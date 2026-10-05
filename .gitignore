@@ -1,0 +1,6 @@
+.godot/
+*.import
+captures/
+builds/
+.DS_Store
+art/generated/**/*.tmp

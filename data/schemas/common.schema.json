@@ -1,0 +1,54 @@
+{
+  "$id": "common.schema.json",
+  "title": "Shared definitions",
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9_]+$", "description": "snake_case identifier, unique within its data type"},
+    "ability": {"type": "string", "enum": ["str", "dex", "con", "int", "wis", "cha"]},
+    "skill": {"type": "string", "enum": ["acrobatics", "animal_handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight_of_hand", "stealth", "survival"]},
+    "dice": {"type": "string", "pattern": "^(\\d*d\\d+)?([+-]\\d+)?$|^\\d+$"},
+    "damage_type": {"type": "string", "enum": ["acid", "bludgeoning", "cold", "fire", "force", "lightning", "necrotic", "piercing", "poison", "psychic", "radiant", "slashing", "thunder"]},
+    "condition": {"type": "string", "enum": ["blinded", "charmed", "deafened", "exhaustion", "frightened", "grappled", "incapacitated", "invisible", "paralyzed", "petrified", "poisoned", "prone", "restrained", "stunned", "unconscious"]},
+    "size": {"type": "string", "enum": ["tiny", "small", "medium", "large", "huge", "gargantuan"]},
+    "source": {
+      "type": "object",
+      "required": ["book"],
+      "properties": {
+        "book": {"type": "string", "enum": ["SRD5.2", "PHB2024", "DMG2024", "MM2025", "CoS", "custom"]},
+        "page": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "effect_ref": {
+      "type": "object",
+      "description": "A reference to a reusable effect primitive in rules/ (see ADR 0003) with its parameters.",
+      "required": ["effect"],
+      "properties": {
+        "effect": {"$ref": "#/$defs/id"},
+        "params": {"type": "object"}
+      }
+    },
+    "feature": {
+      "type": "object",
+      "required": ["id", "name", "summary"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "name": {"type": "string", "minLength": 1},
+        "summary": {"type": "string", "minLength": 1, "description": "Short paraphrase shown in tooltips; full text lives in the rules text field."},
+        "text": {"type": "string"},
+        "choice": {"$ref": "#/$defs/choice"},
+        "effects": {"type": "array", "items": {"$ref": "#/$defs/effect_ref"}}
+      }
+    },
+    "choice": {
+      "type": "object",
+      "description": "A choice the CharacterBuilder or LevelUpController presents. `kind` picks the reusable UI widget (plan §5.6).",
+      "required": ["kind", "count"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["skill", "expertise", "fighting_style", "weapon_mastery", "cantrip", "spell", "feat", "ability_increase", "subclass", "invocation", "metamagic", "maneuver", "language", "tool", "option"]},
+        "count": {"type": "integer", "minimum": 1},
+        "from": {"type": "array", "items": {"type": "string"}},
+        "filter": {"type": "object"}
+      }
+    }
+  }
+}

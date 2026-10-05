@@ -1,0 +1,41 @@
+{
+  "id": "human",
+  "name": "Human",
+  "source": {
+    "book": "SRD5.2"
+  },
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium",
+    "small"
+  ],
+  "speed": 30,
+  "traits": [
+    {
+      "id": "resourceful",
+      "name": "Resourceful",
+      "summary": "Gain Heroic Inspiration whenever you finish a Long Rest."
+    },
+    {
+      "id": "skillful",
+      "name": "Skillful",
+      "summary": "Gain proficiency in one skill of your choice.",
+      "choice": {
+        "kind": "skill",
+        "count": 1
+      }
+    },
+    {
+      "id": "versatile",
+      "name": "Versatile",
+      "summary": "Gain an Origin feat of your choice.",
+      "choice": {
+        "kind": "feat",
+        "count": 1,
+        "filter": {
+          "category": "origin"
+        }
+      }
+    }
+  ]
+}

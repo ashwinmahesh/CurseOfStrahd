@@ -1,0 +1,17 @@
+{
+  "id": "chain_mail",
+  "name": "Chain Mail",
+  "source": {
+    "book": "SRD5.2"
+  },
+  "category": "armor",
+  "weight_lb": 55,
+  "cost_gp": 75,
+  "armor": {
+    "kind": "heavy",
+    "base_ac": 16,
+    "dex_cap": 0,
+    "strength": 13,
+    "stealth_disadvantage": true
+  }
+}

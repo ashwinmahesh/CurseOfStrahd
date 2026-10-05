@@ -1,0 +1,18 @@
+{
+  "$id": "feat.schema.json",
+  "title": "Feat",
+  "type": "object",
+  "required": ["id", "name", "source", "category", "summary"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "name": {"type": "string"},
+    "source": {"$ref": "common.schema.json#/$defs/source"},
+    "category": {"type": "string", "enum": ["origin", "general", "fighting_style", "epic_boon"]},
+    "prerequisites": {"type": "object", "properties": {"level": {"type": "integer"}, "abilities": {"type": "object"}, "any_ability": {"type": "object"}, "feature": {"type": "string"}, "spellcasting": {"type": "boolean"}, "proficiency": {"type": "string"}}},
+    "repeatable": {"type": "boolean"},
+    "summary": {"type": "string"},
+    "ability_increase": {"type": "object", "properties": {"from": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/ability"}}, "amount": {"type": "integer"}, "max": {"type": "integer"}}},
+    "benefits": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}}
+  }
+}

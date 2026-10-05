@@ -1,0 +1,21 @@
+{
+  "id": "alert",
+  "name": "Alert",
+  "source": {
+    "book": "SRD5.2"
+  },
+  "category": "origin",
+  "summary": "Add your Proficiency Bonus to Initiative, and you can swap Initiative with a willing ally after rolling.",
+  "benefits": [
+    {
+      "id": "initiative_proficiency",
+      "name": "Initiative Proficiency",
+      "summary": "Add your Proficiency Bonus to Initiative rolls."
+    },
+    {
+      "id": "initiative_swap",
+      "name": "Initiative Swap",
+      "summary": "After rolling Initiative, swap results with a willing ally who isn't Incapacitated."
+    }
+  ]
+}

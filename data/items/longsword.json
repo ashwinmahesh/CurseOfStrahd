@@ -1,0 +1,20 @@
+{
+  "id": "longsword",
+  "name": "Longsword",
+  "source": {
+    "book": "SRD5.2"
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 15,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d8",
+    "damage_type": "slashing",
+    "properties": [
+      "versatile"
+    ],
+    "versatile": "1d10",
+    "mastery": "sap"
+  }
+}

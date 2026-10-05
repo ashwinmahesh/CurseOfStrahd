@@ -1,0 +1,436 @@
+{
+  "id": "fighter",
+  "name": "Fighter",
+  "source": {
+    "book": "SRD5.2"
+  },
+  "role_tags": [
+    "front line",
+    "weapons"
+  ],
+  "complexity": "low",
+  "hit_die": 10,
+  "primary_abilities": [
+    "str",
+    "dex"
+  ],
+  "saving_throws": [
+    "str",
+    "con"
+  ],
+  "skill_choices": {
+    "kind": "skill",
+    "count": 2,
+    "from": [
+      "acrobatics",
+      "animal_handling",
+      "athletics",
+      "history",
+      "insight",
+      "intimidation",
+      "persuasion",
+      "perception",
+      "survival"
+    ]
+  },
+  "proficiencies": {
+    "armor": [
+      "light",
+      "medium",
+      "heavy",
+      "shields"
+    ],
+    "weapons": [
+      "simple",
+      "martial"
+    ],
+    "tools": []
+  },
+  "multiclass_prerequisites": {
+    "any_of": {
+      "str": 13,
+      "dex": 13
+    }
+  },
+  "multiclass_proficiencies": {
+    "armor": [
+      "light",
+      "medium",
+      "shields"
+    ],
+    "weapons": [
+      "martial"
+    ]
+  },
+  "subclass_level": 3,
+  "resources": {
+    "second_wind_uses": [
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "weapon_masteries": [
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "action_surge_uses": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2
+    ],
+    "indomitable_uses": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3
+    ]
+  },
+  "levels": [
+    {
+      "level": 1,
+      "features": [
+        {
+          "id": "fighting_style",
+          "name": "Fighting Style",
+          "summary": "Gain a Fighting Style feat of your choice.",
+          "choice": {
+            "kind": "fighting_style",
+            "count": 1
+          }
+        },
+        {
+          "id": "second_wind",
+          "name": "Second Wind",
+          "summary": "Bonus Action: regain 1d10 + Fighter level HP. Uses recharge on a Short or Long Rest."
+        },
+        {
+          "id": "weapon_mastery",
+          "name": "Weapon Mastery",
+          "summary": "Use the mastery properties of a number of weapon kinds you choose.",
+          "choice": {
+            "kind": "weapon_mastery",
+            "count": 3
+          }
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "features": [
+        {
+          "id": "action_surge",
+          "name": "Action Surge",
+          "summary": "Once per Short or Long Rest, take one additional action (not Magic) on your turn."
+        },
+        {
+          "id": "tactical_mind",
+          "name": "Tactical Mind",
+          "summary": "When you fail an ability check, spend a Second Wind use to add 1d10 to it; the use is kept if you still fail."
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "features": [
+        {
+          "id": "fighter_subclass",
+          "name": "Fighter Subclass",
+          "summary": "Choose a Fighter subclass.",
+          "choice": {
+            "kind": "subclass",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "choice": {
+            "kind": "feat",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "features": [
+        {
+          "id": "extra_attack",
+          "name": "Extra Attack",
+          "summary": "Attack twice instead of once when you take the Attack action."
+        },
+        {
+          "id": "tactical_shift",
+          "name": "Tactical Shift",
+          "summary": "When you use Second Wind, move up to half your Speed without provoking Opportunity Attacks."
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "choice": {
+            "kind": "feat",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Fighter subclass."
+        }
+      ]
+    },
+    {
+      "level": 8,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "choice": {
+            "kind": "feat",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "features": [
+        {
+          "id": "indomitable",
+          "name": "Indomitable",
+          "summary": "Reroll a failed saving throw with a bonus equal to your Fighter level; once per Long Rest."
+        },
+        {
+          "id": "tactical_master",
+          "name": "Tactical Master",
+          "summary": "When you attack with a weapon whose mastery you can use, you can swap its property for Push, Sap or Slow."
+        }
+      ]
+    },
+    {
+      "level": 10,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Fighter subclass."
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "features": [
+        {
+          "id": "two_extra_attacks",
+          "name": "Two Extra Attacks",
+          "summary": "Attack three times when you take the Attack action."
+        }
+      ]
+    },
+    {
+      "level": 12,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "choice": {
+            "kind": "feat",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "features": [
+        {
+          "id": "indomitable_2",
+          "name": "Indomitable (two uses)",
+          "summary": "Indomitable can be used twice per Long Rest."
+        },
+        {
+          "id": "studied_attacks",
+          "name": "Studied Attacks",
+          "summary": "After you miss a creature, you have Advantage on your next attack roll against it before the end of your next turn."
+        }
+      ]
+    },
+    {
+      "level": 14,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "choice": {
+            "kind": "feat",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Fighter subclass."
+        }
+      ]
+    },
+    {
+      "level": 16,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "choice": {
+            "kind": "feat",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "features": [
+        {
+          "id": "action_surge_2",
+          "name": "Action Surge (two uses)",
+          "summary": "Action Surge can be used twice per rest, but only once per turn."
+        },
+        {
+          "id": "indomitable_3",
+          "name": "Indomitable (three uses)",
+          "summary": "Indomitable can be used three times per Long Rest."
+        }
+      ]
+    },
+    {
+      "level": 18,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Fighter subclass."
+        }
+      ]
+    },
+    {
+      "level": 19,
+      "features": [
+        {
+          "id": "epic_boon",
+          "name": "Epic Boon",
+          "summary": "Gain an Epic Boon feat or another feat you qualify for.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": "epic_boon"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "features": [
+        {
+          "id": "three_extra_attacks",
+          "name": "Three Extra Attacks",
+          "summary": "Attack four times when you take the Attack action."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "$id": "item.schema.json",
+  "title": "Item (mundane gear, weapons, armor, magic items)",
+  "type": "object",
+  "required": ["id", "name", "source", "category", "weight_lb", "cost_gp"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "name": {"type": "string"},
+    "source": {"$ref": "common.schema.json#/$defs/source"},
+    "category": {"type": "string", "enum": ["weapon", "armor", "shield", "gear", "tool", "consumable", "ammunition", "focus", "pack", "treasure", "quest", "wondrous", "ring", "rod", "staff", "wand", "potion", "scroll"]},
+    "weight_lb": {"type": "number", "minimum": 0},
+    "cost_gp": {"type": "number", "minimum": 0},
+    "stackable": {"type": "boolean"},
+    "weapon": {"type": "object", "required": ["kind", "damage", "damage_type"], "properties": {"kind": {"type": "string", "enum": ["simple_melee", "simple_ranged", "martial_melee", "martial_ranged"]}, "damage": {"$ref": "common.schema.json#/$defs/dice"}, "damage_type": {"$ref": "common.schema.json#/$defs/damage_type"}, "properties": {"type": "array", "items": {"type": "string", "enum": ["ammunition", "finesse", "heavy", "light", "loading", "range", "reach", "thrown", "two_handed", "versatile"]}}, "versatile": {"$ref": "common.schema.json#/$defs/dice"}, "range": {"type": "array", "items": {"type": "integer"}}, "mastery": {"type": "string", "enum": ["cleave", "graze", "nick", "push", "sap", "slow", "topple", "vex"]}}},
+    "armor": {"type": "object", "required": ["kind", "base_ac"], "properties": {"kind": {"type": "string", "enum": ["light", "medium", "heavy", "shield"]}, "base_ac": {"type": "integer"}, "dex_cap": {"type": ["integer", "null"]}, "strength": {"type": "integer"}, "stealth_disadvantage": {"type": "boolean"}}},
+    "magic": {"type": "object", "properties": {"rarity": {"type": "string", "enum": ["common", "uncommon", "rare", "very_rare", "legendary", "artifact"]}, "attunement": {"type": ["boolean", "string"]}, "charges": {"type": "object"}, "cursed": {"type": "boolean"}, "sentient": {"type": "boolean"}}},
+    "quest_locked": {"type": "boolean"},
+    "summary": {"type": "string"},
+    "effects": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/effect_ref"}}
+  }
+}

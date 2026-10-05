@@ -1,0 +1,37 @@
+{
+  "id": "magic_missile",
+  "name": "Magic Missile",
+  "source": {
+    "book": "SRD5.2"
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "damage": [
+    {
+      "dice": "1d4+1",
+      "type": "force"
+    }
+  ],
+  "upcast": {
+    "extra_darts_per_slot_level": 1
+  },
+  "summary": "Three glowing darts each hit a creature you can see for 1d4 + 1 Force damage. One more dart per slot level above 1."
+}

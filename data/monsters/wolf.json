@@ -1,0 +1,63 @@
+{
+  "id": "wolf",
+  "name": "Wolf",
+  "source": {
+    "book": "MM2025"
+  },
+  "size": "medium",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 11,
+    "dice": "2d8+2"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 15,
+    "con": 12,
+    "int": 3,
+    "wis": 12,
+    "cha": 6
+  },
+  "skills": {
+    "perception": 5,
+    "stealth": 4
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 15,
+  "languages": [],
+  "cr": 0.25,
+  "traits": [
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "summary": "Advantage on an attack roll against a creature if an ally is within 5 feet of it and isn't Incapacitated."
+    }
+  ],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "attack": {
+        "kind": "melee",
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "dice": "1d6+2",
+          "type": "piercing"
+        }
+      ],
+      "summary": "If the target is Medium or smaller, it has the Prone condition."
+    }
+  ],
+  "ai_profile": "pack_hunter"
+}

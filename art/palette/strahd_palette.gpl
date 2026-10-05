@@ -1,0 +1,50 @@
+GIMP Palette
+Name: Strahd
+Columns: 8
+#
+ 13  10  18	void
+ 26  18  32	ink
+ 39  28  46	grave
+ 58  42  68	ash_violet
+ 61  10  20	blood_deep
+110  16  35	blood
+163  25  45	crimson
+214  40  58	vampire_red
+232  96 106	rose
+ 43  20  56	bruise_deep
+ 74  33  96	bruise
+109  52 134	plum
+154  91 176	orchid
+196 149 207	lilac
+ 15  26  46	night_deep
+ 28  46  76	night
+ 47  78 120	moon_blue
+ 83 121 163	mist_blue
+143 178 207	moonlight
+201 223 232	frost
+ 91  76  62	bone_dark
+142 122  98	bone
+199 177 138	parchment
+230 214 176	vellum
+244 236 214	ivory
+ 20  38  28	bog_deep
+ 37  66  50	bog
+ 62 106  58	moss
+111 154  62	sickly
+169 196  80	bile
+ 74  30  12	ember_deep
+138  58  18	ember
+217 115  30	candle
+242 169  59	flame
+251 224 138	wick
+ 34  34  42	stone_deep
+ 59  59  69	stone
+ 92  92 105	slate
+138 138 150	pewter
+189 189 198	silver
+107  58  38	rust
+140  90  58	leather
+184 138  94	tan
+122  74  60	skin_shadow
+196 138 106	skin
+230 184 150	skin_light

@@ -1,0 +1,40 @@
+; Engine configuration file.
+; Curse of Strahd — Godot 4.7.2, typed GDScript. See CLAUDE.md for agent rules.
+
+config_version=5
+
+[application]
+
+config/name="Curse of Strahd"
+config/description="A 2.5D turn-based party RPG of Curse of Strahd using the 2024 D&D rules."
+run/main_scene="res://scenes/test/graybox_room.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[autoload]
+
+EventBus="*res://core/event_bus.gd"
+Dice="*res://core/dice.gd"
+GameState="*res://core/game_state.gd"
+SaveSystem="*res://core/save_system.gd"
+SceneRouter="*res://core/scene_router.gd"
+ModeController="*res://core/mode_controller.gd"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/inferred_declaration=0
+gdscript/warnings/unsafe_property_access=1
+gdscript/warnings/unsafe_method_access=1
+
+[display]
+
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[rendering]
+
+renderer/rendering_method="forward_plus"
+anti_aliasing/quality/msaa_3d=0
+textures/canvas_textures/default_texture_filter=0

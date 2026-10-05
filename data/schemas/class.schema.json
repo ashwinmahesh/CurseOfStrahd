@@ -1,0 +1,53 @@
+{
+  "$id": "class.schema.json",
+  "title": "Character class",
+  "type": "object",
+  "required": ["id", "name", "source", "hit_die", "primary_abilities", "saving_throws", "skill_choices", "proficiencies", "levels"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "name": {"type": "string"},
+    "source": {"$ref": "common.schema.json#/$defs/source"},
+    "role_tags": {"type": "array", "items": {"type": "string"}},
+    "complexity": {"type": "string", "enum": ["low", "average", "high"]},
+    "hit_die": {"type": "integer", "enum": [6, 8, 10, 12]},
+    "primary_abilities": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/ability"}},
+    "saving_throws": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "common.schema.json#/$defs/ability"}},
+    "skill_choices": {"$ref": "common.schema.json#/$defs/choice"},
+    "proficiencies": {
+      "type": "object",
+      "properties": {
+        "armor": {"type": "array", "items": {"type": "string", "enum": ["light", "medium", "heavy", "shields"]}},
+        "weapons": {"type": "array", "items": {"type": "string"}},
+        "tools": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "multiclass_prerequisites": {"type": "object", "description": "Ability -> minimum score. `any_of` lists alternatives.", "properties": {"all_of": {"type": "object"}, "any_of": {"type": "object"}}},
+    "multiclass_proficiencies": {"type": "object"},
+    "spellcasting": {
+      "type": "object",
+      "properties": {
+        "ability": {"$ref": "common.schema.json#/$defs/ability"},
+        "progression": {"type": "string", "enum": ["full", "half", "third", "pact"]},
+        "prepared": {"type": "boolean"}
+      }
+    },
+    "starting_equipment": {"type": "array", "items": {"type": "object"}},
+    "subclass_level": {"type": "integer", "minimum": 1, "maximum": 3},
+    "resources": {"type": "object", "description": "Resource id -> array of 20 values by level (uses, dice, etc.)."},
+    "levels": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["level", "features"],
+        "properties": {
+          "level": {"type": "integer", "minimum": 1, "maximum": 20},
+          "features": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}}
+        }
+      }
+    }
+  }
+}

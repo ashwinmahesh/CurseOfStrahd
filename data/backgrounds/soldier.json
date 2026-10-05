@@ -1,0 +1,33 @@
+{
+  "id": "soldier",
+  "name": "Soldier",
+  "source": {
+    "book": "SRD5.2"
+  },
+  "ability_scores": [
+    "str",
+    "dex",
+    "con"
+  ],
+  "feat": "savage_attacker",
+  "skills": [
+    "athletics",
+    "intimidation"
+  ],
+  "tool": "gaming_set",
+  "equipment": {
+    "a": [
+      "spear",
+      "shortbow",
+      "arrows_20",
+      "gaming_set",
+      "healers_kit",
+      "quiver",
+      "travelers_clothes",
+      "gp_14"
+    ],
+    "b": [
+      "gp_50"
+    ]
+  }
+}

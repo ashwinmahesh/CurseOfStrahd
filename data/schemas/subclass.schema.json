@@ -1,0 +1,23 @@
+{
+  "$id": "subclass.schema.json",
+  "title": "Subclass",
+  "type": "object",
+  "required": ["id", "name", "class", "source", "summary", "features"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "name": {"type": "string"},
+    "class": {"$ref": "common.schema.json#/$defs/id"},
+    "source": {"$ref": "common.schema.json#/$defs/source"},
+    "summary": {"type": "string"},
+    "always_prepared_spells": {"type": "object", "description": "Class level -> array of spell ids."},
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["level", "feature"],
+        "properties": {"level": {"type": "integer", "minimum": 1, "maximum": 20}, "feature": {"$ref": "common.schema.json#/$defs/feature"}}
+      }
+    }
+  }
+}
