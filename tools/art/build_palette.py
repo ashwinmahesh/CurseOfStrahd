@@ -22,6 +22,7 @@ PALETTE = [
     ("bog_deep", "14261c"), ("bog", "254232"), ("moss", "3e6a3a"), ("sickly", "6f9a3e"), ("bile", "a9c450"),
     ("ember_deep", "4a1e0c"), ("ember", "8a3a12"), ("candle", "d9731e"), ("flame", "f2a93b"), ("wick", "fbe08a"),
     ("stone_deep", "22222a"), ("stone", "3b3b45"), ("slate", "5c5c69"), ("pewter", "8a8a96"), ("silver", "bdbdc6"),
+    ("peat", "2b1f1a"), ("umber", "4d382a"), ("walnut", "664a35"),
     ("rust", "6b3a26"), ("leather", "8c5a3a"), ("tan", "b88a5e"),
     ("skin_shadow", "7a4a3c"), ("skin", "c48a6a"), ("skin_light", "e6b896"),
 ]

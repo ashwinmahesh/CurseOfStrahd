@@ -4,3 +4,6 @@ captures/
 builds/
 .DS_Store
 art/generated/**/*.tmp
+
+# Style test outputs stay local (big, reproducible from tools/art/style_test.sh and the log).
+art/generated/style_test/

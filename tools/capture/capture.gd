@@ -17,6 +17,18 @@ func _ready() -> void:
 	for i in frames:
 		await get_tree().process_frame
 	_shot(out + "_1.png")
+	var focus := str(args.get("focus", ""))
+	if focus != "":
+		# Close-up on one node (e.g. --focus=villager), with shots spread around its walk.
+		var cam_rig := scene.get("rig") as CameraRig
+		cam_rig.follow = scene.get(focus) as Node3D
+		cam_rig.distance = 7.0
+		for i in 6:
+			for f in frames / 2:
+				await get_tree().process_frame
+			_shot(out + "_focus_%d.png" % i)
+		get_tree().quit()
+		return
 	if scene.has_method("debug_move_leader"):
 		scene.call("debug_move_leader", Vector3(5.5, 0, -1.5))
 		for i in frames * 2:

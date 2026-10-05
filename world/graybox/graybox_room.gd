@@ -10,6 +10,7 @@ var party: PartyController
 var rig: CameraRig
 var hud: ExplorationHud
 var post: MeshInstance3D
+var villager: NpcWalker
 
 
 func _ready() -> void:
@@ -18,6 +19,7 @@ func _ready() -> void:
 	_build_environment()
 	_build_room()
 	_build_party()
+	_build_villager()
 	_build_camera()
 	hud = ExplorationHud.new()
 	add_child(hud)
@@ -117,6 +119,16 @@ func _build_party() -> void:
 		var m := PartyMember.create(str(s[0]), str(s[1]), str(s[2]))
 		party.add_member(m)
 		m.global_position = Vector3(-1.2 + i * 0.8, 0.0, 5.0)
+
+
+## Phase 0 pipeline proof: a GPT Image villager rigged and rendered in Blender, walking a loop.
+func _build_villager() -> void:
+	var frames := load("res://art/sprites/villager/walk.tres") as SpriteFrames
+	if frames == null:
+		return
+	var route: Array[Vector3] = [Vector3(-2.6, 0, -1.6), Vector3(2.6, 0, -1.6), Vector3(2.6, 0, 3.6), Vector3(-2.6, 0, 3.6)]
+	villager = NpcWalker.create(frames, route)
+	add_child(villager)
 
 
 func _build_camera() -> void:

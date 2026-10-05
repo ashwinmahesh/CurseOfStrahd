@@ -1,8 +1,11 @@
 {
-  "image_model": "gpt-image-2",
-  "image_model_note": "Default per plan §7 until the Phase 0 style test pins a winner between gpt-image-2, gpt-image-2.5-flare and gpt-image-2.5-sunburst.",
+  "image_model": "gpt-image-2.5-flare-2026-09-08",
+  "image_model_note": "Pinned 2026-10-05 after the Phase 0 style test (art/generated/style_test, see Build Log 02). Flare gave the flattest cel shading and boldest silhouettes, closest to the 90s-cartoon brief, and supports transparent backgrounds. No shutdown date listed for it. gpt-image-2 rejected transparent backgrounds on this key.",
   "assets": [
     {"id": "party_placeholder", "kind": "character", "status": "placeholder", "notes": "Capsule bodies in world/exploration/party_member.gd"},
-    {"id": "barovian_villager", "kind": "character", "status": "missing", "notes": "Phase 0 pipeline proof: turnaround + parts sheet -> Blender cutout rig -> 8-direction walk"}
+    {"id": "barovian_villager", "kind": "character", "status": "rigged",
+     "source": "art/generated/characters/villager_turnaround.png", "sprites": "art/sprites/villager/walk.tres",
+     "model": "gpt-image-2.5-flare", "notes": "Phase 0 pipeline proof: 5-view turnaround -> cutout rig (blender/render_walk.py) -> 8 directions x 8-frame walk. Needs art QA before final."},
+    {"id": "villager_standin", "kind": "character", "status": "placeholder", "source": "art/generated/standin/villager_turnaround.png", "notes": "Primitive stand-in from blender/make_standin_turnaround.py, for pipeline tests"}
   ]
 }
