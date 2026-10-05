@@ -1,7 +1,7 @@
 # Curse of Strahd — agent rules
 Godot 4.7.2 (typed GDScript) · Blender 5.2 · macOS, Apple Silicon
 Plan: ~/Documents/Obsidian Vault/CurseOfStrahd/Game_Plan.md (owned by the planning thread; read, don't edit)
-Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/Build Logs/
+Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log NN - <title>.md")
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
