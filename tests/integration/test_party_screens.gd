@@ -150,3 +150,18 @@ func test_the_stash_at_a_safe_place() -> void:
 	var inv := root.get("screen") as InventoryScreen
 	assert_true(inv.call("_stash_open"), "the test hall is a safe place")
 	assert_true(before >= 0)
+
+
+func test_arcane_recovery_after_a_short_rest() -> void:
+	var silvain := GameState.story.party[3]
+	silvain.slots_used[0] = 2
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	var rest := root.get("screen") as RestScreen
+	rest.call("_finish_short")
+	await _frames(1)
+	var buttons := rest.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text.begins_with("Recover a level 1"))
+	assert_eq(buttons.size(), 1, "level 1 wizard: one slot level to recover")
+	(buttons[0] as Button).pressed.emit()
+	assert_eq(silvain.slots_used[0], 1)
+	assert_eq(silvain.resource_left("arcane_recovery"), 0, "once per Long Rest")

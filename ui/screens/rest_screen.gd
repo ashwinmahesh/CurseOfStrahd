@@ -9,6 +9,7 @@ var root: Node
 var st: StoryState
 var _box: VBoxContainer
 var _log: Label
+var _short_done := false   ## Arcane Recovery comes after a finished Short Rest
 
 
 func _init() -> void:
@@ -45,6 +46,7 @@ func _draw() -> void:
 	for c in _box.get_children():
 		c.queue_free()
 	for ch in st.party:
+		_arcane_recovery_row(ch)
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 10)
 		row.add_child(UiKit.portrait(CombatToken.art_for(ch), 56))
@@ -80,6 +82,7 @@ func _finish_short() -> void:
 	st.advance_minutes(60)
 	_log.text = "An hour passes. Short-rest features are back."
 	_narrate("rest:short")
+	_short_done = true
 	_draw()
 
 
@@ -115,3 +118,45 @@ func _narrate(key: String) -> void:
 	var text := str(root.call("narrate_key", key))
 	if text != "":
 		_log.text += "\n" + text
+
+
+## Arcane Recovery (Wizard 1, 2024): once per Long Rest, after a Short Rest, recover expended slots whose levels add up
+## to at most half the Wizard level (rounded up), none of level 6 or higher. One button per slot level to recover.
+func _arcane_recovery_row(ch: Character) -> void:
+	var wiz := ch.class_level_of("wizard")
+	if wiz <= 0 or not _short_done or ch.resource_left("arcane_recovery") <= 0 or ch.dead:
+		return
+	var budget := int(ch.get_meta("arcane_budget", (wiz + 1) / 2))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	row.add_child(UiKit.label("%s · Arcane Recovery (%d slot level%s left to recover):" % [ch.name.get_slice(" ", 0), budget, "" if budget == 1 else "s"], 15, "lilac"))
+	var any := false
+	for lvl in range(1, mini(5, budget) + 1):
+		if ch.slots_used[lvl - 1] <= 0:
+			continue
+		any = true
+		var l := lvl
+		row.add_child(UiKit.button("Recover a level %d slot" % l, func() -> void:
+			ch.slots_used[l - 1] -= 1
+			var left := budget - l
+			ch.set_meta("arcane_budget", left)
+			_log.text = "%s recovers a level %d spell slot." % [ch.name, l]
+			if left <= 0 or not _has_recoverable(ch, left):
+				ch.spend_resource("arcane_recovery")
+				ch.remove_meta("arcane_budget")
+			_draw(), 13))
+	if not any:
+		return
+	row.add_child(UiKit.button("Done", func() -> void:
+		if ch.has_meta("arcane_budget"):
+			ch.spend_resource("arcane_recovery")
+			ch.remove_meta("arcane_budget")
+		_draw(), 13))
+	_box.add_child(row)
+
+
+static func _has_recoverable(ch: Character, budget: int) -> bool:
+	for lvl in range(1, mini(5, budget) + 1):
+		if ch.slots_used[lvl - 1] > 0:
+			return true
+	return false
