@@ -130,3 +130,60 @@ func test_another_class_level_changes_none_of_them() -> void:
 	var keys: Array = up.level_choices().map(func(c: Choice) -> String: return c.key)
 	assert_false("battle_master.3.combat_superiority" in keys, "a Barbarian level swaps no maneuver: %s" % [keys])
 	assert_false("fighter.1.fighting_style" in keys, str(keys))
+
+
+func test_mystic_arcanum_swaps_one_spell_across_all_its_levels() -> void:
+	var ch := TestChars.custom("warlock", "human", 13)
+	var lv := _level(ch, "warlock")
+	var up := lv[0] as LevelUpController
+	var six := (lv[1] as Dictionary).get("warlock.11.mystic_arcanum") as Choice
+	var seven := (lv[1] as Dictionary).get("warlock.13.mystic_arcanum") as Choice
+	assert_true(six != null and seven != null, "Warlock 14 may swap an arcanum: %s" % [(lv[1] as Dictionary).keys()])
+	assert_true(ChoiceOptions.swap_note(six).begins_with("1 of your Mystic Arcanum spells can change"), ChoiceOptions.swap_note(six))
+	var new6 := _unpicked(six, 1)
+	var new7 := _unpicked(seven, 1)
+	assert_eq(up.choose(six.key, new6), [] as Array[String], "one arcanum swapped")
+	var spent := ((_offered(up))[seven.key]) as Choice
+	assert_true(spent != null, "the level 7 arcanum stays on screen")
+	assert_eq(spent.swap_max, 0, "the one swap is used")
+	assert_true(spent.option(spent.picks[0]).locked, "the level 7 arcanum is locked now")
+	var errs := up.choose(seven.key, new7)
+	assert_true(errs.size() == 1 and errs[0].contains("Only 1 of your Mystic Arcanum spells can change at a level up"), str(errs))
+	up.choose(seven.key, ch.picks_for(seven.key))
+	TestChars.auto_pick(up.pending_choices, up.choose)
+	assert_true(up.confirm(), str(up.errors()))
+	assert_true(new6[0] in ch.picks_for(six.key))
+
+
+func test_magic_initiate_swaps_one_of_its_spells_on_any_level() -> void:
+	var ch := TestChars.custom("fighter", "human", 1, {}, "acolyte")
+	var lv := _level(ch, "fighter")
+	var up := lv[0] as LevelUpController
+	var cantrips := (lv[1] as Dictionary).get("background.feat.two_cantrips.cantrips") as Choice
+	var spell := (lv[1] as Dictionary).get("background.feat.level_1_spell") as Choice
+	assert_true(cantrips != null and spell != null, "a Fighter level may swap a Magic Initiate spell: %s" % [(lv[1] as Dictionary).keys()])
+	var new_spell := _unpicked(spell, 1)
+	var swapped: Array = cantrips.picks.duplicate()
+	swapped[0] = _unpicked(cantrips, 1)[0]
+	assert_eq(up.choose(cantrips.key, swapped), [] as Array[String], "one cantrip swapped")
+	var errs := up.choose(spell.key, new_spell)
+	assert_true(errs.size() == 1 and errs[0].contains("Only 1 of your Magic Initiate spells can change at a level up"), str(errs))
+	up.choose(spell.key, ch.picks_for(spell.key))
+	TestChars.auto_pick(up.pending_choices, up.choose)
+	assert_true(up.confirm(), str(up.errors()))
+
+
+## The level's choices by key, as the screen shows them now.
+func _offered(up: LevelUpController) -> Dictionary:
+	var by_key := {}
+	for c in up.level_choices():
+		by_key[c.key] = c
+	return by_key
+
+
+func test_magical_discoveries_swap_one_spell_per_bard_level() -> void:
+	var ch := TestChars.custom("bard", "human", 6, {"bard_subclass": ["college_of_lore"]})
+	var lv := _level(ch, "bard")
+	var c := (lv[1] as Dictionary).get("college_of_lore.6.magical_discoveries") as Choice
+	assert_true(c != null, "Bard 7 may swap a Magical Discovery: %s" % [(lv[1] as Dictionary).keys()])
+	_one_not_two(lv[0] as LevelUpController, c, "spell")

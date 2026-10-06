@@ -50,6 +50,7 @@
           "kind": "spell",
           "count": 2,
           "replaceable": "level_up",
+          "replace_max": 1,
           "filter": {
             "lists": [
               "cleric",

@@ -152,8 +152,8 @@ func new_features() -> Array[Dictionary]:
 func pending_choices() -> Array[Choice]:
 	var after := preview()
 	var out: Array[Choice] = []
+	_open_swaps(after)
 	for c in after.choice_defs:
-		_open_swap(c)
 		ChoiceOptions.populate(c, after)
 		if not c.is_complete():
 			out.append(c)
@@ -168,9 +168,9 @@ func level_choices() -> Array[Choice]:
 		before[c.key] = c.count
 	var after := preview()
 	var out: Array[Choice] = []
+	var offered := _open_swaps(after)
 	for c in after.choice_defs:
-		_open_swap(c)
-		if not before.has(c.key) or int(before[c.key]) != c.count or not c.is_complete() or c.swap_max > 0:
+		if not before.has(c.key) or int(before[c.key]) != c.count or not c.is_complete() or offered.has(c.key):
 			ChoiceOptions.populate(c, after)
 			out.append(c)
 	return out
@@ -181,12 +181,38 @@ func level_choices() -> Array[Choice]:
 ## pick on a class list stays, so a Cleric or Wizard only adds new spells here and reworks the list after a Long Rest.
 ## Weapon Mastery is the same: a new level adds kinds, and the earlier ones change after a Long Rest. Other choices a
 ## level up lets that class swap (`replaceable` level_up with a `replace_max`: one Eldritch Invocation, Maneuver,
-## Metamagic option, Fighting Style, Blessed or Druidic Warrior cantrip) are offered every level of it too.
+## Metamagic option, Fighting Style, Blessed or Druidic Warrior cantrip) are offered every level of it too, and a
+## choice tied to no class (Magic Initiate) on any level. Choices a rest lets you change (Wild Shape forms) only grow.
 func _open_swap(c: Choice) -> void:
 	var spell_list := c.class_id != "" and c.key in ["%s.prepared" % c.class_id, "%s.cantrips" % c.class_id]
-	if not spell_list and c.kind != "weapon_mastery" and c.replaceable != "level_up":
+	if not spell_list and c.replaceable == "":
 		return
-	ChoiceOptions.open_swap(c, character.picks_for(c.key), "level_up" if c.class_id == chosen_class else "")
+	ChoiceOptions.open_swap(c, character.picks_for(c.key), "level_up" if c.class_id in ["", chosen_class] else "")
+
+
+## Opens every choice's swap chance (_open_swap); choices sharing a `replace_group` (a Warlock's Mystic Arcanum
+## spells, one Magic Initiate's cantrips and spell) then share one budget, each keeping what the others haven't used.
+## Returns the keys offered a swap ({key: true}), so a spent group stays on screen, locked.
+func _open_swaps(after: Character) -> Dictionary:
+	var offered := {}
+	var used := {}
+	for c in after.choice_defs:
+		_open_swap(c)
+		if c.swap_max > 0:
+			offered[c.key] = true
+		if c.replace_group != "" and ChoiceOptions.swap_open(c):
+			used[_group(c)] = int(used.get(_group(c), 0)) + ChoiceOptions.swapped_out(c).size()
+	for c in after.choice_defs:
+		if c.replace_group != "" and ChoiceOptions.swap_open(c):
+			var others := int(used[_group(c)]) - ChoiceOptions.swapped_out(c).size()
+			c.swap_max = maxi(0, c.swap_max - others)
+	return offered
+
+
+## A class's group spans its levels (Mystic Arcanum at 11, 13, 15, 17); a feat's is that one feat (Magic Initiate can be
+## taken again for another list).
+static func _group(c: Choice) -> String:
+	return "%s|%s" % [c.replace_group, c.class_id if c.class_id != "" else c.source]
 
 
 func choose(key: String, picks: Array) -> Array[String]:
@@ -195,9 +221,9 @@ func choose(key: String, picks: Array) -> Array[String]:
 		clean.append(str(p))
 	(build["choices"] as Dictionary)[key] = clean
 	_refresh()
+	_open_swaps(preview())
 	for c in preview().choice_defs:
 		if c.key == key:
-			_open_swap(c)
 			ChoiceOptions.populate(c, preview())
 			return ChoiceOptions.errors(c, preview())
 	return ["Unknown choice: %s" % key]
@@ -209,8 +235,8 @@ func errors() -> Array[String]:
 		out.append("Choose a class to advance.")
 		return out
 	var after := preview()
+	_open_swaps(after)
 	for c in after.choice_defs:
-		_open_swap(c)
 		ChoiceOptions.populate(c, after)
 		out.append_array(ChoiceOptions.errors(c, after))
 	return out
