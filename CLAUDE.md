@@ -6,7 +6,8 @@ Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverag
 
 ## Commands (add new ones to the Makefile)
 make run | arena | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
-make sprite TURNAROUND=<png> ID=<id> [STATIC=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | ui_art | standin | wireframes
+make sprite TURNAROUND=<png> ID=<id> [STATIC=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | standin | wireframes
+make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 
 ## Code
@@ -42,6 +43,9 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - Asset packs from the internet are allowed (owner, 2026-10-06): CC0 or clearly free licences only. Keep
   downloads untouched with their licence in art/sourced/<pack>/ and list each in docs/assets/LICENSES.md.
   Characters come from the Gemini pipeline so the style stays consistent.
+- Set dressing (docs/art/set_dressing.md): a location's props, containers, doors and exits are dressed from
+  art/sprites/props/catalog.json by `model` or id; a new model needs art there (test_set_dressing checks). Towns are
+  built by TownBuilder (houses, roofs, yard walls). Never fall back to plain boxes for new content.
 - UI draws on CanvasLayers so the palette pass never touches it.
 
 ## Done means

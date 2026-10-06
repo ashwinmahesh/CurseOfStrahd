@@ -196,6 +196,8 @@ func _door_state(id: String) -> String:
 
 
 func _build_doors() -> void:
+	for ex: Variant in loc.get("exits", []):
+		SetDressing.exit_piece(board, ex as Dictionary)
 	for d: Variant in loc.get("doors", []):
 		var door := d as Dictionary
 		var cell := _cell(door["cell"])
@@ -203,7 +205,9 @@ func _build_doors() -> void:
 		var secret := int(door.get("secret_dc", 0)) > 0 and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false))
 		var open := _door_state(id) == DOOR_OPEN
 		grid.set_flag(cell, CombatGrid.WALL, not open)
-		var node := _box(Vector3(0.9, 1.7, 0.9), board.cell_center(cell) + Vector3(0, 0.85, 0), "walnut" if not secret else "slate")
+		var node: Node3D = SetDressing.door(board, door, secret)
+		if node == null:
+			node = _box(Vector3(0.9, 1.7, 0.9), board.cell_center(cell) + Vector3(0, 0.85, 0), "walnut" if not secret else "slate")
 		node.visible = not open
 		door_nodes[id] = node
 
@@ -217,23 +221,34 @@ func _build_props() -> void:
 		var kind := str(prop["kind"])
 		if kind == "search" and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false)):
 			continue
-		var colour := {"examine": "parchment", "book": "ember", "search": "bone", "lever": "pewter", "decor": "stone"}.get(kind, "bone") as String
 		if str(prop.get("burning", "")) != "" and StoryConditions.check(str(prop["burning"]), st):
 			prop_nodes[id + "#fire"] = _flame(_cell(prop["cell"]), 1.6)
-		var sprite := _prop_art(prop)
-		var node: Node3D = null
-		if sprite != "":
-			node = board.prop_sprite(sprite, board.cell_center(_cell(prop["cell"])) - Vector3(0, 0, 0), 0.8)
-		if node == null:
-			node = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), colour)
-		prop_nodes[id] = node
+		prop_nodes[id] = _prop_node(prop)
 	for c: Variant in loc.get("containers", []):
 		var ct := c as Dictionary
 		if not StoryConditions.check(str(ct.get("when", "")), st):
 			continue
 		var looted := bool((st.loc_state(loc_id)["looted"] as Dictionary).get(str(ct["id"]), false))
-		container_nodes[str(ct["id"])] = _box(Vector3(0.8, 0.55, 0.55), board.cell_center(_cell(ct["cell"])) + Vector3(0, 0.28, 0),
-			"umber" if not looted else "peat")
+		var node: Node3D = SetDressing.place(board, ct, true)
+		if node == null:
+			node = _box(Vector3(0.8, 0.55, 0.55), board.cell_center(_cell(ct["cell"])) + Vector3(0, 0.28, 0), "umber")
+		if looted:
+			SetDressing.mark_looted(node)
+		container_nodes[str(ct["id"])] = node
+
+
+## A prop's piece (SetDressing, art/sprites/props/catalog.json), else a billboard by name, else a plain marker.
+func _prop_node(prop: Dictionary) -> Node3D:
+	var node: Node3D = SetDressing.place(board, prop)
+	if node != null:
+		return node
+	var sprite := _prop_art(prop)
+	if sprite != "":
+		node = board.prop_sprite(sprite, board.cell_center(_cell(prop["cell"])), 0.8)
+	if node == null:
+		var colour := {"examine": "parchment", "book": "ember", "search": "bone", "lever": "pewter", "decor": "stone"}.get(str(prop["kind"]), "bone") as String
+		node = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), colour)
+	return node
 
 
 ## Which billboard prop art (art/sprites/props) a prop looks like, from its model or id, or "" for a plain marker.
@@ -258,16 +273,23 @@ func _build_lights() -> void:
 		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else 2.2
 		omni.position = board.cell_center(_cell(li["cell"])) + Vector3(0, 1.2, 0)
 		add_child(omni)
-		if str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:
+		if str(li.get("kind", "")) == "torch" and SetDressing.has_art("torch"):
+			board.prop_sprite("torch", board.cell_center(_cell(li["cell"])))
+			omni.position.y = 1.9
+		elif str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:
 			_flame(_cell(li["cell"]), 0.6 if str(li["kind"]) != "torch" else 0.35)
 
 
-## A flame: a small emissive cone with a flicker of its own (watch fires, braziers, the burning wicker sun).
+## A flame with a flicker of its own (watch fires, braziers, the burning wicker sun): the flame billboard where the
+## art exists (SetDressing.flame), else a small emissive cone.
 func _flame(cell: Vector2i, size: float) -> Node3D:
 	var root := Node3D.new()
 	root.position = board.cell_center(cell)
 	add_child(root)
-	for i in 3:
+	var art := SetDressing.flame(size)
+	if art != null:
+		root.add_child(art)
+	for i in (0 if art != null else 3):
 		var mi := MeshInstance3D.new()
 		var cm := CylinderMesh.new()
 		cm.top_radius = 0.0
@@ -550,9 +572,10 @@ func step(dir: Vector2i) -> void:
 
 
 func _process(delta: float) -> void:
-	if board != null and rig != null and rig.camera != null and not members.is_empty() and not board.occluders.is_empty():
+	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
+		board.cut_buildings(rig.camera.global_position, focus, delta)
 	if in_combat or _queue.is_empty():
 		return
 	_step_t -= delta
@@ -1170,7 +1193,7 @@ func _use_container(ct: Dictionary, method: String = "auto") -> void:
 func mark_looted(container_id: String) -> void:
 	(st.loc_state(loc_id)["looted"] as Dictionary)[container_id] = true
 	if container_nodes.has(container_id):
-		(container_nodes[container_id] as MeshInstance3D).material_override = Look.cel("peat")
+		SetDressing.mark_looted(container_nodes[container_id] as Node3D)
 
 
 func _use_prop(prop: Dictionary) -> void:
@@ -1232,7 +1255,7 @@ func search() -> void:
 			continue
 		if grid.distance_ft(c, 1, _cell(prop["cell"]), 1) <= 15 and t.total >= int(prop.get("search_dc", 10)):
 			(states["found"] as Dictionary)[str(prop["id"])] = true
-			prop_nodes[str(prop["id"])] = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), "bone")
+			prop_nodes[str(prop["id"])] = _prop_node(prop)
 			found.append(str(prop.get("label", "something")))
 			found_ids.append(str(prop["id"]))
 	for d: Variant in loc.get("doors", []):
@@ -1241,7 +1264,7 @@ func search() -> void:
 			continue
 		if grid.distance_ft(c, 1, _cell(door["cell"]), 1) <= 15 and t.total >= int(door["secret_dc"]):
 			(states["found"] as Dictionary)[str(door["id"])] = true
-			(door_nodes[str(door["id"])] as MeshInstance3D).material_override = Look.cel("walnut")
+			SetDressing.reveal_door(door_nodes[str(door["id"])] as Node3D)
 			found.append(str(door.get("label", "a hidden door")))
 	st.last_check = not found.is_empty()
 	if found.is_empty():

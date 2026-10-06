@@ -1,0 +1,1038 @@
+{
+  "about": "Billboard props, wall pieces and floor pieces for the set dressing (docs/art/set_dressing.md). One Gemini call per sheet: a sheet of four (2 x 2) or a single image. `tools/art/build_props.py --generate` makes the sources, then cuts them into art/sprites/props/. Sizes are world units (one unit = 5 ft): `height` for standing props and wall pieces, `width` for floor pieces.",
+  "views": {
+    "stand": "in the same three-quarter view from slightly above",
+    "wall": "seen straight on from the front as a flat elevation with no perspective, as if fixed flat against a wall",
+    "floor": "seen from directly above as a flat top-down view with no perspective, lying flat on the ground"
+  },
+  "sheet_prompt": "A game prop sheet: four separate objects arranged in a 2 by 2 grid, each centred in its own quarter of the image with wide empty white space around it; the objects never touch, overlap or cross the middle of the image. Top left: {0}. Top right: {1}. Bottom left: {2}. Bottom right: {3}. Every object is shown whole, {view}, sized to fill most of its quarter, on a plain flat white background, no ground, no ground shadows, no labels, no text, no grid lines, no borders.",
+  "single_prompt": "A single game prop: {0}, shown whole and alone, {view}, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+  "sheets": {
+    "dh_furniture_a": {
+      "view": "stand",
+      "generated_as": "props_test/test_sheet_stand",
+      "items": [
+        "clock_standing",
+        "armor_stand",
+        "harpsichord",
+        "chest_iron"
+      ],
+      "subjects": [
+        "a tall grandfather clock in dark carved walnut with a pale clock face and a brass pendulum",
+        "an empty suit-of-armour stand, a wooden dummy on a cross base with a dented iron helmet on top",
+        "an old harpsichord in black lacquered wood with yellowed keys and a raised lid",
+        "a heavy iron-banded wooden chest with a big padlock"
+      ]
+    },
+    "dh_furniture_b": {
+      "view": "stand",
+      "items": [
+        "table_set",
+        "coats",
+        "cabinet_glass",
+        "sideboard"
+      ]
+    },
+    "dh_furniture_c": {
+      "view": "stand",
+      "items": [
+        "shelves",
+        "stair_riser",
+        "oil_lamp",
+        "book_shelf"
+      ]
+    },
+    "dh_furniture_d": {
+      "view": "stand",
+      "items": [
+        "bird_case",
+        "desk",
+        "footlocker",
+        "bed_canopy"
+      ]
+    },
+    "dh_furniture_e": {
+      "view": "stand",
+      "items": [
+        "dressing_table",
+        "bathtub",
+        "crib",
+        "mobile"
+      ]
+    },
+    "dh_furniture_f": {
+      "view": "stand",
+      "items": [
+        "wardrobe",
+        "cabinet_small",
+        "chest_painted",
+        "bed_small"
+      ]
+    },
+    "dh_attic": {
+      "view": "stand",
+      "items": [
+        "sheeted_furniture",
+        "toy_chest",
+        "dollhouse",
+        "rocking_horse"
+      ]
+    },
+    "dh_crypts": {
+      "view": "stand",
+      "items": [
+        "trunk",
+        "crypt",
+        "crypt_small",
+        "bones"
+      ]
+    },
+    "dh_dungeon": {
+      "view": "stand",
+      "items": [
+        "strongbox",
+        "altar_stone",
+        "refuse_mound",
+        "chest"
+      ]
+    },
+    "dh_small": {
+      "view": "stand",
+      "items": [
+        "lectern",
+        "letters_table",
+        "jewel_box",
+        "well_stone"
+      ]
+    },
+    "mists_road_a": {
+      "view": "stand",
+      "items": [
+        "signpost",
+        "carcass",
+        "shrine_small",
+        "statue_head"
+      ]
+    },
+    "mists_road_b": {
+      "view": "stand",
+      "items": [
+        "crow_barrel",
+        "cart_broken",
+        "bramble_a",
+        "bramble_b"
+      ]
+    },
+    "wild_cover": {
+      "view": "stand",
+      "items": [
+        "boulder",
+        "stump",
+        "log",
+        "woodpile"
+      ]
+    },
+    "gate_pillar": {
+      "view": "stand",
+      "aspect": "2:3",
+      "items": [
+        "gate_pillar"
+      ]
+    },
+    "fog_bank": {
+      "view": "stand",
+      "aspect": "16:9",
+      "items": [
+        "fog_bank"
+      ]
+    },
+    "cottage": {
+      "view": "stand",
+      "aspect": "4:3",
+      "items": [
+        "cottage"
+      ]
+    },
+    "dh_wall_a": {
+      "view": "wall",
+      "items": [
+        "crest",
+        "painting",
+        "trophy_wolf",
+        "tapestry"
+      ]
+    },
+    "dh_wall_b": {
+      "view": "wall",
+      "items": [
+        "fireplace",
+        "stove",
+        "dumbwaiter",
+        "jars"
+      ]
+    },
+    "dh_wall_c": {
+      "view": "wall",
+      "items": [
+        "brick_wall",
+        "window_tall",
+        "painting_row",
+        "clock_tall"
+      ]
+    },
+    "dh_wall_d": {
+      "view": "wall",
+      "items": [
+        "uniforms",
+        "mirror",
+        "plaster_seam",
+        "drawings"
+      ]
+    },
+    "dh_wall_e": {
+      "view": "wall",
+      "items": [
+        "robe_pegs",
+        "shelves_wall",
+        "winch",
+        "relief"
+      ]
+    },
+    "doors_a": {
+      "view": "wall",
+      "items": [
+        "door_wood",
+        "door_double",
+        "door_carved",
+        "arch_carved"
+      ]
+    },
+    "doors_b": {
+      "view": "wall",
+      "items": [
+        "gate_iron",
+        "portcullis",
+        "crypt_gate",
+        "door_bookcase"
+      ]
+    },
+    "dh_floor": {
+      "view": "floor",
+      "items": [
+        "rug_wolf",
+        "stair_down",
+        "bones_water",
+        "rubble"
+      ]
+    },
+    "village_furniture_a": {
+      "view": "stand",
+      "items": [
+        "armchair",
+        "settee",
+        "table_chairs",
+        "candelabra"
+      ]
+    },
+    "village_furniture_b": {
+      "view": "stand",
+      "items": [
+        "pew",
+        "altar_church",
+        "coffin",
+        "rocking_chair"
+      ]
+    },
+    "village_furniture_c": {
+      "view": "stand",
+      "items": [
+        "bar_counter",
+        "shop_counter",
+        "workbench",
+        "puppet_theatre"
+      ]
+    },
+    "village_small": {
+      "view": "stand",
+      "items": [
+        "music_box",
+        "doll",
+        "perch",
+        "cage_covered"
+      ]
+    },
+    "camp_a": {
+      "view": "stand",
+      "items": [
+        "campfire",
+        "brazier",
+        "reeds",
+        "charms"
+      ]
+    },
+    "road_c": {
+      "view": "stand",
+      "items": [
+        "gallows",
+        "milestone",
+        "cairn",
+        "grave_mound"
+      ]
+    },
+    "road_d": {
+      "view": "stand",
+      "items": [
+        "signpost_broken",
+        "wall_low",
+        "bridge_parapet",
+        "sack"
+      ]
+    },
+    "town_a": {
+      "view": "stand",
+      "items": [
+        "notice_board",
+        "stocks",
+        "stocks_broken",
+        "handcart"
+      ]
+    },
+    "town_b": {
+      "view": "stand",
+      "items": [
+        "horse",
+        "fence",
+        "sword_leaning",
+        "satchel"
+      ]
+    },
+    "scenery_tall": {
+      "view": "stand",
+      "items": [
+        "statue_knight",
+        "pine_clawed",
+        "ribbon_tree",
+        "wicker_sun"
+      ]
+    },
+    "tent": {
+      "view": "stand",
+      "items": [
+        "tent"
+      ],
+      "aspect": "4:3"
+    },
+    "barn_collapsed": {
+      "view": "stand",
+      "items": [
+        "barn_collapsed"
+      ],
+      "aspect": "4:3"
+    },
+    "town_wall_a": {
+      "view": "wall",
+      "items": [
+        "door_barred",
+        "shop_window",
+        "hanging_sign",
+        "notice_papers"
+      ]
+    },
+    "town_wall_b": {
+      "view": "wall",
+      "items": [
+        "window_shuttered",
+        "window_lit",
+        "boarded_window",
+        "claw_marks"
+      ]
+    },
+    "town_wall_c": {
+      "view": "wall",
+      "items": [
+        "church_doors",
+        "manor_door",
+        "gate_wooden",
+        "tally_board"
+      ]
+    },
+    "town_wall_d": {
+      "view": "wall",
+      "items": [
+        "door_clawed",
+        "curtain",
+        "door_house",
+        "fence_iron"
+      ]
+    },
+    "floor_b": {
+      "view": "floor",
+      "items": [
+        "grave_open",
+        "rune_circle",
+        "scorch",
+        "drag_marks"
+      ]
+    },
+    "floor_c": {
+      "view": "floor",
+      "items": [
+        "jetty",
+        "puddle",
+        "straw",
+        "leaves"
+      ]
+    },
+    "fire_camp": {
+      "view": "stand",
+      "items": [
+        "flame",
+        "torch",
+        "vardo",
+        "hay_bale"
+      ]
+    }
+  },
+  "props": {
+    "clock_standing": {
+      "height": 2.0
+    },
+    "armor_stand": {
+      "height": 1.6
+    },
+    "harpsichord": {
+      "height": 1.0
+    },
+    "chest_iron": {
+      "height": 0.7
+    },
+    "table_set": {
+      "height": 0.95,
+      "subject": "a long dark wooden dining table laid for supper with pewter plates, goblets and a lit silver candelabra in the middle"
+    },
+    "coats": {
+      "height": 1.7,
+      "subject": "a wooden coat stand hung with old dark coats, a cloak and a hat"
+    },
+    "cabinet_glass": {
+      "height": 1.8,
+      "subject": "a tall glass-fronted hunting cabinet in dark wood holding crossbows and hunting spears"
+    },
+    "sideboard": {
+      "height": 1.1,
+      "subject": "a carved dark wooden sideboard with drawers and a tarnished silver candelabra on top"
+    },
+    "shelves": {
+      "height": 1.8,
+      "subject": "a tall free-standing wooden shelf unit stacked with jars, sacks and small boxes"
+    },
+    "stair_riser": {
+      "height": 1.2,
+      "subject": "a short flight of creaky dark wooden stairs going up, with a plain banister"
+    },
+    "oil_lamp": {
+      "height": 1.1,
+      "subject": "a brass oil lamp burning with a warm flame on a small round wooden side table"
+    },
+    "book_shelf": {
+      "height": 1.9,
+      "subject": "a tall dark wooden bookcase packed with old leather-bound books"
+    },
+    "bird_case": {
+      "height": 1.5,
+      "subject": "a glass display case of stuffed birds (an owl, a crow, small songbirds) on a dark wooden stand"
+    },
+    "desk": {
+      "height": 1.1,
+      "subject": "a dark wooden writing desk with scattered papers, an inkwell with a quill and a candle stub"
+    },
+    "footlocker": {
+      "height": 0.5,
+      "subject": "a plain battered wooden footlocker with iron corners and a hasp"
+    },
+    "bed_canopy": {
+      "height": 2.0,
+      "saturate": 1.2,
+      "subject": "a four-poster canopy bed of dark carved wood with deep red velvet drapes and pillows"
+    },
+    "dressing_table": {
+      "height": 1.4,
+      "subject": "a dark wooden dressing table with an oval mirror, a hairbrush and small perfume bottles"
+    },
+    "bathtub": {
+      "height": 0.7,
+      "subject": "an old cast-iron clawfoot bathtub, grimy inside"
+    },
+    "crib": {
+      "height": 0.9,
+      "subject": "a small dark wooden baby crib with turned bars and a faded blanket"
+    },
+    "mobile": {
+      "height": 1.6,
+      "subject": "a child's mobile of little tin birds hanging on threads from a tall thin wooden stand"
+    },
+    "wardrobe": {
+      "height": 2.0,
+      "subject": "a tall dark wooden wardrobe with two carved doors and brass handles"
+    },
+    "cabinet_small": {
+      "height": 1.0,
+      "subject": "a small dark wooden cabinet on short legs with a little mirror set into its door"
+    },
+    "chest_painted": {
+      "height": 0.6,
+      "subject": "a small wooden chest painted with faded red and blue flowers"
+    },
+    "bed_small": {
+      "height": 0.8,
+      "subject": "a narrow iron-framed bed with a thin mattress, a flat pillow and a grey blanket"
+    },
+    "sheeted_furniture": {
+      "height": 1.2,
+      "subject": "a heap of old furniture (an armchair and a cabinet) covered by dusty grey-blue dust sheets"
+    },
+    "toy_chest": {
+      "height": 0.7,
+      "subject": "a wooden toy chest with its lid open and old toys spilling out: a rag doll, wooden blocks and a tin soldier"
+    },
+    "dollhouse": {
+      "height": 1.0,
+      "subject": "a dollhouse shaped like a tall narrow gothic townhouse with dark shutters, on a low table"
+    },
+    "rocking_horse": {
+      "height": 0.8,
+      "subject": "a wooden rocking horse with chipped paint and a frayed mane"
+    },
+    "trunk": {
+      "height": 0.6,
+      "subject": "an old travel trunk with leather straps and brass corners"
+    },
+    "crypt": {
+      "height": 1.0,
+      "subject": "a large grey stone sarcophagus with a carved lid showing a sleeping figure"
+    },
+    "crypt_small": {
+      "height": 0.7,
+      "subject": "a small child-sized grey stone sarcophagus with a plain carved lid"
+    },
+    "bones": {
+      "height": 0.4,
+      "subject": "a heap of gnawed bones and a cracked skull"
+    },
+    "strongbox": {
+      "height": 0.4,
+      "subject": "a small heavy iron strongbox with rivets and a keyhole"
+    },
+    "altar_stone": {
+      "height": 1.0,
+      "saturate": 1.2,
+      "subject": "a rough grey stone altar block stained with dark red blood"
+    },
+    "refuse_mound": {
+      "height": 0.6,
+      "subject": "a heap of rotting refuse: rags, broken crockery, bones and dark slime"
+    },
+    "chest": {
+      "height": 0.6,
+      "subject": "a plain wooden chest with dark iron bands and a latch"
+    },
+    "lectern": {
+      "height": 1.3,
+      "subject": "a dark wooden lectern holding a big open old book"
+    },
+    "letters_table": {
+      "height": 0.8,
+      "subject": "a small wooden side table with a bundle of old letters tied with ribbon and a candle stub"
+    },
+    "jewel_box": {
+      "height": 0.8,
+      "subject": "a small round wooden side table with an ornate little jewel box on it, its lid open"
+    },
+    "well_stone": {
+      "height": 1.2,
+      "subject": "an old round stone well with a wooden crank, a rope and a bucket, without a roof"
+    },
+    "signpost": {
+      "height": 2.2,
+      "subject": "a leaning weathered wooden signpost with two blank arrow-shaped boards pointing opposite ways"
+    },
+    "carcass": {
+      "height": 0.5,
+      "subject": "a torn deer carcass lying on its side, ribs showing, dark red wounds"
+    },
+    "shrine_small": {
+      "height": 1.8,
+      "subject": "a small wooden wayside shrine on a post, with a little peaked roof, a carved sun symbol inside and melted candle stubs"
+    },
+    "statue_head": {
+      "height": 0.45,
+      "subject": "two broken grey stone statue heads in helmets lying in a tuft of weeds"
+    },
+    "crow_barrel": {
+      "height": 1.1,
+      "subject": "a black crow perched on top of an old wooden barrel"
+    },
+    "cart_broken": {
+      "height": 1.2,
+      "subject": "a broken old wooden farm cart tipped on its side with one wheel missing"
+    },
+    "bramble_a": {
+      "height": 0.55,
+      "subject": "a low tangled bramble bush with dark thorny stems and a few dark leaves"
+    },
+    "bramble_b": {
+      "height": 0.5,
+      "subject": "a clump of dead grey-brown thorny brambles and dry weeds"
+    },
+    "boulder": {
+      "height": 0.8,
+      "subject": "a rounded grey boulder with patches of dark moss"
+    },
+    "stump": {
+      "height": 0.6,
+      "subject": "an old rotting tree stump with gnarled roots"
+    },
+    "log": {
+      "height": 0.5,
+      "subject": "a fallen mossy log lying on its side"
+    },
+    "woodpile": {
+      "height": 0.8,
+      "subject": "a neatly stacked pile of chopped firewood logs"
+    },
+    "gate_pillar": {
+      "height": 4.2,
+      "subject": "a tall square grey stone gate pillar, weathered and cracked, with a headless stone statue of an armoured knight holding a sword standing on top of it"
+    },
+    "fog_bank": {
+      "height": 4.5,
+      "subject": "a towering wall of thick grey-violet mist: big rounded cartoon cloud lobes billowing upward, opaque and dense, wider than it is tall"
+    },
+    "cottage": {
+      "height": 3.4,
+      "subject": "a small old Barovian cottage of cracked plaster and dark timber with a steep sagging thatched roof, a stone chimney, a door, and shuttered windows with a thin warm candle glow leaking between the shutters"
+    },
+    "crest": {
+      "height": 0.6,
+      "subject": "a carved dark wooden coat-of-arms shield showing a windmill, with carved leaves around it"
+    },
+    "painting": {
+      "height": 0.75,
+      "subject": "a portrait painting in an ornate gilt frame of a stern noble family: a father, a mother and two small children"
+    },
+    "trophy_wolf": {
+      "height": 0.5,
+      "subject": "two snarling grey wolf heads mounted on dark wooden plaques side by side"
+    },
+    "tapestry": {
+      "height": 0.95,
+      "saturate": 1.2,
+      "subject": "a long hanging tapestry in faded reds and greens showing a hunt: riders, hounds and a stag"
+    },
+    "fireplace": {
+      "height": 1.05,
+      "subject": "a stone fireplace with a dark wooden mantel and low glowing orange embers in the hearth"
+    },
+    "stove": {
+      "height": 1.0,
+      "subject": "an old black cast-iron kitchen stove with a stove pipe, pots on top"
+    },
+    "dumbwaiter": {
+      "height": 0.6,
+      "subject": "a small square wooden dumbwaiter hatch set in the wall, its little door open, a rope pulley inside"
+    },
+    "jars": {
+      "width": 0.9,
+      "subject": "two wooden wall shelves lined with sealed glass jars of pickles, preserves and dried herbs"
+    },
+    "brick_wall": {
+      "height": 1.1,
+      "subject": "a rectangular doorway in a dark wooden frame that has been bricked up with rough red-brown bricks and mortar"
+    },
+    "window_tall": {
+      "height": 1.05,
+      "subject": "a tall narrow gothic arched window with dark leaded panes of deep blue glass and pale moonlight"
+    },
+    "painting_row": {
+      "width": 0.95,
+      "subject": "three small ancestor portraits in gilt frames hung side by side in a row: a stern old man, a pale woman and a young man"
+    },
+    "clock_tall": {
+      "height": 1.1,
+      "subject": "a tall grandfather clock in dark carved walnut with a pale clock face and a brass pendulum"
+    },
+    "uniforms": {
+      "height": 0.9,
+      "subject": "a row of servants' black and white uniforms hanging from wooden wall pegs"
+    },
+    "mirror": {
+      "height": 0.6,
+      "subject": "an oval wall mirror in an ornate gilt frame, its glass dark grey-blue and cracked"
+    },
+    "plaster_seam": {
+      "height": 0.8,
+      "subject": "a patch of cracked pale plaster with a dark vertical seam and crumbled edges"
+    },
+    "drawings": {
+      "height": 0.6,
+      "subject": "a cluster of children's crayon drawings on pinned scraps of paper: a house, a family of stick figures and a tall black figure, no words"
+    },
+    "robe_pegs": {
+      "height": 0.9,
+      "subject": "a row of black hooded cultist robes hanging from iron wall pegs"
+    },
+    "shelves_wall": {
+      "height": 0.9,
+      "subject": "dark wooden wall shelves holding keepsakes: small skulls, a silver locket, candles, a doll and trinkets"
+    },
+    "winch": {
+      "height": 0.8,
+      "subject": "a heavy wooden winch with a big crank handle and an iron chain wound around its drum, bolted to a wall"
+    },
+    "relief": {
+      "width": 0.95,
+      "subject": "a carved grey stone wall relief of hooded cultists kneeling around an altar"
+    },
+    "door_wood": {
+      "height": 1.15,
+      "subject": "a rectangular dark oak plank door with black iron strap hinges and a ring handle"
+    },
+    "door_double": {
+      "height": 1.15,
+      "subject": "a pair of tall rectangular panelled dark wooden double doors with brass handles, closed"
+    },
+    "door_carved": {
+      "height": 1.15,
+      "subject": "a heavy rectangular dark wooden door with a large open hand carved into its middle"
+    },
+    "arch_carved": {
+      "height": 1.1,
+      "subject": "a grey stone archway carved with skulls and twisting vines, its opening filled with dark stone blocks"
+    },
+    "gate_iron": {
+      "height": 2.4,
+      "subject": "a pair of tall closed black wrought-iron gates with spiked tops and scrolled ironwork, with clear gaps between the bars"
+    },
+    "portcullis": {
+      "height": 1.15,
+      "subject": "a rusty iron portcullis: a grid of thick iron bars with spikes along the bottom, clear gaps between the bars"
+    },
+    "crypt_gate": {
+      "height": 1.15,
+      "subject": "a rectangular iron-barred crypt gate with a heavy lock, clear gaps between the bars"
+    },
+    "door_bookcase": {
+      "height": 1.15,
+      "subject": "a rectangular dark wooden bookcase packed with old books, seen from the front"
+    },
+    "rug_wolf": {
+      "width": 1.6,
+      "mount": "floor",
+      "subject": "a grey wolf-pelt rug spread flat with the wolf's head and four legs"
+    },
+    "stair_down": {
+      "width": 1.0,
+      "mount": "floor",
+      "subject": "a square stairwell with worn grey stone steps going down into darkness"
+    },
+    "bones_water": {
+      "width": 1.0,
+      "mount": "floor",
+      "subject": "old bones and a skull scattered in a pool of shallow dark murky water"
+    },
+    "rubble": {
+      "width": 0.9,
+      "mount": "floor",
+      "subject": "a scatter of broken grey stone rubble and pebbles"
+    },
+    "armchair": {
+      "subject": "a worn high-backed armchair upholstered in faded dark red velvet",
+      "saturate": 1.2,
+      "height": 1.1
+    },
+    "settee": {
+      "subject": "an old carved wooden settee with faded plum cushions",
+      "height": 1.0
+    },
+    "table_chairs": {
+      "subject": "a small round dark wooden table with two high-backed chairs and a candle on it",
+      "height": 1.0
+    },
+    "candelabra": {
+      "subject": "a tall wrought-iron standing candelabra with five lit candles",
+      "height": 1.7
+    },
+    "pew": {
+      "subject": "a plain dark wooden church pew, a long bench with a high back",
+      "height": 0.9
+    },
+    "altar_church": {
+      "subject": "a stone church altar covered with a white-and-gold cloth, two candlesticks and a sun symbol",
+      "saturate": 1.1,
+      "height": 1.1
+    },
+    "coffin": {
+      "subject": "a plain wooden coffin with its lid on, resting on two trestles",
+      "height": 0.8
+    },
+    "rocking_chair": {
+      "subject": "an old wooden rocking chair with a knitted blanket over its arm",
+      "height": 1.1
+    },
+    "bar_counter": {
+      "subject": "a long dark wooden tavern bar counter with tankards and a wine jug on top",
+      "height": 1.1
+    },
+    "shop_counter": {
+      "subject": "a wooden shop counter with a set of brass scales, a ledger and small boxes on it",
+      "height": 1.0
+    },
+    "workbench": {
+      "subject": "a cluttered toymaker's workbench with carving tools, wooden doll heads and puppet limbs",
+      "height": 1.1
+    },
+    "puppet_theatre": {
+      "subject": "a small wooden puppet theatre with red curtains and a little gallows on its stage, marionettes hanging",
+      "saturate": 1.2,
+      "height": 1.6
+    },
+    "music_box": {
+      "subject": "a small round side table with an ornate music box on it, a tiny dancer on top",
+      "height": 0.8
+    },
+    "doll": {
+      "subject": "a porcelain doll with red hair in a dark dress sitting on a small wooden stool",
+      "saturate": 1.2,
+      "height": 0.6
+    },
+    "perch": {
+      "subject": "a tall wooden bird perch stand with a crossbar and a little seed cup, no bird",
+      "height": 1.3
+    },
+    "cage_covered": {
+      "subject": "a large iron animal cage on wheels covered by a heavy dark tarpaulin, one corner lifted",
+      "height": 1.2
+    },
+    "campfire": {
+      "subject": "a campfire: a ring of stones around crossed logs and glowing embers",
+      "height": 0.6
+    },
+    "brazier": {
+      "subject": "an iron brazier on three legs full of glowing coals",
+      "height": 1.1
+    },
+    "reeds": {
+      "subject": "a clump of tall marsh reeds and cattails",
+      "height": 0.9
+    },
+    "charms": {
+      "subject": "a wooden stand hung with Vistani charms: bundles of herbs, bones, beads, bells and little mirrors on strings",
+      "height": 1.5
+    },
+    "gallows": {
+      "subject": "a weathered wooden gallows with a crossbeam and a frayed noose hanging from it, on a small platform",
+      "height": 3.0
+    },
+    "milestone": {
+      "subject": "an old weathered stone milestone with a rounded top and moss, no lettering",
+      "height": 0.8
+    },
+    "cairn": {
+      "subject": "a cairn of stacked grey stones with small tokens, ribbons and trinkets left on it",
+      "height": 0.8
+    },
+    "grave_mound": {
+      "subject": "a low mound of earth with a crude wooden stick marker",
+      "height": 0.5
+    },
+    "signpost_broken": {
+      "subject": "a broken wooden signpost snapped halfway, its blank arrow board hanging askew",
+      "height": 1.6
+    },
+    "wall_low": {
+      "subject": "a short section of a tumbled dry-stone field wall, some stones fallen",
+      "height": 0.8
+    },
+    "bridge_parapet": {
+      "subject": "a section of an old stone bridge parapet wall with a carved post at its end",
+      "height": 0.9
+    },
+    "sack": {
+      "subject": "a lumpy burlap sack tied with rope, rain-soaked",
+      "height": 0.6
+    },
+    "notice_board": {
+      "subject": "a wooden notice board on two posts with a little roof, papers and notices pinned to it (no readable text)",
+      "height": 2.0
+    },
+    "stocks": {
+      "subject": "a set of wooden town stocks with holes for the head and hands",
+      "height": 1.1
+    },
+    "stocks_broken": {
+      "subject": "a set of wooden town stocks smashed and split apart",
+      "height": 0.9
+    },
+    "handcart": {
+      "subject": "a small wooden two-wheeled handcart with long handles",
+      "height": 1.0
+    },
+    "horse": {
+      "subject": "a tied brown horse with a dark mane and a saddle blanket, standing side-on",
+      "saturate": 1.1,
+      "height": 1.7
+    },
+    "fence": {
+      "subject": "a short section of a rough wooden split-rail fence",
+      "height": 0.9
+    },
+    "sword_leaning": {
+      "subject": "a longsword in a dark scabbard leaning against a small wooden stool",
+      "height": 1.0
+    },
+    "satchel": {
+      "subject": "a battered leather scholar's satchel with papers sticking out",
+      "height": 0.4
+    },
+    "statue_knight": {
+      "subject": "a weathered grey stone statue of a headless armoured knight standing with both hands resting on a sword point-down, on a small square base",
+      "height": 1.7
+    },
+    "pine_clawed": {
+      "subject": "a tall dark Barovian pine tree whose trunk is scored with deep pale claw marks",
+      "height": 4.5
+    },
+    "ribbon_tree": {
+      "subject": "a gnarled leafless tree hung all over with colourful ribbons and little charms fluttering",
+      "saturate": 1.2,
+      "height": 3.6
+    },
+    "wicker_sun": {
+      "subject": "a huge wicker effigy of a sun: a round woven wicker sun with spiky rays on a tall wooden pole with a stand",
+      "height": 3.5
+    },
+    "tent": {
+      "subject": "a great round Vistani tent of patched, faded purple, red and gold cloth with a peaked top, its front flap closed",
+      "saturate": 1.2,
+      "height": 2.6
+    },
+    "barn_collapsed": {
+      "subject": "a collapsed old wooden barn: a broken sagging roof fallen in, splintered beams and planks",
+      "height": 2.0
+    },
+    "door_barred": {
+      "subject": "a heavy iron-bound rectangular door with a small barred window and a big lock",
+      "height": 1.15
+    },
+    "shop_window": {
+      "subject": "a small-paned wooden shop window with toys, puppets and dolls displayed behind the glass",
+      "height": 0.9
+    },
+    "hanging_sign": {
+      "subject": "a blank wooden shop sign hanging from a curly wrought-iron bracket",
+      "height": 0.7
+    },
+    "notice_papers": {
+      "subject": "a wooden board with notices and papers pinned to it, no readable text",
+      "height": 0.75
+    },
+    "window_shuttered": {
+      "subject": "a small square house window with closed dark wooden shutters",
+      "height": 0.8
+    },
+    "window_lit": {
+      "subject": "a small square house window with its wooden shutters half open and a warm candle glow inside",
+      "height": 0.8
+    },
+    "boarded_window": {
+      "subject": "a small house window boarded over with rough planks nailed across it",
+      "height": 0.8
+    },
+    "claw_marks": {
+      "subject": "deep claw gouges torn into a patch of pale plaster wall",
+      "height": 0.8
+    },
+    "church_doors": {
+      "subject": "an arched pair of heavy wooden church doors in a carved stone surround, with a round sunburst window above",
+      "height": 1.9
+    },
+    "manor_door": {
+      "subject": "a grand pair of dark wooden front doors under a stone portico with two columns and steps",
+      "height": 1.9
+    },
+    "gate_wooden": {
+      "subject": "a pair of tall heavy wooden town gates of thick planks with iron studs and bands, closed",
+      "height": 2.2
+    },
+    "tally_board": {
+      "subject": "a small chalkboard of white chalk tally marks in rows, no words",
+      "height": 0.6
+    },
+    "door_clawed": {
+      "subject": "a rectangular dark wooden front door covered in deep claw scratches and gouges",
+      "height": 1.15
+    },
+    "curtain": {
+      "subject": "a heavy dark red curtain hanging in a doorway from a wooden rod",
+      "saturate": 1.2,
+      "height": 1.15
+    },
+    "door_house": {
+      "subject": "a rustic rectangular cottage door of weathered planks with an iron latch",
+      "height": 1.15
+    },
+    "fence_iron": {
+      "subject": "a section of black wrought-iron fence with spiked railings between two stone posts",
+      "height": 1.1
+    },
+    "grave_open": {
+      "subject": "an open grave: a rectangular pit of dark earth with a heap of dug dirt beside it and a shovel stuck in the heap",
+      "width": 1.0
+    },
+    "rune_circle": {
+      "subject": "a magic circle drawn in pale chalk lines with a hexagram and runes around its rim, the chalk lines only with nothing behind them",
+      "width": 1.4
+    },
+    "scorch": {
+      "subject": "a ragged black scorch mark with a spatter of grey ash and cinders, the mark alone with nothing behind it",
+      "width": 1.0
+    },
+    "drag_marks": {
+      "subject": "two long dark drag furrows of churned mud with a few bootprints beside them, the marks alone with nothing around them",
+      "width": 1.0
+    },
+    "jetty": {
+      "subject": "a short rotten wooden jetty of weathered planks, some missing",
+      "width": 1.0
+    },
+    "puddle": {
+      "subject": "a dark muddy puddle reflecting a little sky",
+      "width": 0.9
+    },
+    "straw": {
+      "subject": "a loose scatter of yellow straw",
+      "width": 0.9
+    },
+    "leaves": {
+      "subject": "a scatter of dead brown and red fallen leaves",
+      "width": 0.9
+    },
+    "flame": {
+      "height": 0.9,
+      "subject": "a bright cartoon campfire flame by itself: tall licking tongues of yellow, orange and red fire with a few sparks, no logs and no ground"
+    },
+    "torch": {
+      "height": 2.0,
+      "subject": "a burning torch on a tall rough wooden pole stuck in the ground, its flame bright orange"
+    },
+    "vardo": {
+      "height": 2.0,
+      "saturate": 1.2,
+      "subject": "a Vistani vardo: a gaily painted barrel-topped wooden caravan wagon in red, green and gold with big spoked wheels, a little door and steps at the back"
+    },
+    "hay_bale": {
+      "height": 0.6,
+      "subject": "a rectangular bale of golden hay tied with twine"
+    }
+  }
+}

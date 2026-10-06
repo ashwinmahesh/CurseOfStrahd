@@ -1,0 +1,322 @@
+{
+  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label.",
+  "container_default": "chest",
+  "models": {
+    "hearth": "fireplace",
+    "window": "window_tall",
+    "bookcase": "book_shelf",
+    "shelf": "shelves",
+    "shelves": {
+      "art": "shelves",
+      "on_wall": "shelves_wall"
+    },
+    "case": "cabinet_glass",
+    "letter": "letters_table",
+    "letters": "letters_table",
+    "papers": "letters_table",
+    "pamphlet": "letters_table",
+    "book": "lectern",
+    "ledger": "lectern",
+    "crow": "crow_barrel",
+    "table_round": "table",
+    "cupboard": "sideboard",
+    "drawer": "desk",
+    "statue_headless": null,
+    "fog_bank": {
+      "art": "fog_bank",
+      "scale": 0.7
+    },
+    "rope": null,
+    "rags": "refuse_mound",
+    "altar": "altar_church",
+    "bar": "bar_counter",
+    "barred_door": "door_barred",
+    "bridge": "bridge_parapet",
+    "cage": "cage_covered",
+    "chair": "rocking_chair",
+    "chairs": "armchair",
+    "church_front": "church_doors",
+    "dais": null,
+    "door": "door_house",
+    "gate": "gate_wooden",
+    "grave": "grave_open",
+    "ledge": null,
+    "manor_front": "manor_door",
+    "notice_board": {
+      "art": "notice_board",
+      "on_wall": "notice_papers"
+    },
+    "palisade": null,
+    "rocks": "boulder",
+    "sign": "hanging_sign",
+    "stairs": "stair_riser",
+    "tree_marked": "pine_clawed",
+    "cart": "handcart",
+    "shutters": "window_shuttered"
+  },
+  "ids": {
+    "edge_cottage_shutters": "cottage",
+    "vistani_wagons": "vardo",
+    "gate_statues": null,
+    "dungeon_well": "well_stone",
+    "library_odd_shelf": "book_shelf",
+    "boarded_houses": "boarded_window",
+    "boarded_windows": "boarded_window",
+    "castle_glimpse": null,
+    "ceiling_marks": null,
+    "church_facade": null,
+    "clawed_front_door": "door_clawed",
+    "collapsed_barn": "barn_collapsed",
+    "death_house_facade": null,
+    "door_locks": "door_barred",
+    "drag_marks": "drag_marks",
+    "ireena_sword": "sword_leaning",
+    "lake_view": null,
+    "mansion_claw_marks": "claw_marks",
+    "mary_window": "window_lit",
+    "road_east_mists": {
+      "art": "fog_bank",
+      "scale": 0.45
+    },
+    "tavern_tally_board": "tally_board",
+    "undercroft_bones": "bones",
+    "undercroft_door_gouges": "claw_marks",
+    "undercroft_niches": "crypt_small",
+    "luvash_wagon_door": null,
+    "arrigal_wagon_door": null,
+    "rictavio_wagon_outside": null,
+    "festival_dais": null,
+    "mansion_front_door": null,
+    "st_andrals_facade": null,
+    "mansion_facade": null,
+    "wachterhaus_facade": null,
+    "tser_falls_overlook": null
+  },
+  "low_cover": {
+    "wild": [
+      "boulder",
+      "stump",
+      "log",
+      "bramble_a",
+      "woodpile"
+    ],
+    "town": [
+      "crate",
+      "barrel",
+      "barrel",
+      "wagon",
+      "market_stall",
+      "woodpile"
+    ],
+    "manor": [
+      "table",
+      "armchair",
+      "table_chairs",
+      "settee",
+      "candelabra"
+    ],
+    "manor_run": [
+      "table"
+    ],
+    "manor_wall_run": [
+      "book_shelf",
+      "sideboard"
+    ],
+    "townhouse_run": [
+      "table"
+    ],
+    "house_run": [
+      "table"
+    ],
+    "church": [
+      "pew"
+    ],
+    "church_run": [
+      "pew"
+    ],
+    "tavern_run": [
+      "bar_counter"
+    ],
+    "inn_run": [
+      "bar_counter"
+    ],
+    "shop_run": [
+      "shop_counter"
+    ],
+    "shop_wall_run": [
+      "shelves"
+    ],
+    "townhouse": [
+      "table_chairs",
+      "armchair",
+      "book_shelf",
+      "sideboard"
+    ],
+    "house": [
+      "table",
+      "bed",
+      "barrel",
+      "table"
+    ],
+    "attic": [
+      "crate",
+      "trunk",
+      "sheeted_furniture",
+      "bed_small",
+      "barrel"
+    ],
+    "tavern": [
+      "table_chairs",
+      "table_chairs",
+      "barrel",
+      "table"
+    ],
+    "inn": [
+      "table_chairs",
+      "table",
+      "barrel",
+      "table_chairs"
+    ],
+    "shop": [
+      "crate",
+      "barrel",
+      "shop_counter",
+      "crate"
+    ],
+    "tent": [
+      "crate",
+      "barrel",
+      "table",
+      "crate"
+    ],
+    "dungeon": [
+      "boulder",
+      "crypt_small",
+      "barrel",
+      "crate"
+    ],
+    "town_run": [
+      "fence"
+    ]
+  },
+  "difficult": {
+    "wild": [
+      "bramble_a",
+      "bramble_b"
+    ],
+    "dungeon": [
+      "rubble"
+    ],
+    "interior": [
+      "rubble"
+    ]
+  },
+  "doors": {
+    "default": "door_wood",
+    "rules": [
+      [
+        [
+          "curtain"
+        ],
+        "curtain"
+      ],
+      [
+        [
+          "portcullis"
+        ],
+        "portcullis"
+      ],
+      [
+        [
+          "crypt gate",
+          "crypt_gate"
+        ],
+        "crypt_gate"
+      ],
+      [
+        [
+          "gate"
+        ],
+        "gate_iron"
+      ],
+      [
+        [
+          "doors"
+        ],
+        "door_double"
+      ],
+      [
+        [
+          "hand"
+        ],
+        "door_carved"
+      ],
+      [
+        [
+          "bookcase"
+        ],
+        "door_bookcase"
+      ]
+    ],
+    "ids": {
+      "barovia_gates": {
+        "art": "gate_iron",
+        "pillars": true,
+        "statue": "statue_knight",
+        "height": 2.1,
+        "width": 1.16
+      }
+    }
+  },
+  "exits": {
+    "rules": [
+      [
+        [
+          "stairs down",
+          "stair down",
+          "down to",
+          "secret stair"
+        ],
+        "stair_down"
+      ],
+      [
+        [
+          "stairs up",
+          "stair up",
+          "up to",
+          "stairs",
+          "stair"
+        ],
+        "stair_riser"
+      ],
+      [
+        [
+          "flap"
+        ],
+        "curtain"
+      ],
+      [
+        [
+          "window"
+        ],
+        null
+      ],
+      [
+        [
+          "church"
+        ],
+        "church_doors"
+      ],
+      [
+        [
+          "mansion",
+          "wachterhaus",
+          "death house"
+        ],
+        "manor_door"
+      ]
+    ],
+    "outdoor_default": "door_house",
+    "indoor_default": "door_wood"
+  }
+}
