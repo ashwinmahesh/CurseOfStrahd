@@ -289,6 +289,268 @@ func _passives(c: Combatant, out: Array[Dictionary]) -> void:
 		out.append(p)
 
 
+# --- Full details (right-click → Info) -------------------------------------------------------------
+
+## Weapon properties and mastery properties in our own words (2024 PHB "Equipment").
+const PROPERTY_TEXT := {
+	"ammunition": "Needs ammunition, used up with each attack.",
+	"finesse": "Use Strength or Dexterity for the attack and damage, whichever is higher.",
+	"heavy": "Disadvantage on attacks if your Strength (melee) or Dexterity (ranged) is under 13.",
+	"light": "After attacking with it in the Attack action, you can attack with a different Light weapon as a Bonus Action (no ability modifier to that damage unless negative).",
+	"loading": "Only one shot per action, Bonus Action or Reaction, whatever your number of attacks.",
+	"range": "Two ranges: normal, and long (with Disadvantage). Can't attack beyond the long range.",
+	"reach": "Adds 5 ft to your reach for attacks and Opportunity Attacks.",
+	"thrown": "Can be thrown for a ranged attack with the same ability as a melee attack; it leaves your hand.",
+	"two_handed": "Needs two hands to attack with.",
+	"versatile": "Can be used with two hands for the larger damage die.",
+}
+const MASTERY_TEXT := {
+	"cleave": "On a melee hit, make one extra attack against a second creature within 5 ft of the first (once per turn; no ability modifier to its damage).",
+	"graze": "On a miss, the target still takes damage equal to your ability modifier.",
+	"nick": "The Light extra attack is part of the Attack action instead of a Bonus Action (once per turn).",
+	"push": "On a hit, push a Large or smaller target 10 ft straight away from you.",
+	"sap": "On a hit, the target has Disadvantage on its next attack roll before your next turn.",
+	"slow": "On a hit that deals damage, the target's Speed drops by 10 ft until the start of your next turn.",
+	"topple": "On a hit, the target makes a Constitution save (8 + ability modifier + Proficiency) or falls Prone.",
+	"vex": "On a hit that deals damage, you have Advantage on your next attack against that target before the end of your next turn.",
+}
+## The standard actions in our own words (2024 PHB "Actions").
+const ACTION_TEXT := {
+	"dash": "For the rest of the turn, gain extra movement equal to your Speed.",
+	"disengage": "Your movement doesn't provoke Opportunity Attacks for the rest of the turn.",
+	"dodge": "Until the start of your next turn, attack rolls against you have Disadvantage if you can see the attacker, and you have Advantage on Dexterity saves. Lost if you're Incapacitated or your Speed is 0.",
+	"help": "Distract an enemy within 5 ft: the next attack roll one of your allies makes against it before your next turn has Advantage.",
+	"hide": "A DC 15 Dexterity (Stealth) check while out of every enemy's sight (Three-Quarters or Total Cover). On a success you're Invisible until you attack, cast a spell aloud, or an enemy finds you.",
+	"search": "A Wisdom (Perception) check to find hidden creatures; it beats their Stealth total to find them.",
+	"study": "An Intelligence check (Arcana, History, Nature or Religion by the creature's type) to recall what a creature is: its defenses and traits.",
+	"ready": "Hold an attack: when an enemy you can see comes within reach, you make it with your Reaction. Lasts until the start of your next turn.",
+	"stabilize": "Help a dying creature within 5 ft: a DC 10 Wisdom (Medicine) check makes it Stable.",
+	"healers_kit": "Spend one use of the kit to make a dying creature within 5 ft Stable, no check needed.",
+	"grapple": "One of your attacks: the target (no more than one size larger) makes a Strength or Dexterity save against 8 + Str + Proficiency or is Grappled (Speed 0).",
+	"shove_prone": "One of your attacks: the target makes a Strength or Dexterity save or falls Prone.",
+	"shove_push": "One of your attacks: the target makes a Strength or Dexterity save or is pushed 5 ft away.",
+	"escape": "A Strength (Athletics) or Dexterity (Acrobatics) check against the grapple's DC to break free.",
+	"stand": "Standing up costs half your Speed.",
+	"drop_prone": "Drop Prone for free: ranged attacks against you have Disadvantage, melee attacks from within 5 ft have Advantage.",
+	"influence": "Try to change a creature's attitude with words. Nothing here will listen.",
+	"utilize": "Use an object, such as a lever or a potion.",
+}
+
+
+## Everything about a hotbar entry for the Info panel: {title, lines}.
+func details(c: Combatant, action: Dictionary) -> Dictionary:
+	var kind := str(action["kind"])
+	if kind in ["attack", "offhand"]:
+		return _weapon_details(c, action)
+	if kind == "spell":
+		return _spell_details(c, action)
+	var lines: Array[String] = []
+	var id := str(action["id"])
+	var feature := _feature_for(c, id)
+	var cost := str(action["cost"])
+	lines.append("Costs: %s" % _cost_text(cost))
+	if not feature.is_empty():
+		lines.append("From: %s" % feature.get("source", ""))
+		if str(feature.get("summary", "")) != "":
+			lines.append(str(feature["summary"]))
+		if str(feature.get("text", "")) != "":
+			lines.append(str(feature["text"]))
+	elif ACTION_TEXT.has(id):
+		lines.append(str(ACTION_TEXT[id]))
+	elif str(action.get("help", "")) != "":
+		lines.append(str(action["help"]))
+	if str(action["sub"]) != "":
+		lines.append("Now: %s" % action["sub"])
+	if not bool(action["legal"]):
+		lines.append("Can't use it now: %s" % action["reason"])
+	return {"title": str(action["label"]), "lines": lines}
+
+
+func _cost_text(cost: String) -> String:
+	match cost:
+		"action":
+			return "an Action"
+		"attack":
+			return "one attack of your Attack action"
+		"bonus":
+			return "a Bonus Action"
+		"reaction":
+			return "a Reaction"
+		"movement":
+			return "movement"
+	return "nothing (free)"
+
+
+## The class or species feature behind a hotbar entry, by id (channel_divinity covers its options).
+func _feature_for(c: Combatant, id: String) -> Dictionary:
+	if not c.creature is Character:
+		return {}
+	var want := id.trim_prefix("passive:")
+	if want.begins_with("cunning_"):
+		want = "cunning_action"
+	elif want in ["divine_spark_heal", "divine_spark_harm", "turn_undead"]:
+		want = "channel_divinity"
+	elif want == "sneak_attack_info":
+		want = "sneak_attack"
+	for f in (c.creature as Character).features:
+		if str(f["id"]) == want:
+			return f
+	return {}
+
+
+func _weapon_details(c: Combatant, action: Dictionary) -> Dictionary:
+	var o := e.option_by_id(c, str(action["option_id"]))
+	var lines: Array[String] = []
+	if o.is_empty():
+		return {"title": str(action["label"]), "lines": lines}
+	var p := o["profile"] as WeaponProfile
+	var item := Compendium.shared().item_data(p.item_id)
+	var w := item.get("weapon", {}) as Dictionary
+	if not w.is_empty():
+		lines.append("%s weapon" % str(w.get("kind", "")).replace("_", " ").capitalize())
+	lines.append("Costs: %s" % _cost_text(str(action["cost"])))
+	lines.append("Attack: %s" % p.attack.describe())
+	var offhand := str(action["kind"]) == "offhand"
+	var bonus := p.damage_bonus.total() if not offhand else mini(0, p.damage_bonus.total())
+	lines.append("Damage: %s%s %s, average %.1f" % [p.damage_dice, ("%+d" % bonus) if bonus != 0 else "",
+		str(p.damage_type).capitalize(), p.average_damage() - (p.damage_bonus.total() - bonus)])
+	if not p.damage_bonus.parts.is_empty():
+		lines.append("Damage bonus: %s%s" % [p.damage_bonus.describe(), " (not added: off-hand attack)" if offhand and p.damage_bonus.total() > 0 else ""])
+	if p.die_minimum > 0:
+		lines.append("Damage dice below %d count as %d (%s)" % [p.die_minimum, p.die_minimum, p.die_minimum_source])
+	if bool(o["melee"]):
+		lines.append("Reach: %d ft" % p.reach)
+	else:
+		lines.append("Range: %d ft, long range %d ft (Disadvantage)" % [p.normal_range, p.long_range])
+	if p.crit_range < 20:
+		lines.append("Critical Hit on a %d-20" % p.crit_range)
+	for prop: Variant in p.properties:
+		var key := str(prop)
+		if PROPERTY_TEXT.has(key):
+			var pname := key.replace("_", "-")
+			lines.append("%s: %s" % [pname.left(1).to_upper() + pname.substr(1), PROPERTY_TEXT[key]])
+	if p.mastery != "":
+		lines.append("Mastery, %s: %s" % [p.mastery.capitalize(), MASTERY_TEXT.get(p.mastery, "")])
+	elif str(w.get("mastery", "")) != "":
+		lines.append("Mastery %s: not one of your weapon masteries" % str(w["mastery"]).capitalize())
+	if p.item_id != "unarmed_strike" and c.creature is Character:
+		lines.append("Carried: %d" % e.item_count(c, p.item_id))
+	for n in p.notes:
+		lines.append(n)
+	if not bool(action["legal"]):
+		lines.append("Can't use it now: %s" % action["reason"])
+	return {"title": p.name, "lines": lines}
+
+
+func _spell_details(c: Combatant, action: Dictionary) -> Dictionary:
+	var sid := str(action["spell_id"])
+	var data := Compendium.shared().spell_data(sid)
+	var lines: Array[String] = []
+	var level := int(data.get("level", 0))
+	var school := str(data.get("school", "")).capitalize()
+	lines.append("%s cantrip" % school if level == 0 else "Level %d %s" % [level, school])
+	var ct := str((data.get("casting_time", {}) as Dictionary).get("unit", "action"))
+	var rng := data.get("range", {}) as Dictionary
+	var range_text := "Self" if str(rng.get("kind", "")) == "self" else ("Touch" if str(rng.get("kind", "")) == "touch" else "%d ft" % int(rng.get("feet", 0)))
+	var area := data.get("area", {}) as Dictionary
+	if not area.is_empty():
+		range_text += " · %d-ft %s" % [int(area["size"]), str(area["shape"]).capitalize()]
+	lines.append("Casting time: %s · Range: %s" % [ct.replace("_", " ").capitalize(), range_text])
+	var comp := data.get("components", {}) as Dictionary
+	var parts: Array[String] = []
+	if bool(comp.get("v", false)):
+		parts.append("V")
+	if bool(comp.get("s", false)):
+		parts.append("S")
+	if comp.has("m"):
+		parts.append("M (%s)" % comp["m"])
+	lines.append("Components: %s" % ", ".join(parts))
+	var dur := data.get("duration", {}) as Dictionary
+	var dur_text := str(dur.get("kind", "instantaneous")).capitalize()
+	if dur.has("amount"):
+		var unit := str(dur["kind"])
+		dur_text = "%d %s" % [int(dur["amount"]), unit.trim_suffix("s") if int(dur["amount"]) == 1 else unit]
+	if bool(dur.get("concentration", false)):
+		dur_text = "Concentration, up to " + dur_text
+	lines.append("Duration: %s" % dur_text)
+	var ch := c.creature as Character
+	var slot := int(action.get("slot", level))
+	var prev := ch.spell_preview(sid, slot)
+	if prev.has("save_dc"):
+		lines.append("%s saving throw, DC %s" % [Creature.ABILITY_NAMES.get(StringName(str(prev.get("save", ""))), ""), (prev["save_dc"] as Breakdown).describe()])
+	if prev.has("attack"):
+		lines.append("Spell attack: %s" % (prev["attack"] as Breakdown).describe())
+	if prev.has("damage_dice"):
+		var db := prev["damage_bonus"] as Breakdown
+		lines.append("Damage: %s %s%s" % [prev["damage_dice"], str(prev.get("damage_type", "")).capitalize(), (" · " + db.describe()) if not db.parts.is_empty() else ""])
+	if prev.has("heal_dice"):
+		lines.append("Healing: %s · %s" % [prev["heal_dice"], (prev["heal_bonus"] as Breakdown).describe()])
+	var up := data.get("upcast", {}) as Dictionary
+	if not up.is_empty():
+		var bits: Array[String] = []
+		if up.has("damage"):
+			bits.append("+%s damage" % up["damage"])
+		if up.has("heal"):
+			bits.append("+%s healing" % up["heal"])
+		if up.has("targets"):
+			bits.append("+%d target" % int(up["targets"]))
+		if up.has("projectiles"):
+			bits.append("+%d dart or ray" % int(up["projectiles"]))
+		if up.has("text"):
+			bits.append(str(up["text"]))
+		lines.append("At higher levels, per slot level above %d: %s" % [level, "; ".join(bits)])
+	for k in ch.known_spells():
+		if str(k["id"]) == sid:
+			var how := str(k["kind"]).capitalize()
+			if str(k["kind"]) == "granted" and ch.resource_left("spell:" + sid) > 0:
+				how = "Free casting (%d left, then with a slot)" % ch.resource_left("spell:" + sid)
+			lines.append("Known from: %s (%s)" % [k.get("source", ""), how])
+			break
+	if level > 0:
+		lines.append("Your slots: %s" % slots_text(c))
+	lines.append(str(data.get("text", data.get("summary", ""))))
+	if not bool(action["legal"]):
+		lines.append("Can't cast it now: %s" % action["reason"])
+	return {"title": str(data.get("name", sid)), "lines": lines}
+
+
+## Spell slots left by level, e.g. "1st 3/4 · 2nd 2/2" ("" for non-casters).
+func slots_text(c: Combatant) -> String:
+	if not c.creature is Character:
+		return ""
+	var ch := c.creature as Character
+	var parts: Array[String] = []
+	var totals := ch.spell_slots()
+	for l in range(1, 10):
+		if totals[l - 1] > 0:
+			parts.append("%s %d/%d" % [_ordinal(l), ch.slots_left(l), totals[l - 1]])
+	return " · ".join(parts)
+
+
+## Slot pips for the hotbar: [{level, left, total}].
+func slot_pips(c: Combatant) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if not c.creature is Character:
+		return out
+	var ch := c.creature as Character
+	var totals := ch.spell_slots()
+	for l in range(1, 10):
+		if totals[l - 1] > 0:
+			out.append({"level": l, "left": ch.slots_left(l), "total": totals[l - 1]})
+	return out
+
+
+static func _ordinal(n: int) -> String:
+	match n:
+		1:
+			return "1st"
+		2:
+			return "2nd"
+		3:
+			return "3rd"
+	return "%dth" % n
+
+
 # --- Doing it -------------------------------------------------------------------------------------
 
 ## Carries out `action` with the chosen targets / point / direction. `slot` upcasts spells (0 = lowest).

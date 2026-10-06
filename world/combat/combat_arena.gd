@@ -82,6 +82,7 @@ func _ready() -> void:
 		slot_level = l
 		_update_hover())
 	hud.radial_picked.connect(_radial)
+	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
 	if e.title != "":
 		e.log.add("turn", e.title, "")
 	if e.intro != "":
@@ -254,7 +255,8 @@ func _answer(use: bool, rule: String) -> void:
 
 # --- Choosing actions -----------------------------------------------------------------------------
 
-func _choose(action: Dictionary) -> void:
+## Starts an action from the hotbar; `level` picks the spell slot (0 = the lowest available).
+func _choose(action: Dictionary, level: int = 0) -> void:
 	var c := _player()
 	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
 		return
@@ -264,17 +266,19 @@ func _choose(action: Dictionary) -> void:
 		hud.banner(str(action["reason"]), 1.4)
 		return
 	_cancel_targeting()
+	slot_level = int(action.get("slot", 0))
+	var levels: Array[int] = []
+	if str(action["kind"]) == "spell":
+		levels = catalog.slot_choices(c, str(action["spell_id"]))
+		if not levels.is_empty():
+			slot_level = level if level in levels else levels[0]
 	if str(action["targeting"]) == "none":
 		_perform(action, [], Vector2.INF, Vector2.ZERO)
 		return
 	selected = action
 	picked = []
 	mode = Mode.TARGET
-	slot_level = int(action.get("slot", 0))
 	if str(action["kind"]) == "spell":
-		var levels := catalog.slot_choices(c, str(action["spell_id"]))
-		if not levels.is_empty():
-			slot_level = levels[0]
 		hud.set_pips(levels, slot_level)
 	_show_target_marks()
 	_update_hover()
@@ -316,6 +320,7 @@ func _perform(action: Dictionary, targets: Array, point: Vector2, dir: Vector2) 
 	overlay.clear_all()
 	hud.hide_tooltip()
 	var r := catalog.perform(c, action, targets, point, dir, slot_level)
+	slot_level = 0
 	selected = {}
 	picked = []
 	hud.set_pips([], 0)

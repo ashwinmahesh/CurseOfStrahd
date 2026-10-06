@@ -13,12 +13,14 @@ signal inspect_requested(combatant_id: String)
 signal death_save_pressed
 signal slot_level_changed(level: int)
 signal radial_picked(choice: String)
+## Right-click → "Cast at level N" on a spell slot.
+signal cast_at_level(action: Dictionary, level: int)
 
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "ember", "reaction": "plum", "free": "slate",
 	"movement": "moon_blue"}
 const SLOT_SIZE := Vector2(132, 50)
 const CONTROLS: Array[String] = [
-	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click cancels.",
+	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
 	"Keyboard: L minimizes or restores the combat log · 1-0 use hotbar slots · Z / X change tab · Enter confirms (casts early with fewer targets) · Esc cancels · Space ends the turn · [ and ] change the spell slot · T jumps to the next target · Tab inspects the next party member.",
 	"Camera: WASD or arrows pan · Q / E rotate · mouse wheel zooms.",
 	"Controller: left stick moves the cursor · A confirms · B cancels · X next target · Y ends the turn · hold LB for the radial menu (right stick picks, release to choose) · LT / RT pick a hotbar slot · RB uses it · d-pad left/right changes the spell slot · View inspects the next party member.",
@@ -67,6 +69,10 @@ var _banner_time := 0.0
 var _confirm: PanelContainer
 var _confirm_text: Label
 var _pips: HBoxContainer
+var _slot_box: VBoxContainer
+var _slot_row: HBoxContainer
+var _menu: PopupMenu
+var _menu_action: Dictionary = {}
 var _death_button: Button
 var radial: RadialMenu
 var _portraits: Dictionary = {}
@@ -105,6 +111,10 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 	radial.offset_top = -radial.custom_minimum_size.y / 2.0
 	radial.picked.connect(func(choice: String) -> void: radial_picked.emit(choice))
 	add_child(radial)
+	_menu = PopupMenu.new()
+	_menu.add_theme_font_size_override("font_size", 16)
+	_menu.id_pressed.connect(_on_menu)
+	add_child(_menu)
 	_controls = _panel("parchment")
 	_controls.anchor_left = 0.5
 	_controls.anchor_right = 0.5
@@ -264,6 +274,12 @@ func _build_hotbar() -> void:
 	_move_label = _label("", 15, "vellum")
 	mv.add_child(_move_label)
 	top.add_child(mv)
+	_slot_box = VBoxContainer.new()
+	_slot_box.add_child(_label("Spell slots", 14, "parchment"))
+	_slot_row = HBoxContainer.new()
+	_slot_row.add_theme_constant_override("separation", 10)
+	_slot_box.add_child(_slot_row)
+	top.add_child(_slot_box)
 	_pips = HBoxContainer.new()
 	top.add_child(_pips)
 	_turn_note = _label("", 16, "flame")
@@ -553,6 +569,7 @@ func _refresh_hotbar() -> void:
 		_turn_note.text = ("%d attacks per Attack action" % per) if per > 1 else ""
 		if c.attacks_left > 0:
 			_turn_note.text = "%d attack%s left in this Attack action" % [c.attacks_left, "" if c.attacks_left == 1 else "s"]
+	_refresh_slot_pips(c)
 	_end_turn.disabled = not mine or e.pending != null
 	_death_button.visible = mine and e.needs_death_save(c)
 	# Tabs.
@@ -602,13 +619,70 @@ func _refresh_hotbar() -> void:
 		var reason := str(a["reason"]) if not bool(a["legal"]) else ""
 		if not mine and reason == "":
 			reason = "Not %s's turn" % c.name()
-		b.tooltip_text = "%s (%s)%s%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else ""]
+		b.tooltip_text = "%s (%s)%s%s\nRight-click for more" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else ""]
 		var act := a
 		b.pressed.connect(func() -> void: action_chosen.emit(act))
+		b.gui_input.connect(func(ev: InputEvent) -> void:
+			if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
+				open_slot_menu(act, b.get_screen_position() + (ev as InputEventMouseButton).position))
 		_slots.add_child(b)
 		_slot_buttons.append(b)
 		_slot_actions.append(a)
 		i += 1
+
+
+## Spell slots left by level, as filled and empty pips ("1st ●●●○").
+func _refresh_slot_pips(c: Combatant) -> void:
+	for ch in _slot_row.get_children():
+		ch.queue_free()
+	var pips := catalog.slot_pips(c)
+	_slot_box.visible = not pips.is_empty()
+	for p in pips:
+		var left := int(p["left"])
+		var total := int(p["total"])
+		var l := _label("%s %s%s" % [ActionCatalog._ordinal(int(p["level"])), "●".repeat(left), "○".repeat(total - left)], 16,
+			"lilac" if left > 0 else "bone_dark")
+		l.tooltip_text = "Level %d spell slots: %d of %d left" % [int(p["level"]), left, total]
+		l.mouse_filter = Control.MOUSE_FILTER_PASS
+		_slot_row.add_child(l)
+
+
+## The right-click menu on a hotbar slot: Info, Use, and for spells each slot level it can be cast with.
+func open_slot_menu(action: Dictionary, at: Vector2) -> void:
+	_menu_action = action
+	_menu.clear()
+	_menu.add_item("Info", 0)
+	var mine := shown != null and e.current() == shown and e.state == Encounter.State.ACTIVE
+	_menu.add_item("Use", 1)
+	_menu.set_item_disabled(_menu.get_item_index(1), not (bool(action["legal"]) and mine))
+	if str(action["kind"]) == "spell" and shown != null:
+		var levels := catalog.slot_choices(shown, str(action["spell_id"]))
+		if not levels.is_empty():
+			_menu.add_separator("Casting level")
+			var ch := shown.creature as Character
+			for l in levels:
+				_menu.add_item("Cast at level %d (%d slot%s left)" % [l, ch.slots_left(l), "" if ch.slots_left(l) == 1 else "s"], 100 + l)
+				_menu.set_item_disabled(_menu.get_item_index(100 + l), not (bool(action["legal"]) and mine))
+	_menu.reset_size()
+	_menu.position = Vector2i(at)
+	_menu.popup()
+
+
+func _on_menu(id: int) -> void:
+	var action := _menu_action
+	if action.is_empty() or shown == null:
+		return
+	if id == 0:
+		var d := catalog.details(shown, action)
+		show_details(str(d["title"]), d["lines"] as Array)
+	elif id == 1:
+		action_chosen.emit(action)
+	elif id >= 100:
+		cast_at_level.emit(action, id - 100)
+
+
+func menu_open() -> bool:
+	return _menu.visible
 
 
 static func _cost_word(cost: String) -> String:
@@ -717,6 +791,7 @@ func show_details(title: String, lines: Array) -> void:
 		lab.custom_minimum_size = Vector2(620, 0)
 		_details_box.add_child(lab)
 	_details_box.add_child(_label("(click anywhere or press Esc to close)", 12, "parchment"))
+	_details.reset_size()
 	_details.visible = true
 
 

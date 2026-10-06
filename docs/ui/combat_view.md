@@ -112,6 +112,11 @@ template), `_5_end.png` (the end of a fight). Where the build differs from the w
 
 - **Combat log** minimizes to its title bar (the – button or L), which then shows the latest line (owner request).
 - **Damage and healing numbers** stay over the creature for about 2.5 seconds (owner request).
+- **Right-click any hotbar slot** (weapon, spell, ability, action) for a menu: Info (the full details: attack and
+  damage breakdowns, properties and mastery, or a spell's level, school, casting time, range, components, duration,
+  save DC or attack bonus, dice, upcasting and its text), Use, and for spells "Cast at level N" for each slot level
+  available (owner request).
+- **Spell slots** left by level show on the hotbar as pips ("1st ●●●○ 2nd ●●") for casters (owner request).
 
 Owner sign-off on the built screen: **approved 2026-10-06** with the changes above (P2-09).
 

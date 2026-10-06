@@ -25,7 +25,7 @@ func _enc() -> Encounter:
 
 ## Waits (answering prompts with `use`) until a party member can act, or the fight ends.
 func _until_player_turn(use: bool = false) -> void:
-	for i in 1200:
+	for i in 20000:
 		var e := _enc()
 		var hud := arena.get("hud") as CombatHud
 		if e.state != Encounter.State.ACTIVE:
@@ -116,4 +116,35 @@ func test_combat_log_minimizes_and_restores() -> void:
 	hud.toggle_log()
 	assert_eq(hud._log.visible, true if not was else false)
 	CombatHud.log_minimized = false
+
+
+func test_right_click_menu_info_and_casting_level() -> void:
+	var e := _enc()
+	var hud := arena.get("hud") as CombatHud
+	var catalog := arena.get("catalog") as ActionCatalog
+	# Play until it's Silvain's turn (enemies act on their own; party turns are ended).
+	for i in 40:
+		await _until_player_turn()
+		if e.state != Encounter.State.ACTIVE:
+			return
+		var c := e.current()
+		if not c.is_player_controlled():
+			continue
+		if (c.creature as Character).class_level_of("wizard") > 0:
+			break
+		arena.set("_confirmed_end", true)
+		arena.call("_end_turn")
+	var s := e.current()
+	hud.shown = s
+	var mm := catalog.find(s, "spell:magic_missile")
+	hud.open_slot_menu(mm, Vector2(400, 400))
+	assert_true(hud.menu_open())
+	hud._on_menu(0)
+	assert_true(hud._details.visible, "Info opens the details panel")
+	hud.hide_details()
+	hud._menu.hide()
+	hud._on_menu(102)
+	await _frames(2)
+	assert_eq(int(arena.get("slot_level")), 2, "cast at level 2 from the menu")
+	assert_eq(str((arena.get("selected") as Dictionary).get("spell_id", "")), "magic_missile")
 
