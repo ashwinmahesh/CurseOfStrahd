@@ -27,6 +27,12 @@ func original(c: Combatant) -> Creature:
 	return (originals[c.id] as Dictionary)["creature"] as Creature if originals.has(c.id) else c.creature
 
 
+## Shapechange keeps the caster's spellcasting (Wild Shape, Polymorph and the rest don't).
+func keeps_spells(c: Combatant) -> bool:
+	return originals.has(c.id) and str((originals[c.id] as Dictionary).get("label", "")) == "Shapechange" \
+		and (originals[c.id] as Dictionary)["creature"] is Character
+
+
 ## Beasts in the bestiary a creature could become: Challenge Rating at most `max_cr` (swarms excluded).
 static func beast_forms(max_cr: float) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
@@ -96,6 +102,9 @@ func revert(c: Combatant, why: String) -> void:
 	orig.hp = clampi(shape.hp, 0, orig.max_hp())
 	if orig.concentration != null and orig.concentration.ended:
 		orig.concentration = null
+	# A spell begun in the shape (Shapechange's caster can cast) keeps its Concentration after the change back.
+	if shape.concentration != null and not shape.concentration.ended and shape.concentration != orig.concentration:
+		orig.concentration = shape.concentration
 	c.creature = orig
 	c.ai_profile = StringName(str(info["ai_profile"]))
 	c.size_cells = CombatGrid.size_cells_for(orig.size)

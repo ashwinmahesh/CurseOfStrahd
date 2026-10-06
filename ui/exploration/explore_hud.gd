@@ -322,6 +322,11 @@ func narrate(text: String, portrait: String = DialogueRunner.NARRATOR_PORTRAIT) 
 	_narr_time = maxf(_narr_time, VoiceOver.say(VoiceOver.NARRATOR, text) + 1.0)
 
 
+## Keeps the Narrator's box up while a voice is still speaking (ADR 0013).
+func hold_narration(seconds: float) -> void:
+	_narr_time = maxf(_narr_time, seconds + 1.0)
+
+
 func narration_showing() -> bool:
 	return (get_node("NarratorBox") as PanelContainer).visible
 

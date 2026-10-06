@@ -66,6 +66,7 @@ func prune() -> void:
 	for o: FieldObject in objects.duplicate():
 		if o.expired():
 			objects.erase(o)
+			spells().specials.mid.remove_hand(o)
 			enc().events.append({"type": "object_gone", "id": o.id})
 			enc().log.add("info", "%s ends" % o.name, o.caster_id)
 			gone = true
@@ -163,6 +164,7 @@ func on_moved(c: Combatant, from: Vector2i) -> void:
 ## An object moved or an area was moved onto creatures (Cloud of Daggers teleported, Flaming Sphere rolled).
 func moved_object(o: FieldObject, r: CombatResult) -> void:
 	enc().events.append({"type": "object", "id": o.id, "kind": FieldObject.kind_name(o.kind), "cell": o.cell})
+	spells().specials.mid.sync_hand(o)
 	if o.has_trigger("moved_into"):
 		for t in _inside(o):
 			_affect(o, t, "moved_into", r, {})

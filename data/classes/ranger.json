@@ -115,7 +115,8 @@
     "focus": "druidic",
     "prepared_column": "prepared",
     "ritual": "prepared",
-    "swap_prepared": "long_rest"
+    "swap_prepared": "long_rest",
+    "swap_prepared_max": 1
   },
   "subclass_level": 3,
   "subclass_feature_levels": [
@@ -252,7 +253,7 @@
           "id": "weapon_mastery",
           "name": "Weapon Mastery",
           "summary": "Use the mastery properties of two kinds of weapons you're proficient with.",
-          "text": "Choose two kinds of weapons you're proficient with, such as Longbows and Shortswords; you can use their mastery properties. After a Long Rest you can change one of the choices.",
+          "text": "Choose two kinds of weapons you're proficient with, such as Longbows and Shortswords; you can use their mastery properties. You can change both choices after a Long Rest.",
           "choice": {
             "kind": "weapon_mastery",
             "count": 2,

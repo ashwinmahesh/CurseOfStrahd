@@ -1,14 +1,19 @@
 class_name PrepareScreen
 extends CanvasLayer
-## Changing prepared spells after a Long Rest (2024 PHB): Clerics, Druids, Paladins, Rangers and Wizards (from the
-## spellbook) may pick a new list; Bards, Sorcerers and Warlocks change theirs when they gain a level. One choice box
-## per caster, the same widget character creation uses; each change rebuilds the character at once.
+## Changing prepared spells after a Long Rest (2024 PHB): Clerics, Druids and Wizards (from the spellbook) may change
+## any number, Paladins and Rangers one spell, and a Wizard one cantrip too; Bards, Sorcerers and Warlocks change one
+## when they gain a level (LevelUpController). Weapon Mastery too: Barbarians and Fighters swap one kind, Paladins,
+## Rangers and Rogues any. One choice box per caster, the same widget character creation uses;
+## each change rebuilds the character at once. The limits count from the list the rest ended with (`earlier`), so
+## closing and reopening the screen doesn't give a second swap.
 
 var root: Node
 var st: StoryState
 var _box: VBoxContainer
 ## Which rest just ended: "long_rest" or "short_rest" (see preparable()).
 var rest_kind := "long_rest"
+## snapshot() of the party's picks when the rest ended; taken at open() when the opener leaves it empty.
+var earlier: Dictionary = {}
 
 
 func _init() -> void:
@@ -20,7 +25,7 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
 	var frame := UiKit.screen_frame(self, "Prepare Spells", Vector2(1300, 820))
-	frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready. Always-prepared spells (a domain's, an oath's) don't count. Hover a spell for what it does.", 15, "parchment", 1220))
+	frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready: Clerics, Druids and Wizards can change any of theirs, Paladins and Rangers one, and Wizards one cantrip too. Barbarians and Fighters swap one Weapon Mastery; Paladins, Rangers and Rogues any. Always-prepared spells (a domain's, an oath's) don't count. Hover a spell for what it does.", 15, "parchment", 1220))
 	_box = VBoxContainer.new()
 	_box.add_theme_constant_override("separation", 14)
 	var pane := UiParts.pane(14)
@@ -28,6 +33,8 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	pane.add_child(UiParts.fill_scroll(_box))
 	frame.add_child(pane)
 	frame.add_child(UiParts.primary_button("Done", func() -> void: queue_free()))
+	if earlier.is_empty():
+		earlier = PrepareScreen.snapshot(st, rest_kind)
 	_draw()
 
 
@@ -46,14 +53,22 @@ static func preparable(state: StoryState, rest: String = "long_rest") -> Array[D
 				out.append({"ch": ch, "choice": rc})
 		if rest != "long_rest":
 			continue
+		# The class lists a Long Rest lets you change: prepared spells (Cleric, Druid, Paladin, Ranger, Wizard), then
+		# cantrips (Wizard).
 		for e in ch.spellcasting:
-			var cid := str(e["class_id"])
-			var sc := Compendium.shared().class_data(cid).get("spellcasting", {}) as Dictionary
-			if str(sc.get("swap_prepared", "")) != "long_rest":
-				continue
-			var c := ch.choice("%s.prepared" % cid)
-			if c != null:
-				out.append({"ch": ch, "choice": c})
+			for list: String in ["prepared", "cantrips"]:
+				var c := ch.choice("%s.%s" % [e["class_id"], list])
+				if c != null and c.replaceable == "long_rest":
+					out.append({"ch": ch, "choice": c})
+	return out
+
+
+## Every preparable() choice's picks right now, keyed "<character id>/<choice key>": the list a swap limit counts from.
+static func snapshot(state: StoryState, rest: String = "long_rest") -> Dictionary:
+	var out := {}
+	for entry in PrepareScreen.preparable(state, rest):
+		var c := entry["choice"] as Choice
+		out["%s/%s" % [(entry["ch"] as Character).id, c.key]] = c.picks.duplicate()
 	return out
 
 
@@ -66,6 +81,9 @@ func _draw() -> void:
 	for entry in list:
 		var ch := entry["ch"] as Character
 		var c := entry["choice"] as Choice
+		var from: Array[String] = []
+		from.assign(earlier.get("%s/%s" % [ch.id, c.key], c.picks) as Array)
+		ChoiceOptions.open_swap(c, from, rest_kind)
 		ChoiceOptions.populate(c, ch)
 		var what := Compendium.shared().display_name("classes", c.class_id) if c.key.ends_with(".prepared") else c.label
 		var head := HBoxContainer.new()
@@ -83,6 +101,14 @@ func _draw() -> void:
 			ch.refresh()
 			_draw.call_deferred())
 		_box.add_child(w)
+
+
+## The swap chance closes with the screen, so the characters' own choices go back to free picks.
+func _exit_tree() -> void:
+	if st == null:
+		return
+	for entry in PrepareScreen.preparable(st, rest_kind):
+		ChoiceOptions.close_swap(entry["choice"] as Choice)
 
 
 func _unhandled_input(event: InputEvent) -> void:

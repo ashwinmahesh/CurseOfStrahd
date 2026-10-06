@@ -659,6 +659,9 @@ func caster_turn_start(c: Combatant) -> void:
 	for o: FieldObject in sp().zones.live():
 		if o.caster_id != c.id:
 			continue
+		if bool(o.rules.get("fissures", false)) and not bool(o.rules.get("fissures_open", false)):
+			o.rules["fissures_open"] = true
+			open_fissures(o, c)
 		if o.rules.has("storm_round"):
 			_storm_round(o)
 		if o.rules.has("tsunami"):
@@ -673,6 +676,98 @@ func caster_turn_start(c: Combatant) -> void:
 				o.cells = moved
 				o.cell += dv
 				sp().zones.moved_object(o, CombatResult.new())
+
+
+## Earthquake's fissures (the start of the caster's next turn): 1d6 of them, each 10 ft wide and running straight
+## across the quake. The caster lays them through its foes (the nearest first, along the row or column that catches
+## the most foes and the fewest friends). A creature where one opens makes a Dexterity save: a failure drops it
+## 1d10 x 10 ft (falling damage, Prone) and it must climb out (an action and a DC 15 Strength (Athletics) check); a
+## success leaves it on the edge, moved to the nearest solid ground.
+func open_fissures(o: FieldObject, c: Combatant) -> void:
+	var e := enc()
+	var area := {}
+	for cl in o.cells:
+		area[cl] = true
+	var count := e.dice.roll_one(6, "Earthquake fissures")
+	var crack := {}
+	var placed := 0
+	var foes := e.hostiles_of(c).filter(func(h: Combatant) -> bool: return area.has(h.cell) and not h.is_down())
+	foes.sort_custom(func(a: Combatant, b: Combatant) -> bool: return e.distance(c, a) < e.distance(c, b))
+	for f: Combatant in foes:
+		if placed >= count:
+			break
+		if crack.has(f.cell):
+			continue
+		var best: Array[Vector2i] = []
+		var best_score := -1000000000
+		for horizontal: bool in [true, false]:
+			var line: Array[Vector2i] = []
+			for cl: Vector2i in o.cells:
+				var along := cl.y if horizontal else cl.x
+				var mine := f.cell.y if horizontal else f.cell.x
+				if along == mine or along == mine + 1:
+					line.append(cl)
+			var score := 0
+			for x in e.living():
+				if x.footprint().any(func(q: Vector2i) -> bool: return q in line):
+					score += 2 if c.hostile_to(x) else -3
+			if score > best_score:
+				best_score = score
+				best = line
+		for cl2 in best:
+			crack[cl2] = true
+		placed += 1
+	if crack.is_empty():
+		e.log.add("info", "The ground splits, but no fissure opens beneath anyone", c.id)
+		return
+	var f2 := FieldObject.new(FieldObject.Kind.ZONE, "earthquake", "Fissures")
+	f2.caster_id = c.id
+	f2.cells.assign(crack.keys())
+	f2.cell = f2.cells[0]
+	f2.rules = {"triggers": [], "terrain": "difficult"}
+	sp().zones.add(f2, CombatResult.new())
+	e.log.add("spell", "%d fissure%s tear open across the ground" % [placed, "s" if placed > 1 else ""], c.id)
+	for t in e.living():
+		if t.is_down() or not t.footprint().any(func(q: Vector2i) -> bool: return crack.has(q)):
+			continue
+		var test := t.creature.roll_save(e.dice, &"dex", o.save_dc, [], [], "Dex save vs a fissure (%s)" % t.name(), ["save_vs:spell"])
+		if test.success:
+			var from := t.cell
+			var spot := _solid_ground(t, crack)
+			if spot != from:
+				t.cell = spot
+				e.events.append({"type": "move", "id": t.id, "from": from, "to": spot})
+			e.log.add("info", "%s keeps to the fissure's edge" % t.name(), t.id, [test.describe()])
+			continue
+		var depth := e.dice.roll_one(10, "Fissure depth") * 10
+		e.log.add("condition", "%s falls %d ft into a fissure" % [t.name(), depth], t.id, [test.describe()])
+		fall(t.id, depth)
+		if t.is_alive():
+			var pit := Effect.new("In a fissure", &"spell", "earthquake_fissure").with_modifier("speed_set", {"value": 0})
+			pit.caster_id = c.id
+			pit.ends = Effect.Ends.NEVER
+			pit.escape = {"skill": "athletics", "dc": 15}
+			t.creature.add_effect(pit)
+
+
+## The nearest square off the fissures (and not taken) for a creature that kept its feet.
+func _solid_ground(t: Combatant, crack: Dictionary) -> Vector2i:
+	var e := enc()
+	var best := t.cell
+	var best_d := 1 << 30
+	for dx in range(-3, 4):
+		for dy in range(-3, 4):
+			var cl := t.cell + Vector2i(dx, dy)
+			if crack.has(cl) or not e.grid.in_bounds(cl) or e.grid.is_solid(cl):
+				continue
+			var o := e.occupant_at(cl)
+			if o != null and o != t:
+				continue
+			var d := absi(dx) + absi(dy)
+			if d < best_d:
+				best_d = d
+				best = cl
+	return best
 
 
 ## Storm of Vengeance's later rounds (counted at the start of the caster's turns): 2, 4d6 Acid to everyone under the
@@ -776,9 +871,13 @@ func refresh_antimagic() -> void:
 	for c in e.combatants:
 		var inside := in_antimagic(c)
 		var held := _suppressed.get(c.id, []) as Array
+		# Magic items go quiet inside: their bonuses, properties and powers (the bearer's real self too, if shapechanged).
+		for who: Creature in [c.creature, e.shapes.original(c)]:
+			if who is Character and (who as Character).magic_suppressed != inside:
+				(who as Character).magic_suppressed = inside
 		if inside:
 			for fx: Effect in c.creature.effects.duplicate():
-				if fx.source_kind == &"spell" and fx.source_id != "antimagic_field" and not fx.stack_key.begins_with("zone:"):
+				if fx.source_kind in [&"spell", &"item"] and fx.source_id != "antimagic_field" and not fx.stack_key.begins_with("zone:"):
 					c.creature.effects.erase(fx)
 					held.append(fx)
 			if not held.is_empty():

@@ -174,7 +174,8 @@
       "voice_id": "VukLTeVXFTevRA66Vs4N",
       "name": "Barovia Argynvost",
       "description": "An immense, ancient voice, deep, warm and resonant, with an English accent: a fading silver dragon speaking as a gentle echo. Slow, noble and kind, with a soft reverb as if heard through frost and stone.",
-      "settings": {}
+      "settings": {},
+      "released": true
     },
     "clovin_belview": {
       "voice_id": "3E0KFlXnAqSNWnyveHsO",
@@ -705,6 +706,44 @@
       "description": "A dead watchman's hollow, rasping, distant voice, strong, clearly audible Eastern European (Romanian) accent.",
       "settings": {},
       "released": true
+    },
+    "hedda_ironvow": {
+      "voice_id": "mPCUUqqWPQ7K5a7esk7T",
+      "name": "Barovia hedda_ironvow",
+      "settings": {},
+      "description": "A dwarven woman in her middle years with a low, warm, earthy alto and a soft Scottish lilt. Slow, measured and unhurried, letting pauses do the work; dry humour and quiet kindness, weary contempt for the undead, loud and resonant only when she prays."
+    },
+    "ilse_varga": {
+      "voice_id": "YPY0thqwMO67APQMfXLM",
+      "name": "Barovia ilse_varga",
+      "settings": {},
+      "description": "A woman in her late thirties with a husky, clipped, no-nonsense voice and a light German accent, a veteran mercenary sergeant. Short declarative sentences in a military rhythm, counting things out loud; blunt and calm, quieter and more precise when afraid."
+    },
+    "silvain_aster": {
+      "voice_id": "6fePJyZv0Z6hegs501OU",
+      "name": "Barovia silvain_aster",
+      "settings": {},
+      "description": "An ageless, androgynous elven scholar with a light, precise, crisp voice between tenor and alto and a refined English accent. Elaborate, formal, complete sentences; pedantic, always correcting, dryly witty; more exact and faster when frightened."
+    },
+    "tamsin_tealeaf": {
+      "voice_id": "ZzT6eu8pQejVKY0r9YP6",
+      "name": "Barovia tamsin_tealeaf",
+      "settings": {},
+      "description": "A small, cheerful halfling man with a quick, bright, chatty tenor and a light Irish lilt. Long sentences that run downhill to a punchline; warm, mischievous and charming, talks to locks; goes suddenly silent when truly frightened."
+    },
+    "hero_female": {
+      "voice_id": "GPTk4QbvF7snDhImF5UF",
+      "name": "Lucie - Clear and Professional Actress",
+      "library": true,
+      "settings": {},
+      "description": "A warm adult woman's voice with a neutral English accent for a custom player hero: clear, grounded and expressive, able to carry any class or temperament."
+    },
+    "hero_male": {
+      "voice_id": "atEhNo1k29EZslpsboHA",
+      "name": "Julian Vale - Resonant and Optimistic",
+      "library": true,
+      "settings": {},
+      "description": "A warm adult man's voice with a neutral English accent for a custom player hero: resonant, grounded and expressive, able to carry any class or temperament."
     }
   }
 }

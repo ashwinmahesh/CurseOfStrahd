@@ -24,6 +24,12 @@ var per_ability: int = 1
 var max_score: int = 20
 ## When earlier picks can be swapped: long_rest, level_up, never.
 var replaceable: String = ""
+## How many earlier picks one such chance may swap; -1 means any number (a Cleric's list after a Long Rest).
+var replace_max: int = -1
+## Set while a swap chance is open (ChoiceOptions.open_swap): the picks it started from, and how many of them may
+## still go (-1 any). Empty `swap_from` means no chance is open and the picks are free (character creation).
+var swap_from: Array[String] = []
+var swap_max: int = -1
 ## Spell choices: the class whose list and spellcasting ability apply.
 var class_id: String = ""
 ## Character level at which this choice first appeared.

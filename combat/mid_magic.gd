@@ -303,6 +303,61 @@ func ai_turn(c: Combatant) -> void:
 
 # --- Bigby's Hand -------------------------------------------------------------------------------------
 
+## The hand is a Large object that can be attacked: AC 20 and the caster's Hit Point maximum. It stands on the
+## board as a creature with no turns of its own (it acts through the caster's Bonus Actions); at 0 Hit Points the
+## spell ends.
+func spawn_hand(c: Combatant, o: FieldObject) -> void:
+	var e := enc()
+	var hp := c.creature.max_hp()
+	var m := Monster.from_data({"id": "bigbys_hand", "name": "Bigby's Hand", "size": "large", "type": "construct", "alignment": "unaligned",
+		"ac": 20, "hp": {"average": hp, "dice": str(hp)}, "speed": {"walk": 0},
+		"abilities": {"str": 26, "dex": 10, "con": 10, "int": 1, "wis": 1, "cha": 1},
+		"immunities": ["poison", "psychic"], "condition_immunities": ["blinded", "charmed", "deafened", "exhaustion", "frightened",
+			"grappled", "incapacitated", "paralyzed", "petrified", "poisoned", "prone", "restrained", "stunned", "unconscious"],
+		"cr": 0, "xp": 0, "proficiency_bonus": 2, "summon": true,
+		"traits": [{"id": "conjured_object", "name": "Conjured Object", "action": "passive",
+			"modifiers": [{"stat": "flag", "value": "spell_object"}, {"stat": "flag", "value": "no_actions"}],
+			"summary": "A spell's object: no turns of its own; the spell ends if it's destroyed."}],
+		"actions": [], "summary": "A shimmering Large hand of force."})
+	var h := e.add(m, c.side, o.cell)
+	h.controller = &"ai"
+	h.set_meta("hand_of", c.id)
+	o.rules["hand_id"] = h.id
+
+
+## The hand's body follows the hand when it moves.
+func sync_hand(o: FieldObject) -> void:
+	var h := enc().get_c(str(o.rules.get("hand_id", "")))
+	if h != null:
+		h.cell = o.cell
+
+
+## The spell ended: the hand's body goes with it.
+func remove_hand(o: FieldObject) -> void:
+	var e := enc()
+	var h := e.get_c(str(o.rules.get("hand_id", "")))
+	if h == null:
+		return
+	e.combatants.erase(h)
+	e.grapples.erase(h.id)
+	for k: String in e.grapples.keys():
+		if str(e.grapples[k]) == h.id:
+			e.grapples.erase(k)
+	e.events.append({"type": "vanish", "id": h.id})
+
+
+## Destroyed: Bigby's Hand ends.
+func hand_destroyed(t: Combatant) -> void:
+	if not t.has_meta("hand_of"):
+		return
+	var e := enc()
+	var caster := e.get_c(str(t.get_meta("hand_of")))
+	e.log.add("info", "Bigby's Hand is shattered", t.id)
+	if caster != null and caster.creature.concentration != null and caster.creature.concentration.source_id == "bigbys_hand":
+		caster.creature.concentration.end("the hand was destroyed")
+	if caster != null:
+		sp().zones.end_spell(caster.id, "bigbys_hand")
+
 ## The hand's other uses (a Bonus Action after it moves): Forceful Hand (a Strength save or pushed 5 ft + 5 ft per
 ## spellcasting modifier), Grasping Hand (a Dexterity save or Grappled, escape DC the spell's), Crush (4d6 + modifier
 ## Bludgeoning, 2d6 more per slot level above 5, to the creature it holds) and Interposing Hand (Half Cover for the

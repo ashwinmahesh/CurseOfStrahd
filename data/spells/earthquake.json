@@ -58,7 +58,8 @@
           "breaks_concentration": true
         }
       }
-    ]
+    ],
+    "fissures": true
   },
   "tags": [
     "control"

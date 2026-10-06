@@ -11,6 +11,7 @@ var _box: VBoxContainer
 var _log: Label
 var _short_done := false   ## Arcane Recovery comes after a finished Short Rest
 var _long_done := false    ## after a Long Rest, casters may change their prepared spells
+var _prepared_before: Dictionary = {}  ## PrepareScreen.snapshot() as the Long Rest ended: what its swap limits count from
 var _study: Dictionary = {}  ## character id -> the magic item they study through the Short Rest (identifies it)
 
 
@@ -73,6 +74,7 @@ func _draw() -> void:
 	if _long_done and not PrepareScreen.preparable(st).is_empty():
 		var prep := UiKit.button("Change prepared spells", func() -> void:
 			var ps := PrepareScreen.new()
+			ps.earlier = _prepared_before
 			add_child(ps)
 			ps.open(root, st, 0), 15, "spells")
 		UiParts.light_up(prep)
@@ -222,6 +224,7 @@ func _long_rest(rule: String) -> void:
 		var region := str(Compendium.shared().get_entry("locations", st.location).get("region", ""))
 		_narrate("dream:" + region)
 		_long_done = true
+		_prepared_before = PrepareScreen.snapshot(st)
 	_draw()
 	root.call("_refresh")
 
