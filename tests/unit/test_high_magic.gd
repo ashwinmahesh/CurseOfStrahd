@@ -294,6 +294,7 @@ func test_antimagic_field_suppresses_magic_items() -> void:
 	var e := _field()
 	var c := _caster(e)
 	var a := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 7), 100)
 	var ch := a.creature as Character
 	ch.add_item("ring_of_protection")
 	assert_true(ch.equip("ring_of_protection", "ring"))
