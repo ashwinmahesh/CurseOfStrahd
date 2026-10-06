@@ -2,13 +2,13 @@
   "id": "death_house_upper",
   "name": "Death House, Upper Floor",
   "region": "death_house",
-  "summary": "The second storey: the upper hall and its ancestor portraits, a library with a secret study behind a bookcase (Strahd's letter, the family deeds), the servants' quarters and a conservatory with a harpsichord that remembers a lullaby.",
+  "summary": "The second storey: the upper hall with its hearth, the family portrait and two suits of wolf-helmed armor, a library with a secret study behind a bookcase (Strahd's letter, the family deeds), the servants' room and a conservatory with a harpsichord that remembers a lullaby.",
   "map": {
     "theme": "manor",
     "light": "dim",
     "rows": [
       "############################",
-      "#.==.==..#.....####.==..==.#",
+      "#.==.==..#.....####.=...=..#",
       "#........#.....####........#",
       "#........#.....==.#........#",
       "#.................#........#",
@@ -39,7 +39,9 @@
           17,
           14
         ]
-      ]
+      ],
+      "floor": "interior/parquet",
+      "walls": "interior/wood_panel"
     },
     {
       "id": "dh_library",
@@ -53,7 +55,9 @@
           8,
           8
         ]
-      ]
+      ],
+      "floor": "interior/carpet",
+      "walls": "interior/wainscot_wall"
     },
     {
       "id": "dh_secret_study",
@@ -68,7 +72,9 @@
           13
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "interior/wood_planks",
+      "walls": "interior/wood_panel"
     },
     {
       "id": "dh_servants_room",
@@ -82,7 +88,9 @@
           26,
           6
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall"
     },
     {
       "id": "dh_conservatory",
@@ -96,7 +104,9 @@
           26,
           14
         ]
-      ]
+      ],
+      "floor": "interior/parquet",
+      "walls": "interior/wallpaper_green"
     }
   ],
   "spawns": {
@@ -172,16 +182,6 @@
   ],
   "props": [
     {
-      "id": "upper_hall_portraits",
-      "cell": [
-        9,
-        11
-      ],
-      "kind": "examine",
-      "label": "ancestor portraits",
-      "model": "painting_row"
-    },
-    {
       "id": "upper_hall_clock",
       "cell": [
         18,
@@ -190,6 +190,47 @@
       "kind": "examine",
       "label": "a grandfather clock",
       "model": "clock_tall"
+    },
+    {
+      "id": "upper_hearth",
+      "cell": [
+        11,
+        0
+      ],
+      "kind": "examine",
+      "label": "the upper hall hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "hall_family_portrait",
+      "cell": [
+        12,
+        0
+      ],
+      "kind": "examine",
+      "label": "the family portrait",
+      "model": "painting",
+      "dialogue": "death_house/house:family_portrait"
+    },
+    {
+      "id": "upper_armor_west",
+      "cell": [
+        10,
+        3
+      ],
+      "kind": "examine",
+      "label": "a suit of wolf-helmed armor",
+      "model": "statue_knight"
+    },
+    {
+      "id": "upper_armor_east",
+      "cell": [
+        10,
+        5
+      ],
+      "kind": "examine",
+      "label": "a suit of wolf-helmed armor",
+      "model": "statue_knight"
     },
     {
       "id": "library_histories",
@@ -212,6 +253,26 @@
       "kind": "examine",
       "label": "a bookcase",
       "model": "bookcase"
+    },
+    {
+      "id": "library_hearth",
+      "cell": [
+        7,
+        0
+      ],
+      "kind": "examine",
+      "label": "the library hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "library_chair",
+      "cell": [
+        5,
+        5
+      ],
+      "kind": "decor",
+      "label": "a high-backed chair",
+      "model": "chair_high"
     },
     {
       "id": "strahd_letter",
@@ -260,6 +321,36 @@
       "model": "uniforms"
     },
     {
+      "id": "servants_dumbwaiter",
+      "cell": [
+        22,
+        0
+      ],
+      "kind": "examine",
+      "label": "a dumbwaiter door",
+      "model": "dumbwaiter"
+    },
+    {
+      "id": "servants_bed_a",
+      "cell": [
+        20,
+        1
+      ],
+      "kind": "decor",
+      "label": "a narrow bed",
+      "model": "bed_small"
+    },
+    {
+      "id": "servants_bed_b",
+      "cell": [
+        24,
+        1
+      ],
+      "kind": "decor",
+      "label": "a narrow bed",
+      "model": "bed_small"
+    },
+    {
       "id": "harpsichord",
       "cell": [
         22,
@@ -271,14 +362,34 @@
       "dialogue": "death_house/house:harpsichord"
     },
     {
-      "id": "conservatory_birds",
+      "id": "conservatory_hearth",
       "cell": [
-        26,
-        13
+        24,
+        7
       ],
       "kind": "examine",
-      "label": "a case of stuffed birds",
-      "model": "bird_case"
+      "label": "the conservatory hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "conservatory_harp",
+      "cell": [
+        25,
+        8
+      ],
+      "kind": "examine",
+      "label": "a standing harp",
+      "model": "harp"
+    },
+    {
+      "id": "conservatory_glass",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "examine",
+      "label": "stained glass of singers",
+      "model": "window_stained"
     }
   ],
   "containers": [
@@ -302,6 +413,10 @@
         {
           "id": "ink_pen",
           "qty": 1
+        },
+        {
+          "id": "durst_attic_key",
+          "qty": 1
         }
       ]
     },
@@ -316,11 +431,41 @@
       "lock_dc": 13,
       "items": [
         {
-          "id": "spell_scroll_level_1",
+          "id": "book",
+          "qty": 3
+        },
+        {
+          "id": "spell_scroll__bless",
+          "qty": 1
+        },
+        {
+          "id": "spell_scroll__protection_from_poison",
+          "qty": 1
+        },
+        {
+          "id": "spell_scroll__spiritual_weapon",
           "qty": 1
         }
+      ]
+    },
+    {
+      "id": "study_skeleton",
+      "cell": [
+        6,
+        13
       ],
-      "gold": 40
+      "label": "a skeleton in leather armor",
+      "model": "bones",
+      "items": [
+        {
+          "id": "leather_armor",
+          "qty": 1
+        },
+        {
+          "id": "dart",
+          "qty": 3
+        }
+      ]
     },
     {
       "id": "servants_footlocker",

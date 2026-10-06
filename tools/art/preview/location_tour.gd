@@ -3,7 +3,7 @@ extends Node3D
 ## an overview and close shots around its doors, props and containers. Not part of the game.
 ##   make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=death_house_ground NAME=tour FRAMES=20
 ## Godot args after --: --location=<id> [--hour=12] [--shots=8] [--yaw=<camera steps>] [--lit] (brighter ambient, to
-## check placement in dark interiors)
+## check placement in dark interiors) [--at=x,z;x,z] (close shots of these squares)
 
 var view: LocationView
 var _spots: Array[Vector3] = []
@@ -37,6 +37,12 @@ func _ready() -> void:
 					near = true
 			if not near:
 				_spots.append(p)
+	# --at=x,z;x,z: close shots of these squares instead.
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--at="):
+			_spots.clear()
+			for xz: String in a.get_slice("=", 1).split(";"):
+				_spots.append(view.board.cell_center(Vector2i(int(xz.get_slice(",", 0)), int(xz.get_slice(",", 1)))))
 
 
 func capture_shots(tool: Node, out: String) -> void:

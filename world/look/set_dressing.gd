@@ -385,9 +385,15 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 	var wall := wall_side(board, cell)
 	var front := front_override if front_override != "" else front_of(art)
 	if front != "" and wall != Vector2i.ZERO:
-		return _against_wall(board, parent, art, front, cell, wall, scale_)
+		var against := _against_wall(board, parent, art, front, cell, wall, scale_ * real_scale(front))
+		against.set_meta("art", front)
+		return against
+	scale_ *= real_scale(art)
+	big = big or is_big(art)
 	var info := manifest()[art] as Dictionary
 	var back := str(info.get("back", ""))
+	if big and at_override == null:
+		_clear_trees_around(board, parent, cell, maxf(_width(art), _width(back) if back != "" else 0.0) * scale_)
 	if not big and at_override == null:
 		# Owner report (2026-10-06): pieces overlapped walls and each other. A piece is no wider than its square,
 		# unless all eight squares around it are open floor with nothing standing there.
@@ -405,15 +411,53 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 		piece = _sprite(art)
 		piece.pixel_size *= scale_
 	piece.position = at
+	piece.set_meta("art", art)
 	parent.add_child(piece)
 	return piece
 
 
-## How wide a standing piece is drawn (its catalog size included; the wider of its front and back).
+## How wide a standing piece is drawn (its real size and catalog scale included; the wider of its front and back).
 static func footprint(art: String) -> float:
 	var back := str((manifest().get(art, {}) as Dictionary).get("back", ""))
 	var w := maxf(_width(art), _width(back) if back != "" else 0.0)
-	return w * float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
+	return w * real_scale(art) * float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
+
+
+## Owner report (2026-10-06): the opening road's cottage was drawn tiny. Each standing piece has a real height in feet
+## (catalog "feet"; a person is 6 ft and one unit is 5 ft): this is the scale that draws `art` at that height.
+static func real_scale(art: String) -> float:
+	var feet := float((catalog().get("feet", {}) as Dictionary).get(art, 0.0))
+	var info := manifest().get(art, {}) as Dictionary
+	if feet <= 0.0 or info.is_empty():
+		return 1.0
+	return (feet / 5.0) / float(info.get("world_height", 1.0))
+
+
+## A building-sized piece (a cottage, a tent, a wagon: wider than catalog "big_width" at its real size) keeps its real
+## size whatever the room, and clears the trees it would stand among.
+static func is_big(art: String) -> bool:
+	return footprint(art) > float(catalog().get("big_width", 1.6))
+
+
+## Hides the trees (and rock) on the squares a big piece covers, plus one more row on the sides the opening camera
+## looks from (west and south), so the forest neither cuts through it nor hides it, and the board's own scenery (a
+## stump, brambles) on the open squares it covers. They come back if it goes.
+static func _clear_trees_around(board: ArenaBoard, parent: Node3D, cell: Vector2i, width: float) -> void:
+	var k := clampi(int(round(width / 2.0 - 0.5)), 1, 2)
+	var cleared: Array[Vector2i] = []
+	for dx: int in range(-k - 1, k + 1):
+		for dy: int in range(-k, k + 2):
+			var c := cell + Vector2i(dx, dy)
+			var furnished := not board.grid.has_flag(c, CombatGrid.WALL) and board.dressing.has(c) and absi(dx) <= k and dy <= k
+			if c == cell or not (board.is_tree(c) or furnished):
+				continue
+			board.clear_cell(c)
+			cleared.append(c)
+	if parent != board and not cleared.is_empty():
+		parent.tree_exiting.connect(func() -> void:
+			if is_instance_valid(board):
+				for c: Vector2i in cleared:
+					board.restore_cell(c))
 
 
 static func _width(art: String) -> float:
@@ -487,13 +531,14 @@ static func _against_wall(board: ArenaBoard, parent: Node3D, art: String, front:
 	root.rotation.y = atan2(n.x, n.z)
 	parent.add_child(root)
 	var sp := wall_sprite(front)
-	sp.pixel_size *= scale_ * fit
+	sp.pixel_size *= scale_
+	sp.scale.x = fit   # squeezed to fit along the wall, never shortened: it keeps its real height
 	sp.position = Vector3(0, 0, depth)
 	root.add_child(sp)
 	if body:
 		var mi := MeshInstance3D.new()
 		var bm := BoxMesh.new()
-		bm.size = Vector3(w * fit * 0.9, h * fit * 0.86, depth - 0.02)
+		bm.size = Vector3(w * fit * 0.9, h * 0.86, depth - 0.02)
 		mi.mesh = bm
 		mi.position = Vector3(0, bm.size.y / 2.0, depth / 2.0)
 		mi.material_override = Look.cel("walnut")

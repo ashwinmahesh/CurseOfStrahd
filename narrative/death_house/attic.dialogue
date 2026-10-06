@@ -1,6 +1,6 @@
 # The attic of Death House: the toy chest (the children's remains), the dollhouse (which shows the secret stair) and
-# the hidden panel beside the chimney. Every way of finding the stair runs through secret_stair, which grants the
-# level 2 milestone exactly once.
+# the hidden panel in the storage room's corner (book area 18). Every way of finding the stair runs through
+# secret_stair, which grants the level 2 milestone exactly once. Also the nursemaid's remains in the storage trunk.
 
 ~ toy_chest
 narrate examine:toy_chest
@@ -43,13 +43,13 @@ interject name:tamsin_tealeaf: I've carried a lot of things out of a lot of hous
 
 ~ dollhouse
 narrate examine:dollhouse
-Narrator: It is this house, perfect down to the doorknobs: the hall, the den with its tiny wolf heads, the nursery with its tiny crib. Someone spent years on it.
+Narrator: It is this house, perfect down to the doorknobs: the hall, the den with its tiny stag's head, the nursery with its tiny crib. Someone spent years on it.
 * [Investigation DC 12] Go over it room by room. -> doll_close | doll_quick
 * [if flag.death_house_children_met and not flag.death_house_children_riding and not flag.death_house_children_at_rest] Ask Rose what it shows. -> doll_rose
 * Leave it be. -> END
 
 ~ doll_close
-Narrator: Behind the toy chimney, a panel no bigger than a fingernail hides a stair that winds down inside the walls, past every floor, below a cellar the house doesn't have.
+Narrator: In the corner of the little attic storage room, a panel no bigger than a fingernail hides a stair that winds down inside the walls, past every floor, below a cellar the house doesn't have.
 Narrator: At the bottom is a room with a tiny stone table, and beside it a lump of grey clay, shaped like a sleeping heap.
 if not flag.death_house_dollhouse_altar_seen
   set death_house_dollhouse_altar_seen
@@ -62,17 +62,17 @@ endif
 -> secret_stair
 
 ~ doll_quick
-Narrator: It takes {name} a while, but there it is: behind the toy chimney, a panel no bigger than a fingernail, and a stair inside the walls.
+Narrator: It takes {name} a while, but there it is: in the corner of the toy storage room, a panel no bigger than a fingernail, and a stair inside the walls.
 -> secret_stair
 
 ~ doll_rose
 Rose: Father made it for my birthday. He made it too well. It even has the stair they use at night. I found it with a hairpin.
 Thorn: She showed me. I wasn't supposed to know.
-Narrator: Rose's finger touches a panel beside the toy chimney. It swings open on a staircase winding down inside the walls.
+Narrator: Rose's finger touches a panel in the corner of the toy storage room. It swings open on a staircase winding down inside the walls.
 -> secret_stair
 
 ~ secret_panel
-narrate search:chimney_seam
+narrate search:storage_panel
 Narrator: The seam runs in a neat rectangle. Pressed, the plaster swings inward on a breath of warm air, onto a stair that winds down inside the walls.
 interject name:tamsin_tealeaf: Oh, lovely work. Hinges on the inside. Whoever built this didn't want company.
 if not name:tamsin_tealeaf
@@ -84,7 +84,7 @@ endif
 if not flag.death_house_secret_stair_found
   set death_house_secret_stair_found
   quest death_house secret_stair
-  Narrator: In the spare bedroom, beside the chimney, the bare alcove is not bare anymore. A stair waits behind it, going down.
+  Narrator: In the storage room, the bare nook in the corner is not bare anymore. A stair waits behind it, going down.
 endif
 -> milestone
 
@@ -94,4 +94,25 @@ if not flag.death_house_milestone_dungeon
   xp milestone
   Narrator: You have come farther into this house than most guests, and it has noticed. So have you.
 endif
+-> END
+
+~ nursemaid_trunk
+narrate examine:nursemaid_trunk
+Narrator: Under the dust sheet, a big traveling trunk. Inside, wrapped in a bedsheet gone stiff and brown, lie the bones of a young woman, a faded blue ribbon still tied in her hair.
+if flag.death_house_learned_walter
+  Narrator: Walter's nurse. They didn't let her go far.
+endif
+* [Medicine DC 10] Learn how she died. -> trunk_medicine | trunk_medicine_fail
+* Close the lid gently. -> END
+
+~ trunk_medicine
+Narrator: Stab wounds, many of them, the blade turned on the ribs again and again. Someone did this in a fury, and then folded her neatly into a trunk.
+interject name:hedda_ironvow: Rage first, then tidiness. That's a particular kind of person.
+if not name:hedda_ironvow
+  interject class:cleric: Whoever did this was angry, and then very, very calm. I'll pray for her twice.
+endif
+-> END
+
+~ trunk_medicine_fail
+Narrator: Old bones in an old sheet. The sheet tells the story better than you can.
 -> END

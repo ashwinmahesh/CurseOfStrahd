@@ -1,13 +1,40 @@
 # The dungeon under Death House (death_house_dungeon_1): the family crypts, where the children can be laid to rest,
-# and the cult's ledger.
+# the cult's ledger, and the Darklord's shrine (book area 31).
 
-~ crypt_parents
-narrate examine:crypt_parents
-Narrator: Two crypts side by side, cut with the names Gustav Durst and Elisabeth Durst and the years of their births. Both stand open and empty; nobody ever got around to dying properly.
+~ crypt_gustav
+narrate examine:crypt_gustav
+Narrator: A crypt cut with the name Gustav Durst and the year of his birth, its slab set ready and never closed. Nobody ever got around to dying properly.
 if flag.death_house_dursts_destroyed
-  Narrator: You know where they lie now, and someone should lay them in here. It won't be anyone in this house.
+  Narrator: You know where he lies now, and someone should lay him in here. It won't be anyone in this house.
 endif
 -> END
+
+~ crypt_elisabeth
+narrate examine:crypt_elisabeth
+Narrator: Elisabeth Durst's crypt, the slab still in place. The carving is the finest in the row, and something behind it is ticking, very faintly, like a great many small clocks.
+if flag.death_house_insects_scattered
+  Narrator: The coffin inside is empty and its lining eaten to lace. Nothing ticks now.
+  -> END
+endif
+* Slide the slab aside. -> elisabeth_open
+* [Nature DC 12] Listen to the ticking. -> elisabeth_listen | elisabeth_listen_fail
+* Leave it shut. -> END
+
+~ elisabeth_listen
+Narrator: Mandibles. Thousands of them, working at wood and silk, in the dark where Elisabeth meant to lie. Whatever is in there has been eating for years.
+-> elisabeth_choice
+
+~ elisabeth_listen_fail
+Narrator: A dry ticking, close behind the stone. It could be anything. It could be a great many anythings.
+-> elisabeth_choice
+
+~ elisabeth_choice
+* Slide the slab aside. -> elisabeth_open
+* Leave it shut. -> END
+
+~ elisabeth_open
+Narrator: The slab grinds aside, and the coffin's lid lifts by itself, raised from beneath by a pouring black tide of legs.
+combat crypt_insects
 
 ~ crypt_children
 narrate examine:crypt_children
@@ -81,5 +108,42 @@ interject name:silvain_aster: Double-entry bookkeeping. They committed murder in
 interject name:ilse_varga: Every name in there was somebody's.
 if not name:silvain_aster
   interject tag:bookish: A ledger of the dead, kept neater than most temple records. That's the worst part.
+endif
+-> END
+
+~ shrine_statue
+narrate examine:shrine_statue
+Narrator: A painted wooden statue of a gaunt, pale man in a black cloak, one hand resting on the head of a wolf at his side. The other holds out an orb of smoky crystal, as if offering it to whoever kneels here.
+Narrator: Skeletons hang in rusty shackles around the walls, and the soot on the stones behind them is shaped like people.
+interject name:ilse_varga: That's him. Whoever carved it had seen him.
+if not name:ilse_varga
+  interject class:cleric: A shrine to a lord, not a god. They knelt to the wrong one.
+endif
+if flag.death_house_took_shrine_orb
+  Narrator: The statue's hand is empty now.
+  -> END
+endif
+* [Arcana DC 12] Study the orb without touching it. -> orb_arcana | orb_arcana_fail
+* Take the orb. -> orb_take
+* Leave it be. -> END
+
+~ orb_arcana
+Narrator: Plain crystal, smoky and cold, worth a few coins: the magic in this room isn't in the orb. It is in the soot on the walls, and the soot is waiting for someone to take the offering.
+-> orb_choice
+
+~ orb_arcana_fail
+Narrator: Smoky crystal, cold as a winter window. Whatever it is, it doesn't want to be understood.
+-> orb_choice
+
+~ orb_choice
+* Take the orb anyway. -> orb_take
+* Leave it be. -> END
+
+~ orb_take
+set death_house_took_shrine_orb
+give arcane_focus_orb
+Narrator: The orb comes away in {name}'s hand. Around the walls, the sooty shapes behind the skeletons peel themselves off the stone.
+if not flag.death_house_shadows_destroyed
+  combat shrine_shadows
 endif
 -> END

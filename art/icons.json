@@ -590,6 +590,7 @@
     "jewelers_tools": "lorc/cut-diamond@glass",
     "jug": "delapouite/jug@clay",
     "key": "lorc/skeleton-key@gold",
+    "durst_attic_key": "lorc/skeleton-key@iron",
     "ladder": "delapouite/ladder@wood",
     "lamp": "lorc/magic-lamp@gold",
     "lance": "skoll/mounted-knight@steel",

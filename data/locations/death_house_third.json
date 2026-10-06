@@ -2,26 +2,26 @@
   "id": "death_house_third",
   "name": "Death House, Third Floor",
   "region": "death_house",
-  "summary": "The family's private floor: the master suite and bathroom, the nursemaid's room and the nursery where her specter waits for a baby who is never coming back, and the narrow stair to the attic, guarded by a suit of armor.",
+  "summary": "The family's private floor around the balcony: the master suite and bathroom, a storage room with a broom that doesn't like being touched, the nursemaid's suite and the nursery where her specter waits for a baby who is never coming back. The stair to the attic is hidden: behind the balcony's carved paneling, guarded by a suit of armor, or behind the nursemaid's mirror.",
   "map": {
     "theme": "manor",
     "light": "dim",
     "rows": [
       "############################",
-      "#....==..#......###.=....==#",
-      "#.==.....#......###........#",
-      "#.==....=##.#######........#",
-      "#........#.................#",
+      "#....==..#......###.=....=.#",
+      "#.=......#.................#",
+      "#.......=##.#######........#",
       "#........#........#........#",
+      "#........#.................#",
       "#........#........####.#####",
       "#........#........####.#####",
       "#.................#........#",
       "####.#####........#........#",
       "#.......=#........#........#",
-      "#.==.....#........#...==...#",
-      "#.==.....#.....==.#........#",
-      "#........#.....####........#",
-      "##########.....####.......=#",
+      "#.=......###.##...#...=....#",
+      "#........#=...#==.#........#",
+      "#........#....#####........#",
+      "##########....#####.......=#",
       "############################",
       "############################"
     ]
@@ -36,15 +36,17 @@
           1
         ],
         [
-          15,
+          17,
           2
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall"
     },
     {
       "id": "dh_attic_landing",
-      "name": "Third Floor Landing",
+      "name": "Balcony",
       "cells": [
         [
           10,
@@ -54,11 +56,13 @@
           17,
           6
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/carved_panel"
     },
     {
       "id": "dh_third_hall",
-      "name": "Third Floor Hall",
+      "name": "Balcony",
       "cells": [
         [
           10,
@@ -66,9 +70,28 @@
         ],
         [
           17,
+          10
+        ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/carved_panel"
+    },
+    {
+      "id": "dh_third_storage",
+      "name": "Storage Room",
+      "cells": [
+        [
+          10,
+          12
+        ],
+        [
+          13,
           14
         ]
-      ]
+      ],
+      "light": "dark",
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall"
     },
     {
       "id": "dh_master_suite",
@@ -82,7 +105,9 @@
           8,
           8
         ]
-      ]
+      ],
+      "floor": "interior/carpet",
+      "walls": "interior/wainscot_wall"
     },
     {
       "id": "dh_bathroom",
@@ -96,7 +121,9 @@
           8,
           13
         ]
-      ]
+      ],
+      "floor": "interior/tile_floor",
+      "walls": "interior/damp_plaster"
     },
     {
       "id": "dh_nursemaid_room",
@@ -110,7 +137,9 @@
           26,
           5
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall"
     },
     {
       "id": "dh_nursery",
@@ -124,7 +153,9 @@
           26,
           14
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/wallpaper_nursery"
     }
   ],
   "spawns": {
@@ -137,8 +168,8 @@
       11
     ],
     "from_attic": [
-      14,
-      2
+      11,
+      4
     ]
   },
   "exits": [
@@ -170,7 +201,17 @@
         11,
         3
       ],
-      "label": "a narrow door"
+      "label": "a seam in the carved paneling",
+      "secret_dc": 12
+    },
+    {
+      "id": "mirror_stair_door",
+      "cell": [
+        18,
+        2
+      ],
+      "label": "the tall mirror's frame",
+      "secret_dc": 10
     },
     {
       "id": "master_suite_door",
@@ -192,7 +233,7 @@
       "id": "nursemaid_door",
       "cell": [
         18,
-        4
+        5
       ],
       "label": "the nursemaid's door"
     },
@@ -203,6 +244,14 @@
         6
       ],
       "label": "the nursery door"
+    },
+    {
+      "id": "third_storage_door",
+      "cell": [
+        12,
+        11
+      ],
+      "label": "the storage room door"
     }
   ],
   "props": [
@@ -239,12 +288,42 @@
     {
       "id": "master_hearth",
       "cell": [
-        0,
-        5
+        7,
+        0
       ],
       "kind": "examine",
       "label": "the bedroom hearth",
       "model": "fireplace"
+    },
+    {
+      "id": "master_portrait",
+      "cell": [
+        8,
+        0
+      ],
+      "kind": "examine",
+      "label": "a portrait of Gustav and Elisabeth",
+      "model": "painting"
+    },
+    {
+      "id": "master_dumbwaiter",
+      "cell": [
+        3,
+        0
+      ],
+      "kind": "examine",
+      "label": "a dumbwaiter door",
+      "model": "dumbwaiter"
+    },
+    {
+      "id": "master_tiger_rug",
+      "cell": [
+        4,
+        5
+      ],
+      "kind": "decor",
+      "label": "a rotting tiger-skin rug",
+      "model": "tiger_rug"
     },
     {
       "id": "clawfoot_tub",
@@ -257,14 +336,34 @@
       "model": "bathtub"
     },
     {
-      "id": "bath_mirror",
+      "id": "bath_stove",
       "cell": [
-        0,
+        7,
+        9
+      ],
+      "kind": "examine",
+      "label": "a small iron stove",
+      "model": "stove"
+    },
+    {
+      "id": "bath_barrel",
+      "cell": [
+        8,
         12
       ],
       "kind": "examine",
-      "label": "the mirror",
-      "model": "mirror"
+      "label": "a barrel under a dry spigot",
+      "model": "barrel"
+    },
+    {
+      "id": "third_storage_shelves",
+      "cell": [
+        10,
+        12
+      ],
+      "kind": "examine",
+      "label": "shelves of folded linen",
+      "model": "shelves"
     },
     {
       "id": "nursemaid_letters",
@@ -278,6 +377,36 @@
       "codex": "death_house_nursemaid_letters",
       "dialogue": "death_house/house:nursemaid_letters",
       "text": "Letters from Gustav Durst to the household's nursemaid, kept tied with a blue ribbon. They begin politely and stop being polite. The last is short: the mistress knows, the child must be kept quiet, and he will see that both of them are cared for. Under it, in the nursemaid's own hand, someone has written the name Walter and drawn a small, careful sun."
+    },
+    {
+      "id": "nursemaid_mirror",
+      "cell": [
+        18,
+        3
+      ],
+      "kind": "examine",
+      "label": "a full-length mirror",
+      "model": "mirror"
+    },
+    {
+      "id": "nursemaid_bed",
+      "cell": [
+        25,
+        1
+      ],
+      "kind": "decor",
+      "label": "the nursemaid's bed",
+      "model": "bed_small"
+    },
+    {
+      "id": "nursemaid_wardrobe",
+      "cell": [
+        26,
+        3
+      ],
+      "kind": "decor",
+      "label": "an empty wardrobe",
+      "model": "wardrobe"
     },
     {
       "id": "nursery_crib",
@@ -322,6 +451,21 @@
       ]
     },
     {
+      "id": "master_wardrobe_2",
+      "cell": [
+        8,
+        6
+      ],
+      "label": "a second wardrobe",
+      "model": "wardrobe",
+      "items": [
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        }
+      ]
+    },
+    {
       "id": "jewel_box",
       "cell": [
         6,
@@ -330,7 +474,7 @@
       "label": "a jewel box",
       "model": "jewel_box",
       "lock_dc": 12,
-      "gold": 35
+      "gold": 900
     },
     {
       "id": "bath_cabinet",
@@ -464,6 +608,23 @@
       "text": "She wants her baby back."
     },
     {
+      "id": "storage_broom",
+      "trigger": "enter_area:dh_third_storage",
+      "when": "not flag.death_house_broom_destroyed",
+      "flag": "death_house_broom_destroyed",
+      "monsters": [
+        {
+          "monster": "broom_of_animated_attack",
+          "cell": [
+            13,
+            13
+          ],
+          "name": "Broom"
+        }
+      ],
+      "text": "The broom against the wall has opinions about visitors."
+    },
+    {
       "id": "third_escape_swords",
       "trigger": "enter_area:dh_third_hall",
       "when": "flag.death_house_refused",
@@ -472,7 +633,7 @@
           "monster": "animated_flying_sword",
           "cell": [
             11,
-            13
+            8
           ],
           "name": "Ceremonial Blade"
         },

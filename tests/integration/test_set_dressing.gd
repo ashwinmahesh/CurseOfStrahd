@@ -188,25 +188,27 @@ func test_no_piece_overlaps_another_or_a_wall() -> void:
 			standing.append(sp)
 		for i in standing.size():
 			var a := standing[i]
-			var ra := a.texture.get_width() * a.pixel_size / 2.0
+			var ra := a.texture.get_width() * a.pixel_size * a.global_basis.x.length() / 2.0
 			var ca := board.grid.cell_at(a.global_position)
 			if board.grid.has_flag(ca, CombatGrid.WALL):
 				continue   # it stands in for the wall block itself (a camp's wagons)
-			if ra > 0.55:
+			# A building-sized piece (a cottage, a dead tree over a yard wall) may reach past walls; it clears the
+			# trees it stands among instead.
+			if ra > 0.55 and not (a.has_meta("art") and SetDressing.is_big(str(a.get_meta("art")))):
 				for dx: int in [-1, 0, 1]:
 					for dy: int in [-1, 0, 1]:
 						var nb := ca + Vector2i(dx, dy)
 						if (dx != 0 or dy != 0) and board.grid.in_bounds(nb) and board.grid.has_flag(nb, CombatGrid.WALL) \
-								and not board.house_cells.has(nb):
+								and not board.house_cells.has(nb) and _drawn(board, nb):
 							var msg := "%s: %s at %s is %.2f wide beside a wall" % [loc_id, a.texture.resource_path.get_file(), ca, ra * 2.0]
 							if not msg in problems:
 								problems.append(msg)
 			for j in range(i + 1, standing.size()):
 				var b := standing[j]
 				var cb := board.grid.cell_at(b.global_position)
-				if ca == cb or board.grid.has_flag(cb, CombatGrid.WALL):
+				if ca == cb or board.grid.has_flag(cb, CombatGrid.WALL) or not b.is_visible_in_tree():
 					continue
-				var rb := b.texture.get_width() * b.pixel_size / 2.0
+				var rb := b.texture.get_width() * b.pixel_size * b.global_basis.x.length() / 2.0
 				var d := Vector2(a.global_position.x - b.global_position.x, a.global_position.z - b.global_position.z).length()
 				if d < ra + rb - 0.15:
 					problems.append("%s: %s at %s overlaps %s at %s" % [loc_id, a.texture.resource_path.get_file(), ca,
@@ -270,3 +272,52 @@ func test_a_secret_stair_shows_only_once_found() -> void:
 	var door := village.exit_nodes.get("mansion_door", null) as Node3D
 	assert_true(door != null and door.visible, "the burgomaster's barred door is still drawn")
 	village.queue_free()
+
+
+## Whether a wall square's scenery is drawn (a big piece hides the trees it stands among).
+func _drawn(board: ArenaBoard, c: Vector2i) -> bool:
+	for n: Node3D in board.dressing.get(c, []):
+		if n.visible:
+			return true
+	return false
+
+
+## Owner report (2026-10-06): the opening road's cottage was drawn far too small. Every standing piece with a real
+## height (catalog "feet") is drawn close to it in every location, people being 6 ft (1.2 units).
+func test_pieces_are_drawn_at_their_real_size() -> void:
+	var feet := SetDressing.catalog().get("feet", {}) as Dictionary
+	var problems: Array[String] = []
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		var v := _view(loc_id)
+		await _frames(1)
+		for n in v.board.find_children("*", "Node3D", true, false):
+			if not n.has_meta("art") or not feet.has(str(n.get_meta("art"))):
+				continue
+			var art := str(n.get_meta("art"))
+			var sp: Sprite3D = n as Sprite3D if n is Sprite3D else null
+			if sp == null:
+				var inner := n.find_children("*", "Sprite3D", true, false)
+				if inner.is_empty():
+					continue
+				sp = inner[0] as Sprite3D
+			var info := SetDressing.manifest()[art] as Dictionary
+			var px := (sp as PropView).front_pixel if sp is PropView else sp.pixel_size
+			var drawn := float(info["world_height"]) * px / float(info["pixel_size"]) * sp.global_basis.y.length()
+			var real := float(feet[art]) / 5.0
+			if drawn < real * 0.7 or drawn > real * 1.35:
+				var msg := "%s: %s drawn %.2f units tall, really %.2f" % [loc_id, art, drawn, real]
+				if not msg in problems:
+					problems.append(msg)
+		v.queue_free()
+		await _frames(1)
+	assert_eq(problems, [] as Array[String], "off scale")
+	# The opening road's cottage in particular: full size, and the trees around it cleared.
+	var road := _view("into_the_mists_road")
+	await _frames(1)
+	var cottage := road.prop_nodes["edge_cottage_shutters"] as Node3D
+	var pic := cottage.find_children("*", "Sprite3D", true, false)[0] as Sprite3D
+	assert_true(pic.texture.get_height() * pic.pixel_size > 3.0, "the cottage stands about 16 ft tall")
+	for d: Vector2i in [Vector2i(-1, 0), Vector2i(0, 1), Vector2i(-1, 1)]:
+		assert_false(_drawn(road.board, Vector2i(6, 9) + d), "no tree in front of the cottage at %s" % (Vector2i(6, 9) + d))
+	road.queue_free()

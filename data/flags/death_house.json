@@ -63,7 +63,7 @@
     {
       "id": "death_house_broom_destroyed",
       "type": "bool",
-      "summary": "The animated broom in the attic storage room is destroyed (encounter storage_broom)."
+      "summary": "The animated broom in the third-floor storage room is destroyed (encounter storage_broom)."
     },
     {
       "id": "death_house_children_met",
@@ -123,22 +123,32 @@
     {
       "id": "death_house_ghouls_destroyed",
       "type": "bool",
-      "summary": "The ghoul cultists in the dormitory are destroyed (encounter dormitory_ghouls)."
+      "summary": "The ghouls in the bone-strewn passage are destroyed (encounter passage_ghouls)."
     },
     {
       "id": "death_house_grick_slain",
       "type": "bool",
-      "summary": "The grick in the well chamber is dead (encounter well_grick)."
+      "summary": "The grick in the larder is dead (encounter larder_grick)."
     },
     {
       "id": "death_house_shadows_destroyed",
       "type": "bool",
-      "summary": "The shadows in the reliquary are destroyed (encounter reliquary_shadows)."
+      "summary": "The five shadows of the Darklord's shrine are destroyed (encounter shrine_shadows, after taking the statue's orb)."
     },
     {
-      "id": "death_house_rats_scattered",
+      "id": "death_house_insects_scattered",
       "type": "bool",
-      "summary": "The rat swarms in the flooded passage are destroyed (encounter drowned_rats)."
+      "summary": "The swarm of insects in Elisabeth Durst's crypt is destroyed (encounter crypt_insects)."
+    },
+    {
+      "id": "death_house_mimic_slain",
+      "type": "bool",
+      "summary": "The mimic that was the door to the cult leaders' den is dead (encounter den_mimic)."
+    },
+    {
+      "id": "death_house_took_shrine_orb",
+      "type": "bool",
+      "summary": "The party took the smoky crystal orb from the statue in the Darklord's shrine."
     },
     {
       "id": "death_house_lore",

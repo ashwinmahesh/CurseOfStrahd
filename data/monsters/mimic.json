@@ -1,0 +1,133 @@
+{
+  "id": "mimic",
+  "name": "Mimic",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers from the SRD 5.2.1 Mimic (the 2025 Monster Manual block); not yet compared line by line with the book."
+  },
+  "size": "medium",
+  "type": "monstrosity",
+  "tags": [
+    "shapechanger"
+  ],
+  "alignment": "neutral",
+  "ac": 12,
+  "initiative": 3,
+  "hp": {
+    "average": 58,
+    "dice": "9d8+18"
+  },
+  "speed": {
+    "walk": 20
+  },
+  "abilities": {
+    "str": 17,
+    "dex": 12,
+    "con": 15,
+    "int": 5,
+    "wis": 13,
+    "cha": 8
+  },
+  "skills": {
+    "stealth": 5
+  },
+  "immunities": [
+    "acid"
+  ],
+  "condition_immunities": [
+    "prone"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "adhesive",
+      "name": "Adhesive (Object Form Only)",
+      "action": "passive",
+      "summary": "In object form it sticks to anything that touches it; a Huge or smaller creature stuck to it is Grappled (escape DC 13, with Disadvantage).",
+      "text": "The mimic adheres to anything that touches it. A Huge or smaller creature adhered to the mimic has the Grappled condition (escape DC 13). Ability checks made to escape this grapple have Disadvantage.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d8+3",
+          "type": "piercing"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "acid"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "piercing",
+          "when": "extra, against a target the mimic has Grappled (12 (2d8 + 3) Piercing in all)"
+        }
+      ],
+      "summary": "Bites for piercing plus acid damage, harder against a creature it holds.",
+      "text": "Melee Attack Roll: +5, with Advantage if the target is Grappled by the mimic, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage, or 12 (2d8 + 3) Piercing damage if the target is Grappled by the mimic, plus 4 (1d8) Acid damage."
+    },
+    {
+      "id": "pseudopod",
+      "name": "Pseudopod",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d8+3",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "acid"
+        }
+      ],
+      "summary": "Slams a target for bludgeoning plus acid damage; a Large or smaller target is Grappled (escape DC 13).",
+      "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Bludgeoning damage plus 4 (1d8) Acid damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 13).",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 13,
+          "max_size": "large"
+        }
+      ]
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "shape_shift",
+      "name": "Shape-Shift",
+      "kind": "special",
+      "summary": "Takes the shape of a Medium or Small object, or returns to its true blob form.",
+      "text": "The mimic shape-shifts to resemble a Medium or Small object while retaining its game statistics, or it returns to its true blob form. Any equipment it is wearing or carrying isn't transformed."
+    }
+  ],
+  "regions": [
+    "death_house"
+  ],
+  "ai_profile": "brute",
+  "summary": "Waits as a door or a chest until someone touches it, then holds them fast and bites."
+}

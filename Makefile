@@ -12,7 +12,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena import test lint validate ci palette capture standin sprite sprites anims portrait wireframes textures prop props ui_art icons
+.PHONY: run arena import test lint validate ci palette capture standin sprite sprites anims portrait wireframes textures prop props ui_art icons voice
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -45,6 +45,12 @@ ci: validate lint test
 
 palette:
 	python3 tools/art/build_palette.py
+
+## Spoken lines (ADR 0013): generates the clips that are missing with the pinned ElevenLabs model (audio/voice/casting.json).
+## make voice [SPEAKER="narrator madam_eva"] [LIMIT=n] [DRY=1] [MAX_USD=5] [RECAST=1] [PRUNE=1]
+voice:
+	python3 tools/audio/generate_voice.py $(if $(SPEAKER),--speaker $(SPEAKER),) $(if $(LIMIT),--limit $(LIMIT),) $(if $(DRY),--dry-run,) $(if $(MAX_USD),--max-usd $(MAX_USD),) $(if $(RECAST),--recast,) $(if $(PRUNE),--prune,)
+	$(if $(DRY),,$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null)
 
 ## Opens a window for a few seconds and writes a screenshot to captures/. LOCATION=<id> starts the story game there.
 capture:

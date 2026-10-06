@@ -1063,6 +1063,7 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 	if text != "":
 		e.log.add("narr", text, "")
 		hud.refresh_log()
+		VoiceOver.say(VoiceOver.NARRATOR, text)
 
 
 func _stop_walking(walking: Dictionary) -> void:
