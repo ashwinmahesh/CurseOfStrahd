@@ -11,6 +11,8 @@ const SLOT_NAMES := {"tome": "The Tome of Strahd", "symbol": "The Holy Symbol of
 	"ally": "The ally", "enemy": "The enemy"}
 ## The treasures as items (data/magic_items/).
 const TREASURE_ITEMS := {"tome": "tome_of_strahd", "symbol": "holy_symbol_of_ravenkind", "sword": "sunsword"}
+## Each treasure's quest (data/quests/), moved to "found" when the party gets it.
+const TREASURE_QUESTS := {"tome": "find_the_tome", "symbol": "find_the_holy_symbol", "sword": "find_the_sunsword"}
 
 
 ## {card id: card} for the whole deck.
@@ -110,12 +112,14 @@ static func treasures_at(place: String, st: StoryState) -> Array[String]:
 
 
 ## The item ids of the treasures at `place`, marking them found (they're in the party's hands from here: a loot window
-## or a gift). Sets `treasure_found_<slot>` for each.
+## or a gift). Sets `treasure_found_<slot>` for each and moves its quest to "found".
 static func take_from(place: String, st: StoryState) -> Array[String]:
 	var items: Array[String] = []
 	for slot in treasures_at(place, st):
 		st.set_flag("treasure_found_" + slot, true)
 		items.append(str(TREASURE_ITEMS[slot]))
+		if Compendium.shared().has("quests", str(TREASURE_QUESTS[slot])):
+			st.set_quest_stage(str(TREASURE_QUESTS[slot]), "found")
 	return items
 
 
