@@ -1,0 +1,63 @@
+{
+  "$id": "quest.schema.json",
+  "title": "Quest with stages for the journal",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "summary",
+    "stages"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "giver": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "journal"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "journal": {
+            "type": "string"
+          },
+          "objectives": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ends": {
+            "type": "string",
+            "enum": [
+              "",
+              "success",
+              "failure"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

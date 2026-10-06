@@ -11,6 +11,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dialogue_lint  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMAS = ROOT / "data" / "schemas"
 
@@ -19,7 +22,7 @@ FOLDERS = {
     "classes": "class", "subclasses": "subclass", "species": "species",
     "backgrounds": "background", "feats": "feat", "spells": "spell",
     "items": "item", "magic_items": "item", "monsters": "monster", "conditions": "condition", "pregens": "pregen",
-    "encounters": "encounter",
+    "encounters": "encounter", "locations": "location", "npcs": "npc", "quests": "quest",
 }
 
 TYPES = {
@@ -246,7 +249,186 @@ def semantic_checks(data):
             band = "high" if xp >= high else ("moderate" if xp >= mod else "low")
             if band != enc["difficulty"]:
                 errors.append(f"encounters/{eid}: {xp} XP is a {band} encounter for {len(enc['party'])} level {level} characters, not {enc['difficulty']}")
+    story_checks(data, errors, need)
     return errors, pending
+
+
+OPEN_FLOOR = ".~1234"
+
+
+def story_checks(data, errors, need):
+    """Locations, NPCs, quests, the flag registry and every .dialogue file (ADR 0008, ADR 0009)."""
+    flags = {}
+    for f in sorted((ROOT / "data" / "flags").glob("*.json")) if (ROOT / "data" / "flags").exists() else []:
+        try:
+            reg = json.loads(f.read_text())
+        except json.JSONDecodeError as e:
+            errors.append(f"data/flags/{f.name}: invalid JSON: {e}")
+            continue
+        for fl in reg.get("flags", []):
+            if not isinstance(fl, dict) or "id" not in fl or fl.get("type") not in ("bool", "int", "string"):
+                errors.append(f"data/flags/{f.name}: each flag needs an id and a type (bool, int, string): {fl}")
+                continue
+            if fl["id"] in flags:
+                errors.append(f"data/flags/{f.name}: flag '{fl['id']}' also registered in {flags[fl['id']]}")
+            flags[fl["id"]] = f.name
+    flags_read, flags_set = {}, {}
+
+    def read(flag_ids, where):
+        for fid in flag_ids:
+            flags_read.setdefault(fid, []).append(where)
+
+    def cond(expr, where):
+        if expr:
+            read(dialogue_lint.conditions_flags(expr), where)
+
+    npcs, quests, locations = data["npcs"], data["quests"], data["locations"]
+    encounter_ids = set()
+    dialogue_refs = []
+    for lid, loc in locations.items():
+        rows = loc["map"]["rows"]
+        w = f"locations/{lid}"
+
+        def on_floor(cell, what, allow_wall=False):
+            x, z = cell
+            if z >= len(rows) or x >= len(rows[z]):
+                errors.append(f"{w}: {what} at {cell} is outside the map")
+                return
+            if rows[z][x] not in OPEN_FLOOR and not (allow_wall and rows[z][x] in "#="):
+                errors.append(f"{w}: {what} at {cell} isn't on open floor ('{rows[z][x]}')")
+
+        area_ids = set()
+        for a in loc.get("areas", []):
+            area_ids.add(a["id"])
+            for c in a["cells"]:
+                if c[1] >= len(rows) or c[0] >= len(rows[0]):
+                    errors.append(f"{w}: area {a['id']} corner {c} is outside the map")
+        for name, c in loc.get("spawns", {}).items():
+            on_floor(c, f"spawn '{name}'")
+        if "default" not in loc.get("spawns", {}):
+            errors.append(f"{w}: needs a 'default' spawn")
+        for ex in loc.get("exits", []):
+            on_floor(ex["cell"], f"exit {ex['id']}", allow_wall=True)
+            if ex["to"] not in locations:
+                errors.append(f"{w}: exit {ex['id']} leads to unknown location '{ex['to']}'")
+            elif ex.get("spawn") and ex["spawn"] not in locations[ex["to"]].get("spawns", {}):
+                errors.append(f"{w}: exit {ex['id']} uses spawn '{ex['spawn']}' that {ex['to']} doesn't have")
+            cond(ex.get("when", ""), w)
+        for d in loc.get("doors", []):
+            on_floor(d["cell"], f"door {d['id']}")
+            cond(d.get("when", ""), w)
+            if d.get("key"):
+                need("item", data["items"], d["key"], f"{w} door {d['id']} key")
+            if d.get("flag"):
+                flags_set.setdefault(d["flag"], []).append(w)
+        for pr in loc.get("props", []):
+            cond(pr.get("when", ""), w)
+            if pr.get("item"):
+                need("item", data["items"], pr["item"], f"{w} prop {pr['id']}")
+            if pr.get("flag"):
+                flags_set.setdefault(pr["flag"], []).append(w)
+            if pr.get("dialogue"):
+                dialogue_refs.append((pr["dialogue"], w))
+        for ct in loc.get("containers", []):
+            on_floor(ct["cell"], f"container {ct['id']}", allow_wall=True)
+            for it in ct.get("items", []):
+                need("item", data["items"], it["id"], f"{w} container {ct['id']}")
+            if ct.get("key"):
+                need("item", data["items"], ct["key"], f"{w} container {ct['id']} key")
+            cond(ct.get("when", ""), w)
+            if ct.get("flag"):
+                flags_set.setdefault(ct["flag"], []).append(w)
+        for tr in loc.get("traps", []):
+            for c in tr["cells"]:
+                on_floor(c, f"trap {tr['id']}")
+            cond(tr.get("when", ""), w)
+            if tr.get("flag"):
+                flags_set.setdefault(tr["flag"], []).append(w)
+        for n in loc.get("npcs", []):
+            on_floor(n["cell"], f"npc {n['npc']}")
+            if n["npc"] not in npcs:
+                errors.append(f"{w}: unknown npc '{n['npc']}'")
+            if n.get("dialogue"):
+                dialogue_refs.append((n["dialogue"], w))
+            cond(n.get("when", ""), w)
+        for en in loc.get("encounters", []):
+            encounter_ids.add(en["id"])
+            cond(en.get("when", ""), w)
+            trig = en["trigger"]
+            if trig.startswith("enter_area:") and trig.split(":", 1)[1] not in area_ids:
+                errors.append(f"{w}: encounter {en['id']} triggers on unknown area '{trig.split(':', 1)[1]}'")
+            if trig.startswith("flag:"):
+                read([trig.split(":", 1)[1]], w)
+            if en.get("flag"):
+                flags_set.setdefault(en["flag"], []).append(w)
+            for m in en["monsters"]:
+                if m["monster"] not in data["monsters"]:
+                    errors.append(f"{w}: encounter {en['id']} uses unknown monster '{m['monster']}'")
+                else:
+                    on_floor(m["cell"], f"encounter {en['id']} monster")
+    for nid, n in npcs.items():
+        if n.get("monster") and n["monster"] not in data["monsters"]:
+            errors.append(f"npcs/{nid}: unknown monster '{n['monster']}'")
+    # Dialogue files.
+    narrative = ROOT / "narrative"
+    parsed = {}
+    for f in sorted(narrative.rglob("*.dialogue")) if narrative.exists() else []:
+        key = str(f.relative_to(narrative).with_suffix(""))
+        parsed[key] = dialogue_lint.parse_file(f)
+    names = {"narrator", "player"}
+    for nid, n in npcs.items():
+        names.add(nid)
+        names.add(n["name"].lower())
+        names.add(n["name"].split()[0].lower())
+    for pid, pg in data["pregens"].items():
+        names.add(pid)
+        names.add(pg["name"].split()[0].lower())
+    for key, p in parsed.items():
+        w = f"narrative/{key}.dialogue"
+        errors.extend(f"narrative/{e}" if not e.startswith("narrative") else e for e in
+                      [f"{key.rsplit('/', 1)[0]}/{e}" for e in p["errors"]])
+        for target, where in p["jumps"]:
+            if target == "END":
+                continue
+            fkey, _, node = target.rpartition(":") if ":" in target and "/" in target else ("", "", target)
+            if fkey:
+                if fkey not in parsed or node not in parsed[fkey]["nodes"]:
+                    errors.append(f"narrative/{where}: jump to unknown '{target}'")
+            elif node not in p["nodes"]:
+                errors.append(f"narrative/{where}: jump to unknown node '{node}'")
+        for sp, where in p["speakers"]:
+            if sp.lower() not in names:
+                errors.append(f"narrative/{where}: unknown speaker '{sp}' (an npc id or name, Narrator or Player)")
+        for it, where in p["items"]:
+            need("item", data["items"], it, f"narrative/{where}")
+        for qid, stage, where in p["quests"]:
+            if qid not in quests:
+                errors.append(f"narrative/{where}: unknown quest '{qid}'")
+            elif stage not in {s["id"] for s in quests[qid]["stages"]}:
+                errors.append(f"narrative/{where}: quest {qid} has no stage '{stage}'")
+        for enc, where in p["encounters"]:
+            if enc not in encounter_ids:
+                errors.append(f"narrative/{where}: combat '{enc}' isn't an encounter in any location")
+        for fid, wh in p["flags_read"].items():
+            flags_read.setdefault(fid, []).extend(wh)
+        for fid, wh in p["flags_set"].items():
+            flags_set.setdefault(fid, []).extend(wh)
+    for ref, w in dialogue_refs:
+        fkey, _, node = ref.rpartition(":")
+        if fkey not in parsed:
+            errors.append(f"{w}: dialogue file '{fkey}' doesn't exist")
+        elif node not in parsed[fkey]["nodes"]:
+            errors.append(f"{w}: dialogue {fkey} has no node '{node}'")
+    for fid, wh in sorted(flags_read.items()):
+        if fid not in flags:
+            errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")
+        if fid not in flags_set:
+            errors.append(f"{wh[0]}: flag '{fid}' is read but never set")
+    for fid, wh in sorted(flags_set.items()):
+        if fid not in flags:
+            errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")
+        if fid not in flags_read:
+            errors.append(f"{wh[0]}: flag '{fid}' is set but never read")
 
 
 def main():

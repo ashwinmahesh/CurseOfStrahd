@@ -1,0 +1,60 @@
+{
+  "$id": "npc.schema.json",
+  "title": "Named NPC",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "summary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "portrait": {
+      "type": "string"
+    },
+    "sprite": {
+      "type": "string"
+    },
+    "attitude": {
+      "type": "string",
+      "enum": [
+        "hostile",
+        "indifferent",
+        "friendly"
+      ]
+    },
+    "voice": {
+      "type": "string"
+    },
+    "monster": {
+      "type": "string"
+    },
+    "guest": {
+      "type": "boolean"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "region": {
+      "type": "string"
+    },
+    "pronouns": {
+      "type": "string"
+    }
+  }
+}

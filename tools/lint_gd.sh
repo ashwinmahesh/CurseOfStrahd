@@ -12,6 +12,6 @@ while IFS= read -r f; do
     echo "$out" | sed 's/^/        /'
     status=1
   fi
-done < <(find rules combat -name "*.gd" | sort)
+done < <(find rules combat story -name "*.gd" | sort)
 echo "$count scripts checked"
 exit $status
