@@ -92,7 +92,8 @@ func class_level_of(class_id: String) -> int:
 
 
 func proficiency_bonus() -> int:
-	return Abilities.proficiency_bonus(maxi(1, character_level()))
+	# Ioun Stone of Mastery: +1.
+	return Abilities.proficiency_bonus(maxi(1, character_level())) + (1 if has_flag("proficiency_plus_1") else 0)
 
 
 func class_name_of(class_id: String) -> String:
@@ -227,7 +228,13 @@ func item_modifiers() -> Array[Modifier]:
 			continue
 		var iid := str(e["id"])
 		var data := compendium.item_data(iid)
-		var mods := data.get("modifiers", []) as Array
+		var mods := (data.get("modifiers", []) as Array).duplicate()
+		# Properties this one item rolled (an artifact's), always "while attuned".
+		for prop: Variant in e.get("artifact_properties", []):
+			for pm: Variant in (prop as Dictionary).get("modifiers", []):
+				var pmd := (pm as Dictionary).duplicate()
+				pmd["attuned_only"] = true
+				mods.append(pmd)
 		if mods.is_empty():
 			continue
 		var attuned_ok := not MagicItems.needs_attunement(data) or iid in attuned
@@ -242,6 +249,9 @@ func item_modifiers() -> Array[Modifier]:
 				continue
 			# Only alongside other items worn (Hammer of Thunderbolts with a Belt of Giant Strength and Gauntlets of Ogre Power).
 			if d.has("requires_worn") and not _wearing_all(d["requires_worn"] as Array):
+				continue
+			# Only while the item still holds a gem of that kind (Helm of Brilliance's rubies).
+			if d.has("requires_gem") and int((e.get("gems", {}) as Dictionary).get(str(d["requires_gem"]), 0)) <= 0:
 				continue
 			# Two of the same item don't stack (one Ring of Protection counts once).
 			var dedupe := "%s|%s" % [iid, JSON.stringify(d)]
@@ -379,13 +389,41 @@ func on_dawn(dice: DiceRoller) -> Array[String]:
 				e["charges"] = mini(cap, have + n)
 				lines.append("%s's %s regains %d charges (%d of %d)" % [name, data.get("name", ""), int(e["charges"]) - have, int(e["charges"]), cap])
 		_reset_uses(e, data, ["dawn"])
+		# "Once every N days": a dawn closer.
+		var cds := e.get("cooldowns", {}) as Dictionary
+		for pid: String in cds.keys():
+			cds[pid] = int(cds[pid]) - 1
+			if int(cds[pid]) <= 0:
+				cds.erase(pid)
+				(e.get("uses", {}) as Dictionary).erase(pid)
+		_reset_budgets(e, data, "dawn")
+		# A Bag of Devouring swallows whatever is inside it each day.
+		if bool((data.get("container", {}) as Dictionary).get("devours", false)) and not (e.get("contents", []) as Array).is_empty():
+			e["contents"] = []
+			lines.append("Everything in %s's bag is gone" % name)
 	return lines
+
+
+## Running time of toggles (Boots of Speed, Winged Boots, Cloak of Invisibility) comes back.
+func _reset_budgets(e: Dictionary, data: Dictionary, when: String) -> void:
+	if not e.has("budget_used"):
+		return
+	for p: Variant in data.get("powers", []):
+		var pw := p as Dictionary
+		var reset := str(pw.get("budget_reset", "long"))
+		if reset == "never":
+			continue
+		if when == "dawn" and reset == "long" and str(data.get("template_id", data.get("id", ""))) == "boots_of_speed":
+			continue
+		(e["budget_used"] as Dictionary).erase(str(pw.get("id", "")))
 
 
 ## Long and Short Rests bring back powers used "per long rest" or "per short rest".
 func _reset_item_uses(per: Array[String]) -> void:
 	for e in inventory:
 		var data := compendium.item_data(str(e["id"]))
+		if "long" in per:
+			_reset_budgets(e, data, "long")
 		var spec := MagicItems.charges(data)
 		if not spec.is_empty() and str(spec.get("when", "dawn")) in per:
 			e["charges"] = MagicItems.max_charges(data, e)
@@ -1194,12 +1232,24 @@ func base_ability_parts(ab: StringName) -> Array[Dictionary]:
 	var running := base
 	var grouped := {}
 	var order: Array[String] = []
-	for inc in _increases:
-		if str(inc["ability"]) != str(ab):
+	# Manuals and tomes (2024 DMG): +2 to a score and to its maximum, for good.
+	var raise := 0
+	var boons: Array[Dictionary] = []
+	for bv: Variant in build.get("item_boons", []):
+		var bd := bv as Dictionary
+		if str(bd.get("ability", "")) == str(ab):
+			raise += int(bd.get("max_raise", 0))
+			boons.append(bd)
+	var all_incs: Array = _increases.duplicate()
+	for bd2 in boons:
+		all_incs.append({"ability": str(ab), "amount": int(bd2.get("value", 2)), "max": 20, "label": str(bd2.get("source", "Magic book"))})
+	for inc: Variant in all_incs:
+		var incd := inc as Dictionary
+		if str(incd["ability"]) != str(ab):
 			continue
-		var gain := mini(int(inc["amount"]), maxi(0, int(inc["max"]) - running))
+		var gain := mini(int(incd["amount"]), maxi(0, int(incd["max"]) + raise - running))
 		running += gain
-		var label := str(inc["label"])
+		var label := str(incd["label"])
 		if not grouped.has(label):
 			grouped[label] = 0
 			order.append(label)
@@ -1404,10 +1454,14 @@ func add_item(item_id: String, qty: int = 1, state: Dictionary = {}) -> void:
 			for k: String in state:
 				if not k in ["id", "qty", "slot"]:
 					entry[k] = (state[k] as Variant) if not (state[k] is Dictionary or state[k] is Array) else state[k].duplicate(true)
-			if MagicItems.has_charges(data) and not entry.has("charges"):
-				entry["charges"] = MagicItems.starting_charges(data, null)
-				if str(MagicItems.charges(data).get("max", "")).contains("d"):
-					entry["max_charges"] = int(entry["charges"])
+			# A new item: its charges, gems, beads, patches or artifact properties (rolled with a roller seeded by what it is,
+			# so the same item found the same way starts the same; treasure passes its own rolled state).
+			if MagicItems.is_magic(data) and not entry.has("made"):
+				var fresh := MagicItems.init_state(data, DiceRoller.new(hash("%s:%d:%s" % [item_id, inventory.size(), name])), compendium)
+				for k2: String in fresh:
+					if not entry.has(k2):
+						entry[k2] = fresh[k2]
+				entry["made"] = true
 			inventory.append(entry)
 	_item_mods_key = ""
 
@@ -1625,15 +1679,104 @@ func _speed_adjustments(b: Breakdown) -> void:
 	if armor.is_empty():
 		return
 	var need := int((armor["armor"] as Dictionary).get("strength", 0))
-	if need > 0 and ability_score(&"str") < need:
+	if need > 0 and ability_score(&"str") < need and not has_flag("speed_not_reduced"):
 		b.add("%s (needs Strength %d)" % [armor["name"], need], -10)
 
 
 func carried_weight() -> float:
 	var total := 0.0
 	for entry in inventory:
-		total += float(compendium.item_data(str(entry["id"])).get("weight_lb", 0.0)) * int(entry["qty"])
+		var data := compendium.item_data(str(entry["id"]))
+		total += float(data.get("weight_lb", 0.0)) * int(entry["qty"])
+		# What's inside a container counts, unless it's extradimensional (a Bag of Holding always weighs 5 lb).
+		if not bool((data.get("container", {}) as Dictionary).get("weightless", false)):
+			total += _contents_weight(entry)
 	return total
+
+
+# --- Containers (Bag of Holding, Heward's Handy Haversack, Portable Hole, Efficient Quiver) ---------------
+
+const FOOD: Array[String] = ["ration", "dream_pastry", "goodberry", "bead_of_nourishment"]
+
+
+func _contents_weight(entry: Dictionary) -> float:
+	var w := 0.0
+	for c: Variant in entry.get("contents", []):
+		var cd := c as Dictionary
+		w += float(compendium.item_data(str(cd["id"])).get("weight_lb", 0.0)) * int(cd.get("qty", 1))
+	return w
+
+
+## The first carried container entry with this id ({} if none).
+func container_entry(container_id: String) -> Dictionary:
+	var e := entry_of(container_id)
+	return e if not e.is_empty() and compendium.item_data(container_id).has("container") else {}
+
+
+## What a container holds: [{id, qty, ...state}].
+func contents_of(container_id: String) -> Array:
+	return container_entry(container_id).get("contents", []) as Array
+
+
+## Puts one `item_id` from the pack into the container. "" on success, else why not (too heavy, the wrong kind of
+## thing). Putting one extradimensional space in another tears both open: both are destroyed with all they held.
+## A Bag of Devouring eats food.
+func put_in(container_id: String, item_id: String) -> String:
+	var ce := container_entry(container_id)
+	if ce.is_empty():
+		return "No such container"
+	if container_id == item_id and entry_of(item_id) == ce:
+		return "It can't hold itself"
+	var spec := compendium.item_data(container_id).get("container", {}) as Dictionary
+	var data := compendium.item_data(item_id)
+	var only := spec.get("only", []) as Array
+	if not only.is_empty() and not str(data.get("category", "")) in only:
+		return "It only holds %s" % " and ".join(only)
+	var weight := _contents_weight(ce) + float(data.get("weight_lb", 0.0))
+	if weight > float(spec.get("capacity_lb", 0)):
+		return "Too heavy: it holds %d lb" % int(spec.get("capacity_lb", 0))
+	if bool(spec.get("extradimensional", false)) and bool((data.get("container", {}) as Dictionary).get("extradimensional", false)):
+		remove_one(item_id)
+		ce["contents"] = []
+		remove_one(container_id)
+		return "rift"
+	var st := remove_one(item_id)
+	if bool(spec.get("devours", false)) and (item_id in FOOD or str(data.get("category", "")) == "consumable"):
+		return "devoured"
+	if not ce.has("contents"):
+		ce["contents"] = []
+	var stored := st.duplicate()
+	stored["id"] = item_id
+	stored["qty"] = 1
+	(ce["contents"] as Array).append(stored)
+	return ""
+
+
+func _was_stackable(item_id: String) -> bool:
+	return bool(compendium.item_data(item_id).get("stackable", false))
+
+
+## Takes the item at `index` out of the container and back into the pack.
+func take_out(container_id: String, index: int) -> bool:
+	var ce := container_entry(container_id)
+	var items := ce.get("contents", []) as Array
+	if index < 0 or index >= items.size():
+		return false
+	var st := (items[index] as Dictionary).duplicate()
+	items.remove_at(index)
+	add_item(str(st["id"]), int(st.get("qty", 1)), st)
+	return true
+
+
+## Whether the character carries `item_id`, in the pack or inside a container.
+func carries(item_id: String) -> bool:
+	if not entry_of(item_id).is_empty():
+		return true
+	for e in inventory:
+		for c: Variant in e.get("contents", []):
+			if str((c as Dictionary)["id"]) == item_id:
+				return true
+	return false
 
 
 ## Attack options for the sheet: every weapon carried plus an Unarmed Strike.

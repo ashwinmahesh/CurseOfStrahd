@@ -191,6 +191,8 @@ func _compute(c: Creature) -> void:
 		if m.applies_when(situation):
 			damage_bonus.add_nonzero(m.source_name, c.mod_value(m, ctx))
 	for m in c.modifiers_for(&"crit_range"):
+		if not m.applies_when(situation):
+			continue
 		var v := c.mod_value(m, ctx)
 		if v < crit_range:
 			crit_range = v

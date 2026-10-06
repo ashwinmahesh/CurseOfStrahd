@@ -703,6 +703,15 @@
           "bead": {
             "type": "string",
             "description": "Necklace of Prayer Beads: the bead type the power needs on the necklace."
+          },
+          "budget_reset": {
+            "type": "string",
+            "enum": [
+              "long",
+              "dawn",
+              "never"
+            ],
+            "description": "When a budget_rounds toggle's time comes back (default: a Long Rest or dawn)."
           }
         },
         "additionalProperties": false

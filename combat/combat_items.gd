@@ -202,7 +202,14 @@ func power_why(c: Combatant, p: Dictionary, level: int = 0) -> String:
 		return "Not enough charges (%d left, needs %d)" % [charges_of(p), need]
 	var uses := power.get("uses", {}) as Dictionary
 	if not uses.is_empty() and uses_spent(p) >= int(uses.get("count", 1)):
+		var cd := int(((p["entry"] as Dictionary).get("cooldowns", {}) as Dictionary).get(str(power["id"]), 0))
+		if cd > 0:
+			return "Ready again in %d day%s" % [cd, "" if cd == 1 else "s"]
 		return "Used (comes back %s)" % _per_text(str(uses.get("per", "dawn")))
+	var budget := int(power.get("budget_rounds", 0))
+	if budget > 0 and int(((p["entry"] as Dictionary).get("budget_used", {}) as Dictionary).get(str(power["id"]), 0)) >= budget \
+			and not toggled(c, iid, str(power["id"])):
+		return "Its magic is spent until %s" % ("never" if str(power.get("budget_reset", "")) == "never" else "a Long Rest")
 	if int(power.get("needs_charges", 0)) > charges_of(p) and not (bool(power.get("toggle", false)) and toggled(c, iid, str(power["id"]))):
 		return "No charges left"
 	if bool(power.get("scroll", false)):
@@ -243,6 +250,12 @@ static func spend_use(p: Dictionary) -> void:
 	var u := entry["uses"] as Dictionary
 	var pid := str((p["power"] as Dictionary).get("id", ""))
 	u[pid] = int(u.get(pid, 0)) + 1
+	# "Once every N days" (Figurines of Wondrous Power): a countdown of dawns.
+	var per := str(((p["power"] as Dictionary).get("uses", {}) as Dictionary).get("per", ""))
+	if per.begins_with("dawns:"):
+		if not entry.has("cooldowns"):
+			entry["cooldowns"] = {}
+		(entry["cooldowns"] as Dictionary)[pid] = int(per.substr(6))
 
 
 static func _per_text(per: String) -> String:
@@ -647,6 +660,8 @@ static func make_power_effect(c: Combatant, item_id: String, data: Dictionary, p
 	var fx := Effect.new(str(power.get("name", data.get("name", ""))) if str(power.get("name", "")) != "" else str(data.get("name", "")), &"item", item_id)
 	fx.stack_key = toggle_key(item_id, str(power.get("id", "")))
 	fx.caster_id = c.id
+	for cond: Variant in power.get("conditions_on", []):
+		fx.conditions.append(StringName(str(cond)))
 	for md: Variant in power.get("modifiers", []):
 		var d := (md as Dictionary).duplicate(true)
 		var w := d.get("when", {}) as Dictionary
@@ -692,6 +707,11 @@ func detach_light(c: Combatant, key: String) -> void:
 ## Moon-Touched Sword in the dark).
 func combat_started() -> void:
 	var e := enc()
+	# Toggles left on from an earlier fight (a Flame Tongue still ablaze) start each fight off.
+	for c0 in e.combatants:
+		for fx: Effect in c0.creature.effects.duplicate():
+			if bool(fx.data.get("item_toggle", false)) and fx.ends == Effect.Ends.NEVER:
+				c0.creature.remove_effect(fx)
 	for c in e.combatants:
 		for it in active(c):
 			var data := it["data"] as Dictionary
@@ -1024,7 +1044,26 @@ func surprise_filter(ids: Array) -> Array:
 
 
 func turn_start(c: Combatant) -> void:
+	_count_budgets(c)
 	specials.turn_start(c)
+
+
+## Toggles with a limited running time (Boots of Speed's 10 minutes, Winged Boots' 4 hours): a round used each turn.
+func _count_budgets(c: Combatant) -> void:
+	for p in powers(c):
+		var power := p["power"] as Dictionary
+		var budget := int(power.get("budget_rounds", 0))
+		if budget <= 0 or not toggled(c, str(p["item_id"]), str(power["id"])):
+			continue
+		var entry := p["entry"] as Dictionary
+		if not entry.has("budget_used"):
+			entry["budget_used"] = {}
+		var used := entry["budget_used"] as Dictionary
+		var pid := str(power["id"])
+		used[pid] = int(used.get(pid, 0)) + 1
+		if int(used[pid]) >= budget:
+			c.creature.remove_effect(toggle_effect(c, str(p["item_id"]), pid))
+			enc().log.add("info", "%s's %s is spent for now" % [c.name(), (p["data"] as Dictionary).get("name", "")], c.id)
 
 
 func turn_end(c: Combatant) -> void:

@@ -10,11 +10,7 @@
   "cost_gp": 40000,
   "magic": {
     "rarity": "very_rare",
-    "attunement": true,
-    "charges": {
-      "max": 240,
-      "when": "never"
-    }
+    "attunement": true
   },
   "theme": "relics",
   "icon": "candle",
@@ -27,9 +23,11 @@
       "off_cost": "magic",
       "custom_light": {
         "bright": 0,
-        "dim": 5
+        "dim": 30
       },
-      "text": "While it burns (up to 4 hours in all), you and your allies within 30 ft have Advantage on attack rolls, saves and checks, and a Cleric or Druid within 30 ft can cast level 1 spells without slots."
+      "text": "While it burns (up to 4 hours in all), you and your allies within 30 ft have Advantage on attack rolls, saves and checks, and a Cleric or Druid within 30 ft can cast level 1 spells without slots.",
+      "budget_rounds": 2400,
+      "budget_reset": "never"
     },
     {
       "id": "gate",

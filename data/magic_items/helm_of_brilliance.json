@@ -23,6 +23,11 @@
     {
       "stat": "flag",
       "value": "helm_of_brilliance"
+    },
+    {
+      "stat": "resistance",
+      "value": "fire",
+      "requires_gem": "ruby"
     }
   ],
   "powers": [
@@ -61,11 +66,19 @@
     {
       "id": "flame_weapon",
       "name": "Flaming weapon",
-      "cost": "bonus",
+      "cost": "magic",
       "toggle": true,
       "off_cost": "bonus",
-      "needs_gem": "ruby",
-      "text": "Bonus Action (while it has rubies): a weapon you hold bursts into flame, an extra 1d6 Fire on hits."
+      "needs_gem": "fire_opal",
+      "text": "Bonus Action (while it has rubies): a weapon you hold bursts into flame, an extra 1d6 Fire on hits.",
+      "modifiers": [
+        {
+          "stat": "extra_damage",
+          "dice": "1d6",
+          "type": "fire",
+          "on": "weapon"
+        }
+      ]
     }
   ],
   "weapon_rules": {

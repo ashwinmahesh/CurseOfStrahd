@@ -282,3 +282,120 @@ static func recipes_of(item: Dictionary) -> Dictionary:
 			"duration": item.get("duration", {"kind": "instantaneous"}), "tags": ["healing"] if heals else ["buff"],
 			"components": {}}
 	return out
+
+
+# --- A new item's own state ----------------------------------------------------------------------------
+
+## Prayer bead types (2024 DMG, d20): 1-6 Blessing, 7-12 Curing, 13-16 Favor, 17-18 Smiting, 19 Summons, 20 Wind Walking.
+const BEADS: Array[String] = ["blessing", "blessing", "blessing", "blessing", "blessing", "blessing", "curing", "curing", "curing",
+	"curing", "curing", "curing", "favor", "favor", "favor", "favor", "smiting", "smiting", "summons", "wind_walking"]
+## Robe of Useful Items: the six pairs it always has, then 4d4 rolled on its table (d100 bands, condensed to equal odds).
+const ROBE_FIXED: Array[String] = ["dagger", "dagger", "bullseye_lantern", "bullseye_lantern", "mirror", "mirror", "pole", "pole",
+	"rope", "rope", "sack", "sack"]
+const ROBE_RANDOM: Array[String] = ["bag_of_100_gp", "silver_coffer", "iron_door", "ten_gems", "wooden_ladder", "riding_horse", "pit",
+	"potions_of_healing", "rowboat", "spell_scroll", "mastiffs", "window", "portable_ram"]
+## Artifact properties (2024 DMG "Artifact Properties", condensed to what the game can play): each is modifiers.
+const ARTIFACT_PROPERTIES := {
+	"minor_beneficial": [
+		{"text": "proficiency in Perception", "modifiers": [{"stat": "proficiency", "kind": "skill", "value": "perception"}]},
+		{"text": "Immunity to disease", "modifiers": [{"stat": "flag", "value": "immune_disease"}]},
+		{"text": "you can't be Charmed or Frightened", "modifiers": [{"stat": "condition_immunity", "value": "charmed"}, {"stat": "condition_immunity", "value": "frightened"}]},
+		{"text": "Resistance to Fire damage", "modifiers": [{"stat": "resistance", "value": "fire"}]},
+		{"text": "Resistance to Necrotic damage", "modifiers": [{"stat": "resistance", "value": "necrotic"}]},
+		{"text": "Darkvision 60 ft", "modifiers": [{"stat": "darkvision", "value": 60}]},
+		{"text": "Advantage on Initiative", "modifiers": [{"stat": "advantage", "on": "initiative"}]},
+		{"text": "proficiency in Insight", "modifiers": [{"stat": "proficiency", "kind": "skill", "value": "insight"}]}],
+	"major_beneficial": [
+		{"text": "+2 Strength (to 24)", "modifiers": [{"stat": "ability", "ability": "str", "value": 2, "max": 24}]},
+		{"text": "+2 Constitution (to 24)", "modifiers": [{"stat": "ability", "ability": "con", "value": 2, "max": 24}]},
+		{"text": "+2 Wisdom (to 24)", "modifiers": [{"stat": "ability", "ability": "wis", "value": 2, "max": 24}]},
+		{"text": "+1 to Armor Class", "modifiers": [{"stat": "ac", "value": 1}]},
+		{"text": "regain 1d6 Hit Points at the start of each of your turns", "modifiers": [{"stat": "flag", "value": "artifact_regeneration"}]},
+		{"text": "Immunity to Poison damage", "modifiers": [{"stat": "immunity", "value": "poison"}]}],
+	"minor_detrimental": [
+		{"text": "Disadvantage on Perception checks", "modifiers": [{"stat": "disadvantage", "on": "check:perception"}]},
+		{"text": "Vulnerability to Radiant damage", "modifiers": [{"stat": "vulnerability", "value": "radiant"}]},
+		{"text": "-5 ft Speed", "modifiers": [{"stat": "speed", "value": -5}]},
+		{"text": "Disadvantage on Persuasion checks", "modifiers": [{"stat": "disadvantage", "on": "check:persuasion"}]}],
+	"major_detrimental": [
+		{"text": "-2 Charisma", "modifiers": [{"stat": "ability", "ability": "cha", "value": -2}]},
+		{"text": "Disadvantage on Death Saving Throws", "modifiers": [{"stat": "disadvantage", "on": "death_save"}]},
+		{"text": "Vulnerability to Psychic damage", "modifiers": [{"stat": "vulnerability", "value": "psychic"}]}],
+}
+
+
+## The state a newly made item starts with: charges, a Helm of Brilliance's gems, prayer beads, a Robe of Useful Items'
+## patches, a Ring of Spell Storing's stored spells, an artifact's random properties.
+static func init_state(item: Dictionary, dice: DiceRoller, comp: Compendium = null) -> Dictionary:
+	var st := {}
+	if has_charges(item):
+		st["charges"] = starting_charges(item, dice)
+		if str(charges(item).get("max", "")).contains("d"):
+			st["max_charges"] = int(st["charges"])
+	var tid := str(item.get("template_id", item.get("id", "")))
+	match tid:
+		"helm_of_brilliance":
+			st["gems"] = {"diamond": dice.roll_expr("1d10", "Diamonds")["total"], "ruby": dice.roll_expr("2d10", "Rubies")["total"],
+				"fire_opal": dice.roll_expr("3d10", "Fire opals")["total"], "opal": dice.roll_expr("4d10", "Opals")["total"]}
+		"necklace_of_prayer_beads":
+			var beads: Array = []
+			for i in int(dice.roll_expr("1d4+2", "Prayer beads")["total"]):
+				beads.append(BEADS[dice.roll_one(20, "Bead type") - 1])
+			st["beads"] = beads
+		"robe_of_useful_items":
+			var patches: Array = ROBE_FIXED.duplicate()
+			for i in int(dice.roll_expr("4d4", "Patches")["total"]):
+				patches.append(ROBE_RANDOM[dice.roll_one(ROBE_RANDOM.size(), "Patch") - 1])
+			st["patches"] = patches
+		"ring_of_spell_storing":
+			var levels := maxi(0, int(dice.roll_expr("1d6-1", "Stored spell levels")["total"]))
+			st["stored"] = _random_stored(levels, dice, comp)
+	var art := item.get("artifact", {}) as Dictionary
+	if not art.is_empty():
+		var props: Array = []
+		var counts := art.get("properties", {}) as Dictionary
+		for kind: String in counts:
+			var table := ARTIFACT_PROPERTIES.get(kind, []) as Array
+			for i in int(counts[kind]):
+				if not table.is_empty():
+					props.append(table[dice.roll_one(table.size(), "Artifact property") - 1])
+		st["artifact_properties"] = props
+	return st
+
+
+## Spells someone stored in a ring found as treasure: random level 1-5 spells adding up to `levels` (DC 15, +7).
+static func _random_stored(levels: int, dice: DiceRoller, comp: Compendium) -> Array:
+	var out: Array = []
+	if comp == null or levels <= 0:
+		return out
+	var left := levels
+	var guard := 0
+	while left > 0 and guard < 20:
+		guard += 1
+		var lvl := dice.roll_one(mini(5, left), "Stored spell level")
+		var pool := comp.spells_for("", lvl)
+		if pool.is_empty():
+			break
+		var sp := pool[dice.roll_one(pool.size(), "Stored spell") - 1]
+		out.append({"spell": str(sp["id"]), "level": lvl, "dc": 15, "attack": 7, "ability": "int"})
+		left -= lvl
+	return out
+
+
+# --- Spell Scrolls --------------------------------------------------------------------------------------
+
+## "spell_scroll__fireball": a Spell Scroll holding that spell, its rarity and price by the spell's level.
+static func combine_scroll(t: Dictionary, spell: Dictionary, id: String) -> Dictionary:
+	var lvl := clampi(int(spell.get("level", 0)), 0, 9)
+	var out := t.duplicate(true)
+	out.erase("template")
+	out["id"] = id
+	out["template_id"] = str(t["id"])
+	out["name"] = "Spell Scroll (%s)" % spell.get("name", "")
+	out["scroll_spell"] = str(spell["id"])
+	var rar := SCROLL_RARITY[lvl]
+	out["magic"] = {"rarity": rar, "attunement": false}
+	out["cost_gp"] = price_for(rar, true)
+	out["summary"] = "A level %d spell, %s: read it to cast it if it's on your class's spell list (DC %d, %+d)." % [lvl,
+		spell.get("name", ""), SCROLL_DC[lvl], SCROLL_DC[lvl] - 8] if lvl > 0 else "The %s cantrip: read it to cast it if it's on your class's spell list (DC 13, +5)." % spell.get("name", "")
+	return out

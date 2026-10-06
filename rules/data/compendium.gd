@@ -137,8 +137,14 @@ func variant(id: String) -> Dictionary:
 	if _variants.has(id):
 		return _variants[id] as Dictionary
 	var t := get_entry("magic_items", id.get_slice(MagicItems.SEP, 0))
-	var b := get_entry("items", id.get_slice(MagicItems.SEP, 1))
 	var out := {}
+	if str((t.get("template", {}) as Dictionary).get("on", "")) == "spell":
+		var sp := get_entry("spells", id.get_slice(MagicItems.SEP, 1))
+		if not sp.is_empty():
+			out = MagicItems.combine_scroll(t, sp, id)
+		_variants[id] = out
+		return out
+	var b := get_entry("items", id.get_slice(MagicItems.SEP, 1))
 	if not t.is_empty() and not b.is_empty() and MagicItems.template_fits(t, b):
 		out = MagicItems.combine(t, b, id)
 	_variants[id] = out

@@ -120,6 +120,9 @@ func start(surprised_ids: Array = []) -> void:
 		if features.knows_maneuver(c, "ambush") and (c.creature as Character).resource_left("superiority_dice") > 0:
 			(c.creature as Character).spend_resource("superiority_dice")
 			t.add_bonus(dice.roll_one(features.superiority_die(c), "Ambush"), "Ambush")
+		var item_init := items.initiative_bonus(c)
+		if item_init > 0:
+			t.add_bonus(item_init, "Sword of Kas")
 		c.initiative_test = t
 		c.initiative = t.total
 		if group != "":
@@ -257,7 +260,7 @@ func can_see(a: Combatant, b: Combatant) -> bool:
 	if b.hidden and not outlined:
 		return false
 	if b.creature.has_condition(&"invisible") and not outlined:
-		var sees_invisible := a.creature.has_flag("see_invisibility") or (truesight > 0 and dist <= truesight)
+		var sees_invisible := a.creature.has_flag("see_invisibility") or (truesight > 0 and dist <= truesight) or items.reveals_invisible(a, b)
 		if not sees_invisible:
 			return false
 	# Devil's Sight (invocation): normal sight in Darkness, magical or not, within 120 ft.
@@ -1674,6 +1677,9 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "Can't attack yourself"
 	if spells.specials.sphere_blocks(c, target):
 		return "A sphere of force is in the way"
+	var item_block := items.attack_blocked(c, target, option)
+	if item_block != "":
+		return item_block
 	var dist := distance(c, target)
 	var p := option["profile"] as WeaponProfile
 	if bool(option["melee"]):
@@ -2768,8 +2774,14 @@ func search(c: Combatant) -> CombatResult:
 	spend_action(c)
 	var t := c.creature.roll_check(dice, &"perception", 0)
 	var found: Array[String] = []
+	# Cloak of Elvenkind: Perception to find its wearer has Disadvantage (a second roll, the lower kept, for them).
+	var t_hard: D20Test = null
+	for h0 in hostiles_of(c):
+		if h0.hidden and h0.creature.has_flag("hard_to_perceive") and t_hard == null:
+			t_hard = c.creature.roll_check(dice, &"perception", 0, [], ["Cloak of Elvenkind"])
 	for h in hostiles_of(c):
-		if h.hidden and t.total >= h.stealth_total:
+		var total := t.total if not (h.creature.has_flag("hard_to_perceive") and t_hard != null) else mini(t.total, t_hard.total)
+		if h.hidden and total >= h.stealth_total:
 			reveal(h, "%s finds them" % c.name())
 			found.append(h.name())
 	log.add("info", "%s searches (Perception %d)%s" % [c.name(), t.total, ": finds " + ", ".join(found) if not found.is_empty() else ""], c.id, [t.describe()])

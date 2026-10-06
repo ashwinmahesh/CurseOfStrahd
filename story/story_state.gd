@@ -129,9 +129,8 @@ static func member_matches(ch: Character, selector: String) -> bool:
 		"name":
 			return ch.id == value or ch.name.to_snake_case() == value
 		"item":
-			for e in ch.inventory:
-				if str(e["id"]) == value and int(e["qty"]) > 0:
-					return true
+			if ch.carries(value):
+				return true
 	return false
 
 
