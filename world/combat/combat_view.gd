@@ -843,7 +843,7 @@ func _play_events() -> void:
 						if _cap_tool != null and not _cap_swing_done:
 							# Capture: the first drawn attack at the moment its blow lands.
 							_cap_swing_done = true
-							_cap_tool.call("_shot", _cap_out + "_7_swing.png")
+							_cap_tool.call("_shot", _cap_out + "_8_swing.png")
 					else:
 						a.face(Vector2(dir.x, dir.z), false)
 					var tw2 := create_tween()
