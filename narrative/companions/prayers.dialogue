@@ -1,0 +1,21 @@
+# Hedda Ironvow's personal quest, Cold Prayers (data/quests/cold_prayers.json, docs/story/personal_quests.md). Every
+# scene needs Hedda: when a custom hero takes her place the quest never starts. Started from into_the_mists/arrival:
+# hooks. Cold: Madam Eva's price (svalich_road/madam_eva:truth_hedda) or the camp talk (camp/hedda). The symbol:
+# village_of_barovia/donavich:raven. A spark: vallaki/lucian:return. The Keepers: Davian, below. Warmth: the camp
+# talk once the Holy Symbol is found. Dawn is the castle chapel's (Phase 6 hook).
+
+# --- Davian Martikov and the ravens (wizard_of_wines/davian:menu) ------------------------------------------------
+
+~ davian
+set hedda_keepers_told
+interject name:hedda_ironvow: A dream, Master Martikov. A sun going out, and a silver raven with a sunburst in its claws. Your family are the only ravens I've met who talk.
+Davian Martikov: Hm. Say "ravens" more quietly in my yard, priestess. The castle keeps ears in its eaves.
+Davian Martikov: My grandmother told it so. At the first dawn the sun was given a raven to carry it, because the sun cannot walk. Long after, when this valley went dark, a raven carried a little of that dawn down here, in silver, for anyone fool enough to carry it back up into the night for somebody else.
+Davian Martikov: It was carried, once, by a woman who should have lived to be old. It came back without her. My family has been waiting a long while for someone else to ask after it.
+interject name:hedda_ironvow: And if the one asking has gone cold? If her prayers answer, but there's no warmth in them?
+Davian Martikov: A vine in winter has no leaves, no fruit, and no warmth you can feel with your hand. You prune it anyway, and you wait. That is faith, priestess. The rest is weather.
+interject name:hedda_ironvow: Mm. Stone remembers. So do vines, it seems.
+if not (quest.cold_prayers >= the_keepers)
+quest cold_prayers the_keepers
+endif
+-> wizard_of_wines/davian:menu
