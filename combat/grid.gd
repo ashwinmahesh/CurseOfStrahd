@@ -439,6 +439,12 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 					var along2 := v.dot(dir)
 					var across2 := absf(v.dot(Vector2(-dir.y, dir.x)))
 					inside = along2 > 0.0 and along2 <= r + 0.001 and across2 <= along2 / 2.0 + 0.001
+				"wall":
+					# A straight wall one square thick, centred on the point and running along `direction`.
+					var v4 := p - origin
+					var along4 := absf(v4.dot(dir))
+					var across4 := absf(v4.dot(Vector2(-dir.y, dir.x)))
+					inside = along4 <= r / 2.0 + 0.001 and across4 <= 0.5 + 0.001
 				"line":
 					var v2 := p - origin
 					var along3 := v2.dot(dir)

@@ -879,7 +879,9 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		for t in victims:
 			apply_effect_entries(ctx, t, s.get("effects", []) as Array, "cast", r)
 		return
-	if s.has("damage"):
+	# A self-targeted spell whose damage comes from a later action (Produce Flame's hurl) doesn't burn the caster.
+	var self_held := str((s.get("targets", {}) as Dictionary).get("kind", "")) == "self" and s.has("sustain")
+	if s.has("damage") and not self_held:
 		var rolled := roll_damage_parts(ctx, s["damage"] as Array, false, null)
 		for t in victims:
 			enc().deal_damage(c, t, [{"amount": int(rolled["total"]), "type": str(rolled["type"]), "spell": true}], false, str(s["name"]), [str(rolled["text"])])
