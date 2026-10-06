@@ -18,7 +18,7 @@ SCHEMAS = ROOT / "data" / "schemas"
 FOLDERS = {
     "classes": "class", "subclasses": "subclass", "species": "species",
     "backgrounds": "background", "feats": "feat", "spells": "spell",
-    "items": "item", "magic_items": "item", "monsters": "monster", "conditions": "condition",
+    "items": "item", "magic_items": "item", "monsters": "monster", "conditions": "condition", "pregens": "pregen",
 }
 
 TYPES = {

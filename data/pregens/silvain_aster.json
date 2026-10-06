@@ -1,0 +1,236 @@
+{
+  "id": "silvain_aster",
+  "name": "Silvain Aster",
+  "pronouns": "they/them",
+  "summary": "High Elf Wizard (Evoker), Sage. Fire, frost and a growing spellbook.",
+  "hook": "They are hunting a book rumored to be written in a vampire's own hand, its last owner a scholar who walked into the mists and wrote home once: 'He knows I am reading.'",
+  "build": {
+    "name": "Silvain Aster",
+    "species": "elf",
+    "background": "sage",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 8,
+      "dex": 12,
+      "con": 13,
+      "int": 15,
+      "wis": 14,
+      "cha": 10
+    },
+    "levels": [
+      {
+        "class": "wizard",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "background.abilities": [
+        "int",
+        "int",
+        "con"
+      ],
+      "species.elven_lineage": [
+        "high_elf"
+      ],
+      "species.spellcasting_ability": [
+        "int"
+      ],
+      "species.keen_senses": [
+        "perception"
+      ],
+      "origin.languages": [
+        "draconic",
+        "dwarvish"
+      ],
+      "background.feat.two_cantrips.cantrips": [
+        "minor_illusion",
+        "shocking_grasp"
+      ],
+      "background.feat.two_cantrips.spellcasting_ability": [
+        "int"
+      ],
+      "background.feat.level_1_spell": [
+        "find_familiar"
+      ],
+      "wizard.1.skills": [
+        "investigation",
+        "insight"
+      ],
+      "wizard.cantrips": [
+        "fire_bolt",
+        "mage_hand",
+        "light"
+      ],
+      "wizard.spellbook": [
+        "magic_missile",
+        "shield",
+        "mage_armor",
+        "sleep",
+        "thunderwave",
+        "burning_hands"
+      ],
+      "wizard.prepared": [
+        "magic_missile",
+        "shield",
+        "mage_armor",
+        "sleep"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "they/them",
+      "tags": [
+        "bookish",
+        "proud",
+        "secretly kind"
+      ]
+    },
+    "appearance": {}
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.2.scholar": [
+          "arcana"
+        ],
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave"
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.3.wizard_subclass": [
+          "evoker"
+        ],
+        "evoker.3.evocation_savant": [
+          "scorching_ray",
+          "shatter"
+        ],
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "wizard.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "int",
+          "int"
+        ],
+        "wizard.cantrips": [
+          "fire_bolt",
+          "mage_hand",
+          "light",
+          "ray_of_frost"
+        ],
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web",
+          "blur",
+          "hold_person"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray",
+          "web"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "evoker.5.evocation_savant": [
+          "lightning_bolt"
+        ],
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web",
+          "blur",
+          "hold_person",
+          "fireball",
+          "counterspell"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray",
+          "web",
+          "fireball",
+          "counterspell"
+        ]
+      }
+    }
+  ]
+}

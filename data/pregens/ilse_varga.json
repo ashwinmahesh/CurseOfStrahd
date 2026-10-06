@@ -1,0 +1,119 @@
+{
+  "id": "ilse_varga",
+  "name": "Ilse Varga",
+  "pronouns": "she/her",
+  "summary": "Human Fighter (Champion), Soldier. A greatsword, heavy armor and the stubbornness to outlast the night.",
+  "hook": "Her mercenary company vanished on a fog-bound road a year ago; the only trace was a sealed letter of invitation signed with a single ornate S.",
+  "build": {
+    "name": "Ilse Varga",
+    "species": "human",
+    "background": "soldier",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 15,
+      "dex": 14,
+      "con": 13,
+      "int": 8,
+      "wis": 10,
+      "cha": 12
+    },
+    "levels": [
+      {
+        "class": "fighter",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "background.abilities": [
+        "str",
+        "str",
+        "con"
+      ],
+      "background.tool": [
+        "dice_set"
+      ],
+      "species.size": [
+        "medium"
+      ],
+      "species.skillful": [
+        "perception"
+      ],
+      "species.versatile": [
+        "tough"
+      ],
+      "origin.languages": [
+        "dwarvish",
+        "elvish"
+      ],
+      "fighter.1.skills": [
+        "insight",
+        "survival"
+      ],
+      "fighter.1.fighting_style": [
+        "defense"
+      ],
+      "fighter.1.weapon_mastery": [
+        "greatsword",
+        "flail",
+        "javelin"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "she/her",
+      "tags": [
+        "blunt",
+        "loyal",
+        "veteran"
+      ]
+    },
+    "appearance": {}
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 3,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {
+        "fighter.3.fighter_subclass": [
+          "champion"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {
+        "fighter.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "fighter.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "str",
+          "str"
+        ],
+        "fighter.1.weapon_mastery": [
+          "greatsword",
+          "flail",
+          "javelin",
+          "spear"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {}
+    }
+  ]
+}

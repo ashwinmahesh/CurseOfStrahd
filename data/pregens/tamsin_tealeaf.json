@@ -1,0 +1,106 @@
+{
+  "id": "tamsin_tealeaf",
+  "name": "Tamsin Tealeaf",
+  "pronouns": "he/him",
+  "summary": "Halfling Rogue (Thief), Criminal. Quick fingers, quicker feet and Expertise in getting into places.",
+  "hook": "He lifted a silver locket from a nobleman's coach; the portrait inside is of a red-haired woman he has never met, and he dreams of her calling his name.",
+  "build": {
+    "name": "Tamsin Tealeaf",
+    "species": "halfling",
+    "background": "criminal",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 12,
+      "dex": 15,
+      "con": 13,
+      "int": 14,
+      "wis": 10,
+      "cha": 8
+    },
+    "levels": [
+      {
+        "class": "rogue",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "background.abilities": [
+        "dex",
+        "dex",
+        "con"
+      ],
+      "origin.languages": [
+        "halfling",
+        "goblin"
+      ],
+      "rogue.1.skills": [
+        "acrobatics",
+        "deception",
+        "investigation",
+        "perception"
+      ],
+      "rogue.1.expertise": [
+        "stealth",
+        "sleight_of_hand"
+      ],
+      "rogue.1.thieves_cant": [
+        "elvish"
+      ],
+      "rogue.1.weapon_mastery": [
+        "dagger",
+        "shortbow"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "he/him",
+      "tags": [
+        "curious",
+        "light-fingered",
+        "cheerful"
+      ]
+    },
+    "appearance": {}
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 3,
+      "class": "rogue",
+      "hp": 6,
+      "choices": {
+        "rogue.3.rogue_subclass": [
+          "thief"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {
+        "rogue.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "rogue.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "dex",
+          "dex"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {}
+    }
+  ]
+}

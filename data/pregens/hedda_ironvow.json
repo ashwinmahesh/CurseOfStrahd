@@ -1,0 +1,160 @@
+{
+  "id": "hedda_ironvow",
+  "name": "Hedda Ironvow",
+  "pronouns": "she/her",
+  "summary": "Dwarf Cleric (Life Domain), Acolyte. A healer in a shirt of mail who keeps the party standing.",
+  "hook": "Night after night she dreams of a dying sun and a silver raven clutching a sunburst; her temple's oldest book says the symbol was lost in a land of mists.",
+  "build": {
+    "name": "Hedda Ironvow",
+    "species": "dwarf",
+    "background": "acolyte",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 14,
+      "dex": 8,
+      "con": 13,
+      "int": 10,
+      "wis": 15,
+      "cha": 12
+    },
+    "levels": [
+      {
+        "class": "cleric",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "background.abilities": [
+        "wis",
+        "wis",
+        "cha"
+      ],
+      "origin.languages": [
+        "dwarvish",
+        "giant"
+      ],
+      "background.feat.two_cantrips.cantrips": [
+        "light",
+        "toll_the_dead"
+      ],
+      "background.feat.two_cantrips.spellcasting_ability": [
+        "wis"
+      ],
+      "background.feat.level_1_spell": [
+        "sanctuary"
+      ],
+      "cleric.1.skills": [
+        "medicine",
+        "persuasion"
+      ],
+      "cleric.1.divine_order": [
+        "protector"
+      ],
+      "cleric.cantrips": [
+        "guidance",
+        "sacred_flame",
+        "thaumaturgy"
+      ],
+      "cleric.prepared": [
+        "command",
+        "guiding_bolt",
+        "healing_word",
+        "shield_of_faith"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "she/her",
+      "tags": [
+        "devout",
+        "patient",
+        "dry humor"
+      ]
+    },
+    "appearance": {}
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic"
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.3.cleric_subclass": [
+          "life_domain"
+        ],
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "cleric.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "wis",
+          "con"
+        ],
+        "cleric.cantrips": [
+          "guidance",
+          "sacred_flame",
+          "thaumaturgy",
+          "resistance"
+        ],
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon",
+          "hold_person"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon",
+          "hold_person",
+          "spirit_guardians",
+          "dispel_magic"
+        ]
+      }
+    }
+  ]
+}

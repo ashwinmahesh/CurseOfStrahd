@@ -1,0 +1,74 @@
+{
+  "$id": "pregen.schema.json",
+  "title": "Pregenerated character (plan \u00a75.6 Start step): a level 1 build plus the choices for each later level",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "summary",
+    "hook",
+    "build",
+    "level_plan"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "pronouns": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "hook": {
+      "type": "string",
+      "description": "The character's personal tie to the story of Barovia."
+    },
+    "build": {
+      "type": "object",
+      "required": [
+        "name",
+        "species",
+        "background",
+        "ability_method",
+        "base_scores",
+        "levels",
+        "choices"
+      ]
+    },
+    "level_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "level",
+          "class",
+          "choices"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "level": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 20
+          },
+          "class": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "hp": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "0 = fixed Hit Points, otherwise the rolled Hit Point Die."
+          },
+          "choices": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

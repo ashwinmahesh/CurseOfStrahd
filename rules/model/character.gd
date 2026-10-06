@@ -529,18 +529,18 @@ func _build_spellcasting() -> void:
 		if cantrip_count > 0:
 			entry["cantrips"] = _register_choice({"kind": "cantrip", "count": cantrip_count,
 				"filter": {"list": list, "level": 0}, "replaceable": str(sc.get("swap_cantrip", "level_up"))},
-				"%s.cantrips" % cid, src, "%s cantrips" % name_)
+				"%s.cantrips" % cid, src, "%s cantrips" % name_).duplicate()
 		var book := sc.get("spellbook", {}) as Dictionary
 		if not book.is_empty():
 			entry["spellbook_max"] = int(book.get("start", 6)) + int(book.get("per_level", 2)) * (n - 1)
 			entry["spellbook"] = _register_choice({"kind": "spellbook", "count": int(entry["spellbook_max"]),
-				"filter": {"list": list, "max_level": "slots"}}, "%s.spellbook" % cid, src, "Spellbook")
+				"filter": {"list": list, "max_level": "slots"}}, "%s.spellbook" % cid, src, "Spellbook").duplicate()
 		if prepared_max > 0:
 			var filter := {"list": list, "max_level": "slots", "min_level": 1}
 			if not book.is_empty():
 				filter["from_choice"] = "%s.spellbook" % cid
 			entry["prepared"] = _register_choice({"kind": "spell", "count": prepared_max, "filter": filter,
-				"replaceable": str(sc.get("swap_prepared", "long_rest"))}, "%s.prepared" % cid, src, "Prepared spells")
+				"replaceable": str(sc.get("swap_prepared", "long_rest"))}, "%s.prepared" % cid, src, "Prepared spells").duplicate()
 		# Domain spells and similar: always prepared, not counted against the limit.
 		if subclasses.has(cid):
 			var sub2 := compendium.subclass_data(str(subclasses[cid]))
@@ -651,6 +651,67 @@ func known_spells() -> Array[Dictionary]:
 		if int(g["at_level"]) <= character_level():
 			out.append({"id": str(g["id"]), "class_id": "", "ability": str(g["ability"]), "kind": "granted",
 				"source": str(g["source"]), "uses": int(g["uses"]), "recharge": str(g["recharge"])})
+	return out
+
+
+## What a spell does when this character casts it at `slot_level` (0 = its own level): damage and healing
+## dice with every bonus named, plus the attack bonus or save DC. Used by spell cards and the combat log.
+## {name, level, slot, ability, damage_dice, damage_type, damage_bonus: Breakdown, heal_dice,
+##  heal_bonus: Breakdown, attack: Breakdown, save_dc: Breakdown, save}
+func spell_preview(spell_id: String, slot_level: int = 0) -> Dictionary:
+	var s := compendium.spell_data(spell_id)
+	if s.is_empty():
+		return {}
+	var level := int(s.get("level", 0))
+	var slot := 0 if level == 0 else maxi(level, slot_level)
+	var source := {}
+	for k in known_spells():
+		if str(k["id"]) == spell_id:
+			source = k
+			break
+	var class_id := str(source.get("class_id", ""))
+	var ab := StringName(str(source.get("ability", "")))
+	if not Creature.ABILITY_NAMES.has(ab):
+		ab = &"int"
+		for e in spellcasting:
+			if str(s.get("classes", [])).contains(str(e["list"])):
+				ab = StringName(str(e["ability"]))
+				class_id = str(e["class_id"])
+	var mod := ability_mod(ab)
+	var ctx := formula_context(slot)
+	var out := {"name": str(s["name"]), "level": level, "slot": slot, "ability": str(ab), "class_id": class_id}
+	var damage := s.get("damage", []) as Array
+	if not damage.is_empty():
+		var first := damage[0] as Dictionary
+		out["damage_dice"] = Spellcasting.damage_dice(s, character_level(), slot)
+		out["damage_type"] = str(first.get("type", ""))
+		var bonus := Breakdown.new("%s damage bonus" % s["name"])
+		if bool(first.get("add_mod", false)):
+			bonus.add("%s modifier" % ABILITY_SHORT[ab], mod)
+		var situation := {"spell": true, "school": str(s.get("school", ""))}
+		if level == 0:
+			for m in modifiers_for(&"cantrip_damage"):
+				if m.applies_when(situation):
+					bonus.add_nonzero(m.source_name, mod_value(m, ctx))
+		for m in modifiers_for(&"spell_damage"):
+			if m.applies_when(situation):
+				bonus.add_nonzero(m.source_name, mod_value(m, ctx))
+		out["damage_bonus"] = bonus
+	var heal := s.get("heal", {}) as Dictionary
+	if heal.has("dice"):
+		out["heal_dice"] = Spellcasting.heal_dice(s, slot)
+		var hb := Breakdown.new("%s healing bonus" % s["name"])
+		if bool(heal.get("add_mod", false)):
+			hb.add("%s modifier" % ABILITY_SHORT[ab], mod)
+		if slot >= 1:
+			for m in modifiers_for(&"healing_bonus"):
+				hb.add_nonzero(m.source_name, mod_value(m, ctx))
+		out["heal_bonus"] = hb
+	if s.has("attack") and class_id != "":
+		out["attack"] = spell_attack_bonus(class_id)
+	if s.has("save") and class_id != "":
+		out["save"] = str(s["save"])
+		out["save_dc"] = spell_save_dc(class_id)
 	return out
 
 
