@@ -189,10 +189,18 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Casting outside combat: healing and helpful spells, slots, lasting effects and Concentration | story/field_casting.gd (through SpellCaster) | tested | test_party_screens |
 | Frightened: can't willingly move closer to a visible source | encounter.gd reachable_for | tested (strict reading, deviations) | test_combat_encounter |
 | Flying creatures move at their Fly Speed | combatant.gd speed | implemented (no altitude, deviations) | test_phase3_exit |
-| Heroic Inspiration on saves and checks | — | not started | [Phase 4] |
-| Light, Darkvision and obscurement affecting checks and attacks | — | spell and ability audit | — |
+| Heroic Inspiration and Tactical Mind after a failed check (conversations) | story/check_aids.gd | tested; exploration checks and saves outside combat [Phase 5] | test_story |
+| Light, Darkvision and obscurement affecting checks and attacks | combat (audit); location_view.gd passes the hour, map light, lamps and lantern into fights | tested | test_exploration |
+| Exploring spells (Light, Detect Magic, Find Traps, others as `spell:` conditions); Ritual casting (+10 minutes, no slot) | story/field_casting.gd, location_view.gd apply_spell_effect | tested (Light, Find Traps); the rest record their duration for the story to read | test_exploration |
+| Arcane Recovery | rest_screen.gd | tested | test_party_screens |
+| Changing prepared spells after a Long Rest | ui/screens/prepare_screen.gd (the class's `swap_prepared`) | tested | test_party_screens |
+| Attunement (three items, requirements, a Short Rest) and magic item modifiers | character.gd attune, item_modifiers | tested | test_classes |
+| Buying and selling (shop markup, sell rate, stock) | story_state.gd shop_*, shop_screen.gd | tested | test_campaign |
+| Travel (hours on the road), random encounters (day and night chances), day and night | story/travel.gd, game_root.gd travel | tested | test_travel |
+| Guests fighting under the player's control | location_view.gd guest_members, combat side guest | tested | test_exploration |
 
 ## Not started (later phases)
 
-Influence and NPC attitudes as a rule (attitudes exist in the story; checks against them arrive with merchants),
-travel, day and night effects (Phase 4); the new classes' features in combat, magic items and attunement (Phases 4-5).
+Influence and NPC attitudes as a rule (attitudes exist in the story; haggling is written into dialogue for now);
+the new classes' features in combat (the spell and ability thread); magic items' own powers beyond modifiers
+(Phase 5, with the treasures).
