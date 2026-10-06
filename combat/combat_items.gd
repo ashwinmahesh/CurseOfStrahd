@@ -181,6 +181,8 @@ func power_why(c: Combatant, p: Dictionary, level: int = 0) -> String:
 	var iid := str(p["item_id"])
 	if ch == null:
 		return "Only characters use items"
+	if MagicItems.is_magic(data) and enc().spells.specials.high.in_antimagic(c):
+		return "Antimagic Field: the item's magic is suppressed"
 	var req := str(power.get("requires", ""))
 	if MagicItems.needs_attunement(data) and not iid in ch.attuned and req != "anyone":
 		return "Needs attunement"

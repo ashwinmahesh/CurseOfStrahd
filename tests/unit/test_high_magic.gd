@@ -163,6 +163,79 @@ func test_true_polymorph_and_animal_shapes() -> void:
 	assert_true(e.shapes.is_shaped(t) or t.creature.has_flag("shapechanger"))
 
 
+func test_shapechange_keeps_spellcasting_and_a_new_concentration_spell_ends_it() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var t := TestCombat.punching_bag(e, Vector2i(6, 3), 300)
+	TestCombat.start_with(e, c)
+	var real := c.creature as Character
+	assert_true(_cast(e, c, "shapechange", 9).ok)
+	assert_true(e.shapes.is_shaped(c), "in another form")
+	c.action_available = true
+	c.magic_action_used = false
+	c.cast_slot_spell_this_turn = false
+	var mm := {}
+	for entry in e.spells.castable(c):
+		if str(entry["id"]) == "magic_missile":
+			mm = entry
+	assert_false(mm.is_empty(), "the form still knows the caster's spells")
+	assert_true(bool(mm["legal"]), str(mm.get("reason", "")))
+	var slots_before := real.slots_left(1)
+	c.action_available = true
+	c.magic_action_used = false
+	assert_true(e.spells.cast(c, "magic_missile", 1, [t]).ok, "casts from the form")
+	assert_true(t.creature.hp < 300)
+	assert_eq(real.slots_left(1), slots_before - 1, "the real self's slot is spent")
+	assert_true(_cast(e, c, "hold_person", 2, [t]).ok)
+	assert_false(e.shapes.is_shaped(c), "a new Concentration spell ends Shapechange")
+	assert_true(c.creature.concentration != null and c.creature.concentration.source_id == "hold_person", "concentrating on the new spell")
+
+
+func test_bigbys_hand_can_be_attacked_and_destroyed() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var t := TestCombat.punching_bag(e, Vector2i(7, 3), 300)
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "bigbys_hand", 5, [t], Vector2(5.5, 3.5)).ok)
+	var o := e.spells.zones.object_of(c.id, "bigbys_hand")
+	assert_true(o != null)
+	var hand := e.get_c(str(o.rules.get("hand_id", "")))
+	assert_true(hand != null, "the hand stands on the board")
+	assert_eq(hand.creature.ac_value(), 20)
+	assert_eq(hand.creature.max_hp(), c.creature.max_hp(), "Hit Points equal to the caster's maximum")
+	assert_true(hand in e.hostiles_of(t), "foes can attack it")
+	assert_false(hand in e.order, "it takes no turns of its own")
+	e.deal_damage(t, hand, [{"amount": 9999, "type": "force"}], false, "test")
+	assert_true(e.spells.zones.object_of(c.id, "bigbys_hand") == null, "destroying it ends the spell")
+	assert_true(c.creature.concentration == null or c.creature.concentration.source_id != "bigbys_hand")
+	assert_true(e.get_c(hand.id) == null, "and the hand is gone")
+	assert_true(e.state == Encounter.State.ACTIVE, "the fight goes on")
+
+
+func test_earthquake_opens_fissures_under_foes_on_the_casters_next_turn() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var t := TestCombat.punching_bag(e, Vector2i(8, 4), 300)
+	TestCombat.start_with(e, c)
+	TestCombat.next_d20(e, 20)
+	assert_true(_cast(e, c, "earthquake", 8, [], Vector2(8.5, 4.5)).ok)
+	assert_true(c.creature.concentration != null, "the caster kept its footing")
+	assert_true(e.spells.zones.live().all(func(o: FieldObject) -> bool: return o.name != "Fissures"), "no fissures yet")
+	# The start of the caster's next turn (called directly: on this small map the caster shakes in its own quake).
+	e.spells.specials.high.caster_turn_start(c)
+	var cracks: Array = e.spells.zones.live().filter(func(o: FieldObject) -> bool: return o.name == "Fissures")
+	assert_eq(cracks.size(), 1, "fissures opened")
+	var fx := t.creature.effects.filter(func(x: Effect) -> bool: return x.name == "In a fissure")
+	var fell := not fx.is_empty()
+	var on_edge := not t.cell in (cracks[0] as FieldObject).cells
+	assert_true(fell or on_edge, "the foe either fell in or stepped to the edge")
+	if fell:
+		assert_true(t.creature.hp < 300, "falling hurts")
+		assert_false((fx[0] as Effect).escape.is_empty(), "it can climb out")
+	e.spells.specials.high.caster_turn_start(c)
+	assert_eq(e.spells.zones.live().filter(func(o: FieldObject) -> bool: return o.name == "Fissures").size(), 1, "they open only once")
+
+
 func test_delayed_blast_fireball_grows_and_bursts_when_let_go() -> void:
 	var e := _field()
 	var c := _caster(e)
@@ -215,6 +288,23 @@ func test_antimagic_field_stops_spells_inside_and_suppresses_effects() -> void:
 	e.spells.zones.end_spell(c.id, "antimagic_field")
 	e.spells.zones.refresh_auras()
 	assert_true(bless in a.creature.effects, "back when the field is gone")
+
+
+func test_antimagic_field_suppresses_magic_items() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+	var ch := a.creature as Character
+	ch.add_item("ring_of_protection")
+	assert_true(ch.equip("ring_of_protection", "ring"))
+	assert_true(ch.attune("ring_of_protection"))
+	var with_ring := ch.ac_value()
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "antimagic_field", 8).ok)
+	assert_eq(ch.ac_value(), with_ring - 1, "the ring's +1 AC is gone inside the field")
+	e.spells.zones.end_spell(c.id, "antimagic_field")
+	e.spells.zones.refresh_auras()
+	assert_eq(ch.ac_value(), with_ring, "and back outside")
 
 
 func test_conjure_celestial_heals_allies_and_burns_foes() -> void:

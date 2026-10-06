@@ -706,6 +706,10 @@
         },
         "blocks": {
           "type": "boolean"
+        },
+        "fissures": {
+          "type": "boolean",
+          "description": "Earthquake: 1d6 fissures open at the start of the caster's next turn."
         }
       }
     },

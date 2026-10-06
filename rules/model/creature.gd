@@ -902,11 +902,17 @@ func remove_effects_named(effect_name: String) -> void:
 
 ## Starts Concentration on something new, ending any previous Concentration first.
 func begin_concentration(source_id: String, label: String) -> Concentration:
-	if concentration != null:
-		concentration.end("started concentrating on %s" % label)
-	concentration = Concentration.new(self, source_id, label)
+	var old := concentration
+	var conc := Concentration.new(self, source_id, label)
+	concentration = conc
+	# Ended after the new one is in place, so whatever the old spell's end does (Shapechange's caster changing back)
+	# sees the new Concentration.
+	if old != null:
+		old.end("started concentrating on %s" % label)
+	if concentration == null:
+		concentration = conc
 	log_event({"type": "concentration_started", "creature": id, "source": source_id})
-	return concentration
+	return conc
 
 
 ## Turn bookkeeping: call for every creature when anyone's turn starts or ends.
