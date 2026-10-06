@@ -7,10 +7,12 @@ extends RefCounted
 ## cast here first; `resolve` returns true when it handled it.
 
 var _enc: WeakRef
+var high: HighMagic
 
 
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
+	high = HighMagic.new(encounter)
 
 
 func enc() -> Encounter:
@@ -29,6 +31,8 @@ const HANDLED := ["polymorph", "banishment", "otilukes_resilient_sphere", "dimen
 
 
 func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r: CombatResult) -> bool:
+	if high.resolve(ctx, tgt, _cells, r):
+		return true
 	var s := ctx["s"] as Dictionary
 	match str(s["id"]):
 		"polymorph":
@@ -44,7 +48,8 @@ func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r:
 				resilient_sphere(ctx, tgt[0], r)
 			return true
 		"dimension_door":
-			dimension_door(ctx, ctx["cell"] as Vector2i, r)
+			if not high.teleport_blocked(ctx, ctx["c"] as Combatant):
+				dimension_door(ctx, ctx["cell"] as Vector2i, r)
 			return true
 		"heat_metal":
 			for t in tgt:

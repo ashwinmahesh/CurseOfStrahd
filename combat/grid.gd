@@ -458,7 +458,8 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 					var v4 := p - origin
 					var along4 := absf(v4.dot(dir))
 					var across4 := absf(v4.dot(Vector2(-dir.y, dir.x)))
-					inside = along4 <= r / 2.0 + 0.001 and across4 <= 0.5 + 0.001
+					var thick := maxf(1.0, floorf(width_ft / float(FEET)))
+					inside = along4 <= r / 2.0 + 0.001 and across4 <= thick / 2.0 + 0.001
 				"line":
 					var v2 := p - origin
 					var along3 := v2.dot(dir)

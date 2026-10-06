@@ -45,7 +45,7 @@
   "zone": {
     "triggers": [
       "cast",
-      "end_turn"
+      "caster_end_turn"
     ],
     "terrain": "difficult",
     "save": "dex",

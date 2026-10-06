@@ -362,6 +362,9 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 				var cell := Vector2i(x, y)
 				if grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells) < now:
 					blocked[cell] = true
+	# Forcecage: no stepping out of a cage, or into one.
+	for cell3: Vector2i in spells.specials.high.cage_blocks(c):
+		blocked[cell3] = true
 	# Compelled Duel: no square more than 30 ft from the duellist.
 	var anchor := spells.specials.duel_anchor(c)
 	if anchor != null:
@@ -506,6 +509,13 @@ func end_turn() -> CombatResult:
 	_check_over()
 	if state != State.ACTIVE:
 		return CombatResult.new()
+	# Time Stop: the caster's next turn comes straight away.
+	if c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0 and c.is_alive() and c.can_act():
+		c.set_meta("time_stop", int(c.get_meta("time_stop")) - 1)
+		log.add("turn", "Time is still stopped: another turn for %s" % c.name(), c.id)
+		_begin_turn()
+		return CombatResult.new()
+	c.remove_meta("time_stop")
 	for i in order.size():
 		turn_index += 1
 		if turn_index >= order.size():
@@ -1664,6 +1674,8 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "Can't attack yourself"
 	if spells.specials.sphere_blocks(c, target):
 		return "A sphere of force is in the way"
+	if spells.specials.high.box_between(c, target):
+		return "A wall of force is in the way"
 	var dist := distance(c, target)
 	var p := option["profile"] as WeaponProfile
 	if bool(option["melee"]):
@@ -2127,6 +2139,7 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 	_on_hit_effects(c, target, option, dr, r)
 	if bool(option["melee"]):
 		retaliate(c, target)
+		spells.specials.high.holy_aura_hit(c, target)
 	features.after_hit(c, target, option, dr, st, r)
 	_queue_sentinels(c, target)
 	return run_reaction_queue(r)
@@ -2185,6 +2198,9 @@ func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: Strin
 func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: bool, label: String,
 		details: Array = [], log_it: bool = true) -> DamageResult:
 	target = monster_actions.redirect_shared(target)
+	# Time Stop ends when the caster affects anyone else.
+	if source != null and source != target:
+		spells.specials.high.time_stop_broken(source, "it affected another creature")
 	# Otiluke's Resilient Sphere: nothing passes through the globe either way.
 	if source != null and spells.specials.sphere_blocks(source, target):
 		log.add("info", "The sphere of force around %s turns the damage aside" % (target.name() if target.creature.has_flag("sphered") else source.name()), target.id)

@@ -341,6 +341,9 @@ static func taken_by_type(t: Combatant, parts: Array) -> Dictionary:
 ## Spells the monster can cast now: [{id, level, per_day_left}] from its `spellcasting` block (at will, N/day).
 func spells_now(c: Combatant) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
+	# No spellcasting inside an Antimagic Field (or with Befuddlement, Feeblemind...).
+	if c.creature.has_flag("cant_cast") or enc().spells.specials.high.in_antimagic(c):
+		return out
 	var sc := data_of(c).get("spellcasting", {}) as Dictionary
 	for sid: Variant in sc.get("at_will", []):
 		out.append({"id": str(sid), "left": 99})

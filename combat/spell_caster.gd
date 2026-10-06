@@ -165,7 +165,7 @@ static func _out_of_combat_word(s: Dictionary) -> String:
 
 ## True if the spell does something the combat engine can resolve.
 func has_combat_rules(s: Dictionary) -> bool:
-	if str(s.get("id", "")) in SPECIAL or str(s.get("id", "")) in SUMMON_SPELLS or str(s.get("id", "")) in SpellSpecials.HANDLED:
+	if str(s.get("id", "")) in SPECIAL or str(s.get("id", "")) in SUMMON_SPELLS or str(s.get("id", "")) in SpellSpecials.HANDLED or str(s.get("id", "")) in HighMagic.HANDLED:
 		return true
 	for k: String in ["attack", "heal", "damage", "temp_hp", "zone", "object", "sustain"]:
 		if s.has(k):
@@ -439,6 +439,7 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 				if v != c and not c.allied_with(v):
 					continue
 		out.append(v)
+	out.assign(out.filter(func(v: Combatant) -> bool: return not specials.high.in_antimagic(v) or str(s.get("id", "")) == "antimagic_field"))
 	var cap := int(s.get("area_max_targets", 0))
 	if cap > 0 and out.size() > cap:
 		out.sort_custom(func(a: Combatant, b: Combatant) -> bool: return enc().distance(c, a) < enc().distance(c, b))
@@ -565,9 +566,12 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	var cells: Array[Vector2i] = []
 	if s.has("area"):
 		cells = area_for(c, s, point, direction, slot)
+	# Fire Storm's ten 10-ft Cubes and Meteor Swarm's four Spheres at the points chosen (opts.points).
+	if opts.has("points") and spell_id in ["fire_storm", "meteor_swarm"]:
+		cells = multi_area(c, spell_id, opts["points"] as Array)
 	# Wall of Fire as a ring 20 ft across.
-	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and choice_of(s, opts) == "ring" and point != Vector2.INF:
-		cells = _ring(point, 10)
+	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and choice_of(s, opts) in ["ring", "globe"] and point != Vector2.INF:
+		cells = _ring(point, 10 if choice_of(s, opts) == "ring" else 15)
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells,
 		"targets": tgt.map(func(t: Combatant) -> String: return t.id)})
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": nums, "conc": conc, "opts": opts, "point": point,
@@ -643,14 +647,16 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 
 ## A monster casting from its stat block (combat/monster_actions.gd): the action economy as usual, no slots, the
 ## stat block's DC and attack bonus in `nums`, at `level`.
-func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Array, point: Vector2, nums: Dictionary) -> CombatResult:
+func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Array, point: Vector2, nums: Dictionary, opts: Dictionary = {}) -> CombatResult:
 	var e := enc()
 	var s := _comp().spell_data(spell_id)
 	var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 	var why := economy_block(c, unit)
+	if why == "" and (c.creature.has_flag("cant_cast") or specials.high.in_antimagic(c)):
+		why = "Can't cast spells here"
 	if why != "":
 		return CombatResult.fail(why)
-	var check := _check_targets(c, s, level, targets, point, {})
+	var check := _check_targets(c, s, level, targets, point, opts)
 	if str(check["why"]) != "":
 		return CombatResult.fail(str(check["why"]))
 	if unit == "bonus_action":
@@ -670,8 +676,12 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 			dir = (e.center_of(tgt[0]) - e.center_of(c)).normalized()
 		cells = area_for(c, s, point, dir, level)
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells, "targets": tgt.map(func(t: Combatant) -> String: return t.id)})
-	var ctx := {"c": c, "s": s, "slot": level, "nums": nums, "conc": conc, "opts": {}, "point": point, "cells": cells,
-		"choice": choice_of(s, {}), "direction": Vector2.ZERO, "cell": check["cell"]}
+	if opts.has("points") and spell_id in ["fire_storm", "meteor_swarm"]:
+		cells = multi_area(c, spell_id, opts["points"] as Array)
+	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and choice_of(s, opts) in ["ring", "globe"] and point != Vector2.INF:
+		cells = _ring(point, 10 if choice_of(s, opts) == "ring" else 15)
+	var ctx := {"c": c, "s": s, "slot": level, "nums": nums, "conc": conc, "opts": opts, "point": point, "cells": cells,
+		"choice": choice_of(s, opts), "direction": opts.get("direction", Vector2.ZERO), "cell": check["cell"]}
 	var r := CombatResult.new()
 	_resolve(ctx, tgt, cells, r)
 	_finish_concentration(ctx)
@@ -687,6 +697,8 @@ func cast_free(c: Combatant, spell_id: String, targets: Array, point: Vector2, o
 	var s := _comp().spell_data(spell_id)
 	if s.is_empty():
 		return CombatResult.fail("Unknown spell")
+	if specials.high.in_antimagic(c):
+		return CombatResult.fail("Can't cast spells inside an Antimagic Field")
 	var level := int(s.get("level", 0))
 	var check := _check_targets(c, s, level, targets, point, opts)
 	if str(check["why"]) != "":
@@ -753,6 +765,9 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		if (id in ["misty_step", "dimension_door", "flaming_sphere"] or id in SUMMON_SPELLS) and e.occupant_at(cell) != null:
 			out["why"] = "That square is occupied"
 			return out
+		if specials.high.antimagic_at(cell) and (id in ["misty_step", "dimension_door"] or id in SUMMON_SPELLS):
+			out["why"] = "Magic can't reach into the Antimagic Field"
+			return out
 		if id == "misty_step" and not e.grid.can_see(c.cell, c.size_cells, cell, 1):
 			out["why"] = "You must see the square you teleport to"
 			return out
@@ -797,6 +812,12 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 			only = "humanoid"
 		if only != "" and str(t.creature.creature_type) != only:
 			out["why"] = "%s only affects %ss" % [s["name"], only.capitalize()]
+			return out
+		if specials.high.in_antimagic(t) and t != c:
+			out["why"] = "%s is inside an Antimagic Field" % t.name()
+			return out
+		if t != c and specials.high.box_between(c, t):
+			out["why"] = "A wall of force is in the way"
 			return out
 		if t != c and specials.sphere_blocks(c, t):
 			out["why"] = "A sphere of force stands between you and %s" % t.name()
@@ -859,6 +880,8 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			_spare_the_dying(ctx, tgt[0], r)
 			return
 		"misty_step":
+			if specials.high.teleport_blocked(ctx, c):
+				return
 			var start := c.cell
 			_teleport(c, ctx["cell"] as Vector2i, r)
 			enc().class_features.fey_step_rider(c, start)
@@ -1822,6 +1845,8 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 			tn += int(DiceRoller.parse_expr(tup)["count"]) * (slot - int(s.get("level", 0)))
 		td["dice"] = "%dd%d" % [tn, int(tb["sides"])]
 		fxo.data["turn_damage"] = td
+	if params.has("turn_heal"):
+		fxo.data["turn_heal"] = int(params["turn_heal"])
 	# Temporary Hit Points at the start of each of its turns (Heroism: the spellcasting modifier).
 	if params.has("turn_temp_hp"):
 		var th: Variant = params["turn_temp_hp"]
@@ -2440,6 +2465,20 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 	r.lines.append(enc().log.add("spell", "%s fills %d squares" % [s["name"], cells.size()], c.id))
 
 
+## The union of several small areas (a creature in more than one is still affected once).
+func multi_area(c: Combatant, spell_id: String, points: Array) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	var g := enc().grid
+	var cap := 10 if spell_id == "fire_storm" else 4
+	for i in mini(cap, points.size()):
+		var p: Vector2 = points[i]
+		var part: Array[Vector2i] = g.area_cells("cube", 10, Vector2(floorf(p.x), floorf(p.y) + 1.0), Vector2.RIGHT) if spell_id == "fire_storm" else g.area_cells("sphere", 40, p)
+		for cell in part:
+			if not cell in out:
+				out.append(cell)
+	return out
+
+
 ## The squares of a ring wall `radius_ft` from its centre.
 func _ring(center: Vector2, radius_ft: int) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
@@ -2791,6 +2830,9 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 		"dash":
 			c.movement_left += c.speed()
 			e.log.add("info", "%s Dashes (+%d ft, %s)" % [c.name(), c.speed(), s["name"]], c.id)
+		"end_spell":
+			e.log.add("spell", "%s lets %s go" % [c.name(), s["name"]], c.id)
+			_end_spell_of(c, str(a["spell_id"]), "let go")
 		"disengage":
 			c.disengaged = true
 			e.log.add("info", "%s Disengages (%s)" % [c.name(), s["name"]], c.id)
@@ -3031,6 +3073,13 @@ func rehook_effects() -> void:
 					var ubid := str(oe["target"])
 					var ub_round := int(oe.get("round", 0))
 					fx.on_end = func() -> void: specials.unbanish(ubid, ub_round)
+				"burst_bead":
+					var bead := str(oe.get("object", ""))
+					fx.on_end = func() -> void: specials.high.burst_bead(bead)
+				"fall":
+					var fid := str(oe["target"])
+					var ft := int(oe.get("feet", 100))
+					fx.on_end = func() -> void: specials.high.fall(fid, ft)
 				"undominate":
 					var udid := str(oe["target"])
 					fx.on_end = func() -> void: specials.undominate(udid)
@@ -3115,6 +3164,9 @@ func from_dict(d: Dictionary) -> void:
 func turn_start(c: Combatant) -> void:
 	var e := enc()
 	zones.turn_start(c)
+	specials.high.tick_suppressed(c.id, true)
+	specials.high.caster_turn_start(c)
+	specials.high.creature_turn_start(c)
 	_prune_sustained()
 	_turn_start_effects(c)
 	_repeat_saves(c, "start")
@@ -3154,6 +3206,12 @@ func _turn_start_effects(c: Combatant) -> void:
 		if not td.is_empty() and str(td.get("when", "start")) == "start":
 			var rolled := e._roll_damage_dice(str(td["dice"]), false, 0, fx.name)
 			e.deal_damage(e.get_c(fx.caster_id), c, [{"amount": int(rolled["total"]), "type": str(td.get("type", "fire")), "spell": true}], false, fx.name, [str(rolled["text"])])
+		# Regenerate: 1 Hit Point at the start of each turn.
+		if fx.data.has("turn_heal") and not c.creature.has_flag("cant_regain_hp"):
+			var hg := c.creature.heal(int(fx.data["turn_heal"]), fx.name)
+			if hg > 0:
+				c.creature.remove_condition(&"unconscious", "0 Hit Points")
+				e.log.add("heal", "%s regains %d Hit Point (%s)" % [c.name(), hg, fx.name], c.id)
 		if fx.data.has("turn_temp_hp") and c.creature.hp > 0:
 			var amount := int(fx.data["turn_temp_hp"])
 			if amount > 0 and c.creature.add_temp_hp(amount, fx.name):
@@ -3163,6 +3221,9 @@ func _turn_start_effects(c: Combatant) -> void:
 func turn_end(c: Combatant) -> void:
 	var e := enc()
 	zones.turn_end(c)
+	specials.high.caster_turn_end(c)
+	specials.high.prism_turn_end(c)
+	specials.high.tick_suppressed(c.id, false)
 	specials.turn_end(c)
 	_repeat_saves(c, "end")
 	_sustained_turn_end(c)

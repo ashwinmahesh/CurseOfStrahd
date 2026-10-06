@@ -136,6 +136,15 @@ func on_moved(c: Combatant, from: Vector2i) -> void:
 	for o: FieldObject in objects.duplicate():
 		if o.expired() or not o.covers(c) or not _affects(o, c):
 			continue
+		# Prismatic Wall: stepping into it runs every layer.
+		if bool(o.rule("prismatic", false)):
+			var was_in := false
+			for cell in CombatGrid.footprint(from, c.size_cells):
+				if cell in o.cells:
+					was_in = true
+			if not was_in:
+				spells().specials.high.prismatic_layers(o, c)
+			continue
 		# Spike Growth: every 5 feet travelled into or within the area hurts.
 		if o.has_trigger("per_square"):
 			_affect(o, c, "per_square", CombatResult.new(), {})
@@ -238,8 +247,21 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 	if not t.is_alive():
 		return
 	var turn_key := "%d:%d" % [e.round_no, e.turn_index]
+	# Nothing reaches into an Antimagic Field.
+	if spells().specials.high.in_antimagic(t) and o.spell_id != "antimagic_field":
+		return
 	var ctx := spells().context_for_object(o)
 	if ctx.is_empty():
+		return
+	# Conjure Celestial: the light heals the caster's side instead of burning it.
+	if o.rules.has("heal_allies") and ctx.has("c") and ((ctx["c"] as Combatant) == t or (ctx["c"] as Combatant).allied_with(t)):
+		if str(o.hit_on_turn.get(t.id, "")) == turn_key:
+			return
+		o.hit_on_turn[t.id] = turn_key
+		var hp := spells().roll_damage_parts(ctx, [o.rules["heal_allies"]], false, t)
+		var got := t.creature.heal(int(hp["total"]), o.name)
+		e.log.add("heal", "%s regains %d Hit Points (%s)" % [t.name(), got, o.name], t.id, [str(hp["text"])])
+		e.events.append({"type": "heal", "id": t.id, "amount": got})
 		return
 	var label := "%s (%s)" % [o.name, _trigger_words(trigger)]
 	# Hunger of Hadar's cold at the start of a turn: damage with no save, apart from the end-of-turn acid.
@@ -371,6 +393,7 @@ func refresh_auras() -> void:
 			if not fx.modifiers.is_empty() or not fx.conditions.is_empty():
 				t.creature.add_effect(fx)
 	e.class_features.refresh_auras()
+	spells().specials.high.refresh_antimagic()
 
 
 # --- Terrain and sight ------------------------------------------------------------------------------

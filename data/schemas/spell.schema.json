@@ -518,7 +518,8 @@
               "end_turn",
               "near_start_turn",
               "near_end_turn",
-              "per_square"
+              "per_square",
+              "caster_end_turn"
             ]
           }
         },
@@ -665,6 +666,31 @@
         "rounds": {
           "type": "integer",
           "description": "How long it lasts in rounds, when the spell's duration doesn't say."
+        },
+        "prismatic": {
+          "type": "boolean"
+        },
+        "heal_allies": {
+          "type": "object",
+          "description": "Conjure Celestial: the caster's side regains these dice instead of taking damage."
+        },
+        "storm_round": {
+          "type": "integer"
+        },
+        "tsunami": {
+          "type": "integer",
+          "description": "Tsunami: d10s of damage left; the wall moves 50 ft each caster turn."
+        },
+        "drift_away": {
+          "type": "integer",
+          "description": "Feet the area drifts away from its caster at the start of the caster's turns."
+        },
+        "include_caster": {
+          "type": "boolean",
+          "description": "An Emanation that includes its caster's own space."
+        },
+        "cage": {
+          "type": "string"
         }
       }
     },
@@ -730,7 +756,8 @@
               "maintain",
               "move_mark",
               "disengage",
-              "compel"
+              "compel",
+              "end_spell"
             ]
           },
           "cost": {
