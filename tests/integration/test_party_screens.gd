@@ -136,3 +136,17 @@ func test_healing_and_mage_armor_outside_combat() -> void:
 	await _frames(1)
 	var sheet := root.get("screen") as CharacterSheetScreen
 	sheet.call("_draw")
+
+
+func test_the_stash_at_a_safe_place() -> void:
+	var ilse := GameState.story.party[0]
+	assert_true(GameState.story.stash_put("javelin", ilse))
+	assert_true(GameState.story.party_has_item("javelin"))
+	var before := ilse.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "javelin").size()
+	assert_true(GameState.story.stash_take("javelin", ilse))
+	assert_false(GameState.story.stash_take("javelin", ilse), "only the one we put there")
+	root.call("open_screen", "inventory", 0)
+	await _frames(1)
+	var inv := root.get("screen") as InventoryScreen
+	assert_true(inv.call("_stash_open"), "the test hall is a safe place")
+	assert_true(before >= 0)

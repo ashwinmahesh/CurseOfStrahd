@@ -18,6 +18,8 @@ signal combat_ended(outcome: String)
 signal check_rolled(text: String)
 signal hover_changed(text: String)
 signal banter(lines: Array)
+## The party reached a road out of here (an exit to "travel"): the game opens the map.
+signal travel_requested
 
 const STEP_TIME := 0.18
 const SNEAK_STEP_TIME := 0.32
@@ -39,6 +41,8 @@ var _last_banter := -1000
 var members: Array[Combatant] = []
 var tokens: Dictionary = {}          ## combatant id -> CombatToken
 var npc_tokens: Dictionary = {}      ## npc id -> CombatToken
+var _env: Environment
+var _sun: DirectionalLight3D
 var guest_members: Array[Combatant] = []   ## story allies following the party (StoryState.guests)
 var _npc_shown: Array[Dictionary] = []   ## [{spec, token, cell, low_before}] for the NPC entries standing here now
 var door_nodes: Dictionary = {}      ## door id -> Node3D
@@ -65,7 +69,8 @@ static func create(location_id: String, state: StoryState, narrator_: Narrator, 
 	var v := LocationView.new()
 	v.name = "Location_" + location_id
 	v.loc_id = location_id
-	v.loc = Compendium.shared().get_entry("locations", location_id)
+	# A copy: random encounters on the road add fights to it for the length of a visit.
+	v.loc = Compendium.shared().get_entry("locations", location_id).duplicate(true)
 	v.st = state
 	v.narrator = narrator_
 	v.dice = dice_
@@ -112,32 +117,78 @@ func _ready() -> void:
 func _build_environment() -> void:
 	var light := str(loc["map"].get("light", "dim"))
 	var outdoors := bool(loc["map"].get("outdoors", false))
-	var env := Environment.new()
-	env.background_mode = Environment.BG_COLOR
-	env.background_color = Look.color("night_deep") if outdoors else Look.color("void")
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Look.color("mist_blue") if outdoors else Look.color("bruise")
-	env.ambient_light_energy = {"bright": 1.2, "dim": 0.75, "dark": 0.35}.get(light, 0.75) as float
-	env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
-	env.fog_enabled = true
-	env.fog_light_color = Look.color("grave")
-	env.fog_density = 0.02 if outdoors else 0.008
+	_env = Environment.new()
+	_env.background_mode = Environment.BG_COLOR
+	_env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	_env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
+	_env.fog_enabled = true
+	_env.fog_light_color = Look.color("grave")
+	_env.fog_density = 0.02 if outdoors else 0.008
 	var we := WorldEnvironment.new()
-	we.environment = env
+	we.environment = _env
 	add_child(we)
-	var moon := DirectionalLight3D.new()
-	moon.light_color = Look.color("moonlight")
-	moon.light_energy = 0.8 if outdoors else (0.25 if light != "dark" else 0.08)
-	moon.shadow_enabled = true
-	moon.rotation_degrees = Vector3(-55, 35, 0)
-	add_child(moon)
-	if light == "dark" or not outdoors:
-		# The party's lantern (or a Light cantrip): it goes where the leader goes.
-		lantern = OmniLight3D.new()
-		lantern.light_color = Look.color("candle")
-		lantern.omni_range = 7.0
-		lantern.light_energy = 1.6
-		lantern.position = Vector3(0, 1.6, 0)
+	_sun = DirectionalLight3D.new()
+	_sun.shadow_enabled = true
+	_sun.rotation_degrees = Vector3(-55, 35, 0)
+	add_child(_sun)
+	# The party's lantern (or a Light cantrip): it goes where the leader goes, lit when it's dark.
+	lantern = OmniLight3D.new()
+	lantern.light_color = Look.color("candle")
+	lantern.omni_range = 7.0
+	lantern.light_energy = 1.6
+	lantern.position = Vector3(0, 1.6, 0)
+	update_daylight()
+
+
+## The time of day outdoors (plan §5.2 day and night): an overcast Barovian day, a red dusk and dawn, and a blue
+## night when the lantern comes out. Indoors only the map's light level counts.
+func update_daylight() -> void:
+	if _env == null:
+		return
+	var light := str(loc["map"].get("light", "dim"))
+	var outdoors := bool(loc["map"].get("outdoors", false))
+	var phase := time_phase()
+	var base := {"bright": 1.2, "dim": 0.75, "dark": 0.35}.get(light, 0.75) as float
+	if not outdoors:
+		_env.background_color = Look.color("void")
+		_env.ambient_light_color = Look.color("bruise")
+		_env.ambient_light_energy = base
+		_sun.light_color = Look.color("moonlight")
+		_sun.light_energy = 0.25 if light != "dark" else 0.08
+		lantern.visible = true
+		return
+	match phase:
+		"day":
+			_env.background_color = Look.color("ash_violet")
+			_env.ambient_light_color = Look.color("mist_blue")
+			_env.ambient_light_energy = base * 1.35
+			_sun.light_color = Look.color("frost")
+			_sun.light_energy = 0.95
+		"dusk", "dawn":
+			_env.background_color = Look.color("bruise_deep")
+			_env.ambient_light_color = Look.color("lilac")
+			_env.ambient_light_energy = base * 0.9
+			_sun.light_color = Look.color("ember")
+			_sun.light_energy = 0.3
+		_:
+			_env.background_color = Look.color("night_deep")
+			_env.ambient_light_color = Look.color("mist_blue")
+			_env.ambient_light_energy = base * 0.7
+			_sun.light_color = Look.color("moonlight")
+			_sun.light_energy = 0.45
+	lantern.visible = phase == "night" or light == "dark"
+
+
+## "day" (7:00-17:59), "dusk" (18:00-18:59), "night" (19:00-5:59) or "dawn" (6:00-6:59).
+func time_phase() -> String:
+	var h := st.minute_of_day / 60
+	if h >= 7 and h < 18:
+		return "day"
+	if h == 18:
+		return "dusk"
+	if h == 6:
+		return "dawn"
+	return "night"
 
 
 func _door_state(id: String) -> String:
@@ -529,6 +580,9 @@ func _check_cell_events() -> bool:
 					narration.emit(str(exit.get("locked_text", "The way is barred.")))
 				return false
 			_save_positions()
+			if str(exit["to"]) == "travel":
+				travel_requested.emit()
+				return true
 			st.advance_minutes(5)   # walking between places takes a few minutes; rests take the hours
 			exit_requested.emit(str(exit["to"]), str(exit.get("spawn", "default")))
 			return true
@@ -1185,6 +1239,16 @@ func check_flag_encounters() -> bool:
 
 static func _truthy(v: Variant) -> bool:
 	return StoryConditions._truthy(v)
+
+
+## A fight that isn't in the location's data (a random encounter on the road): added for this visit, then started.
+func start_custom_encounter(spec: Dictionary) -> bool:
+	var s := spec.duplicate(true)
+	s["trigger"] = "dialogue"
+	if not loc.has("encounters"):
+		loc["encounters"] = []
+	(loc["encounters"] as Array).append(s)
+	return start_encounter(str(s["id"]))
 
 
 ## The fight happens here, on the same grid: the party where it stands, the monsters where the data puts them.

@@ -21,7 +21,7 @@ endif
 * Close the lid. -> END
 
 ~ chest_medicine
-Narrator: No wounds, no breaks. Just bones too light for their size, curled the way children curl when they fall asleep hungry and cold. Nobody killed them. Somebody forgot them.
+Narrator: No wounds, no breaks: just bones too light for their size, curled the way children curl when they fall asleep hungry and cold. Nobody killed them; somebody forgot them.
 if not flag.death_house_children_truth
   set death_house_children_truth
   set death_house_lore += 1
@@ -92,6 +92,6 @@ endif
 if not flag.death_house_milestone_dungeon
   set death_house_milestone_dungeon
   xp milestone
-  Narrator: You have come further into this house than most guests. It has noticed. So have you.
+  Narrator: You have come farther into this house than most guests, and it has noticed. So have you.
 endif
 -> END

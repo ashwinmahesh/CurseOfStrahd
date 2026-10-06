@@ -16,7 +16,7 @@ interject class:cleric: Stay back from him. He's starving, and he's looking at o
 * [Insight DC 13] What does he really want? -> insight_ok | insight_fail
 * [Cleric] Pray for him. -> pray
 * We'll let you out. -> free_warn
-* This ends now. -> fight
+* This ends now. Attack him. -> fight
 * We'll leave you here. -> leave
 
 ~ who
@@ -42,7 +42,7 @@ Narrator: For a heartbeat the hunger leaves his face, and a scared boy looks dow
 -> menu
 
 ~ free_warn
-Doru [smile]: You would? Oh, you would. I'll go far away. To the castle; he'll take me in. I'll never trouble Father again. I swear it on the Morninglord. On my mother. On anything.
+Doru [smile]: You would? Oh, you would. I'll go far away. To the castle; the master will take me in. I'll never trouble Father again. I swear it on the Morninglord. On my mother. On anything.
 interject tag:blunt: He's a hungry wolf asking us to open the pen.
 * Go, then. The way is open. -> free
 * On second thought, no. -> menu

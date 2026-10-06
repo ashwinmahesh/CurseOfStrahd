@@ -31,7 +31,7 @@ endif
 
 ~ rooms
 Arik: Upstairs. Locks work.
-interject tag:cheerful: Good locks? I could check them for you. Professionally. For free!
+interject tag:cheerful: Locks that work! That's the best news I've had since the mist.
 Arik: Locks work.
 -> menu
 
@@ -56,7 +56,7 @@ endif
 
 ~ insight_ok
 set arik_hollow_noticed
-Narrator: You look for whatever looks back out of a man's eyes. There is nothing there. Not cruelty, not grief, not boredom: a clean, empty room with the lamp left on.
+Narrator: You look for whatever looks back out of a man's eyes, and there is nothing there. Not cruelty, not grief, not boredom: a clean, empty room with the lamp left on.
 -> menu
 
 ~ insight_fail

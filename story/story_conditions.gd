@@ -8,6 +8,9 @@ extends RefCounted
 ## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
 var st: StoryState
+## When set (the Narrator reacting to someone), class:, species:, tag:, name: and background: terms ask about this
+## character rather than anyone in the party.
+var actor: Character = null
 var _tokens: Array[String] = []
 var _i := 0
 
@@ -16,10 +19,12 @@ func _init(state: StoryState) -> void:
 	st = state
 
 
-static func check(expr: String, state: StoryState) -> bool:
+static func check(expr: String, state: StoryState, who: Character = null) -> bool:
 	if expr.strip_edges() == "":
 		return true
-	return StoryConditions.new(state).evaluate(expr)
+	var c := StoryConditions.new(state)
+	c.actor = who
+	return c.evaluate(expr)
 
 
 func evaluate(expr: String) -> bool:
@@ -165,6 +170,8 @@ func _term() -> bool:
 	if t.contains(":"):
 		if t.begins_with("item:"):
 			return st.party_has_item(t.substr(5))
+		if actor != null:
+			return StoryState.member_matches(actor, t)
 		return st.find_member(t) != null
 	push_warning("Unknown condition term: %s" % t)
 	return false

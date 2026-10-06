@@ -21,7 +21,7 @@ endif
 ~ bt_wolf_blood
 if flag.mists_wolves_fought and visited:dh_den and name:hedda_ironvow and name:silvain_aster
   interject name:hedda_ironvow: Eleven wolf heads on that wall, and wolves waiting for us on the road. I don't think that's a coincidence.
-  interject name:silvain_aster: It's a grudge. The house hunted his wolves, and now his wolves hunt the house's guests.
+  interject name:silvain_aster: It's a grudge. The house hunted someone's wolves, and now someone's wolves hunt the house's guests.
 endif
 -> END
 
@@ -59,7 +59,7 @@ endif
 if flag.death_house_found_deeds and name:tamsin_tealeaf and name:silvain_aster
   interject name:tamsin_tealeaf: So when this is over, we retire to the windmill.
   interject name:silvain_aster: There is a noise under this house that suggests "over" is optimistic.
-  interject name:tamsin_tealeaf: Windmill, Silvain. Hold onto the windmill.
+  interject name:tamsin_tealeaf: Windmill, Silvain. Hold on to the windmill.
 endif
 -> END
 
@@ -108,7 +108,7 @@ endif
 if flag.death_house_children_riding and not flag.death_house_children_at_rest
   Narrator: One of you is humming a nursery tune that none of you know.
   Player: Who's humming?
-  Narrator: Nobody answers. The humming stops. Then, very quietly, someone giggles.
+  Narrator: Nobody answers, and the humming stops. Then, very quietly, someone giggles.
 endif
 -> END
 

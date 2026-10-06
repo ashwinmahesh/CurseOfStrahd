@@ -97,6 +97,4 @@ func line(key: String, st: StoryState, actor: Character = null, extra: Dictionar
 ## A variant's condition is checked against the acting character first (class:, species:, tag: ...), then the
 ## party and the story.
 static func _holds(cond: String, st: StoryState, actor: Character) -> bool:
-	if actor != null and not cond.contains(" ") and cond.contains(":") and not cond.begins_with("visited:") and not cond.begins_with("item:"):
-		return StoryState.member_matches(actor, cond)
-	return StoryConditions.check(cond, st)
+	return StoryConditions.check(cond, st, actor)

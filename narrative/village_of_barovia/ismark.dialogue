@@ -11,12 +11,12 @@ else
 Ismark [weary]: Strangers. In Barovia. Either a miracle or a mistake, and I've stopped believing in miracles. Sit. I'm buying. It won't help, but I'm buying.
 endif
 if flag.death_house_refused
-Ismark: The whole lane heard that house last night: bricks grinding, glass going. People don't get out of it at all. You got out through a window, by the look of your sleeves.
+Ismark: The whole lane heard that house: bricks grinding, glass going. Nobody gets out of it at all. You got out through a window, by the look of your sleeves.
 elif flag.death_house_sacrificed
 Narrator: His eyes go over you once, slowly, and stop at your hands. Whatever he sees there, he decides not to ask about it.
 endif
 if flag.death_house_children_at_rest
-Ismark [sad]: The Durst children used to stand in the road outside that house. Folk saw them for years. If they're gone now, if you did that, then thank you. I think.
+Ismark [sad]: The Durst children used to stand in the east road, where the cottages begin. Folk saw them for years. If they're gone now, if you did that, then thank you. I think.
 endif
 -> menu
 
@@ -58,7 +58,7 @@ Ismark: Call him what you like. He answers to all of it.
 -> menu
 
 ~ read_ok
-Narrator: His smile holds, but his eyes keep sliding to the door. He isn't afraid of you. He's ashamed in front of you, which is harder.
+Narrator: His smile holds, but his eyes keep sliding to the door. He isn't afraid of you; he's ashamed in front of you, which is harder.
 Ismark [weary]: Stop that. I can feel you reading me. Yes, I should have saved him. No, I couldn't have. I have that argument with myself every night. I'm winning on points.
 -> menu
 
@@ -70,13 +70,13 @@ Narrator: He gives you nothing but a tired man's face. It is a very good tired m
 set ilse_invitation_shown
 Narrator: The sealed letter goes down on the table between the cups. Ismark looks at the ornate S, and the colour leaves his face.
 Ismark [afraid]: That's not my father's hand. Father wrote letters too, begging for help. The Vistani carried them out of the valley. Nobody ever answered. Except, it seems, him.
-interject name:ilse_varga: Same flourish on the tail. He writes to people he means to keep.
+interject name:ilse_varga: A year I've carried this. Now I know whose door to knock on.
 Ismark: Then he invited you. You're his guests, or his game. Let's make you the third thing: his problem.
 -> menu
 
 ~ ask
 Ismark: Two things. First: help me carry my father to the church and see him buried properly, with Father Donavich's words over him. Ireena won't leave until it's done.
-Ismark: Second: once he's in the ground, take Ireena west to Vallaki. It has walls, a church with old relics under the altar, and a baron who's a fool, but a careful fool. And it's further from the castle.
+Ismark: Second: once he's in the ground, take Ireena west to Vallaki. It has walls, a church with old relics under the altar, and a baron who's a fool, but a careful fool. And it's farther from the castle.
 * We'll help you. -> agree
 * [Persuasion DC 12] We don't work for gratitude. What can you pay? -> pay_ok | pay_fail
 * Tell us about Vallaki. -> vallaki

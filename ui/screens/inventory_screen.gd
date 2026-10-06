@@ -120,7 +120,23 @@ func _draw() -> void:
 			_draw(), 14)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		list.add_child(b)
-	pack.add_child(UiKit.scroll(list, Vector2(540, 560)))
+	var at_safe := _stash_open()
+	pack.add_child(UiKit.scroll(list, Vector2(540, 400 if at_safe else 560)))
+	if at_safe:
+		# The party stash (plan §5.6): kept at safe places like an inn.
+		pack.add_child(UiKit.header("Party stash"))
+		var sl := VBoxContainer.new()
+		if st.stash.is_empty():
+			sl.add_child(UiKit.label("Empty. Select an item and choose Stash it.", 13, "parchment"))
+		for se in st.stash:
+			var sid := str(se["id"])
+			var srow := HBoxContainer.new()
+			srow.add_child(UiKit.label("%s ×%d" % [Compendium.shared().display_name("items", sid), int(se["qty"])], 14, "vellum", 380))
+			srow.add_child(UiKit.button("Take", func() -> void:
+				st.stash_take(sid, _ch())
+				_draw(), 13))
+			sl.add_child(srow)
+		pack.add_child(UiKit.scroll(sl, Vector2(540, 150)))
 	row.add_child(pack)
 	# Item card
 	_card = VBoxContainer.new()
@@ -226,6 +242,17 @@ func _draw_card() -> void:
 	if quest:
 		drop.tooltip_text = "Can't drop: needed for a quest"
 	_card.add_child(drop)
+	if _stash_open() and not quest:
+		_card.add_child(UiKit.button("Stash it", func() -> void:
+			st.stash_put(selected, ch)
+			if _entry(selected).is_empty():
+				selected = ""
+			_draw(), 13))
+
+
+## The stash is reachable where it's safe to rest (an inn, a home).
+func _stash_open() -> bool:
+	return str(Compendium.shared().get_entry("locations", st.location).get("rest", "")) == "safe"
 
 
 func _entry(item_id: String) -> Dictionary:

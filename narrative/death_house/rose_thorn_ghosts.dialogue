@@ -10,7 +10,7 @@ set death_house_children_met
 quest rose_and_thorn met
 Narrator: Two children sit on the floor beside a dollhouse, pale as frost on a window. The girl looks up first, with a hope that has had a long time to get thin.
 if flag.death_house_heard_plea
-  Narrator: You know these faces. An hour ago they were begging you in the road. These ones have been here much longer.
+  Narrator: You know these faces: they begged you for help in the road outside. These two have been here much longer.
 endif
 Rose [afraid]: Is it over? Is the noise over? Mother said she'd unlock the door when the noise downstairs stopped.
 Thorn: You're not Mother.
@@ -31,7 +31,7 @@ endif
 * We have to go. Stay here. -> leaving
 
 ~ locked
-Rose: Mother and Father. They said the people in robes mustn't see us, and we mustn't see them. They said they'd come back up when it was over.
+Rose: Mother and Father. The people in robes mustn't see us, they said, and we mustn't see them. They'd come back up when it was over.
 Thorn: They didn't.
 Rose [angry]: They will. Mother promised.
 -> ask
@@ -52,7 +52,7 @@ Thorn: Downstairs. Everybody goes downstairs.
 -> ask
 
 ~ know_ok
-Narrator: They don't know. They are still waiting for a door to open, the way you wait for morning. Telling them will hurt. Not telling them will hurt longer.
+Narrator: They don't know; they are still waiting for a door to open, the way you wait for morning. Telling them will hurt, and not telling them will hurt longer.
 -> ask
 
 ~ know_fail
@@ -61,8 +61,8 @@ Narrator: Two stubborn, frightened faces. {name} can't read past that.
 
 ~ truth
 Narrator: How do you tell a child she is dead?
-* [Persuasion DC 12] Gently. Kneel, take your time, let them ask questions. -> truth_gentle | truth_hard
-* [Cleric] [Religion DC 10] With the prayer for the dead, as you would for any family. -> truth_gentle | truth_hard
+* [Persuasion DC 12] Gently: kneel, take your time, let them ask. Rush it and Thorn may panic. -> truth_gentle | truth_hard
+* [Cleric] [Religion DC 10] With the prayer for the dead, as for any family. Stumble and Thorn may panic. -> truth_gentle | truth_hard
 * Plainly. They deserve the truth. -> truth_hard
 * Not yet. -> ask
 
@@ -78,7 +78,7 @@ if not flag.death_house_children_truth
   set death_house_children_truth
   set death_house_lore += 1
 endif
-Rose: We hid in the toy chest when it got cold. Our bones are still in there. There's a crypt for us downstairs, next to Grandmother's. Mother showed us once.
+Rose: We hid in the toy chest when it got cold. Our bones are still there. Our crypts are downstairs, by Grandmother's. Mother showed us.
 Rose [sad]: Will you take us?
 interject name:hedda_ironvow: We will, little one. That's what we're for.
 if not name:hedda_ironvow
@@ -98,9 +98,9 @@ Rose [afraid]: He's frightened. We both are. Please don't leave us.
 -> truth_learned
 
 ~ thorn_rides
-Narrator: He goes into one of you like breath into a cold mirror. For a moment two sets of eyes look out of the same face. Then only one. Somewhere inside, a small boy stops crying.
+Narrator: He goes into one of you like breath into a cold mirror; for a moment two sets of eyes look out of the same face, then only one. Somewhere inside, a small boy stops crying.
 Rose [angry]: Thorn! Come out of there! ...Fine. Then I'm coming too.
-Narrator: She steps into another of you, apologizing as she goes. Someone in the party is humming a nursery tune now. None of you started it.
+Narrator: She steps into another of you, apologizing as she goes. Now someone in the party is humming a nursery tune that none of you started.
 set death_house_children_riding
 if not flag.death_house_children_truth
   set death_house_children_truth
@@ -112,7 +112,7 @@ interject name:silvain_aster: Someone in this party now has a child in their hea
 ~ ride_along
 Rose: Hold still. It doesn't hurt. Thorn, say sorry first.
 Thorn: Sorry first.
-Narrator: Two cold presences step inside two of you and settle, the way children settle in the back of a cart. Someone is humming now. None of you started it.
+Narrator: Two cold presences step inside two of you and settle, the way children settle in the back of a cart. Someone is humming now, and none of you started it.
 set death_house_children_riding
 interject name:ilse_varga: Two more to count, then. Fine. Nobody gets left.
 -> END

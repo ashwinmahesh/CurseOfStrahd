@@ -13,7 +13,7 @@ endif
 -> start
 
 ~ start
-Narrator: Robed figures made of shadow stand around the stone altar, faces hidden, voices joined. The chant has been rising since the stairs. Here, you can finally make out the words.
+Narrator: Robed figures made of shadow stand around the stone altar, faces hidden, voices joined. The chant has been rising since the stairs, and here, at last, you can make out the words.
 cult_shades: One must die. One must die. One must die.
 interject name:silvain_aster: Technically, everyone must. I suspect they mean sooner.
 if not name:silvain_aster
@@ -28,7 +28,7 @@ quest death_house the_altar
 ~ choose
 * Who are you? -> who
 * What is that heap in the corner? -> heap
-* [if not flag.death_house_altar_denounced] [Religion DC 14] Denounce their creed in the name of the dawn. -> denounce_ok | denounce_fail
+* [if not flag.death_house_altar_denounced] [Religion DC 14] Denounce their creed in the name of the dawn. (one try) -> denounce_ok | denounce_fail
 * [if flag.death_house_lore >= 4 and not flag.death_house_head_start] We know what you are, and what sleeps in that heap. -> know
 * [Wizard] Offer them a familiar instead: a spirit, not a life. -> familiar
 * Refuse. Nobody here is dying for you. -> refuse
@@ -54,7 +54,7 @@ interject name:tamsin_tealeaf: It's breathing. Why is it breathing. Heaps don't 
 ~ denounce_ok
 set death_house_altar_denounced
 set death_house_head_start
-Narrator: {name}'s voice rings off the stone, and the shades flinch back from it like smoke from an opened door. The chant stumbles. The heap stirs, but slowly. Slowly.
+Narrator: {name}'s voice rings off the stone, and the shades flinch back from it like smoke from an opened door. The chant stumbles, and the heap stirs, but slowly, so slowly.
 interject name:hedda_ironvow: Mm. They remember what dawn is. Good.
 -> choose
 
@@ -65,7 +65,7 @@ Narrator: The words come out strong, and the chant swallows them whole without s
 
 ~ know
 set death_house_head_start
-Narrator: You say it plainly: the cult and the Dursts, the children left in the attic, the baby given on this altar, the thing in the heap, the lord who never wanted any of it.
+Narrator: You tell their story back to them plainly, every piece the house let slip on your way down, and you do not leave out the ending.
 Narrator: For the first time in years the chant falters. Knowing a story is a kind of power over it.
 interject name:silvain_aster: Footnoted and cross-referenced. They hate that.
 -> choose
@@ -94,7 +94,7 @@ endif
 
 ~ run
 if flag.death_house_head_start
-  Narrator: You are through the antechamber before the thing in the heap has finished standing up. Behind you it says its own name in a voice like a drain. Lorghoth. Lorghoth.
+  Narrator: You are through the antechamber before the thing in the heap has finished standing up. Behind you it says its own name in a voice like a drain: Lorghoth, Lorghoth.
   -> fled
 endif
 check Dexterity DC 12 -> run_clear | run_caught
@@ -120,7 +120,7 @@ Narrator: It stands, and keeps standing, until its top brushes the ceiling.
 combat lorghoth_rises
 
 ~ sacrifice
-Narrator: The chant softens, almost kindly. The altar is waiting for one of you to lie down on it. Whoever does will not get up.
+Narrator: The chant softens, almost kindly: the altar is waiting for one of you to lie down on it. Whoever does will not get up.
 interject name:hedda_ironvow: No. Listen to me. This is the one thing we do not do. Not for a door. Not for anything.
 if not name:hedda_ironvow
   interject class:cleric: Don't. Whatever this buys us, we'll be paying for it forever.
@@ -135,7 +135,7 @@ sacrifice
 set death_house_sacrificed
 Narrator: It is quick, and it is quiet, and afterward none of you can remember who held the knife.
 cult_shades: One has died. The house is satisfied.
-Narrator: The shades unravel into the dark. The heap sighs and settles deeper into its sleep. Far above you, every lock in the house turns over, one after another, like a man cracking his knuckles.
+Narrator: The shades unravel into the dark, and the heap sighs and settles deeper into its sleep. Far above you, every lock in the house turns over, one after another, like a man cracking his knuckles.
 if flag.death_house_children_riding
   Narrator: Two small cold weights slip out of two of you and away up the stairs, back to the attic where the house keeps its children.
   set death_house_children_riding = false
@@ -143,5 +143,5 @@ endif
 set death_house_completed
 quest death_house escaped_sacrificed
 xp milestone
-Narrator: The way out is open. Nothing in this house will stop you leaving now. Nothing in it needs to.
+Narrator: The way out is open, and nothing in this house will stop you leaving now. Nothing in it needs to.
 -> END

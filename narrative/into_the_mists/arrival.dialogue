@@ -8,7 +8,7 @@ if not flag.mists_arrived
   quest into_the_mists lost_in_mist
   -> hooks
 endif
-Narrator: You walk into the white. A dozen steps later you walk out of it, facing the same road in the same direction. The mist is not a wall. It is a hand, turning you around.
+Narrator: You walk into the white, and a dozen steps later you walk out of it facing the same road in the same direction. The mist is not a wall; it is a hand, turning you around.
 -> END
 
 ~ hooks
@@ -50,7 +50,7 @@ endif
 ~ carcass_tracks
 set mists_carcass_studied
 set mists_read_the_pack
-Narrator: {name} reads the churned earth: a dozen wolves at least, moving in a line, not a scatter. They killed the deer and did not eat it. They were not hungry. They were busy.
+Narrator: {name} reads the churned earth: a dozen wolves moving in a line, not a scatter, and a kill they never touched. They were not hungry; they were busy.
 interject name:ilse_varga: That's a patrol, not a hunt. Someone's posted pickets on this road.
 if not name:ilse_varga
   interject background:soldier: Wolves in a line. That's a picket. Somebody gives them orders.
@@ -59,5 +59,5 @@ endif
 
 ~ carcass_no_tracks
 set mists_carcass_studied
-Narrator: Prints, fog and old leaves, churned into one dark mess. Whatever did this was large, numerous and gone. Probably gone.
+Narrator: Prints, fog and old leaves, churned into one dark mess by something large, numerous and gone. Probably gone.
 -> END

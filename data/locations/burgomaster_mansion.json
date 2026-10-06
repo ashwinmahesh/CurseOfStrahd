@@ -3,7 +3,7 @@
   "name": "Burgomaster's Mansion",
   "region": "village_of_barovia",
   "summary": "The burgomaster's house, boarded and clawed after weeks of nightly attacks. Ireena keeps watch in the parlor; her father lies in his coffin across the hall.",
-  "text": "Every window is boarded from inside. The front door has been mended so many times it is more patch than door.",
+  "text": "The burgomaster's house, held for a month against the night. The front door has been mended so many times it is more patch than door.",
   "map": {
     "rows": [
       "########################",

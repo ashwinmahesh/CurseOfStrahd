@@ -3,9 +3,9 @@
 
 ~ crypt_parents
 narrate examine:crypt_parents
-Narrator: Two crypts side by side, cut with the names Gustav Durst and Elisabeth Durst and the years of their births. Both stand open and empty. Nobody ever got around to dying properly.
+Narrator: Two crypts side by side, cut with the names Gustav Durst and Elisabeth Durst and the years of their births. Both stand open and empty; nobody ever got around to dying properly.
 if flag.death_house_dursts_destroyed
-  Narrator: You know where they are now. Someone should lay them in here. It won't be anyone in this house.
+  Narrator: You know where they lie now, and someone should lay them in here. It won't be anyone in this house.
 endif
 -> END
 
@@ -20,7 +20,7 @@ if flag.death_house_children_remains_taken
   -> crypt_children_choice
 endif
 if flag.death_house_children_riding
-  Narrator: From somewhere inside one of you, a small voice says: that's ours. But we're not in there. We're upstairs, in the toy chest.
+  Narrator: From somewhere inside one of you, a small voice says: that's ours, but we're not in there. We're upstairs, in the toy chest.
 endif
 -> END
 
@@ -44,7 +44,7 @@ set death_house_children_riding = false
 quest rose_and_thorn at_rest
 interject name:hedda_ironvow: Dawn comes, little ones. Go on ahead. We'll be along. Not soon, I hope.
 if not flag.death_house_sacrificed
-  interject name:ilse_varga: Count off. Four. Good.
+  interject name:ilse_varga: Count off. Good. Nobody left behind this time.
 endif
 if not name:hedda_ironvow
   interject class:cleric: Go gently. Nobody will lock that door again.
@@ -53,7 +53,7 @@ endif
 
 ~ crypt_walter
 narrate examine:crypt_walter
-Narrator: The smallest crypt in the row. It says Walter, and nothing else: no family name, no dates. It has never been opened.
+Narrator: The smallest crypt in the row says Walter, and nothing else: no family name, no dates. It has never been opened.
 if flag.death_house_learned_walter
   Narrator: He never got a surname. He never got a birthday either.
 endif
@@ -61,7 +61,7 @@ endif
 * Move on. -> END
 
 ~ walter_lullaby
-Narrator: The tune goes thin and strange in the stone gallery. Nothing answers. You decide that is the right answer.
+Narrator: The tune goes thin and strange in the stone gallery, and nothing answers. You decide that is the right answer.
 interject name:tamsin_tealeaf: Sleep tight, little one. Somebody remembered.
 -> END
 

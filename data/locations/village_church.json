@@ -3,7 +3,7 @@
   "name": "Village Church",
   "region": "village_of_barovia",
   "summary": "A failing church of the Morninglord: cracked windows, cold candles, a priest praying at the altar, and a barred door to the undercroft where his son screams for blood.",
-  "text": "The nave and the undercroft below it share this map as two walled regions; the stair is an exit to a spawn on the same map.",
+  "text": "The Morninglord's church, one of the few doors in the village still left unbarred. Below the nave, behind a barred door, lies the undercroft.",
   "map": {
     "rows": [
       "######################",

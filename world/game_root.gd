@@ -85,6 +85,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 			text.append(str(d["text"]) if bool(d["narrator"]) else "%s: %s" % [str(d["name"]).get_slice(" ", 0), d["text"]])
 		hud.narrate("\n".join(text)))
 	view.exit_requested.connect(func(to: String, sp: String) -> void: enter_location.call_deferred(to, sp))
+	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
@@ -99,6 +100,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 func _refresh() -> void:
 	if view == null:
 		return
+	view.update_daylight()
 	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo)
 
 
@@ -146,6 +148,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				_command("split")
 			KEY_ESCAPE:
 				open_screen("menu", 0)
+			KEY_M:
+				open_travel(false)
 			KEY_F5:
 				_quick_save()
 			KEY_F9:
@@ -304,8 +308,8 @@ func _dialogue_ended(combat: String) -> void:
 	if combat != "":
 		view.hide_npcs_of(_dialogue_ref)
 		view.start_encounter(combat)
-	else:
-		view.check_flag_encounters()
+	elif not view.check_flag_encounters() and not st.travel_resume.is_empty():
+		_continue_journey.call_deferred()
 
 
 func _open_loot(container_id: String, items: Array, gold: float) -> void:
@@ -324,6 +328,68 @@ func _after_combat(outcome: String) -> void:
 		return
 	view.refresh_npcs()
 	_refresh()
+	if not st.travel_resume.is_empty():
+		hud.toast("The road is clear. You go on.")
+		_continue_journey.call_deferred()
+
+
+# --- Travel (ADR 0010) ----------------------------------------------------------------------------
+
+## The map of Barovia: from a road out of town the party can set out; elsewhere (M) it's only for looking.
+func open_travel(setting_out: bool) -> void:
+	if screen != null or dialogue != null or view.in_combat:
+		return
+	var here := Travel.place_for_location(st.location)
+	if here == "" and setting_out:
+		hud.toast("No road leads on from here yet.")
+		return
+	var t := TravelScreen.new()
+	screen = t
+	add_child(t)
+	t.open_map(st, here, setting_out)
+	t.travel_chosen.connect(func(to: String) -> void:
+		screen = null
+		travel(here, to))
+	t.closed.connect(func() -> void: screen = null)
+
+
+## Sets out from place `from` for place `to`, road by road. Something on the road stops the journey on that road's
+## map; when it's dealt with, the journey goes on (StoryState.travel_resume).
+func travel(from: String, to: String) -> void:
+	st.travel_resume = {}
+	for leg in Travel.route(from, to, st):
+		st.advance_minutes(roundi(float(leg["hours"]) * 60.0))
+		var ev := Travel.roll(leg["road"] as Dictionary, st, Dice.roller)
+		if ev.is_empty():
+			continue
+		st.travel_resume = {"to": to, "at": str(leg["to"])}
+		var table := ev["table"] as Dictionary
+		var entry := ev["entry"] as Dictionary
+		enter_location(str(table["map"]), "default")
+		if entry.has("monsters"):
+			if str(entry.get("text", "")) != "":
+				hud.narrate(str(entry["text"]))
+			view.start_custom_encounter({"id": "random_%s_%d" % [table["id"], st.total_minutes()], "monsters": entry["monsters"],
+				"surprise": str(entry.get("surprise", ""))})
+		else:
+			start_dialogue(str(entry["dialogue"]), "")
+		return
+	_arrive(to)
+
+
+func _continue_journey() -> void:
+	var r := st.travel_resume
+	st.travel_resume = {}
+	if r.is_empty() or view.in_combat:
+		return
+	travel(str(r["at"]), str(r["to"]))
+
+
+func _arrive(place_id: String) -> void:
+	var pl := Travel.place(place_id)
+	var loc_ref := str(pl.get("location", ""))
+	enter_location(loc_ref.get_slice(":", 0), str(pl.get("spawn", "default")))
+	hud.toast("%s · %02d:%02d" % [pl.get("name", place_id), st.minute_of_day / 60, st.minute_of_day % 60])
 
 
 # --- Screens --------------------------------------------------------------------------------------
