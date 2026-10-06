@@ -1,0 +1,64 @@
+# Arik, barkeep of the Blood of the Vine (docs/voice/arik.md)
+
+~ start
+Arik: Wine.
+-> menu
+
+~ menu
+* A cup, then. (1 gp) -> wine
+* Who's the man drinking alone by the hearth? -> ismark
+* Do you have rooms? -> rooms
+* Where does the wine come from? -> source
+* Has anyone else come through lately? Travelers? -> travelers
+* [Insight DC 12] Study him properly. -> insight_ok | insight_fail
+* Goodbye. -> END
+
+~ wine
+gold -1
+Narrator: The wine is thin, sour and faintly purple, like a bruise you can drink.
+interject tag:blunt: Had worse. Not recently.
+Arik: Wine.
+-> menu
+
+~ ismark
+if flag.ismark_met
+Arik: Your friend. The Lesser.
+else
+set ismark_the_lesser_heard
+Arik: Ismark. Burgomaster's son. Folk say the Lesser.
+endif
+-> menu
+
+~ rooms
+Arik: Upstairs. Locks work.
+interject tag:cheerful: Good locks? I could check them for you. Professionally. For free!
+Arik: Locks work.
+-> menu
+
+~ source
+if flag.wine_shortage_heard
+Arik: Still none.
+else
+set wine_shortage_heard
+Arik: Wizard of Wines. No cask in three weeks. Last barrel.
+interject class:fighter: A tavern running dry. That's how you know a siege is going badly.
+endif
+-> menu
+
+~ travelers
+if flag.scholar_notes_found
+Arik: Scholar. You found the bag.
+else
+Arik: Scholar. Wrote a lot. Went up the castle road. Left a bag. Back room.
+interject name:silvain_aster: Thin, ink to the elbows, never finished a sentence without a footnote? Aurel. It has to be Aurel. Back room, he says. Back room.
+endif
+-> menu
+
+~ insight_ok
+set arik_hollow_noticed
+Narrator: You look for whatever looks back out of a man's eyes. There is nothing there. Not cruelty, not grief, not boredom: a clean, empty room with the lamp left on.
+-> menu
+
+~ insight_fail
+Narrator: A barkeep, polishing a cup. If he has depths, they are very well hidden.
+-> menu

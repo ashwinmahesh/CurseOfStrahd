@@ -1,0 +1,18 @@
+{
+  "id": "mirabel",
+  "name": "Mirabel",
+  "title": "Vistana",
+  "summary": "The middle of the three Vistani women at the tavern; quick, mocking and fond of nicknames.",
+  "portrait": "mirabel",
+  "sprite": "mirabel",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vistani_women.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

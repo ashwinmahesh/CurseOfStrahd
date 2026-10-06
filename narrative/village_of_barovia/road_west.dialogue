@@ -1,0 +1,49 @@
+# The road west toward the crossroads, Tser Pool and Vallaki: the departure scene. Phase 4 adds the exit to the travel map;
+# until then this sets village_departed and the escort_ireena stage that Phase 4 reads.
+
+~ start
+if flag.village_departed
+Narrator: The road west runs on into the mist. You have already said your goodbyes to this village; it didn't say any back.
+-> END
+endif
+if flag.ireena_in_party
+-> with_ireena
+endif
+Narrator: The road leaves the village between two leaning posts and runs west under dead trees toward the crossroads. Above it, on its cliff, the castle waits, patient as a creditor.
+if flag.ireena_met and not flag.ireena_escort
+Narrator: Behind you, a single lamp burns in an upstairs window of the burgomaster's house.
+endif
+* Set out west. -> depart_alone
+* Not yet. -> END
+
+~ with_ireena
+Narrator: The road leaves the village between two leaning posts and runs west toward the crossroads. Ireena stops at the last post and looks back once.
+if flag.ismark_joins_escort
+Ismark: Well. The Lesser goes adventuring. If I'm killed, tell the tavern I was the Greater. They won't check.
+else
+Ismark [sad]: This is as far as I go. Get her there. Bring her back one day, if there's anything to bring her back to.
+endif
+Ireena: I've never been past the crossroads. Father always said there was nothing out there but more Barovia. I'd like to see if he was right.
+if flag.madam_eva_rumor
+Ireena: Tser Pool is on the way, the Vistani women said. Madam Eva. If anyone can tell me what he wants with me, perhaps she can.
+endif
+if flag.ireena_destination == "krezk"
+Ireena: Vallaki first, then Krezk. Further than anyone in my family has ever walked.
+endif
+* Set out west. -> depart
+* Not yet. -> END
+
+~ depart
+set village_departed
+quest escort_ireena departed
+Narrator: You walk out of the village of Barovia with the burgomaster's daughter between you. Behind you, a shutter opens a crack, and closes again.
+-> END
+
+~ depart_alone
+if flag.ismark_met and not flag.ireena_escort
+set ireena_escort = "declined"
+quest escort_ireena declined
+endif
+set village_departed
+Narrator: The village falls behind you, shutter by shutter. Nobody waves. Somewhere ahead the road forks, and from its cliff the castle watches you choose.
+-> END

@@ -1,0 +1,212 @@
+# Father Donavich (docs/voice/donavich.md)
+
+~ start
+if flag.doru_destroyed and not flag.donavich_knows_fate
+-> doru_dead_news
+endif
+if flag.doru_freed and not flag.donavich_knows_fate
+-> doru_freed_news
+endif
+if attitude.donavich == hostile
+-> hostile_again
+endif
+if flag.donavich_met
+-> again
+endif
+set donavich_met
+Narrator: A thin man in a threadbare vestment kneels at the altar, praying in a voice worn down to gravel. Beneath the floor, something answers him: a long, hungry cry.
+Donavich [afraid]: Who... forgive me. Visitors. We have so few. The doors are open; I can't remember why I stopped barring them. Perhaps I hoped someone would come.
+if flag.death_house_sacrificed
+Donavich [afraid]: You've been in the house at the end of the lane. There's a smell on you I know from funerals that went wrong. That house wanted an offering. I won't ask what you gave it. The Morninglord already knows.
+interject class:cleric: We'll answer for it. Not to you, Father. But we'll answer.
+elif flag.death_house_refused
+Donavich: Last night the bell rang by itself, when that house at the end of the lane began to groan. You were inside it, weren't you. And you came out. The Morninglord keeps odd company these days.
+endif
+if flag.death_house_children_riding
+Narrator: He looks at you, then past you, at something just over your shoulder. His lips move: two small names, said like a blessing.
+elif flag.death_house_children_at_rest
+Donavich [sad]: The Durst children. Rose and Thorn. Folk saw them in the road for years. If they are at rest now, then you've done more for this village in a night than I have in a year.
+endif
+interject name:hedda_ironvow: A sunburst on the altar. The Morninglord, this far into the dark. Mm. Someone kept faith here.
+Narrator: From under the floor a young man's voice cries out, hoarse and eager: Father, who's there? I can smell them!
+Donavich [afraid]: Pay it no mind. Please. It's nothing that concerns you.
+-> menu
+
+~ again
+if flag.doru_destroyed and flag.donavich_mercy_blessing
+Donavich [sad]: It's still quiet below. I keep waking to listen for him. Habit, I suppose. Grief is mostly habit.
+elif flag.doru_freed
+Donavich [weary]: You've come back. He hasn't. I leave the side door unbarred at night now. I don't know if that's faith or foolishness.
+elif flag.doru_left_locked
+Donavich [weary]: You've come back. He's still below. You left him to me, and I'm grateful, and some nights I wish you hadn't. Both of those are prayers, I think.
+else
+Donavich: You've come back. Forgive me if I don't rise. My knees have taken the shape of the floor.
+endif
+-> menu
+
+~ menu
+* [if not flag.doru_revealed] Who's screaming under the floor? -> screaming
+* [if flag.doru_revealed and not flag.doru_destroyed and not flag.doru_freed] About your son. -> son_menu
+* [if flag.burial_agreed and not flag.donavich_will_officiate and not flag.donavich_refused_rites and not flag.burgomaster_buried] Will you bury the burgomaster? -> burial
+* [name:hedda_ironvow] Tell him about the silver raven in your dreams. -> raven
+* [Cleric] Kneel and pray with him. -> pray
+* Is there anything you need? Anything you can spare? -> needs
+* Goodbye. -> END
+
+~ screaming
+if flag.doru_spoken_to
+Donavich [sad]: You've been below. You've seen him. Then there's no use lying, is there.
+-> truth
+endif
+Donavich [afraid]: A madman. A poor soul I shelter, out of charity. He's loud. Please, don't go near the undercroft door.
+* [Insight DC 10] That's no madman, Father, and you know it. -> truth | insight_fail
+* [Persuasion DC 12] We can help. But you have to tell us the truth. -> truth | persuade_fail
+* As you say. -> menu
+
+~ insight_fail
+Narrator: He holds your gaze with the steadiness of a man who has rehearsed this lie every night. It may even be true. You can't tell.
+-> menu
+
+~ persuade_fail
+Donavich [afraid]: There's nothing to tell. Nothing. Please.
+-> menu
+
+~ truth
+set doru_revealed
+quest the_priests_son heard
+Donavich [sad]: My son. Doru. He went with the other young men to storm the castle and kill the devil in his bed. They had torches and a song. The devil gave them dinner.
+Donavich: Months later Doru came home, at night, wearing his own face. I lured him below and barred the door. I pray. He screams. Neither of us has stopped since.
+interject tag:devout: You've kept him from the village all this time. That took more strength than you know.
+Donavich: Please. Whatever you are, don't hurt him. There may be a way back. There must be.
+-> son_menu
+
+~ son_menu
+* [if not flag.doru_cure_promised] We'll look for a way to save him. -> promise_cure
+* [if not flag.donavich_mercy_blessing and not flag.donavich_mercy_refused] Father, let us end his suffering. -> mercy
+* [if not flag.undercroft_unbarred] We'd like to speak with him. Lift the bar. -> unbar
+* Back to other matters. -> menu
+
+~ promise_cure
+set doru_cure_promised
+set doru_left_locked
+quest the_priests_son cure_promised
+attitude donavich friendly
+Donavich: You would? There are old stories. Saints' bones that turn the dead. Relics of the Morninglord. The sun itself, once. If anything in this valley could bring him back, it's one of those.
+Donavich [sad]: I'll keep him fed on prayer until you come back. It's all I have to feed him on.
+-> menu
+
+~ mercy
+Donavich [afraid]: End it. You mean kill him. Kill my boy.
+* [Religion DC 13] What screams down there isn't Doru. His soul is caged. Let us free it. -> mercy_ok | mercy_fail
+* [Persuasion DC 15] One night that bar will break. Let it end gently, before it does. -> mercy_ok | mercy_fail
+* [Cleric] Speak to him as one priest to another. -> mercy_cleric
+* Forget I asked. -> son_menu
+
+~ mercy_cleric
+Narrator: You don't argue. You tell him what you would want, if it were your child, and what you would want if it were you down there. He listens with his eyes closed.
+-> mercy_ok
+
+~ mercy_ok
+set donavich_mercy_blessing
+set undercroft_unbarred
+attitude donavich friendly
+Narrator: He's silent so long the candles gutter. When he speaks, his voice is very small.
+Donavich [sad]: Do it, then. Gently, if there's any gentle way. I've lifted the bar. I can't watch. I'm sorry, my boy. I'm so sorry.
+if not flag.donavich_gave_holy_water
+set donavich_gave_holy_water
+give holy_water 2
+Donavich: Take these. Holy water. It will burn him. I blessed it for him months ago, and could never throw it.
+endif
+-> END
+
+~ mercy_fail
+set donavich_mercy_refused
+Donavich [angry]: No. No! He's my son. You'll not touch him. The bar stays where it is, and you'll stay away from it.
+-> menu
+
+~ unbar
+Donavich [afraid]: Talk? Oh, he'll talk. He'll talk you all the way to the door and through it. He was always good at talking.
+* [Persuasion DC 12] Only talk. You have our word. -> unbar_ok | unbar_fail
+* Never mind. -> son_menu
+
+~ unbar_ok
+set undercroft_unbarred
+Donavich: Your word. In Barovia that's a strange coin. Very well; the bar is up. Don't open your hand to him. Don't let him see your throat.
+-> menu
+
+~ unbar_fail
+Donavich [afraid]: No. I'm sorry. I can't. If he gets past you, he gets past me, and then the village. The bar stays.
+-> menu
+
+~ burial
+if flag.doru_destroyed and not flag.donavich_mercy_blessing
+Donavich [angry]: You ask me that? After what you did below? No.
+set donavich_refused_rites
+quest bury_the_burgomaster no_priest
+-> END
+endif
+Donavich: Kolyan. He came every holy day until there were no holy days left. Yes. Yes, I'll say the words over him. It's the one thing I still know how to do.
+Donavich [afraid]: Bring him to the grave behind the church; I'll meet you there. And if my boy cries out during the rites, keep singing. Please. Keep singing.
+set donavich_will_officiate
+quest bury_the_burgomaster priest_agreed
+-> menu
+
+~ raven
+set holy_symbol_rumor
+Narrator: Hedda tells him the dream: the sun going out, the silver raven, the sunburst in its claws. Donavich's hands stop shaking.
+Donavich: The Holy Symbol of Ravenkind. Older than this church. A giant raven brought it to a paladin of the dawn, the stories say, and it was turned against the devil once, and lost after. Lost, mind. Not destroyed.
+Donavich: If anyone alive knows where it lies, it's the old Vistani seer at Tser Pool. Or him. He keeps what frightens him.
+interject name:hedda_ironvow: Lost, not destroyed. Mm. Then it can be found.
+-> menu
+
+~ pray
+attitude donavich friendly
+Narrator: You kneel beside him and pray aloud. For a few breaths the voice under the floor stops, as if it's listening too.
+Donavich [sad]: You still feel Him? Here? I haven't, not for a year. I say the words to keep my mouth from saying other things.
+-> menu
+
+~ needs
+Donavich: Need? Food. Sleep. My son back. You can't give me those. I can give you holy water; I have nothing else left to bless.
+if flag.vestry_chest_opened
+Donavich [weary]: Ah, but you've found the vestry chest already. Keep what you took. It does no good in a box.
+elif not flag.donavich_gave_holy_water and attitude.donavich == friendly
+set donavich_gave_holy_water
+give holy_water 2
+Donavich: Here. Two flasks. Throw them hard; the dead don't flinch the way the living do.
+elif flag.donavich_gave_holy_water
+Donavich: I've given you all I had. The well's dry, and so am I.
+else
+Donavich: The rest is in the vestry, for the burial of the dead. Ask me again when I know you better.
+endif
+-> menu
+
+~ doru_dead_news
+set donavich_knows_fate
+quest the_priests_son doru_destroyed
+if flag.donavich_mercy_blessing
+Donavich [sad]: It's quiet. For the first time in months, it's quiet below. Thank you. I think. Ask me again in a year.
+interject class:cleric: He's at rest, Father. Truly at rest. I'd stake my faith on it.
+Donavich: Then he's further from the castle than any of us. Go. Bury your dead. I'll bury mine.
+-> END
+endif
+attitude donavich hostile
+Donavich [angry]: You went down there. You killed my boy. I begged you. I begged you.
+if not flag.burgomaster_buried
+set donavich_refused_rites
+quest bury_the_burgomaster no_priest
+Donavich [angry]: Get out of my church. Bury your burgomaster yourselves. I have a son to bury, and no one to say the words over him either.
+else
+Donavich [angry]: Get out of my church.
+endif
+-> END
+
+~ doru_freed_news
+set donavich_knows_fate
+attitude donavich indifferent
+Donavich [afraid]: The bar is up. The undercroft is empty. You let him out. He'll go to the castle. He'll go to him.
+Donavich [sad]: And Morninglord forgive me, I slept an hour last night, the first in months. What kind of father sleeps?
+-> menu
+
+~ hostile_again
+Donavich [angry]: There's nothing for you here. Not anymore. Go.
+-> END

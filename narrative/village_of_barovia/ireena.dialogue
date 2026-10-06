@@ -1,0 +1,266 @@
+# Ireena Kolyana (docs/voice/ireena.md)
+# door: through the barred mansion door (before Ismark vouches). start: in the parlor.
+# procession_check / procession / vigil: shared with ismark.dialogue. after_burial / escort_ask: the escort choice.
+
+~ door
+Narrator: You knock. Inside, a chair scrapes, and a woman's voice comes through the wood, close and very steady.
+Ireena: Whatever you are, you've come to the wrong door. My father is dead, my brother is at the tavern, and I have a sword.
+* We're travelers. We mean no harm. -> door_plain
+* [Persuasion DC 13] We can help you. Let us in. -> door_open | door_shut
+* [Cleric] I'm a priest. Let me pray over your father. -> door_cleric
+* [Intimidation DC 15] Open the door. Now. -> door_forced | door_shut
+* Leave her be. -> END
+
+~ door_plain
+Ireena: Travelers. Nobody travels here; the mists see to that. If you want to help, find my brother Ismark at the Blood of the Vine. If he vouches for you, I'll open the door.
+-> END
+
+~ door_open
+set ireena_door_opened
+Narrator: Three bolts slide back, one after another. The door opens on a tall red-haired woman with a drawn sword and very tired eyes.
+if flag.death_house_completed
+Ireena: You're the ones who came out of the house at the end of the lane. People don't come out of that house. Come in, quickly, before the dark notices the door is open.
+else
+Ireena: Come in, then. Quickly, before the dark notices the door is open.
+endif
+-> END
+
+~ door_cleric
+set ireena_door_opened
+Narrator: There's a long silence, and then the bolts, one after another.
+Ireena [sad]: A priest. Father wanted a priest at the end, and there wasn't one. Come in.
+-> END
+
+~ door_forced
+set ireena_door_opened
+Narrator: The bolts slide back. The door opens a hand's width, and the point of a sword comes through it first.
+Ireena [angry]: Fine. Come in. Slowly, and with your hands where I can see them. I've opened this door to worse than you, and I'm still standing.
+-> END
+
+~ door_shut
+Ireena: No. I've heard sweeter voices than yours at this door, and they had claws. Find Ismark at the tavern.
+-> END
+
+# --- The parlor ---
+
+~ start
+if flag.ireena_escort == "declined"
+-> declined
+endif
+if flag.ireena_escort == "later"
+-> escort_ask
+endif
+if flag.ireena_met
+-> again
+endif
+set ireena_met
+Narrator: She stands as you come in, sword in hand, then lowers it a few inches. A scarf is wound tight around her throat.
+if flag.ismark_met
+Ireena: Ismark said you'd come. He also said you were "probably not monsters". From him, that's a glowing reference. I'm Ireena.
+else
+Ireena: Ireena Kolyana. This is my father's house. It's still his, until he's in the ground.
+endif
+interject name:tamsin_tealeaf: Oh. Oh, that's... no. No, I'm fine. I'm fine.
+if flag.burial_agreed and not flag.donavich_will_officiate and not flag.donavich_refused_rites
+Ireena: Ismark says you'll help with Father. Then he needs a priest. Father Donavich, at the church on the hill. He hasn't left it in weeks, but he owes Father that much.
+quest bury_the_burgomaster find_a_priest
+endif
+-> menu
+
+~ again
+if flag.mansion_strongbox_opened and not flag.ismark_offered_strongbox and not flag.strongbox_theft_noticed
+set strongbox_theft_noticed
+attitude ireena indifferent
+Ireena [angry]: Someone has been in my father's strongbox. If it was you, I'd rather you had asked. He would have given it to you. That was the sort of fool he was.
+endif
+Ireena: Back again. Good. The house is quieter with more swords in it.
+-> menu
+
+~ menu
+* Tell us about your father. -> father
+* What's been attacking the house? -> attacks
+* [Medicine DC 12] Look at what the scarf is hiding. -> bites_seen | bites_missed
+* Ismark says you were adopted. Where do you come from? -> past
+* [name:tamsin_tealeaf] Show her the locket. -> locket
+* [if not flag.burial_agreed] We'll help you bury your father. -> agree_burial
+* [if flag.burial_agreed and not flag.burial_procession] We're ready to carry him to the church. -> procession_check
+* [if not flag.mansion_vigil] We'll stand watch with you tonight. -> vigil
+* [if flag.mansion_siege_survived] About last night. -> siege_after
+* [Cleric] Offer a blessing over your father's coffin. -> bless_father
+* Goodbye. -> END
+
+~ father
+Ireena: Kolyan Indirovich. Burgomaster for twenty years. Loud, stubborn, and kind to anyone who didn't argue with him, which was nobody. He found me on a road when I was a girl and never once made me feel found.
+Ireena [sad]: His heart gave out at the front door, fighting. He'd want the priest, the words, the earth. He'd want it done properly.
+-> menu
+
+~ attacks
+Ireena: Wolves, most nights. Dead things on others: neighbours we buried, back to scratch at the boards. And once, him. He doesn't scratch. He knocks, and asks, very politely, to be let in.
+interject class:fighter: Every night, testing the doors. They're looking for the weak one.
+Ireena: Father walked the house every night touching every board, as if he could hold them on with his hands. I think, for a while, he did.
+-> menu
+
+~ bites_seen
+set ireena_bite_seen
+Narrator: Above the scarf's edge: two small punctures, pale and puckered and neatly spaced. They have not healed the way a wound should.
+Ireena [angry]: Finished looking? Twice. He's come to my window twice, and twice I woke with these and no memory of opening the shutters. That's the part I can't forgive. Not him. Me.
+interject class:cleric: There's no shame in a wound you didn't choose.
+-> menu
+
+~ bites_missed
+Narrator: She catches your glance before it lands and tugs the scarf higher. Whatever is under it, she isn't sharing.
+Ireena: My eyes are up here. So is my sword.
+-> menu
+
+~ past
+Ireena: I don't know where I come from. Father found me on the road, eight or nine, with no name and no memory. He gave me both. Some nights I dream of a lake, a white dress, and falling. That's all I have.
+interject species:elf: Memories that thin are rarely an accident.
+-> menu
+
+~ locket
+set tamsin_locket_recognized
+Narrator: Tamsin opens the silver locket and holds it out. The tiny painted woman inside has Ireena's face: the same eyes, the same red hair, in a gown a few centuries out of fashion.
+Ireena [afraid]: Where did you get this? I've never sat for a painter. I've never owned a dress like that. Who is she?
+interject name:tamsin_tealeaf: I was hoping you could tell me. She's been calling my name in my sleep for three months.
+Ireena: Then she and I have something in common. Someone calls mine too. Put it away. Please.
+-> menu
+
+~ agree_burial
+set burial_agreed
+quest bury_the_burgomaster find_a_priest
+quest escort_ireena asked
+Ireena: Thank you. Then he needs a priest. Father Donavich, at the church on the hill. Ask him to say the words. Then we carry Father over together, before dark.
+-> menu
+
+~ procession_check
+if flag.donavich_will_officiate and not flag.donavich_refused_rites
+-> procession
+endif
+if flag.donavich_refused_rites
+Ireena [angry]: Donavich won't come. Then he'll go into the ground without the church's words. I hope one of you knows some others.
+else
+Ireena: Has Father Donavich agreed to say the words over him?
+endif
+* Not yet. We'll ask him first. -> END
+* We'll bury him without the priest. -> procession
+
+~ procession
+set burial_procession
+quest bury_the_burgomaster procession
+Narrator: Ismark takes the head of the coffin; Ireena walks in front with the lamp. The burgomaster is heavier than he looks. Grief usually is.
+if flag.parriwimple_pallbearer
+Narrator: Parriwimple is waiting at the gate with a shovel over his shoulder. He takes the foot of the coffin by himself and doesn't seem to notice the weight.
+endif
+Ireena: Behind the church, beside Mother. The grave is ready. We'll see you there.
+-> END
+
+~ vigil
+Ireena: You'd do that? Then listen: the parlor window is the weakest, the front door the most stubborn. If he comes himself, he won't break in. He'll ask. Whatever you do, don't answer.
+* We'll hold the house. Let them come. -> vigil_start
+* On second thought, not tonight. -> END
+
+~ vigil_start
+set mansion_vigil
+Narrator: You bar the door and wait. The fire burns down to embers. Then, all at once, every board on every window begins to creak.
+-> END
+
+~ siege_after
+attitude ireena friendly
+Ireena [smile]: Last night you stood in my father's house, and nobody ran. I've watched a lot of people run. I won't forget it.
+-> menu
+
+~ bless_father
+attitude ireena friendly
+Narrator: You lay a hand on the coffin lid and speak the old words. Ireena stands very straight and doesn't cry, though it costs her something.
+Ireena [sad]: Thank you. He'd have liked you. He'd have argued with you about everything, and liked you.
+-> menu
+
+# --- After the burial: the escort choice ---
+
+~ after_burial
+if flag.burial_method == "hasty"
+Ireena [angry]: He's in the ground. No words, no prayer. I'll go, because staying is worse. But I won't pretend I liked how.
+elif flag.burial_method == "church_rites"
+Ireena [sad]: Father Donavich said the words. Father would have corrected his grammar. He'd have been pleased, though. He liked things done properly.
+elif flag.burial_method == "cleric_rites"
+Ireena: Your god didn't know him. Your god does now. Thank you for that.
+else
+Ireena: Not a priest's words. Honest ones. He'd have taken honest over pretty, most days.
+endif
+if flag.strahd_first_impression == "defiant"
+Ireena: And you told him no. To his face. Nobody does that. I may follow you anywhere just to watch you do it again.
+elif flag.strahd_first_impression == "violent"
+Ireena: And you went for him with steel. He laughed, but you did it. I've wanted to do that for a month.
+elif flag.strahd_first_impression == "courteous"
+Ireena [angry]: You bowed to him. Over my father's grave. I suppose it kept us alive. Don't expect me to like it.
+elif flag.strahd_first_impression == "silent"
+Ireena: You said nothing to him. Maybe that was wise. It felt like losing.
+endif
+if flag.doru_freed
+Ireena [afraid]: And that was Donavich's boy on the wall. You let him out. You'll have to live with that, and so will the rest of us.
+endif
+if flag.churchyard_dead_cleared
+Ireena: You put our dead back where they belong, too. Buried twice. Father always said this village did nothing by halves.
+endif
+-> escort_ask
+
+~ escort_ask
+quest escort_ireena ready
+Ireena: Ismark wants me in Vallaki, behind walls. He's probably right; it's the first time in years I've said that. Will you take me?
+if flag.madam_eva_rumor
+Ireena: The Vistani women say there's a seer at Tser Pool, on the way. If anyone can tell me what he wants with me, perhaps she can.
+endif
+* Yes. We'll take you to Vallaki. -> accept_vallaki
+* Krezk is farther from the castle. We'll take you there. -> krezk
+* Not yet. We have business in the village first. -> later
+* No. We can't take you. -> decline
+
+~ accept_vallaki
+set ireena_destination = "vallaki"
+-> accept
+
+~ krezk
+Ismark: Krezk? That's days past Vallaki, up in the hills, behind a wall and an abbey. Further from him, I'll grant you. Further from everything.
+Ireena: Krezk, then. I've never seen it. For once I'd like to go somewhere I've never been, on purpose. Through Vallaki, and on.
+set ireena_destination = "krezk"
+-> accept
+
+~ accept
+set ireena_escort = "accepted"
+set ireena_in_party
+quest escort_ireena accepted
+attitude ireena friendly
+Ireena: Then I'll fetch my sword and my good boots. I'm not made of glass; I'll walk, I'll fight, and I'll take a watch. Don't argue about the watch.
+Ismark: I'm coming too. Don't argue either. It's the only family business I have left.
+* Glad to have you, Ismark. -> ismark_joins
+* Someone should stay and keep the house standing. -> ismark_stays
+
+~ ismark_joins
+set ismark_joins_escort
+Ismark [smile]: Ismark the Lesser, off to see the world. Someone tell the tavern. Actually, don't; they'll only throw a party.
+Ireena: The west road, then, past the square. We'll meet you there.
+-> END
+
+~ ismark_stays
+Ismark [weary]: The house. Of course. Somebody has to argue with the wolves. Get her there. I'll walk you to the west road and wave like a fool.
+Ireena: The west road, then. Don't keep me waiting; I've done enough of that.
+-> END
+
+~ later
+set ireena_escort = "later"
+Ireena: Then don't be long. I'll be at the house, sitting by the window I'm not supposed to sit by.
+-> END
+
+~ decline
+set ireena_escort = "declined"
+quest escort_ireena declined
+attitude ireena indifferent
+Ireena [weary]: I see. No, I do. It's a long road, and he's very patient. Go on, then.
+Ismark: We'll manage. We always do. Badly, mostly, but we manage.
+-> END
+
+~ declined
+Ireena: Changed your minds? Or just checking the shutters for us?
+* We'll take you after all. Vallaki. -> accept_vallaki
+* We'll take you to Krezk. -> krezk
+* Just checking on you. -> END

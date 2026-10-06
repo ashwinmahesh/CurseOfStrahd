@@ -1,0 +1,20 @@
+{
+  "id": "morgantha",
+  "name": "Morgantha",
+  "title": "The Pastry Seller",
+  "summary": "A sweet old woman who pushes a cart of dream pastries through the village. Her smile never moves.",
+  "portrait": "morgantha",
+  "sprite": "morgantha",
+  "attitude": "friendly",
+  "voice": "docs/voice/morgantha.md",
+  "monster": "night_hag",
+  "guest": false,
+  "tags": [
+    "hag",
+    "disguised",
+    "old_bonegrinder",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

@@ -1,0 +1,142 @@
+# Party banter while exploring Death House (and the road into it). Each node is one short exchange; its opening
+# `if` is the gate. The game plays an eligible node (gate true) at a quiet moment, once each.
+# Pregen voices: docs/voice/{ilse_varga, tamsin_tealeaf, hedda_ironvow, silvain_aster}.md. Class, species and
+# background lines are written so any such character could say them.
+
+~ bt_too_clean
+if name:ilse_varga and name:tamsin_tealeaf and visited:dh_main_hall and not flag.death_house_completed
+  interject name:tamsin_tealeaf: Somebody dusts this place.
+  interject name:ilse_varga: Nobody's lived here in years.
+  interject name:tamsin_tealeaf: That's what I said. Somebody dusts this place.
+endif
+-> END
+
+~ bt_wolves_on_the_road
+if flag.mists_wolves_cowed and visited:death_house_ground and class:fighter and class:cleric
+  interject class:fighter: Those wolves gave way like a picket line. Someone's expecting us.
+  interject class:cleric: Then let's be late. Rudely, unforgivably late.
+endif
+-> END
+
+~ bt_wolf_blood
+if flag.mists_wolves_fought and visited:dh_den and name:hedda_ironvow and name:silvain_aster
+  interject name:hedda_ironvow: Eleven wolf heads on that wall, and wolves waiting for us on the road. I don't think that's a coincidence.
+  interject name:silvain_aster: It's a grudge. The house hunted his wolves, and now his wolves hunt the house's guests.
+endif
+-> END
+
+~ bt_locked_from_outside
+if visited:dh_childrens_room and name:tamsin_tealeaf and name:ilse_varga
+  interject name:tamsin_tealeaf: I don't like rooms that lock from the outside. I've been in a few.
+  interject name:ilse_varga: You got out.
+  interject name:tamsin_tealeaf: I always get out. That's not the same as liking it.
+endif
+-> END
+
+~ bt_nursery_locks
+if visited:dh_childrens_room and class:rogue and not name:tamsin_tealeaf
+  interject class:rogue: Locks on the outside of a children's door. Whoever fitted those knew exactly what they were for.
+endif
+-> END
+
+~ bt_theology_of_debt
+if flag.death_house_read_strahd_letter and name:hedda_ironvow and name:silvain_aster
+  interject name:silvain_aster: His letter treats worship as a bad debt.
+  interject name:hedda_ironvow: Mm. Most gods would agree. They just send kinder letters.
+  interject name:silvain_aster: Do they? I've never had one.
+  interject name:hedda_ironvow: You've never asked.
+endif
+-> END
+
+~ bt_the_signature
+if flag.death_house_read_strahd_letter and name:ilse_varga and name:tamsin_tealeaf
+  interject name:tamsin_tealeaf: Maybe it's just his initial, Ilse. Lots of people start with S.
+  interject name:ilse_varga: It's a signature, Tealeaf. It's a promise.
+endif
+-> END
+
+~ bt_windmill
+if flag.death_house_found_deeds and name:tamsin_tealeaf and name:silvain_aster
+  interject name:tamsin_tealeaf: So when this is over, we retire to the windmill.
+  interject name:silvain_aster: There is a noise under this house that suggests "over" is optimistic.
+  interject name:tamsin_tealeaf: Windmill, Silvain. Hold onto the windmill.
+endif
+-> END
+
+~ bt_dwarf_stonework
+if visited:dh_family_crypts and species:dwarf
+  interject species:dwarf: Good stonework, all of it. Somebody with a real chisel cut these crypts. Pity about the tenants.
+endif
+-> END
+
+~ bt_elf_portraits
+if visited:dh_upper_hall and species:elf
+  interject species:elf: I remember the fashions in the oldest of these portraits. They were embarrassing then, too.
+endif
+-> END
+
+~ bt_halfling_dumbwaiter
+if visited:dh_kitchen and species:halfling and class:fighter
+  interject species:halfling: I'd fit in that dumbwaiter, you know.
+  interject class:fighter: You are not getting in the dumbwaiter.
+  interject species:halfling: I said I'd fit. I didn't say I'd go. ...I might go.
+endif
+-> END
+
+~ bt_soldier_barracks
+if visited:dh_cult_dormitory and background:soldier
+  interject background:soldier: Bunks in rows, kit on pegs, a roster on the wall. They ran it like a barracks. That's how you get ordinary people to do this.
+endif
+-> END
+
+~ bt_criminal_keepsakes
+if visited:dh_reliquary and background:criminal
+  interject background:criminal: Shelves of other people's lockets. The cult robbed its dead and kept a tidy shop. I'm not taking any of those. Not those.
+endif
+-> END
+
+~ bt_children_truth
+if flag.death_house_children_truth and name:hedda_ironvow and name:ilse_varga
+  interject name:hedda_ironvow: They starved, waiting for a door to open.
+  interject name:ilse_varga: Then we open every door in this house.
+  interject name:hedda_ironvow: Mm. Most of them will be worse.
+  interject name:ilse_varga: Every door.
+endif
+-> END
+
+~ bt_humming
+if flag.death_house_children_riding and not flag.death_house_children_at_rest
+  Narrator: One of you is humming a nursery tune that none of you know.
+  Player: Who's humming?
+  Narrator: Nobody answers. The humming stops. Then, very quietly, someone giggles.
+endif
+-> END
+
+~ bt_lure
+if flag.death_house_saw_through_lure and class:cleric and class:wizard
+  interject class:cleric: The children in the road were bait. The house dangles them and waits.
+  interject class:wizard: An old trick. Effective, apparently. We're inside.
+endif
+-> END
+
+~ bt_escape_candlestick
+if flag.death_house_refused and not flag.death_house_completed and name:ilse_varga and name:tamsin_tealeaf
+  interject name:ilse_varga: Keep moving. Don't touch anything.
+  interject name:tamsin_tealeaf: I wasn't going to touch anything.
+  interject name:ilse_varga: You're holding a candlestick.
+  interject name:tamsin_tealeaf: It touched me first.
+endif
+-> END
+
+~ bt_lorghoth_slain
+if flag.death_house_lorghoth_slain and class:fighter and class:wizard
+  interject class:fighter: We killed the thing in the basement.
+  interject class:wizard: We killed a thing in the basement. I'd hesitate to call it the thing.
+endif
+-> END
+
+~ bt_after_the_altar
+if flag.death_house_sacrificed
+  Narrator: Nobody counts off anymore. Nobody needs to be told the number.
+endif
+-> END

@@ -1,0 +1,19 @@
+{
+  "id": "bildrath",
+  "name": "Bildrath Cantemir",
+  "title": "Proprietor, Bildrath's Mercantile",
+  "summary": "The village shopkeeper, who charges ten times the going price because there is no going anywhere else. No haggling, no credit, no returns.",
+  "portrait": "bildrath",
+  "sprite": "bildrath",
+  "attitude": "indifferent",
+  "voice": "docs/voice/bildrath.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "merchant",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

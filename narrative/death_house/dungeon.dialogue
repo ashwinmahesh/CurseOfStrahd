@@ -1,0 +1,85 @@
+# The dungeon under Death House (death_house_dungeon_1): the family crypts, where the children can be laid to rest,
+# and the cult's ledger.
+
+~ crypt_parents
+narrate examine:crypt_parents
+Narrator: Two crypts side by side, cut with the names Gustav Durst and Elisabeth Durst and the years of their births. Both stand open and empty. Nobody ever got around to dying properly.
+if flag.death_house_dursts_destroyed
+  Narrator: You know where they are now. Someone should lay them in here. It won't be anyone in this house.
+endif
+-> END
+
+~ crypt_children
+narrate examine:crypt_children
+if flag.death_house_children_at_rest
+  Narrator: The two small crypts are closed now. Someone has scratched a little sun into each slab with the point of a knife.
+  -> END
+endif
+Narrator: Two small crypts, carved Rosavalda and Thornboldt, with birth years and nothing after them. They stand open, swept and waiting.
+if flag.death_house_children_remains_taken
+  -> crypt_children_choice
+endif
+if flag.death_house_children_riding
+  Narrator: From somewhere inside one of you, a small voice says: that's ours. But we're not in there. We're upstairs, in the toy chest.
+endif
+-> END
+
+~ crypt_children_choice
+* Lay the children's bones in their crypts. -> lay_to_rest
+* Not yet. -> END
+
+~ lay_to_rest
+Narrator: You lay the two small bundles in their two small crypts and slide the slabs home. The sound is final and, for once in this house, kind.
+if flag.death_house_children_riding
+  Narrator: Two cold weights lift out of two of you, like children climbing down from a cart.
+endif
+Narrator: Rose and Thorn stand beside their crypts, clearer than you have ever seen them, and very calm.
+Rose [smile]: It's quiet in here. Thank you. Thorn, say thank you.
+Thorn: Thank you. Don't go downstairs.
+Rose: Mother hid her purse under the bottom stair in the hall, under the loose board. She said it was for emergencies. I think this is one.
+Rose: Goodbye. Properly, this time.
+Narrator: Thorn waves. Then there is nobody to wave at.
+set death_house_children_at_rest
+set death_house_children_riding = false
+quest rose_and_thorn at_rest
+interject name:hedda_ironvow: Dawn comes, little ones. Go on ahead. We'll be along. Not soon, I hope.
+if not flag.death_house_sacrificed
+  interject name:ilse_varga: Count off. Four. Good.
+endif
+if not name:hedda_ironvow
+  interject class:cleric: Go gently. Nobody will lock that door again.
+endif
+-> END
+
+~ crypt_walter
+narrate examine:crypt_walter
+Narrator: The smallest crypt in the row. It says Walter, and nothing else: no family name, no dates. It has never been opened.
+if flag.death_house_learned_walter
+  Narrator: He never got a surname. He never got a birthday either.
+endif
+* [if flag.death_house_knows_lullaby] Hum the nursemaid's lullaby. -> walter_lullaby
+* Move on. -> END
+
+~ walter_lullaby
+Narrator: The tune goes thin and strange in the stone gallery. Nothing answers. You decide that is the right answer.
+interject name:tamsin_tealeaf: Sleep tight, little one. Somebody remembered.
+-> END
+
+~ cult_ledger
+narrate examine:cult_ledger
+Narrator: A ledger kept in a neat merchant's hand: dates, names, and beside each one the word given. Vagrants, a tinker, two pilgrims, a girl from Vallaki.
+Narrator: The last entry is a single name, Walter. Where the others say given, it says first.
+if not flag.death_house_read_cult_ledger
+  set death_house_read_cult_ledger
+  set death_house_lore += 1
+endif
+if not flag.death_house_learned_walter
+  set death_house_learned_walter
+  set death_house_lore += 1
+endif
+interject name:silvain_aster: Double-entry bookkeeping. They committed murder in double-entry bookkeeping.
+interject name:ilse_varga: Every name in there was somebody's.
+if not name:silvain_aster
+  interject tag:bookish: A ledger of the dead, kept neater than most temple records. That's the worst part.
+endif
+-> END

@@ -1,0 +1,43 @@
+{
+  "id": "the_priests_son",
+  "name": "The Priest's Son",
+  "summary": "Screams rise from beneath the village church. Father Donavich's son Doru came back from Castle Ravenloft as something else, and his father keeps him locked below.",
+  "giver": "donavich",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Father Donavich admitted that the voice screaming under his church is his son's. Doru went to storm Castle Ravenloft and came back a vampire spawn. Donavich begged us not to harm him.",
+      "objectives": [
+        "Decide what to do about Doru"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "cure_promised",
+      "journal": "We promised Father Donavich we'd look for a way to save his son. Doru is still locked in the undercroft, and still hungry.",
+      "objectives": [
+        "Look for a cure for Doru"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "doru_destroyed",
+      "journal": "Doru is dead, truly this time. The undercroft is quiet.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "doru_freed",
+      "journal": "We let Doru out of the undercroft. He went over the churchyard wall and into the night, toward the castle.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
+      "id": "doru_left",
+      "journal": "We left Doru in the dark beneath the church, the door barred, his father praying above him.",
+      "objectives": [],
+      "ends": ""
+    }
+  ]
+}

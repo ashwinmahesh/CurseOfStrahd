@@ -1,0 +1,39 @@
+{
+  "id": "find_gertruda",
+  "name": "Mary's Daughter",
+  "summary": "Mad Mary's daughter Gertruda, sixteen and never once allowed outside, slipped out of the house a few nights ago and hasn't come back.",
+  "giver": "mad_mary",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Behind the barred door of a townhouse near the main road, Mad Mary weeps for her daughter Gertruda, who went out at night and never came home.",
+      "objectives": [
+        "Hear Mary out"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "promised",
+      "journal": "We promised Mary we'd look for Gertruda. She's sixteen, dark-haired, and has never seen the valley she's lost in.",
+      "objectives": [
+        "Look for Gertruda"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "refused",
+      "journal": "We told Mary we couldn't look for her daughter. Her weeping followed us all the way down the lane.",
+      "objectives": [],
+      "ends": ""
+    },
+    {
+      "id": "window_clue",
+      "journal": "Gertruda's window latch was opened from the inside, and she took her good shoes. Nobody carried her off. She went out to meet someone.",
+      "objectives": [
+        "Look for Gertruda"
+      ],
+      "ends": ""
+    }
+  ]
+}

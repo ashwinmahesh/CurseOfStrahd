@@ -1,0 +1,100 @@
+# The Vistani women: Alenka, Mirabel, Sorvia (docs/voice/vistani_women.md)
+
+~ start
+if flag.vistani_met
+Alenka [smile]: Back for more of our company? Sensible. It's the best in the valley, and the wine is still the worst.
+-> menu
+endif
+set vistani_met
+Narrator: Three women in layered skirts and a great deal of silver sit around a single candle, sharing one bottle and many opinions. They stop talking as you come over, which is how you know they were talking about you.
+if flag.death_house_completed
+Alenka [smile]: Sit, strangers. You came out of the house at the end of the lane. People don't. So: buy us a cup, and tell us how.
+else
+Alenka [smile]: Sit, strangers. New faces in Barovia! That happens about as often as sunshine. Buy us a cup and tell us everything.
+endif
+Mirabel [sly]: Or don't. We'll guess. Our guesses are always better than the truth.
+Sorvia: You've got grave dirt on your boots. Fresh. Sorry. I notice things.
+-> menu
+
+~ menu
+* Who are you? -> who
+* [if not flag.vistani_wine_bought] Buy the table a bottle. (3 gp) -> wine
+* What can you tell us about the man by the hearth? -> ismark
+* What do you know about the burgomaster's daughter? -> ireena
+* How does anyone get out of this valley? -> leave_valley
+* [Insight DC 14] Watch how they watch you. -> insight_ok | insight_fail
+* Read my palm. -> palm
+* Goodbye. -> END
+
+~ who
+set madam_eva_rumor
+Alenka: Vistani. Our wagons go where they like; the mists open for us. Our camp is at Tser Pool, west along the road. Madam Eva keeps it. She reads the cards for strangers who ask nicely.
+Mirabel: And for strangers who don't, she reads them anyway. It's worse.
+-> menu
+
+~ wine
+gold -3
+set vistani_wine_bought
+Alenka [smile]: Generous! Arik, the good bottle. Yes, he has a good bottle. No, you've never seen it.
+Sorvia: He knows you're here, you know. The lord. He knew before you did. He always does, because we...
+Mirabel [angry]: Sorvia.
+Sorvia: What? They'd work it out. They're not stupid. Look at them; they're nearly clever.
+-> menu
+
+~ ismark
+set ismark_the_lesser_heard
+Mirabel [sly]: Ismark the Lesser. His father was loud, and brave, and dead. Ismark is quiet, and brave, and not dead yet. Give him time.
+Alenka: Be kind, Mirabel. He tips.
+-> menu
+
+~ ireena
+Alenka: The burgomaster's daughter. Beautiful. Unlucky. The lord of the land has taken an interest. When he takes an interest, it's best to step aside.
+Mirabel [sly]: Or to sell tickets.
+Sorvia [sad]: She's nice. She mended my horse's bridle once and wouldn't take a copper. I hope... nothing. More wine?
+-> menu
+
+~ leave_valley
+Alenka: The mists let us pass. Not you. Not anyone he hasn't finished with.
+Sorvia: And he hasn't finished with you. He's hardly started.
+interject tag:veteran: Noted.
+-> menu
+
+~ insight_ok
+set vistani_spies_suspected
+Narrator: Alenka's eyes keep returning to your weapons, your faces, the order you sit in. She isn't curious. She's taking inventory, for someone.
+-> menu
+
+~ insight_fail
+Narrator: Three women enjoying an evening out. If they're anything more, the wine hides it.
+-> menu
+
+~ palm
+Sorvia [smile]: Oh, yes! Give it here. Not you, Mirabel, I know yours; it says you'll die of being rude.
+* [Fighter] Hold out a sword-callused palm. -> palm_fighter
+* [Rogue] Offer a palm, keeping the other hand on your purse. -> palm_rogue
+* [Cleric] Offer a palm, holy symbol and all. -> palm_cleric
+* [Wizard] Offer an ink-stained palm. -> palm_wizard
+* Offer a palm. -> palm_any
+* Maybe later. -> menu
+
+~ palm_fighter
+Sorvia: Your life line is long. It's just that something keeps trying to cut it. There, see? Teeth marks.
+-> menu
+
+~ palm_rogue
+Sorvia: This hand has been in a great many pockets. One of them belonged to someone very, very old. My advice? Give it back. Mirabel's advice will be to sell it.
+Mirabel [sly]: Sell it.
+-> menu
+
+~ palm_cleric
+Sorvia: A line of faith straight down the middle, and a crack right across it. Don't worry. Cracks let the light in, Grandmother says. Also the wind.
+-> menu
+
+~ palm_wizard
+Sorvia: So many lines. You've read too much. One day a book is going to read you back.
+interject name:silvain_aster: That is not how books work. I would like that on the record.
+-> menu
+
+~ palm_any
+Sorvia: You'll meet a tall, dark stranger. Everyone here does. Only once, usually.
+-> menu

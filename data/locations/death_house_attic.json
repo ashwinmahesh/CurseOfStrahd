@@ -1,0 +1,370 @@
+{
+  "id": "death_house_attic",
+  "name": "Death House, Attic",
+  "region": "death_house",
+  "summary": "Low beams and dust: a spare bedroom with a warm alcove beside the chimney (the secret stair), a storage room with a broom that doesn't like being touched, and the locked children's room where Rose and Thorn's ghosts wait beside their dollhouse.",
+  "map": {
+    "theme": "attic",
+    "light": "dim",
+    "rows": [
+      "##########################",
+      "#......##=.......#########",
+      "#.==....#........#########",
+      "#......##........#########",
+      "#=.....##.......=#########",
+      "####.#######.#############",
+      "#........................#",
+      "##.......................#",
+      "##.......................#",
+      "##################.#######",
+      "#############............#",
+      "#############.=........=.#",
+      "#############............#",
+      "#############.=..........#",
+      "#############...=....=...#",
+      "##########################"
+    ]
+  },
+  "areas": [
+    {
+      "id": "dh_attic_hall",
+      "name": "Attic Hall",
+      "cells": [
+        [
+          1,
+          6
+        ],
+        [
+          24,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "dh_spare_bedroom",
+      "name": "Spare Bedroom",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          7,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "dh_storage_room",
+      "name": "Storage Room",
+      "cells": [
+        [
+          9,
+          1
+        ],
+        [
+          16,
+          4
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "dh_childrens_room",
+      "name": "Children's Room",
+      "cells": [
+        [
+          13,
+          10
+        ],
+        [
+          24,
+          14
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      7
+    ],
+    "from_downstairs": [
+      3,
+      7
+    ],
+    "from_secret_stair": [
+      6,
+      2
+    ]
+  },
+  "exits": [
+    {
+      "id": "stairs_down",
+      "cell": [
+        1,
+        6
+      ],
+      "to": "death_house_third",
+      "spawn": "from_attic",
+      "label": "Stairs down"
+    },
+    {
+      "id": "secret_stair_down",
+      "cell": [
+        7,
+        2
+      ],
+      "to": "death_house_dungeon_1",
+      "spawn": "from_secret_stair",
+      "label": "The secret stair",
+      "when": "flag.death_house_secret_stair_found",
+      "locked_text": "A narrow alcove beside the chimney, with nothing at the back but bare plaster. Bare, and oddly warm."
+    }
+  ],
+  "doors": [
+    {
+      "id": "spare_bedroom_door",
+      "cell": [
+        4,
+        5
+      ],
+      "label": "the spare bedroom door"
+    },
+    {
+      "id": "storage_door",
+      "cell": [
+        12,
+        5
+      ],
+      "label": "the storage room door"
+    },
+    {
+      "id": "childrens_room_door",
+      "cell": [
+        18,
+        9
+      ],
+      "label": "the children's door",
+      "locked": true,
+      "lock_dc": 12
+    }
+  ],
+  "props": [
+    {
+      "id": "spare_bed",
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "examine",
+      "label": "the spare bed",
+      "model": "bed_small"
+    },
+    {
+      "id": "chimney_seam",
+      "cell": [
+        8,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a seam in the plaster",
+      "model": "plaster_seam",
+      "dialogue": "death_house/attic:secret_panel"
+    },
+    {
+      "id": "storage_junk",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "examine",
+      "label": "covered furniture",
+      "model": "sheeted_furniture"
+    },
+    {
+      "id": "toy_chest",
+      "cell": [
+        16,
+        14
+      ],
+      "kind": "examine",
+      "label": "the toy chest",
+      "model": "toy_chest",
+      "dialogue": "death_house/attic:toy_chest"
+    },
+    {
+      "id": "dollhouse",
+      "cell": [
+        23,
+        11
+      ],
+      "kind": "examine",
+      "label": "the dollhouse",
+      "model": "dollhouse",
+      "dialogue": "death_house/attic:dollhouse"
+    },
+    {
+      "id": "childrens_drawings",
+      "cell": [
+        25,
+        12
+      ],
+      "kind": "examine",
+      "label": "drawings on the wall",
+      "model": "drawings"
+    },
+    {
+      "id": "rocking_horse",
+      "cell": [
+        21,
+        14
+      ],
+      "kind": "decor",
+      "label": "a rocking horse",
+      "model": "rocking_horse"
+    }
+  ],
+  "containers": [
+    {
+      "id": "spare_wardrobe",
+      "cell": [
+        1,
+        4
+      ],
+      "label": "a narrow wardrobe",
+      "model": "wardrobe",
+      "items": [
+        {
+          "id": "costume",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "storage_trunk",
+      "cell": [
+        9,
+        1
+      ],
+      "label": "a travel trunk",
+      "model": "trunk",
+      "items": [
+        {
+          "id": "lamp",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        }
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        24,
+        12
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "traps": [
+    {
+      "id": "attic_floorboards",
+      "cells": [
+        [
+          10,
+          7
+        ]
+      ],
+      "label": "sagging floorboards",
+      "detect_dc": 12,
+      "disarm_dc": 12,
+      "save": {
+        "ability": "dex",
+        "dc": 11
+      },
+      "damage": "1d6",
+      "damage_type": "bludgeoning",
+      "text": "The boards split, and a leg goes through to the ceiling below."
+    },
+    {
+      "id": "attic_beams",
+      "cells": [
+        [
+          3,
+          6
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "label": "a loosened beam",
+      "detect_dc": 12,
+      "disarm_dc": 13,
+      "save": {
+        "ability": "dex",
+        "dc": 12
+      },
+      "damage": "2d6",
+      "damage_type": "bludgeoning",
+      "when": "flag.death_house_refused",
+      "text": "A roof beam swings down like a door slammed in your face."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "rose",
+      "cell": [
+        18,
+        12
+      ],
+      "dialogue": "death_house/rose_thorn_ghosts:start",
+      "when": "not flag.death_house_children_riding and not flag.death_house_children_at_rest",
+      "facing": "north"
+    },
+    {
+      "npc": "thorn",
+      "cell": [
+        20,
+        12
+      ],
+      "dialogue": "death_house/rose_thorn_ghosts:start",
+      "when": "not flag.death_house_children_riding and not flag.death_house_children_at_rest",
+      "facing": "north"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "storage_broom",
+      "trigger": "enter_area:dh_storage_room",
+      "when": "not flag.death_house_broom_destroyed",
+      "flag": "death_house_broom_destroyed",
+      "monsters": [
+        {
+          "monster": "broom_of_animated_attack",
+          "cell": [
+            15,
+            2
+          ],
+          "name": "Broom"
+        }
+      ],
+      "text": "The broom in the corner has opinions about visitors."
+    }
+  ],
+  "narration": {
+    "enter": "enter:death_house_attic"
+  },
+  "rest": "risky"
+}

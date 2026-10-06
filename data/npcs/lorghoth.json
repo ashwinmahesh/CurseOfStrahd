@@ -1,0 +1,17 @@
+{
+  "id": "lorghoth",
+  "name": "Lorghoth the Decayer",
+  "title": "What Sleeps in the Refuse",
+  "summary": "A shambling mound the cult fed for years, asleep in a heap of rot beneath the altar. It wakes when the altar is refused.",
+  "portrait": "lorghoth",
+  "sprite": "lorghoth",
+  "attitude": "hostile",
+  "monster": "shambling_mound",
+  "guest": false,
+  "tags": [
+    "plant",
+    "boss",
+    "death_house"
+  ],
+  "region": "death_house"
+}

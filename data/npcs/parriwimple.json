@@ -1,0 +1,18 @@
+{
+  "id": "parriwimple",
+  "name": "Parriwimple",
+  "title": "Bildrath's Nephew",
+  "summary": "Bildrath's enormous, gentle nephew, who lifts what he's told and counts what nobody else does.",
+  "portrait": "parriwimple",
+  "sprite": "parriwimple",
+  "attitude": "friendly",
+  "voice": "docs/voice/parriwimple.md",
+  "monster": "tough",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

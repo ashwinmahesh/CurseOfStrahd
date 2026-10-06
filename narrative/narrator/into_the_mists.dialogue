@@ -1,0 +1,85 @@
+# Narrator: Into the Mists (into_the_mists_road). Voice: docs/voice/narrator.md.
+
+# --- The location -----------------------------------------------------------------------------------------------
+
+~ enter:into_the_mists_road
+| The fog behind you thickens like a door swinging shut. The road ahead runs west, under trees that lean in to listen.
+| [flag.death_house_completed] The road east ends where it always did, in a wall of mist that does not care what you survived.
+| [flag.mists_wolves_resolved] Back on the Old Svalich Road. The trees are still leaning in. They have heard about you.
+cooldown 60
+
+# --- Areas ------------------------------------------------------------------------------------------------------
+
+~ enter:mists_svalich_woods
+| Pines crowd the road, black against a sky the color of old pewter. Somewhere off to the left, a wolf howls, and somewhere to the right, another answers.
+| [species:elf] {name} knows old forests. This one is old the way a grudge is old.
+| [class:ranger] {name} counts the howls: six, from three directions. Not hunting. Herding.
+once
+
+~ enter:mists_gates
+| Two stone guardians flank a pair of tall iron gates, their swords grounded, their heads missing. The gates are shut. The road goes through them anyway.
+| [flag.mists_wolves_cowed] The pack let you pass, and the woods have gone very quiet about it. Ahead, a wall of stone and a gate of iron.
+| [flag.mists_wolves_fought] Wolf blood dries on your boots. Ahead, two headless stone knights keep a gate that seems to be expecting you.
+once
+
+~ enter:mists_village_edge
+| Cottages, shuttered tight. Mud, and the smell of woodsmoke from chimneys that are trying not to be noticed. A village, at last, holding its breath.
+| [class:rogue] {name} notes every shutter barred from the inside. Nobody here is keeping thieves out. They're keeping something else out.
+once
+
+# --- Props ------------------------------------------------------------------------------------------------------
+
+~ examine:mists_wall
+| White, cold and patient. The road you came in on is somewhere inside it, and the mist would rather you didn't go looking.
+| [class:wizard] The fog hums very faintly, like a held note. Whatever made it is still making it.
+
+~ examine:mists_signpost
+| A signpost leans over the road. One arm says Barovia. The other arm, pointing back the way you came, has been sawn off.
+| [tag:curious] Someone carved a tally of marks into the post, dozens of them, and then stopped. {name} decides not to wonder why.
+
+~ examine:mists_deer_carcass
+| A deer, torn open and left. Whatever killed it didn't stay to eat.
+
+~ examine:mists_wayside_shrine
+| A little roadside shrine, its sun-disk chipped away to bare stone. Someone still leaves candle stubs here. None of them are lit.
+| [class:cleric] A shrine to the Morninglord, defaced but not abandoned. {name} sets the sun-disk straight; it keeps sliding back.
+
+~ examine:gate_statues
+| Two stone knights stand guard with grounded swords. Their heads are gone, broken off clean at the neck, and they keep watch anyway.
+| [flag.mists_gates_opened] The gates stand open now. Neither of the headless knights looks pleased about it.
+
+~ search:gate_heads
+| Half-buried in the weeds: two stone heads, faces worn smooth by weather, both turned to look back down the road.
+
+~ check:perception:gate_heads:success
+| {name} kicks aside the weeds at the foot of the gate and finds a stone face looking back up.
+
+~ check:perception:gate_heads:failure
+| Weeds, rubble and fog. The gate keeps its own counsel.
+
+~ examine:edge_cottage_shutters
+| The shutters are barred, but a candle burns behind them. When you look closer, it goes out.
+
+~ examine:edge_alley_crow
+| A crow sits on a rain barrel and watches you with professional interest.
+| [species:halfling] The crow looks {name} up and down, plainly deciding whether {name} counts as a snack.
+
+~ open:barovia_gates
+| The gates swing open before anyone touches them, slow and silent on hinges that should be screaming with rust.
+once
+
+~ open:abandoned_cart
+| A cart on its side, one wheel gone. Its owner left in a hurry, and not on the cart.
+once
+
+# --- Traps ------------------------------------------------------------------------------------------------------
+
+~ trap:mists_wolf_trap:found
+| There, under the leaves: the iron teeth of a wolf trap, set right in the road.
+| [class:ranger] {name} spots the trap's chain staked into the verge. A hunter set this for wolves, and the wolves know it's here.
+
+~ trap:mists_wolf_trap:triggered
+| Iron jaws snap shut on a boot. Somewhere in the fog, a wolf yips, almost like laughter.
+
+~ trap:mists_wolf_trap:disarmed
+| The trap's jaws close slowly on a stick. Its spring sighs, disappointed.

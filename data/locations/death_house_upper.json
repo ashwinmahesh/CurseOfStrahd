@@ -1,0 +1,415 @@
+{
+  "id": "death_house_upper",
+  "name": "Death House, Upper Floor",
+  "region": "death_house",
+  "summary": "The second storey: the upper hall and its ancestor portraits, a library with a secret study behind a bookcase (Strahd's letter, the family deeds), the servants' quarters and a conservatory with a harpsichord that remembers a lullaby.",
+  "map": {
+    "theme": "manor",
+    "light": "dim",
+    "rows": [
+      "############################",
+      "#.==.==..#.....####.==..==.#",
+      "#........#.....####........#",
+      "#........#.....==.#........#",
+      "#.................#........#",
+      "#....==..#.................#",
+      "#........#........#....=...#",
+      "#........#........##########",
+      "#........#........#........#",
+      "####.#####........#........#",
+      "#........#............==...#",
+      "#..==....#........#........#",
+      "#=.......#.....==.#........#",
+      "#......=.#.....####.......=#",
+      "##########.....####........#",
+      "############################",
+      "############################"
+    ]
+  },
+  "areas": [
+    {
+      "id": "dh_upper_hall",
+      "name": "Upper Hall",
+      "cells": [
+        [
+          10,
+          1
+        ],
+        [
+          17,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "dh_library",
+      "name": "Library",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          8,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "dh_secret_study",
+      "name": "Secret Study",
+      "cells": [
+        [
+          1,
+          10
+        ],
+        [
+          8,
+          13
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "dh_servants_room",
+      "name": "Servants' Quarters",
+      "cells": [
+        [
+          19,
+          1
+        ],
+        [
+          26,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "dh_conservatory",
+      "name": "Conservatory",
+      "cells": [
+        [
+          19,
+          8
+        ],
+        [
+          26,
+          14
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      16,
+      4
+    ],
+    "from_downstairs": [
+      16,
+      4
+    ],
+    "from_upstairs": [
+      16,
+      11
+    ]
+  },
+  "exits": [
+    {
+      "id": "stairs_down",
+      "cell": [
+        17,
+        3
+      ],
+      "to": "death_house_ground",
+      "spawn": "from_upstairs",
+      "label": "Stairs down"
+    },
+    {
+      "id": "stairs_up",
+      "cell": [
+        17,
+        12
+      ],
+      "to": "death_house_third",
+      "spawn": "from_downstairs",
+      "label": "Stairs up"
+    }
+  ],
+  "doors": [
+    {
+      "id": "library_door",
+      "cell": [
+        9,
+        4
+      ],
+      "label": "the library door"
+    },
+    {
+      "id": "study_bookcase",
+      "cell": [
+        4,
+        9
+      ],
+      "label": "the swinging bookcase",
+      "secret_dc": 13
+    },
+    {
+      "id": "servants_door",
+      "cell": [
+        18,
+        5
+      ],
+      "label": "the servants' door"
+    },
+    {
+      "id": "conservatory_door",
+      "cell": [
+        18,
+        10
+      ],
+      "label": "the conservatory doors"
+    }
+  ],
+  "props": [
+    {
+      "id": "upper_hall_portraits",
+      "cell": [
+        9,
+        11
+      ],
+      "kind": "examine",
+      "label": "ancestor portraits",
+      "model": "painting_row"
+    },
+    {
+      "id": "upper_hall_clock",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "examine",
+      "label": "a grandfather clock",
+      "model": "clock_tall"
+    },
+    {
+      "id": "library_histories",
+      "cell": [
+        2,
+        1
+      ],
+      "kind": "book",
+      "label": "A History of the Valley",
+      "model": "book_shelf",
+      "codex": "barovia_valley_history",
+      "text": "A dry, careful history of the valley. Centuries ago a warlord named Strahd von Zarovich drove out the armies of a rival and claimed these mountains for his family; the people who live here now are the descendants of those he ruled. The author adds, in a nervous footnote, that the valley's lord has never been seen to age, and that it is wise not to write about him at night."
+    },
+    {
+      "id": "library_odd_shelf",
+      "cell": [
+        4,
+        8
+      ],
+      "kind": "examine",
+      "label": "a bookcase",
+      "model": "bookcase"
+    },
+    {
+      "id": "strahd_letter",
+      "cell": [
+        4,
+        11
+      ],
+      "kind": "book",
+      "label": "a letter signed S",
+      "model": "letter",
+      "codex": "death_house_strahd_letter",
+      "dialogue": "death_house/house:strahd_letter",
+      "text": "Gustav. Your devotion has been noted, and declined. You mistake me for a god who answers prayers; I am a lord who collects what he is owed. Your circle of candles and borrowed Latin will not buy you a single extra year, let alone eternity. Should it ever amuse me, I may come to dinner. Do not set a place. S."
+    },
+    {
+      "id": "durst_deeds",
+      "cell": [
+        3,
+        11
+      ],
+      "kind": "examine",
+      "label": "a bundle of deeds",
+      "model": "papers",
+      "dialogue": "death_house/house:deeds"
+    },
+    {
+      "id": "study_cult_tract",
+      "cell": [
+        1,
+        12
+      ],
+      "kind": "book",
+      "label": "a black pamphlet",
+      "model": "pamphlet",
+      "codex": "death_house_cult_tract",
+      "text": "A thin pamphlet, printed privately, with no author's name. It promises that the Lord of the valley rewards those who feed the land, and that the patient and the hungry will be raised up when he returns their gifts. It ends with a single line set in heavy type: one must die, that the rest may live forever. Someone has underlined it twice."
+    },
+    {
+      "id": "servants_uniforms",
+      "cell": [
+        27,
+        3
+      ],
+      "kind": "examine",
+      "label": "pressed uniforms",
+      "model": "uniforms"
+    },
+    {
+      "id": "harpsichord",
+      "cell": [
+        22,
+        10
+      ],
+      "kind": "examine",
+      "label": "the harpsichord",
+      "model": "harpsichord",
+      "dialogue": "death_house/house:harpsichord"
+    },
+    {
+      "id": "conservatory_birds",
+      "cell": [
+        26,
+        13
+      ],
+      "kind": "examine",
+      "label": "a case of stuffed birds",
+      "model": "bird_case"
+    }
+  ],
+  "containers": [
+    {
+      "id": "library_desk",
+      "cell": [
+        6,
+        5
+      ],
+      "label": "the library desk",
+      "model": "desk",
+      "items": [
+        {
+          "id": "parchment",
+          "qty": 3
+        },
+        {
+          "id": "ink",
+          "qty": 1
+        },
+        {
+          "id": "ink_pen",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "study_chest",
+      "cell": [
+        7,
+        13
+      ],
+      "label": "an iron-banded chest",
+      "model": "chest_iron",
+      "lock_dc": 13,
+      "items": [
+        {
+          "id": "spell_scroll_level_1",
+          "qty": 1
+        }
+      ],
+      "gold": 40
+    },
+    {
+      "id": "servants_footlocker",
+      "cell": [
+        23,
+        6
+      ],
+      "label": "a footlocker",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        },
+        {
+          "id": "ration",
+          "qty": 2
+        }
+      ],
+      "gold": 3
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        1,
+        4
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        26,
+        9
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ],
+  "traps": [
+    {
+      "id": "rotten_floorboard",
+      "cells": [
+        [
+          12,
+          8
+        ]
+      ],
+      "label": "a rotten floorboard",
+      "detect_dc": 11,
+      "disarm_dc": 11,
+      "save": {
+        "ability": "dex",
+        "dc": 11
+      },
+      "damage": "1d6",
+      "damage_type": "bludgeoning",
+      "text": "The floor gives way to the knee."
+    },
+    {
+      "id": "hall_wall_blades",
+      "cells": [
+        [
+          16,
+          7
+        ],
+        [
+          17,
+          7
+        ]
+      ],
+      "label": "blades in the wainscot",
+      "detect_dc": 13,
+      "disarm_dc": 13,
+      "save": {
+        "ability": "dex",
+        "dc": 12
+      },
+      "damage": "2d6",
+      "damage_type": "slashing",
+      "when": "flag.death_house_refused",
+      "text": "Rusted blades slide out of the paneling like teeth."
+    }
+  ],
+  "narration": {
+    "enter": "enter:death_house_upper"
+  },
+  "rest": "risky"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "alenka",
+  "name": "Alenka",
+  "title": "Vistana",
+  "summary": "The eldest of three Vistani women drinking at the tavern's corner table; theatrical, honeyed, and the one who does the talking.",
+  "portrait": "alenka",
+  "sprite": "alenka",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vistani_women.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

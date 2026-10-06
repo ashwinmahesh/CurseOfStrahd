@@ -1,0 +1,97 @@
+# The attic of Death House: the toy chest (the children's remains), the dollhouse (which shows the secret stair) and
+# the hidden panel beside the chimney. Every way of finding the stair runs through secret_stair, which grants the
+# level 2 milestone exactly once.
+
+~ toy_chest
+narrate examine:toy_chest
+if flag.death_house_children_remains_taken
+  Narrator: The chest is empty now, except for a wooden horse with one ear and a faint smell of lavender.
+  -> END
+endif
+Narrator: Under the dolls and the wooden horse lie two small bundles wrapped in faded blankets, tied shut with a child's careful knot.
+interject name:hedda_ironvow: Mm. Children. Stone remembers. So will I.
+if not name:hedda_ironvow
+  interject species:dwarf: Small bones. The small ones always weigh the most.
+endif
+-> chest_choice
+
+~ chest_choice
+* [Medicine DC 10] Learn how they died. -> chest_medicine | chest_medicine_fail
+* Gather the bones and carry them with you. -> chest_take
+* Close the lid. -> END
+
+~ chest_medicine
+Narrator: No wounds, no breaks. Just bones too light for their size, curled the way children curl when they fall asleep hungry and cold. Nobody killed them. Somebody forgot them.
+if not flag.death_house_children_truth
+  set death_house_children_truth
+  set death_house_lore += 1
+endif
+interject name:ilse_varga: Locked in and left. Somebody had the key the whole time.
+-> chest_choice
+
+~ chest_medicine_fail
+Narrator: Old bones in old blankets. Whatever happened to them, it happened a long time ago.
+-> chest_choice
+
+~ chest_take
+set death_house_children_remains_taken
+quest rose_and_thorn remains
+Narrator: The bundles weigh almost nothing. Whoever carries them will feel them all the way down.
+interject name:ilse_varga: Careful. Wrap them twice. It's cold where they're going.
+interject name:tamsin_tealeaf: I've carried a lot of things out of a lot of houses. Never anything I wanted to put back somewhere safe.
+-> END
+
+~ dollhouse
+narrate examine:dollhouse
+Narrator: It is this house, perfect down to the doorknobs: the hall, the den with its tiny wolf heads, the nursery with its tiny crib. Someone spent years on it.
+* [Investigation DC 12] Go over it room by room. -> doll_close | doll_quick
+* [if flag.death_house_children_met and not flag.death_house_children_riding and not flag.death_house_children_at_rest] Ask Rose what it shows. -> doll_rose
+* Leave it be. -> END
+
+~ doll_close
+Narrator: Behind the toy chimney, a panel no bigger than a fingernail hides a stair that winds down inside the walls, past every floor, below a cellar the house doesn't have.
+Narrator: At the bottom is a room with a tiny stone table, and beside it a lump of grey clay, shaped like a sleeping heap.
+if not flag.death_house_dollhouse_altar_seen
+  set death_house_dollhouse_altar_seen
+  set death_house_lore += 1
+endif
+interject name:silvain_aster: A working model, secret and all. Either a very cruel joke or a very guilty conscience.
+if not name:silvain_aster
+  interject tag:bookish: Someone put the truth in a toy, where only a child would look. That's a confession.
+endif
+-> secret_stair
+
+~ doll_quick
+Narrator: It takes {name} a while, but there it is: behind the toy chimney, a panel no bigger than a fingernail, and a stair inside the walls.
+-> secret_stair
+
+~ doll_rose
+Rose: Father made it for my birthday. He made it too well. It even has the stair they use at night. I found it with a hairpin.
+Thorn: She showed me. I wasn't supposed to know.
+Narrator: Rose's finger touches a panel beside the toy chimney. It swings open on a staircase winding down inside the walls.
+-> secret_stair
+
+~ secret_panel
+narrate search:chimney_seam
+Narrator: The seam runs in a neat rectangle. Pressed, the plaster swings inward on a breath of warm air, onto a stair that winds down inside the walls.
+interject name:tamsin_tealeaf: Oh, lovely work. Hinges on the inside. Whoever built this didn't want company.
+if not name:tamsin_tealeaf
+  interject class:rogue: Hinges on the inside. Whoever built this didn't want to be followed.
+endif
+-> secret_stair
+
+~ secret_stair
+if not flag.death_house_secret_stair_found
+  set death_house_secret_stair_found
+  quest death_house secret_stair
+  Narrator: In the spare bedroom, beside the chimney, the bare alcove is not bare anymore. A stair waits behind it, going down.
+endif
+-> milestone
+
+~ milestone
+if not flag.death_house_milestone_dungeon
+  set death_house_milestone_dungeon
+  xp milestone
+  Narrator: You have come further into this house than most guests. It has noticed. So have you.
+endif
+-> END

@@ -1,0 +1,58 @@
+{
+  "id": "bury_the_burgomaster",
+  "name": "The Burgomaster's Burial",
+  "summary": "Kolyan Indirovich, burgomaster of the village of Barovia, died three nights ago. His children want him buried in the churchyard, and no villager will help carry the coffin.",
+  "giver": "ismark",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Ismark Kolyanovich asked us to help bury his father, the burgomaster. The body lies in the family mansion; the village is too frightened to carry it to the church.",
+      "objectives": [
+        "Go to the burgomaster's mansion",
+        "Speak with Ireena Kolyana"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "find_a_priest",
+      "journal": "Ireena won't leave her father unburied, and she wants the rites said properly. Father Donavich keeps the church on the hill at the north-east edge of the village.",
+      "objectives": [
+        "Ask Father Donavich to say the rites"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "priest_agreed",
+      "journal": "Father Donavich has agreed to say the rites over the burgomaster. All that's left is to carry the coffin from the mansion to the churchyard.",
+      "objectives": [
+        "Tell Ireena or Ismark you're ready",
+        "Carry the coffin to the churchyard"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "no_priest",
+      "journal": "Father Donavich won't say the rites. If the burgomaster is to be buried, someone else will have to find the words, or do without them.",
+      "objectives": [
+        "Tell Ireena or Ismark you're ready",
+        "Carry the coffin to the churchyard"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "procession",
+      "journal": "The coffin has left the mansion. The grave is dug in the churchyard, beside the burgomaster's wife.",
+      "objectives": [
+        "Go to the open grave"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "buried",
+      "journal": "Kolyan Indirovich lies in the churchyard. Whatever was said over him, the earth has him now, and the devil doesn't.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

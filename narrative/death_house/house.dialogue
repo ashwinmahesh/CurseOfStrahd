@@ -1,0 +1,120 @@
+# Death House, the floors above ground: props whose reading changes the story (lore, the lullaby, the deeds).
+# Lore discoveries each add 1 to death_house_lore once; four or more lets the party read the altar (altar.dialogue).
+
+~ family_portrait
+narrate examine:hall_family_portrait
+Narrator: A handsome family in oils: a broad, smiling man, a narrow woman who isn't smiling, a girl of ten with her chin up, and a small boy holding a stuffed wolf by one ear.
+if flag.death_house_heard_plea
+  Narrator: The children from the road. The same faces, the same wolf. The varnish has gone brown with age, and the dust on the frame is thick enough to write in.
+  if not flag.death_house_saw_through_lure
+    set death_house_saw_through_lure
+    set death_house_lore += 1
+  endif
+  if name:tamsin_tealeaf and name:ilse_varga
+    interject name:tamsin_tealeaf: That's an old painting. Ilse. That is a very old painting.
+    interject name:ilse_varga: I see it.
+  else
+    interject tag:curious: How long ago was this painted? And how are they still that age outside?
+  endif
+endif
+* [History DC 12] Work out when it was painted. -> portrait_history | portrait_history_fail
+* Move on. -> END
+
+~ portrait_history
+Narrator: The clothes are a generation out of date and the paint has crazed like an old plate. These children would be grown by now, if anyone had let them grow.
+-> END
+
+~ portrait_history_fail
+Narrator: Old, says the brushwork. How old, it won't say.
+-> END
+
+~ strahd_letter
+narrate examine:strahd_letter
+Narrator: A short letter in an elegant, unhurried hand. It thanks Gustav Durst for his devotion and declines it, mocks the cult's candles, and promises nothing.
+Narrator: It suggests the writer may come to dinner one day. It is signed with a single ornate S.
+if not flag.death_house_read_strahd_letter
+  set death_house_read_strahd_letter
+  set death_house_lore += 1
+endif
+interject name:ilse_varga: That S. Same hand as my letter. Same flourish. He writes to the people he means to keep.
+interject name:silvain_aster: Look at the pen pressure. He wasn't angry when he wrote this. He was amused. That's worse.
+if not name:silvain_aster
+  interject class:wizard: He wrote this as if he had all the time in the world. I suspect he does.
+endif
+-> END
+
+~ deeds
+narrate examine:durst_deeds
+Narrator: Deeds and titles tied with string: this house, a vineyard plot long since sold, and a windmill on the Old Svalich Road, its sails sketched in the margin by a bored clerk.
+set death_house_found_deeds
+interject name:tamsin_tealeaf: A windmill. We could own a windmill. I've never owned anything I didn't have to run from.
+if not name:tamsin_tealeaf
+  interject background:criminal: Paper says it's ours if we want it. Paper says a lot of things.
+endif
+-> END
+
+~ harpsichord
+narrate examine:harpsichord
+if flag.death_house_harpsichord_played
+  if flag.death_house_knows_lullaby
+    Narrator: The lullaby is still in your head. It will be for a while.
+  else
+    Narrator: The keys are silent, and they stay that way.
+  endif
+  -> END
+endif
+Narrator: Sheet music stands open on the rack: a lullaby, copied out in a careful, loving hand. Across the top someone has written a single letter, W.
+* [Performance DC 11] Play it. -> play_ok | play_fail
+* [Investigation DC 13] Study the notation until you can hear it without playing. -> read_ok | read_fail
+* Leave it. -> END
+
+~ play_ok
+set death_house_harpsichord_played
+set death_house_knows_lullaby
+Narrator: The tune is simple and sad, the kind you sing over a crib at two in the morning. As the last note fades, a second pair of hands nobody can see plays it again, softly, from the beginning.
+interject name:hedda_ironvow: Someone sang that to a baby. Every night, I think.
+if not name:hedda_ironvow
+  interject class:bard: I'll keep that one. A tune like that is a key to someone.
+endif
+-> END
+
+~ play_fail
+set death_house_harpsichord_played
+Narrator: {name}'s fingers stumble. The keys go dead under them one by one, as if the instrument has decided you are not the right person to play this.
+-> END
+
+~ read_ok
+set death_house_harpsichord_played
+set death_house_knows_lullaby
+Narrator: The notes resolve in {name}'s head into a lullaby, slow and simple, and very tired. Somewhere upstairs, very faintly, someone else is humming it too.
+interject name:silvain_aster: Three-four time, a falling third at every cadence. A song for rocking. I'd know it again anywhere.
+-> END
+
+~ read_fail
+set death_house_harpsichord_played
+Narrator: Ink, staves, a smudge that might be a tear. The notes refuse to become a tune, and the stand tips the music face down as if embarrassed for you.
+-> END
+
+~ nursemaid_letters
+narrate examine:nursemaid_letters
+Narrator: Letters from Gustav Durst to the household's nursemaid, tied in blue ribbon. They begin politely and stop being polite.
+Narrator: The last says the mistress knows, the child must be kept quiet, and both of them will be cared for. Under it, in her hand: Walter, and a small drawn sun.
+if not flag.death_house_learned_walter
+  set death_house_learned_walter
+  set death_house_lore += 1
+endif
+interject name:hedda_ironvow: Cared for. Mm. I know how this story ends. I wish I didn't.
+interject name:tamsin_tealeaf: Walter. The baby brother. He wasn't the mistress's, was he.
+if not name:hedda_ironvow
+  interject class:cleric: "Cared for." I've read that phrase on too many graves.
+endif
+-> END
+
+~ crib
+narrate examine:nursery_crib
+Narrator: The crib is freshly made, the blanket folded neatly around nothing at all.
+if flag.death_house_learned_walter
+  Narrator: Walter slept here, for a little while.
+endif
+interject class:cleric: Whoever kept this crib made never stopped hoping. That's the saddest kind of housekeeping.
+-> END

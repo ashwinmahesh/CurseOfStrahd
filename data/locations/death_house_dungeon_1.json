@@ -1,0 +1,620 @@
+{
+  "id": "death_house_dungeon_1",
+  "name": "Death House, Dungeon (Upper Level)",
+  "region": "death_house",
+  "summary": "Below the house, cut into the rock: the Durst family crypts, the cult's dormitory and refectory, a reliquary of victims' belongings, a well where something lurks, and Gustav and Elisabeth Durst, still keeping house. Stairs lead further down toward the chanting.",
+  "map": {
+    "theme": "dungeon",
+    "light": "dark",
+    "rows": [
+      "##############################",
+      "###...##.##.##.##.####.......#",
+      "###...#............~.#......=#",
+      "#.........~.................=#",
+      "#.....#.........~....#......=#",
+      "#.....#..............#.......#",
+      "#############..#######.......#",
+      "#############..###############",
+      "#.......#####..###############",
+      "#.==..=.#####..#####.......=##",
+      "#.......#..........#........##",
+      "#.==....#..........#........##",
+      "#..........======.......==..##",
+      "#.==....#..........#........##",
+      "#.......#..........#........##",
+      "#.......#####.################",
+      "#########..........#.....#####",
+      "#########........~.#.....#####",
+      "#########....##....#........##",
+      "#########.~..##.............##",
+      "#########.......~..#........##",
+      "#########..........#........##",
+      "##############################"
+    ]
+  },
+  "areas": [
+    {
+      "id": "dh_stair_foot",
+      "name": "Foot of the Hidden Stair",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "dh_family_crypts",
+      "name": "Family Crypts",
+      "cells": [
+        [
+          7,
+          1
+        ],
+        [
+          20,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "dh_crypt_passage",
+      "name": "Narrow Passage",
+      "cells": [
+        [
+          13,
+          6
+        ],
+        [
+          14,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "dh_cult_refectory",
+      "name": "Refectory",
+      "cells": [
+        [
+          9,
+          10
+        ],
+        [
+          18,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "dh_cult_dormitory",
+      "name": "Dormitory",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          7,
+          15
+        ]
+      ]
+    },
+    {
+      "id": "dh_durst_chambers",
+      "name": "The Dursts' Chambers",
+      "cells": [
+        [
+          20,
+          9
+        ],
+        [
+          27,
+          14
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "dh_reliquary",
+      "name": "Reliquary",
+      "cells": [
+        [
+          22,
+          1
+        ],
+        [
+          28,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "dh_well_chamber",
+      "name": "Well Chamber",
+      "cells": [
+        [
+          9,
+          16
+        ],
+        [
+          18,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "dh_lower_stair",
+      "name": "Stair Down",
+      "cells": [
+        [
+          20,
+          16
+        ],
+        [
+          27,
+          21
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      3
+    ],
+    "from_secret_stair": [
+      3,
+      3
+    ],
+    "from_downstairs": [
+      25,
+      19
+    ]
+  },
+  "exits": [
+    {
+      "id": "secret_stair_up",
+      "cell": [
+        3,
+        1
+      ],
+      "to": "death_house_attic",
+      "spawn": "from_secret_stair",
+      "label": "The hidden stair up"
+    },
+    {
+      "id": "stairs_down",
+      "cell": [
+        27,
+        18
+      ],
+      "to": "death_house_dungeon_2",
+      "spawn": "from_upstairs",
+      "label": "Stairs down"
+    }
+  ],
+  "doors": [
+    {
+      "id": "crypt_gate",
+      "cell": [
+        6,
+        3
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "dormitory_door",
+      "cell": [
+        8,
+        12
+      ],
+      "label": "the dormitory door"
+    },
+    {
+      "id": "durst_door",
+      "cell": [
+        19,
+        12
+      ],
+      "label": "a heavy oak door"
+    },
+    {
+      "id": "reliquary_door",
+      "cell": [
+        21,
+        3
+      ],
+      "label": "the reliquary door",
+      "locked": true,
+      "lock_dc": 13
+    },
+    {
+      "id": "well_door",
+      "cell": [
+        13,
+        15
+      ],
+      "label": "a damp door"
+    },
+    {
+      "id": "lower_stair_door",
+      "cell": [
+        19,
+        19
+      ],
+      "label": "a door carved with a hand"
+    }
+  ],
+  "props": [
+    {
+      "id": "crypt_ancestors",
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "examine",
+      "label": "the oldest crypts",
+      "model": "crypt"
+    },
+    {
+      "id": "crypt_parents",
+      "cell": [
+        11,
+        1
+      ],
+      "kind": "examine",
+      "label": "Gustav and Elisabeth's crypts",
+      "model": "crypt",
+      "dialogue": "death_house/dungeon:crypt_parents"
+    },
+    {
+      "id": "crypt_children",
+      "cell": [
+        14,
+        1
+      ],
+      "kind": "examine",
+      "label": "Rosavalda and Thornboldt's crypts",
+      "model": "crypt_small",
+      "dialogue": "death_house/dungeon:crypt_children"
+    },
+    {
+      "id": "crypt_walter",
+      "cell": [
+        17,
+        1
+      ],
+      "kind": "examine",
+      "label": "a very small crypt",
+      "model": "crypt_small",
+      "dialogue": "death_house/dungeon:crypt_walter"
+    },
+    {
+      "id": "dormitory_pegs",
+      "cell": [
+        8,
+        9
+      ],
+      "kind": "examine",
+      "label": "pegs of black robes",
+      "model": "robe_pegs"
+    },
+    {
+      "id": "cult_ledger",
+      "cell": [
+        13,
+        12
+      ],
+      "kind": "book",
+      "label": "the cult's ledger",
+      "model": "ledger",
+      "codex": "death_house_cult_ledger",
+      "dialogue": "death_house/dungeon:cult_ledger",
+      "text": "A ledger kept in a neat merchant's hand, the hand of Gustav Durst. Each page lists a date, a name or a description, and the word given. Vagrants, a tinker, two pilgrims, a girl from Vallaki. Near the end the entries thin out and the handwriting changes, as if someone else took over the book. The last entry is a single name, Walter, and beside it, where the others say given, it says first."
+    },
+    {
+      "id": "refectory_bones",
+      "cell": [
+        17,
+        14
+      ],
+      "kind": "examine",
+      "label": "a heap of gnawed bones",
+      "model": "bones"
+    },
+    {
+      "id": "durst_supper",
+      "cell": [
+        24,
+        12
+      ],
+      "kind": "examine",
+      "label": "a set supper table",
+      "model": "table_set"
+    },
+    {
+      "id": "reliquary_trophies",
+      "cell": [
+        25,
+        0
+      ],
+      "kind": "examine",
+      "label": "shelves of keepsakes",
+      "model": "shelves"
+    },
+    {
+      "id": "dungeon_well",
+      "cell": [
+        13,
+        18
+      ],
+      "kind": "examine",
+      "label": "the well",
+      "model": "well"
+    },
+    {
+      "id": "chanting_stair",
+      "cell": [
+        25,
+        16
+      ],
+      "kind": "examine",
+      "label": "the stair down",
+      "model": "stair_down"
+    }
+  ],
+  "containers": [
+    {
+      "id": "dormitory_footlockers",
+      "cell": [
+        6,
+        9
+      ],
+      "label": "the cultists' footlockers",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "robe",
+          "qty": 3
+        },
+        {
+          "id": "dagger",
+          "qty": 2
+        }
+      ],
+      "gold": 9
+    },
+    {
+      "id": "reliquary_shelf",
+      "cell": [
+        28,
+        3
+      ],
+      "label": "the reliquary shelves",
+      "model": "shelves",
+      "items": [
+        {
+          "id": "holy_symbol_amulet",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        },
+        {
+          "id": "holy_water",
+          "qty": 1
+        }
+      ],
+      "gold": 60
+    },
+    {
+      "id": "durst_strongbox",
+      "cell": [
+        27,
+        9
+      ],
+      "label": "a strongbox",
+      "model": "strongbox",
+      "lock_dc": 14,
+      "items": [
+        {
+          "id": "spell_scroll_level_1",
+          "qty": 1
+        }
+      ],
+      "gold": 75
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        24,
+        13
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        28,
+        3
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "traps": [
+    {
+      "id": "passage_pit",
+      "cells": [
+        [
+          13,
+          8
+        ]
+      ],
+      "label": "a covered pit",
+      "detect_dc": 13,
+      "disarm_dc": 13,
+      "save": {
+        "ability": "dex",
+        "dc": 12
+      },
+      "damage": "2d6",
+      "damage_type": "bludgeoning",
+      "text": "The flagstone tips, and the dark beneath it is ten feet deep."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "gustav_durst",
+      "cell": [
+        20,
+        12
+      ],
+      "dialogue": "death_house/dursts:start",
+      "when": "not flag.death_house_dursts_destroyed",
+      "facing": "west"
+    },
+    {
+      "npc": "elisabeth_durst",
+      "cell": [
+        24,
+        11
+      ],
+      "dialogue": "death_house/dursts:start",
+      "when": "not flag.death_house_dursts_destroyed",
+      "facing": "west"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "dormitory_ghouls",
+      "trigger": "enter_area:dh_cult_dormitory",
+      "when": "not flag.death_house_ghouls_destroyed",
+      "flag": "death_house_ghouls_destroyed",
+      "monsters": [
+        {
+          "monster": "ghoul",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            6,
+            12
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            4,
+            14
+          ]
+        }
+      ],
+      "text": "The cult kept its appetite."
+    },
+    {
+      "id": "well_grick",
+      "trigger": "enter_area:dh_well_chamber",
+      "when": "not flag.death_house_grick_slain",
+      "flag": "death_house_grick_slain",
+      "monsters": [
+        {
+          "monster": "grick",
+          "cell": [
+            11,
+            20
+          ]
+        }
+      ],
+      "text": "Part of the wall uncoils."
+    },
+    {
+      "id": "reliquary_shadows",
+      "trigger": "enter_area:dh_reliquary",
+      "when": "not flag.death_house_shadows_destroyed",
+      "flag": "death_house_shadows_destroyed",
+      "monsters": [
+        {
+          "monster": "shadow",
+          "cell": [
+            24,
+            5
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            27,
+            5
+          ]
+        }
+      ],
+      "text": "The shadows on the shelves were not cast by anything."
+    },
+    {
+      "id": "durst_reunion",
+      "trigger": "dialogue",
+      "flag": "death_house_dursts_destroyed",
+      "monsters": [
+        {
+          "monster": "ghast",
+          "cell": [
+            21,
+            11
+          ],
+          "name": "Gustav Durst"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            23,
+            13
+          ],
+          "name": "Elisabeth Durst"
+        }
+      ],
+      "text": "Supper is served."
+    },
+    {
+      "id": "durst_reunion_shaken",
+      "trigger": "dialogue",
+      "flag": "death_house_dursts_destroyed",
+      "surprise": "enemies",
+      "monsters": [
+        {
+          "monster": "ghast",
+          "cell": [
+            21,
+            11
+          ],
+          "name": "Gustav Durst"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            23,
+            13
+          ],
+          "name": "Elisabeth Durst"
+        }
+      ],
+      "text": "For one moment they are only parents, and grieving."
+    }
+  ],
+  "narration": {
+    "enter": "enter:death_house_dungeon_1"
+  },
+  "rest": "risky"
+}

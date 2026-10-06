@@ -1,0 +1,20 @@
+{
+  "id": "donavich",
+  "name": "Father Donavich",
+  "title": "Priest of the Morninglord",
+  "summary": "The village priest, starving and sleepless, praying over the son he has locked in the church undercroft.",
+  "portrait": "donavich",
+  "sprite": "donavich",
+  "attitude": "indifferent",
+  "voice": "docs/voice/donavich.md",
+  "monster": "priest_acolyte",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "cleric",
+    "morninglord",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

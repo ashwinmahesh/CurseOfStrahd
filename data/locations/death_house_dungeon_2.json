@@ -1,0 +1,386 @@
+{
+  "id": "death_house_dungeon_2",
+  "name": "Death House, Dungeon (Lower Level)",
+  "region": "death_house",
+  "summary": "The cult's heart: a flooded passage full of rats, a winch room that raises the portcullis, the robing room, the antechamber, and the ritual chamber where the cult's shades chant around the altar and Lorghoth the Decayer sleeps in a mound of refuse.",
+  "map": {
+    "theme": "dungeon",
+    "light": "dark",
+    "rows": [
+      "##############################",
+      "###....#######################",
+      "###....#.~........~....#.....#",
+      "#.........~~~~~~~~~~~..#.....#",
+      "#.........~~~~~~~~~~~........#",
+      "#......#.....~.......~.#.....#",
+      "###.###############.####.....#",
+      "#......##########......#.....#",
+      "#......##########......#.....#",
+      "#=.....##########......#.....#",
+      "#......##########......###.###",
+      "#.....=#####.................#",
+      "############.......#.....#...#",
+      "############.................#",
+      "############~~~~~~...........#",
+      "############~~~~~~...==......#",
+      "############~~~~~~...........#",
+      "############~~~~~~...........#",
+      "############~~~~~~...........#",
+      "############~~~~~~.#.....#...#",
+      "############~~~~~~...........#",
+      "##############################"
+    ]
+  },
+  "areas": [
+    {
+      "id": "dh_lower_landing",
+      "name": "Bottom of the Stairs",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          6,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "dh_flooded_passage",
+      "name": "Flooded Passage",
+      "cells": [
+        [
+          7,
+          2
+        ],
+        [
+          22,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "dh_robing_room",
+      "name": "Robing Room",
+      "cells": [
+        [
+          1,
+          7
+        ],
+        [
+          6,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "dh_winch_room",
+      "name": "Winch Room",
+      "cells": [
+        [
+          17,
+          7
+        ],
+        [
+          22,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "dh_ritual_antechamber",
+      "name": "Antechamber",
+      "cells": [
+        [
+          24,
+          2
+        ],
+        [
+          28,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "dh_ritual_chamber",
+      "name": "Ritual Chamber",
+      "cells": [
+        [
+          12,
+          11
+        ],
+        [
+          28,
+          20
+        ]
+      ],
+      "light": "dim"
+    }
+  ],
+  "spawns": {
+    "default": [
+      4,
+      3
+    ],
+    "from_upstairs": [
+      4,
+      3
+    ]
+  },
+  "exits": [
+    {
+      "id": "stairs_up",
+      "cell": [
+        3,
+        1
+      ],
+      "to": "death_house_dungeon_1",
+      "spawn": "from_downstairs",
+      "label": "Stairs up"
+    }
+  ],
+  "doors": [
+    {
+      "id": "robing_door",
+      "cell": [
+        3,
+        6
+      ],
+      "label": "the robing room door"
+    },
+    {
+      "id": "winch_door",
+      "cell": [
+        19,
+        6
+      ],
+      "label": "a low door"
+    },
+    {
+      "id": "portcullis",
+      "cell": [
+        23,
+        4
+      ],
+      "label": "the portcullis",
+      "when": "flag.death_house_portcullis_raised"
+    }
+  ],
+  "props": [
+    {
+      "id": "drowned_bones",
+      "cell": [
+        9,
+        5
+      ],
+      "kind": "examine",
+      "label": "bones in the water",
+      "model": "bones_water"
+    },
+    {
+      "id": "robing_hooks",
+      "cell": [
+        0,
+        8
+      ],
+      "kind": "examine",
+      "label": "hooks of robes",
+      "model": "robe_pegs"
+    },
+    {
+      "id": "winch_lever",
+      "cell": [
+        23,
+        8
+      ],
+      "kind": "lever",
+      "label": "the winch",
+      "model": "winch",
+      "flag": "death_house_portcullis_raised"
+    },
+    {
+      "id": "carved_archway",
+      "cell": [
+        27,
+        10
+      ],
+      "kind": "examine",
+      "label": "a carved archway",
+      "model": "arch_carved"
+    },
+    {
+      "id": "altar",
+      "cell": [
+        21,
+        15
+      ],
+      "kind": "examine",
+      "label": "the altar",
+      "model": "altar_stone",
+      "dialogue": "death_house/altar:altar_prop"
+    },
+    {
+      "id": "refuse_heap",
+      "cell": [
+        18,
+        17
+      ],
+      "kind": "examine",
+      "label": "a mound of refuse",
+      "model": "refuse_mound"
+    },
+    {
+      "id": "chamber_reliefs",
+      "cell": [
+        12,
+        10
+      ],
+      "kind": "examine",
+      "label": "wall reliefs",
+      "model": "relief"
+    }
+  ],
+  "containers": [
+    {
+      "id": "robing_chest",
+      "cell": [
+        6,
+        11
+      ],
+      "label": "a robing chest",
+      "model": "chest",
+      "items": [
+        {
+          "id": "robe",
+          "qty": 2
+        },
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "candle",
+          "qty": 6
+        }
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        20,
+        14
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        23,
+        16
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "cult_shades",
+      "cell": [
+        24,
+        14
+      ],
+      "dialogue": "death_house/altar:start",
+      "when": "not flag.death_house_refused and not flag.death_house_sacrificed",
+      "facing": "north"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "drowned_rats",
+      "trigger": "enter_area:dh_flooded_passage",
+      "when": "not flag.death_house_rats_scattered",
+      "flag": "death_house_rats_scattered",
+      "monsters": [
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            15,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            18,
+            4
+          ]
+        }
+      ],
+      "text": "The water is moving against the current."
+    },
+    {
+      "id": "lorghoth_rises",
+      "trigger": "dialogue",
+      "flag": "death_house_lorghoth_slain",
+      "monsters": [
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            16,
+            15
+          ],
+          "name": "Lorghoth the Decayer"
+        }
+      ],
+      "text": "Lorghoth the Decayer wakes."
+    },
+    {
+      "id": "lorghoth_rises_late",
+      "trigger": "dialogue",
+      "flag": "death_house_lorghoth_slain",
+      "monsters": [
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            12,
+            19
+          ],
+          "name": "Lorghoth the Decayer"
+        }
+      ],
+      "text": "Lorghoth the Decayer wakes, slowly. You saw it coming."
+    },
+    {
+      "id": "shades_harry",
+      "trigger": "dialogue",
+      "monsters": [
+        {
+          "monster": "shadow",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Hooded Shade"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hooded Shade"
+        }
+      ],
+      "text": "The shades will not let you leave so easily."
+    }
+  ],
+  "narration": {
+    "enter": "enter:death_house_dungeon_2"
+  },
+  "rest": "no",
+  "rest_text": "The chanting never stops long enough for anyone to sleep."
+}

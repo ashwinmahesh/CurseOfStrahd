@@ -1,0 +1,20 @@
+{
+  "id": "gustav_durst",
+  "name": "Gustav Durst",
+  "title": "Master of the House",
+  "summary": "The father: a merchant who founded a cult to win Strahd's favor, fathered a child on the nursemaid, and gave that child to the altar. Now a ghast, still playing host at his own supper table.",
+  "portrait": "gustav_durst",
+  "sprite": "gustav_durst",
+  "attitude": "hostile",
+  "voice": "docs/voice/gustav_durst.md",
+  "monster": "ghast",
+  "guest": false,
+  "tags": [
+    "undead",
+    "cult",
+    "durst",
+    "death_house"
+  ],
+  "region": "death_house",
+  "pronouns": "he/him"
+}

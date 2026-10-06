@@ -1,0 +1,149 @@
+{
+  "id": "mad_marys_house",
+  "name": "Mad Mary's House",
+  "region": "village_of_barovia",
+  "summary": "A narrow townhouse with three locks on the door and boards on every window, where Mad Mary weeps for her daughter.",
+  "map": {
+    "rows": [
+      "##############",
+      "#........#.==#",
+      "#....==..#...#",
+      "#............#",
+      "#........#...#",
+      "#..=.....#...#",
+      "#........#####",
+      "#........#...#",
+      "#=...........#",
+      "#........#=.=#",
+      "####.#########"
+    ],
+    "theme": "townhouse",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "mary_front_room",
+      "name": "Front room",
+      "cells": [[1, 1], [8, 9]]
+    },
+    {
+      "id": "gertruda_room",
+      "name": "Gertruda's room",
+      "cells": [[10, 1], [12, 5]],
+      "light": "dark"
+    },
+    {
+      "id": "mary_bedroom",
+      "name": "Mary's room",
+      "cells": [[10, 7], [12, 9]],
+      "light": "dark"
+    }
+  ],
+  "spawns": {
+    "default": [4, 9]
+  },
+  "exits": [
+    {
+      "id": "mary_front_door",
+      "cell": [4, 10],
+      "to": "village_of_barovia",
+      "spawn": "from_mad_marys",
+      "label": "Out to the lane"
+    }
+  ],
+  "doors": [
+    {
+      "id": "gertruda_door",
+      "cell": [9, 3],
+      "label": "Gertruda's door"
+    },
+    {
+      "id": "mary_bedroom_door",
+      "cell": [9, 8],
+      "label": "Mary's door"
+    }
+  ],
+  "props": [
+    {
+      "id": "rocking_chair",
+      "cell": [3, 5],
+      "kind": "examine",
+      "label": "Rocking chair",
+      "model": "chair"
+    },
+    {
+      "id": "door_locks",
+      "cell": [5, 10],
+      "kind": "examine",
+      "label": "Three locks"
+    },
+    {
+      "id": "cold_stove",
+      "cell": [1, 8],
+      "kind": "examine",
+      "label": "Cold stove",
+      "model": "stove"
+    },
+    {
+      "id": "gertruda_bed",
+      "cell": [11, 1],
+      "kind": "examine",
+      "label": "Gertruda's bed",
+      "model": "bed"
+    },
+    {
+      "id": "gertruda_window",
+      "cell": [13, 3],
+      "kind": "search",
+      "label": "Gertruda's window",
+      "model": "window",
+      "search_dc": 12,
+      "flag": "gertruda_window_clue"
+    },
+    {
+      "id": "gertruda_storybook",
+      "cell": [12, 2],
+      "kind": "book",
+      "label": "Book of tales",
+      "model": "book",
+      "codex": "gertruda_storybook",
+      "text": "A child's book of tales, read until the spine gave up. Most pages are clean. One is soft with handling: a story about a girl in a tower and a prince in a black coat who sings under her window until she climbs down to him. In the margin, in a girl's hand: real?"
+    }
+  ],
+  "containers": [
+    {
+      "id": "gertruda_chest",
+      "cell": [10, 1],
+      "label": "Gertruda's chest",
+      "model": "chest",
+      "items": [
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "gold": 0,
+      "lock_dc": 0
+    }
+  ],
+  "lights": [
+    {
+      "cell": [5, 2],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "mad_mary",
+      "cell": [4, 5],
+      "dialogue": "village_of_barovia/mad_mary:start"
+    }
+  ],
+  "narration": {
+    "enter": "enter:mad_marys_house"
+  },
+  "rest": "no",
+  "rest_text": "Mary's weeping rises and falls all night. Nobody in this house has slept in days."
+}

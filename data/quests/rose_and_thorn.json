@@ -1,0 +1,37 @@
+{
+  "id": "rose_and_thorn",
+  "name": "Rest for Rose and Thorn",
+  "summary": "The Durst children died in their locked attic room, and their ghosts are still waiting there for someone to come back for them.",
+  "giver": "rose",
+  "region": "death_house",
+  "stages": [
+    {
+      "id": "met",
+      "journal": "Rose and Thorn's ghosts are in their attic room, locked in by their parents long ago. They are waiting for their mother to unlock the door when the noise downstairs stops.",
+      "objectives": [
+        "Decide what to do for the children"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "remains",
+      "journal": "We have the children's bones, wrapped in their blankets. The family crypts are somewhere below the house; two of them were carved for Rose and Thorn and never filled.",
+      "objectives": [
+        "Lay the children's remains in their crypts"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "at_rest",
+      "journal": "Rose and Thorn lie in their own crypts now, under their own names. Rose said goodbye properly. Thorn just waved.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "left_behind",
+      "journal": "We left the house without laying the children to rest. The house still shows them at the village edge, begging strangers to come inside.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

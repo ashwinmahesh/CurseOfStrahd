@@ -1,0 +1,20 @@
+{
+  "id": "ismark",
+  "name": "Ismark Kolyanovich",
+  "title": "Son of the Burgomaster",
+  "summary": "The late burgomaster's son, a capable swordsman the village calls 'the Lesser'. He wants his father buried and his sister Ireena taken somewhere the devil can't reach.",
+  "portrait": "ismark",
+  "sprite": "ismark",
+  "attitude": "indifferent",
+  "voice": "docs/voice/ismark.md",
+  "monster": "warrior_veteran",
+  "guest": true,
+  "tags": [
+    "barovian",
+    "noble",
+    "soldier",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,63 @@
+# Into the Mists: the arrival on the Old Svalich Road (docs/regions/into_the_mists.md).
+# Started by props on into_the_mists_road: mists_wall (the fog at the east edge) and mists_deer_carcass.
+
+~ mist_wall
+narrate examine:mists_wall
+if not flag.mists_arrived
+  set mists_arrived
+  quest into_the_mists lost_in_mist
+  -> hooks
+endif
+Narrator: You walk into the white. A dozen steps later you walk out of it, facing the same road in the same direction. The mist is not a wall. It is a hand, turning you around.
+-> END
+
+~ hooks
+Narrator: Each of you came looking for something. None of you came looking for this.
+interject name:ilse_varga: My company went into a fog like this a year ago. If this is where it took them, I'm in the right place.
+interject name:tamsin_tealeaf: The lady in my locket called my name the whole way here. I'd like a word with her about directions.
+interject name:hedda_ironvow: I dreamed of a dying sun and a silver raven. Mm. This sky looks like the first half of that dream.
+interject name:silvain_aster: Aurel's last letter came out of a land of mists. Wherever this is, I'll want notes.
+if not name:ilse_varga
+  interject class:fighter: Road goes one way. So do we.
+endif
+if not name:hedda_ironvow
+  interject class:cleric: Whatever brought us here went to some trouble. That's worth remembering.
+endif
+* Try walking back into the mist. -> again
+* Follow the road. -> END
+
+~ again
+Narrator: The mist lets you in, holds you a moment like a host taking your coat, and hands you back to the road, facing west.
+interject name:silvain_aster: Not an illusion. Illusions are rude. This is courteous. I like that a great deal less.
+if not name:silvain_aster
+  interject class:wizard: That isn't fog. That's a border, and it has opinions.
+endif
+-> END
+
+~ carcass
+narrate examine:mists_deer_carcass
+if flag.mists_read_the_pack
+  Narrator: The kill is still here, still uneaten. The wolves that left it are still somewhere ahead.
+  -> END
+endif
+if flag.mists_carcass_studied
+  Narrator: The ground has told you all it's going to.
+  -> END
+endif
+* [Survival DC 12] Read the tracks around it. -> carcass_tracks | carcass_no_tracks
+* Leave it. -> END
+
+~ carcass_tracks
+set mists_carcass_studied
+set mists_read_the_pack
+Narrator: {name} reads the churned earth: a dozen wolves at least, moving in a line, not a scatter. They killed the deer and did not eat it. They were not hungry. They were busy.
+interject name:ilse_varga: That's a patrol, not a hunt. Someone's posted pickets on this road.
+if not name:ilse_varga
+  interject background:soldier: Wolves in a line. That's a picket. Somebody gives them orders.
+endif
+-> END
+
+~ carcass_no_tracks
+set mists_carcass_studied
+Narrator: Prints, fog and old leaves, churned into one dark mess. Whatever did this was large, numerous and gone. Probably gone.
+-> END

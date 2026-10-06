@@ -1,0 +1,18 @@
+{
+  "id": "sorvia",
+  "name": "Sorvia",
+  "title": "Vistana",
+  "summary": "The youngest of the three Vistani women at the tavern; she reads palms and says true things before her sisters can stop her.",
+  "portrait": "sorvia",
+  "sprite": "sorvia",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vistani_women.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}
