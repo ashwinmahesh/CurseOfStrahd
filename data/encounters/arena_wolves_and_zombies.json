@@ -1,0 +1,128 @@
+{
+  "id": "arena_wolves_and_zombies",
+  "name": "The Roadside Shrine",
+  "summary": "Phase 2 arena: the level 3 party against a wolf pack, a dire wolf and the shambling dead in a ruined shrine yard off the Old Svalich Road.",
+  "text": "Fog spills between broken gravestones. Beyond the toppled shrine, eyes catch the lantern light: wolves, low and patient, and behind them the slow, wet shuffle of the dead.",
+  "party_level": 3,
+  "difficulty": "low",
+  "map": {
+    "rows": [
+      "########################",
+      "#~~......~~~.......~~~~#",
+      "#~.......~~...##....~~~#",
+      "#....=.........#.......#",
+      "#....=..111.....=......#",
+      "#.......111.....=......#",
+      "#.......111............#",
+      "#..#...........~~......#",
+      "#..............~~...##.#",
+      "#....=====..........##.#",
+      "#......................#",
+      "#..~~......=...........#",
+      "#..~~......=.....~~....#",
+      "#...............~~~....#",
+      "#~~..................~~#",
+      "########################"
+    ],
+    "theme": "shrine_yard",
+    "light": "dim"
+  },
+  "party": [
+    {
+      "pregen": "ilse_varga",
+      "cell": [
+        6,
+        6
+      ]
+    },
+    {
+      "pregen": "hedda_ironvow",
+      "cell": [
+        6,
+        8
+      ]
+    },
+    {
+      "pregen": "tamsin_tealeaf",
+      "cell": [
+        5,
+        5
+      ]
+    },
+    {
+      "pregen": "silvain_aster",
+      "cell": [
+        4,
+        8
+      ],
+      "precast": [
+        "mage_armor"
+      ]
+    }
+  ],
+  "enemies": [
+    {
+      "monster": "wolf",
+      "cell": [
+        19,
+        3
+      ]
+    },
+    {
+      "monster": "wolf",
+      "cell": [
+        20,
+        4
+      ]
+    },
+    {
+      "monster": "wolf",
+      "cell": [
+        19,
+        6
+      ]
+    },
+    {
+      "monster": "wolf",
+      "cell": [
+        21,
+        6
+      ]
+    },
+    {
+      "monster": "dire_wolf",
+      "cell": [
+        18,
+        10
+      ]
+    },
+    {
+      "monster": "zombie",
+      "cell": [
+        21,
+        11
+      ]
+    },
+    {
+      "monster": "zombie",
+      "cell": [
+        20,
+        13
+      ]
+    },
+    {
+      "monster": "zombie",
+      "cell": [
+        16,
+        10
+      ]
+    },
+    {
+      "monster": "zombie",
+      "cell": [
+        14,
+        12
+      ]
+    }
+  ]
+}

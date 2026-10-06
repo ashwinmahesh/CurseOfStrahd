@@ -7,23 +7,9 @@ extends RefCounted
 
 ## A pregenerated character levelled to `level` by its level plan.
 static func pregen(id: String, level: int = 1) -> Character:
-	var data := Compendium.shared().get_entry("pregens", id)
-	var builder := CharacterBuilder.new(null, data["build"] as Dictionary)
-	var ch := builder.build_character()
-	assert(ch != null, "pregen %s doesn't build: %s" % [id, builder.errors()])
-	for step: Variant in data["level_plan"]:
-		var plan := step as Dictionary
-		if int(plan["level"]) > level:
-			break
-		var up := LevelUpController.new(ch)
-		up.choose_class(str(plan["class"]))
-		if int(plan.get("hp", 0)) > 0:
-			((up.build["levels"] as Array).back() as Dictionary)["hp"] = int(plan["hp"])
-		var choices := plan.get("choices", {}) as Dictionary
-		for key: String in choices:
-			up.choose(key, choices[key] as Array)
-		var ok := up.confirm()
-		assert(ok, "pregen %s level %d: %s" % [id, plan["level"], up.errors()])
+	var errors: Array[String] = []
+	var ch := Pregens.build(id, level, errors)
+	assert(ch != null, "pregen %s: %s" % [id, errors])
 	return ch
 
 

@@ -34,6 +34,8 @@ var disadvantage_sources: Array[String] = []
 ## Automatic failure (Paralyzed and a Dexterity save): no die is rolled.
 var auto_failed: bool = false
 var auto_fail_reason: String = ""
+## Text for a d20 that was rolled again (Halfling Luck): "Luck: 1 → 14".
+var reroll_note: String = ""
 
 
 ## `advantage_sources` / `disadvantage_sources` are counts so callers can just add up effects.
@@ -88,6 +90,23 @@ static func automatic_failure(kind_: Kind, target_: int, label_: String, reason:
 	return t
 
 
+## Halfling Luck (2024): a d20 that shows 1 is rolled again and the new roll must be used.
+func reroll_ones(dice: DiceRoller, source: String) -> void:
+	var notes: Array[String] = []
+	for i in rolls.size():
+		if rolls[i] == 1:
+			rolls[i] = dice.d20(source)
+			notes.append("1 → %d" % rolls[i])
+	if notes.is_empty():
+		return
+	reroll_note = "%s: %s" % [source, ", ".join(notes)]
+	if rolls.size() == 2:
+		kept = maxi(rolls[0], rolls[1]) if advantage else mini(rolls[0], rolls[1])
+	else:
+		kept = rolls[0]
+	_resolve()
+
+
 func _resolve() -> void:
 	total = kept + modifier + extra
 	critical = kind == Kind.ATTACK_ROLL and kept >= crit_range
@@ -116,4 +135,7 @@ func describe() -> String:
 	var outcome := "success" if success else "failure"
 	if kind == Kind.ATTACK_ROLL:
 		outcome = "critical hit" if critical else ("hit" if success else "miss")
-	return "%s: %s %s %d%s = %d vs %s %d, %s" % [name, die, sign, absi(modifier), bonus, total, vs, target, outcome]
+	var text := "%s: %s %s %d%s = %d vs %s %d, %s" % [name, die, sign, absi(modifier), bonus, total, vs, target, outcome]
+	if reroll_note != "":
+		text += " (%s)" % reroll_note
+	return text

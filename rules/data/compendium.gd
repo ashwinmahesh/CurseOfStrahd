@@ -4,7 +4,7 @@ extends RefCounted
 ## reads content only through here, so a new subclass, feat or spell is a data file, never new code.
 
 const FOLDERS: Array[String] = ["classes", "subclasses", "species", "backgrounds", "feats", "spells", "items",
-	"monsters", "conditions", "pregens"]
+	"monsters", "conditions", "pregens", "encounters"]
 
 static var _shared: Compendium = null
 

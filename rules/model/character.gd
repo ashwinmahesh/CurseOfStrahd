@@ -760,6 +760,13 @@ func _apply_resources() -> void:
 		if maximum2 > 0:
 			set_resource(str(rd["id"]), str(rd["name"]), maximum2, str(rd.get("recharge", "long")), str(rd["source"]))
 			keep[str(rd["id"])] = true
+	# Spells from species and feats that can be cast without a slot a number of times per rest.
+	for g in granted_spells:
+		if int(g["uses"]) > 0 and int(g["at_level"]) <= character_level():
+			var gid := "spell:%s" % g["id"]
+			set_resource(gid, compendium.display_name("spells", str(g["id"])), int(g["uses"]),
+				str(g["recharge"]) if str(g["recharge"]) != "" else "long", str(g["source"]))
+			keep[gid] = true
 	for k: String in resources.keys():
 		if not keep.has(k):
 			resources.erase(k)

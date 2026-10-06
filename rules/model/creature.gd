@@ -442,6 +442,8 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 			extra_text += " - %s %d" % [m.source_name, r]
 	var t := D20Test.roll(dice, kind, bonus.total(), target, adv.size(), dis.size(), label, crit_range,
 		extra, extra_text.strip_edges())
+	if has_flag("luck"):
+		t.reroll_ones(dice, "Luck")
 	t.breakdown = bonus
 	t.advantage_sources = adv
 	t.disadvantage_sources = dis
@@ -773,8 +775,13 @@ func _modifiers_of_condition(c: StringName) -> Array[Modifier]:
 
 
 func _after_conditions_changed() -> void:
-	if concentration != null and has_flag("no_concentration"):
+	if not has_flag("no_concentration"):
+		return
+	if concentration != null:
 		concentration.end("Incapacitated")
+	for e: Effect in effects.duplicate():
+		if e.ends_when_incapacitated:
+			remove_effect(e)
 
 
 # --- Effects and Concentration -------------------------------------------------------------------

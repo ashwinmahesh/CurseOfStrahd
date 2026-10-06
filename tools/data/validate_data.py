@@ -19,6 +19,7 @@ FOLDERS = {
     "classes": "class", "subclasses": "subclass", "species": "species",
     "backgrounds": "background", "feats": "feat", "spells": "spell",
     "items": "item", "magic_items": "item", "monsters": "monster", "conditions": "condition", "pregens": "pregen",
+    "encounters": "encounter",
 }
 
 TYPES = {
@@ -206,6 +207,45 @@ def semantic_checks(data):
         for sp in sc.get("at_will", []) + [x for v in sc.get("per_day", {}).values() for x in v]:
             if sp not in spells:
                 pending.append(f"monsters/{mid}: spell '{sp}' (not in Phase 1 spell data)")
+    # Encounters: who's in it exists, everyone stands on open floor inside the map, nobody overlaps, and the
+    # difficulty matches the 2024 DMG XP budget for the party.
+    budget = {1: (50, 75, 100), 2: (100, 150, 200), 3: (150, 225, 400), 4: (250, 375, 500), 5: (500, 750, 1100)}
+    sizes = {"tiny": 1, "small": 1, "medium": 1, "large": 2, "huge": 3, "gargantuan": 4}
+    for eid, enc in data["encounters"].items():
+        rows = enc["map"]["rows"]
+        taken = {}
+
+        def place(cell, size, who):
+            x, z = cell
+            for dz in range(size):
+                for dx in range(size):
+                    cx, cz = x + dx, z + dz
+                    if cz >= len(rows) or cx >= len(rows[cz]) or rows[cz][cx] not in ".~1234":
+                        errors.append(f"encounters/{eid}: {who} at {cell} isn't on open floor")
+                        return
+                    if (cx, cz) in taken:
+                        errors.append(f"encounters/{eid}: {who} overlaps {taken[(cx, cz)]}")
+                    taken[(cx, cz)] = who
+        for p in enc["party"]:
+            if p["pregen"] not in data["pregens"]:
+                errors.append(f"encounters/{eid}: unknown pregen '{p['pregen']}'")
+            for sp in p.get("precast", []):
+                need("spell", spells, sp, f"encounters/{eid} precast")
+            place(p["cell"], 1, p["pregen"])
+        xp = 0
+        for m in enc["enemies"]:
+            mon = data["monsters"].get(m["monster"])
+            if mon is None:
+                errors.append(f"encounters/{eid}: unknown monster '{m['monster']}'")
+                continue
+            xp += mon.get("xp", 0)
+            place(m["cell"], sizes.get(mon["size"], 1), m["monster"])
+        level = enc["party_level"]
+        if "difficulty" in enc and level in budget:
+            low, mod, high = (b * len(enc["party"]) for b in budget[level])
+            band = "high" if xp >= high else ("moderate" if xp >= mod else "low")
+            if band != enc["difficulty"]:
+                errors.append(f"encounters/{eid}: {xp} XP is a {band} encounter for {len(enc['party'])} level {level} characters, not {enc['difficulty']}")
     return errors, pending
 
 

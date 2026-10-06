@@ -42,6 +42,15 @@ var _concentration: WeakRef = null
 ## and between equals the most recent. Defaults to source_kind:source_id.
 var stack_key: String = ""
 var order: int = 0
+## Ends the moment the creature takes damage (Turn Undead, Sleep's unconsciousness).
+var ends_on_damage: bool = false
+## Ends if the creature becomes Incapacitated (Dodge).
+var ends_when_incapacitated: bool = false
+## A save the creature repeats at the end of each of its turns to end this effect: {ability, dc}.
+var repeat_save: Dictionary = {}
+## Turn ends of the owner to let pass before END_OF_TURN expires: 1 when the effect starts during the owner's own
+## turn, so "until the end of your next turn" doesn't end with the current one.
+var skip_turn_ends: int = 0
 
 
 func _init(name_: String = "", source_kind_: StringName = &"spell", source_id_: String = "") -> void:
@@ -132,7 +141,12 @@ func on_turn_start(creature_id: String) -> bool:
 
 ## Called when `creature_id`'s turn ends. Returns true when this effect has expired.
 func on_turn_end(creature_id: String) -> bool:
-	return ends == Ends.END_OF_TURN and creature_id == _owner()
+	if ends != Ends.END_OF_TURN or creature_id != _owner():
+		return false
+	if skip_turn_ends > 0:
+		skip_turn_ends -= 1
+		return false
+	return true
 
 
 ## Exploration time passing. Returns true when expired.
