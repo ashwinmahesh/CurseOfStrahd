@@ -7,6 +7,7 @@ const FIRST_LOCATION := "into_the_mists_road"
 
 var st: StoryState
 var narrator: Narrator
+var banter: Banter
 var view: LocationView
 var hud: ExploreHud
 var screen: Node = null              ## the open full-screen panel (sheet, inventory ...), if any
@@ -21,6 +22,7 @@ func _ready() -> void:
 	GameState.current_scene = "res://scenes/game.tscn"
 	st = GameState.story
 	narrator = Narrator.new()
+	banter = Banter.new()
 	if st.party.is_empty():
 		_new_pregen_party()
 	hud = ExploreHud.new()
@@ -55,6 +57,13 @@ func enter_location(location_id: String, spawn: String) -> void:
 		view = null
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view = LocationView.create(location_id, st, narrator, Dice.roller, spawn)
+	view.banter_player = banter
+	view.banter.connect(func(lines: Array) -> void:
+		var text: Array[String] = []
+		for l: Variant in lines:
+			var d := l as Dictionary
+			text.append(str(d["text"]) if bool(d["narrator"]) else "%s: %s" % [str(d["name"]).get_slice(" ", 0), d["text"]])
+		hud.narrate("\n".join(text)))
 	view.exit_requested.connect(func(to: String, sp: String) -> void: enter_location.call_deferred(to, sp))
 	view.dialogue_requested.connect(start_dialogue)
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))

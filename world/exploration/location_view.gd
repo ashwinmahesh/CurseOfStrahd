@@ -17,6 +17,7 @@ signal combat_started(view: CombatView)
 signal combat_ended(outcome: String)
 signal check_rolled(text: String)
 signal hover_changed(text: String)
+signal banter(lines: Array)
 
 const STEP_TIME := 0.18
 const SNEAK_STEP_TIME := 0.32
@@ -31,6 +32,8 @@ var post: MeshInstance3D
 var st: StoryState
 var narrator: Narrator
 var dice: DiceRoller
+var banter_player: Banter = null
+var _last_banter := -1000
 
 ## Party members on the map (marching order = st.party order) and their tokens.
 var members: Array[Combatant] = []
@@ -432,6 +435,7 @@ func _check_areas() -> bool:
 			_say("enter:" + id)
 			if _trigger_encounter("enter_area:" + id):
 				return true
+			_maybe_banter()
 		elif not inside:
 			_areas_in.erase(id)
 	return false
@@ -441,6 +445,16 @@ static func _in_area(area: Dictionary, c: Vector2i) -> bool:
 	var a := _cell((area["cells"] as Array)[0])
 	var b := _cell((area["cells"] as Array)[1])
 	return c.x >= mini(a.x, b.x) and c.x <= maxi(a.x, b.x) and c.y >= mini(a.y, b.y) and c.y <= maxi(a.y, b.y)
+
+
+## Now and then (entering an area, at most every 10 game minutes) the party talks among themselves.
+func _maybe_banter() -> void:
+	if banter_player == null or st.total_minutes() - _last_banter < 10:
+		return
+	var lines := banter_player.next(st, str(loc.get("region", "")))
+	if not lines.is_empty():
+		_last_banter = st.total_minutes()
+		banter.emit(lines)
 
 
 ## Passive Perception notices traps within 10 ft; a member stepping on an unnoticed trap springs it.
@@ -899,7 +913,10 @@ func start_encounter(encounter_id: String) -> bool:
 		ctokens[c.id] = t
 	combat_view = CombatView.new()
 	combat_view.input_locked = input_locked
+	combat_view.narrator = narrator
+	combat_view.story = st
 	add_child(combat_view)
+	_say("combat:start")
 	_run_combat(encounter_id, spec, e, ctokens, surprised)
 	return true
 
@@ -942,6 +959,8 @@ func resume_encounter(snapshot: Dictionary) -> bool:
 		ctokens[c.id] = t
 	combat_view = CombatView.new()
 	combat_view.input_locked = input_locked
+	combat_view.narrator = narrator
+	combat_view.story = st
 	add_child(combat_view)
 	var none: Array[String] = []
 	_run_combat(encounter_id, spec, e, ctokens, none)

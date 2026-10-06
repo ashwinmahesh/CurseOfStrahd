@@ -22,3 +22,10 @@ started" in coverage.md, not a deviation.
 | Monster Hit Points | Average from the stat block | The 2024 default | — |
 | Divine Spark (harm) | Always Radiant | Radiant is never worse than Necrotic against the Phase 2 enemies | Phase 3 |
 | Lighting | Combat ignores light and obscurement (the arena is lit by lanterns) | Vision rules arrive with exploration | Phase 3 |
+| After a won fight | Dying party members are stabilized at 0 Hit Points (their friends tend them) | Rolling death saves every 6 seconds out of combat with nobody hostile adds nothing; the rules let anyone stabilize them with a DC 10 Medicine check | — |
+| Forcing a lock | A Strength (Athletics) check against the lock's DC + 2 | The rules leave forcing to the DM; slightly harder than picking keeps Thieves' Tools worth carrying | — |
+| Disarming a trap | Failing by 5 or more springs it | A common table ruling; the 2024 rules leave failure to the DM | — |
+| Long Rest interruption | In a "risky" place, a 1 in 6 chance; an interrupted rest gives a Short Rest's benefits | Random encounters arrive with travel in Phase 4 | Phase 4 |
+| Group Stealth for surprise | The party's lowest Stealth total is compared with each enemy's passive Perception | The rules leave group stealth to the DM; the lowest roll is the one that gets heard | — |
+| Exploration movement | On the grid, one square at a time, followers stepping into the square ahead | ADR 0009: one geometry for exploring and fighting | — |
+

@@ -41,6 +41,9 @@ var _reach: Dictionary = {}
 var _target_cycle := 0
 ## Captures and scene tests turn off the mouse so a stray pointer can't act.
 var input_locked := false
+## The story's Narrator speaks rarely in combat (crits, falls, kills, victory; plan §5.7); none in the arena.
+var narrator: Narrator = null
+var story: StoryState = null
 
 
 ## Starts showing `encounter` on `board_` with `rig_` and the creatures' `tokens_` (id -> CombatToken). Starts the
@@ -801,6 +804,8 @@ func _play_events() -> void:
 					await tw2.finished
 					if not bool(ev["hit"]):
 						_float(d, "miss", "parchment")
+					elif bool(ev.get("critical", false)):
+						_narrate("combat:crit", a.combatant, d.combatant)
 			"damage":
 				var t := tokens.get(str(ev["id"])) as CombatToken
 				if t != null:
@@ -817,6 +822,12 @@ func _play_events() -> void:
 				var tc := tokens.get(str(ev["id"])) as CombatToken
 				if tc != null:
 					tc.refresh()
+					if kind == "down" and tc.combatant.side == &"party":
+						_narrate("combat:fall", tc.combatant, null)
+					elif kind == "death" and tc.combatant.side == &"enemy":
+						_narrate("combat:kill", null, tc.combatant)
+					elif kind == "death" and tc.combatant.side == &"party":
+						_narrate("death:" + tc.combatant.id, tc.combatant, null)
 					if kind == "death_save":
 						_float(tc, "✓" if bool(ev["success"]) else "✗", "bile" if bool(ev["success"]) else "vampire_red")
 			"spell":
@@ -841,6 +852,17 @@ func _play_events() -> void:
 				_refresh_all()
 	_stop_walking(walking)
 	_refresh_all()
+
+
+## A Narrator line in the combat log (and briefly as a banner), if the story has one for this moment.
+func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
+	if narrator == null or story == null:
+		return
+	var who: Character = actor.creature as Character if actor != null and actor.creature is Character else null
+	var text := narrator.line(key, story, who, {"round": e.round_no, "target": target.name() if target != null else ""})
+	if text != "":
+		e.log.add("narr", text, "")
+		hud.refresh_log()
 
 
 func _stop_walking(walking: Dictionary) -> void:
