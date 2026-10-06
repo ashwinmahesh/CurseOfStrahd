@@ -66,8 +66,14 @@ func castable(c: Combatant) -> Array[Dictionary]:
 	for k in ch.known_spells():
 		var id := str(k["id"])
 		if seen.has(id):
+			# Prepared and granted both: the granted free casting isn't lost.
+			if str(k["kind"]) == "granted" and ch.resource_left("spell:%s" % id) > 0:
+				var prev := seen[id] as Dictionary
+				prev["free"] = true
+				if str(prev["reason"]).begins_with("No spell slots") or str(prev["reason"]).begins_with("Already cast a spell with a slot"):
+					prev["legal"] = true
+					prev["reason"] = ""
 			continue
-		seen[id] = true
 		var s := _comp().spell_data(id)
 		if s.is_empty():
 			continue
@@ -75,6 +81,9 @@ func castable(c: Combatant) -> Array[Dictionary]:
 		var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 		# Mage Hand Legerdemain (Arcane Trickster 3): Mage Hand as a Bonus Action.
 		if id == "mage_hand" and CombatFeatures.has_feature(c, "mage_hand_legerdemain"):
+			unit = "bonus_action"
+		# Spell Breaker (Abjurer 10): Dispel Magic as a Bonus Action.
+		if id == "dispel_magic" and CombatFeatures.has_feature(c, "spell_breaker"):
 			unit = "bonus_action"
 		# Pact of the Chain: Find Familiar as a Magic action without a slot.
 		var chain := id == "find_familiar" and ClassFeatures.knows_invocation(c, "pact_of_the_chain")
@@ -94,6 +103,7 @@ func castable(c: Combatant) -> Array[Dictionary]:
 			entry["legal"] = false
 			entry["reason"] = why
 		out.append(entry)
+		seen[id] = entry
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		return int(a["level"]) < int(b["level"]) or (int(a["level"]) == int(b["level"]) and str(a["name"]) < str(b["name"])))
 	return out
@@ -558,7 +568,9 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			specials.duel_check_attack(c, tt)
 	var nums := numbers(c, entry)
 	var conc: Concentration = null
-	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
+	# Fey Reinforcements (Fey Wanderer 11): Summon Fey without Concentration, lasting 1 minute.
+	var fey_free := spell_id == "summon_fey" and CombatFeatures.has_feature(c, "fey_reinforcements") and bool(opts.get("no_concentration", true))
+	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)) and not fey_free:
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
 		zones.prune()
 		_prune_sustained()
@@ -953,6 +965,17 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		_generic(ctx, tgt, cells, r)
 	if s.has("sustain"):
 		_grant_sustained(ctx, tgt)
+	# Eldritch Hex (Great Old One 10): the hexed creature also has Disadvantage on saves of the chosen ability.
+	if str(s["id"]) == "hex" and CombatFeatures.has_feature(c, "eldritch_hex") and not tgt.is_empty() and str(ctx.get("choice", "")) != "":
+		var eh := Effect.new("Eldritch Hex", &"spell", "hex").with_modifier("disadvantage", {"on": "save:%s" % ctx["choice"]})
+		eh.caster_id = c.id
+		eh.stack_key = "spell:hex:eldritch"
+		_set_duration(eh, ctx, tgt[0], "spell")
+		var hc := ctx["conc"] as Concentration
+		if hc != null:
+			hc.attach(tgt[0].creature, eh)
+		else:
+			tgt[0].creature.add_effect(eh)
 
 
 func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
@@ -2361,7 +2384,11 @@ func _dispel(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 			continue
 		if fx.spell_level > slot:
 			var test := c.creature.roll_check(e.dice, ab, 10 + fx.spell_level)
+			# Spell Breaker (Abjurer 10): Proficiency Bonus on the check.
+			if CombatFeatures.has_feature(c, "spell_breaker"):
+				test.add_bonus(c.creature.proficiency_bonus(), "Spell Breaker")
 			if not test.success:
+				ctx["dispel_failed"] = true
 				continue
 		t.creature.remove_effect(fx)
 		if fx.concentration != null and fx.concentration.source_id == fx.source_id:
@@ -2376,6 +2403,12 @@ func _dispel(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	zones.prune()
 	_prune_sustained()
 	r.lines.append(e.log.add("spell", "Dispel Magic on %s: %s" % [t.name(), ", ".join(ended) if not ended.is_empty() else "nothing to end"], c.id))
+	# Spell Breaker: a Dispel Magic that fails to end a spell gives the slot back.
+	if bool(ctx.get("dispel_failed", false)) and CombatFeatures.has_feature(c, "spell_breaker") and slot > 0 and c.creature is Character:
+		var cch := c.creature as Character
+		if cch.slots_used[slot - 1] > 0:
+			cch.slots_used[slot - 1] -= 1
+			e.log.add("info", "%s keeps the spell slot (Spell Breaker)" % c.name(), c.id)
 
 
 ## True Strike (2024): a weapon attack using the spellcasting ability for attack and damage, Radiant or the
@@ -3060,6 +3093,8 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		marker.on_end = func() -> void: _dismiss(sid)
 	if e.state == Encounter.State.ACTIVE:
 		e.insert_after(c, sc)
+	if conc == null and str(s["id"]) == "summon_fey":
+		sc.set_meta("vanish_round", e.round_no + 10)
 	e.events.append({"type": "summon_creature", "id": sc.id, "cell": cell, "caster": c.id})
 	r.lines.append(e.log.add("spell", "%s appears beside %s" % [m.name, c.name()], c.id))
 
@@ -3215,6 +3250,8 @@ func turn_start(c: Combatant) -> void:
 	var e := enc()
 	zones.turn_start(c)
 	specials.high.tick_suppressed(c.id, true)
+	if c.has_meta("vanish_round") and enc().round_no >= int(c.get_meta("vanish_round")):
+		_dismiss(c.id)
 	specials.high.caster_turn_start(c)
 	specials.high.creature_turn_start(c)
 	specials.mid.panic_turn(c)

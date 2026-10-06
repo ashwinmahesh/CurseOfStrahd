@@ -1967,6 +1967,12 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	var t := c.creature.roll_d20(dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
 		sit["disadvantage"] as Array[String], label, p.crit_range, attacked_dice(target))
 	target.creature.consume_attacked()
+	# Sundering Blow: the next attack by someone else against the creature gets +5.
+	for m: Dictionary in marks.duplicate():
+		if str(m["kind"]) == "attack_bonus_against" and str(m.get("target", "")) == target.id and str(m.get("not_by", "")) != c.id:
+			t.add_bonus(int(m.get("bonus", 5)), str(m.get("source", "")))
+			marks.erase(m)
+			break
 	if not option.get("melee", true) and c.creature is Character and not bool((st["opts"] as Dictionary).get("free_ammo", false)):
 		if str(option.get("kind", "")) == "thrown":
 			_spend_item(c, p.item_id)
@@ -2320,6 +2326,16 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	spells.on_damaged(source, target, dr.final, parts)
 	if dr.final > 0:
 		spells.specials.duel_check_damage(source, target)
+	# Thought Shield (Great Old One 10): Psychic damage dealt to the warlock hits its source too.
+	if source != null and source != target and dr.final > 0 and CombatFeatures.has_feature(target, "thought_shield") and not target.has_meta("reflecting"):
+		var psy := 0
+		for p: Variant in parts:
+			if str((p as Dictionary)["type"]) == "psychic":
+				psy += int((p as Dictionary)["amount"])
+		if psy > 0:
+			target.set_meta("reflecting", true)
+			deal_damage(target, source, [{"amount": mini(psy, dr.final), "type": "psychic"}], false, "Thought Shield")
+			target.remove_meta("reflecting")
 	if dr.final > 0 and target.is_alive():
 		monster_actions.loathsome_limbs(target, parts)
 	if target.is_down():
@@ -2385,6 +2401,10 @@ func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
 		return
 	if not target.creature is Character or target.creature.hp <= 0 or distance(target, source) > 60 or not can_see(target, source):
 		return
+	# Retaliation (Berserker 10): a melee attack back at a creature within 5 ft that hurt you.
+	if CombatFeatures.has_feature(target, "retaliation") and spells.can_react(target) and distance(target, source) <= 5 and not best_melee_option(target, source).is_empty():
+		reaction_queue.append({"kind": "retaliation", "reactor": target.id, "trigger": source.id})
+		return
 	var cfr := class_features.damage_reaction(source, target)
 	if not cfr.is_empty():
 		reaction_queue.append(cfr)
@@ -2423,6 +2443,8 @@ func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 			return spells.can_react(reactor) and reactor.creature.has_flag("fount_of_moonlight")
 		"misty_escape":
 			return spells.can_react(reactor) and reactor.creature.hp > 0
+		"retaliation":
+			return spells.can_react(reactor) and reactor.creature.hp > 0 and get_c(str(q["trigger"])) != null and distance(reactor, get_c(str(q["trigger"]))) <= 5
 	return false
 
 
@@ -2442,6 +2464,8 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 			return _opportunity_attack(reactor, trigger)
 		"misty_escape":
 			return class_features.misty_escape(reactor, trigger)
+		"retaliation":
+			return _opportunity_attack(reactor, trigger)
 		"fount_of_moonlight":
 			reactor.reaction_available = false
 			var dc := (spells.numbers(reactor, spells._entry_any(reactor, "fount_of_moonlight"))["dc"] as Breakdown).total()
@@ -2477,6 +2501,7 @@ const _QUEUED_TEXT := {
 	"hellish_rebuke": ["Reaction: Hellish Rebuke?", "%s hurt %s. Answer with Hellish Rebuke: a Dex save or Fire damage.", "Reaction and a spell slot"],
 	"storms_thunder": ["Reaction: Storm's Thunder?", "%s hurt %s. Answer with 1d8 Thunder damage.", "Reaction and a use of Giant Ancestry"],
 	"sentinel": ["Reaction: Sentinel?", "%s attacks someone beside %s. Make an Opportunity Attack against it?", "Reaction"],
+	"retaliation": ["Reaction: Retaliation?", "%s hurt %s. Strike back with a melee attack?", "Reaction"],
 	"misty_escape": ["Reaction: Misty Escape?", "%s hurt %s. Vanish with Misty Step (Steps of the Fey or a slot)?", "Reaction and a use of Steps of the Fey"],
 	"fount_of_moonlight": ["Reaction: Fount of Moonlight?", "%s hurt %s. Flare moonlight at it: a Constitution save or Blinded?", "Reaction"],
 	"berserk_lashing": ["Reaction: Berserk Lashing?", "%s hurt %s. Lash out with a Slam at a random creature within 5 ft?", "Reaction"],

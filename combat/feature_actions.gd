@@ -940,6 +940,8 @@ func on_zero(c: Combatant) -> bool:
 		return false
 	var ch := c.creature as Character
 	var e := enc()
+	if e.class_features.relentless_rage(c):
+		return true
 	if c.creature.has_flag("relentless_endurance") and ch.resource_left("relentless_endurance") > 0:
 		ch.spend_resource("relentless_endurance")
 		_back_up(c, 1)
