@@ -513,13 +513,14 @@ func walk_to(cell: Vector2i, then: Callable = Callable()) -> bool:
 	return true
 
 
-func _path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
+func _path(from: Vector2i, to: Vector2i, around_traps: bool = true) -> Array[Vector2i]:
 	var avoid := {}
-	for t: Variant in loc.get("traps", []):
-		var trap := t as Dictionary
-		if str((st.loc_state(loc_id)["traps"] as Dictionary).get(str(trap["id"]), "")) == "found":
-			for c: Variant in trap["cells"]:
-				avoid[_cell(c)] = true
+	if around_traps:
+		for t: Variant in loc.get("traps", []):
+			var trap := t as Dictionary
+			if str((st.loc_state(loc_id)["traps"] as Dictionary).get(str(trap["id"]), "")) == "found":
+				for c: Variant in trap["cells"]:
+					avoid[_cell(c)] = true
 	avoid.erase(to)
 	# Closed doors that would open at a touch are part of the way: the party opens them as it reaches them.
 	var doors := _openable_doors()
@@ -537,7 +538,12 @@ func _path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 		grid.set_flag(c, CombatGrid.WALL, true)
 	if low_exit:
 		grid.set_flag(to, CombatGrid.LOW, true)
-	return CombatGrid.path_to(reach, to)
+	var way := CombatGrid.path_to(reach, to)
+	# A found trap that fills the only way (a corridor) is crossed rather than leaving the party stuck; stepping
+	# on it springs it as usual unless it's disarmed first.
+	if way.is_empty() and around_traps and not avoid.is_empty():
+		return _path(from, to, false)
+	return way
 
 
 func _exit_at(cell: Vector2i) -> bool:

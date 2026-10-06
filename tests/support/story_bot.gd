@@ -323,10 +323,17 @@ func _go_by_map(location_id: String) -> bool:
 	note("setting out for %s" % target)
 	if not await walk_to(_cell(out_exit["cell"])):
 		return false
-	for i in 60:
+	# Someone may have called out as the party reached the road (a conversation swallows the map); stepping on the
+	# way out again sets out, as a player would click it again.
+	for attempt in 3:
+		for i in 60:
+			if root.get("screen") is TravelScreen:
+				break
+			await frames(1)
 		if root.get("screen") is TravelScreen:
 			break
-		await frames(1)
+		await settle()
+		view().click(_cell(out_exit["cell"]))
 	var map := root.get("screen") as TravelScreen
 	if map == null:
 		note("the map didn't open")

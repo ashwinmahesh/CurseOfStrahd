@@ -10,8 +10,9 @@ signal attack_finished
 
 ## Order matches the rows the Blender script renders.
 const DIRECTIONS: Array[String] = ["s", "se", "e", "ne", "n", "nw", "w", "sw"]
-## One walk cycle (two steps) covers this many squares, so feet don't skate whatever the step time.
-const CELLS_PER_CYCLE := 3.0
+## One walk cycle (two steps) covers this many squares, so feet don't skate whatever the step time. Four squares give a
+## natural cadence (owner 2026-10-06: three read too fast): about 0.7 s a cycle in exploration, 1 s in combat.
+const CELLS_PER_CYCLE := 4.0
 
 var facing := Vector3.BACK
 var moving := false

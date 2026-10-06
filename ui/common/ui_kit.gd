@@ -245,7 +245,7 @@ static func install_theme() -> void:
 	t.set_color("default_color", "RichTextLabel", Look.color("vellum"))
 	t.set_stylebox("panel", "PanelContainer", style("ui_black", "gilt_dark"))
 	t.set_stylebox("panel", "Panel", style("ui_black", "gilt_dark"))
-	var tip := style("ui_black", "gilt", 1, 0.97)
+	var tip := style("ui_black", "gilt", 1, 1.0)
 	tip.set_content_margin_all(8)
 	t.set_stylebox("panel", "TooltipPanel", tip)
 	t.set_color("font_color", "TooltipLabel", Look.color("vellum"))
@@ -311,11 +311,27 @@ static func install_theme() -> void:
 	t.set_stylebox("slider", "HSlider", groove)
 	t.set_stylebox("grabber_area", "HSlider", filled)
 	t.set_stylebox("grabber_area_highlight", "HSlider", filled)
+	t.set_icon("grabber", "HSlider", _lozenge(18, Look.color("gilt")))
+	t.set_icon("grabber_highlight", "HSlider", _lozenge(18, Look.color("gilt_light")))
 	var rule := StyleBoxLine.new()
 	rule.color = Look.color("gilt_dark")
 	rule.thickness = 1
 	t.set_stylebox("separator", "HSeparator", rule)
 	ThemeDB.get_default_theme().merge_with(t)
+
+
+## A small gilt lozenge with a dark edge, drawn once, for slider grabbers.
+static func _lozenge(side: int, colour: Color) -> ImageTexture:
+	var img := Image.create(side, side, false, Image.FORMAT_RGBA8)
+	var c := (side - 1) / 2.0
+	for y in side:
+		for x in side:
+			var d := absf(x - c) + absf(y - c)
+			if d <= c - 1.5:
+				img.set_pixel(x, y, colour)
+			elif d <= c:
+				img.set_pixel(x, y, Look.color("void"))
+	return ImageTexture.create_from_image(img)
 
 
 ## A value whose tooltip is its Breakdown ("AC 17 = Chain Mail 16 + Defense 1").

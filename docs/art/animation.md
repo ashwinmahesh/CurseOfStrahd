@@ -67,4 +67,5 @@ of the reference (arms barely move). 21:9 leaves room for a swung weapon.
 `DirectionalSprite.frames_for(id)` merges `attack.tres` into the walk frames. `CombatToken.start_attack(dir)` plays
 it facing the target, `wait_for_strike()` waits for the hit frame, and the combat view shows the hit or miss then,
 with a short step toward the target. Without an attack sheet the old lunge plays. Walking is paced to the step time
-(`set_step_time`): one cycle covers three squares in exploration and combat alike.
+(`set_step_time`): one cycle covers four squares in exploration and combat alike (about 0.7 s a cycle exploring,
+1 s in combat, where tokens move at half the exploration speed).

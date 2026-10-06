@@ -1,0 +1,175 @@
+extends Node
+## Every party screen for captures: the four pregens at level 5 with some wear on them (a Bloodied cleric, a spent
+## Second Wind and spell slot, Shield of Faith, Poisoned), then the sheet's tabs, party, inventory, level up, rests,
+## spell preparation, journal, loot, shop, pause menu and character creation, one shot each, plus sample tooltips and
+## the sheet for a level 7 warlock, monk and druid.
+## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
+
+const PARTY: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
+## [character index, tab]
+const SHEET_SHOTS := [[2, "Actions"], [0, "Actions"], [2, "Spells"], [3, "Spells"], [1, "Features"], [0, "Equipment"],
+	[0, "Effects"], [3, "Notes"]]
+
+var root: Node
+var _only: Array[String] = []
+
+
+func _ready() -> void:
+	for s in OS.get_environment("UI_ONLY").split(",", false):
+		_only.append(s.strip_edges())
+	Compendium.shared().tables["locations"]["sheet_hall"] = {"id": "sheet_hall", "name": "Sheet Hall", "region": "test",
+		"summary": "", "map": {"rows": ["#####", "#...#", "#...#", "#####"]}, "spawns": {"default": [1, 1]}, "rest": "safe"}
+	GameState.reset()
+	for id in PARTY:
+		var ch := Pregens.build(id, 5)
+		ch.finish_long_rest()
+		GameState.story.party.append(ch)
+	GameState.story.location = "sheet_hall"
+	GameState.story.gold = 42.0
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+
+
+func _wants(what: String) -> bool:
+	return _only.is_empty() or what in _only
+
+
+func _shoot(tool: Node, path: String) -> void:
+	await tool.call("wait_frames", 8)
+	tool.call("_shot", path)
+
+
+func capture_shots(tool: Node, out: String) -> void:
+	var party := GameState.story.party
+	var ilse := party[0]
+	var hedda := party[2]
+	var silvain := party[3]
+	hedda.hp = int(hedda.max_hp() / 2.0) - 3
+	ilse.spend_resource("second_wind")
+	ilse.add_temp_hp(5, "Capture")
+	var me: Array[Character] = [ilse]
+	FieldCasting.cast(party, hedda, "shield_of_faith", 1, me, DiceRoller.new(3))
+	silvain.expend_slot(1)
+	silvain.add_condition(&"poisoned", "Ghoul claws")
+	silvain.build["notes"] = "Ireena trusts Ismark, not us. The burgomaster's letter was signed in a hand Silvain didn't know."
+	var st := GameState.story
+	st.set_quest_stage("death_house", "plea")
+	st.set_quest_stage("death_house", "secret_stair")
+	st.set_quest_stage("escort_ireena", str(((Compendium.shared().get_entry("quests", "escort_ireena")["stages"] as Array)[0] as Dictionary)["id"]))
+	if st.codex.is_empty():
+		for loc in Compendium.shared().all("locations"):
+			for p: Variant in loc.get("props", []):
+				if str((p as Dictionary).get("kind", "")) == "book" and st.codex.size() < 2:
+					st.codex.append(str((p as Dictionary).get("codex", (p as Dictionary)["id"])))
+	if _wants("sheet"):
+		var n := 1
+		for s: Variant in SHEET_SHOTS:
+			var shot := s as Array
+			root.call("open_screen", "sheet", int(shot[0]))
+			(root.get("screen") as CharacterSheetScreen).show_tab(str(shot[1]))
+			await _shoot(tool, "%s_sheet_%d_%s_%s.png" % [out, n, party[int(shot[0])].name.get_slice(" ", 0).to_lower(), str(shot[1]).to_lower()])
+			n += 1
+		root.call("close_screen")
+	if _wants("tooltips"):
+		await _tooltips(tool, out)
+	for kind: String in ["party", "inventory", "journal", "rest", "menu"]:
+		if _wants(kind):
+			root.call("open_screen", kind, 0)
+			if kind == "inventory":
+				(root.get("screen") as InventoryScreen).selected = "greatsword"
+				root.get("screen").call("_draw")
+			await _shoot(tool, "%s_%s.png" % [out, kind])
+			root.call("close_screen")
+	if _wants("prepare"):
+		var ps := PrepareScreen.new()
+		add_child(ps)
+		ps.open(root, GameState.story, 0)
+		await _shoot(tool, "%s_prepare.png" % out)
+		ps.queue_free()
+	if _wants("level_up"):
+		GameState.story.milestones = 10
+		root.call("open_screen", "level_up", 2)
+		await _shoot(tool, "%s_level_up.png" % out)
+		root.call("close_screen")
+	if _wants("loot"):
+		var lw := LootWindow.new()
+		add_child(lw)
+		lw.show_loot(GameState.story, "chest", [{"id": "potion_of_healing", "qty": 2}, {"id": "dagger", "qty": 1},
+			{"id": "rope", "qty": 1}, {"id": "torch", "qty": 5}], 25.0, null)
+		await _shoot(tool, "%s_loot.png" % out)
+		lw.queue_free()
+	if _wants("shop"):
+		root.call("open_shop", "blinsky")
+		await _shoot(tool, "%s_shop.png" % out)
+		for c in root.get_children():
+			if c is ShopScreen:
+				c.queue_free()
+	if _wants("creation"):
+		var cs := CreationScreen.new()
+		add_child(cs)
+		var starting: Array[Dictionary] = []
+		for ch in party:
+			starting.append(ch.build.duplicate(true))
+		cs.open_with(starting)
+		for step: int in [0, 2, 3, 6, 7]:
+			cs.step = step
+			cs.call("_draw")
+			await _shoot(tool, "%s_creation_%d.png" % [out, step])
+		cs.queue_free()
+	if _wants("classes"):
+		# Level 7 in other classes: Pact Magic, Focus Points, a druid's long feature list.
+		for extra: Array in [["warlock", "Actions"], ["warlock", "Spells"], ["monk", "Actions"], ["druid", "Features"]]:
+			party[1] = TestChars.custom(str(extra[0]), "human", 7)
+			root.call("open_screen", "sheet", 1)
+			(root.get("screen") as CharacterSheetScreen).show_tab(str(extra[1]))
+			await _shoot(tool, "%s_sheet_%s_%s.png" % [out, extra[0], str(extra[1]).to_lower()])
+		root.call("close_screen")
+	if _wants("dialogue"):
+		# A conversation with many options (Doru's has seven or more): the box grows upward and scrolls past 45%.
+		for n_opts: int in [8, 16]:
+			var d := DialogueUI.new()
+			add_child(d)
+			await tool.call("wait_frames", 2)
+			(d.get("_name") as Label).text = "Doru"
+			(d.get("_text") as RichTextLabel).text = ("The boy in the cellar presses his face to the bars. \"Please. I'm so hungry. Let me out, and I'll tell you anything.\"")
+			var opts: Array = []
+			for i in n_opts:
+				var check := {} if i % 3 != 1 else {"who": "Hedda Ironvow", "bonus": 5, "chance": 0.65}
+				opts.append({"text": "Option %d: %s" % [i + 1, ["Ask about his father.", "Persuade him to wait for the priest.", "Ask what he's eaten.", "Say nothing and back away slowly from the bars.", "Insight: is he lying?"][i % 5]],
+					"label": "[Insight]" if i % 3 == 1 else "", "check": check, "enabled": i != 5, "reason": "Needs a holy symbol"})
+			d.call("_show_options", opts)
+			await _shoot(tool, "%s_dialogue_%d_options.png" % [out, n_opts])
+			d.queue_free()
+			await tool.call("wait_frames", 2)
+	# Last: the Long Rest fades to black for a while.
+	if _wants("rest"):
+		root.call("open_screen", "rest", 0)
+		(root.get("screen") as RestScreen).call("_finish_short")
+		(root.get("screen") as RestScreen).call("_long_rest", "safe")
+		await _shoot(tool, "%s_rest_after.png" % out)
+		root.call("close_screen")
+
+
+## Tooltips as the engine shows them (the theme's tooltip panel around each custom tooltip), over the sheet.
+func _tooltips(tool: Node, out: String) -> void:
+	var hedda := GameState.story.party[2]
+	root.call("open_screen", "sheet", 2)
+	var tips := CanvasLayer.new()
+	tips.layer = 100
+	add_child(tips)
+	var spell := Compendium.shared().spell_data("spirit_guardians")
+	var samples: Array[Control] = [UiParts.breakdown_tip(hedda.armor_class(), "Armor Class"),
+		UiParts.breakdown_tip(hedda.skill_bonus(&"religion"), "Religion", hedda.skill_bonus(&"religion").signed(), "Proficient."),
+		UiParts.rules_tip(str(spell["name"]), "Level 3 Conjuration", str(spell.get("text", spell["summary"])),
+			[["Casting time", "Action"], ["Range", "Self"], ["Duration", "Concentration, up to 10 minutes"]])]
+	var x := 60.0
+	for t in samples:
+		var p := PanelContainer.new()
+		p.add_theme_stylebox_override("panel", ThemeDB.get_default_theme().get_stylebox("panel", "TooltipPanel"))
+		p.add_child(t)
+		p.position = Vector2(x, 330)
+		tips.add_child(p)
+		x += 470.0 if t != samples[0] else 330.0
+	await _shoot(tool, "%s_tooltips.png" % out)
+	tips.queue_free()
+	root.call("close_screen")

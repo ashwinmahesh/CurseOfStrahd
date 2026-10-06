@@ -46,10 +46,10 @@ func _build_tips(sheet: CharacterSheetScreen, where: String) -> int:
 	var n := 0
 	for node in sheet.find_children("*", "", true, false):
 		var tip: Callable
-		if node is SheetParts.Tipped:
-			tip = (node as SheetParts.Tipped).tip
-		elif node is SheetParts.Drawn:
-			tip = (node as SheetParts.Drawn).tip
+		if node is UiParts.Tipped:
+			tip = (node as UiParts.Tipped).tip
+		elif node is UiParts.Drawn:
+			tip = (node as UiParts.Drawn).tip
 		if not tip.is_valid():
 			continue
 		var c := tip.call() as Control
