@@ -6,7 +6,7 @@ BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
 G       := $(GODOT) --path .
 LOGCHK  := tools/logcheck.sh
 
-.PHONY: run import test lint validate ci palette capture standin sprite
+.PHONY: run import test lint validate ci palette capture standin sprite wireframes
 
 run:
 	$(G)
@@ -41,3 +41,7 @@ standin:
 ## Turnaround sheet (3 or 5 views) -> cutout rig -> 8-direction walk: make sprite TURNAROUND=<png> ID=<id>
 sprite:
 	$(BLENDER) -b --python blender/render_walk.py -- --turnaround $(abspath $(TURNAROUND)) --id $(ID) $(if $(SIDE),--side-faces $(SIDE),)
+
+## UI flow wireframes (docs/ui/wireframes/*.svg) from tools/ui/wireframes.py.
+wireframes:
+	python3 tools/ui/wireframes.py

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Party · Formation and rests</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Party · Formation and rests</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Marching order and rests</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Order matters for traps and surprise. The leader walks first.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Close</text>
+<rect x="24" y="90" width="560" height="720" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="40" y="118" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">MARCHING ORDER &amp; FORMATION</text>
+<line x1="36" y1="130" x2="572" y2="130" stroke="#3a2a44" stroke-width="1"/>
+<rect x="44" y="136" width="520" height="56" rx="4" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="60" y="160" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">1  Ilse (leader ★)</text>
+<text x="60" y="182" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Passive Perception 12</text>
+<rect x="44" y="206" width="520" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="230" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">2  Tamsin</text>
+<text x="60" y="252" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Passive Perception 12 · Stealth +8</text>
+<rect x="44" y="276" width="520" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="300" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">3  Hedda</text>
+<text x="60" y="322" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Darkvision 120 ft</text>
+<rect x="44" y="346" width="520" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="370" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">4  Silvain</text>
+<text x="60" y="392" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Darkvision 60 ft</text>
+<rect x="44" y="416" width="520" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="440" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Guest  Ireena</text>
+<text x="60" y="462" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">follows Hedda</text>
+<text x="44" y="540" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#c495cf" font-weight="normal" text-anchor="start">Formation</text>
+<rect x="44" y="556" width="120" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="104.0" y="579.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Column</text>
+<rect x="176" y="556" width="120" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="236.0" y="579.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Pairs</text>
+<rect x="308" y="556" width="120" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="368.0" y="579.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Wedge</text>
+<rect x="440" y="556" width="120" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="500.0" y="579.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Spread</text>
+<circle cx="53" cy="635" r="9" fill="#f2a93b"/>
+<text x="53" y="640" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="bold" text-anchor="middle">~</text>
+<text x="70" y="640" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#f2a93b" font-weight="normal" text-anchor="start">Silvain at the back has the best passive Perception (14):</text>
+<text x="70" y="660" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#f2a93b" font-weight="normal" text-anchor="start">traps are spotted by the front rank. Swap?</text>
+<circle cx="564" cy="110" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="564" y="115" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="600" y="90" width="480" height="720" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="616" y="118" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">SHORT REST (1 hour)</text>
+<line x1="612" y1="130" x2="1068" y2="130" stroke="#3a2a44" stroke-width="1"/>
+<rect x="620" y="136" width="440" height="110" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="636" y="160" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Ilse   40/44</text>
+<text x="636" y="182" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">HD 4/4 d10</text>
+<text x="636" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#c9dfe8" font-weight="normal" text-anchor="start">Back on finishing: Second Wind +1, Action Surge ✓</text>
+<rect x="620" y="260" width="440" height="110" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="636" y="284" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Tamsin   18/32</text>
+<text x="636" y="306" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">HD 2/4 d8</text>
+<text x="636" y="328" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#c9dfe8" font-weight="normal" text-anchor="start">Back on finishing: —</text>
+<rect x="900" y="274" width="140" height="34" rx="5" fill="#d9731e" stroke="#fbe08a" stroke-width="4"/>
+<text x="970.0" y="296.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Spend d8 ⚄</text>
+<text x="886" y="297.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#fbe08a" font-weight="bold" text-anchor="start">▸</text>
+<text x="900" y="330" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#fbe08a" font-weight="normal" text-anchor="start">rolled 5 + Con 2 = +7</text>
+<rect x="620" y="384" width="440" height="110" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="636" y="408" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Hedda   35/35</text>
+<text x="636" y="430" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">HD 4/4 d8</text>
+<text x="636" y="452" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#c9dfe8" font-weight="normal" text-anchor="start">Back on finishing: Channel Divinity +1</text>
+<rect x="620" y="508" width="440" height="110" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="636" y="532" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Silvain   26/26</text>
+<text x="636" y="554" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">HD 4/4 d6</text>
+<text x="636" y="576" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#c9dfe8" font-weight="normal" text-anchor="start">Back on finishing: Arcane Recovery: 2 slot levels</text>
+<circle cx="1060" cy="110" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1060" y="115" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">2</text>
+<rect x="1096" y="90" width="480" height="720" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1112" y="118" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">LONG REST (8 hours, camp)</text>
+<line x1="1108" y1="130" x2="1564" y2="130" stroke="#3a2a44" stroke-width="1"/>
+<text x="1116" y="156" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Risk of interruption tonight: High</text>
+<text x="1116" y="184" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">(Svalich Woods at night, wolves heard)</text>
+<text x="1116" y="212" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start"></text>
+<text x="1116" y="240" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Watches: Ilse ▸ Tamsin ▸ Hedda ▸ Silvain</text>
+<text x="1116" y="268" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start"></text>
+<text x="1116" y="296" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">On finishing:</text>
+<text x="1116" y="324" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">• All HP and Hit Point Dice back</text>
+<text x="1116" y="352" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">• Spell slots and features refresh</text>
+<text x="1116" y="380" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">• Exhaustion −1 (Silvain)</text>
+<text x="1116" y="408" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">• Then: prepare spells ▸</text>
+<rect x="1116" y="720" width="200" height="40" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1216.0" y="745.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Make camp</text>
+</svg>

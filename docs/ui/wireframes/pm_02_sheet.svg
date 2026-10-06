@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Party · Character sheet</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Party · Character sheet</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Character sheet: Hedda Ironvow</text>
+<rect x="360" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="372" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">1  Ilse</text>
+<rect x="538" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="550" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  Tamsin</text>
+<rect x="716" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="728" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">3  Hedda</text>
+<rect x="894" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="906" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">4  Silvain</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">LB / RB switch tabs · LT / RT switch character.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Close</text>
+<rect x="24" y="80" width="102" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="75.0" y="106" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="middle">Overview</text>
+<rect x="134" y="80" width="192" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="230.0" y="106" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="middle">Abilities &amp; Skills</text>
+<rect x="334" y="80" width="183" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="425.5" y="106" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="middle">Features &amp; Traits</text>
+<rect x="525" y="80" width="84" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="567.0" y="106" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="middle">Spells</text>
+<rect x="617" y="80" width="111" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="672.5" y="106" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="middle">Inventory</text>
+<rect x="736" y="80" width="156" height="40" rx="4" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="814.0" y="106" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="middle">Active Effects</text>
+<rect x="900" y="80" width="75" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="937.5" y="106" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="middle">Notes</text>
+<rect x="24" y="136" width="1000" height="674" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="40" y="164" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">ACTIVE EFFECTS (every condition, spell and item, with its source)</text>
+<line x1="36" y1="176" x2="1012" y2="176" stroke="#3a2a44" stroke-width="1"/>
+<text x="44" y="190" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="start"></text>
+<rect x="40" y="180" width="968" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Bless</text>
+<text x="56" y="228" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">+1d4 to attack rolls and saves</text>
+<text x="600" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Hedda (Concentration)</text>
+<text x="992" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#fbe08a" font-weight="normal" text-anchor="end">8 rounds</text>
+<rect x="40" y="256" width="968" height="64" rx="4" fill="#3b3b45" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="280" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="bold" text-anchor="start">Shield of Faith</text>
+<text x="56" y="304" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">ended: Concentration moved to Bless</text>
+<text x="600" y="280" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">—</text>
+<text x="992" y="280" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#fbe08a" font-weight="normal" text-anchor="end">—</text>
+<rect x="40" y="332" width="968" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="356" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Dwarven Resilience</text>
+<text x="56" y="380" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Resistance to Poison; Advantage vs Poisoned</text>
+<text x="600" y="356" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Species: Dwarf</text>
+<text x="992" y="356" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#fbe08a" font-weight="normal" text-anchor="end">always</text>
+<rect x="40" y="408" width="968" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="432" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Exhaustion 1</text>
+<text x="56" y="456" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">D20 Tests −2, Speed −5 ft</text>
+<text x="600" y="432" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Forced march</text>
+<text x="992" y="432" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#fbe08a" font-weight="normal" text-anchor="end">until a Long Rest</text>
+<rect x="40" y="484" width="968" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="508" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Strahd&#x27;s charm (lingering)</text>
+<text x="56" y="532" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Disadvantage on saves against Strahd</text>
+<text x="600" y="508" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Story</text>
+<text x="992" y="508" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#fbe08a" font-weight="normal" text-anchor="end">until broken</text>
+<circle cx="1004" cy="156" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1004" y="161" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="1040" y="136" width="536" height="674" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1056" y="164" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">OVERVIEW (other tab) · numbers explain on focus</text>
+<line x1="1052" y1="176" x2="1564" y2="176" stroke="#3a2a44" stroke-width="1"/>
+<text x="1060" y="206" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">AC 14   HP 35/35   Speed 30 ft   Init −1</text>
+<text x="1060" y="236" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Spell save DC 14 · Spell attack +6</text>
+<text x="1060" y="266" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Slots: L1 ●●●● · L2 ●●●</text>
+<text x="1060" y="296" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Channel Divinity ●● (one back on a Short Rest)</text>
+<text x="1060" y="326" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Prepared 7 + domain 4 (★)</text>
+<rect x="1064" y="384" width="496" height="109" rx="6" fill="#0d0a12" opacity="0.6"/>
+<rect x="1060" y="380" width="496" height="109" rx="6" fill="#f4ecd6" stroke="#8e7a62" stroke-width="2"/>
+<text x="1074" y="406" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="start">Spell save DC 14</text>
+<text x="1074" y="430" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Base 8</text>
+<text x="1074" y="451" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Wisdom modifier +4</text>
+<text x="1074" y="472" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Proficiency Bonus +2</text>
+<rect x="1064" y="544" width="496" height="130" rx="6" fill="#0d0a12" opacity="0.6"/>
+<rect x="1060" y="540" width="496" height="130" rx="6" fill="#f4ecd6" stroke="#8e7a62" stroke-width="2"/>
+<text x="1074" y="566" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="start">Hit Points 35</text>
+<text x="1074" y="590" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Level 1: Cleric d8 maximum 8</text>
+<text x="1074" y="611" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">3 levels at the fixed value 15</text>
+<text x="1074" y="632" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Con modifier +2 × 4 levels 8</text>
+<text x="1074" y="653" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Dwarven Toughness +4</text>
+</svg>

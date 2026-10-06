@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Character Creation · Spell browser (Wizard)</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Character Creation · Spell browser (Wizard)</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Silvain · step 5 of 9</text>
+<rect x="546" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="558" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">1  Ilse</text>
+<text x="696" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#a9c450" font-weight="normal" text-anchor="end">✓</text>
+<rect x="724" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="736" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  Tamsin</text>
+<text x="874" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#a9c450" font-weight="normal" text-anchor="end">✓</text>
+<rect x="902" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="914" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Hedda</text>
+<text x="1052" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#a9c450" font-weight="normal" text-anchor="end">✓</text>
+<rect x="1080" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="1092" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">4  Silvain</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Spellbook 4 of 6 · Prepared 2 of 4. Unavailable spells show why.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Next ▸</text>
+<text x="28" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#f4ecd6" font-weight="bold" text-anchor="start">Class Choices: spells</text>
+<rect x="24" y="130" width="220" height="600" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="40" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">STEPS</text>
+<line x1="36" y1="170" x2="232" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<text x="46" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Start</text>
+<text x="46" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Class</text>
+<text x="46" y="296" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="296" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Origin</text>
+<text x="46" y="342" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="342" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Ability Scores</text>
+<rect x="32" y="366" width="204" height="32" rx="4" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="46" y="388" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#d6283a" font-weight="bold" text-anchor="start">!</text>
+<text x="68" y="388" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Class Choices</text>
+<text x="46" y="434" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8a8a96" font-weight="bold" text-anchor="start">·</text>
+<text x="68" y="434" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Equipment</text>
+<text x="46" y="480" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8a8a96" font-weight="bold" text-anchor="start">·</text>
+<text x="68" y="480" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Appearance</text>
+<text x="46" y="526" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8a8a96" font-weight="bold" text-anchor="start">·</text>
+<text x="68" y="526" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Identity</text>
+<text x="46" y="572" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8a8a96" font-weight="bold" text-anchor="start">·</text>
+<text x="68" y="572" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Review</text>
+<rect x="268" y="130" width="520" height="680" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="284" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">WIZARD SPELLS</text>
+<line x1="280" y1="170" x2="776" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<rect x="284" y="182" width="78.8" height="24" rx="12" fill="#d9731e"/>
+<text x="323.4" y="199" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#1a1220" font-weight="normal" text-anchor="middle">Level 1 ▾</text>
+<rect x="380" y="182" width="107.60000000000001" height="24" rx="12" fill="#3a2a44"/>
+<text x="433.8" y="199" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">School: any ▾</text>
+<rect x="495.6" y="182" width="107.60000000000001" height="24" rx="12" fill="#3a2a44"/>
+<text x="549.4" y="199" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Concentration</text>
+<rect x="611.2" y="182" width="57.2" height="24" rx="12" fill="#3a2a44"/>
+<text x="639.8000000000001" y="199" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Ritual</text>
+<rect x="284" y="216" width="114.8" height="24" rx="12" fill="#3a2a44"/>
+<text x="341.4" y="233" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Damage: Fire ▾</text>
+<rect x="420" y="214" width="352" height="28" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="432" y="233" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#8a8a96" font-weight="normal" text-anchor="start">🔍 search</text>
+<circle cx="776" cy="196" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="776" y="201" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="284" y="260" width="488" height="38" rx="4" fill="#1a1220" stroke="#d9731e" stroke-width="2"/>
+<text x="298" y="282" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">☑ Magic Missile</text>
+<text x="540" y="282" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Evocation</text>
+<text x="760" y="282" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#fbe08a" font-weight="normal" text-anchor="end">★ prepared</text>
+<rect x="284" y="308" width="488" height="38" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="298" y="330" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">☑ Shield</text>
+<text x="540" y="330" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Abjuration · Reaction</text>
+<text x="760" y="330" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#fbe08a" font-weight="normal" text-anchor="end">★ prepared</text>
+<rect x="284" y="356" width="488" height="38" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="298" y="378" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">☑ Burning Hands</text>
+<text x="540" y="378" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Evocation · 15 ft cone</text>
+<rect x="284" y="404" width="488" height="38" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="298" y="426" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">☑ Mage Armor</text>
+<text x="540" y="426" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Abjuration</text>
+<rect x="284" y="452" width="488" height="38" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="298" y="474" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">☐ Sleep</text>
+<text x="540" y="474" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Enchantment · C</text>
+<rect x="284" y="500" width="488" height="38" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="298" y="522" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">☐ Detect Magic</text>
+<text x="540" y="522" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Divination · C, R</text>
+<rect x="284" y="548" width="488" height="52" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="298" y="570" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">☐ Find Familiar</text>
+<text x="540" y="570" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Conjuration · R</text>
+<text x="320" y="590" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#f2a93b" font-weight="normal" text-anchor="start">~ You already have it from Magic Initiate</text>
+<rect x="284" y="608" width="488" height="52" rx="4" fill="#3b3b45" stroke="#3a2a44" stroke-width="1"/>
+<text x="298" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#8a8a96" font-weight="bold" text-anchor="start">☐ Fireball</text>
+<text x="540" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Evocation · level 3</text>
+<text x="320" y="650" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e8606a" font-weight="normal" text-anchor="start">⊘ Needs level 3 spell slots</text>
+<circle cx="776" cy="640" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="776" y="645" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">2</text>
+<rect x="800" y="130" width="308" height="680" rx="6" fill="#e6d6b0" stroke="#8e7a62" stroke-width="2"/>
+<text x="818" y="162" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#1a1220" font-weight="bold" text-anchor="start">Magic Missile</text>
+<text x="818" y="186" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Level 1 Evocation · Wizard, Sorcerer</text>
+<text x="818" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Action · 120 ft · V, S · Instant</text>
+<text x="818" y="246" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start">Three darts of force each hit a</text>
+<text x="818" y="264" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start">creature you can see: 1d4 + 1</text>
+<text x="818" y="282" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start">Force damage each. Darts can hit</text>
+<text x="818" y="300" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start">the same or different targets.</text>
+<text x="818" y="318" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start"></text>
+<text x="818" y="336" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start">Higher slot: one more dart per</text>
+<text x="818" y="354" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start">level above 1.</text>
+<text x="818" y="372" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start"></text>
+<text x="818" y="390" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start">With you: 3 × (1d4+1) Force,</text>
+<text x="818" y="408" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="normal" text-anchor="start">always hits.</text>
+<rect x="818" y="740" width="272" height="40" rx="5" fill="#d9731e" stroke="#fbe08a" stroke-width="4"/>
+<text x="954.0" y="765.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Prepare ★</text>
+<text x="804" y="766.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#fbe08a" font-weight="bold" text-anchor="start">▸</text>
+<circle cx="1090" cy="150" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1090" y="155" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">3</text>
+<rect x="1124" y="130" width="452" height="680" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1140" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">LIVE SHEET</text>
+<line x1="1136" y1="170" x2="1564" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<text x="1140" y="196" font-family="Georgia, 'Times New Roman', serif" font-size="18" fill="#f4ecd6" font-weight="bold" text-anchor="start">Silvain</text>
+<text x="1140" y="216" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">High Elf Wizard 1 · Sage</text>
+<text x="1140" y="246" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Int</text>
+<text x="1560" y="246" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">17 (+3)</text>
+<text x="1140" y="270" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Spell save DC</text>
+<text x="1560" y="270" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">13</text>
+<text x="1140" y="294" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Spell attack</text>
+<text x="1560" y="294" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">+5</text>
+<text x="1140" y="318" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Slots</text>
+<text x="1560" y="318" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">L1 × 2</text>
+<text x="1140" y="342" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Cantrips</text>
+<text x="1560" y="342" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">3 of 3 ✓</text>
+<text x="1140" y="366" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Spellbook</text>
+<text x="1560" y="366" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">4 of 6 !</text>
+<text x="1140" y="390" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Prepared</text>
+<text x="1560" y="390" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">2 of 4 !</text>
+<text x="1140" y="414" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">AC</text>
+<text x="1560" y="414" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">11 (14 with Mage Armor)</text>
+<text x="1140" y="438" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Hit Points</text>
+<text x="1560" y="438" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">8</text>
+</svg>

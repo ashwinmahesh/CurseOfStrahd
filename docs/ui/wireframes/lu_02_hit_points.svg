@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Level Up · Hit Points</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Level Up · Hit Points</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Level up · 2 of 4</text>
+<rect x="360" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="372" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">1  Ilse ⬆</text>
+<rect x="538" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="550" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  Tamsin ⬆</text>
+<rect x="716" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="728" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Hedda</text>
+<rect x="894" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="906" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">4  Silvain ⬆</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Take the fixed value or roll. The roll uses the game&#x27;s seeded dice and is shown.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Next ▸</text>
+<text x="28" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#f4ecd6" font-weight="bold" text-anchor="start">Hit Points</text>
+<rect x="40" y="140" width="760" height="670" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="168" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">FIGHTER LEVEL 4: d10</text>
+<line x1="52" y1="180" x2="788" y2="180" stroke="#3a2a44" stroke-width="1"/>
+<rect x="300" y="220" width="240" height="240" rx="30" fill="#1a1220" stroke="#d9731e" stroke-width="3"/>
+<text x="420" y="365" font-family="Georgia, 'Times New Roman', serif" font-size="96" fill="#fbe08a" font-weight="bold" text-anchor="middle">8</text>
+<text x="420" y="500" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="middle">rolled on a d10</text>
+<rect x="120" y="560" width="260" height="52" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="250.0" y="591.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Take 6 (fixed)</text>
+<rect x="460" y="560" width="260" height="52" rx="5" fill="#d9731e" stroke="#fbe08a" stroke-width="4"/>
+<text x="590.0" y="591.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Roll the d10</text>
+<text x="446" y="592.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#fbe08a" font-weight="bold" text-anchor="start">▸</text>
+<text x="120" y="680" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Gain = roll (or 6) + Con modifier (+2), minimum 1.</text>
+<text x="120" y="701" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">You can roll once; the result is final.</text>
+<circle cx="780" cy="160" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="780" y="165" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="820" y="140" width="740" height="670" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="836" y="168" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">HIT POINTS BEFORE → AFTER</text>
+<line x1="832" y1="180" x2="1548" y2="180" stroke="#3a2a44" stroke-width="1"/>
+<text x="850" y="230" font-family="Georgia, 'Times New Roman', serif" font-size="48" fill="#f4ecd6" font-weight="bold" text-anchor="start">34  →  44</text>
+<text x="850" y="300" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#bdbdc6" font-weight="normal" text-anchor="start">Level 1: Fighter d10 maximum 10</text>
+<text x="850" y="332" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#bdbdc6" font-weight="normal" text-anchor="start">Levels 2-3 at the fixed value: 12</text>
+<text x="850" y="364" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#bdbdc6" font-weight="normal" text-anchor="start">Level 4 rolled: 8</text>
+<text x="850" y="396" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#bdbdc6" font-weight="normal" text-anchor="start">Con modifier +2 × 4 levels: 8</text>
+<text x="850" y="428" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#bdbdc6" font-weight="normal" text-anchor="start">Tough: 2 × level = 8</text>
+<circle cx="859" cy="515" r="9" fill="#8fb2cf"/>
+<text x="859" y="520" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="bold" text-anchor="middle">i</text>
+<text x="876" y="520" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c9dfe8" font-weight="normal" text-anchor="start">Changing Constitution later changes every level&#x27;s Hit Points (retroactive).</text>
+<circle cx="859" cy="555" r="9" fill="#8fb2cf"/>
+<text x="859" y="560" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="bold" text-anchor="middle">i</text>
+<text x="876" y="560" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c9dfe8" font-weight="normal" text-anchor="start">Current Hit Points rise by the same amount: 30/34 → 40/44.</text>
+<circle cx="1540" cy="160" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1540" y="165" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">2</text>
+</svg>

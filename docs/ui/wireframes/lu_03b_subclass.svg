@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Level Up · Subclass browser</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Level Up · Subclass browser</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Level up · 3 of 4</text>
+<rect x="362" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="374" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">1  Ilse ⬆</text>
+<rect x="540" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="552" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  Tamsin ⬆</text>
+<rect x="718" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="730" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Hedda</text>
+<rect x="896" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="908" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">4  Silvain ⬆</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Compare subclasses through level 20 before you commit.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Next ▸</text>
+<text x="28" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#f4ecd6" font-weight="bold" text-anchor="start">Choose a Fighter subclass</text>
+<rect x="40" y="140" width="368" height="400" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="54" y="166" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Battle Master</text>
+<text x="54" y="188" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Combat Superiority (4 d8 dice, 3 maneuvers)</text>
+<text x="54" y="207" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Student of War</text>
+<text x="54" y="226" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">7  Know Your Enemy</text>
+<text x="54" y="245" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">10 Improved Combat Superiority (d10)</text>
+<text x="54" y="264" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">15 Relentless</text>
+<text x="54" y="283" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">18 Ultimate Combat Superiority (d12)</text>
+<rect x="54" y="510" width="31" height="20" rx="10" fill="#3a2a44"/>
+<text x="69.5" y="525" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#c495cf" font-weight="normal" text-anchor="middle">●●○</text>
+<rect x="424" y="140" width="368" height="400" rx="6" fill="#4a2160" stroke="#fbe08a" stroke-width="4"/>
+<text x="438" y="166" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Champion</text>
+<text x="438" y="188" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Improved Critical (19-20)</text>
+<text x="438" y="207" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Remarkable Athlete</text>
+<text x="438" y="226" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">7  Additional Fighting Style</text>
+<text x="438" y="245" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">10 Heroic Warrior</text>
+<text x="438" y="264" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">15 Superior Critical (18-20)</text>
+<text x="438" y="283" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">18 Survivor</text>
+<rect x="438" y="510" width="108" height="20" rx="10" fill="#3a2a44"/>
+<text x="492.0" y="525" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#c495cf" font-weight="normal" text-anchor="middle">complexity ●○○</text>
+<text x="408" y="168" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#fbe08a" font-weight="bold" text-anchor="start">▸</text>
+<rect x="808" y="140" width="368" height="400" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="822" y="166" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Eldritch Knight</text>
+<text x="822" y="188" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Spellcasting (Wizard, Int)</text>
+<text x="822" y="207" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  War Bond</text>
+<text x="822" y="226" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">7  War Magic</text>
+<text x="822" y="245" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">10 Eldritch Strike</text>
+<text x="822" y="264" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">15 Arcane Charge</text>
+<text x="822" y="283" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">18 Improved War Magic</text>
+<rect x="822" y="510" width="31" height="20" rx="10" fill="#3a2a44"/>
+<text x="837.5" y="525" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#c495cf" font-weight="normal" text-anchor="middle">●●○</text>
+<rect x="1192" y="140" width="368" height="400" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1206" y="166" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Psi Warrior</text>
+<text x="1206" y="188" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Psionic Power (4 d6 dice)</text>
+<text x="1206" y="207" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">7  Telekinetic Adept</text>
+<text x="1206" y="226" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">10 Guarded Mind</text>
+<text x="1206" y="245" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">15 Bulwark of Force</text>
+<text x="1206" y="264" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">18 Telekinetic Master</text>
+<rect x="1206" y="510" width="31" height="20" rx="10" fill="#3a2a44"/>
+<text x="1221.5" y="525" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#c495cf" font-weight="normal" text-anchor="middle">●●○</text>
+<rect x="40" y="560" width="1520" height="250" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="588" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">CHAMPION · WHAT CHANGES NOW</text>
+<line x1="52" y1="600" x2="1548" y2="600" stroke="#3a2a44" stroke-width="1"/>
+<text x="64" y="620" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Critical Hits on 19 or 20 with weapons and Unarmed Strikes (from 5% to 10% of attacks).</text>
+<text x="64" y="654" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Advantage on Initiative and Strength (Athletics) checks; move half your Speed after a Critical Hit.</text>
+<text x="64" y="688" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Your sheet: Greatsword crit range 19-20 · Initiative +2 with Advantage · Athletics +5 with Advantage</text>
+<circle cx="1540" cy="580" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1540" y="585" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+</svg>

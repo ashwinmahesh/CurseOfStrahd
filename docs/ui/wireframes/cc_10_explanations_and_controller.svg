@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Explanations and controller focus (all screens)</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Explanations and controller focus (all screens)</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Y / right-click pins a tooltip. Pinned tooltips stack until closed.</text>
+<text x="28" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#f4ecd6" font-weight="bold" text-anchor="start">Every number explains itself</text>
+<rect x="40" y="130" width="700" height="680" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">HOVER OR FOCUS A NUMBER</text>
+<line x1="52" y1="170" x2="728" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<rect x="70" y="190" width="160" height="70" rx="6" fill="#1a1220" stroke="#fbe08a" stroke-width="3"/>
+<text x="150" y="238" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="26" fill="#f4ecd6" font-weight="bold" text-anchor="middle">AC 17</text>
+<rect x="264" y="184" width="450" height="109" rx="6" fill="#0d0a12" opacity="0.6"/>
+<rect x="260" y="180" width="450" height="109" rx="6" fill="#f4ecd6" stroke="#8e7a62" stroke-width="2"/>
+<text x="274" y="206" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="start">Armor Class 17</text>
+<text x="274" y="230" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Chain Mail 16 (heavy: no Dexterity)</text>
+<text x="274" y="251" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Defense +1 (Fighting Style, in armor)</text>
+<text x="274" y="272" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Not counted: Dexterity +2 (heavy armor)</text>
+<rect x="70" y="360" width="160" height="70" rx="6" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="150" y="408" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#f4ecd6" font-weight="bold" text-anchor="middle">Stealth +2</text>
+<rect x="264" y="344" width="450" height="130" rx="6" fill="#0d0a12" opacity="0.6"/>
+<rect x="260" y="340" width="450" height="130" rx="6" fill="#f4ecd6" stroke="#8e7a62" stroke-width="2"/>
+<text x="274" y="366" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="start">Stealth +2</text>
+<text x="274" y="390" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Dexterity modifier +2</text>
+<text x="274" y="411" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Not proficient</text>
+<text x="274" y="432" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Disadvantage: Chain Mail</text>
+<text x="274" y="453" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Passive: 10 + 2 − 5 = 7</text>
+<rect x="70" y="560" width="160" height="70" rx="6" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="150" y="608" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#f4ecd6" font-weight="bold" text-anchor="middle">HP 34</text>
+<rect x="264" y="524" width="450" height="130" rx="6" fill="#0d0a12" opacity="0.6"/>
+<rect x="260" y="520" width="450" height="130" rx="6" fill="#f4ecd6" stroke="#8e7a62" stroke-width="2"/>
+<text x="274" y="546" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="start">Hit Points 34 (level 3)</text>
+<text x="274" y="570" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Level 1: Fighter d10 maximum 10</text>
+<text x="274" y="591" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">2 levels at the fixed value 12</text>
+<text x="274" y="612" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Con modifier +2 × 3 levels 6</text>
+<text x="274" y="633" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Tough +6 (2 × level)</text>
+<rect x="760" y="130" width="800" height="330" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="776" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">RULE TERMS OPEN NESTED, PINNABLE TOOLTIPS</text>
+<line x1="772" y1="170" x2="1548" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<text x="790" y="196" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Remarkable Athlete: you have</text>
+<text x="985" y="196" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#fbe08a" font-weight="bold" text-anchor="start">Advantage</text>
+<line x1="985" y1="200" x2="1060" y2="200" stroke="#fbe08a" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="1068" y="196" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">on Initiative and Strength (Athletics) checks.</text>
+<rect x="804" y="230" width="560" height="130" rx="6" fill="#0d0a12" opacity="0.6"/>
+<rect x="800" y="226" width="560" height="130" rx="6" fill="#f4ecd6" stroke="#d9731e" stroke-width="2"/>
+<text x="814" y="252" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="start">Advantage</text>
+<text x="1348" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a3a12" font-weight="normal" text-anchor="end">📌 pinned</text>
+<text x="814" y="276" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Roll two d20s and use the higher.</text>
+<text x="814" y="297" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Advantage and Disadvantage cancel out,</text>
+<text x="814" y="318" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">however many sources of each you have.</text>
+<text x="814" y="339" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#4d382a" font-weight="normal" text-anchor="start">Here from: Remarkable Athlete (Champion 3)</text>
+<rect x="760" y="480" width="800" height="330" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="776" y="508" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">CONTROLLER AND KEYBOARD</text>
+<line x1="772" y1="520" x2="1548" y2="520" stroke="#3a2a44" stroke-width="1"/>
+<text x="790" y="530" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="bold" text-anchor="start">Action</text>
+<text x="1100" y="530" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="bold" text-anchor="start">Controller</text>
+<text x="1330" y="530" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="bold" text-anchor="start">Mouse and keyboard</text>
+<text x="790" y="556" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Move focus</text>
+<text x="1100" y="556" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">D-pad / left stick</text>
+<text x="1330" y="556" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Arrows / Tab</text>
+<text x="790" y="586" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Choose / toggle</text>
+<text x="1100" y="586" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">A</text>
+<text x="1330" y="586" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Enter / Space</text>
+<text x="790" y="616" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Back</text>
+<text x="1100" y="616" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">B</text>
+<text x="1330" y="616" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Esc</text>
+<text x="790" y="646" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Explain (tooltip)</text>
+<text x="1100" y="646" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Y (hold)</text>
+<text x="1330" y="646" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">F1 / hover</text>
+<text x="790" y="676" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Pin tooltip</text>
+<text x="1100" y="676" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Y twice</text>
+<text x="1330" y="676" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Right-click</text>
+<text x="790" y="706" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Previous / next step</text>
+<text x="1100" y="706" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">LB / RB</text>
+<text x="1330" y="706" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">PgUp / PgDn</text>
+<text x="790" y="736" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Previous / next character</text>
+<text x="1100" y="736" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">LT / RT</text>
+<text x="1330" y="736" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Ctrl+Tab</text>
+<text x="790" y="766" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Confirm step</text>
+<text x="1100" y="766" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Start</text>
+<text x="1330" y="766" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Ctrl+Enter</text>
+<circle cx="799" cy="795" r="9" fill="#8fb2cf"/>
+<text x="799" y="800" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="bold" text-anchor="middle">i</text>
+<text x="816" y="800" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c9dfe8" font-weight="normal" text-anchor="start">Focus = thick candle frame + ▸ marker, never colour alone. Text scales 100-160%.</text>
+</svg>

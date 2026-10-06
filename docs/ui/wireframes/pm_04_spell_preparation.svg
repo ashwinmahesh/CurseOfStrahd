@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Party · Spell preparation</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Party · Spell preparation</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Prepare spells: Hedda (after a Long Rest)</text>
+<rect x="360" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="372" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">1  Ilse</text>
+<rect x="538" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="550" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  Tamsin</text>
+<rect x="716" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="728" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">3  Hedda</text>
+<rect x="894" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="906" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">4  Silvain</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Domain spells (★) are always prepared and don&#x27;t count.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Done</text>
+<rect x="24" y="90" width="760" height="720" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="40" y="118" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">CLERIC SPELLS YOU CAN PREPARE · 7 of 7</text>
+<line x1="36" y1="130" x2="772" y2="130" stroke="#3a2a44" stroke-width="1"/>
+<rect x="44" y="130" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="154" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#fbe08a" font-weight="normal" text-anchor="start">★ Bless</text>
+<text x="744" y="154" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end">domain</text>
+<rect x="44" y="174" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="198" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#fbe08a" font-weight="normal" text-anchor="start">★ Cure Wounds</text>
+<text x="744" y="198" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end">domain</text>
+<rect x="44" y="218" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="242" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#fbe08a" font-weight="normal" text-anchor="start">★ Aid</text>
+<text x="744" y="242" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end">domain</text>
+<rect x="44" y="262" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="286" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#fbe08a" font-weight="normal" text-anchor="start">★ Lesser Restoration</text>
+<text x="744" y="286" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end">domain</text>
+<rect x="44" y="306" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="330" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">☑ Guiding Bolt</text>
+<text x="744" y="330" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end"></text>
+<rect x="44" y="350" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="374" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">☑ Healing Word</text>
+<text x="744" y="374" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end"></text>
+<rect x="44" y="394" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="418" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">☑ Shield of Faith</text>
+<text x="744" y="418" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end"></text>
+<rect x="44" y="438" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="462" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">☑ Command</text>
+<text x="744" y="462" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end"></text>
+<rect x="44" y="482" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="506" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">☑ Spiritual Weapon</text>
+<text x="744" y="506" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end"></text>
+<rect x="44" y="526" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="550" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">☑ Hold Person</text>
+<text x="744" y="550" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end"></text>
+<rect x="44" y="570" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="594" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">☑ Detect Magic</text>
+<text x="744" y="594" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end">R</text>
+<rect x="44" y="614" width="720" height="38" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="638" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">☐ Silence</text>
+<text x="744" y="638" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="end">C, R</text>
+<rect x="44" y="658" width="720" height="38" rx="3" fill="#3b3b45" stroke="#3a2a44" stroke-width="1"/>
+<text x="60" y="682" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#8a8a96" font-weight="normal" text-anchor="start">☐ Spirit Guardians</text>
+<text x="744" y="682" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e8606a" font-weight="normal" text-anchor="end">⊘ needs level 3 slots</text>
+<circle cx="764" cy="110" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="764" y="115" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="800" y="90" width="776" height="720" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="816" y="118" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">LOADOUTS</text>
+<line x1="812" y1="130" x2="1564" y2="130" stroke="#3a2a44" stroke-width="1"/>
+<rect x="820" y="150" width="736" height="96" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="834" y="176" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Exploring</text>
+<text x="834" y="198" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Detect Magic, Command, …</text>
+<rect x="820" y="260" width="736" height="96" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="834" y="286" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Dungeon crawl</text>
+<text x="834" y="308" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Spiritual Weapon, Hold Person, …</text>
+<rect x="820" y="370" width="736" height="96" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="834" y="396" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Undead hunt</text>
+<text x="834" y="418" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Guiding Bolt, Spirit Guardians later, …</text>
+<rect x="820" y="500" width="220" height="40" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="930.0" y="525.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Save current as…</text>
+<circle cx="829" cy="595" r="9" fill="#8fb2cf"/>
+<text x="829" y="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="bold" text-anchor="middle">i</text>
+<text x="846" y="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c9dfe8" font-weight="normal" text-anchor="start">Rituals marked R can also be cast without preparing? Cleric: no (prepared only).</text>
+<circle cx="829" cy="635" r="9" fill="#8fb2cf"/>
+<text x="829" y="640" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="bold" text-anchor="middle">i</text>
+<text x="846" y="640" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c9dfe8" font-weight="normal" text-anchor="start">Wizards prepare from their spellbook and can cast its Rituals unprepared.</text>
+<circle cx="1556" cy="110" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1556" y="115" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">2</text>
+</svg>

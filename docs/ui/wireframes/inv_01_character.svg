@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Inventory · Character</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Inventory · Character</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Inventory: Ilse</text>
+<rect x="360" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="372" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">1  Ilse</text>
+<rect x="538" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="550" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  Tamsin</text>
+<rect x="716" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="728" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Hedda</text>
+<rect x="894" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="906" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">4  Silvain</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Drag items onto a portrait to give them. X on a controller opens the item menu.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Done</text>
+<rect x="24" y="80" width="470" height="730" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="40" y="108" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">PAPER DOLL</text>
+<line x1="36" y1="120" x2="482" y2="120" stroke="#3a2a44" stroke-width="1"/>
+<rect x="180" y="170" width="140" height="330" rx="50" fill="#3a2a44" stroke="#5c5c69" stroke-width="1"/>
+<rect x="194" y="120" width="120" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="204" y="153" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a8a96" font-weight="normal" text-anchor="start">Head</text>
+<rect x="54" y="200" width="120" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="64" y="233" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a8a96" font-weight="normal" text-anchor="start">Cloak</text>
+<rect x="340" y="200" width="120" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="350" y="233" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a8a96" font-weight="normal" text-anchor="start">Neck</text>
+<rect x="174" y="270" width="160" height="56" rx="4" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="184" y="303" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#f4ecd6" font-weight="normal" text-anchor="start">Armor: Chain Mail</text>
+<rect x="54" y="360" width="120" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="64" y="393" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a8a96" font-weight="normal" text-anchor="start">Hands</text>
+<rect x="340" y="360" width="120" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="350" y="393" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a8a96" font-weight="normal" text-anchor="start">Belt</text>
+<rect x="54" y="450" width="120" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="64" y="483" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a8a96" font-weight="normal" text-anchor="start">Ring</text>
+<rect x="340" y="450" width="120" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="350" y="483" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a8a96" font-weight="normal" text-anchor="start">Ring</text>
+<rect x="194" y="540" width="120" height="56" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="204" y="573" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#8a8a96" font-weight="normal" text-anchor="start">Feet</text>
+<text x="44" y="640" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Weapon sets (quick swap: ↻)</text>
+<rect x="44" y="652" width="210" height="60" rx="4" fill="#4a2160" stroke="#fbe08a" stroke-width="3"/>
+<text x="56" y="678" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="start">Set 1 ★ Greatsword</text>
+<text x="56" y="700" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">two-handed</text>
+<rect x="266" y="652" width="210" height="60" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="278" y="678" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Set 2  Javelin · —</text>
+<text x="44" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Ammunition: 20 Arrows · Focus: —</text>
+<circle cx="474" cy="100" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="474" y="105" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="508" y="80" width="600" height="730" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="524" y="108" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">BACKPACK</text>
+<line x1="520" y1="120" x2="1096" y2="120" stroke="#3a2a44" stroke-width="1"/>
+<rect x="524" y="128" width="35.6" height="24" rx="12" fill="#d9731e"/>
+<text x="541.8" y="145" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#1a1220" font-weight="normal" text-anchor="middle">All</text>
+<rect x="567.6" y="128" width="64.4" height="24" rx="12" fill="#3a2a44"/>
+<text x="599.8000000000001" y="145" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Weapons</text>
+<rect x="640.0" y="128" width="50.0" height="24" rx="12" fill="#3a2a44"/>
+<text x="665.0" y="145" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Armor</text>
+<rect x="698.0" y="128" width="93.2" height="24" rx="12" fill="#3a2a44"/>
+<text x="744.6" y="145" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Consumables</text>
+<rect x="799.2" y="128" width="50.0" height="24" rx="12" fill="#3a2a44"/>
+<text x="824.2" y="145" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Tools</text>
+<rect x="857.2" y="128" width="50.0" height="24" rx="12" fill="#3a2a44"/>
+<text x="882.2" y="145" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Quest</text>
+<rect x="915.2" y="128" width="42.8" height="24" rx="12" fill="#3a2a44"/>
+<text x="936.6" y="145" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Junk</text>
+<rect x="966.0" y="128" width="35.6" height="24" rx="12" fill="#3a2a44"/>
+<text x="983.8" y="145" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">New</text>
+<text x="532" y="186" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="bold" text-anchor="start">Item</text>
+<text x="760" y="186" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="bold" text-anchor="start">Qty</text>
+<text x="880" y="186" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="bold" text-anchor="start">Weight</text>
+<text x="980" y="186" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="bold" text-anchor="start">Value</text>
+<rect x="520" y="196" width="576" height="34" rx="3" fill="#4a2160" stroke="#fbe08a" stroke-width="3"/>
+<text x="532" y="218" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Longsword (found)</text>
+<text x="760" y="218" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">1</text>
+<text x="880" y="218" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3 lb</text>
+<text x="980" y="218" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">15 GP</text>
+<rect x="1040" y="202" width="35.6" height="24" rx="12" fill="#f2a93b"/>
+<text x="1057.8" y="219" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#1a1220" font-weight="normal" text-anchor="middle">NEW</text>
+<rect x="520" y="238" width="576" height="34" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="532" y="260" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Potion of Healing</text>
+<text x="760" y="260" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">2</text>
+<text x="880" y="260" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">1 lb</text>
+<text x="980" y="260" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">50 GP</text>
+<rect x="520" y="280" width="576" height="34" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="532" y="302" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Javelin</text>
+<text x="760" y="302" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">8</text>
+<text x="880" y="302" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">16 lb</text>
+<text x="980" y="302" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">4 GP</text>
+<rect x="520" y="322" width="576" height="34" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="532" y="344" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Healer&#x27;s Kit</text>
+<text x="760" y="344" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">1 (10 uses)</text>
+<text x="880" y="344" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">3 lb</text>
+<text x="980" y="344" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">5 GP</text>
+<rect x="520" y="364" width="576" height="34" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="532" y="386" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Dungeoneer&#x27;s Pack ▸</text>
+<text x="760" y="386" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">1</text>
+<text x="880" y="386" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">55 lb</text>
+<text x="980" y="386" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">12 GP</text>
+<rect x="520" y="406" width="576" height="34" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="532" y="428" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Shortbow</text>
+<text x="760" y="428" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">1</text>
+<text x="880" y="428" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">2 lb</text>
+<text x="980" y="428" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">25 GP</text>
+<rect x="520" y="448" width="576" height="34" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="532" y="470" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Arrows</text>
+<text x="760" y="470" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">20</text>
+<text x="880" y="470" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">1 lb</text>
+<text x="980" y="470" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">1 GP</text>
+<rect x="520" y="490" width="576" height="34" rx="3" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="532" y="512" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="start">Locket (quest) 🔒</text>
+<text x="760" y="512" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">1</text>
+<text x="880" y="512" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">—</text>
+<text x="980" y="512" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">—</text>
+<text x="524" y="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Carrying 112 / 255 lb  (Strength 17 × 15)</text>
+<rect x="524" y="612" width="560" height="16" rx="8" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<rect x="524" y="612" width="246" height="16" rx="8" fill="#3e6a3a"/>
+<text x="524" y="660" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Attunement  ◇ ◇ ◇  (0 of 3) · attune during a Short Rest</text>
+<text x="524" y="700" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Coins: 18 GP · 0 SP · 0 CP   [Convert ▾]</text>
+<circle cx="1090" cy="100" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1090" y="105" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">2</text>
+<rect x="1122" y="80" width="454" height="730" rx="6" fill="#e6d6b0" stroke="#8e7a62" stroke-width="2"/>
+<text x="1140" y="112" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#1a1220" font-weight="bold" text-anchor="start">Longsword</text>
+<text x="1140" y="136" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">Martial Melee · Versatile (1d10) · 3 lb · 15 GP</text>
+<text x="1140" y="156" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">Mastery: Sap — you can&#x27;t use it yet</text>
+<text x="1140" y="176" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start"></text>
+<text x="1140" y="196" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">With you:  +5 to hit · 1d10+3 two-handed</text>
+<text x="1140" y="216" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">Compared to Greatsword (equipped):</text>
+<text x="1140" y="236" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">  average damage 8.5 vs 10.0   ▼ 1.5</text>
+<text x="1140" y="256" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">  frees a hand for a Shield? Shield: not owned</text>
+<text x="1140" y="276" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start"></text>
+<text x="1140" y="296" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">Not identified: no (mundane)</text>
+<rect x="1140" y="560" width="200" height="40" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1240.0" y="585.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Equip in Set 2</text>
+<rect x="1356" y="560" width="200" height="40" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1456.0" y="585.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Give to… ▾</text>
+<rect x="1140" y="616" width="200" height="40" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1240.0" y="641.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Mark as junk</text>
+<rect x="1356" y="616" width="200" height="40" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1456.0" y="641.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Drop</text>
+<circle cx="1556" cy="100" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1556" y="105" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">3</text>
+</svg>

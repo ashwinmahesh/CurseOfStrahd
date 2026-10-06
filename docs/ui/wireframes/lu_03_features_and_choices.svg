@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Level Up · Features and choices</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Level Up · Features and choices</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Level up · 3 of 4</text>
+<rect x="408" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="420" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">1  Ilse ⬆</text>
+<rect x="586" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="598" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  Tamsin ⬆</text>
+<rect x="764" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="776" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Hedda</text>
+<rect x="942" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="954" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">4  Silvain ⬆</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Unavailable feats stay listed with the reason. Filter to hide them.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Next ▸</text>
+<text x="28" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#f4ecd6" font-weight="bold" text-anchor="start">New features and choices</text>
+<rect x="40" y="140" width="420" height="670" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="168" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">NEW AT LEVEL 4</text>
+<line x1="52" y1="180" x2="448" y2="180" stroke="#3a2a44" stroke-width="1"/>
+<rect x="60" y="196" width="380" height="120" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="74" y="222" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Ability Score Improvement</text>
+<text x="74" y="244" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Take the Ability Score Improvement feat</text>
+<text x="74" y="263" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">or any feat you qualify for.</text>
+<rect x="60" y="330" width="380" height="104" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="74" y="356" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Weapon Mastery: 4th weapon</text>
+<text x="74" y="378" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Pick one more weapon kind.</text>
+<text x="74" y="397" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Now: Greatsword, Flail, Javelin</text>
+<circle cx="69" cy="465" r="9" fill="#d6283a"/>
+<text x="69" y="470" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="bold" text-anchor="middle">!</text>
+<text x="86" y="470" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#d6283a" font-weight="normal" text-anchor="start">1 choice left: Weapon Mastery</text>
+<circle cx="440" cy="160" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="440" y="165" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="476" y="140" width="620" height="670" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="492" y="168" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">FEATS</text>
+<line x1="488" y1="180" x2="1084" y2="180" stroke="#3a2a44" stroke-width="1"/>
+<rect x="496" y="192" width="78.8" height="24" rx="12" fill="#d9731e"/>
+<text x="535.4" y="209" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#1a1220" font-weight="normal" text-anchor="middle">General ▾</text>
+<rect x="582.8" y="192" width="114.8" height="24" rx="12" fill="#3a2a44"/>
+<text x="640.1999999999999" y="209" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Ability: any ▾</text>
+<rect x="705.5999999999999" y="192" width="194.0" height="24" rx="12" fill="#3a2a44"/>
+<text x="802.5999999999999" y="209" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">☐ Only ones I qualify for</text>
+<rect x="492" y="236" width="588" height="44" rx="4" fill="#4a2160" stroke="#fbe08a" stroke-width="3"/>
+<text x="508" y="258" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">Ability Score Improvement</text>
+<text x="760" y="258" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">+2 to one or +1 to two (max 20)</text>
+<rect x="492" y="286" width="588" height="44" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="508" y="308" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">Great Weapon Master</text>
+<text x="760" y="308" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">+1 Str; heavy weapon hits add PB damage</text>
+<rect x="492" y="336" width="588" height="44" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="508" y="358" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">Heavy Armor Master</text>
+<text x="760" y="358" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">+1 Str/Con; reduce B/P/S damage by PB</text>
+<rect x="492" y="386" width="588" height="44" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="508" y="408" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">Tough</text>
+<text x="760" y="408" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Hit Point maximum +2 per level</text>
+<rect x="492" y="436" width="588" height="56" rx="4" fill="#3b3b45" stroke="#3a2a44" stroke-width="1"/>
+<text x="508" y="458" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#8a8a96" font-weight="bold" text-anchor="start">War Caster</text>
+<text x="760" y="458" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Advantage to keep Concentration …</text>
+<text x="508" y="480" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e8606a" font-weight="normal" text-anchor="start">⊘ Requires the Spellcasting feature</text>
+<rect x="492" y="498" width="588" height="56" rx="4" fill="#3b3b45" stroke="#3a2a44" stroke-width="1"/>
+<text x="508" y="520" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#8a8a96" font-weight="bold" text-anchor="start">Elemental Adept</text>
+<text x="760" y="520" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Spells ignore Resistance to one type</text>
+<text x="508" y="542" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e8606a" font-weight="normal" text-anchor="start">⊘ Requires the Spellcasting feature</text>
+<rect x="492" y="560" width="588" height="56" rx="4" fill="#3b3b45" stroke="#3a2a44" stroke-width="1"/>
+<text x="508" y="582" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#8a8a96" font-weight="bold" text-anchor="start">Inspiring Leader</text>
+<text x="760" y="582" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="start">Temp HP to allies after a rest</text>
+<text x="508" y="604" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e8606a" font-weight="normal" text-anchor="start">⊘ Requires Wisdom or Charisma 13</text>
+<circle cx="1076" cy="160" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1076" y="165" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">2</text>
+<rect x="1112" y="140" width="448" height="670" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1128" y="168" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">ABILITY SCORE IMPROVEMENT</text>
+<line x1="1124" y1="180" x2="1548" y2="180" stroke="#3a2a44" stroke-width="1"/>
+<rect x="1132" y="196" width="78.8" height="24" rx="12" fill="#d9731e"/>
+<text x="1171.4" y="213" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#1a1220" font-weight="normal" text-anchor="middle">+2 to one</text>
+<rect x="1240" y="196" width="78.8" height="24" rx="12" fill="#3a2a44"/>
+<text x="1279.4" y="213" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#e6d6b0" font-weight="normal" text-anchor="middle">+1 to two</text>
+<rect x="1132" y="236" width="408" height="40" rx="4" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="1148" y="262" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">Strength</text>
+<text x="1528" y="262" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#fbe08a" font-weight="bold" text-anchor="end">17 → 19</text>
+<rect x="1132" y="286" width="408" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="1148" y="312" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">Dexterity</text>
+<text x="1528" y="312" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="bold" text-anchor="end">14</text>
+<rect x="1132" y="336" width="408" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="1148" y="362" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">Constitution</text>
+<text x="1528" y="362" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="bold" text-anchor="end">14</text>
+<rect x="1132" y="386" width="408" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="1148" y="412" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">Intelligence</text>
+<text x="1528" y="412" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="bold" text-anchor="end">8</text>
+<rect x="1132" y="436" width="408" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="1148" y="462" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">Wisdom</text>
+<text x="1528" y="462" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="bold" text-anchor="end">10</text>
+<rect x="1132" y="486" width="408" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="1148" y="512" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="normal" text-anchor="start">Charisma</text>
+<text x="1528" y="512" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="bold" text-anchor="end">12</text>
+<text x="1132" y="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c9dfe8" font-weight="normal" text-anchor="start">Strength 19: modifier +3 → +4</text>
+<text x="1132" y="624" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c9dfe8" font-weight="normal" text-anchor="start">Greatsword +5 → +6 to hit, damage +3 → +4</text>
+<text x="1132" y="648" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c9dfe8" font-weight="normal" text-anchor="start">Athletics +5 → +6, Strength save +5 → +6</text>
+</svg>

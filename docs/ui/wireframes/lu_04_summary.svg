@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Level Up · Summary</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Level Up · Summary</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Level up · 4 of 4</text>
+<rect x="360" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="372" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">1  Ilse ⬆</text>
+<rect x="538" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="550" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  Tamsin ⬆</text>
+<rect x="716" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="728" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  Hedda</text>
+<rect x="894" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="906" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">4  Silvain ⬆</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Nothing changes until you confirm.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#fbe08a" stroke-width="4"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Confirm ✓</text>
+<text x="1402" y="876.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#fbe08a" font-weight="bold" text-anchor="start">▸</text>
+<text x="28" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#f4ecd6" font-weight="bold" text-anchor="start">Summary: Ilse, Fighter 3 → 4</text>
+<rect x="40" y="140" width="900" height="670" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="56" y="168" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">BEFORE → AFTER (only what changed)</text>
+<line x1="52" y1="180" x2="928" y2="180" stroke="#3a2a44" stroke-width="1"/>
+<text x="64" y="196" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#e6d6b0" font-weight="normal" text-anchor="start"></text>
+<rect x="56" y="188" width="868" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="72" y="214" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Level</text>
+<text x="560" y="214" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="normal" text-anchor="end">Fighter (Champion) 3</text>
+<text x="600" y="214" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#d9731e" font-weight="normal" text-anchor="middle">→</text>
+<text x="640" y="214" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#fbe08a" font-weight="bold" text-anchor="start">Fighter (Champion) 4</text>
+<rect x="56" y="236" width="868" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="72" y="262" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Hit Point maximum</text>
+<text x="560" y="262" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="normal" text-anchor="end">34</text>
+<text x="600" y="262" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#d9731e" font-weight="normal" text-anchor="middle">→</text>
+<text x="640" y="262" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#fbe08a" font-weight="bold" text-anchor="start">44</text>
+<rect x="56" y="284" width="868" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="72" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Strength</text>
+<text x="560" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="normal" text-anchor="end">17</text>
+<text x="600" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#d9731e" font-weight="normal" text-anchor="middle">→</text>
+<text x="640" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#fbe08a" font-weight="bold" text-anchor="start">19</text>
+<rect x="56" y="332" width="868" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="72" y="358" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Strength save</text>
+<text x="560" y="358" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="normal" text-anchor="end">+5</text>
+<text x="600" y="358" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#d9731e" font-weight="normal" text-anchor="middle">→</text>
+<text x="640" y="358" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#fbe08a" font-weight="bold" text-anchor="start">+6</text>
+<rect x="56" y="380" width="868" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="72" y="406" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Athletics</text>
+<text x="560" y="406" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="normal" text-anchor="end">+5</text>
+<text x="600" y="406" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#d9731e" font-weight="normal" text-anchor="middle">→</text>
+<text x="640" y="406" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#fbe08a" font-weight="bold" text-anchor="start">+6</text>
+<rect x="56" y="428" width="868" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="72" y="454" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Greatsword</text>
+<text x="560" y="454" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="normal" text-anchor="end">+5 · 2d6+3</text>
+<text x="600" y="454" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#d9731e" font-weight="normal" text-anchor="middle">→</text>
+<text x="640" y="454" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#fbe08a" font-weight="bold" text-anchor="start">+6 · 2d6+4</text>
+<rect x="56" y="476" width="868" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="72" y="502" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Second Wind uses</text>
+<text x="560" y="502" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="normal" text-anchor="end">2</text>
+<text x="600" y="502" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#d9731e" font-weight="normal" text-anchor="middle">→</text>
+<text x="640" y="502" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#fbe08a" font-weight="bold" text-anchor="start">3</text>
+<rect x="56" y="524" width="868" height="40" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="72" y="550" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Weapon masteries</text>
+<text x="560" y="550" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8a8a96" font-weight="normal" text-anchor="end">3</text>
+<text x="600" y="550" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#d9731e" font-weight="normal" text-anchor="middle">→</text>
+<text x="640" y="550" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#fbe08a" font-weight="bold" text-anchor="start">4 (+Spear)</text>
+<circle cx="920" cy="160" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="920" y="165" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="960" y="140" width="600" height="670" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="976" y="168" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">NEW FEATURES (full text)</text>
+<line x1="972" y1="180" x2="1548" y2="180" stroke="#3a2a44" stroke-width="1"/>
+<rect x="980" y="196" width="560" height="250" rx="6" fill="#e6d6b0" stroke="#8e7a62" stroke-width="2"/>
+<text x="998" y="228" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#1a1220" font-weight="bold" text-anchor="start">Ability Score Improvement</text>
+<text x="998" y="252" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">+2 Strength (17 → 19).</text>
+<text x="998" y="272" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">This feature returns at levels 6, 8, 12, 14 and 16.</text>
+<rect x="980" y="462" width="560" height="200" rx="6" fill="#e6d6b0" stroke="#8e7a62" stroke-width="2"/>
+<text x="998" y="494" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#1a1220" font-weight="bold" text-anchor="start">Weapon Mastery (4 kinds)</text>
+<text x="998" y="518" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="normal" text-anchor="start">Added: Spear (Sap). Change one kind after any Long Rest.</text>
+<circle cx="989" cy="715" r="9" fill="#a9c450"/>
+<text x="989" y="720" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#1a1220" font-weight="bold" text-anchor="middle">✓</text>
+<text x="1006" y="720" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#a9c450" font-weight="normal" text-anchor="start">All choices made. Confirm applies the level.</text>
+</svg>

@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Character Creation · Appearance</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Character Creation · Appearance</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Ilse · step 7 of 9</text>
+<rect x="408" y="14" width="168" height="36" rx="6" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="420" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">1  Ilse</text>
+<rect x="586" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="598" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">2  empty</text>
+<rect x="764" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="776" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">3  empty</text>
+<rect x="942" y="14" width="168" height="36" rx="6" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="954" y="37" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">4  empty</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<rect x="24" y="852" width="130" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="89.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">◂ Back</text>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Q / E or the right stick turns the preview. It uses the game&#x27;s shaders.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Next ▸</text>
+<text x="28" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#f4ecd6" font-weight="bold" text-anchor="start">Appearance</text>
+<rect x="24" y="130" width="220" height="600" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="40" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">STEPS</text>
+<line x1="36" y1="170" x2="232" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<text x="46" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="204" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Start</text>
+<text x="46" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Class</text>
+<text x="46" y="296" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="296" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Origin</text>
+<text x="46" y="342" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="342" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Ability Scores</text>
+<text x="46" y="388" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="388" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Class Choices</text>
+<text x="46" y="434" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#a9c450" font-weight="bold" text-anchor="start">✓</text>
+<text x="68" y="434" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Equipment</text>
+<rect x="32" y="458" width="204" height="32" rx="4" fill="#4a2160" stroke="#d9731e" stroke-width="2"/>
+<text x="46" y="480" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8a8a96" font-weight="bold" text-anchor="start">·</text>
+<text x="68" y="480" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Appearance</text>
+<text x="46" y="526" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8a8a96" font-weight="bold" text-anchor="start">·</text>
+<text x="68" y="526" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Identity</text>
+<text x="46" y="572" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8a8a96" font-weight="bold" text-anchor="start">·</text>
+<text x="68" y="572" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#bdbdc6" font-weight="normal" text-anchor="start">Review</text>
+<rect x="268" y="130" width="520" height="680" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="284" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">IN-GAME SPRITE</text>
+<line x1="280" y1="170" x2="776" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<rect x="380" y="190" width="300" height="420" rx="6" fill="#1c2e4c" stroke="#3a2a44" stroke-width="1"/>
+<rect x="470" y="260" width="120" height="300" rx="40" fill="#3a2a44" stroke="#5c5c69" stroke-width="1"/>
+<text x="530" y="420" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#8a8a96" font-weight="normal" text-anchor="middle">sprite</text>
+<rect x="290" y="640" width="52" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="316" y="724" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="middle">N</text>
+<rect x="350" y="640" width="52" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="376" y="724" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="middle">NE</text>
+<rect x="410" y="640" width="52" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="436" y="724" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="middle">E</text>
+<rect x="470" y="640" width="52" height="64" rx="4" fill="#1a1220" stroke="#d9731e" stroke-width="2"/>
+<text x="496" y="724" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="middle">SE</text>
+<rect x="530" y="640" width="52" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="556" y="724" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="middle">S</text>
+<rect x="590" y="640" width="52" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="616" y="724" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="middle">SW</text>
+<rect x="650" y="640" width="52" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="676" y="724" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="middle">W</text>
+<rect x="710" y="640" width="52" height="64" rx="4" fill="#1a1220" stroke="#3a2a44" stroke-width="1"/>
+<text x="736" y="724" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#bdbdc6" font-weight="normal" text-anchor="middle">NW</text>
+<rect x="300" y="750" width="200" height="36" rx="5" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="400.0" y="773.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#e6d6b0" font-weight="normal" text-anchor="middle">Shaders: on (palette)</text>
+<circle cx="776" cy="150" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="776" y="155" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="800" y="130" width="308" height="680" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="816" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">LOOK</text>
+<line x1="812" y1="170" x2="1096" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<text x="816" y="190" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Body type</text>
+<rect x="816" y="200" width="44" height="34" rx="4" fill="#3a2a44" stroke="#fbe08a" stroke-width="3"/>
+<text x="838" y="223" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="middle">A</text>
+<rect x="868" y="200" width="44" height="34" rx="4" fill="#3a2a44" stroke="#1a1220" stroke-width="1"/>
+<text x="890" y="223" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="middle">B</text>
+<rect x="920" y="200" width="44" height="34" rx="4" fill="#3a2a44" stroke="#1a1220" stroke-width="1"/>
+<text x="942" y="223" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="normal" text-anchor="middle">C</text>
+<text x="816" y="268" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Skin</text>
+<rect x="816" y="278" width="44" height="34" rx="4" fill="#e6b896" stroke="#fbe08a" stroke-width="3"/>
+<rect x="868" y="278" width="44" height="34" rx="4" fill="#c48a6a" stroke="#1a1220" stroke-width="1"/>
+<rect x="920" y="278" width="44" height="34" rx="4" fill="#7a4a3c" stroke="#1a1220" stroke-width="1"/>
+<rect x="972" y="278" width="44" height="34" rx="4" fill="#5b4c3e" stroke="#1a1220" stroke-width="1"/>
+<rect x="1024" y="278" width="44" height="34" rx="4" fill="#3d0a14" stroke="#1a1220" stroke-width="1"/>
+<text x="816" y="346" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Hair</text>
+<rect x="816" y="356" width="44" height="34" rx="4" fill="#e6b896" stroke="#fbe08a" stroke-width="3"/>
+<rect x="868" y="356" width="44" height="34" rx="4" fill="#c48a6a" stroke="#1a1220" stroke-width="1"/>
+<rect x="920" y="356" width="44" height="34" rx="4" fill="#7a4a3c" stroke="#1a1220" stroke-width="1"/>
+<rect x="972" y="356" width="44" height="34" rx="4" fill="#5b4c3e" stroke="#1a1220" stroke-width="1"/>
+<rect x="1024" y="356" width="44" height="34" rx="4" fill="#3d0a14" stroke="#1a1220" stroke-width="1"/>
+<text x="816" y="424" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Outfit main</text>
+<rect x="816" y="434" width="44" height="34" rx="4" fill="#e6b896" stroke="#fbe08a" stroke-width="3"/>
+<rect x="868" y="434" width="44" height="34" rx="4" fill="#c48a6a" stroke="#1a1220" stroke-width="1"/>
+<rect x="920" y="434" width="44" height="34" rx="4" fill="#7a4a3c" stroke="#1a1220" stroke-width="1"/>
+<rect x="972" y="434" width="44" height="34" rx="4" fill="#5b4c3e" stroke="#1a1220" stroke-width="1"/>
+<text x="816" y="502" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Outfit trim</text>
+<rect x="816" y="512" width="44" height="34" rx="4" fill="#e6b896" stroke="#fbe08a" stroke-width="3"/>
+<rect x="868" y="512" width="44" height="34" rx="4" fill="#c48a6a" stroke="#1a1220" stroke-width="1"/>
+<rect x="920" y="512" width="44" height="34" rx="4" fill="#7a4a3c" stroke="#1a1220" stroke-width="1"/>
+<rect x="972" y="512" width="44" height="34" rx="4" fill="#5b4c3e" stroke="#1a1220" stroke-width="1"/>
+<text x="816" y="600" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#c495cf" font-weight="normal" text-anchor="start">Portrait (generated sets)</text>
+<rect x="816" y="612" width="62" height="80" rx="4" fill="#3a2a44" stroke="#1a1220" stroke-width="1"/>
+<rect x="886" y="612" width="62" height="80" rx="4" fill="#3a2a44" stroke="#fbe08a" stroke-width="3"/>
+<rect x="956" y="612" width="62" height="80" rx="4" fill="#3a2a44" stroke="#1a1220" stroke-width="1"/>
+<rect x="1026" y="612" width="62" height="80" rx="4" fill="#3a2a44" stroke="#1a1220" stroke-width="1"/>
+<circle cx="1090" cy="150" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1090" y="155" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">2</text>
+<rect x="1124" y="130" width="452" height="680" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1140" y="158" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">LIVE SHEET</text>
+<line x1="1136" y1="170" x2="1564" y2="170" stroke="#3a2a44" stroke-width="1"/>
+<text x="1140" y="196" font-family="Georgia, 'Times New Roman', serif" font-size="18" fill="#f4ecd6" font-weight="bold" text-anchor="start">Ilse</text>
+<text x="1140" y="216" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Human Fighter 1 · Soldier</text>
+<text x="1140" y="246" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Str</text>
+<text x="1560" y="246" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">17 (+3)</text>
+<text x="1140" y="270" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Dex</text>
+<text x="1560" y="270" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">14 (+2)</text>
+<text x="1140" y="294" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Con</text>
+<text x="1560" y="294" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">14 (+2)</text>
+<text x="1140" y="318" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Int</text>
+<text x="1560" y="318" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">8 (−1)</text>
+<text x="1140" y="342" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Wis</text>
+<text x="1560" y="342" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">10 (+0)</text>
+<text x="1140" y="366" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Cha</text>
+<text x="1560" y="366" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">12 (+1)</text>
+<text x="1140" y="390" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">AC</text>
+<text x="1560" y="390" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">17</text>
+<text x="1140" y="414" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Hit Points</text>
+<text x="1560" y="414" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#f4ecd6" font-weight="bold" text-anchor="end">14</text>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900"><title>Party · Overview</title>
+<rect x="0" y="0" width="1600" height="900" rx="6" fill="#1a1220"/>
+<rect x="0" y="0" width="1600" height="64" rx="0" fill="#0d0a12"/>
+<text x="28" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#fbe08a" font-weight="bold" text-anchor="start">Party · Overview</text>
+<text x="1572" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="end">Party overview</text>
+<rect x="0" y="840" width="1600" height="60" rx="0" fill="#0d0a12"/>
+<text x="800.0" y="876" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="middle">Everyone here is yours to direct. Guests follow your orders in combat.</text>
+<rect x="1416" y="852" width="160" height="36" rx="5" fill="#d9731e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1496.0" y="875.0" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#1a1220" font-weight="bold" text-anchor="middle">Close</text>
+<rect x="24" y="90" width="300" height="470" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<rect x="40" y="110" width="80" height="100" rx="4" fill="#3a2a44" stroke="#5c5c69" stroke-width="1"/>
+<text x="132" y="138" font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Ilse Varga</text>
+<text x="132" y="160" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Fighter 4</text>
+<text x="40" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">HP 40/44</text>
+<rect x="40" y="260" width="268" height="12" rx="6" fill="#1a1220"/>
+<rect x="40" y="260" width="243" height="12" rx="6" fill="#3e6a3a"/>
+<text x="40" y="300" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Hit Dice 4/4 d10</text>
+<text x="40" y="328" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Slots —</text>
+<text x="40" y="356" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Second Wind 3/3 · Action Surge 1/1</text>
+<text x="40" y="384" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Conditions: —</text>
+<text x="40" y="412" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Attuned: ◇◇◇</text>
+<rect x="338" y="90" width="300" height="470" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<rect x="354" y="110" width="80" height="100" rx="4" fill="#3a2a44" stroke="#5c5c69" stroke-width="1"/>
+<text x="446" y="138" font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Tamsin Tealeaf</text>
+<text x="446" y="160" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Rogue 4</text>
+<text x="354" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">HP 18/32</text>
+<rect x="354" y="260" width="268" height="12" rx="6" fill="#1a1220"/>
+<rect x="354" y="260" width="150" height="12" rx="6" fill="#3e6a3a"/>
+<text x="354" y="300" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Hit Dice 2/4 d8</text>
+<text x="354" y="328" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Slots —</text>
+<text x="354" y="356" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Luck</text>
+<text x="354" y="384" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Conditions: Poisoned (2 rounds)</text>
+<text x="354" y="412" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Attuned: ◇◇◇</text>
+<rect x="652" y="90" width="300" height="470" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<rect x="668" y="110" width="80" height="100" rx="4" fill="#3a2a44" stroke="#5c5c69" stroke-width="1"/>
+<text x="760" y="138" font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Hedda Ironvow</text>
+<text x="760" y="160" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Cleric 4</text>
+<text x="668" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">HP 35/35</text>
+<rect x="668" y="260" width="268" height="12" rx="6" fill="#1a1220"/>
+<rect x="668" y="260" width="268" height="12" rx="6" fill="#3e6a3a"/>
+<text x="668" y="300" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Hit Dice 4/4 d8</text>
+<text x="668" y="328" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Slots L1 ●●○○ L2 ●●●</text>
+<text x="668" y="356" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Channel Divinity 2/2</text>
+<text x="668" y="384" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Conditions: —</text>
+<text x="668" y="412" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Attuned: ◇◇◇</text>
+<rect x="966" y="90" width="300" height="470" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<rect x="982" y="110" width="80" height="100" rx="4" fill="#3a2a44" stroke="#5c5c69" stroke-width="1"/>
+<text x="1074" y="138" font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#f4ecd6" font-weight="bold" text-anchor="start">Silvain Aster</text>
+<text x="1074" y="160" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Wizard 4</text>
+<text x="982" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="start">HP 26/26</text>
+<rect x="982" y="260" width="268" height="12" rx="6" fill="#1a1220"/>
+<rect x="982" y="260" width="268" height="12" rx="6" fill="#3e6a3a"/>
+<text x="982" y="300" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Hit Dice 4/4 d6</text>
+<text x="982" y="328" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Slots L1 ●●●● L2 ●●○</text>
+<text x="982" y="356" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Arcane Recovery 1/1</text>
+<text x="982" y="384" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Conditions: Exhaustion 1</text>
+<text x="982" y="412" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Attuned: ◇◇◇</text>
+<rect x="1280" y="90" width="296" height="470" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="1296" y="118" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">GUEST</text>
+<line x1="1292" y1="130" x2="1564" y2="130" stroke="#3a2a44" stroke-width="1"/>
+<rect x="1296" y="110" width="80" height="100" rx="4" fill="#3a2a44" stroke="#5c5c69" stroke-width="1"/>
+<text x="1388" y="138" font-family="Georgia, 'Times New Roman', serif" font-size="15" fill="#f4ecd6" font-weight="bold" text-anchor="start">Ireena Kolyana</text>
+<text x="1296" y="250" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Directed by you in combat.</text>
+<text x="1296" y="274" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">Level and gear come from</text>
+<text x="1296" y="298" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">the story: no level-up or</text>
+<text x="1296" y="322" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#bdbdc6" font-weight="normal" text-anchor="start">build choices.</text>
+<circle cx="1556" cy="110" r="13" fill="#fbe08a" stroke="#1a1220" stroke-width="2"/>
+<text x="1556" y="115" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1a1220" font-weight="bold" text-anchor="middle">1</text>
+<rect x="24" y="576" width="1552" height="234" rx="8" fill="#271c2e" stroke="#3a2a44" stroke-width="1"/>
+<text x="40" y="604" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#c495cf" font-weight="bold" text-anchor="start">PARTY SKILLS (best in each, Expertise ★)</text>
+<line x1="36" y1="616" x2="1564" y2="616" stroke="#3a2a44" stroke-width="1"/>
+<text x="44" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Acrobatics</text>
+<text x="384" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Tamsin +6</text>
+<text x="428" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Arcana</text>
+<text x="768" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Silvain +8 ★</text>
+<text x="812" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Athletics</text>
+<text x="1152" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Ilse +6</text>
+<text x="1196" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Deception</text>
+<text x="1536" y="630" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Tamsin +1</text>
+<text x="44" y="670" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">History</text>
+<text x="384" y="670" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Silvain +6</text>
+<text x="428" y="670" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Insight</text>
+<text x="768" y="670" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Hedda +6</text>
+<text x="812" y="670" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Intimidation</text>
+<text x="1152" y="670" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Ilse +3</text>
+<text x="1196" y="670" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Investigation</text>
+<text x="1536" y="670" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Tamsin +4</text>
+<text x="44" y="710" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Medicine</text>
+<text x="384" y="710" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Hedda +6</text>
+<text x="428" y="710" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Nature</text>
+<text x="768" y="710" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Silvain +4</text>
+<text x="812" y="710" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Perception</text>
+<text x="1152" y="710" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Silvain +4</text>
+<text x="1196" y="710" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Persuasion</text>
+<text x="1536" y="710" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Hedda +3</text>
+<text x="44" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Religion</text>
+<text x="384" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Hedda +2</text>
+<text x="428" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Sleight of Hand</text>
+<text x="768" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Tamsin +8 ★</text>
+<text x="812" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Stealth</text>
+<text x="1152" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Tamsin +8 ★</text>
+<text x="1196" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#bdbdc6" font-weight="normal" text-anchor="start">Survival</text>
+<text x="1536" y="750" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#f4ecd6" font-weight="bold" text-anchor="end">Ilse +2</text>
+</svg>
