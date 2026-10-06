@@ -1,0 +1,1011 @@
+{
+  "id": "castle_ravenloft_catacombs",
+  "name": "Castle Ravenloft, the Catacombs",
+  "region": "castle_ravenloft",
+  "summary": "The crypts under the castle where the house of von Zarovich keeps its dead in rows: generals, servants, a conjurer, a jester, a champion watched by stone, and the black horse's stall. Stairs lead up to the castle and down to the oldest tombs.",
+  "text": "Aisles of crypts run away into the dark in straight lines, each behind an iron gate with a name over it. The air is cold and very still.",
+  "map": {
+    "rows": [
+      "############################################",
+      "###.####################################.###",
+      "#..........................................#",
+      "#..........................................#",
+      "#..........................................#",
+      "########..###########..###########..########",
+      "#......#..#....#....#..#....#....#..#......#",
+      "#...~..#..#....#....#..#....#....#..#......#",
+      "#..............#............#.......#......#",
+      "#......#..#....#....#..#....#....#.........#",
+      "#......#..#....#....#..#....#....#..#......#",
+      "#......#..###########..###########..#......#",
+      "########..#.....#..........#.....#..#......#",
+      "#......#..#.....#..#....#..#.....#..########",
+      "#.........#.....#..........#........#......#",
+      "#......#........#..........#........#......#",
+      "#......#..#.....#..........#...............#",
+      "########..#.....#..#....#..#.....#..#......#",
+      "#......#..#.....#..........#.....#..#......#",
+      "#......#..###########..###########..########",
+      "#......#..#....#....#..#....#....#..#......#",
+      "#.........#....#....#..#....#....#..#......#",
+      "#......#............#.......#..............#",
+      "#......#..#....#....#..#....#....#..#......#",
+      "#......#..#....#....#..#....#....#..#......#",
+      "########..###########..###########..########",
+      "#........................................~.#",
+      "#..............~...........................#",
+      "#..........................................#",
+      "#####.######################################",
+      "############################################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "cat_upper_gallery",
+      "name": "The upper gallery",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          42,
+          4
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "cat_lower_gallery",
+      "name": "The lower gallery",
+      "cells": [
+        [
+          1,
+          26
+        ],
+        [
+          42,
+          29
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "cat_mad_dog_crypt",
+      "name": "The Mad Dog's crypt",
+      "cells": [
+        [
+          1,
+          6
+        ],
+        [
+          6,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "cat_jester_crypt",
+      "name": "The jester's crypt",
+      "cells": [
+        [
+          1,
+          13
+        ],
+        [
+          6,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "cat_conjurer_crypt",
+      "name": "The conjurer's crypt",
+      "cells": [
+        [
+          1,
+          18
+        ],
+        [
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "cat_stewards_crypt",
+      "name": "The stewards' crypt",
+      "cells": [
+        [
+          11,
+          12
+        ],
+        [
+          15,
+          18
+        ]
+      ]
+    },
+    {
+      "id": "cat_hidden_ossuary",
+      "name": "The forgotten ossuary",
+      "cells": [
+        [
+          16,
+          20
+        ],
+        [
+          19,
+          24
+        ]
+      ],
+      "floor": "dungeon/packed_earth"
+    },
+    {
+      "id": "cat_hall_of_names",
+      "name": "The hall of names",
+      "cells": [
+        [
+          17,
+          12
+        ],
+        [
+          26,
+          18
+        ]
+      ],
+      "light": "dim",
+      "floor": "church/stone_flags",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "cat_beucephalus_crypt",
+      "name": "The black horse's crypt",
+      "cells": [
+        [
+          28,
+          12
+        ],
+        [
+          32,
+          18
+        ]
+      ]
+    },
+    {
+      "id": "cat_gargoyle_tomb",
+      "name": "The champion's tomb",
+      "cells": [
+        [
+          37,
+          6
+        ],
+        [
+          42,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "cat_sleepers_crypt",
+      "name": "The sleepers' crypt",
+      "cells": [
+        [
+          37,
+          14
+        ],
+        [
+          42,
+          18
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      3
+    ],
+    "from_gates": [
+      3,
+      3
+    ],
+    "from_larders": [
+      40,
+      3
+    ],
+    "from_tombs": [
+      5,
+      27
+    ],
+    "from_strahd": [
+      18,
+      14
+    ]
+  },
+  "exits": [
+    {
+      "id": "cat_stairs_to_main_floor",
+      "cell": [
+        3,
+        1
+      ],
+      "to": "castle_ravenloft_main_floor",
+      "spawn": "from_catacombs",
+      "label": "Stairs up to the chapel side"
+    },
+    {
+      "id": "cat_stairs_to_larders",
+      "cell": [
+        40,
+        1
+      ],
+      "to": "castle_ravenloft_larders",
+      "spawn": "from_catacombs",
+      "label": "Stairs up to the dungeon"
+    },
+    {
+      "id": "cat_down_to_tombs",
+      "cell": [
+        5,
+        29
+      ],
+      "to": "castle_ravenloft_catacombs_tombs",
+      "spawn": "from_catacombs",
+      "label": "Stairs down to the old tombs"
+    },
+    {
+      "id": "cat_black_stair_down",
+      "cell": [
+        18,
+        15
+      ],
+      "to": "castle_ravenloft_catacombs_strahd",
+      "spawn": "from_catacombs",
+      "label": "The black stair down"
+    }
+  ],
+  "doors": [
+    {
+      "id": "cat_mad_dog_gate",
+      "cell": [
+        7,
+        8
+      ],
+      "label": "an iron crypt gate, chained",
+      "lock_dc": 15
+    },
+    {
+      "id": "cat_jester_gate",
+      "cell": [
+        7,
+        14
+      ],
+      "label": "a small iron crypt gate"
+    },
+    {
+      "id": "cat_conjurer_gate",
+      "cell": [
+        7,
+        21
+      ],
+      "label": "an iron crypt gate scratched with sigils"
+    },
+    {
+      "id": "cat_mw1_gate",
+      "cell": [
+        10,
+        8
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "cat_mw2_gate",
+      "cell": [
+        20,
+        8
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "cat_stewards_gate",
+      "cell": [
+        10,
+        15
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "cat_mw4_gate",
+      "cell": [
+        10,
+        22
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "cat_ossuary_secret",
+      "cell": [
+        15,
+        22
+      ],
+      "label": "a seam in the crypt's back wall",
+      "secret_dc": 16
+    },
+    {
+      "id": "cat_me1_gate",
+      "cell": [
+        23,
+        8
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "cat_me2_gate",
+      "cell": [
+        33,
+        8
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "cat_me4_gate",
+      "cell": [
+        23,
+        22
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "cat_me5_gate",
+      "cell": [
+        33,
+        22
+      ],
+      "label": "an iron crypt gate"
+    },
+    {
+      "id": "cat_champion_gate",
+      "cell": [
+        36,
+        9
+      ],
+      "label": "a tall iron crypt gate"
+    },
+    {
+      "id": "cat_sleepers_gate",
+      "cell": [
+        36,
+        16
+      ],
+      "label": "an iron crypt gate, its bars bent outward"
+    },
+    {
+      "id": "cat_e3_gate",
+      "cell": [
+        36,
+        22
+      ],
+      "label": "an iron crypt gate"
+    }
+  ],
+  "props": [
+    {
+      "id": "cat_mourners_frieze",
+      "cell": [
+        21,
+        1
+      ],
+      "kind": "examine",
+      "label": "A frieze of mourners",
+      "model": "relief"
+    },
+    {
+      "id": "cat_mad_dog_banners",
+      "cell": [
+        0,
+        8
+      ],
+      "kind": "examine",
+      "label": "Torn regimental banners",
+      "model": "tapestry"
+    },
+    {
+      "id": "cat_mad_dog_niches",
+      "cell": [
+        0,
+        10
+      ],
+      "kind": "decor",
+      "label": "Burial niches",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "cat_jester_crypt_lid",
+      "cell": [
+        3,
+        14
+      ],
+      "kind": "examine",
+      "label": "A small sarcophagus",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_conjurer_bier",
+      "cell": [
+        2,
+        19
+      ],
+      "kind": "examine",
+      "label": "The conjurer's bier",
+      "model": "bier",
+      "item": "arcane_focus_wand",
+      "text": "The conjurer lies on his bier with one hand open, where his wand used to be."
+    },
+    {
+      "id": "cat_conjurer_sigils",
+      "cell": [
+        0,
+        22
+      ],
+      "kind": "examine",
+      "label": "Sigils on the wall",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "cat_mw1_crypt",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_mw2_crypt",
+      "cell": [
+        18,
+        8
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_steward_crypt_a",
+      "cell": [
+        12,
+        13
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_steward_crypt_b",
+      "cell": [
+        12,
+        17
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_steward_crypt_c",
+      "cell": [
+        14,
+        13
+      ],
+      "kind": "examine",
+      "label": "A steward's crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_mw4_crypt",
+      "cell": [
+        12,
+        22
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_ossuary_bones",
+      "cell": [
+        17,
+        21
+      ],
+      "kind": "examine",
+      "label": "Bones stacked to the ceiling",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "cat_names_wall",
+      "cell": [
+        20,
+        11
+      ],
+      "kind": "examine",
+      "label": "The wall of names",
+      "model": "relief"
+    },
+    {
+      "id": "cat_black_stair_candles",
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "decor",
+      "label": "Black candles",
+      "model": "candelabra"
+    },
+    {
+      "id": "cat_hall_statue",
+      "cell": [
+        25,
+        15
+      ],
+      "kind": "examine",
+      "label": "A statue of the lord of the house",
+      "model": "statue_strahd"
+    },
+    {
+      "id": "cat_me1_crypt",
+      "cell": [
+        26,
+        8
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_me2_crypt",
+      "cell": [
+        30,
+        8
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_beucephalus_manger",
+      "cell": [
+        28,
+        17
+      ],
+      "kind": "examine",
+      "label": "A manger heaped with bones",
+      "model": "bones"
+    },
+    {
+      "id": "cat_me4_crypt",
+      "cell": [
+        26,
+        22
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_me5_crypt",
+      "cell": [
+        30,
+        22
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_champion_plaque",
+      "cell": [
+        43,
+        9
+      ],
+      "kind": "examine",
+      "label": "A bronze plaque",
+      "model": "relief"
+    },
+    {
+      "id": "cat_sleeper_coffin_a",
+      "cell": [
+        38,
+        14
+      ],
+      "kind": "decor",
+      "label": "An open coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_sleeper_coffin_b",
+      "cell": [
+        41,
+        14
+      ],
+      "kind": "decor",
+      "label": "An open coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_sleeper_coffin_c",
+      "cell": [
+        41,
+        18
+      ],
+      "kind": "decor",
+      "label": "An open coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "cat_e3_crypt",
+      "cell": [
+        40,
+        22
+      ],
+      "kind": "decor",
+      "label": "Crypt",
+      "model": "crypt_small"
+    },
+    {
+      "id": "cat_lower_niches",
+      "cell": [
+        21,
+        29
+      ],
+      "kind": "decor",
+      "label": "Burial niches",
+      "model": "wall_alcoves"
+    }
+  ],
+  "containers": [
+    {
+      "id": "cat_mad_dog_sarcophagus",
+      "cell": [
+        2,
+        9
+      ],
+      "label": "The Mad Dog's sarcophagus",
+      "model": "crypt",
+      "items": [
+        {
+          "id": "longsword",
+          "qty": 1
+        }
+      ],
+      "gold": 45
+    },
+    {
+      "id": "cat_conjurer_reliquary",
+      "cell": [
+        5,
+        23
+      ],
+      "label": "A sealed reliquary with a slot in its lid",
+      "model": "chest_iron",
+      "key": "arcane_focus_wand",
+      "lock_dc": 22,
+      "items": [
+        {
+          "id": "spell_scroll_level_1",
+          "qty": 2
+        },
+        {
+          "id": "ink",
+          "qty": 1
+        }
+      ],
+      "gold": 30
+    },
+    {
+      "id": "cat_jester_box",
+      "cell": [
+        5,
+        16
+      ],
+      "label": "A painted box",
+      "model": "toy_chest",
+      "items": [
+        {
+          "id": "playing_card_set",
+          "qty": 1
+        }
+      ],
+      "gold": 7
+    },
+    {
+      "id": "cat_hidden_ossuary_chest",
+      "cell": [
+        18,
+        23
+      ],
+      "label": "An iron-bound chest under the bones",
+      "model": "chest_iron",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        }
+      ],
+      "gold": 120
+    },
+    {
+      "id": "cat_noble_crypt",
+      "cell": [
+        31,
+        23
+      ],
+      "label": "A noble's crypt, its lid ajar",
+      "model": "crypt_small",
+      "items": [
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "gold": 25
+    },
+    {
+      "id": "cat_champion_slab",
+      "cell": [
+        39,
+        9
+      ],
+      "label": "The champion's slab",
+      "model": "crypt",
+      "items": [
+        {
+          "id": "greatsword",
+          "qty": 1
+        }
+      ],
+      "gold": 20
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        26,
+        12
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        3,
+        6
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "traps": [
+    {
+      "id": "cat_mad_dog_blade",
+      "cells": [
+        [
+          4,
+          9
+        ],
+        [
+          4,
+          10
+        ]
+      ],
+      "label": "a scything blade under the flagstones",
+      "detect_dc": 15,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d10",
+      "damage_type": "slashing",
+      "flag": "cat_mad_dog_blade_known",
+      "text": "A flagstone sinks, and a blade swings out of the wall at knee height."
+    },
+    {
+      "id": "cat_conjurer_glyph",
+      "cells": [
+        [
+          6,
+          21
+        ]
+      ],
+      "label": "a glyph cut into the threshold",
+      "detect_dc": 16,
+      "disarm_dc": 16,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d8",
+      "damage_type": "lightning",
+      "text": "The sigil under your foot wakes with a crack, and blue light jumps up your legs."
+    }
+  ],
+  "encounters": [
+    {
+      "id": "cat_horseman_final",
+      "trigger": "enter_area:cat_beucephalus_crypt",
+      "when": "not flag.strahd_in_coffin",
+      "final_battle": "castle_ravenloft_catacombs",
+      "lair": true,
+      "surprise": "",
+      "text": "The black horse lifts its head from the manger, and the man beside it turns around.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            29,
+            15
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            29,
+            12
+          ],
+          "name": "Beucephalus"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            31,
+            17
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            30,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_sleepers",
+      "trigger": "enter_area:cat_sleepers_crypt",
+      "when": "night",
+      "surprise": "",
+      "flag": "cat_sleepers_slain",
+      "text": "The coffins are empty because their sleepers are already standing, and they have been waiting for you.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            39,
+            16
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            16
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            40,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_sleepers",
+      "trigger": "enter_area:cat_sleepers_crypt",
+      "when": "day",
+      "surprise": "enemies",
+      "flag": "cat_sleepers_slain",
+      "text": "Two of the coffins are not empty. The things in them open their eyes slowly, sick with the day.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            39,
+            16
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_gargoyle_watch",
+      "trigger": "enter_area:cat_gargoyle_tomb",
+      "surprise": "",
+      "flag": "cat_gargoyles_slain",
+      "text": "The winged figures at the corners of the slab unfold, stone grinding on stone, and drop to the floor.",
+      "monsters": [
+        {
+          "monster": "gargoyle",
+          "cell": [
+            38,
+            7
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            41,
+            7
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            38,
+            11
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            41,
+            11
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            40,
+            6
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            39,
+            12
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_catacombs"
+  },
+  "rest": "risky",
+  "treasure_spots": {
+    "castle_ravenloft_crypt_of_the_mad_dog": {
+      "container": "cat_mad_dog_sarcophagus"
+    },
+    "castle_ravenloft_crypt_of_the_wizard": {
+      "container": "cat_conjurer_reliquary"
+    },
+    "castle_ravenloft_gargoyle_tomb": {
+      "container": "cat_champion_slab"
+    }
+  }
+}

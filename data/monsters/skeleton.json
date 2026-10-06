@@ -1,0 +1,99 @@
+{
+  "id": "skeleton",
+  "name": "Skeleton",
+  "source": {
+    "book": "MM2025",
+    "edition": "2024",
+    "note": "The 2024 Skeleton (2025 Monster Manual, also in SRD 5.2.1), entered from knowledge; not yet compared line by line with SRD 5.2.1."
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "lawful evil",
+  "ac": 14,
+  "initiative": 3,
+  "hp": {
+    "average": 13,
+    "dice": "2d8+4"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 10,
+    "dex": 16,
+    "con": 15,
+    "int": 6,
+    "wis": 8,
+    "cha": 5
+  },
+  "vulnerabilities": [
+    "bludgeoning"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 9,
+  "languages": [
+    "understands Common and one other language but can't speak"
+  ],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "gear": [
+    "shortbow",
+    "shortsword"
+  ],
+  "actions": [
+    {
+      "id": "shortsword",
+      "name": "Shortsword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d6+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Stabs with a rusty shortsword.",
+      "weapon": true
+    },
+    {
+      "id": "shortbow",
+      "name": "Shortbow",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 5,
+        "range": [
+          80,
+          320
+        ]
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d6+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Shoots an arrow up to 320 ft.",
+      "weapon": true
+    }
+  ],
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "brute",
+  "summary": "Old bones that still follow orders: arrows from afar, a blade up close; blunt weapons shatter them."
+}

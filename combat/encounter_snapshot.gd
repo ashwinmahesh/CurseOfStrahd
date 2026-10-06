@@ -59,7 +59,8 @@ static func capture(e: Encounter) -> Dictionary:
 		log.append(en.duplicate(true))
 	return {"version": 1, "rows": rows, "combatants": cbs, "order": order, "round": e.round_no, "marks": e.marks.duplicate(true),
 		"grapples": e.grapples.duplicate(), "studied": e.studied.duplicate(), "title": e.title, "log": log,
-		"spells": e.spells.to_dict(), "shapes": e.shapes.to_dict(), "light": e.ambient_light, "sunlit": e.sunlit}
+		"spells": e.spells.to_dict(), "shapes": e.shapes.to_dict(), "light": e.ambient_light, "sunlit": e.sunlit,
+		"location_id": e.location_id, "places": e.places.duplicate(), "lair": e.lair, "outdoors": e.outdoors, "boss": e.legendary.to_dict()}
 
 
 ## Rebuilds the fight; `party` supplies the party's Character objects (from the loaded story) by id when present.
@@ -123,11 +124,18 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 	e.ambient_light = str(d.get("light", "bright"))
 	e.sunlit = bool(d.get("sunlit", false))
 	e.spells.from_dict(d.get("spells", {}) as Dictionary)
+	e.location_id = str(d.get("location_id", ""))
+	for pl: Variant in d.get("places", []):
+		e.places.append(str(pl))
+	e.lair = bool(d.get("lair", false))
+	e.outdoors = bool(d.get("outdoors", false))
+	e.legendary.from_dict(d.get("boss", {}) as Dictionary)
+	e.legendary.after_restore()
 	e.state = Encounter.State.ACTIVE
 	e.round_no = int(d["round"])
 	e.log.round_no = e.round_no
 	e.turn_index = 0
 	while e.turn_index < e.order.size() and not e.order[e.turn_index].is_alive():
 		e.turn_index += 1
-	e._begin_turn()
+	e._lair_then_begin()
 	return e

@@ -1,0 +1,10 @@
+{
+  "region": "endings",
+  "flags": [
+    {
+      "id": "campaign_ending",
+      "type": "string",
+      "summary": "The ending the campaign reached (a data/endings id): set by story/endings.gd when the game ends (`end_game`, the parley's yield or ireena, a wipe in a final battle, or a won fight that leaves strahd_destroyed set). The ending screen plays it; a finished save that is loaded plays it again. Dialogue never sets it."
+    }
+  ]
+}

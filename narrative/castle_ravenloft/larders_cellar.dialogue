@@ -1,0 +1,37 @@
+# The wine cellar's bricked-over rack (prop larders_bricked_rack / larders_open_niche): the Tarokka place
+# castle_ravenloft_wine_cellar (treasure_spots dialogue castle_ravenloft/larders_cellar:niche). No roll is needed.
+
+~ niche
+if flag.larders_niche_opened
+-> niche_open
+endif
+Narrator: At the very back of the cellar, one rack has been bricked over. The bricks are newer than the wall around them, and someone has pressed a row of corks into the mortar like buttons.
+if flag.larders_niche_told
+Narrator: The cook's work. He did say he was good with bricks.
+endif
+* (Pull the bricks down.) -> niche_break
+* [Investigation DC 12] (Look the brickwork over first.) -> niche_study | niche_break
+* Leave it walled up. -> END
+
+~ niche_study
+Narrator: The mortar was laid from outside, in one go, by somebody tidy. Low on one brick, scratched from the inside, is a single word: VINEGAR.
+-> niche_break
+
+~ niche_break
+set larders_niche_opened
+time +10
+Narrator: The bricks come out one at a time. Behind them, in a rack's worth of space, a man in a good merchant's coat sits among his own bottles, long dead, with his ledger in his lap.
+if treasure_at:castle_ravenloft_wine_cellar
+Narrator: Under the ledger, wrapped in a fold of his coat as if he were keeping it warm, is something that was never a wine merchant's.
+tarokka give castle_ravenloft_wine_cellar
+endif
+Narrator: His purse is still on his belt. The ledger's last page is a bill to the castle for six casks, marked paid in a different hand.
+gold +35
+give book 1
+interject tag:devout: Rest now, whoever you were. You can stop holding your breath.
+interject name:tamsin_tealeaf: Whoever he was, he kept a very tidy purse.
+-> END
+
+~ niche_open
+Narrator: The wine merchant sits among his bottles with his coat open and his ledger closed. There's nothing more he can sell anyone.
+-> END

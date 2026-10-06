@@ -861,6 +861,7 @@ func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	e.class_features.after_d20(c, t)
 	e.ravenloft.after_d20(c, t, keys)
 	e.items.after_d20(c, t, keys)
+	e.legendary.after_d20(c, t)
 	if not cr is Character:
 		return
 	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.

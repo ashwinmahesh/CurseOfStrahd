@@ -1,0 +1,536 @@
+{
+  "id": "strahd_von_zarovich",
+  "name": "Strahd von Zarovich",
+  "source": {
+    "book": "CoS",
+    "edition": "2014",
+    "note": "Curse of Strahd's own block (2016; the 2025 Monster Manual has no Strahd, owner rule 2026-10-06) in the 2024 layout with ADR 0014's boss fields. Entered from knowledge, not yet checked against the book: the skill bonuses, the prepared spells and the lair actions especially need it. For the engine: his resistance to nonmagical Bludgeoning, Piercing and Slashing is text only (the engine can't tell a magic weapon; by the castle the party's weapons are mostly magic, so this is closer than plain resistance), and so is the mist form's immunity to nonmagical damage. Unarmed Strike grapples on every hit and still deals its Bludgeoning damage (the book: a grapple instead of that damage). A creature he has Charmed counts as willing for the Bite. Children of the Night calls at most 8 wolves (the book: 3d6). Which actions each shape allows is given only by forms.shapes[].actions (the actions carry no forms lists of their own); the wolf shape has no attack, as in the book. The lair's apparition uses the game's specter (2024) for its one attack. Ray of Frost runs as an attack (its slow is text only); spell slots are listed per spell. The Heart of Sorrow that shields him in the castle is not part of this block."
+  },
+  "size": "medium",
+  "type": "undead",
+  "tags": [
+    "shapechanger"
+  ],
+  "alignment": "lawful evil",
+  "ac": 16,
+  "ac_note": "Natural armor",
+  "initiative": 4,
+  "hp": {
+    "average": 144,
+    "dice": "17d8+68"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 18,
+    "con": 18,
+    "int": 20,
+    "wis": 15,
+    "cha": 18
+  },
+  "saves": {
+    "dex": 9,
+    "wis": 7,
+    "cha": 9
+  },
+  "skills": {
+    "arcana": 15,
+    "perception": 12,
+    "religion": 10,
+    "stealth": 14
+  },
+  "resistances": [
+    "necrotic"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 22,
+  "languages": [
+    "Abyssal",
+    "Common",
+    "Draconic",
+    "Elvish",
+    "Giant",
+    "Infernal"
+  ],
+  "cr": 15,
+  "xp": 13000,
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "id": "shapechanger",
+      "name": "Shapechanger",
+      "action": "action",
+      "summary": "As an action, becomes a Tiny bat, a Medium wolf or a cloud of mist, or returns to his own shape; not in sunlight or running water.",
+      "text": "Unless he is in sunlight or running water, Strahd can spend his action to turn into a Tiny bat (Speed 5 ft., Fly 30 ft.), a Medium wolf (Speed 40 ft.) or a Medium cloud of mist (Fly 20 ft., hovering), or back into his true form. He keeps his Hit Points and other statistics apart from size and speed; what he wears changes with him, what he carries doesn't, and he can't speak as a bat or a wolf. As mist he can't act, speak or handle objects, weighs nothing, can drift into and stay in an enemy's space, slips through any gap air can pass (but not through water), has Advantage on Strength, Dexterity and Constitution saves, and nonmagical damage can't hurt him except sunlight's. He returns to his true form if he dies.",
+      "implemented": "engine"
+    },
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (3/Day)",
+      "action": "special",
+      "summary": "Three times a day, a failed saving throw becomes a success.",
+      "text": "When Strahd fails a saving throw, he can choose to succeed instead. He can do this three times a day (once per fight in the game counts against the same three).",
+      "implemented": "engine"
+    },
+    {
+      "id": "misty_escape",
+      "name": "Misty Escape",
+      "action": "special",
+      "summary": "Dropped to 0 HP outside his coffin, he becomes mist and flees to it instead of falling.",
+      "text": "When Strahd drops to 0 Hit Points anywhere but his coffin, he turns into a cloud of mist instead of falling, unless sunlight or running water stops the change, in which case he is destroyed. At 0 Hit Points as mist he can't change back, and he must reach his coffin within 2 hours or be destroyed. In the coffin he returns to his true form, Paralyzed until he regains a Hit Point, which takes an hour of rest there. Destroying him for good means finishing him in the coffin.",
+      "implemented": "engine"
+    },
+    {
+      "id": "regeneration",
+      "name": "Regeneration",
+      "action": "passive",
+      "summary": "Regains 20 HP at the start of his turn, unless he took Radiant damage or holy water since his last turn, or is in sunlight or running water.",
+      "text": "At the start of his turn Strahd regains 20 Hit Points if he has at least 1 Hit Point and isn't in sunlight or running water. Radiant damage, or damage from holy water, stops this at the start of his next turn.",
+      "implemented": "engine"
+    },
+    {
+      "id": "spider_climb",
+      "name": "Spider Climb",
+      "action": "passive",
+      "summary": "Climbs walls and ceilings with no ability check.",
+      "text": "Strahd can climb difficult surfaces, even upside down across ceilings, without an ability check.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "spider_climb"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "vampire_weakness",
+      "name": "Vampire Weaknesses",
+      "action": "passive",
+      "summary": "Needs an invitation to enter a home; hurt by running water and sunlight; a wooden stake in his coffin pins him.",
+      "text": "Forbiddance: he can't enter a home unless someone living there invites him in. Running water: he takes 20 Acid damage if he ends his turn in it. Stake: a wooden piercing weapon driven into his heart while he is Incapacitated in his coffin leaves him Paralyzed until it is pulled out. Sunlight: he takes 20 Radiant damage if he starts his turn in it, and while in it he has Disadvantage on attack rolls and ability checks.",
+      "implemented": "engine",
+      "sunlight": "hypersensitivity"
+    },
+    {
+      "id": "mundane_weapon_resistance",
+      "name": "Resistance to Mundane Weapons",
+      "action": "passive",
+      "summary": "Takes half Bludgeoning, Piercing and Slashing damage from nonmagical attacks.",
+      "text": "Strahd has Resistance to Bludgeoning, Piercing and Slashing damage from attacks that aren't magical. Text only for the engine, which can't tell a magic weapon from a plain one.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack (Vampire Form Only)",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "unarmed_strike",
+          "count": 1
+        },
+        {
+          "action": "unarmed_strike",
+          "count": 1,
+          "or": [
+            "bite"
+          ]
+        }
+      ],
+      "summary": "Two attacks, at most one of them a Bite."
+    },
+    {
+      "id": "unarmed_strike",
+      "name": "Unarmed Strike (Vampire Form Only)",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "1d8+4",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 14,
+          "dice": "4d6",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A cold blow that also drains life; he can seize the target (escape DC 18).",
+      "text": "Hit: 8 (1d8 + 4) Bludgeoning damage plus 14 (4d6) Necrotic damage. Against a creature he can grapple it (escape DC 18) instead of dealing the Bludgeoning damage; the engine grapples on every hit and keeps the damage.",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 18,
+          "limit": 2
+        }
+      ]
+    },
+    {
+      "id": "bite",
+      "name": "Bite (Bat or Vampire Form Only)",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d6+4",
+          "type": "piercing"
+        },
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "Bites a willing, held, Incapacitated or Restrained creature, lowering its Hit Point maximum and healing himself.",
+      "text": "Only against a willing creature, or one he is grappling, or one that is Incapacitated or Restrained. Hit: 7 (1d6 + 4) Piercing damage plus 10 (3d6) Necrotic damage. The target's Hit Point maximum drops by the Necrotic damage taken until it finishes a Long Rest, and Strahd regains that many Hit Points. A target whose maximum reaches 0 dies; a Humanoid killed this way and buried rises the next night as his vampire spawn.",
+      "targets": {
+        "requires": [
+          "willing",
+          "charmed",
+          "grappled",
+          "incapacitated",
+          "restrained"
+        ]
+      },
+      "on_hit": [
+        {
+          "do": "drain_max_hp",
+          "type": "necrotic"
+        },
+        {
+          "do": "heal_self",
+          "type": "necrotic"
+        }
+      ]
+    },
+    {
+      "id": "charm",
+      "name": "Charm",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 17,
+        "success": "none"
+      },
+      "area": {
+        "targets": 1,
+        "range": 30
+      },
+      "targets": {
+        "range": 30,
+        "count": 1,
+        "types": [
+          "humanoid"
+        ]
+      },
+      "summary": "DC 17 Wis save by a Humanoid within 30 ft that can see him, or it is Charmed; harm lets it save again.",
+      "text": "Strahd picks a Humanoid he can see within 30 feet. If it can see him, it makes a DC 17 Wisdom saving throw against this magic or has the Charmed condition. A charmed creature treats him as a trusted friend: it isn't under his control, but it takes his words and deeds in the best light and lets him bite it. Whenever Strahd or his allies harm it, it can repeat the save, ending the charm on a success. Otherwise the charm lasts 24 hours, until he is destroyed or on another plane, or until he ends it as a Bonus Action.",
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "charmed",
+          "until": "permanent",
+          "repeat_save": {
+            "ability": "wis",
+            "dc": 17,
+            "when": "manual",
+            "on_damage": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "children_of_the_night",
+      "name": "Children of the Night (1/Day)",
+      "kind": "special",
+      "uses": {
+        "count": 1,
+        "per": "day"
+      },
+      "summary": "Calls 2d4 swarms of bats or rats, or outdoors 3d6 wolves, arriving in 1d4 rounds; not while the sun is up.",
+      "text": "Unless the sun is up, Strahd calls the creatures of the night: 2d4 swarms of bats or swarms of rats, or, outdoors, 3d6 wolves instead. They come in 1d4 rounds, fight on his side and heed his spoken orders, and stay for an hour, until he dies, or until he sends them off as a Bonus Action. The engine calls bats indoors and at most 8 wolves outdoors.",
+      "summon": {
+        "choices": [
+          {
+            "monster": "wolf",
+            "count": "3d6",
+            "max": 8,
+            "where": "outdoors"
+          },
+          {
+            "monster": "swarm_of_bats",
+            "count": "2d4",
+            "where": "any"
+          },
+          {
+            "monster": "swarm_of_rats",
+            "count": "2d4",
+            "where": "any"
+          }
+        ],
+        "arrive": "1d4",
+        "not_in": [
+          "sunlight"
+        ]
+      }
+    },
+    {
+      "id": "ray_of_frost",
+      "name": "Ray of Frost",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 10,
+        "range": [
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "cold"
+        }
+      ],
+      "summary": "Casts Ray of Frost up to 60 ft; the target's Speed drops by 10 ft until his next turn.",
+      "text": "Ranged spell attack: +10 to hit, range 60 ft. Hit: 9 (2d8) Cold damage, and the target's Speed is 10 feet lower until the start of his next turn (the slow is text only for the engine)."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "A 9th-level wizard (Int, DC 18, +10): Fog Cloud, Sleep, Mirror Image, Fireball, Animate Dead, Blight, Greater Invisibility, Polymorph, Animate Objects and more.",
+      "text": "Strahd casts spells as a 9th-level wizard, using Intelligence (spell save DC 18, +10 to hit with spell attacks). Cantrips (at will): Mage Hand, Prestidigitation, Ray of Frost. 1st level (4 slots): Comprehend Languages, Fog Cloud, Sleep. 2nd level (3 slots): Detect Thoughts, Gust of Wind, Mirror Image. 3rd level (3 slots): Animate Dead, Fireball, Nondetection. 4th level (3 slots): Blight, Greater Invisibility, Polymorph. 5th level (1 slot): Animate Objects, Scrying."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 18,
+    "attack": 10,
+    "at_will": [
+      "mage_hand",
+      "prestidigitation"
+    ],
+    "per_day": {
+      "4": [
+        "comprehend_languages",
+        "fog_cloud",
+        "sleep"
+      ],
+      "3": [
+        "detect_thoughts",
+        "gust_of_wind",
+        "mirror_image",
+        "animate_dead",
+        "fireball",
+        "nondetection",
+        "blight",
+        "greater_invisibility",
+        "polymorph"
+      ],
+      "1": [
+        "animate_objects",
+        "scrying"
+      ]
+    }
+  },
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "move",
+        "name": "Move",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to his Speed without provoking Opportunity Attacks."
+      },
+      {
+        "id": "unarmed_strike",
+        "name": "Unarmed Strike",
+        "cost": 1,
+        "action": "unarmed_strike",
+        "summary": "Makes one Unarmed Strike."
+      },
+      {
+        "id": "bite",
+        "name": "Bite (Costs 2 Actions)",
+        "cost": 2,
+        "action": "bite",
+        "summary": "Makes one Bite attack."
+      }
+    ]
+  },
+  "lair_actions": [
+    {
+      "id": "through_the_walls",
+      "name": "Through the Walls",
+      "kind": "self",
+      "summary": "Until the next lair turn, Strahd passes through walls, doors, floors and ceilings.",
+      "text": "Until initiative count 20 of the next round, Strahd moves through solid walls, doors, ceilings and floors as if they weren't there. The engine lets him cross walls as Difficult Terrain.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "incorporeal_movement"
+        }
+      ]
+    },
+    {
+      "id": "slam_the_doors",
+      "name": "Doors Obey",
+      "kind": "text",
+      "summary": "Doors and windows he can see fly open or slam shut, and shut ones can be magically locked (DC 20 Strength to force).",
+      "text": "Strahd chooses any number of doors and windows he can see; each opens or closes as he likes. Closed ones can be magically locked, needing a DC 20 Strength check to force, until he ends it or uses another lair action. Told only: the engine doesn't move doors in a fight yet."
+    },
+    {
+      "id": "vengeful_dead",
+      "name": "Vengeful Dead",
+      "kind": "attack",
+      "attack": {
+        "bonus": 4,
+        "range": 120
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "necrotic"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "drain_max_hp",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "The angry ghost of someone who died in the castle strikes a foe he can see, then fades.",
+      "text": "Strahd calls up the furious spirit of one who died in the castle. It appears beside an enemy he can see, attacks it once with a specter's Life Drain, and vanishes. The engine uses the game's specter: +4 to hit, 7 (2d6) Necrotic damage, and the target's Hit Point maximum drops by the damage taken."
+    },
+    {
+      "id": "shadow_thief",
+      "name": "Shadow Thief",
+      "kind": "save",
+      "save": {
+        "ability": "cha",
+        "dc": 17,
+        "success": "none"
+      },
+      "targets": {
+        "range": 30,
+        "count": 1,
+        "max_size": "medium"
+      },
+      "summon": {
+        "monster": "shadow",
+        "count": 1
+      },
+      "summary": "A Medium or smaller foe within 30 ft makes a DC 17 Cha save or its shadow tears loose and serves him.",
+      "text": "Strahd targets a Medium or smaller creature within 30 feet whose shadow he can see. On a failed DC 17 Charisma saving throw its shadow pulls free and becomes a Shadow that obeys him, acting on initiative count 20. Greater Restoration or Remove Curse on the creature brings its own shadow back, but only once the undead shadow is destroyed (text only)."
+    }
+  ],
+  "legendary_resistance": 3,
+  "regenerates": {
+    "hp": 20,
+    "stopped_by": [
+      "radiant"
+    ],
+    "running_water": true,
+    "sunlight": true
+  },
+  "forms": {
+    "base": "vampire",
+    "change": "action",
+    "blocked_in": [
+      "sunlight",
+      "running_water"
+    ],
+    "shapes": [
+      {
+        "id": "bat",
+        "name": "Bat",
+        "size": "tiny",
+        "speed": {
+          "walk": 5,
+          "fly": 30
+        },
+        "actions": [
+          "bite",
+          "charm",
+          "children_of_the_night"
+        ],
+        "summary": "A Tiny bat (Speed 5 ft., Fly 30 ft.): can bite, but can't speak or cast spells."
+      },
+      {
+        "id": "wolf",
+        "name": "Wolf",
+        "size": "medium",
+        "speed": {
+          "walk": 40
+        },
+        "actions": [
+          "charm",
+          "children_of_the_night"
+        ],
+        "art": "wolf",
+        "summary": "A Medium wolf (Speed 40 ft.): fast, but no attacks and no speech."
+      },
+      {
+        "id": "mist",
+        "name": "Mist",
+        "size": "medium",
+        "speed": {
+          "walk": 0,
+          "fly": 20,
+          "hover": true
+        },
+        "actions": [],
+        "save_advantage": [
+          "str",
+          "dex",
+          "con"
+        ],
+        "flags": [
+          "enters_spaces"
+        ],
+        "summary": "A drifting cloud (Fly 20 ft., hovering): can't act or speak, can enter enemies' spaces, Advantage on Str, Dex and Con saves."
+      }
+    ]
+  },
+  "misty_escape": {
+    "resting_place": "castle_ravenloft_strahds_tomb",
+    "flag": "strahd_in_coffin",
+    "form": "mist",
+    "destroyed_flag": "strahd_destroyed",
+    "quest": {
+      "id": "strahds_lair",
+      "stage": "destroyed"
+    },
+    "blocked_in": [
+      "sunlight",
+      "running_water"
+    ],
+    "narration": "strahd:fled_to_coffin"
+  },
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "strahd",
+  "art": "strahd",
+  "summary": "The vampire lord of Barovia: crushing blows and a draining bite, charm, wolves and bats at his call, wounds that close each turn, and mist when he falls.",
+  "ward": {
+    "hp": 50,
+    "unless": "flag.heart_of_sorrow_shattered",
+    "region": "castle_ravenloft"
+  }
+}

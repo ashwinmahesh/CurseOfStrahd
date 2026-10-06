@@ -1,0 +1,28 @@
+{
+  "id": "castle_ravenloft",
+  "name": "Castle Ravenloft",
+  "places": [
+    {
+      "id": "castle_ravenloft",
+      "name": "Castle Ravenloft",
+      "location": "castle_ravenloft_gates",
+      "spawn": "gate",
+      "pos": [
+        0.695,
+        0.73
+      ],
+      "region": "castle_ravenloft",
+      "summary": "Strahd's castle on its pillar of rock above the valley, reached by a drawbridge over a chasm. Its doors open for anyone."
+    }
+  ],
+  "roads": [
+    {
+      "id": "crossroads_to_castle_ravenloft",
+      "from": "svalich_crossroads",
+      "to": "castle_ravenloft",
+      "hours": 2,
+      "table": "svalich_woods",
+      "name": "The castle road, climbing south through the dead pines"
+    }
+  ]
+}

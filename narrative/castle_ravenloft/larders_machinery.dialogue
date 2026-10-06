@@ -1,0 +1,43 @@
+# The dungeon's machinery (docs/regions/castle_ravenloft_larders.md §3, §4).
+# winch: the lift winch in the larders (sets larders_lift_ready, which opens the lift exit down to the cells).
+# sluice: the furnace's sluice wheel in the dungeon (larders_furnace_quenched: the green fire and the bone lamp go out).
+
+~ winch
+if flag.larders_lift_ready
+Narrator: The brake is set and the cage waits at the landing, turning slowly on its chain.
+-> END
+endif
+Narrator: A great iron winch, its drum wound with chain that runs down a square shaft into the dark. Beside it a brake lever stands thrown off, and the cage hangs a foot below the landing.
+* (Set the brake and wind the cage up to the landing.) -> winch_set
+* [Investigation DC 13] (Look the machine over first.) -> winch_study | winch_set
+* Leave it. -> END
+
+~ winch_study
+Narrator: The brake's catch has been filed half through, neatly, on purpose. Let go of the handle with anyone in the cage and the cage goes straight to the bottom.
+Narrator: Someone used to send guests down this way. You wedge the catch with an iron spike before you trust it.
+-> winch_set
+
+~ winch_set
+set larders_lift_ready
+time +5
+Narrator: It takes two of you on the handles. The cage comes up out of the dark, rattling, and something small with a great many legs leaves it in a hurry.
+-> END
+
+~ sluice
+if flag.larders_furnace_quenched
+Narrator: The furnace is black and dripping, and the sluice wheel is turned as far as it goes.
+-> END
+endif
+Narrator: Beside the furnace, an iron wheel works a sluice gate in a pipe as thick as a man. Water mutters behind it. The green fire roars on, unbothered.
+if flag.larders_lamp_told
+Narrator: The cook said the lamp over the Master's table drinks from this furnace.
+endif
+* (Turn the wheel and let the water in.) -> sluice_turn
+* Leave it burning. -> END
+
+~ sluice_turn
+set larders_furnace_quenched
+time +5
+Narrator: The wheel shrieks, the sluice opens, and black water floods the firebox. The green fire screams like a kettle and goes out. All through the dungeon, the green lamps go out with it.
+interject class:wizard: The gears have stopped. Whatever that fire was driving, it isn't now.
+-> END

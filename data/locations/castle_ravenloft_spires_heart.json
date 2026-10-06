@@ -1,0 +1,324 @@
+{
+  "id": "castle_ravenloft_spires_heart",
+  "name": "Castle Ravenloft, the Heart of Sorrow",
+  "region": "castle_ravenloft",
+  "summary": "The round room at the very top of the high tower, with windows on the whole valley. In the middle, over a low dais, hangs a crystal heart the size of a man, beating slowly. It takes Strahd's wounds before he does.",
+  "text": "A round room at the top of the world, windows on every side. In the middle hangs a heart of red crystal as big as a man, and it beats.",
+  "map": {
+    "rows": [
+      "##################",
+      "#####........#####",
+      "###............###",
+      "##..............##",
+      "##..............##",
+      "#.......11.......#",
+      "#......1111......#",
+      "#......1111......#",
+      "#.......11.......#",
+      "##..............##",
+      "##..............##",
+      "###............###",
+      "#####.##..##.#####",
+      "####..........####",
+      "####..........####",
+      "##################"
+    ],
+    "theme": "church",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "spires_heart_landing",
+      "name": "The last landing",
+      "cells": [
+        [
+          4,
+          12
+        ],
+        [
+          13,
+          14
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "spires_heart_chamber",
+      "name": "The Heart of Sorrow",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          16,
+          11
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    }
+  ],
+  "spawns": {
+    "default": [
+      8,
+      14
+    ],
+    "from_stair": [
+      8,
+      14
+    ]
+  },
+  "exits": [
+    {
+      "id": "down_to_landing",
+      "cell": [
+        5,
+        14
+      ],
+      "to": "castle_ravenloft_spires",
+      "spawn": "from_heart",
+      "label": "Down to the high landing"
+    }
+  ],
+  "props": [
+    {
+      "id": "spires_heart_of_sorrow",
+      "cell": [
+        8,
+        6
+      ],
+      "kind": "examine",
+      "label": "The Heart of Sorrow",
+      "model": "cage_hanging",
+      "dialogue": "castle_ravenloft/spires_heart:heart",
+      "when": "not flag.heart_of_sorrow_shattered"
+    },
+    {
+      "id": "spires_heart_shards",
+      "cell": [
+        9,
+        7
+      ],
+      "kind": "examine",
+      "label": "Shards of red crystal",
+      "model": "glass_ring",
+      "when": "flag.heart_of_sorrow_shattered"
+    },
+    {
+      "id": "spires_heart_drip",
+      "cell": [
+        7,
+        7
+      ],
+      "kind": "decor",
+      "label": "Dark drops on the dais",
+      "model": "bloodstain"
+    },
+    {
+      "id": "spires_heart_window_north",
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "examine",
+      "label": "The north window",
+      "model": "window_tall"
+    },
+    {
+      "id": "spires_heart_window_east",
+      "cell": [
+        16,
+        6
+      ],
+      "kind": "examine",
+      "label": "The east window",
+      "model": "window_tall"
+    },
+    {
+      "id": "spires_heart_window_west",
+      "cell": [
+        1,
+        6
+      ],
+      "kind": "examine",
+      "label": "The west window",
+      "model": "window_tall"
+    },
+    {
+      "id": "spires_heart_chains",
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "decor",
+      "label": "Chains in the stone",
+      "model": "wall_chains"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        8,
+        5
+      ],
+      "kind": "magic",
+      "bright_ft": 10,
+      "dim_ft": 30
+    }
+  ],
+  "npcs": [],
+  "encounters": [
+    {
+      "id": "heart_of_sorrow_final",
+      "trigger": "enter_area:spires_heart_chamber",
+      "when": "",
+      "final_battle": "castle_ravenloft_heart_of_sorrow",
+      "lair": true,
+      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below.",
+      "surprise": "",
+      "flag": "spires_final_battle_fought",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            8,
+            4
+          ],
+          "name": "Strahd von Zarovich"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Heart's Warden"
+        }
+      ]
+    },
+    {
+      "id": "heart_guardians",
+      "trigger": "dialogue",
+      "when": "not flag.heart_guardians_beaten and level >= 11",
+      "text": "The heart rings like a struck bell. Below, armour comes clanking up the last turn of the stair, and something in a great helm floats up the well behind it.",
+      "surprise": "",
+      "flag": "heart_guardians_beaten",
+      "monsters": [
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            6,
+            11
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            11,
+            11
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            3,
+            9
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            14,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heart_guardians",
+      "trigger": "dialogue",
+      "when": "not flag.heart_guardians_beaten and level >= 10",
+      "text": "The heart rings like a struck bell. Below, armour comes clanking up the last turn of the stair, and something in a great helm floats up the well behind it.",
+      "surprise": "",
+      "flag": "heart_guardians_beaten",
+      "monsters": [
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            6,
+            11
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            11,
+            11
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            14,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heart_guardians",
+      "trigger": "dialogue",
+      "when": "not flag.heart_guardians_beaten",
+      "text": "The heart rings like a struck bell. Below, armour comes clanking up the last turn of the stair, and something in a great helm floats up the well behind it.",
+      "surprise": "",
+      "flag": "heart_guardians_beaten",
+      "monsters": [
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            6,
+            11
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            14,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heart_strahd_test",
+      "trigger": "flag:heart_of_sorrow_shattered",
+      "when": "not flag.strahd_heart_tested and not (quest.strahds_lair >= confronted) and not final_room:castle_ravenloft_heart_of_sorrow",
+      "text": "Mist pours up out of the stair and stands up in the shape of a tall man in black. He looks at the shards for a long moment before he looks at you, and then he is simply among you.",
+      "surprise": "",
+      "flag": "strahd_heart_tested",
+      "withdraw": {
+        "who": "strahd_von_zarovich",
+        "at_hp_below": 110,
+        "after_rounds": 1,
+        "flag": "strahd_heart_tested"
+      },
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            8,
+            3
+          ],
+          "name": "Strahd von Zarovich"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_spires_heart"
+  },
+  "rest": "no",
+  "rest_text": "Nobody sleeps beside that heartbeat."
+}

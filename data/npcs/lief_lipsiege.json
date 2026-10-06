@@ -1,0 +1,19 @@
+{
+  "id": "lief_lipsiege",
+  "name": "Lief Lipsiege",
+  "title": "Accountant to the Count",
+  "summary": "The count's accountant, shackled to his desk for forty-one years after one attempt to leave. Fussy, precise and very frightened of Rahadin, he knows where every coin in the castle lies.",
+  "portrait": "lief_lipsiege",
+  "sprite": "lief_lipsiege",
+  "attitude": "indifferent",
+  "voice": "docs/voice/lief_lipsiege.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "castle_ravenloft",
+    "prisoner"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

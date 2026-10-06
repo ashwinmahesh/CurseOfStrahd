@@ -57,6 +57,12 @@ var solo := false                    ## move only the leader (split the party)
 var busy := false                    ## walking, talking or fighting
 var in_combat := false
 var combat_view: CombatView = null
+## The encounter spec of the fight that ended last (the game reads its `final_battle` when combat_ended fires).
+var last_encounter: Dictionary = {}
+## A final battle waiting for Strahd's parley to end (ADR 0014): its encounter id, or "".
+var _pending_final := ""
+## Strahd names his price before a final battle (the presence package writes it).
+const PARLEY := "strahd/final:parley"
 var hover_cell := Vector2i(-1, -1)
 var input_locked := false
 
@@ -1533,15 +1539,40 @@ func _trigger_encounter(trigger: String) -> bool:
 		if (st.loc_state(loc_id)["encounters"] as Dictionary).get(str(spec["id"]), false) is bool \
 				and bool((st.loc_state(loc_id)["encounters"] as Dictionary).get(str(spec["id"]), false)):
 			continue
-		if not StoryConditions.check(str(spec.get("when", "")), st):
+		# A final battle's `when` also needs Strahd waiting in its room (StoryConditions.encounter_when, ADR 0014).
+		if not StoryConditions.check(StoryConditions.encounter_when(spec), st):
 			continue
+		if str(spec.get("final_battle", "")) != "":
+			return _begin_final_battle(str(spec["id"]))
 		start_encounter(str(spec["id"]))
 		return true
 	return false
 
 
+## Before a final battle Strahd parleys (strahd/final:parley, when it's written and hasn't been answered): the fight
+## starts once it ends, if `strahd_parley` is `fight` or unset; `yield` and `ireena` leave it to the ending. True if
+## the parley or the fight began.
+func _begin_final_battle(encounter_id: String) -> bool:
+	var answer := str(st.get_flag("strahd_parley", ""))
+	var file := DialogueFile.load_key(PARLEY.get_slice(":", 0))
+	if answer == "" and file != null and file.nodes.has(PARLEY.get_slice(":", 1)) and _pending_final == "":
+		_pending_final = encounter_id
+		dialogue_requested.emit(PARLEY, "strahd")
+		return true
+	if answer in ["", "fight"]:
+		return start_encounter(encounter_id)
+	return false
+
+
 ## Fights triggered by a flag (set by dialogue or a lever): checked after conversations and interactions.
 func check_flag_encounters() -> bool:
+	# The parley before a final battle has ended: the fight, unless Strahd's price was paid.
+	if _pending_final != "":
+		var waiting := _pending_final
+		_pending_final = ""
+		if str(st.get_flag("strahd_parley", "")) in ["", "fight"]:
+			return start_encounter(waiting)
+		return false
 	for en: Variant in loc.get("encounters", []):
 		var spec := en as Dictionary
 		var trig := str(spec["trigger"])
@@ -1673,6 +1704,15 @@ func start_custom_encounter(spec: Dictionary) -> bool:
 	return start_encounter(str(s["id"]))
 
 
+## A monster's ward in a fight at `location` (ADR 0014): its `ward.hp` taken before its Hit Points (the Heart of
+## Sorrow shielding Strahd), in its `region` if it names one, unless the story condition `unless` holds. 0 for none.
+static func ward_for(data: Dictionary, location: Dictionary, state: StoryState) -> int:
+	var ward := data.get("ward", {}) as Dictionary
+	if ward.is_empty() or (str(ward.get("region", "")) != "" and str(ward["region"]) != str(location.get("region", ""))):
+		return 0
+	return 0 if StoryConditions.check(str(ward.get("unless", "false")), state) else int(ward["hp"])
+
+
 ## The fight happens here, on the same grid: the party where it stands, the monsters where the data puts them.
 ## Surprise: a sneaking party whose every Stealth check beats a monster's passive Perception surprises it.
 func start_encounter(encounter_id: String) -> bool:
@@ -1680,16 +1720,29 @@ func start_encounter(encounter_id: String) -> bool:
 	# party): the first whose condition holds is the fight.
 	var spec := {}
 	for en: Variant in loc.get("encounters", []):
-		if str((en as Dictionary)["id"]) == encounter_id and (spec.is_empty() or not StoryConditions.check(str(spec.get("when", "")), st)):
+		if str((en as Dictionary)["id"]) == encounter_id and (spec.is_empty() or not StoryConditions.check(StoryConditions.encounter_when(spec), st)):
 			spec = en as Dictionary
 	if spec.is_empty() or in_combat:
 		return false
+	if _pending_final == encounter_id:
+		_pending_final = ""
 	_queue.clear()
 	_on_arrive = Callable()
 	in_combat = true
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := Encounter.new(_combat_grid(), dice)
 	e.title = str(spec.get("text", ""))
+	# Bosses (ADR 0014): the place (a Misty Escape's resting place), the lair's actions, a foe that withdraws.
+	e.location_id = loc_id
+	for place: String in Tarokka.spots(loc):
+		e.places.append(place)
+	if str(spec.get("final_battle", "")) != "":
+		e.places.append(str(spec["final_battle"]))
+	e.lair = bool(spec.get("lair", false))
+	e.outdoors = bool(loc["map"].get("outdoors", false))
+	e.legendary.set_withdraw(spec.get("withdraw", {}))
+	if str(spec.get("final_battle", "")) != "" and st.quest_stage_index("strahds_lair", st.quest_stage("strahds_lair")) < st.quest_stage_index("strahds_lair", "confronted"):
+		st.set_quest_stage("strahds_lair", "confronted")
 	var party_cbs: Array[Combatant] = []
 	for m in members:
 		if m.creature.dead:
@@ -1711,6 +1764,7 @@ func start_encounter(encounter_id: String) -> bool:
 			# A tuned stat block for this fight (docs/contracts/locations.md).
 			mon.hp_max_base = int(md["hp"])
 			mon.hp = mon.max_hp()
+		mon.ward_hp = ward_for(data, loc, st)
 		if md.has("name"):
 			mon.name = str(md["name"])
 		elif int(counts[str(md["monster"])]) > 1:
@@ -1893,12 +1947,13 @@ func _combat_grid() -> CombatGrid:
 
 
 func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, outcome: String) -> void:
+	last_encounter = spec
 	for c in e.combatants:
 		if c.side in [&"party", &"guest"]:
 			for m: Combatant in members + guest_members:
 				if m.creature == c.creature:
 					m.cell = c.cell
-		elif c.creature.dead:
+		elif c.creature.dead and not e.legendary.departed.has(c.id):
 			var stain := _box(Vector3(0.6, 0.02, 0.4), board.cell_center(c.cell, c.size_cells) + Vector3(0, 0.015, 0), "blood_deep")
 			stain.name = "Remains"
 	# The party's own figures go back to exploring where they stand; whoever else is still up fades away.
@@ -1949,16 +2004,23 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 			if cr.hp <= 0 and not cr.dead and not cr.stable:
 				cr.stabilize()
 		_say("combat:victory")
+	# What the fight hands back to the story, whatever the outcome (ADR 0014): Misty Escape's flag, a withdrawal's
+	# flag, Strahd destroyed and his quest's stage.
+	for f: String in e.legendary.story_flags:
+		st.set_flag(f, e.legendary.story_flags[f])
+	for qid: String in e.legendary.story_quests:
+		st.set_quest_stage(qid, str(e.legendary.story_quests[qid]))
 	_save_positions()
 	combat_ended.emit(outcome)
+	# A foe that withdrew or fled as mist leaves nothing behind (a Tarokka treasure here is still found).
 	if outcome == "victory":
-		_spoils(encounter_id, spec)
+		_spoils(encounter_id, spec, not e.legendary.no_loot())
 
 
 ## What a won fight leaves (the encounter's `loot`, and a Tarokka treasure if this fight is a treasure spot), in the
 ## loot window like a chest. Leftovers stay as "fight:<id>".
-func _spoils(encounter_id: String, spec: Dictionary) -> void:
-	var loot := spec.get("loot", {}) as Dictionary
+func _spoils(encounter_id: String, spec: Dictionary, with_loot: bool = true) -> void:
+	var loot := spec.get("loot", {}) as Dictionary if with_loot else {}
 	var items := (loot.get("items", []) as Array).duplicate(true)
 	for treasure in Tarokka.take_from(Tarokka.place_for(loc, "encounter", encounter_id), st):
 		items.append({"id": treasure, "qty": 1})

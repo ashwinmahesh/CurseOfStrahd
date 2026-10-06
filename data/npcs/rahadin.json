@@ -1,0 +1,19 @@
+{
+  "id": "rahadin",
+  "name": "Rahadin",
+  "title": "Chamberlain of Castle Ravenloft",
+  "summary": "The count's chamberlain: a small, exact dusk elf in black who has served Strahd since before the valley had his name. The screams of everyone he has killed follow him about like a draught.",
+  "portrait": "rahadin",
+  "sprite": "rahadin",
+  "attitude": "indifferent",
+  "voice": "docs/voice/rahadin.md",
+  "monster": "rahadin",
+  "guest": false,
+  "tags": [
+    "dusk_elf",
+    "castle_ravenloft",
+    "servant_of_strahd"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

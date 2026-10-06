@@ -1,0 +1,131 @@
+# Rahadin, the count's chamberlain (docs/voice/rahadin.md; docs/regions/castle_ravenloft_court.md).
+# start: the first meeting in the King's Hall (approach). chamber: in his room on the floor above.
+# intercept: at the head of the grand stairs when the party leaves with Gertruda.
+
+~ start
+if flag.rahadin_met
+Rahadin: You are still here. Good. The master dislikes guests who leave early.
+-> menu
+endif
+set rahadin_met
+Narrator: A small, straight-backed man in black waits in the middle of the long hall with his hands folded. Around him, faint as a draught under a door, many voices are screaming.
+Rahadin: You came up the grand stair, so you are the master's guests. I am Rahadin. I keep this house.
+Rahadin: There are three rules. Go where you like. Take nothing that is not offered. Do not touch the girl.
+interject class:cleric: Those voices. They're coming from you.
+Rahadin: They are mine. I have collected them for a long time. You need not listen.
+-> menu
+
+~ chamber
+if not flag.rahadin_met
+set rahadin_met
+Narrator: A bare room: a cot, a rack of curved swords, a ledger on a stand. A small man in black sits on the cot polishing a blade, and the air around him is full of faint screaming.
+Rahadin: You found my room before you found me. Most guests manage it the other way round. I am Rahadin. I keep this house.
+else
+Narrator: Rahadin looks up from his blade. The screaming in the room rises a little, as if to see who has come.
+Rahadin: Guests do not usually come this far along the corridor. Those who do, I remember.
+endif
+-> menu
+
+~ menu
+* Where is your master? -> master
+* What girl? -> girl
+* What are those voices? -> voices
+* How long have you served him? -> service
+* [Insight DC 15] What does he really want from us? -> insight_ok | insight_fail
+* [if guest:ireena] You know who this is. -> ireena
+* We didn't come as guests. -> fight
+* We'll find our own way. -> leave
+
+~ master
+Rahadin: In the house. He is always in the house, even when he is not. He receives when he chooses.
+if tarokka.drawn
+Rahadin: If an old woman has turned cards for you, you know more than I am permitted to say. Her cards are seldom wrong. It annoys him.
+endif
+-> menu
+
+~ girl
+Rahadin: A guest of the master, in the rooms above. She is content. Leave her so.
+if flag.gertruda_search_promised
+interject tag:blunt: Dark-haired girl? Sixteen? From the village?
+Rahadin: I do not ask their ages.
+endif
+-> menu
+
+~ voices
+Rahadin: Everyone I have killed in his service. They do not leave me. It is the price of a long career, and I pay it.
+interject class:wizard: That isn't a curse. He keeps them on purpose.
+Rahadin: I keep accounts. Lipsiege keeps the master's money. I keep the rest.
+-> menu
+
+~ service
+Rahadin: Since before this valley had his name. I served the man; I serve what he became. The house needs keeping either way.
+interject species:elf: You're elven. Or you were. What are you now?
+Rahadin: Punctual.
+-> menu
+
+~ insight_ok
+Narrator: Under the courtesy he is weighing you, the way a steward weighs candles: how long you will burn, and what you will cost.
+Rahadin: He wants to be amused. Amuse him, and you will live longer than most.
+-> menu
+
+~ insight_fail
+Narrator: His face gives you nothing at all. It has had centuries of practice.
+-> menu
+
+~ ireena
+Rahadin: I know the face. Everyone in this house knows the face. Her rooms have been ready for a very long time.
+interject guest:ireena: Then they can stay empty.
+-> menu
+
+~ fight
+Rahadin: As you wish. He will want to hear how it went.
+if at:castle_ravenloft_court_weeping
+combat court_rahadin_chamber_fight
+else
+combat court_rahadin_fight
+endif
+
+~ leave
+Rahadin: Then I will not keep you. Supper is at dusk, if the master remembers to serve it.
+-> END
+
+# ---------------------------------------------------------------- Leaving with Gertruda
+
+~ intercept
+if not flag.rahadin_met
+set rahadin_met
+Narrator: A small man in black stands at the head of the grand stairs with his hands folded, and the air around him is full of faint screaming.
+Rahadin: I am Rahadin. I keep this house, and I keep its guests.
+endif
+Narrator: Rahadin stands between you and the stairs. He looks past you at Gertruda, and she steps behind the nearest of you.
+Rahadin: The girl is the master's guest. She stays.
+if flag.court_gertruda_warned_him
+Rahadin: She rang for him an hour ago and told him what you said. He asked me to see her safely back upstairs. I always do what he asks.
+endif
+Gertruda [afraid]: I want to go home. I'm allowed to want that. Aren't I?
+-> intercept_menu
+
+~ intercept_menu
+* Then we go through you. -> fight
+* [if not flag.court_gertruda_warned_him] [Persuasion DC 16] A guest who can't leave is a prisoner. Does your master keep prisoners in his guest rooms? -> stand_aside | refused
+* [Intimidation DC 17] Look at us, Rahadin. You're one man. -> stand_aside | refused
+* Gertruda, go back to your room. -> give_back
+
+~ stand_aside
+set rahadin_stood_aside
+Narrator: For a long moment the only sound is the screaming. Then Rahadin steps aside, exactly one pace.
+Rahadin: The master will be amused. She will come back on her own; they generally do. Mind the stairs.
+-> END
+
+~ refused
+Rahadin: No. I think not.
+combat court_rahadin_fight
+
+~ give_back
+leave gertruda
+set gertruda_given_back
+quest find_gertruda lost
+Gertruda [sad]: Oh. Yes. Of course. I'll go up.
+Narrator: She climbs the stairs alone and doesn't look back. Rahadin bows to you, very correctly.
+Rahadin: The master thanks you for returning what is his.
+-> END

@@ -1,0 +1,274 @@
+# Narrator: Castle Ravenloft, the Court of the Count and the Rooms of Weeping (docs/voice/narrator.md;
+# docs/regions/castle_ravenloft_court.md). Second person, present tense, one or two sentences.
+# Book props (the unsent letters, the count's ledger, Rahadin's list of names) show their own text. The portrait in
+# the long hall opens a conversation instead.
+
+# ---------------------------------------------------------------- The maps
+
+~ enter:castle_ravenloft_court
+| The grand stairs end in a landing of black marble. Beyond it a long hall runs away in both directions under banners nobody has dusted in a lifetime.
+| [night] Candles burn in the long hall with nobody to light them, and every flame leans the same way, toward the throne room doors.
+| [guest:gertruda] Gertruda keeps a hand on somebody's sleeve all the way along the hall, and hums under her breath.
+cooldown 20
+
+~ enter:castle_ravenloft_court_weeping
+| The stairs bring you up into a corridor of closed doors. Somewhere along it, always just out of sight, someone is crying very quietly.
+| [flag.anastrasya_at_rest] The corridor is quiet. For the first time, nobody is crying behind any of the doors.
+cooldown 20
+
+~ enter:castle_ravenloft_court_treasury
+| The stair turns twice in the thickness of the wall and lets you out into a low vault that glitters. The air tastes of cold metal.
+cooldown 20
+
+# ---------------------------------------------------------------- The Court of the Count
+
+~ enter:court_grand_landing
+| A landing wide enough for a carriage, and two suits of black armour with wolf-headed helms standing guard over nothing.
+| [guest:gertruda and not flag.rahadin_stood_aside and not flag.rahadin_defeated] The landing is very still. Somebody is standing at the head of the stairs.
+cooldown 20
+
+~ enter:court_kings_hall
+| The long hall runs the width of the keep under a vaulted ceiling. Every banner on its walls bears the same black crest, and every one has faded to the colour of old blood.
+| [flag.rahadin_met] Your footsteps come back from the vault overhead a little late, as if the hall were checking them.
+cooldown 15
+
+~ enter:court_audience_hall
+| A throne room built for crowds and kept for one. The throne stands on a dais at the far end, and the floor between is worn smooth by people who were made to walk it slowly.
+| [treasure_at:castle_ravenloft_audience_hall] Something about the throne catches the light wrongly, the way a seat does when someone has only just left it.
+cooldown 15
+
+~ enter:court_study
+| Books to the ceiling, a fire burning low, two armchairs turned toward it. Above the mantel a young woman in a painted frame looks down at the room.
+| [treasure_at:castle_ravenloft_study] The painted woman's eyes are lowered, as if to something just below her frame.
+cooldown 15
+
+~ enter:court_trophy_room
+| Heads on every wall: stags, bears, wolves, and things you don't have names for. At the far end, mounted like the rest, the long skull of a dragon.
+once
+
+~ enter:court_accountant
+| A small office that smells of ink and tallow. Ledgers fill the shelves, the floor and most of the desk. The rest of the desk is an old man.
+| [flag.lief_freed] The desk is empty. A broken shackle lies on the floor beside a neat stack of ledgers, squared off at the corners.
+cooldown 15
+
+~ enter:court_guard_post
+| A guardroom with a cold hearth and a table set for a game of cards nobody finished. The pegs along the wall hold armour, and none of it is hanging quite still.
+| [flag.court_post_cleared] Scattered armour lies across the guardroom floor, empty and quiet at last.
+cooldown 20
+
+~ enter:court_stair_hall
+| A stair hall at the foot of a tower. One stair winds up into the dark toward the spires; another climbs to the floor above, toward the sound of someone crying.
+once
+
+# ---------------------------------------------------------------- The Rooms of Weeping
+
+~ enter:court_weeping_hall
+| Closed doors on both sides, and a long carpet that swallows your footsteps. The crying is always one door further on.
+once
+
+~ enter:court_weeping_landing
+| The head of the stair, and a candle that never seems to burn down.
+once
+
+~ enter:court_strahds_bedchamber
+| A great bed hung with black curtains, a cold hearth, a tall mirror. The bed has not been slept in for a very long time. The mirror shows it perfectly.
+once
+
+~ enter:court_strahds_bath
+| A copper bath on clawed feet, a cabinet of bottles, a mirror fogged with dust. Someone kept up the appearances here long after there was any point.
+once
+
+~ enter:court_portrait_gallery
+| A long gallery of dark portraits. At its heart hangs the master of the house himself, painted life-sized, and his eyes are already on the door.
+| [flag.court_gallery_cleared] The gallery is quiet. Where the count's portrait hung there is a slashed frame and a paler patch of wall.
+cooldown 20
+
+~ enter:court_lounge
+| A lounge of faded velvet and guttering candles. Three women in old-fashioned gowns look up together, like cats at a sound in the wall.
+| [flag.court_brides_fought] The lounge is empty. A book lies open on a chair; cards lie in a ring of patience with no queens in it.
+cooldown 20
+
+~ enter:court_ludmilla_room
+| Books in neat stacks, a coffin with a reading lamp beside it, and no mirror anywhere.
+once
+
+~ enter:court_anastrasya_room
+| A bare little room with a coffin in it, and on the coffin's lid a child's drawing of a town on a hill, pinned flat with a hairpin.
+once
+
+~ enter:court_volenta_room
+| Dolls with their eyes picked out, ranged along a shelf to watch the coffin. Someone has drawn smiles on all of them in red.
+once
+
+~ enter:court_guest_room
+| A yellow room with a curtained bed, a dressing table and a wardrobe of gowns. Everything in it is very pretty and none of it is hers.
+| [flag.gertruda_home] The yellow room is empty, and the wardrobe door hangs open on gowns that will never fit anyone again.
+cooldown 20
+
+~ enter:court_rahadin_chamber
+| A cot, a rack of curved swords, a ledger on a stand, and nothing else. The screaming is loudest in here, the way a hive is loudest near the queen.
+| [flag.rahadin_defeated] The room is silent. Whatever followed Rahadin about has gone with him.
+cooldown 20
+
+# ---------------------------------------------------------------- The vault
+
+~ enter:court_vault_stair
+| The stair is so narrow your shoulders brush both walls. At the bottom, something glitters.
+once
+
+~ enter:court_treasury
+| Coin lies on the vault floor in drifts, with chests and caskets sunk in it like rocks in snow. Centuries of tithes, and not one of them spent.
+| [treasure_at:castle_ravenloft_treasury] Down in the deepest drift of coin, something that isn't money is catching your lantern light.
+cooldown 15
+
+# ---------------------------------------------------------------- Things to look at
+
+~ examine:court_study_hearth
+| The fire burns low and gives no warmth at all. Above it, the young woman in her frame looks down at it as she has for a very long time.
+cooldown 5
+
+~ examine:court_zarovich_crest
+| The Zarovich crest, carved and gilded: a black bird on a field of red, wings spread over the throne as if to keep it.
+cooldown 5
+
+~ examine:court_audience_window_w
+| Far below the window the valley lies under its mist like something drowned. You can see the road you came up.
+cooldown 5
+
+~ examine:court_dragon_skull
+| A dragon's skull, silver-grey and longer than a man is tall, mounted on the wall among the stags. A brass plate under it gives a date and no name.
+| [flag.argynvost_skull_known] Argynvost. The dragon of the ruined house on the ridge. His knights are still waiting for this to come home.
+cooldown 5
+
+~ examine:court_trophy_heads
+| A stag with antlers like a winter tree, a bear with its lips pulled back, a wolf larger than any wolf. Every plate gives the same hunter's name.
+cooldown 5
+
+~ examine:court_general_statue
+| A young general in old-fashioned armour, one hand on his sword, looking east toward the pass. The face is unmistakably the count's, and almost kind.
+cooldown 5
+
+~ examine:court_hall_banners
+| Old war banners, black birds on red, rotted to lace at the edges. Their battles were won before your great-grandparents were born.
+cooldown 5
+
+~ examine:court_lief_desk
+| A clerk's desk with a groove worn into the floor around it in a half circle: exactly the length of the chain.
+| [flag.lief_freed] The chain lies slack on the floor. The groove around the desk will take a hundred years to fill in.
+cooldown 5
+
+~ examine:court_stair_window
+| A narrow window onto the courtyard far below, where the mist moves in slow circles like water round a drain.
+cooldown 5
+
+~ examine:court_treasury_heaps
+| Coin from every reign the valley ever had, and some it didn't. Most of it has never been touched by anyone but a tax collector.
+cooldown 5
+
+~ examine:court_vault_chair
+| A high-backed chair half sunk in the drifts of coin. The seat is worn smooth. He comes down here to sit.
+cooldown 5
+
+~ examine:court_strahd_bed
+| The bed is made. It has been made for a very long time. Nobody sleeps in it; he only likes to have it.
+cooldown 5
+
+~ examine:court_strahd_mirror
+| The mirror shows the room behind you in perfect detail: the bed, the hearth, the door, and you. The count stood here every morning for centuries and saw none of that.
+cooldown 5
+
+~ examine:court_bedside_portrait
+| A small portrait by the bed, the same young woman again, painted smaller, as if to be held in one hand.
+cooldown 5
+
+~ examine:court_bath_tub
+| A copper bath on clawed feet, bone dry. A bar of soap in the dish has gone hard as stone.
+cooldown 5
+
+~ examine:court_strahd_portrait
+| The count, life-sized, in black, one hand on a chair back. The painter caught him smiling. The paint has caught him watching.
+cooldown 5
+
+~ examine:court_lounge_harpsichord
+| A harpsichord with every key worn pale. Someone here plays it every night, the same piece, over and over.
+cooldown 5
+
+~ examine:court_lounge_cards
+| A game of patience laid out with no queens in the deck. It can never come out. It has been laid out a great many times.
+cooldown 5
+
+~ examine:court_ludmilla_coffin
+| A plain black coffin with a reading lamp on its lid and a ribbon marking somebody's place in a book.
+cooldown 5
+
+~ examine:court_anastrasya_coffin
+| A child's drawing on the lid: a walled town on a hill, a pool, a tree. Underneath, in a careful round hand, "Krezk".
+cooldown 5
+
+~ examine:court_volenta_coffin
+| The lid is scratched all over with little tally marks, hundreds of them, in neat groups of five.
+cooldown 5
+
+~ examine:court_guest_dressing_table
+| Combs, ribbons, a pot of rouge, a hand mirror lying face down. Somebody turned it over and didn't want to turn it back.
+cooldown 5
+
+~ examine:court_guest_window
+| The window looks out over the valley toward the village far below. From up here you could just make out a house with all its shutters closed.
+cooldown 5
+
+# ---------------------------------------------------------------- Opening things
+
+~ open:court_throne
+| The seat of the throne lifts on a hidden hinge. Underneath is a shallow box lined with red velvet.
+| [treasure_at:castle_ravenloft_audience_hall] The seat lifts on a hidden hinge. In the velvet box underneath, something has been waiting for you.
+cooldown 5
+
+~ open:court_study_portrait
+| You follow her painted gaze to the bottom of the frame, and the frame comes away from the wall a little at the corner.
+| [treasure_at:castle_ravenloft_study] You follow her painted gaze to the bottom of the frame. Something is wedged behind the canvas, exactly where she is looking.
+cooldown 5
+
+~ open:court_treasury_hoard
+| You dig into the drift of coin up to the elbow. It is very cold.
+| [treasure_at:castle_ravenloft_treasury] You dig into the drift of coin up to the elbow, and your fingers close on something that isn't money.
+cooldown 5
+
+~ open:court_strahd_jewel_box
+| Rings, pins and a lady's hair comb, every one of them old-fashioned and every one of them small.
+once
+
+~ open:court_guest_wardrobe
+| Three gowns, all the same size. Behind them, pushed to the back, a fourth in the same size with a stain at the collar.
+once
+
+~ open:court_anastrasya_trunk
+| A plain dress, a shawl and a handful of copper coins from Krezk. Everything she came with.
+once
+
+~ open:court_trophy_cabinet
+| A hunter's cabinet: a spear with a silver-chased head, a good bow, and a purse of prize money.
+once
+
+# ---------------------------------------------------------------- Traps
+
+~ trap:court_trophy_crossbow:found
+| A tripwire runs knee-high across the floor in front of the trophy cabinet, to a hunting crossbow on the wall above it.
+once
+
+~ trap:court_trophy_crossbow:triggered
+| The crossbow on the wall swings round on its bracket and looses into the room.
+cooldown 1
+
+~ trap:court_vault_glyph:found
+| A sigil is cut into the bottom step, filled with something that is not quite silver. Nobody should stand on it.
+once
+
+~ trap:court_vault_glyph:triggered
+| The sigil on the bottom step wakes in white fire, and the stairwell fills with lightning.
+cooldown 1
+
+# ---------------------------------------------------------------- Resting
+
+~ rest:long:castle_ravenloft_court
+| You sleep in shifts in a locked room off the long hall. Twice in the night footsteps stop outside the door, and wait, and go away.

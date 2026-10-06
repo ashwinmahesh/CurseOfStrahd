@@ -1,0 +1,773 @@
+{
+  "id": "castle_ravenloft_spires_rooms",
+  "name": "Castle Ravenloft, the Tower Rooms",
+  "region": "castle_ravenloft",
+  "summary": "The rooms high in the towers, off a narrow gallery: the count's bats, a stillroom of four glass vessels, a coven at its cauldron, Escher locked in his suite, and a ladder to the roofs.",
+  "text": "A narrow gallery with doors on both sides. Somewhere a pot is boiling, somewhere bats are shifting, and behind one locked door somebody is humming.",
+  "map": {
+    "rows": [
+      "##############################",
+      "#........#..........#........#",
+      "#........#..........#........#",
+      "#........#..........#........#",
+      "#........#..........#........#",
+      "#........#..........#........#",
+      "####.#########..#######.######",
+      "#............................#",
+      "#............................#",
+      "######.#######.########.######",
+      "#..........#........#........#",
+      "#..........#........#........#",
+      "#..........#........#........#",
+      "#..........#........#........#",
+      "#..........#........#........#",
+      "#..........#........#........#",
+      "#..........#........#........#",
+      "#..........#........#........#",
+      "#..........#........#........#",
+      "########################.#####"
+    ],
+    "theme": "manor",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "spires_familiars_room",
+      "name": "The familiars' room",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          8,
+          5
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "spires_stillroom",
+      "name": "The stillroom",
+      "cells": [
+        [
+          10,
+          1
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "floor": "interior/tile_floor",
+      "walls": "interior/tile_wall",
+      "light": "dim"
+    },
+    {
+      "id": "spires_roof_stair",
+      "name": "The roof stair",
+      "cells": [
+        [
+          21,
+          1
+        ],
+        [
+          28,
+          5
+        ]
+      ],
+      "floor": "interior/workshop_boards"
+    },
+    {
+      "id": "spires_tower_gallery",
+      "name": "The tower gallery",
+      "cells": [
+        [
+          1,
+          7
+        ],
+        [
+          28,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "spires_cauldron_room",
+      "name": "The cauldron room",
+      "cells": [
+        [
+          1,
+          10
+        ],
+        [
+          10,
+          18
+        ]
+      ],
+      "floor": "interior/kitchen_flags",
+      "walls": "interior/kitchen_wall",
+      "light": "dim"
+    },
+    {
+      "id": "spires_escher_suite",
+      "name": "Escher's suite",
+      "cells": [
+        [
+          12,
+          10
+        ],
+        [
+          19,
+          18
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "spires_tower_vestibule",
+      "name": "The tower vestibule",
+      "cells": [
+        [
+          21,
+          10
+        ],
+        [
+          28,
+          18
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      24,
+      17
+    ],
+    "from_high_tower": [
+      24,
+      17
+    ],
+    "from_roofs": [
+      24,
+      3
+    ],
+    "from_back_stair": [
+      18,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "to_high_tower",
+      "cell": [
+        24,
+        19
+      ],
+      "to": "castle_ravenloft_spires",
+      "spawn": "from_rooms",
+      "label": "The door to the high tower"
+    },
+    {
+      "id": "up_to_roofs",
+      "cell": [
+        25,
+        2
+      ],
+      "to": "castle_ravenloft_spires_roofs",
+      "spawn": "from_rooms",
+      "label": "Up to the roofs"
+    },
+    {
+      "id": "back_stair",
+      "cell": [
+        19,
+        10
+      ],
+      "to": "castle_ravenloft_spires_roost",
+      "spawn": "from_back_stair",
+      "label": "A narrow stair up behind the wardrobe",
+      "when": "flag.spires_back_stair_found or flag.spires_back_stair_told",
+      "locked_text": "Only the back of a wardrobe and a cold draught."
+    }
+  ],
+  "doors": [
+    {
+      "id": "spires_familiars_door",
+      "cell": [
+        4,
+        6
+      ],
+      "label": "a door scratched by claws"
+    },
+    {
+      "id": "spires_roofstair_door",
+      "cell": [
+        23,
+        6
+      ],
+      "label": "a narrow door"
+    },
+    {
+      "id": "spires_cauldron_door",
+      "cell": [
+        6,
+        9
+      ],
+      "label": "a door with steam under it"
+    },
+    {
+      "id": "spires_escher_door",
+      "cell": [
+        14,
+        9
+      ],
+      "label": "Escher's door",
+      "locked": true,
+      "lock_dc": 16
+    },
+    {
+      "id": "spires_vestibule_door",
+      "cell": [
+        23,
+        9
+      ],
+      "label": "the vestibule door"
+    }
+  ],
+  "props": [
+    {
+      "id": "spires_bat_perches",
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "examine",
+      "label": "Perches under the ceiling",
+      "model": "perch"
+    },
+    {
+      "id": "spires_bat_perches_b",
+      "cell": [
+        7,
+        2
+      ],
+      "kind": "decor",
+      "label": "Perches",
+      "model": "perch"
+    },
+    {
+      "id": "spires_bat_droppings",
+      "cell": [
+        5,
+        3
+      ],
+      "kind": "decor",
+      "label": "Droppings",
+      "model": "straw"
+    },
+    {
+      "id": "spires_four_vessels",
+      "cell": [
+        14,
+        2
+      ],
+      "kind": "examine",
+      "label": "Four glass vessels",
+      "model": "cabinet_glass"
+    },
+    {
+      "id": "spires_stillroom_jars",
+      "cell": [
+        11,
+        1
+      ],
+      "kind": "decor",
+      "label": "Jars on shelves",
+      "model": "jars"
+    },
+    {
+      "id": "spires_stillroom_bench",
+      "cell": [
+        17,
+        4
+      ],
+      "kind": "decor",
+      "label": "A workbench",
+      "model": "workbench"
+    },
+    {
+      "id": "spires_roof_ladder_crates",
+      "cell": [
+        27,
+        4
+      ],
+      "kind": "decor",
+      "label": "Crates",
+      "model": "crate"
+    },
+    {
+      "id": "spires_cauldron",
+      "cell": [
+        5,
+        14
+      ],
+      "kind": "examine",
+      "label": "The cauldron",
+      "model": "brazier_green"
+    },
+    {
+      "id": "spires_witch_brooms",
+      "cell": [
+        1,
+        11
+      ],
+      "kind": "decor",
+      "label": "Brooms and bundles",
+      "model": "robe_pegs"
+    },
+    {
+      "id": "spires_escher_bed",
+      "cell": [
+        13,
+        11
+      ],
+      "kind": "decor",
+      "label": "A canopied bed",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "spires_escher_mirror",
+      "cell": [
+        12,
+        15
+      ],
+      "kind": "examine",
+      "label": "A tall mirror",
+      "model": "mirror_full"
+    },
+    {
+      "id": "spires_escher_wardrobe",
+      "cell": [
+        19,
+        12
+      ],
+      "kind": "examine",
+      "label": "A wardrobe",
+      "model": "wardrobe"
+    },
+    {
+      "id": "spires_wardrobe_seam",
+      "cell": [
+        19,
+        11
+      ],
+      "kind": "search",
+      "search_dc": 15,
+      "label": "a draught behind the wardrobe",
+      "model": "plaster_seam",
+      "flag": "spires_back_stair_found"
+    },
+    {
+      "id": "spires_escher_armchair",
+      "cell": [
+        17,
+        15
+      ],
+      "kind": "decor",
+      "label": "An armchair",
+      "model": "armchair"
+    },
+    {
+      "id": "spires_vestibule_armor",
+      "cell": [
+        21,
+        11
+      ],
+      "kind": "decor",
+      "label": "A suit of armour",
+      "model": "armor_stand"
+    },
+    {
+      "id": "spires_vestibule_painting",
+      "cell": [
+        28,
+        13
+      ],
+      "kind": "examine",
+      "label": "A painting of the castle",
+      "model": "painting"
+    },
+    {
+      "id": "spires_gallery_window",
+      "cell": [
+        1,
+        8
+      ],
+      "kind": "examine",
+      "label": "An arrow-slit window",
+      "model": "window_shuttered"
+    }
+  ],
+  "containers": [
+    {
+      "id": "spires_keeper_trunk",
+      "cell": [
+        1,
+        5
+      ],
+      "label": "The bat-keeper's trunk",
+      "model": "trunk",
+      "items": [
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "vial",
+          "qty": 2
+        }
+      ],
+      "gold": 30
+    },
+    {
+      "id": "spires_stillroom_cabinet",
+      "cell": [
+        19,
+        1
+      ],
+      "label": "A glass-fronted cabinet",
+      "model": "cabinet_glass",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        },
+        {
+          "id": "alchemists_fire",
+          "qty": 2
+        },
+        {
+          "id": "acid",
+          "qty": 1
+        },
+        {
+          "id": "vial",
+          "qty": 3
+        }
+      ]
+    },
+    {
+      "id": "spires_witch_shelf",
+      "cell": [
+        10,
+        11
+      ],
+      "label": "The witches' shelf",
+      "model": "shelves",
+      "items": [
+        {
+          "id": "herbalism_kit",
+          "qty": 1
+        },
+        {
+          "id": "basic_poison",
+          "qty": 1
+        },
+        {
+          "id": "candle",
+          "qty": 4
+        }
+      ],
+      "gold": 25
+    },
+    {
+      "id": "spires_escher_dressing",
+      "cell": [
+        16,
+        10
+      ],
+      "label": "Escher's dressing table",
+      "model": "dressing_table",
+      "items": [
+        {
+          "id": "perfume",
+          "qty": 1
+        },
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        }
+      ],
+      "gold": 180
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        5,
+        13
+      ],
+      "kind": "fire",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        15,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        18,
+        14
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        14,
+        7
+      ],
+      "kind": "torch",
+      "bright_ft": 20,
+      "dim_ft": 40
+    }
+  ],
+  "traps": [],
+  "npcs": [
+    {
+      "npc": "escher",
+      "cell": [
+        16,
+        14
+      ],
+      "dialogue": "castle_ravenloft/spires_escher:start",
+      "when": "not flag.escher_fight_won",
+      "facing": "north",
+      "approach": 4
+    }
+  ],
+  "encounters": [
+    {
+      "id": "cauldron_coven",
+      "trigger": "enter_area:spires_cauldron_room",
+      "when": "not flag.cauldron_coven_cleared and level >= 11",
+      "text": "Around the cauldron, women in black rags look up all at once with the same wet smile. The brew heaves, and something black slops over the rim and keeps coming.",
+      "surprise": "",
+      "flag": "cauldron_coven_cleared",
+      "monsters": [
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            2,
+            12
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            8,
+            12
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            2,
+            16
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            8,
+            16
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            4,
+            11
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            7,
+            17
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            3,
+            17
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            9,
+            14
+          ]
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            6,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cauldron_coven",
+      "trigger": "enter_area:spires_cauldron_room",
+      "when": "not flag.cauldron_coven_cleared and level >= 10",
+      "text": "Around the cauldron, women in black rags look up all at once with the same wet smile. The brew heaves, and something black slops over the rim and keeps coming.",
+      "surprise": "",
+      "flag": "cauldron_coven_cleared",
+      "monsters": [
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            2,
+            12
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            8,
+            12
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            2,
+            16
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            8,
+            16
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            4,
+            11
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            7,
+            17
+          ]
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            6,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cauldron_coven",
+      "trigger": "enter_area:spires_cauldron_room",
+      "when": "not flag.cauldron_coven_cleared",
+      "text": "Around the cauldron, women in black rags look up all at once with the same wet smile. The brew heaves, and something black slops over the rim and keeps coming.",
+      "surprise": "",
+      "flag": "cauldron_coven_cleared",
+      "monsters": [
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            2,
+            12
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            8,
+            12
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            2,
+            16
+          ]
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            8,
+            16
+          ]
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            6,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "escher_fight",
+      "trigger": "dialogue",
+      "when": "not flag.escher_fight_won",
+      "text": "Escher's smile goes long in the teeth. The bats in the canopy of his bed come down like a dropped curtain.",
+      "surprise": "",
+      "flag": "escher_fight_won",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            14
+          ],
+          "name": "Escher"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            14,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            18,
+            17
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_spires_rooms"
+  },
+  "rest": "risky"
+}
