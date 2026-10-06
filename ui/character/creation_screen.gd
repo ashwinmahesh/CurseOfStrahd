@@ -5,6 +5,10 @@ extends CanvasLayer
 ## Scores, Class Choices, Equipment, Appearance, Identity, Review. Every list, number, reason and warning comes
 ## from CharacterBuilder; this screen only lays them out and sends picks back. Emits finished(party) when all four
 ## are confirmed.
+##
+## Hero mode (open_hero): one custom character who takes a pregenerated companion's place. Its Appearance step is the
+## paper doll (AppearancePanel: body, head, hair, beard, skin, outfit, portrait and voice), and Review weighs the party
+## it will travel with.
 
 signal finished(party: Array[Character])
 signal cancelled
@@ -24,6 +28,13 @@ var _rail: VBoxContainer
 var _body: VBoxContainer
 var _sheet: VBoxContainer
 var _rolled_text := ""
+## Hero mode: the pregen the hero replaces and the three who travel with them.
+var hero_mode := false
+var replacing := ""
+var companions: Array[String] = []
+var _appearance_tab := "Body"
+## The player picked an outfit themselves, so a class change no longer picks one for them.
+var _outfit_chosen := false
 
 
 func _init() -> void:
@@ -38,7 +49,22 @@ func open_with(starting: Array[Dictionary], count: int = 4) -> void:
 		var b := CharacterBuilder.new(null, starting[i] if i < starting.size() else {})
 		builders.append(b)
 		confirmed.append(false)
-	var frame := UiKit.screen_frame(self, "Create your party", Vector2(1540, 830))
+	_build_frame("Create your party" if count > 1 else "Rebuild a character")
+
+
+## One custom hero in place of the pregen `replacing_id`; `others` are the three pregens who come along.
+func open_hero(replacing_id: String, others: Array[String]) -> void:
+	hero_mode = true
+	replacing = replacing_id
+	companions = others
+	var app := HeroLook.default_appearance("female")
+	builders.append(CharacterBuilder.new(null, {"appearance": app, "identity": {"pronouns": "she/her", "tags": []}}))
+	confirmed.append(false)
+	_build_frame("Create your hero")
+
+
+func _build_frame(title: String) -> void:
+	var frame := UiKit.screen_frame(self, title, Vector2(1540, 830))
 	_strip = HBoxContainer.new()
 	_strip.add_theme_constant_override("separation", 8)
 	frame.add_child(_strip)
@@ -69,6 +95,11 @@ func b() -> CharacterBuilder:
 
 
 func _draw() -> void:
+	_draw_strip()
+	_draw_rest()
+
+
+func _draw_strip() -> void:
 	for c in _strip.get_children():
 		c.queue_free()
 	for i in builders.size():
@@ -90,13 +121,28 @@ func _draw() -> void:
 		if i == slot:
 			UiParts.light_up(chip)
 		_strip.add_child(chip)
+	if hero_mode:
+		var with := HBoxContainer.new()
+		with.add_theme_constant_override("separation", 4)
+		var names: Array[String] = []
+		for id in companions:
+			with.add_child(UiParts.framed_portrait(id, 42.0))
+			names.append(str(Compendium.shared().get_entry("pregens", id).get("name", id)).get_slice(" ", 0))
+		var cap := UiKit.label("Travelling with %s" % _and_list(names), 14, "parchment")
+		cap.tooltip_text = "Your hero takes %s's place." % str(Compendium.shared().get_entry("pregens", replacing).get("name", replacing))
+		cap.mouse_filter = Control.MOUSE_FILTER_PASS
+		with.add_child(cap)
+		_strip.add_child(with)
 	_strip.add_child(UiParts.gap())
 	_strip.add_child(UiParts.small_button("Back to title", func() -> void: cancelled.emit()))
 	var all_done := not confirmed.has(false)
-	var go := UiParts.primary_button("Begin the adventure" if builders.size() > 1 else "Done", _finish)
+	var go := UiParts.primary_button("Begin the adventure" if builders.size() > 1 or hero_mode else "Done", _finish)
 	go.disabled = not all_done
 	go.tooltip_text = "" if all_done else "Confirm every character on their Review step first."
 	_strip.add_child(go)
+
+
+func _draw_rest() -> void:
 	for c in _rail.get_children():
 		c.queue_free()
 	_rail.add_child(UiParts.caption("Steps", 12))
@@ -171,6 +217,7 @@ func _class_step() -> void:
 		var summary := o.summary
 		var btn := UiParts.tip_button(o.label, func() -> void:
 			b().set_class(o.id)
+			_suit_outfit()
 			_changed(), func() -> Control: return UiParts.rules_tip(label, "", summary), o.id == b().class_id(), 16)
 		btn.custom_minimum_size = Vector2(130, 40)
 		grid.add_child(btn)
@@ -399,9 +446,24 @@ func _equipment_step() -> void:
 
 
 func _appearance_step() -> void:
+	var app := b().build.get("appearance", {}) as Dictionary
+	if bool(app.get("custom", false)):
+		_body.add_child(UiParts.section("Appearance"))
+		var panel := AppearancePanel.create(app, str(b().build.get("species", "human")), b().class_id(), _appearance_tab)
+		panel.tab_changed.connect(func(t: String) -> void: _appearance_tab = t)
+		panel.changed.connect(func(a: Dictionary) -> void:
+			var before := b().build.get("appearance", {}) as Dictionary
+			if str(a.get("outfit", "")) != str(before.get("outfit", "")):
+				_outfit_chosen = true
+			var portrait_changed := str(a.get("portrait", "")) != str(before.get("portrait", ""))
+			_follow_gender(before, a)
+			b().set_appearance(a)
+			if portrait_changed:
+				_draw_strip())
+		_body.add_child(panel)
+		return
 	_body.add_child(UiParts.section("Appearance"))
 	_body.add_child(UiKit.label("Pick a look from the generated sprite library (more looks and palette swaps arrive with the art pass).", 14, "parchment", BODY_W))
-	var app := b().build.get("appearance", {}) as Dictionary
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
 	for look in LOOKS:
@@ -418,6 +480,36 @@ func _appearance_step() -> void:
 		col.add_child(btn)
 		row.add_child(col)
 	_body.add_child(row)
+
+
+## A hero whose pronouns are still the old gender's usual ones gets the new gender's.
+func _follow_gender(before: Dictionary, after: Dictionary) -> void:
+	var g0 := str(before.get("gender", ""))
+	var g1 := str(after.get("gender", ""))
+	if g0 == g1:
+		return
+	var usual := {"female": "she/her", "male": "he/him"}
+	var idn := (b().build.get("identity", {}) as Dictionary).duplicate(true)
+	if str(idn.get("pronouns", "")) in ["", str(usual.get(g0, ""))]:
+		idn["pronouns"] = str(usual.get(g1, ""))
+		b().set_identity(idn)
+
+
+## In hero mode, until the player picks an outfit themselves, the class picks the one that suits it.
+func _suit_outfit() -> void:
+	var app := (b().build.get("appearance", {}) as Dictionary)
+	if not bool(app.get("custom", false)) or _outfit_chosen:
+		return
+	var fresh := HeroLook.default_appearance(str(app.get("gender", "female")), b().class_id())
+	var a := app.duplicate()
+	a["outfit"] = fresh["outfit"]
+	b().set_appearance(a)
+
+
+static func _and_list(names: Array[String]) -> String:
+	if names.size() <= 1:
+		return "".join(names)
+	return "%s and %s" % [", ".join(names.slice(0, names.size() - 1)), names.back()]
 
 
 func _identity_step() -> void:
@@ -491,6 +583,10 @@ func _review_step() -> void:
 	for i in builders.size():
 		if builders[i].errors().is_empty():
 			built.append(builders[i].preview())
+	for id in companions:
+		var mate := Pregens.build(id, 1)
+		if mate != null:
+			built.append(mate)
 	if built.size() >= 2:
 		var cov := PartyCoverage.analyze(built)
 		_body.add_child(UiParts.section("Party composition"))

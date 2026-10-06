@@ -1,6 +1,10 @@
 extends Control
-## The title screen (plan §5.6 Start step): New game (the pregenerated party, ready to play or to edit, or four
-## characters built from scratch), Continue (the newest save), Load, the Phase 2 combat arena, and Quit.
+## The title screen (plan §5.6 Start step): New game (the pregenerated party as it is, or with one of them replaced
+## by a custom hero the player makes: owner, 2026-10-06, "only 1 character of the party can be the custom created
+## one"), Continue (the newest save), Load, the Phase 2 combat arena, and Quit.
+
+## The pregenerated party, in marching order.
+const PARTY: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
 
 var _creation: CreationScreen = null
 var _box: VBoxContainer
@@ -113,9 +117,20 @@ func _new_game() -> void:
 		c.queue_free()
 	_box.add_child(UiKit.title("Who goes into the mists?"))
 	_box.add_child(UiParts.section("The pregenerated party"))
+	_box.add_child(_party_cards(Callable()))
+	_box.add_child(UiParts.primary_button("Play these four", _pregen_party))
+	(_box.get_child(_box.get_child_count() - 1) as Button).size_flags_horizontal = Control.SIZE_FILL
+	var own := UiKit.button("Bring your own hero", _choose_replacement, 18)
+	own.tooltip_text = "Make one character of your own to take a companion's place. The other three come with you."
+	_box.add_child(own)
+	_box.add_child(UiKit.button("Back", _title, 16))
+
+
+## The four pregens on a plate; with `on_pick`, each card is a button that picks that companion.
+func _party_cards(on_pick: Callable) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
-	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
+	for id in PARTY:
 		var data := Compendium.shared().get_entry("pregens", id)
 		var col := VBoxContainer.new()
 		col.add_theme_constant_override("separation", 4)
@@ -124,49 +139,61 @@ func _new_game() -> void:
 		n.add_theme_font_override("font", UiKit.display_font())
 		col.add_child(n)
 		col.add_child(UiKit.label(str(data.get("summary", "")), 12, "parchment", 140))
+		if on_pick.is_valid():
+			var first := str(data.get("name", id)).get_slice(" ", 0)
+			var b := UiParts.small_button("Leave %s behind" % first, func() -> void: on_pick.call(id))
+			b.tooltip_text = str(data.get("hook", ""))
+			col.add_child(b)
 		row.add_child(col)
 	var plate := UiParts.card("ui_black", "gilt_dark", 0.82, 12)
 	plate.add_child(row)
-	_box.add_child(plate)
-	_box.add_child(UiParts.primary_button("Pregenerated party: play as is", _pregen_party))
-	(_box.get_child(_box.get_child_count() - 1) as Button).size_flags_horizontal = Control.SIZE_FILL
-	_box.add_child(UiKit.button("Pregenerated party: edit them first", func() -> void: _open_creator(true), 18))
-	_box.add_child(UiKit.button("Build all four from scratch", func() -> void: _open_creator(false), 18))
-	var copy := UiKit.button("Copy from a save", func() -> void: pass, 18)
-	copy.disabled = true
-	copy.tooltip_text = "No other saves to copy from yet (Phase 4)."
-	_box.add_child(copy)
-	_box.add_child(UiKit.button("Back", _title, 16))
+	return plate
+
+
+## Bring your own hero: who stays behind.
+func _choose_replacement() -> void:
+	for c in _box.get_children():
+		c.queue_free()
+	_box.add_child(UiKit.title("Who stays behind?"))
+	_box.add_child(UiKit.label("Your hero takes one companion's place. The other three travel with you, and their own stories come along.", 15, "parchment", 560))
+	_box.add_child(_party_cards(_open_hero))
+	_box.add_child(UiKit.button("Back", _new_game, 16))
 
 
 func _pregen_party() -> void:
 	var party: Array[Character] = []
-	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
+	for id in PARTY:
 		var ch := Pregens.build(id, 1)
 		ch.finish_long_rest()
 		party.append(ch)
 	_start(party)
 
 
-func _open_creator(from_pregens: bool) -> void:
-	var builds: Array[Dictionary] = []
-	if from_pregens:
-		for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
-			var b := (Compendium.shared().get_entry("pregens", id)["build"] as Dictionary).duplicate(true)
-			var app := (b.get("appearance", {}) as Dictionary).duplicate()
-			app["art"] = id
-			b["appearance"] = app
-			builds.append(b)
+## The custom hero's creator; when it's done, the hero stands where `replacing` would have.
+func _open_hero(replacing: String) -> void:
+	var others: Array[String] = []
+	for id in PARTY:
+		if id != replacing:
+			others.append(id)
 	_creation = CreationScreen.new()
 	_box.visible = false
 	add_child(_creation)
-	_creation.finished.connect(_start)
+	_creation.finished.connect(func(made: Array[Character]) -> void:
+		var party: Array[Character] = []
+		for id in PARTY:
+			if id == replacing:
+				party.append(made[0])
+			else:
+				var ch := Pregens.build(id, 1)
+				ch.finish_long_rest()
+				party.append(ch)
+		_start(party))
 	_creation.cancelled.connect(func() -> void:
 		_creation.queue_free()
 		_creation = null
 		_box.visible = true
-		_title())
-	_creation.open_with(builds)
+		_new_game())
+	_creation.open_hero(replacing, others)
 
 
 ## A fresh playthrough: the party at level 1 on the Old Svalich Road, at dusk.
@@ -199,18 +226,28 @@ func _load(slot: String) -> void:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
-## The capture tool's sequence: the title, the new-game choice, and character creation partway through.
+## The capture tool's sequence: the title, the new-game choice, who stays behind, and the hero creator's Appearance
+## tabs and Review.
 func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 10)
 	tool.call("_shot", out + "_1_title.png")
 	_new_game()
 	await tool.call("wait_frames", 10)
 	tool.call("_shot", out + "_2_new_game.png")
-	_open_creator(true)
+	_choose_replacement()
 	await tool.call("wait_frames", 10)
-	tool.call("_shot", out + "_3_creation.png")
-	for step: int in [2, CharacterBuilder.Step.REVIEW]:
-		_creation.step = step
+	tool.call("_shot", out + "_3_who_stays.png")
+	_open_hero("tamsin_tealeaf")
+	var b := _creation.b()
+	b.set_class("fighter")
+	_creation.call("_suit_outfit")
+	_creation.step = CharacterBuilder.Step.APPEARANCE
+	for t: String in AppearancePanel.TABS:
+		_creation.set("_appearance_tab", t)
 		_creation.call("_draw")
-		await tool.call("wait_frames", 10)
-		tool.call("_shot", out + "_4_creation_step_%d.png" % step)
+		await tool.call("wait_frames", 20)
+		tool.call("_shot", out + "_4_appearance_%s.png" % t.to_snake_case().replace("&", "and").replace("__", "_"))
+	_creation.step = CharacterBuilder.Step.REVIEW
+	_creation.call("_draw")
+	await tool.call("wait_frames", 10)
+	tool.call("_shot", out + "_5_review.png")

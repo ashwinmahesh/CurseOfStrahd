@@ -53,6 +53,8 @@ static func art_for(cr: Creature) -> String:
 		var data := (cr as Monster).data
 		return str(data.get("art", data.get("id", "")))
 	if cr is Character:
+		if HeroLook.is_custom(cr as Character):
+			return HeroLook.register(cr as Character)
 		var look := str(((cr as Character).build.get("appearance", {}) as Dictionary).get("art", ""))
 		if look != "":
 			return look
@@ -66,6 +68,11 @@ static func default_look(ch: Character) -> String:
 		if ch.class_level_of(cls) > 0:
 			return {"fighter": "ilse_varga", "rogue": "tamsin_tealeaf", "cleric": "hedda_ironvow", "wizard": "silvain_aster"}[cls] as String
 	return "ilse_varga"
+
+
+## Sprite height in world units for an art id: a custom hero's from its species and height pick, else HEIGHTS.
+static func height_for(aid: String) -> float:
+	return HeroLook.height_for_art(aid, float(HEIGHTS.get(aid, 1.2)))
 
 
 ## `art` overrides which sprite to use (NPCs whose stat block is generic, like a commoner).
@@ -84,7 +91,7 @@ func _build() -> void:
 	var frames := DirectionalSprite.frames_for(aid)
 	var size_units := float(c.size_cells)
 	if frames != null:
-		sprite = DirectionalSprite.create(frames, float(HEIGHTS.get(aid, 1.2)))
+		sprite = DirectionalSprite.create(frames, height_for(aid))
 		sprite.play(&"idle_s")
 		add_child(sprite)
 		body = sprite
@@ -129,7 +136,7 @@ func _build() -> void:
 	# Health bar under the ring, facing up so it reads from the camera's pitch.
 	_bar_back = _bar("ink", 0.8 * size_units, 0.0)
 	_bar_fill = _bar("sickly", 0.8 * size_units, 0.005)
-	var top := float(HEIGHTS.get(aid, 1.2)) + 0.25
+	var top := height_for(aid) + 0.25
 	_label = _text(c.name(), Vector3(0, top, 0), 30, "vellum")
 	_status = _text("", Vector3(0, top + 0.2, 0), 24, "flame")
 	_label.visible = false
