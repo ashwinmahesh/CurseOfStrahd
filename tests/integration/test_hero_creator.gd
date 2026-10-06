@@ -46,11 +46,16 @@ func test_a_class_pick_suits_the_outfit_until_the_player_picks_one() -> void:
 	var cs := _hero_screen()
 	cs.b().set_class("wizard")
 	cs.call("_suit_outfit")
-	assert_eq(str((cs.b().build["appearance"] as Dictionary)["outfit"]), "scholar", "a wizard starts in robes")
+	var app := cs.b().build["appearance"] as Dictionary
+	var offered := HeroLook.offered_ids(app, "outfits")
+	if "scholar" in offered:
+		assert_eq(str(app["outfit"]), "scholar", "a wizard starts in robes")
+	assert_true(str(app["outfit"]) in offered, "the outfit is one that's drawn")
+	var picked := str(app["outfit"])
 	cs.set("_outfit_chosen", true)
 	cs.b().set_class("fighter")
 	cs.call("_suit_outfit")
-	assert_eq(str((cs.b().build["appearance"] as Dictionary)["outfit"]), "scholar", "the player's pick stays")
+	assert_eq(str((cs.b().build["appearance"] as Dictionary)["outfit"]), picked, "the player's pick stays")
 	cs.queue_free()
 
 
@@ -75,7 +80,9 @@ func test_the_appearance_step_draws_and_sends_picks_back() -> void:
 	assert_eq(got.size(), 1, "a pick is sent back")
 	assert_eq(str(got[0]["gender"]), "male")
 	assert_eq(str(got[0]["voice"]), "hero_male", "the default voice follows the gender")
-	panel.call("_pick", "portrait", "hero_07")
-	assert_eq(str(got[1]["art"]), "hero_07", "the portrait is the art id")
+	assert_true(HeroLook.has_pieces(got[0]), "the man's look settled onto drawn art")
+	var portrait := HeroLook.offered_ids(got[0], "portraits").back() as String
+	panel.call("_pick", "portrait", portrait)
+	assert_eq(str(got[got.size() - 1]["art"]), portrait, "the portrait is the art id")
 	panel.queue_free()
 	cs.queue_free()

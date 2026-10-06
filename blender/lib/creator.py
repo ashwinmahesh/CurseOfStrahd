@@ -229,6 +229,46 @@ def head(arr, skin=None, fig_h=None, expect=None, top_frac=0.45):
             "skull_w": int(skull_w), "skull_row": int(row)}
 
 
+def head_template(hd, scale=1.0):
+    """The standing head (its skin above the neck) as a boolean template at `scale`, with its skull's anchors in the
+    template's pixels."""
+    blob = hd["blob"].copy()
+    blob[hd["cut"]:] = False
+    ys, xs = np.nonzero(blob)
+    y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+    t = blob[y0:y1, x0:x1]
+    if abs(scale - 1.0) > 1e-3:
+        h, w = t.shape
+        nh, nw = max(1, int(round(h * scale))), max(1, int(round(w * scale)))
+        t = t[np.minimum((np.arange(nh) / scale).astype(int), h - 1)][:, np.minimum((np.arange(nw) / scale).astype(int), w - 1)]
+    return {"mask": t, "cx": (hd["cx"] - x0) * scale, "top": (hd["top"] - y0) * scale,
+            "skull_w": hd["skull_w"] * scale, "cut": (hd["cut"] - y0) * scale, "area": float(t.sum())}
+
+
+def find_head_like(skin, tmpl, top_frac=0.6):
+    """Where the standing head sits in a pose: the placement of its template that best matches the pose's skin (skin
+    under the template counts for, bare background or cloth against), searched in the upper part of the pose. Raised
+    arms touching the head can't pull it off centre the way a blob's outline can. Returns a head dict like head()'s,
+    or None."""
+    h, w = skin.shape
+    t = tmpl["mask"].astype(np.float32)
+    th, tw = t.shape
+    if th >= h or tw >= w:
+        return None
+    region = skin[: max(th + 1, int(top_frac * h))].astype(np.float32)
+    rh, rw = region.shape
+    size = (rh + th, rw + tw)
+    f = np.fft.rfft2(region, size)
+    g = np.fft.rfft2(t[::-1, ::-1], size)
+    overlap = np.fft.irfft2(f * g, size)[th - 1:rh, tw - 1:rw]
+    score = 2.0 * overlap - tmpl["area"]
+    y, x = np.unravel_index(int(np.argmax(score)), score.shape)
+    if score[y, x] < 0.35 * tmpl["area"]:
+        return None
+    return {"cx": float(x + tmpl["cx"]), "top": float(y + tmpl["top"]), "skull_w": float(tmpl["skull_w"]),
+            "cut": int(round(y + tmpl["cut"])), "area": tmpl["area"]}
+
+
 def encode_keys(arr, skin_shade=None, hair_shade=None):
     """The stored form of a piece: keyed pixels get alpha 254 (skin) or 253 (hair) and their shade in red."""
     out = arr.copy()

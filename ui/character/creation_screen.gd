@@ -449,6 +449,11 @@ func _equipment_step() -> void:
 func _appearance_step() -> void:
 	var app := b().build.get("appearance", {}) as Dictionary
 	if bool(app.get("custom", false)):
+		# A look saved before some art existed, or picked when it didn't, moves onto art that exists.
+		var settled := HeroLook.settle(app)
+		if settled != app:
+			b().set_appearance(settled)
+			app = settled
 		_body.add_child(UiParts.section("Appearance"))
 		var panel := AppearancePanel.create(app, str(b().build.get("species", "human")), b().class_id(), _appearance_tab)
 		panel.tab_changed.connect(func(t: String) -> void: _appearance_tab = t)

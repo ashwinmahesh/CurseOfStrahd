@@ -252,7 +252,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	b.set_class("fighter")
 	_creation.call("_suit_outfit")
 	var app := (b.build["appearance"] as Dictionary).duplicate()
-	app.merge({"head": "elfin", "hair": "wavy", "skin": "olive", "hair_colour": "auburn", "portrait": "hero_03", "art": "hero_03"}, true)
+	app.merge({"head": "elfin", "hair": "wavy", "skin": "olive", "hair_colour": "auburn"}, true)
 	b.set_appearance(app)
 	_creation.step = CharacterBuilder.Step.APPEARANCE
 	for t: String in AppearancePanel.TABS:

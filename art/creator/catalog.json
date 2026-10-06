@@ -51,7 +51,7 @@
   {"id": "crest", "label": "Crest", "prompt": "the sides of the head shaved bare, with a short crest of hair running along the top from brow to nape"}
  ],
  "hair_colours": [
-  {"id": "black", "label": "Black", "ramp": ["void", "ink", "grave", "ash_violet"]},
+  {"id": "black", "label": "Black", "ramp": ["void", "ink", "stone_deep", "stone"]},
   {"id": "dark_brown", "label": "Dark brown", "ramp": ["peat", "umber", "walnut", "leather"]},
   {"id": "chestnut", "label": "Chestnut", "ramp": ["peat", "rust", "leather", "tan"]},
   {"id": "auburn", "label": "Auburn", "ramp": ["blood_deep", "rust", "ember", "candle"]},

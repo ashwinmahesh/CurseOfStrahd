@@ -238,12 +238,13 @@ def attack(a, figs, ppu, heads, shades_by_view, out_dir):
         planes, pose_heads = {}, {}
         planes["idle"] = ra.figure_plane(f"{name}_idle", idle, ppu, stand_x)
         pose_heads["idle"] = (heads[name], (idle.anchor, idle.h), ppu)
+        tmpl = creator.head_template(heads[name], 1.0 / k)
         for pose, kf in (("windup", kfs[1]), ("strike", kfs[2])):
-            expect = heads[name]["area"] / (k * k)
-            shade, hd = keyed(kf.crop, fig.shape[0] / k, expect=expect)
+            shade, _ = keyed(kf.crop, fig.shape[0] / k, expect=heads[name]["area"] / (k * k))
+            # The head in a pose is where the standing head's shape fits its skin best (raised arms touch it).
+            hd = creator.find_head_like(shade >= 0, tmpl)
             if hd is None:
                 problems.append(f"{name} {pose}: no head found; the standing head's place is used")
-                hd = None
             kf.crop = creator.to_key_colours(kf.crop, shade >= 0, shade)
             planes[pose] = ra.figure_plane(f"{name}_{pose}", kf, ppu / k, stand_x)
             pose_heads[pose] = (hd, (kf.anchor, kf.h), ppu / k)
