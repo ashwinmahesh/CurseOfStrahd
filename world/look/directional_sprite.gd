@@ -10,7 +10,7 @@ var facing := Vector3.BACK
 var moving := false
 
 
-## Characters draw after the palette pass (which works on a 2x pixel grid with dithering) at full screen
+## Characters draw after the palette pass at full screen
 ## resolution: their sheets are already quantized to the palette by the pipeline, so they stay on-model while
 ## staying sharp (owner request 2026-10-06). Mipmaps keep them smooth when the camera is far away.
 const RENDER_PRIORITY := 6

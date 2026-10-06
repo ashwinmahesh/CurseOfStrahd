@@ -91,6 +91,10 @@ static func make_post_process() -> MeshInstance3D:
 	mat.set_shader_parameter("palette_tex", PALETTE_TEX)
 	mat.set_shader_parameter("palette_size", palette_size())
 	mat.set_shader_parameter("outline_color", color("void"))
+	# Owner feedback (2026-10-06): the 2x pixel grid and ordered dithering read as grain. The palette snap and the
+	# outlines stay; every pixel is its own and no dither pattern is added.
+	mat.set_shader_parameter("pixel_size", 1.0)
+	mat.set_shader_parameter("dither_strength", 0.0)
 	quad.material = mat
 	var mi := MeshInstance3D.new()
 	mi.name = "PostProcess"

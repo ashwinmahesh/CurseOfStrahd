@@ -11,7 +11,7 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
 - Ramps: void/ink/grave (near-black, never pure black) · blood reds · bruised purples · moonlit blues ·
   bone and parchment · bog greens and bile · candle and ember oranges · stone greys · earth browns (peat, umber, walnut, rust, leather, tan) · skin.
 - Night scenes sit in purples and blues; warmth comes only from candles, fire and blood.
-- The in-game post-process snaps every pixel to the palette at a 2x pixel grid with light ordered dithering.
+- The in-game post-process snaps every pixel to the palette at full resolution, with no dithering (owner feedback 2026-10-06: the 2x pixel grid and ordered dither read as grain).
   Sprites are also quantized in the pipeline so they hold up when the pass is off. The pipeline's quantizer keeps neutral
   greys on the grey ramp (so a grey wolf stays grey) and despeckles; `SAT=1.3` is an opt-in chroma boost for
   muted reds that would otherwise snap to brown.
