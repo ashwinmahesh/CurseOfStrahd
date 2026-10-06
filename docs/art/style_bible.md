@@ -1,6 +1,6 @@
 # Style bible (draft 1, Phase 0)
 
-Owner sign-off: **pending**. Reference images: Build Log 02 style test (gpt-image-2.5-flare column).
+Owner sign-off: **pending**. Reference images: Build Log 02 style test (Gemini 3.1 Flash column).
 
 ## The look in one line
 Gothic horror told as a 1990s Saturday-morning cartoon: bold ink, flat cel shading, big readable
@@ -27,7 +27,8 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
 
 ## Characters (sprites)
 - Generate a **5-view turnaround in one row**: front, front three-quarter, side profile facing right,
-  back three-quarter, back. Arms at the sides, same height, clear gaps, transparent background.
+  back three-quarter, back. Arms at the sides, same height, clear gaps, plain flat white background
+  (Gemini can't do transparency; the pipeline removes the background).
 - `make sprite TURNAROUND=<png> ID=<id>` cuts it into a cutout rig and renders 8 directions × 8 walk frames.
 - In game a sprite is about 1.5 world units tall (a Medium creature).
 
@@ -48,8 +49,9 @@ text or watermarks in images, pure black, neon colours outside the palette, chib
 
 ## Prompting rules
 - Every call goes through `tools/art/generate.sh` (adds `art/prompts/style_preamble.txt`, pins the model, logs the call).
-- Model: `gpt-image-2.5-flare-2026-09-08` (art/manifest.json).
-- Templates live in `art/prompts/`. Ask for transparent backgrounds for sprites, parts and props.
+- Model: `gemini-3.1-flash-image` (art/manifest.json, owner pick 2026-10-06).
+- Templates live in `art/prompts/`. Ask for a plain flat white background for sprites, parts and props.
+- Gemini tends to add scenery behind portraits: say "plain dark purple background, no props or scenery".
 
 ## Art QA before "final"
 Silhouette reads at in-game size, palette compliance after quantization, all 8 directions consistent,

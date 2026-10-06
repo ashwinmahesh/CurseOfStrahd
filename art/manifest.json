@@ -1,11 +1,29 @@
 {
-  "image_model": "gpt-image-2.5-flare-2026-09-08",
-  "image_model_note": "Pinned 2026-10-05 after the Phase 0 style test (art/generated/style_test, see Build Log 02). Flare gave the flattest cel shading and boldest silhouettes, closest to the 90s-cartoon brief, and supports transparent backgrounds. No shutdown date listed for it. gpt-image-2 rejected transparent backgrounds on this key.",
+  "image_model": "gemini-3.1-flash-image",
+  "image_model_note": "Pinned 2026-10-06 by the owner after the Phase 0 style test (Build Log 02): the most Saturday-morning-cartoon look and the most readable sprites. Gemini returns opaque images; prompts ask for a plain flat white background and the pipeline removes it. Previous pin: gpt-image-2.5-flare-2026-09-08 (OpenAI), kept as a fallback via tools/art/generate_openai.sh.",
   "assets": [
-    {"id": "party_placeholder", "kind": "character", "status": "placeholder", "notes": "Capsule bodies in world/exploration/party_member.gd"},
-    {"id": "barovian_villager", "kind": "character", "status": "rigged",
-     "source": "art/generated/characters/villager_turnaround.png", "sprites": "art/sprites/villager/walk.tres",
-     "model": "gpt-image-2.5-flare", "notes": "Phase 0 pipeline proof: 5-view turnaround -> cutout rig (blender/render_walk.py) -> 8 directions x 8-frame walk. Needs art QA before final."},
-    {"id": "villager_standin", "kind": "character", "status": "placeholder", "source": "art/generated/standin/villager_turnaround.png", "notes": "Primitive stand-in from blender/make_standin_turnaround.py, for pipeline tests"}
-  ]
+    {
+      "id": "party_placeholder",
+      "kind": "character",
+      "status": "placeholder",
+      "notes": "Capsule bodies in world/exploration/party_member.gd"
+    },
+    {
+      "id": "barovian_villager",
+      "kind": "character",
+      "status": "rigged",
+      "source": "art/generated/characters/villager_turnaround.png",
+      "sprites": "art/sprites/villager/walk.tres",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Phase 0 pipeline proof: 5-view turnaround -> cutout rig (blender/render_walk.py) -> 8 directions x 8-frame walk. Needs art QA before final."
+    },
+    {
+      "id": "villager_standin",
+      "kind": "character",
+      "status": "placeholder",
+      "source": "art/generated/standin/villager_turnaround.png",
+      "notes": "Primitive stand-in from blender/make_standin_turnaround.py, for pipeline tests"
+    }
+  ],
+  "image_provider": "gemini"
 }

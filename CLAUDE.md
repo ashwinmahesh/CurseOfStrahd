@@ -5,7 +5,8 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | test [ONLY=substr] | validate | ci | palette | capture [SCENE=… NAME=… FRAMES=…]
+make run | test [ONLY=substr] | validate | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node]
+make sprite TURNAROUND=<png> ID=<id> | standin
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.
@@ -21,8 +22,10 @@ Rule deviations go in docs/rules/deviations.md; a rule is "done" only when cover
 
 ## Art
 - Colours only from art/palette/palette.json (via Look) — run `make palette` after editing the list.
-- Images: OpenAI GPT Image via tools/art/generate.sh only; model pinned in art/manifest.json.
-  Never use models with a shutdown date (gpt-image-1, gpt-image-1.5, gpt-image-1-mini, chatgpt-image-latest).
+- Images: Gemini (gemini-3.1-flash-image, owner decision 2026-10-06) via tools/art/generate.sh only;
+  provider and model pinned in art/manifest.json. Key: GEMINI_API_KEY, sent as a header. Gemini gives opaque
+  images, so ask for a plain flat white background; the pipeline removes it. OpenAI is a fallback
+  (tools/art/generate_openai.sh); never use OpenAI models with a shutdown date.
 - UI draws on CanvasLayers so the palette pass never touches it.
 
 ## Done means

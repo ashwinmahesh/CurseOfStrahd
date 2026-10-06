@@ -66,6 +66,15 @@ def remove_background(arr, tolerance=0.12):
         if (grown == mask).all():
             break
         mask = grown
+    # Anti-aliased edges leave a light halo: drop edge pixels still close to the background colour.
+    near = np.linalg.norm(rgb - bg, axis=2) < tolerance * 3
+    for _ in range(2):
+        edge = np.zeros_like(mask)
+        edge[1:] |= mask[:-1]
+        edge[:-1] |= mask[1:]
+        edge[:, 1:] |= mask[:, :-1]
+        edge[:, :-1] |= mask[:, 1:]
+        mask |= edge & near
     out = arr.copy()
     out[mask, 3] = 0.0
     return out
