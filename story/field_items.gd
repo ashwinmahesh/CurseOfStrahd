@@ -46,7 +46,7 @@ static func _field_why(e: Encounter, c: Combatant, p: Dictionary) -> String:
 	return why
 
 
-const FIELD_CUSTOM: Array[String] = ["alchemy_jug", "bag_of_beans", "deck_of_many_things", "exalted_deeds", "vile_darkness",
+const FIELD_CUSTOM: Array[String] = ["read_tome", "alchemy_jug", "bag_of_beans", "deck_of_many_things", "exalted_deeds", "vile_darkness",
 	"manual_study", "instant_fortress", "rod_of_security", "oil_of_sharpness", "ring_store", "sense_dragons", "useful_items",
 	"flavour", "drink_field_spell", "chime_of_opening", "mystery_key", "wand_of_secrets", "feather_token"]
 
@@ -113,6 +113,16 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 	match str(power["custom"]):
 		"flavour":
 			return {"ok": true, "text": "%s's %s %s." % [nm, label, params.get("text", "does something harmless")]}
+		"read_tome":
+			# The Tome of Strahd (Curse of Strahd): its history goes into the codex; the vampire knows it was read.
+			var first := not "tome_of_strahd" in st.codex
+			if first:
+				st.codex.append("tome_of_strahd")
+				st.advance_minutes(3 * 60)
+			st.set_flag("tome_of_strahd_read", true)
+			st.set_flag("strahd_knows_tome_read", true)
+			return {"ok": true, "text": "%s reads the %s through. Somewhere, a door closes very quietly." % [nm, label] if first
+				else "%s turns the pages again. The ending hasn't changed." % nm}
 		"drink_field_spell":
 			var mins := int(params.get("minutes", 10))
 			st.active_spells[str(params.get("spell", ""))] = {"until": st.total_minutes() + mins, "caster": who.id}

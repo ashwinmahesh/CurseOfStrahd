@@ -96,7 +96,7 @@
           "recharge": "long"
         },
         "uses_resource": "beguiling_defenses",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

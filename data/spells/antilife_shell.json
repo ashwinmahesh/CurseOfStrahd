@@ -32,6 +32,12 @@
   "targets": {
     "kind": "self"
   },
+  "zone": {
+    "triggers": [],
+    "affects": "all",
+    "include_caster": true,
+    "colour": "bile"
+  },
   "tags": [
     "defense"
   ],

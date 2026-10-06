@@ -47,6 +47,10 @@
         {
           "stat": "attacked_with",
           "value": "disadvantage"
+        },
+        {
+          "stat": "flag",
+          "value": "holy_aura"
         }
       ]
     }

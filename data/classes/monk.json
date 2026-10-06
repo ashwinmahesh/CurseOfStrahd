@@ -492,7 +492,7 @@
           "name": "Acrobatic Movement",
           "summary": "Without armor or a Shield, move along vertical surfaces and across liquids on your turn.",
           "text": "While you wear no armor and wield no Shield, on your turn you can move along vertical surfaces and across liquids without falling during the move.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

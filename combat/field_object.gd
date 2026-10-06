@@ -67,7 +67,7 @@ func expired() -> bool:
 
 func covers(c: Combatant) -> bool:
 	# An aura for "you and your allies" (Aura of Life, Crusader's Mantle) includes the caster's own space.
-	if follows_caster and c.id == caster_id and str(rules.get("affects", "")) == "allies":
+	if follows_caster and c.id == caster_id and (str(rules.get("affects", "")) == "allies" or bool(rules.get("include_caster", false))):
 		return true
 	for cell_ in c.footprint():
 		if cell_ in cells:

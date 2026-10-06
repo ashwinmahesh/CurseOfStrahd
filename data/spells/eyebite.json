@@ -31,8 +31,29 @@
   "targets": {
     "kind": "creature",
     "count": 1,
-    "description": "a creature you can see within 60 feet of you"
+    "description": "a creature you can see within 60 feet of you",
+    "within": 60
   },
+  "choice": {
+    "kind": "option",
+    "label": "Effect",
+    "from": [
+      "asleep",
+      "panicked",
+      "sickened"
+    ]
+  },
+  "sustain": [
+    {
+      "do": "eyebite",
+      "cost": "magic",
+      "not_this_turn": true,
+      "range": 60,
+      "label": "Eyebite: new target",
+      "sub": "Wis save",
+      "help": "A Magic action: another creature within 60 ft makes the save (never one that already succeeded)."
+    }
+  ],
   "tags": [
     "control",
     "debuff"

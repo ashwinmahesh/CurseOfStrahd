@@ -80,7 +80,7 @@
           "recharge": "long"
         },
         "uses_resource": "moonlight_step",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

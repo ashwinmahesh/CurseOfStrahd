@@ -171,7 +171,9 @@ static func card(bg: String = "ui_oxblood", border: String = "gilt_dark", alpha:
 	s.bg_color = Color(Look.color(bg), alpha)
 	s.border_color = Color(Look.color(border), 0.9)
 	s.set_border_width_all(1)
-	s.set_corner_radius_all(3)
+	# Bevelled corners, not squares (owner, 2026-10-06).
+	s.set_corner_radius_all(7)
+	s.corner_detail = 1
 	s.set_content_margin_all(margin)
 	p.add_theme_stylebox_override("panel", s)
 	return p
@@ -358,25 +360,47 @@ static func plaque(value: String, caption: String, tip: Callable, small: String 
 static func bar(value: float, maximum: float, extra: float, text: String, fill: String, tip: Callable,
 		width: float = 300.0, height: float = 26.0) -> Drawn:
 	return drawn(Vector2(width, height), func(c: Control) -> void:
+		# A long hexagon like the buttons: the ends come to points.
 		var r := Rect2(Vector2.ZERO, c.size)
 		var thin := c.size.y < 16.0
-		c.draw_rect(r, Look.color("void"))
+		var tip_w := c.size.y / 2.0
+		var outer := _long_hex(r, tip_w)
+		c.draw_colored_polygon(outer, Look.color("void"))
 		var inner := r.grow(-2.0 if thin else -3.0)
 		var span := maxf(maximum + extra, 1.0)
 		var f := clampf(value / span, 0.0, 1.0)
 		if f > 0.0:
 			var fr := Rect2(inner.position, Vector2(inner.size.x * f, inner.size.y))
-			c.draw_rect(fr, Look.color(fill))
-			c.draw_rect(Rect2(fr.position, Vector2(fr.size.x, fr.size.y * 0.4)), Color(Look.color("ivory"), 0.12))
+			_fill(c, _clip_hex(fr, inner, tip_w - 2.0), Look.color(fill))
+			var shine := Rect2(fr.position, Vector2(fr.size.x, fr.size.y * 0.4))
+			_fill(c, _clip_hex(shine, inner, tip_w - 2.0), Color(Look.color("ivory"), 0.12))
 		if extra > 0.0:
 			var ex := Rect2(inner.position + Vector2(inner.size.x * f, 0), Vector2(inner.size.x * clampf(extra / span, 0.0, 1.0 - f), inner.size.y))
-			c.draw_rect(ex, Look.color("moonlight"))
-		c.draw_rect(r, Look.color("gilt" if not thin else "gilt_dark"), false, 1.5 if not thin else 1.0)
-		if not thin:
-			c.draw_rect(r.grow(-3), Color(Look.color("gilt_dark"), 0.8), false, 1.0)
+			_fill(c, _clip_hex(ex, inner, tip_w - 2.0), Look.color("moonlight"))
+		closed_line(c, outer, Look.color("gilt" if not thin else "gilt_dark"), 1.5 if not thin else 1.0)
 		if text != "" and not thin:
 			centred_text(c, figure_font(), text, r.get_center() + Vector2(0, 1), clampi(int(c.size.y * 0.66), 12, 17), Look.color("ivory")),
 		tip, text)
+
+
+## A rectangle with its two ends drawn to points `tip` wide.
+static func _long_hex(r: Rect2, tip: float) -> PackedVector2Array:
+	var t := minf(tip, r.size.x / 2.0)
+	var m := r.get_center().y
+	return PackedVector2Array([Vector2(r.position.x, m), Vector2(r.position.x + t, r.position.y), Vector2(r.end.x - t, r.position.y),
+		Vector2(r.end.x, m), Vector2(r.end.x - t, r.end.y), Vector2(r.position.x + t, r.end.y)])
+
+
+## Part of a bar (`part`, inside `whole`) cut to the whole bar's pointed ends.
+static func _clip_hex(part: Rect2, whole: Rect2, tip: float) -> PackedVector2Array:
+	var poly := Geometry2D.intersect_polygons(PackedVector2Array([part.position, Vector2(part.end.x, part.position.y), part.end,
+		Vector2(part.position.x, part.end.y)]), _long_hex(whole, tip))
+	return poly[0] if not poly.is_empty() else PackedVector2Array()
+
+
+static func _fill(c: CanvasItem, poly: PackedVector2Array, colour: Color) -> void:
+	if poly.size() >= 3:
+		c.draw_colored_polygon(poly, colour)
 
 
 ## A creature's Hit Points as a bar: crimson, brighter when Bloodied, temporary Hit Points in moonlight, grey when
@@ -569,6 +593,9 @@ static func light_up(b: Button) -> void:
 		on.content_margin_bottom = was.content_margin_bottom
 	b.add_theme_stylebox_override("normal", on)
 	b.add_theme_color_override("font_color", Look.color("gilt_light"))
+	# Lozenges just inside its points, where there's room beside the text.
+	if on.content_margin_left >= 16.0:
+		mark_ends(b, false)
 
 
 ## A smaller button for inside rows and HUD cards, so a row with one is no taller than one without.
@@ -583,8 +610,8 @@ static func compact(b: Button) -> void:
 		var s := UiKit.button_style(state)
 		s.content_margin_top = 3
 		s.content_margin_bottom = 3
-		s.content_margin_left = 9
-		s.content_margin_right = 9
+		s.content_margin_left = 13
+		s.content_margin_right = 13
 		b.add_theme_stylebox_override(state, s)
 	b.add_theme_font_size_override("font_size", 13)
 	b.add_theme_constant_override("icon_max_width", 16)
@@ -607,6 +634,7 @@ static func primary_button(text: String, on_press: Callable, icon_id: String = "
 		b.add_theme_stylebox_override(state, s)
 	b.add_theme_color_override("font_color", Look.color("ivory"))
 	b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	mark_ends(b, false)
 	return b
 
 
@@ -711,6 +739,112 @@ static func fill_scroll(child: Control) -> ScrollContainer:
 	child.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	s.add_child(child)
 	return s
+
+
+# --- Gothic shapes (owner's pick, the Crimson settings concept: arched frames, crests, hexagonal buttons) -----
+
+static func _bezier(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, steps: int) -> PackedVector2Array:
+	var out := PackedVector2Array()
+	for i in range(1, steps + 1):
+		var t := float(i) / steps
+		var u := 1.0 - t
+		out.append(p0 * u * u * u + p1 * 3.0 * u * u * t + p2 * 3.0 * u * t * t + p3 * t * t * t)
+	return out
+
+
+## An arched panel's outline: straight sides, a pointed (lancet) arch whose apex is `r`'s top edge and whose shoulders
+## are `rise` lower, and a flat bottom. Convex, so it fills with draw_polygon.
+static func arch_points(r: Rect2, rise: float, steps: int = 18) -> PackedVector2Array:
+	var x0 := r.position.x
+	var w := r.size.x
+	var apex := Vector2(x0 + w / 2.0, r.position.y)
+	var sh := r.position.y + rise
+	var pts := PackedVector2Array([Vector2(x0, r.end.y), Vector2(x0, sh)])
+	pts.append_array(_bezier(Vector2(x0, sh), Vector2(x0, sh - rise * 0.5), Vector2(x0 + w * 0.286, r.position.y + rise * 0.167), apex, steps))
+	pts.append_array(_bezier(apex, Vector2(x0 + w * 0.714, r.position.y + rise * 0.167), Vector2(x0 + w, sh - rise * 0.5), Vector2(x0 + w, sh), steps))
+	pts.append(Vector2(x0 + w, r.end.y))
+	return pts
+
+
+## Fills a convex shape with a vertical gradient (wine at the top fading to black, like the concept).
+static func gradient_fill(c: CanvasItem, pts: PackedVector2Array, top: Color, bottom: Color) -> void:
+	var lo := INF
+	var hi := -INF
+	for p in pts:
+		lo = minf(lo, p.y)
+		hi = maxf(hi, p.y)
+	var cols := PackedColorArray()
+	for p in pts:
+		cols.append(top.lerp(bottom, (p.y - lo) / maxf(hi - lo, 1.0)))
+	c.draw_polygon(pts, cols)
+
+
+static func closed_line(c: CanvasItem, pts: PackedVector2Array, colour: Color, width: float) -> void:
+	var closed := pts.duplicate()
+	closed.append(pts[0])
+	c.draw_polyline(closed, colour, width, true)
+
+
+## The crest at an arch's apex: a gilt ring around a lozenge.
+static func crest(c: CanvasItem, centre: Vector2, r: float = 13.0) -> void:
+	c.draw_circle(centre, r, Look.color("ui_black"))
+	c.draw_arc(centre, r, 0.0, TAU, 32, Look.color("gilt"), 1.2, true)
+	diamond(c, centre, r * 0.82, Look.color("gilt_light"), true)
+
+
+## A curl of scrollwork at an arch's shoulder; `flip` mirrors it for the right side.
+static func curl(c: CanvasItem, at: Vector2, k: float = 1.0, flip: bool = false) -> void:
+	var m := Vector2(-1.0 if flip else 1.0, 1.0) * k
+	var p0 := at
+	var pts := PackedVector2Array([p0])
+	pts.append_array(_bezier(p0, p0 + Vector2(0, -20) * m, p0 + Vector2(18, -28) * m, p0 + Vector2(30, -18) * m, 12))
+	var p3 := p0 + Vector2(30, -18) * m
+	pts.append_array(_bezier(p3, p0 + Vector2(38, -11) * m, p0 + Vector2(30, 0) * m, p0 + Vector2(22, -6) * m, 10))
+	c.draw_polyline(pts, Look.color("gilt"), 1.5, true)
+
+
+## A title's rule: a fine gilt line either side of a lozenge.
+static func title_rule(c: CanvasItem, centre: Vector2, half: float) -> void:
+	var gilt := Look.color("gilt")
+	c.draw_line(centre + Vector2(-half, 0), centre + Vector2(-12, 0), gilt, 1.0, true)
+	c.draw_line(centre + Vector2(12, 0), centre + Vector2(half, 0), gilt, 1.0, true)
+	diamond(c, centre, 5.0, gilt, true)
+
+
+## The footer flourish: a gilt wave with a lozenge at its middle.
+static func footer_wave(c: CanvasItem, centre: Vector2, half: float) -> void:
+	var k := half / 80.0
+	var a := centre + Vector2(-80, 0) * k
+	var pts := PackedVector2Array([a])
+	pts.append_array(_bezier(a, centre + Vector2(-50, -10) * k, centre + Vector2(-25, 10) * k, centre, 14))
+	pts.append_array(_bezier(centre, centre + Vector2(25, -10) * k, centre + Vector2(50, 10) * k, centre + Vector2(80, 0) * k, 14))
+	c.draw_polyline(pts, Look.color("gilt"), 1.2, true)
+	diamond(c, centre, 5.0, Look.color("gilt"), true)
+
+
+## L-shaped brackets at a rectangle's bottom corners (and its top ones with `top`).
+static func brackets(c: CanvasItem, r: Rect2, arm: float = 18.0, top: bool = false) -> void:
+	var gilt := Look.color("gilt")
+	var corners := [[r.position + Vector2(0, r.size.y), Vector2(1, -1)], [r.end, Vector2(-1, -1)]]
+	if top:
+		corners.append([r.position, Vector2(1, 1)])
+		corners.append([Vector2(r.end.x, r.position.y), Vector2(-1, 1)])
+	for cn: Variant in corners:
+		var at := (cn as Array)[0] as Vector2
+		var d := (cn as Array)[1] as Vector2
+		c.draw_line(at, at + Vector2(0, arm * d.y), gilt, 2.0, true)
+		c.draw_line(at, at + Vector2(arm * d.x, 0), gilt, 2.0, true)
+
+
+## Lozenges at a button's two points, the concept's mark for the chosen one: outside it where there's room (a menu
+## column), else just inside its tips.
+static func mark_ends(b: Control, outside: bool = true) -> void:
+	b.draw.connect(func() -> void:
+		var y := b.size.y / 2.0
+		var dx := -11.0 if outside else 9.0
+		diamond(b, Vector2(dx, y), 5.0 if outside else 3.5, Look.color("gilt_light"), true)
+		diamond(b, Vector2(b.size.x - dx, y), 5.0 if outside else 3.5, Look.color("gilt_light"), true))
+	b.queue_redraw()
 
 
 # --- Tooltips -------------------------------------------------------------------------------------

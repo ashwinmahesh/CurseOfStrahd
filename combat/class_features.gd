@@ -248,6 +248,12 @@ func _barbarian(c: Combatant, ch: Character, out: Array[Dictionary], aw: String,
 	if has(c, "reckless_attack") and not c.took_attack_action and not c.creature.has_flag("reckless"):
 		out.append(_entry("reckless_attack", "Reckless Attack", "Advantage on Strength attacks", "free", tw, "none",
 			"On your first attack this turn: Advantage on attack rolls with Strength until the start of your next turn, but attacks against you have Advantage too."))
+	if has(c, "zealous_presence"):
+		var zw := bw
+		if zw == "" and _uses(c, "zealous_presence", "Zealous Presence", 1, "long") <= 0 and ch.resource_left("rage") <= 0:
+			zw = "Used (or spend a Rage)"
+		out.append(_entry("zealous_presence", "Zealous Presence", "allies: Advantage", "bonus", zw, "none",
+			"Bonus Action: up to ten allies within 60 ft gain Advantage on attack rolls and saves until the start of your next turn."))
 	if has(c, "warrior_of_the_gods") and ch.resource_left("warrior_of_the_gods") > 0:
 		out.append(_entry("warrior_of_the_gods", "Warrior of the Gods", "%d d12 left" % ch.resource_left("warrior_of_the_gods"), "bonus", bw, "none",
 			"Bonus Action: roll d12s from the pool (as many as you need) and regain that many Hit Points."))
@@ -267,7 +273,10 @@ func _monk(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw: 
 		out.append(_entry("patient_defense", "Patient Defense", "Disengage", "bonus", bw, "none", "Bonus Action: Disengage."))
 		out.append(_entry("patient_defense_focus", "Patient Defense (Focus)", "Disengage + Dodge · 1 Focus", "bonus", _first(bw, fw), "none", "Bonus Action, 1 Focus Point: Disengage and Dodge."))
 	if has(c, "step_of_the_wind"):
-		out.append(_entry("step_of_the_wind", "Step of the Wind", "Dash", "bonus", bw, "none", "Bonus Action: Dash."))
+		# Fleet Step (Open Hand 11): after another Bonus Action, Step of the Wind right away.
+		var fleet := has(c, "fleet_step") and str(c.get_meta("fleet_step", "")) == _turn_key()
+		var sbw := "" if fleet else bw
+		out.append(_entry("step_of_the_wind", "Step of the Wind", "Dash" + (" (Fleet Step)" if fleet else ""), "bonus", sbw, "none", "Bonus Action: Dash."))
 		out.append(_entry("step_of_the_wind_focus", "Step of the Wind (Focus)", "Dash + Disengage · 1 Focus", "bonus", _first(bw, fw), "none", "Bonus Action, 1 Focus Point: Disengage and Dash, and your jumps double."))
 	match ch.subclasses.get("monk", ""):
 		"warrior_of_the_open_hand":
@@ -275,6 +284,9 @@ func _monk(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw: 
 				var uw := "" if _uses(c, "wholeness_of_body", "Wholeness of Body", maxi(1, c.creature.ability_mod(&"wis")), "long") > 0 else "None left"
 				out.append(_entry("wholeness_of_body", "Wholeness of Body", "1d%d + %d" % [die, c.creature.ability_mod(&"wis")], "bonus", _first(bw, uw), "none", "Bonus Action: regain a Martial Arts die + Wisdom Hit Points."))
 		"warrior_of_shadow":
+			if has(c, "improved_shadow_step"):
+				out.append(_entry("improved_shadow_step", "Shadow Step (anywhere)", "60 ft + strike · 1 Focus", "bonus", _first(bw, fw), "point",
+					"Bonus Action, 1 Focus Point: teleport up to 60 ft from and to anywhere, then make an Unarmed Strike.", 60))
 			if has(c, "shadow_arts"):
 				out.append(_entry("shadow_arts", "Shadow Arts: Darkness", "1 Focus", "action", _first(aw, fw), "point", "Magic action, 1 Focus Point: cast Darkness without a slot; you can see through it.", 60))
 			if has(c, "shadow_step"):
@@ -290,6 +302,12 @@ func _monk(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw: 
 				out.append(_entry("elemental_burst", "Elemental Burst", "%dd%d · 2 Focus" % [3, die], "action", _first(aw, _res_why(c, "focus_points", 2)), "point",
 					"Magic action, 2 Focus Points: a 20-ft-radius Sphere within 120 ft, Dex save for three Martial Arts dice of an element, half on a success.", 120))
 		"warrior_of_mercy":
+			if has(c, "flurry_of_healing_and_harm"):
+				var fhw := _first(bw, fw)
+				if fhw == "" and _uses(c, "flurry_of_healing_and_harm", "Flurry of Healing and Harm", maxi(1, c.creature.ability_mod(&"wis")), "long") <= 0:
+					fhw = "None left"
+				out.append(_entry("flurry_of_healing", "Flurry of Healing", "heal %d creatures · 1 Focus" % (3 if has(c, "heightened_focus") else 2), "bonus", fhw, "ally",
+					"Bonus Action, 1 Focus Point: Flurry of Blows with Hand of Healing in place of each strike (free).", 5))
 			if has(c, "hand_of_healing"):
 				out.append(_entry("hand_of_healing", "Hand of Healing", "1d%d + %d · 1 Focus" % [die, c.creature.ability_mod(&"wis")], "action", _first(aw, fw), "ally",
 					"Magic action, 1 Focus Point: a creature you touch regains a Martial Arts die + Wisdom Hit Points.", 5))
@@ -318,6 +336,12 @@ func _paladin(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, b
 			if has(c, "vow_of_enmity"):
 				out.append(_entry("vow_of_enmity", "Vow of Enmity", "Advantage vs one foe", "free", _first(enc()._turn_check(c), cw), "enemy",
 					"When you take the Attack action, Channel Divinity: Advantage on attack rolls against a creature within 30 ft for 1 minute.", 30))
+		"oath_of_glory":
+			pass
+	if has(c, "abjure_foes"):
+		out.append(_entry("abjure_foes", "Abjure Foes", "Wis save · 60 ft", "action", _first(aw, cw), "none",
+			"Magic action, Channel Divinity: up to %d creatures within 60 ft make a Wisdom save or are Frightened for 1 minute (or until damaged), able only to move, act or take a Bonus Action each turn." % maxi(1, c.creature.ability_mod(&"cha"))))
+	match ch.subclasses.get("paladin", ""):
 		"oath_of_glory":
 			if has(c, "peerless_athlete"):
 				out.append(_entry("peerless_athlete", "Peerless Athlete", "1 hour", "bonus", _first(bw, cw), "none",
@@ -378,6 +402,12 @@ func _druid(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw:
 				out.append(_entry("wild_resurgence", "Wild Resurgence", "a slot → Wild Shape", "free", tw, "none", "Once on each of your turns, spend a spell slot to regain a Wild Shape use."))
 			if ch.resource_left("wild_shape") > 0 and _uses(c, "wild_resurgence_slot", "Wild Resurgence", 1, "long") > 0:
 				out.append(_entry("wild_resurgence_slot", "Wild Resurgence: level 1 slot", "spend Wild Shape", "free", tw, "none", "Once per Long Rest, spend a Wild Shape use to regain a level 1 spell slot."))
+	if has(c, "moonlight_step"):
+		var mw := bw
+		if mw == "" and ch.resource_left("moonlight_step") <= 0 and _uses(c, "moonlight_step", "Moonlight Step", maxi(1, c.creature.ability_mod(&"wis")), "long") <= 0:
+			mw = "None left (restore one with a level 2+ slot)"
+		out.append(_entry("moonlight_step", "Moonlight Step", "teleport 30 ft", "bonus", mw, "point",
+			"Bonus Action: teleport up to 30 ft in a flash of moonlight; Advantage on your next attack this turn.", 30))
 	# Starry Form (Circle of the Stars) and Lands' Aid / Wrath of the Sea spend Wild Shape uses too.
 	match ch.subclasses.get("druid", ""):
 		"circle_of_the_land":
@@ -594,6 +624,7 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			e.log.add("info", "%s takes Patient Defense" % c.name(), c.id)
 		"step_of_the_wind", "step_of_the_wind_focus":
 			c.bonus_available = false
+			c.remove_meta("fleet_step")
 			c.movement_left += c.speed()
 			if head == "step_of_the_wind_focus":
 				ch.spend_resource("focus_points")
@@ -619,6 +650,10 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 		"elemental_attunement":
 			ch.spend_resource("focus_points")
 			var fx2 := _minutes(c, "Elemental Attunement", "elemental_attunement", 10).with_modifier("flag", {"value": "elemental_attunement"}).with_modifier("reach", {"value": 10})
+			# Stride of the Elements (Elements 11): fly and swim at your Speed while attuned.
+			if has(c, "stride_of_the_elements"):
+				fx2.modifiers.append(Modifier.of("speed_set", {"kind": "fly", "value": c.creature.speed().total()}, "Stride of the Elements", &"feature"))
+				fx2.modifiers.append(Modifier.of("speed_set", {"kind": "swim", "value": c.creature.speed().total()}, "Stride of the Elements", &"feature"))
 			c.creature.add_effect(fx2)
 			e.log.add("info", "%s attunes to the elements" % c.name(), c.id)
 		"elemental_burst":
@@ -722,7 +757,13 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 		"wrath_of_the_sea":
 			ch.spend_resource("wild_shape")
 			c.bonus_available = false
-			c.creature.add_effect(_minutes(c, "Wrath of the Sea", "wrath_of_the_sea", 10).with_modifier("flag", {"value": "wrath_of_the_sea"}))
+			var wfx := _minutes(c, "Wrath of the Sea", "wrath_of_the_sea", 10).with_modifier("flag", {"value": "wrath_of_the_sea"})
+			# Stormborn (Sea 10): fly at your Speed and resist Cold, Lightning and Thunder.
+			if has(c, "stormborn"):
+				wfx.modifiers.append(Modifier.of("speed_set", {"kind": "fly", "value": c.creature.speed().total()}, "Stormborn", &"feature"))
+				for ty: String in ["cold", "lightning", "thunder"]:
+					wfx.modifiers.append(Modifier.of("resistance", {"value": ty}, "Stormborn", &"feature"))
+			c.creature.add_effect(wfx)
 			e.log.add("info", "Ocean spray swirls around %s" % c.name(), c.id)
 			var near := _nearest_foe(c, 10 if has(c, "aquatic_affinity") else 5)
 			if near != null:
@@ -753,6 +794,63 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 		"starry_arrow":
 			c.bonus_available = false
 			return _luminous_arrow(c, t)
+		"zealous_presence":
+			if ch.resource_left("zealous_presence") > 0:
+				ch.spend_resource("zealous_presence")
+			else:
+				ch.spend_resource("rage")
+			c.bonus_available = false
+			var n := 0
+			for a in e.allies_of(c):
+				if a == c or n >= 10 or e.distance(c, a) > 60 or not a.is_alive():
+					continue
+				n += 1
+				var zp := _timed(c, "Zealous Presence", "zealous_presence", Effect.Ends.START_OF_TURN, c).with_modifier("advantage", {"on": "attack"}).with_modifier("advantage", {"on": "save:all"})
+				a.creature.add_effect(zp)
+			e.log.add("info", "%s lets out a divine battle cry (Zealous Presence)" % c.name(), c.id)
+		"abjure_foes":
+			ch.spend_resource("paladin_channel_divinity")
+			e.spend_action(c)
+			c.magic_action_used = true
+			var left := maxi(1, c.creature.ability_mod(&"cha"))
+			var dc := _spell_dc(c, "paladin")
+			for o in e.hostiles_of(c):
+				if left <= 0:
+					break
+				if o.is_down() or e.distance(c, o) > 60 or not e.can_see(c, o):
+					continue
+				left -= 1
+				if not _save(o, &"wis", dc, "Abjure Foes", "frightened"):
+					var af := _minutes(c, "Frightened (Abjure Foes)", "abjure_foes", 1).with_condition(&"frightened").with_modifier("flag", {"value": "dazed"})
+					af.turn_owner_id = o.id
+					af.ends_on_damage = true
+					o.creature.add_effect(af)
+					e.events.append({"type": "condition", "id": o.id})
+		"moonlight_step":
+			if cell.x < 0 or e.occupant_at(cell) != null or e.grid.distance_ft(c.cell, c.size_cells, cell, c.size_cells) > 30:
+				return CombatResult.fail("Choose an empty square within 30 ft")
+			ch.spend_resource("moonlight_step")
+			c.bonus_available = false
+			e.spells._teleport(c, cell, r)
+			e.add_mark({"kind": "advantage_next_attack", "attacker": c.id, "source": "Moonlight Step", "expires_owner": c.id, "expires_phase": "end", "consume": true})
+		"improved_shadow_step":
+			if cell.x < 0 or e.occupant_at(cell) != null or e.grid.distance_ft(c.cell, c.size_cells, cell, c.size_cells) > 60:
+				return CombatResult.fail("Choose an empty square within 60 ft")
+			ch.spend_resource("focus_points")
+			c.bonus_available = false
+			e.spells._teleport(c, cell, r)
+			e.add_mark({"kind": "advantage_next_attack", "attacker": c.id, "source": "Shadow Step", "expires_owner": c.id, "expires_phase": "end", "consume": true})
+			var foe := _nearest_foe(c, 5)
+			if foe != null:
+				return _unarmed(c, foe, "Improved Shadow Step", false)
+		"flurry_of_healing":
+			if t == null or e.distance(c, t) > 5:
+				return CombatResult.fail("Touch a creature within 5 ft")
+			ch.spend_resource("focus_points")
+			ch.spend_resource("flurry_of_healing_and_harm")
+			c.bonus_available = false
+			for i in (3 if has(c, "heightened_focus") else 2):
+				_heal(c, t, e.dice.roll_one(martial_die(c), "Hand of Healing") + c.creature.ability_mod(&"wis"), "Flurry of Healing")
 		"tides_of_chaos":
 			ch.spend_resource("tides_of_chaos")
 			c.armed.append("tides_of_chaos")
@@ -829,7 +927,11 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			if e.attack_legal(beast, t, opt) != "":
 				return CombatResult.fail(e.attack_legal(beast, t, opt))
 			e.log.add("info", "%s commands %s to strike" % [c.name(), beast.name()], c.id)
-			return e._resolve_attack(beast, t, opt, {})
+			var res := e._resolve_attack(beast, t, opt, {})
+			# Bestial Fury (Beast Master 11): the Beast's Strike twice.
+			if has(c, "bestial_fury") and e.pending == null and t.is_alive() and not t.is_down():
+				return e._resolve_attack(beast, t, opt, {})
+			return res
 		"pact_of_the_blade":
 			var wid := str(ch.equipped("main_hand").get("id", ""))
 			if wid == "":
@@ -896,6 +998,8 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			_heal(c, t, int(rolled3["total"]), "Healing Light")
 		_:
 			return CombatResult.fail("Not available")
+	if has(c, "fleet_step") and not c.bonus_available and not head.begins_with("step_of_the_wind"):
+		c.set_meta("fleet_step", _turn_key())
 	e._check_over()
 	return r
 
@@ -944,6 +1048,7 @@ func _start_rage(c: Combatant, animal: String) -> CombatResult:
 			fx.modifiers.append(Modifier.of("condition_immunity", {"value": cond}, "Mindless Rage", &"feature"))
 			e.spells.cure(c, StringName(cond))
 	c.creature.add_effect(fx)
+	c.set_meta("rage_effect", true)
 	if animal != "":
 		c.set_meta("rage_animal", animal)
 	c.set_meta("rage_kept", _turn_key())
@@ -963,6 +1068,7 @@ func _start_rage(c: Combatant, animal: String) -> CombatResult:
 
 
 func end_rage(c: Combatant, why: String) -> void:
+	c.remove_meta("rage_effect")
 	for fx: Effect in c.creature.effects.duplicate():
 		if fx.source_id == "rage":
 			c.creature.remove_effect(fx)
@@ -1194,7 +1300,8 @@ func companion_why(c: Combatant) -> String:
 func attack_situation(c: Combatant, target: Combatant, option: Dictionary, adv: Array[String], dis: Array[String]) -> void:
 	var e := enc()
 	var p := option["profile"] as WeaponProfile
-	if c.creature.has_flag("reckless") and p.ability == &"str" and str(option.get("kind", "")) != "spell":
+	var brutal := c.armed.any(func(a: String) -> bool: return a.begins_with("brutal:"))
+	if c.creature.has_flag("reckless") and p.ability == &"str" and str(option.get("kind", "")) != "spell" and not brutal:
 		adv.append("Reckless Attack")
 	if str(c.get_meta("vow_of_enmity", "")) == target.id:
 		adv.append("Vow of Enmity")
@@ -1224,6 +1331,13 @@ func hit_dice(c: Combatant, target: Combatant, option: Dictionary, st: Dictionar
 	var p := option["profile"] as WeaponProfile
 	var melee := bool(option.get("melee", false))
 	var str_attack := p.ability == &"str"
+	# Brutal Strike (Barbarian 9): Advantage given up for 1d10 and a blow.
+	for a: String in c.armed.duplicate():
+		if a.begins_with("brutal:") and str_attack and _once(c, "brutal_strike"):
+			c.armed.erase(a)
+			st["brutal"] = a.substr(7)
+			out.append({"dice": "2d10" if level_of(c, "barbarian") >= 17 else "1d10", "type": str(p.damage_type), "label": "Brutal Strike"})
+			break
 	# Berserker's Frenzy: the first Strength hit of the turn while raging and reckless.
 	if has(c, "frenzy") and raging(c) and c.creature.has_flag("reckless") and str_attack and e.current() == c and _once(c, "frenzy"):
 		out.append({"dice": "%dd6" % rage_bonus(c), "type": str(p.damage_type), "label": "Frenzy"})
@@ -1247,9 +1361,14 @@ func hit_dice(c: Combatant, target: Combatant, option: Dictionary, st: Dictionar
 	if has(c, "radiant_strikes") and melee:
 		out.append({"dice": "1d8", "type": "radiant", "label": "Radiant Strikes"})
 	# Monk: Warrior of Mercy's Hand of Harm (1 Focus, once per turn on an Unarmed Strike).
-	if "hand_of_harm" in c.armed and p.item_id == "unarmed_strike" and _ch(c).resource_left("focus_points") > 0 and _once(c, "hand_of_harm"):
+	var free_harm := has(c, "flurry_of_healing_and_harm") and str(c.get_meta("flurry_turn", "")) == _turn_key() and "hand_of_harm" in c.armed \
+		and _uses(c, "flurry_of_healing_and_harm", "Flurry of Healing and Harm", maxi(1, c.creature.ability_mod(&"wis")), "long") > 0
+	if "hand_of_harm" in c.armed and p.item_id == "unarmed_strike" and (free_harm or _ch(c).resource_left("focus_points") > 0) and _once(c, "hand_of_harm"):
 		c.armed.erase("hand_of_harm")
-		_ch(c).spend_resource("focus_points")
+		if free_harm:
+			_ch(c).spend_resource("flurry_of_healing_and_harm")
+		else:
+			_ch(c).spend_resource("focus_points")
 		out.append({"dice": "1d%d+%d" % [martial_die(c), c.creature.ability_mod(&"wis")], "type": "necrotic", "label": "Hand of Harm"})
 	# Warlock: Lifedrinker, Eldritch Smite on the pact weapon.
 	if c.has_meta("pact_weapon") and p.item_id == str(c.get_meta("pact_weapon")):
@@ -1262,6 +1381,13 @@ func hit_dice(c: Combatant, target: Combatant, option: Dictionary, st: Dictionar
 			_ch(c).pact_slots_used = int(pact["used"]) + 1
 			out.append({"dice": "%dd8" % (1 + lvl), "type": "force", "label": "Eldritch Smite"})
 			st["eldritch_smite"] = true
+	# Bestial Fury: the beast's first hit each turn on its ranger's Hunter's Mark target adds the mark's damage.
+	if c.creature is Monster and bool((c.creature as Monster).data.get("primal_companion", false)):
+		var ranger := enc().get_c(str(c.get_meta("summoner", "")))
+		if ranger != null and has(ranger, "bestial_fury") and _once(c, "bestial_fury"):
+			for m in ranger.creature.modifiers_for(&"extra_damage"):
+				if str(m.data.get("vs", "")) == target.id and m.source_name == "Hunter's Mark":
+					out.append({"dice": m.text("dice", "1d6"), "type": "force", "label": "Bestial Fury"})
 	# Monk: Elemental Attunement strikes deal elemental damage instead (an extra die of it here).
 	return out
 
@@ -1281,6 +1407,9 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 	var ch := _ch(c)
 	if ch == null:
 		return out
+	if has(c, "brutal_strike") and c.creature.has_flag("reckless"):
+		for b: String in ["forceful", "hamstring"] + (["staggering", "sundering"] if has(c, "improved_brutal_strike") else []):
+			out.append({"id": "brutal:" + b, "label": "Brutal Strike: %s Blow" % b.capitalize(), "sub": "give up Advantage: +%s" % ("2d10" if level_of(c, "barbarian") >= 17 else "1d10"), "why": ""})
 	if has(c, "stunning_strike"):
 		out.append({"id": "stunning_strike", "label": "Stunning Strike", "sub": "1 Focus: Con save or Stunned", "why": "" if ch.resource_left("focus_points") > 0 else "No Focus Points"})
 	if has(c, "hand_of_harm"):
@@ -1338,6 +1467,28 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, st: Dictiona
 	if c.creature.has_flag("elemental_attunement") and p.item_id == "unarmed_strike" and alive and Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large"):
 		if not _save(target, &"str", 8 + c.creature.proficiency_bonus() + c.creature.ability_mod(&"wis"), "Elemental Attunement"):
 			e.forced_move(target, e.center_of(c), 10)
+	# Battering Roots (World Tree 10): a Heavy or Versatile hit on your turn can also Topple (Con save or Prone).
+	if has(c, "battering_roots") and alive and e.current() == c and ("heavy" in p.properties or "versatile" in p.properties) and p.mastery != "topple" \
+			and Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large") and _once(c, "battering_roots"):
+		if not _save(target, &"con", 8 + c.creature.ability_mod(p.ability) + c.creature.proficiency_bonus(), "Battering Roots (Topple)", "prone"):
+			target.creature.add_condition(&"prone", "Battering Roots")
+	match str(st.get("brutal", "")):
+		"forceful":
+			if alive:
+				e.forced_move(target, e.center_of(c), 15)
+			c.free_move_ft = maxi(c.free_move_ft, c.speed() / 2)
+		"hamstring":
+			if alive:
+				for fx0: Effect in target.creature.effects.duplicate():
+					if fx0.source_id == "hamstring_blow":
+						target.creature.remove_effect(fx0)
+				target.creature.add_effect(_timed(c, "Hamstring Blow", "hamstring_blow", Effect.Ends.START_OF_TURN, c).with_modifier("speed", {"value": -15}))
+		"staggering":
+			if alive:
+				target.creature.add_effect(_timed(c, "Staggering Blow", "staggering_blow", Effect.Ends.START_OF_TURN, c).with_modifier("disadvantage", {"on": "save:all"}).with_modifier("flag", {"value": "no_opportunity_attacks"}))
+		"sundering":
+			if alive:
+				e.add_mark({"kind": "attack_bonus_against", "target": target.id, "bonus": 5, "not_by": c.id, "source": "Sundering Blow", "expires_owner": c.id, "expires_phase": "start"})
 	# Relentless Avenger (Vengeance 7): an Opportunity Attack hit stops the target and lets the paladin move.
 	if bool(option.get("opportunity", false)) and has(c, "relentless_avenger"):
 		if alive:
@@ -1347,6 +1498,37 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, st: Dictiona
 	if bool(st.get("eldritch_smite", false)) and alive and Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"huge"):
 		target.creature.add_condition(&"prone", "Eldritch Smite")
 		e.log.add("condition", "%s is knocked Prone (Eldritch Smite)" % target.name(), target.id)
+	# Stalker's Flurry (Gloom Stalker 11): with Dreadful Strike, a Sudden Strike at another foe beside the target, or
+	# Mass Fear around it.
+	if has(c, "stalkers_flurry") and str(c.get_meta(meta_key("once_dreadful_strike"), "")) == _turn_key() and not c.has_meta("flurried_" + _turn_key().replace(":", "_")):
+		c.set_meta("flurried_" + _turn_key().replace(":", "_"), true)
+		var other: Combatant = null
+		for o in e.hostiles_of(c):
+			if o != target and not o.is_down() and e.distance(o, target) <= 5 and e.attack_legal(c, o, option) == "":
+				other = o
+				break
+		if other != null:
+			e.log.add("info", "%s strikes again at %s (Sudden Strike)" % [c.name(), other.name()], c.id)
+			e.cleave_queue.append({"c": c, "target": other, "option": option})
+		else:
+			var dc := _spell_dc(c, "ranger")
+			for o2 in e.hostiles_of(c):
+				if not o2.is_down() and e.distance(o2, target) <= 10 or o2 == target:
+					if o2.is_alive() and not _save(o2, &"wis", dc, "Mass Fear", "frightened"):
+						o2.creature.add_effect(_timed(c, "Frightened (Mass Fear)", "mass_fear", Effect.Ends.START_OF_TURN, c).with_condition(&"frightened"))
+	# Superior Hunter's Prey (Hunter 11): Hunter's Mark's extra damage also hits another creature within 30 ft.
+	if has(c, "superior_hunters_prey") and _once(c, "superior_hunters_prey"):
+		for m in c.creature.modifiers_for(&"extra_damage"):
+			if str(m.data.get("vs", "")) == target.id and m.source_name == "Hunter's Mark":
+				var other2: Combatant = null
+				for o3 in e.hostiles_of(c):
+					if o3 != target and not o3.is_down() and e.distance(o3, target) <= 30 and e.can_see(c, o3):
+						other2 = o3
+						break
+				if other2 != null:
+					var hm := e._roll_damage_dice(m.text("dice", "1d6"), false, 0, "Superior Hunter's Prey")
+					e.deal_damage(c, other2, [{"amount": int(hm["total"]), "type": m.text("type", "force")}], false, "Superior Hunter's Prey", [str(hm["text"])])
+				break
 	# Hunter's Prey: Horde Breaker (once per turn, another creature within 5 ft of the target).
 	if "horde_breaker" in picks(c, "hunters_prey") and _once(c, "horde_breaker"):
 		for o in e.hostiles_of(c):
@@ -1387,6 +1569,30 @@ func cast_origin(c: Combatant) -> Combatant:
 	return other
 
 
+## Relentless Rage (Barbarian 11): dropping to 0 while raging, a Constitution save (DC 10, +5 each use) leaves you at
+## twice your Barbarian level. True if it held.
+func relentless_rage(c: Combatant) -> bool:
+	# Dropping to 0 already ended the Rage effect (Incapacitated), so the Rage counts if it was on a moment ago.
+	if not has(c, "relentless_rage") or not (raging(c) or c.has_meta("rage_effect")):
+		return false
+	var e := enc()
+	var dc := 10 + 5 * int(c.get_meta("relentless_uses", 0))
+	c.set_meta("relentless_uses", int(c.get_meta("relentless_uses", 0)) + 1)
+	var sv := c.creature.roll_save(e.dice, &"con", dc, [], [], "Relentless Rage (%s)" % c.name())
+	if not sv.success:
+		return false
+	c.creature.hp = 2 * level_of(c, "barbarian")
+	c.creature.remove_condition(&"unconscious", "0 Hit Points")
+	# Still raging: put the Rage back without spending a use.
+	if not raging(c):
+		_refund(_ch(c), "rage")
+		var keep := c.bonus_available
+		_start_rage(c, str(c.get_meta("rage_animal", "")))
+		c.bonus_available = keep
+	e.log.add("info", "%s refuses to fall: Relentless Rage" % c.name(), c.id, [sv.describe()])
+	return true
+
+
 ## A creature dropped to 0 Hit Points by `by`: Dark One's Blessing (Fiend Patron) for a warlock or a nearby ally.
 func on_drop(by: Combatant, target: Combatant) -> void:
 	var e := enc()
@@ -1425,6 +1631,23 @@ func against_damage(st: Dictionary, total: Callable, cut: Callable, out: Array) 
 					if not _save(c, &"dex", dc, "Deflect Attacks"):
 						var rr := e._roll_damage_dice("2d%d" % martial_die(target), false, 0, "Deflect Attacks")
 						e.deal_damage(target, c, [{"amount": int(rr["total"]) + target.creature.ability_mod(&"dex"), "type": str(p.damage_type)}], false, "Deflect Attacks", [str(rr["text"])])})
+	# Beguiling Defenses (Archfey 10): halve the damage and turn it back on the attacker (Wisdom save).
+	if has(target, "beguiling_defenses") and e.can_see(target, c) and (_uses(target, "beguiling_defenses", "Beguiling Defenses", 1, "long") > 0 or int(_ch(target).pact_magic()["left"]) > 0):
+		out.append({"kind": "beguiling_defenses", "reactor": target, "trigger": c.id, "title": "Reaction: Beguiling Defenses?",
+			"text": "%s hits %s for %d. Halve it and make %s save or take the same Psychic damage?" % [c.name(), target.name(), total.call(), c.name()],
+			"cost": "Reaction (once per Long Rest, or a Pact Magic slot)",
+			"still": func() -> bool: return react.call(target) and int(total.call()) > 0,
+			"use": func() -> void:
+				target.reaction_available = false
+				var tch := _ch(target)
+				if tch.resource_left("beguiling_defenses") > 0:
+					tch.spend_resource("beguiling_defenses")
+				else:
+					tch.pact_slots_used = int(tch.pact_magic()["used"]) + 1
+				var half := int(total.call()) - int(total.call()) / 2
+				cut.call(half, "Beguiling Defenses")
+				if not _save(c, &"wis", _spell_dc(target, "warlock"), "Beguiling Defenses"):
+					e.deal_damage(target, c, [{"amount": int(total.call()), "type": "psychic"}], false, "Beguiling Defenses")})
 	for b in e.allies_of(target):
 		if has(b, "cutting_words") and _ch(b).resource_left("bardic_inspiration") > 0 and e.distance(b, c) <= 60 and e.can_see(b, c):
 			var bard := b
@@ -1585,6 +1808,12 @@ func turn_start(c: Combatant) -> void:
 		if ch.resources.has("focus_points"):
 			(ch.resources["focus_points"] as Dictionary)["used"] = 0
 		_heal(c, c, e.dice.roll_one(martial_die(c), "Uncanny Metabolism") + level_of(c, "monk"), "Uncanny Metabolism")
+	# Guarded Mind (Psi Warrior 10): start the turn Charmed or Frightened, spend a Psionic Energy Die to end it.
+	if has(c, "guarded_mind") and (c.creature.has_condition(&"charmed") or c.creature.has_condition(&"frightened")) and ch.resource_left("psionic_energy") > 0:
+		ch.spend_resource("psionic_energy")
+		e.spells.cure(c, &"charmed")
+		e.spells.cure(c, &"frightened")
+		e.log.add("info", "%s clears its mind (Guarded Mind)" % c.name(), c.id)
 	# Gloom Stalker: +10 ft on the first turn.
 	if has(c, "dread_ambusher") and not c.has_meta("ambushed"):
 		c.set_meta("ambushed", true)
@@ -1623,6 +1852,15 @@ func _standing_effects(c: Combatant, ch: Character) -> void:
 		fx2.modifiers.append(Modifier.of("flag", {"value": "devils_sight"}, "Devil's Sight", &"feature"))
 	if has(c, "extra_attack") and ch.subclasses.get("bard", "") == "college_of_valor":
 		fx2.modifiers.append(Modifier.of("attacks_per_action", {"value": 2}, "Extra Attack", &"feature"))
+	# Acrobatic Movement (Monk 9): walls and water on your turn, unarmored.
+	if has(c, "acrobatic_movement") and unarmored:
+		fx2.modifiers.append(Modifier.of("flag", {"value": "spider_climb"}, "Acrobatic Movement", &"feature"))
+	# Battering Roots (World Tree 10): +10 ft reach with Heavy or Versatile melee weapons.
+	if has(c, "battering_roots"):
+		var main := ch.equipped("main_hand")
+		var props := Gear.weapon_props(main)
+		if not main.is_empty() and ("heavy" in props or "versatile" in props) and not Gear.is_ranged_weapon(main):
+			fx2.modifiers.append(Modifier.of("reach", {"value": 10}, "Battering Roots", &"feature"))
 	if has(c, "beguiling_twist"):
 		fx2.modifiers.append(Modifier.of("advantage", {"on": "save_vs:charmed"}, "Beguiling Twist", &"feature"))
 		fx2.modifiers.append(Modifier.of("advantage", {"on": "save_vs:frightened"}, "Beguiling Twist", &"feature"))

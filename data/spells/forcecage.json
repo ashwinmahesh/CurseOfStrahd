@@ -39,6 +39,14 @@
     "kind": "area",
     "description": "a 20-foot cage or a 10-foot box"
   },
+  "choice": {
+    "kind": "option",
+    "label": "Shape",
+    "from": [
+      "cage",
+      "box"
+    ]
+  },
   "tags": [
     "control"
   ],

@@ -42,6 +42,10 @@
         {
           "stat": "advantage",
           "on": "save_vs:spell"
+        },
+        {
+          "stat": "flag",
+          "value": "circle_of_power"
         }
       ]
     }

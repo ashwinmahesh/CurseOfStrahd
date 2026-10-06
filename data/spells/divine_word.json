@@ -25,7 +25,8 @@
   },
   "targets": {
     "kind": "creature",
-    "description": "any number of creatures of your choice you can see in range"
+    "description": "any number of creatures of your choice you can see in range",
+    "count": 99
   },
   "save": "cha",
   "save_success": "none",

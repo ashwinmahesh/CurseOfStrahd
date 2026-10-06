@@ -301,3 +301,95 @@ func test_pact_of_the_chain_familiar_attacks_in_place_of_an_attack() -> void:
 	var r := _act(e, w, "familiar_strike", t)
 	assert_true(r.ok, r.reason)
 	assert_true(t.creature.hp < 300)
+
+
+# --- Levels 8 to 11 -------------------------------------------------------------------------------------
+
+func test_brutal_strike_trades_advantage_for_a_blow() -> void:
+	var e := TestCombat.open_field(3)
+	var b := _add(e, TestChars.custom("barbarian", "human", 9), Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(3, 3), 300)
+	TestCombat.start_with(e, b)
+	assert_true(_act(e, b, "reckless_attack").ok)
+	assert_true(e.features.toggle_rider(b, "brutal:forceful").ok)
+	var opt := e.option_by_id(b, _melee(e, b))
+	assert_false("Reckless Attack" in (e.attack_situation(b, t, opt)["advantage"] as Array), "Advantage given up")
+	TestCombat.next_d20(e, 19)
+	assert_true(e.attack(b, t, _melee(e, b)).hit)
+	assert_true(t.cell.x >= 5, "Forceful Blow pushed it 15 ft: %s" % t.cell)
+
+
+func test_relentless_rage_keeps_a_barbarian_up() -> void:
+	var e := TestCombat.open_field(3)
+	var b := _add(e, TestChars.custom("barbarian", "human", 11), Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 3), 300)
+	TestCombat.start_with(e, b)
+	assert_true(_act(e, b, "rage").ok)
+	b.creature.add_effect(Effect.new("Sure", &"effect", "t").with_modifier("save", {"ability": "con", "value": 30}))
+	e.deal_damage(null, b, [{"amount": b.creature.hp + b.creature.temp_hp + 3, "type": "force"}], false, "test")
+	assert_eq(b.creature.hp, 22, "twice the Barbarian level")
+
+
+func test_abjure_foes_frightens() -> void:
+	var e := TestCombat.open_field(3)
+	var p := _add(e, TestChars.custom("paladin", "human", 9), Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 3), 300)
+	TestCombat.start_with(e, p)
+	assert_true(_act(e, p, "abjure_foes").ok)
+	assert_true(t.creature.has_condition(&"frightened"))
+
+
+func test_zealous_presence_rouses_allies() -> void:
+	var e := TestCombat.open_field(3)
+	var b := _add(e, TestChars.custom("barbarian", "human", 10, {"barbarian_subclass": ["path_of_the_zealot"]}), Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 3), 300)
+	TestCombat.start_with(e, b)
+	assert_true(_act(e, b, "zealous_presence").ok)
+	assert_true(a.creature.modifiers_for(&"advantage").any(func(m: Modifier) -> bool: return m.source_name == "Zealous Presence"))
+
+
+func test_thought_shield_reflects_psychic_damage() -> void:
+	var e := TestCombat.open_field(3)
+	var w := _add(e, TestChars.custom("warlock", "human", 10, {"warlock_subclass": ["great_old_one_patron"]}), Vector2i(2, 3))
+	var foe := TestCombat.punching_bag(e, Vector2i(3, 3), 300)
+	TestCombat.start_with(e, w)
+	e.deal_damage(foe, w, [{"amount": 10, "type": "psychic"}], false, "test")
+	assert_true(foe.creature.hp < 300)
+
+
+func test_spell_breaker_casts_dispel_magic_as_a_bonus_action() -> void:
+	var e := TestCombat.open_field(3)
+	var w := _add(e, TestChars.custom("wizard", "human", 10, {"wizard_subclass": ["abjurer"]}), Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 3), 300)
+	TestCombat.start_with(e, w)
+	var dm := {}
+	for sp in e.spells.castable(w):
+		if str(sp["id"]) == "dispel_magic":
+			dm = sp
+	assert_eq(str(dm.get("casting", "")), "bonus_action")
+
+
+func test_moonlight_step_teleports_with_advantage() -> void:
+	var e := TestCombat.open_field(3)
+	var d := _add(e, TestChars.custom("druid", "human", 10, {"druid_subclass": ["circle_of_the_moon"]}), Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 3), 300)
+	TestCombat.start_with(e, d)
+	var r := _act(e, d, "moonlight_step", null, Vector2(6.5, 3.5))
+	assert_true(r.ok, r.reason)
+	assert_eq(d.cell, Vector2i(6, 3))
+
+
+func test_a_spell_both_prepared_and_granted_keeps_its_free_casting() -> void:
+	var e := TestCombat.open_field(3)
+	var c := TestCombat.caster_with(e, ["misty_step"], Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 3), 300)
+	var ch := c.creature as Character
+	ch.granted_spells.append({"id": "misty_step", "at_level": 1, "ability": "int", "source": "test", "uses": 1, "recharge": "long", "class_id": ""})
+	ch.set_resource("spell:misty_step", "Misty Step", 1, "long", "test")
+	TestCombat.start_with(e, c)
+	var ms := {}
+	for sp in e.spells.castable(c):
+		if str(sp["id"]) == "misty_step":
+			ms = sp
+	assert_true(bool(ms.get("free", false)), "the free casting survives")
