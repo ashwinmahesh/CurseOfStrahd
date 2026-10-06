@@ -478,7 +478,12 @@ func _refresh_strip() -> void:
 	for ch in _strip.get_children():
 		ch.queue_free()
 	var cur := e.current()
-	for c in e.order:
+	# The lair's turn sits at initiative count 20 (ADR 0014); legendary creatures show the actions they have left.
+	var lair_at := e.legendary.lair_slot()
+	for i in e.order.size():
+		var c := e.order[i]
+		if i == lair_at:
+			_strip.add_child(_lair_card())
 		if c.creature.dead and c.side == &"enemy":
 			continue
 		var active := c == cur
@@ -494,8 +499,29 @@ func _refresh_strip() -> void:
 		sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(sl)
 		v.add_child(_hp_bar(c, 60 if not active else 76))
+		var pips := e.legendary.pips(c)
+		if pips != "":
+			var lg := _label(pips, 13, "crimson")
+			lg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			lg.tooltip_text = "Legendary actions left this round"
+			v.add_child(lg)
 		card.mouse_entered.connect(func() -> void: inspect_requested.emit("hover:" + c.id))
 		_strip.add_child(card)
+	if lair_at == e.order.size():
+		_strip.add_child(_lair_card())
+
+
+## The lair's turn in the order (initiative count 20): ticked once the lair has acted this round.
+func _lair_card() -> PanelContainer:
+	var card := PanelContainer.new()
+	var done := e.legendary.lair_round >= e.round_no
+	card.add_theme_stylebox_override("panel", _style("ui_black", "crimson", 2))
+	var l := _label("Lair\n20" + (" ✓" if done else ""), 13, "parchment" if done else "vellum")
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	l.tooltip_text = "The lair acts on initiative count 20, losing ties"
+	card.add_child(l)
+	return card
 
 
 func _refresh_party() -> void:

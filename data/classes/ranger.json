@@ -301,6 +301,7 @@
             "kind": "fighting_style",
             "count": 1,
             "replaceable": "level_up",
+            "replace_max": 1,
             "options": [
               {
                 "id": "druidic_warrior",
@@ -311,6 +312,7 @@
                   "kind": "cantrip",
                   "count": 2,
                   "replaceable": "level_up",
+                  "replace_max": 1,
                   "filter": {
                     "list": "druid",
                     "level": 0

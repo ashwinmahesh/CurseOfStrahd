@@ -39,14 +39,16 @@ first so content and code can be built in parallel.
   and a `when`). The engine adds to its `when`: the reading's enemy room is that room, `strahds_lair` is at
   `foretold` or later, and Strahd isn't destroyed. The card `mists` (room `castle_ravenloft`) means he roams: the
   engine picks one of the enemy rooms from the playthrough seed when the reading is drawn and stores it in the
-  reading (`tarokka.enemy.roam`), so saves stay stable. The condition `final_room:<room id>` is true for the room
-  he waits in (the drawn room, or the roam pick).
+  reading (key `enemy_roam`, read as `tarokka.enemy.roam`), so saves stay stable. The condition `final_room:<room id>`
+  is true for the room he waits in (the drawn room, or the roam pick).
 - **The parley.** Before a final battle starts, the engine plays `strahd/final:parley` (the presence package writes
   it): Strahd names his price. It sets `strahd_parley` to `fight`, `yield` or `ireena`; only `fight` (or a parley that
   sets nothing) starts the battle. `yield` and `ireena` end the game (below).
 - Strahd is destroyed only in his coffin: dropping him to 0 Hit Points anywhere else turns him to mist (Misty Escape)
-  and he flees to `castle_ravenloft_strahds_tomb`, flag `strahd_in_coffin`. Finishing him there (the stake, sunlight,
-  or the coffin fight) sets `strahd_destroyed` and moves `strahds_lair` to `destroyed`. If the party wipes in the final
+  and he flees to `castle_ravenloft_strahds_tomb` (a place inside the location `castle_ravenloft_catacombs_strahd`),
+  flag `strahd_in_coffin`, and the Narrator tells where he went. Finishing him there (the stake, sunlight, or the coffin
+  fight) sets `strahd_destroyed` and moves `strahds_lair` to `destroyed`. While the Heart of Sorrow stands
+  (`heart_of_sorrow_shattered` unset) he has a 50 Hit Point ward in fights in the castle (`ward` in his block). If the party wipes in the final
   battle, it is not a load screen: it leads to an ending (below).
 
 ### Strahd in combat
@@ -55,17 +57,21 @@ first so content and code can be built in parallel.
   2026-10-06). The engine adds what his block needs, as data any monster can use:
   - `legendary_actions`: `{"per_round": 3, "options": [{"id", "name", "cost", "action" or "move"}]}`; used at the end
     of another creature's turn, refreshed at the start of his own. Shown in the initiative tracker.
-  - `lair_actions`: on initiative count 20 (losing ties) when the encounter has `lair: true`; one per round, the same
-    one never twice in a row.
-  - Regeneration (`regenerates`: hit points at the start of his turn unless he took Radiant damage or is in running
-    water), Shapechanger (`forms`: bat, wolf, mist; a form swaps size, speed, attacks and immunities and keeps his hit
-    points), Misty Escape (above), Charm, Children of the Night (a summon that adds swarms or wolves to the fight),
-    Spider Climb, and the vampire weaknesses already in the engine.
+  - `lair_actions`: `[{"id", "name", "kind": "self" | "attack" | "save" | "summon" | "text", ...}]`, on initiative
+    count 20 (losing ties) when the encounter has `lair: true`; one per round, the same one never twice in a row.
+  - Regeneration (`regenerates`: `{"hp", "stopped_by": [damage types], "running_water": true, "sunlight": true}`,
+    any monster), Shapechanger (`forms`: `{"base", "change", "blocked_in", "shapes": [{"id": "bat" | "wolf" | "mist",
+    "size", "speed", "actions", defenses...}]}`; a shape swaps size, speed, usable actions and defenses and keeps his
+    hit points), Misty Escape (`misty_escape`: `{"resting_place", "flag", "form", "narration", "destroyed_flag",
+    "quest"}`), `legendary_resistance`, Charm (a save action whose rider has a `repeat_save`), Children of the Night
+    (an action's `summon` block that adds swarms or wolves to the fight), Spider Climb, and the vampire weaknesses
+    already in the engine. The exact shapes are in docs/contracts/combat.md ("Bosses").
   - An AI profile `strahd`: he strikes the weakest or the one carrying a treasure, charms, summons, uses legendary
     moves to stay out of reach, and leaves (mist or bat) when the encounter says so.
 - **Withdrawing.** An encounter may say when a foe leaves: `"withdraw": {"who": "<monster id>", "at_hp_below": n,
   "after_rounds": n, "flag": "<flag set when he leaves>"}`. Strahd's harassment fights use it: he tests the party and
-  goes. Leaving is not dying: no loot, no Misty Escape.
+  goes. Leaving is not dying: no loot, no Misty Escape. (Refined by the engine, P6-01: the field shapes above, the
+  Tarokka's `enemy_roam` key, resting places inside a location, and the ward.)
 
 ### Strahd's presence across the campaign
 

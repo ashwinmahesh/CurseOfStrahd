@@ -111,6 +111,19 @@ func capture_shots(tool: Node, out: String) -> void:
 		root.call("open_screen", "level_up", 2)
 		await _shoot(tool, "%s_level_up.png" % out)
 		root.call("close_screen")
+	if _wants("level_up_fighter"):
+		# Ilse's Fighter 6: her Fighting Style may change though the level brings no new one.
+		GameState.story.milestones = 10
+		root.call("open_screen", "level_up", 0)
+		await tool.call("wait_frames", 4)
+		var screen := root.get("screen") as Node
+		for l in screen.find_children("*", "Label", true, false):
+			if (l as Label).text.contains("Choices"):
+				for sc in screen.find_children("*", "ScrollContainer", true, false):
+					var scroll := sc as ScrollContainer
+					scroll.scroll_vertical = int((l as Label).global_position.y - scroll.global_position.y) - 8
+		await _shoot(tool, "%s_level_up_fighter.png" % out)
+		root.call("close_screen")
 	if _wants("loot"):
 		var lw := LootWindow.new()
 		add_child(lw)

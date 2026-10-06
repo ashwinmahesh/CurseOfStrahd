@@ -73,7 +73,7 @@ The card `mists` sends Strahd roaming (ADR 0014): one of the enemy rooms, picked
 | rahadin | court | Strahd's chamberlain, a dusk elf with screams in his wake |
 | ludmilla_vilisevic, anastrasya_karelova, volenta_popofsky | court | the three brides (vampire spawn) |
 | lief_lipsiege | court | the accountant chained in his office |
-| gertruda | court | Mad Mary's daughter (quest find_gertruda, Vallaki): the castle is where she is found; new NPC |
+| gertruda | court | Mad Mary's daughter (quest find_gertruda, village of Barovia): the castle is where she is found; new NPC |
 | escher | spires | a cast-off consort (vampire spawn) |
 | pidlwick_ii | spires | the clockwork jester, the marionette card's ally (guest, join scene) |
 | cyrus_belview | larders | the mongrelfolk cook |

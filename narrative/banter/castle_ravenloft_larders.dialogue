@@ -1,0 +1,71 @@
+# Party banter in the Larders of Ill Omen and the dungeon. Each node opens with an `if` gate: the node is eligible
+# only while its condition holds. Party members speak only through interjections.
+
+~ banter_soup
+if flag.larders_cyrus_met and not flag.larders_cyrus_slain and not flag.larders_cyrus_hostile
+interject name:tamsin_tealeaf: I had the soup. Before he told us who it was for. It was very good soup.
+interject name:hedda_ironvow: It was barley and mutton, lass. I checked.
+interject name:tamsin_tealeaf: You checked after I ate it.
+endif
+-> END
+
+~ banter_cook
+if flag.larders_cyrus_met and not flag.larders_cyrus_slain and not flag.larders_nadia_fate
+interject name:ilse_varga: He gives her extra bread so she won't be ready yet. That's the kindest thing anyone does in this castle, and it's monstrous.
+interject name:silvain_aster: Both things can be true. Down here, they usually are.
+endif
+-> END
+
+~ banter_chained
+if flag.larders_nadia_met and not flag.larders_nadia_fate
+interject tag:loyal: We're not leaving that girl in a cell. Whatever else we do down here.
+interject tag:blunt: Then we'd better find her a way out that isn't through him.
+endif
+-> END
+
+~ banter_escaped
+if flag.larders_nadia_fate == "escaped"
+interject name:tamsin_tealeaf: Out in the scrap barrel. When she tells this story in Vallaki, she'll leave that part out.
+interject name:hedda_ironvow: She'll tell it every winter for fifty years, barrel and all. I'd stake my beard.
+endif
+-> END
+
+~ banter_shawl
+if flag.larders_nadia_lost
+interject name:ilse_varga: You don't send one soldier up a road alone. I've known that for eleven years. I said nothing.
+endif
+-> END
+
+~ banter_brother
+if flag.larders_anatol_fate == "unmasked" and not flag.larders_anatol_destroyed
+interject name:hedda_ironvow: A false priest in a cell, set out like bait for decent folk. That's the part I can't forgive. He used the dawn for it.
+interject tag:blunt: Then let's go back and give him some.
+endif
+-> END
+
+~ banter_doru
+if flag.larders_doru_fate == "rest"
+interject name:hedda_ironvow: His father will want to know. I'll tell him myself, if I live. Gently.
+endif
+-> END
+
+~ banter_bones
+if flag.larders_hall_told and not flag.larders_furnace_quenched
+interject name:silvain_aster: A lamp fed by a furnace fed by nothing. It's a machine for keeping one room lit forever. I'd almost admire it.
+interject name:tamsin_tealeaf: Don't.
+endif
+-> END
+
+~ banter_dark
+if flag.larders_furnace_quenched
+interject name:silvain_aster: Every green lamp below the castle went out at once. Somewhere upstairs, someone noticed.
+interject tag:cheerful: Good. Let him wonder about something for once.
+endif
+-> END
+
+~ banter_niche
+if flag.larders_niche_opened
+interject name:tamsin_tealeaf: He sold the wrong man vinegar, and paid for it for three hundred years. I've cheated worse people for less.
+interject name:ilse_varga: Not in this castle you haven't.
+endif
+-> END

@@ -1,0 +1,340 @@
+{
+  "id": "castle_ravenloft_spires_roost",
+  "name": "Castle Ravenloft, the Ravens' Roost",
+  "region": "castle_ravenloft",
+  "summary": "The long space under the castle's roofs where hundreds of ravens roost on the beams. They hide bright things in their nests, and they watch everything.",
+  "text": "Under the roof the dark is full of small sounds: feathers settling, claws shifting on wood, a hundred birds deciding what you are.",
+  "map": {
+    "rows": [
+      "##########################",
+      "#........................#",
+      "#........~~..............#",
+      "#........................#",
+      "#.....#.....#.....#......#",
+      "#........................#",
+      "#...................~....#",
+      "#....................~...#",
+      "#........................#",
+      "#.....#.....#.....#......#",
+      "#..~.....................#",
+      "#.............~..........#",
+      "#........................#",
+      "##########################"
+    ],
+    "theme": "attic",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "spires_roost",
+      "name": "The ravens' roost",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          24,
+          12
+        ]
+      ],
+      "floor": "interior/attic_boards"
+    }
+  ],
+  "spawns": {
+    "default": [
+      4,
+      3
+    ],
+    "from_roofs": [
+      4,
+      3
+    ],
+    "from_back_stair": [
+      21,
+      11
+    ]
+  },
+  "exits": [
+    {
+      "id": "up_to_roofs",
+      "cell": [
+        3,
+        2
+      ],
+      "to": "castle_ravenloft_spires_roofs",
+      "spawn": "from_roost",
+      "label": "Up to the roofs"
+    },
+    {
+      "id": "back_stair_down",
+      "cell": [
+        22,
+        11
+      ],
+      "to": "castle_ravenloft_spires_rooms",
+      "spawn": "from_back_stair",
+      "label": "A narrow stair down to Escher's rooms"
+    }
+  ],
+  "props": [
+    {
+      "id": "spires_roost_ravens",
+      "cell": [
+        8,
+        3
+      ],
+      "kind": "examine",
+      "label": "The ravens",
+      "model": "crow_barrel",
+      "dialogue": "castle_ravenloft/spires_roost:ravens"
+    },
+    {
+      "id": "spires_brass_glint",
+      "cell": [
+        22,
+        3
+      ],
+      "kind": "examine",
+      "label": "A glint of brass in a nest",
+      "model": "roc_nest",
+      "dialogue": "castle_ravenloft/spires_roost:brass"
+    },
+    {
+      "id": "spires_nest_a",
+      "cell": [
+        5,
+        7
+      ],
+      "kind": "decor",
+      "label": "A nest",
+      "model": "roc_nest"
+    },
+    {
+      "id": "spires_nest_b",
+      "cell": [
+        11,
+        11
+      ],
+      "kind": "decor",
+      "label": "A nest",
+      "model": "roc_nest"
+    },
+    {
+      "id": "spires_nest_c",
+      "cell": [
+        19,
+        10
+      ],
+      "kind": "decor",
+      "label": "A nest",
+      "model": "roc_nest"
+    },
+    {
+      "id": "spires_perch_a",
+      "cell": [
+        10,
+        5
+      ],
+      "kind": "decor",
+      "label": "A perch",
+      "model": "perch"
+    },
+    {
+      "id": "spires_perch_b",
+      "cell": [
+        23,
+        8
+      ],
+      "kind": "decor",
+      "label": "A perch",
+      "model": "perch"
+    },
+    {
+      "id": "spires_roost_bones",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "examine",
+      "label": "Small bones",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "spires_roost_feathers",
+      "cell": [
+        7,
+        11
+      ],
+      "kind": "decor",
+      "label": "Feathers",
+      "model": "leaves"
+    }
+  ],
+  "containers": [
+    {
+      "id": "spires_great_nest",
+      "cell": [
+        15,
+        6
+      ],
+      "label": "The great nest",
+      "model": "roc_nest",
+      "items": [
+        {
+          "id": "mirror",
+          "qty": 1
+        }
+      ],
+      "gold": 35
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "window",
+      "bright_ft": 5,
+      "dim_ft": 20
+    }
+  ],
+  "traps": [
+    {
+      "id": "spires_rotten_beam",
+      "cells": [
+        [
+          11,
+          7
+        ]
+      ],
+      "label": "a rotten board",
+      "detect_dc": 13,
+      "disarm_dc": 13,
+      "save": {
+        "ability": "dex",
+        "dc": 13
+      },
+      "damage": "2d6",
+      "damage_type": "bludgeoning",
+      "text": "The board snaps under you and you drop to the waist, legs kicking in the air of the room below."
+    }
+  ],
+  "npcs": [],
+  "encounters": [
+    {
+      "id": "roost_swarm",
+      "trigger": "open:spires_great_nest",
+      "when": "not flag.roost_ravens_calm and not flag.roost_swarm_cleared",
+      "text": "The roost goes up all at once: a black storm of wings and beaks and shrieking, pouring down off the beams.",
+      "surprise": "",
+      "flag": "roost_swarm_cleared",
+      "monsters": [
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            14,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            17,
+            7
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            13,
+            8
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            9,
+            6
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            20,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            16,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roost_swarm_roused",
+      "trigger": "dialogue",
+      "when": "not flag.roost_swarm_cleared",
+      "text": "The roost goes up all at once: a black storm of wings and beaks and shrieking, pouring down off the beams.",
+      "surprise": "",
+      "flag": "roost_swarm_cleared",
+      "monsters": [
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            14,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            17,
+            7
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            13,
+            8
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            9,
+            6
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            20,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_ravens",
+          "cell": [
+            16,
+            10
+          ]
+        }
+      ]
+    }
+  ],
+  "treasure_spots": {
+    "castle_ravenloft_ravens_roost": {
+      "container": "spires_great_nest"
+    }
+  },
+  "narration": {
+    "enter": "enter:castle_ravenloft_spires_roost"
+  },
+  "rest": "risky"
+}

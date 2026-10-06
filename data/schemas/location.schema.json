@@ -560,6 +560,39 @@
                 }
               }
             }
+          },
+          "final_battle": {
+            "$ref": "common.schema.json#/$defs/id",
+            "description": "ADR 0014: this is Strahd's fight in this Tarokka enemy room; the engine adds final_room:<room>, strahds_lair at foretold or later and not destroyed to `when`, and plays strahd/final:parley first."
+          },
+          "lair": {
+            "type": "boolean",
+            "description": "Lair actions on initiative count 20 for a monster that has them."
+          },
+          "withdraw": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "who",
+              "flag"
+            ],
+            "description": "A foe leaves the fight (no loot, no death) below `at_hp_below` Hit Points or after `after_rounds` rounds, setting `flag`.",
+            "properties": {
+              "who": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "at_hp_below": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "after_rounds": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "flag": {
+                "type": "string"
+              }
+            }
           }
         }
       }

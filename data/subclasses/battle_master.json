@@ -112,6 +112,7 @@
           "count": 3,
           "count_column": "maneuvers_known",
           "replaceable": "level_up",
+          "replace_max": 1,
           "options": [
             {
               "id": "ambush",

@@ -1,0 +1,110 @@
+# The three brides in the lounge of the Rooms of Weeping (docs/voice/{ludmilla_vilisevic, anastrasya_karelova,
+# volenta_popofsky}.md). first: Volenta greets the party (approach). ludmilla / volenta / anastrasya: talking to one of
+# them. Anastrasya's story frees Gertruda's mind (court_anastrasya_story) and keeps her out of the fight.
+# anastrasya_after: in her room after the fight, she asks for rest.
+
+~ first
+set court_brides_met
+Narrator: Three women in old-fashioned gowns sit in a lounge of faded velvet. One reads. One plays patience with a deck that has no queens in it. One looks out of a window that has been bricked up from outside.
+Volenta Popofsky [smile]: Visitors! Ludmilla, look, visitors with pulses. May I keep one?
+Ludmilla Vilisevic: They are his guests, Volenta. You may look. You may not touch.
+Volenta Popofsky: He never says for how long, though. He never, ever says that.
+-> lounge
+
+~ volenta
+if not flag.court_brides_met
+-> first
+endif
+Volenta Popofsky [smile]: You came back to play. I knew you would. Everybody comes back to play eventually.
+-> lounge
+
+~ ludmilla
+if not flag.court_brides_met
+-> first
+endif
+Ludmilla Vilisevic: Yes? Be brief. I am at a good part.
+-> lounge
+
+~ anastrasya
+if not flag.court_brides_met
+-> first
+endif
+Narrator: The woman at the bricked-up window doesn't turn round. Her reflection would, if she had one.
+-> lounge
+
+~ lounge
+* (To Volenta) What game are you playing? -> volenta_game
+* (To Ludmilla) What are you reading? -> ludmilla_book
+* [if not flag.court_treasury_known] (To Ludmilla) You don't care for the portraits, do you? -> ludmilla_portraits
+* (To Anastrasya) What are you looking at? -> anastrasya_window
+* [if flag.court_anastrasya_story] (To Anastrasya) What do you want us to do? -> anastrasya_plea
+* [Intimidation DC 16] (To Volenta) Stop looking at us like that. -> volenta_cowed | volenta_provoked
+* You're his brides. We've come to end him. Stand aside or fall with him. -> fight
+* We'll leave you to it. -> END
+
+~ volenta_game
+Volenta Popofsky: Patience. I'm very patient. You'd be amazed. Shall we play something else? I count to a hundred and you hide. If I find you before dawn I win.
+Volenta Popofsky [smile]: I always win. It's the trying that's fun.
+interject tag:blunt: No.
+Volenta Popofsky: Everybody says that first.
+-> lounge
+
+~ ludmilla_book
+Ludmilla Vilisevic: Poetry. A man loved a woman who did not love him back, and wrote four hundred pages about it. I find it restful.
+interject tag:bookish: Does she ever love him back?
+Ludmilla Vilisevic: Of course not. That is the poem.
+-> lounge
+
+~ ludmilla_portraits
+set court_treasury_known
+Ludmilla Vilisevic: He has had her painted forty times. I counted. There is one in the long hall he visits more often than he visits me.
+Ludmilla Vilisevic: It swings open, you know, onto his money. Push the left side of the frame. He thinks I don't know. I know everything in this house that hurts.
+-> lounge
+
+~ anastrasya_window
+Anastrasya Karelova: Krezk. You can't see it from here. I look anyway.
+* How did you come to be here? -> anastrasya_story
+* We'll let you be. -> lounge
+
+~ anastrasya_story
+set court_anastrasya_story
+Anastrasya Karelova: He wrote to me. Letters like the books my mother hid. Then a carriage, and a room on this floor, the yellow one, and gowns. They were the nicest dresses I ever had.
+Anastrasya Karelova [sad]: Is there someone in the yellow room now? There is. I hear her humming. Tell her about me. Tell her what the gowns are for.
+-> lounge
+
+~ anastrasya_plea
+Anastrasya Karelova: When you find him, end it. When he goes, we can stop. Please. I would like to stop.
+interject class:cleric: You will. I promise you that.
+-> lounge
+
+~ volenta_cowed
+Volenta Popofsky [angry]: Spoilsport. Fine. Grumpy.
+Volenta Popofsky [sly]: He's in the house tonight, you know. He likes to watch new people. He's watching now.
+-> lounge
+
+~ volenta_provoked
+Volenta Popofsky [smile]: Oh, you're brave. I love brave. Brave lasts longer.
+-> fight
+
+~ fight
+Ludmilla Vilisevic: How tiresome. Volenta.
+Volenta Popofsky [smile]: Finally!
+combat court_brides_fight
+
+# ---------------------------------------------------------------- After the fight
+
+~ anastrasya_after
+Narrator: Anastrasya sits on the lid of her coffin with her hands in her lap. She didn't fight. She looks as if she has been waiting for you.
+Anastrasya Karelova: They're gone. I'm still here. I don't want to be still here. Will you help me stop?
+* We'll do it quickly. -> rest
+* Not like this. Wait for us to finish him. -> wait
+
+~ rest
+set anastrasya_at_rest
+Narrator: She lies down and folds her hands, and closes her eyes, and does not open them when you do what has to be done. It is very quick. Afterwards the room smells, very faintly, of bread.
+interject class:cleric: Go home, Anastrasya. Go home to Krezk.
+-> END
+
+~ wait
+Anastrasya Karelova: Then be quick about him. I've waited a long time. I can wait a little longer.
+-> END

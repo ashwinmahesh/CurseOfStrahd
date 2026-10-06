@@ -40,11 +40,26 @@ func _process(delta: float) -> void:
 	_wait = CHECK_EVERY
 	var sig := signature(view)
 	if sig == _sig:
+		# The view rebuilds its props and containers after a conversation or a fight (refresh_npcs), freeing the
+		# ones this put away: hide their replacements too.
+		if _forget_freed():
+			_hide_nodes()
 		return
 	_sig = sig
 	hidden = hidden_cells(view)
+	_forget_freed()
 	_reveal_shown()
 	_hide_nodes()
+
+
+## Drops pieces that were freed while put away. True if there were any.
+func _forget_freed() -> bool:
+	var gone := false
+	for n: Variant in _put_away.keys():
+		if not is_instance_valid(n):
+			_put_away.erase(n)
+			gone = true
+	return gone
 
 
 func is_hidden(cell: Vector2i) -> bool:

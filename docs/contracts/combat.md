@@ -73,3 +73,59 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 spell_id, slot, option_id, kind, help, opts}`; `perform(c, action, targets, point, direction, slot)` carries one out.
 Previews: `attack_preview(c, action, t)`, `spell_preview(c, action, point, direction, slot)`,
 `move_preview(c, cell, move_reach(c))`, `slot_choices(c, spell_id)`, `target_why(c, action, t)`.
+
+## Bosses: legendary and lair actions, forms, Misty Escape, withdrawing (ADR 0014, combat/legendary.gd)
+
+Stat-block fields any monster can use (`data/schemas/monster.schema.json`; Strahd's block is the reference):
+
+| field | shape | what the engine does |
+|---|---|---|
+| `legendary_actions` | `{per_round, options: [{id, name, cost, action \| move, summary}]}` | `per_round` uses, refreshed at the start of its own turn (full at the start of the fight); one option at the end of each other creature's turn, chosen by the AI. `action` names one of its actions (an attack, or a save action), `move: true` moves up to its Speed without Opportunity Attacks. `cost` defaults to 1. Not while Incapacitated. |
+| `legendary_resistance` | uses per day (per fight) | a failed saving throw becomes a success while uses last |
+| `lair_actions` | `[{id, name, kind, summary, ...}]` | with the encounter's `lair: true`: one on initiative count 20, losing ties (after everyone at 20 or more, before the rest), never the same twice in a row, by a lair master that can act. `kind`: `self` (`modifiers` on the master until the next lair turn), `attack` (`attack.bonus`, `damage`, `on_hit` at a foe it can see within `attack.range`, default 120), `save` (`save`, `targets` {range from the master, count, max_size, types}, `damage`, `on_fail` riders, `summon` on a failure: e.g. the target's shadow, acting on initiative 20), `summon` (`summon: {monster, count, max}` beside the master), `text` (told only). |
+| `regenerates` | `{hp, stopped_by: [damage types], running_water: bool, sunlight: bool}` | any monster (Strahd, trolls, vampires): `hp` back at the start of its turn while it has at least 1 Hit Point, unless it took a `stopped_by` type since its last turn, or stands in running water (a `WATER` square it isn't flying over, or the `in_running_water` flag) or sunlight when those are true |
+| `forms` | `{base, change: action \| bonus_action, blocked_in, shapes: [{id, name, size, speed, actions, immunities, resistances, vulnerabilities, condition_immunities, save_advantage, flags, art}]}` | a shape keeps its Hit Points and swaps size, speeds, the actions it can use (`actions: []` = none, so no attacks or spells) and defenses. Actions may still carry their own `forms` list, naming `base` for the true form. |
+| `misty_escape` | `{resting_place, flag, form, narration, destroyed_flag, quest: {id, stage}, blocked_in}` | at 0 Hit Points anywhere but its `resting_place` (a location id, or a place inside one: `Encounter.at_place`): it turns to mist (`form`, default mist), leaves the fight, `flag` is set and the Narrator says `narration`; at its resting place, or in sunlight or running water, it is destroyed (`destroyed_flag`, `quest` moved to `stage`) |
+| `ward` | `{hp, unless, region}` | LocationView gives it `hp` of ward (taken before Temporary Hit Points and Hit Points) in a fight in `region`, unless the story condition `unless` holds: Strahd's is the Heart of Sorrow's 50, gone once `heart_of_sorrow_shattered` is set |
+| action `summon` | `{choices: [{monster, count (int or dice), max, where: any \| outdoors \| indoors}], arrive (rounds, int or dice), not_in}` | Children of the Night: the first choice allowed where the fight is, arriving at the start of a later round beside the summoner and acting after it |
+| action `targets.requires` | conditions | on an attack action too: only targets with one of them (a vampire's Bite) |
+| rider `repeat_save` | `{ability, dc, when: end \| start \| manual, on_damage}` | a condition the target can shake off (Charm: a new save whenever it takes damage) |
+| `ai_profile: strahd` | | see below |
+
+Trait ids the code reads for `"implemented": "engine"`: `legendary_resistance`, `regeneration`, `shapechanger`,
+`misty_escape`, `children_of_the_night`, `charm`, `spider_climb`, `vampire_weakness`.
+
+Encounter fields (a location's `encounters[]`, `data/schemas/location.schema.json`): `lair: true`,
+`final_battle: "<enemy room id>"` and `withdraw: {who, at_hp_below, after_rounds, flag}` (the foe `who` leaves below
+that many Hit Points, or at the start of its turn once `after_rounds` rounds have passed; never dies while it can
+withdraw; no loot). On an Encounter: `lair`, `location_id`, `places` (the location's Tarokka places and the final
+battle's room), `outdoors`, `legendary.withdraws`; all are kept in a round's save.
+
+What a fight hands back to the story (`Encounter.legendary`): `story_flags` (flag -> value: Misty Escape's flag, a
+withdrawal's flag, `strahd_destroyed`), `story_quests` (quest -> stage), `departed` (creature id -> `mist` or
+`withdraw`). LocationView applies them when the fight ends, whatever the outcome; a creature that departed leaves no
+remains, and a fight where every foe left without one dying gives no `loot` (a Tarokka treasure there is still found).
+
+The final battle (LocationView): an encounter with `final_battle` also needs `StoryConditions.final_battle_condition(room)`
+(`final_room:<room> and quest.strahds_lair >= foretold and not flag.strahd_destroyed`; `encounter_when(spec)` joins it
+to the entry's own `when`). Before it starts, `strahd/final:parley` plays (when the file has that node) unless
+`strahd_parley` is already set; the fight starts when `strahd_parley` is `fight` or unset, and `strahds_lair` moves
+to `confronted`. `yield` and `ireena` start nothing (the ending takes over). `LocationView.last_encounter` is the spec of the fight
+that just ended (its `final_battle` decides the ending after a wipe, story/endings.gd).
+
+The Tarokka (story/tarokka.gd): the card `mists` (room `castle_ravenloft`, `Tarokka.ROAM_ROOM`) sends him roaming;
+`draw()` stores the room picked from the seed as the reading's `enemy_roam` key, read as `tarokka.enemy.roam`
+(a reading saved before the pick finds the same room from the seed). `Tarokka.final_room(st)` and the condition
+`final_room:<room>` give the room he waits in.
+
+### The `strahd` AI profile (combat/ai/boss_brain.gd)
+
+Strikes the weakest foe or the one carrying the Sunsword, the Holy Symbol of Ravenkind or the Tome of Strahd; bites
+whoever he holds; charms a strong foe (a save action whose failure Charms) when no one is charmed by him; calls the
+Children of the Night once when two or more foes stand; uses legendary Moves to get out of reach when hurt and
+legendary strikes otherwise; below a quarter of his Hit Points with Regeneration working, takes mist form and keeps
+away until he is back over half. Withdrawing turns him to mist (or a bat) as he goes.
+
+Events: `legendary` (id, option, name, left), `lair` (id, action, name), `form` (id, form, art: the token wears the
+shape's sprite when it exists), `vanish` (id, left: mist or withdraw, narration) for a creature leaving the fight.
+The initiative tracker shows a legendary creature's actions left (◆◇) and the lair's card at count 20.

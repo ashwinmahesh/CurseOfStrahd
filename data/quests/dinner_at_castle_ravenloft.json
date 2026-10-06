@@ -1,0 +1,29 @@
+{
+  "id": "dinner_at_castle_ravenloft",
+  "name": "Dinner at Castle Ravenloft",
+  "summary": "Strahd sent his carriage with an invitation to dine. He kept his word: the table was laid, and he was waiting.",
+  "giver": "strahd",
+  "region": "castle_ravenloft",
+  "stages": [
+    {
+      "id": "seated",
+      "journal": "Strahd received us in his dining hall, at the organ, as if we were old friends late for supper. The food is real. The host is something else.",
+      "objectives": [
+        "Finish the meal, one way or another"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "dined",
+      "journal": "We ate at Strahd's table and he let us go, which he did not have to do. He left us the run of his house for the night and went off into it himself.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "affront",
+      "journal": "We drew steel at Strahd's table. He left us his bats and went, laughing, as if we had paid him a compliment.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

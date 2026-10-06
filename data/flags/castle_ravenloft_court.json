@@ -1,0 +1,115 @@
+{
+  "region": "castle_ravenloft",
+  "flags": [
+    {
+      "id": "rahadin_met",
+      "type": "bool",
+      "summary": "The party has met Rahadin, the chamberlain (court_rahadin:start, chamber or intercept)."
+    },
+    {
+      "id": "rahadin_defeated",
+      "type": "bool",
+      "summary": "The party beat Rahadin in a fight (court_rahadin_fight or court_rahadin_chamber_fight). Endings and epilogues may read it."
+    },
+    {
+      "id": "rahadin_stood_aside",
+      "type": "bool",
+      "summary": "Rahadin let the party take Gertruda down the grand stairs (court_rahadin:stand_aside)."
+    },
+    {
+      "id": "court_treasury_known",
+      "type": "bool",
+      "summary": "The party knows the vault is behind the lady's portrait in the King's Hall (Lief, his ledger, or Ludmilla). Opens the portrait with no roll."
+    },
+    {
+      "id": "court_treasury_found",
+      "type": "bool",
+      "summary": "The portrait in the King's Hall alcove has been swung aside (court_halls:open): the secret stair to the treasury is open."
+    },
+    {
+      "id": "court_ledger_read",
+      "type": "bool",
+      "summary": "The party read the count's ledger, or Lief told them: the vault is behind the lady, and Gertruda's gowns are an open account. Convinces Gertruda."
+    },
+    {
+      "id": "court_rug_destroyed",
+      "type": "bool",
+      "summary": "The rug of smothering in Lief's office is destroyed (court_accountant_rug); Lief can leave."
+    },
+    {
+      "id": "lief_met",
+      "type": "bool",
+      "summary": "The party has spoken with Lief Lipsiege."
+    },
+    {
+      "id": "lief_freed",
+      "type": "bool",
+      "summary": "Lief Lipsiege left the castle, free (court_lief:go_vallaki or go_free). Endings and epilogues may read it."
+    },
+    {
+      "id": "court_post_cleared",
+      "type": "bool",
+      "summary": "The animated armour in the guardroom was beaten (court_post_watch)."
+    },
+    {
+      "id": "court_gallery_cleared",
+      "type": "bool",
+      "summary": "The count's portrait and the gallery armour were destroyed (court_portrait_watch)."
+    },
+    {
+      "id": "court_brides_met",
+      "type": "bool",
+      "summary": "The party has met the three brides in the lounge (court_brides:first)."
+    },
+    {
+      "id": "court_brides_fought",
+      "type": "bool",
+      "summary": "The party fought the brides in the lounge (court_brides_fight). Endings and epilogues may read it."
+    },
+    {
+      "id": "court_anastrasya_story",
+      "type": "bool",
+      "summary": "Anastrasya told the party she was once the girl in the yellow guest room. Convinces Gertruda; Anastrasya stays out of a fight."
+    },
+    {
+      "id": "anastrasya_at_rest",
+      "type": "bool",
+      "summary": "At her own asking, the party laid Anastrasya Karelova to rest (court_brides:rest). Endings and epilogues may read it."
+    },
+    {
+      "id": "argynvost_skull_found",
+      "type": "bool",
+      "summary": "The party found the silver dragon Argynvost's skull mounted in the castle's trophy room (Argynvostholt's quest the_dark_beacon wants it home)."
+    },
+    {
+      "id": "gertruda_met",
+      "type": "bool",
+      "summary": "The party has met Gertruda in the yellow guest room."
+    },
+    {
+      "id": "court_gertruda_insight",
+      "type": "bool",
+      "summary": "Insight saw that Gertruda is frightened under the chatter; the party can tell her so."
+    },
+    {
+      "id": "court_gertruda_warned_him",
+      "type": "bool",
+      "summary": "A failed Persuasion made Gertruda ring for Strahd: Rahadin will not be talked aside at the stairs."
+    },
+    {
+      "id": "gertruda_rescued",
+      "type": "bool",
+      "summary": "Gertruda agreed to go home and joined the party as a guest (court_gertruda:join)."
+    },
+    {
+      "id": "gertruda_given_back",
+      "type": "bool",
+      "summary": "The party gave Gertruda back to Rahadin at the stairs; she stays in the castle (find_gertruda lost). Endings and epilogues may read it."
+    },
+    {
+      "id": "gertruda_home",
+      "type": "bool",
+      "summary": "Gertruda is home with Mad Mary in the village of Barovia (court_gertruda:homecoming; find_gertruda home). Endings and epilogues may read it."
+    }
+  ]
+}

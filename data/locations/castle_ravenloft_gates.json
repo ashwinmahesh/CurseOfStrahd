@@ -1,0 +1,657 @@
+{
+  "id": "castle_ravenloft_gates",
+  "name": "Castle Ravenloft, the Gates",
+  "region": "castle_ravenloft",
+  "summary": "The road's end below Castle Ravenloft: a drawbridge over a black chasm, the gatehouse and its portcullis, the front courtyard before the keep's great doors, the servants' courtyard and the carriage house, and the walk along the wall to the overlook.",
+  "text": "A chasm with no bottom you can see, a drawbridge already lowered, a gatehouse with its portcullis up. Beyond it a courtyard of cracked stone and weeds, and the keep rising over it with one window lit.",
+  "map": {
+    "rows": [
+      "###..###################################",
+      "#......##########################......#",
+      "#......##########################......#",
+      "#......##########################......#",
+      "#......##########################......#",
+      "#......##########################......#",
+      "#......##########################......#",
+      "#....~.##########################......#",
+      "#......############..##############..###",
+      "#......#........................#......#",
+      "#......#......~.................#......#",
+      "#......#...................~....#......#",
+      "#......#........................#......#",
+      "#......#........................#......#",
+      "#......#........................#......#",
+      "#......................................#",
+      "#......#....==..................#......#",
+      "#......#........................#......#",
+      "#.~....#........................#......#",
+      "#......#........................#..~...#",
+      "#......#.~....................~.#......#",
+      "#......#..~.....................#......#",
+      "###################..###################",
+      "###################..###################",
+      "                  =..=                  ",
+      "                  =..=                  ",
+      "                  =..=                  ",
+      "                  =..=                  ",
+      "                  =..=                  ",
+      "                  =..=                  ",
+      "##......~..........................~..##",
+      "#..~..#.......................~..#.....#",
+      "#...~.......~.............~.........~..#",
+      "###################..###################"
+    ],
+    "theme": "shrine_yard",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "crg_cliff_road",
+      "name": "The road below the gates",
+      "cells": [
+        [
+          1,
+          30
+        ],
+        [
+          38,
+          33
+        ]
+      ],
+      "floor": "village/mud_road"
+    },
+    {
+      "id": "crg_drawbridge",
+      "name": "The drawbridge",
+      "cells": [
+        [
+          18,
+          24
+        ],
+        [
+          21,
+          29
+        ]
+      ],
+      "floor": "interior/wood_planks"
+    },
+    {
+      "id": "crg_gatehouse",
+      "name": "The gatehouse",
+      "cells": [
+        [
+          19,
+          22
+        ],
+        [
+          20,
+          23
+        ]
+      ],
+      "floor": "church/stone_flags"
+    },
+    {
+      "id": "crg_front_courtyard",
+      "name": "The front courtyard",
+      "cells": [
+        [
+          8,
+          9
+        ],
+        [
+          31,
+          21
+        ]
+      ],
+      "floor": "village/cobbles"
+    },
+    {
+      "id": "crg_overlook_walk",
+      "name": "The walk along the wall",
+      "cells": [
+        [
+          1,
+          0
+        ],
+        [
+          6,
+          21
+        ]
+      ],
+      "floor": "church/stone_flags"
+    },
+    {
+      "id": "crg_servants_court",
+      "name": "The servants' courtyard",
+      "cells": [
+        [
+          33,
+          9
+        ],
+        [
+          38,
+          21
+        ]
+      ],
+      "floor": "village/cobbles"
+    },
+    {
+      "id": "crg_carriage_house",
+      "name": "The carriage house",
+      "cells": [
+        [
+          33,
+          1
+        ],
+        [
+          38,
+          8
+        ]
+      ],
+      "floor": "church/stone_flags"
+    }
+  ],
+  "spawns": {
+    "default": [
+      19,
+      12
+    ],
+    "gate": [
+      19,
+      31
+    ],
+    "from_main_floor": [
+      19,
+      10
+    ],
+    "from_overlook": [
+      3,
+      2
+    ]
+  },
+  "exits": [
+    {
+      "id": "road_out",
+      "cell": [
+        19,
+        33
+      ],
+      "to": "travel",
+      "label": "The castle road, down through the dead pines"
+    },
+    {
+      "id": "road_out_east",
+      "cell": [
+        20,
+        33
+      ],
+      "to": "travel",
+      "label": "The castle road, down through the dead pines"
+    },
+    {
+      "id": "great_doors",
+      "cell": [
+        19,
+        8
+      ],
+      "to": "castle_ravenloft_main_floor",
+      "spawn": "from_gates",
+      "label": "The keep's great doors"
+    },
+    {
+      "id": "great_doors_east",
+      "cell": [
+        20,
+        8
+      ],
+      "to": "castle_ravenloft_main_floor",
+      "spawn": "from_gates",
+      "label": "The keep's great doors"
+    },
+    {
+      "id": "overlook_walk",
+      "cell": [
+        3,
+        0
+      ],
+      "to": "castle_ravenloft_overlook",
+      "spawn": "from_gates",
+      "label": "Along the wall to the overlook"
+    },
+    {
+      "id": "overlook_walk_east",
+      "cell": [
+        4,
+        0
+      ],
+      "to": "castle_ravenloft_overlook",
+      "spawn": "from_gates",
+      "label": "Along the wall to the overlook"
+    }
+  ],
+  "doors": [
+    {
+      "id": "crg_portcullis",
+      "cell": [
+        19,
+        22
+      ],
+      "label": "the portcullis"
+    },
+    {
+      "id": "crg_portcullis_east",
+      "cell": [
+        20,
+        22
+      ],
+      "label": "the portcullis"
+    },
+    {
+      "id": "crg_side_gate",
+      "cell": [
+        7,
+        15
+      ],
+      "label": "the side gate"
+    },
+    {
+      "id": "crg_center_court_gate",
+      "cell": [
+        32,
+        15
+      ],
+      "label": "the center court gate"
+    }
+  ],
+  "props": [
+    {
+      "id": "crg_drawbridge_chains",
+      "cell": [
+        18,
+        26
+      ],
+      "kind": "examine",
+      "label": "The drawbridge",
+      "model": "bridge"
+    },
+    {
+      "id": "crg_drawbridge_rail",
+      "cell": [
+        21,
+        27
+      ],
+      "kind": "decor",
+      "label": "The drawbridge's rail",
+      "model": "bridge"
+    },
+    {
+      "id": "crg_chasm_edge",
+      "cell": [
+        18,
+        30
+      ],
+      "kind": "examine",
+      "label": "The edge of the chasm",
+      "model": "boulder"
+    },
+    {
+      "id": "crg_dead_pine_1",
+      "cell": [
+        10,
+        31
+      ],
+      "kind": "decor",
+      "label": "A dead pine",
+      "model": "dead_tree"
+    },
+    {
+      "id": "crg_dead_pine_2",
+      "cell": [
+        28,
+        30
+      ],
+      "kind": "decor",
+      "label": "A dead pine",
+      "model": "dead_tree"
+    },
+    {
+      "id": "crg_dead_pine_3",
+      "cell": [
+        15,
+        32
+      ],
+      "kind": "decor",
+      "label": "A dead pine",
+      "model": "dead_tree"
+    },
+    {
+      "id": "crg_dead_pine_4",
+      "cell": [
+        24,
+        32
+      ],
+      "kind": "decor",
+      "label": "A dead pine",
+      "model": "dead_tree"
+    },
+    {
+      "id": "crg_keep_face",
+      "cell": [
+        14,
+        8
+      ],
+      "kind": "examine",
+      "label": "The keep",
+      "model": "window_tall"
+    },
+    {
+      "id": "crg_keep_window_2",
+      "cell": [
+        25,
+        8
+      ],
+      "kind": "decor",
+      "label": "A tall window",
+      "model": "window_tall"
+    },
+    {
+      "id": "crg_keep_crest",
+      "cell": [
+        22,
+        8
+      ],
+      "kind": "examine",
+      "label": "A carved crest over the doors",
+      "model": "crest"
+    },
+    {
+      "id": "crg_dry_well",
+      "cell": [
+        14,
+        16
+      ],
+      "kind": "examine",
+      "label": "A dry well",
+      "model": "well_stone"
+    },
+    {
+      "id": "crg_courtyard_lamp",
+      "cell": [
+        17,
+        11
+      ],
+      "kind": "decor",
+      "label": "An iron lamp post",
+      "model": "lantern_post"
+    },
+    {
+      "id": "crg_courtyard_lamp_2",
+      "cell": [
+        22,
+        11
+      ],
+      "kind": "decor",
+      "label": "An iron lamp post",
+      "model": "lantern_post"
+    },
+    {
+      "id": "crg_black_carriage",
+      "cell": [
+        35,
+        4
+      ],
+      "kind": "examine",
+      "label": "A black carriage",
+      "model": "wagon",
+      "dialogue": "castle_ravenloft/gates_castle:carriage",
+      "when": "flag.strahd_invitation != \"accepted\""
+    },
+    {
+      "id": "crg_black_carriage_waiting",
+      "cell": [
+        24,
+        12
+      ],
+      "kind": "examine",
+      "label": "The black carriage",
+      "model": "wagon",
+      "dialogue": "castle_ravenloft/gates_castle:carriage",
+      "when": "flag.strahd_invitation == \"accepted\""
+    },
+    {
+      "id": "crg_carriage_horse",
+      "cell": [
+        37,
+        3
+      ],
+      "kind": "decor",
+      "label": "A black horse",
+      "model": "horse",
+      "when": "flag.strahd_invitation != \"accepted\""
+    },
+    {
+      "id": "crg_carriage_horse_waiting",
+      "cell": [
+        27,
+        12
+      ],
+      "kind": "decor",
+      "label": "A black horse",
+      "model": "horse",
+      "when": "flag.strahd_invitation == \"accepted\""
+    },
+    {
+      "id": "crg_stable_straw",
+      "cell": [
+        33,
+        6
+      ],
+      "kind": "decor",
+      "label": "Old straw",
+      "model": "hay_bale"
+    },
+    {
+      "id": "crg_wall_drop",
+      "cell": [
+        1,
+        10
+      ],
+      "kind": "examine",
+      "label": "Over the outer wall",
+      "model": "wall_low"
+    },
+    {
+      "id": "crg_servants_well",
+      "cell": [
+        36,
+        13
+      ],
+      "kind": "decor",
+      "label": "A well",
+      "model": "well"
+    },
+    {
+      "id": "crg_woodpile",
+      "cell": [
+        38,
+        17
+      ],
+      "kind": "decor",
+      "label": "A woodpile",
+      "model": "woodpile"
+    }
+  ],
+  "containers": [
+    {
+      "id": "crg_carriage_box",
+      "cell": [
+        34,
+        2
+      ],
+      "label": "The carriage's driver box",
+      "model": "trunk",
+      "items": [
+        {
+          "id": "blanket",
+          "qty": 1
+        },
+        {
+          "id": "hooded_lantern",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "crg_guard_locker",
+      "cell": [
+        37,
+        20
+      ],
+      "label": "A gate guard's locker",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "crossbow_bolt",
+          "qty": 20
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        }
+      ],
+      "gold": 12,
+      "lock_dc": 14
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        20,
+        7
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        17,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        22,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "encounters": [
+    {
+      "id": "crg_courtyard_gargoyles",
+      "trigger": "enter_area:crg_front_courtyard",
+      "when": "night and flag.strahd_invitation != \"accepted\" and level >= 10",
+      "text": "Stone creaks overhead. The gargoyles on the gatehouse unfold, stretch like cats, and drop into the courtyard.",
+      "surprise": "",
+      "flag": "crg_gargoyles_broken",
+      "monsters": [
+        {
+          "monster": "gargoyle",
+          "cell": [
+            10,
+            10
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            10
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            15,
+            13
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            24,
+            13
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            11,
+            19
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crg_courtyard_gargoyles",
+      "trigger": "enter_area:crg_front_courtyard",
+      "when": "night and flag.strahd_invitation != \"accepted\"",
+      "text": "Stone creaks overhead. The gargoyles on the gatehouse unfold, stretch like cats, and drop into the courtyard.",
+      "surprise": "",
+      "flag": "crg_gargoyles_broken",
+      "monsters": [
+        {
+          "monster": "gargoyle",
+          "cell": [
+            10,
+            10
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            10
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            11,
+            19
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            19
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_gates"
+  },
+  "rest": "risky"
+}

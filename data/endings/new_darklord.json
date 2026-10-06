@@ -1,0 +1,46 @@
+{
+  "id": "new_darklord",
+  "title": "The Second Thirst",
+  "summary": "Strahd is destroyed, but the thirst he carried finds a new home in one of you.",
+  "priority": 40,
+  "when": "flag.strahd_destroyed and gift:gift_of_the_hollow",
+  "narration": "endings/new_darklord:start",
+  "tone": "blood",
+  "music": "ending",
+  "epilogue_from": "strahd_triumphant",
+  "epilogue": [
+    {
+      "topic": "land",
+      "title": "Barovia",
+      "when": "",
+      "text": "The mists do not lift. The valley learns a new name to whisper, and finds it fits the same old fear."
+    },
+    {
+      "topic": "heir",
+      "title": "The New Lord",
+      "portrait": "{name}",
+      "when": "",
+      "text": "{name} takes the high chair in the castle hall. The thirst is patient at first. It was patient with the one before, too."
+    },
+    {
+      "topic": "party",
+      "title": "Old Friends",
+      "when": "",
+      "text": "The rest of you could leave now; the mists part for the new lord's friends. Whether you stay is a question {name} asks every night."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "guest:ireena",
+      "text": "Ireena leaves the castle on the morning {name} stops casting a reflection. She does not say goodbye."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "",
+      "text": "Ireena hears that the devil is dead and an heir sits in his chair. She does not wait to learn what kind of lord the heir will be."
+    }
+  ]
+}

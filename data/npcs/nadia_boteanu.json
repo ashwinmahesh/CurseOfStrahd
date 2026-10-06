@@ -1,0 +1,20 @@
+{
+  "id": "nadia_boteanu",
+  "name": "Nadia Boteanu",
+  "title": "Lamplighter of Vallaki",
+  "summary": "A young lamplighter from Vallaki who got into a black carriage with no driver at dusk. Chained in the castle's cells, kept fed by the cook until she is ready for the lord's table.",
+  "portrait": "nadia_boteanu",
+  "sprite": "nadia_boteanu",
+  "attitude": "friendly",
+  "voice": "docs/voice/nadia_boteanu.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "prisoner",
+    "vallaki",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "she/her"
+}

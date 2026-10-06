@@ -114,6 +114,10 @@ func fight() -> bool:
 		var lines := e.log.dump().split("\n")
 		for l in lines.slice(0, 80):
 			trace.append("      | " + l)
+		if lines.size() > 80:
+			trace.append("      | ...")
+			for l in lines.slice(maxi(80, lines.size() - 60)):
+				trace.append("      | " + l)
 		for c in e.combatants:
 			trace.append("      @ %s at %s, %d HP%s" % [c.name(), c.cell, c.creature.hp, " (dead)" if c.creature.dead else ""])
 		defeated = true

@@ -1,0 +1,83 @@
+# Strahd's letters (docs/regions/strahd_presence.md; data/strahd/visits.json): the first letter, brought by a Vistani
+# rider from the third day, and the dinner invitation with the black carriage once the party is level 9. Getting in
+# sets strahd_invitation = "accepted"; the visit's `then` takes the party to the castle's front door.
+
+# ---------------------------------------------------------------- The first letter
+
+~ first
+set strahd_letter_read
+Narrator: A rider in Vistani colours reins in beside you, holds out a letter sealed in black wax, and is gone back up the road before anyone can ask who sent it.
+Narrator: The seal is one letter, a Z, pressed deep.
+Strahd: My dear guests. Forgive a host for writing when he might call. The daylight is so inconvenient for me.
+if flag.strahd_watcher_seen
+Strahd: You saw me on the ridge. You looked well. A little thin. Do eat.
+endif
+if flag.death_house_completed
+Strahd: You found your way out of the house on the hill. Most do not. I have the house to thank for introducing us.
+endif
+if guest:ireena
+Strahd: You have Ireena with you. Keep her warm and keep her close. I should be desolate if anything happened to her that I had not arranged.
+elif flag.ireena_sanctuary == "st_andrals"
+Strahd: You have left Ireena with a priest and his saint. How touching. Saints are so rarely at home.
+elif flag.ireena_sanctuary == "inn" or flag.ireena_in_krezk
+Strahd: You have put Ireena behind a wall and a door. I have always admired walls. They tell me exactly where to look.
+endif
+if tarokka.drawn
+Strahd: The old woman at the pool has told you a story about me. She tells it to everyone. It always ends the same way.
+endif
+Strahd: Go where you like. See what my land has to show you. When you are ready, we will dine. Until then I remain your host, Strahd von Zarovich.
+* Burn it. -> first_burned
+* Keep it. -> first_kept
+
+~ first_burned
+Narrator: The paper takes the flame slowly, as if it would rather not, and the black wax runs like something alive.
+-> END
+
+~ first_kept
+set strahd_letter_kept
+Narrator: You fold it away. For a while it is warm against you. Then, oddly, it isn't.
+-> END
+
+# ---------------------------------------------------------------- The invitation and the black carriage (level 9)
+
+~ invitation
+if flag.strahd_invitation == "declined"
+Narrator: The black carriage again, waiting on the road with its door open, as patient as a stone.
+else
+Narrator: A black carriage waits on the road ahead, drawn by two black horses with embers for eyes. It has no driver. Its door stands open.
+endif
+Narrator: On the seat lies a letter sealed in black wax.
+Strahd: My guests. You have grown remarkable, and I have grown curious. Dine with me tonight at Castle Ravenloft. The carriage knows the way.
+if flag.strahd_letter_kept
+Strahd: You kept my first letter. I noticed. I notice everything that concerns you.
+endif
+if flag.strahd_night_visit == "attacked"
+Strahd: Bring your weapons, by all means. I forgive the business by your fire. A host must.
+endif
+if flag.strahd_test == "fought"
+Strahd: You fought well on my road. Come and let me thank you properly.
+endif
+if guest:ireena
+Strahd: Ireena is welcome, of course. Her room has been ready for a very long time.
+Ireena [angry]: I'll ride in his coach when I'm dead. Which is what he's hoping.
+endif
+Strahd: No harm will come to you under my roof before the meal is over. You have my word, and my word is older than your kingdoms.
+* Get in. -> accept
+* Not tonight. -> decline
+* Tear up the letter. -> tear
+
+~ accept
+set strahd_invitation = "accepted"
+Narrator: The door shuts behind you on its own. The carriage moves off with no word and no whip, faster than horses should, up into the mountains and the cloud.
+time +90
+-> END
+
+~ decline
+set strahd_invitation = "declined"
+Narrator: The door swings shut. The carriage turns in the road with great care and goes back the way it came.
+-> END
+
+~ tear
+set strahd_invitation = "declined"
+Narrator: The pieces go off in the wind. The horses watch you do it. Then the carriage turns and goes, unhurried, like something that will be back.
+-> END

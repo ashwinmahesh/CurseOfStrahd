@@ -7,7 +7,7 @@ extends RefCounted
 ##   line {speaker, mood, text} · option {text, ok, fail, cond, check: {skill, dc}, selector} · jump {to}
 ##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty}
 ##   gold {amount} · attitude {npc, value} · xp · check {skill, dc, ok, fail} · interject {selector, text}
-##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {n} · once
+##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {n} · once · end_game (ADR 0014)
 
 const ROOT := "res://narrative/"
 const CLASS_TAGS := ["fighter", "rogue", "cleric", "wizard", "barbarian", "bard", "druid", "monk", "paladin", "ranger",
@@ -158,6 +158,9 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 			return {"t": "shop"}
 		"respec":
 			return {"t": "respec"}
+		"end_game":
+			if parts.size() == 1:
+				return {"t": "end_game"}
 		"time":
 			if parts.size() == 2 and parts[1].begins_with("+"):
 				return {"t": "time", "minutes": int(parts[1].substr(1))}

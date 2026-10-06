@@ -1,0 +1,235 @@
+# Narrator: Castle Ravenloft, the high tower and the spires (docs/voice/narrator.md). Second person, present tense,
+# one or two sentences. The heart, the ravens and the brass nest open conversations instead of examine: lines.
+
+# ---------------------------------------------------------------- The maps
+
+~ enter:castle_ravenloft_spires
+| The stair climbs the inside of the tower in long turns with no rail at all, and in the middle there is nothing: a black well of air going straight down.
+| [guest:pidlwick_ii] Pidlwick II hops up the first steps ahead of you, then remembers his promise and drops back behind.
+| [flag.heart_of_sorrow_shattered] The tower is quieter than it was. You hadn't noticed the slow beat in the stones until it stopped.
+cooldown 20
+
+~ enter:castle_ravenloft_spires_heart
+| At the top of the last turn the stair opens into a round room full of grey sky, and in the middle of it something red is beating.
+| [flag.heart_of_sorrow_shattered] The round room is cold and bright now. Red glass crunches underfoot, and nothing beats.
+| [flag.spires_final_battle_fought and not flag.heart_of_sorrow_shattered] The room still smells of his mist. The heart beats on, a little faster than before.
+cooldown 20
+
+~ enter:castle_ravenloft_spires_rooms
+| A narrow gallery with doors down both sides. Somewhere a pot is boiling, somewhere bats are shifting, and behind one locked door somebody is humming.
+| [flag.cauldron_coven_cleared] The gallery smells of burnt herbs and something worse that has gone cold.
+cooldown 20
+
+~ enter:castle_ravenloft_spires_roofs
+| The wind hits you the moment your head clears the hatch. The whole valley is laid out below, grey and green and endless.
+| [night] The wind hits you the moment your head clears the hatch. Below, the valley is black, with a few small lights in it that look very far away.
+| [day] Grey daylight, a long way down to the courtyard, and the wind tugging at you as if it has somewhere to take you.
+cooldown 20
+
+~ enter:castle_ravenloft_spires_roost
+| The dark under the roof is full of small sounds: feathers settling, claws shifting on wood, hundreds of birds deciding what you are.
+| [flag.roost_ravens_calm] The ravens barely look up. A few of them make room on the beams.
+| [flag.roost_swarm_cleared] Feathers still drift in the dark. The ravens that are left keep very still.
+cooldown 20
+
+# ---------------------------------------------------------------- The high tower
+
+~ enter:spires_tower_foot
+| The foot of the tower is a bare round room with a door back to the main floor and a stair going up the wall into the dark.
+once
+
+~ enter:spires_lamp_closet
+| A narrow closet that smells of lamp oil. Lamps hang in rows on hooks, every one of them cold.
+once
+
+~ enter:spires_lower_stair
+| The steps are worn into hollows in the middle. On the open side there is nothing but the well.
+once
+
+~ enter:spires_grand_landing
+| A wide landing where the count's floor meets the tower: an arch, a bench, an empty suit of armour, and the well yawning beside it.
+| [guest:pidlwick_ii] Pidlwick II pats the stone bench as you pass, the way you'd pat a dog.
+cooldown 30
+
+~ enter:spires_upper_stair
+| Up here the stair narrows and the wind finds its way in through cracks in the wall. Some of the steps are missing.
+once
+
+~ enter:spires_high_landing
+| The high landing, with a window full of sky. One door leads off into the tower rooms; one last stair goes on up.
+once
+
+~ examine:spires_jester_portrait
+| A little man in motley and a cap of bells, painted laughing, with a child on each knee. A brass plate on the frame reads: PIDLWICK, FOOL TO THE HOUSE. Someone has scratched the eyes out of the frame's carved cherubs.
+| [flag.pidlwick_truth_known] The little jester laughs out of the paint. It's the last place in the castle anybody looks pleased to see you.
+
+~ examine:spires_well_edge
+| You look over. The well goes down past every floor of the castle and doesn't seem to stop.
+| [class:rogue] {name} drops a coin over the edge and listens. Nothing. {name} decides not to count.
+
+~ examine:spires_foot_tapestry
+| A tapestry so faded that the hunt on it is only shapes: riders, hounds, and something tall in the trees that none of them has noticed yet.
+
+~ examine:spires_high_window
+| The window looks east over the whole valley: the road, the dark woods, and a long way off, a grey smudge that might be the village.
+
+~ open:spires_closet_panel
+| The panel swings in on oiled hinges. Somebody wanted this closet kept, and kept quiet.
+
+~ search:spires_wardrobe_seam
+| Cold air slides out from behind the wardrobe, and when you lean on it, it moves. Behind it, narrow steps go up into the dark.
+
+~ trap:spires_broken_step:found
+| One step ahead is cracked right through. It would hold a cat. It wouldn't hold you.
+
+~ trap:spires_broken_step:triggered
+| The step goes, and for a terrible moment so do you.
+
+# ---------------------------------------------------------------- The Heart of Sorrow
+
+~ enter:spires_heart_landing
+| The last few steps, and above them an arch. Through it comes a slow red light that brightens and fades, brightens and fades.
+once
+
+~ enter:spires_heart_chamber
+| Windows on every side, the grey sky, and the heart hanging in the middle of it all, beating.
+| [flag.heart_of_sorrow_shattered] Shards of red glass on the dais, and the chains swinging empty in the draught.
+cooldown 20
+
+~ examine:spires_heart_shards
+| Just glass now, cloudy and ordinary. The chains overhead swing a little in the wind, holding nothing.
+
+~ examine:spires_heart_window_north
+| North, the mountains, white at the top. Somewhere out there a ruined house on a ridge.
+| [flag.argynvost_beacon_lit] North, the mountains, and on a ridge below them a cold silver light that doesn't flicker.
+
+~ examine:spires_heart_window_east
+| East, the road you came in on, small as a thread.
+
+~ examine:spires_heart_window_west
+| West, the lake like a dropped mirror, and the walls of a town beside it.
+
+# ---------------------------------------------------------------- The tower rooms
+
+~ enter:spires_tower_gallery
+| A gallery so narrow two people can't pass. Every door along it has something to say: claw marks, steam, a lock.
+once
+
+~ enter:spires_familiars_room
+| The ceiling is alive. Hundreds of bats hang up there in their sleep, and the floor is thick with what they leave behind.
+once
+
+~ enter:spires_stillroom
+| A cold room of tiles and glass, with four great vessels on stands in a row, each glowing faintly from inside.
+once
+
+~ enter:spires_roof_stair
+| A cramped room with a ladder going up to a hatch in the ceiling. You can hear the wind on the other side of it.
+once
+
+~ enter:spires_cauldron_room
+| Steam, a green fire, a black pot as big as a bathtub, and the smell of something that was alive this morning.
+| [flag.cauldron_coven_cleared] The fire under the cauldron has gone out. What's left in the pot has a skin on it.
+cooldown 20
+
+~ enter:spires_escher_suite
+| Velvet, dust, a canopied bed nobody sleeps in, and a mirror that shows the room without anyone in it.
+| [flag.escher_fight_won] Escher's coats hang in the open wardrobe, beautiful and empty.
+cooldown 20
+
+~ enter:spires_tower_vestibule
+| A small square room at the top of the high tower's door, with a suit of armour that hasn't moved in a long time. You check twice.
+once
+
+~ examine:spires_bat_perches
+| Rails and hooks fixed under the ceiling for the bats. Someone polishes them. Someone polishes them often.
+
+~ examine:spires_four_vessels
+| Four glass globes on iron stands: one full of slow fire, one of dark water, one of earth that shifts on its own, and one that seems empty until the air inside it moves.
+| [class:wizard] {name} reads the runes on the stands: bindings, very old, and very much still holding. Best not to find out what they hold.
+
+~ examine:spires_cauldron
+| Something in the cauldron turns over in its sleep. You decide not to stir it.
+
+~ examine:spires_escher_mirror
+| The mirror shows the room behind you, perfectly: the bed, the chair, the dust. It doesn't show you.
+| [flag.escher_met and not flag.escher_fight_won] It doesn't show Escher either, though he is sitting right in front of it, watching you look.
+
+~ examine:spires_escher_wardrobe
+| A wardrobe full of coats, each one beautiful and a lifetime out of fashion.
+| [flag.spires_back_stair_found or flag.spires_back_stair_told] A wardrobe full of coats, and behind it, cold air and a narrow stair.
+
+~ examine:spires_vestibule_painting
+| The castle on its rock, painted from below by someone who never wanted to go up to it.
+
+~ examine:spires_gallery_window
+| An arrow-slit. Through it, a sliver of sky and a long way down.
+
+~ open:spires_escher_dressing
+| Powders, combs, a ring box with no ring in it, and a purse heavier than it looks.
+| [flag.escher_met and not flag.escher_fight_won] Escher watches you go through his things with a face like a slammed door.
+
+~ open:spires_stillroom_cabinet
+| Rows of stoppered bottles, most of them labelled in a careful hand. You take the ones whose labels you can read.
+
+# ---------------------------------------------------------------- The roofs
+
+~ enter:spires_south_tower_roof
+| The top of the south tower: battlements, the hatch you came up through, and the wind.
+once
+
+~ enter:spires_walkway
+| A walkway two paces wide with nothing on either side. Don't look down. You look down.
+cooldown 30
+
+~ enter:spires_keep_roof
+| The slate roof of the keep, with chimneys like broken teeth. Ravens watch you from the ridge.
+once
+
+~ enter:spires_bridge
+| The bridge is a single span of stone between two towers, and the wind leans on it from one side, then the other.
+| [class:fighter] {name} keeps low and keeps moving. It's the same as a wall in a siege, just with more sky.
+cooldown 30
+
+~ enter:spires_north_peak
+| The peak of the north tower, crowned with stone guardians on the parapet: winged, crouching, faces turned in toward you.
+| [flag.peak_guardians_cleared] Broken stone and empty plinths. Only the guardians that never moved are still on the parapet.
+cooldown 20
+
+~ examine:spires_peak_view
+| The whole valley, laid out like a map somebody spilled ink on. Every road in it ends here.
+
+~ examine:spires_bridge_rail
+| The bridge has no rail, only a lip of stone a hand high. It has been enough so far.
+
+~ examine:spires_keep_crows
+| A row of ravens on the ridge of the roof, all facing you. One of them tips its head as if it has a question.
+
+~ examine:spires_south_view
+| Far below, the courtyard, the gate, and the road going away into the trees.
+
+~ open:spires_hollow_guardian
+| The guardian's base is hollow, packed with old coins and dead leaves.
+| [treasure_at:castle_ravenloft_north_tower_peak] The guardian's base is hollow, and something wrapped in oilcloth has been pushed right to the back of it, where no bird or rain could reach.
+
+~ trap:spires_slick_slates:found
+| The slates ahead are dark with damp and tilted toward the edge. Go round.
+
+~ trap:spires_slick_slates:triggered
+| Your feet go out from under you and the roof takes you sliding toward the parapet.
+
+# ---------------------------------------------------------------- The roost
+
+~ enter:spires_roost
+| Beams, nests, droppings, and eyes. A lot of eyes.
+once
+
+~ examine:spires_roost_bones
+| Tiny bones, picked clean: mice, sparrows, a bat. The ravens are keeping the castle tidy in their own way.
+
+~ open:spires_great_nest
+| The great nest is a hoard: buttons, a spoon, a broken watch, a tin soldier, coins, a hand mirror with the glass intact.
+| [treasure_at:castle_ravenloft_ravens_roost] The great nest is a hoard of bright odds and ends, and in the middle of it, tucked in carefully, something that is no odd or end at all.
+
+~ trap:spires_rotten_beam:triggered
+| The board snaps and you drop to the waist, legs kicking in the air of the room below.

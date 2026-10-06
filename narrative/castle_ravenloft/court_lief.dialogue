@@ -1,0 +1,93 @@
+# Lief Lipsiege, the count's accountant, shackled to his desk (docs/voice/lief_lipsiege.md).
+# start: at his desk. Freeing him wakes the rug (court_accountant_rug); after_rug: when the rug is gone (approach).
+
+~ start
+if flag.lief_met
+Lief Lipsiege: You again. A visit from you costs me eleven minutes on average. I have opened a column for it.
+-> menu
+endif
+set lief_met
+Narrator: A thin old man in ink-stained sleeves sits at a desk heaped with ledgers. An iron shackle on his ankle is chained to the leg of the desk, and the chain has worn a groove in the floor.
+Lief Lipsiege: If you are from the treasury, you are late. If you are not from the treasury, you are interrupting. Which?
+-> menu
+
+~ menu
+* Who are you? -> who
+* Why are you chained? -> chain
+* What are you counting? -> accounts
+* [if not flag.court_treasury_known] Where does the count keep his money? -> vault
+* Who is in the guest rooms upstairs? -> guest
+* What do you know about Rahadin? -> rahadin
+* We could get you out of that chain. -> free_offer
+* Goodbye. -> END
+
+~ who
+Lief Lipsiege: Lief Lipsiege. Accountant to the count, by appointment, since the year they rebuilt the bridge at Vallaki. The second time they rebuilt it.
+interject tag:curious: How many times have they rebuilt it?
+Lief Lipsiege: Seven. Wood is cheaper than stone and the river is patient. I have the figures.
+-> menu
+
+~ chain
+Lief Lipsiege: I left once. I got as far as the gate. Rahadin brought me back, and the next morning the smith came up with this. That was forty-one years ago.
+Lief Lipsiege: I have not tried again. I find the arithmetic discourages it.
+-> menu
+
+~ accounts
+Lief Lipsiege: Everything. Vallaki's tithe. Wine from the vineyard, when there is wine. Rents from Krezk. Candles. Gowns. He is a very poor spender and a very good collector. It makes for dull books.
+-> menu
+
+~ vault
+set court_treasury_known
+Lief Lipsiege: Behind the lady in the long hall, of course. The alcove. Push the left side of the frame. He likes her to keep an eye on it.
+Lief Lipsiege [afraid]: Don't tell Rahadin I told you. And don't take more than you can carry. It unbalances everything.
+-> menu
+
+~ guest
+set court_ledger_read
+Lief Lipsiege: The yellow room, third floor. The account is open: "G., sixteen, three gowns, all one size. Pending."
+Lief Lipsiege [sad]: There was an "A." before her. Same size. That account is closed. I closed it myself. Neat hand. I always have a neat hand.
+-> menu
+
+~ rahadin
+Lief Lipsiege [afraid]: He is very good at his work. I keep the count's accounts. He keeps the count's other accounts. His have more names in them.
+-> menu
+
+~ free_offer
+Lief Lipsiege [afraid]: Don't. Don't touch the chain. The rug. The count had it woven for this office. It does not like things to leave.
+* We'll deal with the rug. Hold still. -> free_go
+* Then we'll leave you to your sums. -> menu
+
+~ free_go
+Narrator: You set to the chain. Behind you, the rug ripples like a pond someone has dropped a stone in.
+combat court_accountant_rug
+
+# ---------------------------------------------------------------- After the rug
+
+~ after_rug
+Narrator: The rug lies in rags. Lief stares at it, then at you, then at the shackle, which opens easily now that nothing is watching it.
+Lief Lipsiege: Forty-one years, three months and a week. I shall have to close the column.
+-> after_menu
+
+~ after_menu
+* Come with us as far as the gate. Vallaki could use a man who counts. -> go_vallaki
+* [if not flag.court_treasury_known] Before you go: where's the count's money? -> vault_free
+* You're free. Go wherever you like. -> go_free
+
+~ vault_free
+set court_treasury_known
+Lief Lipsiege: Behind the lady in the long hall. Push the left side of the frame. There. Now I have stolen from him too. How very modern of me.
+-> after_menu
+
+~ go_vallaki
+set lief_freed
+attitude lief_lipsiege friendly
+Lief Lipsiege: Vallaki. Their tithe books are a disgrace; I have seen them. Yes. Yes, I could do something with Vallaki.
+Narrator: He tucks a ledger under each arm, thinks about it, and puts one back.
+-> END
+
+~ go_free
+set lief_freed
+attitude lief_lipsiege friendly
+Lief Lipsiege: Wherever I like. I shall have to make a list. I have never had to make that list.
+Narrator: He goes out into the long hall, very carefully, as if the floor might send him a bill.
+-> END

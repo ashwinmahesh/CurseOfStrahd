@@ -13,6 +13,9 @@ const SLOT_NAMES := {"tome": "The Tome of Strahd", "symbol": "The Holy Symbol of
 const TREASURE_ITEMS := {"tome": "tome_of_strahd", "symbol": "holy_symbol_of_ravenkind", "sword": "sunsword"}
 ## Each treasure's quest (data/quests/), moved to "found" when the party gets it.
 const TREASURE_QUESTS := {"tome": "find_the_tome", "symbol": "find_the_holy_symbol", "sword": "find_the_sunsword"}
+## The enemy room that means "anywhere in the castle" (the card `mists`): he roams to one of the other enemy rooms,
+## picked from the playthrough seed and kept in the reading as `enemy_roam` (`tarokka.enemy.roam`, ADR 0014).
+const ROAM_ROOM := "castle_ravenloft"
 
 
 ## {card id: card} for the whole deck.
@@ -53,7 +56,44 @@ static func draw(seed_value: int) -> Dictionary:
 	_shuffle(high, rng)
 	if common.size() < 3 or high.size() < 2:
 		return {}
-	return {"tome": common[0], "symbol": common[1], "sword": common[2], "ally": high[0], "enemy": high[1]}
+	var reading := {"tome": common[0], "symbol": common[1], "sword": common[2], "ally": high[0], "enemy": high[1]}
+	if str(outcome("enemy", high[1]).get("room", "")) == ROAM_ROOM:
+		reading["enemy_roam"] = roam_pick(seed_value)
+	return reading
+
+
+## Every enemy room a card can name (sorted), but the roaming one.
+static func enemy_rooms() -> Array[String]:
+	var out: Array[String] = []
+	var table := Compendium.shared().get_entry("tarokka", "outcomes").get("enemy", {}) as Dictionary
+	for card_id: String in table:
+		var room := str((table[card_id] as Dictionary).get("room", ""))
+		if room != "" and room != ROAM_ROOM and not room in out:
+			out.append(room)
+	out.sort()
+	return out
+
+
+## Where Strahd roams for this seed (the card `mists`): one of the enemy rooms, always the same for the seed.
+static func roam_pick(seed_value: int) -> String:
+	var rooms := enemy_rooms()
+	if rooms.is_empty():
+		return ""
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash("roam:%d" % seed_value)
+	return rooms[rng.randi_range(0, rooms.size() - 1)]
+
+
+## The room Strahd waits in for this reading (`final_room:<room>`): the enemy card's room, or the roam pick. "" before
+## the reading.
+static func final_room(st: StoryState) -> String:
+	if st.tarokka.is_empty() or str(st.tarokka.get("enemy", "")) == "":
+		return ""
+	var room := str(outcome("enemy", str(st.tarokka["enemy"])).get("room", ""))
+	if room != ROAM_ROOM:
+		return room
+	var roam := str(st.tarokka.get("enemy_roam", ""))
+	return roam if roam != "" else roam_pick(st.playthrough_seed)
 
 
 static func _shuffle(list: Array[String], rng: RandomNumberGenerator) -> void:
@@ -79,6 +119,8 @@ static func field(st: StoryState, path: String) -> String:
 	var card_id := str(st.tarokka[parts[0]])
 	if parts.size() == 1:
 		return card_id
+	if parts[0] == "enemy" and parts[1] == "roam":
+		return final_room(st) if str(outcome("enemy", card_id).get("room", "")) == ROAM_ROOM else ""
 	if parts[1] == "card":
 		return str(card(card_id).get("name", card_id))
 	return str(outcome(parts[0], card_id).get(parts[1], ""))

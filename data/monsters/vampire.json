@@ -1,0 +1,315 @@
+{
+  "id": "vampire",
+  "name": "Vampire",
+  "source": {
+    "book": "MM2025",
+    "edition": "2024",
+    "note": "The 2024 Vampire (2025 Monster Manual, also in SRD 5.2.1), entered from knowledge; not yet compared line by line with SRD 5.2.1. The Initiative bonus (+14), Grave Strike's Necrotic dice and the Bite's numbers especially need the check. In its lair it has 4 Legendary Resistances and 4 legendary actions; the engine always gives it 3. Deathless Strike's half-Speed move is left out (it just strikes), and Beguile (Command) is text only. Which actions each shape allows is given only by forms.shapes[].actions. Charm (a Bonus Action Charm Person) is text only until the engine runs bonus-action saves. It has no resting place in this block, so Misty Escape is text only: at 0 Hit Points it dies. The mist shape resists every damage type, sunlight's Radiant included (the book exempts sunlight)."
+  },
+  "size": "medium",
+  "type": "undead",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "lawful evil",
+  "ac": 16,
+  "initiative": 14,
+  "hp": {
+    "average": 195,
+    "dice": "23d8+92"
+  },
+  "speed": {
+    "walk": 40,
+    "climb": 40
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 18,
+    "con": 18,
+    "int": 17,
+    "wis": 15,
+    "cha": 18
+  },
+  "saves": {
+    "dex": 9,
+    "wis": 7,
+    "cha": 9
+  },
+  "skills": {
+    "perception": 7,
+    "stealth": 9
+  },
+  "resistances": [
+    "necrotic"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 17,
+  "languages": [
+    "Common",
+    "two other languages"
+  ],
+  "cr": 13,
+  "xp": 10000,
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+      "action": "special",
+      "summary": "Three times a day (four in its lair), a failed saving throw becomes a success.",
+      "text": "When the vampire fails a saving throw, it can choose to succeed instead: three times a day, or four in its lair.",
+      "implemented": "engine"
+    },
+    {
+      "id": "misty_escape",
+      "name": "Misty Escape",
+      "action": "special",
+      "summary": "Dropped to 0 HP away from its resting place, it turns to mist and must get home within 2 hours.",
+      "text": "When the vampire drops to 0 Hit Points anywhere but its resting place, it becomes mist with Shape-Shift (no action needed); if it can't, it is destroyed. At 0 Hit Points as mist it can't change back and must reach its resting place within 2 hours or be destroyed. There it returns to vampire form, Paralyzed until it regains a Hit Point, which comes after an hour. Text only here: this block names no resting place.",
+      "implemented": "text"
+    },
+    {
+      "id": "spider_climb",
+      "name": "Spider Climb",
+      "action": "passive",
+      "summary": "Climbs walls and ceilings with no ability check.",
+      "text": "The vampire can climb difficult surfaces, ceilings included, without an ability check.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "spider_climb"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "vampire_weakness",
+      "name": "Vampire Weakness",
+      "action": "passive",
+      "summary": "Needs an invitation to enter a home; hurt by running water and sunlight; a stake in its resting place pins it.",
+      "text": "Forbiddance: it can't enter a home without an invitation from someone living there. Running water: it takes 20 Acid damage if it ends its turn in running water. Stake: a piercing weapon driven into its heart while it is Incapacitated in its resting place leaves it Paralyzed until the weapon is pulled out. Sunlight: it takes 20 Radiant damage if it starts its turn in sunlight, and while in sunlight it has Disadvantage on attack rolls and ability checks.",
+      "implemented": "engine",
+      "sunlight": "hypersensitivity"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack (Vampire Form Only)",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "grave_strike",
+          "count": 2
+        },
+        {
+          "action": "bite",
+          "count": 1
+        }
+      ],
+      "summary": "Makes two Grave Strike attacks and uses Bite."
+    },
+    {
+      "id": "grave_strike",
+      "name": "Grave Strike (Vampire Form Only)",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "1d8+4",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A deathly blow; a Large or smaller target is Grappled (escape DC 14) by one of its two hands.",
+      "text": "Hit: 8 (1d8 + 4) Bludgeoning damage plus 7 (2d6) Necrotic damage. A Large or smaller target has the Grappled condition (escape DC 14), held by one of the vampire's two hands.",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 14,
+          "max_size": "large",
+          "limit": 2
+        }
+      ]
+    },
+    {
+      "id": "bite",
+      "name": "Bite (Bat or Vampire Form Only)",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 17,
+        "success": "none"
+      },
+      "area": {
+        "targets": 1,
+        "range": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d4+4",
+          "type": "piercing"
+        },
+        {
+          "average": 13,
+          "dice": "3d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "DC 17 Con save by a willing, Charmed, Grappled, Incapacitated or Restrained target; drains life to heal.",
+      "text": "Constitution saving throw: DC 17, one creature within 5 feet that is willing or is Grappled, Incapacitated or Restrained. Failure: 6 (1d4 + 4) Piercing damage plus 13 (3d8) Necrotic damage. The target's Hit Point maximum drops by the Necrotic damage taken and the vampire regains that many Hit Points. A Humanoid it kills this way that is then buried rises at the next sunset as its vampire spawn.",
+      "targets": {
+        "range": 5,
+        "count": 1,
+        "requires": [
+          "willing",
+          "charmed",
+          "grappled",
+          "incapacitated",
+          "restrained"
+        ]
+      },
+      "on_fail": [
+        {
+          "do": "drain_max_hp",
+          "type": "necrotic"
+        },
+        {
+          "do": "heal_self",
+          "type": "necrotic"
+        }
+      ]
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "charm",
+      "name": "Charm (Recharge 5-6)",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "wis",
+        "dc": 17,
+        "success": "none"
+      },
+      "targets": {
+        "range": 30,
+        "count": 1,
+        "types": [
+          "humanoid"
+        ]
+      },
+      "summary": "Recharge 5-6. Casts Charm Person (Cha, DC 17) lasting 24 hours; the charmed target welcomes its Bite.",
+      "text": "The vampire casts Charm Person with no components, using Charisma (spell save DC 17); the spell lasts 24 hours. The charmed target willingly accepts the vampire's Bite, and the Bite's damage doesn't end the spell. When the charm ends, the target doesn't know it was charmed. Text only for the engine for now.",
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "charmed",
+          "until": "permanent",
+          "repeat_save": {
+            "ability": "wis",
+            "dc": 17,
+            "when": "manual",
+            "on_damage": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "shape_shift",
+      "name": "Shape-Shift",
+      "kind": "special",
+      "summary": "Away from sunlight and running water, becomes a Tiny bat or a cloud of mist, or returns to vampire form.",
+      "text": "If it isn't in sunlight or running water, the vampire turns into a Tiny bat (Speed 5 ft., Fly 30 ft.) or a Medium cloud of mist (Speed 5 ft., Fly 30 ft., hovering), or back into its vampire form. What it wears changes with it. As a bat it can't speak; otherwise it keeps its statistics apart from size and speed. As mist it can't act, speak or handle objects, weighs nothing, can enter and stay in an enemy's space, passes wherever air can (not through liquid), and has Resistance to all damage except sunlight's. The engine runs this through the block's forms."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "beguile",
+        "name": "Beguile",
+        "cost": 1,
+        "summary": "Casts Command (Cha, DC 17); not again until its next turn. Text only for the engine.",
+        "text": "The vampire casts Command with no components, using Charisma (spell save DC 17), and can't use Beguile again until the start of its next turn."
+      },
+      {
+        "id": "deathless_strike",
+        "name": "Deathless Strike",
+        "cost": 1,
+        "action": "grave_strike",
+        "summary": "Moves up to half its Speed and makes one Grave Strike (the engine only strikes)."
+      }
+    ]
+  },
+  "legendary_resistance": 3,
+  "forms": {
+    "base": "vampire",
+    "change": "bonus_action",
+    "blocked_in": [
+      "sunlight",
+      "running_water"
+    ],
+    "shapes": [
+      {
+        "id": "bat",
+        "name": "Bat",
+        "size": "tiny",
+        "speed": {
+          "walk": 5,
+          "fly": 30
+        },
+        "actions": [
+          "bite"
+        ],
+        "summary": "A Tiny bat (Speed 5 ft., Fly 30 ft.): can bite, can't speak."
+      },
+      {
+        "id": "mist",
+        "name": "Mist",
+        "size": "medium",
+        "speed": {
+          "walk": 5,
+          "fly": 30,
+          "hover": true
+        },
+        "actions": [],
+        "resistances": [
+          "acid",
+          "bludgeoning",
+          "cold",
+          "fire",
+          "force",
+          "lightning",
+          "necrotic",
+          "piercing",
+          "poison",
+          "psychic",
+          "radiant",
+          "slashing",
+          "thunder"
+        ],
+        "flags": [
+          "enters_spaces"
+        ],
+        "summary": "A drifting cloud (Fly 30 ft., hovering): can't act or speak, can enter enemies' spaces, resists all damage."
+      }
+    ]
+  },
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "strahd",
+  "summary": "A true vampire: grappling strikes and a draining bite, charm, bat and mist shapes, and legendary speed in a fight."
+}

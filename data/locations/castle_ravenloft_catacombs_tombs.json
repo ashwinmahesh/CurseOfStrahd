@@ -1,0 +1,510 @@
+{
+  "id": "castle_ravenloft_catacombs_tombs",
+  "name": "Castle Ravenloft, the Old Tombs",
+  "region": "castle_ravenloft",
+  "summary": "The oldest tombs under the castle: Sergei von Zarovich's white tomb, a hall of stone guardians, and the vault where King Barov and Queen Ravenovia lie side by side.",
+  "text": "Below the crypts the stone changes: older, paler, cut with more care. Somebody loved the people buried here.",
+  "map": {
+    "rows": [
+      "############################",
+      "################.###########",
+      "##.........#.........#######",
+      "##.........#.........#######",
+      "##...................#######",
+      "##.........#.........#######",
+      "##.........#.........#######",
+      "##.........#####.###########",
+      "##.........###.....#########",
+      "##.........###.....#########",
+      "##.........###.....#########",
+      "##############.....#########",
+      "##############.....#########",
+      "##############.....#########",
+      "##############.....#########",
+      "##############.....#########",
+      "##############.....#########",
+      "##############.....#########",
+      "##############.....#########",
+      "################.###########",
+      "######.....................#",
+      "######..#..11111111111..#..#",
+      "######.....11111111111.....#",
+      "######.....11111111111.....#",
+      "######..#..11111111111..#..#",
+      "######.....................#",
+      "############################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "cat_tombs_vestibule",
+      "name": "The vestibule of the old tombs",
+      "cells": [
+        [
+          12,
+          1
+        ],
+        [
+          20,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "castle_ravenloft_sergeis_tomb",
+      "name": "Sergei's tomb",
+      "cells": [
+        [
+          2,
+          2
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      "light": "dim",
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "cat_guardians_hall",
+      "name": "The guardians' hall",
+      "cells": [
+        [
+          14,
+          8
+        ],
+        [
+          18,
+          18
+        ]
+      ]
+    },
+    {
+      "id": "castle_ravenloft_tomb_of_barov_and_ravenovia",
+      "name": "The tomb of King Barov and Queen Ravenovia",
+      "cells": [
+        [
+          6,
+          20
+        ],
+        [
+          26,
+          25
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    }
+  ],
+  "spawns": {
+    "default": [
+      16,
+      3
+    ],
+    "from_catacombs": [
+      16,
+      3
+    ]
+  },
+  "exits": [
+    {
+      "id": "cat_tombs_up",
+      "cell": [
+        16,
+        1
+      ],
+      "to": "castle_ravenloft_catacombs",
+      "spawn": "from_tombs",
+      "label": "Stairs up to the catacombs"
+    }
+  ],
+  "doors": [
+    {
+      "id": "cat_sergei_door",
+      "cell": [
+        11,
+        4
+      ],
+      "label": "a door of pale wood carved with a sunburst"
+    },
+    {
+      "id": "cat_guardians_doors",
+      "cell": [
+        16,
+        7
+      ],
+      "label": "bronze doors"
+    },
+    {
+      "id": "cat_royal_doors",
+      "cell": [
+        16,
+        19
+      ],
+      "label": "tall carved doors"
+    }
+  ],
+  "props": [
+    {
+      "id": "cat_vestibule_arch",
+      "cell": [
+        16,
+        0
+      ],
+      "kind": "examine",
+      "label": "Words over the stair",
+      "model": "arch_carved"
+    },
+    {
+      "id": "cat_sergei_sarcophagus",
+      "cell": [
+        6,
+        4
+      ],
+      "kind": "examine",
+      "label": "Sergei's sarcophagus",
+      "model": "crypt",
+      "dialogue": "castle_ravenloft/catacombs_sergei:sarcophagus"
+    },
+    {
+      "id": "cat_sergei_font",
+      "cell": [
+        6,
+        7
+      ],
+      "kind": "examine",
+      "label": "A basin of still water",
+      "model": "puddle",
+      "dialogue": "castle_ravenloft/catacombs_sergei:font"
+    },
+    {
+      "id": "cat_sergei_sunburst",
+      "cell": [
+        6,
+        1
+      ],
+      "kind": "decor",
+      "label": "A carved sunburst",
+      "model": "sunburst"
+    },
+    {
+      "id": "cat_sergei_candles_w",
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candelabra"
+    },
+    {
+      "id": "cat_sergei_candles_e",
+      "cell": [
+        9,
+        3
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candelabra"
+    },
+    {
+      "id": "cat_guardian_statue_1",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "decor",
+      "label": "A stone knight",
+      "model": "statue_knight"
+    },
+    {
+      "id": "cat_guardian_statue_2",
+      "cell": [
+        18,
+        9
+      ],
+      "kind": "decor",
+      "label": "A stone knight",
+      "model": "statue_knight"
+    },
+    {
+      "id": "cat_guardian_statue_3",
+      "cell": [
+        14,
+        13
+      ],
+      "kind": "decor",
+      "label": "A stone knight",
+      "model": "statue_knight"
+    },
+    {
+      "id": "cat_guardian_statue_4",
+      "cell": [
+        18,
+        13
+      ],
+      "kind": "decor",
+      "label": "A stone knight",
+      "model": "statue_knight"
+    },
+    {
+      "id": "cat_guardian_statue_5",
+      "cell": [
+        14,
+        17
+      ],
+      "kind": "decor",
+      "label": "A stone knight",
+      "model": "statue_knight"
+    },
+    {
+      "id": "cat_guardian_statue_6",
+      "cell": [
+        18,
+        17
+      ],
+      "kind": "decor",
+      "label": "A stone knight",
+      "model": "statue_knight"
+    },
+    {
+      "id": "cat_barov_sarcophagus",
+      "cell": [
+        14,
+        22
+      ],
+      "kind": "examine",
+      "label": "King Barov's sarcophagus",
+      "model": "crypt"
+    },
+    {
+      "id": "cat_royal_relief",
+      "cell": [
+        12,
+        19
+      ],
+      "kind": "examine",
+      "label": "A carved family",
+      "model": "relief"
+    },
+    {
+      "id": "cat_royal_candles_w",
+      "cell": [
+        10,
+        22
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candelabra"
+    },
+    {
+      "id": "cat_royal_candles_e",
+      "cell": [
+        22,
+        22
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candelabra"
+    },
+    {
+      "id": "cat_royal_banner",
+      "cell": [
+        27,
+        22
+      ],
+      "kind": "decor",
+      "label": "A faded royal banner",
+      "model": "tapestry"
+    }
+  ],
+  "containers": [
+    {
+      "id": "cat_ravenovia_sarcophagus",
+      "cell": [
+        18,
+        22
+      ],
+      "label": "Queen Ravenovia's sarcophagus",
+      "model": "crypt",
+      "items": [
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "gold": 60
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        9,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        10,
+        22
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        22,
+        22
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "encounters": [
+    {
+      "id": "cat_sergei_final",
+      "trigger": "enter_area:castle_ravenloft_sergeis_tomb",
+      "when": "not flag.strahd_in_coffin",
+      "final_battle": "castle_ravenloft_sergeis_tomb",
+      "lair": true,
+      "surprise": "",
+      "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            6,
+            5
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            3,
+            7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            8,
+            7
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            3,
+            4
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            9,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_guardians",
+      "trigger": "enter_area:cat_guardians_hall",
+      "surprise": "",
+      "flag": "cat_guardians_stilled",
+      "text": "Three of the stone knights were never stone. They step off their plinths into the aisle, visors turning together.",
+      "monsters": [
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            16,
+            14
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            15,
+            16
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            17,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_royal_final",
+      "trigger": "enter_area:castle_ravenloft_tomb_of_barov_and_ravenovia",
+      "when": "not flag.strahd_in_coffin",
+      "final_battle": "castle_ravenloft_tomb_of_barov_and_ravenovia",
+      "lair": true,
+      "surprise": "",
+      "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            16,
+            23
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            12,
+            24
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            20,
+            24
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            16,
+            21
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_catacombs_tombs"
+  },
+  "rest": "risky",
+  "treasure_spots": {
+    "castle_ravenloft_sergeis_tomb": {
+      "dialogue": "castle_ravenloft/catacombs_sergei:take_treasure"
+    },
+    "castle_ravenloft_tomb_of_barov_and_ravenovia": {
+      "container": "cat_ravenovia_sarcophagus"
+    }
+  }
+}

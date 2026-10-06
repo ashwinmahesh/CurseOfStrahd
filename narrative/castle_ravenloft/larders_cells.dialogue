@@ -1,0 +1,267 @@
+# The prisoners in the dungeon cells (docs/regions/castle_ravenloft_larders.md §4, §5).
+# nadia: Nadia Boteanu (docs/voice/nadia_boteanu.md), cell N1. doru: only if the party let him out of the undercroft
+# (docs/voice/doru.md), cell N2. anatol: "Brother Anatol" (docs/voice/brother_anatol.md), a vampire spawn posing as a
+# prisoner, cell S1. shawl: the prop at the servants' stair foot after Nadia ran alone.
+
+# ---------------------------------------------------------------- Nadia Boteanu
+
+~ nadia
+if flag.larders_nadia_fate == "waits"
+-> nadia_waiting
+endif
+if not flag.larders_nadia_met
+-> nadia_first
+endif
+Nadia Boteanu: You came back. Nobody comes back down here. Except the cook, and he doesn't count.
+-> nadia_menu
+
+~ nadia_first
+set larders_nadia_met
+quest the_cooks_guests found
+Narrator: A young woman in a soot-streaked dress is chained by one ankle to a ring in the wall. She presses into the corner as the gate swings open.
+Nadia Boteanu [afraid]: Don't. Please. Oh. You're not him. You're not the cook either.
+Nadia Boteanu: Nadia. Nadia Boteanu. I light the lamps in Vallaki. Lit them. I don't know which, any more.
+-> nadia_menu
+
+~ nadia_menu
+* How did you end up down here? -> nadia_taken
+* [if not flag.larders_hall_told] Has anyone taken you out of this cell? -> nadia_hall
+* [if not flag.larders_nadia_freed] Let's get that chain off you. -> nadia_chain
+* [if flag.larders_nadia_freed] Now, how to get you out of the castle. -> nadia_way
+* We'll be back. -> nadia_bye
+
+~ nadia_taken
+Nadia Boteanu: A carriage stopped beside me on the road at dusk. Black, no driver. The door swung open by itself.
+Nadia Boteanu: I thought, well, it's going toward Vallaki, and my feet hurt. It was not going toward Vallaki.
+interject tag:cheerful: Never get into the carriage with no driver. That's a rule now.
+Nadia Boteanu [sad]: It should have been a rule already.
+-> nadia_menu
+
+~ nadia_hall
+set larders_hall_told
+Nadia Boteanu: Once. The cook walked me down the passage, past the other cells, to a long hall at the end.
+Nadia Boteanu: A man sat at the head of a table made of bones. The chairs were bones. The lamp over it burned green.
+Nadia Boteanu [afraid]: He asked me about Vallaki's lamps, very politely, as if he cared. Then he sent me back. He said I wasn't ripe.
+interject class:rogue: The lamp. Did you see what fed it?
+Nadia Boteanu: A chain went up into the dark toward the noise. There's a noise down here like something breathing, all the time.
+-> nadia_menu
+
+~ nadia_chain
+Narrator: The shackle is old iron. Its chain runs to a ring bolted deep into the stone.
+* [if flag.larders_keys_taken] (Use the jailers' keys.) -> nadia_unchained
+* [Sleight of Hand DC 13] (Work the shackle's pin loose.) -> nadia_unchained | nadia_pick_fail
+* [Athletics DC 15] (Wrench the ring out of the wall.) -> nadia_unchained | nadia_wrench_fail
+* We'll find the keys and come back. -> nadia_menu
+
+~ nadia_pick_fail
+time +10
+Narrator: The pin turns halfway and sticks. Ten minutes gone, and it will take another try.
+-> nadia_chain
+
+~ nadia_wrench_fail
+time +10
+Narrator: The ring grinds in its socket and holds. Somewhere above, something stops moving to listen, and then goes on.
+-> nadia_chain
+
+~ nadia_unchained
+set larders_nadia_freed
+quest the_cooks_guests freed
+Narrator: The shackle opens. She rubs her ankle, stands, sits down again, and stands up properly the second time.
+-> nadia_way
+
+~ nadia_way
+Nadia Boteanu: Out. Yes. Which way is out? I came in asleep.
+* [if flag.larders_cyrus_helps] The cook will smuggle you out at dawn in his scrap barrel. Go to the kitchen. -> nadia_escape
+* Up the servants' stair, through the castle and out the front door. Run, and don't stop. -> nadia_run
+* Shut yourself in here and hide until we've finished with him. -> nadia_hide
+* [if not flag.larders_cyrus_helps] Wait here a little. We'll find you a safer way. -> nadia_bye
+
+~ nadia_escape
+set larders_nadia_fate = "escaped"
+quest the_cooks_guests escaped
+Nadia Boteanu: In a barrel. With the scraps. Of course. Why would anything here be easy.
+Narrator: She hugs the nearest of you, hard and quick, and goes up the passage toward the warm smell of the kitchen.
+-> END
+
+~ nadia_run
+Nadia Boteanu [afraid]: Up there? Through his house? On my own?
+interject tag:blunt: It's his house. Every corridor in it is his.
+* Yes. Go now, while he's busy with us. -> nadia_run_go
+* No, you're right. Not that way. -> nadia_way
+
+~ nadia_run_go
+set larders_nadia_fate = "sent_alone"
+Narrator: She swallows, nods, and goes. You hear her bare feet on the stair for a long time, and then you don't.
+-> END
+
+~ nadia_hide
+set larders_nadia_fate = "waits"
+quest the_cooks_guests hidden
+Nadia Boteanu: Hide. In the cell. Like a guest who's very good at being a guest. All right. Shut the gate. Come back.
+-> END
+
+~ nadia_waiting
+Nadia Boteanu: Is it over? Is he gone?
+* [if flag.larders_cyrus_helps] Not yet. But the cook will smuggle you out at dawn. Go to the kitchen. -> nadia_escape
+* Up the stair now, and run. -> nadia_run
+* Not yet. Stay hidden. -> END
+
+~ nadia_bye
+Nadia Boteanu [sad]: Shut the gate behind you. It's worse when it's open and I can't go anywhere.
+-> END
+
+# ---------------------------------------------------------------- Doru
+
+~ doru
+if not flag.larders_doru_met
+-> doru_first
+endif
+Doru [sad]: Still here. Still hungry. Have you come to watch?
+-> doru_menu
+
+~ doru_first
+set larders_doru_met
+Narrator: A thin young man hangs in silvered chains, his toes just clear of the floor. His lips are cracked back to the gums. He knows you at once.
+Doru: You. You opened the door under the church. I remember how you smelled. Rain and roads.
+Doru [sad]: I went home to him, to the castle. I thought he'd give me a seat at the table. He gave me this, for coming back with nothing.
+-> doru_menu
+
+~ doru_menu
+* Your father still prays for you, Doru. -> doru_father
+* [if flag.doru_cure_promised] We promised your father we'd look for a cure. -> doru_cure
+* We could end this, Doru. If you want it ended. -> doru_rest
+* (Strike the chains off him.) -> doru_free
+* We're leaving you here. -> doru_leave
+
+~ doru_father
+Doru: Does he? Still? Even now? Tell him... no. Don't tell him where I am. Tell him I went far away.
+Doru [angry]: Come a little closer while you think it over. Just a little.
+-> doru_menu
+
+~ doru_cure
+Doru: There isn't one. There's the hunger and there's the stake. I've asked the dark every night. That's all it says.
+-> doru_menu
+
+~ doru_rest
+set larders_doru_fate = "rest"
+Doru: Yes. Please. Before he wants me again.
+interject class:cleric: Close your eyes, Doru. Think of the church with the candles lit.
+Narrator: It is quick. The hunger goes out of his face, and for a moment he is only a tired boy. Then he is dust in the chains.
+interject tag:devout: We'll tell his father he was brave at the end. It's even true.
+-> END
+
+~ doru_free
+set larders_doru_fate = "freed"
+Doru: Thank you. Thank you. Oh, you're warm. You're all so warm.
+combat larders_doru_hunger
+
+~ doru_leave
+set larders_doru_fate = "left"
+Doru [angry]: No. No! Come back! I'm better now! I'm better!
+Narrator: He is still shouting it when the passage turns.
+-> END
+
+# ---------------------------------------------------------------- "Brother Anatol"
+
+~ anatol
+if flag.larders_anatol_fate == "unmasked"
+-> anatol_unmasked_again
+endif
+if not flag.larders_anatol_met
+-> anatol_first
+endif
+Brother Anatol [smile]: Friends. Bless the dawn, you came back.
+-> anatol_menu
+
+~ anatol_first
+set larders_anatol_met
+Narrator: A man in a clean grey habit kneels in the straw with his hands folded. A sun is scratched into the wall above him. Beside him sits a tray of bread nobody has touched.
+Brother Anatol [smile]: Bless the dawn. Visitors, and not the cook. The Morninglord heard me after all.
+Brother Anatol: Brother Anatol, of St. Andral's in Vallaki. I came to pray for the lord of this house. He did not care for it.
+-> anatol_menu
+
+~ anatol_menu
+* How long have you been down here? -> anatol_how
+* [if flag.larders_anatol_noticed] Your breath doesn't fog in this cold, Brother. Ours does. -> anatol_unmask
+* [Insight DC 15] (Watch him while he talks.) -> anatol_seen | anatol_insight_fail
+* [if not flag.larders_anatol_prayed] [Religion DC 12] Pray the dawn prayer with us, Brother. -> anatol_prayer_wrong | anatol_prayer_passes
+* [if flag.lucian_met] Father Lucian keeps St. Andral's with two acolytes. He never mentioned you. -> anatol_lucian
+* [if flag.larders_anatol_warned] The cook says you never touch his soup. -> anatol_cook
+* [Cleric] (Raise your holy symbol to the gate.) -> anatol_symbol
+* [Paladin] (Raise your holy symbol to the gate.) -> anatol_symbol
+* Come on, Brother. We're getting you out. -> anatol_free
+* Stay quiet. We'll be back. -> END
+
+~ anatol_how
+set larders_anatol_noticed
+Brother Anatol: Weeks. I count the days by the cook's visits. He brings bread. I pray over it and give it back.
+Narrator: Your own breath hangs white in the cold of the cell while he talks. His doesn't.
+-> anatol_menu
+
+~ anatol_seen
+Narrator: He talks about the dawn the way a man describes a country he has only read about. And he hasn't blinked once.
+-> anatol_unmask
+
+~ anatol_insight_fail
+Narrator: He seems exactly what he says: a tired, frightened holy man, too gentle for this place.
+-> anatol_menu
+
+~ anatol_prayer_wrong
+set larders_anatol_prayed
+Narrator: He starts the prayer smoothly and then asks the dawn to wait. Every priest of the Morninglord asks it to come.
+-> anatol_unmask
+
+~ anatol_prayer_passes
+set larders_anatol_prayed
+Narrator: He murmurs along with you, eyes closed. If he stumbles, you can't hear it.
+-> anatol_menu
+
+~ anatol_lucian
+Brother Anatol: Lucian. Yes. Of course. Lucian and I... It was a long time ago.
+Narrator: Father Lucian is not much over forty.
+-> anatol_unmask
+
+~ anatol_cook
+Brother Anatol: I fast. It is a discipline.
+Narrator: Weeks of fasting, and his cheeks are fuller than yours.
+-> anatol_unmask
+
+~ anatol_symbol
+Narrator: He looks at the holy symbol for exactly as long as a man can look at the sun. Then he looks at the floor, and keeps looking.
+-> anatol_unmask
+
+~ anatol_unmask
+set larders_anatol_fate = "unmasked"
+Narrator: The kindness goes out of his face all at once, like a lamp turned down. He stands, and the shackle slides off his wrist. It was never locked.
+Brother Anatol [sly]: Pity. The Master so enjoys it when the rescuers walk me to his table themselves.
+* Then we'll save him the trouble. -> anatol_fight
+* Stay in your cell. We'll be back with a stake. -> anatol_left
+
+~ anatol_fight
+combat larders_false_brother_unmasked
+
+~ anatol_left
+Narrator: He laughs. He sits down in the straw again, folds his hands, and goes back to waiting.
+-> END
+
+~ anatol_unmasked_again
+Brother Anatol [sly]: Back with that stake? Or did you only come to look at me?
+* Back with the stake. -> anatol_fight
+* Only to look. -> anatol_left
+
+~ anatol_free
+set larders_anatol_fate = "freed"
+Narrator: He rises, thanking you in a low voice, and steps out into the passage behind you.
+Brother Anatol [sly]: Bless you. Truly. Now hold still.
+combat larders_false_brother
+
+# ---------------------------------------------------------------- After Nadia ran alone
+
+~ shawl
+Narrator: A soot-streaked shawl lies on the bottom step, folded neatly, the way a servant folds things for the laundry.
+if not flag.larders_nadia_lost
+set larders_nadia_lost
+quest the_cooks_guests caught
+endif
+interject tag:blunt: She got as far as the stair. Then someone folded her shawl.
+-> END

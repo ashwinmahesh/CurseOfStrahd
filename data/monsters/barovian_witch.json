@@ -1,0 +1,143 @@
+{
+  "id": "barovian_witch",
+  "name": "Barovian Witch",
+  "source": {
+    "book": "CoS",
+    "edition": "2014",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Its darkvision and prepared spells need the book. Ray of Frost runs as an attack (its slow is text only); spell slots are listed per spell. The Claws need Alter Self, which the engine doesn't treat as a form yet, so the claws stay unusable."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "alignment": "chaotic evil",
+  "ac": 10,
+  "initiative": 0,
+  "hp": {
+    "average": 16,
+    "dice": "3d8+3"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 7,
+    "dex": 11,
+    "con": 13,
+    "int": 14,
+    "wis": 11,
+    "cha": 12
+  },
+  "skills": {
+    "arcana": 4,
+    "perception": 2
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common"
+  ],
+  "cr": 0.5,
+  "xp": 100,
+  "proficiency_bonus": 2,
+  "gear": [
+    "dagger"
+  ],
+  "actions": [
+    {
+      "id": "claws",
+      "name": "Claws (Requires Alter Self)",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Magical claws, only while Alter Self has changed its hands.",
+      "text": "Usable only while the witch's Alter Self has given it claws. Hit: 7 (2d6) Slashing damage; the attack counts as magical.",
+      "forms": [
+        "alter_self"
+      ]
+    },
+    {
+      "id": "dagger",
+      "name": "Dagger",
+      "kind": "melee_or_ranged",
+      "attack": {
+        "bonus": 2,
+        "reach": 5,
+        "range": [
+          20,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 2,
+          "dice": "1d4",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Stabs with a dagger, or throws it up to 60 ft.",
+      "weapon": true
+    },
+    {
+      "id": "ray_of_frost",
+      "name": "Ray of Frost",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "cold"
+        }
+      ],
+      "summary": "Casts Ray of Frost up to 60 ft; the target's Speed drops by 10 ft until the witch's next turn.",
+      "text": "Ranged spell attack: +4 to hit, range 60 ft. Hit: 4 (1d8) Cold damage, and the target's Speed is 10 feet lower until the start of the witch's next turn (the slow is text only for the engine)."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "A 3rd-level wizard (Int, DC 12, +4): Ray of Sickness, Sleep, Tasha's Hideous Laughter, Alter Self, Invisibility.",
+      "text": "The witch casts spells as a 3rd-level wizard, using Intelligence (spell save DC 12, +4 to hit with spell attacks). Cantrips (at will): Mage Hand, Prestidigitation, Ray of Frost. 1st level (4 slots): Ray of Sickness, Sleep, Tasha's Hideous Laughter. 2nd level (2 slots): Alter Self, Invisibility."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 12,
+    "attack": 4,
+    "at_will": [
+      "mage_hand",
+      "prestidigitation"
+    ],
+    "per_day": {
+      "4": [
+        "ray_of_sickness",
+        "sleep",
+        "tashas_hideous_laughter"
+      ],
+      "2": [
+        "alter_self",
+        "invisibility"
+      ]
+    }
+  },
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "One of Strahd's hedge witches: frost and sickness from a distance, sleep and laughter to stop a fight, claws when it changes shape."
+}

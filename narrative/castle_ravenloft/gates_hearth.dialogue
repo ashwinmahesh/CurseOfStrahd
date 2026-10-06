@@ -1,0 +1,56 @@
+# The hearth at the end of the hall of faces, which burns on nothing (docs/regions/castle_ravenloft_gates.md §2).
+# Behind it is the hidden hoard (the Tarokka place castle_ravenloft_hidden_hearth). Three ways to put it out: shut
+# the flue (no roll; loud: the hall's guardians wake, crg_faces_wake), holy water, or Arcana (both quiet). A failed
+# Arcana check closes that way. Then the seam beside the firebox can be found (Perception DC 13) and opened.
+
+~ start
+if flag.crg_ever_hearth_out
+Narrator: The firebox is cold and black. A draught breathes through a seam in the stone beside it.
+-> END
+endif
+Narrator: A fire stands in the great hearth, tall and steady. There is no wood under it, no smoke above it, and no heat in front of it.
+if treasure_at:castle_ravenloft_hidden_hearth
+Narrator: Through the flames, the back of the firebox is not soot-black like the sides. It is clean stone, with a seam down one edge.
+endif
+-> choices
+
+~ choices
+* Look closer. -> look
+* [if not flag.crg_hearth_arcana_failed] [Arcana DC 15] Find the spell that feeds it and unpick it. -> arcana_ok | arcana_fail
+* [if item:holy_water] Pour holy water on the fire. -> holy
+* Shut the flue and smother it. -> smother
+* Leave it burning. -> END
+
+~ look
+Narrator: Every carved face in the hall is turned a little toward this fire, like people warming their hands.
+Narrator: A flue lever hangs in the chimney's throat, rusted open. Under the grate, scratched into the stone, runs a ring of tiny letters.
+interject class:wizard: The ring is the fuel. Someone bound it to burn on nothing. Break the ring and it has nothing left.
+interject class:rogue: Or shut the flue and let it choke. Simple usually works.
+-> choices
+
+~ arcana_ok
+set crg_hearth_quiet
+set crg_ever_hearth_out
+Narrator: You find the ring's first letter and its last, and draw a line through both. The fire goes out like a held breath let go. Nothing in the hall stirs.
+-> after
+
+~ arcana_fail
+set crg_hearth_arcana_failed
+Narrator: The letters slide away from your attention like fish. The fire leans out to lick your sleeve, and the ring knots itself tighter. You won't unpick it now.
+-> choices
+
+~ holy
+take holy_water 1
+set crg_hearth_quiet
+set crg_ever_hearth_out
+Narrator: The holy water hits the flames. They flinch, hiss, and are gone. Along the hall, the carved faces look somewhere else.
+-> after
+
+~ smother
+set crg_ever_hearth_out
+Narrator: The lever shrieks as it moves. The flue clangs shut, the fire chokes and dies, and every face along the hall turns to look at you.
+-> after
+
+~ after
+Narrator: Cold air breathes out through a seam beside the firebox. There is room behind that stone.
+-> END

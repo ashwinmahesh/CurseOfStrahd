@@ -303,7 +303,7 @@ func _wound(c: Combatant, target: Combatant, iid: String, label: String) -> void
 func _vorpal(c: Combatant, target: Combatant, label: String, r: CombatResult) -> void:
 	var e := enc()
 	var headless := str(target.creature.creature_type) in ["ooze", "elemental", "plant"] or target.creature.has_flag("headless")
-	var legendary := target.creature is Monster and ((target.creature as Monster).data.get("legendary_actions", []) as Array).size() > 0
+	var legendary := target.creature is Monster and (target.creature as Monster).data.has("legendary_actions")
 	var too_big := target.creature.size == &"gargantuan"
 	if target.creature.immunity_source(&"slashing") != "" or headless or legendary or too_big:
 		e.deal_damage(c, target, [{"amount": 30, "type": "slashing", "ignore_resistance": true, "ignore_source": label}], false, label)
