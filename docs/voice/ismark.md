@@ -6,7 +6,7 @@ a guest). Speaker name in dialogue: `Ismark`. Region: Village of Barovia.
 ## Who he is
 
 The burgomaster's son, a trained swordsman in his late twenties, broad in the shoulder and hollow under the eyes. For
-weeks the family mansion has been besieged every night by wolves and worse; three nights ago his father's heart gave
+a month the family mansion has been besieged every night by wolves and worse; three nights ago his father's heart gave
 out, and no one in the village will help carry the coffin to the church. The villagers call him "Ismark the Lesser"
 behind his back, because he is not his father and because nothing he does stops the attacks. He spends his days in
 the Blood of the Vine, not because he likes the wine (nobody does) but because it's the only room in the village

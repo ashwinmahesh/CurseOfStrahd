@@ -25,10 +25,10 @@ Ismark [sad]: This is as far as I go. Get her there. Bring her back one day, if 
 endif
 Ireena: I've never been past the crossroads. Father always said there was nothing out there but more Barovia. I'd like to see if he was right.
 if flag.madam_eva_rumor
-Ireena: Tser Pool is on the way, the Vistani women said. Madam Eva. If anyone can tell me what he wants with me, perhaps she can.
+Ireena: Tser Pool first, then. If this Madam Eva reads cards for strangers, she can read a few for me.
 endif
 if flag.ireena_destination == "krezk"
-Ireena: Vallaki first, then Krezk. Further than anyone in my family has ever walked.
+Ireena: Vallaki first, then Krezk. Farther than anyone in my family has ever walked.
 endif
 * Set out west. -> depart
 * Not yet. -> END
@@ -45,5 +45,5 @@ set ireena_escort = "declined"
 quest escort_ireena declined
 endif
 set village_departed
-Narrator: The village falls behind you, shutter by shutter. Nobody waves. Somewhere ahead the road forks, and from its cliff the castle watches you choose.
+Narrator: The village falls behind you, shutter by shutter, and nobody waves. Somewhere ahead the road forks, and from its cliff the castle watches you choose.
 -> END

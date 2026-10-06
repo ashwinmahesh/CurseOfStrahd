@@ -69,7 +69,7 @@ Morgantha [smile]: There. Wasn't that lovely? You'll want another one tonight. M
 
 ~ insight_ok
 set morgantha_suspected
-Narrator: Her smile doesn't move when she talks. And she isn't looking at your faces at all. She's weighing you, one at a time, like flour.
+Narrator: Her smile doesn't move when she talks, and she isn't looking at your faces at all. She's weighing you, one at a time, like flour.
 -> menu
 
 ~ insight_fail
@@ -78,7 +78,7 @@ Narrator: A sweet old woman with flour on her sleeves. You find nothing else, an
 
 ~ medicine_ok
 set morgantha_suspected
-Narrator: The crust is threaded with a fine white powder that isn't flour, and under the honey is a bitter, sleepy smell. Bone, ground very fine. And something to make you dream.
+Narrator: The crust is threaded with a fine white powder that isn't flour, and under the honey is a bitter, sleepy smell. Bone, ground very fine, and something to make you dream.
 Morgantha [sly]: Secret ingredient, dearie. Every family has one.
 -> menu
 

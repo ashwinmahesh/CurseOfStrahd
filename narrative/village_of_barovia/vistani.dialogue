@@ -13,7 +13,7 @@ else
 Alenka [smile]: Sit, strangers. New faces in Barovia! That happens about as often as sunshine. Buy us a cup and tell us everything.
 endif
 Mirabel [sly]: Or don't. We'll guess. Our guesses are always better than the truth.
-Sorvia: You've got grave dirt on your boots. Fresh. Sorry. I notice things.
+Sorvia: Your boots have walked farther than boots should, in this valley. Sorry. I notice things.
 -> menu
 
 ~ menu
@@ -61,7 +61,7 @@ interject tag:veteran: Noted.
 
 ~ insight_ok
 set vistani_spies_suspected
-Narrator: Alenka's eyes keep returning to your weapons, your faces, the order you sit in. She isn't curious. She's taking inventory, for someone.
+Narrator: Alenka's eyes keep returning to your weapons, your faces, the order you sit in. She isn't curious; she's taking inventory, for someone.
 -> menu
 
 ~ insight_fail

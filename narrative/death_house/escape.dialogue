@@ -8,9 +8,9 @@ if flag.death_house_window_attempted
   -> window_through
 endif
 set death_house_window_attempted
-Narrator: Every other window in the house is brick now. This one is still closing, wet brick climbing the glass row by row. At the top there is a gap the width of a person. For now.
-* [Athletics DC 12] Smash the glass and haul everyone up through the gap. -> window_through | window_guard
-* [Acrobatics DC 12] Up the window seat, through the gap, and pull the others after you. -> window_through | window_guard
+Narrator: Every other window in the house is brick now, and this one is closing, wet brick climbing the glass row by row. At the top there is a gap the width of a person, for now.
+* [Athletics DC 12] Smash the glass and haul everyone up through the gap. Too slow, and the house fights back. -> window_through | window_guard
+* [Acrobatics DC 12] Up the window seat, through the gap, and pull the others after you. Too slow, and the house fights back. -> window_through | window_guard
 
 ~ window_guard
 Narrator: The glass holds one heartbeat too long. Behind you, the dining room's silver lifts off the sideboard with a sound like a breath let out.
@@ -19,7 +19,7 @@ combat window_last_guard
 ~ window_through
 Narrator: Glass bursts outward and the soft brick crumbles with it, leaving a ragged gap onto grey daylight and the weeds of the lot. Behind you, every door in the house slams at once, like applause.
 if flag.death_house_lorghoth_slain
-  Narrator: Somewhere far below, the thing you killed is already rotting into the heap it came from. The house will grow another. It can wait.
+  Narrator: Somewhere far below, the thing you killed is already rotting back into its heap. The house will grow another; it can wait.
 endif
 if flag.death_house_children_riding
   Narrator: As you reach the gap, two small cold weights tear out of two of you and are dragged back into the dark, crying. The house keeps what it owns.

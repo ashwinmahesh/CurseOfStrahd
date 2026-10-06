@@ -3,7 +3,7 @@
   "name": "Village of Barovia",
   "region": "village_of_barovia",
   "summary": "A shuttered village in a mist-choked valley: muddy streets, boarded houses, a tavern with almost no wine, a mansion under siege, and a church on the hill where something screams at night.",
-  "text": "The Old Svalich Road runs through the village, from the Gates of Barovia and the mists in the east toward the crossroads, Tser Pool and Vallaki in the west. Most doors are nailed shut. The burgomaster's mansion sits behind an iron fence to the north-west, the church and its churchyard on the rise to the north-east, and Death House at the south-east edge, behind its own rusted fence.",
+  "text": "The Old Svalich Road runs through the village from the gates and the mists in the east to the far hills in the west, past doors nailed shut. A big house stands behind an iron fence to the north-west, a church on its rise to the north-east, and a tall, handsome house behind a rusted fence at the south-east edge.",
   "map": {
     "rows": [
       "########################################",
@@ -488,7 +488,7 @@
       "label": "Price board",
       "model": "sign",
       "codex": "bildrath_prices",
-      "text": "BILDRATH'S MERCANTILE. Rope, fifty feet: 10 gold. Torches, a bundle of five: 1 gold. Rations, per day: 5 gold. Lamp oil, per flask: 1 gold. Healer's kit: 50 gold. Crowbar: 20 gold. Potion of healing (one only): 500 gold. NO CREDIT. NO HAGGLING. NO RETURNS. Browsing: free, for now."
+      "text": "BILDRATH'S MERCANTILE. Rope, fifty feet: 10 gold. Torches, a bundle of five: 1 gold. Rations, per day: 5 gold. Lamp oil, per flask: 1 gold. Healer's kit: 50 gold. Potion of healing (one only): 500 gold. NO CREDIT. NO HAGGLING. NO RETURNS. Browsing: free, for now."
     },
     {
       "id": "mary_window",

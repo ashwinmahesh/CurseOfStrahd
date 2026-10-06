@@ -6,8 +6,8 @@
 if flag.death_house_heard_plea
   -> again
 endif
-Narrator: Two children stand in the road where the cottages begin: a girl of ten with her chin up, and a small boy holding a stuffed wolf by one ear. Neither is dressed for the cold. Neither seems to feel it.
-Rose [afraid]: Please, you have to help us. There's a monster in our house. In the basement.
+Narrator: Two children stand in the road where the cottages begin: a girl of ten with her chin up, and a small boy holding a stuffed wolf by one ear. Neither is dressed for the cold, and neither seems to feel it.
+Rose [afraid]: Please, you have to help us. Something horrible lives in our house, down in the basement.
 Thorn [sad]: It's got Walter.
 Rose: Our baby brother. He's down there crying, and we can't go back in. We can't. Please.
 interject name:ilse_varga: Easy, little one. Nobody's going back in there alone. Which house?
@@ -48,17 +48,17 @@ Rose [afraid]: We don't say the words.
 
 ~ insight_ok
 set death_house_lure_tested
-Narrator: {name} watches closely. Your breath fogs in the cold; theirs doesn't. The wind tugs your cloaks and leaves the girl's hair perfectly still. Her fear is real, but it is old fear, worn smooth, like a story told many times.
+Narrator: {name} watches closely: your breath fogs in the cold and theirs doesn't, and the wind that tugs your cloaks leaves the girl's hair perfectly still. Her fear is real, but it is old fear, worn smooth, like a story told many times.
 -> saw_through
 
 ~ insight_fail
 set death_house_lure_tested
-Narrator: Two frightened children in the cold. That's all {name} can see. Perhaps that's all there is.
+Narrator: Two frightened children in the cold is all {name} can see. Perhaps that's all there is.
 -> questions
 
 ~ arcana_ok
 set death_house_lure_tested
-Narrator: {name} feels it like a draft from an open door: an illusion, beautifully made and very old. Someone wants you to see two children here. Someone wants you to go inside.
+Narrator: {name} feels it like a draft from an open door: an illusion, beautifully made and very old. Someone wants you to see two children here, and wants you to go inside.
 -> saw_through
 
 ~ arcana_fail
@@ -79,7 +79,7 @@ endif
 -> questions
 
 ~ pray
-Narrator: Rose folds her hands at once, the way she was taught. Thorn copies her a beat late. Halfway through, they both look up, puzzled, as if they have forgotten the words.
+Narrator: Rose folds her hands at once, the way she was taught, and Thorn copies her a beat late. Halfway through, they both look up, puzzled, as if they have forgotten the words.
 Rose: Mother doesn't pray to the Morninglord anymore. She says he never answers, and the other one does.
 interject name:hedda_ironvow: The other one. Mm. I'd like to know his name, and then I'd like to forget it.
 -> questions
@@ -94,7 +94,7 @@ quest into_the_mists village_edge
 
 ~ refuse
 Rose [sad]: Then who will?
-Narrator: Thorn starts to cry without making a sound. When you look back down the road a little later, the two of them are still standing exactly where you left them. They have not moved at all.
+Narrator: Thorn starts to cry without making a sound. When you look back down the road a little later, the two of them stand exactly where you left them, and have not moved at all.
 quest into_the_mists village_edge
 -> END
 
@@ -114,13 +114,13 @@ Narrator: She says it the way a music box plays its tune: exactly the same, ever
 -> END
 
 ~ return
-Narrator: Two children stand in the road where the cottages begin, as if they have never moved. The girl lifts her chin. The boy holds his wolf by one ear.
-Rose [afraid]: Please, you have to help us. There's a monster in our house. In the basement.
+Narrator: Two children stand in the road where the cottages begin, as if they have never moved. The girl lifts her chin; the boy holds his wolf by one ear.
+Rose [afraid]: Please, you have to help us. Something horrible lives in our house, down in the basement.
 Thorn [sad]: It's got Walter.
-Narrator: They don't know you. They never will. The house is fishing again.
+Narrator: They don't know you, and they never will. The house is fishing again.
 interject name:hedda_ironvow: That is the cruelest thing I've seen in this valley, and the valley has been trying.
 if not name:hedda_ironvow
-  interject class:cleric: Their bones are still up in that attic. That's why. We left them there.
+  interject class:cleric: Whatever holds them is still in that house. Nobody has let them go.
 endif
 if flag.death_house_children_met
   quest rose_and_thorn left_behind

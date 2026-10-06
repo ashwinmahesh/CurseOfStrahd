@@ -6,7 +6,7 @@
 | The village sits in the valley like something left out in the rain: grey roofs, nailed shutters, mud to the ankle. Smoke rises from a few chimneys, and from none of them in a hurry.
 | [flag.death_house_completed and not flag.burgomaster_buried] Out of the house, into the open air, which turns out to be only slightly larger. Behind every shutter, someone is pretending not to watch you.
 | [flag.burgomaster_buried] The village looks the same as it did, which is to say exhausted. A few more shutters stand open a finger's width than before.
-| [flag.ireena_in_party] Doors open a crack as Ireena passes, and close again. Nobody calls out to her. A few people touch their foreheads, as if at a funeral.
+| [flag.ireena_in_party] Doors open a crack as Ireena passes and close again, and nobody calls out to her. A few people touch their foreheads, as if at a funeral.
 cooldown 30
 
 ~ enter:blood_of_the_vine
@@ -17,12 +17,12 @@ cooldown 20
 ~ enter:burgomaster_mansion
 | Every window is boarded from inside, and the boards are scored with claw marks on the outside of the wood. The house smells of candle wax, wet dog and grief.
 | [flag.burial_procession] The house is emptier without the coffin in it. Somehow the boards on the windows look less sure of themselves.
-| [flag.mansion_siege_survived] Splintered boards, fresh nails, a long scorch on the hall floor. The house held. It looks surprised about it.
+| [flag.mansion_siege_survived] Splintered boards, fresh nails, a long scorch on the hall floor: the house held. It looks surprised about it.
 cooldown 20
 
 ~ enter:village_church
 | Cold candles, cracked windows and a sunburst over the altar gone grey with soot. Under your boots, faint through the floorboards, someone is weeping and someone is praying, and you can't tell which is which.
-| [flag.doru_destroyed] The church is quiet now. The candles are lit. Someone has swept the floor, badly, as if with shaking hands.
+| [flag.doru_destroyed] The church is quiet now, and the candles are lit. Someone has swept the floor, badly, as if with shaking hands.
 | [flag.doru_freed] The church is quiet now, and the undercroft door stands open. The quiet is worse than the screaming was; screaming, at least, stayed in one place.
 cooldown 20
 
@@ -63,7 +63,7 @@ once
 cooldown 15
 
 ~ enter:village_road_east
-| The road east runs back the way you came, toward the gates and the mist beyond them. The mist has not moved. It doesn't need to.
+| The road east runs back the way you came, toward the gates and the mist beyond them. The mist has not moved; it doesn't need to.
 once
 
 ~ enter:mary_lane
@@ -83,7 +83,7 @@ once
 | A tall, handsome house behind a rusted fence, its windows dark, its porch swept. It is the best-kept house in the village, and nobody will walk past it.
 | [flag.death_house_refused] Bricks fill the doorway where the front door used to be, and the tall window you came out of is half bricked over already. The house is mending itself, slowly, like a scab.
 | [flag.death_house_sacrificed] The house is quiet. It has the stillness of something that has been fed and is in no hurry for its next meal.
-| [flag.death_house_children_at_rest] The house is only a house now. Nobody waits on its steps, and the road outside is just a road.
+| [flag.death_house_children_at_rest] The house is only a house now, and the road at the village edge is only a road.
 cooldown 15
 
 # ---------------------------------------------------------------- Interior areas
@@ -117,7 +117,7 @@ once
 once
 
 ~ enter:mansion_wake_room
-| The coffin rests on trestles between two candles. The candles are new. Someone replaces them every few hours, and doesn't sleep in between.
+| The coffin rests on trestles between two new candles. Someone replaces them every few hours, and doesn't sleep in between.
 | [flag.burial_procession] Two burned-out candles and two empty trestles. The room still feels like it's holding its breath.
 cooldown 30
 
@@ -144,7 +144,7 @@ once
 cooldown 20
 
 ~ enter:mercantile_shop
-| A shop so tidy it feels like a reprimand. Behind the counter, each shelf is labelled, and each label has a price, and each price has been written in ink so it can't be argued with.
+| A shop so tidy it feels like a reprimand. Behind the counter, each shelf is labeled, and each label has a price, and each price has been written in ink so it can't be argued with.
 once
 
 ~ enter:mercantile_storeroom
@@ -156,7 +156,7 @@ once
 once
 
 ~ enter:gertruda_room
-| A narrow bed, a chest, a shelf of children's books and a window with its shutter hanging open. The room is very clean. Nothing in it has been moved since she left.
+| A narrow bed, a chest, a shelf of children's books and a window with its shutter hanging open. The room is very clean, and nothing in it has been moved since she left.
 once
 
 ~ enter:mary_bedroom
@@ -181,8 +181,8 @@ cooldown 10
 cooldown 10
 
 ~ examine:castle_glimpse
-| Castle Ravenloft stands on its pillar of rock above the valley, its towers lost in cloud. One window is lit, high up. It is always lit.
-| [class:wizard] Castle Ravenloft, above the valley. One high window is lit: a library, by the shape of the shadows behind it, or {name} is no judge of shelving.
+| Castle Ravenloft stands on its pillar of rock above the valley, its towers lost in cloud. One window high up is lit, as it always is.
+| [class:wizard] Castle Ravenloft, above the valley, with one high window lit. {name} would wager a good book that the room behind it is full of them.
 cooldown 10
 
 ~ examine:road_west_gates
@@ -190,7 +190,7 @@ cooldown 10
 cooldown 10
 
 ~ examine:road_east_mists
-| The road east runs back toward the gates and the mists. The mist lies across it like a held breath. Nobody has come in from that direction in a long time, except you.
+| The road east runs back toward the gates, and the mist lies across it like a held breath. Nobody has come in from that direction in a long time, except you.
 cooldown 10
 
 ~ examine:mansion_front_door
@@ -203,11 +203,11 @@ cooldown 10
 cooldown 10
 
 ~ examine:boarded_houses
-| Every door on the lane is boarded over from outside, which means the people who live here nailed themselves in. Behind the boards, a child's voice asks a question and is hushed.
+| Every door on the lane is boarded over from inside, which means the people who live here nailed themselves in. Behind the boards, a child's voice asks a question and is hushed.
 cooldown 10
 
 ~ examine:abandoned_handcart
-| A handcart, tipped over in the lane with one wheel missing. Its load is gone. A child's shoe lies in the mud beside it, the other one nowhere.
+| A handcart tipped over in the lane, one wheel missing, its load gone. A child's shoe lies in the mud beside it; the other is nowhere.
 cooldown 10
 
 ~ examine:church_facade
@@ -220,7 +220,7 @@ cooldown 10
 
 ~ examine:open_grave
 | A fresh grave beside a headstone that reads only "Beloved". The earth is piled neatly, ready to go back in.
-| [flag.parriwimple_pallbearer] A fresh grave, very deep and very square. The spoil heap is so tidy it looks like it was measured. It was.
+| [flag.parriwimple_pallbearer] A fresh grave, very deep and very square, its spoil heap so tidy it looks measured. It was.
 cooldown 10
 
 ~ examine:kolyan_grave
@@ -233,7 +233,7 @@ cooldown 10
 cooldown 10
 
 ~ examine:price_board
-| A board of prices, painted in neat black letters. Each number is roughly ten times what it should be. Underneath, smaller: "Browsing: free, for now."
+| A board of prices in neat black letters, each number roughly ten times what it should be. Underneath, smaller: "Browsing: free, for now."
 cooldown 10
 
 ~ examine:mary_window
@@ -242,7 +242,7 @@ cooldown 10
 
 ~ examine:morgantha_cart
 | A handcart heaped with glazed pastries under a white cloth. They smell of honey and warm butter and something else, faint and sleepy, underneath.
-| [species:halfling] Pastries, golden and glistening. {name}'s stomach makes a case for them. {name}'s instincts make a better one against.
+| [species:halfling] Pastries, golden and glistening: {name}'s stomach makes a case for them, and {name}'s instincts make a better one against.
 cooldown 10
 
 ~ examine:collapsed_barn
@@ -250,20 +250,20 @@ cooldown 10
 cooldown 10
 
 ~ examine:death_house_facade
-| A handsome townhouse, freshly painted, its windows dark. It looks like a house waiting for guests. You know exactly what it does with them.
+| A handsome townhouse, freshly painted, its windows dark. It has the look of a house expecting guests, and looking forward to them.
 | [flag.death_house_refused] The front door is bricked up, and so is most of the window you came out of. Faintly, from inside, comes the sound of a trowel.
 | [flag.death_house_sacrificed] The house is quiet and well-fed. A curtain twitches in an upstairs window, as if to say: come back any time.
-| [flag.death_house_children_at_rest] Just a house now. A sad one. The door hangs open on an empty hall, and nothing in it is waiting for anyone.
+| [flag.death_house_children_at_rest] Just a house now, and a sad one. Whatever waited inside it has stopped waiting.
 cooldown 10
 
 ~ examine:death_house_dead_tree
-| A dead tree in the yard, its branches clawing at the upstairs windows. Someone once hung a swing from it. The rope is still there; the seat is not.
+| A dead tree in the yard, its branches clawing at the upstairs windows. Someone once hung a swing from it; the rope is still there, the seat is not.
 cooldown 10
 
 # ---------------------------------------------------------------- Blood of the Vine
 
 ~ examine:tavern_casks
-| Wine casks, branded with a wizard's hat and a bunch of grapes. Most ring hollow when you knock. One sloshes, sadly, about a quarter full.
+| Wine casks branded with a wizard's hat and a bunch of grapes. Most ring hollow when you knock; one sloshes, sadly, about a quarter full.
 cooldown 10
 
 ~ examine:tavern_hearth
@@ -275,12 +275,12 @@ cooldown 10
 cooldown 10
 
 ~ examine:tavern_tally_board
-| A chalk board of what each regular owes the house. Most columns are short. One, headed ISMARK, runs to the bottom of the board and continues on the wall.
+| A chalk board of what each regular owes the house. Most columns are short, but one, headed ISMARK, runs to the bottom of the board and carries on along the wall.
 cooldown 10
 
 ~ examine:aurel_last_note
 | A folded sheet of good paper, written in a fast, educated hand. It's addressed to nobody, and signed with two initials.
-| [name:silvain_aster] {name} knows the hand before the first word. Aurel always crossed his sevens. He crossed them here, too.
+| [name:silvain_aster] {name} knows the hand before the first word: Aurel always crossed his sevens, and he crossed them here too.
 cooldown 10
 
 # ---------------------------------------------------------------- Burgomaster's mansion
@@ -303,22 +303,22 @@ cooldown 10
 cooldown 10
 
 ~ examine:ireena_sword
-| A good sword, well oiled, leaning where a hand can find it without looking. It's been used. Recently.
+| A good sword, well oiled, leaning where a hand can find it without looking. It has been used, recently.
 cooldown 10
 
 ~ examine:burgomaster_letter
-| A letter on the desk, in a big, generous hand that goes small and shaky by the last lines. It was never sent. It was never finished.
+| A letter on the desk, in a big, generous hand that goes small and shaky by the last lines. It was never sent, and never finished.
 cooldown 10
 
 # ---------------------------------------------------------------- Church and undercroft
 
 ~ examine:church_altar_stone
 | The altar is a single block of grey stone with a sunburst carved into its face. Someone has scrubbed it so often that the sunburst is wearing away.
-| [name:hedda_ironvow] The sunburst of the Morninglord, cut into stone the way it is at home. {name} lays a palm on it. The stone is cold; it wasn't always.
+| [name:hedda_ironvow] The sunburst of the Morninglord, cut into stone the way it is at home. {name} lays a palm on it: the stone is cold, and it wasn't always.
 cooldown 10
 
 ~ examine:morninglord_window
-| A round window of coloured glass, a rising sun in reds and golds. It's the brightest thing in the church, and it is the colour of dusk.
+| A round window of colored glass, a rising sun in reds and golds. It's the brightest thing in the church, and it is the color of dusk.
 cooldown 10
 
 ~ examine:church_pews
@@ -352,12 +352,12 @@ cooldown 10
 cooldown 10
 
 ~ examine:last_potion
-| A single potion in a locked glass case, red as a cherry and dusty as a tomb. The tag reads 500 GOLD. The tag is also dusty.
-| [class:rogue] A cheap case and a cheaper lock. {name} could have it open before Bildrath finished saying "No". {name} also notices Bildrath noticing.
+| A single potion in a locked glass case, red as a cherry and dusty as a tomb. The tag reads 500 GOLD, and the tag is dusty too.
+| [class:rogue] A cheap case and a cheaper lock: {name} could have it open before Bildrath finished saying "No". {name} also notices Bildrath noticing.
 cooldown 10
 
 ~ examine:storeroom_crates
-| Crates of stock stacked to the beams, each one stencilled with its contents and its price. One is marked FOR THE BURGOMASTER, PAID, and has never been collected.
+| Crates of stock stacked to the beams, each one stenciled with its contents and its price. One is marked FOR THE BURGOMASTER, PAID, and has never been collected.
 cooldown 10
 
 ~ examine:bildrath_ledger
@@ -371,7 +371,7 @@ cooldown 10
 cooldown 10
 
 ~ examine:door_locks
-| Three locks on the inside of the door: a bolt, a bar and a padlock, all new. All three were locked the night Gertruda left. None of them was the one that mattered.
+| Three locks on the inside of the door, a bolt, a bar and a padlock, all new and all locked the night Gertruda left. None of them was the one that mattered.
 cooldown 10
 
 ~ examine:cold_stove
@@ -387,7 +387,7 @@ cooldown 10
 cooldown 10
 
 ~ search:gertruda_window
-| The latch was lifted from the inside, and carefully, so it wouldn't squeak. Her good shoes are gone from under the bed. Nobody carried Gertruda off. She went.
+| The latch was lifted from the inside, carefully, so it wouldn't squeak, and her good shoes are gone from under the bed. Nobody carried Gertruda off; she went.
 
 ~ examine:gertruda_storybook
 | A child's book of tales, read until the spine gave up. One page falls open by itself.
@@ -397,10 +397,10 @@ cooldown 10
 
 ~ dream:dream_pastry
 | {name} dreams of someone lost: a warm kitchen, a familiar voice, a door that opens onto everything that was taken. Waking feels like a theft, and the honey taste won't leave {name}'s mouth.
-| [name:ilse_varga] {name} dreams of Kestrel Company on the march, forty voices singing the old rude songs, every face exactly as it was. She counts them all. Nobody is missing. Then she wakes.
+| [name:ilse_varga] {name} dreams of Kestrel Company on the march, forty voices singing the old rude songs, every face exactly as it was. She counts them all and nobody is missing, and then she wakes.
 | [name:tamsin_tealeaf] {name} dreams of the woman from the locket, standing by a lake in a white dress. She turns to say his name, and he wakes with the honey still sweet on his tongue.
 | [name:hedda_ironvow] {name} dreams of the chapel at dawn, the light striking the altar, warmth on her face. She wakes in grey Barovian daylight and lies still a long while.
-| [name:silvain_aster] {name} dreams of a library and of Aurel, at a long table, turning pages and laughing. He looks up to say something. The dream ends before he can.
+| [name:silvain_aster] {name} dreams of a library, and of Aurel at a long table, turning pages and laughing. He looks up to say something, and the dream ends before he can.
 
 ~ rest:short
 | You rest with your backs to a wall that has seen worse. Somewhere a dog barks once and thinks better of it.
@@ -409,5 +409,5 @@ cooldown 30
 
 ~ rest:long
 | You sleep in shifts. Every watch hears wolves, far off, singing to each other about you.
-| [flag.ireena_in_party] You sleep in shifts, and whoever has the watch keeps one eye on Ireena's window. Twice in the night, something taps on the glass. Nobody answers.
+| [flag.ireena_in_party] You sleep in shifts, and whoever has the watch keeps one eye on Ireena's window. Twice in the night something taps on the glass, and nobody answers.
 cooldown 60

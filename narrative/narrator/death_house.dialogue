@@ -8,14 +8,14 @@
 ~ enter:death_house_ground
 | The door shuts behind you with a soft, satisfied click. Inside, the house smells of beeswax and old smoke, as if the family stepped out a minute ago and has been gone for years.
 | The ground floor waits exactly as you left it, every chair squared to its table. Houses are not supposed to be this patient.
-| [flag.death_house_heard_plea and not visited:dh_foyer] Through the glass of the shutting door you glimpse the road outside. It is empty. No children, and no footprints where they stood.
-| [flag.death_house_refused and not flag.death_house_completed] The stairs deliver you into a house that has stopped pretending. The walls are sweating. The front of the house is very, very quiet.
+| [flag.death_house_heard_plea and not visited:dh_foyer] Through the glass of the shutting door you glimpse the road outside, empty. No children, and no footprints where they stood.
+| [flag.death_house_refused and not flag.death_house_completed] The stairs deliver you into a house that has stopped pretending, its walls sweating. The front of the house is very, very quiet.
 | [flag.death_house_sacrificed] The house is quiet now, with the stillness of something that has been fed. Every door you pass stands open.
 cooldown 30
 
 ~ enter:dh_foyer
 | A narrow entrance hall: a coat stand, an umbrella with nothing to keep off, and an archway into a grand hall beyond.
-| [class:rogue] {name} checks the door behind you out of habit. Oiled lock, oiled hinges. Someone wanted it to open easily for guests.
+| [class:rogue] {name} checks the door behind you out of habit: oiled lock, oiled hinges. Someone wanted it to open easily for guests.
 once
 
 ~ enter:dh_cloakroom
@@ -23,7 +23,7 @@ once
 once
 
 ~ enter:dh_main_hall
-| A grand hall paneled in dark wood, a staircase sweeping up its far side, a lamp burning low on a side table. Nobody here lit that lamp. It burns anyway.
+| A grand hall paneled in dark wood, a staircase sweeping up its far side, a lamp burning low on a side table. Nobody here lit that lamp, and it burns anyway.
 | The great hall again. The lamp has not burned any lower.
 | [flag.death_house_refused and not flag.death_house_completed] The weapons in the hall hang crooked on their hooks, trembling. The paneling creaks like something drawing breath to shout.
 | [flag.death_house_sacrificed] The lamp in the hall has gone out. Nobody needs it now.
@@ -39,13 +39,13 @@ once
 once
 
 ~ enter:dh_pantry
-| Shelves of sealed jars and cheeses under cloth, every label in the same neat hand. Nothing has spoiled. Nothing is fresh.
+| Shelves of sealed jars and cheeses under cloth, every label in the same neat hand. Nothing has spoiled, and nothing is fresh.
 once
 
 ~ enter:dh_dining_room
 | A long table laid for a dinner party: silver, crystal, napkins folded into swans, a centerpiece of dried roses. Every chair is pulled out an inch, as if expecting someone.
 | The dining room, still laid for guests who never arrive.
-| [flag.death_house_refused and not flag.death_house_completed] Brick is climbing the tall window from the sill up, row by row. There is still a gap at the top. Not for long.
+| [flag.death_house_refused and not flag.death_house_completed] Brick is climbing the tall window from the sill up, row by row. There is still a gap at the top, though not for long.
 cooldown 30
 
 ~ examine:durst_crest
@@ -55,17 +55,17 @@ cooldown 30
 | A family portrait in a heavy gilt frame, hung where every guest would see it first.
 
 ~ examine:hall_lamp
-| An oil lamp on the side table, wick trimmed, reservoir full. You check again later. It is still full.
+| An oil lamp on the side table, wick trimmed, reservoir full. You check again later, and it is still full.
 
 ~ examine:den_trophies
 | Wolf heads in a row, mouths open, as if they all howled at once and were stuffed mid-howl.
-| [class:ranger] {name} notes the brass plates under each head. Dates, all in winter, all within a few years. Then they stop.
+| [class:ranger] {name} notes the brass plates under each head: dates, all in winter, all within a few years. Then they stop.
 
 ~ examine:den_hearth
 | A deep hearth swept clean, a log laid ready. The log is grey with dust.
 
 ~ examine:den_wolf_rug
-| A wolf-pelt rug with the head still on. Its glass eyes watch the door, not you. Small mercies.
+| A wolf-pelt rug with the head still on, its glass eyes watching the door instead of you. Small mercies.
 
 ~ examine:kitchen_stove
 | A black iron stove, cold to the touch. The kettle on it is warm.
@@ -107,7 +107,7 @@ once
 once
 
 ~ open:under_stair_cache
-| Under the loose riser, wrapped in a handkerchief: a purse, and two little bottles. Mother's emergency. Rose was right.
+| Under the loose riser, wrapped in a handkerchief, are a purse and two little bottles. Mother's emergency: Rose was right.
 once
 
 ~ trap:hall_chandelier:found
@@ -120,7 +120,7 @@ once
 
 ~ enter:death_house_upper
 | The upper floor creaks under your weight, a long low complaint that travels ahead of you down the hall.
-| Upstairs again. The house has moved nothing. You are almost sure of that.
+| Upstairs again, and the house has moved nothing. You are almost sure of that.
 | [flag.death_house_refused and not flag.death_house_completed] The upper hall is longer than it was, or you are more frightened. Possibly both.
 | [flag.death_house_sacrificed] Every door on this floor stands open, like a host showing guests the way out.
 cooldown 30
@@ -133,7 +133,7 @@ cooldown 30
 
 ~ enter:dh_library
 | Shelves to the ceiling, a reading desk, the smell of dust and leather. One bookcase on the south wall has no dust on the floor in front of it, in a neat quarter circle.
-| [class:wizard] {name} breathes in: old paper, old leather, and the faint ozone of a book that bites. Not a big library. A well-chosen one.
+| [class:wizard] {name} breathes in old paper, old leather and the faint ozone of a book that bites. Not a big library, but a well-chosen one.
 once
 
 ~ enter:dh_secret_study
@@ -150,7 +150,7 @@ once
 once
 
 ~ examine:upper_hall_portraits
-| Generations of Dursts in oils. The early ones look like merchants. The later ones look like they know something.
+| Generations of Dursts in oils. The early ones look like merchants; the later ones look like they know something.
 
 ~ examine:upper_hall_clock
 | A tall clock stopped at a quarter past three. Its pendulum swings anyway, very slowly, keeping some other time.
@@ -160,7 +160,7 @@ once
 
 ~ examine:library_odd_shelf
 | A bookcase like the others, except that the floor before it is swept in a neat quarter circle, and one book has no dust on its spine.
-| [class:rogue] {name} knows that kind of bookcase. It opens. They always open.
+| [class:rogue] {name} knows that kind of bookcase. It opens; they always open.
 
 ~ open:study_bookcase
 | The bookcase swings out on silent hinges, books and all, onto a hidden room.
@@ -222,17 +222,17 @@ cooldown 30
 
 ~ enter:dh_attic_landing
 | An empty armor stand at the end of the landing, and beside it a suit of black plate, standing on its own, as if it got tired and stepped down.
-| [class:fighter] {name} eyes the black plate. Good steel, well kept. Nobody keeps armor that well unless someone is still wearing it.
+| [class:fighter] {name} eyes the black plate: good steel, well kept. Nobody keeps armor that well unless someone is still wearing it.
 once
 
 ~ enter:dh_third_hall
 | A hall of closed doors, a runner worn thin, and the faint sweet smell of a nursery.
-| The third-floor hall. One of the doors is breathing. You are fairly sure it's the nursery.
+| The third-floor hall, where one of the doors is breathing. You are fairly sure it's the nursery.
 | [flag.death_house_refused and not flag.death_house_completed] Every blade on this floor has slipped its sheath. You can hear them in the rooms, testing the air.
 cooldown 30
 
 ~ enter:dh_master_suite
-| A canopy bed, a cold hearth, a dressing table laid out for a woman who took great care over her face. One pillow is dented. The other has never been touched.
+| A canopy bed, a cold hearth, a dressing table laid out for a woman who took great care over her face. One pillow is dented; the other has never been touched.
 once
 
 ~ enter:dh_bathroom
@@ -265,7 +265,7 @@ once
 | Black water to the brim, still as glass. Your reflection in it moves a moment after you do.
 
 ~ examine:bath_mirror
-| A tall mirror, its silvering spotted with age. Everyone who should be in it is in it. You count twice.
+| A tall mirror, its silvering spotted with age. Everyone who should be in it is in it; you count twice.
 
 ~ examine:nursemaid_letters
 | A bundle of letters tied in blue ribbon, hidden under the blotter of the writing table.
@@ -277,7 +277,7 @@ once
 | Tin birds turn on their threads above the crib, though there isn't a breath of draft.
 
 ~ open:jewel_box
-| The jewel box plays three notes of a lullaby and stops. The rings inside are real. The music box is broken. Both facts feel important.
+| The jewel box plays three notes of a lullaby and stops. The rings inside are real and the music box is broken, and both facts feel important.
 once
 
 ~ open:nursery_door
@@ -302,12 +302,12 @@ cooldown 30
 ~ enter:dh_attic_hall
 | A long, low hall under the roof. Somewhere along it, a child is humming.
 | The attic hall. The humming stops as you come in, like children caught out of bed.
-| [flag.death_house_children_at_rest] The attic hall is quiet now. No humming. Just the roof and the wind.
+| [flag.death_house_children_at_rest] The attic hall is quiet now: no humming, just the roof and the wind.
 | [flag.death_house_refused and not flag.death_house_completed] Dust sifts down from beams that are shifting in their sockets.
 cooldown 30
 
 ~ enter:dh_spare_bedroom
-| A spare bedroom: a dusty bed, a narrow wardrobe, and an alcove beside the chimney breast. The chimney is warm. Nobody has lit a fire.
+| A spare bedroom: a dusty bed, a narrow wardrobe, and an alcove beside the chimney breast. The chimney is warm, though nobody has lit a fire.
 | The spare bedroom. The alcove beside the chimney is still warm.
 | [flag.death_house_refused and not flag.death_house_completed] The spare bed has turned to face the door.
 cooldown 30
@@ -330,10 +330,10 @@ once
 | {name} feels a thread of warm air on the back of one hand, and follows it to a seam in the plaster.
 
 ~ check:perception:chimney_seam:failure
-| Plaster, dust and a warm chimney. Nothing more. Not yet.
+| Plaster, dust and a warm chimney. Nothing more, not yet.
 
 ~ examine:storage_junk
-| Furniture under dust sheets, shapes like people sitting very still. You lift one sheet. It's a chair. You don't lift the others.
+| Furniture under dust sheets, shapes like people sitting very still. You lift one sheet, find a chair, and leave the others alone.
 
 ~ examine:toy_chest
 | A painted toy chest at the foot of a little bed, its lid shut.
@@ -373,7 +373,7 @@ once
 
 ~ enter:death_house_dungeon_1
 | The stair ends in rock, cold and sweating. Somewhere ahead and below, many voices are saying the same thing, over and over.
-| Under the house again. The chanting hasn't stopped. It doesn't need to breathe.
+| Under the house again, and the chanting hasn't stopped. It doesn't need to breathe.
 | [flag.death_house_refused and not flag.death_house_completed] The chant has become a howl, and under it something heavy is dragging itself toward the stairs.
 | [flag.death_house_sacrificed] The chanting has stopped. The silence it left behind is worse.
 cooldown 30
@@ -385,7 +385,7 @@ cooldown 30
 
 ~ enter:dh_family_crypts
 | A gallery of crypts cut into the rock, names and dates carved over every niche. Generations of Dursts, filed neatly away.
-| The family crypts. The dead keep their own counsel here. Most of them.
+| The family crypts, where the dead keep their own counsel. Most of them.
 | [flag.death_house_refused and not flag.death_house_completed] The crypt slabs rattle in their niches as you run past, like teeth.
 cooldown 30
 
@@ -395,8 +395,8 @@ cooldown 30
 cooldown 30
 
 ~ enter:dh_cult_refectory
-| A long table with benches for a dozen. The bowls are licked clean. The bones in the corner are not animal bones.
-| The refectory. Nobody has cleared the table. Nobody ever will.
+| A long table with benches for a dozen, the bowls licked clean. The bones in the corner are not animal bones.
+| The refectory. Nobody has cleared the table, and nobody ever will.
 | [flag.death_house_refused and not flag.death_house_completed] Every bench in the refectory has turned to face the stairs, as if waiting for you to be served.
 cooldown 30
 
@@ -425,7 +425,7 @@ cooldown 30
 cooldown 30
 
 ~ examine:crypt_ancestors
-| The oldest crypts, names worn soft by damp: Durst, Durst, Durst. This family kept its dead close. Closer than most.
+| The oldest crypts, names worn soft by damp: Durst, Durst, Durst. This family kept its dead close, closer than most.
 
 ~ examine:crypt_parents
 | Two crypts side by side, their slabs pushed aside.
@@ -446,7 +446,7 @@ cooldown 30
 | Bones in the corner, cracked for the marrow. You count four skulls before you stop counting.
 
 ~ examine:durst_supper
-| Supper for two: silver, linen, and plates full of something. You don't look closer. You will be glad of that later.
+| Supper for two: silver, linen, and plates full of something. You don't look closer, and later you will be glad of that.
 
 ~ examine:reliquary_trophies
 | Lockets, spectacles, a child's shoe, a holy symbol on a broken chain. Each has a paper tag tied to it, with a date.
@@ -492,7 +492,7 @@ once
 
 ~ enter:death_house_dungeon_2
 | At the bottom of the stair the air is thick and warm and smells of rot. The chanting is very close now.
-| Back at the bottom of the house. The chant knows you're here. It always did.
+| Back at the bottom of the house. The chant knows you're here; it always did.
 cooldown 30
 
 ~ enter:dh_lower_landing
@@ -506,7 +506,7 @@ cooldown 30
 cooldown 30
 
 ~ enter:dh_robing_room
-| Hooks of stiff black robes, a bench, a chest. The cult dressed for worship here. The robes still smell of candle smoke.
+| Hooks of stiff black robes, a bench, a chest: the cult dressed for worship here. The robes still smell of candle smoke.
 once
 
 ~ enter:dh_winch_room
@@ -519,7 +519,7 @@ once
 cooldown 30
 
 ~ enter:dh_ritual_chamber
-| A pillared chamber around a stone altar, braziers burning on either side. Robed shadows turn toward you as one. In the corner, a heap of refuse breathes, very slowly, like something asleep.
+| A pillared chamber around a stone altar, braziers burning on either side, and robed shadows turning toward you as one. In the corner, a heap of refuse breathes, very slowly, like something asleep.
 | [flag.death_house_sacrificed] The altar is clean. That is the worst thing about it.
 | [flag.death_house_refused] The heap in the corner is a crater now, a wet hollow the shape of something very large that has gotten up.
 | [flag.death_house_lorghoth_slain] Rot is spread across the floor in a great slick. Lorghoth the Decayer has finally decayed.
@@ -543,11 +543,11 @@ once
 | Words cut into the archway in a plain, unlovely hand: one must die.
 
 ~ examine:altar
-| A slab of black stone, grooved along its edges. The grooves run to a drain. The drain is not dry.
+| A slab of black stone, its grooved edges running to a drain. The drain is not dry.
 | [flag.death_house_sacrificed] The altar is clean. The grooves are not.
 
 ~ examine:refuse_heap
-| A mound of rot and rushes taller than a man, steaming faintly. It rises and falls. It rises and falls.
+| A mound of rot and rushes taller than a man, steaming faintly. It rises and falls, and rises, and falls.
 | [flag.death_house_refused] A crater where the heap was, wet and deep, in the shape of something that got up.
 | [flag.death_house_lorghoth_slain] A spreading slick of rot. Lorghoth the Decayer has decayed.
 

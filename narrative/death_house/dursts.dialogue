@@ -3,7 +3,7 @@
 # whether the Dursts are shaken by news of their children, changes it.
 
 ~ start
-Narrator: A man and a woman sit at a laid supper table by the light of one candle. Their fine clothes hang off them. Their fingers are long and grey, and the plates in front of them are not empty.
+Narrator: A man and a woman sit at a laid supper table by the light of one candle, their fine clothes hanging off them. Their fingers are long and grey, and the plates in front of them are not empty.
 Gustav [smile]: Guests. Elisabeth, guests. Do sit. We so rarely have anyone down.
 Elisabeth [sly]: They came down the children's way. Didn't you, dears.
 interject name:ilse_varga: Two of them. Close quarters. Don't let them get behind us.
@@ -19,7 +19,7 @@ endif
 * [Intimidation DC 13] Tell us about your cult. Now. -> confess | bristle
 * [Persuasion DC 15] You were people once. Tell us the truth while you still can. -> confess | bristle
 * [if flag.death_house_children_at_rest] Your children are at rest. They're free of you. -> shaken
-* Enough talk. -> fight
+* Enough talk. Attack. -> fight
 
 ~ who
 Gustav: Gustav Durst, and my wife, Elisabeth. This is our house, you understand. All of it. Even the parts that never appeared on the plans.
@@ -43,7 +43,7 @@ if not flag.death_house_learned_walter
   set death_house_learned_walter
   set death_house_lore += 1
 endif
-interject name:silvain_aster: Refused. By the one who signed that letter, I assume.
+interject name:silvain_aster: Refused. By the "he" you are both so careful not to name, I assume.
 -> choose
 
 ~ confess

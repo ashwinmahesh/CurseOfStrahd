@@ -5,7 +5,7 @@
 ~ enter:into_the_mists_road
 | The fog behind you thickens like a door swinging shut. The road ahead runs west, under trees that lean in to listen.
 | [flag.death_house_completed] The road east ends where it always did, in a wall of mist that does not care what you survived.
-| [flag.mists_wolves_resolved] Back on the Old Svalich Road. The trees are still leaning in. They have heard about you.
+| [flag.mists_wolves_resolved] Back on the Old Svalich Road, where the trees are still leaning in. They have heard about you.
 cooldown 60
 
 # --- Areas ------------------------------------------------------------------------------------------------------
@@ -13,18 +13,18 @@ cooldown 60
 ~ enter:mists_svalich_woods
 | Pines crowd the road, black against a sky the color of old pewter. Somewhere off to the left, a wolf howls, and somewhere to the right, another answers.
 | [species:elf] {name} knows old forests. This one is old the way a grudge is old.
-| [class:ranger] {name} counts the howls: six, from three directions. Not hunting. Herding.
+| [class:ranger] {name} counts the howls, six from three directions, and they are not hunting. They are herding.
 once
 
 ~ enter:mists_gates
-| Two stone guardians flank a pair of tall iron gates, their swords grounded, their heads missing. The gates are shut. The road goes through them anyway.
+| A pair of tall iron gates bars the road, kept by two stone knights who have lost their heads but not their posts. The gates are shut, and the road goes through them anyway.
 | [flag.mists_wolves_cowed] The pack let you pass, and the woods have gone very quiet about it. Ahead, a wall of stone and a gate of iron.
 | [flag.mists_wolves_fought] Wolf blood dries on your boots. Ahead, two headless stone knights keep a gate that seems to be expecting you.
 once
 
 ~ enter:mists_village_edge
-| Cottages, shuttered tight. Mud, and the smell of woodsmoke from chimneys that are trying not to be noticed. A village, at last, holding its breath.
-| [class:rogue] {name} notes every shutter barred from the inside. Nobody here is keeping thieves out. They're keeping something else out.
+| Shuttered cottages, mud, and woodsmoke from chimneys that are trying not to be noticed. A village, at last, holding its breath.
+| [class:rogue] {name} notes every shutter barred from the inside. Nobody here is keeping thieves out; they're keeping something else out.
 once
 
 # --- Props ------------------------------------------------------------------------------------------------------
@@ -34,14 +34,14 @@ once
 | [class:wizard] The fog hums very faintly, like a held note. Whatever made it is still making it.
 
 ~ examine:mists_signpost
-| A signpost leans over the road. One arm says Barovia. The other arm, pointing back the way you came, has been sawn off.
+| A signpost leans over the road. One arm says Barovia; the other, pointing back the way you came, has been sawn off.
 | [tag:curious] Someone carved a tally of marks into the post, dozens of them, and then stopped. {name} decides not to wonder why.
 
 ~ examine:mists_deer_carcass
 | A deer, torn open and left. Whatever killed it didn't stay to eat.
 
 ~ examine:mists_wayside_shrine
-| A little roadside shrine, its sun-disk chipped away to bare stone. Someone still leaves candle stubs here. None of them are lit.
+| A little roadside shrine, its sun-disk chipped away to bare stone. Someone still leaves candle stubs here, though none of them are lit.
 | [class:cleric] A shrine to the Morninglord, defaced but not abandoned. {name} sets the sun-disk straight; it keeps sliding back.
 
 ~ examine:gate_statues

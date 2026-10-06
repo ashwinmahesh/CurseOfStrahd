@@ -39,7 +39,7 @@ Mad Mary [afraid]: There was singing, some nights. Under her window. A man's voi
 -> menu
 
 ~ insight_ok
-Narrator: Under the weeping she is perfectly clear-headed. She isn't mad. She's guilty, and grief is the only thing loud enough to drown it out.
+Narrator: Under the weeping she is perfectly clear-headed. She isn't mad; she's guilty, and grief is the only thing loud enough to drown it out.
 Mad Mary: They call me mad because mad is easier to walk past.
 -> menu
 
@@ -51,7 +51,7 @@ Narrator: She rocks, and weeps, and rocks. Whatever is under it, the weeping kee
 quest find_gertruda window_clue
 Mad Mary [sad]: From the inside. Then nobody took her. She went to him. Whoever he was, with his old songs. I made a house so safe that a girl had to escape it.
 * [Persuasion DC 12] You kept her alive for sixteen years, Mary. That isn't a crime. -> comfort_ok | comfort_fail
-* We'll find her. -> menu
+* Say nothing for a moment. -> menu
 
 ~ comfort_ok
 attitude mad_mary friendly
@@ -60,7 +60,7 @@ Mad Mary: Sixteen years. Yes. That's something. That's something, isn't it. Than
 -> menu
 
 ~ comfort_fail
-Mad Mary [sad]: Kind of you. It's not true, but it's kind. She'd have said the same. She was always kinder than me.
+Mad Mary [sad]: Kind of you. It's not true, but it's kind. She'd say the same. She's kinder than me, my Gertruda.
 -> menu
 
 ~ promise

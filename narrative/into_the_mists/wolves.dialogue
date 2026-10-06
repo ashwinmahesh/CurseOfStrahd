@@ -2,7 +2,7 @@
 # Talking them down sets mists_wolves_cowed; a fight is the mists_wolves encounter (3 wolves, 150 XP, level 1).
 
 ~ start
-Narrator: A grey wolf stands square in the narrows, head low, eyes steady. More shapes wait in the fog beyond it, and something moves in the trees behind you. None of them growl. They are waiting to see what you do.
+Narrator: A grey wolf stands square in the narrows, head low, while more shapes wait in the fog beyond it and something shifts in the trees behind you. None of them growl; they are waiting to see what you do.
 interject name:tamsin_tealeaf: Good dog. Nice dog. Large, organized dog.
 if not name:tamsin_tealeaf
   interject species:halfling: I'd like it noted that I'm the bite-sized one.
@@ -10,15 +10,15 @@ endif
 -> choose
 
 ~ choose
-* [Intimidation DC 13] Stand tall, shout, and make them give way. -> cowed_shout | attack
-* [Animal Handling DC 12] Move slowly, eyes down, and walk through. -> cowed_gentle | attack
-* [if flag.mists_read_the_pack] [Insight DC 10] They're sentries, not hunters. Let them see you've seen them, and walk on. -> cowed_sentries | attack
-* [Wizard] [Arcana DC 12] A flash of harmless light and thunder should do it. -> cowed_magic | attack
+* [Intimidation DC 13] Stand tall and shout them off the road. If they don't give way, they attack. -> cowed_shout | attack
+* [Animal Handling DC 12] Eyes down, move slowly, walk through. Startle them and they attack. -> cowed_gentle | attack
+* [if flag.mists_read_the_pack] [Insight DC 10] They're sentries, not hunters: nod to them and walk on. Misjudge them and they attack. -> cowed_sentries | attack
+* [Wizard] [Arcana DC 12] Scatter them with harmless light and thunder. If they don't scare, they attack. -> cowed_magic | attack
 * Draw steel and kill the leader before it calls the rest. -> fight_first
 * Wait for them to leave. -> wait
 
 ~ wait
-Narrator: You wait. The wolves wait longer. When you finally look up, every one of them is still looking at you.
+Narrator: You wait, and the wolves wait longer. When you finally look up, every one of them is still looking at you.
 interject name:ilse_varga: They're not leaving. They're holding a line. Ours to cross or not.
 -> choose
 
@@ -31,11 +31,11 @@ Narrator: {name} walks into the narrows with eyes lowered and hands open. The le
 -> resolved
 
 ~ cowed_sentries
-Narrator: {name} meets the lead wolf's eyes and nods, the way you nod to a guard at a gate. It considers this. Then it lets you pass, and the fog fills up with wolves going somewhere to tell someone.
+Narrator: {name} meets the lead wolf's eyes and nods, the way you nod to a guard at a gate. It considers this, then lets you pass, and the fog fills up with wolves going somewhere to tell someone.
 -> resolved
 
 ~ cowed_magic
-Narrator: Light flares white and a clap of thunder rolls down the road. The wolves scatter into the fog, and from somewhere further off, a single long howl answers, as if passing on the news.
+Narrator: Light flares white and a clap of thunder rolls down the road. The wolves scatter into the fog, and from somewhere farther off, a single long howl answers, as if passing on the news.
 -> resolved
 
 ~ resolved

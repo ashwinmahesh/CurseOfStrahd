@@ -80,7 +80,7 @@ Ireena: Back again. Good. The house is quieter with more swords in it.
 * Tell us about your father. -> father
 * What's been attacking the house? -> attacks
 * [Medicine DC 12] Look at what the scarf is hiding. -> bites_seen | bites_missed
-* Ismark says you were adopted. Where do you come from? -> past
+* Where do you come from, originally? -> past
 * [name:tamsin_tealeaf] Show her the locket. -> locket
 * [if not flag.burial_agreed] We'll help you bury your father. -> agree_burial
 * [if flag.burial_agreed and not flag.burial_procession] We're ready to carry him to the church. -> procession_check
@@ -90,12 +90,12 @@ Ireena: Back again. Good. The house is quieter with more swords in it.
 * Goodbye. -> END
 
 ~ father
-Ireena: Kolyan Indirovich. Burgomaster for twenty years. Loud, stubborn, and kind to anyone who didn't argue with him, which was nobody. He found me on a road when I was a girl and never once made me feel found.
+Ireena: Kolyan Indirovich. Burgomaster for twenty years. Loud, stubborn, and kind to everyone, even the people he was shouting at. He found me on a road when I was a girl and never once made me feel found.
 Ireena [sad]: His heart gave out at the front door, fighting. He'd want the priest, the words, the earth. He'd want it done properly.
 -> menu
 
 ~ attacks
-Ireena: Wolves, most nights. Dead things on others: neighbours we buried, back to scratch at the boards. And once, him. He doesn't scratch. He knocks, and asks, very politely, to be let in.
+Ireena: Wolves, most nights. Dead things on others: neighbors we buried, back to scratch at the boards. And once, him. He doesn't scratch. He knocks, and asks, very politely, to be let in.
 interject class:fighter: Every night, testing the doors. They're looking for the weak one.
 Ireena: Father walked the house every night touching every board, as if he could hold them on with his hands. I think, for a while, he did.
 -> menu
@@ -141,13 +141,13 @@ Ireena [angry]: Donavich won't come. Then he'll go into the ground without the c
 else
 Ireena: Has Father Donavich agreed to say the words over him?
 endif
-* Not yet. We'll ask him first. -> END
+* Not yet. Give us a little longer. -> END
 * We'll bury him without the priest. -> procession
 
 ~ procession
 set burial_procession
 quest bury_the_burgomaster procession
-Narrator: Ismark takes the head of the coffin; Ireena walks in front with the lamp. The burgomaster is heavier than he looks. Grief usually is.
+Narrator: Ismark takes the head of the coffin and Ireena walks in front with the lamp. The burgomaster is heavier than he looks, as grief usually is.
 if flag.parriwimple_pallbearer
 Narrator: Parriwimple is waiting at the gate with a shovel over his shoulder. He takes the foot of the coffin by himself and doesn't seem to notice the weight.
 endif
@@ -161,7 +161,7 @@ Ireena: You'd do that? Then listen: the parlor window is the weakest, the front 
 
 ~ vigil_start
 set mansion_vigil
-Narrator: You bar the door and wait. The fire burns down to embers. Then, all at once, every board on every window begins to creak.
+Narrator: You bar the door and wait while the fire burns down to embers. Then, all at once, every board on every window begins to creak.
 -> END
 
 ~ siege_after
@@ -181,7 +181,7 @@ Ireena [sad]: Thank you. He'd have liked you. He'd have argued with you about ev
 if flag.burial_method == "hasty"
 Ireena [angry]: He's in the ground. No words, no prayer. I'll go, because staying is worse. But I won't pretend I liked how.
 elif flag.burial_method == "church_rites"
-Ireena [sad]: Father Donavich said the words. Father would have corrected his grammar. He'd have been pleased, though. He liked things done properly.
+Ireena [sad]: Donavich said the words. Father would have corrected his grammar. He'd have been pleased, though. He liked things done properly.
 elif flag.burial_method == "cleric_rites"
 Ireena: Your god didn't know him. Your god does now. Thank you for that.
 else
@@ -220,7 +220,7 @@ set ireena_destination = "vallaki"
 -> accept
 
 ~ krezk
-Ismark: Krezk? That's days past Vallaki, up in the hills, behind a wall and an abbey. Further from him, I'll grant you. Further from everything.
+Ismark: Krezk? That's days past Vallaki, up in the hills, behind a wall and an abbey. Farther from him, I'll grant you. Farther from everything.
 Ireena: Krezk, then. I've never seen it. For once I'd like to go somewhere I've never been, on purpose. Through Vallaki, and on.
 set ireena_destination = "krezk"
 -> accept

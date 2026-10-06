@@ -13,7 +13,7 @@ Bildrath: Back again. The prices haven't changed. They never change. That's what
 -> menu
 endif
 set bildrath_met
-Narrator: Everything in the shop is dusted, labelled and squared to the edge of its shelf. Behind the counter, a narrow man in a spotless apron is already reaching for a pencil.
+Narrator: Everything in the shop is dusted, labeled and squared to the edge of its shelf. Behind the counter, a narrow man in a spotless apron is already reaching for a pencil.
 Bildrath: Welcome to Bildrath's Mercantile. Prices are posted. They are ten times what you're used to. You are used to the wrong place.
 interject background:criminal: What a lovely, sturdy counter. Very... sturdy.
 -> menu
@@ -32,7 +32,7 @@ Bildrath [weary]: For you, the special price. Nine times. I'll never recover. Ro
 else
 Bildrath: Rope, ten gold. Torches, one gold for five. Rations, five gold a day. Lamp oil, one gold a flask. A healer's kit, fifty. And the potion in the case, five hundred.
 endif
-interject class:rogue: Five hundred? For one potion? I've stolen less. In theory. Hypothetically. Never mind.
+interject class:rogue: That much? For one potion? I've stolen less. In theory. Hypothetically. Never mind.
 * Fifty feet of rope. (10 gp) -> buy_rope
 * Five torches. (1 gp) -> buy_torches
 * Three days of rations. (15 gp) -> buy_rations
@@ -127,8 +127,8 @@ Bildrath: Seven gold. Heavy. I'll have Parriwimple carry it. I'll have Parriwimp
 
 ~ haggle
 Bildrath: Haggling is a form of theft that takes longer.
-* [Persuasion DC 18] A loyal customer is worth more than one sale. -> haggle_ok | haggle_fail
-* [Intimidation DC 18] Lower the prices. -> haggle_ok | haggle_fail
+* [Persuasion DC 18] A loyal customer is worth more than one sale. (one try) -> haggle_ok | haggle_fail
+* [Intimidation DC 18] Lower the prices. (one try) -> haggle_ok | haggle_fail
 * Never mind. -> menu
 
 ~ haggle_ok
@@ -151,7 +151,7 @@ Bildrath: News costs nothing, which is what it's worth. Ask.
 * Enough news. -> menu
 
 ~ news_morgantha
-Bildrath: Morgantha. Comes through every few weeks with that cart. I don't sell pastries; I have standards, and she undercuts me. Folk who can't pay her settle up some other way. I don't ask how. I don't give credit, and I suspect neither does she.
+Bildrath: Morgantha. Comes through every few weeks with that cart. I don't sell pastries; I have standards. Folk who can't pay her settle up some other way. I don't ask how. I don't give credit, and I suspect neither does she.
 -> news
 
 ~ news_ismark
@@ -186,10 +186,10 @@ Bildrath [angry]: He offered. For free. Parriwimple, we will be having a talk ab
 
 ~ robbed
 set bildrath_accused
-Bildrath [angry]: My strongbox is thirty gold lighter than it was this morning, and you are the only new faces in the valley. Parriwimple! Stand by the door.
-* [Deception DC 15] We've no idea what you're talking about. -> lie_ok | lie_fail
+Bildrath [angry]: My strongbox is thirty gold lighter than it ought to be, and you are the only new faces in the valley. Parriwimple! Stand by the door.
+* [Deception DC 15] We've no idea what you're talking about. (If he doesn't believe you, you're thrown out.) -> lie_ok | lie_fail
 * Fine. Here's your money back. (30 gp) -> repay
-* [Intimidation DC 14] Call your nephew off, or else. -> threat_ok | threat_fail
+* [Intimidation DC 14] Call your nephew off, or else. (If he doesn't back down, you're thrown out.) -> threat_ok | threat_fail
 
 ~ lie_ok
 attitude bildrath indifferent
