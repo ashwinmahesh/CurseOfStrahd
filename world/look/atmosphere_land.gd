@@ -139,7 +139,8 @@ func _distances() -> void:
 		for i in _nx:
 			var c := Vector2i(i - int(REACH), j - int(REACH))
 			_dist[j * _nx + i] = 0.0 if _is_map(i, j) else 1e6
-			var walk := g.in_bounds(c) and not g.has_flag(c, CombatGrid.WALL) and not g.has_flag(c, CombatGrid.VOID)
+			var walk := g.in_bounds(c) and not g.has_flag(c, CombatGrid.WALL) and not g.has_flag(c, CombatGrid.VOID) \
+				and not g.has_flag(c, CombatGrid.WATER)
 			_walk[j * _nx + i] = 0.0 if walk else 1e6
 	_dist = _chamfered(_dist)
 	_walk = _chamfered(_walk)

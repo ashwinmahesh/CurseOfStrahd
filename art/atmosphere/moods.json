@@ -99,7 +99,7 @@
         "hills": 1.4
       },
       "water": {
-        "deep": "night_deep",
+        "deep": "night",
         "shallow": "moon_blue",
         "foam": "frost",
         "glint": "moonlight"
@@ -320,8 +320,8 @@
         "window_light",
         {
           "kind": "snow",
-          "amount": 60,
-          "wind": 0.6
+          "amount": 110,
+          "wind": 0.5
         }
       ],
       "times": {
@@ -354,7 +354,7 @@
       "weather": [
         {
           "kind": "snow",
-          "amount": 40,
+          "amount": 80,
           "wind": 0.4
         }
       ]
@@ -380,8 +380,8 @@
         "window_light",
         {
           "kind": "snow",
-          "amount": 160,
-          "wind": 1.6
+          "amount": 220,
+          "wind": 1.2
         },
         {
           "kind": "crows",
@@ -557,8 +557,8 @@
       "water": {
         "deep": "bog_deep",
         "shallow": "bog",
-        "foam": "sickly",
-        "glint": "bile",
+        "foam": "bone_dark",
+        "glint": "moss",
         "flow": [
           0.03,
           0.01
@@ -585,7 +585,7 @@
             "lights": "bone",
             "amount": 0.4
           },
-          "saturation": 0.8
+          "saturation": 0.75
         },
         "dusk": {
           "mist": "bone",
@@ -593,15 +593,17 @@
             "shadows": "bog_deep",
             "lights": "parchment",
             "amount": 0.4
-          }
+          },
+          "saturation": 0.8
         },
         "night": {
-          "mist": "moss",
+          "mist": "slate",
           "grade": {
-            "shadows": "bog_deep",
+            "shadows": "night",
             "lights": "moonlight",
             "amount": 0.45
-          }
+          },
+          "saturation": 0.65
         }
       }
     },
@@ -628,8 +630,8 @@
       "weather": [
         {
           "kind": "snow",
-          "amount": 200,
-          "wind": 1.4
+          "amount": 320,
+          "wind": 1.0
         }
       ],
       "times": {
@@ -642,26 +644,36 @@
           "grade": {
             "shadows": "moon_blue",
             "lights": "ivory",
-            "amount": 0.3
-          }
-        },
-        "dusk": {
-          "mist": "lilac",
-          "grade": {
-            "shadows": "bruise",
-            "lights": "frost",
             "amount": 0.35
           }
         },
+        "dusk": {
+          "mist": "silver",
+          "mists": "silver",
+          "grade": {
+            "shadows": "moon_blue",
+            "lights": "frost",
+            "amount": 0.4
+          }
+        },
         "night": {
-          "mist": "mist_blue",
+          "mist": "moonlight",
           "grade": {
             "shadows": "night",
             "lights": "frost",
-            "amount": 0.45
+            "amount": 0.5
+          }
+        },
+        "dawn": {
+          "mist": "silver",
+          "grade": {
+            "shadows": "moon_blue",
+            "lights": "frost",
+            "amount": 0.4
           }
         }
-      }
+      },
+      "keep_greys": true
     },
     "blizzard": {
       "like": "high_snow",
@@ -677,8 +689,8 @@
       "weather": [
         {
           "kind": "snow",
-          "amount": 480,
-          "wind": 3.5
+          "amount": 700,
+          "wind": 2.2
         }
       ],
       "surround": {
@@ -759,10 +771,12 @@
       },
       "surround": {
         "ground": "mountain/scree",
-        "trees": 0.35,
-        "dead": 0.6,
-        "rise": 9.0,
-        "hills": 3.0
+        "road": "mountain/scree",
+        "trees": 0.15,
+        "dead": 0.8,
+        "rise": 6.0,
+        "hills": 2.5,
+        "void": "drop"
       },
       "weather": [
         {
@@ -880,23 +894,23 @@
     "crypt": {
       "like": "indoors",
       "mist": {
-        "height": 0.45,
-        "cover": 0.55,
+        "height": 0.6,
+        "cover": 0.6,
         "scale": 0.3,
         "wind": [
           0.08,
           0.03
         ],
-        "thickness": 1.2,
+        "thickness": 3.5,
         "bands": 3,
-        "open": 0.6
+        "open": 0.7
       },
       "times": {
         "any": {
           "ambient": "bog_deep",
-          "ambient_energy": 0.65,
-          "mist": "slate",
-          "mist_strength": 0.35,
+          "ambient_energy": 0.8,
+          "mist": "pewter",
+          "mist_strength": 0.5,
           "grade": {
             "shadows": "bog_deep",
             "lights": "flame",
@@ -910,7 +924,7 @@
       "times": {
         "any": {
           "ambient": "grave",
-          "mist": "stone"
+          "mist": "slate"
         }
       }
     },
@@ -935,7 +949,7 @@
           "ambient": "night",
           "ambient_energy": 0.7,
           "mist": "frost",
-          "mist_strength": 0.3,
+          "mist_strength": 0.45,
           "grade": {
             "shadows": "night",
             "lights": "flame",
@@ -963,7 +977,7 @@
       "times": {
         "any": {
           "ambient": "bruise_deep",
-          "mist": "bruise",
+          "mist": "orchid",
           "grade": {
             "shadows": "blood_deep",
             "lights": "lilac",
@@ -977,7 +991,7 @@
       "times": {
         "any": {
           "ambient": "grave",
-          "mist": "bone_dark",
+          "mist": "bone",
           "grade": {
             "shadows": "bruise_deep",
             "lights": "bone",
