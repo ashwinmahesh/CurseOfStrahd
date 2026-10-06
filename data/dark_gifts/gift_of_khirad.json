@@ -1,0 +1,47 @@
+{
+  "id": "gift_of_khirad",
+  "name": "The Backward Stars",
+  "vestige": "Khirad, who reads the stars backward",
+  "summary": "Advantage on Initiative, +5 to passive Perception, and Clairvoyance once per long rest. The price: 1 fewer Hit Point per level, and visions that never let you rest easy.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "advantage",
+        "on": "initiative"
+      },
+      {
+        "stat": "passive",
+        "skill": "perception",
+        "value": 5
+      },
+      {
+        "stat": "spell",
+        "value": "clairvoyance",
+        "ability": "wis",
+        "uses": {
+          "count": 1,
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "clairvoyance"
+    ],
+    "text": "You see the next moment a breath before it arrives, and once a day you can look somewhere you are not."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "hp_max",
+        "value": "-level"
+      }
+    ],
+    "flaw": "You see every way a moment could end, mostly badly, and you cannot stop yourself saying so.",
+    "text": "The visions don't stop when you sleep. You wake worn thin, every morning, for the rest of your life."
+  },
+  "implemented": "data"
+}

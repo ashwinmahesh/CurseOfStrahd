@@ -1,0 +1,73 @@
+{
+  "id": "the_amber_temple",
+  "name": "The Amber Temple",
+  "summary": "High above the Tsolenka Pass, a temple of amber where dead powers talk and bargain, and where the lord of the valley once made his.",
+  "region": "amber_temple",
+  "stages": [
+    {
+      "id": "arrived",
+      "journal": "Above the Tsolenka Pass, a temple is cut into the mountain, its doors flanked by two colossi of amber. One is split and dead. The other asked us for a word, and when we had none, it let us in anyway. It said nothing about letting us out.",
+      "objectives": [
+        "Explore the Amber Temple",
+        "Learn how the devil made his bargain here"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "voices_heard",
+      "journal": "The temple's sarcophagi hold vestiges: the last embers of dead gods and worse, sealed in amber by the wardens who built this place. They are not dead enough to be quiet. Each one offers a gift, and each gift has a price that never comes off.",
+      "objectives": [
+        "Decide what, if anything, to take from the amber",
+        "Find the deepest vault"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "broker_met",
+      "journal": "A mild scholar called Master Vosk reads in the temple library, and urges everyone to listen to the sarcophagi. He says there is an empty one at the very bottom of the temple, and that he'd like to show it to us.",
+      "objectives": [
+        "Go down to the bottom of the temple"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "hollow_found",
+      "journal": "At the bottom of the temple lies a sarcophagus with its name chiselled away and nothing inside. Whatever lay in it went into a prince of the west, long ago, and it is in him still.",
+      "objectives": [
+        "Deal with the broker of the temple's bargains",
+        "Read the record of the devil's bargain"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "broker_banished",
+      "journal": "We spoke Vosk's true name, Ashkarreth, and bound him: the jackal who brokered the devil's bargain has left the temple, and will never broker another in this valley.",
+      "objectives": [],
+      "ends": ""
+    },
+    {
+      "id": "broker_destroyed",
+      "journal": "Vosk was an arcanaloth, a jackal-headed fiend who witnessed the devil's bargain and took his fee. He offered us the same bargain. We refused, and destroyed him.",
+      "objectives": [],
+      "ends": ""
+    },
+    {
+      "id": "broker_paid",
+      "journal": "One of us lay down in the empty amber, and the Thirst that lives in the devil knows them now. Vosk, an arcanaloth, took his fee and left smiling.",
+      "objectives": [],
+      "ends": ""
+    },
+    {
+      "id": "pact_learned",
+      "journal": "We have stood where the devil made his bargain. The Thirst lives in him, and he and his land are bound together until the end of both. It is not a weakness, but it is a shape, and shapes can be broken.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "temple_sealed",
+      "journal": "Exethanter performed the wardens' last rite. Every sarcophagus in the Amber Temple is dark and silent now. No one will bargain there again.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

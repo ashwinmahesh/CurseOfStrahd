@@ -1,0 +1,693 @@
+{
+  "id": "amber_temple_vault",
+  "name": "The Amber Temple: the Vaults",
+  "region": "amber_temple",
+  "summary": "Under the great hall: a long gallery of ten talking sarcophagi, a door of glowing amber over a vault heaped with the offerings of the desperate, and at the bottom of everything the sanctum where a prince of the west once made his bargain with the thing whose sarcophagus is now empty.",
+  "text": "The amber in the walls glows here, faintly, like honey held up to a candle. It is the only warm colour for a mile.",
+  "map": {
+    "rows": [
+      "########################################",
+      "#........#######...........#############",
+      "#........#######...........#############",
+      "#........#######...........#############",
+      "#........#######...........#############",
+      "####.###########...........#############",
+      "####.###############.###################",
+      "####.###############.###################",
+      "#......................................#",
+      "#....=....=....=.........=....=.......=#",
+      "#......................................#",
+      "#......................................#",
+      "#......................................#",
+      "#......................................#",
+      "#......................................#",
+      "#....=....=....=.........=....=.......=#",
+      "#......................................#",
+      "###################..###################",
+      "###################..###################",
+      "##########....................##########",
+      "##########....................##########",
+      "##########..=..............=..##########",
+      "##########....................##########",
+      "##########....................##########",
+      "##########..=..............=..##########",
+      "##########....................##########",
+      "##########........====........##########",
+      "##########....................##########",
+      "##########....................##########",
+      "########################################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "vault_stair",
+      "name": "The vault stair",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          9,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "treasure_vault",
+      "name": "The vault of offerings",
+      "cells": [
+        [
+          15,
+          0
+        ],
+        [
+          27,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "hall_of_vestiges",
+      "name": "The hall of vestiges",
+      "cells": [
+        [
+          0,
+          8
+        ],
+        [
+          39,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "sanctum",
+      "name": "The sanctum of the hollow",
+      "cells": [
+        [
+          10,
+          17
+        ],
+        [
+          29,
+          28
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      4,
+      2
+    ],
+    "from_upper": [
+      4,
+      2
+    ]
+  },
+  "exits": [
+    {
+      "id": "up_to_the_great_hall",
+      "cell": [
+        1,
+        1
+      ],
+      "to": "amber_temple_faceless_god",
+      "spawn": "from_vaults",
+      "label": "Stairs up to the great hall"
+    }
+  ],
+  "doors": [
+    {
+      "id": "honey_doors",
+      "cell": [
+        20,
+        7
+      ],
+      "label": "The honey-glow doors",
+      "when": "flag.honey_door_opened"
+    }
+  ],
+  "props": [
+    {
+      "id": "honey_door_seal",
+      "cell": [
+        21,
+        8
+      ],
+      "kind": "examine",
+      "label": "The amber doors' seal",
+      "model": "rune_circle",
+      "dialogue": "amber_temple/vault:honey_door"
+    },
+    {
+      "id": "sarc_khirad",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a face turned up)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:khirad"
+    },
+    {
+      "id": "sarc_norganas",
+      "cell": [
+        10,
+        9
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a rubbed-out shape)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:norganas"
+    },
+    {
+      "id": "sarc_savnok",
+      "cell": [
+        15,
+        9
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a sewn mouth)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:savnok"
+    },
+    {
+      "id": "sarc_seriach",
+      "cell": [
+        25,
+        9
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (chained hounds)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:seriach"
+    },
+    {
+      "id": "sarc_sykane",
+      "cell": [
+        30,
+        9
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (an empty ribcage)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:sykane"
+    },
+    {
+      "id": "sarc_tarakamedes",
+      "cell": [
+        5,
+        15
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a dragon's skull)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:tarakamedes"
+    },
+    {
+      "id": "sarc_tenebrous",
+      "cell": [
+        10,
+        15
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a dark absence)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:tenebrous"
+    },
+    {
+      "id": "sarc_yrrga",
+      "cell": [
+        15,
+        15
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a great eye)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:yrrga"
+    },
+    {
+      "id": "sarc_zhudun",
+      "cell": [
+        25,
+        15
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a grey star)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:zhudun"
+    },
+    {
+      "id": "sarc_dahlver_nar",
+      "cell": [
+        30,
+        15
+      ],
+      "kind": "examine",
+      "label": "A sarcophagus of amber (a jaw of teeth)",
+      "model": "coffin",
+      "dialogue": "amber_temple/vestiges:dahlver_nar"
+    },
+    {
+      "id": "empty_plinth",
+      "cell": [
+        38,
+        9
+      ],
+      "kind": "examine",
+      "label": "A plinth with no sarcophagus",
+      "model": "altar_stone"
+    },
+    {
+      "id": "cracked_sarcophagus",
+      "cell": [
+        38,
+        15
+      ],
+      "kind": "examine",
+      "label": "A cracked, silent sarcophagus",
+      "model": "crypt"
+    },
+    {
+      "id": "hollow_sarcophagus",
+      "cell": [
+        19,
+        26
+      ],
+      "kind": "examine",
+      "label": "The empty sarcophagus",
+      "model": "crypt",
+      "dialogue": "amber_temple/vault:hollow"
+    },
+    {
+      "id": "pact_ledger",
+      "cell": [
+        27,
+        26
+      ],
+      "kind": "examine",
+      "label": "A stone lectern with a book chained to it",
+      "model": "book",
+      "dialogue": "amber_temple/vault:pact_ledger"
+    },
+    {
+      "id": "sanctum_braziers",
+      "cell": [
+        12,
+        21
+      ],
+      "kind": "decor",
+      "label": "Cold braziers",
+      "model": "brazier"
+    }
+  ],
+  "containers": [
+    {
+      "id": "gift_heap",
+      "cell": [
+        21,
+        2
+      ],
+      "label": "A heap of offerings",
+      "model": "chest",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 3
+        },
+        {
+          "id": "jewelers_tools",
+          "qty": 1
+        },
+        {
+          "id": "mirror",
+          "qty": 1
+        },
+        {
+          "id": "perfume",
+          "qty": 2
+        },
+        {
+          "id": "spyglass",
+          "qty": 1
+        }
+      ],
+      "gold": 640
+    },
+    {
+      "id": "offering_urns",
+      "cell": [
+        17,
+        4
+      ],
+      "label": "Sealed urns",
+      "model": "jars",
+      "items": [
+        {
+          "id": "antitoxin",
+          "qty": 2
+        },
+        {
+          "id": "holy_water",
+          "qty": 2
+        }
+      ],
+      "gold": 120
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        20,
+        8
+      ],
+      "kind": "magic",
+      "bright_ft": 5,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        20,
+        2
+      ],
+      "kind": "magic",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        20,
+        22
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        5,
+        12
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        33,
+        12
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ],
+  "traps": [
+    {
+      "id": "warding_glyphs",
+      "label": "A line of glyphs across the floor",
+      "cells": [
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          8,
+          14
+        ]
+      ],
+      "detect_dc": 16,
+      "disarm_dc": 17,
+      "save": {
+        "ability": "wis",
+        "dc": 16
+      },
+      "damage": "4d8",
+      "damage_type": "psychic",
+      "text": "The glyphs light as you cross them, and for a moment every voice in the amber is inside your head at once."
+    },
+    {
+      "id": "amber_shards",
+      "label": "Cracked amber in the vault ceiling",
+      "cells": [
+        [
+          20,
+          5
+        ],
+        [
+          19,
+          4
+        ],
+        [
+          20,
+          4
+        ],
+        [
+          21,
+          4
+        ]
+      ],
+      "detect_dc": 14,
+      "disarm_dc": 0,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d10",
+      "damage_type": "piercing",
+      "text": "The ceiling sheds a curtain of amber shards, each as long as a knife and nearly as sharp."
+    },
+    {
+      "id": "stair_ice",
+      "label": "Black ice on the steps",
+      "cells": [
+        [
+          4,
+          6
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "detect_dc": 12,
+      "disarm_dc": 0,
+      "save": {
+        "ability": "dex",
+        "dc": 13
+      },
+      "damage": "2d6",
+      "damage_type": "bludgeoning",
+      "condition": "prone",
+      "text": "Your heel finds black ice instead of stone, and the stair hurries you down the rest of the way."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "vosk",
+      "cell": [
+        19,
+        22
+      ],
+      "dialogue": "amber_temple/vosk:sanctum",
+      "when": "not flag.vosk_fate and not flag.vosk_destroyed",
+      "approach": 7
+    },
+    {
+      "npc": "exethanter",
+      "cell": [
+        14,
+        21
+      ],
+      "dialogue": "amber_temple/vault:aftermath",
+      "when": "(flag.vosk_fate or flag.vosk_destroyed) and not flag.amber_seal_decided and flag.exethanter_met and not flag.exethanter_destroyed and not flag.exethanter_hostile and flag.exethanter_phylactery != \"smashed\"",
+      "approach": 8
+    }
+  ],
+  "encounters": [
+    {
+      "id": "vault_guardian",
+      "trigger": "flag:honey_door_forced",
+      "when": "not flag.vault_guardian_destroyed and level >= 10",
+      "text": "The alcove beside the doors was not empty. Something tall and golden steps out of it, and the hall's light shifts as it moves.",
+      "monsters": [
+        {
+          "monster": "amber_golem",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "The Vault Guardian"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            12
+          ],
+          "name": "Warden's wraith"
+        }
+      ],
+      "surprise": "",
+      "flag": "vault_guardian_destroyed"
+    },
+    {
+      "id": "vault_guardian",
+      "trigger": "flag:honey_door_forced",
+      "when": "not flag.vault_guardian_destroyed",
+      "text": "The alcove beside the doors was not empty. Something tall and golden steps out of it, and the hall's light shifts as it moves.",
+      "monsters": [
+        {
+          "monster": "amber_golem",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "The Vault Guardian"
+        }
+      ],
+      "surprise": "",
+      "flag": "vault_guardian_destroyed"
+    },
+    {
+      "id": "vosk_unmasked",
+      "trigger": "dialogue",
+      "when": "flag.vosk_named or flag.vosk_weakened",
+      "text": "Vosk's shape slips like a badly hung coat. Under it: a jackal's head, a scholar's robe, and claws that shake.",
+      "monsters": [
+        {
+          "monster": "arcanaloth",
+          "cell": [
+            19,
+            22
+          ],
+          "name": "Vosk, unmasked",
+          "hp": 80
+        }
+      ],
+      "surprise": "",
+      "flag": "vosk_destroyed",
+      "quest": {
+        "id": "the_amber_temple",
+        "stage": "broker_destroyed"
+      }
+    },
+    {
+      "id": "vosk_unmasked",
+      "trigger": "dialogue",
+      "when": "level >= 10",
+      "text": "The scholar takes off his spectacles, and his face goes with them: a jackal's head, black-lipped and smiling. The cold braziers light themselves with green fire.",
+      "monsters": [
+        {
+          "monster": "arcanaloth",
+          "cell": [
+            19,
+            22
+          ],
+          "name": "Vosk, unmasked"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            12,
+            22
+          ],
+          "name": "Bound skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            27,
+            22
+          ],
+          "name": "Bound skull"
+        }
+      ],
+      "surprise": "",
+      "flag": "vosk_destroyed",
+      "quest": {
+        "id": "the_amber_temple",
+        "stage": "broker_destroyed"
+      }
+    },
+    {
+      "id": "vosk_unmasked",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The scholar takes off his spectacles, and his face goes with them: a jackal's head, black-lipped and smiling. One cold brazier lights itself with green fire.",
+      "monsters": [
+        {
+          "monster": "arcanaloth",
+          "cell": [
+            19,
+            22
+          ],
+          "name": "Vosk, unmasked"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            12,
+            22
+          ],
+          "name": "Bound skull"
+        }
+      ],
+      "surprise": "",
+      "flag": "vosk_destroyed",
+      "quest": {
+        "id": "the_amber_temple",
+        "stage": "broker_destroyed"
+      }
+    },
+    {
+      "id": "vosk_unmasked",
+      "trigger": "dialogue",
+      "text": "The scholar takes off his spectacles, and his face goes with them: a jackal's head, black-lipped and smiling.",
+      "monsters": [
+        {
+          "monster": "arcanaloth",
+          "cell": [
+            19,
+            22
+          ],
+          "name": "Vosk, unmasked",
+          "hp": 85
+        }
+      ],
+      "surprise": "",
+      "flag": "vosk_destroyed",
+      "quest": {
+        "id": "the_amber_temple",
+        "stage": "broker_destroyed"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:amber_temple_vault"
+  },
+  "rest": "no",
+  "rest_text": "Nobody sleeps down here. The voices in the amber know your names now, and they take turns.",
+  "treasure_spots": {
+    "amber_temple_vault": {
+      "container": "gift_heap"
+    }
+  }
+}

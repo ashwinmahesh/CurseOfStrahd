@@ -1,0 +1,56 @@
+{
+  "id": "gift_of_the_hollow",
+  "name": "The Second Thirst",
+  "vestige": "The Thirst, whose name was cut away",
+  "summary": "Strength and Constitution +2, darkvision, necrotic resistance, a draining strike and more Hit Points. The price: radiant vulnerability, sunlight's burn, and the devil's own thirst.",
+  "source": {
+    "book": "CoS",
+    "note": "The empty sarcophagus where Strahd made his bargain. Ours entirely: the book's vestige is not named or used here. Offered at the region's climax (amber_temple_vault (the sanctum: Master Vosk offers it at the climax))."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "str",
+        "value": 2,
+        "max": 22
+      },
+      {
+        "stat": "ability",
+        "ability": "con",
+        "value": 2,
+        "max": 22
+      },
+      {
+        "stat": "darkvision",
+        "value": 120
+      },
+      {
+        "stat": "resistance",
+        "value": "necrotic"
+      },
+      {
+        "stat": "hp_max",
+        "value": "level"
+      },
+      {
+        "stat": "extra_damage",
+        "dice": "1d6",
+        "type": "necrotic",
+        "on": "weapon"
+      }
+    ],
+    "text": "What filled the prince of this valley has room for one more. You grow strong, hard to kill, and hungry in a way that feels like purpose."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "vulnerability",
+        "value": "radiant"
+      }
+    ],
+    "flaw": "Something in you thirsts. It is patient now. It will not always be.",
+    "text": "You are the first step of what he is: sunlight burns you (radiant damage at the start of each of your turns in it), running water frightens you, and the lord of the valley knows your name. Barovia will not let you leave while he stands."
+  },
+  "implemented": "partial: sunlight damage, the fear of running water and being bound to the valley are text only (no sunlight or travel rules for characters yet). The endings (Phase 6) read gift:gift_of_the_hollow."
+}

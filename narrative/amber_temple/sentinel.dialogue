@@ -1,0 +1,88 @@
+# The Amber Sentinel at the temple doors (docs/regions/amber_temple.md §4.1). The wardens set two colossi of amber
+# at the doors; one is split and dead. The other lets anyone in, and stops anyone leaving with a dark gift unless it
+# hears the wardens' word. arrival: first approach. departure: someone carries a gift (approach from the doors; the
+# encounter sentinel_stops_you on the ledge is the fallback). talk: any later use.
+
+~ arrival
+set amber_temple_arrived
+quest the_amber_temple arrived
+Narrator: Two colossi of amber flank the doors, each three times a man's height, robed and hooded like the wardens who carved them. The left one has split from crown to knee, and snow has packed the crack.
+Narrator: The right one has not. As you come within its reach it turns its head toward you, with a sound like a frozen river shifting in its bed.
+amber_sentinel: SPEAK THE WORD.
+interject guest:kasimir_velikov: I have read about these. They were made to keep something in, not to keep us out. I wish I had not read that part.
+* We don't know any word. -> no_word
+* [History DC 17] Read the old script carved over the doors aloud. -> lintel_ok | lintel_fail
+* [Arcana DC 16] Study the ward cut into its chest. -> ward_ok | ward_fail
+* (Draw steel and strike it.) -> attack
+
+~ no_word
+Narrator: The head turns back toward the valley. Whatever it was waiting for, it wasn't you.
+amber_sentinel: ALL MAY ENTER.
+Narrator: It says nothing at all about leaving.
+interject tag:blunt: Noted.
+-> END
+
+~ lintel_ok
+set lintel_read_attempted
+set warden_word_known
+set sentinel_stilled
+Narrator: The script was cut by someone used to being obeyed. Most of it lists what the temple must never become: a shrine, a market, a door. The last line is a single word, carved deeper than the rest.
+Narrator: You say it aloud. The colossus lowers its head like a hound told to lie down, and the light behind its amber eyes sinks to an ember.
+-> END
+
+~ lintel_fail
+set lintel_read_attempted
+Narrator: Frost has had three hundred winters at the deep cuts. You make out a list of things the temple refuses to be, and no word at all.
+-> no_word
+
+~ ward_ok
+Narrator: It isn't a lock. It's a net, and it faces inward. Whatever this temple hands out, the colossus was made to stop it walking away.
+interject class:wizard: A gaoler, then, not a doorman. That is considerably worse.
+-> no_word
+
+~ ward_fail
+Narrator: The lines in the amber run in circles that never quite close. The colossus doesn't wait for you to work them out.
+-> no_word
+
+~ attack
+Narrator: Steel rings off amber. The colossus considers the scratch, and then it considers you.
+combat sentinel_wakes
+
+~ talk
+if flag.sentinel_stilled
+Narrator: The colossus stands with its head bowed and its eyes dim, a guard who has been told to stand easy and has decided to believe it.
+-> END
+endif
+Narrator: The colossus watches the valley below. When you come close, the light in its eyes brightens a little, the way a sleeper's breathing changes.
+amber_sentinel: SPEAK THE WORD.
+* [if flag.warden_word_known] Speak the wardens' word. -> stilled
+* [if not flag.lintel_read_attempted] [History DC 17] Read the old script carved over the doors aloud. -> lintel_ok | lintel_fail
+* Leave it be. -> END
+* (Draw steel and strike it.) -> attack
+
+~ stilled
+set sentinel_stilled
+Narrator: You say the word the wardens chose. The colossus lowers its head, and the light in its eyes sinks to an ember. Somewhere deep in the amber, something settles.
+-> END
+
+~ departure
+Narrator: The split colossus stays dead. The other turns its head, and keeps turning, until its eyes find whoever is carrying something the temple gave.
+amber_sentinel: WHO CARRIES. NOTHING LEAVES.
+interject guest:kasimir_velikov: It knows. Of course it knows. It was built for nothing else.
+* [if flag.warden_word_known] Speak the wardens' word. -> stilled
+* [Arcana DC 18] Find the knot in its inward ward and pull it loose. -> departure_ward_ok | departure_ward_fail
+* We'll go back inside. -> departure_back
+* (Draw steel and strike it.) -> attack
+
+~ departure_ward_ok
+set sentinel_stilled
+Narrator: You find the place where the ward turns back on itself and pull. The colossus freezes mid-turn, head cocked, and stays that way.
+-> END
+
+~ departure_ward_fail
+Narrator: The ward slides through your understanding like meltwater, and the colossus is already stepping down off its plinth.
+combat sentinel_wakes
+
+~ departure_back
+Narrator: It watches you go back through the doors. It will be here when you come out. It has nowhere else to be.
+-> END

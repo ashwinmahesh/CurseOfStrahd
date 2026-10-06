@@ -1,0 +1,300 @@
+{
+  "region": "amber_temple",
+  "flags": [
+    {
+      "id": "amber_temple_arrived",
+      "type": "bool",
+      "summary": "The Amber Sentinel challenged the party on its first approach to the temple doors (sentinel:arrival); quest the_amber_temple arrived. The sentinel's arrival scene stops playing."
+    },
+    {
+      "id": "lintel_read_attempted",
+      "type": "bool",
+      "summary": "The party made its one History attempt at the script over the temple doors (sentinel)."
+    },
+    {
+      "id": "warden_word_known",
+      "type": "bool",
+      "summary": "The party knows the wardens' word: from the lintel (History 17), Exethanter (asked, or as thanks for his phylactery) or his notes (Investigation 15). Stills the sentinel and opens the honey-glow doors."
+    },
+    {
+      "id": "sentinel_stilled",
+      "type": "bool",
+      "summary": "The Amber Sentinel heard the wardens' word (or had its ward unpicked, Arcana 18): it no longer stops gift-bearers leaving."
+    },
+    {
+      "id": "sentinel_destroyed",
+      "type": "bool",
+      "summary": "The Amber Sentinel was destroyed (encounter sentinel_wakes or sentinel_stops_you). Narrator; Exethanter."
+    },
+    {
+      "id": "dark_gifts_taken",
+      "type": "int",
+      "summary": "How many dark gifts the party has accepted in the Amber Temple (vestiges, the Hollow). The sentinel stops anyone leaving with one; Vosk, Exethanter, banter and rests react. Phase 6 epilogue may read it (darker bargains)."
+    },
+    {
+      "id": "frozen_watch_cleared",
+      "type": "bool",
+      "summary": "The frozen warden-guards (wights) in the east guardroom are destroyed (encounter frozen_watch)."
+    },
+    {
+      "id": "amber_voices_begun",
+      "type": "bool",
+      "summary": "Guard: the party has heard its first vestige (quest the_amber_temple voices_heard). Banter."
+    },
+    {
+      "id": "vestige_zantras_heard",
+      "type": "bool",
+      "summary": "Zantras (ring of amber) has spoken to the party; later visits get its short greeting."
+    },
+    {
+      "id": "vestige_fekre_heard",
+      "type": "bool",
+      "summary": "Fekre (ring of amber) has spoken to the party."
+    },
+    {
+      "id": "vestige_taar_haak_heard",
+      "type": "bool",
+      "summary": "Great Taar Haak (ring of amber) has spoken to the party."
+    },
+    {
+      "id": "vestige_shami_amourae_heard",
+      "type": "bool",
+      "summary": "Shami-Amourae (ring of amber) has spoken to the party."
+    },
+    {
+      "id": "vestige_yog_heard",
+      "type": "bool",
+      "summary": "Yog (ring of amber) has spoken to the party."
+    },
+    {
+      "id": "vestige_drizlash_heard",
+      "type": "bool",
+      "summary": "Drizlash (ring of amber) has spoken to the party."
+    },
+    {
+      "id": "vestige_khirad_heard",
+      "type": "bool",
+      "summary": "Khirad (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_norganas_heard",
+      "type": "bool",
+      "summary": "Norganas (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_savnok_heard",
+      "type": "bool",
+      "summary": "Savnok (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_seriach_heard",
+      "type": "bool",
+      "summary": "Seriach (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_sykane_heard",
+      "type": "bool",
+      "summary": "Sykane (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_tarakamedes_heard",
+      "type": "bool",
+      "summary": "Tarakamedes (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_tenebrous_heard",
+      "type": "bool",
+      "summary": "Tenebrous (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_yrrga_heard",
+      "type": "bool",
+      "summary": "Yrrga (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_zhudun_heard",
+      "type": "bool",
+      "summary": "Zhudun (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "vestige_dahlver_nar_heard",
+      "type": "bool",
+      "summary": "Dahlver-Nar (hall of vestiges) has spoken to the party."
+    },
+    {
+      "id": "hollow_eyed_cleared",
+      "type": "bool",
+      "summary": "The nothics (seekers who took too many gifts) and the wardens' wraiths in the ring of amber are destroyed (encounter hollow_eyed)."
+    },
+    {
+      "id": "library_wardens_cleared",
+      "type": "bool",
+      "summary": "The wardens' flameskulls that guard the chained case in the library's barred alcove are destroyed (encounter library_wardens)."
+    },
+    {
+      "id": "exethanter_met",
+      "type": "bool",
+      "summary": "The party has met Exethanter, the forgetful lich, in his study. He comes down to the sanctum after the broker is dealt with only if met."
+    },
+    {
+      "id": "exethanter_note_given",
+      "type": "bool",
+      "summary": "The party pinned 'These are friends' to Exethanter's sleeve; he greets them as friends every visit."
+    },
+    {
+      "id": "exethanter_asked_lid",
+      "type": "bool",
+      "summary": "Exethanter asked the party to find 'something with a lid' (his phylactery); quest something_with_a_lid asked."
+    },
+    {
+      "id": "phylactery_found",
+      "type": "bool",
+      "summary": "The party found the jar labelled NOT THE PHYLACTERY on Exethanter's top shelf (search prop exethanter_jar)."
+    },
+    {
+      "id": "exethanter_phylactery",
+      "type": "string",
+      "summary": "What became of Exethanter's phylactery: returned (he gives the word and the jackal's name gladly), kept (he cooperates under duress) or smashed (he will not come back if destroyed, and withdraws; no sealing rite). Phase 6 / epilogue may read it."
+    },
+    {
+      "id": "exethanter_notes_searched",
+      "type": "bool",
+      "summary": "The party made its one Investigation attempt on Exethanter's wall of notes (library:notes)."
+    },
+    {
+      "id": "exethanter_bargain_known",
+      "type": "bool",
+      "summary": "Norganas told the party that Exethanter traded his memory to it; unlocks his confession."
+    },
+    {
+      "id": "exethanter_strahd_told",
+      "type": "bool",
+      "summary": "The party showed Exethanter his own signature beside Strahd's in the visitors' ledger; he remembered leading the prince down."
+    },
+    {
+      "id": "exethanter_remembers",
+      "type": "bool",
+      "summary": "Exethanter chose to keep the memory of guiding Strahd to the Thirst (written on his hand); he says so in the sanctum."
+    },
+    {
+      "id": "exethanter_hostile",
+      "type": "bool",
+      "summary": "The party attacked Exethanter (encounter exethanter_wrath starts); he no longer stands in his study."
+    },
+    {
+      "id": "exethanter_destroyed",
+      "type": "bool",
+      "summary": "Exethanter was destroyed (encounter exethanter_wrath). With his phylactery intact he would re-form in time; Phase 6 may read it."
+    },
+    {
+      "id": "exethanter_came_down",
+      "type": "bool",
+      "summary": "Exethanter has come down to the sanctum after the broker was dealt with and said his piece (vault:aftermath)."
+    },
+    {
+      "id": "visitors_ledger_read",
+      "type": "bool",
+      "summary": "The party read the wardens' visitors' ledger (book prop): a courteous prince, and Exethanter's 'I showed him'. Unlocks Exethanter's memory of Strahd."
+    },
+    {
+      "id": "vosk_met",
+      "type": "bool",
+      "summary": "The party has met Master Vosk (in the library or the sanctum); he leaves the library for the vaults; quest the_amber_temple broker_met."
+    },
+    {
+      "id": "vosk_suspected",
+      "type": "bool",
+      "summary": "Insight showed the party that Vosk is no scholar (a jackal's shadow, glassless spectacles, or his lie about Aurel)."
+    },
+    {
+      "id": "vosk_named",
+      "type": "bool",
+      "summary": "The party knows Vosk's true name, Ashkarreth (Exethanter's note, given once his phylactery is returned or kept, or found in his notes): it binds him in the sanctum, or weakens him in a fight."
+    },
+    {
+      "id": "vosk_weakened",
+      "type": "bool",
+      "summary": "A Deception trick fed Vosk's own shadow to the hollow amber; he fights weakened (encounter vosk_unmasked)."
+    },
+    {
+      "id": "vosk_fate",
+      "type": "string",
+      "summary": "How the broker's story ended without a fight: banished (bound by his true name, gone from the valley) or paid (someone accepted gift_of_the_hollow and he left smiling). A fight sets vosk_destroyed instead. Phase 6 (Strahd's scenes) may read it."
+    },
+    {
+      "id": "vosk_destroyed",
+      "type": "bool",
+      "summary": "Vosk the arcanaloth was destroyed in the sanctum (encounter vosk_unmasked); quest the_amber_temple broker_destroyed."
+    },
+    {
+      "id": "honey_door_opened",
+      "type": "bool",
+      "summary": "The honey-glow doors to the vault of offerings are open (the word, Arcana, force or blood)."
+    },
+    {
+      "id": "honey_door_forced",
+      "type": "bool",
+      "summary": "The honey-glow doors were forced or bled open: the vault guardian wakes (encounter vault_guardian triggers on this flag)."
+    },
+    {
+      "id": "vault_guardian_destroyed",
+      "type": "bool",
+      "summary": "The amber golem guarding the vault doors is destroyed (encounter vault_guardian)."
+    },
+    {
+      "id": "strahd_pact_known",
+      "type": "string",
+      "summary": "The party read the wardens' copper record of Strahd's bargain: ledger (the terms) or full (with the Tome of Strahd beside it: why he made it). Phase 6: Strahd's scenes and the endings may read it."
+    },
+    {
+      "id": "amber_milestone_given",
+      "type": "bool",
+      "summary": "Guard: the Amber Temple's one milestone has been given (vault:revelation, after the broker is dealt with)."
+    },
+    {
+      "id": "amber_seal_decided",
+      "type": "bool",
+      "summary": "The party answered Exethanter about the wardens' last rite (seal the temple or leave it open)."
+    },
+    {
+      "id": "amber_temple_sealed",
+      "type": "bool",
+      "summary": "Exethanter sealed every sarcophagus: the vestiges are silent and no more gifts can be taken. Epilogue may read it."
+    },
+    {
+      "id": "patrina_met",
+      "type": "bool",
+      "summary": "The party met Patrina Velikovna's banshee in the hall of echoes; quest patrinas_wail heard."
+    },
+    {
+      "id": "patrina_named",
+      "type": "bool",
+      "summary": "The party knows the banshee is Patrina, Kasimir's sister (from Kasimir's story, or Kasimir is with them)."
+    },
+    {
+      "id": "patrina_fate",
+      "type": "string",
+      "summary": "Patrina's end: rest (laid to rest by word, prayer or her brother) or restored (Kasimir's bargain with Tarakamedes: she walks out alive toward the castle). A fight sets patrina_destroyed instead. Phase 6 reads restored (she is at the castle) and rest (her bones under the castle are quiet)."
+    },
+    {
+      "id": "patrina_destroyed",
+      "type": "bool",
+      "summary": "Patrina's banshee was destroyed (encounter patrina_wails); quest patrinas_wail destroyed."
+    },
+    {
+      "id": "kasimir_bargain",
+      "type": "string",
+      "summary": "Kasimir's choice at Tarakamedes: made (every year he had left but one, for Patrina's life) or refused. Phase 6 / epilogue may read it (Kasimir has a year left)."
+    },
+    {
+      "id": "kasimir_at_peace",
+      "type": "bool",
+      "summary": "Kasimir said to Patrina what he never had, and she let go. Banter; Phase 6 may read it."
+    },
+    {
+      "id": "amber_road_expedition_found",
+      "type": "bool",
+      "summary": "The party found the frozen expedition on the ice stair (event, once)."
+    }
+  ]
+}

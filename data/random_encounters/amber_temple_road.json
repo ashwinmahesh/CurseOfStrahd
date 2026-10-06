@@ -1,0 +1,112 @@
+{
+  "id": "amber_temple_road",
+  "map": "amber_temple_road",
+  "chance_day": 0.25,
+  "chance_night": 0.45,
+  "summary": "The ice stair between the Tsolenka Pass and the Amber Temple: whiteouts, a dead expedition, gargoyles off the cliffs, and the frozen dead who climb at night.",
+  "entries": [
+    {
+      "id": "whiteout",
+      "weight": 3,
+      "when": "day",
+      "dialogue": "amber_temple/road:whiteout"
+    },
+    {
+      "id": "dead_expedition",
+      "weight": 2,
+      "when": "not flag.amber_road_expedition_found",
+      "once": true,
+      "dialogue": "amber_temple/road:expedition"
+    },
+    {
+      "id": "cliff_gargoyles",
+      "weight": 2,
+      "monsters": [
+        {
+          "monster": "gargoyle",
+          "cell": [
+            24,
+            2
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            6,
+            2
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            12,
+            3
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            26,
+            12
+          ]
+        }
+      ],
+      "text": "What you took for knobs of rock on the cliff above unfold their wings and drop."
+    },
+    {
+      "id": "frozen_climbers",
+      "weight": 3,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            5,
+            4
+          ],
+          "name": "Frozen climber"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            26,
+            6
+          ],
+          "name": "Frozen climber"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            15,
+            12
+          ],
+          "name": "Frozen climber"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            22,
+            4
+          ],
+          "name": "The cold's own"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "The cold's own"
+        }
+      ],
+      "text": "Shapes climb up over the edge of the shelf in the moonlight, roped together, frost in their beards. They have been climbing toward the temple for a very long time."
+    }
+  ]
+}

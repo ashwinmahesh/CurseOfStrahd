@@ -1,0 +1,49 @@
+# Events on the climb between the Tsolenka Pass and the Amber Temple (data/random_encounters/amber_temple_road.json).
+# Each plays on the road map amber_temple_road; when it ends without a fight, the journey goes on.
+
+~ whiteout
+Narrator: The wind turns, and the mountain disappears. Snow comes sideways, thick as wool, and the person in front of you becomes a grey shape, then a voice, then nothing.
+* [Survival DC 15] Rope together and find the cairns. -> whiteout_ok | whiteout_lost
+* Dig in behind a boulder and wait it out. -> whiteout_wait
+
+~ whiteout_ok
+Narrator: Cairn to cairn, roped hand to hand, you find the path. When the snow lifts, you are further on than you'd have dared to hope.
+-> END
+
+~ whiteout_lost
+time +120
+Narrator: You walk for an hour and come back to your own footprints. By the time the snow lifts, the light has moved a long way across the sky.
+interject name:ilse_varga: Count off. ...Good. Still all here.
+-> END
+
+~ whiteout_wait
+time +180
+Narrator: You huddle in the lee of a boulder while the mountain screams over your heads. It passes, eventually. Everything up here passes, except the cold.
+-> END
+
+~ expedition
+if flag.amber_road_expedition_found
+-> END
+endif
+set amber_road_expedition_found
+Narrator: Off the path, half buried, a ring of tents has been crushed flat by old snow. Inside, a party of climbers sits where the cold found them, still holding their cups.
+Narrator: One has a journal open on his knee. The last page reads: "Tomorrow the temple. Petra says she can hear it already. She says it knows our names."
+* Take what they won't need. -> expedition_take
+* [Religion DC 12] Say the words for the dead over them. -> expedition_rites | expedition_rites_plain
+* Leave them in peace. -> END
+
+~ expedition_take
+give potion_of_healing 2
+give climbers_kit
+gold +30
+Narrator: You take their potions, their purse and their ropes, and you tell them, out loud, that you'll put it all to good use. It seems only polite.
+-> END
+
+~ expedition_rites
+Narrator: You say the words. When you look back from the next bend, the snow has covered them over gently, like a sheet drawn up by someone who loved them.
+interject name:hedda_ironvow: Mm. Nobody should wait that long to be told they can stop.
+-> END
+
+~ expedition_rites_plain
+Narrator: You stumble over the old words, but you say them. The wind takes them. Perhaps it carries them where they need to go.
+-> END

@@ -1,0 +1,43 @@
+{
+  "id": "gift_of_yog",
+  "name": "Yog's Hide",
+  "vestige": "Yog, the unbroken",
+  "summary": "Resistance to bludgeoning, piercing and slashing damage. The price: Speed -10 ft, Dexterity -2, and no feeling in your skin ever again.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_faceless_god (the ring of amber)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "resistance",
+        "value": "bludgeoning"
+      },
+      {
+        "stat": "resistance",
+        "value": "piercing"
+      },
+      {
+        "stat": "resistance",
+        "value": "slashing"
+      }
+    ],
+    "text": "Your skin goes dense and grey as old horn. Blades skid on it. Clubs bounce."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "speed",
+        "value": -10
+      },
+      {
+        "stat": "ability",
+        "ability": "dex",
+        "value": -2
+      }
+    ],
+    "flaw": "You no longer feel warmth or touch. An embrace is a weight on your shoulders and nothing more.",
+    "text": "You move like something carved: heavily, and a beat behind everyone else."
+  },
+  "implemented": "data"
+}

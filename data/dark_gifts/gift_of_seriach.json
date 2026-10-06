@@ -1,0 +1,40 @@
+{
+  "id": "gift_of_seriach",
+  "name": "The Hounds' Leash",
+  "vestige": "Seriach, master of the burning hounds",
+  "summary": "Resistance to fire, and your weapon blows burn for an extra 1d6 fire. The price: vulnerability to cold, and beasts that panic at your smell.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "resistance",
+        "value": "fire"
+      },
+      {
+        "stat": "extra_damage",
+        "dice": "1d6",
+        "type": "fire",
+        "on": "weapon"
+      }
+    ],
+    "text": "Hellfire runs in your blood like a hound on a long leash. Your blows leave scorch marks."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "vulnerability",
+        "value": "cold"
+      },
+      {
+        "stat": "disadvantage",
+        "on": "check:animal_handling"
+      }
+    ],
+    "flaw": "Somewhere just out of sight, the hounds are always following. Dogs howl when you pass, and horses won't carry you without a fight.",
+    "text": "The fire in you hates the cold, and the cold has noticed."
+  },
+  "implemented": "data"
+}

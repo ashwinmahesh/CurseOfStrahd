@@ -260,9 +260,7 @@ def semantic_checks(data):
 
 
 # Regions later phases build (plan §6). References into them are pending, not errors.
-LATER_REGIONS = {"old_bonegrinder", "wizard_of_wines", "yester_hill", "krezk", "abbey_of_st_markovia", "argynvostholt",
-                 "van_richtens_tower", "werewolf_den", "berez", "lake_zarovich", "tsolenka_pass", "amber_temple",
-                 "castle_ravenloft", "ravenloft"}
+LATER_REGIONS = {"castle_ravenloft", "ravenloft"}  # regions 5-10 are built (Phase 5); the castle is Phase 6
 
 
 def campaign_checks(data, errors, pending):

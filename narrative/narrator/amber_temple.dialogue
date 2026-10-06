@@ -1,0 +1,228 @@
+# Narrator: the Amber Temple (amber_temple_entrance, _faceless_god, _library, _vault, _road). docs/voice/narrator.md.
+# One of the three scariest places in the game: the humour is thin and dry, and some lines carry none. Book props
+# (the charter, the visitors' ledger, the treatise) have no examine: line here, so their own text is shown.
+# Props with a dialogue (sarcophagi, the honey doors' seal, the notes, the jar, the hollow, the ledger) speak there.
+
+# ---------------------------------------------------------------- The doors
+
+~ enter:amber_temple_entrance
+| The ice stair ends on a shelf of wind-scoured snow, and the mountain opens a door in front of you. Two colossi of amber stand on either side of it, and the air is so thin that your heart has to work twice as hard for each step.
+| [flag.sentinel_destroyed] The shelf of snow before the temple doors is littered with amber, broken into pieces the size of shields. Neither colossus is watching now.
+| [flag.amber_temple_sealed] The doors stand quiet under the snow. Whatever used to murmur behind them has stopped, and the silence up here is very large.
+| [guest:kasimir_velikov] Kasimir stops at the top of the stair and looks up at the doors for a long time. His breath smokes. He doesn't seem to notice the cold at all.
+cooldown 30
+
+~ enter:snow_ledge
+| The ledge drops away on two sides into cloud. Somewhere far below, under that white lid, is the whole valley, and none of it can see you.
+once
+
+~ enter:ice_stair
+| Steps cut into the ice by hands that have been dead for centuries, worn into shallow bowls by the feet of everyone who climbed up after them.
+once
+
+~ enter:vestibule
+| The doors close the wind out, and the silence that comes in its place is worse. The walls are veined with amber that glows, faintly, like embers under ash.
+once
+
+~ enter:west_guardroom
+| A guardroom: bunks, a cold brazier, a rack of halberds furred with frost. Whoever stood watch here left in good order, and didn't come back.
+once
+
+~ enter:east_guardroom
+| Another guardroom, and this one is not empty. Figures stand at their posts, coated in frost, perfectly still.
+| [flag.frozen_watch_cleared] The east guardroom, its watch relieved at last. Shards of frost and mail lie where they fell.
+cooldown 30
+
+~ examine:cracked_colossus
+| The split colossus wears a warden's robe and hood carved in amber. Through the crack you can see right into it: hollow, and packed with old snow. Whatever moved it once has gone.
+
+~ examine:doors_lintel
+| Old script runs across the stone over the doors, cut deep by someone who expected to be obeyed. Most of it is a list. The last line is a single word.
+| [flag.warden_word_known] The wardens' word is the last line of the carving. Now that you know it, you can't stop seeing it.
+
+~ examine:name_cairn
+| A cairn of flat stones, each one scratched with a name. There are a great many names. None of them has been crossed out, which would mean someone came back for it.
+
+~ examine:valley_view
+| The edge of the world, as far as you can tell. Cloud fills the valley from wall to wall, and somewhere under it a castle is waiting for you to come down.
+| [night] Below, the cloud glows faintly in one place, the way a sheet glows over a candle. You know what that light is.
+
+~ examine:frozen_pilgrim
+| A traveller sits against the inside of the doors, wrapped in a good cloak, chin on chest. They got past the colossi and in out of the wind, and then the cold finished what the climb had started.
+
+~ examine:vestibule_reliefs
+| A carved warning, repeated in nine scripts and a set of pictures for those who couldn't read: a hand reaching toward a box, and the same hand without its fingers.
+
+~ examine:west_rack
+| Halberds, frozen into their rack. The wardens hired soldiers, then. Soldiers are the first people anyone thinks of, and the last thing that helps.
+
+~ examine:east_ice_figures
+| Figures in frost-covered mail stand at their posts. Their eyes are open. You are fairly sure their eyes were closed a moment ago.
+
+# ---------------------------------------------------------------- The great hall
+
+~ enter:amber_temple_faceless_god
+| The great hall goes up into the dark further than your light can follow. At its centre stands a colossal robed figure in a warden's hood, and under the hood there is no face, only smooth stone.
+| [flag.amber_temple_sealed] The great hall is quiet. Not empty, never that, but quiet, the way a held breath is quiet.
+cooldown 30
+
+~ enter:south_gallery
+| A gallery of pillars at the head of the stair. Every sound you make comes back to you a moment later, slightly changed, as if repeated by someone who didn't quite catch it.
+once
+
+~ enter:great_hall
+| The faceless god looks down on the hall with nothing. You find yourself not standing directly in front of it.
+once
+
+~ enter:ring_of_amber
+| The east wing is a ring of sarcophagi, each one a block of amber taller than a man, and each one has something in it. Something in all six of them is talking, softly, at once.
+| [flag.amber_temple_sealed] Six sarcophagi, dark and silent. The things inside are still there. The seal holds.
+cooldown 30
+
+~ enter:hall_of_echoes
+| A reading hall: rows of desks, books open on every one, everything furred with frost. One desk is clear, and someone is weeping at it in a voice that doesn't stop for breath.
+| [flag.patrina_fate or flag.patrina_destroyed] The reading hall is only cold now. The frost on the desks is thinner than it was, and nobody is weeping.
+cooldown 30
+
+~ enter:wardens_cells
+| A long corridor of cells, each just big enough for a cot and a prayer. The wardens lived here, a few steps from what they guarded. It must have been very hard to sleep.
+once
+
+~ examine:faceless_statue
+| The sculptor finished the robe down to the stitching, and the hands down to the knuckles, and then left the face perfectly smooth. Whether that was a choice or a refusal, the stone isn't saying.
+| [treasure_at:amber_temple_faceless_god] At the statue's feet, among the offerings, something catches your light and holds it a moment longer than the rest.
+
+~ examine:hall_pillars
+| The pillars are carved with the wardens at work: carrying sarcophagi, sealing lids, standing guard. In the highest carvings the wardens are leaning close to the amber, listening.
+
+~ examine:echo_desks
+| Students' desks, each with a book still open. The pages are frozen together. On one, someone has written the same line over and over until the ink ran out: I WILL NOT ANSWER.
+
+~ examine:patrina_desk
+| The one desk free of frost. A book lies open on it, its pages crumbling and re-forming, crumbling and re-forming.
+| [flag.patrina_fate == "rest"] The book on the desk is closed now. It hasn't crumbled.
+
+~ examine:warden_cell_cot
+| A warden's cot, its blanket folded with military care. Above it, scratched into the wall at the height of a sleeping head: DON'T LISTEN DON'T LISTEN DON'T LISTEN.
+
+~ search:warden_cell_scratches
+| Behind the frost on the cell wall, tally marks: hundreds of them, in rows of five. The last row stops at three.
+
+# ---------------------------------------------------------------- The library
+
+~ enter:amber_temple_library
+| Long stacks furred with frost, books chained to their shelves, and a smell of ice instead of dust. Somewhere among the shelves, someone is humming a song they can't remember the end of.
+| [flag.exethanter_destroyed] The library is silent. Nobody is humming now.
+cooldown 30
+
+~ enter:library_stacks
+| The stacks run the length of the hall. Most of the books have been chained in place, as if they might otherwise wander.
+once
+
+~ enter:reading_room
+| A reading room of lecterns, each with a book left open on it, as if the readers had stepped out for a moment three centuries ago.
+once
+
+~ enter:restricted_stacks
+| Behind the iron gate, the books are chained twice. Some of the chains are on the inside of the covers.
+once
+
+~ enter:exethanter_study
+| A study buried in paper. Notes are pinned to every surface: the walls, the shelves, the desk, the chair, and the warden sitting in it.
+once
+
+~ examine:vosk_table
+| A reading table stacked with books on contracts, oaths and wagers, each one bristling with neat paper markers. The cup beside them is still steaming, though nobody has touched it.
+
+~ examine:restricted_shelves
+| The chained books have titles like instructions. Some of the instructions are for things that should never be done twice.
+
+# ---------------------------------------------------------------- The vaults
+
+~ enter:amber_temple_vault
+| Down here the amber in the walls glows, faintly, like honey held up to a candle. It is the only warm colour for a mile in any direction, and it is not warm.
+| [flag.amber_temple_sealed] The vaults are dark and still. The amber in the walls has stopped glowing, and you find you miss it, which is worse.
+cooldown 30
+
+~ enter:vault_stair
+| The stair down is narrow and the steps are glazed with old ice. Every voice in the temple is louder down here.
+once
+
+~ enter:hall_of_vestiges
+| A long gallery of sarcophagi, ten of them, all talking. Not to each other. To you.
+| [flag.amber_temple_sealed] A long gallery of dark amber, ten silent sarcophagi, and nothing at all to listen to.
+cooldown 30
+
+~ enter:treasure_vault
+| The vault behind the honey-glow doors is heaped with offerings: coins, rings, swords, crowns, children's toys. Everything anyone ever brought down here to bargain with, and left.
+once
+
+~ enter:sanctum
+| At the very bottom of the temple, in a chamber of cold braziers, lies the largest sarcophagus of all, and it is empty.
+once
+
+~ examine:empty_plinth
+| A plinth with no sarcophagus on it. Scrapes on the floor lead away toward the stair, as though something very heavy was carried off by people who were in a great hurry.
+
+~ examine:cracked_sarcophagus
+| This one is split from end to end, and silent. Whatever was in it is gone, or dead. Up here, you have learned not to assume which.
+
+# ---------------------------------------------------------------- The road
+
+~ enter:amber_temple_road
+| The path above the Tsolenka Pass climbs in switchbacks along a shelf of rock and snow, with the mountain on one side and nothing at all on the other.
+| [visited:amber_temple_entrance] The ice stair again, and the same cold, which has not got any more used to you.
+cooldown 60
+
+~ enter:switchbacks
+| Cairns mark the path where the snow would otherwise hide it. Some of them are old. Some of them are people.
+once
+
+~ examine:road_cairn
+| A cairn, built carefully, with a frozen glove on top to mark the way. Someone was kind up here, once.
+
+# ---------------------------------------------------------------- Traps
+
+~ trap:snow_cornice:found
+| The snow near the edge has the wrong sheen: an overhang, not ground. Your boot finds the difference before your weight does.
+
+~ trap:snow_cornice:triggered
+| The ground under {name} turns out to be weather, and gives way.
+
+~ trap:frost_vent:found
+| A crack in the floor breathes out, and the frost around it is feathered in a fan. The mountain is exhaling through it.
+
+~ trap:frost_vent:triggered
+| The mountain breathes out, and {name}'s breath stops for it.
+
+~ trap:faceless_gaze:found
+| There is a place in front of the statue where the blank face seems to look straight down. You'd rather not stand in it.
+
+~ trap:faceless_gaze:triggered
+| {name} looks up into the blank face, and for one long moment it wears every face they have ever feared.
+
+~ trap:warding_glyphs:found
+| A line of glyphs crosses the gallery floor, set by the wardens to keep the curious from the amber. They're still awake.
+
+~ trap:warding_glyphs:triggered
+| The glyphs light, and every voice in the gallery is inside {name}'s head at once.
+
+~ trap:amber_shards:found
+| The vault ceiling is cracked amber, hanging in shards as long as knives. One good shake would bring it down.
+
+~ trap:amber_shards:triggered
+| The ceiling sheds a curtain of amber, every shard as sharp as glass.
+
+~ trap:stair_ice:found
+| Black ice on the stair, the kind you only see when it's too late. This time it isn't.
+
+~ trap:stair_ice:triggered
+| {name}'s heel finds ice instead of stone, and the stair hurries them down the rest of the way.
+
+# ---------------------------------------------------------------- Rest
+
+~ rest:long:amber_temple
+| You sleep in shifts, and nobody sleeps much. The voices in the amber don't shout. They say your names, kindly, all night.
+| [flag.amber_temple_sealed] For the first time since the stair, you sleep. The temple is cold and silent and, for one night, only a building.
+| [flag.dark_gifts_taken >= 1] Whoever carries a gift sleeps soundly, and wakes rested. Nobody else does, and nobody mentions it.
+cooldown 0

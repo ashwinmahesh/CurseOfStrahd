@@ -1,0 +1,19 @@
+{
+  "id": "amber_sentinel",
+  "name": "The Amber Sentinel",
+  "title": "Guardian of the Temple Doors",
+  "summary": "One of the two colossi of amber the wardens set at the temple's doors. Its twin is split and dead. This one still watches: it lets anyone in, and stops anyone leaving with what the temple gave them.",
+  "portrait": "amber_sentinel",
+  "sprite": "amber_sentinel",
+  "attitude": "indifferent",
+  "voice": "docs/voice/amber_vestiges.md",
+  "monster": "amber_golem",
+  "guest": false,
+  "tags": [
+    "construct",
+    "golem",
+    "amber_temple"
+  ],
+  "pronouns": "it",
+  "region": "amber_temple"
+}

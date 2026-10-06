@@ -1,0 +1,52 @@
+{
+  "id": "gift_of_tarakamedes",
+  "name": "The Grave Wyrm's Claim",
+  "vestige": "Tarakamedes, the dragon in the grave",
+  "summary": "Animate Dead and Speak with Dead once per long rest each, and resistance to cold. The price: Disadvantage on every death saving throw.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "resistance",
+        "value": "cold"
+      },
+      {
+        "stat": "spell",
+        "value": "animate_dead",
+        "ability": "wis",
+        "uses": {
+          "count": 1,
+          "recharge": "long"
+        }
+      },
+      {
+        "stat": "spell",
+        "value": "speak_with_dead",
+        "ability": "wis",
+        "uses": {
+          "count": 1,
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "animate_dead",
+      "speak_with_dead"
+    ],
+    "text": "The dead hear you and get up when you ask. The grave's cold no longer bites, because it knows you."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "disadvantage",
+        "on": "death_save"
+      }
+    ],
+    "flaw": "The grave has your name written down now. When you fall, it pulls.",
+    "text": "A dragon sleeps in the dark under everything, and it has been promised you."
+  },
+  "implemented": "data"
+}

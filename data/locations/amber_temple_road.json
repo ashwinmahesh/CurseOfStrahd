@@ -1,0 +1,98 @@
+{
+  "id": "amber_temple_road",
+  "name": "The Ice Stair",
+  "region": "amber_temple",
+  "summary": "The last climb from the Tsolenka Pass to the Amber Temple: a switchback shelf of snow and broken rock with the drop on one side and the mountain on the other. Where the road's fights and meetings play out.",
+  "map": {
+    "rows": [
+      "##############################",
+      "#####........####........#####",
+      "###.....~~.........~.......###",
+      "##....~~~......==......~~...##",
+      "#.........................~..#",
+      "#..==.......~~~...............",
+      "...............~~.......==....",
+      "..............................",
+      "#....~~..........==......~...#",
+      "#.......====..........~~.....#",
+      " ...........~~................",
+      "  ......~.........==........# ",
+      "   .........~~.............#  ",
+      "     ..........   ........    ",
+      "        .....        ....     ",
+      "                              "
+    ],
+    "theme": "wilderness",
+    "light": "bright",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "switchbacks",
+      "name": "The switchbacks",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          29,
+          15
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      14,
+      7
+    ]
+  },
+  "exits": [
+    {
+      "id": "road_down",
+      "cell": [
+        0,
+        7
+      ],
+      "to": "travel",
+      "label": "On down toward the pass"
+    },
+    {
+      "id": "road_up",
+      "cell": [
+        29,
+        7
+      ],
+      "to": "travel",
+      "label": "On up toward the temple"
+    }
+  ],
+  "props": [
+    {
+      "id": "road_cairn",
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "examine",
+      "label": "A cairn",
+      "model": "cairn"
+    },
+    {
+      "id": "road_boulders",
+      "cell": [
+        8,
+        9
+      ],
+      "kind": "decor",
+      "label": "Fallen rock",
+      "model": "rocks"
+    }
+  ],
+  "encounters": [],
+  "narration": {
+    "enter": "enter:amber_temple_road"
+  },
+  "rest": "risky"
+}

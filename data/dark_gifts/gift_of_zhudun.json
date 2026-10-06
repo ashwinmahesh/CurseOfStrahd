@@ -1,0 +1,47 @@
+{
+  "id": "gift_of_zhudun",
+  "name": "The Dead Star's Light",
+  "vestige": "Zhudun, the dead star",
+  "summary": "Hunger of Hadar once per long rest, and resistance to radiant damage. The price: Constitution -2, vulnerability to fire, and a corpse-light no hood can hide.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "resistance",
+        "value": "radiant"
+      },
+      {
+        "stat": "spell",
+        "value": "hunger_of_hadar",
+        "ability": "cha",
+        "uses": {
+          "count": 1,
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "hunger_of_hadar"
+    ],
+    "text": "Light that gives no warmth runs under your skin. Once a day you can open a hole into the cold between the stars."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "con",
+        "value": -2
+      },
+      {
+        "stat": "vulnerability",
+        "value": "fire"
+      }
+    ],
+    "flaw": "Your skin is cold to the touch and gives off a faint grey glow in the dark. You will never hide at night again.",
+    "text": "A dead star burns cold, and its ashes catch easily."
+  },
+  "implemented": "data"
+}

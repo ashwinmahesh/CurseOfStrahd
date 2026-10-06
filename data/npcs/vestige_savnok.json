@@ -1,0 +1,16 @@
+{
+  "id": "vestige_savnok",
+  "name": "Savnok",
+  "title": "A Voice in the Amber",
+  "summary": "A vestige sealed in a sarcophagus of amber in the Amber Temple: the last ember of a dead or forgotten power, still able to speak and to bargain. A hooded figure with its mouth sewn shut and its hands folded over a closed box.",
+  "portrait": "vestige_amber",
+  "attitude": "indifferent",
+  "voice": "docs/voice/amber_vestiges.md",
+  "guest": false,
+  "tags": [
+    "vestige",
+    "amber_temple"
+  ],
+  "pronouns": "it",
+  "region": "amber_temple"
+}

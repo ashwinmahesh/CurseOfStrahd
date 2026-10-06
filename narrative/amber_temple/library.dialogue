@@ -1,0 +1,50 @@
+# The Amber Temple library (docs/regions/amber_temple.md §3): Exethanter's wall of notes and the jar he hid his
+# phylactery in. The books (charter, visitors' ledger, treatise) are book props with their own text.
+
+~ notes
+Narrator: Notes cover the wall behind Exethanter's desk, pinned three and four deep: lists, warnings, recipes, and one that just says DUCK?, underlined twice.
+if flag.exethanter_notes_searched
+Narrator: You've been through them once already. They look no more organised for it.
+-> END
+endif
+* [Investigation DC 15] Go through the notes for anything useful. (one try) -> notes_ok | notes_fail
+* Leave the notes alone. -> END
+
+~ notes_ok
+set exethanter_notes_searched
+set warden_word_known
+set vosk_named
+Narrator: Under a recipe for ink and a list of the names of his own fingers, you find the wardens' word, written out in capitals with DO NOT FORGET beside it.
+Narrator: Lower down, half hidden by a pressed flower: THE JACKAL IN THE STACKS IS NOT A SCHOLAR. HIS NAME IS ASHKARRETH. SAY IT AND HE MUST ANSWER.
+interject tag:bookish: A true name, filed under a pressed flower. I would like a word with whoever trained this man as an archivist.
+-> END
+
+~ notes_fail
+set exethanter_notes_searched
+Narrator: Recipes, lists, warnings, a careful sketch of a duck. If the useful notes are here, they're under the useless ones, which are under the confusing ones.
+-> END
+
+~ jar
+Narrator: A plain clay jar on the highest shelf, sealed with wax and labelled in a careful, shaky hand: NOT THE PHYLACTERY.
+interject class:rogue: Oh, that's beautiful. Nobody ever checks the jar that tells you not to.
+if flag.exethanter_asked_lid
+Narrator: It has a lid.
+endif
+if flag.exethanter_phylactery
+Narrator: Somebody has already decided what to do with it.
+-> END
+endif
+* Take it down to show Exethanter. -> jar_take
+* (Smash it.) -> jar_smash
+* Leave it where it is. -> END
+
+~ jar_take
+quest something_with_a_lid found
+Narrator: It's heavier than clay ought to be, and colder. Something inside shifts when you tilt it, like a stone having second thoughts.
+-> END
+
+~ jar_smash
+set exethanter_phylactery = "smashed"
+quest something_with_a_lid smashed
+Narrator: The jar bursts on the flagstones. Among the shards, a dull grey stone splits in two. Across the room, Exethanter puts down his pen and sits very still.
+-> END

@@ -1,0 +1,36 @@
+{
+  "id": "gift_of_zantras",
+  "name": "The Crown of Zantras",
+  "vestige": "Zantras, who crowned beggars",
+  "summary": "Charisma +4 (up to 22). The price: Disadvantage on Stealth and Insight checks, and a hunger to be the one everyone watches.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_faceless_god (the ring of amber)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "cha",
+        "value": 4,
+        "max": 22
+      }
+    ],
+    "text": "Rooms turn toward you when you walk in. People begin agreeing with you before you have finished the sentence, and feel foolish when they stop."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "disadvantage",
+        "on": "check:stealth"
+      },
+      {
+        "stat": "disadvantage",
+        "on": "check:insight"
+      }
+    ],
+    "flaw": "You must be the one they look at. When someone else is praised or obeyed in front of you, you cannot let the moment stand.",
+    "text": "You can no longer pass unnoticed, and you stop noticing anyone who isn't watching you."
+  },
+  "implemented": "data"
+}

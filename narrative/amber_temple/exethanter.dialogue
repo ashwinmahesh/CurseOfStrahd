@@ -1,0 +1,211 @@
+# Exethanter, the last Warden of the Amber Temple (docs/voice/exethanter.md): a lich who has forgotten nearly
+# everything. He forgets the party between visits unless they pin a note to his sleeve (exethanter_note_given).
+# He gives the wardens' word for the asking (then forgets he did); the arcanaloth's true name once his phylactery
+# is back in his hands (or held over him); and, if shown the visitors' ledger, his memory of the night he led a
+# prince of the west down to the deep vault. The phylactery hunt: quest something_with_a_lid.
+
+~ start
+if not flag.exethanter_met
+-> first
+endif
+if flag.exethanter_phylactery == "smashed"
+-> smashed_after
+endif
+if flag.exethanter_note_given
+Narrator: Exethanter looks up, blinks, and reads the paper pinned to his sleeve, his jaw moving with the words.
+Exethanter: "These are friends. Do not freeze them." Friends! Of course. I knew that. Sit, sit. What can I fail to remember for you today?
+elif flag.exethanter_phylactery == "returned"
+Exethanter: Visitors! I feel as though I ought to be grateful to you for something. I am, whatever it was. Hello!
+else
+Exethanter: Visitors! How unusual. We almost never get visitors. Have we met? You have the look of people I've met. Everyone does, lately.
+interject name:ilse_varga: Twice, warden. We've met twice.
+Exethanter: Then this is the third time, and the third time is when one finally gets to know a person. Splendid.
+endif
+-> menu
+
+~ first
+set exethanter_met
+Narrator: At a desk buried in loose pages sits a figure in a warden's robe gone the colour of weak tea, pinned all over with notes.
+Narrator: Inside the hood is a skull with a little parchment skin left on it, and two cold sparks where the eyes were.
+Exethanter: Oh! Living people. Hello! Don't be alarmed, I'm a lich. Was a lich. Am a lich; one doesn't really stop. Exethanter, Warden of the Amber, at your service, if I can remember what the service involves.
+interject class:wizard: A lich. An actual lich. I have a great many questions, and I'm afraid of every one of them.
+Exethanter: Ask away! I'll answer the ones I recall. It won't take long.
+-> menu
+
+~ menu
+* What is this place? -> place
+* What happened to your memory? -> memory
+* [if not flag.warden_word_known] The colossus at the doors asked us for a word. -> word
+* [if not flag.warden_word_known] How do we open the glowing doors in the vaults? -> word
+* [if flag.vosk_met and not flag.vosk_named] What do you make of Master Vosk? -> vosk
+* [if not flag.exethanter_asked_lid and not flag.exethanter_phylactery] Is there anything you need? -> lid_ask
+* [if flag.exethanter_asked_lid and not flag.phylactery_found] About the thing with a lid... -> lid_again
+* [if flag.phylactery_found and not flag.exethanter_phylactery] We found a jar on your top shelf, labelled NOT THE PHYLACTERY. -> lid_found
+* [if flag.visitors_ledger_read and not flag.exethanter_strahd_told] Your name is in the visitors' ledger, beside a prince's. -> strahd
+* [if flag.exethanter_bargain_known] Norganas says you made a bargain with it. -> norganas
+* [if flag.dark_gifts_taken >= 1] One of us took a gift from the amber. -> gift_taken
+* [if not flag.exethanter_note_given] (Pin a note to his sleeve: "These are friends.") -> note
+* (Attack the lich.) -> attack
+* Goodbye, warden. -> bye
+
+~ place
+Exethanter: This? The Amber Temple. We built it. Well. They built it, and I helped, and then they all died and I didn't, which I gather is the usual arrangement with liches.
+Exethanter: We gathered up the vestiges, you see: the last scraps of dead gods and worse, things the world was right to forget. Amber holds them. Nothing else does. And then we sat down to guard them forever.
+Exethanter: The trouble with forever is that the things you're guarding can talk.
+interject tag:bookish: And the wardens listened.
+Exethanter [sad]: One by one. They were very persuasive scraps. I believe I listened too. I can't remember to which.
+-> menu
+
+~ memory
+Exethanter: Ah. Well. You live a few centuries, things slip. Names. Faces. Most of my spells. I used to know one that made a sort of wall out of... no. It's gone. It had a lovely name.
+Exethanter: I write things down. That's what the notes are for. The difficulty is remembering to read them, and which ones are still true. One just says DUCK, underlined, and I have no idea at all.
+* [Insight DC 14] He's frightened of something, under all the chatter. -> memory_insight | memory_insight_fail
+* Back to other matters. -> menu
+
+~ memory_insight
+Narrator: The sparks in his sockets keep drifting toward the stair down to the vaults and away again, the way a man's eyes keep finding a door he has locked. Whatever he's forgotten, part of him is glad of it.
+-> menu
+
+~ memory_insight_fail
+Narrator: He chatters on, pleasant and vague. If something lies underneath, he has hidden it from himself too well for you to find.
+-> menu
+
+~ word
+Exethanter: The word! Yes. The wardens' word. It quiets the colossus and it opens the honey doors, and it's... it's...
+Narrator: He pats his robe. He unpins a note, reads it, pins it back. He unpins another.
+Exethanter: Here! I wrote it down. Clever me. You say it like a door closing. There. Now you know it, and I've already half forgotten I told you, so we're both quite safe.
+set warden_word_known
+interject class:rogue: You keep the password to the vault pinned to your coat.
+Exethanter: Where else would I keep it? In my head? Have you met my head?
+-> menu
+
+~ vosk
+Exethanter: Vosk? Is that his name this time? Pleasant fellow. Reads a great deal. He's been in my library for... I want to say a week. I said that last time too. It may have been a century.
+Exethanter: I don't like him. I can't remember why. There's a note somewhere.
+if flag.exethanter_phylactery == "returned" or flag.exethanter_phylactery == "kept"
+Narrator: He unpins a scrap from inside his cuff, holds it up to his sparks, and hands it over without a word.
+Narrator: In a hand that shakes: THE JACKAL IN THE STACKS IS NOT A SCHOLAR. HIS NAME IS ASHKARRETH. SAY IT AND HE MUST ANSWER.
+set vosk_named
+Exethanter: Jackal? I don't recall a jackal. But I recall that I don't trust him, and that will have to do.
+else
+Narrator: He looks at the hundreds of notes on his robe and the thousands on the walls, and his shoulders sag.
+Exethanter: It's in here somewhere. I'd look harder if I weren't so distracted. I've lost something, you see. Something with a lid.
+endif
+-> menu
+
+~ lid_ask
+set exethanter_asked_lid
+quest something_with_a_lid asked
+Exethanter: Need? Oh, there is something, now you mention it. I've lost a... thing. Small. It has a lid, I'm nearly sure. A box, or a jar. Something with a lid.
+Exethanter: It's rather important. If anything happened to this body, the thing with the lid is how I'd come back. And I hid it so cleverly that now I can't find it.
+interject class:wizard: Your phylactery. You've lost your own phylactery.
+Exethanter: Not so loud! Someone might hear, and then they'd know where it isn't.
+-> menu
+
+~ lid_again
+Exethanter: The thing with the lid! You remembered. Did you find it? No? It'll be somewhere sensible. I'm a very sensible person. That's what worries me.
+-> menu
+
+~ lid_found
+Exethanter: NOT THE... oh, that's good. That's very clever. Nobody would ever look there. I didn't, for a hundred and twelve years.
+Exethanter: Have you got it? Might I... could I have it back?
+* Give it back to him. -> lid_return
+* We'll keep it safe for you. For now. -> lid_keep
+* (Smash it on the floor.) -> lid_smash
+
+~ lid_return
+set exethanter_phylactery = "returned"
+quest something_with_a_lid returned
+attitude exethanter friendly
+Narrator: He takes the jar in both hands, carefully, the way you'd hold a bird. Then he looks around for somewhere to put it, opens his mouth, shuts it again, and tucks the jar inside his robe.
+Exethanter: Thank you. Truly. I'd give you something, if I could remember what I own.
+Exethanter: The word for the doors, at least, you shall have, written out large. And there's a note about the jackal somewhere. Ask me about him; I'll find it now. I feel much less distracted.
+set warden_word_known
+-> menu
+
+~ lid_keep
+set exethanter_phylactery = "kept"
+quest something_with_a_lid kept
+Narrator: The sparks in his eyes go very still.
+Exethanter: Ah. Yes. I see. I've held a few things over people myself, in my time. I just can't remember how it turned out for them.
+Exethanter: Very well. I'll be... cooperative. That's the word, isn't it? You'll have the doors' word, and anything else I can find.
+set warden_word_known
+-> menu
+
+~ lid_smash
+set exethanter_phylactery = "smashed"
+quest something_with_a_lid smashed
+Narrator: The jar bursts on the flagstones. Among the wax and the shards, a dull grey stone cracks in two, and something like a sigh passes through the whole library.
+Exethanter: Oh.
+Narrator: For a long moment he says nothing. Then he looks down at his hands as if they belonged to someone else.
+Exethanter: I think I've been waiting for that for a very long time. Thank you. I think. Would you go away now, please? Gently.
+-> END
+
+~ smashed_after
+Narrator: Exethanter sits very still at his desk, unpinning his notes one at a time and reading each before he lets it fall.
+Exethanter: I'm sorting. Deciding what to forget on purpose, for once. It's quite pleasant. Did you want something?
+* [if not flag.warden_word_known] The wardens' word, for the doors. -> word_smashed
+* Goodbye, warden. -> END
+
+~ word_smashed
+Exethanter: Here. Take the note. I won't be needing it.
+set warden_word_known
+-> END
+
+~ strahd
+set exethanter_strahd_told
+Narrator: You read him the two entries: the courteous prince who asked to read, and the line underneath in different ink. "He asked for the deep vault. God help us, I showed him."
+Exethanter: That's my hand. That's... yes. That's my hand.
+Narrator: For a moment the sparks in his sockets burn white. Then, very quietly, he begins to remember.
+Exethanter [sad]: He was so polite. Young, angry, grieving something he hadn't lost yet. He wanted time. He said he had a war to finish, a woman to win, and a brother who would always be younger than him.
+Exethanter [sad]: I took him down to the one with no name. I told myself the rule was for wardens, and he wasn't one. The jackal was there, I think. I think he was smiling.
+Exethanter: Please. I'd like to forget this again now. Would you mind very much if I did?
+* Forget it, warden. It's all right. -> strahd_forget
+* No. Remember it. Help us end what you helped start. -> strahd_remember
+
+~ strahd_forget
+Narrator: He closes his eyes, or the sparks dim, and when they brighten again he is smiling at you pleasantly.
+Exethanter: Thank you. ...Thank you for what? Never mind. I'm sure it was kind.
+-> menu
+
+~ strahd_remember
+set exethanter_remembers
+Exethanter: ...Yes. All right. A warden's whole job is to remember. I'll write it on the back of my hand, where I'll see it every time I reach for something.
+Exethanter: If the jackal is in my temple, he's waiting at the bottom, where it happened. And when he's gone, there's a rite. The last one we had. Find me after.
+-> menu
+
+~ norganas
+Exethanter: Norganas? I don't... oh dear. Oh, dear. The eraser.
+Exethanter: Yes. I remember remembering. The voices were so loud, those first years. I asked it to take the whispering out of my head. Only the whispering.
+Exethanter: It was very kind about it. It kept on taking. It's still taking. That's why everything goes, isn't it? It isn't age at all. It's interest.
+interject class:cleric: Some debts end when you stop paying them.
+Exethanter: Do they? I'll write that down. I'll write it down this minute and pin it somewhere I'll see it.
+-> menu
+
+~ gift_taken
+Narrator: Exethanter's sparks drop to whoever among you carries a gift, as if he could smell it on them.
+Exethanter: Oh, no. Oh, my dears. We had one rule. One. We carved it over the door so we wouldn't forget, and even I...
+Exethanter: Well. It's done; it never comes undone. Don't take another. They're like stairs: each one is only a small step down.
+if not flag.sentinel_stilled and not flag.sentinel_destroyed
+Exethanter: And the colossus won't let you out with it, you know. It was built for nothing else. Say the word to it on your way out, if you have the word.
+endif
+-> menu
+
+~ note
+set exethanter_note_given
+Narrator: You write it out in a clear hand and pin it to his sleeve among a hundred others: THESE ARE FRIENDS. DO NOT FREEZE THEM.
+Exethanter: How thoughtful! I'll read it every time I see you. If I remember to read it. I generally do read my sleeve.
+-> menu
+
+~ attack
+set exethanter_hostile
+Exethanter: Oh, must we? I was enjoying the company. I can't remember the last time I enjoyed company.
+combat exethanter_wrath
+
+~ bye
+if flag.exethanter_note_given
+Exethanter: Goodbye, friends! It says friends. Mind the duck.
+else
+Exethanter: Goodbye! Do come again. I'll be delighted to meet you.
+endif
+-> END

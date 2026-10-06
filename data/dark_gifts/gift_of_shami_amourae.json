@@ -1,0 +1,42 @@
+{
+  "id": "gift_of_shami_amourae",
+  "name": "The Honeyed Hand",
+  "vestige": "Shami-Amourae, the honeyed hand",
+  "summary": "Advantage on Persuasion, and Charm Monster once per long rest. The price: Disadvantage on saves against being Charmed, and no will to refuse a pleasure.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_faceless_god (the ring of amber)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "advantage",
+        "on": "check:persuasion"
+      },
+      {
+        "stat": "spell",
+        "value": "charm_monster",
+        "ability": "cha",
+        "uses": {
+          "count": 1,
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "charm_monster"
+    ],
+    "text": "You know what people want before they do, and you know how to look as if you are offering it."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "disadvantage",
+        "on": "save_vs:charmed"
+      }
+    ],
+    "flaw": "You cannot turn down a pleasure that is offered to you. You can only be talked out of it afterward.",
+    "text": "What you can do to others is easier to do to you. Charms, glamours and sweet voices find the door already open."
+  },
+  "implemented": "data"
+}

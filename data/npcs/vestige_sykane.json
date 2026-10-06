@@ -1,0 +1,16 @@
+{
+  "id": "vestige_sykane",
+  "name": "Sykane",
+  "title": "A Voice in the Amber",
+  "summary": "A vestige sealed in a sarcophagus of amber in the Amber Temple: the last ember of a dead or forgotten power, still able to speak and to bargain. An emaciated shape with its ribs open like a cage door, empty inside.",
+  "portrait": "vestige_amber",
+  "attitude": "indifferent",
+  "voice": "docs/voice/amber_vestiges.md",
+  "guest": false,
+  "tags": [
+    "vestige",
+    "amber_temple"
+  ],
+  "pronouns": "it",
+  "region": "amber_temple"
+}
