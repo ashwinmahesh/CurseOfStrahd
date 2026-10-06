@@ -60,9 +60,9 @@ def main():
     a = p.parse_args()
     reg = json.loads(REGISTRY.read_text())
     ids = a.only or sorted(reg)
-    unknown = [i for i in ids if i not in reg]
-    if unknown:
-        sys.exit(f"not in {REGISTRY.relative_to(ROOT)}: {', '.join(unknown)}")
+    for i in [i for i in ids if i not in reg]:
+        print(f"skip {i}: not in {REGISTRY.relative_to(ROOT)} yet", flush=True)
+    ids = [i for i in ids if i in reg]
     manifest = json.loads((ROOT / "art" / "manifest.json").read_text())["assets"]
     sources = {Path(m["sprites"]).parent.name: m.get("source", "") for m in manifest
                if isinstance(m.get("sprites"), str) and m["sprites"].endswith("/walk.tres")}

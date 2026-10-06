@@ -297,6 +297,18 @@ func errors() -> Array[String]:
 		out.append_array(ChoiceOptions.errors(c, ch))
 	if str(build.get("name", "")) == "":
 		out.append("Give your character a name.")
+	out.append_array(name_problems())
+	return out
+
+
+## A custom hero (appearance.custom) can't share a pregenerated companion's name: the story speaks to companions by
+## name (`name:` selectors), so a namesake would answer for them.
+func name_problems() -> Array[String]:
+	var out: Array[String] = []
+	var app := build.get("appearance", {}) as Dictionary
+	var key := str(build.get("name", "")).to_snake_case()
+	if bool(app.get("custom", false)) and key != "" and not compendium.get_entry("pregens", key).is_empty():
+		out.append("%s is one of your companions' names; choose another for your hero." % str(build["name"]))
 	return out
 
 
@@ -347,6 +359,7 @@ func step_status(step: Step) -> Dictionary:
 		Step.IDENTITY:
 			if str(build.get("name", "")) == "":
 				errs.append("Give your character a name.")
+			errs.append_array(name_problems())
 		Step.REVIEW:
 			errs = errors()
 	return {"step": STEP_NAMES[step], "complete": errs.is_empty(), "errors": errs}

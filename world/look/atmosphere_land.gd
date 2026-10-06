@@ -26,9 +26,19 @@ var occluders: Array[Sprite3D] = []
 var _edge: Dictionary = {}      ## border cell -> Edge
 var _w := 0
 var _d := 0
+## Empty squares on the map (' ') are hillside like the land around it, unless the mood says they're a drop (a
+## chasm, a cliff).
+var _void_land := true
+## Over the whole area the land covers, one cell per square from (-REACH, -REACH): how far each is from the map's own
+## squares (`_dist`) and from the squares people walk on (`_walk`), in squares.
+var _dist := PackedFloat32Array()
+var _walk := PackedFloat32Array()
+var _nx := 0
+var _nz := 0
 
 
-## Builds the land for `board` from a mood's `surround` (ground, road, trees, dead, rise, hills) and its `mists` side.
+## Builds the land for `board` from a mood's `surround` (ground, road, trees, dead, rise, hills, void) and its
+## `mists_edge` side.
 static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenerator, water: ShaderMaterial) -> AtmosphereLand:
 	var l := AtmosphereLand.new()
 	l.board = board_
@@ -40,11 +50,19 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 	l.root.name = "Surround"
 	l._w = board_.grid.width
 	l._d = board_.grid.depth
+	l._void_land = str(l.spec.get("void", "land")) == "land"
 	l._classify()
+	l._distances()
 	l._terrain()
 	if float(l.spec.get("trees", 0.0)) > 0.0:
 		l._trees()
 	return l
+
+
+## Is a map square empty ground the land covers (a plain ' ' square)?
+func _is_void(c: Vector2i) -> bool:
+	var g := board.grid
+	return g.has_flag(c, CombatGrid.VOID) and not g.has_flag(c, CombatGrid.WATER)
 
 
 ## What each square on the map's edge leads on into.
@@ -58,8 +76,8 @@ func _classify() -> void:
 			var inward := Vector2i(clampi(x, 1, _w - 2), clampi(z, 1, _d - 2))
 			if g.has_flag(c, CombatGrid.WATER):
 				_edge[c] = Edge.WATER
-			elif g.has_flag(c, CombatGrid.VOID):
-				_edge[c] = Edge.DROP
+			elif _is_void(c):
+				_edge[c] = Edge.FOREST if _void_land else Edge.DROP
 			elif g.has_flag(c, CombatGrid.WALL):
 				# The map's frame of trees: a lake behind it goes on past it.
 				_edge[c] = Edge.WATER if g.in_bounds(inward) and g.has_flag(inward, CombatGrid.WATER) else Edge.FOREST
@@ -93,9 +111,84 @@ static func outside(p: Vector2, w: float, d: float) -> float:
 	return o.length()
 
 
+## The cell of the land's grid a point is in, or -1 off it.
+func _cell(p: Vector2) -> int:
+	var i := floori(p.x) + int(REACH)
+	var j := floori(p.y) + int(REACH)
+	if i < 0 or j < 0 or i >= _nx or j >= _nz:
+		return -1
+	return j * _nx + i
+
+
+## A square of the map's own that the land doesn't cover (anything but empty ground in land mode).
+func _is_map(i: int, j: int) -> bool:
+	var c := Vector2i(i - int(REACH), j - int(REACH))
+	if not board.grid.in_bounds(c):
+		return false
+	return not (_void_land and _is_void(c))
+
+
+## Two chamfer passes (straight steps 1, diagonal 1.41) for the distances from the map and from where people walk.
+func _distances() -> void:
+	_nx = _w + 2 * int(REACH)
+	_nz = _d + 2 * int(REACH)
+	_dist.resize(_nx * _nz)
+	_walk.resize(_nx * _nz)
+	var g := board.grid
+	for j in _nz:
+		for i in _nx:
+			var c := Vector2i(i - int(REACH), j - int(REACH))
+			_dist[j * _nx + i] = 0.0 if _is_map(i, j) else 1e6
+			var walk := g.in_bounds(c) and not g.has_flag(c, CombatGrid.WALL) and not g.has_flag(c, CombatGrid.VOID) \
+				and not g.has_flag(c, CombatGrid.WATER)
+			_walk[j * _nx + i] = 0.0 if walk else 1e6
+	_dist = _chamfered(_dist)
+	_walk = _chamfered(_walk)
+
+
+func _chamfered(f: PackedFloat32Array) -> PackedFloat32Array:
+	var d := 1.41421
+	for j in _nz:
+		for i in _nx:
+			var k := j * _nx + i
+			var v := f[k]
+			if i > 0:
+				v = minf(v, f[k - 1] + 1.0)
+			if j > 0:
+				v = minf(v, f[k - _nx] + 1.0)
+				if i > 0:
+					v = minf(v, f[k - _nx - 1] + d)
+				if i < _nx - 1:
+					v = minf(v, f[k - _nx + 1] + d)
+			f[k] = v
+	for j in range(_nz - 1, -1, -1):
+		for i in range(_nx - 1, -1, -1):
+			var k := j * _nx + i
+			var v := f[k]
+			if i < _nx - 1:
+				v = minf(v, f[k + 1] + 1.0)
+			if j < _nz - 1:
+				v = minf(v, f[k + _nx] + 1.0)
+				if i < _nx - 1:
+					v = minf(v, f[k + _nx + 1] + d)
+				if i > 0:
+					v = minf(v, f[k + _nx - 1] + d)
+			f[k] = v
+	return f
+
+
+## How far a point is from the map's own squares (0 on them).
+func distance(p: Vector2) -> float:
+	var k := _cell(p)
+	return REACH if k < 0 else _dist[k]
+
+
 ## Ground height at a point: rising away from the map into hills (`rise` at the far edge, `hills` of roll on top).
 func height(p: Vector2) -> float:
-	var out := outside(p, _w, _d)
+	return _height_at(p, distance(p))
+
+
+func _height_at(p: Vector2, out: float) -> float:
 	var rise := float(spec.get("rise", 3.0))
 	var hills := float(spec.get("hills", 1.2))
 	var k := clampf((out - 1.5) / (REACH - 1.5), 0.0, 1.0)
@@ -114,30 +207,37 @@ static func _hash(p: Vector2) -> float:
 	return fposmod(sin(p.x * 127.1 + p.y * 311.7) * 43758.5453, 1.0)
 
 
-## One mesh of 1-unit quads around the map, in three surfaces: ground, road and water. Shared corners, so the ground
-## dips to the waterline at a shore and flattens along a road.
+## One mesh of 1-unit quads around the map (and over its empty squares), in three surfaces: ground, road and water.
+## Shared corners, so the ground dips to the waterline at a shore, flattens along a road and meets the map's floor
+## level at its squares.
 func _terrain() -> void:
 	var r := int(REACH)
-	var x0 := -r
-	var z0 := -r
-	var nx := _w + 2 * r
-	var nz := _d + 2 * r
+	var nx := _nx
+	var nz := _nz
 	var kinds := PackedInt32Array()
 	kinds.resize(nx * nz)
 	for j in nz:
 		for i in nx:
-			var p := Vector2(x0 + i + 0.5, z0 + j + 0.5)
-			var inside := p.x > 0.0 and p.x < _w and p.y > 0.0 and p.y < _d
-			kinds[j * nx + i] = -1 if inside else edge_at(p)
-	# Corner heights: water or a drop next to a corner pins it down; a road beside it flattens it.
+			var p := Vector2(i - r + 0.5, j - r + 0.5)
+			var c := Vector2i(i - r, j - r)
+			if board.grid.in_bounds(c):
+				if _is_void(c):
+					kinds[j * nx + i] = Edge.FOREST if _void_land else Edge.DROP
+				else:
+					kinds[j * nx + i] = -1
+			else:
+				kinds[j * nx + i] = edge_at(p)
+	# Corner heights: water or a drop next to a corner pins it down; a road beside it flattens it; a corner touching
+	# the map's own squares sits level with its floor.
 	var heights := PackedFloat32Array()
 	heights.resize((nx + 1) * (nz + 1))
 	for j in nz + 1:
 		for i in nx + 1:
-			var p := Vector2(x0 + i, z0 + j)
+			var p := Vector2(i - r, j - r)
 			var water := false
 			var road := 0
-			var count := 0
+			var on_map := false
+			var near := 1e6
 			for dj: int in [-1, 0]:
 				for di: int in [-1, 0]:
 					var qi: int = i + di
@@ -145,15 +245,16 @@ func _terrain() -> void:
 					if qi < 0 or qj < 0 or qi >= nx or qj >= nz:
 						continue
 					var k := kinds[qj * nx + qi]
+					near = minf(near, _dist[qj * nx + qi])
 					if k == -1:
+						on_map = true
 						continue
-					count += 1
 					water = water or k == Edge.WATER or k == Edge.DROP
 					if k == Edge.OPEN:
 						road += 1
-			var h := height(p)
-			if count < 4 and outside(p, _w, _d) < 0.01:
-				h = 0.0   # on the map's edge: level with its floor
+			var h := _height_at(p, near)
+			if on_map:
+				h = 0.0
 			elif water:
 				h = WATER_Y
 			elif road > 0:
@@ -179,10 +280,10 @@ func _terrain() -> void:
 				y10 = WATER_Y
 				y01 = WATER_Y
 				y11 = WATER_Y
-			var a := Vector3(x0 + i, y00, z0 + j)
-			var b := Vector3(x0 + i + 1, y10, z0 + j)
-			var c := Vector3(x0 + i, y01, z0 + j + 1)
-			var e := Vector3(x0 + i + 1, y11, z0 + j + 1)
+			var a := Vector3(i - r, y00, j - r)
+			var b := Vector3(i - r + 1, y10, j - r)
+			var c := Vector3(i - r, y01, j - r + 1)
+			var e := Vector3(i - r + 1, y11, j - r + 1)
 			for v: Vector3 in [a, b, c, b, e, c]:
 				st.add_vertex(v)
 	var mesh := ArrayMesh.new()
@@ -206,8 +307,8 @@ func _terrain() -> void:
 	root.add_child(mi)
 
 
-## Trees on a jittered grid over the forest land: the first rows as the board's own fading billboards, the rest in one
-## MultiMesh per kind, darker further out.
+## Trees on a jittered grid over the forest land, never within two squares of where people walk: the first rows as
+## the board's own fading billboards, the rest in one MultiMesh per kind, darker further out.
 func _trees() -> void:
 	var density := float(spec.get("trees", 0.8))
 	var dead := float(spec.get("dead", 0.2))
@@ -222,8 +323,13 @@ func _trees() -> void:
 		while x < _w + REACH:
 			var p := Vector2(x + rng.randf_range(0.0, step), y + rng.randf_range(0.0, step))
 			x += step
-			var out := outside(p, _w, _d)
-			if out < 0.4 or out > REACH - 1.0 or edge_at(p) != Edge.FOREST:
+			var k := _cell(p)
+			if k < 0:
+				continue
+			var out := _dist[k]
+			var c := Vector2i(floori(p.x), floori(p.y))
+			var kind_here := (Edge.FOREST if _void_land else Edge.DROP) if board.grid.in_bounds(c) and _is_void(c) else (-1 if board.grid.in_bounds(c) else edge_at(p))
+			if out < 0.5 or _walk[k] < 2.0 or out > REACH - 1.0 or kind_here != Edge.FOREST:
 				continue
 			if mists != "" and _beyond(p, mists):
 				continue

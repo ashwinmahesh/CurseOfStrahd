@@ -3,7 +3,7 @@ extends TestCase
 ## and known weather, the land around an outdoor map leaves its ways out open and stays off the map, nothing the
 ## atmosphere adds is a square's piece for HiddenAreas, and the time of day changes the light.
 
-const WEATHER := ["leaves", "rain", "snow", "wisps", "crows", "chimney_smoke", "window_light", "embers"]
+const WEATHER := ["leaves", "rain", "snow", "wisps", "dust", "crows", "chimney_smoke", "window_light", "embers"]
 
 
 func before_each() -> void:
@@ -128,14 +128,33 @@ func test_water_is_alive() -> void:
 		v.queue_free()
 
 
-## A place without a mood of its own yet keeps the look it had: no land, mist, grade or weather.
-func test_places_without_a_mood_look_as_before() -> void:
-	var v := _view("krezk")
-	if v.atmosphere.mood_id != "outdoors_plain":
-		return
-	assert_true(v.atmosphere.land == null, "no land around it yet")
-	assert_true(v.atmosphere.weather.follow.is_empty(), "no weather yet")
-	assert_true(v.atmosphere.env.fog_enabled, "the old haze")
+## A lake that runs past the map's edge isn't fenced by a row of trees standing in the water.
+func test_the_lake_runs_past_the_edge() -> void:
+	var v := _view("lake_zarovich")
+	var edge := 0
+	for n in v.board.get_children():
+		if n is MeshInstance3D and str(n.name).begins_with("WaterEdge"):
+			edge += 1
+	assert_true(edge > 0, "the frame across the lake is open water")
+	var c := Vector2i(10, 0)
+	for n: Node3D in v.board.dressing.get(c, []):
+		assert_false(n.visible, "no tree stands in the lake at %s" % c)
+	assert_true(v.grid.has_flag(c, CombatGrid.WALL), "the rules still wall the edge off")
+
+
+## Every outdoor place has land around it, and none of the land's trees stand within reach of where people walk.
+func test_outdoor_places_have_land() -> void:
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in ["krezk", "berez", "castle_ravenloft_gates"]:
+		if not locs.has(loc_id):
+			continue
+		var v := _view(loc_id)
+		assert_true(v.atmosphere.land != null, "%s has land around it" % loc_id)
+		for t: Sprite3D in v.atmosphere.land.occluders:
+			var c := Vector2i(floori(t.global_position.x), floori(t.global_position.z))
+			if v.grid.in_bounds(c):
+				assert_true(v.grid.has_flag(c, CombatGrid.VOID), "%s: a land tree stands only on empty ground (%s)" % [loc_id, c])
+		v.queue_free()
 
 
 ## Indoors there is no land around the rooms and no outdoor weather.

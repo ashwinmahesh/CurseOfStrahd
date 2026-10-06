@@ -197,7 +197,7 @@ func _build() -> void:
 			var room := _room_at(c)
 			if room.has("floor") and (f & CombatGrid.DIFFICULT) == 0 and h <= 0.0:
 				mat = room["floor"] as Material
-			_box("Floor", Vector3(1, 0.2 + h, 1), Vector3(x + 0.5, (h - 0.2) / 2.0, z + 0.5), mat)
+			_floors[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(x + 0.5, (h - 0.2) / 2.0, z + 0.5), mat)
 			var dressed := get_child_count()
 			if (f & CombatGrid.DIFFICULT) != 0:
 				_brambles(c)
@@ -235,6 +235,7 @@ var _yard: Dictionary = {}
 var _roof_alt: Material = null
 var _has_ground: Dictionary = {}     ## wall squares with a ground box of their own (trees)
 var _cleared: Dictionary = {}        ## cell -> the floor box put under a wall square a prop took
+var _floors: Dictionary = {}         ## cell -> its floor box (a stairwell down opens it)
 var _wagon_cells := {}      ## camp: '#' blocks inside the map are wagons, cell -> the block's center
 var _wagon_drawn := {}
 
@@ -282,11 +283,14 @@ func _plan_rooms(loc: Dictionary) -> void:
 		var q0 := Vector2i(int(cells0[0][0]), int(cells0[0][1]))
 		var q1 := Vector2i(int(cells0[1][0]), int(cells0[1][1]))
 		areas.append(Rect2i(Vector2i(mini(q0.x, q1.x), mini(q0.y, q1.y)), (q1 - q0).abs() + Vector2i.ONE))
+		# Room rules are for rooms; an outdoor map has its own few (a jetty is planks), so a fishing "landing" isn't
+		# floored like a manor's.
+		var key := "rooms" if theme in INTERIORS or theme == "dungeon" else "outdoor_rooms"
 		if area.has("floor") or area.has("walls"):
 			# The data names this room's own surfaces (an area's `floor` and `walls`).
-			rules = [[[name_], {"floor": area.get("floor", ""), "wall": area.get("walls", "")}]] + (SetDressing.catalog().get("rooms", []) as Array)
+			rules = [[[name_], {"floor": area.get("floor", ""), "wall": area.get("walls", "")}]] + (SetDressing.catalog().get(key, []) as Array)
 		else:
-			rules = SetDressing.catalog().get("rooms", []) as Array
+			rules = SetDressing.catalog().get(key, []) as Array
 		for rule: Variant in rules:
 			var hit := false
 			for w: String in (rule as Array)[0]:
@@ -426,6 +430,19 @@ func clear_cell(c: Vector2i) -> void:
 	if grid.has_flag(c, CombatGrid.WALL) and not _has_ground.has(c) and not _cleared.has(c):
 		var h := floor_y(c)
 		_cleared[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), _floor_mat)
+
+
+## A stairwell down opens the floor of its square (and shows it again when it goes).
+func hide_floor(c: Vector2i) -> void:
+	for d: Dictionary in [_floors, _cleared]:
+		if d.has(c) and is_instance_valid(d[c]):
+			(d[c] as Node3D).visible = false
+
+
+func show_floor(c: Vector2i) -> void:
+	for d: Dictionary in [_floors, _cleared]:
+		if d.has(c) and is_instance_valid(d[c]):
+			(d[c] as Node3D).visible = true
 
 
 ## A wall square drawn as a tree or a rock column (it has ground of its own under it).

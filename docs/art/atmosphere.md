@@ -5,63 +5,99 @@ Owner rules kept: no grain or dither, character sprites stay clear, gothic tone,
 hidden until found.
 
 Props, floor and wall textures and their placement belong to set dressing (docs/art/set_dressing.md). This covers
-everything around them: light and shadow, mist and fog, the land past the map's edge, weather and the colour grade.
+everything around them: light and shadow, mist and fog, water, the land past the map's edge, weather and the colour
+grade.
 
 ## Where it lives
 
 | Piece | File |
 |---|---|
-| Each place's mood: light per time of day, mist, clouds, grade, weather, land around the map | `art/atmosphere/moods.json` |
-| Builds the mood for a location and runs it (sun, sky, contact shadows, surround, weather, time-of-day blends) | `world/look/atmosphere.gd` (`Atmosphere`) |
+| Each place's mood: light per time of day, mist, clouds, grade, water, weather, land around the map | `art/atmosphere/moods.json` |
+| Builds the mood for a location and runs it (sun, sky, contact shadows, water, time-of-day blends, lightning) | `world/look/atmosphere.gd` (`Atmosphere`) |
+| The land around the map and over its empty squares: hills, forest, roads and lakes running on | `world/look/atmosphere_land.gd` (`AtmosphereLand`) |
+| Weather: leaves, rain, snow, wisps, dust, crows, chimney smoke, embers, lit windows | `world/look/atmosphere_weather.gd` (`AtmosphereWeather`) |
 | Mist, the Mists' wall, cloud shadows, ground patches, grade, vignette, then outlines and the palette snap | `shaders/post/strahd_post.gdshader` |
-| Trees of the surrounding forest (one MultiMesh), falling leaves, chimney smoke | `shaders/atmosphere/` |
+| Water, forest trees (one MultiMesh), leaves, rain, splashes, motes, crows, smoke | `shaders/atmosphere/` |
 | Art QA: a place at each time of day from the game camera, with frame times | `tools/art/preview/atmosphere_preview.tscn` |
 
 `LocationView` makes one `Atmosphere` and hands it the camera and the screen pass; `update_daylight()` tells it the
-time of day. A mood is picked by location id (`places`), else by map theme (`themes`), else the outdoor or indoor
-default. A mood can be `like` another and change only what differs.
+time of day. A mood can be `like` another and change only what differs.
+
+## Which mood a place gets
+
+Most specific first: the location's id in `places`; the longest of `prefixes` its id starts with (the castle's
+parts); its region in `regions` (`"<region>"` for its outdoor maps, `"<region>/indoors"` for the rest); its map theme
+in `themes` (the same way); else `outdoors` or `indoors`. A new map in a known region or theme gets that mood without
+anyone touching this file.
+
+| Mood | Places | What it brings |
+|---|---|---|
+| `svalich_woods`, `svalich_road`, `crossroads` | the Svalich Woods, the opening road (with the Mists' wall), the crossroads | the base: overcast day, violet dusk, blue night; ground mist, falling leaves; crows at the gallows |
+| `barovia_village` | the Village of Barovia | thicker mist in the streets, chimney smoke, lit windows, a few crows |
+| `vallaki` | Vallaki | steady rain with splashes, smoke, lit windows, a greyer day |
+| `krezk`, `abbey`, `white_sun` | Krezk, the Abbey, the Pool of the White Sun | mountain scree and hillsides, light snow (heavier at the Abbey), a cold grade |
+| `high_snow`, `blizzard` | Mount Baratok, the Amber Temple's approach; Tsolenka Pass and the Amber Temple road | snowfields, a blue-white grade; a blizzard driving almost sideways |
+| `lake_zarovich`, `lakeside` | Lake Zarovich, Van Richten's tower | moving water running on past the map's edge, mist on the lake |
+| `berez` | Berez and the marsh track | marsh-mud land, still bog water, green-yellow will-o'-wisps after dark, a bone-coloured grade |
+| `tser_pool`, `vistani_camp`, `tser_falls` | the Vistani camps, Tser Falls | sparks over the fires, fireflies; steep hills and thick mist at the falls |
+| `wizard_of_wines`, `bonegrinder`, `argynvostholt`, `werewolf_den`, `yester_hill` | those places | rain and crows over the vines; crows over the windmill; a cold dead grade and pale wisps; rock; a sick green grade and many crows |
+| `ravenloft`, `ravenloft_roofs` | the castle's gates, overlook and roofs | a storm: hard rain, lightning flashes, crows, the sky of blood at dusk; on the roofs, a gale |
+| `ravenloft_halls`, `ravenloft_chapel`, `ravenloft_court`, `ravenloft_spires`, `ravenloft_larders`, `ravenloft_crypt` | the castle's main floor, chapel, Court of the Count, spires, larders, catacombs | candlelit cold halls with dust in the air; a bone-dust chapel; crimson for the brides' court; moonlit spires with lightning at the windows; a sick green below the kitchens; a cold, still mist on the crypt floors |
+| `indoors`, `tavern`, `eva_tent`, `chapel`, `crypt`, `cave`, `death_house`, `death_house_crypt`, `amber_temple`, `haunted` | rooms, taverns, Madam Eva's tent, churches, dungeons, caves, Death House, the Amber Temple, Argynvostholt's halls | warm firelit taverns, purple tent light, cold moonlit churches, mist lying on dungeon floors |
 
 ## What it adds
 
 - **Light by time of day.** Day is an overcast silver-grey, dusk a low warm sun under a violet sky, night a cold
   moon from the other side, dawn a rose light. The key light moves (long shadows at dusk and dawn). A change of time
-  blends over three seconds instead of snapping.
+  blends over three seconds instead of snapping. Indoors the map's light level (bright, dim, dark) scales it.
 - **Ground mist.** A layer over the ground that the view ray is marched through, so it lies in the low places and
-  shifts with the camera. It gathers by the trees and in brambles and thins in clearings (a mask built from the
-  map), drifts with the wind in streaks and thin wisps, and comes out in three or four flat bands like the rest of the
-  cel look. Lanterns, fires and lit windows light the mist around them.
+  shifts with the camera. It gathers by the trees, over empty ground and in brambles and thins in clearings, on
+  roads and over water (a mask built from the map), drifts with the wind in streaks and thin wisps, and comes out in
+  three or four flat bands like the rest of the cel look. Lanterns, fires and lit windows light the mist around them.
+  Indoors a thin, slow mist lies on dungeon and crypt floors, and the dark around the rooms stays clear.
 - **The Mists.** On the opening road the wall of the Mists stands at the east edge, where the party came in: a flat
   pale wall with an inked, slowly billowing edge, kept a square clear of the map.
-- **The land beyond the map.** Ground runs on past the edge, forest thins into the distance (the near trees fade
-  like the board's own when they stand in front of the party), the road runs on out of every way out, and the far
-  land sinks into the sky colour in flat steps. No place floats in a void any more.
+- **The land beyond the map.** Ground runs on past the edge and rises into hills, forest thins into the distance
+  (the near trees fade like the board's own when they stand in front of the party), the road runs on out of every
+  way out, a lake that meets the edge runs on past it, and the far land sinks into the sky colour in flat steps.
+  Empty squares inside a map (Krezk's approach, the Abbey's road) are hillside too, unless the mood says they are a
+  drop (`"void": "drop"`: the castle's roofs and chasms, Tsolenka's gorge). No tree of the land stands within two
+  squares of anywhere people can walk.
+- **Water.** Lakes, rivers, pools and marsh drift in two layers of the water texture, deeper water darker, foam
+  lapping along the shore, thin highlight lines riding the current and the sky's light on the surface. Water keeps
+  its own colours through the grade (it marks itself in the normal buffer for the screen pass), so a lake never
+  turns the colour of the road. A row of the map's frame trees standing across a lake becomes open water (the rules
+  still wall the edge off).
 - **Cloud shadows** drift over the ground; broad light and dark patches break up the ground texture so it doesn't
   read as tiles.
 - **Contact shadows** (Godot's SSAO) ground props, walls and houses.
-- **Weather.** Dead leaves drift down through the view in the woods and the village; smoke curls from every
-  village chimney, bent by the wind; after dark the lit windows spill candlelight on the street.
+- **Weather**, by mood: dead leaves; rain slanting on the wind with rings where it lands; snow drifting or driving
+  in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
+  chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
+  lightning flashes in a storm (and through the castle's spire windows).
 - **Grade.** Each time of day maps brightness through its own shadow and light colours, so a scene keeps to one
-  family of hues; strongly coloured light (a lantern, a fire) keeps more of its own colour. A vignette sinks the
-  screen's edges towards `void`.
+  family of hues; strongly coloured light (a lantern, a fire) keeps more of its own colour. Greys stay on the grey
+  ramp in the palette snap where the mood asks (`keep_greys`), so a pale grey fades without a muddy brown ring. A
+  vignette sinks the screen's edges towards `void`.
 
-All of it happens before the palette snap, so it comes out in palette colours with no dithering. Character sprites
-draw after the screen pass, so mist never covers them and they stay crisp.
+All of it happens before the palette snap, so it comes out in palette colours with no dithering; every weather piece
+is an opaque, hard-edged shape for the same reason. Character sprites draw after the screen pass, so mist never covers
+them and they stay crisp. On this Mac, Vallaki in the rain, the castle's storm and the Tsolenka blizzard all hold the capture's 120 fps cap at
+1600 x 900 with it on, the same as with it off (`--uncapped --compare`).
 
 ## Rules for new places
 
-- Give an outdoor place a mood (or let its theme's mood cover it); indoor places use `indoors` unless they need
-  their own (a crypt, the Amber Temple).
-- Colours are palette names only.
+- An outdoor place gets its region's or theme's mood; give it its own only when it should feel different. Indoor
+  places use their region's or theme's indoor mood, else `indoors`.
+- Colours are palette names only (tests/integration/test_atmosphere.gd checks), weather only of the known kinds.
 - A `mists_edge` side only where nothing leads out (it covers that edge completely).
-- Anything a mood adds that belongs to one square (a window's light, a chimney's smoke) hangs on the board's house,
-  so HiddenAreas hides it with the house.
+- Anything a mood adds that belongs to one square (a window's light, a chimney's smoke, a fire's sparks) hangs on
+  that square's piece, so HiddenAreas hides it with the piece.
 
 ## Checking a place
 
-    __CFBundleIdentifier=org.godotengine.godot caffeinate -du make capture \
-      SCENE=res://tools/art/preview/atmosphere_preview.tscn LOCATION=village_of_barovia NAME=atmo FRAMES=20 \
-      ARGS="--times=day,dusk,night,dawn --at=20,12" < /dev/null
+    make capture SCENE=res://tools/art/preview/atmosphere_preview.tscn LOCATION=village_of_barovia NAME=atmo \
+      FRAMES=20 ARGS="--times=day,dusk,night,dawn --at=20,12"
 
 `--overview` frames the whole map, `--uncapped --compare` also times and shoots it with the atmosphere's extras off,
-`--set=mist_strength:0.8` tries a value. `caffeinate -du` keeps the display awake: a sleeping display hands back
-stale frames.
+`--set=mist_strength:0.8` tries a value, `--no-ao` turns contact shadows off. `make capture` draws off screen.

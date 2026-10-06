@@ -43,6 +43,22 @@ a fixed place and facing, and the camera sees the side that faces it:
 - `tools/art/preview/prop_turntable.tscn` shoots a small room of these from the four camera headings
   (`make capture SCENE=res://tools/art/preview/prop_turntable.tscn NAME=turntable`).
 
+## Stairs are steps (owner report, 2026-10-06)
+
+"Stairs still look too small... the icon for stairs down looks weird." Stairs are no longer pictures: `Stairs`
+(`world/look/stairs.gd`) builds a flight up as seven solid steps climbing 7.5 ft across its square, with a banister,
+and a stairwell down as a shaft that opens the square's floor (stone sides, a dark bottom) with steps descending 7 ft.
+Both start at the square's open side and climb or descend away from it, in wood indoors and stone below ground, and
+read right from every camera heading. Exits and props whose art is `stair_riser` or `stair_down` use them.
+
+## Flush with the wall, always
+
+Furniture that has a front view is never drawn as a turning billboard: it stands flush with the wall or doorway
+beside it (the Death House's swinging bookcase backs onto its secret door), or with its back to the north when
+nothing is beside it, and its root stands on its own square so it shows and hides with that square.
+`test_wall_pieces_sit_flush_with_their_wall` fails on any wall piece turned off its wall or without a wall behind
+it, and on any front-view furniture drawn as a billboard.
+
 ## Pointing at pieces (owner report, 2026-10-06)
 
 The top of a tall piece is drawn over the squares behind it, so the mouse now tests what's drawn before the floor
