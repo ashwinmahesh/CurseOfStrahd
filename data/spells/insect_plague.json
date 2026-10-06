@@ -1,0 +1,65 @@
+{
+  "id": "insect_plague",
+  "name": "Insect Plague",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "conjuration",
+  "classes": [
+    "cleric",
+    "druid",
+    "sorcerer"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 300
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a locust"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "4d10",
+      "type": "piercing"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10"
+  },
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn"
+    ],
+    "obscured": "light",
+    "terrain": "difficult"
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "A 20-foot swarm of locusts: Con save, 4d10 Piercing, half on a success.",
+  "text": "Creatures save when it appears and when they enter it or end a turn in it, once per turn. The swarm is Lightly Obscured and Difficult Terrain."
+}

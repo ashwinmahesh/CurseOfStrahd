@@ -1,0 +1,200 @@
+{
+  "id": "arcanaloth",
+  "name": "Arcanaloth",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual arcanaloth; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical weapons is entered as plain Bludgeoning, Piercing and Slashing resistance, as the 2024 books do for such creatures. Its innate spells use the main DC 17 in the engine (the book gives them DC 15). The Claws' poison save and Teleport are text only; Fire Bolt runs as an attack; spell slots are listed per spell."
+  },
+  "size": "medium",
+  "type": "fiend",
+  "tags": [
+    "yugoloth"
+  ],
+  "alignment": "neutral evil",
+  "ac": 17,
+  "initiative": 1,
+  "hp": {
+    "average": 104,
+    "dice": "16d8+32"
+  },
+  "speed": {
+    "walk": 30,
+    "fly": 30
+  },
+  "abilities": {
+    "str": 17,
+    "dex": 12,
+    "con": 14,
+    "int": 20,
+    "wis": 16,
+    "cha": 17
+  },
+  "saves": {
+    "dex": 5,
+    "int": 9,
+    "wis": 7,
+    "cha": 7
+  },
+  "skills": {
+    "arcana": 13,
+    "deception": 9,
+    "insight": 9,
+    "perception": 7
+  },
+  "resistances": [
+    "bludgeoning",
+    "cold",
+    "fire",
+    "lightning",
+    "piercing",
+    "slashing"
+  ],
+  "immunities": [
+    "acid",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "poisoned"
+  ],
+  "senses": {
+    "truesight": 120
+  },
+  "passive_perception": 17,
+  "languages": [
+    "all"
+  ],
+  "telepathy": 120,
+  "cr": 12,
+  "xp": 8400,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "magic_weapons",
+      "name": "Magic Weapons",
+      "action": "passive",
+      "summary": "Its weapon attacks count as magical.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "claws",
+      "name": "Claws",
+      "kind": "melee",
+      "attack": {
+        "bonus": 7,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "2d4+3",
+          "type": "slashing"
+        },
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "poison",
+          "when": "on a failed DC 14 Constitution save (half on a success)"
+        }
+      ],
+      "summary": "Venomous claws: the target also saves against poison.",
+      "text": "The target makes a DC 14 Constitution save, taking 10 (3d6) Poison damage on a failure or half as much on a success."
+    },
+    {
+      "id": "fire_bolt",
+      "name": "Fire Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 9,
+        "range": [
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "3d10",
+          "type": "fire"
+        }
+      ],
+      "summary": "Casts Fire Bolt up to 120 ft."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Int, DC 17, +9: a 16th-level wizard's spells up to Finger of Death and Mind Blank, plus innate tricks.",
+      "text": "A 16th-level spellcaster using Intelligence (spell save DC 17, +9 to hit). Cantrips: Fire Bolt, Mage Hand, Minor Illusion, Prestidigitation. 1st level (4 slots): Detect Magic, Identify, Shield, Tenser's Floating Disk. 2nd level (3 slots): Detect Thoughts, Mirror Image, Phantasmal Force, Suggestion. 3rd level (3 slots): Counterspell, Fear, Fireball. 4th level (3 slots): Banishment, Dimension Door. 5th level (2 slots): Contact Other Plane, Hold Monster. 6th level (1 slot): Chain Lightning. 7th level (1 slot): Finger of Death. 8th level (1 slot): Mind Blank. Innate (Charisma, DC 15), at will: Alter Self, Darkness, Heat Metal, Invisibility (self only), Magic Missile."
+    },
+    {
+      "id": "teleport",
+      "name": "Teleport",
+      "kind": "special",
+      "summary": "Teleports up to 60 ft to a space it can see, with what it carries.",
+      "text": "Text only for the engine."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 17,
+    "attack": 9,
+    "at_will": [
+      "alter_self",
+      "darkness",
+      "heat_metal",
+      "invisibility",
+      "magic_missile",
+      "mage_hand",
+      "minor_illusion",
+      "prestidigitation"
+    ],
+    "per_day": {
+      "4": [
+        "detect_magic",
+        "identify",
+        "shield",
+        "tensers_floating_disk"
+      ],
+      "3": [
+        "detect_thoughts",
+        "mirror_image",
+        "phantasmal_force",
+        "suggestion",
+        "counterspell",
+        "fear",
+        "fireball",
+        "banishment",
+        "dimension_door"
+      ],
+      "2": [
+        "contact_other_plane",
+        "hold_monster"
+      ],
+      "1": [
+        "chain_lightning",
+        "finger_of_death",
+        "mind_blank"
+      ]
+    }
+  },
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "A jackal-headed fiend sage: poisoned claws, a 16th-level wizard's spells, and teleportation."
+}

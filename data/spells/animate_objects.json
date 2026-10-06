@@ -1,0 +1,44 @@
+{
+  "id": "animate_objects",
+  "name": "Animate Objects",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "object",
+    "description": "nonmagical objects in range that nobody wears or carries and that aren't fixed or Gargantuan"
+  },
+  "upcast": {
+    "text": "Slam damage increases per slot level above 5 (1d4 for Medium or smaller, 1d6 for Large, 1d12 for Huge)."
+  },
+  "tags": [
+    "summon",
+    "damage"
+  ],
+  "summary": "Loose nonmagical objects in range become your fighters for up to a minute.",
+  "text": "Animate objects up to your spellcasting modifier (Large counts as 2, Huge as 3); each uses the Animated Object stat block, acts on your turn and attacks with a Slam when you command it as a Bonus Action. Their Slam damage grows with higher slots."
+}

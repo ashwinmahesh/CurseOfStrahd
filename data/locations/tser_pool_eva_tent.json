@@ -140,5 +140,23 @@
     "enter": "enter:tser_pool_eva_tent"
   },
   "rest": "no",
-  "rest_text": "Madam Eva does not keep a guest bed, and you would not sleep well in it if she did. The camp outside is safer."
+  "rest_text": "Madam Eva does not keep a guest bed, and you would not sleep well in it if she did. The camp outside is safer.",
+  "containers": [
+    {
+      "id": "eva_card_chest",
+      "cell": [
+        6,
+        1
+      ],
+      "label": "Madam Eva's painted chest",
+      "model": "chest",
+      "items": [],
+      "gold": 0
+    }
+  ],
+  "treasure_spots": {
+    "tser_pool_eva_tent": {
+      "container": "eva_card_chest"
+    }
+  }
 }

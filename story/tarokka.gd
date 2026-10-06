@@ -9,6 +9,8 @@ const TREASURES: Array[String] = ["tome", "symbol", "sword"]
 const SLOTS: Array[String] = ["tome", "symbol", "sword", "ally", "enemy"]
 const SLOT_NAMES := {"tome": "The Tome of Strahd", "symbol": "The Holy Symbol of Ravenkind", "sword": "The Sunsword",
 	"ally": "The ally", "enemy": "The enemy"}
+## The treasures as items (data/magic_items/).
+const TREASURE_ITEMS := {"tome": "tome_of_strahd", "symbol": "holy_symbol_of_ravenkind", "sword": "sunsword"}
 
 
 ## {card id: card} for the whole deck.
@@ -91,3 +93,41 @@ static func fill(text: String, st: StoryState) -> String:
 			if out.contains(key):
 				out = out.replace(key, field(st, "%s.%s" % [slot, f]))
 	return out
+
+
+# --- Treasure spots (ADR 0011) ------------------------------------------------------------------------------------
+
+## The treasures (slots) the party's reading put at `place` that haven't been found yet.
+static func treasures_at(place: String, st: StoryState) -> Array[String]:
+	var out: Array[String] = []
+	if place == "" or st.tarokka.is_empty():
+		return out
+	for slot in TREASURES:
+		if st.tarokka.has(slot) and str(outcome(slot, str(st.tarokka[slot])).get("place", "")) == place \
+				and not bool(st.get_flag("treasure_found_" + slot, false)):
+			out.append(slot)
+	return out
+
+
+## The item ids of the treasures at `place`, marking them found (they're in the party's hands from here: a loot window
+## or a gift). Sets `treasure_found_<slot>` for each.
+static func take_from(place: String, st: StoryState) -> Array[String]:
+	var items: Array[String] = []
+	for slot in treasures_at(place, st):
+		st.set_flag("treasure_found_" + slot, true)
+		items.append(str(TREASURE_ITEMS[slot]))
+	return items
+
+
+## Where a location keeps a reading's place: {place id: {container|encounter|dialogue: id}} (data, ADR 0011).
+static func spots(location: Dictionary) -> Dictionary:
+	return location.get("treasure_spots", {}) as Dictionary
+
+
+## The place a location's container or encounter holds (kind "container" or "encounter"), or "".
+static func place_for(location: Dictionary, kind: String, id: String) -> String:
+	var all := spots(location)
+	for place: String in all:
+		if str((all[place] as Dictionary).get(kind, "")) == id:
+			return place
+	return ""

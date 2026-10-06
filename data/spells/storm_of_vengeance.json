@@ -1,0 +1,61 @@
+{
+  "id": "storm_of_vengeance",
+  "name": "Storm of Vengeance",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 9,
+  "school": "conjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "sight"
+  },
+  "area": {
+    "shape": "cylinder",
+    "size": 300
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "each creature under the cloud"
+  },
+  "save": "con",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "2d6",
+      "type": "thunder"
+    }
+  ],
+  "conditions": [
+    "deafened"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "deafened"
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "A 300-foot-radius storm: Con save or 2d6 Thunder and Deafened, then acid, lightning, hail and freezing rain on your later turns.",
+  "text": "At the start of your later turns: turn 2, 4d6 Acid to everything under the cloud; turn 3, six bolts on six targets (Dex save, 10d6 Lightning, half on a success); turn 4, 2d6 Bludgeoning to each creature; turns 5-10, 1d6 Cold to each creature. From turn 5 the area is also Difficult Terrain and Heavily Obscured, ranged weapon attacks there are impossible, and strong wind blows."
+}

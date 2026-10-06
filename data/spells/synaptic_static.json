@@ -1,0 +1,71 @@
+{
+  "id": "synaptic_static",
+  "name": "Synaptic Static",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "int",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "8d6",
+      "type": "psychic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "until": "rounds:10",
+        "repeat_save": "end_of_turn",
+        "modifiers": [
+          {
+            "stat": "penalty_die",
+            "dice": "1d6",
+            "on": [
+              "attack",
+              "check:all",
+              "concentration"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "A 20-foot psychic burst: Int save, 8d6 Psychic (half on a success); those who fail are muddled for a minute.",
+  "text": "A muddled creature subtracts 1d6 from its attack rolls, ability checks and Con saves to keep Concentration. It repeats the Int save at the end of each of its turns, ending the effect on a success."
+}

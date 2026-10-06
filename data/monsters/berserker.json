@@ -71,7 +71,8 @@
   ],
   "regions": [
     "svalich_road",
-    "vallaki"
+    "vallaki",
+    "yester_hill"
   ],
   "ai_profile": "brute",
   "summary": "A hunter or deserter gone wild: wades in with a greataxe and fights harder the more it bleeds."

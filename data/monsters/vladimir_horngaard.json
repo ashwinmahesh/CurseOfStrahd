@@ -1,0 +1,143 @@
+{
+  "id": "vladimir_horngaard",
+  "name": "Vladimir Horngaard",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. His Hit Points (remembered as about 192; 23d8 + 92 here), hit dice, Strength and the Greatsword's numbers need the book. The extra damage against Strahd and Vengeful Glare are text only (the engine has no sworn foe yet); Regeneration runs but not its pause after Fire or Radiant damage."
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "lawful evil",
+  "ac": 17,
+  "ac_note": "half plate",
+  "initiative": 2,
+  "hp": {
+    "average": 195,
+    "dice": "23d8+92"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 14,
+    "con": 18,
+    "int": 13,
+    "wis": 16,
+    "cha": 18
+  },
+  "saves": {
+    "str": 7,
+    "con": 7,
+    "wis": 6,
+    "cha": 7
+  },
+  "resistances": [
+    "necrotic",
+    "psychic"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "poisoned",
+    "stunned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 13,
+  "languages": [
+    "Common"
+  ],
+  "cr": 7,
+  "xp": 2900,
+  "proficiency_bonus": 3,
+  "gear": [
+    "greatsword",
+    "half_plate_armor"
+  ],
+  "traits": [
+    {
+      "id": "regeneration",
+      "name": "Regeneration",
+      "action": "passive",
+      "summary": "Regains 10 HP at the start of its turn unless it took Fire or Radiant damage since its last turn.",
+      "text": "The revenant regains 10 Hit Points at the start of its turn. If it took Fire or Radiant damage, this doesn't work at the start of its next turn. Its body is destroyed only if it starts its turn at 0 Hit Points and doesn't regenerate.",
+      "regenerate": 10,
+      "implemented": "engine"
+    },
+    {
+      "id": "rejuvenation",
+      "name": "Rejuvenation",
+      "action": "passive",
+      "summary": "If its body is destroyed, its soul takes another corpse within a day.",
+      "text": "When the revenant's body is destroyed, its soul lingers. After 24 hours the soul enters and animates another Humanoid corpse on the same plane and regains all its Hit Points. While the soul has no body, a Wish spell can send it on to the afterlife for good.",
+      "implemented": "text"
+    },
+    {
+      "id": "turn_immunity",
+      "name": "Turn Immunity",
+      "action": "passive",
+      "summary": "Effects that turn Undead don't affect it.",
+      "text": "The revenant is immune to effects that turn Undead.",
+      "implemented": "text"
+    },
+    {
+      "id": "vengeful_tracker",
+      "name": "Vengeful Tracker",
+      "action": "passive",
+      "summary": "Always knows the distance and direction to Strahd, the foe it hunts.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "greatsword",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Greatsword attacks."
+    },
+    {
+      "id": "greatsword",
+      "name": "Greatsword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 7,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d6+4",
+          "type": "slashing"
+        }
+      ],
+      "summary": "A two-handed sword stroke; Strahd takes 14 (4d6) more.",
+      "text": "Against Strahd the hit deals an extra 14 (4d6) Slashing damage.",
+      "weapon": true
+    },
+    {
+      "id": "vengeful_glare",
+      "name": "Vengeful Glare",
+      "kind": "special",
+      "summary": "Strahd, if seen within 30 ft, makes a DC 15 Wis save or is Paralyzed, then Frightened.",
+      "text": "Paralyzed until this creature damages him or until the end of its next turn; then Frightened for 1 minute (repeat save each turn). Text only for the engine."
+    }
+  ],
+  "regions": [
+    "argynvostholt"
+  ],
+  "ai_profile": "brute",
+  "summary": "The revenant commander of a fallen order: two greatsword strokes, wounds that close, and hatred only for Strahd."
+}

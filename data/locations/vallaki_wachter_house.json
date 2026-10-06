@@ -527,5 +527,10 @@
     "enter": "enter:vallaki_wachter_house"
   },
   "rest": "no",
-  "rest_text": "Not under this roof. Somewhere above you, slow and patient, something is scratching at a door."
+  "rest_text": "Not under this roof. Somewhere above you, slow and patient, something is scratching at a door.",
+  "treasure_spots": {
+    "vallaki_wachter_house:wachter_study": {
+      "container": "wachter_strongbox"
+    }
+  }
 }

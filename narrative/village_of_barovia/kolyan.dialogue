@@ -1,0 +1,40 @@
+# Kolyan Indirovich at his grave: the horseman card's ally (ADR 0011). He can be raised by a priest or bard who
+# commands the magic for it (Raise Dead, level 9) and 500 gp of diamonds for the rite.
+
+~ grave
+Narrator: Fresh earth, a board with his name burned into it, and someone's wildflowers already gone brown.
+if tarokka.ally.npc == kolyan_indirovich and not guest:kolyan_indirovich and not flag.kolyan_raised
+interject guest:ismark: Madam Eva said Father would ride with us. I thought she meant his memory. She didn't, did she.
+-> raise_menu
+endif
+-> END
+
+~ raise_menu
+* [if (class:cleric or class:bard) and level >= 9 and gold >= 500] Call him back: the rite, and five hundred gold of diamonds in the grave. -> raise
+* [if not ((class:cleric or class:bard) and level >= 9)] (Raising the dead needs a cleric or bard of ninth level.) -> END
+* [if (class:cleric or class:bard) and level >= 9 and gold < 500] (The rite needs 500 gp of diamonds.) -> END
+* Let him rest. -> END
+
+~ raise
+gold -500
+set kolyan_raised
+Narrator: The earth heaves, settles, heaves. A hand the colour of tallow finds the board with his name on it and pushes it over.
+Kolyan Indirovich: Twenty years I kept this village. Two weeks dead and you lot are digging me up. Is the church still standing?
+interject guest:ireena: Father. It's me.
+Kolyan Indirovich: I know who you are, girl. I'm dead, not blind. Help an old man up.
+* Strahd is still out there. Ride with us. -> join
+* Rest a while. We'll come back for you. -> later
+
+~ join
+Kolyan Indirovich: My heart gave out the last time he came knocking. Let's see if it does better the second time. Give me a sword I can lift.
+join kolyan_indirovich
+-> END
+
+~ later
+Kolyan Indirovich: Then I'll sit on my own grave and frighten the gravedigger. Don't be long. I've lost enough time.
+-> END
+
+~ visit
+Kolyan Indirovich: Back, are you? I'm ready when you are.
+* Ride with us. -> join
+* Not yet. -> END

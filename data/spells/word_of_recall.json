@@ -1,0 +1,36 @@
+{
+  "id": "word_of_recall",
+  "name": "Word of Recall",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "conjuration",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 5
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 6,
+    "description": "you and up to five willing creatures within 5 feet of you"
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "You and up to five willing creatures near you teleport to a sanctuary you prepared.",
+  "text": "You must first designate the sanctuary by casting the spell in a place dedicated to your deity; casting it with no sanctuary set does nothing."
+}

@@ -1,0 +1,38 @@
+{
+  "id": "animal_shapes",
+  "name": "Animal Shapes",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "transmutation",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "ally",
+    "description": "any number of willing creatures you can see"
+  },
+  "tags": [
+    "buff",
+    "utility"
+  ],
+  "summary": "Willing creatures become Large or smaller Beasts of CR 4 or lower, with Temporary Hit Points equal to the form's HP.",
+  "text": "Each target can take a different form, and you can reshape them again with a Magic action. They keep their creature type, Hit Points, Hit Point Dice, alignment, ability to communicate and Intelligence, Wisdom and Charisma, can't cast spells, and change back when their Temporary Hit Points run out or they end it with a Bonus Action."
+}

@@ -1,0 +1,122 @@
+{
+  "id": "phantom_warrior",
+  "name": "Phantom Warrior",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Its Armor Class, the sword's damage type and its resistances need the book. Resistance to nonmagical weapons is entered as plain Bludgeoning, Piercing and Slashing resistance."
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "any alignment",
+  "ac": 16,
+  "ac_note": "spectral armor",
+  "initiative": 0,
+  "hp": {
+    "average": 45,
+    "dice": "6d8+18"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 11,
+    "con": 16,
+    "int": 8,
+    "wis": 10,
+    "cha": 15
+  },
+  "resistances": [
+    "acid",
+    "bludgeoning",
+    "cold",
+    "fire",
+    "lightning",
+    "piercing",
+    "slashing",
+    "thunder"
+  ],
+  "immunities": [
+    "necrotic",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "the languages it knew in life"
+  ],
+  "cr": 3,
+  "xp": 700,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "ethereal_sight",
+      "name": "Ethereal Sight",
+      "action": "passive",
+      "summary": "Sees 60 ft into the Ethereal Plane from the Material Plane.",
+      "implemented": "text"
+    },
+    {
+      "id": "incorporeal_movement",
+      "name": "Incorporeal Movement",
+      "action": "passive",
+      "summary": "Moves through creatures and objects as Difficult Terrain; 5 (1d10) Force if it ends a turn inside one.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "incorporeal_movement"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "spectral_longsword",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Spectral Longsword attacks."
+    },
+    {
+      "id": "spectral_longsword",
+      "name": "Spectral Longsword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d8+3",
+          "type": "force"
+        }
+      ],
+      "summary": "A ghostly blade that cuts with force."
+    }
+  ],
+  "regions": [
+    "argynvostholt"
+  ],
+  "ai_profile": "brute",
+  "summary": "The ghost of a fallen knight, still fighting: two spectral sword strokes, and it walks through walls."
+}

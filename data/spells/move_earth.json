@@ -1,0 +1,41 @@
+{
+  "id": "move_earth",
+  "name": "Move Earth",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a miniature shovel"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 2,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a 40-foot-square area of earth you can see"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Reshape dirt, sand or clay in a 40-foot square, up to 20 feet up or down.",
+  "text": "Each reshaping takes 10 minutes, and you can pick a new area with a Magic action. It can't touch natural stone or buildings, and the slow change never traps or harms creatures."
+}

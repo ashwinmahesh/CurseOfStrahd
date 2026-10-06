@@ -93,3 +93,49 @@ statement `shop` opens the shop for the NPC being spoken to; `closed` is a condi
 or `"guest_build": {"pregen": "<pregen id>", "level": 3}` for a guest with a full character sheet. Dialogue:
 `join ireena` adds the guest (they follow, fight on the party's side under the player's control, and appear in the
 party frames), `leave ireena` removes them. Conditions: `guest:ireena`.
+
+## Region travel files (Phase 5, ADR 0011)
+
+Every file in `data/travel/` is merged into the one map: a region adds `data/travel/<region>.json` with the same shape
+(`id`, `name`, `places`, `roads`) holding only its own places and the roads that reach them. Road ends may be places
+from any file. Place ids are unique across files.
+
+## Treasure spots (Phase 5, ADR 0011)
+
+In a location file:
+
+```json
+"treasure_spots": {
+  "old_bonegrinder": {"container": "hag_oven"},
+  "argynvostholt_vladimir": {"encounter": "vladimir_horngaard"},
+  "krezk_pool_of_the_white_sun": {"dialogue": "krezk/pool:the_pool"}
+}
+```
+
+- Keys are `place` values from data/tarokka/outcomes.json (a location id, or `location:spot`). Every place outside
+  Castle Ravenloft must have exactly one spot, in a location of its region.
+- `container`: a container id in the same location. Opening it also yields every treasure the reading put there.
+- `encounter`: an encounter id in the same location. Winning that fight adds the treasure to the loot.
+- `dialogue`: a conversation node (file:node) that reaches `tarokka give <place id>`.
+- Condition `treasure_at:<place id>`: a treasure not yet found is there (so a line can hint at it).
+- Found treasures set `treasure_found_tome`, `treasure_found_symbol`, `treasure_found_sword`. Items:
+  `tome_of_strahd`, `holy_symbol_of_ravenkind`, `sunsword`.
+
+## Allies (Phase 5)
+
+Each ally card's NPC (outcomes.json `ally.<card>.npc`) has `"guest": true`, a `guest_build`, and a conversation in its
+region that reaches `join <npc>` when `tarokka.ally.npc == <npc>`. The darklord card has no ally; the marionette
+(Pidlwick II) waits in the castle (Phase 6).
+
+## Dark gifts (Phase 5)
+
+`data/dark_gifts/<id>.json`:
+
+```json
+{"id": "gift_of_zantras", "name": "Zantras's gift", "vestige": "Zantras", "summary": "Our words.",
+ "benefit": {"modifiers": [{"stat": "ability", "ability": "cha", "value": 4, "max": 22}], "text": "..."},
+ "cost": {"modifiers": [], "flaw": "You can't bear to be out of the spotlight.", "text": "..."}}
+```
+
+Dialogue: `dark_gift <id>` asks which party member accepts (or none); the gift is saved in that character's build and
+can't be undone. Condition: `gift:<id>` (anyone in the party carries it).

@@ -1,0 +1,52 @@
+{
+  "id": "power_word_stun",
+  "name": "Power Word Stun",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "conditions": [
+    "stunned"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "stunned",
+        "repeat_save": "end_of_turn",
+        "repeat_ability": "con"
+      }
+    }
+  ],
+  "tags": [
+    "control"
+  ],
+  "summary": "A creature with 150 HP or fewer is Stunned until it passes a Con save at the end of a turn; a tougher one has Speed 0 until your next turn.",
+  "text": "No save at first: a target with 150 Hit Points or fewer has the Stunned condition and makes a Constitution save at the end of each of its turns, ending it on a success. A target with more Hit Points instead has Speed 0 until the start of your next turn."
+}

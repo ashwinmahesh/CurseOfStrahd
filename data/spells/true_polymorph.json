@@ -1,0 +1,45 @@
+{
+  "id": "true_polymorph",
+  "name": "True Polymorph",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 9,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a drop of mercury, a dollop of gum arabic and a wisp of smoke"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "a creature or nonmagical object you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "tags": [
+    "control",
+    "utility"
+  ],
+  "summary": "Turn a creature into another creature or an object, or an object into a creature; held for the full hour, it becomes permanent.",
+  "text": "An unwilling creature makes a Wisdom save; a creature form can't have a higher Challenge Rating than the target, and the target gains Temporary Hit Points equal to the form's Hit Points (the spell ends when they run out). An object can become a creature no larger than it of CR 9 or lower, which obeys you and acts right after you; a creature turned into an object no larger than it remembers nothing of the time."
+}

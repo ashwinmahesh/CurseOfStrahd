@@ -103,6 +103,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 				open_screen("menu", 0)))
 	view.combat_ended.connect(_after_combat)
 	add_child(view)
+	hud.show_location(view)
 	_refresh()
 
 

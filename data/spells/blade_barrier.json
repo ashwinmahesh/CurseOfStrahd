@@ -1,0 +1,62 @@
+{
+  "id": "blade_barrier",
+  "name": "Blade Barrier",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "evocation",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "area": {
+    "shape": "wall",
+    "size": 100,
+    "width": 5,
+    "height": 20
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a straight wall up to 100 feet long or a ring up to 60 feet across"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "6d10",
+      "type": "force"
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn"
+    ],
+    "terrain": "difficult"
+  },
+  "tags": [
+    "damage",
+    "control",
+    "defense"
+  ],
+  "summary": "A wall of whirling blades: Dex save, 6d10 Force, half on a success.",
+  "text": "The wall is up to 100 ft long, 20 ft high and 5 ft thick (or a ring up to 60 ft across). It gives Three-Quarters Cover and is Difficult Terrain; creatures save when it appears and when they enter it or end a turn in it, once per turn."
+}

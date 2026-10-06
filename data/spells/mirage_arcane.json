@@ -1,0 +1,39 @@
+{
+  "id": "mirage_arcane",
+  "name": "Mirage Arcane",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 7,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "sight"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "days",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "area",
+    "description": "terrain up to 1 mile square"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Up to a square mile of terrain looks, sounds, smells and feels like other terrain for 10 days.",
+  "text": "The illusion is solid enough to touch and can make ground Difficult Terrain or block movement; structures can be changed or added, but not creatures. Creatures with Truesight see the real terrain but still interact with the illusion."
+}

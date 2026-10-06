@@ -1,0 +1,64 @@
+{
+  "id": "foresight",
+  "name": "Foresight",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 9,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "druid",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a hummingbird feather"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a willing creature you touch"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "advantage",
+            "on": [
+              "attack",
+              "save:all",
+              "check:all"
+            ]
+          },
+          {
+            "stat": "attacked_with",
+            "value": "disadvantage"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "defense"
+  ],
+  "summary": "For 8 hours a willing creature has Advantage on D20 Tests and attacks against it have Disadvantage.",
+  "text": "The target has Advantage on D20 Tests, and other creatures have Disadvantage on attack rolls against it. The spell ends early if you cast it again."
+}

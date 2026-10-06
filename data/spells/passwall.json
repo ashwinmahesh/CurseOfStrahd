@@ -1,0 +1,39 @@
+{
+  "id": "passwall",
+  "name": "Passwall",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "transmutation",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of sesame seeds"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "object",
+    "description": "a wooden, plaster or stone surface you can see"
+  },
+  "tags": [
+    "utility",
+    "movement"
+  ],
+  "summary": "Open a passage through a wooden, plaster or stone surface.",
+  "text": "The passage is up to 5 feet wide, 8 feet tall and 20 feet deep. When it closes, anyone still inside is safely moved to the nearest unoccupied space."
+}

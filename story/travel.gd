@@ -7,8 +7,24 @@ extends RefCounted
 const MAP := "barovia"
 
 
+## The one map: data/travel/barovia.json, then every region's own file (ADR 0011) in id order, places and roads
+## merged, so writers of different regions never edit the same file.
 static func map_data() -> Dictionary:
-	return Compendium.shared().get_entry("travel", MAP)
+	var files := Compendium.shared().table("travel")
+	var out := (files.get(MAP, {}) as Dictionary).duplicate()
+	var places: Array = (out.get("places", []) as Array).duplicate()
+	var roads: Array = (out.get("roads", []) as Array).duplicate()
+	var ids: Array = files.keys()
+	ids.sort()
+	for id: Variant in ids:
+		if str(id) == MAP:
+			continue
+		var f := files[id] as Dictionary
+		places.append_array(f.get("places", []) as Array)
+		roads.append_array(f.get("roads", []) as Array)
+	out["places"] = places
+	out["roads"] = roads
+	return out
 
 
 static func place(place_id: String) -> Dictionary:

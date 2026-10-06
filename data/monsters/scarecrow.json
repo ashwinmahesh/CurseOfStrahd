@@ -1,0 +1,145 @@
+{
+  "id": "scarecrow",
+  "name": "Scarecrow",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual scarecrow; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical weapons is entered as plain resistance. The AI doesn't pick Terrifying Glare yet (it uses save actions only with a recharge or in a Multiattack)."
+  },
+  "size": "medium",
+  "type": "construct",
+  "alignment": "chaotic evil",
+  "ac": 11,
+  "initiative": 1,
+  "hp": {
+    "average": 36,
+    "dice": "8d8"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 11,
+    "dex": 13,
+    "con": 11,
+    "int": 10,
+    "wis": 10,
+    "cha": 13
+  },
+  "resistances": [
+    "bludgeoning",
+    "piercing",
+    "slashing"
+  ],
+  "vulnerabilities": [
+    "fire"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "poisoned",
+    "unconscious"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "understands its creator's languages but can't speak"
+  ],
+  "cr": 1,
+  "xp": 200,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "false_appearance",
+      "name": "False Appearance",
+      "action": "passive",
+      "summary": "Looks like an ordinary scarecrow while it stays still.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "claw",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Claw attacks."
+    },
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "2d4+1",
+          "type": "slashing"
+        }
+      ],
+      "summary": "A raking claw; a creature hit makes a DC 11 Wis save or is Frightened until the end of the scarecrow's next turn.",
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "save": {
+            "ability": "wis",
+            "dc": 11
+          },
+          "until": "source_turn_end"
+        }
+      ]
+    },
+    {
+      "id": "terrifying_glare",
+      "name": "Terrifying Glare",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 11,
+        "success": "none"
+      },
+      "area": {
+        "targets": 1,
+        "range": 30
+      },
+      "damage": [],
+      "summary": "DC 11 Wis save by a creature within 30 ft that can see it, or Frightened and Paralyzed until the end of the scarecrow's next turn.",
+      "targets": {
+        "range": 30,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_end"
+        },
+        {
+          "do": "condition",
+          "condition": "paralyzed",
+          "until": "source_turn_end"
+        }
+      ]
+    }
+  ],
+  "regions": [
+    "berez"
+  ],
+  "ai_profile": "brute",
+  "summary": "A straw figure brought to malevolent life: frightening claws and a stare that roots victims in place. Burns easily."
+}

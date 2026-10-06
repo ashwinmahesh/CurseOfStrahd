@@ -1,0 +1,41 @@
+{
+  "id": "seeming",
+  "name": "Seeming",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 99,
+    "description": "any number of creatures you can see"
+  },
+  "tags": [
+    "utility",
+    "social"
+  ],
+  "summary": "Give any number of creatures you can see new illusory appearances.",
+  "text": "An unwilling target can make a Cha save to avoid it. A creature can see through a disguise with a successful Intelligence (Investigation) check against your spell save DC."
+}

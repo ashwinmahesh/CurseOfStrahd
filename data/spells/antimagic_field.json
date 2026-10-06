@@ -1,0 +1,55 @@
+{
+  "id": "antimagic_field",
+  "name": "Antimagic Field",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "iron filings"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "everything within 10 feet of you"
+  },
+  "zone": {
+    "triggers": [],
+    "inside": {
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "cant_cast"
+        }
+      ]
+    }
+  },
+  "tags": [
+    "defense",
+    "control"
+  ],
+  "summary": "A 10-foot Emanation around you where no one can cast spells and magic is suppressed.",
+  "text": "Inside the aura no one can cast spells, take Magic actions or create magical effects, magic items stop working, and ongoing spells are suppressed while their duration runs on. Outside magic can't reach in, nobody can teleport or travel between planes into or out of it, and Dispel Magic doesn't affect it."
+}

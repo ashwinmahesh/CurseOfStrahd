@@ -3,6 +3,20 @@
   "image_model_note": "Pinned 2026-10-06 by the owner after the Phase 0 style test (Build Log 02): the most Saturday-morning-cartoon look and the most readable sprites. Gemini returns opaque images; prompts ask for a plain flat white background and the pipeline removes it. Previous pin: gpt-image-2.5-flare-2026-09-08 (OpenAI), kept as a fallback via tools/art/generate_openai.sh.",
   "assets": [
     {
+      "id": "travel_map_barovia",
+      "kind": "map",
+      "status": "generated",
+      "source": "art/generated/map/barovia_map_gothic_b.png",
+      "sprites": "art/ui/map/barovia.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Repaint the first reference image, an illustrated map of the valley of Barovia, as a dark gothic horror map in the colours and mood of the second reference image (the game's title art). Keep the composition exactly the same: every mountain, the lake, the river, the waterfall and its pool, the forests, the walled town, the hill towns, the ruined mansion, the windmill, the Vistani wagons, the gallows, the village and its church, the two knight statues, the castle on its pillar of rock and the compass rose stay in the same place, at the same size and with the same outlines. Change only the colours, light and mood: the sheet becomes old dark vellum stained deep sepia and bruised purple, darkening toward the edges; the forests turn near-black pine green; the mountains cold slate grey with moonlit blue edges; the lake and river ink-dark blue with a pale gleam of moonlight; the mist around the valley becomes the pale, sickly grey-green swirling fog of the title art; Castle Ravenloft is black against a faint blood-red glow with a few red-lit windows and a handful of bats; the trees around the castle are bare and dead; the village gains a small walled graveyard. The compass rose is tarnished gold and iron with a crimson centre. It should feel like a cursed land at dusk, gothic and foreboding, but stay clearly readable: bold clean black ink outlines and flat cel colour with two or three tones, crisp and sharp, with no grain, noise, speckle or blur. The sheet fills the whole image edge to edge: no border, frame, torn edges or background around it. No roads, paths or dotted lines, and no text, letters, labels, numbers, legend or cartouche anywhere.",
+      "reference": [
+        "art/generated/map/barovia_map_a.png",
+        "art/ui/title_backdrop.png"
+      ],
+      "notes": "The travel map's art, 3:2 at 2K (--size 2K, 2528x1696) so it stays sharp when the map zooms in; imported lossless with mipmaps. First pass (barovia_map_a, from the layout sketch art/generated/map/barovia_layout.png) came out as a bright storybook parchment; the owner asked for the game's gothic tone (2026-10-06), so it was repainted with that map as the layout reference and the title art as the colour and mood reference: dark blood-stained vellum, near-black pines, grey-green mist, Castle Ravenloft in a red glow, a graveyard by the village. Two takes; take b (closest to the title art's palette) is used as is. No roads and no text: the game draws the known roads and names on top. Landmark positions are unchanged and listed in docs/ui/travel_map.md."
+    },
+    {
       "id": "party_placeholder",
       "kind": "character",
       "status": "placeholder",
@@ -116,7 +130,7 @@
       "model": "gemini-3.1-flash-image",
       "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Grey wolf. Re-rendered (P4-09, 2026-10-06) for the owner's Build Log 04 note (it came out beige): cutout.quantize now keeps neutral greys on the palette's grey ramp (pewter/slate) instead of letting redmean pick bone, and despeckles. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "sprite_flags": [
-        "STATIC=1"
+        "BODY=quadruped"
       ]
     },
     {
@@ -129,7 +143,7 @@
       "model": "gemini-3.1-flash-image",
       "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Large dire wolf, second generation (first came out maroon, not black). Use a bigger height_units than the wolf. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "sprite_flags": [
-        "STATIC=1"
+        "BODY=quadruped"
       ]
     },
     {
@@ -615,7 +629,7 @@
       "prompt": "Character turnaround sheet of a specter, a floating ghost of a dead person with no legs: a tattered hooded shroud whose lower half tapers into a single ragged wisp a little above the ground, long thin reaching hands and a gaunt skull-like face with hollow glowing eyes. The specter is pale and cold: its shroud, hands and face are all pale frost-blue and moonlit-blue with lilac shadows (no red, no crimson, no dark robes, no pure white areas), fully opaque flat colours. Exactly five full views of the same ghost in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating upright in a neutral pose, arms at the sides, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
       "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Specter (enemy). Rendered STATIC although the brief grouped it with the walkers: it has no legs (the shroud tapers into a wisp), so the game's bob reads better than a leg cycle. Second generation: the first came out in crimson robes, too close to the cultist. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "sprite_flags": [
-        "STATIC=1"
+        "BODY=float"
       ]
     },
     {
@@ -717,7 +731,7 @@
       "prompt": "Character turnaround sheet of an animated flying longsword: a single steel longsword floating on its own, point down and upright, with a dark leather-wrapped grip, a crossguard and a round pommel, no one holding it. Exactly five full views of the same sword in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Hovering upright, point down, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
       "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Flying sword (enemy). The blade is tinted dark red (bloodied) rather than clean steel. Drawn as tall as a person: use about 0.5 of a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "sprite_flags": [
-        "STATIC=1"
+        "BODY=float"
       ]
     },
     {
@@ -744,7 +758,7 @@
       "prompt": "Character turnaround sheet of an animated broom: an old twig broom with a gnarled wooden handle, standing upright on its bristles by itself, its bristle head bent forward menacingly like a body, bound with rusty wire, no one holding it. Exactly five full views of the same broom in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing upright on its bristles, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
       "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Broom of animated attack (enemy): twig broom with its bristle head bent forward like a body. Use about 0.7 of a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "sprite_flags": [
-        "STATIC=1"
+        "BODY=hop"
       ]
     },
     {
@@ -771,7 +785,7 @@
       "prompt": "Character turnaround sheet of a grick, a monster like a giant worm: a thick, rubbery olive-grey snake-like body coiled on the ground with its front third rearing up, its head a sharp dark beak surrounded by four barbed tentacles spread open like a flower, no eyes. Exactly five full views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Coiled on the ground with its front rearing up, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
       "notes": "5-view turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Grick (enemy): reared worm body with a beak and four barbed tentacles. The olive-grey body snaps to tan/bone under the palette. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "sprite_flags": [
-        "STATIC=1"
+        "BODY=slither"
       ]
     },
     {
@@ -798,7 +812,7 @@
       "prompt": "Character turnaround sheet of a shambling mound, a huge hulking heap of rotting vegetation in a hunched, vaguely humanoid shape with two thick trailing arm-masses: tangled bog-green vines, dark moss, peat-brown mud and roots, with a few old bones and dead leaves caught in it, no visible face. Exactly five full views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing hunched in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
       "notes": "5-view turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Shambling mound (enemy, Large): use about 2x a human's height_units (2x2 footprint). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "sprite_flags": [
-        "STATIC=1"
+        "BODY=lumber"
       ]
     },
     {
@@ -825,7 +839,7 @@
       "prompt": "Character turnaround sheet of a swarm of rats: about a dozen scrawny grey-brown rats with red eyes and long pink tails crowded together into one low, dome-shaped writhing heap on the ground, about twice as wide as it is tall, all the rats touching. Exactly three views of the same swarm in one single row, left to right: front (rats facing the viewer), side profile (rats facing right), back (seen from behind). A low heap on the ground, same scale, evenly spaced with wide clear gaps so no view touches another, nothing above or below the row, on a plain flat white background, no ground shadow.",
       "notes": "3-view (front, side, back) turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 0.72. Swarm of rats (enemy): a low heap of rats. Third generation: the first stacked the rats into a tower, the second drew six views in two rows. blender/render_walk.py now detects 3-view sheets (it used to cut the wide side view in two); diagonals reuse front/back turned 25 degrees. Use a small height_units (about half a human's). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "sprite_flags": [
-        "STATIC=1"
+        "BODY=swarm"
       ]
     },
     {

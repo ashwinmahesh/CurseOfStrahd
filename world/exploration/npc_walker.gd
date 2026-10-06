@@ -15,6 +15,7 @@ static func create(frames: SpriteFrames, route: Array[Vector3]) -> NpcWalker:
 	n.name = "Villager"
 	n.waypoints = route
 	n.sprite = DirectionalSprite.create(frames, 1.55)
+	n.sprite.set_step_time(1.0 / SPEED)
 	# The generated art is dark; lift it a little so it reads against the night floor.
 	n.sprite.modulate = Color(1.3, 1.3, 1.3)
 	n.add_child(n.sprite)

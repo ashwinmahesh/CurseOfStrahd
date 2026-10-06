@@ -1,0 +1,146 @@
+{
+  "id": "mordenkainen",
+  "name": "Mordenkainen",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. His Constitution and Hit Points, challenge rating and above all the prepared spells (reconstructed here for a 16th-level wizard) need the book. AC assumes Mage Armor; Fire Bolt runs as an attack; spell slots are listed per spell."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "alignment": "lawful neutral",
+  "ac": 15,
+  "ac_note": "Mage Armor (12 without)",
+  "initiative": 2,
+  "hp": {
+    "average": 72,
+    "dice": "16d8"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 10,
+    "dex": 14,
+    "con": 10,
+    "int": 20,
+    "wis": 15,
+    "cha": 17
+  },
+  "saves": {
+    "int": 9,
+    "wis": 6
+  },
+  "skills": {
+    "arcana": 13,
+    "insight": 6
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common",
+    "Draconic",
+    "Dwarvish",
+    "Elvish",
+    "Giant",
+    "Orc"
+  ],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "gear": [
+    "quarterstaff"
+  ],
+  "actions": [
+    {
+      "id": "quarterstaff",
+      "name": "Quarterstaff",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 3,
+          "dice": "1d6",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Raps with a staff; 4 (1d8) two-handed.",
+      "weapon": true
+    },
+    {
+      "id": "fire_bolt",
+      "name": "Fire Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 9,
+        "range": [
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "3d10",
+          "type": "fire"
+        }
+      ],
+      "summary": "Casts Fire Bolt up to 120 ft."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Int, DC 17, +9: a 16th-level wizard's spells, including his own named ones.",
+      "text": "A 16th-level spellcaster using Intelligence (spell save DC 17, +9 to hit). Cantrips: Fire Bolt, Light, Mage Hand, Prestidigitation, Shocking Grasp. 1st level (4 slots): Detect Magic, Identify, Magic Missile, Shield. 2nd level (3 slots): Detect Thoughts, Invisibility, Mirror Image. 3rd level (3 slots): Counterspell, Dispel Magic, Fly, Lightning Bolt. 4th level (3 slots): Mordenkainen's Faithful Hound, Mordenkainen's Private Sanctum, Stoneskin. 5th level (2 slots): Bigby's Hand, Wall of Force. 6th level (1 slot): Globe of Invulnerability, True Seeing. 7th level (1 slot): Mordenkainen's Magnificent Mansion, Mordenkainen's Sword. 8th level (1 slot): Mind Blank, Power Word Stun."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 17,
+    "attack": 9,
+    "at_will": [
+      "light",
+      "mage_hand",
+      "prestidigitation",
+      "shocking_grasp"
+    ],
+    "per_day": {
+      "4": [
+        "detect_magic",
+        "identify",
+        "magic_missile",
+        "shield"
+      ],
+      "3": [
+        "detect_thoughts",
+        "invisibility",
+        "mirror_image",
+        "counterspell",
+        "dispel_magic",
+        "fly",
+        "lightning_bolt",
+        "mordenkainens_faithful_hound",
+        "mordenkainens_private_sanctum",
+        "stoneskin"
+      ],
+      "2": [
+        "bigbys_hand",
+        "wall_of_force"
+      ],
+      "1": [
+        "globe_of_invulnerability",
+        "true_seeing",
+        "mordenkainens_magnificent_mansion",
+        "mordenkainens_sword",
+        "mind_blank",
+        "power_word_stun"
+      ]
+    }
+  },
+  "regions": [
+    "mount_baratok"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "A legendary archwizard: Fire Bolt and Magic Missile, walls of force, a spectral sword and wards of every kind."
+}

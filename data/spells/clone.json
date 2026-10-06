@@ -1,0 +1,41 @@
+{
+  "id": "clone",
+  "name": "Clone",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "necromancy",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "hour",
+    "amount": 1
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a diamond worth 1,000+ GP and a cubic inch of the creature's flesh, which the spell consumes, and a sealable vessel worth 2,000+ GP that can hold a Medium creature",
+    "m_cost_gp": 3000,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature, or a cubic inch of its flesh"
+  },
+  "tags": [
+    "restoration",
+    "utility"
+  ],
+  "summary": "Grow an inert duplicate of a creature that its soul can move into if the original dies.",
+  "text": "The clone grows in its vessel for 120 days (you can make it younger) and then waits, unaging, while the vessel is undisturbed. If the original dies after that, a free and willing soul moves into the clone, which has its memories and abilities but none of its gear."
+}

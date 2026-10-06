@@ -477,7 +477,8 @@
       "kind": "examine",
       "label": "The burgomaster's grave",
       "model": "grave",
-      "when": "flag.burgomaster_buried"
+      "when": "flag.burgomaster_buried",
+      "dialogue": "village_of_barovia/kolyan:grave"
     },
     {
       "id": "tavern_sign",
@@ -842,5 +843,23 @@
   "narration": {
     "enter": "enter:village_of_barovia"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "containers": [
+    {
+      "id": "churchyard_loose_slab",
+      "cell": [
+        29,
+        4
+      ],
+      "label": "A loose grave slab",
+      "model": "chest",
+      "items": [],
+      "gold": 0
+    }
+  ],
+  "treasure_spots": {
+    "village_of_barovia:churchyard": {
+      "container": "churchyard_loose_slab"
+    }
+  }
 }

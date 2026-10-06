@@ -5,6 +5,7 @@ extends RefCounted
 ## `quest.q == stage`, `quest.q >= stage` (by stage order), `attitude.npc == friendly`, `visited:loc`, `night`,
 ## `day`, `hour >= 20`, `gold >= 25` (the party's purse), `level >= 3` (the lowest character level in the party),
 ## `tarokka.drawn`, `tarokka.sword == swords_3`, `tarokka.ally.npc == ezmerelda` (ADR 0010), `guest:ireena`,
+## `treasure_at:<place>` (a treasure the reading put there, not yet found) and `gift:<dark gift>` (ADR 0011),
 ## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
 var st: StoryState
@@ -138,6 +139,13 @@ func _term() -> bool:
 		return (value == str(_literal(rhs))) == (op == "==")
 	if t.begins_with("guest:"):
 		return t.substr(6) in st.guest_ids
+	if t.begins_with("treasure_at:"):
+		return not Tarokka.treasures_at(t.substr(12), st).is_empty()
+	if t.begins_with("gift:"):
+		for ch in st.party:
+			if ch.dark_gifts().has(t.substr(5)):
+				return true
+		return false
 	if t.begins_with("spell:"):
 		return st.spell_active(t.substr(6))
 	if t.begins_with("at:"):

@@ -207,9 +207,13 @@ func take_item(item_id: String, qty: int) -> int:
 	return qty - left
 
 
+## The highest level the campaign takes the party to (plan §10, Phase 5: 10 or 11 by the Amber Temple).
+const LEVEL_CAP := 11
+
+
 ## Milestone levelling (plan §5.6): the level the party may reach now.
 func target_level() -> int:
-	return mini(20, start_level + milestones)
+	return mini(LEVEL_CAP, start_level + milestones)
 
 
 func can_level_up(ch: Character) -> bool:

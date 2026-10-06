@@ -392,5 +392,10 @@
   "narration": {
     "enter": "enter:vallaki_blue_water_inn"
   },
-  "rest": "safe"
+  "rest": "safe",
+  "treasure_spots": {
+    "vallaki_blue_water_inn:rictavio_wagon": {
+      "container": "wagon_lockbox"
+    }
+  }
 }

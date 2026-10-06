@@ -1,0 +1,34 @@
+{
+  "id": "time_stop",
+  "name": "Time Stop",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 9,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Time stops for everyone else while you take 1d4 + 1 turns in a row.",
+  "text": "The spell ends early if anything you do, or any effect you create, affects another creature or an object someone else is wearing or carrying. It also ends if you move more than 1,000 feet from where you cast it."
+}

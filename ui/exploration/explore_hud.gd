@@ -19,6 +19,10 @@ var _toast: Label
 var _toast_time := 0.0
 var _roll: Label
 var _roll_time := 0.0
+## The current location at the top right, north up, following the party (ui/exploration/minimap.gd).
+var minimap: Minimap
+## Ways out to other regions marked over the world (ui/exploration/exit_signs.gd).
+var exit_signs: ExitSigns
 
 ## [label, key, command, icon (art/ui/icons)]
 const BUTTONS := [["Character", "C", "sheet", "character"], ["Inventory", "I", "inventory", "inventory"],
@@ -34,6 +38,8 @@ func _init() -> void:
 
 func build(state: StoryState) -> void:
 	st = state
+	exit_signs = ExitSigns.new()
+	add_child(exit_signs)
 	_party_box = VBoxContainer.new()
 	_party_box.position = Vector2(12, 12)
 	_party_box.add_theme_constant_override("separation", 6)
@@ -44,6 +50,10 @@ func build(state: StoryState) -> void:
 	top.offset_left = -360
 	top.offset_right = -14
 	top.offset_top = 12
+	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	minimap = Minimap.new()
+	minimap.size_flags_horizontal = Control.SIZE_SHRINK_END
+	top.add_child(minimap)
 	_where = _label("", 24, "gilt_light")
 	_where.add_theme_font_override("font", UiKit.display_font())
 	_where.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -214,6 +224,12 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 	var hours := st.minute_of_day / 60
 	_mode.text = "Day %d · %02d:%02d%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
 		" · Split party" if solo else "", int(st.gold)]
+
+
+## A new location: the minimap and the signs at its ways out.
+func show_location(view: LocationView) -> void:
+	minimap.show_location(view)
+	exit_signs.show_location(view)
 
 
 func narrate(text: String) -> void:

@@ -1,0 +1,53 @@
+{
+  "id": "meteor_swarm",
+  "name": "Meteor Swarm",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 9,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "miles",
+    "miles": 1
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 40
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area",
+    "description": "four 40-foot-radius Spheres (one Sphere per casting on the grid)"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "20d6",
+      "type": "fire"
+    },
+    {
+      "dice": "20d6",
+      "type": "bludgeoning"
+    }
+  ],
+  "tags": [
+    "damage"
+  ],
+  "summary": "Four 40-foot-radius blasts: Dex save, 20d6 Fire and 20d6 Bludgeoning damage, half on a success.",
+  "text": "Meteors strike four points you can see in range; each creature within 40 feet of a point makes a Dexterity save, taking 20d6 Fire and 20d6 Bludgeoning damage on a failure or half on a success. A creature in several blasts is affected once, and unattended objects take the damage too (flammable ones ignite)."
+}

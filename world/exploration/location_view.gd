@@ -196,6 +196,8 @@ func _door_state(id: String) -> String:
 
 
 func _build_doors() -> void:
+	for ex: Variant in loc.get("exits", []):
+		SetDressing.exit_piece(board, ex as Dictionary)
 	for d: Variant in loc.get("doors", []):
 		var door := d as Dictionary
 		var cell := _cell(door["cell"])
@@ -203,7 +205,9 @@ func _build_doors() -> void:
 		var secret := int(door.get("secret_dc", 0)) > 0 and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false))
 		var open := _door_state(id) == DOOR_OPEN
 		grid.set_flag(cell, CombatGrid.WALL, not open)
-		var node := _box(Vector3(0.9, 1.7, 0.9), board.cell_center(cell) + Vector3(0, 0.85, 0), "walnut" if not secret else "slate")
+		var node: Node3D = SetDressing.door(board, door, secret)
+		if node == null:
+			node = _box(Vector3(0.9, 1.7, 0.9), board.cell_center(cell) + Vector3(0, 0.85, 0), "walnut" if not secret else "slate")
 		node.visible = not open
 		door_nodes[id] = node
 
@@ -217,23 +221,34 @@ func _build_props() -> void:
 		var kind := str(prop["kind"])
 		if kind == "search" and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false)):
 			continue
-		var colour := {"examine": "parchment", "book": "ember", "search": "bone", "lever": "pewter", "decor": "stone"}.get(kind, "bone") as String
 		if str(prop.get("burning", "")) != "" and StoryConditions.check(str(prop["burning"]), st):
 			prop_nodes[id + "#fire"] = _flame(_cell(prop["cell"]), 1.6)
-		var sprite := _prop_art(prop)
-		var node: Node3D = null
-		if sprite != "":
-			node = board.prop_sprite(sprite, board.cell_center(_cell(prop["cell"])) - Vector3(0, 0, 0), 0.8)
-		if node == null:
-			node = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), colour)
-		prop_nodes[id] = node
+		prop_nodes[id] = _prop_node(prop)
 	for c: Variant in loc.get("containers", []):
 		var ct := c as Dictionary
 		if not StoryConditions.check(str(ct.get("when", "")), st):
 			continue
 		var looted := bool((st.loc_state(loc_id)["looted"] as Dictionary).get(str(ct["id"]), false))
-		container_nodes[str(ct["id"])] = _box(Vector3(0.8, 0.55, 0.55), board.cell_center(_cell(ct["cell"])) + Vector3(0, 0.28, 0),
-			"umber" if not looted else "peat")
+		var node: Node3D = SetDressing.place(board, ct, true)
+		if node == null:
+			node = _box(Vector3(0.8, 0.55, 0.55), board.cell_center(_cell(ct["cell"])) + Vector3(0, 0.28, 0), "umber")
+		if looted:
+			SetDressing.mark_looted(node)
+		container_nodes[str(ct["id"])] = node
+
+
+## A prop's piece (SetDressing, art/sprites/props/catalog.json), else a billboard by name, else a plain marker.
+func _prop_node(prop: Dictionary) -> Node3D:
+	var node: Node3D = SetDressing.place(board, prop)
+	if node != null:
+		return node
+	var sprite := _prop_art(prop)
+	if sprite != "":
+		node = board.prop_sprite(sprite, board.cell_center(_cell(prop["cell"])), 0.8)
+	if node == null:
+		var colour := {"examine": "parchment", "book": "ember", "search": "bone", "lever": "pewter", "decor": "stone"}.get(str(prop["kind"]), "bone") as String
+		node = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), colour)
+	return node
 
 
 ## Which billboard prop art (art/sprites/props) a prop looks like, from its model or id, or "" for a plain marker.
@@ -258,16 +273,23 @@ func _build_lights() -> void:
 		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else 2.2
 		omni.position = board.cell_center(_cell(li["cell"])) + Vector3(0, 1.2, 0)
 		add_child(omni)
-		if str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:
+		if str(li.get("kind", "")) == "torch" and SetDressing.has_art("torch"):
+			board.prop_sprite("torch", board.cell_center(_cell(li["cell"])))
+			omni.position.y = 1.9
+		elif str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:
 			_flame(_cell(li["cell"]), 0.6 if str(li["kind"]) != "torch" else 0.35)
 
 
-## A flame: a small emissive cone with a flicker of its own (watch fires, braziers, the burning wicker sun).
+## A flame with a flicker of its own (watch fires, braziers, the burning wicker sun): the flame billboard where the
+## art exists (SetDressing.flame), else a small emissive cone.
 func _flame(cell: Vector2i, size: float) -> Node3D:
 	var root := Node3D.new()
 	root.position = board.cell_center(cell)
 	add_child(root)
-	for i in 3:
+	var art := SetDressing.flame(size)
+	if art != null:
+		root.add_child(art)
+	for i in (0 if art != null else 3):
 		var mi := MeshInstance3D.new()
 		var cm := CylinderMesh.new()
 		cm.top_radius = 0.0
@@ -550,9 +572,10 @@ func step(dir: Vector2i) -> void:
 
 
 func _process(delta: float) -> void:
-	if board != null and rig != null and rig.camera != null and not members.is_empty() and not board.occluders.is_empty():
+	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
+		board.cut_buildings(rig.camera.global_position, focus, delta)
 	if in_combat or _queue.is_empty():
 		return
 	_step_t -= delta
@@ -604,7 +627,7 @@ func _advance_party(next: Vector2i) -> void:
 		var was := g.cell
 		g.cell = ahead
 		var gt := tokens[g.id] as CombatToken
-		gt.face(Vector2(ahead - was), true)
+		gt.face(Vector2(ahead - was), true, SNEAK_STEP_TIME if sneaking else STEP_TIME)
 		create_tween().tween_property(gt, "position", board.cell_center(ahead), (SNEAK_STEP_TIME if sneaking else STEP_TIME) * 0.95)
 		ahead = was
 
@@ -614,7 +637,7 @@ func _move_member(i: int, to: Vector2i) -> void:
 	var from := m.cell
 	m.cell = to
 	var tok := tokens[m.id] as CombatToken
-	tok.face(Vector2(to - from), true)
+	tok.face(Vector2(to - from), true, SNEAK_STEP_TIME if sneaking else STEP_TIME)
 	var tw := create_tween()
 	tw.tween_property(tok, "position", board.cell_center(to), (SNEAK_STEP_TIME if sneaking else STEP_TIME) * 0.95)
 
@@ -1159,17 +1182,18 @@ func _use_container(ct: Dictionary, method: String = "auto") -> void:
 	if ct.has("flag"):
 		st.set_flag(str(ct["flag"]))
 	var left := (st.loc_state(loc_id).get("contents", {}) as Dictionary).get(id, {}) as Dictionary
-	if not left.is_empty():
-		loot_opened.emit(id, (left["items"] as Array).duplicate(true), float(left["gold"]))
-	else:
-		loot_opened.emit(id, (ct.get("items", []) as Array).duplicate(true), float(ct.get("gold", 0)))
+	var items := (left["items"] as Array).duplicate(true) if not left.is_empty() else (ct.get("items", []) as Array).duplicate(true)
+	# A Tarokka treasure spot (ADR 0011): whatever the reading hid here is in the chest too.
+	for treasure in Tarokka.take_from(Tarokka.place_for(loc, "container", id), st):
+		items.append({"id": treasure, "qty": 1})
+	loot_opened.emit(id, items, float(left["gold"]) if not left.is_empty() else float(ct.get("gold", 0)))
 
 
 ## Called by the loot window when everything's been taken.
 func mark_looted(container_id: String) -> void:
 	(st.loc_state(loc_id)["looted"] as Dictionary)[container_id] = true
 	if container_nodes.has(container_id):
-		(container_nodes[container_id] as MeshInstance3D).material_override = Look.cel("peat")
+		SetDressing.mark_looted(container_nodes[container_id] as Node3D)
 
 
 func _use_prop(prop: Dictionary) -> void:
@@ -1231,7 +1255,7 @@ func search() -> void:
 			continue
 		if grid.distance_ft(c, 1, _cell(prop["cell"]), 1) <= 15 and t.total >= int(prop.get("search_dc", 10)):
 			(states["found"] as Dictionary)[str(prop["id"])] = true
-			prop_nodes[str(prop["id"])] = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), "bone")
+			prop_nodes[str(prop["id"])] = _prop_node(prop)
 			found.append(str(prop.get("label", "something")))
 			found_ids.append(str(prop["id"]))
 	for d: Variant in loc.get("doors", []):
@@ -1240,7 +1264,7 @@ func search() -> void:
 			continue
 		if grid.distance_ft(c, 1, _cell(door["cell"]), 1) <= 15 and t.total >= int(door["secret_dc"]):
 			(states["found"] as Dictionary)[str(door["id"])] = true
-			(door_nodes[str(door["id"])] as MeshInstance3D).material_override = Look.cel("walnut")
+			SetDressing.reveal_door(door_nodes[str(door["id"])] as Node3D)
 			found.append(str(door.get("label", "a hidden door")))
 	st.last_check = not found.is_empty()
 	if found.is_empty():
@@ -1595,3 +1619,17 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 		_say("combat:victory")
 	_save_positions()
 	combat_ended.emit(outcome)
+	if outcome == "victory":
+		_spoils(encounter_id, spec)
+
+
+## What a won fight leaves (the encounter's `loot`, and a Tarokka treasure if this fight is a treasure spot), in the
+## loot window like a chest. Leftovers stay as "fight:<id>".
+func _spoils(encounter_id: String, spec: Dictionary) -> void:
+	var loot := spec.get("loot", {}) as Dictionary
+	var items := (loot.get("items", []) as Array).duplicate(true)
+	for treasure in Tarokka.take_from(Tarokka.place_for(loc, "encounter", encounter_id), st):
+		items.append({"id": treasure, "qty": 1})
+	var gold := float(loot.get("gold", 0))
+	if not items.is_empty() or gold > 0.0:
+		loot_opened.emit.call_deferred("fight:" + encounter_id, items, gold)

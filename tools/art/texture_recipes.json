@@ -200,6 +200,23 @@
           "moss"
         ]
       }
+    },
+    "wild": {
+      "water": {
+        "subject": "the dark still water of a forest pool at night: deep blue-black water with faint ripples, a few pale moonlit glints and dark reflections, no lily pads, no shore",
+        "view": "floor",
+        "tile_world_units": 3.0,
+        "axis": "both",
+        "palette": [
+          "void",
+          "ink",
+          "night_deep",
+          "night",
+          "moon_blue",
+          "mist_blue",
+          "bruise_deep"
+        ]
+      }
     }
   }
 }

@@ -1,0 +1,89 @@
+{
+  "id": "sunbeam",
+  "name": "Sunbeam",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "evocation",
+  "classes": [
+    "cleric",
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "line",
+    "size": 60,
+    "width": 5
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a magnifying glass"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "6d8",
+      "type": "radiant"
+    }
+  ],
+  "conditions": [
+    "blinded"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "blinded",
+        "until": "caster_turn_start"
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "area",
+      "cost": "magic",
+      "area": {
+        "shape": "line",
+        "size": 60,
+        "width": 5
+      },
+      "save": "con",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "6d8",
+          "type": "radiant"
+        }
+      ],
+      "label": "Sunbeam",
+      "sub": "60 ft Line",
+      "help": "A Magic action: a new 60-ft beam (Con save, 6d8 Radiant, half on a success)."
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff",
+    "light"
+  ],
+  "summary": "A 60-foot line of sunlight: Con save or 6d8 Radiant and Blinded until the start of your next turn; half damage only on a success.",
+  "text": "You can fire a new beam as a Magic action on later turns. While the spell lasts you shed sunlight: Bright Light in a 30-ft radius and Dim Light 30 ft beyond."
+}

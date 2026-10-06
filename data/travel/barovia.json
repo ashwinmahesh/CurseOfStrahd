@@ -8,8 +8,8 @@
       "location": "into_the_mists_road",
       "spawn": "default",
       "pos": [
-        0.86,
-        0.56
+        0.93,
+        0.5
       ],
       "region": "into_the_mists",
       "summary": "Iron gates between headless stone knights, where the Old Svalich Road comes out of the mists."
@@ -20,8 +20,8 @@
       "location": "village_of_barovia",
       "spawn": "from_west_road",
       "pos": [
-        0.76,
-        0.56
+        0.775,
+        0.51
       ],
       "region": "village_of_barovia",
       "summary": "A shuttered village under the castle's cliff: the Blood of the Vine, the burgomaster's house, the church."
@@ -69,8 +69,8 @@
       "location": "vallaki",
       "spawn": "from_road",
       "pos": [
-        0.33,
-        0.5
+        0.32,
+        0.48
       ],
       "region": "vallaki",
       "summary": "A walled town on the shore of Lake Zarovich, with bells, banners and a festival every week."

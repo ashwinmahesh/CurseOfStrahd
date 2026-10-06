@@ -1,0 +1,59 @@
+{
+  "id": "wall_of_ice",
+  "name": "Wall of Ice",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "evocation",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "wall",
+    "size": 100,
+    "width": 1,
+    "height": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a piece of quartz"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a dome or globe up to 10 feet in radius, or ten connected 10-foot panels"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "10d6",
+      "type": "cold"
+    }
+  ],
+  "upcast": {
+    "damage": "2d6",
+    "text": "The wall's damage rises by 2d6 and the frigid air's by 1d6 per slot level above 6."
+  },
+  "tags": [
+    "damage",
+    "control",
+    "defense"
+  ],
+  "summary": "A wall of ice: creatures in its path are pushed aside and make a Dex save, 10d6 Cold, half on a success.",
+  "text": "Make a dome or globe up to 10 feet in radius, or ten connected 10-foot panels, all 1 foot thick. Each 10-foot section has AC 12 and 30 Hit Points (Vulnerable to Fire); a broken section leaves frigid air that deals 5d6 Cold (Con save for half) to a creature first passing through it on a turn."
+}
