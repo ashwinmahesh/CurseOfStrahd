@@ -12,8 +12,13 @@ var moving := false
 
 ## Characters draw after the palette pass at full screen
 ## resolution: their sheets are already quantized to the palette by the pipeline, so they stay on-model while
-## staying sharp (owner request 2026-10-06). Mipmaps keep them smooth when the camera is far away.
+## staying sharp (owner request 2026-10-06).
 const RENDER_PRIORITY := 6
+## Owner feedback (2026-10-06, "they still look really blurry"): a 384 px sheet shown about 110 px tall picked up
+## mostly the 96 px mipmap and went soft. Sprites now sample the full sheet; mipmaps take over only when the camera
+## is so far out (a figure under ~60 px tall) that sampling the full sheet would shimmer.
+const SHARP_DOWN_TO := 0.18
+var _filter_check := 0.0
 
 
 ## `cell_px` is the sheet's cell size; by default it's read from the frames.
@@ -39,10 +44,10 @@ static func cell_size(frames: SpriteFrames) -> int:
 
 
 ## Shared settings for character sprites (also the lying-down view): hard alpha edges, mipmapped filtering, and
-## drawn after the screen pass.
+## drawn after the screen pass, sampled sharp (see SHARP_DOWN_TO).
 static func setup_material(s: SpriteBase3D) -> void:
 	s.alpha_cut = SpriteBase3D.ALPHA_CUT_DISABLED
-	s.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	s.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR
 	s.render_priority = RENDER_PRIORITY
 	s.shaded = false
 
@@ -65,12 +70,29 @@ static func direction_for(facing_dir: Vector3, camera_basis: Basis) -> String:
 	return DIRECTIONS[idx]
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var cam := get_viewport().get_camera_3d()
 	if cam == null:
 		return
+	_keep_sharp(cam, delta)
 	var anim := StringName(("walk_" if moving else "idle_") + direction_for(facing, cam.global_basis))
 	if animation != anim:
 		var f := frame
 		play(anim)
 		frame = f
+
+
+## How many screen pixels one sheet pixel covers decides the filter: sharp while it's above SHARP_DOWN_TO, mipmapped
+## below (checked a few times a second; changing the filter rebuilds the material, so only on a change).
+func _keep_sharp(cam: Camera3D, delta: float) -> void:
+	_filter_check -= delta
+	if _filter_check > 0.0:
+		return
+	_filter_check = 0.25
+	var vp := get_viewport()
+	var h := float((vp as SubViewport).size.y) if vp is SubViewport else float(get_window().size.y)
+	var d := maxf(cam.global_position.distance_to(global_position), 0.01)
+	var on_screen := h / (2.0 * d * tan(deg_to_rad(cam.fov) / 2.0)) * pixel_size
+	var want := BaseMaterial3D.TEXTURE_FILTER_LINEAR if on_screen >= SHARP_DOWN_TO else BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	if texture_filter != want:
+		texture_filter = want

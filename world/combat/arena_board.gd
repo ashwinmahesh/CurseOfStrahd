@@ -407,5 +407,9 @@ func fade_occluders(camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 		var a := move_toward(t.modulate.a, target, delta * 4.0)
 		if not is_equal_approx(a, t.modulate.a):
 			t.modulate.a = a
-			t.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD if a >= 0.999 else SpriteBase3D.ALPHA_CUT_DISABLED
-			t.transparent = a < 0.999
+			# The texture's own alpha always counts (switching `transparent` off drew the whole quad: the black box
+			# behind trees). A fading tree is blended, and drawn after the screen pass like the characters; at the
+			# screen pass's own priority it sorted before it now and then and was painted over (trees flickering).
+			var fading := a < 0.999
+			t.alpha_cut = SpriteBase3D.ALPHA_CUT_DISABLED if fading else SpriteBase3D.ALPHA_CUT_DISCARD
+			t.render_priority = DirectionalSprite.RENDER_PRIORITY if fading else 0

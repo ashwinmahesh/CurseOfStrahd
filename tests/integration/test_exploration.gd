@@ -300,3 +300,25 @@ func test_escape_in_combat_opens_the_menu_and_pauses_the_fight() -> void:
 	await _frames(1)
 	assert_true(root.get("screen") == null, "Escape again closes it")
 	assert_false(get_tree().paused)
+
+
+## Owner bug reports: trees showed a black box behind them after fading, and flickered in the forest. A fading tree
+## keeps its texture's alpha and draws after the screen pass; once back, it's a cut-out again.
+func test_trees_fade_and_come_back_without_a_box() -> void:
+	root.call("enter_location", "into_the_mists_road", "")
+	await _frames(3)
+	var board := _view().board
+	assert_false(board.occluders.is_empty(), "the road has billboard trees")
+	var tree := board.occluders[0]
+	var focus := tree.position + Vector3(-1.5, 0, 0)
+	for i in 10:
+		board.fade_occluders(focus + Vector3(10, 10, 0), focus, 0.5)
+	assert_true(tree.modulate.a < 0.5, "the tree between the camera and the party fades")
+	assert_true(tree.transparent, "its own alpha still counts while fading")
+	assert_eq(tree.render_priority, DirectionalSprite.RENDER_PRIORITY, "drawn after the screen pass, not under it")
+	for i in 10:
+		board.fade_occluders(focus + Vector3(-10, 10, 0), focus, 0.5)
+	assert_eq(tree.modulate.a, 1.0, "back when the camera moves")
+	assert_true(tree.transparent, "no black box: the texture's alpha still cuts the tree out")
+	assert_eq(tree.alpha_cut, SpriteBase3D.ALPHA_CUT_DISCARD)
+	assert_eq(tree.render_priority, 0)
