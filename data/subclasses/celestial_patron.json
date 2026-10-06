@@ -1,0 +1,103 @@
+{
+  "id": "celestial_patron",
+  "name": "Celestial Patron",
+  "class": "warlock",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A pact with a being of the Upper Planes: healing light, radiant magic and resilience for you and your friends.",
+  "role_tags": [
+    "healer",
+    "support"
+  ],
+  "always_prepared": {
+    "3": [
+      "aid",
+      "cure_wounds",
+      "guiding_bolt",
+      "lesser_restoration",
+      "light",
+      "sacred_flame"
+    ],
+    "5": [
+      "daylight",
+      "revivify"
+    ],
+    "7": [
+      "guardian_of_faith",
+      "wall_of_fire"
+    ],
+    "9": [
+      "greater_restoration",
+      "summon_celestial"
+    ]
+  },
+  "resources": [
+    {
+      "id": "healing_light",
+      "name": "Healing Light dice",
+      "recharge": "long",
+      "max": "1+class_level",
+      "from_level": 3
+    }
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "celestial_spells",
+        "name": "Celestial Spells",
+        "summary": "Aid, Cure Wounds, Guiding Bolt, Lesser Restoration, Light and Sacred Flame always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Warlock level shown, you always have these spells prepared; they don't count against your Prepared Spells: Aid, Cure Wounds, Guiding Bolt, Lesser Restoration, Light and Sacred Flame (3); Daylight and Revivify (5); Guardian of Faith and Wall of Fire (7); Greater Restoration and Summon Celestial (9).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "healing_light",
+        "name": "Healing Light",
+        "summary": "A pool of d6s (1 + Warlock level); as a Bonus Action spend up to Charisma-modifier dice to heal a creature within 60 feet.",
+        "text": "You have a pool of d6s equal to 1 plus your Warlock level, refilled on a Long Rest. As a Bonus Action you can heal yourself or one creature you can see within 60 feet by expending dice from the pool, at most a number equal to your Charisma modifier (minimum one) at a time; roll them and the creature regains that many Hit Points.",
+        "action": "bonus_action",
+        "uses_resource": "healing_light",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "radiant_soul",
+        "name": "Radiant Soul",
+        "summary": "Resistance to Radiant damage; once per turn add your Charisma modifier to a spell's Radiant or Fire damage against one target.",
+        "text": "You have Resistance to Radiant damage. Once per turn, when a spell you cast deals Radiant or Fire damage, you can add your Charisma modifier to that spell's damage against one of its targets. The Resistance is applied; the damage bonus waits for the combat engine.",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "radiant"
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "celestial_resilience",
+        "name": "Celestial Resilience",
+        "summary": "After a Short or Long Rest gain Temporary Hit Points (Warlock level + Charisma) and share some with up to five creatures.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "searing_vengeance",
+        "name": "Searing Vengeance",
+        "summary": "Once per Long Rest, when an ally near you makes a Death Saving Throw, restore it to half its Hit Points in a burst of Radiant damage.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

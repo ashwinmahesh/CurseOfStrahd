@@ -1,0 +1,117 @@
+{
+  "id": "path_of_the_wild_heart",
+  "name": "Path of the Wild Heart",
+  "class": "barbarian",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A barbarian bonded to beasts, whose Rage takes the shape of the bear, the eagle or the wolf.",
+  "role_tags": [
+    "versatile",
+    "durable"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "animal_speaker",
+        "name": "Animal Speaker",
+        "summary": "Cast Beast Sense and Speak with Animals, only as Rituals, using Wisdom.",
+        "text": "You can cast the Beast Sense and Speak with Animals spells, but only as Rituals. Wisdom is your spellcasting ability for them.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "beast_sense",
+            "ability": "wis",
+            "always_prepared": true
+          },
+          {
+            "stat": "spell",
+            "value": "speak_with_animals",
+            "ability": "wis",
+            "always_prepared": true
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "rage_of_the_wilds",
+        "name": "Rage of the Wilds",
+        "summary": "Each time you rage choose Bear (resist almost everything), Eagle (Dash and Disengage) or Wolf (allies gain Advantage near you).",
+        "text": "Whenever you enter your Rage, choose one of these options; it lasts while the Rage does. Bear: you also have Resistance to every damage type except Force, Necrotic, Psychic and Radiant. Eagle: when you enter the Rage you can take the Disengage and Dash actions as part of that Bonus Action, and while raging you can take both as a single Bonus Action. Wolf: your allies have Advantage on attack rolls against any enemy of yours within 5 feet of you.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "aspect_of_the_wilds",
+        "name": "Aspect of the Wilds",
+        "summary": "Choose Owl (Darkvision), Panther (Climb Speed) or Salmon (Swim Speed); you can change it after a Long Rest.",
+        "text": "Choose one of these options; you can change the choice whenever you finish a Long Rest. Owl: you gain Darkvision out to 60 feet, or your Darkvision reaches 60 feet farther if you already have it. Panther: you gain a Climb Speed equal to your Speed. Salmon: you gain a Swim Speed equal to your Speed.",
+        "choice": {
+          "kind": "option",
+          "count": 1,
+          "replaceable": "long_rest",
+          "options": [
+            {
+              "id": "owl",
+              "name": "Owl",
+              "summary": "Darkvision 60 feet, or 60 feet more if you already have it.",
+              "modifiers": [
+                {
+                  "stat": "darkvision",
+                  "value": 60
+                }
+              ],
+              "implemented": "text"
+            },
+            {
+              "id": "panther",
+              "name": "Panther",
+              "summary": "A Climb Speed equal to your Speed.",
+              "implemented": "text"
+            },
+            {
+              "id": "salmon",
+              "name": "Salmon",
+              "summary": "A Swim Speed equal to your Speed.",
+              "implemented": "text"
+            }
+          ]
+        },
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "nature_speaker",
+        "name": "Nature Speaker",
+        "summary": "Cast Commune with Nature, only as a Ritual, using Wisdom.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "commune_with_nature",
+            "ability": "wis",
+            "always_prepared": true
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "power_of_the_wilds",
+        "name": "Power of the Wilds",
+        "summary": "While raging choose Falcon (fly), Lion (nearby enemies have Disadvantage against others) or Ram (knock Large or smaller creatures Prone).",
+        "implemented": "text"
+      }
+    }
+  ]
+}

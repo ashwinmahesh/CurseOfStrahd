@@ -1,0 +1,678 @@
+{
+  "id": "monk",
+  "name": "Monk",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A martial artist who turns inner focus into rapid strikes, swift movement and uncanny defenses, fighting without armor.",
+  "role_tags": [
+    "striker",
+    "mobile",
+    "skirmisher"
+  ],
+  "complexity": "average",
+  "hit_die": 8,
+  "primary_abilities": [
+    "dex",
+    "wis"
+  ],
+  "saving_throws": [
+    "str",
+    "dex"
+  ],
+  "skill_choices": {
+    "kind": "skill",
+    "count": 2,
+    "from": [
+      "acrobatics",
+      "athletics",
+      "history",
+      "insight",
+      "religion",
+      "stealth"
+    ]
+  },
+  "tool_choices": {
+    "kind": "tool",
+    "count": 1,
+    "filter": {
+      "tool_kind": [
+        "artisan",
+        "musical_instrument"
+      ]
+    }
+  },
+  "proficiencies": {
+    "armor": [],
+    "weapons": [
+      "simple",
+      "martial_light"
+    ],
+    "tools": []
+  },
+  "multiclass": {
+    "all_of": {
+      "dex": 13,
+      "wis": 13
+    },
+    "proficiencies": {}
+  },
+  "starting_equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "spear",
+          "qty": 1
+        },
+        {
+          "id": "dagger",
+          "qty": 5
+        },
+        {
+          "id": "flute",
+          "qty": 1,
+          "choice": "artisan_or_musical_instrument"
+        },
+        {
+          "id": "explorers_pack",
+          "qty": 1
+        }
+      ],
+      "gp": 11
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ],
+  "subclass_level": 3,
+  "subclass_feature_levels": [
+    3,
+    6,
+    11,
+    17
+  ],
+  "table": {
+    "martial_arts": {
+      "name": "Martial Arts",
+      "values": [
+        "1d6",
+        "1d6",
+        "1d6",
+        "1d6",
+        "1d8",
+        "1d8",
+        "1d8",
+        "1d8",
+        "1d8",
+        "1d8",
+        "1d10",
+        "1d10",
+        "1d10",
+        "1d10",
+        "1d10",
+        "1d10",
+        "1d12",
+        "1d12",
+        "1d12",
+        "1d12"
+      ]
+    },
+    "focus_points": {
+      "name": "Focus Points",
+      "values": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "unarmored_movement": {
+      "name": "Unarmored Movement",
+      "values": [
+        "",
+        "+10 ft",
+        "+10 ft",
+        "+10 ft",
+        "+10 ft",
+        "+15 ft",
+        "+15 ft",
+        "+15 ft",
+        "+15 ft",
+        "+20 ft",
+        "+20 ft",
+        "+20 ft",
+        "+20 ft",
+        "+25 ft",
+        "+25 ft",
+        "+25 ft",
+        "+25 ft",
+        "+30 ft",
+        "+30 ft",
+        "+30 ft"
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "focus_points",
+      "name": "Focus Points",
+      "recharge": "short",
+      "table": "focus_points",
+      "from_level": 2
+    },
+    {
+      "id": "uncanny_metabolism",
+      "name": "Uncanny Metabolism",
+      "recharge": "long",
+      "max": 1,
+      "from_level": 2
+    }
+  ],
+  "recommended": {
+    "standard_array": {
+      "str": 12,
+      "dex": 15,
+      "con": 13,
+      "int": 10,
+      "wis": 14,
+      "cha": 8
+    },
+    "background": "hermit",
+    "skills": [
+      "acrobatics",
+      "insight"
+    ],
+    "note": "Dexterity first, then Wisdom: both feed Unarmored Defense."
+  },
+  "levels": [
+    {
+      "level": 1,
+      "features": [
+        {
+          "id": "martial_arts",
+          "name": "Martial Arts",
+          "summary": "Unarmed or with Monk weapons: use Dexterity, roll the Martial Arts die (d6) for damage, and make an Unarmed Strike as a Bonus Action.",
+          "text": "While you are unarmed or wielding only Monk weapons (Simple Melee weapons and Martial Melee weapons with the Light property), and you wear no armor and wield no Shield, you gain three benefits. Bonus Unarmed Strike: you can make an Unarmed Strike as a Bonus Action. Martial Arts Die: you can roll your Martial Arts die (a d6, growing as the Martial Arts column shows) in place of the normal damage of your Unarmed Strikes and Monk weapons. Dexterous Attacks: you can use your Dexterity modifier instead of Strength for the attack and damage rolls of Unarmed Strikes and Monk weapons, and for the save DC of your Grapples and Shoves.",
+          "modifiers": [
+            {
+              "stat": "flag",
+              "value": "martial_arts"
+            }
+          ],
+          "implemented": "text"
+        },
+        {
+          "id": "unarmored_defense",
+          "name": "Unarmored Defense",
+          "summary": "Without armor or a Shield, AC = 10 + Dexterity + Wisdom modifiers.",
+          "text": "While you wear no armor and wield no Shield, your base Armor Class equals 10 plus your Dexterity and Wisdom modifiers.",
+          "modifiers": [
+            {
+              "stat": "ac_formula",
+              "base": 10,
+              "abilities": [
+                "dex",
+                "wis"
+              ],
+              "when": {
+                "armor": "none",
+                "shield": false
+              }
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "features": [
+        {
+          "id": "monks_focus",
+          "name": "Monk's Focus",
+          "summary": "Focus Points (2, all back on a Short Rest) fuel Flurry of Blows, Patient Defense and Step of the Wind.",
+          "text": "Your discipline gives you Focus Points, as many as the Focus Points column shows; you regain all of them when you finish a Short or Long Rest. Saves against your Focus features use DC 8 + your Wisdom modifier + Proficiency Bonus. You can spend the points on Flurry of Blows, Patient Defense and Step of the Wind, and on later Monk features.",
+          "uses_resource": "focus_points",
+          "implemented": "text"
+        },
+        {
+          "id": "flurry_of_blows",
+          "name": "Flurry of Blows",
+          "summary": "Spend 1 Focus Point: make two Unarmed Strikes as a Bonus Action.",
+          "text": "You can expend 1 Focus Point to make two Unarmed Strikes as a Bonus Action.",
+          "action": "bonus_action",
+          "uses_resource": "focus_points",
+          "implemented": "text"
+        },
+        {
+          "id": "patient_defense",
+          "name": "Patient Defense",
+          "summary": "Bonus Action: Disengage, or spend 1 Focus Point to Disengage and Dodge.",
+          "text": "You can take the Disengage action as a Bonus Action. Alternatively, you can expend 1 Focus Point to take both the Disengage and the Dodge actions as a Bonus Action.",
+          "action": "bonus_action",
+          "uses_resource": "focus_points",
+          "implemented": "text"
+        },
+        {
+          "id": "step_of_the_wind",
+          "name": "Step of the Wind",
+          "summary": "Bonus Action: Dash, or spend 1 Focus Point to Disengage and Dash with doubled jumps.",
+          "text": "You can take the Dash action as a Bonus Action. Alternatively, you can expend 1 Focus Point to take both the Disengage and Dash actions as a Bonus Action, and your jump distance is doubled for the turn.",
+          "action": "bonus_action",
+          "uses_resource": "focus_points",
+          "implemented": "text"
+        },
+        {
+          "id": "unarmored_movement",
+          "name": "Unarmored Movement",
+          "summary": "+10 feet of Speed while you wear no armor and no Shield (more at levels 6, 10, 14 and 18).",
+          "text": "Your Speed increases by 10 feet while you aren't wearing armor or wielding a Shield. The bonus grows as the Unarmored Movement column shows: 15 feet at level 6, 20 at 10, 25 at 14 and 30 at 18.",
+          "modifiers": [
+            {
+              "stat": "speed",
+              "value": 10,
+              "when": {
+                "armor": "none",
+                "shield": false
+              }
+            },
+            {
+              "stat": "speed",
+              "value": 5,
+              "when": {
+                "armor": "none",
+                "shield": false
+              },
+              "at_class_level": 6
+            },
+            {
+              "stat": "speed",
+              "value": 5,
+              "when": {
+                "armor": "none",
+                "shield": false
+              },
+              "at_class_level": 10
+            },
+            {
+              "stat": "speed",
+              "value": 5,
+              "when": {
+                "armor": "none",
+                "shield": false
+              },
+              "at_class_level": 14
+            },
+            {
+              "stat": "speed",
+              "value": 5,
+              "when": {
+                "armor": "none",
+                "shield": false
+              },
+              "at_class_level": 18
+            }
+          ],
+          "implemented": "data"
+        },
+        {
+          "id": "uncanny_metabolism",
+          "name": "Uncanny Metabolism",
+          "summary": "Once per Long Rest, when you roll Initiative, regain all Focus Points and heal a Martial Arts die + Monk level.",
+          "text": "When you roll Initiative you can regain all your expended Focus Points. When you do, you also regain Hit Points equal to a roll of your Martial Arts die plus your Monk level. Once you use this, you need a Long Rest to do so again.",
+          "uses_resource": "uncanny_metabolism",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "features": [
+        {
+          "id": "deflect_attacks",
+          "name": "Deflect Attacks",
+          "summary": "Reaction: cut an attack's damage by 1d10 + Dex + Monk level; spend Focus to throw it back if it drops to 0.",
+          "text": "When an attack roll hits you and its damage includes Bludgeoning, Piercing or Slashing damage, you can take a Reaction to reduce the attack's total damage by 1d10 plus your Dexterity modifier and Monk level. If that reduces the damage to 0, you can spend 1 Focus Point to redirect some of it: a creature you can see within 5 feet of you (or within 60 feet, not behind Total Cover, against a ranged attack) makes a Dexterity saving throw, taking damage equal to two rolls of your Martial Arts die plus your Dexterity modifier on a failure, of the attack's damage type.",
+          "action": "reaction",
+          "implemented": "text"
+        },
+        {
+          "id": "monk_subclass",
+          "name": "Monk Subclass",
+          "summary": "Choose a Monk subclass.",
+          "text": "You choose a Monk subclass. From now on you gain each subclass feature when you reach its Monk level.",
+          "choice": {
+            "kind": "subclass",
+            "count": 1
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        },
+        {
+          "id": "slow_fall",
+          "name": "Slow Fall",
+          "summary": "Reaction when you fall: reduce the falling damage by five times your Monk level.",
+          "text": "When you fall, you can take a Reaction to reduce any damage you take from the fall by an amount equal to five times your Monk level.",
+          "action": "reaction",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "features": [
+        {
+          "id": "extra_attack",
+          "name": "Extra Attack",
+          "summary": "Attack twice when you take the Attack action.",
+          "text": "When you take the Attack action on your turn, you can attack twice instead of once.",
+          "modifiers": [
+            {
+              "stat": "attacks_per_action",
+              "value": 2
+            }
+          ],
+          "implemented": "data"
+        },
+        {
+          "id": "stunning_strike",
+          "name": "Stunning Strike",
+          "summary": "Once per turn after hitting with a Monk weapon or Unarmed Strike, spend 1 Focus: Constitution save or Stunned until your next turn.",
+          "text": "Once on each of your turns, when you hit a creature with a Monk weapon or an Unarmed Strike, you can spend 1 Focus Point to attempt a stunning strike. The target makes a Constitution saving throw; on a failure it has the Stunned condition until the start of your next turn. On a success its Speed is halved until then, and the next attack roll made against it before then has Advantage.",
+          "uses_resource": "focus_points",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "features": [
+        {
+          "id": "empowered_strikes",
+          "name": "Empowered Strikes",
+          "summary": "Your Unarmed Strikes can deal Force damage instead of Bludgeoning.",
+          "text": "Whenever you deal damage with your Unarmed Strike, it can deal Force damage or its normal damage type.",
+          "implemented": "text"
+        },
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Monk subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "features": [
+        {
+          "id": "evasion",
+          "name": "Evasion",
+          "summary": "Dexterity saves for half damage: none on a success, half on a failure.",
+          "text": "When an effect lets you make a Dexterity saving throw to take only half damage, you instead take no damage on a success and half damage on a failure. You don't benefit while Incapacitated.",
+          "modifiers": [
+            {
+              "stat": "flag",
+              "value": "evasion"
+            }
+          ],
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 8,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "features": [
+        {
+          "id": "acrobatic_movement",
+          "name": "Acrobatic Movement",
+          "summary": "Without armor or a Shield, move along vertical surfaces and across liquids on your turn.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 10,
+      "features": [
+        {
+          "id": "heightened_focus",
+          "name": "Heightened Focus",
+          "summary": "Flurry of Blows makes three strikes, and Patient Defense and Step of the Wind gain extra benefits.",
+          "implemented": "text"
+        },
+        {
+          "id": "self_restoration",
+          "name": "Self-Restoration",
+          "summary": "End Charmed, Frightened or Poisoned on yourself at the end of each turn; going without food and water doesn't exhaust you.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Monk subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 12,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "features": [
+        {
+          "id": "deflect_energy",
+          "name": "Deflect Energy",
+          "summary": "Deflect Attacks works against attacks of any damage type.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 14,
+      "features": [
+        {
+          "id": "disciplined_survivor",
+          "name": "Disciplined Survivor",
+          "summary": "Proficiency in every saving throw; spend 1 Focus Point to reroll a failed save.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "features": [
+        {
+          "id": "perfect_focus",
+          "name": "Perfect Focus",
+          "summary": "When you roll Initiative with 3 or fewer Focus Points and don't use Uncanny Metabolism, regain up to 4.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 16,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Monk subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 18,
+      "features": [
+        {
+          "id": "superior_defense",
+          "name": "Superior Defense",
+          "summary": "Spend 3 Focus Points: Resistance to every damage type except Force for 1 minute.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 19,
+      "features": [
+        {
+          "id": "epic_boon",
+          "name": "Epic Boon",
+          "summary": "Gain an Epic Boon feat or another feat you qualify for.",
+          "text": "Take an Epic Boon feat or any other feat whose prerequisites you meet. Boon of Irresistible Offense is recommended.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "epic_boon",
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "features": [
+        {
+          "id": "body_and_mind",
+          "name": "Body and Mind",
+          "summary": "Dexterity and Wisdom increase by 4, to a maximum of 25.",
+          "text": "You have developed your body and mind to new heights: your Dexterity and Wisdom scores increase by 4, to a maximum of 25.",
+          "modifiers": [
+            {
+              "stat": "ability",
+              "ability": "dex",
+              "value": 4,
+              "max": 25
+            },
+            {
+              "stat": "ability",
+              "ability": "wis",
+              "value": 4,
+              "max": 25
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    }
+  ]
+}

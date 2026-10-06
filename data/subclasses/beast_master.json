@@ -1,0 +1,54 @@
+{
+  "id": "beast_master",
+  "name": "Beast Master",
+  "class": "ranger",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A ranger bonded to a primal beast of land, sea or sky that fights at their command.",
+  "role_tags": [
+    "companion",
+    "striker"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "primal_companion",
+        "name": "Primal Companion",
+        "summary": "Summon a Beast of the Land, Sea or Sky that obeys you and acts on your turn; it returns after a Long Rest or for a spell slot.",
+        "text": "You magically summon a primal beast using the Beast of the Land, Beast of the Sea or Beast of the Sky stat block (your choice); it draws strength from your bond with nature. It is friendly to you and your allies, obeys your commands and acts during your turn, right after you. It can move and use its Reaction on its own, but the only action it takes is Dodge unless you take a Bonus Action to command it to take an action from its stat block or another action; you can also give up one attack of your Attack action to command it to take its Beast's Strike action. If it dies you can bring it back by touching it and expending a spell slot as a Magic action, and you can summon a different one after a Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "exceptional_training",
+        "name": "Exceptional Training",
+        "summary": "Your beast can Dash, Disengage, Dodge or Help as a Bonus Action, and its strikes can deal Force damage.",
+        "text": "When you take a Bonus Action to command your beast, it can also take the Dash, Disengage, Dodge or Help action as a Bonus Action. In addition, whenever it hits with an attack and deals damage, it can deal Force damage or its normal damage type.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "bestial_fury",
+        "name": "Bestial Fury",
+        "summary": "Your beast's Beast's Strike attacks twice, and its first hit each turn on your Hunter's Mark target adds the mark's damage.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "share_spells",
+        "name": "Share Spells",
+        "summary": "A spell you cast that targets only you can also affect your beast within 30 feet.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

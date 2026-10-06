@@ -1,0 +1,612 @@
+{
+  "id": "barbarian",
+  "name": "Barbarian",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A primal warrior who channels Rage into toughness and brutal strength, shrugging off blows that would fell anyone else.",
+  "role_tags": [
+    "front line",
+    "durable",
+    "damage"
+  ],
+  "complexity": "low",
+  "hit_die": 12,
+  "primary_abilities": [
+    "str"
+  ],
+  "saving_throws": [
+    "str",
+    "con"
+  ],
+  "skill_choices": {
+    "kind": "skill",
+    "count": 2,
+    "from": [
+      "animal_handling",
+      "athletics",
+      "intimidation",
+      "nature",
+      "perception",
+      "survival"
+    ]
+  },
+  "proficiencies": {
+    "armor": [
+      "light",
+      "medium",
+      "shields"
+    ],
+    "weapons": [
+      "simple",
+      "martial"
+    ],
+    "tools": []
+  },
+  "multiclass": {
+    "all_of": {
+      "str": 13
+    },
+    "proficiencies": {
+      "armor": [
+        "shields"
+      ],
+      "weapons": [
+        "martial"
+      ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "greataxe",
+          "qty": 1
+        },
+        {
+          "id": "handaxe",
+          "qty": 4
+        },
+        {
+          "id": "explorers_pack",
+          "qty": 1
+        }
+      ],
+      "gp": 15
+    },
+    {
+      "id": "b",
+      "gp": 75
+    }
+  ],
+  "subclass_level": 3,
+  "subclass_feature_levels": [
+    3,
+    6,
+    10,
+    14
+  ],
+  "table": {
+    "rage": {
+      "name": "Rages",
+      "values": [
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    "rage_damage": {
+      "name": "Rage Damage",
+      "values": [
+        "+2",
+        "+2",
+        "+2",
+        "+2",
+        "+2",
+        "+2",
+        "+2",
+        "+2",
+        "+3",
+        "+3",
+        "+3",
+        "+3",
+        "+3",
+        "+3",
+        "+3",
+        "+4",
+        "+4",
+        "+4",
+        "+4",
+        "+4"
+      ]
+    },
+    "weapon_mastery": {
+      "name": "Weapon Mastery",
+      "values": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "rage",
+      "name": "Rage",
+      "recharge": "short_one",
+      "table": "rage"
+    }
+  ],
+  "recommended": {
+    "standard_array": {
+      "str": 15,
+      "dex": 13,
+      "con": 14,
+      "int": 10,
+      "wis": 12,
+      "cha": 8
+    },
+    "background": "soldier",
+    "skills": [
+      "athletics",
+      "perception"
+    ],
+    "note": "Strength first, then Constitution for Hit Points and Unarmored Defense."
+  },
+  "levels": [
+    {
+      "level": 1,
+      "features": [
+        {
+          "id": "rage",
+          "name": "Rage",
+          "summary": "Bonus Action: Resistance to Bludgeoning, Piercing and Slashing damage, extra damage on Strength attacks and Advantage on Strength checks and saves.",
+          "text": "While you aren't wearing Heavy armor you can enter a Rage as a Bonus Action. While it lasts you have Resistance to Bludgeoning, Piercing and Slashing damage, you add your Rage Damage bonus to the damage of attacks that use Strength (with a weapon or an Unarmed Strike), and you have Advantage on Strength checks and Strength saving throws. You can't cast spells or maintain Concentration while raging. The Rage lasts until the end of your next turn and carries on for another turn each time you attack an enemy, force an enemy to make a saving throw, or spend a Bonus Action to keep it going, up to 10 minutes; it ends early if you put on Heavy armor or become Incapacitated. You have two uses (more as the Rages column grows); one comes back on a Short Rest and all of them on a Long Rest.",
+          "action": "bonus_action",
+          "uses_resource": "rage",
+          "implemented": "text"
+        },
+        {
+          "id": "unarmored_defense",
+          "name": "Unarmored Defense",
+          "summary": "Without armor, AC = 10 + Dexterity + Constitution modifiers (a Shield still counts).",
+          "text": "While you wear no armor, your base Armor Class equals 10 plus your Dexterity and Constitution modifiers. You can still use a Shield.",
+          "modifiers": [
+            {
+              "stat": "ac_formula",
+              "base": 10,
+              "abilities": [
+                "dex",
+                "con"
+              ],
+              "when": {
+                "armor": "none"
+              }
+            }
+          ],
+          "implemented": "data"
+        },
+        {
+          "id": "weapon_mastery",
+          "name": "Weapon Mastery",
+          "summary": "Use the mastery properties of two kinds of Simple or Martial melee weapons.",
+          "text": "Choose two kinds of Simple or Martial Melee weapons, such as Greataxes and Handaxes; you can use their mastery properties. After a Long Rest you can swap one of the choices. You gain more kinds at levels 4 and 10.",
+          "choice": {
+            "kind": "weapon_mastery",
+            "count": 2,
+            "count_column": "weapon_mastery",
+            "filter": {
+              "weapon_kinds": [
+                "simple",
+                "martial"
+              ],
+              "melee": true
+            },
+            "replaceable": "long_rest"
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "features": [
+        {
+          "id": "danger_sense",
+          "name": "Danger Sense",
+          "summary": "Advantage on Dexterity saving throws while you aren't Incapacitated.",
+          "text": "You have an uncanny sense of when things are about to go wrong: you have Advantage on Dexterity saving throws unless you have the Incapacitated condition.",
+          "modifiers": [
+            {
+              "stat": "advantage",
+              "on": "save:dex",
+              "when": {
+                "incapacitated": false
+              }
+            }
+          ],
+          "implemented": "data"
+        },
+        {
+          "id": "reckless_attack",
+          "name": "Reckless Attack",
+          "summary": "On your first attack of a turn, gain Advantage on Strength attacks, but attacks against you have Advantage until your next turn.",
+          "text": "When you make your first attack roll on your turn, you can decide to attack recklessly. Until the start of your next turn, your attack rolls that use Strength have Advantage, and attack rolls against you have Advantage too.",
+          "action": "free",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "features": [
+        {
+          "id": "barbarian_subclass",
+          "name": "Barbarian Subclass",
+          "summary": "Choose a Barbarian subclass.",
+          "text": "You choose a Barbarian subclass. From now on you gain each subclass feature when you reach its Barbarian level.",
+          "choice": {
+            "kind": "subclass",
+            "count": 1
+          },
+          "implemented": "data"
+        },
+        {
+          "id": "primal_knowledge",
+          "name": "Primal Knowledge",
+          "summary": "Gain one more Barbarian skill; while raging, some Dexterity and Wisdom checks can use Strength.",
+          "text": "You gain proficiency in one more skill from the Barbarian skill list. While your Rage is active you can make Acrobatics, Intimidation, Perception, Stealth and Survival checks as Strength checks, using your raw might in place of the usual ability.",
+          "choice": {
+            "kind": "skill",
+            "count": 1,
+            "from": [
+              "animal_handling",
+              "athletics",
+              "intimidation",
+              "nature",
+              "perception",
+              "survival"
+            ]
+          },
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "features": [
+        {
+          "id": "extra_attack",
+          "name": "Extra Attack",
+          "summary": "Attack twice when you take the Attack action.",
+          "text": "When you take the Attack action on your turn, you can attack twice instead of once.",
+          "modifiers": [
+            {
+              "stat": "attacks_per_action",
+              "value": 2
+            }
+          ],
+          "implemented": "data"
+        },
+        {
+          "id": "fast_movement",
+          "name": "Fast Movement",
+          "summary": "+10 feet of Speed while you aren't wearing Heavy armor.",
+          "text": "Your Speed increases by 10 feet while you aren't wearing Heavy armor.",
+          "modifiers": [
+            {
+              "stat": "speed",
+              "value": 10,
+              "when": {
+                "armor": "not_heavy"
+              }
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Barbarian subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "features": [
+        {
+          "id": "feral_instinct",
+          "name": "Feral Instinct",
+          "summary": "Advantage on Initiative rolls.",
+          "text": "Your instincts are honed to a fine edge: you have Advantage on Initiative rolls.",
+          "modifiers": [
+            {
+              "stat": "advantage",
+              "on": "initiative"
+            }
+          ],
+          "implemented": "data"
+        },
+        {
+          "id": "instinctive_pounce",
+          "name": "Instinctive Pounce",
+          "summary": "When you enter a Rage, move up to half your Speed as part of the same Bonus Action.",
+          "text": "As part of the Bonus Action you take to enter your Rage, you can move up to half your Speed.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 8,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "features": [
+        {
+          "id": "brutal_strike",
+          "name": "Brutal Strike",
+          "summary": "Give up Reckless Attack's Advantage on one Strength attack to add 1d10 damage and a Forceful Blow (push 15 feet) or Hamstring Blow (Speed -15 feet).",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 10,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Barbarian subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "features": [
+        {
+          "id": "relentless_rage",
+          "name": "Relentless Rage",
+          "summary": "Dropping to 0 Hit Points while raging: succeed on a Constitution save (DC 10, rising by 5 each time) to stay up with twice your Barbarian level in Hit Points.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 12,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "features": [
+        {
+          "id": "improved_brutal_strike",
+          "name": "Improved Brutal Strike",
+          "summary": "New Brutal Strike effects: Staggering Blow (Disadvantage on its next save) and Sundering Blow (+5 to an ally's next attack against it).",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 14,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Barbarian subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "features": [
+        {
+          "id": "persistent_rage",
+          "name": "Persistent Rage",
+          "summary": "Once per Long Rest regain all Rage uses when you roll Initiative; your Rage lasts 10 minutes without being extended.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 16,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "features": [
+        {
+          "id": "improved_brutal_strike",
+          "name": "Improved Brutal Strike",
+          "summary": "Brutal Strike deals 2d10 extra damage, and you can apply two of its effects at once.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 18,
+      "features": [
+        {
+          "id": "indomitable_might",
+          "name": "Indomitable Might",
+          "summary": "If a Strength check or Strength saving throw totals less than your Strength score, use the score.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 19,
+      "features": [
+        {
+          "id": "epic_boon",
+          "name": "Epic Boon",
+          "summary": "Gain an Epic Boon feat or another feat you qualify for.",
+          "text": "Take an Epic Boon feat or any other feat whose prerequisites you meet. Boon of Irresistible Offense is recommended.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "epic_boon",
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "features": [
+        {
+          "id": "primal_champion",
+          "name": "Primal Champion",
+          "summary": "Strength and Constitution increase by 4, to a maximum of 25.",
+          "text": "You embody primal power: your Strength and Constitution scores increase by 4, to a maximum of 25.",
+          "modifiers": [
+            {
+              "stat": "ability",
+              "ability": "str",
+              "value": 4,
+              "max": 25
+            },
+            {
+              "stat": "ability",
+              "ability": "con",
+              "value": 4,
+              "max": 25
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    }
+  ]
+}

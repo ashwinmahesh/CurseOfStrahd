@@ -1,0 +1,89 @@
+{
+  "id": "oath_of_vengeance",
+  "name": "Oath of Vengeance",
+  "class": "paladin",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A relentless avenger sworn to punish grievous wrongs, marking a foe and hunting it down.",
+  "role_tags": [
+    "damage",
+    "striker"
+  ],
+  "always_prepared": {
+    "3": [
+      "bane",
+      "hunters_mark"
+    ],
+    "5": [
+      "hold_person",
+      "misty_step"
+    ],
+    "9": [
+      "haste",
+      "protection_from_energy"
+    ],
+    "13": [
+      "banishment",
+      "dimension_door"
+    ],
+    "17": [
+      "hold_monster",
+      "scrying"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "oath_of_vengeance_spells",
+        "name": "Oath of Vengeance Spells",
+        "summary": "Bane and Hunter's Mark always prepared; more at levels 5, 9, 13 and 17.",
+        "text": "When you reach a Paladin level shown, you always have these spells prepared; they don't count against your Prepared Spells: Bane and Hunter's Mark (3); Hold Person and Misty Step (5); Haste and Protection from Energy (9); Banishment and Dimension Door (13); Hold Monster and Scrying (17).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "vow_of_enmity",
+        "name": "Vow of Enmity",
+        "summary": "When you take the Attack action, spend Channel Divinity: Advantage on attacks against one creature within 30 feet for 1 minute.",
+        "text": "When you take the Attack action, you can expend a use of Channel Divinity to swear a vow against a creature you can see within 30 feet of you. You have Advantage on attack rolls against it for 1 minute or until you use this feature again. If the creature drops to 0 Hit Points before the vow ends, you can move the vow to a different creature within 30 feet (no action required).",
+        "uses_resource": "paladin_channel_divinity",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "relentless_avenger",
+        "name": "Relentless Avenger",
+        "summary": "When you hit with an Opportunity Attack, the target's Speed drops to 0 and you can move half your Speed.",
+        "text": "Your supernatural focus helps you close off a foe's retreat. When you hit a creature with an Opportunity Attack, you can reduce its Speed to 0 until the end of the current turn, and you can then move up to half your Speed as part of the same Reaction without provoking Opportunity Attacks.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "soul_of_vengeance",
+        "name": "Soul of Vengeance",
+        "summary": "When the target of your Vow of Enmity makes an attack, you can make a melee attack against it as a Reaction.",
+        "action": "reaction",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 20,
+      "feature": {
+        "id": "avenging_angel",
+        "name": "Avenging Angel",
+        "summary": "Bonus Action, once per Long Rest: for 10 minutes fly at 60 feet and frighten enemies who start their turn near you.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    }
+  ]
+}

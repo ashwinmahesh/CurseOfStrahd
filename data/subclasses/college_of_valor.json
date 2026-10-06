@@ -1,0 +1,78 @@
+{
+  "id": "college_of_valor",
+  "name": "College of Valor",
+  "class": "bard",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A battle-skald who fights in the front rank, armored and armed, and lets allies turn inspiration into blows and parries.",
+  "role_tags": [
+    "front line",
+    "support"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "combat_inspiration",
+        "name": "Combat Inspiration",
+        "summary": "A creature holding your Bardic Inspiration die can add it to a weapon's damage, or to its AC as a Reaction against an attack.",
+        "text": "A creature that has one of your Bardic Inspiration dice can use it in two more ways. Defense: when an attack roll hits it, it can take a Reaction to roll the die and add the number to its AC against that attack, possibly causing a miss. Offense: right after it hits a target with an attack, it can roll the die and add the number to the attack's damage.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "martial_training",
+        "name": "Martial Training",
+        "summary": "Proficiency with Martial weapons and training with Medium armor and Shields; a weapon can be your spellcasting focus.",
+        "text": "You gain proficiency with Martial weapons and training with Medium armor and Shields. You can also use a Simple or Martial weapon as a Spellcasting Focus for your Bard spells.",
+        "modifiers": [
+          {
+            "stat": "proficiency",
+            "kind": "weapon",
+            "value": "martial"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "armor",
+            "value": "medium"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "armor",
+            "value": "shields"
+          }
+        ],
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "extra_attack",
+        "name": "Extra Attack",
+        "summary": "Attack twice with the Attack action; one attack can be a cantrip instead.",
+        "text": "You can attack twice instead of once whenever you take the Attack action on your turn. You can also cast one of your cantrips that takes an action in place of one of those attacks.",
+        "modifiers": [
+          {
+            "stat": "attacks_per_action",
+            "value": 2
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "battle_magic",
+        "name": "Battle Magic",
+        "summary": "After you cast a spell that takes an action, you can make one weapon attack as a Bonus Action.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

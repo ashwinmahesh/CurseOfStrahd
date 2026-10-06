@@ -1,0 +1,97 @@
+{
+  "id": "archfey_patron",
+  "name": "Archfey Patron",
+  "class": "warlock",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A pact with a lord or lady of the Feywild: misty steps that refresh or taunt, and defenses woven of glamour.",
+  "role_tags": [
+    "mobile",
+    "control"
+  ],
+  "always_prepared": {
+    "3": [
+      "calm_emotions",
+      "faerie_fire",
+      "phantasmal_force",
+      "sleep"
+    ],
+    "5": [
+      "blink",
+      "plant_growth"
+    ],
+    "7": [
+      "dominate_beast",
+      "greater_invisibility"
+    ],
+    "9": [
+      "dominate_person",
+      "seeming"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "archfey_spells",
+        "name": "Archfey Spells",
+        "summary": "Calm Emotions, Faerie Fire, Misty Step, Phantasmal Force and Sleep always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Warlock level shown, you always have these spells prepared; they don't count against your Prepared Spells: Calm Emotions, Faerie Fire, Phantasmal Force and Sleep (3); Blink and Plant Growth (5); Dominate Beast and Greater Invisibility (7); Dominate Person and Seeming (9). Misty Step is always prepared through Steps of the Fey.",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "steps_of_the_fey",
+        "name": "Steps of the Fey",
+        "summary": "Cast Misty Step without a slot Charisma-modifier times per Long Rest, adding a Refreshing or Taunting step.",
+        "text": "You can cast Misty Step without expending a spell slot a number of times equal to your Charisma modifier (minimum once), regaining all uses on a Long Rest. Whenever you cast it you can choose one extra effect. Refreshing Step: right after you teleport, you or one creature you can see within 10 feet of you gains 1d10 Temporary Hit Points. Taunting Step: creatures within 5 feet of the space you left make a Wisdom saving throw against your spell save DC or have Disadvantage on attack rolls against creatures other than you until the start of your next turn. The free casts are tracked; the extra effects wait for the combat engine.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "misty_step",
+            "always_prepared": true,
+            "uses": {
+              "count": "mod:cha",
+              "min": 1,
+              "recharge": "long"
+            }
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "misty_escape",
+        "name": "Misty Escape",
+        "summary": "Cast Misty Step as a Reaction when you take damage; adds the Disappearing and Dreadful step options.",
+        "text": "You can cast Misty Step as a Reaction when you take damage. You also gain two more options for Steps of the Fey. Disappearing Step: you have the Invisible condition until the start of your next turn or until you attack, deal damage or cast a spell. Dreadful Step: creatures within 5 feet of the space you left or the space you arrive in (your choice) make a Wisdom saving throw against your spell save DC, taking 2d10 Psychic damage on a failure.",
+        "action": "reaction",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "beguiling_defenses",
+        "name": "Beguiling Defenses",
+        "summary": "Immunity to Charmed; Reaction to turn part of a creature's damage back on it.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "bewitching_magic",
+        "name": "Bewitching Magic",
+        "summary": "After casting an Enchantment or Illusion spell with a slot, cast Misty Step as part of it without a slot.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

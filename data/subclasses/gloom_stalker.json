@@ -1,0 +1,157 @@
+{
+  "id": "gloom_stalker",
+  "name": "Gloom Stalker",
+  "class": "ranger",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A hunter of the dark who strikes first from the shadows and is unseen by those who rely on darkvision.",
+  "role_tags": [
+    "stealth",
+    "striker"
+  ],
+  "always_prepared": {
+    "3": [
+      "disguise_self"
+    ],
+    "5": [
+      "rope_trick"
+    ],
+    "9": [
+      "fear"
+    ],
+    "13": [
+      "greater_invisibility"
+    ],
+    "17": [
+      "seeming"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "dread_ambusher",
+        "name": "Dread Ambusher",
+        "summary": "Add Wisdom to Initiative; +10 feet of Speed on your first turn; Dreadful Strike adds 2d6 Psychic once per turn (Wisdom-modifier uses per Long Rest).",
+        "text": "Ambusher's Leap: at the start of your first turn of each combat, your Speed increases by 10 feet until the end of that turn. Dreadful Strike: when you hit a creature with a weapon, you can deal an extra 2d6 Psychic damage, once per turn, a number of times equal to your Wisdom modifier (minimum once); you regain the uses on a Long Rest. Initiative Bonus: when you roll Initiative, you add your Wisdom modifier to the roll. The Initiative bonus is applied; the rest waits for the combat engine.",
+        "modifiers": [
+          {
+            "stat": "initiative",
+            "value": "mod:wis"
+          }
+        ],
+        "resource": {
+          "id": "dreadful_strike",
+          "name": "Dreadful Strike",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "dreadful_strike",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "gloom_stalker_spells",
+        "name": "Gloom Stalker Spells",
+        "summary": "Disguise Self always prepared; more at levels 5, 9, 13 and 17.",
+        "text": "When you reach a Ranger level shown, you always have these spells prepared; they don't count against your Prepared Spells: Disguise Self (3); Rope Trick (5); Fear (9); Greater Invisibility (13); Seeming (17).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "umbral_sight",
+        "name": "Umbral Sight",
+        "summary": "Darkvision 60 feet (or 60 feet more), and creatures relying on Darkvision can't see you while you're in Darkness.",
+        "text": "You gain Darkvision with a range of 60 feet; if you already have Darkvision, its range increases by 60 feet. You are also adept at evading creatures that rely on Darkvision: while entirely in Darkness, you have the Invisible condition against any creature that relies on Darkvision to see you there.",
+        "modifiers": [
+          {
+            "stat": "darkvision",
+            "value": 60
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "iron_mind",
+        "name": "Iron Mind",
+        "summary": "Proficiency in Wisdom saving throws, or Intelligence or Charisma if you already have it.",
+        "text": "You have honed your ability to resist mind-altering powers. You gain proficiency in Wisdom saving throws; if you already have it, you gain proficiency in Intelligence or Charisma saving throws instead (your choice).",
+        "choice": {
+          "kind": "option",
+          "count": 1,
+          "options": [
+            {
+              "id": "wisdom",
+              "name": "Wisdom saving throws",
+              "summary": "Take this unless you already have it.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "wis"
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "intelligence",
+              "name": "Intelligence saving throws",
+              "summary": "Only if you already have Wisdom saving throws.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "int"
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "charisma",
+              "name": "Charisma saving throws",
+              "summary": "Only if you already have Wisdom saving throws.",
+              "modifiers": [
+                {
+                  "stat": "proficiency",
+                  "kind": "save",
+                  "value": "cha"
+                }
+              ],
+              "implemented": "data"
+            }
+          ]
+        },
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "stalkers_flurry",
+        "name": "Stalker's Flurry",
+        "summary": "Dreadful Strike's damage becomes 2d8, and each use can add a Sudden Strike or a Mass Fear.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "shadowy_dodge",
+        "name": "Shadowy Dodge",
+        "summary": "Reaction: impose Disadvantage on an attack against you, then teleport 30 feet if it misses.",
+        "action": "reaction",
+        "implemented": "text"
+      }
+    }
+  ]
+}

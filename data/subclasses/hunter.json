@@ -1,0 +1,103 @@
+{
+  "id": "hunter",
+  "name": "Hunter",
+  "class": "ranger",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A protector of civilization who studies prey and specializes in bringing down giants or hordes.",
+  "role_tags": [
+    "striker",
+    "simple"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "hunters_lore",
+        "name": "Hunter's Lore",
+        "summary": "While a creature is marked by your Hunter's Mark, you know its Immunities, Resistances and Vulnerabilities.",
+        "text": "You can call on the forces of nature to reveal a target's strengths and weaknesses. While a creature is marked by your Hunter's Mark, you know whether it has any Immunities, Resistances or Vulnerabilities, and what they are.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "hunters_prey",
+        "name": "Hunter's Prey",
+        "summary": "Choose Colossus Slayer (+1d8 against a wounded target once per turn) or Horde Breaker (an extra attack on a creature next to your target); swap it on a rest.",
+        "text": "Choose one of these options; whenever you finish a Short or Long Rest you can swap it for the other. Colossus Slayer: once per turn, when you hit a creature that is missing any of its Hit Points with a weapon, it takes an extra 1d8 damage. Horde Breaker: once on each of your turns when you attack with a weapon, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target and within the weapon's range.",
+        "choice": {
+          "kind": "option",
+          "count": 1,
+          "replaceable": "short_rest",
+          "options": [
+            {
+              "id": "colossus_slayer",
+              "name": "Colossus Slayer",
+              "summary": "Once per turn, +1d8 damage against a creature missing any Hit Points.",
+              "implemented": "text"
+            },
+            {
+              "id": "horde_breaker",
+              "name": "Horde Breaker",
+              "summary": "Once per turn, attack a second creature within 5 feet of your target.",
+              "implemented": "text"
+            }
+          ]
+        },
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "defensive_tactics",
+        "name": "Defensive Tactics",
+        "summary": "Choose Escape the Horde (Opportunity Attacks against you have Disadvantage) or Multiattack Defense (after a creature hits you, its other attacks this turn have Disadvantage); swap it on a rest.",
+        "text": "Choose one of these options; whenever you finish a Short or Long Rest you can swap it for the other. Escape the Horde: Opportunity Attacks against you have Disadvantage. Multiattack Defense: when a creature hits you with an attack roll, that creature has Disadvantage on all other attack rolls against you this turn.",
+        "choice": {
+          "kind": "option",
+          "count": 1,
+          "replaceable": "short_rest",
+          "options": [
+            {
+              "id": "escape_the_horde",
+              "name": "Escape the Horde",
+              "summary": "Opportunity Attacks against you have Disadvantage.",
+              "implemented": "text"
+            },
+            {
+              "id": "multiattack_defense",
+              "name": "Multiattack Defense",
+              "summary": "After a creature hits you, its other attacks against you this turn have Disadvantage.",
+              "implemented": "text"
+            }
+          ]
+        },
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "superior_hunters_prey",
+        "name": "Superior Hunter's Prey",
+        "summary": "Once per turn, when Hunter's Mark damages a creature, deal the same extra damage to another creature within 30 feet of it.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "superior_hunters_defense",
+        "name": "Superior Hunter's Defense",
+        "summary": "Reaction when you take damage: Resistance to that damage and that type until the end of the turn.",
+        "action": "reaction",
+        "implemented": "text"
+      }
+    }
+  ]
+}

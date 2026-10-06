@@ -1,0 +1,240 @@
+{
+  "id": "circle_of_the_land",
+  "name": "Circle of the Land",
+  "class": "druid",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A druid drawing on one land's magic, with spells that change by terrain and Land's Aid to heal and harm at once.",
+  "role_tags": [
+    "control",
+    "utility",
+    "healer"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "circle_of_the_land_spells",
+        "name": "Circle of the Land Spells",
+        "summary": "After each Long Rest choose arid, polar, temperate or tropical land; its circle spells are always prepared.",
+        "text": "Whenever you finish a Long Rest, choose a type of land: arid, polar, temperate or tropical. You always have that land's spells prepared once your Druid level reaches the level shown. Arid: Blur, Burning Hands and Fire Bolt (3), Fireball (5), Blight (7), Wall of Stone (9). Polar: Fog Cloud, Hold Person and Ray of Frost (3), Sleet Storm (5), Ice Storm (7), Cone of Cold (9). Temperate: Misty Step, Shocking Grasp and Sleep (3), Lightning Bolt (5), Freedom of Movement (7), Tree Stride (9). Tropical: Acid Splash, Ray of Sickness and Web (3), Stinking Cloud (5), Polymorph (7), Insect Plague (9).",
+        "choice": {
+          "id": "land",
+          "kind": "option",
+          "count": 1,
+          "replaceable": "long_rest",
+          "options": [
+            {
+              "id": "arid",
+              "name": "Arid Land",
+              "summary": "Blur, Burning Hands and Fire Bolt; Fireball at 5, Blight at 7, Wall of Stone at 9.",
+              "modifiers": [
+                {
+                  "stat": "spell",
+                  "value": "blur",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "burning_hands",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "fire_bolt",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "fireball",
+                  "always_prepared": true,
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "blight",
+                  "always_prepared": true,
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "wall_of_stone",
+                  "always_prepared": true,
+                  "at_class_level": 9
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "polar",
+              "name": "Polar Land",
+              "summary": "Fog Cloud, Hold Person and Ray of Frost; Sleet Storm at 5, Ice Storm at 7, Cone of Cold at 9.",
+              "modifiers": [
+                {
+                  "stat": "spell",
+                  "value": "fog_cloud",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "hold_person",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "ray_of_frost",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "sleet_storm",
+                  "always_prepared": true,
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "ice_storm",
+                  "always_prepared": true,
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "cone_of_cold",
+                  "always_prepared": true,
+                  "at_class_level": 9
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "temperate",
+              "name": "Temperate Land",
+              "summary": "Misty Step, Shocking Grasp and Sleep; Lightning Bolt at 5, Freedom of Movement at 7, Tree Stride at 9.",
+              "modifiers": [
+                {
+                  "stat": "spell",
+                  "value": "misty_step",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "shocking_grasp",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "sleep",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "lightning_bolt",
+                  "always_prepared": true,
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "freedom_of_movement",
+                  "always_prepared": true,
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "tree_stride",
+                  "always_prepared": true,
+                  "at_class_level": 9
+                }
+              ],
+              "implemented": "data"
+            },
+            {
+              "id": "tropical",
+              "name": "Tropical Land",
+              "summary": "Acid Splash, Ray of Sickness and Web; Stinking Cloud at 5, Polymorph at 7, Insect Plague at 9.",
+              "modifiers": [
+                {
+                  "stat": "spell",
+                  "value": "acid_splash",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "ray_of_sickness",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "web",
+                  "always_prepared": true
+                },
+                {
+                  "stat": "spell",
+                  "value": "stinking_cloud",
+                  "always_prepared": true,
+                  "at_class_level": 5
+                },
+                {
+                  "stat": "spell",
+                  "value": "polymorph",
+                  "always_prepared": true,
+                  "at_class_level": 7
+                },
+                {
+                  "stat": "spell",
+                  "value": "insect_plague",
+                  "always_prepared": true,
+                  "at_class_level": 9
+                }
+              ],
+              "implemented": "data"
+            }
+          ]
+        },
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "lands_aid",
+        "name": "Land's Aid",
+        "summary": "Magic action, spend Wild Shape: a 10-foot sphere deals 2d6 Necrotic (Con save halves) and one creature in it regains 2d6 Hit Points.",
+        "text": "As a Magic action you can expend a use of Wild Shape and choose a point within 60 feet of you. Life-giving flowers and thorns fill a 10-foot-radius sphere there: each creature of your choice in it makes a Constitution saving throw against your spell save DC, taking 2d6 Necrotic damage on a failure or half as much on a success, and one creature of your choice in the area regains 2d6 Hit Points. Both grow to 3d6 at Druid level 10 and 4d6 at 14.",
+        "action": "action",
+        "uses_resource": "wild_shape",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "natural_recovery",
+        "name": "Natural Recovery",
+        "summary": "Once per Long Rest cast a circle spell without a slot; once per Long Rest recover spell slots when you finish a Short Rest.",
+        "text": "You can cast one of your level 1+ Circle of the Land spells without expending a spell slot, and you can't do so again until you finish a Long Rest. In addition, when you finish a Short Rest you can recover expended spell slots whose levels add up to no more than half your Druid level (round up), none of them level 6 or higher; once you do, you can't again until you finish a Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "natures_ward",
+        "name": "Nature's Ward",
+        "summary": "Immunity to the Poisoned condition and Resistance to a damage type tied to your current land.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "natures_sanctuary",
+        "name": "Nature's Sanctuary",
+        "summary": "Magic action, spend Wild Shape: a 15-foot cube of spectral trees gives you and allies Half Cover and your land's Resistance.",
+        "action": "action",
+        "implemented": "text"
+      }
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "id": "aberrant_sorcery",
+  "name": "Aberrant Sorcery",
+  "class": "sorcerer",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "Magic seeded by an alien mind: psionic spells, telepathy and flesh that warps toward the strange.",
+  "role_tags": [
+    "control",
+    "psychic"
+  ],
+  "always_prepared": {
+    "3": [
+      "arms_of_hadar",
+      "calm_emotions",
+      "detect_thoughts",
+      "dissonant_whispers",
+      "mind_sliver"
+    ],
+    "5": [
+      "hunger_of_hadar",
+      "sending"
+    ],
+    "7": [
+      "evards_black_tentacles",
+      "summon_aberration"
+    ],
+    "9": [
+      "rarys_telepathic_bond",
+      "telekinesis"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "psionic_spells",
+        "name": "Psionic Spells",
+        "summary": "Arms of Hadar, Calm Emotions, Detect Thoughts, Dissonant Whispers and Mind Sliver always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Sorcerer level shown, you always have these spells prepared; they don't count against your Prepared Spells: Arms of Hadar, Calm Emotions, Detect Thoughts, Dissonant Whispers and Mind Sliver (3); Hunger of Hadar and Sending (5); Evard's Black Tentacles and Summon Aberration (7); Rary's Telepathic Bond and Telekinesis (9).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "telepathic_speech",
+        "name": "Telepathic Speech",
+        "summary": "Bonus Action: form a telepathic link with a creature within 30 feet for Sorcerer-level minutes.",
+        "text": "As a Bonus Action you can link minds with one creature you can see within 30 feet of you. Until the link ends, the two of you can speak telepathically while within a number of miles of each other equal to your Charisma modifier (minimum one mile), as long as each of you knows a language. The link lasts a number of minutes equal to your Sorcerer level and ends early if you use this feature on another creature.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "psionic_sorcery",
+        "name": "Psionic Sorcery",
+        "summary": "Cast your level 1+ Psionic Spells with Sorcery Points equal to their level, with no Verbal or Somatic components.",
+        "text": "When you cast a level 1+ spell from your Psionic Spells feature, you can spend Sorcery Points equal to the spell's level instead of a spell slot. Cast that way it needs no Verbal or Somatic components, nor Material ones unless they are consumed by the spell or have a listed cost.",
+        "uses_resource": "sorcery_points",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "psychic_defenses",
+        "name": "Psychic Defenses",
+        "summary": "Resistance to Psychic damage and Advantage on saves against Charmed and Frightened.",
+        "text": "You have Resistance to Psychic damage, and you have Advantage on saving throws to avoid or end the Charmed or Frightened condition.",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "psychic"
+          },
+          {
+            "stat": "advantage",
+            "on": [
+              "save_vs:charmed",
+              "save_vs:frightened"
+            ]
+          }
+        ],
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "revelation_in_flesh",
+        "name": "Revelation in Flesh",
+        "summary": "Spend Sorcery Points for 10 minutes of aberrant traits: a Fly or Swim Speed, seeing the Invisible, or squeezing through tiny gaps.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "warping_implosion",
+        "name": "Warping Implosion",
+        "summary": "Teleport up to 120 feet; creatures near where you left are pulled in for 3d10 Force damage (Strength save halves).",
+        "implemented": "text"
+      }
+    }
+  ]
+}

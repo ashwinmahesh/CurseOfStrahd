@@ -1,0 +1,983 @@
+{
+  "id": "warlock",
+  "name": "Warlock",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A seeker of forbidden lore bound to an otherworldly patron, with Pact Magic that returns on a Short Rest and Eldritch Invocations that shape their power.",
+  "role_tags": [
+    "arcane magic",
+    "damage",
+    "utility"
+  ],
+  "complexity": "high",
+  "hit_die": 8,
+  "primary_abilities": [
+    "cha"
+  ],
+  "saving_throws": [
+    "wis",
+    "cha"
+  ],
+  "skill_choices": {
+    "kind": "skill",
+    "count": 2,
+    "from": [
+      "arcana",
+      "deception",
+      "history",
+      "intimidation",
+      "investigation",
+      "nature",
+      "religion"
+    ]
+  },
+  "proficiencies": {
+    "armor": [
+      "light"
+    ],
+    "weapons": [
+      "simple"
+    ],
+    "tools": []
+  },
+  "multiclass": {
+    "all_of": {
+      "cha": 13
+    },
+    "proficiencies": {
+      "armor": [
+        "light"
+      ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "leather_armor",
+          "qty": 1
+        },
+        {
+          "id": "sickle",
+          "qty": 1
+        },
+        {
+          "id": "dagger",
+          "qty": 2
+        },
+        {
+          "id": "arcane_focus_orb",
+          "qty": 1
+        },
+        {
+          "id": "book",
+          "qty": 1
+        },
+        {
+          "id": "scholars_pack",
+          "qty": 1
+        }
+      ],
+      "gp": 15
+    },
+    {
+      "id": "b",
+      "gp": 100
+    }
+  ],
+  "spellcasting": {
+    "ability": "cha",
+    "progression": "pact",
+    "list": "warlock",
+    "focus": "arcane",
+    "cantrips_column": "cantrips",
+    "prepared_column": "prepared",
+    "pact_slots_column": "pact_slots",
+    "pact_level_column": "slot_level",
+    "ritual": "prepared",
+    "swap_prepared": "level_up",
+    "swap_cantrip": "level_up"
+  },
+  "subclass_level": 3,
+  "subclass_feature_levels": [
+    3,
+    6,
+    10,
+    14
+  ],
+  "table": {
+    "invocations": {
+      "name": "Invocations",
+      "values": [
+        1,
+        3,
+        3,
+        3,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        7,
+        8,
+        8,
+        8,
+        9,
+        9,
+        9,
+        10,
+        10,
+        10
+      ]
+    },
+    "cantrips": {
+      "name": "Cantrips",
+      "values": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    "prepared": {
+      "name": "Prepared Spells",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        10,
+        11,
+        11,
+        12,
+        12,
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ]
+    },
+    "pact_slots": {
+      "name": "Spell Slots",
+      "values": [
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    "slot_level": {
+      "name": "Slot Level",
+      "values": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "magical_cunning",
+      "name": "Magical Cunning",
+      "recharge": "long",
+      "max": 1,
+      "from_level": 2
+    }
+  ],
+  "recommended": {
+    "standard_array": {
+      "str": 8,
+      "dex": 14,
+      "con": 13,
+      "int": 12,
+      "wis": 10,
+      "cha": 15
+    },
+    "background": "charlatan",
+    "skills": [
+      "arcana",
+      "deception"
+    ],
+    "note": "Charisma first, then Dexterity for Armor Class and Constitution for Concentration."
+  },
+  "levels": [
+    {
+      "level": 1,
+      "features": [
+        {
+          "id": "eldritch_invocations",
+          "name": "Eldritch Invocations",
+          "summary": "Learn an Eldritch Invocation (Pact of the Tome is a good first pick); more as you level.",
+          "text": "You have unearthed Eldritch Invocations, pieces of forbidden knowledge that grant lasting magic. You gain one at level 1 and more as the Invocations column shows. A prerequisite level refers to your Warlock level. Whenever you gain a Warlock level you can replace one invocation with another you qualify for, unless another of your invocations depends on it. In this game each invocation can be taken once.",
+          "choice": {
+            "kind": "invocation",
+            "count": 1,
+            "count_column": "invocations",
+            "replaceable": "level_up",
+            "options": [
+              {
+                "id": "agonizing_blast",
+                "name": "Agonizing Blast",
+                "summary": "Add your Charisma modifier to the damage rolls of one damaging Warlock cantrip you know.",
+                "text": "Choose one of your known Warlock cantrips that deals damage. You add your Charisma modifier to that spell's damage rolls. (The book lets you take this invocation again for another cantrip; here it is taken once.)",
+                "choice": {
+                  "id": "cantrip",
+                  "kind": "cantrip",
+                  "count": 1,
+                  "filter": {
+                    "list": "warlock",
+                    "level": 0,
+                    "known_only": true,
+                    "damaging": true
+                  }
+                },
+                "modifiers": [
+                  {
+                    "stat": "cantrip_damage",
+                    "value": "mod:cha",
+                    "when": {
+                      "spell_id": "@cantrip"
+                    }
+                  }
+                ],
+                "implemented": "data",
+                "prerequisites": {
+                  "level": 2,
+                  "cantrip": "damage"
+                }
+              },
+              {
+                "id": "armor_of_shadows",
+                "name": "Armor of Shadows",
+                "summary": "Cast Mage Armor on yourself without a spell slot.",
+                "text": "You can cast Mage Armor on yourself without expending a spell slot. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "mage_armor",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text"
+              },
+              {
+                "id": "ascendant_step",
+                "name": "Ascendant Step",
+                "summary": "Cast Levitate on yourself without a spell slot.",
+                "text": "You can cast Levitate on yourself without expending a spell slot. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "levitate",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 5
+                }
+              },
+              {
+                "id": "devils_sight",
+                "name": "Devil's Sight",
+                "summary": "See normally in Dim Light and Darkness, magical or not, within 120 feet.",
+                "text": "You can see normally in Dim Light and Darkness, both magical and nonmagical, within 120 feet of you.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 2
+                }
+              },
+              {
+                "id": "devouring_blade",
+                "name": "Devouring Blade",
+                "summary": "Thirsting Blade gives you two extra attacks instead of one.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 12,
+                  "invocation": "thirsting_blade"
+                }
+              },
+              {
+                "id": "eldritch_mind",
+                "name": "Eldritch Mind",
+                "summary": "Advantage on Constitution saves to keep Concentration.",
+                "text": "You have Advantage on Constitution saving throws that you make to maintain Concentration.",
+                "modifiers": [
+                  {
+                    "stat": "advantage",
+                    "on": "concentration"
+                  }
+                ],
+                "implemented": "data"
+              },
+              {
+                "id": "eldritch_smite",
+                "name": "Eldritch Smite",
+                "summary": "Once per turn when your pact weapon hits, spend a Pact Magic slot for extra Force damage and knock a Huge or smaller target Prone.",
+                "text": "Once per turn when you hit a creature with your pact weapon, you can expend a Pact Magic spell slot to deal an extra 1d8 Force damage plus another 1d8 per level of the slot, and you can give the target the Prone condition if it is Huge or smaller.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 5,
+                  "invocation": "pact_of_the_blade"
+                }
+              },
+              {
+                "id": "eldritch_spear",
+                "name": "Eldritch Spear",
+                "summary": "One damaging Warlock cantrip with a range of 10 feet or more reaches 30 feet times your Warlock level.",
+                "text": "Choose one of your known Warlock cantrips that deals damage and has a range of 10 or more feet. When you cast it, its range increases by a number of feet equal to 30 times your Warlock level.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 2,
+                  "cantrip": "damage"
+                }
+              },
+              {
+                "id": "fiendish_vigor",
+                "name": "Fiendish Vigor",
+                "summary": "Cast False Life on yourself without a spell slot, taking the highest number for the Temporary Hit Points.",
+                "text": "You can cast False Life on yourself without expending a spell slot. When you do, you don't roll the dice for the Temporary Hit Points; you automatically get the highest number. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "false_life",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 2
+                }
+              },
+              {
+                "id": "gaze_of_two_minds",
+                "name": "Gaze of Two Minds",
+                "summary": "Bonus Action: perceive through a willing creature's senses, and cast spells as if from its space.",
+                "text": "As a Bonus Action you can touch a willing creature and perceive through its senses until the end of your next turn, extending the link each turn with a Bonus Action while you are both on the same plane. While linked you can cast spells as though you were in your space or in the other creature's space, if you are within 60 feet of each other.",
+                "action": "bonus_action",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 5
+                }
+              },
+              {
+                "id": "gift_of_the_depths",
+                "name": "Gift of the Depths",
+                "summary": "Breathe underwater, gain a Swim Speed equal to your Speed, and cast Water Breathing once per Long Rest without a slot.",
+                "text": "You can breathe underwater and you gain a Swim Speed equal to your Speed. You can also cast Water Breathing once without expending a spell slot, regaining that use on a Long Rest.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "water_breathing",
+                    "always_prepared": true,
+                    "uses": {
+                      "count": 1,
+                      "recharge": "long"
+                    }
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 5
+                }
+              },
+              {
+                "id": "gift_of_the_protectors",
+                "name": "Gift of the Protectors",
+                "summary": "Creatures who write their names in your Book of Shadows drop to 1 Hit Point instead of 0, once per Long Rest.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 9,
+                  "invocation": "pact_of_the_tome"
+                }
+              },
+              {
+                "id": "investment_of_the_chain_master",
+                "name": "Investment of the Chain Master",
+                "summary": "Your familiar gains a Fly or Swim Speed, attacks when you command it as a Bonus Action, deals Necrotic or Radiant damage and uses your save DC.",
+                "text": "When you cast Find Familiar, your familiar gains these benefits: a Fly or Swim Speed of 40 feet (your choice); as a Bonus Action you can command it to take the Attack action; its damage can be Necrotic or Radiant (your choice); its saving throw DCs use your spell save DC; and when it takes damage you can take a Reaction to give it Resistance to that damage.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 5,
+                  "invocation": "pact_of_the_chain"
+                }
+              },
+              {
+                "id": "lessons_of_the_first_ones",
+                "name": "Lessons of the First Ones",
+                "summary": "Gain an Origin feat of your choice.",
+                "text": "You have received knowledge from an elder entity of the multiverse, giving you one Origin feat of your choice. (The book lets you take this invocation more than once; here it is taken once.)",
+                "choice": {
+                  "id": "feat",
+                  "kind": "feat",
+                  "count": 1,
+                  "filter": {
+                    "category": "origin"
+                  }
+                },
+                "implemented": "data",
+                "prerequisites": {
+                  "level": 2
+                }
+              },
+              {
+                "id": "lifedrinker",
+                "name": "Lifedrinker",
+                "summary": "Once per turn a pact weapon hit deals an extra 1d6 Necrotic, Psychic or Radiant, and you can spend a Hit Point Die to heal.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 9,
+                  "invocation": "pact_of_the_blade"
+                }
+              },
+              {
+                "id": "mask_of_many_faces",
+                "name": "Mask of Many Faces",
+                "summary": "Cast Disguise Self without a spell slot.",
+                "text": "You can cast Disguise Self without expending a spell slot. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "disguise_self",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 2
+                }
+              },
+              {
+                "id": "master_of_myriad_forms",
+                "name": "Master of Myriad Forms",
+                "summary": "Cast Alter Self without a spell slot.",
+                "text": "You can cast Alter Self without expending a spell slot. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "alter_self",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 5
+                }
+              },
+              {
+                "id": "misty_visions",
+                "name": "Misty Visions",
+                "summary": "Cast Silent Image without a spell slot.",
+                "text": "You can cast Silent Image without expending a spell slot. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "silent_image",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 2
+                }
+              },
+              {
+                "id": "one_with_shadows",
+                "name": "One with Shadows",
+                "summary": "While in Dim Light or Darkness, cast Invisibility on yourself without a spell slot.",
+                "text": "While you're in an area of Dim Light or Darkness, you can cast Invisibility on yourself without expending a spell slot.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "invisibility",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 5
+                }
+              },
+              {
+                "id": "otherworldly_leap",
+                "name": "Otherworldly Leap",
+                "summary": "Cast Jump on yourself without a spell slot.",
+                "text": "You can cast Jump on yourself without expending a spell slot. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "jump",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 2
+                }
+              },
+              {
+                "id": "pact_of_the_blade",
+                "name": "Pact of the Blade",
+                "summary": "Bonus Action: conjure or bond a pact weapon; use Charisma for its attacks and deal Necrotic, Psychic or Radiant damage with it.",
+                "text": "As a Bonus Action you can conjure a pact weapon in your hand (a Simple or Martial Melee weapon of your choice) or bond with a magic weapon you touch. You are proficient with it while you wield it, can use it as a Spellcasting Focus, and can use your Charisma modifier instead of Strength or Dexterity for its attack and damage rolls; each hit can deal Necrotic, Psychic or Radiant damage or its normal type. The bond ends if you use this feature again, dismiss the weapon, or are more than 5 feet away from it for 1 minute.",
+                "action": "bonus_action",
+                "implemented": "text"
+              },
+              {
+                "id": "pact_of_the_chain",
+                "name": "Pact of the Chain",
+                "summary": "Find Familiar is always known and you can cast it as a Magic action without a slot; your familiar can take special forms.",
+                "text": "You learn the Find Familiar spell and can cast it as a Magic action without expending a spell slot. Your familiar can take an unusual form: Imp, Pseudodragon, Quasit, Skeleton, Slaad Tadpole, Sphinx of Wonder, Sprite or Venomous Snake. When you take the Attack action, you can give up one of your attacks to let the familiar make one attack with its Reaction.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "find_familiar",
+                    "always_prepared": true
+                  }
+                ],
+                "implemented": "text"
+              },
+              {
+                "id": "pact_of_the_tome",
+                "name": "Pact of the Tome",
+                "summary": "A Book of Shadows holds three cantrips and two level 1 Ritual spells from any class's list, prepared as Warlock spells.",
+                "text": "Stitching together strands of shadow, you conjure a Book of Shadows at the end of a Short or Long Rest. Choose three cantrips and two level 1 spells that have the Ritual tag, from any class's spell list. While the book is on your person you have those spells prepared and they count as Warlock spells. You can use the book as a Spellcasting Focus.",
+                "choices": [
+                  {
+                    "id": "cantrips",
+                    "kind": "cantrip",
+                    "count": 3,
+                    "filter": {
+                      "level": 0
+                    }
+                  },
+                  {
+                    "id": "rituals",
+                    "kind": "spell",
+                    "count": 2,
+                    "filter": {
+                      "level": 1,
+                      "ritual": true
+                    }
+                  }
+                ],
+                "implemented": "data"
+              },
+              {
+                "id": "repelling_blast",
+                "name": "Repelling Blast",
+                "summary": "When a damaging Warlock cantrip with an attack roll hits a Large or smaller creature, push it up to 10 feet.",
+                "text": "Choose one of your known Warlock cantrips that requires an attack roll. When you hit a Large or smaller creature with it, you can push the creature up to 10 feet straight away from you.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 2,
+                  "cantrip": "attack"
+                }
+              },
+              {
+                "id": "thirsting_blade",
+                "name": "Thirsting Blade",
+                "summary": "Attack twice with your pact weapon when you take the Attack action.",
+                "text": "You gain the Extra Attack feature for your pact weapon only: you can attack twice with it instead of once when you take the Attack action on your turn.",
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 5,
+                  "invocation": "pact_of_the_blade"
+                }
+              },
+              {
+                "id": "visions_of_distant_realms",
+                "name": "Visions of Distant Realms",
+                "summary": "Cast Arcane Eye without a spell slot.",
+                "text": "You can cast Arcane Eye without expending a spell slot. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "arcane_eye",
+                    "always_prepared": true,
+                    "at_class_level": 9
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 9
+                }
+              },
+              {
+                "id": "whispers_of_the_grave",
+                "name": "Whispers of the Grave",
+                "summary": "Cast Speak with Dead without a spell slot.",
+                "text": "You can cast Speak with Dead without expending a spell slot. You can cast it at will this way; the spell is listed as known, and free casting waits for the combat engine.",
+                "modifiers": [
+                  {
+                    "stat": "spell",
+                    "value": "speak_with_dead",
+                    "always_prepared": true,
+                    "at_class_level": 7
+                  }
+                ],
+                "implemented": "text",
+                "prerequisites": {
+                  "level": 7
+                }
+              },
+              {
+                "id": "witch_sight",
+                "name": "Witch Sight",
+                "summary": "Truesight out to 30 feet.",
+                "text": "You have Truesight with a range of 30 feet.",
+                "modifiers": [
+                  {
+                    "stat": "sense",
+                    "kind": "truesight",
+                    "value": 30,
+                    "at_class_level": 15
+                  }
+                ],
+                "implemented": "data",
+                "prerequisites": {
+                  "level": 15
+                }
+              }
+            ]
+          },
+          "implemented": "data"
+        },
+        {
+          "id": "pact_magic",
+          "name": "Pact Magic",
+          "summary": "Cast Warlock spells with Charisma using Pact Magic slots that share one level and return on a Short Rest.",
+          "text": "You know two Warlock cantrips (more at levels 4 and 10) and prepare level 1+ Warlock spells as the Prepared Spells column shows; whenever you gain a Warlock level you can replace one cantrip and one prepared spell. Your Pact Magic slots are shown in the Spell Slots and Slot Level columns. They are all the same level: any spell of level 1+ you cast with one is cast at that level. You regain every expended Pact Magic slot when you finish a Short or Long Rest. Charisma is your spellcasting ability, and an Arcane Focus can be your focus. If you also have the Spellcasting feature, each kind of slot can cast the other class's spells, but the two pools never merge.",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "features": [
+        {
+          "id": "magical_cunning",
+          "name": "Magical Cunning",
+          "summary": "Once per Long Rest, a 1-minute rite regains half your Pact Magic slots (round up).",
+          "text": "You can perform an esoteric rite for 1 minute. At the end of it you regain expended Pact Magic spell slots, but no more than half your maximum (round up). Once you use this, you need a Long Rest to do so again.",
+          "uses_resource": "magical_cunning",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "features": [
+        {
+          "id": "warlock_subclass",
+          "name": "Warlock Subclass",
+          "summary": "Choose a Warlock subclass.",
+          "text": "You choose a Warlock subclass. From now on you gain each subclass feature when you reach its Warlock level.",
+          "choice": {
+            "kind": "subclass",
+            "count": 1
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "features": []
+    },
+    {
+      "level": 6,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Warlock subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "features": []
+    },
+    {
+      "level": 8,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "features": [
+        {
+          "id": "contact_patron",
+          "name": "Contact Patron",
+          "summary": "Contact Other Plane is always prepared; cast it once per Long Rest without a slot and succeed on its save.",
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "contact_other_plane",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              }
+            }
+          ],
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 10,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Warlock subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "features": [
+        {
+          "id": "mystic_arcanum",
+          "name": "Mystic Arcanum",
+          "summary": "Choose a level 6 Warlock spell you can cast once per Long Rest without a slot.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 12,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "features": [
+        {
+          "id": "mystic_arcanum",
+          "name": "Mystic Arcanum",
+          "summary": "Choose a level 7 Warlock spell you can cast once per Long Rest without a slot.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 14,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Warlock subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "features": [
+        {
+          "id": "mystic_arcanum",
+          "name": "Mystic Arcanum",
+          "summary": "Choose a level 8 Warlock spell you can cast once per Long Rest without a slot.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 16,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "features": [
+        {
+          "id": "mystic_arcanum",
+          "name": "Mystic Arcanum",
+          "summary": "Choose a level 9 Warlock spell you can cast once per Long Rest without a slot.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 18,
+      "features": []
+    },
+    {
+      "level": 19,
+      "features": [
+        {
+          "id": "epic_boon",
+          "name": "Epic Boon",
+          "summary": "Gain an Epic Boon feat or another feat you qualify for.",
+          "text": "Take an Epic Boon feat or any other feat whose prerequisites you meet. Boon of Fate is recommended.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "epic_boon",
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "features": [
+        {
+          "id": "eldritch_master",
+          "name": "Eldritch Master",
+          "summary": "Magical Cunning restores all your Pact Magic slots.",
+          "implemented": "text"
+        }
+      ]
+    }
+  ]
+}

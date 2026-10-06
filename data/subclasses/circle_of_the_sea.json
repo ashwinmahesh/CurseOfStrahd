@@ -1,0 +1,87 @@
+{
+  "id": "circle_of_the_sea",
+  "name": "Circle of the Sea",
+  "class": "druid",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A druid of storms and tides who wraps themselves in churning spray and lightning.",
+  "role_tags": [
+    "damage",
+    "control"
+  ],
+  "always_prepared": {
+    "3": [
+      "fog_cloud",
+      "gust_of_wind",
+      "ray_of_frost",
+      "shatter",
+      "thunderwave"
+    ],
+    "5": [
+      "lightning_bolt",
+      "water_breathing"
+    ],
+    "7": [
+      "control_water",
+      "ice_storm"
+    ],
+    "9": [
+      "conjure_elemental",
+      "hold_monster"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "circle_of_the_sea_spells",
+        "name": "Circle of the Sea Spells",
+        "summary": "Fog Cloud, Gust of Wind, Ray of Frost, Shatter and Thunderwave always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Druid level shown, you always have these spells prepared; they don't count against your Prepared Spells: Fog Cloud, Gust of Wind, Ray of Frost, Shatter and Thunderwave (3); Lightning Bolt and Water Breathing (5); Control Water and Ice Storm (7); Conjure Elemental and Hold Monster (9).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "wrath_of_the_sea",
+        "name": "Wrath of the Sea",
+        "summary": "Bonus Action, spend Wild Shape: a 5-foot emanation for 10 minutes; each turn one creature in it makes a Con save or takes Cold damage and is pushed.",
+        "text": "As a Bonus Action you can expend a use of Wild Shape to wreathe yourself in an emanation of ocean spray reaching 5 feet from you for 10 minutes (it ends early if you dismiss it, use it again or become Incapacitated). When it appears, and as a Bonus Action on later turns, choose one creature in it: it makes a Constitution saving throw against your spell save DC. On a failure it takes Cold damage equal to a number of d6s equal to your Wisdom modifier (minimum one) and, if Large or smaller, is pushed up to 15 feet away from you. On a success it takes half as much damage and isn't pushed.",
+        "action": "bonus_action",
+        "uses_resource": "wild_shape",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "aquatic_affinity",
+        "name": "Aquatic Affinity",
+        "summary": "Wrath of the Sea reaches 10 feet, and you gain a Swim Speed equal to your Speed.",
+        "text": "The emanation of your Wrath of the Sea grows to 10 feet, and you gain a Swim Speed equal to your Speed.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "stormborn",
+        "name": "Stormborn",
+        "summary": "While Wrath of the Sea is active, fly at your Speed and resist Cold, Lightning and Thunder damage.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "oceanic_gift",
+        "name": "Oceanic Gift",
+        "summary": "Wrath of the Sea can wrap a willing ally instead, or both of you for two Wild Shape uses.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

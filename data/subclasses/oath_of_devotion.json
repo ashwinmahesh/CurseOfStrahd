@@ -1,0 +1,94 @@
+{
+  "id": "oath_of_devotion",
+  "name": "Oath of Devotion",
+  "class": "paladin",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "The paladin of classic ideals, honesty, courage and compassion, wielding a weapon made holy and an aura no charm can pierce.",
+  "role_tags": [
+    "front line",
+    "defense"
+  ],
+  "always_prepared": {
+    "3": [
+      "protection_from_evil_and_good",
+      "shield_of_faith"
+    ],
+    "5": [
+      "aid",
+      "zone_of_truth"
+    ],
+    "9": [
+      "beacon_of_hope",
+      "dispel_magic"
+    ],
+    "13": [
+      "freedom_of_movement",
+      "guardian_of_faith"
+    ],
+    "17": [
+      "commune",
+      "flame_strike"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "oath_of_devotion_spells",
+        "name": "Oath of Devotion Spells",
+        "summary": "Protection from Evil and Good and Shield of Faith always prepared; more at levels 5, 9, 13 and 17.",
+        "text": "When you reach a Paladin level shown, you always have these spells prepared; they don't count against your Prepared Spells: Protection from Evil and Good and Shield of Faith (3); Aid and Zone of Truth (5); Beacon of Hope and Dispel Magic (9); Freedom of Movement and Guardian of Faith (13); Commune and Flame Strike (17).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "sacred_weapon",
+        "name": "Sacred Weapon",
+        "summary": "Channel Divinity: for 10 minutes add your Charisma modifier to attacks with a melee weapon, which glows and can deal Radiant damage.",
+        "text": "When you take the Attack action, you can expend a use of Channel Divinity to fill one melee weapon you are holding with positive energy for 10 minutes, or until you use this again or let go of the weapon. You add your Charisma modifier (minimum +1) to attack rolls with it, and each time you hit with it you can make its damage Radiant. The weapon sheds Bright Light in a 20-foot radius and Dim Light for 20 feet beyond.",
+        "uses_resource": "paladin_channel_divinity",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "aura_of_devotion",
+        "name": "Aura of Devotion",
+        "summary": "You and allies in your Aura of Protection are immune to Charmed.",
+        "text": "You and your allies within your Aura of Protection have Immunity to the Charmed condition. If a Charmed ally enters the aura, the condition has no effect on it while it remains there. Your own immunity is applied; allies' needs positions in a fight.",
+        "modifiers": [
+          {
+            "stat": "condition_immunity",
+            "value": "charmed"
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "smite_of_protection",
+        "name": "Smite of Protection",
+        "summary": "When you cast Divine Smite, you and allies in your aura have Half Cover until your next turn.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 20,
+      "feature": {
+        "id": "holy_nimbus",
+        "name": "Holy Nimbus",
+        "summary": "Bonus Action, once per Long Rest: for 10 minutes your aura burns enemies with Radiant damage, grants Advantage on saves against Fiends and Undead, and sheds sunlight.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    }
+  ]
+}

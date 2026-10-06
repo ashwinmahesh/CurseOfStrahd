@@ -35,7 +35,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `attack` | value, when | bonus to attack rolls. Archery: `{"stat":"attack","value":2,"when":{"weapon":"ranged"}}` |
 | `damage` | value, when | bonus to damage rolls. Dueling: `{"stat":"damage","value":2,"when":{"weapon":"one_handed_alone"}}` |
 | `spell_dc`, `spell_attack` | value | bonus to spell save DC / spell attack rolls |
-| `speed` | value, kind (default walk) | +value ft |
+| `speed` | value, kind (default walk), when | +value ft; `when` sees the armor worn (Fast Movement: `{"armor":"not_heavy"}`, Unarmored Movement: `{"armor":"none","shield":false}`) |
 | `speed_set` | value, kind | speed becomes value (Grappled: 0). `kind` may be `fly` etc. to grant a speed |
 | `hp_max` | value | + to Hit Point maximum (formulas recompute on level up) |
 | `proficiency` | kind, value | kind = skill, save, armor, weapon, tool, language. value = id (`heavy`, `martial`, `thieves_tools`, `perception`, `str`, `common`) |
@@ -57,8 +57,8 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `healing_bonus` | value | add to healing from spells with a slot (Disciple of Life: `2+slot_level`) |
 | `carry_size_step` | value | count as this many sizes larger for carrying capacity (Powerful Build: 1) |
 | `reach` | value | + reach in ft |
-| `spell` | value, ability, uses, always_prepared, at_level | grants a spell. `ability` is an ability id or `choice` (the player picks; species list it in `spellcasting_ability_choice`). `uses: {"count":1,"recharge":"long"}` = once free per rest |
-| `flag` | value | a named switch bespoke code reads (`potent_cantrip`, `relentless_endurance`) |
+| `spell` | value, ability, uses, always_prepared, at_level, at_class_level | grants a spell. `ability` is an ability id or `choice` (the player picks; species list it in `spellcasting_ability_choice`); from a class or subclass feature it defaults to that class's spellcasting ability and the spell uses that class's DC and attack. `uses: {"count":1,"recharge":"long"}` = once free per rest; `count` may be a formula (`"mod:wis"` with `"min": 1`), or `"count_column": "favored_enemy"` reads the class table |
+| `flag` | value | a named switch bespoke code reads (`potent_cantrip`, `relentless_endurance`, `jack_of_all_trades`, `martial_arts`, `circle_forms`, `evasion`) |
 | `extra_damage` | dice, type, on (`weapon`), vs, penalty | extra dice on weapon and Unarmed Strike hits (Crusader's Mantle, Enlarge +1d4; Reduce −1d4 with `penalty`) |
 | `damage_penalty_die` | dice | subtract a die from the creature's weapon damage (Ray of Enfeeblement) |
 | `attacked_penalty_die` | dice | attack rolls against the creature subtract the die (Blade Ward) |
@@ -73,11 +73,17 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 `armor`: `any` (wearing any armor), `none`, `light`, `medium`, `heavy`. `shield`: true/false.
 `weapon`: `melee`, `ranged`, `finesse`, `thrown`, `one_handed_alone` (one melee weapon, nothing in the other
 hand), `two_handed` (melee weapon held in two hands), `light`, `unarmed`. `spell`: true. `school`: a school.
-`bloodied`: true. `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). Several keys = all must hold.
+`bloodied`: true. `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). `spell_id`: one spell
+(Agonizing Blast: `"@cantrip"`, the pick of the feature's own choice). `damage_type`: the spell's damage type
+(Elemental Affinity: `"@element"`). `incapacitated`: false (Danger Sense; Advantage and Disadvantage sources see
+the armor worn and whether the creature is Incapacitated). `armor` also takes `not_heavy`. A `when` value starting
+with `@` names a pick of the same feature, like `value` does. Several keys = all must hold.
 
-### `at_level`
-Modifier starts at that character level (species spells at 3 and 5). For class features the level comes from
-where the feature sits in the class table, so don't repeat it.
+### `at_level`, `at_class_level`
+`at_level`: the modifier starts at that character level (species spells at 3 and 5). For class features the level
+comes from where the feature sits in the class table, so don't repeat it. `at_class_level`: the modifier starts
+at that level in the class that granted it, for one choice whose parts arrive later (Circle of the Land's spells
+at Druid 5, 7 and 9; Unarmored Movement's +5 ft steps at Monk 6, 10, 14 and 18).
 
 ## Resources and choices on a feature
 
@@ -90,8 +96,27 @@ a Long Rest), `turn`, `round`, `dawn`, `none`.
 
 Choice kinds pick the UI widget: skill, expertise, fighting_style, weapon_mastery, cantrip, spell, spellbook,
 feat, ability_increase, subclass, invocation, metamagic, maneuver, language, tool, option, damage_type, size,
-spellcasting_ability, lineage. `filter` narrows the pool: `{"category": "origin"}`, `{"list": "wizard",
-"level": 1}`, `{"proficient": true}`. A `kind: option` choice lists its options inline as features.
+spellcasting_ability, lineage, beast_form. `filter` narrows the pool: `{"category": "origin"}`, `{"list": "wizard",
+"level": 1}`, `{"proficient": true}`. A `kind: option` choice lists its options inline as features; so do
+`maneuver`, `metamagic` and `invocation`, and a `fighting_style` choice may add inline options beside the feats
+(Blessed Warrior, Druidic Warrior). `count_column` takes the count from the class table (Weapon Mastery,
+Invocations, Metamagic, Known Forms).
+
+More filters: spells `lists` (several class lists: Magical Discoveries), `ritual: true`, `known_only: true` (point
+at a spell the class already knows instead of learning one; with `damaging: true` only damaging ones: Agonizing
+Blast), `list` empty = any class's list (Pact of the Tome); tools `tool_kind` as one kind or a list (Monk:
+artisan or musical instrument); weapon masteries `melee: true` (Barbarian); beast forms `cr_column` and
+`fly_column` (the Druid table's Max CR and Fly Speed; the count is also capped by the Beasts in the bestiary).
+Invocation options carry `prerequisites`: `{"level": 5, "invocation": "pact_of_the_blade", "cantrip": "damage"
+| "attack"}`; ChoiceOptions blocks them with the reason.
+
+## Classes
+
+Beyond features, a class names `tool_choices` (a tool choice at level 1: Bard instruments) and, under
+`multiclass.proficiencies`, how many of those a multiclass level gives. Pact Magic is `spellcasting.progression:
+"pact"` with `pact_slots_column` and `pact_level_column`: its slots stay out of the multiclass caster level, all
+share one level, and come back on a Short Rest (`Character.pact_magic()`); `spell_slots()` reports both pools by
+level for casting code.
 
 ## Conditions
 

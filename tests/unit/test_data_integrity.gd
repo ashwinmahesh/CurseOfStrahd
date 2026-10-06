@@ -1,13 +1,15 @@
 extends TestCase
-## Phase 1 content is all there and every class and subclass can be built and levelled 1 to 5 through
-## CharacterBuilder and LevelUpController with no dead ends (plan §5.6 acceptance).
+## The rules content is all there and every class and subclass can be built and levelled 1 to 7 through
+## CharacterBuilder and LevelUpController with no dead ends (plan §5.6 acceptance). All twelve 2024 PHB classes
+## since Phase 4 (P4-01).
 
 
 func test_phase_1_content_counts() -> void:
 	var c := Compendium.shared()
-	assert_eq(c.table("classes").size(), 4)
-	assert_eq(c.table("subclasses").size(), 16)
-	for cls: String in ["fighter", "rogue", "cleric", "wizard"]:
+	assert_eq(c.table("classes").size(), 12)
+	assert_eq(c.table("subclasses").size(), 48)
+	for cls: String in ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue",
+			"sorcerer", "warlock", "wizard"]:
 		assert_eq(c.subclasses_of(cls).size(), 4, "%s has its four PHB subclasses" % cls)
 	assert_eq(c.table("species").size(), 10)
 	assert_eq(c.table("backgrounds").size(), 16)
@@ -20,7 +22,7 @@ func test_phase_1_content_counts() -> void:
 		assert_true(c.spells_for("wizard", level).size() >= 20, "wizard level %d spells" % level)
 
 
-func test_every_class_and_subclass_builds_and_levels_to_5() -> void:
+func test_every_class_and_subclass_builds_and_levels_to_7() -> void:
 	var c := Compendium.shared()
 	for sub in c.all("subclasses"):
 		var cls := str(sub["class"])
@@ -35,7 +37,7 @@ func test_every_class_and_subclass_builds_and_levels_to_5() -> void:
 		if ch == null:
 			fail("%s level 1: %s" % [sub["id"], b.errors()])
 			continue
-		for level in range(2, 6):
+		for level in range(2, 8):
 			var up := LevelUpController.new(ch)
 			up.choose_class(cls)
 			if level == 3:
@@ -44,7 +46,7 @@ func test_every_class_and_subclass_builds_and_levels_to_5() -> void:
 			if not up.confirm():
 				fail("%s level %d: %s" % [sub["id"], level, up.errors()])
 				break
-		assert_eq(ch.character_level(), 5, "%s reached level 5" % sub["id"])
+		assert_eq(ch.character_level(), 7, "%s reached level 7" % sub["id"])
 		assert_eq(str(ch.subclasses.get(cls, "")), str(sub["id"]))
 		assert_true(ch.max_hp() > 0)
 		for f in ch.features:

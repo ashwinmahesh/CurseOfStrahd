@@ -25,6 +25,13 @@ static func populate(c: Choice, ch: Character) -> void:
 			_languages(c, ch)
 		"feat", "fighting_style":
 			_feats(c, ch, comp)
+			# Blessed Warrior / Druidic Warrior: options offered beside the Fighting Style feats.
+			for o in c.inline_options:
+				c.options.append(ChoiceOption.make(str(o.get("id", "")), str(o.get("name", "")), str(o.get("summary", ""))))
+		"invocation":
+			_invocations(c, ch)
+		"beast_form":
+			_beast_forms(c, ch)
 		"weapon_mastery":
 			_masteries(c, ch, comp)
 		"cantrip", "spell", "spellbook":
@@ -34,7 +41,7 @@ static func populate(c: Choice, ch: Character) -> void:
 				c.options.append(ChoiceOption.make(str(s["id"]), str(s["name"]), str(s.get("summary", ""))))
 		"ability_increase":
 			_abilities(c, ch)
-		"option", "maneuver":
+		"option", "maneuver", "metamagic":
 			for o in c.inline_options:
 				c.options.append(ChoiceOption.make(str(o.get("id", "")), str(o.get("name", "")), str(o.get("summary", ""))))
 		"lineage":
@@ -130,11 +137,16 @@ static func _expertise(c: Choice, ch: Character) -> void:
 
 
 static func _tools(c: Choice, ch: Character, comp: Compendium) -> void:
-	var kind := str(c.filter.get("tool_kind", ""))
+	var kinds: Array = []
+	var raw: Variant = c.filter.get("tool_kind", "")
+	if raw is Array:
+		kinds = raw as Array
+	elif str(raw) != "":
+		kinds = [str(raw)]
 	var tools := ch.proficiencies["tools"] as Dictionary
 	for t in comp.items_where("tool"):
 		var tool := t.get("tool", {}) as Dictionary
-		if kind != "" and str(tool.get("kind", "")) != kind:
+		if not kinds.is_empty() and not str(tool.get("kind", "")) in kinds:
 			continue
 		if not c.from.is_empty() and not str(t["id"]) in c.from:
 			continue
@@ -228,10 +240,13 @@ static func prerequisite_problem(f: Dictionary, ch: Character, level: int) -> St
 static func _masteries(c: Choice, ch: Character, comp: Compendium) -> void:
 	var kinds := c.filter.get("weapon_kinds", []) as Array
 	var need_prof := bool(c.filter.get("proficient", false))
+	var melee_only := bool(c.filter.get("melee", false))
 	for w in comp.items_where("weapon"):
 		var wd := w.get("weapon", {}) as Dictionary
 		var kind := str(wd.get("kind", ""))
 		if not kinds.is_empty() and not kind.split("_")[0] in kinds:
+			continue
+		if melee_only and not kind.ends_with("melee"):
 			continue
 		var o := ChoiceOption.make(str(w["id"]), "%s (%s)" % [w["name"], str(wd.get("mastery", "")).capitalize()],
 			"%s %s, %s" % [wd.get("damage", ""), str(wd.get("damage_type", "")).capitalize(), kind.replace("_", " ")])
@@ -242,6 +257,12 @@ static func _masteries(c: Choice, ch: Character, comp: Compendium) -> void:
 
 static func _spells(c: Choice, ch: Character, comp: Compendium) -> void:
 	var list := str(c.filter.get("list", ""))
+	# Several lists at once (Magical Discoveries: Cleric, Druid or Wizard).
+	var lists: Array = c.filter.get("lists", []) as Array
+	# Pointing at a spell already known (Agonizing Blast) rather than learning one; optionally only damaging ones.
+	var known_only := bool(c.filter.get("known_only", false))
+	var damaging := bool(c.filter.get("damaging", false))
+	var ritual_only := bool(c.filter.get("ritual", false))
 	var exact: Variant = c.filter.get("level", null)
 	var min_level := int(c.filter.get("min_level", 0 if c.kind == "cantrip" else 1))
 	var max_level := 9
@@ -263,14 +284,30 @@ static func _spells(c: Choice, ch: Character, comp: Compendium) -> void:
 		for s: Variant in e.get("spellbook", []):
 			allowed_ids[str(s)] = true
 	var known := {}
+	var mine := {}
 	for s in ch.known_spells():
 		known[str(s["id"])] = str(s["source"])
+		if str(s.get("class_id", "")) == c.class_id:
+			mine[str(s["id"])] = true
 	var in_book := {}
 	if c.kind == "spellbook":
 		var e2 := ch.spellcasting_entry(c.class_id)
 		for s: Variant in e2.get("spellbook", []):
 			in_book[str(s)] = true
-	for s in comp.spells_for(list, -1):
+	for s in comp.spells_for("" if not lists.is_empty() else list, -1):
+		if not lists.is_empty():
+			var on_list := false
+			for l: Variant in lists:
+				if str(l) in (s.get("classes", []) as Array):
+					on_list = true
+			if not on_list:
+				continue
+		if known_only and not mine.has(str(s["id"])):
+			continue
+		if damaging and (s.get("damage", []) as Array).is_empty():
+			continue
+		if ritual_only and not bool(s.get("ritual", false)):
+			continue
 		var level := int(s.get("level", 0))
 		if exact != null and level != int(exact):
 			continue
@@ -290,7 +327,7 @@ static func _spells(c: Choice, ch: Character, comp: Compendium) -> void:
 			o.block("Needs level %d spell slots" % level)
 		elif c.kind == "spellbook" and in_book.has(str(s["id"])) and not str(s["id"]) in c.picks:
 			o.block("Already in your spellbook")
-		elif c.kind != "spellbook" and known.has(str(s["id"])) and not str(s["id"]) in c.picks:
+		elif c.kind != "spellbook" and not known_only and known.has(str(s["id"])) and not str(s["id"]) in c.picks:
 			o.warn("You already have this spell from %s; picking it here adds nothing new." % known[str(s["id"])])
 		c.options.append(o)
 
@@ -301,6 +338,8 @@ static func _castable_level(c: Choice, ch: Character) -> int:
 	var e := ch.spellcasting_entry(c.class_id)
 	if e.is_empty():
 		return 1
+	if str(e["progression"]) == "pact":
+		return maxi(1, int(e.get("pact_level", 1)))
 	var slots := Spellcasting.slots_for([{"progression": str(e["progression"]), "level": ch.class_level_of(c.class_id)}])
 	return maxi(1, Spellcasting.highest_slot_level(slots))
 
@@ -316,4 +355,66 @@ static func _abilities(c: Choice, ch: Character) -> void:
 		o.summary = "Currently %d" % score
 		if score >= c.max_score and not a in c.picks:
 			o.block("Already %d, the maximum" % c.max_score)
+		c.options.append(o)
+
+
+## Eldritch Invocations: each option may list prerequisites {level, invocation, cantrip: "damage"|"attack"}; the
+## level is the invoking class's level, an invocation counts if picked here or elsewhere.
+static func _invocations(c: Choice, ch: Character) -> void:
+	for o in c.inline_options:
+		var opt := ChoiceOption.make(str(o.get("id", "")), str(o.get("name", "")), str(o.get("summary", "")))
+		var why := invocation_problem(o, c, ch)
+		if why != "":
+			opt.block(why)
+		c.options.append(opt)
+
+
+static func invocation_problem(o: Dictionary, c: Choice, ch: Character) -> String:
+	var pre := o.get("prerequisites", {}) as Dictionary
+	if pre.is_empty():
+		return ""
+	var cls_name := ch.compendium.display_name("classes", c.class_id)
+	if ch.class_level_of(c.class_id) < int(pre.get("level", 0)):
+		return "Requires %s level %d" % [cls_name, int(pre["level"])]
+	if pre.has("invocation"):
+		var need := str(pre["invocation"])
+		if not need in c.picks and not need in ch.invocations:
+			var label := need.replace("_", " ").capitalize()
+			for other in c.inline_options:
+				if str(other.get("id", "")) == need:
+					label = str(other.get("name", label))
+			return "Requires %s" % label
+	if pre.has("cantrip"):
+		var want := str(pre["cantrip"])
+		var ok := false
+		for k in ch.known_spells():
+			if str(k.get("class_id", "")) != c.class_id:
+				continue
+			var s := ch.compendium.spell_data(str(k["id"]))
+			if int(s.get("level", -1)) != 0 or (s.get("damage", []) as Array).is_empty():
+				continue
+			if want == "attack" and not s.has("attack"):
+				continue
+			ok = true
+		if not ok:
+			return "Requires a %s cantrip that deals damage%s" % [cls_name, " with an attack roll" if want == "attack" else ""]
+	return ""
+
+
+## Wild Shape forms: Beast stat blocks up to the table's CR; the rest stay visible with the reason.
+static func _beast_forms(c: Choice, ch: Character) -> void:
+	var ok := {}
+	for m in ch.beast_forms_for(c):
+		ok[str(m["id"])] = true
+	for m in ch.compendium.all("monsters"):
+		if str(m.get("type", "")) != "beast":
+			continue
+		var cr := float(m.get("cr", 0))
+		var cr_text := "1/8" if is_equal_approx(cr, 0.125) else ("1/4" if is_equal_approx(cr, 0.25) else ("1/2" if is_equal_approx(cr, 0.5) else str(int(cr))))
+		var o := ChoiceOption.make(str(m["id"]), str(m["name"]), "Beast, CR %s" % cr_text)
+		if not ok.has(str(m["id"])):
+			if int((m.get("speed", {}) as Dictionary).get("fly", 0)) > 0:
+				o.block("No forms with a Fly Speed yet")
+			else:
+				o.block("Challenge Rating %s is too high for now" % cr_text)
 		c.options.append(o)

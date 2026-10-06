@@ -1,0 +1,613 @@
+{
+  "id": "paladin",
+  "name": "Paladin",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A holy warrior bound by an oath, healing with Lay On Hands, smiting with radiant power and shielding allies with an aura.",
+  "role_tags": [
+    "front line",
+    "healer",
+    "divine magic"
+  ],
+  "complexity": "average",
+  "hit_die": 10,
+  "primary_abilities": [
+    "str",
+    "cha"
+  ],
+  "saving_throws": [
+    "wis",
+    "cha"
+  ],
+  "skill_choices": {
+    "kind": "skill",
+    "count": 2,
+    "from": [
+      "athletics",
+      "insight",
+      "intimidation",
+      "medicine",
+      "persuasion",
+      "religion"
+    ]
+  },
+  "proficiencies": {
+    "armor": [
+      "light",
+      "medium",
+      "heavy",
+      "shields"
+    ],
+    "weapons": [
+      "simple",
+      "martial"
+    ],
+    "tools": []
+  },
+  "multiclass": {
+    "all_of": {
+      "str": 13,
+      "cha": 13
+    },
+    "proficiencies": {
+      "armor": [
+        "light",
+        "medium",
+        "shields"
+      ],
+      "weapons": [
+        "martial"
+      ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "chain_mail",
+          "qty": 1
+        },
+        {
+          "id": "shield",
+          "qty": 1
+        },
+        {
+          "id": "longsword",
+          "qty": 1
+        },
+        {
+          "id": "javelin",
+          "qty": 6
+        },
+        {
+          "id": "holy_symbol_amulet",
+          "qty": 1,
+          "choice": "holy_symbol"
+        },
+        {
+          "id": "priests_pack",
+          "qty": 1
+        }
+      ],
+      "gp": 9
+    },
+    {
+      "id": "b",
+      "gp": 150
+    }
+  ],
+  "spellcasting": {
+    "ability": "cha",
+    "progression": "half",
+    "list": "paladin",
+    "focus": "holy",
+    "prepared_column": "prepared",
+    "ritual": "prepared",
+    "swap_prepared": "long_rest"
+  },
+  "subclass_level": 3,
+  "subclass_feature_levels": [
+    3,
+    7,
+    15,
+    20
+  ],
+  "table": {
+    "channel_divinity": {
+      "name": "Channel Divinity",
+      "values": [
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    "prepared": {
+      "name": "Prepared Spells",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        6,
+        7,
+        7,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        12,
+        12,
+        14,
+        14,
+        15,
+        15
+      ]
+    },
+    "weapon_mastery": {
+      "name": "Weapon Mastery",
+      "values": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "lay_on_hands",
+      "name": "Lay On Hands",
+      "recharge": "long",
+      "max": "5*class_level"
+    },
+    {
+      "id": "paladin_channel_divinity",
+      "name": "Channel Divinity (Paladin)",
+      "recharge": "short_one",
+      "table": "channel_divinity",
+      "from_level": 3
+    }
+  ],
+  "recommended": {
+    "standard_array": {
+      "str": 15,
+      "dex": 10,
+      "con": 13,
+      "int": 8,
+      "wis": 12,
+      "cha": 14
+    },
+    "background": "noble",
+    "skills": [
+      "athletics",
+      "persuasion"
+    ],
+    "note": "Strength and Charisma first; heavy armor means Dexterity can wait."
+  },
+  "levels": [
+    {
+      "level": 1,
+      "features": [
+        {
+          "id": "lay_on_hands",
+          "name": "Lay On Hands",
+          "summary": "Bonus Action: restore Hit Points from a pool of five times your Paladin level, or spend 5 to end Poisoned.",
+          "text": "You have a pool of healing power holding five times your Paladin level in Hit Points; it refills when you finish a Long Rest. As a Bonus Action you touch a creature (you included) and restore any number of Hit Points from the pool. Instead of healing, you can spend 5 Hit Points' worth from the pool to remove the Poisoned condition from the creature.",
+          "action": "bonus_action",
+          "uses_resource": "lay_on_hands",
+          "implemented": "text"
+        },
+        {
+          "id": "spellcasting",
+          "name": "Spellcasting",
+          "summary": "Cast Paladin spells with Charisma; prepare two to start.",
+          "text": "You prepare level 1+ Paladin spells for which you have slots, as many as the Prepared Spells column shows (two at level 1). When you finish a Long Rest you can replace one prepared spell with another Paladin spell. Charisma is your spellcasting ability, and a Holy Symbol can be your focus. Your spell slots follow the half-caster progression.",
+          "implemented": "engine"
+        },
+        {
+          "id": "weapon_mastery",
+          "name": "Weapon Mastery",
+          "summary": "Use the mastery properties of two kinds of weapons you're proficient with.",
+          "text": "Choose two kinds of weapons you're proficient with, such as Longswords and Javelins; you can use their mastery properties. After a Long Rest you can change one of the choices.",
+          "choice": {
+            "kind": "weapon_mastery",
+            "count": 2,
+            "count_column": "weapon_mastery",
+            "filter": {
+              "proficient": true
+            },
+            "replaceable": "long_rest"
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "features": [
+        {
+          "id": "fighting_style",
+          "name": "Fighting Style",
+          "summary": "Gain a Fighting Style feat, or Blessed Warrior (two Cleric cantrips cast with Charisma).",
+          "text": "You gain a Fighting Style feat of your choice (Defense is a good pick); whenever you gain a Paladin level you can swap it for another. Instead of a feat you can take Blessed Warrior: you learn two Cleric cantrips (Guidance and Sacred Flame are suggested), which count as Paladin spells with Charisma as your spellcasting ability; whenever you gain a Paladin level you can replace one of them with another Cleric cantrip.",
+          "choice": {
+            "kind": "fighting_style",
+            "count": 1,
+            "replaceable": "level_up",
+            "options": [
+              {
+                "id": "blessed_warrior",
+                "name": "Blessed Warrior",
+                "summary": "Learn two Cleric cantrips; they count as Paladin spells cast with Charisma.",
+                "choice": {
+                  "id": "cantrips",
+                  "kind": "cantrip",
+                  "count": 2,
+                  "replaceable": "level_up",
+                  "filter": {
+                    "list": "cleric",
+                    "level": 0
+                  }
+                },
+                "implemented": "data"
+              }
+            ]
+          },
+          "implemented": "data"
+        },
+        {
+          "id": "paladins_smite",
+          "name": "Paladin's Smite",
+          "summary": "Divine Smite is always prepared, and you can cast it once per Long Rest without a slot.",
+          "text": "You always have the Divine Smite spell prepared. You can also cast it without expending a spell slot, but once you do, you must finish a Long Rest before doing so again.",
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "divine_smite",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              }
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "features": [
+        {
+          "id": "paladin_channel_divinity",
+          "name": "Channel Divinity",
+          "summary": "Two uses per rest of divine power: Divine Sense, plus the options your Oath grants.",
+          "text": "You can channel divine energy twice; one use comes back on a Short Rest and all of them on a Long Rest (a third use at Paladin level 11). Saves against these effects use your spell save DC. Divine Sense: as a Bonus Action, for 10 minutes you sense the location and kind of every Celestial, Fiend and Undead within 60 feet of you, and any place or object within 60 feet that has been consecrated or desecrated.",
+          "action": "bonus_action",
+          "uses_resource": "paladin_channel_divinity",
+          "implemented": "text"
+        },
+        {
+          "id": "paladin_subclass",
+          "name": "Paladin Subclass",
+          "summary": "Choose a Paladin subclass.",
+          "text": "You choose a Paladin subclass. From now on you gain each subclass feature when you reach its Paladin level.",
+          "choice": {
+            "kind": "subclass",
+            "count": 1
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "features": [
+        {
+          "id": "extra_attack",
+          "name": "Extra Attack",
+          "summary": "Attack twice when you take the Attack action.",
+          "text": "When you take the Attack action on your turn, you can attack twice instead of once.",
+          "modifiers": [
+            {
+              "stat": "attacks_per_action",
+              "value": 2
+            }
+          ],
+          "implemented": "data"
+        },
+        {
+          "id": "faithful_steed",
+          "name": "Faithful Steed",
+          "summary": "Find Steed is always prepared, and you can cast it once per Long Rest without a slot.",
+          "text": "You can call on an otherworldly mount. You always have the Find Steed spell prepared, and you can cast it once without expending a spell slot, regaining that ability when you finish a Long Rest.",
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "find_steed",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              }
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "features": [
+        {
+          "id": "aura_of_protection",
+          "name": "Aura of Protection",
+          "summary": "You and allies within 10 feet add your Charisma modifier (minimum +1) to saving throws.",
+          "text": "While you aren't Incapacitated, you and your allies within a 10-foot emanation from you add your Charisma modifier (minimum +1) to their saving throws. A creature benefits from only one Aura of Protection at a time. Your own bonus is on your sheet; allies' bonus needs positions in a fight.",
+          "modifiers": [
+            {
+              "stat": "save",
+              "ability": "all",
+              "value": "mod:cha",
+              "min": 1
+            }
+          ],
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Paladin subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 8,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "features": [
+        {
+          "id": "abjure_foes",
+          "name": "Abjure Foes",
+          "summary": "Channel Divinity: creatures of your choice within 60 feet make a Wisdom save or are Frightened and slowed for 1 minute.",
+          "action": "action",
+          "uses_resource": "paladin_channel_divinity",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 10,
+      "features": [
+        {
+          "id": "aura_of_courage",
+          "name": "Aura of Courage",
+          "summary": "You and allies in your aura are immune to Frightened.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "features": [
+        {
+          "id": "radiant_strikes",
+          "name": "Radiant Strikes",
+          "summary": "Melee weapon and Unarmed Strike hits deal an extra 1d8 Radiant damage.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 12,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "features": []
+    },
+    {
+      "level": 14,
+      "features": [
+        {
+          "id": "restoring_touch",
+          "name": "Restoring Touch",
+          "summary": "Lay On Hands can also end Blinded, Charmed, Deafened, Frightened, Paralyzed or Stunned, 5 points each.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Paladin subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 16,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "features": []
+    },
+    {
+      "level": 18,
+      "features": [
+        {
+          "id": "aura_expansion",
+          "name": "Aura Expansion",
+          "summary": "Your Aura of Protection reaches 30 feet.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 19,
+      "features": [
+        {
+          "id": "epic_boon",
+          "name": "Epic Boon",
+          "summary": "Gain an Epic Boon feat or another feat you qualify for.",
+          "text": "Take an Epic Boon feat or any other feat whose prerequisites you meet. Boon of Truesight is recommended.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "epic_boon",
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Paladin subclass.",
+          "implemented": "data"
+        }
+      ]
+    }
+  ]
+}

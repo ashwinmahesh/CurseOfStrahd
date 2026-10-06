@@ -1,0 +1,117 @@
+{
+  "id": "fey_wanderer",
+  "name": "Fey Wanderer",
+  "class": "ranger",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A ranger touched by the Feywild who strikes with psychic power and charms with otherworldly glamour.",
+  "role_tags": [
+    "face",
+    "control"
+  ],
+  "always_prepared": {
+    "3": [
+      "charm_person"
+    ],
+    "5": [
+      "misty_step"
+    ],
+    "9": [
+      "summon_fey"
+    ],
+    "13": [
+      "dimension_door"
+    ],
+    "17": [
+      "mislead"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "dreadful_strikes",
+        "name": "Dreadful Strikes",
+        "summary": "Once per turn per creature, a weapon hit deals an extra 1d4 Psychic damage (1d6 at level 11).",
+        "text": "You can augment your weapon strikes with mind-scarring magic from the Feywild. When you hit a creature with a weapon, you can deal an extra 1d4 Psychic damage to it; a creature can take this extra damage only once per turn. The die becomes a d6 at Ranger level 11.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "fey_wanderer_spells",
+        "name": "Fey Wanderer Spells",
+        "summary": "Charm Person always prepared; more at levels 5, 9, 13 and 17.",
+        "text": "When you reach a Ranger level shown, you always have these spells prepared; they don't count against your Prepared Spells: Charm Person (3); Misty Step (5); Summon Fey (9); Dimension Door (13); Mislead (17).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "otherworldly_glamour",
+        "name": "Otherworldly Glamour",
+        "summary": "Add your Wisdom modifier (minimum +1) to Charisma checks, and gain proficiency in Deception, Performance or Persuasion.",
+        "text": "Whenever you make a Charisma check, you gain a bonus equal to your Wisdom modifier (minimum +1). You also gain proficiency in one of these skills of your choice: Deception, Performance or Persuasion.",
+        "choice": {
+          "kind": "skill",
+          "count": 1,
+          "from": [
+            "deception",
+            "performance",
+            "persuasion"
+          ]
+        },
+        "modifiers": [
+          {
+            "stat": "check",
+            "ability": "cha",
+            "value": "mod:wis",
+            "min": 1
+          }
+        ],
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "beguiling_twist",
+        "name": "Beguiling Twist",
+        "summary": "Advantage on saves against Charmed and Frightened; when a creature near you succeeds on such a save, a Reaction can Charm or Frighten another.",
+        "text": "You have Advantage on saving throws to avoid or end the Charmed or Frightened condition. In addition, whenever you or a creature you can see within 120 feet of you succeeds on a saving throw to avoid or end the Charmed or Frightened condition, you can take a Reaction to force a different creature you can see within 120 feet to make a Wisdom saving throw against your spell save DC. On a failure it is Charmed or Frightened (your choice) for 1 minute, repeating the save at the end of each of its turns. The Advantage is applied; the Reaction waits for the combat engine.",
+        "modifiers": [
+          {
+            "stat": "advantage",
+            "on": [
+              "save_vs:charmed",
+              "save_vs:frightened"
+            ]
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "fey_reinforcements",
+        "name": "Fey Reinforcements",
+        "summary": "Summon Fey is always ready: cast it once per Long Rest without a slot or Material components, and you can choose a version without Concentration.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "misty_wanderer",
+        "name": "Misty Wanderer",
+        "summary": "Cast Misty Step without a slot Wisdom-modifier times per Long Rest, bringing a willing creature along.",
+        "implemented": "text"
+      }
+    }
+  ]
+}
