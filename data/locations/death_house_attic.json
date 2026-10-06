@@ -2,25 +2,25 @@
   "id": "death_house_attic",
   "name": "Death House, Attic",
   "region": "death_house",
-  "summary": "Low beams and dust: a spare bedroom with a warm alcove beside the chimney (the secret stair), a storage room with a broom that doesn't like being touched, and the locked children's room where Rose and Thorn's ghosts wait beside their dollhouse.",
+  "summary": "Low beams and dust: two spare bedrooms, a storage room where a trunk holds what's left of the nursemaid and a nook in the corner hides the stair down inside the walls, and the padlocked children's room where Rose and Thorn's ghosts wait beside their dollhouse.",
   "map": {
     "theme": "attic",
     "light": "dim",
     "rows": [
       "##########################",
-      "#......##=.......#########",
-      "#.==....#........#########",
+      "#......##=........########",
+      "#.==...##........#########",
       "#......##........#########",
       "#=.....##.......=#########",
       "####.#######.#############",
       "#........................#",
       "##.......................#",
       "##.......................#",
-      "##################.#######",
-      "#############............#",
-      "#############.=........=.#",
-      "#############............#",
-      "#############.=..........#",
+      "#####.############.#######",
+      "##.........##............#",
+      "##.=.......##.=........=.#",
+      "##.........##............#",
+      "##=........##.=..........#",
       "#############...=....=...#",
       "##########################"
     ]
@@ -63,11 +63,25 @@
           1
         ],
         [
-          16,
+          17,
           4
         ]
       ],
       "light": "dark"
+    },
+    {
+      "id": "dh_spare_bedroom_2",
+      "name": "Spare Bedroom",
+      "cells": [
+        [
+          2,
+          10
+        ],
+        [
+          10,
+          13
+        ]
+      ]
     },
     {
       "id": "dh_childrens_room",
@@ -94,7 +108,7 @@
       7
     ],
     "from_secret_stair": [
-      6,
+      16,
       2
     ]
   },
@@ -112,14 +126,14 @@
     {
       "id": "secret_stair_down",
       "cell": [
-        7,
-        2
+        17,
+        1
       ],
       "to": "death_house_dungeon_1",
       "spawn": "from_secret_stair",
       "label": "The secret stair",
       "when": "flag.death_house_secret_stair_found",
-      "locked_text": "A narrow alcove beside the chimney, with nothing at the back but bare plaster. Bare, and oddly warm."
+      "locked_text": "A narrow nook in the corner of the storage room, with nothing at the back but bare plaster. Bare, and oddly warm."
     }
   ],
   "doors": [
@@ -140,6 +154,14 @@
       "label": "the storage room door"
     },
     {
+      "id": "spare_bedroom_2_door",
+      "cell": [
+        5,
+        9
+      ],
+      "label": "the second spare bedroom door"
+    },
+    {
       "id": "childrens_room_door",
       "cell": [
         18,
@@ -147,7 +169,8 @@
       ],
       "label": "the children's door",
       "locked": true,
-      "lock_dc": 12
+      "lock_dc": 12,
+      "key": "durst_attic_key"
     }
   ],
   "props": [
@@ -162,10 +185,70 @@
       "model": "bed_small"
     },
     {
-      "id": "chimney_seam",
+      "id": "spare_stove",
       "cell": [
-        8,
-        2
+        3,
+        0
+      ],
+      "kind": "decor",
+      "label": "a small iron stove",
+      "model": "stove"
+    },
+    {
+      "id": "spare_desk",
+      "cell": [
+        6,
+        1
+      ],
+      "kind": "decor",
+      "label": "a writing desk and stool",
+      "model": "desk"
+    },
+    {
+      "id": "spare_rocking_chair",
+      "cell": [
+        5,
+        3
+      ],
+      "kind": "examine",
+      "label": "a rocking chair",
+      "model": "rocking_chair"
+    },
+    {
+      "id": "spare_doll",
+      "cell": [
+        1,
+        1
+      ],
+      "kind": "examine",
+      "label": "a doll in a yellow dress",
+      "model": "doll"
+    },
+    {
+      "id": "spare2_bed",
+      "cell": [
+        3,
+        11
+      ],
+      "kind": "decor",
+      "label": "a narrow bed",
+      "model": "bed_small"
+    },
+    {
+      "id": "spare2_stove",
+      "cell": [
+        9,
+        9
+      ],
+      "kind": "decor",
+      "label": "a small iron stove",
+      "model": "stove"
+    },
+    {
+      "id": "storage_panel",
+      "cell": [
+        18,
+        1
       ],
       "kind": "search",
       "search_dc": 14,
@@ -182,6 +265,27 @@
       "kind": "examine",
       "label": "covered furniture",
       "model": "sheeted_furniture"
+    },
+    {
+      "id": "storage_stove",
+      "cell": [
+        11,
+        0
+      ],
+      "kind": "examine",
+      "label": "an iron stove",
+      "model": "stove"
+    },
+    {
+      "id": "nursemaid_trunk",
+      "cell": [
+        14,
+        1
+      ],
+      "kind": "examine",
+      "label": "a big trunk under a sheet",
+      "model": "trunk",
+      "dialogue": "death_house/attic:nursemaid_trunk"
     },
     {
       "id": "toy_chest",
@@ -238,6 +342,21 @@
       "items": [
         {
           "id": "costume",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "spare2_wardrobe",
+      "cell": [
+        2,
+        13
+      ],
+      "label": "a wardrobe",
+      "model": "wardrobe",
+      "items": [
+        {
+          "id": "blanket",
           "qty": 1
         }
       ]
@@ -342,25 +461,6 @@
       "dialogue": "death_house/rose_thorn_ghosts:start",
       "when": "not flag.death_house_children_riding and not flag.death_house_children_at_rest",
       "facing": "north"
-    }
-  ],
-  "encounters": [
-    {
-      "id": "storage_broom",
-      "trigger": "enter_area:dh_storage_room",
-      "when": "not flag.death_house_broom_destroyed",
-      "flag": "death_house_broom_destroyed",
-      "monsters": [
-        {
-          "monster": "broom_of_animated_attack",
-          "cell": [
-            15,
-            2
-          ],
-          "name": "Broom"
-        }
-      ],
-      "text": "The broom in the corner has opinions about visitors."
     }
   ],
   "narration": {
