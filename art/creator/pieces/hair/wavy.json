@@ -22,7 +22,7 @@
    "cx": 31.04,
    "top": 1.94,
    "skull_w": 34.92,
-   "cut": 50.92
+   "cut": 48.49
   },
   "side": {
    "rect": [
@@ -34,7 +34,7 @@
    "cx": 33.95,
    "top": 2.42,
    "skull_w": 38.8,
-   "cut": 64.5
+   "cut": 62.07
   },
   "back34": {
    "rect": [
@@ -46,7 +46,7 @@
    "cx": 31.04,
    "top": 2.91,
    "skull_w": 36.86,
-   "cut": 66.92
+   "cut": 51.4
   },
   "back": {
    "rect": [
@@ -58,7 +58,7 @@
    "cx": 27.64,
    "top": 2.42,
    "skull_w": 31.52,
-   "cut": 64.5
+   "cut": 43.16
   }
  },
  "source": "art/generated/creator/hair_wavy.png"

@@ -22,7 +22,7 @@
    "cx": 12.61,
    "top": -23.76,
    "skull_w": 34.92,
-   "cut": 25.22
+   "cut": 22.79
   },
   "side": {
    "rect": [
@@ -34,7 +34,7 @@
    "cx": 2.91,
    "top": -22.79,
    "skull_w": 38.8,
-   "cut": 39.28
+   "cut": 36.86
   },
   "back34": {
    "rect": [
@@ -46,7 +46,7 @@
    "cx": -8.24,
    "top": -25.22,
    "skull_w": 36.86,
-   "cut": 38.8
+   "cut": 23.28
   },
   "back": {
    "rect": [
@@ -58,7 +58,7 @@
    "cx": 14.55,
    "top": -34.92,
    "skull_w": 31.52,
-   "cut": 27.16
+   "cut": 5.82
   }
  },
  "source": "art/generated/creator/beard_full.png"

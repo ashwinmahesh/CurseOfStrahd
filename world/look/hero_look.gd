@@ -46,18 +46,88 @@ static func option(category: String, id: String) -> Dictionary:
 	return {}
 
 
-## A fresh look for `gender`, with the outfit suiting `class_id` when one does.
+## A fresh look for `gender`, with the outfit suiting `class_id` when one does, settled onto art that exists.
 static func default_appearance(gender: String = "female", class_id: String = "") -> Dictionary:
 	var d := ((catalog()["defaults"] as Dictionary)[gender] as Dictionary).duplicate()
 	d["custom"] = true
 	d["gender"] = gender
 	if class_id != "":
 		for o: Variant in options("outfits"):
-			if class_id in ((o as Dictionary).get("suits", []) as Array):
+			if class_id in ((o as Dictionary).get("suits", []) as Array) and str((o as Dictionary)["id"]) in offered_ids(d, "outfits"):
 				d["outfit"] = str((o as Dictionary)["id"])
 				break
-	d["art"] = str(d["portrait"])
+	d = settle(d)
 	return d
+
+
+# --- What the creator can offer (owner, 2026-10-06: merge now, more art as it lands) ---------------------------------
+
+## The options of `category` the creator can offer with the look's other picks: those whose art exists. Bodies are
+## gender x build x outfit, heads gender x head; hair, beards and portraits by their own art; colours, heights and
+## voices always.
+static func offered(app: Dictionary, category: String) -> Array:
+	var out: Array = []
+	for o: Variant in options(category):
+		var id := str((o as Dictionary)["id"])
+		if _has_art(app, category, id):
+			out.append(o)
+	return out
+
+
+static func offered_ids(app: Dictionary, category: String) -> Array[String]:
+	var out: Array[String] = []
+	for o: Variant in offered(app, category):
+		out.append(str((o as Dictionary)["id"]))
+	return out
+
+
+static func _has_art(app: Dictionary, category: String, id: String) -> bool:
+	var g := str(app.get("gender", "female"))
+	match category:
+		"genders":
+			for b: Variant in options("builds"):
+				for o: Variant in options("outfits"):
+					if _body_ready("%s_%s_%s" % [id, (b as Dictionary)["id"], (o as Dictionary)["id"]]):
+						return true
+			return false
+		"builds":
+			for o: Variant in options("outfits"):
+				if _body_ready("%s_%s_%s" % [g, id, (o as Dictionary)["id"]]):
+					return true
+			return false
+		"outfits":
+			return _body_ready("%s_%s_%s" % [g, str(app.get("build", "average")), id])
+		"heads":
+			return FileAccess.file_exists(_piece_png("heads", "%s_%s" % [g, id], ""))
+		"hair", "beards":
+			return id == "none" or FileAccess.file_exists(_piece_png(category, id, ""))
+		"portraits":
+			return ResourceLoader.exists("res://art/portraits/%s.png" % id)
+	return true
+
+
+## A body is ready when it walks and attacks.
+static func _body_ready(id: String) -> bool:
+	if not FileAccess.file_exists(_piece_png("bodies", id, "walk")) or not FileAccess.file_exists(_piece_png("bodies", id, "attack")):
+		return false
+	return _piece_json("bodies", id).has("attack")
+
+
+## The look with every pick moved onto art that exists: a pick that's offered stays; otherwise the first offered
+## option (for hair, the first that isn't bald). Picks are settled in order, gender first, so later ones follow it.
+static func settle(app: Dictionary) -> Dictionary:
+	var out := app.duplicate()
+	for pair: Array in [["genders", "gender"], ["builds", "build"], ["outfits", "outfit"], ["heads", "head"],
+			["hair", "hair"], ["beards", "beard"], ["portraits", "portrait"]]:
+		var ids := offered_ids(out, str(pair[0]))
+		if ids.is_empty() or str(out.get(str(pair[1]), "")) in ids:
+			continue
+		var pick := ids[0]
+		if str(pair[0]) == "hair" and ids.size() > 1 and pick == "none":
+			pick = ids[1]
+		out[str(pair[1])] = pick
+	out["art"] = str(out.get("portrait", out.get("art", "")))
+	return out
 
 
 static func is_custom(ch: Character) -> bool:

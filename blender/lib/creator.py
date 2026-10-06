@@ -128,7 +128,9 @@ def skin_shadow(arr, skin, region):
 
 ## Where the neck is, as shares of a standing figure's height below the top of the skull (a figure is about 7.3
 ## heads tall): the narrowest row through the head's centre between these is the cut.
-NECK_ROWS = (0.11, 0.19)
+NECK_ROWS = (0.115, 0.19)
+## How far either side of the head's centre line the neck's width is measured, as a share of the figure's height.
+NECK_REACH = 0.09
 ## The skull is measured this share of the figure's height below its top (about a third of the way down the head).
 SKULL_ROW = 0.045
 
@@ -191,12 +193,28 @@ def head(arr, skin=None, fig_h=None, expect=None, top_frac=0.45):
     top_rows = ys < y0 + max(4, lo_off // 3)
     cx = int(np.median(xs[top_rows]))
     lo, hi = y0 + lo_off, min(y0 + hi_off, int(ys.max()))
+    # The neck ends where clothing crosses the head's centre line (a collar seen from behind): past it the run
+    # through the centre is a sliver of shoulder, not neck.
+    for y in range(lo, hi + 1):
+        if not blob[y, cx]:
+            hi = y - 1
+            break
     if hi <= lo:
         cut = int(ys.max()) + 1
     else:
-        widths = np.array([_run_width(blob[y], cx) for y in range(lo, hi + 1)], dtype=np.float32)
-        # The narrowest row, preferring the higher of equally narrow rows.
-        cut = lo + int(np.argmin(widths + np.arange(len(widths)) * 0.01))
+        # Width as the blob's pixels near the head's centre line (ink lines inside an ear would split a single run).
+        reach = max(4, int(NECK_REACH * fig_h))
+        x0, x1 = max(0, cx - reach), min(blob.shape[1], cx + reach + 1)
+        widths = [int(blob[y, x0:x1].sum()) for y in range(lo, hi + 1)]
+        # Walking down from the jaw: the narrowest row before the outline flares out into the shoulders (a quarter
+        # wider than the narrowest so far). Past the flare a low neckline can pinch the skin narrower again, and that
+        # isn't the neck.
+        cut, narrowest = lo, widths[0]
+        for i, w in enumerate(widths):
+            if w < narrowest:
+                cut, narrowest = lo + i, w
+            elif w > narrowest * 1.25 + 2:
+                break
     above = blob.copy()
     above[cut:] = False
     ys2, xs2 = np.nonzero(above)

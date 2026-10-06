@@ -63,6 +63,8 @@ func _pick(key: String, value: String) -> void:
 			appearance["voice"] = str((defaults[value] as Dictionary)["voice"])
 	if key == "portrait":
 		appearance["art"] = value
+	# A pick can leave another without art (a build that has no such outfit yet): move it onto art that exists.
+	appearance = HeroLook.settle(appearance)
 	changed.emit(appearance.duplicate())
 	_redraw()
 	if key in HeroLook.LOOK_KEYS or key == "height":
@@ -102,7 +104,7 @@ func _choice_row(box: VBoxContainer, title: String, category: String, key: Strin
 	box.add_child(UiParts.section(title))
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
-	for o: Variant in HeroLook.options(category):
+	for o: Variant in HeroLook.offered(appearance, category):
 		var id := str((o as Dictionary)["id"])
 		var b := UiKit.button(str((o as Dictionary)["label"]), func() -> void: _pick(key, id), 15)
 		b.custom_minimum_size = Vector2(110, 36)
@@ -117,7 +119,7 @@ func _swatches(box: VBoxContainer, title: String, category: String, key: String)
 	box.add_child(UiParts.section(title, UiKit.label(str(HeroLook.option(category, str(appearance.get(key, ""))).get("label", "")), 14, "gilt_light")))
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
-	for o: Variant in HeroLook.options(category):
+	for o: Variant in HeroLook.offered(appearance, category):
 		var id := str((o as Dictionary)["id"])
 		var shades := HeroLook.ramp(category, id)
 		var on := str(appearance.get(key, "")) == id
@@ -152,7 +154,7 @@ func _pictures(box: VBoxContainer, title: String, category: String, key: String,
 	grid.columns = columns
 	grid.add_theme_constant_override("h_separation", 6)
 	grid.add_theme_constant_override("v_separation", 6)
-	for o: Variant in HeroLook.options(category):
+	for o: Variant in HeroLook.offered(appearance, category):
 		var id := str((o as Dictionary)["id"])
 		var trial := appearance.duplicate()
 		trial[key] = id
@@ -176,7 +178,7 @@ func _pictures(box: VBoxContainer, title: String, category: String, key: String,
 func _outfits(box: VBoxContainer) -> void:
 	box.add_child(UiParts.section("Starting outfit"))
 	box.add_child(UiKit.label("What your hero wears into the mists, and the weapon they swing in the art. Your gear on the sheet is set by your class and background.", 13, "parchment", OPTIONS_W))
-	for o: Variant in HeroLook.options("outfits"):
+	for o: Variant in HeroLook.offered(appearance, "outfits"):
 		var od := o as Dictionary
 		var id := str(od["id"])
 		var on := str(appearance.get("outfit", "")) == id
@@ -203,7 +205,7 @@ func _portraits(box: VBoxContainer) -> void:
 	grid.columns = 5
 	grid.add_theme_constant_override("h_separation", 8)
 	grid.add_theme_constant_override("v_separation", 8)
-	for o: Variant in HeroLook.options("portraits"):
+	for o: Variant in HeroLook.offered(appearance, "portraits"):
 		var id := str((o as Dictionary)["id"])
 		var on := str(appearance.get("portrait", "")) == id
 		var b := Button.new()
