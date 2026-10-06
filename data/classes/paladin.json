@@ -106,7 +106,8 @@
     "focus": "holy",
     "prepared_column": "prepared",
     "ritual": "prepared",
-    "swap_prepared": "long_rest"
+    "swap_prepared": "long_rest",
+    "swap_prepared_max": 1
   },
   "subclass_level": 3,
   "subclass_feature_levels": [

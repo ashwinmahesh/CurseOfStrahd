@@ -3,7 +3,8 @@ extends VBoxContainer
 ## One character-building choice (plan §5.6 "a new subclass or feat needs data, never new UI code"): a box titled
 ## with its count ("Skills · choose 2 of 9 · 2 of 2 ✓") and its options as toggles. Options that can't be picked stay
 ## visible, greyed, with the engine's reason; weak ones show ~ and the warning. Picking more than the count replaces
-## the oldest pick. Works for every Choice.kind; ability increases allow the same ability twice.
+## the oldest pick. Works for every Choice.kind; ability increases allow the same ability twice. Inside a swap chance
+## (a Long Rest, a level up) a line says what may change, and picks that have to stay say why on hover.
 
 signal picks_changed(key: String, picks: Array)
 
@@ -27,6 +28,9 @@ func _build() -> void:
 	var status := UiParts.pill(_status_text().strip_edges(), "bile" if choice.is_complete() else "gilt", 13)
 	head.add_child(status)
 	add_child(head)
+	var note := ChoiceOptions.swap_note(choice)
+	if note != "":
+		add_child(UiKit.label(note, 14, "moonlight", 1100))
 	if choice.kind == "ability_increase":
 		_ability_rows()
 		return
@@ -41,6 +45,8 @@ func _build() -> void:
 		var foot := ""
 		if not o.legal:
 			foot = "Can't pick: " + o.reason
+		elif o.locked:
+			foot = "Stays: " + o.reason
 		elif o.warning != "":
 			foot = "~ " + o.warning
 		var label := o.label
@@ -82,14 +88,7 @@ func _status_text() -> String:
 
 
 func _toggle(id: String, on: bool) -> void:
-	var picks: Array = choice.picks.duplicate()
-	if on and not id in picks:
-		picks.append(id)
-		while picks.size() > choice.count:
-			picks.pop_front()
-	elif not on:
-		picks.erase(id)
-	picks_changed.emit(choice.key, picks)
+	picks_changed.emit(choice.key, ChoiceOptions.toggled(choice, id, on))
 
 
 ## Ability score increases: a button per ability adds +1 there (up to per_ability on one ability); when all are
