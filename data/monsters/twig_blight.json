@@ -1,0 +1,84 @@
+{
+  "id": "twig_blight",
+  "name": "Twig Blight",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual block (the one Curse of Strahd uses); the 2024 changes are not entered yet. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight."
+  },
+  "size": "small",
+  "type": "plant",
+  "alignment": "neutral evil",
+  "ac": 13,
+  "initiative": 1,
+  "hp": {
+    "average": 4,
+    "dice": "1d6+1"
+  },
+  "speed": {
+    "walk": 20
+  },
+  "abilities": {
+    "str": 6,
+    "dex": 13,
+    "con": 12,
+    "int": 4,
+    "wis": 8,
+    "cha": 3
+  },
+  "skills": {
+    "stealth": 3
+  },
+  "vulnerabilities": [
+    "fire"
+  ],
+  "condition_immunities": [
+    "blinded",
+    "deafened"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 9,
+  "languages": [
+    "Common (understands but can't speak)"
+  ],
+  "cr": 0.125,
+  "xp": 25,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "false_appearance",
+      "name": "False Appearance",
+      "action": "passive",
+      "summary": "Motionless, it looks just like a dead shrub.",
+      "text": "While the blight stays still, nothing tells it apart from a dead, dry shrub.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "claws",
+      "name": "Claws",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 3,
+          "dice": "1d4+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Scratches with twiggy claws."
+    }
+  ],
+  "regions": [
+    "svalich_road",
+    "yester_hill",
+    "wizard_of_wines"
+  ],
+  "ai_profile": "mindless",
+  "summary": "A knee-high bundle of dead twigs that passes for brush until it scuttles out to claw; fire burns it badly."
+}

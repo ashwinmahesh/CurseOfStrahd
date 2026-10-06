@@ -43,7 +43,8 @@ static func art_id(c: Combatant) -> String:
 ## Appearance step), or its name.
 static func art_for(cr: Creature) -> String:
 	if cr is Monster:
-		return str((cr as Monster).data.get("id", ""))
+		var data := (cr as Monster).data
+		return str(data.get("art", data.get("id", "")))
 	if cr is Character:
 		var look := str(((cr as Character).build.get("appearance", {}) as Dictionary).get("art", ""))
 		if look != "":

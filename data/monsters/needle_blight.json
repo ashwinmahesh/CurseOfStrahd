@@ -1,0 +1,88 @@
+{
+  "id": "needle_blight",
+  "name": "Needle Blight",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual block (the one Curse of Strahd uses); the 2024 changes are not entered yet. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight."
+  },
+  "size": "medium",
+  "type": "plant",
+  "alignment": "neutral evil",
+  "ac": 12,
+  "initiative": 1,
+  "hp": {
+    "average": 11,
+    "dice": "2d8+2"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 12,
+    "dex": 12,
+    "con": 13,
+    "int": 4,
+    "wis": 8,
+    "cha": 3
+  },
+  "condition_immunities": [
+    "blinded",
+    "deafened"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 9,
+  "languages": [
+    "Common (understands but can't speak)"
+  ],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "id": "claws",
+      "name": "Claws",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "2d4+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Rakes with needle-tipped claws."
+    },
+    {
+      "id": "needles",
+      "name": "Needles",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 3,
+        "range": [
+          30,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "2d6+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Sprays a volley of needles up to 60 ft."
+    }
+  ],
+  "regions": [
+    "svalich_road",
+    "yester_hill",
+    "wizard_of_wines"
+  ],
+  "ai_profile": "brute",
+  "summary": "A hunched figure of conifer needles that sprays needles from the trees and rakes anyone who closes in."
+}

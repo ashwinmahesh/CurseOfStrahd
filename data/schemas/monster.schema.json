@@ -666,6 +666,11 @@
     },
     "summary": {
       "type": "string"
+    },
+    "art": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "Sprite and portrait id when it isn't the block's own id (art/sprites/<art>/), e.g. a named NPC's block."
     }
   }
 }

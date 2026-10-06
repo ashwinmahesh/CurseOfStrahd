@@ -7,7 +7,7 @@
   "sprite": "rictavio",
   "attitude": "indifferent",
   "voice": "docs/voice/rictavio.md",
-  "monster": "scout",
+  "monster": "rictavio",
   "guest": true,
   "tags": [
     "traveler",
@@ -20,7 +20,7 @@
   "region": "vallaki",
   "pronouns": "he/him",
   "guest_build": {
-    "monster": "warrior_veteran",
-    "note": "Stand-in until Rudolph van Richten has his own stat block; joins only if the Tarokka names him."
+    "monster": "rictavio",
+    "note": "Rictavio's own stat block (Rudolph van Richten in disguise); joins only if the Tarokka names him."
   }
 }

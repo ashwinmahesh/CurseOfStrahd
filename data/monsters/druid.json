@@ -1,0 +1,123 @@
+{
+  "id": "druid",
+  "name": "Druid",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual druid (the one Curse of Strahd's Yester Hill uses); the 2024 Druid differs and isn't entered yet. Entered from knowledge, not yet checked against the book. For the engine Shillelagh is assumed cast, Produce Flame (the 2024 cantrip) runs as an attack, and spell slots are listed per spell."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small",
+    "druid"
+  ],
+  "alignment": "neutral",
+  "ac": 11,
+  "initiative": 1,
+  "hp": {
+    "average": 27,
+    "dice": "5d8+5"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 10,
+    "dex": 12,
+    "con": 13,
+    "int": 12,
+    "wis": 15,
+    "cha": 11
+  },
+  "skills": {
+    "medicine": 4,
+    "nature": 3,
+    "perception": 4
+  },
+  "passive_perception": 14,
+  "languages": [
+    "Druidic",
+    "two other languages"
+  ],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "gear": [
+    "quarterstaff"
+  ],
+  "actions": [
+    {
+      "id": "quarterstaff",
+      "name": "Quarterstaff",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d8+2",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Swings a quarterstaff charged with Shillelagh.",
+      "text": "Melee attack: +2 to hit (+4 with Shillelagh), reach 5 ft. Hit: 3 (1d6) Bludgeoning damage, 4 (1d8) with both hands, or 6 (1d8 + 2) with Shillelagh.",
+      "weapon": true
+    },
+    {
+      "id": "produce_flame",
+      "name": "Produce Flame",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "fire"
+        }
+      ],
+      "summary": "Hurls a flame from its palm up to 60 ft.",
+      "text": "Ranged spell attack: +4 to hit, range 60 ft., one target. Hit: 4 (1d8) Fire damage."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "A 4th-level druid (Wis, DC 12): Entangle, Thunderwave, Barkskin (AC 16) and nature magic.",
+      "text": "The druid casts spells as a 4th-level druid, using Wisdom (spell save DC 12, +4 to hit with spell attacks). Cantrips (at will): Druidcraft, Produce Flame, Shillelagh. 1st level (4 slots): Entangle, Longstrider, Speak with Animals, Thunderwave. 2nd level (3 slots): Animal Messenger, Barkskin (its AC becomes 16)."
+    }
+  ],
+  "spellcasting": {
+    "ability": "wis",
+    "dc": 12,
+    "attack": 4,
+    "at_will": [
+      "druidcraft",
+      "shillelagh"
+    ],
+    "per_day": {
+      "4": [
+        "entangle",
+        "longstrider",
+        "speak_with_animals",
+        "thunderwave"
+      ],
+      "3": [
+        "animal_messenger",
+        "barkskin"
+      ]
+    }
+  },
+  "regions": [
+    "svalich_road",
+    "yester_hill"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A wild-eyed druid of Yester Hill: hurls flame from range, then a Shillelagh staff, with roots and thunder to spare."
+}

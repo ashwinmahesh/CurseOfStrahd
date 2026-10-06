@@ -1,0 +1,98 @@
+{
+  "id": "vine_blight",
+  "name": "Vine Blight",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual block (the one Curse of Strahd uses); the 2024 changes are not entered yet. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight. Constrict's Restrained and Entangling Plants (an area) are text only for the engine; the grapple is real."
+  },
+  "size": "medium",
+  "type": "plant",
+  "alignment": "neutral evil",
+  "ac": 12,
+  "initiative": -1,
+  "hp": {
+    "average": 26,
+    "dice": "4d8+8"
+  },
+  "speed": {
+    "walk": 10
+  },
+  "abilities": {
+    "str": 15,
+    "dex": 8,
+    "con": 14,
+    "int": 5,
+    "wis": 10,
+    "cha": 3
+  },
+  "skills": {
+    "stealth": 1
+  },
+  "condition_immunities": [
+    "blinded",
+    "deafened"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "Common"
+  ],
+  "cr": 0.5,
+  "xp": 100,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "false_appearance",
+      "name": "False Appearance",
+      "action": "passive",
+      "summary": "Motionless, it looks just like a tangle of vines.",
+      "text": "While the blight stays still, nothing tells it apart from an ordinary snarl of vines.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "constrict",
+      "name": "Constrict",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "2d6+2",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Lashes out 10 ft and binds a Large or smaller target: Grappled (escape DC 12) and Restrained.",
+      "text": "Melee attack: +4 to hit, reach 10 ft. Hit: 9 (2d6 + 2) Bludgeoning damage, and a Large or smaller target has the Grappled condition (escape DC 12). Until the grapple ends the target also has the Restrained condition, and the blight can't constrict anyone else.",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 12,
+          "max_size": "large",
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "id": "entangling_plants",
+      "name": "Entangling Plants",
+      "kind": "special",
+      "recharge": "5-6",
+      "summary": "Recharge 5-6. Roots fill a 15 ft radius for a minute: difficult ground, DC 12 Str save or Restrained.",
+      "text": "Roots and creepers burst from the ground in a 15-foot radius around the blight and wither after 1 minute. Until then the area is Difficult Terrain for anything that isn't a plant, and each creature the blight chooses in it when the plants appear makes a DC 12 Strength saving throw or has the Restrained condition. A creature can take an action to make a DC 12 Strength check, freeing itself or another trapped creature within its reach on a success."
+    }
+  ],
+  "regions": [
+    "svalich_road",
+    "yester_hill",
+    "wizard_of_wines"
+  ],
+  "ai_profile": "brute",
+  "summary": "A slow heap of creepers that crushes a victim from 10 ft away and makes the ground itself grab at feet."
+}

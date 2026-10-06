@@ -13,7 +13,7 @@ func test_phase_1_content_counts() -> void:
 		assert_eq(c.subclasses_of(cls).size(), 4, "%s has its four PHB subclasses" % cls)
 	assert_eq(c.table("species").size(), 10)
 	assert_eq(c.table("backgrounds").size(), 16)
-	assert_eq(c.table("monsters").size(), 30)
+	assert_eq(c.table("monsters").size(), 45)
 	assert_eq(c.table("pregens").size(), 4)
 	assert_true(c.table("feats").size() >= 70)
 	assert_true(c.table("spells").size() >= 170)

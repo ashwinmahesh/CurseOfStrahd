@@ -574,7 +574,7 @@
       "text": "Izek comes off the cot in one movement, and the arm that isn't his starts to glow like a coal someone has blown on.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             3,
             11
@@ -613,7 +613,7 @@
       "text": "Izek comes off the cot in one movement, and the arm that isn't his starts to glow like a coal someone has blown on.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             3,
             11
@@ -644,7 +644,7 @@
       "text": "Izek comes off the cot in one movement, and the arm that isn't his starts to glow like a coal someone has blown on.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             3,
             11

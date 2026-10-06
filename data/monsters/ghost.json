@@ -1,0 +1,144 @@
+{
+  "id": "ghost",
+  "name": "Ghost",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Ghost. Entered from knowledge, not yet checked against the book. Whether Cold is a resistance or an immunity, and the touch's damage, need the book. Horrifying Visage (a cone) and Possession are text only for the engine."
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "neutral",
+  "ac": 11,
+  "initiative": 1,
+  "hp": {
+    "average": 45,
+    "dice": "10d8"
+  },
+  "speed": {
+    "walk": 5,
+    "fly": 40,
+    "hover": true
+  },
+  "abilities": {
+    "str": 7,
+    "dex": 13,
+    "con": 10,
+    "int": 10,
+    "wis": 12,
+    "cha": 17
+  },
+  "resistances": [
+    "acid",
+    "bludgeoning",
+    "cold",
+    "fire",
+    "lightning",
+    "piercing",
+    "slashing",
+    "thunder"
+  ],
+  "immunities": [
+    "necrotic",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 11,
+  "languages": [
+    "Common",
+    "one other language"
+  ],
+  "cr": 4,
+  "xp": 1100,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "ethereal_sight",
+      "name": "Ethereal Sight",
+      "action": "passive",
+      "summary": "Sees 60 ft into the Ethereal Plane from the Material Plane.",
+      "text": "While on the Material Plane, the ghost can see 60 feet into the Ethereal Plane.",
+      "implemented": "text"
+    },
+    {
+      "id": "incorporeal_movement",
+      "name": "Incorporeal Movement",
+      "action": "passive",
+      "summary": "Moves through creatures and objects as Difficult Terrain; 5 (1d10) Force if it ends a turn inside one.",
+      "text": "The ghost can pass through other creatures and through objects as if they were Difficult Terrain. It takes 5 (1d10) Force damage if it ends its turn inside an object.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "incorporeal_movement"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "withering_touch",
+      "name": "Withering Touch",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 19,
+          "dice": "3d10+3",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A cold touch that withers flesh."
+    },
+    {
+      "id": "etherealness",
+      "name": "Etherealness",
+      "kind": "spellcasting",
+      "summary": "Slips into the Ethereal Plane or back, seen across the border but untouchable from it.",
+      "text": "The ghost casts Etherealness with no spell components, using Charisma as its spellcasting ability. While on the Border Ethereal it can be seen from the Material Plane and the reverse, but it can't affect or be affected by anything on the plane it left."
+    },
+    {
+      "id": "horrifying_visage",
+      "name": "Horrifying Visage",
+      "kind": "special",
+      "summary": "60 ft cone: DC 13 Wis save or 10 (2d6+3) Psychic and Frightened briefly; success gives a day's immunity.",
+      "text": "Wisdom Saving Throw: DC 13, each creature in a 60-foot Cone that can see the ghost and isn't Undead. Failure: 10 (2d6 + 3) Psychic damage, and the target has the Frightened condition until the start of the ghost's next turn. Success: the target is immune to this ghost's Horrifying Visage for 24 hours."
+    },
+    {
+      "id": "possession",
+      "name": "Possession",
+      "kind": "special",
+      "recharge": "6",
+      "summary": "Recharge 6. DC 13 Cha save or a Humanoid within 5 ft is possessed and Incapacitated.",
+      "text": "Charisma Saving Throw: DC 13, one Humanoid the ghost can see within 5 feet. Failure: the ghost vanishes into the target's body. The target has the Incapacitated condition and loses control of its body to the ghost, though it stays aware. While inside, the ghost can be targeted only by effects that turn Undead; it keeps its alignment, Intelligence, Wisdom, Charisma and immunity to Charmed and Frightened, and otherwise uses the target's statistics without its knowledge, class features or proficiencies. The possession ends when the body drops to 0 Hit Points, when the ghost leaves as a Bonus Action, or when an effect such as Dispel Evil and Good forces it out; the ghost then appears within 5 feet of the body. The target is immune to this ghost's Possession for 24 hours after succeeding on the save or after the possession ends."
+    }
+  ],
+  "spellcasting": {
+    "ability": "cha",
+    "dc": 13,
+    "at_will": [
+      "etherealness"
+    ]
+  },
+  "regions": [
+    "svalich_road",
+    "argynvostholt"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A lost traveller's spirit: drifts through walls, withers with a touch, and can frighten or possess the living."
+}

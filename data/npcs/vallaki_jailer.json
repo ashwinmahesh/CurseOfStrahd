@@ -7,7 +7,7 @@
   "sprite": "vallaki_guard",
   "attitude": "indifferent",
   "voice": "docs/voice/vallaki_guard.md",
-  "monster": "bandit",
+  "monster": "vallaki_guard",
   "guest": false,
   "tags": [
     "barovian",

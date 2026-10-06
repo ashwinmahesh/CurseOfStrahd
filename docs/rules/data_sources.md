@@ -13,7 +13,7 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 | feats | 75 | 17 | 58 |
 | spells | 256 | 216 | 40 |
 | items | 186 | 183 | 3 |
-| monsters | 30 | 28 | 2 |
+| monsters | 45 | 28 | 17 |
 | conditions | 15 | 15 | 0 |
 
 ## Entries to check against the books
@@ -26,4 +26,6 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 - **spells** (PHB2024, 40): Arcane Vigor, Armor of Agathys, Arms of Hadar, Aura of Purity, Aura of Vitality, Beast Sense, Blade Ward, Blinding Smite, Cloud of Daggers, Compelled Duel, Conjure Barrage, Cordon of Arrows, Crown of Madness, Crusader's Mantle, Elemental Weapon, Etherealness, Feign Death, Fount of Moonlight, Friends, Grasping Vine, Hail of Thorns, Hunger of Hadar, Lightning Arrow, Mind Sliver, Phantasmal Killer, Plane Shift, Staggering Smite, Summon Aberration, Summon Beast, Summon Construct, Summon Elemental, Summon Fey, Summon Undead, Thorn Whip, Thunderclap, Thunderous Smite, Toll the Dead, Witch Bolt, Word of Radiance, Wrathful Smite
 - **items** (CoS, 2): Bones of St. Andral, Dream Pastry
 - **items** (PHB2024, 1): Spellbook
-- **monsters** (CoS, 2): Broom of Animated Attack, Strahd Zombie
+- **monsters** (custom, 1): Apprentice Wizard
+- **monsters** (MM2025, 9): Berserker, Druid, Ghost, Needle Blight, Revenant, Saber-Toothed Tiger, Town Guard, Twig Blight, Vine Blight
+- **monsters** (CoS, 7): Broom of Animated Attack, Izek Strazni, Kasimir Velikov, Mongrelfolk, Rictavio, Strahd Zombie, Wereraven

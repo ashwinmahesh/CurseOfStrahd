@@ -1,0 +1,118 @@
+{
+  "id": "apprentice_wizard",
+  "name": "Apprentice Wizard",
+  "source": {
+    "book": "custom",
+    "note": "The apprentice wizard of Volo's Guide to Monsters (2016) in the 2024 layout, for Victor Vallakovich; the 2024 books have no such block (their Mage Apprentice is CR 2). Entered from knowledge, not yet checked against the book. Fire Bolt runs as an attack; the two 1st-level slots are listed as one use a day of each spell."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "any alignment",
+  "ac": 10,
+  "initiative": 0,
+  "hp": {
+    "average": 9,
+    "dice": "2d8"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 10,
+    "dex": 10,
+    "con": 10,
+    "int": 14,
+    "wis": 10,
+    "cha": 11
+  },
+  "skills": {
+    "arcana": 4,
+    "history": 4
+  },
+  "passive_perception": 10,
+  "languages": [
+    "any one language (usually Common)"
+  ],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "gear": [
+    "dagger"
+  ],
+  "actions": [
+    {
+      "id": "dagger",
+      "name": "Dagger",
+      "kind": "melee_or_ranged",
+      "attack": {
+        "bonus": 2,
+        "reach": 5,
+        "range": [
+          20,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 2,
+          "dice": "1d4",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Stabs with a dagger, or throws it up to 60 ft.",
+      "text": "Melee or ranged attack: +2 to hit, reach 5 ft. or range 20/60 ft. Hit: 2 (1d4) Piercing damage.",
+      "weapon": true
+    },
+    {
+      "id": "fire_bolt",
+      "name": "Fire Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d10",
+          "type": "fire"
+        }
+      ],
+      "summary": "Casts Fire Bolt up to 120 ft; loose flammable objects catch alight.",
+      "text": "Ranged spell attack: +4 to hit, range 120 ft., one target. Hit: 5 (1d10) Fire damage. A flammable object that nobody is wearing or carrying catches fire."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "A 1st-level wizard (Int, DC 12): Mending, Prestidigitation; Burning Hands, Disguise Self or Shield.",
+      "text": "The apprentice casts spells as a 1st-level wizard, using Intelligence (spell save DC 12, +4 to hit with spell attacks). Cantrips (at will): Fire Bolt, Mending, Prestidigitation. 1st level (2 slots): Burning Hands, Disguise Self, Shield."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 12,
+    "attack": 4,
+    "at_will": [
+      "mending",
+      "prestidigitation"
+    ],
+    "per_day": {
+      "1": [
+        "burning_hands",
+        "disguise_self",
+        "shield"
+      ]
+    }
+  },
+  "regions": [
+    "vallaki"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "A novice wizard who throws Fire Bolts from the back and only draws a dagger when cornered."
+}

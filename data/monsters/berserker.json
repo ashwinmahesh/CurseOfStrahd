@@ -1,0 +1,78 @@
+{
+  "id": "berserker",
+  "name": "Berserker",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Berserker. Entered from knowledge, not yet checked against the book. Bloodied Frenzy is text only (the engine's Advantage modifiers can't ask whether the creature is Bloodied)."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "neutral",
+  "ac": 13,
+  "initiative": 1,
+  "hp": {
+    "average": 67,
+    "dice": "9d8+27"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 12,
+    "con": 17,
+    "int": 9,
+    "wis": 11,
+    "cha": 9
+  },
+  "passive_perception": 10,
+  "languages": [
+    "Common"
+  ],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "gear": [
+    "greataxe",
+    "hide_armor"
+  ],
+  "traits": [
+    {
+      "id": "bloodied_frenzy",
+      "name": "Bloodied Frenzy",
+      "action": "passive",
+      "summary": "While Bloodied it has Advantage on attack rolls and saving throws.",
+      "text": "Once the berserker is Bloodied, it has Advantage on its attack rolls and saving throws.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "greataxe",
+      "name": "Greataxe",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "1d12+3",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Cleaves with a greataxe.",
+      "weapon": true
+    }
+  ],
+  "regions": [
+    "svalich_road",
+    "vallaki"
+  ],
+  "ai_profile": "brute",
+  "summary": "A hunter or deserter gone wild: wades in with a greataxe and fights harder the more it bleeds."
+}

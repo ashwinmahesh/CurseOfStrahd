@@ -7,7 +7,7 @@
   "sprite": "victor_vallakovich",
   "attitude": "indifferent",
   "voice": "docs/voice/victor_vallakovich.md",
-  "monster": "noble",
+  "monster": "apprentice_wizard",
   "guest": true,
   "tags": [
     "barovian",
@@ -19,7 +19,7 @@
   "region": "vallaki",
   "pronouns": "he/him",
   "guest_build": {
-    "monster": "noble",
-    "note": "Stand-in until an apprentice wizard stat block exists; joins only if the Tarokka names him."
+    "monster": "apprentice_wizard",
+    "note": "The apprentice wizard stat block; joins only if the Tarokka names him."
   }
 }

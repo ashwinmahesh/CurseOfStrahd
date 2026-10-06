@@ -6,11 +6,11 @@
   "portrait": "kasimir_velikov",
   "sprite": "kasimir_velikov",
   "attitude": "indifferent",
-  "monster": "priest_acolyte",
+  "monster": "kasimir_velikov",
   "guest": true,
   "guest_build": {
-    "monster": "priest_acolyte",
-    "note": "Placeholder until Vallaki or a later phase writes him and gives him his own stat block (a dusk elf mage in the adventure)."
+    "monster": "kasimir_velikov",
+    "note": "His own stat block (a dusk elf wizard); joins only if the Tarokka names him."
   },
   "tags": [
     "elf",

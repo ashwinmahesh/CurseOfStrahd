@@ -1,0 +1,96 @@
+{
+  "id": "saber_toothed_tiger",
+  "name": "Saber-Toothed Tiger",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual block (the one Curse of Strahd uses); the 2024 changes are not entered yet. Entered from knowledge, not yet checked against the book. Its damage bonus is +5 as printed although Strength 18 gives +4. Pounce is text only (the engine doesn't track a straight-line charge)."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 52,
+    "dice": "7d10+14"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 14,
+    "con": 15,
+    "int": 3,
+    "wis": 12,
+    "cha": 8
+  },
+  "skills": {
+    "perception": 3,
+    "stealth": 6
+  },
+  "passive_perception": 13,
+  "languages": [],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "keen_smell",
+      "name": "Keen Smell",
+      "action": "passive",
+      "summary": "Advantage on Wisdom (Perception) checks that rely on smell.",
+      "text": "The tiger has Advantage on Wisdom (Perception) checks that use its sense of smell.",
+      "implemented": "text"
+    },
+    {
+      "id": "pounce",
+      "name": "Pounce",
+      "action": "passive",
+      "summary": "After a 20 ft straight run, a Claw hit forces a DC 14 Str save or Prone, then a Bite as a Bonus Action.",
+      "text": "If the tiger moves at least 20 feet straight toward a creature and then hits it with a Claw attack on the same turn, the target makes a DC 14 Strength saving throw or has the Prone condition. Against a Prone target, the tiger can make one Bite attack as a Bonus Action.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "1d10+5",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Drives its long fangs into a target."
+    },
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "2d6+5",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Rakes a target with heavy claws."
+    }
+  ],
+  "regions": [
+    "vallaki"
+  ],
+  "ai_profile": "brute",
+  "summary": "A huge striped cat with dagger fangs: charges in, knocks prey down with its claws and bites the fallen."
+}

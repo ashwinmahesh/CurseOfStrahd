@@ -7,7 +7,7 @@
   "sprite": "izek",
   "attitude": "indifferent",
   "voice": "docs/voice/izek.md",
-  "monster": "warrior_veteran",
+  "monster": "izek_strazni",
   "guest": false,
   "tags": [
     "barovian",

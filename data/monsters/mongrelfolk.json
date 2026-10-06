@@ -1,0 +1,145 @@
+{
+  "id": "mongrelfolk",
+  "name": "Mongrelfolk",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Its Deception bonus looks high for Charisma 6. The extraordinary feature is text only: pick or roll one per creature."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "alignment": "any alignment",
+  "ac": 11,
+  "initiative": -1,
+  "hp": {
+    "average": 26,
+    "dice": "4d8+8"
+  },
+  "speed": {
+    "walk": 20
+  },
+  "abilities": {
+    "str": 12,
+    "dex": 9,
+    "con": 15,
+    "int": 9,
+    "wis": 10,
+    "cha": 6
+  },
+  "skills": {
+    "deception": 2,
+    "perception": 2,
+    "stealth": 1
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common"
+  ],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "gear": [
+    "dagger"
+  ],
+  "traits": [
+    {
+      "id": "extraordinary_feature",
+      "name": "Extraordinary Feature",
+      "action": "passive",
+      "summary": "Each one has a random gift: gills, darkvision, wings, keen senses, spider climb, a long leap or two heads.",
+      "text": "Each mongrelfolk has one of these features, rolled on a d20 or picked: 1-3 Amphibious (it breathes air and water); 4-9 Darkvision 60 ft.; 10 Flight (wings and a 40 ft. fly speed); 11-15 Keen Hearing and Smell (Advantage on Wisdom (Perception) checks using either sense); 16-17 Spider Climb (climbs sheer surfaces and ceilings without checks); 18-19 Standing Leap (jumps 20 feet long and 10 feet high, with or without a run); 20 Two-Headed (Advantage on Wisdom (Perception) checks and on saves against being Blinded, Charmed, Deafened, Frightened, Stunned or knocked Unconscious).",
+      "implemented": "text"
+    },
+    {
+      "id": "mimicry",
+      "name": "Mimicry",
+      "action": "passive",
+      "summary": "Imitates any sound it has heard, voices too; a DC 12 Wisdom (Insight) check spots the fake.",
+      "text": "The mongrelfolk can imitate any sound it has heard, voices included. A listener who succeeds on a DC 12 Wisdom (Insight) check knows it is an imitation.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bite",
+          "count": 1
+        },
+        {
+          "action": "claw",
+          "count": 1,
+          "or": [
+            "dagger"
+          ]
+        }
+      ],
+      "summary": "A Bite, and a Claw or Dagger attack."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 3,
+          "dice": "1d4+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bites with mismatched teeth."
+    },
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 3,
+          "dice": "1d4+1",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Scratches with an animal's claw."
+    },
+    {
+      "id": "dagger",
+      "name": "Dagger",
+      "kind": "melee_or_ranged",
+      "attack": {
+        "bonus": 3,
+        "reach": 5,
+        "range": [
+          20,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 3,
+          "dice": "1d4+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Stabs with a dagger, or throws it up to 60 ft.",
+      "text": "Melee or ranged attack: +3 to hit, reach 5 ft. or range 20/60 ft. Hit: 3 (1d4 + 1) Piercing damage.",
+      "weapon": true
+    }
+  ],
+  "regions": [
+    "abbey_of_st_markovia",
+    "svalich_road"
+  ],
+  "ai_profile": "brute",
+  "summary": "A patchwork of beast and human from the abbey's breeding: bites, claws and a stolen dagger, and a voice that mimics."
+}

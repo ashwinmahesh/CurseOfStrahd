@@ -1,0 +1,120 @@
+{
+  "id": "izek_strazni",
+  "name": "Izek Strazni",
+  "art": "izek",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. For the engine, Hurl Flame may replace one of the two axe blows (in the book it is its own action; either way he throws one bolt a turn when no foe is in reach), and the Battleaxe always deals its one-handed damage."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "alignment": "neutral evil",
+  "ac": 14,
+  "initiative": 2,
+  "hp": {
+    "average": 112,
+    "dice": "15d8+45"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 15,
+    "con": 16,
+    "int": 10,
+    "wis": 9,
+    "cha": 15
+  },
+  "skills": {
+    "intimidation": 8,
+    "perception": 2
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common"
+  ],
+  "cr": 5,
+  "xp": 1800,
+  "proficiency_bonus": 3,
+  "gear": [
+    "battleaxe",
+    "studded_leather_armor"
+  ],
+  "traits": [
+    {
+      "id": "brute",
+      "name": "Brute",
+      "action": "passive",
+      "summary": "His melee weapon hits roll one extra damage die; the Battleaxe numbers already include it.",
+      "text": "When Izek hits with a melee weapon, the attack deals one more of the weapon's damage dice. The Battleaxe damage below already counts that die.",
+      "implemented": "data"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "battleaxe",
+          "count": 1,
+          "or": [
+            "hurl_flame"
+          ]
+        },
+        {
+          "action": "battleaxe",
+          "count": 1
+        }
+      ],
+      "summary": "Two Battleaxe blows a turn; fire from his fiendish arm can take the place of one.",
+      "text": "Izek makes two Battleaxe attacks. He can use Hurl Flame in place of one of them."
+    },
+    {
+      "id": "battleaxe",
+      "name": "Battleaxe",
+      "kind": "melee",
+      "attack": {
+        "bonus": 7,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "2d8+4",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Hacks with a heavy battleaxe; harder still when he swings it two-handed.",
+      "text": "Melee attack: +7 to hit, reach 5 ft. Hit: 13 (2d8 + 4) Slashing damage, or 15 (2d10 + 4) Slashing damage when he swings it with both hands.",
+      "weapon": true
+    },
+    {
+      "id": "hurl_flame",
+      "name": "Hurl Flame",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 5,
+        "range": [
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Flings fire from his scaled arm up to 60 ft; loose flammable objects catch alight.",
+      "text": "Ranged attack: +5 to hit, range 60 ft., one target. Hit: 10 (3d6) Fire damage. A flammable object that nobody is wearing or carrying bursts into flame."
+    }
+  ],
+  "regions": [
+    "vallaki"
+  ],
+  "ai_profile": "brute",
+  "summary": "The Baron's enforcer: two brutal axe blows up close, and fire hurled from his fiendish arm at anyone who keeps away."
+}

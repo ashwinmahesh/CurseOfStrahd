@@ -1367,7 +1367,7 @@
       "text": "Izek vaults off the dais with his strange arm already smoking. The Baron's watch closes ranks behind him.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12
@@ -1384,7 +1384,7 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             19,
             19
@@ -1392,7 +1392,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             29,
             19
@@ -1400,7 +1400,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1408,7 +1408,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             33,
             13
@@ -1438,7 +1438,7 @@
       "text": "Izek vaults off the dais with his strange arm already smoking. The Baron's watch closes ranks behind him.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12
@@ -1455,7 +1455,7 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             19,
             19
@@ -1463,7 +1463,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             29,
             19
@@ -1471,7 +1471,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1479,7 +1479,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             33,
             13
@@ -1525,7 +1525,7 @@
           "name": "Captain of the watch"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             19,
             19
@@ -1533,7 +1533,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             29,
             19
@@ -1571,7 +1571,7 @@
           "name": "Captain of the watch"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             19,
             19
@@ -1579,7 +1579,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             29,
             19
@@ -1587,7 +1587,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1595,7 +1595,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             33,
             13
@@ -1617,7 +1617,7 @@
       "text": "The Baron's watch closes ranks around the dais, spears levelled at the crowd, and at you.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12
@@ -1626,7 +1626,7 @@
           "hp": 60
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             19,
             19
@@ -1634,7 +1634,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             29,
             19
@@ -1642,7 +1642,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1673,7 +1673,7 @@
           "hp": 40
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             19,
             19
@@ -1681,7 +1681,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             29,
             19
@@ -1689,7 +1689,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1711,7 +1711,7 @@
       "text": "Izek's arm bursts into flame to the elbow. Most of the watch backs away from the priest; the ones who don't come with Izek.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12
@@ -1736,7 +1736,7 @@
           "name": "Captain of the watch"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1744,7 +1744,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             33,
             13
@@ -1762,7 +1762,7 @@
       "text": "Izek's arm bursts into flame to the elbow. Most of the watch backs away from the priest; the ones who don't come with Izek.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12
@@ -1779,7 +1779,7 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1787,7 +1787,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             33,
             13
@@ -1829,7 +1829,7 @@
           "name": "Captain of the watch"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1837,7 +1837,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             33,
             13
@@ -1881,7 +1881,7 @@
       "text": "Izek's arm bursts into flame to the elbow. Most of the watch backs away from the priest; the ones who don't come with Izek.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12
@@ -1890,7 +1890,7 @@
           "hp": 60
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1898,7 +1898,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             33,
             13
@@ -1925,7 +1925,7 @@
           "hp": 40
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             16,
             13
@@ -1933,7 +1933,7 @@
           "name": "Town guard"
         },
         {
-          "monster": "bandit",
+          "monster": "vallaki_guard",
           "cell": [
             33,
             13
@@ -1951,7 +1951,7 @@
       "text": "Izek steps down off the dais, flexing the arm that isn't his. A few of the watch step down with him.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12
@@ -1990,7 +1990,7 @@
       "text": "Izek steps down off the dais, flexing the arm that isn't his. A few of the watch step down with him.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12
@@ -2021,7 +2021,7 @@
       "text": "Izek steps down off the dais, flexing the arm that isn't his. A few of the watch step down with him.",
       "monsters": [
         {
-          "monster": "warrior_veteran",
+          "monster": "izek_strazni",
           "cell": [
             22,
             12

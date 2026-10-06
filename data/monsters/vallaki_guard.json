@@ -1,0 +1,76 @@
+{
+  "id": "vallaki_guard",
+  "name": "Town Guard",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Guard, kept under the Vallaki watch's id so the watch's fights use its sprite; any town's guards can use it. Entered from knowledge, not yet checked against the book. The engine has it stab with the spear, never throw it."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "neutral",
+  "ac": 16,
+  "initiative": 1,
+  "hp": {
+    "average": 11,
+    "dice": "2d8+2"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 13,
+    "dex": 12,
+    "con": 12,
+    "int": 10,
+    "wis": 11,
+    "cha": 10
+  },
+  "skills": {
+    "perception": 2
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common"
+  ],
+  "cr": 0.125,
+  "xp": 25,
+  "proficiency_bonus": 2,
+  "gear": [
+    "chain_shirt",
+    "shield",
+    "spear"
+  ],
+  "actions": [
+    {
+      "id": "spear",
+      "name": "Spear",
+      "kind": "melee_or_ranged",
+      "attack": {
+        "bonus": 3,
+        "reach": 5,
+        "range": [
+          20,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 4,
+          "dice": "1d6+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Jabs with a spear, or throws it up to 60 ft.",
+      "text": "Melee or ranged attack: +3 to hit, reach 5 ft. or range 20/60 ft. Hit: 4 (1d6 + 1) Piercing damage.",
+      "weapon": true
+    }
+  ],
+  "regions": [
+    "vallaki"
+  ],
+  "ai_profile": "brute",
+  "summary": "A watchman behind a shield and a chain shirt: hard to hit, but one or two solid blows put him down."
+}
