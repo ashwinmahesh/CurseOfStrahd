@@ -3,7 +3,8 @@ extends RefCounted
 ## Evaluates dialogue and location conditions (docs/contracts/dialogue.md): `flag.x`, `flag.x >= 2`, `class:cleric`,
 ## `species:elf`, `background:acolyte`, `tag:pious`, `name:ilse_varga`, `item:holy_symbol_amulet`,
 ## `quest.q == stage`, `quest.q >= stage` (by stage order), `attitude.npc == friendly`, `visited:loc`, `night`,
-## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
+## `gold >= 25` (the party's purse), `level >= 3` (the lowest character level in the party), `check.last`, `true`,
+## `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
 var st: StoryState
 var _tokens: Array[String] = []
@@ -119,6 +120,13 @@ func _term() -> bool:
 		return st.is_night()
 	if t == "check.last":
 		return st.last_check
+	if t == "gold":
+		return _compare(st.gold, op if op != "" else ">", _literal(rhs) if op != "" else 0)
+	if t == "level":
+		var lowest := 20
+		for ch in st.party:
+			lowest = mini(lowest, ch.character_level())
+		return _compare(lowest, op if op != "" else ">", _literal(rhs) if op != "" else 0)
 	if t.begins_with("flag."):
 		var value: Variant = st.get_flag(t.substr(5), false)
 		if op == "":

@@ -179,3 +179,30 @@ func test_round_start_save_resumes_the_fight() -> void:
 	assert_eq(e.order.size(), 5)
 	SaveSystem.delete_slot("round_start")
 
+
+
+func test_npc_speaks_on_approach_and_leaves_when_the_story_moves_on() -> void:
+	var v := _view()
+	var spec := (v.loc["npcs"] as Array)[0] as Dictionary
+	spec["approach"] = 2
+	spec["when"] = "not flag.test_spoke"
+	(GameState.story.loc_state("test_hall")["traps"] as Dictionary)["pit"] = "found"
+	v.refresh_npcs()
+	await _frames(1)
+	assert_eq(v.thing_at(Vector2i(4, 2))["kind"], "npc")
+	v.walk_to(Vector2i(2, 2))
+	for i in 200:
+		if root.get("dialogue") != null:
+			break
+		await get_tree().process_frame
+	var d := root.get("dialogue") as DialogueUI
+	assert_true(d != null, "Ismark spoke first")
+	for i in 5:
+		if root.get("dialogue") == null:
+			break
+		d.call("_advance")
+		await _frames(1)
+	assert_true(bool(GameState.story.get_flag("test_spoke")))
+	await _frames(2)
+	assert_true(v.thing_at(Vector2i(4, 2)).is_empty(), "his condition no longer holds")
+	assert_false(v.grid.has_flag(Vector2i(4, 2), CombatGrid.LOW), "his square is free again")

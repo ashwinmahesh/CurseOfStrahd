@@ -152,6 +152,10 @@ func _show_options(options: Array) -> void:
 		b.add_theme_color_override("font_color", Look.color("flame") if label != "" else Look.color("vellum"))
 		b.add_theme_color_override("font_hover_color", Look.color("wick"))
 		var idx := i
+		if not bool(opt.get("enabled", true)):
+			b.disabled = true
+			b.tooltip_text = str(opt.get("reason", ""))
+			b.add_theme_color_override("font_disabled_color", Look.color("ash_violet"))
 		b.pressed.connect(func() -> void: _choose(idx))
 		_options.add_child(b)
 		_option_buttons.append(b)

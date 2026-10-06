@@ -421,6 +421,12 @@
           },
           "facing": {
             "type": "string"
+          },
+          "approach": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Squares: the NPC starts its dialogue once when the leader comes this close and can see them."
           }
         }
       }
@@ -471,6 +477,11 @@
                     "enemy",
                     "neutral"
                   ]
+                },
+                "hp": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Overrides the stat block's Hit Points for this fight."
                 }
               }
             }
@@ -488,6 +499,23 @@
           },
           "text": {
             "type": "string"
+          },
+          "quest": {
+            "type": "object",
+            "required": [
+              "id",
+              "stage"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "stage": {
+                "$ref": "common.schema.json#/$defs/id"
+              }
+            },
+            "description": "Quest stage reached on victory."
           }
         }
       }

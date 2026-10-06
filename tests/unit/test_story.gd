@@ -242,3 +242,41 @@ func test_effects_and_concentration_survive_a_save() -> void:
 	h2.concentration.end("test")
 	assert_eq(s2.modifiers_for(&"bonus_die").size(), 0, "ending it removes Bless everywhere")
 
+
+
+func test_purchases_need_the_gold_and_level_and_gold_conditions() -> void:
+	var f := DialogueFile.parse("""
+~ shop
+Bildrath: Buy.
+* Rope (10 gp) -> rope
+* Potion (500 gp) -> potion
+* [if gold >= 5 and level >= 1] Leave a tip. -> END
+
+~ rope
+gold -10
+give rope 1
+-> END
+
+~ potion
+gold -500
+-> END
+""", "test/shop")
+	assert_true(f.errors.is_empty(), str(f.errors))
+	DialogueFile.register(f)
+	var st := _party()
+	st.gold = 20.0
+	var r := DialogueRunner.new(st, DiceRoller.new(1))
+	r.start("test/shop:shop")
+	var b := r.next()
+	while str(b["kind"]) != "options":
+		b = r.next()
+	var opts := b["options"] as Array
+	assert_eq(opts.size(), 3)
+	assert_true(bool(opts[0]["enabled"]))
+	assert_false(bool(opts[1]["enabled"]), "500 gp is out of reach")
+	assert_eq(str(r.choose(1)["kind"]), "options", "choosing it does nothing")
+	assert_eq(st.gold, 20.0)
+	r.choose(0)
+	assert_eq(st.gold, 10.0)
+	assert_false(StoryConditions.check("level >= 2", st))
+	assert_true(StoryConditions.check("gold > 5 and level == 1", st))

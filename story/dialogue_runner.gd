@@ -175,6 +175,8 @@ func choose(i: int) -> Dictionary:
 	if i < 0 or i >= _options.size():
 		return next()
 	var opt := _options[i]
+	if not bool(opt["enabled"]):
+		return _options_beat()
 	_options.clear()
 	var who := opt["who"] as Character
 	if who != null:
@@ -215,8 +217,14 @@ func _collect_options() -> void:
 			for tag: String in s["tags"]:
 				tags += "[%s] " % tag
 			var label := "%s%s" % ["[%s DC %d] " % [str(check["skill"]).replace("_", " ").capitalize(), int(check["dc"])] if not check.is_empty() else "", tags]
+			# A purchase: an option whose node starts by paying is greyed out when the purse can't cover it.
+			var price := _price_of(str(s["ok"]))
+			var enabled := price <= 0.0 or st.gold >= price
+			if not enabled:
+				label = (label + " [%d gp]" % roundi(price)).strip_edges()
 			_options.append({"text": str(s["text"]), "label": label.strip_edges(), "ok": str(s["ok"]), "fail": str(s["fail"]),
-				"check": check, "check_info": info, "who": who, "enabled": true})
+				"check": check, "check_info": info, "who": who, "enabled": enabled,
+				"reason": "" if enabled else "Not enough gold"})
 		elif t in ["if", "elif", "else", "endif"]:
 			if t == "if":
 				if StoryConditions.check(str(s["cond"]), st):
@@ -231,10 +239,27 @@ func _collect_options() -> void:
 			break
 
 
+## What going to `ref` costs: the gold paid by its first statements (before any line or option), or 0.
+func _price_of(ref: String) -> float:
+	if ref == "END" or ref.contains(":"):
+		return 0.0
+	var list := file.nodes.get(ref, []) as Array
+	for st_: Variant in list:
+		var d := st_ as Dictionary
+		match str(d["t"]):
+			"gold":
+				return maxf(0.0, -float(d["amount"]))
+			"set", "give", "take", "quest", "attitude":
+				continue
+		break
+	return 0.0
+
+
 func _options_beat() -> Dictionary:
 	var out: Array[Dictionary] = []
 	for o in _options:
 		out.append({"text": o["text"], "label": o["label"], "check": o["check_info"], "enabled": o["enabled"],
+			"reason": o["reason"],
 			"who": (o["who"] as Character).name if o["who"] != null else ""})
 	return {"kind": "options", "options": out}
 

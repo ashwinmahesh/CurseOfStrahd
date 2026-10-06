@@ -1,0 +1,14 @@
+{
+  "id": "dream_pastry",
+  "name": "Dream Pastry",
+  "source": {
+    "book": "CoS",
+    "note": "Morgantha's wares in the Village of Barovia; numbers are ours."
+  },
+  "category": "consumable",
+  "weight_lb": 0.25,
+  "cost_gp": 1,
+  "stackable": true,
+  "summary": "A heavy, sweet pastry from an old peddler's basket. It smells of honey and something under the honey.",
+  "text": "Eating one brings a long, warm sleep and dreams too pleasant to trust. Whoever wakes from them wants another."
+}

@@ -37,9 +37,14 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   what Darkvision and darkness do to checks and attacks — belong to the spell and ability audit; the world only
   reports each square's light level.)
 - **Encounter triggers:** `enter_area:<area>`, `open:<door_or_container>`, `examine:<prop>`, `flag:<flag>` (when a
-  flag is set, e.g. by dialogue), `dialogue` (only started by a `combat` line). `surprise`: `party`, `enemies` or
+  flag is set, e.g. by dialogue), `dialogue` (only started by a `combat` line). On victory the game sets `flag` and
+  moves `quest: {id, stage}` along. A monster entry may carry `hp` to tune that stat block for this fight.
+  `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md).
 - **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6) or `no` (with `rest_text`); default risky.
+- **NPCs:** `{npc, cell, dialogue, when, facing, approach}`. The first entry per NPC whose `when` holds stands there;
+  the game re-checks after every conversation and fight. `approach: n` makes the NPC speak first, once, when the
+  leader comes within n squares and can see them.
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
   with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`.
 

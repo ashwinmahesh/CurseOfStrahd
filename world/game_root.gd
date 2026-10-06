@@ -210,6 +210,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 func _dialogue_ended(combat: String) -> void:
 	dialogue = null
 	ModeController.force(ModeController.Mode.EXPLORATION)
+	view.refresh_npcs()
 	_refresh()
 	if combat != "":
 		view.start_encounter(combat)
@@ -231,6 +232,7 @@ func _after_combat(outcome: String) -> void:
 	if outcome == "defeat":
 		open_screen("game_over", 0)
 		return
+	view.refresh_npcs()
 	_refresh()
 
 

@@ -39,6 +39,7 @@ var _last_banter := -1000
 var members: Array[Combatant] = []
 var tokens: Dictionary = {}          ## combatant id -> CombatToken
 var npc_tokens: Dictionary = {}      ## npc id -> CombatToken
+var _npc_shown: Array[Dictionary] = []   ## [{spec, token, cell, low_before}] for the NPC entries standing here now
 var door_nodes: Dictionary = {}      ## door id -> Node3D
 var container_nodes: Dictionary = {}
 var prop_nodes: Dictionary = {}
@@ -187,11 +188,24 @@ func _build_lights() -> void:
 		add_child(omni)
 
 
+## Re-reads which NPCs stand here (their `when` conditions) after a conversation or a fight changes the story.
+func refresh_npcs() -> void:
+	for shown in _npc_shown:
+		(shown["token"] as Node).queue_free()
+		if not bool(shown["low_before"]):
+			grid.set_flag(shown["cell"] as Vector2i, CombatGrid.LOW, false)
+	_npc_shown.clear()
+	npc_tokens.clear()
+	_build_npcs()
+
+
 func _build_npcs() -> void:
 	for n: Variant in loc.get("npcs", []):
 		var spec := n as Dictionary
 		if not StoryConditions.check(str(spec.get("when", "")), st):
 			continue
+		if npc_tokens.has(str(spec["npc"])):
+			continue   # one entry per NPC at a time: the first whose condition holds
 		var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 		var mon_id := str(npc.get("monster", "commoner"))
 		var data := Compendium.shared().monster_data(mon_id)
@@ -205,6 +219,7 @@ func _build_npcs() -> void:
 		tok.position = board.cell_center(cb.cell)
 		add_child(tok)
 		npc_tokens[str(spec["npc"])] = tok
+		_npc_shown.append({"spec": spec, "token": tok, "cell": cb.cell, "low_before": grid.has_flag(cb.cell, CombatGrid.LOW)})
 		grid.set_flag(cb.cell, CombatGrid.LOW, true)   # an NPC blocks the square while standing there
 
 
@@ -409,6 +424,8 @@ func _check_cell_events() -> bool:
 		return true
 	if _check_areas():
 		return true
+	if _check_approach():
+		return true
 	for ex: Variant in loc.get("exits", []):
 		var exit := ex as Dictionary
 		if _cell(exit["cell"]) == leader().cell:
@@ -438,6 +455,27 @@ func _check_areas() -> bool:
 			_maybe_banter()
 		elif not inside:
 			_areas_in.erase(id)
+	return false
+
+
+## An NPC entry with `approach: n` speaks first, once, when the leader comes within n squares and can see them.
+func _check_approach() -> bool:
+	for shown in _npc_shown:
+		var spec := shown["spec"] as Dictionary
+		var reach := int(spec.get("approach", 0))
+		if reach <= 0 or str(spec.get("dialogue", "")) == "":
+			continue
+		var key := "approach:%s:%s" % [spec["npc"], spec["dialogue"]]
+		var props := st.loc_state(loc_id)["props"] as Dictionary
+		if bool(props.get(key, false)):
+			continue
+		var at := shown["cell"] as Vector2i
+		if grid.distance_ft(leader().cell, 1, at, 1) > reach * 5 or not grid.can_see(leader().cell, 1, at, 1):
+			continue
+		props[key] = true
+		_queue.clear()
+		dialogue_requested.emit(str(spec["dialogue"]), str(spec["npc"]))
+		return true
 	return false
 
 
@@ -526,9 +564,9 @@ func _spring_trap(trap: Dictionary, victim: Combatant) -> void:
 
 ## What's at a square for the hover hint and clicks: {kind, id, label} or {}.
 func thing_at(cell: Vector2i) -> Dictionary:
-	for n: Variant in loc.get("npcs", []):
-		var spec := n as Dictionary
-		if _cell(spec["cell"]) == cell and npc_tokens.has(str(spec["npc"])):
+	for shown in _npc_shown:
+		var spec := shown["spec"] as Dictionary
+		if shown["cell"] == cell:
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			return {"kind": "npc", "id": str(spec["npc"]), "label": "Talk to %s" % npc.get("name", spec["npc"]), "spec": spec}
 	for d: Variant in loc.get("doors", []):
@@ -889,6 +927,10 @@ func start_encounter(encounter_id: String) -> bool:
 		var md := mo as Dictionary
 		var data := Compendium.shared().monster_data(str(md["monster"]))
 		var mon := Monster.from_data(data)
+		if md.has("hp"):
+			# A tuned stat block for this fight (docs/contracts/locations.md).
+			mon.hp_max_base = int(md["hp"])
+			mon.hp = mon.max_hp()
 		if md.has("name"):
 			mon.name = str(md["name"])
 		elif int(counts[str(md["monster"])]) > 1:
@@ -1019,6 +1061,10 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 		(st.loc_state(loc_id)["encounters"] as Dictionary)[encounter_id] = true
 		if spec.has("flag"):
 			st.set_flag(str(spec["flag"]))
+		if spec.has("quest"):
+			var q := spec["quest"] as Dictionary
+			st.set_quest_stage(str(q["id"]), str(q["stage"]))
+			toast.emit("Journal updated: %s" % str(Compendium.shared().get_entry("quests", str(q["id"])).get("name", q["id"])))
 		# Out of combat, the fallen are stabilized by their friends (a minute later) at 0 HP; nobody stays dying.
 		for m in members:
 			var cr := m.creature

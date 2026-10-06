@@ -53,8 +53,11 @@ narrate trigger_key                Plays a Narrator trigger (below) inline.
 
 `flag.<id>` (truthy), `not flag.<id>`, `flag.<id> == 3` / `!= >= <= > <`, `class:cleric`, `species:elf`,
 `background:acolyte`, `tag:pious`, `item:holy_symbol_amulet` (anyone carries it), `quest.<id> == stage_id`,
-`attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `check.last` (the last check succeeded), joined
-with `and`, `or`, `not` and parentheses.
+`attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `gold >= 25` (the party's purse), `level >= 3`
+(the lowest character level in the party), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
+and parentheses.
+
+`gold -N` never takes the purse below zero: guard a purchase with `[if gold >= N]` and offer a "can't afford" line.
 
 ## The Narrator
 
