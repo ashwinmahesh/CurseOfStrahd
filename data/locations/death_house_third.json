@@ -40,7 +40,9 @@
           2
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall"
     },
     {
       "id": "dh_attic_landing",
@@ -54,7 +56,9 @@
           17,
           6
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/carved_panel"
     },
     {
       "id": "dh_third_hall",
@@ -68,7 +72,9 @@
           17,
           10
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/carved_panel"
     },
     {
       "id": "dh_third_storage",
@@ -83,7 +89,9 @@
           14
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall"
     },
     {
       "id": "dh_master_suite",
@@ -97,7 +105,9 @@
           8,
           8
         ]
-      ]
+      ],
+      "floor": "interior/carpet",
+      "walls": "interior/wainscot_wall"
     },
     {
       "id": "dh_bathroom",
@@ -111,7 +121,9 @@
           8,
           13
         ]
-      ]
+      ],
+      "floor": "interior/tile_floor",
+      "walls": "interior/damp_plaster"
     },
     {
       "id": "dh_nursemaid_room",
@@ -125,7 +137,9 @@
           26,
           5
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall"
     },
     {
       "id": "dh_nursery",
@@ -139,7 +153,9 @@
           26,
           14
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/wallpaper_nursery"
     }
   ],
   "spawns": {
@@ -298,6 +314,16 @@
       "kind": "examine",
       "label": "a dumbwaiter door",
       "model": "dumbwaiter"
+    },
+    {
+      "id": "master_tiger_rug",
+      "cell": [
+        4,
+        5
+      ],
+      "kind": "decor",
+      "label": "a rotting tiger-skin rug",
+      "model": "tiger_rug"
     },
     {
       "id": "clawfoot_tub",

@@ -44,7 +44,9 @@
           6,
           5
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_flooded_passage",
@@ -58,7 +60,9 @@
           22,
           5
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
     },
     {
       "id": "dh_robing_room",
@@ -72,7 +76,9 @@
           6,
           11
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
     },
     {
       "id": "dh_winch_room",
@@ -86,7 +92,9 @@
           22,
           10
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_ritual_antechamber",
@@ -100,7 +108,9 @@
           28,
           9
         ]
-      ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
     },
     {
       "id": "dh_ritual_chamber",
@@ -115,7 +125,9 @@
           20
         ]
       ],
-      "light": "dim"
+      "light": "dim",
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
     }
   ],
   "spawns": {

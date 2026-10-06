@@ -45,7 +45,9 @@
           4,
           4
         ]
-      ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced"
     },
     {
       "id": "dh_family_crypts",
@@ -59,7 +61,9 @@
           20,
           4
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_cult_dormitory",
@@ -73,7 +77,9 @@
           5,
           10
         ]
-      ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_well_chamber",
@@ -87,7 +93,9 @@
           17,
           13
         ]
-      ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced"
     },
     {
       "id": "dh_pit_passage",
@@ -101,7 +109,9 @@
           22,
           10
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_cult_refectory",
@@ -115,7 +125,9 @@
           28,
           12
         ]
-      ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_larder",
@@ -130,7 +142,9 @@
           4
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/damp_brick"
     },
     {
       "id": "dh_lower_stair",
@@ -144,7 +158,9 @@
           28,
           21
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_ghoul_passage",
@@ -158,7 +174,9 @@
           15,
           14
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
     },
     {
       "id": "dh_shrine",
@@ -172,7 +190,9 @@
           7,
           20
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_trapdoor_stair",
@@ -187,7 +207,9 @@
           21
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced"
     },
     {
       "id": "dh_durst_chambers",
@@ -202,7 +224,9 @@
           20
         ]
       ],
-      "light": "dim"
+      "light": "dim",
+      "floor": "church/stone_flags",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_durst_quarters",
@@ -216,7 +240,9 @@
           19,
           20
         ]
-      ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "dungeon/stone_wall"
     }
   ],
   "spawns": {
@@ -423,7 +449,7 @@
       ],
       "kind": "decor",
       "label": "a straw pallet",
-      "model": "straw"
+      "model": "straw_pallet"
     },
     {
       "id": "initiate_pallet_b",
@@ -433,7 +459,7 @@
       ],
       "kind": "decor",
       "label": "a straw pallet",
-      "model": "straw"
+      "model": "straw_pallet"
     },
     {
       "id": "initiate_pallet_c",
@@ -443,7 +469,7 @@
       ],
       "kind": "decor",
       "label": "a straw pallet",
-      "model": "straw"
+      "model": "straw_pallet"
     },
     {
       "id": "dungeon_well",
@@ -498,6 +524,26 @@
       "label": "a painted wooden statue",
       "model": "statue_knight",
       "dialogue": "death_house/dungeon:shrine_statue"
+    },
+    {
+      "id": "shrine_shackles",
+      "cell": [
+        1,
+        15
+      ],
+      "kind": "examine",
+      "label": "skeletons in rusty shackles",
+      "model": "skeleton_shackles"
+    },
+    {
+      "id": "shrine_shackles_b",
+      "cell": [
+        6,
+        15
+      ],
+      "kind": "decor",
+      "label": "skeletons in rusty shackles",
+      "model": "skeleton_shackles"
     },
     {
       "id": "durst_supper",

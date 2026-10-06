@@ -39,7 +39,9 @@
           17,
           14
         ]
-      ]
+      ],
+      "floor": "interior/parquet",
+      "walls": "interior/wood_panel"
     },
     {
       "id": "dh_library",
@@ -53,7 +55,9 @@
           8,
           8
         ]
-      ]
+      ],
+      "floor": "interior/carpet",
+      "walls": "interior/wainscot_wall"
     },
     {
       "id": "dh_secret_study",
@@ -68,7 +72,9 @@
           13
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "interior/wood_planks",
+      "walls": "interior/wood_panel"
     },
     {
       "id": "dh_servants_room",
@@ -82,7 +88,9 @@
           26,
           6
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/plaster_wall"
     },
     {
       "id": "dh_conservatory",
@@ -96,7 +104,9 @@
           26,
           14
         ]
-      ]
+      ],
+      "floor": "interior/parquet",
+      "walls": "interior/wallpaper_green"
     }
   ],
   "spawns": {
@@ -350,6 +360,16 @@
       "kind": "examine",
       "label": "the conservatory hearth",
       "model": "fireplace"
+    },
+    {
+      "id": "conservatory_harp",
+      "cell": [
+        25,
+        8
+      ],
+      "kind": "examine",
+      "label": "a standing harp",
+      "model": "harp"
     },
     {
       "id": "conservatory_glass",
