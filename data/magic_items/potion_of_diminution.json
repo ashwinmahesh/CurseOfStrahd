@@ -1,0 +1,52 @@
+{
+  "id": "potion_of_diminution",
+  "name": "Potion of Diminution",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 2000.0,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_red",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "size_step",
+            "value": -1
+          },
+          {
+            "stat": "disadvantage",
+            "on": "check:str"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:str"
+          },
+          {
+            "stat": "extra_damage",
+            "dice": "1d4",
+            "on": "weapon",
+            "penalty": true
+          }
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "dice": "1d4"
+  },
+  "summary": "The Reduce part of Enlarge/Reduce for 1d4 hours (no Concentration).",
+  "text": "For 1d4 hours after drinking, you are under the reduce half of the Enlarge/Reduce spell without needing Concentration: you drop one size category, make Strength checks and Strength saving throws with Disadvantage, and deal 1d4 less damage with your weapons. A speck of red in the liquid constantly dwindles to a pinpoint and swells again."
+}

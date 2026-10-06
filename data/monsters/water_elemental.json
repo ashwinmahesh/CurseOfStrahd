@@ -1,0 +1,93 @@
+{
+  "id": "water_elemental",
+  "name": "Water Elemental",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "elemental",
+  "alignment": "unaligned",
+  "ac": 14,
+  "initiative": 2,
+  "hp": {
+    "average": 114,
+    "dice": "12d10+48"
+  },
+  "speed": {
+    "walk": 30,
+    "swim": 90
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 14,
+    "con": 18,
+    "int": 5,
+    "wis": 10,
+    "cha": 8
+  },
+  "resistances": [
+    "acid",
+    "fire"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained",
+    "unconscious"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "primordial"
+  ],
+  "cr": 5,
+  "xp": 1800,
+  "proficiency_bonus": 3,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "slam",
+          "count": 2
+        }
+      ],
+      "summary": "Two Slams."
+    },
+    {
+      "id": "slam",
+      "name": "Slam",
+      "kind": "melee",
+      "attack": {
+        "bonus": 7,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "2d8+4",
+          "type": "bludgeoning"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Slam: +7 to hit, 2d8+4 Bludgeoning."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A surging wave that crashes over its foes."
+}

@@ -1,0 +1,39 @@
+{
+  "id": "potion_of_giant_strength_storm",
+  "name": "Potion of Giant Strength (Storm Giant)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 100000.0,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_gold",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "ability_min",
+            "ability": "str",
+            "value": 29
+          }
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "variant_of": "potion_of_giant_strength",
+  "summary": "Your Strength becomes 29 for 1 hour (no effect if it's already higher).",
+  "text": "The clear liquid holds a floating sliver of storm giant fingernail. Drink it and your Strength score becomes 29 for 1 hour; a creature whose Strength is 29 or more gains nothing from it."
+}

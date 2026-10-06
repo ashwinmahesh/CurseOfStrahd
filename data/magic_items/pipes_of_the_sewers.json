@@ -1,0 +1,43 @@
+{
+  "id": "pipes_of_the_sewers",
+  "name": "Pipes of the Sewers",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 2,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "instrument",
+  "powers": [
+    {
+      "id": "play",
+      "name": "Call the rats",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "params": {
+        "monster": "swarm_of_rats",
+        "count": 3,
+        "hours": 1,
+        "count_dice": "1d3",
+        "concentration": true
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Magic action, 1 charge: 1d3 Swarms of Rats answer the tune and fight for you while you keep playing.",
+      "charges": 1
+    }
+  ],
+  "summary": "3 charges: call up to three swarms of rats that obey you while you play.",
+  "text": "Using these pipes requires proficiency with wind instruments. While you are attuned, ordinary rats and giant rats treat you with indifference and leave you alone unless you threaten or hurt them. The pipes hold 3 charges and regain 1d3 each dawn. Play them as a Magic action and spend 1 to 3 charges; each charge summons one Swarm of Rats, provided enough rats lie within half a mile to answer. Arriving swarms stay friendly toward you and your companions for as long as you keep playing, which works like maintaining Concentration."
+}

@@ -1,0 +1,29 @@
+{
+  "id": "hat_of_disguise",
+  "name": "Hat of Disguise",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "hat",
+  "powers": [
+    {
+      "id": "disguise_self",
+      "name": "Disguise Self",
+      "spell": "disguise_self",
+      "field": true,
+      "text": "Cast Disguise Self at will."
+    }
+  ],
+  "worn": "head",
+  "summary": "Cast Disguise Self at will.",
+  "text": "Wearing this hat lets you cast Disguise Self from it whenever you like; taking the hat off ends the spell."
+}

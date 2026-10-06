@@ -1,0 +1,40 @@
+{
+  "id": "well_of_many_worlds",
+  "name": "Well of Many Worlds",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "hole",
+  "treasure": {
+    "random": false
+  },
+  "powers": [
+    {
+      "id": "open",
+      "name": "Unfold",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "opens onto another world, but Barovia's mists close it again"
+      },
+      "field": true,
+      "text": "It opens onto another world, but Barovia's mists close it again. (No other effect in the game.)",
+      "combat": false,
+      "uses": {
+        "count": 1,
+        "per": "dawns:3"
+      }
+    }
+  ],
+  "summary": "A cloth that opens a two-way portal to another world (Barovia's mists won't let it open out of the valley).",
+  "text": "Folded, this soft, silky black cloth is the size of a handkerchief; opened out, it is a round sheet 6 feet across. As a Magic action, spread it out on a solid surface and it opens a two-way gateway to some other world or plane, with the DM choosing the destination each time. A Magic action spent gripping its edges and folding it shuts the portal. After opening a portal, the Well can't open another for 1d8 hours."
+}

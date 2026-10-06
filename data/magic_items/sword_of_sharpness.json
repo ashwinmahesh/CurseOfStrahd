@@ -1,0 +1,54 @@
+{
+  "id": "sword_of_sharpness",
+  "name": "Sword of Sharpness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "damage_types": [
+      "slashing"
+    ],
+    "name": "{base} of Sharpness",
+    "default": "longsword"
+  },
+  "weapon_rules": {
+    "special": [
+      "sharpness"
+    ]
+  },
+  "powers": [
+    {
+      "id": "glow",
+      "name": "Light",
+      "cost": "magic",
+      "toggle": true,
+      "off_cost": "magic",
+      "custom_light": {
+        "bright": 10,
+        "dim": 10
+      },
+      "text": "Magic action: the blade sheds bright light 10 ft and dim light 10 ft more, or stops."
+    }
+  ],
+  "summary": "On a 20, an extra 4d6 Slashing, and another 20 lops off a limb. Objects it hits take maximum damage.",
+  "text": "Against objects, every hit with this magic sword deals the maximum on its weapon damage dice. Against a creature, an attack roll of 20 adds 4d6 Slashing damage; then roll a d20 again, and on another 20 the blow severs one of the target's limbs (or a chunk of its body if it has none), with the DM ruling on the consequences. As a Magic action you can also make the blade shine, casting Bright Light out to 10 feet and Dim Light for 10 feet more; repeating the action or sheathing the sword puts the light out.",
+  "icon": "longsword",
+  "icon_fallback": true
+}

@@ -1,0 +1,76 @@
+{
+  "id": "moon_sickle_plus_3",
+  "name": "Moon Sickle, +3",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": "by a Druid or Ranger"
+  },
+  "theme": "armaments",
+  "icon": "moon_sickle",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "sickle"
+    ],
+    "name": "+3 Moon Sickle"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "spell_attack",
+      "value": 3,
+      "when": {
+        "spell_class": "druid"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 3,
+      "when": {
+        "spell_class": "druid"
+      }
+    },
+    {
+      "stat": "spell_attack",
+      "value": 3,
+      "when": {
+        "spell_class": "ranger"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 3,
+      "when": {
+        "spell_class": "ranger"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "special": [
+      "moon_sickle"
+    ]
+  },
+  "variant_of": "moon_sickle",
+  "summary": "+3 sickle; +3 to your Druid and Ranger spell attacks and save DC; healing spells you cast heal 1d4 more.",
+  "text": "A faint moonlit sheen plays along this sickle's silver blade. Attack and damage rolls made with the magic weapon gain +3, and while you hold it, your Druid and Ranger spells get +3 to spell attack rolls and to their saving throw DCs. It also serves as a Spellcasting Focus for those spells. Healing spells you cast while holding it restore an extra 1d4 Hit Points."
+}

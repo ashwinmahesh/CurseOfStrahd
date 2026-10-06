@@ -1,0 +1,124 @@
+{
+  "id": "oil_of_slipperiness",
+  "name": "Oil of Slipperiness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "oil_flask",
+  "stackable": true,
+  "recipes": {
+    "pour": {
+      "name": "Oil of Slipperiness",
+      "level": 0,
+      "school": "conjuration",
+      "range": {
+        "kind": "feet",
+        "feet": 5
+      },
+      "area": {
+        "shape": "cube",
+        "size": 10
+      },
+      "duration": {
+        "kind": "hours",
+        "amount": 8
+      },
+      "targets": {
+        "kind": "area"
+      },
+      "save": "dex",
+      "tags": [
+        "control"
+      ],
+      "components": {},
+      "zone": {
+        "triggers": [
+          "cast",
+          "enter",
+          "end_turn"
+        ],
+        "terrain": "difficult",
+        "save": "dex",
+        "effects": [
+          {
+            "effect": "condition",
+            "params": {
+              "plain": true,
+              "condition": "prone"
+            }
+          }
+        ]
+      }
+    },
+    "coat": {
+      "name": "Oil of Slipperiness",
+      "level": 0,
+      "targets": {
+        "kind": "creature",
+        "count": 1
+      },
+      "range": {
+        "kind": "touch"
+      },
+      "duration": {
+        "kind": "hours",
+        "amount": 8
+      },
+      "components": {},
+      "tags": [
+        "buff"
+      ],
+      "effects": [
+        {
+          "effect": "modifiers",
+          "params": {
+            "modifiers": [
+              {
+                "stat": "flag",
+                "value": "freedom_of_movement"
+              },
+              {
+                "stat": "condition_immunity",
+                "value": "paralyzed"
+              },
+              {
+                "stat": "condition_immunity",
+                "value": "restrained"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "pour",
+      "name": "Pour",
+      "cost": "magic",
+      "recipe": "pour",
+      "dc": 13,
+      "consume": true
+    },
+    {
+      "id": "coat",
+      "name": "Coat a creature",
+      "cost": "action",
+      "recipe": "coat",
+      "consume": true,
+      "field": true,
+      "combat": false
+    }
+  ],
+  "summary": "Coat a creature: Freedom of Movement for 8 hours. Or pour it out: a 10-foot square of Grease for 8 hours.",
+  "text": "Thick and heavy in the jar, this black unguent pours out surprisingly fast. One use: spend 10 minutes coating a Medium or smaller creature and its worn and carried gear (each size category above Medium needs an extra vial), and for 8 hours the creature benefits from Freedom of Movement. The other use: as a Magic action, tip it out to slick a 10-foot square of ground, which acts as the Grease spell there for 8 hours."
+}

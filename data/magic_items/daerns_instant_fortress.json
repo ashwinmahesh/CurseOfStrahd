@@ -1,0 +1,30 @@
+{
+  "id": "daerns_instant_fortress",
+  "name": "Daern's Instant Fortress",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "cube",
+  "powers": [
+    {
+      "id": "fortress",
+      "name": "Raise the fortress",
+      "cost": "magic",
+      "custom": "instant_fortress",
+      "field": true,
+      "combat": false,
+      "text": "Set it down and speak the word: a stone tower 20 ft square and 30 ft high rises. Rest inside it in safety."
+    }
+  ],
+  "summary": "A tiny cube that grows into a stone tower you can rest in safely, then shrinks back.",
+  "text": "Place the tiny metal cube (1 inch across) on the ground and say its command word (a Magic action), and it swells at once into a square tower measuring 20 feet per side and 30 feet tall, with arrow slits in every wall and a battlement on top. Inside are two floors linked by a ladder along one wall, which climbs to a trapdoor onto the roof. The single door faces you when the tower forms; it opens only on your command, given as a Bonus Action, and Knock and similar magic can't open it. Any creature where the tower appears makes a Dexterity saving throw against DC 15, suffering 10d10 Bludgeoning damage if it fails or half that if it succeeds, and is shoved into an unoccupied space just outside the walls either way. Another Magic action and command word shrinks it back into a cube, but only if nobody is inside. In the game, the party can safely take a Long Rest anywhere by setting it up."
+}

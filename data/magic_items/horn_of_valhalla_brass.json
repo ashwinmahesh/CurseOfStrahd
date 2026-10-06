@@ -1,0 +1,41 @@
+{
+  "id": "horn_of_valhalla_brass",
+  "name": "Horn of Valhalla (Brass)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 2,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "relics",
+  "icon": "horn",
+  "variant_of": "horn_of_valhalla",
+  "powers": [
+    {
+      "id": "blow",
+      "name": "Blow",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "params": {
+        "monster": "berserker",
+        "count": 3,
+        "hours": 1,
+        "requires_prof": "simple"
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Magic action (once every 7 days): 3 warrior spirits (Berserkers) appear and fight for you for 1 hour. If you lack proficiency with all Simple weapons, the berserkers attack you.",
+      "uses": {
+        "count": 1,
+        "per": "dawns:7"
+      }
+    }
+  ],
+  "summary": "Once a week, summons 3 Berserker spirits that fight for you for an hour. If you lack proficiency with all Simple weapons, the berserkers attack you.",
+  "text": "Sound this brass horn with a Magic action and 3 warrior spirits from Ysgard appear within 60 feet of you in unoccupied spaces. They seem fully alive, use the Berserker stat block and have Immunity to the Charmed condition and the Frightened condition; each one goes back to Ysgard when 1 hour passes or once it falls to 0 Hit Points. Anyone who blows it without proficiency with all Simple weapons is attacked by the berserkers instead. After a use, the horn needs 7 days before it works again."
+}

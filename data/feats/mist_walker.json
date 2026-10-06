@@ -1,0 +1,43 @@
+{
+  "id": "mist_walker",
+  "name": "Mist Walker",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. The Mists carry you between the Domains of Dread and pull you 15 feet clear of harm; they won't let you sit still.",
+  "benefits": [
+    {
+      "id": "mist_wanderer_ways",
+      "name": "Children of the Mists",
+      "summary": "You can find your way through the Mists between Domains of Dread you know.",
+      "text": "While in the Mists, you can find the way to any Domain of Dread you have visited before.",
+      "action": "passive",
+      "implemented": "text"
+    },
+    {
+      "id": "mist_step",
+      "name": "Mist Step",
+      "summary": "Reaction when you take damage or fail a save against Grappled or Restrained: teleport 15 feet (PB times per Long Rest).",
+      "text": "When you take damage, or fail a saving throw against the Grappled or Restrained condition, you can take a Reaction to dissolve into mist and teleport up to 15 feet to an unoccupied space you can see (escaping a grapple or restraint if you were in one). You can do this a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "action": "reaction",
+      "resource": {
+        "id": "mist_step",
+        "name": "Mist Step",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "engine"
+    }
+  ],
+  "drawback": {
+    "id": "mist_walker_drawback",
+    "name": "Drawback",
+    "summary": "After a Long Rest you must travel at least 10 miles before a Short Rest, or make a Constitution save (DC 13 + PB) and gain nothing from it on a failure.",
+    "text": "The Mists keep you moving. After each Long Rest, unless you have travelled at least 10 miles since, a Short Rest requires a Constitution saving throw (DC 13 plus your Proficiency Bonus); on a failure you gain no benefit from that Short Rest.",
+    "action": "special",
+    "implemented": "engine"
+  }
+}

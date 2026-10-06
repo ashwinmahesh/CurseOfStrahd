@@ -1,0 +1,36 @@
+{
+  "id": "deck_of_illusions",
+  "name": "Deck of Illusions",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false,
+    "charges": {
+      "max": 34,
+      "start": "1d20+14",
+      "when": "never"
+    }
+  },
+  "theme": "implements",
+  "icon": "cards",
+  "powers": [
+    {
+      "id": "draw",
+      "name": "Throw a card",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "deck_of_illusions",
+      "targeting": "place",
+      "range": 30,
+      "text": "Magic action: draw a card at random and throw it up to 30 ft: an illusion of a creature appears there until it's dispelled or seen through."
+    }
+  ],
+  "summary": "Throw a card and an illusory creature appears that fools your foes until they see through it.",
+  "text": "This boxed deck holds 34 cards when complete: 32 picture particular creatures and 2 have mirrored faces. Decks discovered as treasure are usually short 1d20 - 1 cards. Its magic works only for cards drawn at random. As a Magic action, draw a random card and toss it to the ground up to 30 feet away; an illusory image of a creature or a group of creatures rises over it. The illusion looks real, is the right size and acts like the real creature, but it can't cause harm. While you can see it and are within 120 feet of it, you can reposition it with a Magic action, keeping it no more than 30 feet from its card. Touching it exposes the trick, since things pass right through. A creature can also take a Study action to look it over; if it succeeds on an Intelligence (Investigation) check against DC 15, it recognizes the illusion, which then looks translucent. The image lasts until it is dispelled or someone moves its card; when it ends, the card's picture fades and the card is spent for good."
+}

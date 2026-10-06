@@ -1,0 +1,29 @@
+{
+  "id": "ring_of_invisibility",
+  "name": "Ring of Invisibility",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "powers": [
+    {
+      "id": "vanish",
+      "name": "Turn Invisible",
+      "cost": "magic",
+      "custom": "ring_invisibility",
+      "text": "Magic action: you're Invisible until you attack, cast a spell, or end it as a Bonus Action."
+    }
+  ],
+  "summary": "A Magic action makes you Invisible until you attack, cast a spell, or choose to appear.",
+  "text": "A Magic action with this ring grants you the Invisible condition. It lasts until you cast a spell, make an attack roll, take off the ring, or spend a Bonus Action to reappear."
+}

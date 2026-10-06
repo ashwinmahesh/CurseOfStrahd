@@ -1,0 +1,35 @@
+{
+  "id": "chime_of_opening",
+  "name": "Chime of Opening",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false,
+    "charges": {
+      "max": 10,
+      "when": "never"
+    }
+  },
+  "theme": "implements",
+  "icon": "chime",
+  "powers": [
+    {
+      "id": "open",
+      "name": "Strike the chime",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "chime_of_opening",
+      "field": true,
+      "combat": false,
+      "text": "Point it at a locked door, chest or shackles within 120 ft and strike it: one lock or latch opens (10 uses)."
+    }
+  ],
+  "summary": "10 uses: one lock, bar or latch on something within 120 ft springs open.",
+  "text": "A hollow metal tube roughly 1 foot long and weighing 1 pound. Strike it as a Magic action while aiming it at a door, lid, lock or other openable object within 120 feet. Its clear note unfastens one lock or latch on that object, provided the sound can reach it; if nothing locked or latched remains, the object itself swings open. It works 10 times, then cracks and is useless."
+}

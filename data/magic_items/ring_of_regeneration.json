@@ -1,0 +1,26 @@
+{
+  "id": "ring_of_regeneration",
+  "name": "Ring of Regeneration",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "regeneration_ring"
+    }
+  ],
+  "summary": "Regain 1d6 Hit Points every 10 minutes (if you have at least 1); lost body parts grow back.",
+  "text": "While you are at 1 Hit Point or higher, the ring restores 1d6 Hit Points to you each 10 minutes. It can also regrow a lost body part, which becomes fully functional after 1d6 + 1 days, provided you never drop below 1 Hit Point in that time."
+}

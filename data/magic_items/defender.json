@@ -1,0 +1,65 @@
+{
+  "id": "defender",
+  "name": "Defender",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "name": "{base} Defender",
+    "default": "longsword"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "powers": [
+    {
+      "id": "guard",
+      "name": "Shift to AC",
+      "cost": "free",
+      "custom": "defender",
+      "choice": {
+        "label": "Bonus to AC",
+        "from": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "text": "On your turn, before you attack with it, move some or all of its +3 from attack and damage to your AC until the start of your next turn."
+    }
+  ],
+  "summary": "+3 sword; on your turn you can shift some or all of its bonus to your AC until your next turn.",
+  "text": "This magic sword grants +3 to attack and damage rolls. Each turn, on your first attack with it, you can move any part of that bonus, up to all of it, onto your Armor Class. The split holds until your next turn starts, and you only get the AC portion while you're holding the sword.",
+  "icon": "longsword",
+  "icon_fallback": true
+}

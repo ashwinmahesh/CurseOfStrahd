@@ -7,13 +7,18 @@ extends TestCase
 func test_phase_1_content_counts() -> void:
 	var c := Compendium.shared()
 	assert_eq(c.table("classes").size(), 12)
-	assert_eq(c.table("subclasses").size(), 48)
+	var phb_only := func(rows: Array) -> Array: return rows.filter(func(x: Dictionary) -> bool: return str((x["source"] as Dictionary)["book"]) == "PHB2024")
+	var rthw_only := func(rows: Array) -> Array: return rows.filter(func(x: Dictionary) -> bool: return str((x["source"] as Dictionary)["book"]) == "RtHW")
+	assert_eq((phb_only.call(c.all("subclasses")) as Array).size(), 48)
+	assert_eq((rthw_only.call(c.all("subclasses")) as Array).size(), 6, "Ravenloft: The Horrors Within (no Reanimator: no Artificer)")
 	for cls: String in ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue",
 			"sorcerer", "warlock", "wizard"]:
-		assert_eq(c.subclasses_of(cls).size(), 4, "%s has its four PHB subclasses" % cls)
-	assert_eq(c.table("species").size(), 10)
+		assert_eq((phb_only.call(c.subclasses_of(cls)) as Array).size(), 4, "%s has its four PHB subclasses" % cls)
+	assert_eq((phb_only.call(c.all("species")) as Array).size(), 10)
+	assert_eq((rthw_only.call(c.all("species")) as Array).size(), 4, "Dhampir, Hexblood, Lupin, Reborn")
+	assert_eq(c.all("feats").filter(func(f: Dictionary) -> bool: return str(f["category"]) == "dark_gift").size(), 9, "nine Ravenloft Dark Gifts")
 	assert_eq(c.table("backgrounds").size(), 16)
-	assert_eq(c.table("monsters").size(), 76)
+	assert_eq(c.table("monsters").size(), 112, "76 from Phase 1, 36 that magic items summon or become")
 	assert_eq(c.table("pregens").size(), 4)
 	assert_true(c.table("feats").size() >= 70)
 	assert_true(c.table("spells").size() >= 170)

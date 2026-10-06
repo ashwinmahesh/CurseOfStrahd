@@ -1,0 +1,57 @@
+{
+  "id": "echoing_soul",
+  "name": "Echoing Soul",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. Two skills, a language and an Expertise you can move each Long Rest; a natural 1 can leave you dazed and slow.",
+  "benefits": [
+    {
+      "id": "echoes_of_lives",
+      "name": "Echoes of Other Lives",
+      "summary": "Proficiency in two skills and one extra language.",
+      "text": "You gain proficiency in two skills of your choice and learn one language of your choice.",
+      "action": "passive",
+      "choices": [
+        {
+          "id": "skills",
+          "kind": "skill",
+          "count": 2
+        },
+        {
+          "id": "language",
+          "kind": "language",
+          "count": 1
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "borrowed_mastery",
+      "name": "Borrowed Mastery",
+      "summary": "Expertise in one skill you're proficient in; you can change it when you finish a Long Rest.",
+      "text": "Choose one skill in which you have proficiency; you have Expertise in it. Whenever you finish a Long Rest, you can choose a different skill instead.",
+      "action": "passive",
+      "choice": {
+        "kind": "expertise",
+        "count": 1,
+        "filter": {
+          "proficient": true
+        },
+        "replaceable": "long_rest"
+      },
+      "implemented": "data"
+    }
+  ],
+  "drawback": {
+    "id": "echoing_soul_drawback",
+    "name": "Drawback",
+    "summary": "On a natural 1: Wisdom save (DC 13 + PB) or Incapacitated with half Speed until the end of your next turn.",
+    "text": "Whenever you roll a 1 on the d20 of a D20 Test, you make a Wisdom saving throw (DC 13 plus your Proficiency Bonus); on a failure the other souls in you surface: you have the Incapacitated condition and your Speed is halved until the end of your next turn.",
+    "action": "special",
+    "implemented": "engine"
+  }
+}

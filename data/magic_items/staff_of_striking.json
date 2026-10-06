@@ -1,0 +1,77 @@
+{
+  "id": "staff_of_striking",
+  "name": "Staff of Striking",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true,
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "nonmagical",
+        "text": "becomes a nonmagical Quarterstaff"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Striking"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "special": [
+      "striking"
+    ]
+  },
+  "powers": [
+    {
+      "id": "strike",
+      "name": "Striking",
+      "cost": "free",
+      "toggle": true,
+      "off_cost": "free",
+      "choice": {
+        "label": "Charges on the next hit",
+        "from": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "text": "Arm it: your next hit with the staff spends up to 3 charges, an extra 1d6 Force each.",
+      "needs_charges": 1
+    }
+  ],
+  "summary": "+3 quarterstaff; on a hit, spend up to 3 charges for an extra 1d6 Force each.",
+  "text": "A magic Quarterstaff with +3 to attack and damage rolls and 10 charges. When you land a melee hit with it, you can spend as many as 3 charges, adding 1d6 Force damage per charge spent. It regains 1d6 + 4 charges every dawn. If the last charge is spent, roll 1d20; on a 1, it becomes an ordinary nonmagical Quarterstaff."
+}

@@ -1,0 +1,70 @@
+{
+  "id": "gathered_whispers",
+  "name": "Gathered Whispers",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. Message, a free Augury and a Reaction that adds your Proficiency Bonus to AC; a natural 1 can drown you in whispers.",
+  "benefits": [
+    {
+      "id": "whispering_magic",
+      "name": "Whispering Magic",
+      "summary": "You know Message; Augury is always prepared and free once per Long Rest.",
+      "text": "You know the Message cantrip, and you always have Augury prepared; you can cast Augury once without a spell slot, regaining that use on a Long Rest. Intelligence, Wisdom or Charisma is your spellcasting ability for these spells (choose when you take the gift).",
+      "action": "passive",
+      "choice": {
+        "id": "ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "message",
+          "ability": "@ability"
+        },
+        {
+          "stat": "spell",
+          "value": "augury",
+          "ability": "@ability",
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "whispered_warning",
+      "name": "Whispered Warning",
+      "summary": "Reaction when an attack would hit you: add your Proficiency Bonus to your AC against it (PB times per Long Rest).",
+      "text": "When you are hit by an attack roll, the whispers warn you: you can take a Reaction to add your Proficiency Bonus to your AC against that attack, possibly turning the hit into a miss. You can do this a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "action": "reaction",
+      "resource": {
+        "id": "whispered_warning",
+        "name": "Whispered Warning",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "engine"
+    }
+  ],
+  "drawback": {
+    "id": "gathered_whispers_drawback",
+    "name": "Drawback",
+    "summary": "On a natural 1: Wisdom save (DC 13 + PB) or Deafened, with Disadvantage on ability checks and attack rolls, until the end of your next turn.",
+    "text": "Whenever you roll a 1 on the d20 of a D20 Test, you make a Wisdom saving throw (DC 13 plus your Proficiency Bonus); on a failure the whispers roar: you have the Deafened condition and Disadvantage on ability checks and attack rolls until the end of your next turn.",
+    "action": "special",
+    "implemented": "engine"
+  }
+}

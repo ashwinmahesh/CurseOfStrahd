@@ -1,0 +1,56 @@
+{
+  "id": "talisman_of_ultimate_evil",
+  "name": "Talisman of Ultimate Evil",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a creature of evil alignment",
+    "charges": {
+      "max": 6,
+      "when": "never",
+      "last": {
+        "die": 1,
+        "on": 1,
+        "result": "destroyed",
+        "text": "melts into foul-smelling slime"
+      }
+    }
+  },
+  "theme": "relics",
+  "icon": "amulet",
+  "treasure": {
+    "random": false
+  },
+  "modifiers": [
+    {
+      "stat": "spell_attack",
+      "value": 2
+    }
+  ],
+  "powers": [
+    {
+      "id": "fissure",
+      "name": "Fissure of Darkness",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "talisman_fissure",
+      "targeting": "enemy",
+      "range": 120,
+      "params": {
+        "types": [
+          "celestial"
+        ],
+        "good": true
+      },
+      "text": "Magic action, 1 charge: a good creature within 120 ft standing on the ground makes a DC 20 Dex save or falls into a fissure of darkness and is destroyed."
+    }
+  ],
+  "summary": "An unholy symbol (+2 spell attacks) with 6 charges that open fissures to swallow good creatures.",
+  "text": "An emblem of unrepentant evil that sears those unlike it: touching it deals 6d6 Necrotic damage to a creature of neither good nor evil alignment and 8d6 Necrotic damage to a good one. An evil Cleric or Paladin can use it as a holy symbol, gaining +2 to spell attack rolls while wearing or holding it. It holds 6 charges. While the talisman is on you or in hand, a Magic action and 1 charge let you target a creature standing on the ground that you can see within 120 feet; if the target is good, the earth splits open beneath it, and unless it makes a Dexterity saving throw against DC 20 it drops in and is destroyed without a trace. Spending the last charge melts the talisman into stinking slime, destroying it. (Alignment isn't tracked in the game, so Celestials count as good.)"
+}

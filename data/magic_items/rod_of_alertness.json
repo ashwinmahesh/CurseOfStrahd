@@ -1,0 +1,65 @@
+{
+  "id": "rod_of_alertness",
+  "name": "Rod of Alertness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "rod",
+  "weight_lb": 2,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "rod",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "initiative"
+    }
+  ],
+  "powers": [
+    {
+      "id": "detect_evil_and_good",
+      "name": "Detect Evil and Good",
+      "spell": "detect_evil_and_good",
+      "charges": 0,
+      "field": true
+    },
+    {
+      "id": "detect_magic",
+      "name": "Detect Magic",
+      "spell": "detect_magic",
+      "charges": 0,
+      "field": true
+    },
+    {
+      "id": "detect_poison_and_disease",
+      "name": "Detect Poison and Disease",
+      "spell": "detect_poison_and_disease",
+      "charges": 0,
+      "field": true
+    },
+    {
+      "id": "see_invisibility",
+      "name": "See Invisibility",
+      "spell": "see_invisibility",
+      "charges": 0
+    },
+    {
+      "id": "aura",
+      "name": "Protective Aura",
+      "cost": "magic",
+      "custom": "rod_of_alertness_aura",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Magic action (once per dawn): plant the rod; for 10 minutes it lights 60 ft, and you and your allies there have +1 AC and saves and sense invisible foes."
+    }
+  ],
+  "summary": "Advantage on Initiative; detection spells at will; once a day a protective aura (+1 AC and saves) for 10 minutes.",
+  "text": "A rod with a flanged head. Alertness: holding it gives you Advantage on Initiative rolls and Wisdom (Perception) checks. Spells: holding it, you can cast See Invisibility, Detect Magic, Detect Evil and Good, or Detect Poison and Disease from it. Protective Aura: drive the haft into the ground as a Magic action, and the head gives off Bright Light out to 60 feet and Dim Light 60 feet farther. You and every creature friendly to you standing in that Bright Light get +1 to saving throws and Armor Class and can tell where any Invisible creature in that Bright Light is. The glow and its benefits end after 10 minutes, or sooner if someone yanks the rod free as a Magic action. The aura then can't be raised again until the next dawn."
+}

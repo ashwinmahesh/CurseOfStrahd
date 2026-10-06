@@ -174,16 +174,21 @@ static func _feats(c: Choice, ch: Character, comp: Compendium) -> void:
 	var categories: Array = []
 	var cat: Variant = c.filter.get("category", "fighting_style" if c.kind == "fighting_style" else "")
 	if cat is Array:
-		categories = cat as Array
+		categories = (cat as Array).duplicate()
 	elif str(cat) != "":
 		categories = [str(cat)]
+	# Ravenloft: The Horrors Within: a Dark Gift can be taken whenever an origin feat could be.
+	if "origin" in categories and not "dark_gift" in categories:
+		categories.append("dark_gift")
 	var level := c.level if c.level > 0 else ch.character_level()
 	var taken := {}
 	for f in ch.feats_taken:
-		if not str(f["key"]).begins_with(c.key + "/"):
+		if not str(f["key"]).begins_with(c.key + "/") and not (c.key == "background.feat_choice" and str(f["key"]) == "background.feat"):
 			taken[str(f["id"])] = str(f["source"])
+	var gifts: Array[ChoiceOption] = []
 	for f in comp.all("feats"):
-		if not categories.is_empty() and not str(f.get("category", "")) in categories:
+		# `from` lists feats offered whatever their category (a background's own origin feat beside the Dark Gifts).
+		if not categories.is_empty() and not str(f.get("category", "")) in categories and not str(f["id"]) in c.from:
 			continue
 		var o := ChoiceOption.make(str(f["id"]), str(f["name"]), str(f.get("summary", "")))
 		o.tags.append(str(f.get("category", "")))
@@ -192,7 +197,13 @@ static func _feats(c: Choice, ch: Character, comp: Compendium) -> void:
 			o.block(why)
 		elif taken.has(str(f["id"])) and not bool(f.get("repeatable", false)):
 			o.block("You already have this feat (%s)" % taken[str(f["id"])])
-		c.options.append(o)
+		if str(f.get("category", "")) == "dark_gift":
+			o.warning = "A Ravenloft Dark Gift: its power comes with a drawback."
+			gifts.append(o)
+		else:
+			c.options.append(o)
+	# Dark Gifts follow the ordinary feats, so the usual picks (and recommendations) come first.
+	c.options.append_array(gifts)
 
 
 ## "" if the character meets the feat's prerequisites at `level`, otherwise the reason.

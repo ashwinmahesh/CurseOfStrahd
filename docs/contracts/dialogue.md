@@ -19,7 +19,8 @@ a minute and the validator can read it without Godot.
 ```
 ~ node_id                          A node. Ids: lower_snake_case, unique in the file.
 Speaker: Text                      A line. Speaker = an npc id from data/npcs (shown by its name and portrait),
-                                   "Narrator", or "Player" (the character currently speaking for the party).
+                                   "Narrator" (art/portraits/narrator.png), or "Player" (the character currently
+                                   speaking for the party). A roll shows the portrait of whoever makes it.
 Speaker [mood]: Text               Picks a portrait expression (neutral, smile, angry, afraid, sad, sly).
 * Option text -> node              A player option. Options collected after the last line form one menu.
 * [Persuasion DC 14] Text -> ok_node | fail_node

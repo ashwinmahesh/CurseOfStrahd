@@ -1,0 +1,61 @@
+{
+  "id": "staff_of_the_adder",
+  "name": "Staff of the Adder",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": "by a Cleric, Druid, or Warlock"
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of the Adder"
+  },
+  "powers": [
+    {
+      "id": "adder",
+      "name": "Snake Head",
+      "cost": "bonus",
+      "toggle": true,
+      "minutes": 1,
+      "off_cost": "bonus",
+      "text": "Bonus Action: the staff's head becomes a venomous snake for 1 minute. Its bite: your melee attack, 1d6 Piercing, and a DC 15 Con save or 3d6 Poison.",
+      "modifiers": [
+        {
+          "stat": "weapon_override",
+          "items": [
+            "@self"
+          ],
+          "die": "1d6",
+          "damage_type": "piercing"
+        }
+      ]
+    }
+  ],
+  "weapon_rules": {
+    "on_hit": [
+      {
+        "while": "adder",
+        "save": "con",
+        "dc": 15,
+        "damage": {
+          "dice": "3d6",
+          "type": "poison"
+        },
+        "save_success": "none"
+      }
+    ]
+  },
+  "summary": "The head becomes a snake: its bite deals 1d6 Piercing and 3d6 Poison (Con DC 15 avoids the poison).",
+  "text": "As a Bonus Action, you turn the staff's head into a living, venomous snake's head for 1 minute; another Bonus Action changes it back. While it is a snake, you can attack with it in melee, using your attack bonus: it has 5-foot reach, and a hit deals 1d6 Piercing damage and forces a Constitution saving throw (DC 15), failure meaning 3d6 Poison damage. The living head can itself be attacked: its AC is 15 and it has 20 Hit Points, and reducing it to 0 Hit Points destroys the staff. If the staff survives, it heals fully once it turns inanimate again."
+}

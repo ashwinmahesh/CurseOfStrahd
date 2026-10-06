@@ -1,0 +1,38 @@
+{
+  "id": "winged_boots",
+  "name": "Winged Boots",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "boots",
+  "powers": [
+    {
+      "id": "fly",
+      "name": "Fly",
+      "cost": "bonus",
+      "toggle": true,
+      "off_cost": "bonus",
+      "budget_rounds": 2400,
+      "modifiers": [
+        {
+          "stat": "speed_set",
+          "kind": "fly",
+          "value": "walk"
+        }
+      ],
+      "text": "Bonus Action: a Fly Speed equal to your Speed, up to 4 hours a day."
+    }
+  ],
+  "worn": "feet",
+  "summary": "Fly at your Speed for up to 4 hours a day.",
+  "text": "Wearing these boots, you can fly, with a Fly Speed matching your Speed. They hold 4 hours of flight, which you can use in one stretch or split across several flights, though each flight uses up at least 1 minute. If the time runs out while you are airborne, you sink 30 feet each round until you reach the ground. For every 12 hours the boots go unused, they recover 2 hours of flight."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "immovable_rod",
+  "name": "Immovable Rod",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "rod",
+  "weight_lb": 2,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "rod",
+  "powers": [
+    {
+      "id": "fix",
+      "name": "Press the button",
+      "cost": "utilize",
+      "custom": "flavour",
+      "field": true,
+      "params": {
+        "text": "locks in place, held fast by magic"
+      },
+      "text": "Utilize action: the rod fixes itself in place and holds up to 8,000 lb; pressing again frees it."
+    }
+  ],
+  "summary": "Press its button and it stays fixed in place, holding up to 8,000 lb.",
+  "text": "Pressing the button on the end of this iron rod (a Utilize action) locks it magically in place, hanging in midair if need be, and it stays put until someone presses the button again with another Utilize action. It supports as much as 8,000 pounds; load it beyond that and it switches off and drops. A creature can shift a locked rod by up to 10 feet with a Utilize action and a successful Strength (Athletics) check against DC 30."
+}

@@ -1,0 +1,36 @@
+{
+  "id": "veterans_cane",
+  "name": "Veteran's Cane",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "club"
+    ],
+    "name": "Veteran's Cane"
+  },
+  "powers": [
+    {
+      "id": "draw",
+      "name": "Become a Longsword",
+      "cost": "bonus",
+      "custom": "veterans_cane",
+      "text": "Bonus Action: the cane becomes an ordinary longsword and loses its magic."
+    }
+  ],
+  "summary": "A walking cane that turns into an ordinary longsword (and stays one).",
+  "text": "Grip this walking cane and speak its command word as a Bonus Action: it becomes an ordinary Longsword and loses its magic.",
+  "icon": "club",
+  "icon_fallback": true
+}

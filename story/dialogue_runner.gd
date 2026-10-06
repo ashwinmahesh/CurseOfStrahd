@@ -7,10 +7,12 @@ extends RefCounted
 ##
 ## Beats: {kind: "line", speaker_id, name, portrait, mood, text, narrator, party}
 ##        {kind: "options", options: [{text, label, check: {skill, dc, bonus, chance, who}, enabled}]}
-##        {kind: "check", who, skill, dc, total, success, detail, said}
+##        {kind: "check", who, portrait, skill, dc, total, success, detail, said}
 ##        {kind: "notice", text}
 ##        {kind: "end", combat: encounter id or ""}
 
+## The Narrator's portrait (art/portraits/narrator.png), on their lines here and in the exploration box.
+const NARRATOR_PORTRAIT := "narrator"
 const ABILITIES := {"strength": &"str", "dexterity": &"dex", "constitution": &"con", "intelligence": &"int",
 	"wisdom": &"wis", "charisma": &"cha"}
 
@@ -474,7 +476,8 @@ func _apply_set(s: Dictionary) -> void:
 func _line_beat(speaker_name: String, mood: String, text: String) -> Dictionary:
 	var low := speaker_name.to_lower()
 	if low == "narrator":
-		return {"kind": "line", "speaker_id": "narrator", "name": "Narrator", "portrait": "", "mood": "", "text": _fill(text), "narrator": true, "party": false}
+		return {"kind": "line", "speaker_id": "narrator", "name": "Narrator", "portrait": NARRATOR_PORTRAIT, "mood": "", "text": _fill(text),
+			"narrator": true, "party": false}
 	if low == "player":
 		return _party_line(speaker, text)
 	var npc := _npc_for(low)
@@ -489,9 +492,14 @@ func _line_beat(speaker_name: String, mood: String, text: String) -> Dictionary:
 func _party_line(who: Character, text: String) -> Dictionary:
 	if who == null:
 		return {"kind": "line", "speaker_id": "player", "name": "You", "portrait": "", "mood": "", "text": _fill(text), "narrator": false, "party": true}
-	var look := str((who.build.get("appearance", {}) as Dictionary).get("art", ""))
-	return {"kind": "line", "speaker_id": who.id, "name": who.name, "portrait": look if look != "" else who.name.to_snake_case(), "mood": "",
+	return {"kind": "line", "speaker_id": who.id, "name": who.name, "portrait": portrait_of(who), "mood": "",
 		"text": _fill(text), "narrator": false, "party": true}
+
+
+## A party member's portrait (art/portraits/<id>.png): the look picked in the creator, else one named after them.
+static func portrait_of(who: Character) -> String:
+	var look := str((who.build.get("appearance", {}) as Dictionary).get("art", ""))
+	return look if look != "" else who.name.to_snake_case()
 
 
 static func _npc_for(low: String) -> Dictionary:
@@ -552,8 +560,8 @@ func _roll(who: Character, skill: String, dc: int, said: String) -> Dictionary:
 func _check_beat() -> Dictionary:
 	var who := _last_check["who"] as Character
 	var test := _last_check["test"] as D20Test
-	return {"kind": "check", "who": who.name, "skill": str(_last_check["skill"]).replace("_", " ").capitalize(), "dc": test.target,
-		"total": test.total, "success": test.success, "detail": test.describe(), "said": str(_last_check["said"]),
+	return {"kind": "check", "who": who.name, "portrait": portrait_of(who),
+		"skill": str(_last_check["skill"]).replace("_", " ").capitalize(), "dc": test.target, "total": test.total, "success": test.success, "detail": test.describe(), "said": str(_last_check["said"]),
 		"aids": CheckAids.options(who, test)}
 
 

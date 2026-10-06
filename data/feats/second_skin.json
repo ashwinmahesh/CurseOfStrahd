@@ -1,0 +1,51 @@
+{
+  "id": "second_skin",
+  "name": "Second Skin",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. Alter Self, free once per Long Rest and without Concentration; a catalyst can force the change on you.",
+  "benefits": [
+    {
+      "id": "second_shape",
+      "name": "Second Shape",
+      "summary": "Alter Self always prepared; once per Long Rest cast it without a slot or Concentration.",
+      "text": "You always have Alter Self prepared. Once per Long Rest you can cast it without a spell slot or Material components, and that casting doesn't require Concentration. Intelligence, Wisdom or Charisma is your spellcasting ability for it (choose when you take the gift).",
+      "action": "passive",
+      "choice": {
+        "id": "ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "alter_self",
+          "ability": "@ability",
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "drawback": {
+    "id": "second_skin_drawback",
+    "name": "Drawback",
+    "summary": "A catalyst you choose (a moon phase, a sound, a smell) forces the change; if your free casting is spent, you are Stunned until the start of your next turn instead.",
+    "text": "Choose a catalyst: a phase of the moon, a particular sound or a smell. When you meet it, you cast Alter Self using your free casting; if you've already used it since your last Long Rest, the change wracks you instead and you have the Stunned condition until the start of your next turn.",
+    "action": "special",
+    "implemented": "text"
+  }
+}

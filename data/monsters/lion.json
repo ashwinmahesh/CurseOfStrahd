@@ -1,0 +1,86 @@
+{
+  "id": "lion",
+  "name": "Lion",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 22,
+    "dice": "4d10"
+  },
+  "speed": {
+    "walk": 50
+  },
+  "abilities": {
+    "str": 17,
+    "dex": 15,
+    "con": 11,
+    "int": 3,
+    "wis": 12,
+    "cha": 8
+  },
+  "skills": {
+    "perception": 3,
+    "stealth": 4
+  },
+  "senses": {},
+  "passive_perception": 13,
+  "languages": [],
+  "cr": 1,
+  "xp": 200,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "action": "passive",
+      "summary": "Advantage on attack rolls against a target that has a non-Incapacitated ally of this creature within 5 ft.",
+      "implemented": "engine",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "pack_tactics"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "rend",
+          "count": 2
+        }
+      ],
+      "summary": "Two Rend attacks."
+    },
+    {
+      "id": "rend",
+      "name": "Rend",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d8+3",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Rend: +5 to hit, 1d8+3 Slashing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A great cat that hunts with its pride."
+}

@@ -1,0 +1,37 @@
+{
+  "id": "sword_of_life_stealing",
+  "name": "Sword of Life Stealing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "name": "{base} of Life Stealing",
+    "default": "longsword"
+  },
+  "weapon_rules": {
+    "special": [
+      "life_stealing"
+    ]
+  },
+  "summary": "On a 20, an extra 3d6 Necrotic to a living target, and you gain that much in Temporary Hit Points.",
+  "text": "Roll a 20 on an attack roll with this magic weapon against any creature other than a Construct or Undead and it suffers 3d6 extra Necrotic damage, and you receive that much extra damage as Temporary Hit Points.",
+  "icon": "longsword",
+  "icon_fallback": true
+}

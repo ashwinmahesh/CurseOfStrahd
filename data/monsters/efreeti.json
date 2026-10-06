@@ -1,0 +1,105 @@
+{
+  "id": "efreeti",
+  "name": "Efreeti",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "elemental",
+  "alignment": "lawful evil",
+  "ac": 17,
+  "initiative": 1,
+  "hp": {
+    "average": 200,
+    "dice": "16d10+112"
+  },
+  "speed": {
+    "walk": 40,
+    "fly": 60
+  },
+  "abilities": {
+    "str": 22,
+    "dex": 12,
+    "con": 24,
+    "int": 16,
+    "wis": 15,
+    "cha": 16
+  },
+  "immunities": [
+    "fire"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 12,
+  "languages": [
+    "primordial"
+  ],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "scimitar",
+          "count": 2
+        },
+        {
+          "action": "hurl_flame",
+          "count": 1
+        }
+      ],
+      "summary": "Two Scimitar attacks and a Hurl Flame."
+    },
+    {
+      "id": "scimitar",
+      "name": "Scimitar",
+      "kind": "melee",
+      "attack": {
+        "bonus": 10,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "2d6+6",
+          "type": "slashing"
+        },
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Scimitar: +10 to hit, 2d6+6 Slashing."
+    },
+    {
+      "id": "hurl_flame",
+      "name": "Hurl Flame",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 7,
+        "range": [
+          120,
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 17,
+          "dice": "5d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Hurl Flame: +7 to hit, 5d6 Fire."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A towering genie of fire, cruel and proud."
+}

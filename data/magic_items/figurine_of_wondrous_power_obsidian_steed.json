@@ -1,0 +1,40 @@
+{
+  "id": "figurine_of_wondrous_power_obsidian_steed",
+  "name": "Figurine of Wondrous Power (Obsidian Steed)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "figurine",
+  "variant_of": "figurine_of_wondrous_power",
+  "powers": [
+    {
+      "id": "animate",
+      "name": "Animate",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "params": {
+        "monster": "nightmare",
+        "count": 1,
+        "hours": 24
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Magic action: throw it to a spot within 60 ft: it becomes a Nightmare for up to 24 hours, then can't be used again for 5 days.",
+      "uses": {
+        "count": 1,
+        "per": "dawns:5"
+      }
+    }
+  ],
+  "summary": "Becomes a Nightmare that serves you for up to 24 hours (once every 5 days).",
+  "text": "Small enough for a pocket, this statuette comes alive when you use a Magic action to hurl it at a spot on the ground up to 60 feet away, turning into a Nightmare. If something already occupies that space, the transformation fails. The Nightmare regards you and your allies as friends, knows your languages and does as you say; given no orders, it defends itself and otherwise does nothing. After up to 24 hours it becomes a figurine once more, or sooner if it is reduced to 0 Hit Points or you touch it and use a Magic action to end the transformation. Once it reverts, the figurine needs 5 days before it works again."
+}

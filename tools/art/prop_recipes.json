@@ -3,7 +3,8 @@
   "views": {
     "stand": "in the same three-quarter view from slightly above",
     "wall": "seen straight on from the front as a flat elevation with no perspective, as if fixed flat against a wall",
-    "floor": "seen from directly above as a flat top-down view with no perspective, lying flat on the ground"
+    "floor": "seen from directly above as a flat top-down view with no perspective, lying flat on the ground",
+    "pair": "in the same three-quarter view from slightly above"
   },
   "sheet_prompt": "A game prop sheet: four separate objects arranged in a 2 by 2 grid, each centred in its own quarter of the image with wide empty white space around it; the objects never touch, overlap or cross the middle of the image. Top left: {0}. Top right: {1}. Bottom left: {2}. Bottom right: {3}. Every object is shown whole, {view}, sized to fill most of its quarter, on a plain flat white background, no ground, no ground shadows, no labels, no text, no grid lines, no borders.",
   "single_prompt": "A single game prop: {0}, shown whole and alone, {view}, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
@@ -391,20 +392,543 @@
         "vardo",
         "hay_bale"
       ]
+    },
+    "p5_abbey": {
+      "view": "stand",
+      "items": [
+        "scarecrow",
+        "scarecrow_stitched",
+        "statue_saint",
+        "stone_bench"
+      ]
+    },
+    "p5_rooms": {
+      "view": "stand",
+      "items": [
+        "pipe_organ",
+        "surgery_table",
+        "spinning_wheel",
+        "cage_hanging"
+      ]
+    },
+    "p5_winery": {
+      "view": "stand",
+      "items": [
+        "wine_press",
+        "wine_vat",
+        "cask_rack",
+        "millstone"
+      ]
+    },
+    "p5_hills": {
+      "view": "stand",
+      "items": [
+        "vines",
+        "standing_stones",
+        "wicker_cage",
+        "strahd_effigy"
+      ]
+    },
+    "p5_holt": {
+      "view": "stand",
+      "items": [
+        "dragon_bones",
+        "beacon_cradle",
+        "barrow",
+        "druid_totem"
+      ]
+    },
+    "p5_wall": {
+      "view": "wall",
+      "items": [
+        "sunburst",
+        "banner_dragon",
+        "oven_brick",
+        "window_stained"
+      ]
+    },
+    "p5_floor": {
+      "view": "floor",
+      "items": [
+        "garden_bed",
+        "crater",
+        "offering_circle",
+        "bloodstain"
+      ]
+    },
+    "windmill": {
+      "view": "stand",
+      "items": [
+        "windmill"
+      ],
+      "aspect": "3:4"
+    },
+    "gulthias_tree": {
+      "view": "stand",
+      "items": [
+        "gulthias_tree"
+      ],
+      "aspect": "1:1"
+    },
+    "bell_tower": {
+      "view": "stand",
+      "items": [
+        "bell_tower"
+      ],
+      "aspect": "2:3"
+    },
+    "p5_late": {
+      "view": "stand",
+      "items": [
+        "amber_sarcophagus",
+        "rowboat",
+        "fishing_nets",
+        "roc_nest"
+      ]
+    },
+    "hut_lysaga": {
+      "view": "stand",
+      "items": [
+        "hut_lysaga"
+      ],
+      "aspect": "3:4"
+    },
+    "tower_vr": {
+      "view": "stand",
+      "items": [
+        "tower_vr"
+      ],
+      "aspect": "2:3"
+    },
+    "colossus": {
+      "view": "stand",
+      "items": [
+        "colossus"
+      ],
+      "aspect": "2:3"
+    },
+    "statue_faceless": {
+      "view": "stand",
+      "items": [
+        "statue_faceless"
+      ],
+      "aspect": "2:3"
+    },
+    "pair_chest_table_set": {
+      "view": "pair",
+      "items": [
+        "chest",
+        "chest_back",
+        "table_set",
+        "table_set_back"
+      ],
+      "generated_as": "props_test/test_pair",
+      "subjects_note": "generated with the pair prompt and the chest and dining table subjects"
+    },
+    "pair_chest_iron_chest_painted": {
+      "view": "pair",
+      "items": [
+        "chest_iron",
+        "chest_iron_back",
+        "chest_painted",
+        "chest_painted_back"
+      ]
+    },
+    "pair_footlocker_trunk": {
+      "view": "pair",
+      "items": [
+        "footlocker",
+        "footlocker_back",
+        "trunk",
+        "trunk_back"
+      ]
+    },
+    "pair_strongbox_toy_chest": {
+      "view": "pair",
+      "items": [
+        "strongbox",
+        "strongbox_back",
+        "toy_chest",
+        "toy_chest_back"
+      ]
+    },
+    "pair_table_table_chairs": {
+      "view": "pair",
+      "items": [
+        "table",
+        "table_back",
+        "table_chairs",
+        "table_chairs_back"
+      ]
+    },
+    "pair_bed_bed_small": {
+      "view": "pair",
+      "items": [
+        "bed",
+        "bed_back",
+        "bed_small",
+        "bed_small_back"
+      ]
+    },
+    "pair_bed_canopy_crib": {
+      "view": "pair",
+      "items": [
+        "bed_canopy",
+        "bed_canopy_back",
+        "crib",
+        "crib_back"
+      ]
+    },
+    "pair_armchair_settee": {
+      "view": "pair",
+      "items": [
+        "armchair",
+        "armchair_back",
+        "settee",
+        "settee_back"
+      ]
+    },
+    "pair_rocking_chair_harpsichord": {
+      "view": "pair",
+      "items": [
+        "rocking_chair",
+        "rocking_chair_back",
+        "harpsichord",
+        "harpsichord_back"
+      ]
+    },
+    "pair_bathtub_coffin": {
+      "view": "pair",
+      "items": [
+        "bathtub",
+        "bathtub_back",
+        "coffin",
+        "coffin_back"
+      ]
+    },
+    "pair_crypt_crypt_small": {
+      "view": "pair",
+      "items": [
+        "crypt",
+        "crypt_back",
+        "crypt_small",
+        "crypt_small_back"
+      ]
+    },
+    "pair_amber_sarcophagus_altar_stone": {
+      "view": "pair",
+      "items": [
+        "amber_sarcophagus",
+        "amber_sarcophagus_back",
+        "altar_stone",
+        "altar_stone_back"
+      ]
+    },
+    "pair_altar_church_pew": {
+      "view": "pair",
+      "items": [
+        "altar_church",
+        "altar_church_back",
+        "pew",
+        "pew_back"
+      ]
+    },
+    "pair_lectern_desk": {
+      "view": "pair",
+      "items": [
+        "lectern",
+        "lectern_back",
+        "desk",
+        "desk_back"
+      ]
+    },
+    "pair_armor_stand_bird_case": {
+      "view": "pair",
+      "items": [
+        "armor_stand",
+        "armor_stand_back",
+        "bird_case",
+        "bird_case_back"
+      ]
+    },
+    "pair_dollhouse_rocking_horse": {
+      "view": "pair",
+      "items": [
+        "dollhouse",
+        "dollhouse_back",
+        "rocking_horse",
+        "rocking_horse_back"
+      ]
+    },
+    "pair_sheeted_furniture_spinning_wheel": {
+      "view": "pair",
+      "items": [
+        "sheeted_furniture",
+        "sheeted_furniture_back",
+        "spinning_wheel",
+        "spinning_wheel_back"
+      ]
+    },
+    "pair_surgery_table_stocks": {
+      "view": "pair",
+      "items": [
+        "surgery_table",
+        "surgery_table_back",
+        "stocks",
+        "stocks_back"
+      ]
+    },
+    "pair_cart_broken_handcart": {
+      "view": "pair",
+      "items": [
+        "cart_broken",
+        "cart_broken_back",
+        "handcart",
+        "handcart_back"
+      ]
+    },
+    "pair_wagon_vardo": {
+      "view": "pair",
+      "items": [
+        "wagon",
+        "wagon_back",
+        "vardo",
+        "vardo_back"
+      ]
+    },
+    "pair_market_stall_notice_board": {
+      "view": "pair",
+      "items": [
+        "market_stall",
+        "market_stall_back",
+        "notice_board",
+        "notice_board_back"
+      ]
+    },
+    "pair_signpost_signpost_broken": {
+      "view": "pair",
+      "items": [
+        "signpost",
+        "signpost_back",
+        "signpost_broken",
+        "signpost_broken_back"
+      ]
+    },
+    "pair_shrine_small_statue_knight": {
+      "view": "pair",
+      "items": [
+        "shrine_small",
+        "shrine_small_back",
+        "statue_knight",
+        "statue_knight_back"
+      ]
+    },
+    "pair_statue_saint_scarecrow": {
+      "view": "pair",
+      "items": [
+        "statue_saint",
+        "statue_saint_back",
+        "scarecrow",
+        "scarecrow_back"
+      ]
+    },
+    "pair_scarecrow_stitched_gallows": {
+      "view": "pair",
+      "items": [
+        "scarecrow_stitched",
+        "scarecrow_stitched_back",
+        "gallows",
+        "gallows_back"
+      ]
+    },
+    "pair_horse_rowboat": {
+      "view": "pair",
+      "items": [
+        "horse",
+        "horse_back",
+        "rowboat",
+        "rowboat_back"
+      ]
+    },
+    "pair_wine_press_fishing_nets": {
+      "view": "pair",
+      "items": [
+        "wine_press",
+        "wine_press_back",
+        "fishing_nets",
+        "fishing_nets_back"
+      ]
+    },
+    "pair_puppet_theatre_cage_covered": {
+      "view": "pair",
+      "items": [
+        "puppet_theatre",
+        "puppet_theatre_back",
+        "cage_covered",
+        "cage_covered_back"
+      ]
+    },
+    "pair_stone_bench_bridge_parapet": {
+      "view": "pair",
+      "items": [
+        "stone_bench",
+        "stone_bench_back",
+        "bridge_parapet",
+        "bridge_parapet_back"
+      ]
+    },
+    "pair_wall_low_fence": {
+      "view": "pair",
+      "items": [
+        "wall_low",
+        "wall_low_back",
+        "fence",
+        "fence_back"
+      ]
+    },
+    "pair_stair_riser_coats": {
+      "view": "pair",
+      "items": [
+        "stair_riser",
+        "stair_riser_back",
+        "coats",
+        "coats_back"
+      ]
+    },
+    "pair_cottage_tent": {
+      "view": "pair",
+      "items": [
+        "cottage",
+        "cottage_back",
+        "tent",
+        "tent_back"
+      ]
+    },
+    "pair_barn_collapsed_hut_lysaga": {
+      "view": "pair",
+      "items": [
+        "barn_collapsed",
+        "barn_collapsed_back",
+        "hut_lysaga",
+        "hut_lysaga_back"
+      ]
+    },
+    "pair_statue_faceless_colossus": {
+      "view": "pair",
+      "items": [
+        "statue_faceless",
+        "statue_faceless_back",
+        "colossus",
+        "colossus_back"
+      ]
+    },
+    "pair_strahd_effigy_druid_totem": {
+      "view": "pair",
+      "items": [
+        "strahd_effigy",
+        "strahd_effigy_back",
+        "druid_totem",
+        "druid_totem_back"
+      ]
+    },
+    "pair_sword_leaning_carcass": {
+      "view": "pair",
+      "items": [
+        "sword_leaning",
+        "sword_leaning_back",
+        "carcass",
+        "carcass_back"
+      ]
+    },
+    "pair_gravestone_milestone": {
+      "view": "pair",
+      "items": [
+        "gravestone",
+        "gravestone_back",
+        "milestone",
+        "milestone_back"
+      ]
+    },
+    "pair_workbench_shop_counter": {
+      "view": "pair",
+      "items": [
+        "workbench",
+        "workbench_back",
+        "shop_counter",
+        "shop_counter_back"
+      ]
+    },
+    "pair_bar_counter_grave_mound": {
+      "view": "pair",
+      "items": [
+        "bar_counter",
+        "bar_counter_back",
+        "grave_mound",
+        "grave_mound_back"
+      ]
+    },
+    "pair_barrow_crow_barrel": {
+      "view": "pair",
+      "items": [
+        "barrow",
+        "barrow_back",
+        "crow_barrel",
+        "crow_barrel_back"
+      ]
+    },
+    "fronts_1": {
+      "view": "wall",
+      "items": [
+        "book_shelf_front",
+        "shelves_front",
+        "wardrobe_front",
+        "cabinet_glass_front"
+      ]
+    },
+    "fronts_2": {
+      "view": "wall",
+      "items": [
+        "sideboard_front",
+        "pipe_organ_front",
+        "dressing_table_front",
+        "desk_front"
+      ]
+    },
+    "fronts_3": {
+      "view": "wall",
+      "items": [
+        "bar_front",
+        "counter_front",
+        "workbench_front",
+        "cask_rack_front"
+      ]
+    },
+    "fronts_4": {
+      "view": "wall",
+      "items": [
+        "cabinet_small_front",
+        "shelves_front_b",
+        "chest_of_drawers_front",
+        "wine_shelf_front"
+      ]
     }
   },
   "props": {
     "clock_standing": {
-      "height": 2.0
+      "height": 2.0,
+      "subject": "a tall grandfather clock in dark carved walnut with a pale clock face and a brass pendulum"
     },
     "armor_stand": {
-      "height": 1.6
+      "height": 1.6,
+      "subject": "an empty suit-of-armour stand, a wooden dummy on a cross base with a dented iron helmet on top"
     },
     "harpsichord": {
-      "height": 1.0
+      "height": 1.0,
+      "subject": "an old harpsichord in black lacquered wood with yellowed keys and a raised lid"
     },
     "chest_iron": {
-      "height": 0.7
+      "height": 0.7,
+      "subject": "a heavy iron-banded wooden chest with a big padlock"
     },
     "table_set": {
       "height": 0.95,
@@ -1033,6 +1557,606 @@
     "hay_bale": {
       "height": 0.6,
       "subject": "a rectangular bale of golden hay tied with twine"
+    },
+    "scarecrow": {
+      "subject": "a ragged scarecrow on a wooden cross-post with a sack head, a battered hat and straw poking out",
+      "height": 1.8
+    },
+    "scarecrow_stitched": {
+      "subject": "a crude stitched-together scarecrow figure of patched leather and burlap with mismatched stitched limbs, standing on a post",
+      "height": 1.9
+    },
+    "statue_saint": {
+      "subject": "a weathered grey stone statue of a saintly woman in robes holding a sun symbol aloft, on a square plinth",
+      "height": 2.4
+    },
+    "stone_bench": {
+      "subject": "a plain weathered grey stone bench",
+      "height": 0.6
+    },
+    "pipe_organ": {
+      "subject": "a church pipe organ: a dark carved wooden case with a keyboard and tall tarnished brass pipes",
+      "height": 2.2
+    },
+    "surgery_table": {
+      "subject": "a grim wooden surgery table with leather straps, stained cloths and a tray of crude tools",
+      "height": 0.9
+    },
+    "spinning_wheel": {
+      "subject": "an old wooden spinning wheel with a stool",
+      "height": 1.0
+    },
+    "cage_hanging": {
+      "subject": "an empty rusty iron birdcage-shaped cage big enough for a child, hanging from a chain on a wooden post",
+      "height": 2.0
+    },
+    "wine_press": {
+      "subject": "a great wooden wine press: a huge screw and beam over a slatted wooden basket stained purple",
+      "height": 2.0,
+      "saturate": 1.2
+    },
+    "wine_vat": {
+      "subject": "a big open wooden fermenting vat bound with iron hoops, dark purple wine inside",
+      "height": 1.2,
+      "saturate": 1.2
+    },
+    "cask_rack": {
+      "subject": "a wooden rack holding a stack of wine casks lying on their sides",
+      "height": 1.4
+    },
+    "millstone": {
+      "subject": "a huge round grey millstone lying flat with a square hole in the middle",
+      "height": 0.6
+    },
+    "vines": {
+      "subject": "a short row of gnarled grapevines on a wooden post-and-wire trellis, a few dark purple grape bunches",
+      "height": 1.2,
+      "saturate": 1.2
+    },
+    "standing_stones": {
+      "subject": "a ring of three tall rough grey standing stones carved with faint spirals",
+      "height": 2.2
+    },
+    "wicker_cage": {
+      "subject": "a tall wicker cage woven from branches, shaped like a cylinder with a pointed top, empty",
+      "height": 1.8
+    },
+    "strahd_effigy": {
+      "subject": "a towering wicker effigy of a tall caped vampire lord with a high collar, woven from branches and twigs, on a wooden frame",
+      "height": 4.0
+    },
+    "dragon_bones": {
+      "subject": "the huge heaped bones of a dragon: a long skull with horns, curved ribs and a coiled spine, pale and old",
+      "height": 1.6
+    },
+    "beacon_cradle": {
+      "subject": "a great iron beacon cradle on a stone base, an empty iron basket for a signal fire, soot-blackened",
+      "height": 1.8
+    },
+    "barrow": {
+      "subject": "a grassy earthen barrow mound with a dark stone-framed doorway into it",
+      "height": 1.6
+    },
+    "druid_totem": {
+      "subject": "a crude druid totem pole of carved wood hung with antlers, bones and twigs",
+      "height": 2.4
+    },
+    "sunburst": {
+      "subject": "a gilded carved wooden sunburst: a golden sun with a calm face and long straight rays",
+      "height": 0.8,
+      "saturate": 1.1
+    },
+    "banner_dragon": {
+      "subject": "a long hanging banner of deep blue cloth with a silver dragon emblem, frayed at the bottom",
+      "height": 1.0,
+      "saturate": 1.2
+    },
+    "oven_brick": {
+      "subject": "a big domed brick bread oven with an arched iron door and an orange fire glowing inside",
+      "height": 1.1
+    },
+    "window_stained": {
+      "subject": "a tall arched stained-glass window of a sun and a robed saint in gold, red and blue",
+      "height": 1.1,
+      "saturate": 1.2
+    },
+    "garden_bed": {
+      "subject": "a frosty vegetable garden bed of dark soil with withered cabbages and dead stalks",
+      "width": 1.0
+    },
+    "crater": {
+      "subject": "a scorched black crater in the earth with cracked burnt ground around it",
+      "width": 1.6
+    },
+    "offering_circle": {
+      "subject": "a ring of melted candle stubs, small bones and trinkets laid out in a circle, nothing in the middle",
+      "width": 1.0
+    },
+    "bloodstain": {
+      "subject": "a dark red bloodstain splatter",
+      "width": 0.9,
+      "saturate": 1.2
+    },
+    "windmill": {
+      "subject": "a ruined old Barovian windmill: a tall leaning tower of grey stone and dark timber with a pointed shingle cap, four tattered broken sails, and a small door at its foot",
+      "height": 6.0
+    },
+    "gulthias_tree": {
+      "subject": "the Gulthias Tree: a huge twisted evil tree with a black trunk split open like a wound, bleeding red sap, gnarled leafless branches like claws and roots heaving from the ground",
+      "height": 6.5,
+      "saturate": 1.2
+    },
+    "bell_tower": {
+      "subject": "a tall square stone bell tower with a pointed slate roof, an open belfry with a bronze bell and arched windows",
+      "height": 6.0
+    },
+    "amber_sarcophagus": {
+      "height": 1.1,
+      "saturate": 1.2,
+      "subject": "a sarcophagus carved from a single block of glowing golden amber, a dark shadowy shape trapped inside, on a black stone base"
+    },
+    "rowboat": {
+      "height": 0.6,
+      "subject": "a small old wooden rowboat pulled up on the shore with two oars inside"
+    },
+    "fishing_nets": {
+      "height": 1.4,
+      "subject": "fishing nets hung to dry on a wooden rack of poles, with a few floats and a basket"
+    },
+    "roc_nest": {
+      "height": 0.9,
+      "subject": "a huge bird's nest of broken branches and bones with one giant cracked egg"
+    },
+    "hut_lysaga": {
+      "height": 5.0,
+      "subject": "Baba Lysaga's creeping hut: a crooked little wooden hut with a sagging thatched roof and a chimney, perched on top of a huge gnarled tree stump whose thick roots spread out beneath it like legs"
+    },
+    "tower_vr": {
+      "height": 7.0,
+      "subject": "a tall round grey stone wizard's tower with arrow-slit windows, a heavy iron-bound door at its foot and a conical slate roof, weathered and mossy"
+    },
+    "colossus": {
+      "height": 5.0,
+      "subject": "a colossal ancient stone statue of a robed and hooded figure, cracked and partly crumbled, with frost on its shoulders, on a square plinth"
+    },
+    "statue_faceless": {
+      "height": 5.5,
+      "subject": "a towering grey stone statue of a hooded robed god with no face at all, a smooth blank oval under the hood, hands open at its sides"
+    },
+    "table": {
+      "subject": "a plain rough wooden table with four sturdy legs",
+      "height": 0.7
+    },
+    "bed": {
+      "subject": "a simple wooden bed with a pillow and a striped blanket",
+      "height": 0.8
+    },
+    "crate": {
+      "subject": "a wooden crate"
+    },
+    "wagon": {
+      "subject": "a covered wagon with a patched canvas cover and big wooden wheels",
+      "height": 1.8
+    },
+    "market_stall": {
+      "subject": "a wooden market stall with a red-and-white striped awning and goods on its counter",
+      "height": 2.0
+    },
+    "gravestone": {
+      "subject": "a weathered, slightly leaning grey stone gravestone with a rounded top, cracks and moss, no lettering",
+      "height": 0.9
+    },
+    "chest_back": {
+      "height": 0.6,
+      "back_of": "chest"
+    },
+    "table_set_back": {
+      "height": 0.95,
+      "back_of": "table_set"
+    },
+    "chest_iron_back": {
+      "height": 0.7,
+      "back_of": "chest_iron"
+    },
+    "chest_painted_back": {
+      "height": 0.6,
+      "back_of": "chest_painted"
+    },
+    "footlocker_back": {
+      "height": 0.5,
+      "back_of": "footlocker"
+    },
+    "trunk_back": {
+      "height": 0.6,
+      "back_of": "trunk"
+    },
+    "strongbox_back": {
+      "height": 0.4,
+      "back_of": "strongbox"
+    },
+    "toy_chest_back": {
+      "height": 0.7,
+      "back_of": "toy_chest"
+    },
+    "table_back": {
+      "height": 0.7,
+      "back_of": "table"
+    },
+    "table_chairs_back": {
+      "height": 1.0,
+      "back_of": "table_chairs"
+    },
+    "bed_back": {
+      "height": 0.8,
+      "back_of": "bed"
+    },
+    "bed_small_back": {
+      "height": 0.8,
+      "back_of": "bed_small"
+    },
+    "bed_canopy_back": {
+      "height": 2.0,
+      "saturate": 1.2,
+      "back_of": "bed_canopy"
+    },
+    "crib_back": {
+      "height": 0.9,
+      "back_of": "crib"
+    },
+    "armchair_back": {
+      "saturate": 1.2,
+      "height": 1.1,
+      "back_of": "armchair"
+    },
+    "settee_back": {
+      "height": 1.0,
+      "back_of": "settee"
+    },
+    "rocking_chair_back": {
+      "height": 1.1,
+      "back_of": "rocking_chair"
+    },
+    "harpsichord_back": {
+      "height": 1.0,
+      "back_of": "harpsichord"
+    },
+    "bathtub_back": {
+      "height": 0.7,
+      "back_of": "bathtub"
+    },
+    "coffin_back": {
+      "height": 0.8,
+      "back_of": "coffin"
+    },
+    "crypt_back": {
+      "height": 1.0,
+      "back_of": "crypt"
+    },
+    "crypt_small_back": {
+      "height": 0.7,
+      "back_of": "crypt_small"
+    },
+    "amber_sarcophagus_back": {
+      "height": 1.1,
+      "saturate": 1.2,
+      "back_of": "amber_sarcophagus"
+    },
+    "altar_stone_back": {
+      "height": 1.0,
+      "saturate": 1.2,
+      "back_of": "altar_stone"
+    },
+    "altar_church_back": {
+      "saturate": 1.1,
+      "height": 1.1,
+      "back_of": "altar_church"
+    },
+    "pew_back": {
+      "height": 0.9,
+      "back_of": "pew"
+    },
+    "lectern_back": {
+      "height": 1.3,
+      "back_of": "lectern"
+    },
+    "desk_back": {
+      "height": 1.1,
+      "back_of": "desk"
+    },
+    "armor_stand_back": {
+      "height": 1.6,
+      "back_of": "armor_stand"
+    },
+    "bird_case_back": {
+      "height": 1.5,
+      "back_of": "bird_case"
+    },
+    "dollhouse_back": {
+      "height": 1.0,
+      "back_of": "dollhouse"
+    },
+    "rocking_horse_back": {
+      "height": 0.8,
+      "back_of": "rocking_horse"
+    },
+    "sheeted_furniture_back": {
+      "height": 1.2,
+      "back_of": "sheeted_furniture"
+    },
+    "spinning_wheel_back": {
+      "height": 1.0,
+      "back_of": "spinning_wheel"
+    },
+    "surgery_table_back": {
+      "height": 0.9,
+      "back_of": "surgery_table"
+    },
+    "stocks_back": {
+      "height": 1.1,
+      "back_of": "stocks"
+    },
+    "cart_broken_back": {
+      "height": 1.2,
+      "back_of": "cart_broken"
+    },
+    "handcart_back": {
+      "height": 1.0,
+      "back_of": "handcart"
+    },
+    "wagon_back": {
+      "height": 1.8,
+      "back_of": "wagon"
+    },
+    "vardo_back": {
+      "height": 2.0,
+      "saturate": 1.2,
+      "back_of": "vardo"
+    },
+    "market_stall_back": {
+      "height": 2.0,
+      "back_of": "market_stall"
+    },
+    "notice_board_back": {
+      "height": 2.0,
+      "back_of": "notice_board"
+    },
+    "signpost_back": {
+      "height": 2.2,
+      "back_of": "signpost"
+    },
+    "signpost_broken_back": {
+      "height": 1.6,
+      "back_of": "signpost_broken"
+    },
+    "shrine_small_back": {
+      "height": 1.8,
+      "back_of": "shrine_small"
+    },
+    "statue_knight_back": {
+      "height": 1.7,
+      "back_of": "statue_knight"
+    },
+    "statue_saint_back": {
+      "height": 2.4,
+      "back_of": "statue_saint"
+    },
+    "scarecrow_back": {
+      "height": 1.8,
+      "back_of": "scarecrow"
+    },
+    "scarecrow_stitched_back": {
+      "height": 1.9,
+      "back_of": "scarecrow_stitched"
+    },
+    "gallows_back": {
+      "height": 3.0,
+      "back_of": "gallows"
+    },
+    "horse_back": {
+      "saturate": 1.1,
+      "height": 1.7,
+      "back_of": "horse"
+    },
+    "rowboat_back": {
+      "height": 0.6,
+      "back_of": "rowboat"
+    },
+    "wine_press_back": {
+      "height": 2.0,
+      "saturate": 1.2,
+      "back_of": "wine_press"
+    },
+    "fishing_nets_back": {
+      "height": 1.4,
+      "back_of": "fishing_nets"
+    },
+    "puppet_theatre_back": {
+      "saturate": 1.2,
+      "height": 1.6,
+      "back_of": "puppet_theatre"
+    },
+    "cage_covered_back": {
+      "height": 1.2,
+      "back_of": "cage_covered"
+    },
+    "stone_bench_back": {
+      "height": 0.6,
+      "back_of": "stone_bench"
+    },
+    "bridge_parapet_back": {
+      "height": 0.9,
+      "back_of": "bridge_parapet"
+    },
+    "wall_low_back": {
+      "height": 0.8,
+      "back_of": "wall_low"
+    },
+    "fence_back": {
+      "height": 0.9,
+      "back_of": "fence"
+    },
+    "stair_riser_back": {
+      "height": 1.2,
+      "back_of": "stair_riser"
+    },
+    "coats_back": {
+      "height": 1.7,
+      "back_of": "coats"
+    },
+    "cottage_back": {
+      "height": 3.4,
+      "back_of": "cottage"
+    },
+    "tent_back": {
+      "saturate": 1.2,
+      "height": 2.6,
+      "back_of": "tent"
+    },
+    "barn_collapsed_back": {
+      "height": 2.0,
+      "back_of": "barn_collapsed"
+    },
+    "hut_lysaga_back": {
+      "height": 5.0,
+      "back_of": "hut_lysaga"
+    },
+    "statue_faceless_back": {
+      "height": 5.5,
+      "back_of": "statue_faceless"
+    },
+    "colossus_back": {
+      "height": 5.0,
+      "back_of": "colossus"
+    },
+    "strahd_effigy_back": {
+      "height": 4.0,
+      "back_of": "strahd_effigy"
+    },
+    "druid_totem_back": {
+      "height": 2.4,
+      "back_of": "druid_totem"
+    },
+    "sword_leaning_back": {
+      "height": 1.0,
+      "back_of": "sword_leaning"
+    },
+    "carcass_back": {
+      "height": 0.5,
+      "back_of": "carcass"
+    },
+    "gravestone_back": {
+      "height": 0.9,
+      "back_of": "gravestone"
+    },
+    "milestone_back": {
+      "height": 0.8,
+      "back_of": "milestone"
+    },
+    "workbench_back": {
+      "height": 1.1,
+      "back_of": "workbench"
+    },
+    "shop_counter_back": {
+      "height": 1.0,
+      "back_of": "shop_counter"
+    },
+    "bar_counter_back": {
+      "height": 1.1,
+      "back_of": "bar_counter"
+    },
+    "grave_mound_back": {
+      "height": 0.5,
+      "back_of": "grave_mound"
+    },
+    "barrow_back": {
+      "height": 1.6,
+      "back_of": "barrow"
+    },
+    "crow_barrel_back": {
+      "height": 1.1,
+      "back_of": "crow_barrel"
+    },
+    "book_shelf_front": {
+      "height": 1.9,
+      "subject": "a tall dark wooden bookcase packed with old leather-bound books",
+      "mount": "front"
+    },
+    "shelves_front": {
+      "height": 1.8,
+      "subject": "a tall free-standing wooden shelf unit stacked with jars, sacks and small boxes",
+      "mount": "front"
+    },
+    "wardrobe_front": {
+      "height": 2.0,
+      "subject": "a tall dark wooden wardrobe with two carved doors and brass handles",
+      "mount": "front"
+    },
+    "cabinet_glass_front": {
+      "height": 1.8,
+      "subject": "a tall glass-fronted hunting cabinet in dark wood holding crossbows and hunting spears",
+      "mount": "front"
+    },
+    "sideboard_front": {
+      "height": 1.1,
+      "subject": "a carved dark wooden sideboard with drawers and a tarnished silver candelabra on top",
+      "mount": "front"
+    },
+    "pipe_organ_front": {
+      "height": 2.2,
+      "subject": "a church pipe organ: a dark carved wooden case with a keyboard and tall tarnished brass pipes",
+      "mount": "front"
+    },
+    "dressing_table_front": {
+      "height": 1.4,
+      "subject": "a dark wooden dressing table with an oval mirror, a hairbrush and small perfume bottles",
+      "mount": "front"
+    },
+    "desk_front": {
+      "height": 1.1,
+      "subject": "a dark wooden writing desk with scattered papers, an inkwell with a quill and a candle stub",
+      "mount": "front"
+    },
+    "bar_front": {
+      "height": 1.1,
+      "subject": "a long dark wooden tavern bar counter with tankards and a wine jug on top",
+      "mount": "front"
+    },
+    "counter_front": {
+      "height": 1.0,
+      "subject": "a wooden shop counter with a set of brass scales, a ledger and small boxes on it",
+      "mount": "front"
+    },
+    "workbench_front": {
+      "height": 1.1,
+      "subject": "a cluttered toymaker's workbench with carving tools, wooden doll heads and puppet limbs",
+      "mount": "front"
+    },
+    "cask_rack_front": {
+      "height": 1.4,
+      "subject": "a wooden rack holding a stack of wine casks lying on their sides, their round ends facing out",
+      "mount": "front"
+    },
+    "cabinet_small_front": {
+      "height": 1.0,
+      "subject": "a small dark wooden cabinet on short legs with a little mirror set into its door",
+      "mount": "front"
+    },
+    "shelves_front_b": {
+      "height": 1.6,
+      "subject": "a tall narrow wooden bookcase of old books and scrolls, some shelves sagging",
+      "mount": "front"
+    },
+    "chest_of_drawers_front": {
+      "height": 1.2,
+      "mount": "front",
+      "subject": "a dark wooden chest of drawers with brass handles and a plain top"
+    },
+    "wine_shelf_front": {
+      "height": 1.8,
+      "mount": "front",
+      "subject": "a tall wooden wine rack of square cubbies full of dusty dark wine bottles lying on their sides"
     }
-  }
+  },
+  "pair_prompt": "A game prop sheet: two objects, each shown twice, arranged in a 2 by 2 grid with wide empty white space between the four drawings; nothing touches or crosses the middle of the image. Every drawing uses the same three-quarter view from slightly above, and each object is turned the same way in its pair: its front faces toward the lower right of the picture. Top left: {0}, seen from the front. Top right: the very same object seen from directly behind at the same angle, so its back faces toward the lower right. Bottom left: {1}, seen from the front. Bottom right: the very same object seen from directly behind at the same angle. Same colours, size and details in each pair, on a plain flat white background, no ground, no ground shadows, no labels, no text, no grid lines, no borders.",
+  "pairs": {}
 }

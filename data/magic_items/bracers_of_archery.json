@@ -1,0 +1,46 @@
+{
+  "id": "bracers_of_archery",
+  "name": "Bracers of Archery",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "bracers",
+  "modifiers": [
+    {
+      "stat": "proficiency",
+      "kind": "weapon",
+      "value": "longbow"
+    },
+    {
+      "stat": "proficiency",
+      "kind": "weapon",
+      "value": "shortbow"
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "base_item": "longbow"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "base_item": "shortbow"
+      }
+    }
+  ],
+  "worn": "wrists",
+  "summary": "Proficiency with Longbows and Shortbows, and +2 damage with them.",
+  "text": "Wearing these bracers makes you proficient with both the Longbow and the Shortbow, and your damage rolls with either bow get a +2 bonus."
+}

@@ -1,0 +1,76 @@
+{
+  "id": "nightmare",
+  "name": "Nightmare",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "fiend",
+  "alignment": "neutral evil",
+  "ac": 13,
+  "initiative": 2,
+  "hp": {
+    "average": 68,
+    "dice": "8d10+24"
+  },
+  "speed": {
+    "walk": 60,
+    "fly": 90
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 15,
+    "con": 16,
+    "int": 10,
+    "wis": 13,
+    "cha": 15
+  },
+  "immunities": [
+    "fire"
+  ],
+  "senses": {},
+  "passive_perception": 11,
+  "languages": [
+    "abyssal",
+    "infernal"
+  ],
+  "cr": 3,
+  "xp": 700,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "illumination",
+      "name": "Illumination",
+      "action": "passive",
+      "summary": "Sheds bright light 10 ft and dim light 10 ft more.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "hooves",
+      "name": "Hooves",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "2d8+4",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Hooves: +6 to hit, 2d8+4 Bludgeoning."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A black horse with a burning mane and hooves of fire."
+}

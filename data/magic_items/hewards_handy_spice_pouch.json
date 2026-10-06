@@ -1,0 +1,39 @@
+{
+  "id": "hewards_handy_spice_pouch",
+  "name": "Heward's Handy Spice Pouch",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false,
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "pouch",
+  "powers": [
+    {
+      "id": "pinch",
+      "name": "Take a pinch",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "yields a pinch of whatever seasoning you name"
+      },
+      "field": true,
+      "text": "It yields a pinch of whatever seasoning you name. (No other effect in the game.)",
+      "charges": 1,
+      "combat": false
+    }
+  ],
+  "summary": "10 charges: a pinch of any seasoning you like.",
+  "text": "A belt pouch that looks empty yet holds 10 charges. As a Magic action while holding it, spend 1 charge and name any nonmagical seasoning, such as cilantro, saffron, pepper or salt, then draw out a pinch of it, enough to flavour one meal. Each dawn, the pouch recovers 1d6 + 4 spent charges."
+}

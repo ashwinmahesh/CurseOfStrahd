@@ -1,0 +1,118 @@
+{
+  "id": "sword_of_kas",
+  "name": "Sword of Kas",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true,
+    "sentient": true
+  },
+  "theme": "relics",
+  "icon": "sword_of_kas",
+  "treasure": {
+    "random": false
+  },
+  "template": {
+    "on": "weapon",
+    "items": [
+      "longsword"
+    ],
+    "name": "Sword of Kas"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "crit_range",
+      "value": 19,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "flag",
+      "value": "kas_initiative"
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs": [
+          "undead"
+        ],
+        "dice": "2d10",
+        "type": "slashing"
+      }
+    ],
+    "special": [
+      "kas"
+    ]
+  },
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 1,
+      "major_beneficial": 1,
+      "minor_detrimental": 1,
+      "major_detrimental": 1
+    }
+  },
+  "powers": [
+    {
+      "id": "call_lightning",
+      "name": "Call Lightning",
+      "spell": "call_lightning",
+      "dc": 18,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "divine_word",
+      "name": "Divine Word",
+      "spell": "divine_word",
+      "dc": 18,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "finger_of_death",
+      "name": "Finger Of Death",
+      "spell": "finger_of_death",
+      "dc": 18,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "sentience": {
+    "int": 15,
+    "wis": 13,
+    "cha": 16,
+    "alignment": "chaotic evil",
+    "purpose": "to destroy Vecna"
+  },
+  "summary": "+3 longsword that crits on 19-20, an extra 2d10 against Undead, and a burning hatred of Vecna.",
+  "text": "Kas the Bloody Handed served Vecna as bodyguard and ruthless chief lieutenant until he turned on his master with this very blade. The sword grants +3 to attack and damage rolls, has a Critical Hit range of 19-20, and Undead it strikes take 2d10 extra Slashing damage. With it drawn, your Initiative rolls gain an extra 1d10. Once per dawn each, you can cast Finger of Death, Call Lightning and Divine Word from it (save DC 18). A sentient blade (Charisma 16, Intelligence 15, Wisdom 13), it exists to bring about Vecna's destruction. It also bears four random properties: a minor and a major beneficial one, and a minor and a major detrimental one."
+}

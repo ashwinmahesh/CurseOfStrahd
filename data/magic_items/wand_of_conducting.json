@@ -1,0 +1,44 @@
+{
+  "id": "wand_of_conducting",
+  "name": "Wand of Conducting",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wand",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false,
+    "charges": {
+      "max": 7,
+      "regain": "1d6+1",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "crumbles to dust"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "wand",
+  "powers": [
+    {
+      "id": "use",
+      "name": "Conducting",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "flavour",
+      "params": {
+        "text": "makes orchestral music"
+      },
+      "field": true,
+      "text": "1 charge: it makes orchestral music. (No other effect in the game.)"
+    }
+  ],
+  "summary": "7 charges: it makes orchestral music.",
+  "text": "Spend 1 of its 7 charges as a Magic action while holding it and orchestral music swells from the wand. It recovers 1d6 + 1 charges each dawn; spending the final charge means rolling 1d20, and a 1 reduces it to dust. (Purely flavour; it does nothing else in the game.)"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "belt_of_giant_strength_stone",
+  "name": "Belt of Giant Strength (Stone Giant)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "belt",
+  "variant_of": "belt_of_giant_strength",
+  "modifiers": [
+    {
+      "stat": "ability_min",
+      "ability": "str",
+      "value": 23
+    }
+  ],
+  "worn": "belt",
+  "summary": "Your Strength is 23 while you wear it.",
+  "text": "Wearing this belt sets your Strength score to 23. If your Strength is already 23 or more without it, the belt does nothing for you."
+}

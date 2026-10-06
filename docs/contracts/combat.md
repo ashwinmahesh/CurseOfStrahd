@@ -30,6 +30,7 @@ How the scene, the HUD and tests talk to a fight. Everything here lives in `comb
 | `feature_actions.perform(c, id, t, point)` | a class, subclass, feat or species action (`feature_actions.list(c)`); the eight Phase 4 classes' actions are `cf:<id>`, run by combat/class_features.gd |
 | `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |
 | `escape_effect(c, effect_id)`, `wake(c, t)`, `haste_action_use(c, what, t, option_id)`, `use_item(c, item_id, t)` | breaking free of Web/Entangle, shaking a sleeper awake, Haste's extra action, potions and Goodberries |
+| `items.use(c, item_id, power_id, targets, point, direction, level, opts)` | a magic item's power (ADR 0012, docs/contracts/magic_items.md): a wand's spell at a level paid in charges, a potion, a toggle, a custom power; `items.list(c)` is the Items tab |
 | `features.second_wind / action_surge / steady_aim / turn_undead / divine_spark / preserve_life` | |
 | `end_turn()` | Rolls a pending Death Saving Throw, end-of-turn effects and repeated saves, next creature |
 | `run_ai_turn()` | Plays the current AI creature's turn (may pause for player reactions) |

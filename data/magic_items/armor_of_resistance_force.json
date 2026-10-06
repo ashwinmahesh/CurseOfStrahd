@@ -1,0 +1,32 @@
+{
+  "id": "armor_of_resistance_force",
+  "name": "Armor of Resistance (Force)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "name": "{base} of Force Resistance",
+    "default": "chain_mail"
+  },
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "force"
+    }
+  ],
+  "variant_of": "armor_of_resistance",
+  "summary": "Resistance to Force damage while you wear it.",
+  "text": "Its wearer has Resistance to Force damage.",
+  "icon": "chain_mail",
+  "icon_fallback": true
+}

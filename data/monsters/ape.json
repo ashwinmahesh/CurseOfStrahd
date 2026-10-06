@@ -1,0 +1,93 @@
+{
+  "id": "ape",
+  "name": "Ape",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "medium",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 19,
+    "dice": "3d8+6"
+  },
+  "speed": {
+    "walk": 30,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 14,
+    "con": 14,
+    "int": 6,
+    "wis": 12,
+    "cha": 7
+  },
+  "skills": {
+    "athletics": 5,
+    "perception": 3
+  },
+  "senses": {},
+  "passive_perception": 13,
+  "languages": [],
+  "cr": 0.5,
+  "xp": 100,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "fist",
+          "count": 2
+        }
+      ],
+      "summary": "Two Fist attacks."
+    },
+    {
+      "id": "fist",
+      "name": "Fist",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d4+3",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Fist: +5 to hit, 1d4+3 Bludgeoning."
+    },
+    {
+      "id": "rock",
+      "name": "Rock",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 5,
+        "range": [
+          25,
+          50
+        ]
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "2d6+3",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Rock: +5 to hit, 2d6+3 Bludgeoning."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A powerful ape."
+}

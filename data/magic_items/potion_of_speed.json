@@ -1,0 +1,49 @@
+{
+  "id": "potion_of_speed",
+  "name": "Potion of Speed",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 20000.0,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_yellow",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "ac",
+            "value": 2
+          },
+          {
+            "stat": "advantage",
+            "on": "save:dex"
+          },
+          {
+            "stat": "flag",
+            "value": "hasted"
+          },
+          {
+            "stat": "speed_percent",
+            "value": 200
+          }
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "summary": "Haste for 1 minute (no Concentration), with the lethargy when it ends.",
+  "text": "Black streaks swirl through this yellow fluid of their own accord. Drinking it grants the Haste spell's effect for 1 minute with no Concentration needed: +2 to AC, Advantage on Dexterity saving throws, double Speed and an additional limited action on each of your turns. Once it wears off, you can neither move nor take actions until your next turn has passed."
+}

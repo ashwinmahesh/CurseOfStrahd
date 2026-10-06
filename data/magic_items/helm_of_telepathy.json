@@ -1,0 +1,42 @@
+{
+  "id": "helm_of_telepathy",
+  "name": "Helm of Telepathy",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "helm",
+  "powers": [
+    {
+      "id": "detect_thoughts",
+      "name": "Detect Thoughts",
+      "spell": "detect_thoughts",
+      "dc": 13,
+      "field": true,
+      "text": "Cast Detect Thoughts (save DC 13) at will."
+    },
+    {
+      "id": "suggestion",
+      "name": "Suggestion",
+      "spell": "suggestion",
+      "dc": 13,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true,
+      "text": "Once per dawn, cast Suggestion (save DC 13) on a creature you're in contact with."
+    }
+  ],
+  "worn": "head",
+  "summary": "Detect Thoughts at will, telepathy, and a daily Suggestion (save DC 13).",
+  "text": "Wearing this helm grants three benefits. Detect Thoughts (save DC 13) can be cast from it at will. As long as you hold Concentration on that spell, you can speak telepathically to the creature you're focusing on as a Bonus Action, and it can answer. Also, while Detect Thoughts is focused on a creature, you can also target that creature with Suggestion (save DC 13) cast from the helm; the Suggestion benefit then recharges at the next dawn."
+}

@@ -33,7 +33,7 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 ## Loot, stash and merchant (`inv_02_loot_and_merchant`)
 ![Loot and merchant](wireframes/inv_02_loot_and_merchant.svg)
 
-- **Loot window**: Take all, Take one, or **Send to who can carry** (skips overloaded characters and says so).
+- **Loot window**: Take all, Take one, Take gold (the coins alone, into the party purse), or **Send to who can carry** (skips overloaded characters and says so).
   Books, letters and notes go to the **Codex**, not the backpack. Unidentified items say how to identify them
   (Identify, or study during a Short Rest per 2024 rules).
 - **Party transfer**: drag an item onto another portrait (or "Give to…"); the receiving character's capacity is

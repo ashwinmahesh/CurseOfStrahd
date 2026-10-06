@@ -77,6 +77,15 @@ func _draw() -> void:
 		UiParts.light_up(prep)
 		prep.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_box.add_child(prep)
+	elif _short_done and not PrepareScreen.preparable(st, "short_rest").is_empty():
+		var swap := UiKit.button("Change what the rest lets you change", func() -> void:
+			var ps2 := PrepareScreen.new()
+			ps2.rest_kind = "short_rest"
+			add_child(ps2)
+			ps2.open(root, st, 0), 15)
+		UiParts.light_up(swap)
+		swap.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		_box.add_child(swap)
 	for ch in st.party:
 		_arcane_recovery_row(ch)
 		var row := HBoxContainer.new()
@@ -115,14 +124,21 @@ func _spend(ch: Character, die: int) -> void:
 
 func _finish_short() -> void:
 	Audio.sfx("rest")
+	var denied: Array[String] = []
 	for ch in st.party:
-		if not ch.dead:
-			ch.finish_short_rest()
+		if ch.dead:
+			continue
+		if ch.mists_deny_short_rest(Dice.roller, st.miles_since_long_rest):
+			denied.append(ch.name)
+			continue
+		ch.finish_short_rest()
 	for g in st.guests:
 		if not g.dead:
 			g.finish_short_rest()
 	st.advance_minutes(60)
 	_log.text = "An hour passes. Short-rest features are back."
+	if not denied.is_empty():
+		_log.text += " The Mists give %s no rest (Mist Walker)." % ", ".join(denied)
 	_narrate("rest:short")
 	_short_done = true
 	_draw()
@@ -141,6 +157,7 @@ func _long_rest(rule: String) -> void:
 		_log.text = "Something moves in the dark, and nobody sleeps again. (Interrupted: a Short Rest's benefits only.)"
 	else:
 		st.advance_minutes(8 * 60)
+		st.miles_since_long_rest = 0.0
 		for ch in st.party:
 			if not ch.dead:
 				ch.finish_long_rest()
