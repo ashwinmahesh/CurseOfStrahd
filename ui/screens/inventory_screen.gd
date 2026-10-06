@@ -541,15 +541,20 @@ func _magic_card(ch: Character, data: Dictionary) -> void:
 				if _entry(selected).is_empty():
 					selected = ""
 				_draw()
-				match res:
-					"":
-						pass
-					"rift":
-						_card.add_child(UiKit.label("The two extradimensional spaces tear each other open: both are destroyed with everything inside.", 15, "vampire_red", 420))
-					"devoured":
-						_card.add_child(UiKit.label("Something inside the bag eats it.", 15, "vampire_red", 420))
-					_:
-						_card.add_child(UiKit.label(res, 14, "flame", 420))))
+				_show_put_in(res)))
+
+
+## What happened when something went into a container ("" when it simply went in).
+func _show_put_in(res: String) -> void:
+	match res:
+		"":
+			pass
+		"rift":
+			_card.add_child(UiKit.label("The two extradimensional spaces tear each other open: both are destroyed with everything inside.", 15, "vampire_red", 420))
+		"devoured":
+			_card.add_child(UiKit.label("Something inside the bag eats it.", 15, "vampire_red", 420))
+		_:
+			_card.add_child(UiKit.label(res, 14, "flame", 420))
 
 
 ## Uses a magic item's power outside a fight (story/field_items.gd) and shows what happened.

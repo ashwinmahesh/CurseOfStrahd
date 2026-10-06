@@ -239,7 +239,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 					hammer_thunder(c, target)
 			"wounding":
 				target.creature.unhealable += dr.final
-				var key := "wounded:%d:%d" % [e.round_no, e.turn_index]
+				var key := "wounded_%d_%d" % [e.round_no, e.turn_index]
 				if not c.has_meta(key):
 					c.set_meta(key, true)
 					_wound(c, target, iid, label)
@@ -338,6 +338,15 @@ func before_roll(st: Dictionary, out: Array) -> void:
 				dis.erase("long range")
 				if int(sit.get("cover", 0)) < CombatGrid.Cover.TOTAL:
 					st["ac"] = int(st["ac"]) - int(sit.get("cover_bonus", 0))
+	# Ring of Elemental Command: Advantage against elementals of its element, and they have Disadvantage against you.
+	if target.creature is Monster:
+		for el: String in ["air", "earth", "fire", "water"]:
+			if c.creature.has_flag("elemental_command:%s" % el) and str((target.creature as Monster).data.get("id", "")).begins_with(el + "_elemental"):
+				(sit["advantage"] as Array[String]).append("Ring of Elemental Command")
+	if c.creature is Monster:
+		for el2: String in ["air", "earth", "fire", "water"]:
+			if target.creature.has_flag("elemental_command:%s" % el2) and str((c.creature as Monster).data.get("id", "")).begins_with(el2 + "_elemental"):
+				(sit["disadvantage"] as Array[String]).append("Ring of Elemental Command (target)")
 	# Cloak of Displacement: attackers have Disadvantage until the wearer is hurt (back at the start of its turn).
 	if has(target, "cloak_of_displacement") and not target.has_meta("displacement_off") and not target.creature.has_condition(&"incapacitated") \
 			and not target.creature.has_condition(&"restrained") and target.speed() > 0:
@@ -569,6 +578,16 @@ func turn_start(c: Combatant) -> void:
 	if c.creature.has_flag("berserk"):
 		_berserk_turn(c)
 	c.remove_meta("displacement_off")
+	# Cloak of the Bat: in Dim Light or darkness its wearer can fly at 40 ft (this turn).
+	if c.creature.has_flag("bat_cloak"):
+		for fxb: Effect in c.creature.effects.duplicate():
+			if fxb.stack_key == "bat_flight":
+				c.creature.remove_effect(fxb)
+		if e.light_at(c.cell) != "bright":
+			var fly := Effect.new("Cloak of the Bat", &"item", "cloak_of_the_bat")
+			fly.stack_key = "bat_flight"
+			fly.modifiers.append(Modifier.of("speed_set", {"kind": "fly", "value": 40}, "Cloak of the Bat", &"item"))
+			c.creature.add_effect(fly)
 	# Periapt of Wound Closure: a dying wearer stabilizes at the start of its turn.
 	if c.creature.has_flag("wound_closure") and c.creature.hp == 0 and not c.creature.dead and not c.creature.stable:
 		c.creature.stabilize()
@@ -1009,6 +1028,20 @@ func absorb(c: Combatant, t: Combatant, ctx: Dictionary, r: CombatResult) -> boo
 				var p := {"item_id": str(it["id"]), "data": it["data"], "entry": entry, "power": {}}
 				retributive_strike(t, p)
 			return true
+		# Ioun Stones of Absorption (level 4 or lower, 20 levels) and Greater Absorption (level 8 or lower, 50 levels).
+		if tid in ["ioun_stone_absorption", "ioun_stone_greater_absorption"]:
+			var cap := 4 if tid == "ioun_stone_absorption" else 8
+			if lvl > cap or int(entry.get("charges", 0)) < lvl or e._reaction_decision(t, tid) == "never":
+				continue
+			t.reaction_available = false
+			entry["charges"] = int(entry["charges"]) - lvl
+			r.lines.append(e.log.add("reaction", "%s's Ioun Stone swallows %s (%d levels left)" % [t.name(), s.get("name", ""), int(entry["charges"])], t.id))
+			if int(entry["charges"]) <= 0:
+				var ch := ch_of(t)
+				ch.unequip_item(str(it["id"]))
+				ch.remove_one(str(it["id"]))
+				e.log.add("info", "The Ioun Stone burns out and turns to dust", t.id)
+			return true
 	if c == null:
 		return false
 	return false
@@ -1074,7 +1107,8 @@ func summon(c: Combatant, monster_id: String, count: int, point: Vector2, params
 			marker.modifiers.append(Modifier.of("flag", {"value": "summoned"}, label, &"item"))
 			conc.attach(m, marker)
 			var sid := sc.id
-			marker.on_end = func() -> void: e.spells._dismiss(sid)
+			var sp := e.spells
+			marker.on_end = func() -> void: sp._dismiss(sid)
 		if e.state == Encounter.State.ACTIVE:
 			e.insert_after(c, sc)
 		e.events.append({"type": "summon_creature", "id": sc.id, "cell": at, "caster": c.id})

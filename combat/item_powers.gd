@@ -252,7 +252,8 @@ func _scintillate(c: Combatant, label: String) -> CombatResult:
 	fx.modifiers.append(Modifier.of("attacked_with", {"value": "disadvantage", "if_seen": true}, label, &"item"))
 	c.creature.add_effect(fx)
 	items().attach_light(c, "scintillating", 30, 30)
-	fx.on_end = func() -> void: items().detach_light(c, "scintillating")
+	var cid := c.id
+	fx.on_end = func() -> void: items().detach_light_of(cid, "scintillating")
 	for o in e.living():
 		if o == c or e.distance(o, c) > 30 or not e.can_see(o, c):
 			continue

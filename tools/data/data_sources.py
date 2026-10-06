@@ -6,7 +6,7 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-FOLDERS = ["classes", "subclasses", "species", "backgrounds", "feats", "spells", "items", "monsters", "conditions"]
+FOLDERS = ["classes", "subclasses", "species", "backgrounds", "feats", "spells", "items", "magic_items", "monsters", "conditions"]
 
 
 def main():
@@ -30,7 +30,17 @@ def main():
             by_book[e.get("source", {}).get("book", "?")].append(e.get("name", e["id"]))
         for book, names in by_book.items():
             lines.append(f"- **{folder}** ({book}, {len(names)}): " + ", ".join(sorted(names)))
-    lines.append("")
+    lines += ["", "## Magic items (DMG2024) entered from memory", "",
+              "The 2024 Dungeon Master's Guide isn't in the free Basic Rules, so every magic item (data/magic_items, `book:",
+              "DMG2024`) was entered from knowledge of the book (owner decision, personal use only): names, rarities,",
+              "attunement, charges, DCs and effects all need a check against the owner's copy. The catalogue was rebuilt from",
+              "memory as: every item of the 2014 DMG the 2024 book kept, the common items it folded in (from Xanathar's), the",
+              "class implements (Amulet of the Devout, Arcane Grimoire, Bloodwell Vial, Moon Sickle, Rhythm-Maker's Drum,",
+              "Dragonhide Belt, Wraps of Unarmed Power), Adamantine Weapon, and its artifacts. Left out as doubtful for the",
+              "2024 book: the Sword of Answering, the All-Purpose Tool (Artificer only) and the Tasha's tattoos and shards.",
+              "Artifacts' random properties use a condensed table (rules/equipment/magic_items.gd). The stat blocks for",
+              "creatures the items summon (data/monsters, notes saying so) were entered from the 2025 Monster Manual the same way.",
+              ""]
     (ROOT / "docs/rules/data_sources.md").write_text("\n".join(lines))
     print("\n".join(lines[6:6 + len(FOLDERS) + 1]))
 

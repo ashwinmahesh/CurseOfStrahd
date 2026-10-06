@@ -168,7 +168,7 @@ func test_druid_land_to_level_7() -> void:
 	assert_eq(ch.resource_max("wild_shape"), 3)
 	assert_eq(str((ch.resources["wild_shape"] as Dictionary)["recharge"]), "short_one")
 	var forms := ch.choice("druid.2.wild_shape")
-	assert_true(forms.count <= 6 and forms.count == ch.beast_forms_for(forms).size(), "known forms: %d" % forms.count)
+	assert_eq(forms.count, mini(6, ch.beast_forms_for(forms).size()), "six known forms at Druid 7, or every Beast there is")
 	for f in ch.wild_shape_forms:
 		var m := ch.compendium.monster_data(f)
 		assert_eq(str(m["type"]), "beast")

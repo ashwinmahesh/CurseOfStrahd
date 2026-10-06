@@ -1202,6 +1202,8 @@ func drop_prone(c: Combatant) -> CombatResult:
 ## It goes in a straight line away from (or, with `toward`, toward) the grid point `origin`, square by square, and
 ## stops at walls and other creatures. Areas it's moved into still affect it. Returns the squares moved.
 func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = false) -> int:
+	# Dwarven Plate: a Reaction cuts a shove across the ground by up to 10 ft.
+	feet = items.forced_move_feet(target, feet)
 	var dir := center_of(target) - origin
 	if toward:
 		dir = -dir

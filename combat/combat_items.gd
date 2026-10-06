@@ -671,8 +671,8 @@ func toggle(c: Combatant, p: Dictionary, opts: Dictionary = {}) -> CombatResult:
 		var cl := power["custom_light"] as Dictionary
 		attach_light(c, toggle_key(iid, pid), int(cl.get("bright", 0)), int(cl.get("dim", 0)), bool(cl.get("sunlight", false)))
 		var key := toggle_key(iid, pid)
-		var cc := c
-		fx.on_end = func() -> void: detach_light(cc, key)
+		var cid := c.id
+		fx.on_end = func() -> void: detach_light_of(cid, key)
 	specials.toggled_on(c, p, fx)
 	_after_use(c, p, {}, 0)
 	e.log.add("info", "%s: %s" % [c.name(), power.get("log", "%s %s" % [data.get("name", ""), power.get("name", "")])], c.id)
@@ -722,8 +722,13 @@ func attach_light(c: Combatant, key: String, bright: int, dim: int, sunlight: bo
 
 
 func detach_light(c: Combatant, key: String) -> void:
+	detach_light_of(c.id, key)
+
+
+## The same by the creature's id (an Effect's on_end keeps the id, not the creature, so nothing holds itself).
+func detach_light_of(cid: String, key: String) -> void:
 	for o in enc().spells.zones.live():
-		if o.caster_id == c.id and str(o.rules.get("item_light", "")) == key:
+		if o.caster_id == cid and str(o.rules.get("item_light", "")) == key:
 			o.ended = true
 	enc().spells.zones.prune()
 
@@ -1096,6 +1101,17 @@ func spell_blocked(c: Combatant, t: Combatant) -> String:
 	if t.creature.has_flag("protection_from:%s" % c.creature.creature_type):
 		return "A Scroll of Protection keeps the caster's kind away"
 	return ""
+
+
+## Dwarven Plate: when something moves its wearer against its will along the ground, a Reaction shortens it by 10 ft.
+func forced_move_feet(target: Combatant, feet: int) -> int:
+	for it in active(target):
+		var cut := int(((it["data"] as Dictionary).get("armor_rules", {}) as Dictionary).get("forced_move_reduction", 0))
+		if cut > 0 and enc().spells.can_react(target) and enc()._reaction_decision(target, "dwarven_plate") != "never" and feet > 0:
+			target.reaction_available = false
+			enc().log.add("reaction", "%s plants their feet in Dwarven Plate (%d ft less)" % [target.name(), mini(cut, feet)], target.id)
+			return maxi(0, feet - cut)
+	return feet
 
 
 ## Extra Initiative from items (Sword of Kas: + 1d10 while drawn).
