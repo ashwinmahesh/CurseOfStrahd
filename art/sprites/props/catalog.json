@@ -1004,5 +1004,29 @@
     "workbench": 4.5,
     "workbench_front": 3.5
   },
-  "big_width": 1.6
+  "big_width": 1.6,
+  "models3d": {
+    "about": "3D pieces from art/models (blender/models_3d.py, docs/art/models.md) that stand in for 2D art, by art id. Only the places listed use them (a pilot until the owner signs off; \"*\" for everywhere). walls: a wall surface whose painted panelling gets 3D panels on every open face.",
+    "places": ["death_house_upper"],
+    "art": {
+      "book_shelf": "bookcase",
+      "book_shelf_front": "bookcase",
+      "bookshelf": "bookcase",
+      "desk": "desk",
+      "desk_front": "desk",
+      "chair_high": "chair_high",
+      "armchair": "armchair",
+      "settee": "settee",
+      "table": "table",
+      "table_chairs": "table_chairs",
+      "candelabra": "candelabra",
+      "fireplace": "fireplace",
+      "stair_riser": "stairs_up",
+      "stair_down": "stairs_down",
+      "door_wood": "door_wood"
+    },
+    "walls": {
+      "interior/wainscot_wall": "wainscot"
+    }
+  }
 }

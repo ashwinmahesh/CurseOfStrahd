@@ -1,0 +1,843 @@
+"""Builds the 3D set pieces (docs/art/models.md): furniture, fireplaces, stairs, doors and wall panelling modelled from
+the 2D props they replace (art/sprites/props), in the palette's colours, exported one GLB each to art/models with
+art/models/manifest.json. Characters and creatures stay 2D sprites.
+
+blender -b --python blender/models_3d.py -- [--only bookcase desk ...] [--preview out.png]
+
+Units are world units (one 5 ft square; a 6 ft person is 1.2). Blender -Y is a piece's front (Godot +Z after the
+glTF axis change), +Z is up, and the origin is the middle of its footprint on the floor, except pieces that stand
+against a wall or hang on it ("against_wall", "wall", "wall_face"), whose origin is the middle of their back, on the
+wall face.
+
+Material names say how the game draws each surface (world/look/model_piece.gd):
+  pal_<colour>              flat cel colour from art/palette/palette.json
+  glow_<colour>             the same colour, lit from within (flames, embers)
+  tex_<theme>__<surface>    a texture set from art/textures (world-mapped, like the board's floors and walls)
+"""
+import argparse
+import json
+import math
+import random
+import sys
+from pathlib import Path
+
+import bmesh
+import bpy
+from mathutils import Euler, Matrix, Vector
+
+ROOT = Path(__file__).resolve().parent.parent
+OUT_DIR = ROOT / "art" / "models"
+PALETTE = json.loads((ROOT / "art" / "palette" / "palette.json").read_text())
+TEXTURES = json.loads((ROOT / "art" / "textures" / "manifest.json").read_text())
+
+MODELS = {}
+
+
+def model(id_, mount, stands_for, **extra):
+    """Registers a builder: mount is free | against_wall | wall | wall_face | stairs_up | stairs_down | door."""
+    def wrap(fn):
+        MODELS[id_] = {"build": fn, "mount": mount, "stands_for": stands_for, **extra}
+        return fn
+    return wrap
+
+
+# --- Materials -------------------------------------------------------------------------------------------------
+
+def _linear(hexstr):
+    h = hexstr.lstrip("#")
+    c = [int(h[i:i + 2], 16) / 255.0 for i in (0, 2, 4)]
+    return [x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in c] + [1.0]
+
+
+def _hex_of(name):
+    kind, _, rest = name.partition("_")
+    if kind in ("pal", "glow"):
+        return PALETTE[rest]
+    theme, _, surface = rest.partition("__")
+    info = TEXTURES["themes"][theme][surface]
+    return PALETTE[info["palette"][0]]
+
+
+def material(name):
+    m = bpy.data.materials.get(name)
+    if m is not None:
+        return m
+    m = bpy.data.materials.new(name)
+    col = _linear(_hex_of(name))
+    m.diffuse_color = col
+    bsdf = m.node_tree.nodes.get("Principled BSDF")
+    bsdf.inputs["Base Color"].default_value = col
+    bsdf.inputs["Roughness"].default_value = 0.85
+    if name.startswith("glow_"):
+        bsdf.inputs["Emission Color"].default_value = col
+        bsdf.inputs["Emission Strength"].default_value = 4.0
+    return m
+
+
+# --- Geometry --------------------------------------------------------------------------------------------------
+
+def _rot(deg):
+    return Euler(tuple(math.radians(a) for a in deg), "XYZ").to_matrix().to_4x4()
+
+
+class Piece:
+    """One model: primitives appended into a single mesh, a material slot per surface kind."""
+
+    def __init__(self, id_, seed=1):
+        self.id = id_
+        self.bm = bmesh.new()
+        self.mats = []
+        self.sockets = {}
+        self.rng = random.Random(seed)
+        self._scratch = bpy.data.meshes.new("_scratch")
+
+    def _append(self, t, mat, smooth):
+        mi = self._slot(mat)
+        for f in t.faces:
+            f.material_index = mi
+            f.smooth = smooth
+        t.to_mesh(self._scratch)
+        t.free()
+        self.bm.from_mesh(self._scratch)
+
+    def _slot(self, mat):
+        if mat not in self.mats:
+            self.mats.append(mat)
+        return self.mats.index(mat)
+
+    def box(self, size, at, mat, rot=(0, 0, 0), soft=0.0):
+        """A box `size` (x, y, z) centred on `at`, turned by `rot` degrees; `soft` rounds its edges (cushions)."""
+        t = bmesh.new()
+        bmesh.ops.create_cube(t, size=1.0)
+        bmesh.ops.scale(t, vec=Vector(size), verts=t.verts)
+        if soft > 0.0:
+            bmesh.ops.bevel(t, geom=list(t.edges), offset=min(soft, min(size) * 0.45), segments=2, affect="EDGES",
+                            profile=0.6)
+        bmesh.ops.transform(t, matrix=Matrix.Translation(Vector(at)) @ _rot(rot), verts=t.verts)
+        self._append(t, mat, soft > 0.0)
+
+    def cyl(self, r, h, at, mat, r2=None, segs=12, rot=(0, 0, 0), smooth=True):
+        """A cylinder (or cone) standing on `at` along its local z, turned by `rot` degrees about `at`."""
+        t = bmesh.new()
+        bmesh.ops.create_cone(t, cap_ends=True, cap_tris=False, segments=segs, radius1=r,
+                              radius2=r if r2 is None else r2, depth=h)
+        bmesh.ops.translate(t, vec=Vector((0, 0, h / 2.0)), verts=t.verts)
+        bmesh.ops.transform(t, matrix=Matrix.Translation(Vector(at)) @ _rot(rot), verts=t.verts)
+        self._append(t, mat, smooth)
+
+    def lathe(self, profile, at, mat, segs=12, rot=(0, 0, 0), smooth=True):
+        """A turned shape (legs, finials, candlesticks): `profile` is [(radius, z), ...] from the bottom up."""
+        t = bmesh.new()
+        rings = []
+        for r, z in profile:
+            if r <= 1e-5:
+                rings.append([t.verts.new((0.0, 0.0, z))])
+                continue
+            rings.append([t.verts.new((r * math.cos(a), r * math.sin(a), z))
+                          for a in (2 * math.pi * k / segs for k in range(segs))])
+        for lo, hi in zip(rings, rings[1:]):
+            for k in range(segs):
+                quad = [lo[k % len(lo)], lo[(k + 1) % len(lo)], hi[(k + 1) % len(hi)], hi[k % len(hi)]]
+                uniq = []
+                for v in quad:
+                    if v not in uniq:
+                        uniq.append(v)
+                if len(uniq) >= 3:
+                    t.faces.new(uniq)
+        for ring in (rings[0], rings[-1]):
+            if len(ring) > 2:
+                t.faces.new(ring)
+        bmesh.ops.recalc_face_normals(t, faces=t.faces)
+        bmesh.ops.transform(t, matrix=Matrix.Translation(Vector(at)) @ _rot(rot), verts=t.verts)
+        self._append(t, mat, smooth)
+
+    def prism(self, poly, thick, at, mat, rot=(0, 0, 0)):
+        """A flat outline `poly` [(x, z), ...] (front view) given `thick` depth along y, centred on `at`."""
+        t = bmesh.new()
+        front = [t.verts.new((x, -thick / 2.0, z)) for x, z in poly]
+        back = [t.verts.new((x, thick / 2.0, z)) for x, z in poly]
+        t.faces.new(front)
+        t.faces.new(list(reversed(back)))
+        n = len(poly)
+        for k in range(n):
+            t.faces.new([front[k], front[(k + 1) % n], back[(k + 1) % n], back[k]])
+        bmesh.ops.recalc_face_normals(t, faces=t.faces)
+        bmesh.ops.transform(t, matrix=Matrix.Translation(Vector(at)) @ _rot(rot), verts=t.verts)
+        self._append(t, mat, False)
+
+    def tube(self, points, radius, mat, segs=6, smooth=True):
+        """A round bar swept along `points` (iron scrolls, handrails)."""
+        t = bmesh.new()
+        pts = [Vector(p) for p in points]
+        rings = []
+        for i, p in enumerate(pts):
+            tan = (pts[min(i + 1, len(pts) - 1)] - pts[max(i - 1, 0)]).normalized()
+            side = tan.cross(Vector((0, 0, 1)))
+            if side.length < 1e-4:
+                side = tan.cross(Vector((1, 0, 0)))
+            side.normalize()
+            up = side.cross(tan).normalized()
+            rings.append([t.verts.new(p + (side * math.cos(a) + up * math.sin(a)) * radius)
+                          for a in (2 * math.pi * k / segs for k in range(segs))])
+        for lo, hi in zip(rings, rings[1:]):
+            for k in range(segs):
+                t.faces.new([lo[k], lo[(k + 1) % segs], hi[(k + 1) % segs], hi[k]])
+        t.faces.new(rings[0])
+        t.faces.new(rings[-1])
+        bmesh.ops.recalc_face_normals(t, faces=t.faces)
+        self._append(t, mat, smooth)
+
+    def socket(self, name, at):
+        self.sockets[name] = at
+
+    def finish(self):
+        bmesh.ops.remove_doubles(self.bm, verts=self.bm.verts, dist=1e-6)
+        me = bpy.data.meshes.new(self.id)
+        self.bm.to_mesh(me)
+        self.bm.free()
+        for name in self.mats:
+            me.materials.append(material(name))
+        ob = bpy.data.objects.new(self.id, me)
+        bpy.context.scene.collection.objects.link(ob)
+        bpy.data.meshes.remove(self._scratch)
+        return ob
+
+
+def curve(p0, p1, p2, n=8):
+    """Points along a quadratic Bezier."""
+    out = []
+    for i in range(n + 1):
+        s = i / n
+        out.append(tuple((1 - s) ** 2 * a + 2 * (1 - s) * s * b + s * s * c for a, b, c in zip(p0, p1, p2)))
+    return out
+
+
+def arch(x0, x1, z0, rise, n=8, pointed=True):
+    """The top edge of a gothic arch from (x0, z0) to (x1, z0): two arcs meeting in a point (or one round arch)."""
+    out = []
+    half = (x1 - x0) / 2.0
+    for i in range(n + 1):
+        s = i / n
+        x = x0 + s * (x1 - x0)
+        u = abs(x - (x0 + half)) / half
+        z = z0 + rise * (math.sqrt(max(0.0, 1 - u * u)) if not pointed else (1 - u) ** 0.65)
+        out.append((x, z))
+    return out
+
+
+# --- Library pieces --------------------------------------------------------------------------------------------
+
+BOOKS = [("pal_blood", 3), ("pal_blood_deep", 2), ("pal_umber", 3), ("pal_walnut", 2), ("pal_leather", 2),
+         ("pal_rust", 2), ("pal_moon_blue", 2), ("pal_night", 1), ("pal_bog", 2), ("pal_bone_dark", 2),
+         ("pal_parchment", 1), ("pal_ash_violet", 1), ("pal_tan", 1)]
+
+
+def _book_colour(rng):
+    total = sum(w for _, w in BOOKS)
+    r = rng.uniform(0, total)
+    for c, w in BOOKS:
+        r -= w
+        if r <= 0:
+            return c
+    return BOOKS[0][0]
+
+
+def shelf_of_books(p, x0, x1, zf, hmax, yback, dmax):
+    """Fills one shelf from x0 to x1: upright books of mixed size, the odd gap, a flat stack, one leaning at the end."""
+    rng = p.rng
+    x = x0 + rng.uniform(0.0, 0.02)
+    while x < x1 - 0.022:
+        r = rng.random()
+        room = x1 - x
+        if r < 0.07:
+            x += rng.uniform(0.04, 0.09)
+            continue
+        if r < 0.14 and room > 0.2:
+            bw = rng.uniform(0.12, 0.16)
+            z = zf
+            for _ in range(rng.randint(2, 4)):
+                tk = rng.uniform(0.022, 0.036)
+                d = rng.uniform(0.11, 0.15)
+                p.box((bw, d, tk), (x + bw / 2 + rng.uniform(-0.008, 0.008), yback - d / 2 - 0.01, z + tk / 2),
+                      _book_colour(rng), rot=(0, 0, rng.uniform(-5, 5)))
+                z += tk
+            x += bw + 0.012
+            continue
+        w = rng.uniform(0.022, 0.048)
+        h = rng.uniform(0.62, 0.98) * hmax
+        d = rng.uniform(dmax - 0.08, dmax)
+        col = _book_colour(rng)
+        if room < 0.16 and r > 0.6:
+            lean = rng.uniform(14, 24)
+            a = math.radians(lean)
+            px = x + h * math.sin(a)
+            centre = (px + w / 2 * math.cos(a) - h / 2 * math.sin(a), yback - d / 2, zf + w / 2 * math.sin(a) + h / 2 * math.cos(a))
+            if px + w * math.cos(a) < x1:
+                p.box((w, d, h), centre, col, rot=(0, -lean, 0))
+            break
+        p.box((w, d, h), (x + w / 2, yback - d / 2, zf + h / 2), col)
+        if w > 0.03 and rng.random() < 0.55:
+            for f in (0.18, 0.8):
+                p.box((w * 0.9, 0.004, 0.012), (x + w / 2, yback - d - 0.001, zf + h * f), "pal_tan")
+        x += w + rng.uniform(0.0, 0.004)
+
+
+@model("bookcase", "against_wall", ["book_shelf", "book_shelf_front", "bookshelf"], size_ft=7)
+def bookcase(p):
+    W, D, H = 0.9, 0.3, 1.4
+    wood, dark, edge = "pal_umber", "pal_peat", "pal_walnut"
+    yc = -D / 2.0   # the back is on the wall at y = 0
+    p.box((W - 0.03, D - 0.03, 0.07), (0, yc + 0.015, 0.035), dark)                       # plinth
+    for s in (-1, 1):
+        p.box((0.045, D, H - 0.07), (s * (W / 2 - 0.0225), yc, (H - 0.07) / 2), wood)        # sides
+        p.box((0.05, 0.012, H - 0.07), (s * (W / 2 - 0.025), yc - D / 2 - 0.004, (H - 0.07) / 2), edge)
+    p.box((W - 0.09, 0.02, H - 0.17), (0, -0.01, 0.07 + (H - 0.17) / 2), dark)              # back
+    p.box((W, 0.012, 0.07), (0, yc - D / 2 - 0.004, 0.035), edge)                           # bottom rail
+    p.box((W - 0.09, D - 0.02, 0.03), (0, yc - 0.01, 0.085), wood)                           # bottom shelf
+    p.box((W, D, 0.03), (0, yc, H - 0.085), wood)                                            # top
+    p.box((W - 0.09, 0.02, 0.07), (0, yc - D / 2 + 0.01, H - 0.135), wood)                   # frieze
+    p.box((W + 0.04, D + 0.02, 0.03), (0, yc - 0.01, H - 0.055), wood)                       # cornice
+    p.box((W + 0.08, D + 0.04, 0.03), (0, yc - 0.02, H - 0.025), edge)
+    z0, ztop, rows = 0.1, H - 0.17, 5
+    pitch = (ztop - z0) / rows
+    for i in range(rows):
+        zf = z0 + i * pitch
+        if i > 0:
+            p.box((W - 0.09, D - 0.03, 0.022), (0, yc - 0.005, zf - 0.011), wood)
+            p.box((W - 0.09, 0.014, 0.026), (0, yc - D / 2 + 0.012, zf - 0.013), edge)
+        shelf_of_books(p, -W / 2 + 0.05, W / 2 - 0.05, zf, pitch - 0.035, -0.022, 0.25)
+
+
+@model("desk", "against_wall", ["desk", "desk_front"], container=True)
+def desk(p):
+    W, D, H = 1.0, 0.55, 0.52
+    top, trim, body, face, brass = "pal_walnut", "pal_blood", "pal_ash_violet", "pal_grave", "pal_tan"
+    yc = -D / 2.0 - 0.04   # a hand's breadth out from the wall
+    p.box((W, D, 0.035), (0, yc, H - 0.0175), top)
+    p.box((W - 0.02, D - 0.02, 0.02), (0, yc, H - 0.045), trim)
+    pw = 0.3
+    front = yc - (D - 0.06) / 2
+    for s in (-1, 1):
+        cx = s * (W / 2 - pw / 2 - 0.015)
+        p.box((pw, D - 0.06, H - 0.11), (cx, yc, 0.05 + (H - 0.11) / 2), body)
+        p.box((pw + 0.02, D - 0.04, 0.05), (cx, yc, 0.025), trim)
+        for k in (-1, 1):
+            p.box((0.025, 0.01, H - 0.11), (cx + k * (pw / 2 - 0.0125), front - 0.004, 0.05 + (H - 0.11) / 2), trim)
+        if s > 0:
+            for j in range(3):
+                dz = 0.06 + j * 0.122
+                p.box((pw - 0.07, 0.012, 0.108), (cx, front - 0.007, dz + 0.054), face)
+                p.box((0.05, 0.012, 0.012), (cx, front - 0.016, dz + 0.07), brass)
+        else:
+            p.box((pw - 0.07, 0.012, H - 0.14), (cx, front - 0.007, 0.06 + (H - 0.14) / 2), face)
+            p.box((pw - 0.13, 0.008, H - 0.22), (cx, front - 0.016, 0.06 + (H - 0.14) / 2), body)
+            p.cyl(0.011, 0.014, (cx + pw / 2 - 0.06, front - 0.012, 0.26), brass, rot=(90, 0, 0), segs=8)
+    mid = W - 2 * pw - 0.06
+    p.box((mid, 0.03, 0.075), (0, front + 0.012, H - 0.09), body)
+    p.box((mid - 0.03, 0.01, 0.055), (0, front - 0.006, H - 0.09), face)
+    p.box((0.06, 0.012, 0.012), (0, front - 0.014, H - 0.09), brass)
+    p.box((mid + 0.02, 0.02, H - 0.2), (0, yc + D / 2 - 0.06, 0.1 + (H - 0.2) / 2), body)
+    # On the top: letters, an inkwell and quill, a candle, a closed book (the 2D desk's things).
+    rng = p.rng
+    for k, col in enumerate(["pal_vellum", "pal_parchment", "pal_ivory", "pal_vellum"]):
+        p.box((0.15, 0.2, 0.003), (rng.uniform(-0.28, 0.05), yc + rng.uniform(-0.1, 0.06), H + 0.0016 + k * 0.0026),
+              col, rot=(0, 0, rng.uniform(-35, 35)))
+    ink = (0.24, yc + 0.08, H)
+    p.lathe([(0.0, 0.0), (0.038, 0.0), (0.04, 0.012), (0.036, 0.04), (0.018, 0.05), (0.014, 0.056), (0.017, 0.064),
+             (0.0, 0.064)], ink, "pal_void")
+    feather = [(0.0, 0.0), (0.004, 0.06), (0.022, 0.12), (0.022, 0.17), (0.01, 0.21), (0.0, 0.215),
+               (-0.005, 0.15), (-0.004, 0.07)]
+    p.prism(feather, 0.004, (ink[0], ink[1], H + 0.04), "pal_ivory", rot=(-18, 0, 25))
+    cand = (-0.36, yc + 0.13, H)
+    p.lathe([(0.0, 0.0), (0.05, 0.0), (0.055, 0.008), (0.046, 0.014), (0.012, 0.018), (0.012, 0.04), (0.02, 0.044),
+             (0.0, 0.046)], cand, brass)
+    p.cyl(0.017, 0.085, (cand[0], cand[1], H + 0.044), "pal_ivory", segs=10)
+    p.lathe([(0.0, 0.0), (0.009, 0.008), (0.011, 0.02), (0.006, 0.034), (0.0, 0.044)], (cand[0], cand[1], H + 0.132),
+            "glow_flame", segs=8)
+    p.socket("candle", (cand[0], cand[1], H + 0.15))
+    bk = (-0.04, yc + 0.12)
+    p.box((0.15, 0.205, 0.026), (bk[0], bk[1], H + 0.017), "pal_vellum", rot=(0, 0, 14))
+    for dz in (0.003, 0.031):
+        p.box((0.16, 0.22, 0.006), (bk[0], bk[1], H + dz), trim, rot=(0, 0, 14))
+
+
+def _chair_frame(p, x, y, face_deg, wood, seat_col, back_col, seat=0.33, width=0.42, depth=0.4, back_top=0.92,
+                 crest=None, turned=True):
+    """A straight-backed chair at (x, y) facing `face_deg` (0 = front, -y)."""
+    m = Matrix.Translation((x, y, 0)) @ Matrix.Rotation(math.radians(face_deg), 4, "Z")
+
+    def at(lx, ly, lz):
+        return tuple(m @ Vector((lx, ly, lz)))
+    hw, hd = width / 2, depth / 2
+    for s in (-1, 1):
+        if turned:
+            p.lathe([(0.02, 0.0), (0.027, 0.015), (0.027, 0.03), (0.016, 0.06), (0.024, 0.11), (0.027, 0.15),
+                     (0.018, 0.2), (0.015, seat - 0.12), (0.023, seat - 0.08), (0.026, seat - 0.05), (0.026, seat - 0.04)],
+                    at(s * (hw - 0.03), -hd + 0.03, 0), wood, segs=10)
+        else:
+            p.box((0.035, 0.035, seat - 0.04), at(s * (hw - 0.03), -hd + 0.03, (seat - 0.04) / 2), wood, rot=(0, 0, face_deg))
+        p.box((0.04, 0.04, back_top), at(s * (hw - 0.03), hd - 0.03, back_top / 2), wood, rot=(0, 0, face_deg))
+        p.lathe([(0.022, 0.0), (0.026, 0.01), (0.012, 0.03), (0.018, 0.045), (0.0, 0.08)],
+                at(s * (hw - 0.03), hd - 0.03, back_top), wood, segs=8)
+        p.box((0.022, depth - 0.06, 0.022), at(s * (hw - 0.03), 0, 0.08), wood, rot=(0, 0, face_deg))
+    p.box((width - 0.06, 0.022, 0.022), at(0, -hd + 0.03, 0.08), wood, rot=(0, 0, face_deg))
+    p.box((width, depth, 0.06), at(0, 0, seat - 0.07), wood, rot=(0, 0, face_deg))
+    apron = [(-hw, 0.0), (hw, 0.0), (hw, -0.05), (hw * 0.5, -0.035), (0.0, -0.06), (-hw * 0.5, -0.035), (-hw, -0.05)]
+    p.prism(apron, 0.02, at(0, -hd - 0.008, seat - 0.04), wood, rot=(0, 0, face_deg))
+    p.box((width - 0.03, depth - 0.03, 0.06), at(0, -0.01, seat - 0.02), seat_col, rot=(0, 0, face_deg), soft=0.014)
+    p.box((width - 0.06, 0.035, 0.05), at(0, hd - 0.03, seat + 0.06), wood, rot=(0, 0, face_deg))
+    ptop = back_top - 0.1
+    p.box((width - 0.1, 0.03, ptop - seat - 0.09), at(0, hd - 0.035, seat + 0.09 + (ptop - seat - 0.09) / 2), back_col,
+          rot=(0, 0, face_deg), soft=0.01)
+    poly = crest or ([(-hw + 0.03, 0.0)] + arch(-hw + 0.03, hw - 0.03, 0.02, 0.1, n=10) + [(hw - 0.03, 0.0)])
+    p.prism(poly, 0.036, at(0, hd - 0.03, ptop - 0.03), "pal_peat", rot=(0, 0, face_deg))
+
+
+@model("chair_high", "free", ["chair_high"])
+def chair_high(p):
+    """The 2D high-backed chair: dark carved wood, red velvet seat and back, a crest of scrolls with a finial."""
+    hw = 0.21
+    crest = [(-hw + 0.03, 0.0), (hw - 0.03, 0.0), (hw - 0.03, 0.05), (0.15, 0.1), (0.12, 0.08), (0.08, 0.1),
+             (0.04, 0.15), (0.0, 0.17), (-0.04, 0.15), (-0.08, 0.1), (-0.12, 0.08), (-0.15, 0.1), (-hw + 0.03, 0.05)]
+    _chair_frame(p, 0, 0, 0, "pal_umber", "pal_blood", "pal_blood", crest=crest)
+    p.lathe([(0.016, 0.0), (0.022, 0.012), (0.01, 0.03), (0.016, 0.045), (0.0, 0.075)], (0, 0.2 - 0.03, 0.92 - 0.13 + 0.17),
+            "pal_peat", segs=8)
+    for s in (-1, 1):
+        p.prism([(0.0, 0.0), (0.03, 0.06), (0.025, 0.2), (0.0, 0.3), (-0.01, 0.15)], 0.02, (s * 0.165, 0.14, 0.42),
+                "pal_peat", rot=(0, 0, 0 if s > 0 else 180))
+
+
+@model("armchair", "free", ["armchair"])
+def armchair(p):
+    """The 2D red wingback: crimson velvet over a blood-red shell, rolled arms, cabriole legs."""
+    W, D, L = 0.56, 0.54, 0.19   # L: the legs' height
+    shell, cushion, wood = "pal_blood", "pal_crimson", "pal_umber"
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            # Cabriole legs: a knee out at the corner, an ankle in, a small foot out again.
+            x, y = sx * (W / 2 - 0.05), sy * (D / 2 - 0.05)
+            ox, oy = sx * 0.025, sy * 0.025
+            p.tube([(x, y, L), (x + ox, y + oy, L - 0.04), (x + ox * 0.4, y + oy * 0.4, L * 0.5), (x - ox * 0.3, y - oy * 0.3, 0.04),
+                    (x + ox * 0.3, y + oy * 0.3, 0.008)], 0.019, wood, segs=8)
+            p.cyl(0.022, 0.012, (x + ox * 0.3, y + oy * 0.3, 0.0), wood, segs=8)
+    p.box((W + 0.01, D + 0.01, 0.035), (0, 0, L + 0.0175), wood)
+    p.prism([(-W / 2, 0.0), (W / 2, 0.0), (W / 2, -0.045), (W * 0.2, -0.03), (0, -0.055), (-W * 0.2, -0.03),
+             (-W / 2, -0.045)], 0.02, (0, -D / 2 - 0.006, L + 0.03), wood)
+    p.box((W, D, 0.12), (0, 0, L + 0.095), shell, soft=0.02)
+    p.box((W - 0.15, D - 0.12, 0.07), (0, -0.04, L + 0.185), cushion, soft=0.025)
+    back = [(-W / 2 + 0.02, 0.0), (W / 2 - 0.02, 0.0)] + list(reversed(
+        [(x, z) for x, z in arch(-W / 2 + 0.02, W / 2 - 0.02, 0.46, 0.08, n=10, pointed=False)]))
+    p.prism(back, 0.13, (0, D / 2 - 0.075, L + 0.15), shell)
+    p.box((W - 0.16, 0.06, 0.38), (0, D / 2 - 0.16, L + 0.38), cushion, soft=0.025, rot=(-6, 0, 0))
+    wing = [(D / 2 - 0.02, 0.0), (D / 2 - 0.02, 0.52), (D / 2 - 0.14, 0.56), (0.02, 0.47), (-0.05, 0.36),
+            (-0.03, 0.24), (-0.06, 0.19), (-0.12, 0.19), (-0.12, 0.0)]
+    for s in (-1, 1):
+        p.prism(wing, 0.06, (s * (W / 2 - 0.03), 0, L + 0.15), shell, rot=(0, 0, 90))
+        p.box((0.09, D - 0.06, 0.15), (s * (W / 2 - 0.045), -0.01, L + 0.225), shell, soft=0.02)
+        p.cyl(0.048, D - 0.08, (s * (W / 2 - 0.045), -D / 2 + 0.02, L + 0.3), shell, rot=(-90, 0, 0), segs=12)
+        p.cyl(0.034, 0.012, (s * (W / 2 - 0.045), -D / 2 + 0.012, L + 0.3), wood, rot=(90, 0, 0), segs=12)
+
+
+@model("settee", "against_wall", ["settee"])
+def settee(p):
+    W, D = 0.98, 0.46
+    wood, carve, cushion = "pal_umber", "pal_peat", "pal_tan"
+    yc = -D / 2 - 0.03
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.lathe([(0.016, 0.0), (0.024, 0.012), (0.018, 0.045), (0.026, 0.1), (0.03, 0.14)],
+                    (sx * (W / 2 - 0.04), yc + sy * (D / 2 - 0.04), 0), wood, segs=10)
+    p.box((W, D, 0.08), (0, yc, 0.18), wood)
+    p.prism([(-W / 2, 0.0), (W / 2, 0.0), (W / 2, -0.06), (W * 0.3, -0.04), (W * 0.15, -0.065), (0, -0.04),
+             (-W * 0.15, -0.065), (-W * 0.3, -0.04), (-W / 2, -0.06)], 0.02, (0, yc - D / 2 - 0.008, 0.22), carve)
+    cw = (W - 0.16) / 2 - 0.01
+    for s in (-1, 1):
+        p.box((cw, D - 0.1, 0.08), (s * (cw / 2 + 0.005), yc - 0.03, 0.26), cushion, soft=0.025)
+        p.box((cw, 0.08, 0.3), (s * (cw / 2 + 0.005), yc + D / 2 - 0.1, 0.44), cushion, soft=0.025, rot=(-8, 0, 0))
+    for s in (-1, 1):
+        p.box((0.05, 0.05, 0.62), (s * (W / 2 - 0.03), yc + D / 2 - 0.03, 0.14 + 0.31), wood)
+    p.box((W - 0.1, 0.03, 0.42), (0, yc + D / 2 - 0.03, 0.22 + 0.21), carve)
+    for k in (-1, 0, 1):
+        lancet = [(-0.09, 0.0), (0.09, 0.0)] + list(reversed(arch(-0.09, 0.09, 0.22, 0.1, n=8)))
+        p.prism(lancet, 0.012, (k * 0.27, yc + D / 2 - 0.009, 0.28), wood)
+    crest = [(-W / 2 + 0.02, 0.0), (W / 2 - 0.02, 0.0), (W / 2 - 0.02, 0.06), (W * 0.3, 0.085), (W * 0.12, 0.1),
+             (0.05, 0.16), (0.0, 0.18), (-0.05, 0.16), (-W * 0.12, 0.1), (-W * 0.3, 0.085), (-W / 2 + 0.02, 0.06)]
+    p.prism(crest, 0.04, (0, yc + D / 2 - 0.03, 0.62), wood)
+    for s in (-1, 1):
+        x = s * (W / 2 - 0.03)
+        p.box((0.045, 0.045, 0.25), (x, yc - D / 2 + 0.04, 0.22 + 0.125), wood)
+        p.box((0.06, D - 0.02, 0.04), (x, yc - 0.01, 0.47), wood)
+        p.cyl(0.03, 0.05, (x, yc - D / 2 + 0.01, 0.46), wood, rot=(90, 0, 0), segs=10)
+        side = [(-D / 2 + 0.06, 0.0), (D / 2 - 0.06, 0.0), (D / 2 - 0.06, 0.2), (0.0, 0.16), (-D / 2 + 0.06, 0.2)]
+        p.prism(side, 0.02, (x, yc, 0.22), carve, rot=(0, 0, 90))
+
+
+@model("table", "free", ["table", "table_back"])
+def table(p):
+    W, D, H = 0.95, 0.6, 0.5
+    rng = p.rng
+    for k, col in enumerate(["pal_walnut", "pal_leather", "pal_walnut"]):
+        p.box((W + rng.uniform(-0.01, 0.01), D / 3 - 0.008, 0.045), (rng.uniform(-0.006, 0.006), (k - 1) * D / 3,
+              H - 0.0225 + rng.uniform(-0.003, 0.003)), col, rot=(0, 0, rng.uniform(-0.6, 0.6)))
+    for s in (-1, 1):
+        p.box((W - 0.16, 0.03, 0.08), (0, s * (D / 2 - 0.07), H - 0.085), "pal_umber")
+        p.box((0.03, D - 0.16, 0.08), (s * (W / 2 - 0.08), 0, H - 0.085), "pal_umber")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.075, 0.075, H - 0.045), (sx * (W / 2 - 0.09), sy * (D / 2 - 0.08), (H - 0.045) / 2), "pal_walnut")
+        p.box((0.035, D - 0.2, 0.04), (sx * (W / 2 - 0.09), 0, 0.1), "pal_umber")
+    p.box((W - 0.2, 0.035, 0.04), (0, 0, 0.1), "pal_umber")
+
+
+@model("table_chairs", "free", ["table_chairs", "table_chairs_back"])
+def table_chairs(p):
+    H = 0.45
+    p.cyl(0.24, 0.035, (0, 0, H - 0.035), "pal_rust", segs=20, smooth=False)
+    p.cyl(0.23, 0.025, (0, 0, H - 0.06), "pal_umber", segs=20, smooth=False)
+    p.lathe([(0.05, 0.06), (0.03, 0.09), (0.024, 0.16), (0.035, 0.2), (0.022, 0.24), (0.02, 0.36), (0.04, 0.39),
+             (0.05, H - 0.06), (0.0, H - 0.06)], (0, 0, 0), "pal_peat", segs=12)
+    for k in range(3):
+        a = math.radians(90 + k * 120)
+        p.tube([(0.03 * math.cos(a), 0.03 * math.sin(a), 0.09), (0.12 * math.cos(a), 0.12 * math.sin(a), 0.05),
+                (0.17 * math.cos(a), 0.17 * math.sin(a), 0.015)], 0.02, "pal_peat")
+    p.lathe([(0.0, 0.0), (0.045, 0.0), (0.05, 0.008), (0.04, 0.013), (0.012, 0.017), (0.012, 0.036), (0.018, 0.04),
+             (0.0, 0.042)], (0, -0.02, H), "pal_pewter")
+    p.cyl(0.017, 0.09, (0, -0.02, H + 0.04), "pal_ivory", segs=10)
+    p.lathe([(0.0, 0.0), (0.009, 0.008), (0.011, 0.02), (0.006, 0.034), (0.0, 0.044)], (0, -0.02, H + 0.133),
+            "glow_flame", segs=8)
+    p.socket("candle", (0, -0.02, H + 0.15))
+    lancet = [(-0.13, 0.0), (0.13, 0.0)] + list(reversed(arch(-0.13, 0.13, 0.42, 0.2, n=10)))
+    inner = [(-0.09, 0.0), (0.09, 0.0)] + list(reversed(arch(-0.09, 0.09, 0.32, 0.15, n=10)))
+    for s in (-1, 1):
+        face = -90 * s   # each chair turns to the table
+        _chair_frame(p, s * 0.36, 0.0, face, "pal_ash_violet", "pal_bone_dark", "pal_bone_dark", seat=0.3, width=0.3,
+                     depth=0.28, back_top=0.62, crest=lancet, turned=False)
+        m = Matrix.Translation((s * 0.36, 0, 0)) @ Matrix.Rotation(math.radians(face), 4, "Z")
+        p.prism(inner, 0.012, tuple(m @ Vector((0, 0.14 - 0.03 - 0.03, 0.39))), "pal_bone_dark", rot=(0, 0, face))
+
+
+@model("candelabra", "free", ["candelabra"])
+def candelabra(p):
+    """Wrought iron, five candles in a V like the 2D candelabra: a tripod of scrolled feet, a knopped shaft and two
+    pairs of curling arms in the front plane."""
+    iron = "pal_ink"
+    for k in range(3):
+        a = math.radians(90 + k * 120)
+        c, s = math.cos(a), math.sin(a)
+        p.tube([(0.02 * c, 0.02 * s, 0.16), (0.11 * c, 0.11 * s, 0.09), (0.18 * c, 0.18 * s, 0.03), (0.22 * c, 0.22 * s, 0.05),
+                (0.21 * c, 0.21 * s, 0.085), (0.19 * c, 0.19 * s, 0.07)], 0.018, iron)
+        p.cyl(0.03, 0.016, (0.18 * c, 0.18 * s, 0.0), iron, segs=8)
+    p.lathe([(0.05, 0.12), (0.06, 0.15), (0.026, 0.2), (0.02, 0.42), (0.04, 0.44), (0.02, 0.47), (0.018, 0.64),
+             (0.04, 0.66), (0.018, 0.69), (0.018, 0.9), (0.045, 0.93), (0.05, 0.95), (0.0, 0.95)], (0, 0, 0), iron, segs=10)
+    for s in (-1, 1):
+        p.tube(curve((0.0, 0.0, 0.3), (s * 0.09, 0.0, 0.26), (s * 0.07, 0.0, 0.36), n=8), 0.012, iron)
+    cups = [((0, 0, 0.95), 0.14)]
+    for s in (-1, 1):
+        for r, zb, zt, h in ((0.15, 0.7, 0.86, 0.12), (0.28, 0.6, 0.76, 0.1)):
+            p.tube(curve((0.0, 0.0, zb), (s * r * 0.95, 0.0, zb - 0.09), (s * r, 0.0, zt - 0.02), n=12), 0.014, iron)
+            p.tube(curve((s * r * 0.55, 0.0, zb - 0.055), (s * r * 0.5, 0.0, zb + 0.03), (s * r * 0.3, 0.0, zb + 0.01), n=6),
+                   0.009, iron)
+            p.lathe([(0.0, 0.0), (0.05, 0.0), (0.056, 0.012), (0.02, 0.016), (0.02, 0.034), (0.0, 0.034)],
+                    (s * r, 0.0, zt - 0.03), iron, segs=10)
+            cups.append(((s * r, 0.0, zt), h))
+    for i, (at, h) in enumerate(cups):
+        x, y, z = at
+        p.cyl(0.021, h, (x, y, z), "pal_ivory", segs=10)
+        p.box((0.01, 0.01, 0.035), (x + 0.016, y - 0.01, z + h - 0.022), "pal_vellum")
+        p.lathe([(0.0, 0.0), (0.012, 0.01), (0.014, 0.024), (0.008, 0.04), (0.0, 0.055)], (x, y, z + h + 0.004),
+                "glow_flame", segs=8)
+        p.socket("candle_%d" % i, (x, y, z + h + 0.025))
+
+
+@model("fireplace", "wall", ["fireplace"])
+def fireplace(p):
+    W, D = 0.96, 0.3
+    HB = 0.86            # the stone surround's height; the mantel sits on it
+    ow, oh = 0.5, 0.44   # the firebox opening
+    mortar = "pal_stone_deep"
+    front = -(D - 0.03)
+    pier = (W - ow) / 2
+    for s in (-1, 1):
+        p.box((pier, D - 0.03, HB), (s * (ow / 2 + pier / 2), front / 2, HB / 2), mortar)
+    p.box((ow, D - 0.03, HB - oh), (0, front / 2, oh + (HB - oh) / 2), mortar)
+    p.box((ow, 0.03, oh), (0, -0.015, oh / 2), "pal_ink")
+    rng = p.rng
+    stones = ["pal_stone", "pal_stone", "pal_slate", "pal_stone", "pal_ash_violet", "pal_slate"]
+
+    def block(size, at):
+        p.box(size, at, rng.choice(stones), rot=(rng.uniform(-2, 2), rng.uniform(-2, 2), rng.uniform(-1.5, 1.5)))
+    z = 0.0
+    while z < HB - 0.04:
+        rh = min(rng.uniform(0.09, 0.13), HB - z)
+        segs = [(-W / 2, W / 2)]
+        if z < oh + 0.1:
+            segs = [(-W / 2, -ow / 2 - 0.005), (ow / 2 + 0.005, W / 2)]
+        for x0, x1 in segs:
+            x = x0
+            while x < x1 - 0.03:
+                ln = min(rng.uniform(0.1, 0.22), x1 - x)
+                dep = rng.uniform(0.028, 0.045)
+                block((ln - 0.012, dep, rh - 0.012), (x + ln / 2, front - dep / 2 + 0.012, z + rh / 2))
+                x += ln
+        for s in (-1, 1):
+            y = 0.0
+            while y > front + 0.03:
+                ln = min(rng.uniform(0.1, 0.18), y - front)
+                dep = rng.uniform(0.02, 0.035)
+                block((dep, ln - 0.012, rh - 0.012), (s * (W / 2 + dep / 2 - 0.01), y - ln / 2, z + rh / 2))
+                y -= ln
+        z += rh
+    p.box((ow + 0.16, 0.05, 0.1), (0, front - 0.012, oh + 0.05), "pal_slate")
+    p.prism([(-0.06, 0.0), (0.06, 0.0), (0.045, 0.13), (-0.045, 0.13)], 0.06, (0, front - 0.02, oh - 0.005), "pal_stone")
+    p.box((W + 0.04, D + 0.02, 0.04), (0, -(D + 0.02) / 2, HB + 0.02), "pal_peat")
+    p.box((W + 0.06, D + 0.07, 0.045), (0, -(D + 0.07) / 2, HB + 0.0625), "pal_umber")
+    for s in (-1, 1):
+        p.prism([(0.0, 0.0), (0.0, 0.1), (-0.07, 0.1), (-0.07, 0.07), (-0.02, 0.0)], 0.05,
+                (s * (W / 2 - 0.03), front, HB - 0.1), "pal_peat", rot=(0, 0, 90))
+    p.box((W + 0.04, 0.22, 0.03), (0, front - 0.11, 0.015), "pal_slate")
+    p.box((ow, -front, 0.03), (0, front / 2, 0.015), mortar)
+    for s in (-1, 1):
+        p.box((0.025, 0.16, 0.025), (s * 0.13, front / 2 - 0.02, 0.05), "pal_void")
+        p.cyl(0.018, 0.05, (s * 0.13, front + 0.08, 0.03), "pal_void", segs=8)
+    for ln, at, rz, ry in [(0.34, (0, -0.13, 0.075), 6, 0), (0.3, (0.02, -0.09, 0.11), -12, 8),
+                           (0.24, (-0.04, -0.17, 0.12), 25, -10)]:
+        p.cyl(0.032, ln, (at[0] - ln / 2 * math.cos(math.radians(rz)), at[1] - ln / 2 * math.sin(math.radians(rz)), at[2]),
+              "pal_umber", rot=(0, 90, rz), segs=8)
+    for _ in range(14):
+        sz = rng.uniform(0.025, 0.05)
+        p.box((sz, sz, sz * 0.6), (rng.uniform(-0.18, 0.18), rng.uniform(-0.2, -0.05), 0.035),
+              rng.choice(["glow_ember", "glow_candle", "glow_ember"]), rot=(0, 0, rng.uniform(0, 90)))
+    p.socket("flame", (0.0, -0.12, 0.07))
+
+
+# --- Stairs and doors ------------------------------------------------------------------------------------------
+
+STEPS, RISE, RUN, WIDTH = 7, 1.5, 1.0, 0.9   # as world/look/stairs.gd: 7.5 ft up over one square
+
+
+def _steps(p, z_of, top_of):
+    """Steps across one square from the entry (front, -y) to the back; z_of(i) is step i's top, top_of its block's base."""
+    td = RUN / STEPS
+    rise = abs(z_of(1) - z_of(0))
+    for i in range(STEPS):
+        zt = z_of(i)
+        y0 = -RUN / 2 + td * i
+        base = top_of(i)
+        p.box((WIDTH - 0.06, td, zt - base), (0, y0 + td / 2, (zt + base) / 2), "pal_grave")
+        p.box((WIDTH - 0.05, td + 0.02, 0.025), (0, y0 + td / 2 - 0.01, zt - 0.0125), "pal_walnut")
+        p.box((0.5, td + 0.012, 0.006), (0, y0 + td / 2 - 0.006, zt + 0.003), "pal_blood")
+        p.box((0.5, 0.006, rise - 0.03), (0, y0 - 0.016, zt - 0.025 - (rise - 0.03) / 2), "pal_blood")
+        for s in (-1, 1):
+            p.box((0.016, td + 0.012, 0.007), (s * 0.24, y0 + td / 2 - 0.006, zt + 0.0035), "pal_tan")
+        p.cyl(0.006, 0.54, (-0.27, y0 - 0.022, zt - rise + 0.012), "pal_tan", rot=(0, 90, 0), segs=6)
+
+
+@model("stairs_up", "stairs_up", ["stair_riser", "stair_riser_back"])
+def stairs_up(p):
+    rh = RISE / STEPS
+    td = RUN / STEPS
+    _steps(p, lambda i: rh * (i + 1), lambda i: 0.0)
+    side = [(-RUN / 2, 0.0), (RUN / 2, 0.0), (RUN / 2, RISE + 0.06), (RUN / 2 - td, RISE + 0.06), (-RUN / 2, rh + 0.06)]
+    cap = [(-RUN / 2, rh + 0.03), (RUN / 2 - td, RISE + 0.03), (RUN / 2, RISE + 0.03), (RUN / 2, RISE + 0.08),
+           (RUN / 2 - td, RISE + 0.08), (-RUN / 2, rh + 0.08)]
+    for s in (-1, 1):
+        x = s * (WIDTH / 2 - 0.02)
+        p.prism(side, 0.04, (x, 0, 0), "pal_blood", rot=(0, 0, 90))
+        p.prism(cap, 0.05, (x, 0, 0), "pal_walnut", rot=(0, 0, 90))
+        p.box((0.065, 0.065, rh + 0.55), (x, -RUN / 2 + 0.035, (rh + 0.55) / 2), "pal_walnut")
+        p.lathe([(0.03, 0.0), (0.038, 0.015), (0.02, 0.03), (0.032, 0.05), (0.0, 0.09)], (x, -RUN / 2 + 0.035, rh + 0.55),
+                "pal_walnut", segs=10)
+        p.box((0.06, 0.06, 0.5), (x, RUN / 2 - 0.03, RISE + 0.25), "pal_walnut")
+        p.tube([(x, -RUN / 2 + 0.035, rh + 0.5), (x, RUN / 2 - 0.03, RISE + 0.46)], 0.022, "pal_walnut", segs=6)
+        for i in range(1, STEPS - 1):
+            y = -RUN / 2 + td * (i + 0.5)
+            zt = rh * (i + 1)
+            zr = rh + 0.5 + (y + RUN / 2 - 0.035) / (RUN - 0.065) * (RISE + 0.46 - rh - 0.5)
+            p.lathe([(0.012, 0.0), (0.018, 0.02), (0.01, 0.05), (0.01, zr - zt - 0.06), (0.016, zr - zt - 0.03),
+                     (0.012, zr - zt)], (x, y, zt + 0.05), "pal_umber", segs=6)
+
+
+@model("stairs_down", "stairs_down", ["stair_down"])
+def stairs_down(p):
+    drop = 1.4
+    rh = drop / STEPS
+    _steps(p, lambda i: -rh * (i + 1), lambda i: -drop - 0.02)
+    p.box((1.0, 1.0, 0.04), (0, 0, -drop - 0.04), "pal_void")
+    p.box((1.0, 0.05, drop), (0, 0.475, -drop / 2), "pal_peat")
+    for s in (-1, 1):
+        p.box((0.05, 1.0, drop), (s * 0.475, 0, -drop / 2), "pal_peat")
+        for z in (-0.12, -0.6):
+            p.box((0.012, 0.95, 0.03), (s * 0.444, 0.0, z), "pal_umber")
+    # A railing round the well on the three sides away from the entry.
+    rail_h = 0.45
+    corners = [(-0.46, -0.46), (0.46, -0.46), (-0.46, 0.46), (0.46, 0.46)]
+    for x, y in corners:
+        p.box((0.06, 0.06, rail_h), (x, y, rail_h / 2), "pal_walnut")
+        p.lathe([(0.03, 0.0), (0.036, 0.015), (0.018, 0.03), (0.03, 0.05), (0.0, 0.085)], (x, y, rail_h), "pal_walnut")
+    for a, b in [((-0.46, 0.46), (0.46, 0.46)), ((-0.46, -0.46), (-0.46, 0.46)), ((0.46, -0.46), (0.46, 0.46))]:
+        p.tube([(a[0], a[1], rail_h - 0.02), (b[0], b[1], rail_h - 0.02)], 0.022, "pal_walnut", segs=6)
+        for k in range(1, 7):
+            t = k / 7
+            x, y = a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t
+            p.lathe([(0.012, 0.0), (0.018, 0.02), (0.01, 0.05), (0.01, rail_h - 0.1), (0.016, rail_h - 0.06),
+                     (0.012, rail_h - 0.03)], (x, y, 0.0), "pal_umber", segs=6)
+
+
+@model("door_wood", "door", ["door_wood"])
+def door_wood(p):
+    """A plank door leaf with iron strap hinges and a ring pull (the 2D door_wood), 0.86 x 1.15 like the sprite leaf."""
+    W, H, T = 0.86, 1.15, 0.055
+    rng = p.rng
+    n = 5
+    pw = W / n
+    for k in range(n):
+        p.box((pw - 0.006, T, H - rng.uniform(0.0, 0.01)), (-W / 2 + pw * (k + 0.5), 0, H / 2),
+              "pal_walnut" if k % 2 == 0 else "pal_rust")
+    for z in (0.22, 0.92):
+        p.box((W - 0.12, 0.012, 0.055), (-0.04, -T / 2 - 0.006, z), "pal_void")
+        p.cyl(0.03, 0.013, (W / 2 - 0.13, -T / 2 - 0.006, z), "pal_void", rot=(90, 0, 0), segs=10)
+        for k in range(5):
+            p.cyl(0.008, 0.008, (-W / 2 + 0.08 + k * 0.16, -T / 2 - 0.012, z), "pal_pewter", rot=(90, 0, 0), segs=6)
+        p.box((W - 0.1, 0.03, 0.08), (0, T / 2 + 0.015, z), "pal_umber")
+    p.box((0.05, 0.03, 0.82), (0, T / 2 + 0.015, 0.57), "pal_umber", rot=(0, 45, 0))
+    ring = [(-W / 2 + 0.12 + 0.045 * math.sin(a), -T / 2 - 0.02, 0.56 - 0.045 * math.cos(a))
+            for a in (2 * math.pi * k / 12 for k in range(13))]
+    p.tube(ring, 0.007, "pal_void", segs=6)
+    p.cyl(0.02, 0.012, (-W / 2 + 0.12, -T / 2 - 0.006, 0.6), "pal_void", rot=(90, 0, 0), segs=8)
+
+
+@model("wainscot", "wall_face", ["interior/wainscot_wall"])
+def wainscot(p):
+    """One square's face of a panelled wall: skirting, two raised panels and a chair rail over the painted wainscot's
+    lower half (the damask above the rail is the wall's own texture). Modules meet at their ends along a wall."""
+    W = 1.0
+    frame, field, rail = "pal_peat", "pal_umber", "pal_walnut"
+    p.box((W, 0.032, 0.075), (0, -0.016, 0.0375), frame)
+    p.box((W, 0.04, 0.014), (0, -0.02, 0.082), rail)
+    p.box((W, 0.016, 0.5), (0, -0.008, 0.075 + 0.25), frame)
+    for s in (-1, 1):
+        cx = s * 0.25
+        p.box((0.36, 0.01, 0.34), (cx, -0.021, 0.32), "pal_grave")
+        p.box((0.3, 0.02, 0.28), (cx, -0.026, 0.32), field, soft=0.008)
+    p.box((W, 0.036, 0.03), (0, -0.018, 0.555), rail)
+    p.box((W, 0.046, 0.016), (0, -0.023, 0.578), rail)
+
+
+# --- Export and preview ----------------------------------------------------------------------------------------
+
+def bounds(ob):
+    vs = [ob.matrix_world @ v.co for v in ob.data.vertices]
+    lo = Vector((min(v.x for v in vs), min(v.y for v in vs), min(v.z for v in vs)))
+    hi = Vector((max(v.x for v in vs), max(v.y for v in vs), max(v.z for v in vs)))
+    return lo, hi
+
+
+def godot(v):
+    """Blender (x, y, z) -> Godot (x, z, -y), rounded."""
+    return [round(v[0], 4), round(v[2], 4), round(-v[1], 4)]
+
+
+def build(ids):
+    for ob in list(bpy.data.objects):
+        bpy.data.objects.remove(ob)
+    built = {}
+    for id_ in ids:
+        spec = MODELS[id_]
+        p = Piece(id_, seed=sum(ord(c) for c in id_))
+        spec["build"](p)
+        sockets = dict(p.sockets)
+        ob = p.finish()
+        built[id_] = (ob, sockets)
+    return built
+
+
+def export(built):
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    path = OUT_DIR / "manifest.json"
+    data = json.loads(path.read_text()) if path.exists() else {}
+    data["about"] = ("3D set pieces from blender/models_3d.py (docs/art/models.md). size is [width, height, depth] in "
+                     "world units; sockets are in Godot axes (x, y up, z toward the front).")
+    models = data.setdefault("models", {})
+    for id_, (ob, sockets) in built.items():
+        bpy.ops.object.select_all(action="DESELECT")
+        ob.select_set(True)
+        bpy.context.view_layer.objects.active = ob
+        out = OUT_DIR / (id_ + ".glb")
+        bpy.ops.export_scene.gltf(filepath=str(out), export_format="GLB", use_selection=True, export_yup=True,
+                                  export_apply=True, export_texcoords=False, export_materials="EXPORT")
+        lo, hi = bounds(ob)
+        spec = MODELS[id_]
+        entry = {"file": "art/models/%s.glb" % id_, "mount": spec["mount"], "stands_for": spec["stands_for"],
+                 "size": [round(hi.x - lo.x, 3), round(hi.z - lo.z, 3), round(hi.y - lo.y, 3)],
+                 "materials": sorted({m.name for m in ob.data.materials}),
+                 "triangles": sum(len(f.vertices) - 2 for f in ob.data.polygons)}
+        if sockets:
+            entry["sockets"] = {k: godot(v) for k, v in sockets.items()}
+        if spec.get("container"):
+            entry["container"] = True
+        models[id_] = entry
+        print("model %s: %s, %d triangles" % (id_, entry["size"], entry["triangles"]))
+    path.write_text(json.dumps(data, indent=2) + "\n")
+
+
+def preview(built, out, yaw_deg=45.0):
+    """One image per piece from the game's opening camera (south-east, 40 degrees down) beside a 6 ft figure,
+    workbench-lit: out_<id>.png, so shapes can be checked against the 2D art without the game."""
+    scene = bpy.context.scene
+    man = bpy.data.meshes.new("figure")
+    t = bmesh.new()
+    bmesh.ops.create_cone(t, cap_ends=True, segments=12, radius1=0.16, radius2=0.12, depth=1.2)
+    bmesh.ops.translate(t, vec=Vector((0, 0, 0.6)), verts=t.verts)
+    t.to_mesh(man)
+    fig = bpy.data.objects.new("figure", man)
+    scene.collection.objects.link(fig)
+    cam_data = bpy.data.cameras.new("cam")
+    cam_data.type = "ORTHO"
+    cam = bpy.data.objects.new("cam", cam_data)
+    scene.collection.objects.link(cam)
+    scene.camera = cam
+    scene.render.engine = "BLENDER_WORKBENCH"
+    shading = scene.display.shading
+    shading.light = "STUDIO"
+    shading.color_type = "MATERIAL"
+    shading.show_object_outline = True
+    shading.show_cavity = False
+    scene.render.resolution_x = 900
+    scene.render.resolution_y = 900
+    scene.world = scene.world or bpy.data.worlds.new("w")
+    yaw, pitch = math.radians(yaw_deg), math.radians(40)
+    offset = Vector((math.sin(yaw) * math.cos(pitch), -math.cos(yaw) * math.cos(pitch), math.sin(pitch))) * 30
+    right = Vector((math.cos(yaw), math.sin(yaw), 0))
+    for ob, _ in built.values():
+        ob.hide_render = True
+    for id_, (ob, _) in built.items():
+        ob.hide_render = False
+        lo, hi = bounds(ob)
+        size = max(hi.x - lo.x, hi.y - lo.y, hi.z - lo.z, 1.2)
+        fig.location = Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, 0)) - right * (size * 0.5 + 0.35)
+        centre = Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, (lo.z + hi.z) / 2)) - right * 0.2
+        cam_data.ortho_scale = size * 1.7
+        cam.location = centre + offset
+        cam.rotation_euler = (offset * -1).to_track_quat("-Z", "Y").to_euler()
+        scene.render.filepath = out.replace(".png", "_%s.png" % id_)
+        bpy.ops.render.render(write_still=True)
+        ob.hide_render = True
+
+
+def main():
+    argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--only", nargs="*", default=[])
+    ap.add_argument("--preview", default="")
+    ap.add_argument("--yaw", type=float, default=45.0)
+    ap.add_argument("--no-export", action="store_true")
+    a = ap.parse_args(argv)
+    ids = a.only or list(MODELS)
+    built = build(ids)
+    if not a.no_export:
+        export(built)
+    if a.preview:
+        preview(built, a.preview, a.yaw)
+
+
+main()

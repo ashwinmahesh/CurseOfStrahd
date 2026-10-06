@@ -3,7 +3,8 @@ extends Node3D
 ## an overview and close shots around its doors, props and containers. Not part of the game.
 ##   make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=death_house_ground NAME=tour FRAMES=20
 ## Godot args after --: --location=<id> [--hour=12] [--shots=8] [--yaw=<camera steps>] [--lit] (brighter ambient, to
-## check placement in dark interiors) [--at=x,z;x,z] (close shots of these squares)
+## check placement in dark interiors) [--at=x,z;x,z] (close shots of these squares) [--party=x,z] (the party, with
+## its lantern, stands there instead of at the spawn)
 
 var view: LocationView
 var _spots: Array[Vector3] = []
@@ -24,7 +25,16 @@ func _ready() -> void:
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)
 	GameState.story.minute_of_day = hour * 60
-	view = LocationView.create(loc_id, GameState.story, Narrator.new(), Dice.roller, "default")
+	var spawn := "default"
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--party="):
+			var at := Vector2i(int(a.get_slice("=", 1).get_slice(",", 0)), int(a.get_slice("=", 1).get_slice(",", 1)))
+			GameState.story.location = loc_id
+			GameState.story.positions.clear()
+			for i in GameState.story.party.size():
+				GameState.story.positions.append(at + [Vector2i.ZERO, Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)][i % 4])
+			spawn = ""
+	view = LocationView.create(loc_id, GameState.story, Narrator.new(), Dice.roller, spawn)
 	add_child(view)
 	# Spots worth a close look: clusters of doors, props and containers (one shot per cluster).
 	for key: String in ["doors", "props", "containers"]:

@@ -146,6 +146,7 @@ static func mark_looted(node: Node3D) -> void:
 		return
 	for c: Node in node.find_children("*", "SpriteBase3D", true, false):
 		(c as SpriteBase3D).modulate = Color(0.55, 0.5, 0.55)
+	ModelPiece.dim(node)
 
 
 # --- Doors ----------------------------------------------------------------------------------------
@@ -188,14 +189,19 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 	leaf.position = base
 	leaf.rotation.y = yaw
 	board.add_child(leaf)
-	var sp := _sprite(art)
-	var info := manifest()[art] as Dictionary
-	sp.billboard = BaseMaterial3D.BILLBOARD_DISABLED
-	sp.double_sided = true
-	sp.scale = Vector3(w / float(info.get("world_width", 1.0)), h / float(info.get("world_height", 1.0)), 1.0)
-	sp.position = Vector3(0, 0, 0)
-	sp.name = "Leaf"
-	leaf.add_child(sp)
+	var model := "" if secret else ModelPiece.for_art(board, art)
+	var sp: Sprite3D = null
+	if model != "":
+		leaf.add_child(ModelPiece.door_leaf(model, w, h))   # a 3D leaf (docs/art/models.md)
+	else:
+		sp = _sprite(art)
+		var info := manifest()[art] as Dictionary
+		sp.billboard = BaseMaterial3D.BILLBOARD_DISABLED
+		sp.double_sided = true
+		sp.scale = Vector3(w / float(info.get("world_width", 1.0)), h / float(info.get("world_height", 1.0)), 1.0)
+		sp.position = Vector3(0, 0, 0)
+		sp.name = "Leaf"
+		leaf.add_child(sp)
 	var statue := str(look.get("statue", ""))
 	if bool(look.get("pillars", false)):
 		# A gateway between two stone pillars (the Gates of Barovia), each with a statue on top where there's art:
@@ -307,6 +313,11 @@ static func exit_piece(board: ArenaBoard, spec: Dictionary) -> Node3D:
 	board.add_child(root)
 	# Stairs are the way itself, so they show only while the way is open (LocationView keeps them hidden while the
 	# exit's `when` is false: a secret stair nobody has found). A door stays drawn even when it's barred.
+	var model := ModelPiece.for_art(board, art)
+	if model != "" and str((ModelPiece.manifest()[model] as Dictionary).get("mount", "")).begins_with("stairs"):
+		ModelPiece.stand(board, root, model, art, cell)
+		root.set_meta("only_when_open", true)
+		return root
 	if mount == "floor":
 		_lay(board, root, art, cell, 1.0)
 		root.set_meta("only_when_open", true)
@@ -380,6 +391,9 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## Added to `parent`; returns the piece.
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
 		at_override: Variant = null, front_override: String = "", big: bool = false) -> Node3D:
+	var model := ModelPiece.for_art(board, art)
+	if model != "":
+		return ModelPiece.stand(board, parent, model, art, cell, at_override)   # a 3D piece (docs/art/models.md)
 	scale_ *= float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
 	var at: Vector3 = board.cell_center(cell) if at_override == null else at_override as Vector3
 	var wall := wall_side(board, cell)
@@ -591,6 +605,11 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 				key = k2
 				break
 	board.used_faces[key] = true
+	var model := ModelPiece.for_art(board, art)
+	if model != "":
+		ModelPiece.hang(board, root, model, art, wall, normal)
+		board.attach_to_building(wall, root)
+		return true
 	var info := manifest()[art] as Dictionary
 	var sp := _sprite(art)
 	sp.billboard = BaseMaterial3D.BILLBOARD_DISABLED

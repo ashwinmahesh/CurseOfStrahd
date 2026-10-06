@@ -1,0 +1,334 @@
+{
+  "about": "3D set pieces from blender/models_3d.py (docs/art/models.md). size is [width, height, depth] in world units; sockets are in Godot axes (x, y up, z toward the front).",
+  "models": {
+    "bookcase": {
+      "file": "art/models/bookcase.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "book_shelf",
+        "book_shelf_front",
+        "bookshelf"
+      ],
+      "size": [
+        0.98,
+        1.39,
+        0.34
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_bog",
+        "pal_bone_dark",
+        "pal_leather",
+        "pal_moon_blue",
+        "pal_night",
+        "pal_parchment",
+        "pal_peat",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 1824
+    },
+    "desk": {
+      "file": "art/models/desk.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "desk",
+        "desk_front"
+      ],
+      "size": [
+        1.0,
+        0.765,
+        0.55
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ash_violet",
+        "pal_blood",
+        "pal_grave",
+        "pal_ivory",
+        "pal_parchment",
+        "pal_tan",
+        "pal_vellum",
+        "pal_void",
+        "pal_walnut"
+      ],
+      "triangles": 776,
+      "sockets": {
+        "candle": [
+          -0.36,
+          0.67,
+          0.185
+        ]
+      },
+      "container": true
+    },
+    "chair_high": {
+      "file": "art/models/chair_high.glb",
+      "mount": "free",
+      "stands_for": [
+        "chair_high"
+      ],
+      "size": [
+        0.42,
+        1.035,
+        0.418
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 1022
+    },
+    "armchair": {
+      "file": "art/models/armchair.glb",
+      "mount": "free",
+      "stands_for": [
+        "armchair"
+      ],
+      "size": [
+        0.57,
+        0.902,
+        0.561
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_crimson",
+        "pal_umber"
+      ],
+      "triangles": 1280
+    },
+    "settee": {
+      "file": "art/models/settee.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "settee"
+      ],
+      "size": [
+        0.98,
+        0.8,
+        0.5
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 1208
+    },
+    "table": {
+      "file": "art/models/table.glb",
+      "mount": "free",
+      "stands_for": [
+        "table",
+        "table_back"
+      ],
+      "size": [
+        0.96,
+        0.502,
+        0.598
+      ],
+      "materials": [
+        "pal_leather",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 168
+    },
+    "table_chairs": {
+      "file": "art/models/table_chairs.glb",
+      "mount": "free",
+      "stands_for": [
+        "table_chairs",
+        "table_chairs_back"
+      ],
+      "size": [
+        1.0,
+        1.11,
+        0.48
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ash_violet",
+        "pal_bone_dark",
+        "pal_ivory",
+        "pal_peat",
+        "pal_pewter",
+        "pal_rust",
+        "pal_umber"
+      ],
+      "triangles": 1802,
+      "sockets": {
+        "candle": [
+          0,
+          0.6,
+          0.02
+        ]
+      }
+    },
+    "candelabra": {
+      "file": "art/models/candelabra.glb",
+      "mount": "free",
+      "stands_for": [
+        "candelabra"
+      ],
+      "size": [
+        0.672,
+        1.149,
+        0.359
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ink",
+        "pal_ivory",
+        "pal_vellum"
+      ],
+      "triangles": 2462,
+      "sockets": {
+        "candle_0": [
+          0,
+          1.115,
+          0
+        ],
+        "candle_1": [
+          -0.15,
+          1.005,
+          -0.0
+        ],
+        "candle_2": [
+          -0.28,
+          0.885,
+          -0.0
+        ],
+        "candle_3": [
+          0.15,
+          1.005,
+          -0.0
+        ],
+        "candle_4": [
+          0.28,
+          0.885,
+          -0.0
+        ]
+      }
+    },
+    "fireplace": {
+      "file": "art/models/fireplace.glb",
+      "mount": "wall",
+      "stands_for": [
+        "fireplace"
+      ],
+      "size": [
+        1.02,
+        0.945,
+        0.49
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ash_violet",
+        "pal_ink",
+        "pal_peat",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 1324,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.07,
+          0.12
+        ]
+      }
+    },
+    "stairs_up": {
+      "file": "art/models/stairs_up.glb",
+      "mount": "stairs_up",
+      "stands_for": [
+        "stair_riser",
+        "stair_riser_back"
+      ],
+      "size": [
+        0.936,
+        2.0,
+        1.028
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_grave",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 1640
+    },
+    "stairs_down": {
+      "file": "art/models/stairs_down.glb",
+      "mount": "stairs_down",
+      "stands_for": [
+        "stair_down"
+      ],
+      "size": [
+        1.0,
+        2.13,
+        1.028
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_grave",
+        "pal_peat",
+        "pal_tan",
+        "pal_umber",
+        "pal_void",
+        "pal_walnut"
+      ],
+      "triangles": 2448
+    },
+    "door_wood": {
+      "file": "art/models/door_wood.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_wood"
+      ],
+      "size": [
+        0.854,
+        1.148,
+        0.112
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_rust",
+        "pal_umber",
+        "pal_void",
+        "pal_walnut"
+      ],
+      "triangles": 572
+    },
+    "wainscot": {
+      "file": "art/models/wainscot.glb",
+      "mount": "wall_face",
+      "stands_for": [
+        "interior/wainscot_wall"
+      ],
+      "size": [
+        1.0,
+        0.586,
+        0.046
+      ],
+      "materials": [
+        "pal_grave",
+        "pal_peat",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 300
+    }
+  }
+}
