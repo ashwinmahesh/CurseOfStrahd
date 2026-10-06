@@ -3,7 +3,7 @@ extends Control
 ## The minimap at the top right of the exploration HUD: the current location drawn from its grid map, north up,
 ## centred on the party's leader and moving with them. Ways out are marked: a gilt arrow for a road to another region
 ## (on the rim, pointing toward it, while it's beyond the edge) and a small lamp for a door into a building. Doors,
-## the people here and the party show as marks, and a pale wedge shows which way the camera looks. The wheel zooms;
+## noticed traps, the people here and the party show as marks, and a pale wedge shows which way the camera looks. The wheel zooms;
 ## a click walks the party to that square. It reads the LocationView and never changes it except through `click`.
 
 const RADIUS := 100.0
@@ -180,6 +180,7 @@ func _draw_content() -> void:
 		return
 	_content.draw_texture_rect(_tex, Rect2(to_map(Vector2.ZERO), Vector2(_grid.width, _grid.depth) * cell_px), false)
 	_draw_doors()
+	_draw_traps()
 	_draw_camera_wedge()
 	for e in ways_out:
 		_draw_way_out(e)
@@ -224,6 +225,20 @@ func _draw_doors() -> void:
 		if node != null and is_instance_valid(node) and node.visible:
 			_content.draw_rect(r.grow(-cell_px * 0.12), Look.color("leather"), true)
 			_content.draw_rect(r.grow(-cell_px * 0.12), Look.color("peat"), false, 1.5)
+
+
+## Traps the party has noticed: their squares ringed in red. Unnoticed ones aren't drawn.
+func _draw_traps() -> void:
+	var states := view.st.loc_state(view.loc_id)["traps"] as Dictionary
+	for t: Variant in view.loc.get("traps", []):
+		var trap := t as Dictionary
+		if str(states.get(str(trap["id"]), "")) != "found":
+			continue
+		for c: Variant in trap["cells"]:
+			var a := c as Array
+			var r := Rect2(to_map(Vector2(float(a[0]), float(a[1]))), Vector2.ONE * cell_px).grow(-cell_px * 0.12)
+			_content.draw_rect(r, Color(Look.color("vampire_red"), 0.35), true)
+			_content.draw_rect(r, Look.color("vampire_red"), false, 1.5)
 
 
 func _draw_camera_wedge() -> void:

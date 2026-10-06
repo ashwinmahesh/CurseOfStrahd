@@ -31,6 +31,8 @@ func _ready() -> void:
 	_sig = signature(view)
 	hidden = hidden_cells(view)
 	_hide_nodes()
+	# On arriving, the party's passive Perception takes in the traps it can already see (the rest after each step).
+	TrapSight.notice_all.call_deferred(view)
 
 
 func _process(delta: float) -> void:
