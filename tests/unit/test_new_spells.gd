@@ -658,3 +658,31 @@ func test_calm_emotions_can_free_allies_from_fear() -> void:
 	TestCombat.start_with(e, c)
 	assert_true(e.spells.cast(c, "calm_emotions", 2, [], Vector2(5.5, 3.5), Vector2.ZERO, {"choice": "suppress"}).ok)
 	assert_false(a.creature.has_condition(&"frightened"))
+
+
+# --- Mounted combat -------------------------------------------------------------------------------------
+
+func test_a_rider_mounts_the_steed_and_rides_it() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["find_steed"], Vector2i(2, 3))
+	var foe := TestCombat.punching_bag(e, Vector2i(10, 7), 100)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "find_steed", 2, [], Vector2(3.5, 3.5)).ok)
+	var steed := _summoned(e, c)
+	var r := e.feature_actions.perform(c, "cf:mount:" + steed.id, null, Vector2.INF)
+	assert_true(r.ok, r.reason)
+	assert_eq(e.mount_of(c), steed)
+	assert_eq(c.cell, steed.cell)
+	e.end_turn()
+	assert_eq(e.current(), steed)
+	assert_false(e.attack(steed, foe, "monster:otherworldly_slam").ok, "a controlled mount doesn't attack")
+	e.end_turn()
+	while e.current() != c:
+		e.end_turn()
+	var mv := e.move(c, Vector2i(8, 3))
+	assert_true(mv.ok, mv.reason)
+	assert_eq(steed.cell, Vector2i(8, 3), "the steed carries its rider")
+	assert_eq(c.cell, steed.cell)
+	e.deal_damage(foe, steed, [{"amount": 500, "type": "force"}], false, "test")
+	assert_true(e.mount_of(c) == null, "thrown when the mount falls")
+	assert_true(c.creature.has_condition(&"prone"))

@@ -170,6 +170,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Monster stat blocks in combat: attacks, Multiattack choices, timed riders with exceptions, real grapples, save actions, Recharge, drains, swarms, flyers, Parry, auras, sunlight, Lightning Absorption, Incorporeal Movement, Loathsome Limbs, lycanthropy, spellcasting | encounter.gd, monster_actions.gd | tested | test_monster_actions, test_combat_encounter |
 | Enemy AI: pack_hunter, brute, mindless, cowardly, skirmisher, swarm, spellcaster, support; obeys Command, Fear, Crown of Madness, Calm Emotions | ai/ai_brain.gd | tested | test_combat_ai, test_arena_fight, test_monster_actions |
 | Encounter XP budget (2024 DMG) | tools/data/validate_data.py | tested by make validate | — |
+| Mounted combat: mounting and dismounting (half Speed), a controlled mount carrying its rider and limited to Dash, Disengage and Dodge, falling off when the mount is moved or drops | encounter.gd mount, dismount, _forced_mount_check; combat_view.gd | tested | test_new_spells |
 | Light, darkness and obscurement in combat | encounter.gd can_see / light_at, spell_zones.gd | implemented: map light (bright/dim/dark), Darkvision, Blindsight and Truesight, light from spells, magical Darkness, Heavily Obscured areas, sunlight | test_spell_recipes |
 
 ## Exploration and rests (Phase 3: world/exploration, story/, ADR 0008, ADR 0009)

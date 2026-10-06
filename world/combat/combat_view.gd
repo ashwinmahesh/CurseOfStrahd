@@ -797,6 +797,16 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 
 # --- Playing events -------------------------------------------------------------------------------
 
+## Where a token stands: its square's centre, raised onto the mount's back for a rider.
+func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
+	var p := board.cell_center(cell, c.size_cells)
+	var m := e.mount_of(c)
+	if m != null:
+		var h := float(CombatToken.HEIGHTS.get(CombatToken.art_id(m), 1.2)) * (m.size_cells if m.size_cells > 1 else 1)
+		p = board.cell_center(m.cell, m.size_cells) + Vector3(0, h * 0.8, 0)
+	return p
+
+
 func _play_events() -> void:
 	var events := e.drain_events()
 	var walking: Dictionary = {}
@@ -812,7 +822,9 @@ func _play_events() -> void:
 				tok.face(Vector2(to - from), not bool(ev.get("forced", false)))
 				walking[tok] = true
 				var tw := create_tween()
-				tw.tween_property(tok, "position", board.cell_center(to, tok.combatant.size_cells), STEP_TIME)
+				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), STEP_TIME)
+				if bool(ev.get("mounted", false)):
+					continue
 				await tw.finished
 			"attack":
 				_stop_walking(walking)
@@ -869,8 +881,12 @@ func _play_events() -> void:
 			"teleport":
 				var tt := tokens.get(str(ev["id"])) as CombatToken
 				if tt != null:
+					# Back from Banishment: the token shows again.
+					if not tt.visible:
+						tt.show()
+						tt.scale = Vector3.ONE * (float(tt.combatant.size_cells) if tt.combatant.size_cells > 1 else 1.0)
 					tt.flash(Look.color("lilac"), 0.3)
-					tt.position = board.cell_center(ev["to"] as Vector2i, tt.combatant.size_cells)
+					tt.position = _token_spot(tt.combatant, ev["to"] as Vector2i)
 					await get_tree().create_timer(0.2).timeout
 			"summon_creature":
 				var sc := e.get_c(str(ev["id"]))
@@ -1014,6 +1030,7 @@ func capture_shots(tool: Node, out: String) -> void:
 				await tool.call("wait_frames", 10)
 				tool.call("_shot", out + "_3_area.png")
 				_cancel_targeting()
+				await _capture_new_objects(tool, out, c2)
 			break
 		await _autoplay_turn(pilot)
 	var weapon_shot := false
@@ -1034,6 +1051,54 @@ func capture_shots(tool: Node, out: String) -> void:
 	_advance()
 	await tool.call("wait_frames", 40)
 	tool.call("_shot", out + "_5_end.png")
+
+
+## The Phase 4 spell objects and a mounted rider, staged beside the wizard for one shot: Mordenkainen's Faithful
+## Hound, a Grasping Vine and the wizard riding an Otherworldly Steed (captures only).
+func _capture_new_objects(tool: Node, out: String, c: Combatant) -> void:
+	var cells: Array[Vector2i] = []
+	for off: Vector2i in [Vector2i(-2, -1), Vector2i(2, -1), Vector2i(-1, -2), Vector2i(1, -2), Vector2i(-3, 0), Vector2i(3, 0), Vector2i(-2, 1), Vector2i(2, 1)]:
+		var cell := c.cell + off
+		if e.grid.in_bounds(cell) and not e.grid.is_solid(cell) and e.occupant_at(cell) == null:
+			cells.append(cell)
+	if cells.size() < 2:
+		return
+	var hound := FieldObject.new(FieldObject.Kind.HOUND, "mordenkainens_faithful_hound", "Faithful Hound")
+	hound.caster_id = c.id
+	hound.cell = cells[0]
+	hound.cells = [cells[0]]
+	hound.rounds_left = 1000
+	e.spells.zones.add(hound, CombatResult.new())
+	var vine := FieldObject.new(FieldObject.Kind.VINE, "grasping_vine", "Grasping Vine")
+	vine.caster_id = c.id
+	vine.cell = cells[1]
+	vine.cells = [cells[1]]
+	vine.rounds_left = 1000
+	e.spells.zones.add(vine, CombatResult.new())
+	var steed_data := SummonBlocks.for_spell("find_steed", 2, "celestial", {})
+	var m := Monster.from_data(steed_data)
+	var spot := e.spells._free_cell_near(c.cell, 2)
+	var sc := e.add(m, &"guest", spot)
+	sc.controller = &"player"
+	sc.set_meta("summoner", c.id)
+	e.events.append({"type": "summon_creature", "id": sc.id, "cell": spot, "caster": c.id})
+	c.movement_left = c.speed()
+	var keep := e.order.duplicate()
+	e.mount(c, sc)
+	e.order = keep
+	await _play_events()
+	_show_weapons()
+	rig.follow = tokens[c.id] as Node3D
+	await tool.call("wait_frames", 45)
+	tool.call("_shot", out + "_7_new_objects.png")
+	e.dismount(c)
+	sc.creature.dead = true
+	e.events.append({"type": "vanish", "id": sc.id})
+	hound.ended = true
+	vine.ended = true
+	e.spells.zones.prune()
+	await _play_events()
+	_show_weapons()
 
 
 ## One turn played without the player (captures only): the autopilot for the party, AiBrain for enemies. The

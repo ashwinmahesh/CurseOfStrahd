@@ -207,6 +207,20 @@ func list(c: Combatant, out: Array[Dictionary], aw: String, bw: String) -> void:
 	_sorcerer(c, ch, out, aw, bw, tw)
 	_ranger(c, ch, out, aw, bw)
 	_warlock(c, ch, out, aw, bw)
+	_riding(c, out, tw)
+
+
+## Mounting and dismounting (2024 Mounted Combat): half your Speed either way.
+func _riding(c: Combatant, out: Array[Dictionary], tw: String) -> void:
+	var e := enc()
+	if e.mount_of(c) != null:
+		out.append(_entry("dismount", "Dismount", "half your Speed", "movement", _first(tw, "" if c.movement_left >= c.speed() / 2 else "Needs half your Speed"), "none",
+			"Get down from %s into a space within 5 ft of it." % e.mount_of(c).name()))
+		return
+	for o in e.allies_of(c):
+		if o != c and e.distance(c, o) <= 5 and Creature.SIZES.find(o.creature.size) > Creature.SIZES.find(c.creature.size) and e.rider_of(o) == null:
+			out.append(_entry("mount:" + o.id, "Mount %s" % o.name(), "half your Speed", "movement", _first(tw, e.mount_why(c, o)), "none",
+				"Climb onto %s: you share its space and it carries you as a controlled mount (it can then only Dash, Disengage or Dodge)." % o.name()))
 
 
 func _barbarian(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw: String, tw: String) -> void:
@@ -527,6 +541,10 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 	match head:
 		"rage":
 			return _start_rage(c, arg)
+		"mount":
+			return e.mount(c, e.get_c(id.substr(6)))
+		"dismount":
+			return e.dismount(c)
 		"extend_rage":
 			c.bonus_available = false
 			c.set_meta("rage_kept", _turn_key())
@@ -1518,6 +1536,14 @@ func prepare(c: Combatant) -> void:
 
 func turn_start(c: Combatant) -> void:
 	var e := enc()
+	# Mounted combat: a controlled mount moves on its rider's turn (its Speed refreshes then) and spends its own turn
+	# only on Dash, Disengage or Dodge.
+	var steed := e.controlled_mount(c)
+	if steed != null:
+		steed.movement_left = steed.speed()
+	if e.rider_of(c) != null and c.allied_with(e.rider_of(c)):
+		c.movement_left = 0
+		e.log.add("info", "%s carries %s (a controlled mount moves on its rider's turn)" % [c.name(), e.rider_of(c).name()], c.id)
 	# Branches of the Tree (World Tree 6): a creature starting its turn within 30 ft of a raging barbarian makes a
 	# Strength save or is pulled beside it with Speed 0 for the turn.
 	for b in e.hostiles_of(c):
