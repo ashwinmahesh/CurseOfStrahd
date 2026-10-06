@@ -3,7 +3,8 @@
   "name": "Badger",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "tiny",
   "type": "beast",
@@ -19,7 +20,7 @@
     "burrow": 5
   },
   "abilities": {
-    "str": 4,
+    "str": 10,
     "dex": 11,
     "con": 16,
     "int": 2,

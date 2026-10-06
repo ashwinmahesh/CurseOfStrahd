@@ -3,7 +3,8 @@
   "name": "Nothic",
   "source": {
     "book": "MM2025",
-    "note": "Numbers follow the 2014 Monster Manual nothic; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. The Claws' +4 with 1d6 + 3 is as remembered and doesn't fit Strength 14 or Dexterity 16. Weird Insight is text only, and the AI doesn't pick Rotting Gaze yet (it uses save actions only with a recharge or in a Multiattack)."
+    "edition": "2014",
+    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual nothic; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. The Claws' +4 with 1d6 + 3 is as remembered and doesn't fit Strength 14 or Dexterity 16. Weird Insight is text only, and the AI doesn't pick Rotting Gaze yet (it uses save actions only with a recharge or in a Multiattack)."
   },
   "size": "medium",
   "type": "aberration",

@@ -3,7 +3,8 @@
   "name": "Ape",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "beast",
@@ -65,7 +66,7 @@
           "type": "bludgeoning"
         }
       ],
-      "summary": "Fist: +5 to hit, 1d4+3 Bludgeoning."
+      "summary": "Pounds with a heavy fist."
     },
     {
       "id": "rock",
@@ -85,7 +86,8 @@
           "type": "bludgeoning"
         }
       ],
-      "summary": "Rock: +5 to hit, 2d6+3 Bludgeoning."
+      "summary": "Recharge 6. Hurls a rock up to 50 ft.",
+      "recharge": "6"
     }
   ],
   "ai_profile": "brute",

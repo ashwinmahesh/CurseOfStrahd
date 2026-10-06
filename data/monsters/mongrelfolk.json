@@ -3,6 +3,7 @@
   "name": "Mongrelfolk",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Its Deception bonus looks high for Charisma 6. The extraordinary feature is text only: pick or roll one per creature."
   },
   "size": "medium",

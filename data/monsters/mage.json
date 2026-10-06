@@ -3,7 +3,8 @@
   "name": "Mage",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Mage. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the spell list and the uses of Misty Step and Protective Magic. Arcane Burst is split into a melee and a ranged entry so the engine can use it at range. Protective Magic (Counterspell or Shield as a Reaction) is text only. AC assumes Mage Armor."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "humanoid",

@@ -3,7 +3,8 @@
   "name": "Berserker",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Berserker. Entered from knowledge, not yet checked against the book. Bloodied Frenzy is text only (the engine's Advantage modifiers can't ask whether the creature is Bloodied)."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "humanoid",
@@ -44,9 +45,24 @@
       "id": "bloodied_frenzy",
       "name": "Bloodied Frenzy",
       "action": "passive",
-      "summary": "While Bloodied it has Advantage on attack rolls and saving throws.",
-      "text": "Once the berserker is Bloodied, it has Advantage on its attack rolls and saving throws.",
-      "implemented": "text"
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "attack",
+          "when": {
+            "bloodied": true
+          }
+        },
+        {
+          "stat": "advantage",
+          "on": "save:all",
+          "when": {
+            "bloodied": true
+          }
+        }
+      ],
+      "summary": "Advantage on attack rolls and saving throws while Bloodied.",
+      "implemented": "engine"
     }
   ],
   "actions": [

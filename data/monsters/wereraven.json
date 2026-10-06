@@ -3,6 +3,7 @@
   "name": "Wereraven",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Changes for the engine: Shape-Shift is a Bonus Action as for the 2024 lycanthropes (the book spends the action), the 50 ft fly speed is listed for every form because it takes hybrid form at once, and its immunity to mundane, unsilvered weapons is text only (the 2024 lycanthropes dropped that immunity)."
   },
   "size": "medium",

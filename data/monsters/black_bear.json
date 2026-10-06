@@ -3,7 +3,8 @@
   "name": "Black Bear",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "beast",
@@ -16,7 +17,8 @@
   },
   "speed": {
     "walk": 30,
-    "climb": 30
+    "climb": 30,
+    "swim": 30
   },
   "abilities": {
     "str": 15,
@@ -66,7 +68,7 @@
           "type": "slashing"
         }
       ],
-      "summary": "Rend: +4 to hit, 1d6+2 Slashing."
+      "summary": "Claws and teeth."
     }
   ],
   "ai_profile": "brute",

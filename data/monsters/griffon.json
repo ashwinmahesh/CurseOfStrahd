@@ -3,7 +3,8 @@
   "name": "Griffon",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "monstrosity",
@@ -66,7 +67,15 @@
           "type": "piercing"
         }
       ],
-      "summary": "Rend: +6 to hit, 1d8+4 Piercing."
+      "summary": "Front claws that seize a Medium or smaller target (escape DC 14).",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 14,
+          "max_size": "medium",
+          "limit": 1
+        }
+      ]
     }
   ],
   "ai_profile": "brute",

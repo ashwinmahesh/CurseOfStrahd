@@ -3,7 +3,8 @@
   "name": "Lion",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "beast",
@@ -48,6 +49,13 @@
           "value": "pack_tactics"
         }
       ]
+    },
+    {
+      "id": "running_leap",
+      "name": "Running Leap",
+      "action": "passive",
+      "summary": "Long jumps up to 25 ft with a 10-ft run-up.",
+      "implemented": "text"
     }
   ],
   "actions": [
@@ -58,10 +66,17 @@
       "multiattack": [
         {
           "action": "rend",
-          "count": 2
+          "count": 1,
+          "or": [
+            "roar"
+          ]
+        },
+        {
+          "action": "rend",
+          "count": 1
         }
       ],
-      "summary": "Two Rend attacks."
+      "summary": "Two Rend attacks; one can be a Roar."
     },
     {
       "id": "rend",
@@ -78,7 +93,28 @@
           "type": "slashing"
         }
       ],
-      "summary": "Rend: +5 to hit, 1d8+3 Slashing."
+      "summary": "Claws and fangs."
+    },
+    {
+      "id": "roar",
+      "name": "Roar",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 11,
+        "success": "none"
+      },
+      "targets": {
+        "range": 15
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_start"
+        }
+      ],
+      "summary": "DC 11 Wis save by a creature within 15 ft or Frightened until the lion's next turn."
     }
   ],
   "ai_profile": "brute",

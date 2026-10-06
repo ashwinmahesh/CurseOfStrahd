@@ -3,7 +3,8 @@
   "name": "Baboon",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "small",
   "type": "beast",
@@ -63,7 +64,7 @@
           "type": "piercing"
         }
       ],
-      "summary": "Bite: +1 to hit, 1d4-1 Piercing."
+      "summary": "A sharp-toothed bite."
     }
   ],
   "ai_profile": "brute",

@@ -42,7 +42,7 @@ def main():
               "Dragonhide Belt, Wraps of Unarmed Power), Adamantine Weapon, and its artifacts. Left out as doubtful for the",
               "2024 book: the Sword of Answering, the All-Purpose Tool (Artificer only) and the Tasha's tattoos and shards.",
               "Artifacts' random properties use a condensed table (rules/equipment/magic_items.gd). The stat blocks for",
-              "creatures the items summon (data/monsters, notes saying so) were entered from the 2025 Monster Manual the same way.",
+              "creatures the items summon (data/monsters) were since checked against SRD 5.2.1 (see Monster editions).",
               "Every item's `text`, `summary` and power text is written in our own words; only the game terms are the book's.",
               "", "## Death House (Curse of Strahd appendix B) from memory", "",
               "Death House's rooms, decor, encounters and treasure (data/locations/death_house_*.json,",
@@ -65,9 +65,28 @@ def main():
               "  cloak of protection and spellbook (two sources agree).",
               "- Not modelled: a silvered shortsword (ours is plain), the mess kit, the yellow spellbook's spell list.",
               ""]
+    lines += monster_editions()
     (ROOT / "docs/rules/data_sources.md").write_text("\n".join(lines))
     start = lines.index("| Data | Total | Checked | From knowledge |")
     print("\n".join(lines[start:start + len(FOLDERS) + 2]))
+
+
+def monster_editions():
+    """Owner rule (2026-10-06): a monster uses its 2025 Monster Manual block where one exists, else the 2014 one."""
+    by = defaultdict(list)
+    for f in sorted((ROOT / "data" / "monsters").glob("*.json")):
+        e = json.loads(f.read_text())
+        src = e.get("source", {})
+        by[(src.get("edition", "?"), src.get("checked_against", "-"), src.get("book", "?"))].append(e.get("name", e["id"]))
+    out = ["## Monster editions", "",
+           "Owner rule: every monster uses its 2025 Monster Manual block (`source.edition: 2024`) where one exists, and",
+           "the 2014 block (`2014`) only where there is no 2025 version (Curse of Strahd's own creatures and NPCs). SRD5.2 =",
+           "compared line by line with the System Reference Document 5.2.1, whose monsters are the 2025 Monster Manual's.",
+           "MM2025 entries still on 2014 numbers have a 2025 block that isn't in the SRD; they need the owner's book.", "",
+           "| Edition | Checked against | Book | Count | Monsters |", "|---|---|---|---|---|"]
+    for (ed, chk, book), names in sorted(by.items()):
+        out.append(f"| {ed} | {chk} | {book} | {len(names)} | {', '.join(sorted(names))} |")
+    return out + [""]
 
 
 if __name__ == "__main__":

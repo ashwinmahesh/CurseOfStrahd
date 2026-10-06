@@ -3,16 +3,18 @@
   "name": "Gargoyle",
   "source": {
     "book": "MM2025",
-    "note": "Numbers follow the 2014 Monster Manual gargoyle; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical, non-adamantine weapons is entered as plain resistance."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "The 2024 Gargoyle. Checked against SRD 5.2.1."
   },
   "size": "medium",
   "type": "elemental",
   "alignment": "chaotic evil",
   "ac": 15,
-  "initiative": 0,
+  "initiative": 2,
   "hp": {
-    "average": 52,
-    "dice": "7d8+21"
+    "average": 67,
+    "dice": "9d8+27"
   },
   "speed": {
     "walk": 30,
@@ -26,11 +28,6 @@
     "wis": 11,
     "cha": 7
   },
-  "resistances": [
-    "bludgeoning",
-    "piercing",
-    "slashing"
-  ],
   "immunities": [
     "poison"
   ],
@@ -51,11 +48,17 @@
   "proficiency_bonus": 2,
   "traits": [
     {
-      "id": "false_appearance",
-      "name": "False Appearance",
+      "id": "flyby",
+      "name": "Flyby",
       "action": "passive",
-      "summary": "Looks like an ordinary statue while it stays still.",
-      "implemented": "text"
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "flyby"
+        }
+      ],
+      "summary": "Doesn't provoke Opportunity Attacks when it flies out of reach.",
+      "implemented": "engine"
     }
   ],
   "actions": [
@@ -65,19 +68,15 @@
       "kind": "multiattack",
       "multiattack": [
         {
-          "action": "bite",
-          "count": 1
-        },
-        {
-          "action": "claws",
-          "count": 1
+          "action": "claw",
+          "count": 2
         }
       ],
-      "summary": "Makes one Bite attack and one Claws attack."
+      "summary": "Two Claw attacks."
     },
     {
-      "id": "bite",
-      "name": "Bite",
+      "id": "claw",
+      "name": "Claw",
       "kind": "melee",
       "attack": {
         "bonus": 4,
@@ -85,25 +84,8 @@
       },
       "damage": [
         {
-          "average": 5,
-          "dice": "1d6+2",
-          "type": "piercing"
-        }
-      ],
-      "summary": "A stony bite."
-    },
-    {
-      "id": "claws",
-      "name": "Claws",
-      "kind": "melee",
-      "attack": {
-        "bonus": 4,
-        "reach": 5
-      },
-      "damage": [
-        {
-          "average": 5,
-          "dice": "1d6+2",
+          "average": 7,
+          "dice": "2d4+2",
           "type": "slashing"
         }
       ],
@@ -114,5 +96,8 @@
     "amber_temple"
   ],
   "ai_profile": "skirmisher",
-  "summary": "A living statue that swoops down to bite and claw; hard to hurt with weapons."
+  "summary": "A living statue that swoops down to claw at intruders.",
+  "skills": {
+    "stealth": 4
+  }
 }

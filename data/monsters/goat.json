@@ -3,7 +3,8 @@
   "name": "Goat",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "beast",
@@ -11,8 +12,8 @@
   "ac": 10,
   "initiative": 0,
   "hp": {
-    "average": 5,
-    "dice": "1d8+1"
+    "average": 4,
+    "dice": "1d8"
   },
   "speed": {
     "walk": 40,
@@ -21,7 +22,7 @@
   "abilities": {
     "str": 11,
     "dex": 10,
-    "con": 12,
+    "con": 11,
     "int": 2,
     "wis": 10,
     "cha": 5
@@ -44,12 +45,23 @@
       },
       "damage": [
         {
-          "average": 2,
-          "dice": "1d4",
+          "average": 1,
+          "dice": "1",
           "type": "bludgeoning"
         }
       ],
-      "summary": "Ram: +2 to hit, 1d4 Bludgeoning."
+      "summary": "A head-butt; 1d4 instead of 1 after a 20-ft run-up.",
+      "charge": {
+        "feet": 20,
+        "replace": true,
+        "damage": [
+          {
+            "average": 2,
+            "dice": "1d4",
+            "type": "bludgeoning"
+          }
+        ]
+      }
     }
   ],
   "ai_profile": "brute",

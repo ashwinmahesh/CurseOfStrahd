@@ -156,3 +156,258 @@ func test_werewolf_bite_curses_and_only_in_beast_forms() -> void:
 	assert_ne(e.monster_actions.why_not(w, bite), "", "no Bite in humanoid form")
 	w.set_meta("form", "hybrid")
 	assert_eq(e.monster_actions.why_not(w, bite), "")
+
+
+func test_giant_elk_charge_adds_damage_and_knocks_prone() -> void:
+	var e := _field(3)
+	var elk := TestCombat.foe(e, "giant_elk", Vector2i(2, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(6, 3), 12)
+	TestCombat.start_with(e, elk)
+	# Standing still: an ordinary Ram, no Prone.
+	TestCombat.next_d20(e, 19)
+	e.attack(elk, h, "monster:ram")
+	assert_false(h.creature.has_condition(&"prone"), "no charge without a run-up")
+	assert_false(e.log.entries.any(func(x: Dictionary) -> bool: return "Charge" in str(x.get("details", ""))), "no charge dice")
+	# A 20-ft run straight at the target.
+	elk.turn_start_cell = Vector2i(-2, 3)
+	elk.moved = true
+	elk.action_available = true
+	elk.attacks_left = 0
+	TestCombat.next_d20(e, 19)
+	h.creature.hp = h.creature.max_hp()
+	e.attack(elk, h, "monster:ram")
+	assert_true(h.creature.has_condition(&"prone"), "the charge knocks a Huge or smaller target Prone")
+	assert_true(e.log.entries.any(func(x: Dictionary) -> bool: return "Charge" in str(x.get("details", ""))), "the charge's extra 2d4 is rolled")
+
+
+func test_roc_talons_restrain_until_the_swoop_drops_the_victim() -> void:
+	var e := _field(4)
+	var roc := TestCombat.foe(e, "roc", Vector2i(2, 2))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(6, 3))
+	TestCombat.start_with(e, roc)
+	e.monster_actions.apply_riders(roc, h, (roc.creature as Monster).action("talons")["on_hit"] as Array, {}, "Talons")
+	assert_true(h.creature.has_condition(&"grappled") and h.creature.has_condition(&"restrained"), "grappled and restrained")
+	var before := h.creature.hp
+	e.monster_actions.bonus_action(roc, "swoop")
+	assert_false(e.grapples.has(h.id), "dropped")
+	assert_false(h.creature.has_condition(&"restrained"), "the restraint ends with the grapple")
+	assert_true(h.creature.has_condition(&"prone"), "lands Prone")
+	assert_true(h.creature.hp < before, "falls 60 ft")
+	assert_eq(e.monster_actions.why_not(roc, (roc.creature as Monster).data["bonus_actions"][0] as Dictionary), "Recharging")
+
+
+func test_restraining_grapple_ends_when_the_victim_breaks_free() -> void:
+	var e := _field(5)
+	var vb := TestCombat.foe(e, "vine_blight", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3))
+	TestCombat.start_with(e, vb)
+	e.monster_actions.apply_riders(vb, h, (vb.creature as Monster).action("constrict")["on_hit"] as Array, {}, "Constrict")
+	assert_true(h.creature.has_condition(&"restrained"))
+	h.creature.remove_condition(&"grappled")
+	assert_false(h.creature.has_condition(&"restrained"), "free of the grapple, free of the restraint")
+
+
+func test_djinni_storm_bolt_knocks_down_large_or_smaller() -> void:
+	var e := _field()
+	var dj := TestCombat.foe(e, "djinni", Vector2i(2, 2))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(8, 3))
+	TestCombat.start_with(e, dj)
+	e.monster_actions.apply_riders(dj, h, (dj.creature as Monster).action("storm_bolt")["on_hit"] as Array, {}, "Storm Bolt")
+	assert_true(h.creature.has_condition(&"prone"))
+
+
+func test_fire_elemental_sets_targets_burning_until_they_douse() -> void:
+	var e := _field(7)
+	var fe := TestCombat.foe(e, "fire_elemental", Vector2i(2, 2))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(4, 2), 12)
+	TestCombat.start_with(e, fe)
+	e.monster_actions.turn_end(fe)
+	assert_true(h.creature.effects.any(func(x: Effect) -> bool: return x.name == "Burning"), "Fire Aura sets creatures within 10 ft burning")
+	var hp := h.creature.hp
+	e.spells._turn_start_effects(h)
+	assert_true(h.creature.hp < hp, "1d4 Fire at the start of its turn")
+	while e.current() != h:
+		e.end_turn()
+	var ids: Array = ActionCatalog.new(e).actions_for(h).map(func(a: Dictionary) -> String: return str(a["id"]))
+	assert_true("douse" in ids, "offered: put out the flames")
+	e.douse(h)
+	assert_false(h.creature.effects.any(func(x: Effect) -> bool: return x.name == "Burning"))
+	assert_true(h.creature.has_condition(&"prone"), "rolling on the ground leaves it Prone")
+
+
+func test_ghost_horrific_visage_fills_a_cone_and_leaves_survivors_immune() -> void:
+	var e := _field(8)
+	var g := TestCombat.foe(e, "ghost", Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3))
+	var b := TestCombat.hero(e, "silvain_aster", Vector2i(6, 3))
+	var behind := TestCombat.hero(e, "hedda_ironvow", Vector2i(0, 3))
+	TestCombat.start_with(e, g)
+	var act := (g.creature as Monster).action("horrific_visage")
+	var hit := e.monster_actions.save_victims(g, act, a)
+	assert_true(a in hit and b in hit, "both creatures in the cone")
+	assert_false(behind in hit, "not the one behind the ghost")
+	var r := CombatResult.new()
+	for i in 6:
+		e.monster_actions.save_action(g, act, a, r)
+	var immune_or_scared := a.creature.has_condition(&"frightened") or a.has_meta(ClassFeatures.meta_key("immune_%s_Horrific Visage" % g.id))
+	assert_true(immune_or_scared, "a failure frightens, a success makes it immune")
+
+
+func test_ghost_possession_turns_the_body_until_it_drops() -> void:
+	var e := _field(9)
+	var g := TestCombat.foe(e, "ghost", Vector2i(2, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
+	TestCombat.hero(e, "silvain_aster", Vector2i(8, 3))
+	TestCombat.start_with(e, g)
+	e.monster_actions.possess(g, h, "Possession")
+	assert_eq(h.side, g.side, "the body fights for the ghost")
+	assert_false(e.can_see(e.get_c(h.id), g), "the ghost is hidden inside")
+	e.deal_damage(null, h, [{"amount": 999, "type": "force"}], false, "test")
+	assert_eq(h.side, &"party", "the body's owner is back in control")
+	assert_false(g.has_meta("possessing"))
+	assert_true(h.has_meta(ClassFeatures.meta_key("immune_%s_Possession" % g.id)))
+
+
+func test_water_elemental_whelm_holds_restrains_and_batters() -> void:
+	var e := _field(10)
+	var we := TestCombat.foe(e, "water_elemental", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "silvain_aster", Vector2i(6, 3), 12)
+	TestCombat.start_with(e, we)
+	h.cell = Vector2i(3, 3)
+	var act := (we.creature as Monster).action("whelm")
+	var held := false
+	for i in 20:
+		h.creature.hp = h.creature.max_hp()
+		e.monster_actions.save_action(we, act, h, CombatResult.new())
+		if e.grapples.has(h.id):
+			held = true
+			break
+	assert_true(held, "a failed save leaves it held")
+	assert_true(h.creature.has_condition(&"restrained"))
+	h.creature.hp = h.creature.max_hp()
+	e.monster_actions.turn_start(we)
+	assert_true(h.creature.hp < h.creature.max_hp(), "battered at the start of the elemental's turn")
+
+
+func test_air_elemental_whirlwind_flings_and_drops() -> void:
+	var e := _field(11)
+	var ae := TestCombat.foe(e, "air_elemental", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "silvain_aster", Vector2i(6, 3), 12)
+	TestCombat.start_with(e, ae)
+	h.cell = Vector2i(3, 3)
+	assert_true(h in e.monster_actions.save_targets(ae, (ae.creature as Monster).action("whirlwind")), "a creature in its space")
+	var prone := false
+	for i in 20:
+		h.cell = Vector2i(3, 3)
+		h.creature.hp = h.creature.max_hp()
+		e.monster_actions.save_action(ae, (ae.creature as Monster).action("whirlwind"), h, CombatResult.new())
+		if h.creature.has_condition(&"prone"):
+			prone = true
+			break
+	assert_true(prone, "a failure knocks it Prone")
+
+
+func test_elephant_tramples_a_prone_creature() -> void:
+	var e := _field(12)
+	var el := TestCombat.foe(e, "elephant", Vector2i(2, 2))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3), 12)
+	TestCombat.start_with(e, el)
+	h.creature.add_condition(&"prone", "test")
+	var hp := h.creature.hp
+	e.monster_actions.bonus_action(el, "trample")
+	assert_true(h.creature.hp < hp, "Trample hits a Prone creature")
+	assert_false(el.bonus_available)
+
+
+func test_giant_hyena_rampages_after_biting_a_bloodied_foe() -> void:
+	var e := _field(13)
+	var hy := TestCombat.foe(e, "giant_hyena", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3), 12)
+	TestCombat.start_with(e, hy)
+	h.creature.hp = h.creature.max_hp() / 2
+	var hits := 0
+	for i in 10:
+		TestCombat.next_d20(e, 19)
+		hy.action_available = true
+		hy.attacks_left = 0
+		e.monster_attack(hy, h, "bite")
+		hits += 1
+		if hy.has_meta("hit_bloodied"):
+			break
+	assert_true(hy.has_meta("hit_bloodied"), "it hurt an already Bloodied creature")
+	var before := h.creature.hp
+	TestCombat.next_d20(e, 19)
+	e.monster_actions.bonus_action(hy, "rampage")
+	assert_true(h.creature.hp < before, "the Rampage bite lands")
+	assert_eq(e.monster_actions.why_not(hy, (hy.creature as Monster).data["bonus_actions"][0] as Dictionary), "No uses left")
+
+
+func test_flesh_golem_shies_from_fire_and_goes_berserk() -> void:
+	var e := _field(14)
+	var g := TestCombat.foe(e, "flesh_golem", Vector2i(3, 3))
+	TestCombat.hero(e, "ilse_varga", Vector2i(6, 3))
+	TestCombat.start_with(e, g)
+	e.deal_damage(null, g, [{"amount": 5, "type": "fire"}], false, "test")
+	assert_true(g.creature.d20_sources(["attack", "attack:melee"])["disadvantage"].size() > 0, "Aversion to Fire")
+	g.creature.hp = g.creature.max_hp() / 3
+	var mad := false
+	for i in 40:
+		e.monster_actions.turn_start(g)
+		if g.has_meta("berserk"):
+			mad = true
+			break
+	assert_true(mad, "a 6 sends a Bloodied golem berserk")
+	g.creature.hp = g.creature.max_hp()
+	e.monster_actions.turn_start(g)
+	assert_false(g.has_meta("berserk"), "calm once no longer Bloodied")
+
+
+func test_berserker_frenzy_only_while_bloodied() -> void:
+	var b := TestCombat.monster("berserker")
+	assert_eq((b.d20_sources(["attack"])["advantage"] as Array).size(), 0)
+	b.hp = b.max_hp() / 2 - 1
+	assert_true((b.d20_sources(["attack"])["advantage"] as Array).size() > 0, "Advantage on attacks while Bloodied")
+	assert_true((b.d20_sources(["save:con", "save:all"])["advantage"] as Array).size() > 0, "and on saves")
+
+
+func test_will_o_wisp_vanishes_and_consumes_the_dying() -> void:
+	var e := _field(15)
+	var w := TestCombat.foe(e, "will_o_wisp", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3))
+	TestCombat.hero(e, "silvain_aster", Vector2i(9, 9))
+	TestCombat.start_with(e, w)
+	e.monster_actions.bonus_action(w, "vanish")
+	assert_true(w.creature.has_condition(&"invisible"))
+	TestCombat.next_d20(e, 15)
+	e.monster_attack(w, h, "shock")
+	assert_false(w.creature.has_condition(&"invisible"), "attacking ends Vanish")
+	h.creature.hp = 0
+	h.creature.add_condition(&"unconscious", "0 Hit Points")
+	w.bonus_available = true
+	w.creature.hp = 5
+	var tries := 0
+	while not h.creature.dead and tries < 10:
+		w.bonus_available = true
+		e.monster_actions.bonus_action(w, "consume_life")
+		tries += 1
+	assert_true(h.creature.dead, "a failed DC 10 Con save kills the dying creature")
+	assert_true(w.creature.hp > 5, "and the wisp heals")
+
+
+func test_giant_spider_web_restrains_until_broken() -> void:
+	var e := _field(16)
+	var sp := TestCombat.foe(e, "giant_spider", Vector2i(2, 2))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(8, 2))
+	TestCombat.start_with(e, sp)
+	e.monster_actions.apply_riders(sp, h, (sp.creature as Monster).action("web")["on_fail"] as Array, {}, "Web")
+	assert_true(h.creature.has_condition(&"restrained"))
+	var fx: Effect = null
+	for x: Effect in h.creature.effects:
+		if not x.escape.is_empty():
+			fx = x
+	assert_true(fx != null, "an action and a check can break the web")
+
+
+func test_rat_slips_away_without_opportunity_attacks() -> void:
+	var r := TestCombat.monster("rat")
+	assert_true(r.has_flag("agile"))

@@ -37,6 +37,7 @@ var surged: bool = false
 var magic_action_used: bool = false      ## at most one Magic action a turn (Action Surge's can't be Magic)
 var haste_action: bool = false           ## Haste's extra action: one weapon attack, Dash, Disengage, Hide or Utilize
 var moved: bool = false                  ## moved this turn (Steady Aim)
+var turn_start_cell: Vector2i = Vector2i.ZERO  ## where the turn began (a charge's run-up)
 var stood_up: bool = false
 var hidden: bool = false
 var stealth_total: int = 0
@@ -126,6 +127,7 @@ func reach_ft() -> int:
 
 func reset_turn() -> void:
 	movement_left = speed()
+	turn_start_cell = cell
 	action_available = true
 	bonus_available = true
 	reaction_available = true

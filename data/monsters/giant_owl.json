@@ -3,11 +3,12 @@
   "name": "Giant Owl",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
-  "type": "beast",
-  "alignment": "unaligned",
+  "type": "celestial",
+  "alignment": "neutral",
   "ac": 12,
   "initiative": 2,
   "hp": {
@@ -22,19 +23,21 @@
     "str": 13,
     "dex": 15,
     "con": 12,
-    "int": 8,
-    "wis": 13,
+    "int": 10,
+    "wis": 14,
     "cha": 10
   },
   "skills": {
-    "perception": 5,
+    "perception": 6,
     "stealth": 6
   },
   "senses": {
     "darkvision": 120
   },
-  "passive_perception": 15,
-  "languages": [],
+  "passive_perception": 16,
+  "languages": [
+    "Celestial"
+  ],
   "cr": 0.25,
   "xp": 50,
   "proficiency_bonus": 2,
@@ -43,8 +46,14 @@
       "id": "flyby",
       "name": "Flyby",
       "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "flyby"
+        }
+      ],
       "summary": "Doesn't provoke Opportunity Attacks when it flies out of reach.",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ],
   "actions": [
@@ -53,19 +62,44 @@
       "name": "Talons",
       "kind": "melee",
       "attack": {
-        "bonus": 3,
+        "bonus": 4,
         "reach": 5
       },
       "damage": [
         {
-          "average": 8,
-          "dice": "2d6+1",
+          "average": 7,
+          "dice": "1d10+2",
           "type": "slashing"
         }
       ],
-      "summary": "Talons: +3 to hit, 2d6+1 Slashing."
+      "summary": "Silent talons from above."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Wisdom: Detect Evil and Good and Detect Magic at will; Clairvoyance once a day."
     }
   ],
   "ai_profile": "brute",
-  "summary": "A silent wise hunter."
+  "summary": "A silent wise hunter.",
+  "resistances": [
+    "necrotic",
+    "radiant"
+  ],
+  "saves": {
+    "wis": 4
+  },
+  "spellcasting": {
+    "ability": "wis",
+    "at_will": [
+      "detect_evil_and_good",
+      "detect_magic"
+    ],
+    "per_day": {
+      "1": [
+        "clairvoyance"
+      ]
+    }
+  }
 }

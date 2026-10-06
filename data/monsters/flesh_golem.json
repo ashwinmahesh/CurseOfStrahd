@@ -3,7 +3,8 @@
   "name": "Flesh Golem",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Flesh Golem. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Hit Points, the Slam's Lightning damage and the Berserk trigger. Aversion to Fire, Berserk and Immutable Form are text only. Krezk's Vasilka uses this block under her own name."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "construct",
@@ -53,14 +54,14 @@
       "name": "Aversion to Fire",
       "action": "passive",
       "summary": "After taking Fire damage it has Disadvantage on attack rolls and ability checks until the end of its next turn.",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "berserk",
       "name": "Berserk",
       "action": "passive",
       "summary": "Starting a turn Bloodied, it rolls a d6; on a 6 it attacks the nearest creature (or an object) every turn until it is no longer Bloodied.",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "immutable_form",

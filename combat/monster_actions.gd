@@ -54,7 +54,7 @@ func spend(c: Combatant, act: Dictionary) -> void:
 
 ## Recharge X-6 is rolled at the start of the monster's turn.
 func roll_recharges(c: Combatant) -> void:
-	for a: Variant in data_of(c).get("actions", []):
+	for a: Variant in (data_of(c).get("actions", []) as Array) + (data_of(c).get("bonus_actions", []) as Array):
 		var act := a as Dictionary
 		if not act.has("recharge") or bool(c.get_meta("charged_%s" % act["id"], true)):
 			continue
@@ -66,6 +66,24 @@ func roll_recharges(c: Combatant) -> void:
 
 
 # --- Riders on a hit or a failed save -------------------------------------------------------------
+
+## The action's `charge` block when `c` ran at least its `feet` straight at `target` this turn before the hit (the
+## distance closed since the turn began stands in for the straight line), else {}.
+func charge_of(c: Combatant, target: Combatant, option: Dictionary) -> Dictionary:
+	if c.has_meta("charged_vs"):
+		c.remove_meta("charged_vs")
+	if not c.creature is Monster or not c.moved:
+		return {}
+	var act := (c.creature as Monster).action(str(option.get("action_id", "")))
+	if not act.has("charge"):
+		return {}
+	var ch := act["charge"] as Dictionary
+	var e := enc()
+	var before := e.grid.distance_ft(c.turn_start_cell, c.size_cells, target.cell, target.size_cells)
+	if before - e.distance(c, target) < int(ch.get("feet", 20)):
+		return {}
+	return ch
+
 
 ## Applies `riders` from `src` to `t` after damage `by_type` ({type: amount taken}).
 func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictionary, act_name: String) -> void:
@@ -100,9 +118,15 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 				continue
 		match str(rd["do"]):
 			"condition":
-				_timed_condition(src, t, str(rd["condition"]), str(rd.get("until", "permanent")), act_name, rd.get("modifiers", []) as Array)
+				_timed_condition(src, t, str(rd["condition"]), str(rd.get("until", "permanent")), act_name, rd.get("modifiers", []) as Array, rd)
 			"grapple":
-				grapple(src, t, int(rd.get("escape_dc", 10)), int(rd.get("limit", 1)), act_name)
+				grapple(src, t, int(rd.get("escape_dc", 10)), int(rd.get("limit", 1)), act_name, bool(rd.get("restrain", false)))
+				if e.grapples.has(t.id) and rd.has("hold_damage"):
+					t.set_meta("hold_damage", rd["hold_damage"])
+			"burning":
+				set_burning(src, t)
+			"possess":
+				possess(src, t, act_name)
 			"pull", "push":
 				var moved := e.forced_move(t, e.center_of(src), int(rd.get("feet", 5)), str(rd["do"]) == "pull")
 				if moved > 0:
@@ -132,10 +156,13 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 
 ## A condition that lasts as the stat block says: until the end or start of the target's (or the source's) next
 ## turn, a minute, or until something ends it.
-func _timed_condition(src: Combatant, t: Combatant, cond: String, until: String, label: String, mods: Array) -> void:
+func _timed_condition(src: Combatant, t: Combatant, cond: String, until: String, label: String, mods: Array, rd: Dictionary = {}) -> void:
 	var e := enc()
 	var fx := Effect.new("%s (%s)" % [cond.capitalize(), label] if cond != "" else label, &"monster", "%s:%s" % [src.id, label])
 	fx.caster_id = src.id
+	# Webbing and the like: an action and an ability check frees the target.
+	if rd.has("escape"):
+		fx.escape = (rd["escape"] as Dictionary).duplicate()
 	if cond != "":
 		fx.conditions.append(StringName(cond))
 	# "Until the end of your next turn" for a summon's rider means its summoner's turn (Fell Glare).
@@ -172,9 +199,44 @@ func _timed_condition(src: Combatant, t: Combatant, cond: String, until: String,
 			e.features.end_turning_from(t)
 
 
+## Burning (2024 rules glossary): 1d4 Fire at the start of each of the creature's turns until it uses an action to
+## drop Prone and put the flames out.
+func set_burning(src: Combatant, t: Combatant) -> void:
+	var e := enc()
+	if t.creature.effects.any(func(x: Effect) -> bool: return bool(x.data.get("douse", false))):
+		return
+	var fx := Effect.new("Burning", &"monster", "burning")
+	fx.caster_id = src.id if src != null else ""
+	fx.ends = Effect.Ends.NEVER
+	fx.data["turn_damage"] = {"dice": "1d4", "type": "fire"}
+	fx.data["douse"] = true
+	t.creature.add_effect(fx)
+	e.log.add("condition", "%s catches fire" % t.name(), t.id)
+
+
+## Fire Form (fire elemental): the first time on a turn it moves into a creature's space, that creature takes 1d10
+## Fire damage and starts burning.
+func entered_space(c: Combatant) -> void:
+	var e := enc()
+	if not c.creature.has_flag("fire_form"):
+		return
+	var turn_key := "%d:%d" % [e.round_no, e.turn_index]
+	for o in e.living():
+		if o == c or o.is_down() or not c.cell in o.footprint():
+			continue
+		var key := ClassFeatures.meta_key("fire_form_%s" % c.id)
+		if str(o.get_meta(key, "")) == turn_key:
+			continue
+		o.set_meta(key, turn_key)
+		var rolled := e._roll_damage_dice("1d10", false, 0, "Fire Form")
+		e.deal_damage(c, o, [{"amount": int(rolled["total"]), "type": "fire"}], false, "Fire Form", [str(rolled["text"])])
+		if o.is_alive():
+			set_burning(c, o)
+
+
 ## A grapple from a stat block: registered like an Unarmed Strike grapple, with the printed escape DC; a creature
 ## can hold only `limit` creatures at once (the Vampire Spawn's two claws).
-func grapple(src: Combatant, t: Combatant, escape_dc: int, limit: int, label: String) -> void:
+func grapple(src: Combatant, t: Combatant, escape_dc: int, limit: int, label: String, restrain: bool = false) -> void:
 	var e := enc()
 	var held := 0
 	for k: String in e.grapples:
@@ -185,7 +247,9 @@ func grapple(src: Combatant, t: Combatant, escape_dc: int, limit: int, label: St
 	t.creature.add_condition(&"grappled", src.name())
 	e.grapples[t.id] = src.id
 	t.set_meta("escape_dc", escape_dc)
-	e.log.add("condition", "%s grabs %s (%s, escape DC %d)" % [src.name(), t.name(), label, escape_dc], src.id)
+	if restrain:
+		t.creature.add_condition(&"restrained", Creature.GRAPPLE_RESTRAINT)
+	e.log.add("condition", "%s grabs %s (%s, escape DC %d%s)" % [src.name(), t.name(), label, escape_dc, ", Restrained while held" if restrain else ""], src.id)
 
 
 ## Engulf (Shambling Mound): the target is pulled into the mound's space, Grappled (escape DC), Blinded and
@@ -275,6 +339,14 @@ func save_targets(c: Combatant, act: Dictionary) -> Array[Combatant]:
 			continue
 		if tg.has("max_size") and Creature.SIZES.find(t.creature.size) > Creature.SIZES.find(StringName(str(tg["max_size"]))):
 			continue
+		if tg.has("types") and not str(t.creature.creature_type) in (tg["types"] as Array):
+			continue
+		if tg.has("not_types") and str(t.creature.creature_type) in (tg["not_types"] as Array):
+			continue
+		if t.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [c.id, str(act.get("name", ""))])):
+			continue
+		if _nothing_new(act, t):
+			continue
 		if tg.has("requires"):
 			var ok := false
 			for need: Variant in tg["requires"]:
@@ -288,22 +360,82 @@ func save_targets(c: Combatant, act: Dictionary) -> Array[Combatant]:
 	return out
 
 
-## A save action (Bite, Engulf, Cacophony): the target saves; on a failure damage and the riders.
+## Everyone an area save action catches when aimed at `t` (a ghost's 60-ft cone of Horrific Visage, an air elemental's
+## space): [t] for a single-target action.
+func save_victims(c: Combatant, act: Dictionary, t: Combatant) -> Array[Combatant]:
+	var e := enc()
+	var area := act.get("area", {}) as Dictionary
+	var out: Array[Combatant] = []
+	if not area.has("shape"):
+		out.append(t)
+		return out
+	var tg := act.get("targets", {}) as Dictionary
+	var cells: Array[Vector2i] = []
+	if str(area["shape"]) == "space":
+		cells = c.footprint()
+	else:
+		var origin := e.center_of(c)
+		cells = e.grid.area_cells(str(area["shape"]), int(area.get("size", 15)), origin, e.center_of(t) - origin, 5, c.cell, c.size_cells)
+	for o in e.living():
+		if o == c or o.is_down() or not o.footprint().any(func(x: Vector2i) -> bool: return x in cells):
+			continue
+		if tg.has("not_types") and str(o.creature.creature_type) in (tg["not_types"] as Array):
+			continue
+		if tg.has("max_size") and Creature.SIZES.find(o.creature.size) > Creature.SIZES.find(StringName(str(tg["max_size"]))):
+			continue
+		if bool(tg.get("sees_source", false)) and not e.can_see(o, c):
+			continue
+		if bool(tg.get("enemies_only", false)) and not c.hostile_to(o):
+			continue
+		out.append(o)
+	return out
+
+
+## True when a save action would only give `t` conditions it already has (a lion roaring at a creature that's
+## already Frightened).
+func _nothing_new(act: Dictionary, t: Combatant) -> bool:
+	var fails := act.get("on_fail", []) as Array
+	if fails.is_empty() or not (act.get("damage", []) as Array).is_empty():
+		return false
+	for rd: Variant in fails:
+		if str((rd as Dictionary).get("do", "")) != "condition" or not t.creature.has_condition(StringName(str((rd as Dictionary).get("condition", "")))):
+			return false
+	return true
+
+
+## A save action (Bite, Engulf, Cacophony): the target saves; on a failure damage and the riders. An area action
+## (`area.shape`) rolls its damage once for everyone it catches.
 func save_action(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult) -> void:
+	var e := enc()
+	spend(c, act)
+	var victims := save_victims(c, act, t)
+	e.log.add("info", "%s uses %s%s" % [c.name(), act.get("name", ""), (" on %s" % t.name()) if victims.size() == 1 and victims[0] == t else ""], c.id)
+	var rolled_once := {}
+	for v in victims:
+		_save_one(c, act, v, r, rolled_once)
+
+
+func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rolled_once: Dictionary) -> void:
 	var e := enc()
 	var sv := act["save"] as Dictionary
 	var ab := StringName(str(sv["ability"]))
-	spend(c, act)
-	e.log.add("info", "%s uses %s on %s" % [c.name(), act.get("name", ""), t.name()], c.id)
+	var immune_key := ClassFeatures.meta_key("immune_%s_%s" % [c.id, str(act.get("name", ""))])
+	if t.has_meta(immune_key):
+		e.log.add("info", "%s is unmoved by %s" % [t.name(), act.get("name", "")], t.id)
+		return
 	var test := t.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act.get("name", ""), t.name()])
 	var by_type := {}
 	var parts: Array = []
 	var texts: Array[String] = [test.describe()]
+	var i := 0
 	for d: Variant in act.get("damage", []):
 		var dd := d as Dictionary
+		i += 1
 		if dd.has("when"):
 			continue
-		var rolled := e._roll_damage_dice(str(dd["dice"]), false, 0, str(act.get("name", "")))
+		if not rolled_once.has(i):
+			rolled_once[i] = e._roll_damage_dice(str(dd["dice"]), false, 0, str(act.get("name", "")))
+		var rolled := rolled_once[i] as Dictionary
 		var amount := int(rolled["total"])
 		if test.success:
 			amount = amount / 2 if str(sv.get("success", "none")) == "half" else 0
@@ -315,6 +447,8 @@ func save_action(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult) -
 		by_type = taken_by_type(t, parts)
 	elif test.success:
 		e.log.add("info", "%s resists %s" % [t.name(), act.get("name", "")], t.id, texts)
+	if test.success and bool(act.get("immune_on_success", false)):
+		t.set_meta(immune_key, true)
 	if not test.success and t.is_alive():
 		apply_riders(c, t, act.get("on_fail", []) as Array, by_type, str(act.get("name", "")))
 
@@ -384,6 +518,15 @@ func turn_start(c: Combatant) -> void:
 	var e := enc()
 	if c.creature is Monster:
 		roll_recharges(c)
+	# Berserk (flesh golem): starting a turn Bloodied, a 6 on a d6 sends it into a rage until it's no longer Bloodied.
+	if has_trait(c, "berserk"):
+		if not c.creature.is_bloodied():
+			c.remove_meta("berserk")
+		elif not c.has_meta("berserk"):
+			var roll := e.dice.roll_one(6, "Berserk")
+			if roll == 6:
+				c.set_meta("berserk", true)
+				e.log.add("condition", "%s goes berserk (d6: 6)" % c.name(), c.id)
 	for o in e.living():
 		if o == c or o.is_down():
 			continue
@@ -409,6 +552,13 @@ func turn_start(c: Combatant) -> void:
 			if healed > 0:
 				e.log.add("heal", "%s regenerates %d Hit Points" % [c.name(), healed], c.id)
 				e.events.append({"type": "heal", "id": c.id, "amount": healed})
+	# Whelm (water elemental): each creature it holds takes damage at the start of its turn.
+	for k: String in e.grapples.keys():
+		var held := e.get_c(k)
+		if str(e.grapples[k]) == c.id and held != null and held.is_alive() and held.has_meta("hold_damage"):
+			var hd := held.get_meta("hold_damage") as Dictionary
+			var hr := e._roll_damage_dice(str(hd["dice"]), false, 0, "Held")
+			e.deal_damage(c, held, [{"amount": int(hr["total"]), "type": str(hd["type"])}], false, "%s's grip" % c.name(), [str(hr["text"])])
 	if c.has_meta("engulfed_by"):
 		var by := e.get_c(str(c.get_meta("engulfed_by")))
 		if by == null or by.is_down() or not e.grapples.has(c.id):
@@ -435,15 +585,21 @@ func _aura_on(o: Combatant, c: Combatant, tr: Dictionary) -> void:
 	if c.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [o.id, label])):
 		return
 	if aura.has("damage"):
-		var sv := aura["save"] as Dictionary
-		var ab := StringName(str(sv["ability"]))
-		var test := c.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], label, c.name()])
-		if test.success:
-			e.log.add("info", "%s resists %s" % [c.name(), label], c.id, [test.describe()])
-			return
+		var details: Array[String] = []
+		if aura.has("save"):
+			var sv := aura["save"] as Dictionary
+			var ab := StringName(str(sv["ability"]))
+			var test := c.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], label, c.name()])
+			if test.success:
+				e.log.add("info", "%s resists %s" % [c.name(), label], c.id, [test.describe()])
+				return
+			details.append(test.describe())
 		var dmg := aura["damage"] as Dictionary
 		var rolled := e._roll_damage_dice(str(dmg["dice"]), false, 0, label)
-		e.deal_damage(o, c, [{"amount": int(rolled["total"]), "type": str(dmg["type"])}], false, label, [test.describe(), str(rolled["text"])])
+		details.append(str(rolled["text"]))
+		e.deal_damage(o, c, [{"amount": int(rolled["total"]), "type": str(dmg["type"])}], false, label, details)
+		if c.is_alive():
+			apply_riders(o, c, aura.get("riders", []) as Array, {}, label)
 		return
 	apply_riders(o, c, [{"do": "condition", "condition": str(aura.get("condition", "")), "save": aura["save"], "until": str(aura.get("until", "target_turn_start")),
 		"immune_on_success": bool(aura.get("immune_on_success", false)), "modifiers": aura.get("modifiers", [])}], {}, label)
@@ -452,6 +608,15 @@ func _aura_on(o: Combatant, c: Combatant, tr: Dictionary) -> void:
 ## End of `c`'s turn: Incorporeal Movement inside an object (a wall square) costs 1d10 Force.
 func turn_end(c: Combatant) -> void:
 	var e := enc()
+	# Auras that act at the end of their owner's turn (a fire elemental's Fire Aura).
+	if c.is_alive() and not c.is_down():
+		for tr: Variant in traits(c):
+			var aura := (tr as Dictionary).get("aura", {}) as Dictionary
+			if aura.is_empty() or str(aura.get("trigger", "")) != "own_turn_end":
+				continue
+			for o in e.living():
+				if o != c and not o.is_down():
+					_aura_on(c, o, tr as Dictionary)
 	if has_trait(c, "incorporeal_movement"):
 		for cell in c.footprint():
 			if e.grid.is_solid(cell):
@@ -556,10 +721,61 @@ func redirect_shared(target: Combatant) -> Combatant:
 
 func body_dropped(body: Combatant) -> void:
 	var e := enc()
+	if body.has_meta("possessed_by"):
+		end_possession(body)
 	for o in e.combatants:
 		if str(o.get_meta("shares_hp_with", "")) == body.id and o.is_alive():
 			o.creature.dead = true
 			e.events.append({"type": "death", "id": o.id})
+
+
+## Possession (ghost): the ghost vanishes into a Humanoid's body, which fights for the ghost's side (the target is
+## Incapacitated inside, aware but not in control) until the body drops to 0 Hit Points or the ghost leaves.
+func possess(src: Combatant, t: Combatant, label: String) -> void:
+	var e := enc()
+	if t.has_meta("possessed_by") or src.has_meta("possessing"):
+		return
+	t.set_meta("possessed_by", src.id)
+	t.set_meta("possessed_from", [str(t.side), str(t.controller)])
+	t.side = src.side
+	t.controller = src.controller
+	var fx := Effect.new("Possessed by %s" % src.name(), &"monster", "possession:%s" % src.id)
+	fx.caster_id = src.id
+	fx.ends = Effect.Ends.NEVER
+	t.creature.add_effect(fx)
+	src.set_meta("possessing", t.id)
+	var hide := Effect.new("Inside %s" % t.name(), &"monster", "possessing").with_modifier("flag", {"value": "ethereal"})
+	hide.ends = Effect.Ends.NEVER
+	src.creature.add_effect(hide)
+	e.log.add("condition", "%s possesses %s (%s)" % [src.name(), t.name(), label], src.id)
+	e.events.append({"type": "condition", "id": t.id})
+
+
+## The ghost leaves the body: it reappears beside it, the body's owner takes control again and can't be possessed
+## by this ghost for a day.
+func end_possession(body: Combatant) -> void:
+	var e := enc()
+	var ghost := e.get_c(str(body.get_meta("possessed_by", "")))
+	var was := body.get_meta("possessed_from", []) as Array
+	body.remove_meta("possessed_by")
+	body.remove_meta("possessed_from")
+	if was.size() == 2:
+		body.side = StringName(str(was[0]))
+		body.controller = StringName(str(was[1]))
+	for fx: Effect in body.creature.effects.duplicate():
+		if fx.source_id.begins_with("possession:"):
+			body.creature.remove_effect(fx)
+	if ghost == null:
+		return
+	body.set_meta(ClassFeatures.meta_key("immune_%s_Possession" % ghost.id), true)
+	ghost.remove_meta("possessing")
+	for fx2: Effect in ghost.creature.effects.duplicate():
+		if fx2.source_id == "possessing":
+			ghost.creature.remove_effect(fx2)
+	var from := ghost.cell
+	ghost.cell = e.spells._beside(ghost, body)
+	e.events.append({"type": "teleport", "id": ghost.id, "from": from, "to": ghost.cell})
+	e.log.add("info", "%s slips out of %s" % [ghost.name(), body.name()], ghost.id)
 
 
 ## The lycanthropy curse: a cursed creature that drops to 0 Hit Points turns into a Werewolf under the DM's control
@@ -632,9 +848,38 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 			"cast":
 				if plan == "support":
 					return _divine_aid(c, act)
+			"cast_control":
+				if plan == "control":
+					return _control_spell(c, act)
 			"fey_step":
 				if plan == "fey_step":
 					return _fey_step(c, act)
+			"swoop":
+				if plan == "swoop":
+					return _swoop(c, act)
+			"consume_life":
+				if plan == "consume_life":
+					return _consume_life(c, act)
+			"trample":
+				if plan == "trample" and act.has("save"):
+					var st := save_targets(c, act)
+					if not st.is_empty():
+						c.bonus_available = false
+						var r := CombatResult.new()
+						save_action(c, act, st[0], r)
+						return r
+			"rampage":
+				if plan == "rampage":
+					return _rampage(c, act)
+			"vanish":
+				if plan == "vanish" and not c.creature.has_condition(&"invisible"):
+					c.bonus_available = false
+					var fx := Effect.new("Vanished", &"monster", "vanish")
+					fx.conditions.append(&"invisible")
+					fx.ends = Effect.Ends.NEVER
+					c.creature.add_effect(fx)
+					e.log.add("info", "%s winks out of sight" % c.name(), c.id)
+					return CombatResult.new()
 	return CombatResult.new()
 
 
@@ -649,6 +894,133 @@ func _divine_aid(c: Combatant, act: Dictionary) -> CombatResult:
 		c.bonus_available = false
 		spend(c, act)
 		return cast(c, "healing_word", [hurt])
+	return CombatResult.new()
+
+
+## A control spell cast as a Bonus Action (a stone golem's Slow): aimed at the nearest foe it can see and up to five
+## more foes within 20 ft of it (the spell's 40-ft cube), when at least two would be caught.
+func _control_spell(c: Combatant, act: Dictionary) -> CombatResult:
+	var e := enc()
+	var spell_id := str((act.get("cast", []) as Array)[0]) if not (act.get("cast", []) as Array).is_empty() else ""
+	var anchor: Combatant = null
+	for h in e.hostiles_of(c):
+		if not h.is_down() and e.can_see(c, h) and e.distance(c, h) <= 120 and (anchor == null or e.distance(c, h) < e.distance(c, anchor)):
+			anchor = h
+	if spell_id == "" or anchor == null:
+		return CombatResult.new()
+	var group: Array = []
+	for h2 in e.hostiles_of(c):
+		if not h2.is_down() and e.distance(anchor, h2) <= 20 and group.size() < 6:
+			group.append(h2)
+	if group.size() < 2:
+		return CombatResult.new()
+	c.bonus_available = false
+	spend(c, act)
+	return cast(c, spell_id, group)
+
+
+## Rampage (giant hyena): right after it damages a creature that was already Bloodied, it moves up to half its
+## Speed and bites again.
+func _rampage(c: Combatant, act: Dictionary) -> CombatResult:
+	var e := enc()
+	if str(c.get_meta("hit_bloodied", "")) != "%d:%d" % [e.round_no, e.turn_index]:
+		return CombatResult.new()
+	var bite := str(act.get("attack", "bite"))
+	var target: Combatant = null
+	for h in e.hostiles_of(c):
+		if not h.is_down() and (target == null or e.distance(c, h) < e.distance(c, target)):
+			target = h
+	if target == null:
+		return CombatResult.new()
+	c.bonus_available = false
+	spend(c, act)
+	c.remove_meta("hit_bloodied")
+	c.movement_left += c.speed() / 2
+	e.log.add("info", "%s goes on a rampage" % c.name(), c.id)
+	var dest := e.spells._beside(c, target)
+	var go := e.move(c, dest) if e.distance(c, target) > 5 and dest != target.cell else CombatResult.new()
+	return e.then(go, func() -> CombatResult:
+		if not c.can_act() or target.is_down() or e.distance(c, target) > 5:
+			return CombatResult.new()
+		c.attacks_left += 1
+		return e.monster_attack(c, target, bite))
+
+
+## Consume Life (will-o'-wisp): a living creature at 0 Hit Points within 5 ft makes a DC 10 Constitution save or
+## dies, and the wisp regains 3d6 Hit Points.
+func _consume_life(c: Combatant, act: Dictionary) -> CombatResult:
+	var e := enc()
+	for t in e.living():
+		if t == c or not t.is_down() or str(t.creature.creature_type) in ["undead", "construct"] or e.distance(c, t) > 5 or not e.can_see(c, t):
+			continue
+		c.bonus_available = false
+		end_vanish(c)
+		var test := t.creature.roll_save(e.dice, &"con", int(act.get("dc", 10)), [], [], "Con save vs Consume Life (%s)" % t.name())
+		if test.success:
+			e.log.add("info", "%s clings to life" % t.name(), t.id, [test.describe()])
+			return CombatResult.new()
+		t.creature.dead = true
+		e.events.append({"type": "death", "id": t.id})
+		var rolled := e._roll_damage_dice("3d6", false, 0, "Consume Life")
+		var healed := c.creature.heal(int(rolled["total"]), "Consume Life")
+		e.log.add("heal", "%s drinks the last of %s's life and regains %d Hit Points" % [c.name(), t.name(), healed], c.id, [test.describe(), str(rolled["text"])])
+		return CombatResult.new()
+	return CombatResult.new()
+
+
+## Vanish ends when the wisp attacks or uses Consume Life.
+func end_vanish(c: Combatant) -> void:
+	for fx: Effect in c.creature.effects.duplicate():
+		if fx.source_id == "vanish":
+			c.creature.remove_effect(fx)
+
+
+## Traits that react to a damage type: Aversion to Fire (flesh golem: Disadvantage on attacks and checks until the end
+## of its next turn) and Freeze (water elemental: 20 ft slower until the end of its next turn).
+func damage_traits(target: Combatant, parts: Array) -> void:
+	var e := enc()
+	var types := {}
+	for p: Variant in parts:
+		if int((p as Dictionary).get("amount", 0)) > 0:
+			types[str((p as Dictionary)["type"])] = true
+	if types.has("fire") and has_trait(target, "aversion_to_fire"):
+		var fx := Effect.new("Aversion to Fire", &"monster", "aversion_to_fire") \
+			.with_modifier("disadvantage", {"on": "attack"}).with_modifier("disadvantage", {"on": "check:all"})
+		_until_own_turn_end(target, fx)
+		e.log.add("condition", "%s recoils from the flames" % target.name(), target.id)
+	if types.has("cold") and has_trait(target, "freeze"):
+		var fx2 := Effect.new("Freeze", &"monster", "freeze").with_modifier("speed", {"value": -20})
+		_until_own_turn_end(target, fx2)
+		e.log.add("condition", "%s partly freezes (-20 ft Speed)" % target.name(), target.id)
+
+
+func _until_own_turn_end(t: Combatant, fx: Effect) -> void:
+	for old: Effect in t.creature.effects.duplicate():
+		if old.source_id == fx.source_id:
+			t.creature.remove_effect(old)
+	fx.ends = Effect.Ends.END_OF_TURN
+	fx.turn_owner_id = t.id
+	fx.skip_turn_ends = enc().own_turn_skip(t)
+	t.creature.add_effect(fx)
+
+
+## Swoop (roc): with a creature in its talons it climbs half its Fly Speed, out of reach without Opportunity Attacks,
+## and lets go; the victim falls that far (1d6 per 10 ft) and lands Prone.
+func _swoop(c: Combatant, act: Dictionary) -> CombatResult:
+	var e := enc()
+	var held: Combatant = null
+	for k: String in e.grapples:
+		if str(e.grapples[k]) == c.id:
+			held = e.get_c(k)
+	if held == null:
+		return CombatResult.new()
+	c.bonus_available = false
+	spend(c, act)
+	var feet := c.creature.speed("fly").total() / 2
+	e._release_grapples_by(c)
+	e.log.add("info", "%s soars %d ft up and drops %s" % [c.name(), feet, held.name()], c.id)
+	e.spells.specials.high.fall(held.id, feet)
+	c.disengaged = true
 	return CombatResult.new()
 
 

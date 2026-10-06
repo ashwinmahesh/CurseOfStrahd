@@ -231,7 +231,13 @@
             "dash_or_disengage",
             "hide_in_dim",
             "shape_shift",
-            "cast"
+            "cast",
+            "swoop",
+            "trample",
+            "rampage",
+            "consume_life",
+            "vanish",
+            "cast_control"
           ],
           "description": "What a special bonus action does."
         },
@@ -245,6 +251,59 @@
         "ac_bonus": {
           "type": "integer",
           "description": "Parry: AC bonus against one melee hit."
+        },
+        "charge": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "feet"
+          ],
+          "description": "Extra effect when the monster moved at least `feet` straight toward the target right before the hit.",
+          "properties": {
+            "feet": {
+              "type": "integer"
+            },
+            "replace": {
+              "type": "boolean",
+              "description": "The charge damage replaces the normal damage."
+            },
+            "damage": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "dice",
+                  "type"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "average": {
+                    "type": "integer"
+                  },
+                  "dice": {
+                    "$ref": "common.schema.json#/$defs/dice"
+                  },
+                  "type": {
+                    "$ref": "common.schema.json#/$defs/damage_type"
+                  }
+                }
+              }
+            },
+            "on_hit": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/rider"
+              }
+            }
+          }
+        },
+        "immune_on_success": {
+          "type": "boolean",
+          "description": "save action: a creature that succeeds can't be affected by this monster's action again (24 hours)."
+        },
+        "dc": {
+          "type": "integer",
+          "description": "A bonus action's save DC when it has no `save` block (Consume Life)."
         }
       }
     },
@@ -267,7 +326,9 @@
             "heal_self",
             "ability_drain",
             "curse",
-            "engulf"
+            "engulf",
+            "burning",
+            "possess"
           ]
         },
         "condition": {
@@ -346,6 +407,44 @@
           "items": {
             "$ref": "common.schema.json#/$defs/modifier"
           }
+        },
+        "restrain": {
+          "type": "boolean",
+          "description": "grapple: the target is also Restrained until the grapple ends."
+        },
+        "escape": {
+          "type": "object",
+          "required": [
+            "skill",
+            "dc"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "skill": {
+              "type": "string"
+            },
+            "dc": {
+              "type": "integer"
+            }
+          },
+          "description": "condition: an action and this check ends it."
+        },
+        "hold_damage": {
+          "type": "object",
+          "required": [
+            "dice",
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "dice": {
+              "$ref": "common.schema.json#/$defs/dice"
+            },
+            "type": {
+              "$ref": "common.schema.json#/$defs/damage_type"
+            }
+          },
+          "description": "grapple: damage to the held creature at the start of each of the grappler's turns."
         }
       }
     }
@@ -639,6 +738,13 @@
             "items": {
               "type": "string"
             }
+          }
+        },
+        "levels": {
+          "type": "object",
+          "description": "spell id -> the level it is cast at (Wall of Fire at 7th for the efreeti).",
+          "additionalProperties": {
+            "type": "integer"
           }
         }
       }

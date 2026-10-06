@@ -3,6 +3,7 @@
   "name": "Tree Blight",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. The number of attacks in its Multiattack especially needs the book. A root's hit deals no damage of its own here (0) and grabs; the crushing damage each turn, cutting a root, and the Bite (a Bonus Action against a creature it holds) are text only. Wintersplinter on Yester Hill can use this block under its own name."
   },
   "size": "huge",

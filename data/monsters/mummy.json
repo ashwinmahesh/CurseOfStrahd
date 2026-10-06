@@ -3,7 +3,8 @@
   "name": "Mummy",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Mummy. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Fist's damage dice, whether its curse allows a save, and Dreadful Glare's rider. The curse is recorded on the target, but its effects (no healing, a shrinking Hit Point maximum) are text only."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "undead",

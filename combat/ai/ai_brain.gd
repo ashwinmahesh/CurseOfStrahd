@@ -74,6 +74,8 @@ func play_turn(c: Combatant) -> CombatResult:
 		var crowned := _crown_turn(c)
 		if crowned != null:
 			return crowned
+	if c.has_meta("berserk") and c.can_act():
+		return _berserk_turn(c)
 	if c.creature.has_flag("command_drop"):
 		e.log.add("info", "%s drops what it holds and ends its turn (Command: Drop)" % c.name(), c.id)
 		c.set_meta("dropped_weapon", true)
@@ -112,6 +114,9 @@ func play_turn(c: Combatant) -> CombatResult:
 			if aid.is_paused():
 				return aid
 		ma.bonus_action(c, "fey_step")
+		var control := ma.bonus_action(c, "control")
+		if control.is_paused():
+			return control
 		var spell_plan := _spell_plan(c, prof)
 		if not spell_plan.is_empty():
 			last_plan = spell_plan
@@ -121,10 +126,20 @@ func play_turn(c: Combatant) -> CombatResult:
 		var save_plan := _save_action_plan(c)
 		if not save_plan.is_empty():
 			last_plan = save_plan
-			e.spend_action(c)
-			var r0 := CombatResult.new()
-			ma.save_action(c, save_plan["action"] as Dictionary, save_plan["target"] as Combatant, r0)
-			return e.then(r0, func() -> CombatResult: return _after_main(c))
+			var use_it := func() -> CombatResult:
+				if not c.can_act() or e.state != Encounter.State.ACTIVE:
+					return CombatResult.new()
+				var act := save_plan["action"] as Dictionary
+				var tg := save_plan["target"] as Combatant
+				if ma.save_victims(c, act, tg).is_empty() or (bool((act.get("targets", {}) as Dictionary).get("in_space", false)) and not tg in ma.save_targets(c, act)):
+					return CombatResult.new()
+				e.spend_action(c)
+				var r0 := CombatResult.new()
+				ma.save_action(c, act, tg, r0)
+				return e.then(r0, func() -> CombatResult: return _after_main(c))
+			if save_plan.has("move_to"):
+				return e.then(e.move(c, save_plan["move_to"] as Vector2i), use_it)
+			return use_it.call() as CombatResult
 	if bool(prof["flee_bloodied"]) and c.creature.is_bloodied():
 		var near := _nearest_enemy(c)
 		if near != null:
@@ -153,6 +168,13 @@ func _after_main(c: Combatant) -> CombatResult:
 	var prof := profile(c)
 	if c.creature is Monster:
 		e.monster_actions.bonus_action(c, "hide")
+		e.monster_actions.bonus_action(c, "swoop")
+		e.monster_actions.bonus_action(c, "consume_life")
+		e.monster_actions.bonus_action(c, "trample")
+		var rampage := e.monster_actions.bonus_action(c, "rampage")
+		if rampage.is_paused():
+			return rampage
+		e.monster_actions.bonus_action(c, "vanish")
 	if bool(prof.get("retreat", false)) and c.movement_left > 0:
 		var near := _nearest_enemy(c)
 		if near != null and e.distance(c, near) <= 5:
@@ -208,9 +230,26 @@ func _save_action_plan(c: Combatant) -> Dictionary:
 		return {}
 	for a: Variant in MonsterActions.data_of(c).get("actions", []):
 		var act := a as Dictionary
-		if str(act.get("kind", "")) != "save" or not act.has("recharge") or e.monster_actions.why_not(c, act) != "":
+		var spread := (act.get("area", {}) as Dictionary).has("shape")
+		if str(act.get("kind", "")) != "save" or not (act.has("recharge") or spread) or e.monster_actions.why_not(c, act) != "":
 			continue
 		var targets := e.monster_actions.save_targets(c, act)
+		# An area action that isn't recharging (a ghost's Horrific Visage) is worth it when it catches two foes.
+		if spread and not act.has("recharge"):
+			var best_t: Combatant = null
+			for t0 in targets:
+				var foes := e.monster_actions.save_victims(c, act, t0).filter(func(v: Combatant) -> bool: return c.hostile_to(v))
+				if foes.size() >= 2:
+					best_t = t0
+			if best_t != null:
+				return {"kind": "save_action", "action": act, "target": best_t, "why": "%s at %s" % [act.get("name", ""), best_t.name()]}
+			continue
+		# An elemental that can flow into a creature's space moves onto a foe first for Whelm or Whirlwind.
+		if targets.is_empty() and bool((act.get("targets", {}) as Dictionary).get("in_space", false)) and c.creature.has_flag("enters_spaces"):
+			var reach := e.reachable_for(c)
+			for h in e.hostiles_of(c):
+				if not h.is_down() and reach.has(h.cell):
+					return {"kind": "save_action", "action": act, "target": h, "move_to": h.cell, "why": "%s on %s" % [act.get("name", ""), h.name()]}
 		if not targets.is_empty():
 			return {"kind": "save_action", "action": act, "target": targets[0], "why": "%s on %s" % [act.get("name", ""), targets[0].name()]}
 	return {}
@@ -246,6 +285,38 @@ func _crown_turn(c: Combatant) -> CombatResult:
 	if c.creature is Monster:
 		return e.monster_attack(c, best, str(opt.get("action_id", "")))
 	return e.attack(c, best, str(opt["id"]))
+
+
+## Berserk (flesh golem): it goes for the nearest creature it can see, friend or foe, with its full Multiattack.
+func _berserk_turn(c: Combatant) -> CombatResult:
+	var e := enc()
+	var near: Combatant = null
+	for o in e.living():
+		if o == c or o.is_down() or not e.can_see(c, o):
+			continue
+		if near == null or e.distance(c, o) < e.distance(c, near):
+			near = o
+	last_plan = {"kind": "attack", "why": "Berserk"}
+	if near == null:
+		return CombatResult.new()
+	e.log.add("info", "%s rages at %s (Berserk)" % [c.name(), near.name()], c.id)
+	var strike := func() -> CombatResult:
+		if not c.can_act() or e.state != Encounter.State.ACTIVE or e.best_melee_option(c, near).is_empty():
+			return CombatResult.new()
+		var mo := e.best_melee_option(c, near)
+		if e.distance(c, near) > (mo["profile"] as WeaponProfile).reach:
+			return CombatResult.new()
+		var queue: Array[String] = []
+		for entry in e.begin_multiattack(c):
+			for i in int(entry["count"]):
+				queue.append(str(entry["action"]))
+		if queue.is_empty():
+			return e.monster_attack(c, near, str(mo.get("action_id", "")))
+		return _multi_step(c, near, queue)
+	var mo0 := e.best_melee_option(c, near)
+	if not mo0.is_empty() and e.distance(c, near) <= (mo0["profile"] as WeaponProfile).reach:
+		return strike.call() as CombatResult
+	return e.then(_approach(c, {"target": near}), strike)
 
 
 func _commander(c: Combatant) -> Combatant:

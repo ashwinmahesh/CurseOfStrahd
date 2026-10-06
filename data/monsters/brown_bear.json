@@ -3,7 +3,8 @@
   "name": "Brown Bear",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "beast",
@@ -70,7 +71,7 @@
           "type": "piercing"
         }
       ],
-      "summary": "Bite: +5 to hit, 1d8+3 Piercing."
+      "summary": "A crushing bite."
     },
     {
       "id": "claw",
@@ -90,7 +91,7 @@
       "conditions": [
         "prone"
       ],
-      "summary": "Claw: +5 to hit, 1d4+3 Slashing."
+      "summary": "A swipe that knocks a Large or smaller target Prone."
     }
   ],
   "ai_profile": "brute",

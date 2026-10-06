@@ -3,7 +3,8 @@
   "name": "Giant Goat",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "beast",
@@ -26,8 +27,10 @@
     "wis": 12,
     "cha": 6
   },
-  "senses": {},
-  "passive_perception": 11,
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 13,
   "languages": [],
   "cr": 0.5,
   "xp": 100,
@@ -44,17 +47,37 @@
       },
       "damage": [
         {
-          "average": 8,
-          "dice": "2d4+3",
+          "average": 6,
+          "dice": "1d6+3",
           "type": "bludgeoning"
         }
       ],
-      "conditions": [
-        "prone"
-      ],
-      "summary": "Ram: +5 to hit, 2d4+3 Bludgeoning."
+      "summary": "Horns; a 20-ft charge adds 2d4 and knocks a Large or smaller target Prone.",
+      "charge": {
+        "feet": 20,
+        "damage": [
+          {
+            "average": 5,
+            "dice": "2d4",
+            "type": "bludgeoning"
+          }
+        ],
+        "on_hit": [
+          {
+            "do": "condition",
+            "condition": "prone",
+            "max_size": "large"
+          }
+        ]
+      }
     }
   ],
   "ai_profile": "brute",
-  "summary": "A goat the size of an ox with a ram's charge."
+  "summary": "A goat the size of an ox with a ram's charge.",
+  "saves": {
+    "str": 5
+  },
+  "skills": {
+    "perception": 3
+  }
 }
