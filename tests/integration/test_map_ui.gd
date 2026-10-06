@@ -2,7 +2,8 @@ extends TestCase
 ## The travel map and the minimap (owner ask 2026-10-06): the map of Barovia is a sharp illustrated sheet with the
 ## known places on it, zooming and panning without leaving the art; the minimap shows the current location north up
 ## and keeps the party in its middle; ways out to other regions are marked, and doors into buildings are not; rooms
-## behind secret doors stay out of the level view and off the minimap until the door is found.
+## behind secret doors stay out of the level view and off the minimap until the door is found; the travel map shows
+## only places the party has been, one road from there or heard of, with mist over the rest.
 
 var root: Node
 
@@ -44,6 +45,7 @@ func test_the_map_opens_on_what_the_party_knows_and_zooms_within_the_art() -> vo
 	var st := GameState.story
 	st.location = "into_the_mists_road"
 	st.visited["into_the_mists_road"] = true
+	st.visited["tser_pool"] = true   # Vallaki is one road from Tser Pool, so it's on the map
 	var t := TravelScreen.new()
 	add_child(t)
 	t.open_map(st, "gates_of_barovia", true)
@@ -161,3 +163,26 @@ func test_a_room_behind_a_secret_door_stays_hidden_until_found() -> void:
 	assert_true(prop.visible, "the shrine fades in")
 	assert_false(map.get("_hidden").has(shrine), "and onto the minimap")
 	assert_false(view.thing_at(shrine).is_empty())
+
+
+func test_the_map_shows_the_next_stop_and_mist_over_the_rest() -> void:
+	var st := GameState.story
+	st.location = "into_the_mists_road"
+	st.visited["into_the_mists_road"] = true
+	var ids := func() -> Array: return Travel.known(st).map(func(p: Dictionary) -> String: return str(p["id"]))
+	assert_eq(ids.call(), ["gates_of_barovia", "village_of_barovia"], "at the gates: the gates, and the village one road on")
+	st.visited["village_of_barovia"] = true
+	assert_true(ids.call().has("svalich_crossroads"), "from the village, the crossroads")
+	assert_false(ids.call().has("vallaki"), "Vallaki isn't on the map until the party is one road from it")
+	assert_false(ids.call().has("old_bonegrinder"), "a place with a condition waits for it, however close")
+	st.set_flag("bonegrinder_rumor", true)
+	assert_true(ids.call().has("old_bonegrinder"), "heard of: on the map")
+	var t := TravelScreen.new()
+	add_child(t)
+	t.open_map(st, "village_of_barovia", false)
+	assert_true(t.clear_at(Vector2(0.775, 0.51)) > 0.9, "the village is clear")
+	assert_true(t.clear_at(Vector2(0.71, 0.52)) > 0.5, "and the road to the crossroads")
+	assert_true(t.clear_at(Vector2(0.075, 0.48)) < 0.05, "Krezk is under the mist")
+	assert_true(t.clear_at(Vector2(0.411, 0.139)) < 0.05, "and the Amber Temple")
+	assert_true(t.clear_at(Vector2(0.695, 0.73)) > 0.9, "the castle on its cliff is seen from everywhere")
+	t.queue_free()

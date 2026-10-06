@@ -42,13 +42,30 @@ static func place_for_location(location_id: String) -> String:
 	return ""
 
 
-## Places the party knows of: visited, or whose `when` holds.
+## Places the party knows of (owner decision 2026-10-06, "next stop"): where it has been, places one open road from
+## there, and places it has heard of (their `when` holds). A place with no `when` is common knowledge only once the
+## party is one road from it; a place with a `when` stays unknown until it holds, however close.
 static func known(st: StoryState) -> Array[Dictionary]:
+	var places := map_data().get("places", []) as Array
+	var been := {}
+	for p: Variant in places:
+		if st.visited.has(str((p as Dictionary)["location"]).get_slice(":", 0)):
+			been[str((p as Dictionary)["id"])] = true
+	var near := {}
+	for r: Variant in map_data().get("roads", []):
+		var road := r as Dictionary
+		if not StoryConditions.check(str(road.get("when", "")), st):
+			continue
+		if been.has(str(road["from"])):
+			near[str(road["to"])] = true
+		if been.has(str(road["to"])):
+			near[str(road["from"])] = true
 	var out: Array[Dictionary] = []
-	for p: Variant in map_data().get("places", []):
+	for p: Variant in places:
 		var pl := p as Dictionary
-		var loc := str(pl["location"]).get_slice(":", 0)
-		if st.visited.has(loc) or StoryConditions.check(str(pl.get("when", "")), st):
+		var id := str(pl["id"])
+		var when := str(pl.get("when", ""))
+		if been.has(id) or (when == "" and near.has(id)) or (when != "" and StoryConditions.check(when, st)):
 			out.append(pl)
 	return out
 
