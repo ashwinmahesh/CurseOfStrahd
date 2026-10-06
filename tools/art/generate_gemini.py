@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Gemini image generation, the counterpart of tools/art/generate.sh for Gemini Flash image models.
 
-Usage: tools/art/generate_gemini.py <name> <subfolder> "<prompt>" [--model M] [--aspect 3:2]
+Usage: tools/art/generate_gemini.py <name> <subfolder> "<prompt>" [--model M] [--aspect 3:2] [--ref img.png]
 Adds the project style preamble, saves art/generated/<subfolder>/<name>.png and logs the call to
 art/generation_log.jsonl. Stdlib only. The key comes from GEMINI_API_KEY (read from ~/.zshrc if
 the shell doesn't have it) and is sent as a header, never in the URL.
 
 Gemini returns opaque images, so prompts ask for a plain flat background and the sprite pipeline
 removes it (blender/lib/cutout.py remove_background).
+
+--ref sends an existing image along with the prompt (e.g. the neutral portrait when generating another
+expression of the same character); it is recorded in the log.
 """
 import argparse
 import base64
@@ -44,11 +47,15 @@ def main():
     p.add_argument("prompt")
     p.add_argument("--model", default=os.environ.get("GEMINI_MODEL", DEFAULT_MODEL))
     p.add_argument("--aspect", default="1:1", help="e.g. 1:1, 3:2, 16:9")
+    p.add_argument("--ref", action="append", default=[], help="reference image (PNG), may repeat")
     a = p.parse_args()
 
     preamble = (ROOT / "art" / "prompts" / "style_preamble.txt").read_text().strip()
+    parts = [{"inlineData": {"mimeType": "image/png", "data": base64.b64encode(Path(r).read_bytes()).decode()}}
+             for r in a.ref]
+    parts.append({"text": f"{preamble} {a.prompt}"})
     body = {
-        "contents": [{"role": "user", "parts": [{"text": f"{preamble} {a.prompt}"}]}],
+        "contents": [{"role": "user", "parts": parts}],
         "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": {"aspectRatio": a.aspect}},
     }
     req = urllib.request.Request(ENDPOINT.format(model=a.model), data=json.dumps(body).encode(),
@@ -74,6 +81,7 @@ def main():
     with open(ROOT / "art" / "generation_log.jsonl", "a") as f:
         f.write(json.dumps({"time": time.strftime("%Y-%m-%dT%H:%M:%S"), "name": a.name, "folder": a.folder,
                             "model": a.model, "aspect": a.aspect, "prompt": a.prompt,
+                            **({"ref": [os.path.relpath(Path(r).resolve(), ROOT) for r in a.ref]} if a.ref else {}),
                             "output_tokens": usage.get("candidatesTokenCount")}) + "\n")
     print(f"Saved image: {out}")
 
