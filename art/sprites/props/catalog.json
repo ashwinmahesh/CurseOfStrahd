@@ -252,7 +252,20 @@
     "shrine_shackles": "skeleton_shackles",
     "prison_skeleton": "skeleton_shackles",
     "initiate_pallets": "straw_pallet",
-    "reliquary_niches": "wall_alcoves"
+    "reliquary_niches": "wall_alcoves",
+    "den_mother_night": "statue_mother_night",
+    "frozen_pilgrim": "frozen_traveller",
+    "sanctum_braziers": "brazier_green",
+    "marina_bier": "bier",
+    "lysaga_poppet": "poppet",
+    "bonegrinder_receipt_book": "receipt_table",
+    "baratok_frozen_birds": "frozen_birds",
+    "bonegrinder_soul_bags": "soul_bags",
+    "bonegrinder_soul_bags_sealed": "soul_bags",
+    "den_silver_chains": "wall_chains",
+    "exethanter_notes": "notes_wall",
+    "bonegrinder_brake": "gear_brake",
+    "baratok_glass_ring": "glass_ring"
   },
   "low_cover": {
     "wild": [
@@ -381,6 +394,26 @@
     "shrine_yard": [
       "bramble_a",
       "bramble_b"
+    ],
+    "amber_temple_entrance": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "amber_temple_road": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "mount_baratok": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "mount_baratok_trail": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "tsolenka_pass": [
+      "snowdrift",
+      "ice_patch"
     ]
   },
   "doors": {
@@ -443,6 +476,9 @@
         "statue": "statue_knight",
         "height": 2.1,
         "width": 1.16
+      },
+      "honey_doors": {
+        "art": "amber_doors"
       }
     }
   },
