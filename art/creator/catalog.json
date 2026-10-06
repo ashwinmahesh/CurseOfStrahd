@@ -119,6 +119,7 @@
   {"id": "hero_09", "prompt": "a dark-skinned human man in his forties with close-cropped black hair and a neat black beard, a scholar-mage in deep blue-violet robes with a satchel strap across his chest", "expression": "thoughtful, calm"},
   {"id": "hero_10", "prompt": "a pale young noblewoman with long black hair in a single braid over her shoulder, sharp features and dark eyes, wearing a black and crimson doublet with a rapier hilt rising behind her shoulder", "expression": "cold, proud"}
  ],
+ "voice_sample": "I came into this valley by my own road. I mean to leave it by the same one.",
  "voices": [
   {"id": "hero_female", "label": "Woman's voice"},
   {"id": "hero_male", "label": "Man's voice"}

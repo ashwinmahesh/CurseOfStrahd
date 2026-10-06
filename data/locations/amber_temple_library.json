@@ -213,6 +213,18 @@
       "kind": "examine",
       "label": "Books in chains",
       "model": "bookcase"
+    },
+    {
+      "id": "aurel_margins",
+      "cell": [
+        14,
+        2
+      ],
+      "kind": "examine",
+      "label": "A chained book, recently read",
+      "model": "book",
+      "when": "name:silvain_aster",
+      "dialogue": "companions/aurel:margins"
     }
   ],
   "containers": [

@@ -1,0 +1,65 @@
+# Silvain Aster's camp talks (story/camp_talk.gd). Quest: Aurel's Last Chapter (narrative/companions/aurel.dialogue).
+
+~ talk_cipher
+if name:silvain_aster and flag.scholar_notes_found and not flag.aurel_cipher_read
+-> cipher
+endif
+-> END
+
+~ cipher
+Narrator: Silvain has Aurel's note spread on one knee and a stub of candle at their elbow, and has been reading the same sheet for an hour.
+interject name:silvain_aster: Do you know, he wrote in the margins. Tiny. In our shorthand. We invented it in our second year to pass notes during Professor Ostrowe's lectures on comparative moss.
+interject name:silvain_aster: I'd forgotten I could still read it. I can. That's either a comfort or the beginning of a very long night.
+* What does it say? -> cipher_says
+* Comparative moss? -> cipher_moss
+
+~ cipher_moss
+interject name:silvain_aster: Four hours a week, for a year. It was the worst year of my life, and the best, because Aurel sat behind me and wrote libels about Ostrowe's beard in the margins of my notes. Where was I.
+-> cipher_says
+
+~ cipher_says
+interject name:silvain_aster: "Showman at Vallaki asked me the same question I asked him. Knows more than a showman should." Then: "Index at the amber temple. Must see the shape before I read it." And at the bottom: "Going up anyway."
+interject name:silvain_aster: He went to the mountains before he came here. Then he came here, and drew the castle's windows, and went up. In that order. He always did his reading backwards.
+interject name:silvain_aster: So we follow him backwards. A showman in Vallaki. A temple of amber. I'll want notes.
+set aurel_cipher_read
+if not (quest.aurels_last_chapter >= the_satchel)
+quest aurels_last_chapter the_satchel
+endif
+if not (quest.aurels_last_chapter >= the_cipher)
+quest aurels_last_chapter the_cipher
+endif
+-> END
+
+~ talk_tome
+if name:silvain_aster and quest.find_the_tome == found
+-> tome
+endif
+-> END
+
+~ tome
+Narrator: Silvain reads the Tome of Strahd all night, and nobody tries to stop them. Near dawn they go very still, the way a hunting cat goes still.
+interject name:silvain_aster: Here. The last pages. Not the history. Notes, in the same hand as the rest, written in last winter's ink.
+interject name:silvain_aster: "My reader Mirescu asks again to be allowed to sleep. Denied. He has not finished the chapter. He reads my youth aloud more beautifully than I lived it, and he weeps at the right places. I have not had such an audience in three centuries."
+interject name:silvain_aster: He's alive. He's in the castle, in the room with the lamp that never goes out, and he's reading. Still reading.
+if flag.eva_question == "aurel"
+interject name:silvain_aster: Exactly as that dreadful old woman said. I shall have to tell her she was right. I'd rather be bitten.
+endif
+* Then we'll go and get him. -> tome_get
+* Silvain, he may not be the same man by now. -> tome_same
+
+~ tome_get
+interject name:silvain_aster: Yes. Yes, we will. That is the logical course of action. Entirely logical. I'm not crying, the candle smokes.
+-> tome_end
+
+~ tome_same
+interject name:silvain_aster: I know. I've read the literature on what he keeps and how. I know exactly what I may find in that tower.
+interject name:silvain_aster: I'm going anyway. He'd have come for me. He'd have complained about it the whole way, and come.
+-> tome_end
+
+~ tome_end
+interject name:ilse_varga: East tower. Noted. We take it in daylight, all together, nobody goes ahead.
+interject name:hedda_ironvow: Mm. And we bring a lamp. He asked for one.
+if not (quest.aurels_last_chapter >= still_reading)
+quest aurels_last_chapter still_reading
+endif
+-> END

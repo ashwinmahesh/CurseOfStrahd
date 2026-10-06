@@ -104,7 +104,8 @@ func _draw_strip() -> void:
 		c.queue_free()
 	for i in builders.size():
 		var name_text := str(builders[i].build.get("name", ""))
-		var chip := UiKit.button("%s%s" % ["✓ " if confirmed[i] else "", name_text if name_text != "" else "Character %d" % (i + 1)], func() -> void:
+		var blank := "Your hero" if hero_mode else "Character %d" % (i + 1)
+		var chip := UiKit.button("%s%s" % ["✓ " if confirmed[i] else "", name_text if name_text != "" else blank], func() -> void:
 			slot = i
 			_draw(), 16)
 		var art := str((builders[i].build.get("appearance", {}) as Dictionary).get("art", ""))

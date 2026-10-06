@@ -144,6 +144,10 @@ func _party_cards(on_pick: Callable) -> Control:
 		col.add_child(n)
 		col.add_child(UiKit.label(str(data.get("summary", "")), 12, "parchment", 140))
 		if on_pick.is_valid():
+			# The buttons line up along the bottom of the plate, whatever the summaries' lengths.
+			var push := Control.new()
+			push.size_flags_vertical = Control.SIZE_EXPAND_FILL
+			col.add_child(push)
 			var first := str(data.get("name", id)).get_slice(" ", 0)
 			var b := UiParts.small_button("Leave %s behind" % first, func() -> void: on_pick.call(id))
 			b.tooltip_text = str(data.get("hook", ""))
@@ -245,6 +249,9 @@ func capture_shots(tool: Node, out: String) -> void:
 	var b := _creation.b()
 	b.set_class("fighter")
 	_creation.call("_suit_outfit")
+	var app := (b.build["appearance"] as Dictionary).duplicate()
+	app.merge({"head": "elfin", "hair": "wavy", "skin": "olive", "hair_colour": "auburn", "portrait": "hero_03", "art": "hero_03"}, true)
+	b.set_appearance(app)
 	_creation.step = CharacterBuilder.Step.APPEARANCE
 	for t: String in AppearancePanel.TABS:
 		_creation.set("_appearance_tab", t)

@@ -6,7 +6,7 @@ extends Control
 
 signal turned(dir: String)
 
-const ARCH := Vector2(250, 330)
+const ARCH := Vector2(270, 380)
 const TURN_EVERY := 1.1
 const WALK_CELL := 384.0
 
@@ -67,10 +67,7 @@ func _reload() -> void:
 	_frames = HeroLook.preview_frames(appearance, kind, dir())
 	_durations.clear()
 	if kind == "attack" and not _frames.is_empty():
-		var body := HeroLook._piece_json("bodies", str(HeroLook.pieces_for(appearance)["bodies"]))
-		var a := body.get("attack", {}) as Dictionary
-		for d: Variant in a.get("durations", []):
-			_durations.append(float(d) / float(a.get("fps", 12.0)))
+		_durations = HeroLook.attack_timing(appearance)
 	_frame = 0
 	_clock = 0.0
 	_note.text = "" if not _frames.is_empty() else "This look's art is still being drawn."

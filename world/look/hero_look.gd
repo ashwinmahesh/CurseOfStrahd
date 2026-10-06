@@ -176,6 +176,16 @@ static func frames(app: Dictionary) -> SpriteFrames:
 	return sf
 
 
+## Seconds each attack frame shows (the preview plays the blow at the game's pace).
+static func attack_timing(app: Dictionary) -> Array[float]:
+	var out: Array[float] = []
+	var body := _piece_json("bodies", str(pieces_for(app)["bodies"]))
+	var a := body.get("attack", {}) as Dictionary
+	for d: Variant in a.get("durations", []):
+		out.append(float(d) / float(a.get("fps", 12.0)))
+	return out
+
+
 static func signature(app: Dictionary) -> String:
 	var parts: Array[String] = []
 	for k in LOOK_KEYS:

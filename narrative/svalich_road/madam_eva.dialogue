@@ -114,6 +114,9 @@ interject name:tamsin_tealeaf: For what it's worth, I'd have stayed in bed too. 
 ~ truth_hedda
 set eva_reading_paid = "truth"
 set eva_truth_teller = "hedda_ironvow"
+if not (quest.cold_prayers >= cold)
+quest cold_prayers cold
+endif
 Player: Since we crossed the mist, I have not felt my god. The prayers still answer. They answer cold. I have told no one, because a healer who doubts is a healer nobody lets near the bed.
 Madam Eva [sad]: The Morninglord's light is a long way from here, priestess. It still reaches you. Ask why it reaches, not why it's cold.
 interject name:silvain_aster: Hedda. For the record, those cold prayers have kept me alive twice. I will take cold.
@@ -377,6 +380,9 @@ Player: ...Noted.
 
 ~ q_locket
 set eva_question = "locket"
+if not (quest.the_locket >= her_name)
+quest the_locket her_name
+endif
 Madam Eva: Her name was Tatyana. She is dead, and she is not. Whoever put her in your hand wanted you to carry her face home, and you have.
 if guest:ireena
 Ireena: Who is Tatyana?

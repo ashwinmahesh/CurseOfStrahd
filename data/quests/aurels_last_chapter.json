@@ -1,0 +1,63 @@
+{
+  "id": "aurels_last_chapter",
+  "name": "Aurel's Last Chapter",
+  "summary": "Silvain Aster's colleague Aurel Mirescu went into the mists after a book written in a vampire's own hand, and wrote home exactly once: He knows I am reading.",
+  "region": "companions",
+  "stages": [
+    {
+      "id": "the_letter",
+      "journal": "Aurel Mirescu went into the mists after a book said to be written in a vampire's own hand. He wrote home once: 'He knows I am reading.' Silvain says they came for the book. Silvain also still has Aurel's good pen.",
+      "objectives": [
+        "Find out what happened to Aurel Mirescu"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_satchel",
+      "journal": "Aurel left his satchel and a last note in the back room of the Blood of the Vine. He had drawn the castle from three sides and listed its lit windows; one, high in the east tower, burns every night, and he took it for a library. Then he went up the road.",
+      "objectives": [
+        "Follow Aurel's trail back through the valley"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_cipher",
+      "journal": "In the margins of Aurel's note, in the shorthand he and Silvain invented as students to pass notes in lectures: 'Showman at Vallaki asked me the same question I asked him. Index at the amber temple. Going up anyway.'",
+      "objectives": [
+        "Ask the showman in Vallaki about Aurel",
+        "Find what Aurel read at the Amber Temple"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_hunter",
+      "journal": "Rictavio, who is not a showman, met Aurel in Vallaki: a thin man with ink to his elbows and a list of questions about one book. He told Aurel to go home. Aurel thanked him, very politely, and asked the way to the mountains.",
+      "objectives": [
+        "Find what Aurel read at the Amber Temple"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_margins",
+      "journal": "Aurel signed the Amber Temple's ledger, 'A. Mirescu, a reader', and left a note for Silvain in the margins of a chained book, because he knew Silvain would come: the book is real; its author wrote it to be read; and what the devil wants most is not blood, but an audience.",
+      "objectives": [
+        "Find the Tome of Strahd"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "still_reading",
+      "journal": "Inside the Tome of Strahd, in its author's hand, a note written last winter: 'My reader Mirescu asks again to be allowed to sleep. Denied. He has not finished the chapter.' Aurel is alive in the castle, in the room with the light that never goes out, reading still.",
+      "objectives": [
+        "Find Aurel in the east tower of Castle Ravenloft"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_last_page",
+      "journal": "Silvain found Aurel in the east tower library and closed the book for him. However the chapter ended, Aurel did not finish it alone. Silvain has his pen back. They intend to argue about who owes whom for a very long time.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
