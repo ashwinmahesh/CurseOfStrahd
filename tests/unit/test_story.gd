@@ -219,3 +219,26 @@ func test_journal_and_story_save_round_trip() -> void:
 	assert_eq(str((copy.loc_state("room")["doors"] as Dictionary)["front"]), "open")
 	assert_eq(copy.quest_stage("test_quest"), "done")
 	Compendium.shared().tables["quests"].erase("test_quest")
+
+
+func test_effects_and_concentration_survive_a_save() -> void:
+	var st := _party()
+	var hedda := st.party[0]
+	var silvain := st.party[1]
+	var conc := hedda.begin_concentration("bless", "Bless")
+	conc.attach(hedda, Effect.new("Bless", &"spell", "bless").with_modifier("bonus_die", {"dice": "1d4", "on": ["attack"]}))
+	conc.attach(silvain, Effect.new("Bless", &"spell", "bless").with_modifier("bonus_die", {"dice": "1d4", "on": ["attack"]}))
+	var armor := Effect.new("Mage Armor", &"spell", "mage_armor").with_modifier("ac_formula", {"base": 13, "abilities": ["dex"]})
+	armor.lasting({"kind": "hours", "amount": 8})
+	silvain.add_effect(armor)
+	var ac := silvain.ac_value()
+	var copy := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	var h2 := copy.party[0]
+	var s2 := copy.party[1]
+	assert_eq(s2.ac_value(), ac, "Mage Armor kept")
+	assert_eq(s2.modifiers_for(&"bonus_die").size(), 1, "Bless kept on Silvain")
+	assert_true(h2.concentration != null)
+	assert_eq(h2.concentration.effect_count(), 2, "Concentration relinked to both Blessed creatures")
+	h2.concentration.end("test")
+	assert_eq(s2.modifiers_for(&"bonus_die").size(), 0, "ending it removes Bless everywhere")
+

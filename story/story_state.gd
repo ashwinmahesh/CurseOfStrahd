@@ -218,10 +218,15 @@ func to_dict() -> Dictionary:
 
 static func from_dict(d: Dictionary) -> StoryState:
 	var st := StoryState.new()
+	var saved := {}
+	var loaded: Array[Creature] = []
 	for m: Variant in d.get("party", []):
 		var ch := Character.from_dict(m as Dictionary)
 		if ch != null:
 			st.party.append(ch)
+			loaded.append(ch)
+			saved[ch.id] = (m as Dictionary).get("state", {})
+	Creature.relink_concentration(loaded, saved)
 	st.leader = int(d.get("leader", 0))
 	st.gold = float(d.get("gold", 0.0))
 	for e: Variant in d.get("stash", []):

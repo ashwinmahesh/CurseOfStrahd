@@ -900,9 +900,51 @@ func start_encounter(encounter_id: String) -> bool:
 	combat_view = CombatView.new()
 	combat_view.input_locked = input_locked
 	add_child(combat_view)
+	_run_combat(encounter_id, spec, e, ctokens, surprised)
+	return true
+
+
+func _run_combat(encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, surprised: Array[String]) -> void:
 	combat_view.finished.connect(func(outcome: String) -> void: _end_encounter(encounter_id, spec, e, ctokens, outcome))
+	combat_view.round_started.connect(func(_r: int) -> void: _save_round(encounter_id, e))
 	combat_started.emit(combat_view)
 	combat_view.begin(e, board, rig, ctokens, surprised)
+
+
+## Saves the fight as the round begins: the party (in the story), the location, and the encounter's state.
+func _save_round(encounter_id: String, e: Encounter) -> void:
+	if e.state != Encounter.State.ACTIVE:
+		return
+	_save_positions()
+	GameState.combat_snapshot = {"location": loc_id, "encounter": encounter_id, "data": EncounterSnapshot.capture(e)}
+	SaveSystem.save_round()
+
+
+## Picks a saved fight up again at the start of its round (after loading a round-start save).
+func resume_encounter(snapshot: Dictionary) -> bool:
+	var encounter_id := str(snapshot.get("encounter", ""))
+	var spec := {}
+	for en: Variant in loc.get("encounters", []):
+		if str((en as Dictionary)["id"]) == encounter_id:
+			spec = en as Dictionary
+	if spec.is_empty() or in_combat:
+		return false
+	in_combat = true
+	ModeController.force(ModeController.Mode.COMBAT)
+	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, dice, st.party)
+	for m in members:
+		(tokens[m.id] as Node3D).visible = false
+	var ctokens := {}
+	for c in e.combatants:
+		var t := CombatToken.create(c)
+		t.position = board.cell_center(c.cell, c.size_cells)
+		add_child(t)
+		ctokens[c.id] = t
+	combat_view = CombatView.new()
+	combat_view.input_locked = input_locked
+	add_child(combat_view)
+	var none: Array[String] = []
+	_run_combat(encounter_id, spec, e, ctokens, none)
 	return true
 
 
@@ -951,6 +993,7 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 		tok.visible = true
 		tok.refresh()
 	in_combat = false
+	GameState.combat_snapshot = {}
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	rig.follow = tokens[leader().id] as Node3D
 	if outcome == "victory":

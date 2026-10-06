@@ -1004,9 +1004,13 @@ func state_to_dict() -> Dictionary:
 	var res := {}
 	for k: String in resources:
 		res[k] = int((resources[k] as Dictionary)["used"])
+	var fx: Array = []
+	for e in effects:
+		fx.append(e.to_dict())
 	return {"hp": hp, "temp_hp": temp_hp, "exhaustion": exhaustion, "death_successes": death_successes,
 		"death_failures": death_failures, "stable": stable, "dead": dead, "conditions": conds,
-		"resources_used": res}
+		"resources_used": res, "effects": fx,
+		"concentration": {"source": concentration.source_id, "name": concentration.name} if concentration != null else {}}
 
 
 func state_from_dict(d: Dictionary) -> void:
@@ -1025,3 +1029,25 @@ func state_from_dict(d: Dictionary) -> void:
 	for k: String in used:
 		if resources.has(k):
 			(resources[k] as Dictionary)["used"] = int(used[k])
+	effects.clear()
+	for ed: Variant in d.get("effects", []):
+		effects.append(Effect.from_dict(ed as Dictionary))
+	var conc := d.get("concentration", {}) as Dictionary
+	concentration = Concentration.new(self, str(conc["source"]), str(conc["name"])) if not conc.is_empty() else null
+
+
+## After loading several creatures: reattaches Concentration links (effects on anyone, cast by these casters).
+static func relink_concentration(creatures: Array[Creature], saved: Dictionary) -> void:
+	var by_id := {}
+	for c in creatures:
+		by_id[c.id] = c
+	for c in creatures:
+		var effs := (saved.get(c.id, {}) as Dictionary).get("effects", []) as Array
+		for i in mini(effs.size(), c.effects.size()):
+			var info := ((effs[i] as Dictionary).get("concentration", {}) as Dictionary)
+			var caster_id := str(info.get("caster", ""))
+			if caster_id == "" or not by_id.has(caster_id):
+				continue
+			var caster := by_id[caster_id] as Creature
+			if caster.concentration != null and caster.concentration.source_id == str(info.get("source", "")):
+				caster.concentration.relink(c, c.effects[i])

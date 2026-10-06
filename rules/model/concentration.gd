@@ -33,6 +33,12 @@ func attach(target: Creature, effect: Effect) -> bool:
 	return true
 
 
+## Restores a link after loading a save (the effect is already on the target).
+func relink(target: Creature, effect: Effect) -> void:
+	effect.concentration = self
+	_links.append({"creature": weakref(target), "effect": effect})
+
+
 func effect_count() -> int:
 	return _links.size()
 

@@ -1,0 +1,108 @@
+class_name EncounterSnapshot
+extends RefCounted
+## Saving a fight at the start of a round (plan §10 Phase 3: "save and load ... at the start of each combat round"):
+## every combatant (characters in full, monsters by stat block plus their state), positions, Initiative order, the
+## round, marks, grapples and what the party has studied, and the map as it stood. Restored, the round begins again
+## from its first turn.
+
+
+static func capture(e: Encounter) -> Dictionary:
+	var cbs: Array = []
+	for c in e.combatants:
+		var cd := {"id": c.id, "side": str(c.side), "cell": [c.cell.x, c.cell.y], "initiative": c.initiative,
+			"group": c.initiative_group, "surprised": c.surprised, "reaction_rules": c.reaction_rules.duplicate(),
+			"reaction_available": c.reaction_available, "hidden": c.hidden, "stealth_total": c.stealth_total}
+		if c.creature is Character:
+			cd["character"] = (c.creature as Character).to_dict()
+		else:
+			var m := c.creature as Monster
+			cd["monster"] = str(m.data.get("id", ""))
+			cd["name"] = m.name
+			cd["state"] = m.state_to_dict()
+		cbs.append(cd)
+	var order: Array = []
+	for c in e.order:
+		order.append(c.id)
+	var rows: Array = []
+	for z in e.grid.depth:
+		var row := ""
+		for x in e.grid.width:
+			var cell := Vector2i(x, z)
+			if e.grid.has_flag(cell, CombatGrid.VOID):
+				row += " "
+			elif e.grid.has_flag(cell, CombatGrid.WALL):
+				row += "#"
+			elif e.grid.has_flag(cell, CombatGrid.LOW):
+				row += "="
+			elif e.grid.has_flag(cell, CombatGrid.DIFFICULT):
+				row += "~"
+			elif e.grid.height(cell) > 0:
+				row += str(mini(4, e.grid.height(cell) / CombatGrid.FEET))
+			else:
+				row += "."
+		rows.append(row)
+	var log: Array = []
+	for en in e.log.last(40):
+		log.append(en.duplicate(true))
+	return {"version": 1, "rows": rows, "combatants": cbs, "order": order, "round": e.round_no, "marks": e.marks.duplicate(true),
+		"grapples": e.grapples.duplicate(), "studied": e.studied.duplicate(), "title": e.title, "log": log}
+
+
+## Rebuilds the fight; `party` supplies the party's Character objects (from the loaded story) by id when present.
+static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = []) -> Encounter:
+	var e := Encounter.new(CombatGrid.from_rows(d["rows"] as Array), dice)
+	e.title = str(d.get("title", ""))
+	var by_id := {}
+	for ch in party:
+		by_id[ch.id] = ch
+	var saved := {}
+	var loaded: Array[Creature] = []
+	for cdv: Variant in d["combatants"]:
+		var cd := cdv as Dictionary
+		var creature: Creature
+		if cd.has("character"):
+			var cid := str((cd["character"] as Dictionary).get("id", ""))
+			creature = by_id[cid] as Character if by_id.has(cid) else Character.from_dict(cd["character"] as Dictionary)
+			if by_id.has(cid):
+				creature.state_from_dict((cd["character"] as Dictionary)["state"] as Dictionary)
+			saved[cid] = (cd["character"] as Dictionary)["state"]
+		else:
+			var m := Monster.from_data(Compendium.shared().monster_data(str(cd["monster"])))
+			m.name = str(cd["name"])
+			m.state_from_dict(cd["state"] as Dictionary)
+			creature = m
+		var a := cd["cell"] as Array
+		var c := e.add(creature, StringName(str(cd["side"])), Vector2i(int(a[0]), int(a[1])))
+		c.id = str(cd["id"])
+		creature.id = c.id
+		if not cd.has("character"):
+			saved[c.id] = cd["state"]
+		c.initiative = int(cd["initiative"])
+		c.initiative_group = str(cd["group"])
+		c.surprised = bool(cd["surprised"])
+		c.reaction_rules = (cd.get("reaction_rules", {}) as Dictionary).duplicate()
+		c.reaction_available = bool(cd.get("reaction_available", true))
+		c.hidden = bool(cd.get("hidden", false))
+		c.stealth_total = int(cd.get("stealth_total", 0))
+		loaded.append(creature)
+	Creature.relink_concentration(loaded, saved)
+	e.order.clear()
+	for id: Variant in d["order"]:
+		var c2 := e.get_c(str(id))
+		if c2 != null:
+			e.order.append(c2)
+	for m2: Variant in d.get("marks", []):
+		e.marks.append((m2 as Dictionary).duplicate(true))
+	e.grapples = (d.get("grapples", {}) as Dictionary).duplicate()
+	e.studied = (d.get("studied", {}) as Dictionary).duplicate()
+	for en: Variant in d.get("log", []):
+		var entry := en as Dictionary
+		e.log.entries.append(entry.duplicate(true))
+	e.state = Encounter.State.ACTIVE
+	e.round_no = int(d["round"])
+	e.log.round_no = e.round_no
+	e.turn_index = 0
+	while e.turn_index < e.order.size() and not e.order[e.turn_index].is_alive():
+		e.turn_index += 1
+	e._begin_turn()
+	return e

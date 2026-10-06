@@ -6,6 +6,8 @@ extends Node3D
 ## the rules. Emits finished(outcome) when the player leaves the end-of-fight banner.
 
 signal finished(outcome: String)
+## A new round is about to begin (round 1 right after Initiative): the moment the game may save a fight.
+signal round_started(round: int)
 
 const STEP_TIME := 0.13
 const AI_PAUSE := 0.35
@@ -834,6 +836,7 @@ func _play_events() -> void:
 				_refresh_all()
 			"round":
 				hud.banner("Round %d" % int(ev["round"]), 1.0)
+				round_started.emit(int(ev["round"]))
 			"over":
 				_refresh_all()
 	_stop_walking(walking)

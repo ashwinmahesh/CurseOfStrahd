@@ -34,6 +34,10 @@ func _ready() -> void:
 	hud.command.connect(_command)
 	var where := st.location if st.location != "" else FIRST_LOCATION
 	enter_location(where, "" if st.location == where else "default")
+	# A round-start save puts the party back into its fight.
+	var snap := GameState.combat_snapshot
+	if not snap.is_empty() and str(snap.get("location", "")) == where:
+		view.resume_encounter.call_deferred(snap)
 
 
 ## A quick start: the four pregens at level 1 (plan §5.6 Start step). The full creator replaces this in the menu.

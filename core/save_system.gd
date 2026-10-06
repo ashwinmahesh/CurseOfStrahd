@@ -26,6 +26,18 @@ func save(slot: String) -> Error:
 	return OK
 
 
+## The fight's round-start save (plan §10 Phase 3): allowed in combat, written only by the game at the start of
+## a round, when GameState.combat_snapshot holds the fight.
+func save_round(slot: String = "round_start") -> Error:
+	DirAccess.make_dir_recursive_absolute(save_dir)
+	var f := FileAccess.open(slot_path(slot), FileAccess.WRITE)
+	if f == null:
+		return FileAccess.get_open_error()
+	f.store_string(JSON.stringify(GameState.to_dict(), "\t"))
+	f.close()
+	return OK
+
+
 func load_slot(slot: String) -> Error:
 	if not FileAccess.file_exists(slot_path(slot)):
 		return ERR_FILE_NOT_FOUND

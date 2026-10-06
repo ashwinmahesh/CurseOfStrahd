@@ -153,3 +153,29 @@ func test_story_saves_and_loads() -> void:
 	assert_eq(GameState.story.party.size(), 4)
 	assert_eq(GameState.story.location, "test_hall")
 	SaveSystem.delete_slot("test_slot")
+
+
+func test_round_start_save_resumes_the_fight() -> void:
+	var v := _view()
+	v.start_encounter("wolves")
+	for i in 30:
+		await get_tree().process_frame
+		if not GameState.combat_snapshot.is_empty():
+			break
+	assert_false(GameState.combat_snapshot.is_empty(), "the fight saved itself as round 1 began")
+	assert_true(SaveSystem.has_slot("round_start"))
+	var wolf_hp := 0
+	for c in v.combat_view.e.combatants:
+		if c.side == &"enemy":
+			c.creature.hp = 4
+	assert_eq(SaveSystem.load_slot("round_start"), OK)
+	var e := EncounterSnapshot.restore(GameState.combat_snapshot["data"] as Dictionary, DiceRoller.new(1), GameState.story.party)
+	assert_eq(e.round_no, 1)
+	assert_eq(e.combatants.size(), 5)
+	for c in e.combatants:
+		if c.side == &"enemy":
+			wolf_hp = c.creature.hp
+	assert_eq(wolf_hp, 11, "the wolf as the round began, not as it is now")
+	assert_eq(e.order.size(), 5)
+	SaveSystem.delete_slot("round_start")
+
