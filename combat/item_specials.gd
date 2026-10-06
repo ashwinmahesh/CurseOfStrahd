@@ -789,6 +789,34 @@ func _use_arcana(c: Combatant, p: Dictionary, targets: Array, point: Vector2, op
 			_pay_cost(c, cost)
 			e.log.add("info", "%s's %s %s" % [c.name(), label, params.get("text", "does something harmless")], c.id)
 			return CombatResult.new()
+		"ravenkind_hold":
+			# Holy Symbol of Ravenkind (Curse of Strahd): every vampire and vampire spawn within range that can see the
+			# symbol saves (Wisdom) or is Paralyzed for a minute, saving again at the end of each of its turns.
+			_pay_cost(c, cost)
+			var dc := int(params.get("dc", 15))
+			var held := 0
+			for v in e.living():
+				if not v.creature is Monster or not e.can_see(v, c) or e.distance(c, v) > int(params.get("range", 30)):
+					continue
+				var mid := str((v.creature as Monster).data.get("id", ""))
+				if not (mid.contains("vampire") or mid.begins_with("strahd")):
+					continue
+				var sv := v.creature.roll_save(e.dice, &"wis", dc, [], [], "Wis save (%s)" % label)
+				if sv.success:
+					e.log.add("info", "%s resists the %s" % [v.name(), label], v.id, [sv.describe()])
+					continue
+				var fx := Effect.new(label, &"item", iid)
+				fx.caster_id = c.id
+				fx.conditions.append(&"paralyzed")
+				fx.lasting_rounds(10, c.id)
+				fx.repeat_save = {"ability": "wis", "dc": dc, "when": "end"}
+				v.creature.add_effect(fx)
+				held += 1
+				e.log.add("condition", "%s is held fast by the %s" % [v.name(), label], v.id, [sv.describe()])
+				e.events.append({"type": "condition", "id": v.id})
+			if held == 0:
+				e.log.add("info", "%s raises the %s; no vampire is held" % [c.name(), label], c.id)
+			return CombatResult.new()
 		"summon_monster":
 			_pay_cost(c, cost)
 			return summon(c, str(params.get("monster", "")), int(params.get("count", 1)), point, params, label)

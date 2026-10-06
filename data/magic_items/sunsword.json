@@ -3,9 +3,9 @@
   "name": "Sunsword",
   "source": {
     "book": "CoS",
-    "note": "One of the three Tarokka treasures (data/tarokka). Properties paraphrased from the adventure in our own words; every number must be checked against the book when the weapon is built (Phase 5). It is a quest item until then, so nobody equips half a sword."
+    "note": "A Tarokka treasure (data/tarokka). Curse of Strahd's 2016 numbers as we know them, in our own words; check against the book."
   },
-  "category": "quest",
+  "category": "weapon",
   "weight_lb": 3,
   "cost_gp": 0,
   "quest_locked": true,
@@ -14,6 +14,81 @@
     "attunement": true,
     "sentient": true
   },
-  "summary": "A platinum sword hilt with a sunburst guard and no blade. Held and willed, a blade of pure sunlight grows from it, and the hilt has opinions.",
-  "text": "Once the sword of Strahd's brother Sergei, it was stripped of its blade and thrown away by a lord who could not bear to look at it. Attuned, the hilt grows a blade of radiance and fights as a longsword with a +2 bonus to attack and damage rolls that deals Radiant damage instead of Slashing, an extra 1d8 Radiant damage to Undead, and the Finesse property. The blade sheds bright sunlight for 15 feet and dim light for 15 feet more; the wielder can widen or narrow the light by 5 feet at a time, up to 30 feet bright and 30 feet dim. The sword is a sentient thing (Intelligence 11, Wisdom 17, Charisma 16) that sees and hears for 60 feet and speaks into its wielder's mind. It hates the undead, longs to see Strahd destroyed, and does not forgive a wielder who flees from him."
+  "icon": "sunsword",
+  "treasure": {
+    "random": false
+  },
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d8",
+    "damage_type": "radiant",
+    "properties": [
+      "versatile",
+      "finesse"
+    ],
+    "versatile": "1d10",
+    "mastery": "sap"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "light": {
+    "bright": 15,
+    "dim": 15,
+    "when": "drawn",
+    "sunlight": true
+  },
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs": [
+          "undead"
+        ],
+        "dice": "1d8",
+        "type": "radiant"
+      }
+    ]
+  },
+  "powers": [
+    {
+      "id": "brighten",
+      "name": "Widen or narrow the sunlight",
+      "cost": "bonus",
+      "custom": "sun_blade_light",
+      "choice": {
+        "label": "Bright light radius",
+        "from": [
+          "10",
+          "15",
+          "20",
+          "25",
+          "30"
+        ]
+      },
+      "text": "Bonus Action: the blade's sunlight grows or shrinks 5 ft at a time (bright 10 to 30 ft, as far again dim)."
+    }
+  ],
+  "sentience": {
+    "int": 11,
+    "wis": 17,
+    "cha": 16,
+    "senses": "sight and hearing 60 ft",
+    "alignment": "chaotic good",
+    "purpose": "to see Strahd and every vampire destroyed"
+  },
+  "summary": "Sergei's sword: a hilt that grows a blade of sunlight. +2, Finesse, Radiant; an extra 1d8 Radiant against Undead; it sheds true sunlight.",
+  "text": "A platinum hilt with a sunburst guard and no blade, until someone attuned to it wills one: then a blade of pure sunlight springs from it. It fights as a +2 longsword with Finesse that deals Radiant damage, and an extra 1d8 Radiant to Undead. The blade sheds sunlight, bright for 15 feet and dim for 15 more; a Bonus Action widens or narrows the glow by 5 feet, up to 30 feet bright. The sword thinks and speaks into its bearer's mind. It loathes the undead, wants Strahd ended above all, and has no patience for a bearer who runs from him."
 }

@@ -3,12 +3,31 @@
   "name": "Tome of Strahd",
   "source": {
     "book": "CoS",
-    "note": "One of the three Tarokka treasures (data/tarokka). Text is ours; its lore pages and what reading it unlocks come with the regions that hide it (Phase 5/6)."
+    "note": "A Tarokka treasure (data/tarokka). Our own words; the history summarised in our own words too."
   },
-  "category": "quest",
+  "category": "wondrous",
   "weight_lb": 5,
   "cost_gp": 0,
   "quest_locked": true,
+  "icon": "tome_of_strahd",
+  "treasure": {
+    "random": false
+  },
+  "powers": [
+    {
+      "id": "read",
+      "name": "Read it through",
+      "cost": "free",
+      "field": true,
+      "combat": false,
+      "custom": "read_tome",
+      "text": "A few hours with the book: its story goes into the codex, and Strahd knows it has been read."
+    }
+  ],
+  "codex": {
+    "title": "The Tome of Strahd",
+    "text": "In his own unwavering hand, Strahd von Zarovich tells it: a conqueror who took the valley by the sword and found that peace bored him; a younger brother, Sergei, who had everything Strahd lacked; a girl named Tatyana who loved the brother and not the lord. Strahd sought youth from the powers below the mountains and paid with his brother's blood on the wedding day. Tatyana fled him to the castle walls and fell to the mists rather than be his. The guards shot him, and he did not die. The book ends on the man telling himself he chose all of it."
+  },
   "summary": "A heavy book bound in black leather and clasped with tarnished silver: the vampire's own account of himself, in his own hand.",
-  "text": "Strahd von Zarovich wrote this history over many years: the wars that won him the valley, the pact he made for youth and for love, the brother he envied and the woman who chose death over him. The handwriting never wavers; the author was very sure of himself. The book holds no enchantment. Its power is what it tells: whoever reads it learns where the vampire came from, what he wanted, and what he lost. Reading it through takes a long rest. Strahd knows when it is opened, and he does not like it."
+  "text": "Strahd von Zarovich wrote this history over many years: the wars that won him the valley, the pact he made for youth and for love, the brother he envied and the woman who chose death over him. The book holds no enchantment. Its power is what it tells: whoever reads it learns where the vampire came from, what he wanted and what he lost. Reading it through takes a few hours, and Strahd knows when it has been opened."
 }
