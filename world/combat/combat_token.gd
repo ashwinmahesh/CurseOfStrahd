@@ -18,7 +18,22 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"victor_vallakovich": 1.15, "lydia_petrovna": 1.18, "vallaki_guard": 1.45, "vistana": 1.22, "milivoj": 1.3, "henrik": 1.22,
 	"gunther_arasek": 1.3, "luvash": 1.38, "arabelle": 0.75, "bluto": 1.22, "kasimir_velikov": 1.32, "stanimir": 1.38,
 	"alenka": 1.25, "mirabel": 1.22, "sorvia": 1.15, "arik": 1.25, "doru": 1.22, "gustav_durst": 1.3, "elisabeth_durst": 1.25,
-	"durst_nursemaid": 1.2, "lorghoth": 1.9, "cult_shades": 1.3}
+	"durst_nursemaid": 1.2, "lorghoth": 1.9, "cult_shades": 1.3,
+	"amber_golem": 2.0, "arcanaloth": 1.35, "baba_lysagas_creeping_hut": 3.0, "banshee": 1.25, "deva": 1.45,
+	"flameskull": 0.6, "flesh_golem": 1.6, "gargoyle": 1.3, "ghost": 1.25, "giant_spider": 1.3,
+	"mongrelfolk": 1.2, "mummy": 1.3, "needle_blight": 1.2, "night_hag": 1.15, "nothic": 1.0, "ogre": 2.1,
+	"phantom_warrior": 1.35, "revenant": 1.3, "roc": 3.0, "scarecrow": 1.35, "swarm_of_bats": 1.0,
+	"swarm_of_insects": 0.6, "swarm_of_ravens": 0.9, "tree_blight": 3.0, "twig_blight": 0.7, "vine_blight": 1.1,
+	"werewolf": 1.45, "wereraven": 1.3, "wight": 1.3, "will_o_wisp": 0.5, "wraith": 1.35, "berserker": 1.3,
+	"raven": 0.35,
+	"air_elemental": 2.0, "ape": 1.2, "axe_beak": 1.7, "baboon": 0.6, "badger": 0.35, "bat": 0.3,
+	"black_bear": 1.0, "boar": 0.8, "brown_bear": 1.4, "djinni": 2.0, "earth_elemental": 2.0, "efreeti": 2.1,
+	"elephant": 2.8, "fire_elemental": 2.0, "giant_badger": 0.7, "giant_boar": 1.3,
+	"giant_constrictor_snake": 1.2, "giant_elk": 2.3, "giant_fly": 1.0, "giant_goat": 1.4, "giant_hyena": 1.2,
+	"giant_owl": 1.6, "giant_rat": 0.5, "giant_weasel": 0.6, "goat": 0.8, "griffon": 1.7, "jackal": 0.55,
+	"lion": 1.1, "mastiff": 0.75, "nightmare": 1.7, "owl": 0.35, "panther": 0.8, "rat": 0.25, "rhinoceros": 1.5,
+	"saber_toothed_tiger": 1.2, "tiger": 1.1, "water_elemental": 2.0, "weasel": 0.25,
+	"mimic": 0.9}
 
 var combatant: Combatant
 var art_override := ""

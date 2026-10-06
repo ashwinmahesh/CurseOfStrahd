@@ -135,9 +135,9 @@ def main():
     a = p.parse_args()
     reg = json.loads(REGISTRY.read_text())
     ids = a.only or sorted(reg)
-    missing = [i for i in ids if i not in reg]
-    if missing:
-        sys.exit(f"not in {REGISTRY.relative_to(ROOT)}: {', '.join(missing)}")
+    for i in [i for i in ids if i not in reg]:
+        print(f"skip {i}: not in {REGISTRY.relative_to(ROOT)} yet", flush=True)
+    ids = [i for i in ids if i in reg]
     flags = walk_flags()
     if a.kind == "walk":
         ids = [i for i in ids if flags.get(i, {}).get("BODY") == "quadruped"]
