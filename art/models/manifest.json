@@ -118,7 +118,7 @@
         "pal_peat",
         "pal_umber"
       ],
-      "triangles": 1208
+      "triangles": 1376
     },
     "table": {
       "file": "art/models/table.glb",
@@ -454,6 +454,401 @@
           ]
         }
       ]
+    },
+    "barrel": {
+      "file": "art/models/barrel.glb",
+      "mount": "free",
+      "stands_for": [
+        "barrel"
+      ],
+      "size": [
+        0.48,
+        0.72,
+        0.49
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_stone_deep",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 768
+    },
+    "crate": {
+      "file": "art/models/crate.glb",
+      "mount": "free",
+      "stands_for": [
+        "crate"
+      ],
+      "size": [
+        0.626,
+        0.6,
+        0.626
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 252
+    },
+    "chest": {
+      "file": "art/models/chest.glb",
+      "mount": "free",
+      "stands_for": [
+        "chest",
+        "chest_back"
+      ],
+      "size": [
+        0.79,
+        0.448,
+        0.532
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 602,
+      "container": true
+    },
+    "chest_iron": {
+      "file": "art/models/chest_iron.glb",
+      "mount": "free",
+      "stands_for": [
+        "chest_iron",
+        "chest_iron_back"
+      ],
+      "size": [
+        0.79,
+        0.448,
+        0.532
+      ],
+      "materials": [
+        "pal_night",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 602,
+      "container": true
+    },
+    "strongbox": {
+      "file": "art/models/strongbox.glb",
+      "mount": "free",
+      "stands_for": [
+        "strongbox",
+        "strongbox_back"
+      ],
+      "size": [
+        0.426,
+        0.375,
+        0.383
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_pewter",
+        "pal_silver",
+        "pal_slate",
+        "pal_stone_deep",
+        "pal_void"
+      ],
+      "triangles": 240,
+      "container": true
+    },
+    "trunk": {
+      "file": "art/models/trunk.glb",
+      "mount": "free",
+      "stands_for": [
+        "trunk",
+        "trunk_back"
+      ],
+      "size": [
+        0.827,
+        0.446,
+        0.47
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_stone",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 1360,
+      "container": true
+    },
+    "footlocker": {
+      "file": "art/models/footlocker.glb",
+      "mount": "free",
+      "stands_for": [
+        "footlocker",
+        "footlocker_back"
+      ],
+      "size": [
+        0.67,
+        0.384,
+        0.429
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 208,
+      "container": true
+    },
+    "bed": {
+      "file": "art/models/bed.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "bed",
+        "bed_back"
+      ],
+      "size": [
+        0.678,
+        0.685,
+        0.978
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_ivory",
+        "pal_umber",
+        "pal_vellum",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 980
+    },
+    "bed_small": {
+      "file": "art/models/bed_small.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "bed_small",
+        "bed_small_back"
+      ],
+      "size": [
+        0.574,
+        0.63,
+        0.974
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_ivory",
+        "pal_slate",
+        "pal_vellum"
+      ],
+      "triangles": 952
+    },
+    "wardrobe": {
+      "file": "art/models/wardrobe.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "wardrobe",
+        "wardrobe_front"
+      ],
+      "size": [
+        1.0,
+        1.48,
+        0.54
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 664
+    },
+    "sideboard": {
+      "file": "art/models/sideboard.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "sideboard",
+        "sideboard_front"
+      ],
+      "size": [
+        0.99,
+        0.853,
+        0.45
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ivory",
+        "pal_peat",
+        "pal_silver",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 870
+    },
+    "shelves": {
+      "file": "art/models/shelves.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "shelves",
+        "shelves_front"
+      ],
+      "size": [
+        0.939,
+        1.3,
+        0.36
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_leather",
+        "pal_moon_blue",
+        "pal_moss",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 2324
+    },
+    "pew": {
+      "file": "art/models/pew.glb",
+      "mount": "free",
+      "stands_for": [
+        "pew",
+        "pew_back"
+      ],
+      "size": [
+        0.98,
+        0.88,
+        0.48
+      ],
+      "materials": [
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 124
+    },
+    "lectern": {
+      "file": "art/models/lectern.glb",
+      "mount": "free",
+      "stands_for": [
+        "lectern",
+        "lectern_back"
+      ],
+      "size": [
+        0.46,
+        0.922,
+        0.387
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_peat",
+        "pal_umber",
+        "pal_vellum"
+      ],
+      "triangles": 360
+    },
+    "table_set": {
+      "file": "art/models/table_set.glb",
+      "mount": "free",
+      "stands_for": [
+        "table_set",
+        "table_set_back"
+      ],
+      "size": [
+        0.98,
+        0.818,
+        0.6
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone",
+        "pal_ivory",
+        "pal_pewter",
+        "pal_silver",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 1378
+    },
+    "letters_table": {
+      "file": "art/models/letters_table.glb",
+      "mount": "free",
+      "stands_for": [
+        "letters_table"
+      ],
+      "size": [
+        0.5,
+        0.628,
+        0.5
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ivory",
+        "pal_plum",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 396
+    },
+    "coffin": {
+      "file": "art/models/coffin.glb",
+      "mount": "free",
+      "stands_for": [
+        "coffin",
+        "coffin_back"
+      ],
+      "size": [
+        0.5,
+        0.582,
+        0.989
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_grave",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 132
+    },
+    "stairs_up_stone": {
+      "file": "art/models/stairs_up_stone.glb",
+      "mount": "stairs_up",
+      "stands_for": [
+        "stair_riser"
+      ],
+      "size": [
+        1.02,
+        1.72,
+        1.028
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_dungeon__stone_floor",
+        "tex_dungeon__stone_wall"
+      ],
+      "triangles": 240
+    },
+    "stairs_down_stone": {
+      "file": "art/models/stairs_down_stone.glb",
+      "mount": "stairs_down",
+      "stands_for": [
+        "stair_down"
+      ],
+      "size": [
+        1.02,
+        1.8,
+        1.029
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "pal_void",
+        "tex_dungeon__stone_floor",
+        "tex_dungeon__stone_wall"
+      ],
+      "triangles": 288
     }
   }
 }
