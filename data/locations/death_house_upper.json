@@ -8,7 +8,7 @@
     "light": "dim",
     "rows": [
       "############################",
-      "#.==.==..#.....####.==..==.#",
+      "#.==.==..#.....####.=...=..#",
       "#........#.....####........#",
       "#........#.....==.#........#",
       "#.................#........#",
@@ -309,6 +309,26 @@
       "kind": "examine",
       "label": "a dumbwaiter door",
       "model": "dumbwaiter"
+    },
+    {
+      "id": "servants_bed_a",
+      "cell": [
+        20,
+        1
+      ],
+      "kind": "decor",
+      "label": "a narrow bed",
+      "model": "bed_small"
+    },
+    {
+      "id": "servants_bed_b",
+      "cell": [
+        24,
+        1
+      ],
+      "kind": "decor",
+      "label": "a narrow bed",
+      "model": "bed_small"
     },
     {
       "id": "harpsichord",
