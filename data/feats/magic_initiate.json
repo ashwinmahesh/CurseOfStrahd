@@ -31,7 +31,9 @@
             "list": "@list",
             "level": 0
           },
-          "replaceable": "level_up"
+          "replaceable": "level_up",
+          "replace_max": 1,
+          "replace_group": "Magic Initiate"
         },
         {
           "id": "spellcasting_ability",
@@ -67,7 +69,9 @@
           "list": "@list",
           "level": 1
         },
-        "replaceable": "level_up"
+        "replaceable": "level_up",
+        "replace_max": 1,
+        "replace_group": "Magic Initiate"
       },
       "modifiers": [
         {

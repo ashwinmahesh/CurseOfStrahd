@@ -152,6 +152,10 @@ static func swap_note(c: Choice) -> String:
 	if not swap_open(c):
 		return ""
 	var noun := _swap_noun(c)
+	if c.replace_group != "":
+		var used := clampi(c.replace_max - c.swap_max + swapped_out(c).size(), 0, c.replace_max)
+		return "%d of your %s spells can change at this level (%d of %d changed)%s." % [c.replace_max, c.replace_group,
+			used, c.replace_max, "" if c.count == 1 else ": unpick one, then pick the new one"]
 	if c.swap_max == 0:
 		return "Pick the new %ss; the others %s." % [noun, _swap_when(c)]
 	if c.count == 1:
@@ -196,6 +200,8 @@ static func _needed_by(c: Choice, id: String) -> String:
 
 static func _swap_rule(c: Choice) -> String:
 	var noun := _swap_noun(c)
+	if c.replace_group != "":
+		return "Only %d of your %s spells can change at a level up" % [c.replace_max, c.replace_group]
 	if c.swap_max == 0:
 		return "Your earlier %ss %s" % [noun, _swap_when(c)]
 	return "Only %d %s%s can change %s" % [c.swap_max, noun, "" if c.swap_max == 1 else "s",
