@@ -70,6 +70,15 @@ cooldown 30
 | A stag's head over the hearth, antlers dusted, glass eyes fixed on the door. The only thing in the den that isn't a wolf.
 | [class:ranger] {name} reads the brass plate under the stag: a date in winter, decades ago. The hunter never shot anything else worth a plate.
 
+~ examine:den_stuffed_wolf_a
+| A stuffed grey wolf, posed mid-stride with its lips curled back. The taxidermist was very good, or the wolf was very angry.
+
+~ examine:den_stuffed_wolf_b
+| A smaller wolf, crouched as if to spring. Its glass eyes are on the door, not on you. You check.
+
+~ examine:den_stuffed_wolf_c
+| A big grey wolf with an old arrow scar on its flank, set by the wall like a dog waiting to be let out.
+
 ~ examine:den_hearth
 | A deep hearth swept clean, a log laid ready. The log is grey with dust.
 
@@ -225,6 +234,9 @@ once
 
 ~ examine:conservatory_glass
 | Stained glass of singers with their mouths open. In this light they could be singing, or screaming.
+
+~ examine:conservatory_harp
+| A standing harp by the hearth, every string still taut. One of them hums when you breathe near it.
 
 ~ trap:rotten_floorboard:found
 | One floorboard in the gallery is dark with rot and bows downward, like a sagging lip.
@@ -554,6 +566,9 @@ cooldown 30
 
 ~ examine:shrine_statue
 | A painted statue of a gaunt man in a black cloak, holding out an orb of smoky crystal.
+
+~ examine:shrine_shackles
+| Skeletons hang in rusty shackles along the wall, wrists over their heads. Behind each one, the soot on the stone is the shape of a person.
 
 ~ examine:chanting_stair
 | Stairs going down into warm dark. The chant comes up them like a tide.

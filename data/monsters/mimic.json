@@ -76,7 +76,7 @@
           "type": "acid"
         },
         {
-          "average": 5,
+          "average": 4,
           "dice": "1d8",
           "type": "piercing",
           "when": "extra, against a target the mimic has Grappled (12 (2d8 + 3) Piercing in all)"
