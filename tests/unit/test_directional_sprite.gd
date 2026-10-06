@@ -58,6 +58,8 @@ func test_every_sprite_attacks_in_every_direction() -> void:
 		assert_true(ResourceLoader.exists("res://art/sprites/%s/attack.tres" % id), id + " has an attack sheet")
 		var frames := DirectionalSprite.frames_for(id)
 		assert_true(DirectionalSprite.has_attack(frames), id + " attack merged into its frames")
+		if not DirectionalSprite.has_attack(frames):
+			continue
 		var hit := int(frames.get_meta("hit_frame", -1))
 		for d in DirectionalSprite.DIRECTIONS:
 			var anim := StringName("attack_" + d)
