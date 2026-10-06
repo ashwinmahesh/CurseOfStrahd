@@ -12,6 +12,8 @@ var rig: CameraRig
 var post: MeshInstance3D
 var tokens: Dictionary = {}
 var view: CombatView
+## The pause menu while it's open (Escape): resume, load a save, or quit to the title. The fight waits meanwhile.
+var screen: PauseMenu = null
 
 
 func _ready() -> void:
@@ -49,7 +51,35 @@ func _ready() -> void:
 	add_child(view)
 	var surprised := EncounterSetup.surprised_ids(Compendium.shared().get_entry("encounters", ENCOUNTER_ID), e)
 	view.begin(e, board, rig, tokens, surprised)
+	view.menu_requested.connect(toggle_menu)
 	rig.snap_to_target()
+
+
+## Escape (nothing selected) opens the pause menu, as in the story game; Escape again closes it.
+func toggle_menu() -> void:
+	if screen != null:
+		close_screen()
+		return
+	screen = PauseMenu.new()
+	screen.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(screen)
+	screen.open(self, GameState.story, 0)
+	get_tree().paused = true
+
+
+## The pause menu calls this to close itself (Resume, Escape).
+func close_screen() -> void:
+	get_tree().paused = false
+	if screen != null:
+		screen.queue_free()
+		screen = null
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Once the fight is over the view no longer takes Escape, so the menu opens from here.
+	if screen == null and view != null and view.mode == CombatView.Mode.OVER and event.is_action_pressed(&"combat_cancel"):
+		get_viewport().set_input_as_handled()
+		toggle_menu()
 
 
 ## Night sky, fog and moonlight for a fight outdoors.
