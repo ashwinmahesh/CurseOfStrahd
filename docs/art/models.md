@@ -19,7 +19,9 @@ looks at the pilot. Everywhere else draws the 2D pieces exactly as before. Rolli
 | desk | desk, desk_front (a container: it dims when emptied) | against the wall |
 | chair_high, armchair, table, table_chairs, candelabra | the 2D piece of the same name | free-standing |
 | settee | settee | against the wall |
-| fireplace | fireplace | on the wall face; its fire is the 2D flame at the model's `flame` socket |
+| fireplace | fireplace (the upper hall) | on the wall face; its fire is the 2D flame at the model's `flame` socket |
+| fireplace_windmill | fireplace_windmill (the library) | the same, near-black stone, and the moonlit windmill painting above it: a carved 3D frame round the canvas cut from the 2D art |
+| fireplace_dancers | fireplace_dancers (the conservatory) | the same, grey marble with an arched firebox; the dancing figurines on the mantel are cut from the 2D art, one sprite each, turning to the camera |
 | stairs_up, stairs_down | stair_riser, stair_down | stairs: the steps start on the side the party walks in from |
 | door_wood | door_wood (leaf only; the frame stays the wall's posts) | door |
 | wainscot | the `interior/wainscot_wall` surface | a module on every open face of a wall painted with it |
@@ -43,13 +45,18 @@ panelling.
 
 ## Look
 
-Every surface is a palette colour with the board's cel shading (`Look.cel`), so the models take the scene's lights
-and shadows in the same two or three tones, and the screen pass outlines them and snaps them to the palette like the
-rest of the world. Material names in Blender say how each surface is drawn: `pal_<colour>`, `glow_<colour>` (flames
+Every surface is a palette colour with the board's cel shading (`Look.cel`), or for big wooden surfaces (table tops,
+the desk top, stair treads, door planks) the repo's own `interior/wood_planks` texture, so the models take the
+scene's lights and shadows in the same two or three tones, and the screen pass outlines them and snaps them to the
+palette like the rest of the world. Where a 2D piece has a detail that is a picture (a painting, figurines), the
+model keeps that part of the 2D art (manifest `decals`: a pixel region of the prop sprite set at a socket). Material names in Blender say how each surface is drawn: `pal_<colour>`, `glow_<colour>` (flames
 and embers, lit from within) or `tex_<theme>__<surface>` (a texture set from art/textures, world-mapped like the
 board). Colours were picked from each 2D prop: the bookcase's umber carcass and books in the reds, browns, blues and
 greens of the painted shelves; the desk's walnut top, plum body and blood-red trim; the red velvet chairs; the stone
 fireplace's greys with violet; the red stair runner with gilt rods.
+
+The panelling takes the painted wainscot's own colours (peat panels, near-black mouldings, an umber chair rail),
+so lamplight shows its depth rather than a new colour.
 
 Sizes are real sizes (a person is 6 ft, 1.2 units): a bookcase 7 ft, a desk top 2.6 ft, a chair seat 1.65 ft with a
 4.75 ft back, stairs 7.5 ft over one square like `world/look/stairs.gd`.
