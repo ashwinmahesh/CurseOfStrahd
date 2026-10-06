@@ -77,6 +77,7 @@
         "spellbook": {"type": "object", "properties": {"start": {"type": "integer"}, "per_level": {"type": "integer"}}, "description": "Wizard: spells in the book at level 1 and added each level."},
         "ritual": {"type": "string", "enum": ["prepared", "spellbook", "none"]},
         "swap_prepared": {"type": "string", "enum": ["long_rest", "level_up"]},
+        "swap_prepared_max": {"type": "integer", "minimum": 1, "description": "How many prepared spells one chance may replace (Paladin and Ranger: 1 per Long Rest). Default: any after a Long Rest, 1 at a level up."},
         "swap_cantrip": {"type": "string", "enum": ["level_up", "long_rest", "none"]}
       }
     },

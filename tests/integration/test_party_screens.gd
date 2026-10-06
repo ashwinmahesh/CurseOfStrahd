@@ -200,6 +200,56 @@ func test_preparing_spells_after_a_long_rest() -> void:
 	assert_eq(rest.find_children("*", "PrepareScreen", true, false).size(), 1)
 
 
+## The Prepare Spells widget for `key` inside the rest screen's open PrepareScreen (opened with its button).
+func _prepare_widget(rest: RestScreen, key: String) -> ChoiceWidget:
+	for ps in rest.find_children("*", "PrepareScreen", true, false):
+		ps.free()
+	var btn := rest.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text == "Change prepared spells")
+	(btn[0] as Button).pressed.emit()
+	await _frames(2)
+	for w in rest.find_children("*", "ChoiceWidget", true, false):
+		if (w as ChoiceWidget).choice.key == key:
+			return w as ChoiceWidget
+	return null
+
+
+func test_a_wizard_swaps_one_cantrip_per_long_rest_even_after_reopening() -> void:
+	var silvain := GameState.story.party[3]
+	var keys: Array = PrepareScreen.preparable(GameState.story).map(func(e: Dictionary) -> String: return (e["choice"] as Choice).key)
+	assert_true("wizard.cantrips" in keys, "a Wizard swaps a cantrip after a Long Rest: %s" % [keys])
+	var earlier := silvain.picks_for("wizard.cantrips")
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	var rest := root.get("screen") as RestScreen
+	rest.call("_long_rest", "safe")
+	await _frames(1)
+	var w := await _prepare_widget(rest, "wizard.cantrips")
+	assert_true(w != null, "the Wizard's cantrips are on the Prepare Spells screen")
+	w.call("_toggle", earlier[0], false)
+	await _frames(2)
+	assert_false(earlier[0] in silvain.picks_for("wizard.cantrips"), "unpicked")
+	w = null
+	for w2 in rest.find_children("*", "ChoiceWidget", true, false):
+		if (w2 as ChoiceWidget).choice.key == "wizard.cantrips" and not (w2 as Node).is_queued_for_deletion():
+			w = w2 as ChoiceWidget
+	var fresh := ""
+	for o in w.choice.options:
+		if o.legal and not o.id in earlier:
+			fresh = o.id
+			break
+	w.call("_toggle", fresh, true)
+	await _frames(2)
+	assert_true(fresh in silvain.picks_for("wizard.cantrips"), "the new cantrip is in")
+	# Done, then the button again: the swap still counts from the list the rest ended with.
+	w = await _prepare_widget(rest, "wizard.cantrips")
+	assert_true(w.choice.option(earlier[1]).locked, "the Long Rest's one cantrip swap is used")
+	assert_true(ChoiceOptions.swap_note(w.choice).contains("1 of 1 replaced"), ChoiceOptions.swap_note(w.choice))
+	# Closing the screen ends the chance: the character's own choice has no limit left on it.
+	for ps in rest.find_children("*", "PrepareScreen", true, false):
+		ps.free()
+	assert_false(ChoiceOptions.swap_open(silvain.choice("wizard.cantrips")), "the swap chance closed with the screen")
+
+
 func test_quicksave_from_the_pause_menu() -> void:
 	# A new game has no slot: the first quicksave makes one, and later ones go over it.
 	SaveSystem.current_slot = ""
