@@ -17,11 +17,15 @@
     "old_bonegrinder_track": "svalich_woods",
     "amber_temple_entrance": "high_snow",
     "death_house_dungeon_1": "death_house_crypt",
-    "death_house_dungeon_2": "death_house_crypt"
+    "death_house_dungeon_2": "death_house_crypt",
+    "castle_ravenloft_spires_roofs": "ravenloft_roofs",
+    "castle_ravenloft_chapel": "ravenloft_chapel"
   },
   "prefixes": {
-    "castle_ravenloft_catacombs": "ravenloft_crypt",
-    "castle_ravenloft_larders": "ravenloft_crypt"
+    "castle_ravenloft_court": "ravenloft_court",
+    "castle_ravenloft_spires": "ravenloft_spires",
+    "castle_ravenloft_larders": "ravenloft_larders",
+    "castle_ravenloft_catacombs": "ravenloft_crypt"
   },
   "regions": {
     "village_of_barovia": "barovia_village",
@@ -960,10 +964,19 @@
     },
     "ravenloft_halls": {
       "like": "indoors",
+      "weather": [
+        {
+          "kind": "dust",
+          "indoors": true,
+          "amount": 50
+        }
+      ],
       "times": {
         "any": {
           "ambient": "bruise_deep",
-          "ambient_energy": 0.7,
+          "ambient_energy": 0.75,
+          "key": "moonlight",
+          "key_energy": 0.3,
           "grade": {
             "shadows": "blood_deep",
             "lights": "flame",
@@ -976,11 +989,13 @@
       "like": "crypt",
       "times": {
         "any": {
-          "ambient": "bruise_deep",
-          "mist": "orchid",
+          "ambient": "night",
+          "ambient_energy": 0.75,
+          "mist": "silver",
+          "mist_strength": 0.5,
           "grade": {
-            "shadows": "blood_deep",
-            "lights": "lilac",
+            "shadows": "night_deep",
+            "lights": "moonlight",
             "amount": 0.35
           }
         }
@@ -1015,6 +1030,112 @@
           }
         }
       }
+    },
+    "ravenloft_chapel": {
+      "like": "chapel",
+      "weather": [
+        {
+          "kind": "dust",
+          "indoors": true,
+          "amount": 70,
+          "core": "bone",
+          "rim": "bone_dark"
+        }
+      ],
+      "times": {
+        "any": {
+          "ambient": "night",
+          "ambient_energy": 0.65,
+          "grade": {
+            "shadows": "night_deep",
+            "lights": "bone",
+            "amount": 0.35
+          }
+        }
+      }
+    },
+    "ravenloft_court": {
+      "like": "indoors",
+      "weather": [
+        {
+          "kind": "dust",
+          "indoors": true,
+          "amount": 40,
+          "core": "rose",
+          "rim": "blood"
+        }
+      ],
+      "times": {
+        "any": {
+          "ambient": "blood_deep",
+          "ambient_energy": 0.8,
+          "key": "moonlight",
+          "key_energy": 0.3,
+          "grade": {
+            "shadows": "blood_deep",
+            "lights": "rose",
+            "amount": 0.35
+          }
+        }
+      }
+    },
+    "ravenloft_spires": {
+      "like": "indoors",
+      "lightning": true,
+      "times": {
+        "any": {
+          "ambient": "night",
+          "ambient_energy": 0.7,
+          "key": "moonlight",
+          "key_energy": 0.55,
+          "grade": {
+            "shadows": "night_deep",
+            "lights": "frost",
+            "amount": 0.4
+          },
+          "saturation": 0.85
+        }
+      }
+    },
+    "ravenloft_larders": {
+      "like": "crypt",
+      "times": {
+        "any": {
+          "ambient": "bog_deep",
+          "ambient_energy": 0.75,
+          "mist": "sickly",
+          "mist_strength": 0.4,
+          "grade": {
+            "shadows": "bog_deep",
+            "lights": "bile",
+            "amount": 0.35
+          }
+        }
+      }
+    },
+    "ravenloft_roofs": {
+      "like": "ravenloft",
+      "mist": {
+        "height": 1.1,
+        "cover": 0.45,
+        "wind": [
+          2.0,
+          0.7
+        ]
+      },
+      "weather": [
+        {
+          "kind": "rain",
+          "amount": 650,
+          "length": 0.75
+        },
+        {
+          "kind": "crows",
+          "amount": 10,
+          "height": 5.5,
+          "radius": 6.0
+        }
+      ]
     }
   }
 }

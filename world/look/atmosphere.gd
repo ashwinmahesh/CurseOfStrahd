@@ -426,7 +426,7 @@ func _process(delta: float) -> void:
 	if _blend < 1.0:
 		_blend = minf(1.0, _blend + delta / TRANSITION)
 		dirty = true
-	if bool(mood.get("lightning", false)) and outdoors:
+	if bool(mood.get("lightning", false)):
 		dirty = _lightning(delta) or dirty
 	if dirty:
 		_apply(smoothstep(0.0, 1.0, _blend))
@@ -450,7 +450,8 @@ func _process(delta: float) -> void:
 	_update_glows()
 
 
-## A storm's lightning: now and then the sky flashes, once or twice, lighting everything cold for an instant.
+## A storm's lightning: now and then the sky flashes, once or twice, lighting everything cold for an instant (indoors,
+## through the windows).
 func _lightning(delta: float) -> bool:
 	var was := _flash
 	_next_flash -= delta

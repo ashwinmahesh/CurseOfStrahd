@@ -43,6 +43,8 @@ static func build(parent: Node, board: ArenaBoard, mood: Dictionary, outdoors: b
 				w._snow(spec)
 			"wisps":
 				w._wisps(spec)
+			"dust":
+				w._dust(spec)
 			"crows":
 				w._crows(spec)
 			"chimney_smoke":
@@ -198,6 +200,31 @@ func _wisps(spec: Dictionary) -> void:
 	p.draw_pass_1 = quad
 	if bool(spec.get("night_only", true)):
 		night_only.append(p)
+
+
+## Dust hanging in the air of a shut-up room, drifting slowly and catching the light.
+func _dust(spec: Dictionary) -> void:
+	var p := _particles("Dust", int(spec.get("amount", 60)), 12.0, Vector3(11, 1.0, 11), 1.4)
+	var pm := p.process_material as ParticleProcessMaterial
+	pm.gravity = Vector3(0, -0.01, 0)
+	pm.initial_velocity_min = 0.02
+	pm.initial_velocity_max = 0.08
+	pm.spread = 180.0
+	pm.turbulence_enabled = true
+	pm.turbulence_noise_strength = 0.3
+	pm.turbulence_noise_scale = 2.0
+	pm.turbulence_influence_min = 0.02
+	pm.turbulence_influence_max = 0.06
+	var size := float(spec.get("size", 0.035))
+	var quad := QuadMesh.new()
+	quad.size = Vector2(size, size)
+	var mat := ShaderMaterial.new()
+	mat.shader = MOTE_SHADER
+	mat.set_shader_parameter("core", Look.color(str(spec.get("core", "parchment"))))
+	mat.set_shader_parameter("rim", Look.color(str(spec.get("rim", "bone"))))
+	mat.set_shader_parameter("pulse", 0.4)
+	quad.material = mat
+	p.draw_pass_1 = quad
 
 
 ## A few crows wheeling high over the place.
