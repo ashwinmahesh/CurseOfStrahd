@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Godot for agent runs that open a window: it never takes focus, stays out of the Dock and opens behind the owner's
+# windows (CLAUDE.md, "Godot windows"). Same arguments as Godot: tools/godot --path . res://scenes/x.tscn
+# Builds tools/macos/nofocus.m into .godot/nofocus/ on first use and loads it into Godot. The owner's own make run
+# and make arena don't use it, so the game still comes to the front for him.
+set -euo pipefail
+root="$(cd "$(dirname "$0")/.." && pwd)"
+godot="${GODOT:-/Applications/Godot.app/Contents/MacOS/Godot}"
+src="$root/tools/macos/nofocus.m"
+lib="$root/.godot/nofocus/nofocus.dylib"
+if [ ! -f "$lib" ] || [ "$src" -nt "$lib" ]; then
+  mkdir -p "$(dirname "$lib")"
+  clang -dynamiclib -arch arm64 -arch x86_64 -fobjc-arc -framework AppKit -framework ApplicationServices \
+    -o "$lib.$$" "$src"
+  mv -f "$lib.$$" "$lib"
+fi
+export DYLD_INSERT_LIBRARIES="$lib" __CFBundleIdentifier=org.godotengine.godot
+exec "$godot" "$@" < /dev/null

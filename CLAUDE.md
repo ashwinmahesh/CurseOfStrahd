@@ -14,9 +14,10 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 ## Godot windows (the owner works on this Mac)
 - Never open a Godot window that can take focus or cover the owner's work. Checks without pixels run headless
   (`make test`, `make smoke` to boot the game or a scene); screenshots only through `make capture`, which draws off
-  screen.
+  screen. Batch screenshots into few runs.
+- Any other Godot run that opens a window goes through `tools/godot` (same arguments as Godot), never the Godot.app
+  path: it loads tools/macos/nofocus.m so Godot can't activate itself (owner decision 2026-10-06).
 - `make run` and `make arena` are for the owner to play: run them only when asked.
-- Any other windowed Godot command: `env __CFBundleIdentifier=org.godotengine.godot <godot> … < /dev/null`.
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.

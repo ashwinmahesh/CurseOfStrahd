@@ -4,10 +4,11 @@ SHELL       := /bin/bash
 GODOT   ?= /Applications/Godot.app/Contents/MacOS/Godot
 BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
 G       := $(GODOT) --path .
-## A Godot window an agent opens never takes focus: started from a tool, Godot forces itself to the front unless the
-## bundle id matches and no standard stream is a terminal (from the owner's terminal it still comes to the front).
+## run and arena: Godot started by a tool skips its extra "unbundled activation hack" when the bundle id matches and no
+## standard stream is a terminal; from the owner's terminal the game still comes to the front.
 NOFOCUS := env __CFBundleIdentifier=org.godotengine.godot $(G)
-UNSEEN  := $(NOFOCUS) --resolution 1x1 --position 100000,100000 --max-fps 60 --audio-driver Dummy
+## Agent runs that open a window go through tools/godot, which keeps Godot from ever taking focus (CLAUDE.md).
+UNSEEN  := GODOT=$(GODOT) tools/godot --path . --resolution 1x1 --position 100000,100000 --max-fps 60 --audio-driver Dummy
 LOGCHK  := tools/logcheck.sh
 STAMP   := .godot/.last_import
 FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./captures -o -path ./builds \) -prune -o \
