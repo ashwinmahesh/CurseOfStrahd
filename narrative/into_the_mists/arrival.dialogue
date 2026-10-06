@@ -17,6 +17,19 @@ interject name:ilse_varga: My company went into a fog like this a year ago. If t
 interject name:tamsin_tealeaf: The lady in my locket called my name the whole way here. I'd like a word with her about directions.
 interject name:hedda_ironvow: I dreamed of a dying sun and a silver raven. Mm. This sky looks like the first half of that dream.
 interject name:silvain_aster: Aurel's last letter came out of a land of mists. Wherever this is, I'll want notes.
+# Each pregen's personal quest starts here (docs/story/personal_quests.md); a custom hero in their place starts none.
+if name:ilse_varga
+quest kestrel_company the_letter
+endif
+if name:tamsin_tealeaf
+quest the_locket the_dreams
+endif
+if name:hedda_ironvow
+quest cold_prayers the_dream
+endif
+if name:silvain_aster
+quest aurels_last_chapter the_letter
+endif
 if not name:ilse_varga
   interject class:fighter: Road goes one way. So do we.
 endif
