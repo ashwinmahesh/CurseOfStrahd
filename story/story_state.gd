@@ -152,6 +152,32 @@ func give_item(item_id: String, qty: int, ch: Character = null) -> void:
 	stash.append({"id": item_id, "qty": qty})
 
 
+## Moves one `item_id` from `ch`'s pack to the party stash (kept at safe places: inns, a home base).
+func stash_put(item_id: String, ch: Character) -> bool:
+	for e in ch.inventory:
+		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+			if str(e.get("slot", "")) != "" and int(e["qty"]) <= 1:
+				ch.unequip(str(e["slot"]))
+			e["qty"] = int(e["qty"]) - 1
+			if int(e["qty"]) <= 0:
+				ch.inventory.erase(e)
+			give_item(item_id, 1)
+			return true
+	return false
+
+
+## Moves one `item_id` from the stash to `ch`.
+func stash_take(item_id: String, ch: Character) -> bool:
+	for e in stash:
+		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+			e["qty"] = int(e["qty"]) - 1
+			if int(e["qty"]) <= 0:
+				stash.erase(e)
+			ch.add_item(item_id, 1)
+			return true
+	return false
+
+
 ## Takes up to `qty` of an item from the party (stash last). Returns how many were taken.
 func take_item(item_id: String, qty: int) -> int:
 	var left := qty
