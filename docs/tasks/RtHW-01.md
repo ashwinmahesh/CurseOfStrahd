@@ -9,10 +9,10 @@ depends_on: []
 Owner decision 2026-10-06: merge what's built and leave the rest as a todo until the book's text is available (the
 owner's D&D Beyond copy or screenshots of the pages; no pirated PDFs).
 
-Built and merged into main (2a595b3c, branch `ravenloft-horrors`): Dhampir, Hexblood, Lupin and Reborn; Sharp Eye and Survivor; the nine
-Ravenloft Dark Gifts (feat category `dark_gift`, any origin feat can be one); College of Spirits, Grave Domain, Hollow
-Warden, Phantom, Shadow Sorcery and Undead Patron with their combat behaviour (combat/ravenloft_features.gd). All of it
-was entered from the 2025 Unearthed Arcana (Horror Subclasses), reviews of the book and Van Richten's Guide to
+Built and merged into main (2a595b3c, branch `ravenloft-horrors`): Dhampir, Hexblood, Lupin and Reborn; Sharp Eye
+and Survivor; the nine Ravenloft Dark Gifts (feat category `dark_gift`, any origin feat can be one); College of
+Spirits, Grave Domain, Hollow Warden, Phantom, Shadow Sorcery and Undead Patron with their combat behaviour
+(combat/ravenloft_features.gd). All of it was entered from the 2025 Unearthed Arcana (Horror Subclasses), reviews of the book and Van Richten's Guide to
 Ravenloft, so every entry has `source.book: RtHW` and no `checked_against` yet.
 
 Still to do:
