@@ -152,6 +152,7 @@ endif
 Baron [smile]: My marshals! You'll come to the Festival of Loyalty, won't you? And the Festival of the Thaw after that? There will be one every week until the sun comes back. Possibly after.
 * How is Lady Wachter? -> after_wachter
 * [if flag.wachter_fate == "stocks"] [Persuasion DC 15] Let Lady Wachter out of the stocks. Exile her instead. -> mercy_ok | mercy_fail
+* [if flag.wachter_fate == "stocks" and gold >= 100] (A hundred gold for the festival fund.) Exile her, and call it the Festival of Mercy. -> mercy_bought
 * Goodbye, Baron. -> bye
 
 ~ after_wachter
@@ -165,6 +166,12 @@ endif
 ~ mercy_ok
 set wachter_fate = "exiled"
 Baron: Oh, very well. Out of the stocks and out of the gate, and her house to the festival fund. You're too soft, marshals. It's very becoming.
+-> after
+
+~ mercy_bought
+gold -100
+set wachter_fate = "exiled"
+Baron [smile]: The Festival of Mercy! Oh, that's good. That's very good. Bunting, a pardon, and a collection plate. Out of the stocks and out of the gate with her, and a speech!
 -> after
 
 ~ mercy_fail

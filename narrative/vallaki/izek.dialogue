@@ -25,8 +25,9 @@ Izek: Not here. Not in front of the town.
 -> END
 
 ~ scare_fail
+attitude izek hostile
 Izek: You think you frighten me? Something took my arm when I was nine and gave me this one. Nothing's frightened me since.
-Narrator: He looks past you, at Ireena, the whole time he's speaking.
+Narrator: He looks past you, at Ireena, the whole time he's speaking. Then, once, at you, the way a man marks a tree he means to come back and cut.
 -> END
 
 ~ name
@@ -41,6 +42,8 @@ if not flag.izek_met
 set izek_met
 Narrator: The Baron's enforcer stands in the square with his arms folded, the scaled one under the ordinary one, watching the town the way a dog watches sheep.
 Izek: Strangers. The Baron says be polite to strangers. I'm being polite.
+elif attitude.izek == hostile
+Izek [angry]: You again. You stood between us in the square. I remember where everyone stands.
 else
 Izek: You again.
 endif
@@ -94,6 +97,11 @@ Narrator: There's something here, a pattern in the woods and the wolves and the 
 Narrator: You tell him: the woods, the wolves, the little sister who was never found. The girl the burgomaster of Barovia took in, wandering, with no memory of where she came from. The red hair. The year.
 * [Persuasion DC 14] Make him hear it. -> truth_ok | truth_fail
 * [if guest:ireena] Let Ireena tell him herself. -> truth_ireena
+* [if not guest:ireena] Don't take our word. Hear it from her. We'll bring her to you. -> truth_later
+
+~ truth_later
+Izek: Bring her, then. If she says it, I'll listen. If you say it again without her, I'll break your jaw.
+-> END
 
 ~ truth_ireena
 Ireena: I don't remember anything before Kolyan's house. Only trees, and being cold, and a boy shouting a name. I always thought the name was mine.
@@ -113,7 +121,11 @@ endif
 -> END
 
 ~ truth_fail
+attitude izek hostile
 Izek [angry]: Liar. You saw the dolls and you made up a story to go with them. Get out of my sight before I forget the Baron likes you.
+if not guest:ireena
+Izek: If it's true, she can tell me herself. Not you. Never you.
+endif
 -> END
 
 ~ at_home

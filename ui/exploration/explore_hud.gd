@@ -12,6 +12,8 @@ signal command(name: String)
 var st: StoryState
 var _party_box: VBoxContainer
 var _where: Label
+## The width of the top-right block the location's name has to fit.
+const WHERE_WIDTH := 346.0
 var _mode: Label
 var _narr: RichTextLabel
 var _narr_time := 0.0
@@ -54,6 +56,8 @@ func build(state: StoryState) -> void:
 	top.offset_left = -360
 	top.offset_right = -14
 	top.offset_top = 12
+	# Anything wider than the block grows it leftward, never off the right edge of the screen.
+	top.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	minimap = Minimap.new()
 	minimap.size_flags_horizontal = Control.SIZE_SHRINK_END
@@ -61,6 +65,8 @@ func build(state: StoryState) -> void:
 	_where = _label("", 24, "gilt_light")
 	_where.add_theme_font_override("font", UiKit.display_font())
 	_where.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_where.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_where.custom_minimum_size = Vector2(WHERE_WIDTH, 0)
 	top.add_child(_where)
 	_mode = _label("", 15, "parchment")
 	_mode.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -248,10 +254,23 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		grow.add_child(gv)
 		_party_box.add_child(gcard)
 	if location_name != "":
-		_where.text = location_name
+		_fit_where(location_name)
 	var hours := st.minute_of_day / 60
 	_mode.text = "Day %d · %02d:%02d%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
 		" · Split party" if solo else "", int(st.gold)]
+
+
+## The location's name at the top right: the book hand at 24 px, smaller for a long name ("The Amber Temple: Hall of
+## the Faceless God"), broken after a colon onto a second line, and wrapped if it still doesn't fit.
+func _fit_where(text: String) -> void:
+	var font := UiKit.display_font()
+	var size := 24
+	while size > 18 and font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x > WHERE_WIDTH:
+		size -= 1
+	if font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x > WHERE_WIDTH and text.contains(": "):
+		text = text.replace(": ", ":\n")
+	_where.add_theme_font_size_override("font_size", size)
+	_where.text = text
 
 
 ## A new location: the minimap and the signs at its ways out.

@@ -165,6 +165,11 @@
       "id": "morgantha_cart_met",
       "type": "bool",
       "summary": "The party met Morgantha with her cart on the miller's lane (road event)."
+    },
+    {
+      "id": "coven_knows_liars",
+      "type": "bool",
+      "summary": "A hag caught the party in a lie (Bella's or Offalia's failed Deception) and told the coven. Morgantha says so, and won't trade the children for the party's word (her Persuasion truce is gone)."
     }
   ]
 }

@@ -61,7 +61,14 @@ endif
 Donavich [afraid]: A madman. A poor soul I shelter, out of charity. He's loud. Please, don't go near the undercroft door.
 * [Insight DC 10] That's no madman, Father, and you know it. -> truth | insight_fail
 * [Persuasion DC 12] We can help. But you have to tell us the truth. -> truth | persuade_fail
+* Then we'll sit with you, Father, until he goes quiet. -> screaming_vigil
 * As you say. -> menu
+
+~ screaming_vigil
+time +120
+Narrator: You sit in the back pews while he prays. The voice below begs, then bargains, then sings a hymn with the words wrong. Near the second hour it stops calling him Father and starts calling him Papa.
+Donavich [sad]: Forgive me. You've sat through it now. There's no use lying to people who've sat through it.
+-> truth
 
 ~ insight_fail
 Narrator: He holds your gaze with the steadiness of a man who has rehearsed this every night. It may even be true; you can't tell.
@@ -127,7 +134,15 @@ Donavich [angry]: No. No! He's my son. You'll not touch him. The bar stays where
 ~ unbar
 Donavich [afraid]: Talk? Oh, he'll talk. He'll talk you all the way to the door and through it. He was always good at talking.
 * [Persuasion DC 12] Only talk. You have our word. -> unbar_ok | unbar_fail
+* Then come down with us, Father, and keep your own hand on the bar. -> unbar_watched
 * Never mind. -> son_menu
+
+~ unbar_watched
+time +60
+Donavich [afraid]: My own hand. Yes. I've held it every night for months, from this side. First let me pray. An hour. Forgive me; I need the hour more than he does.
+Narrator: When the hour is up he lifts the bar, and sits at the head of the stair with it across his knees, lips moving, ready to drop it back.
+set undercroft_unbarred
+-> menu
 
 ~ unbar_ok
 set undercroft_unbarred

@@ -146,9 +146,23 @@ interject class:cleric: Mm.
 -> menu
 
 ~ lie_fail
-Stanimir [angry]: You lie the way I play the flute: loudly and badly. Give it back.
-* Give it back. -> repay
+Stanimir [angry]: You lie the way I play the flute: loudly and badly. Give it back. And ten more, for making me listen to it.
+* [if gold >= 50] Give it back, and the ten. (50 gp) -> repay_liar
+* [if not (gold >= 50)] Give back the forty. It's all we have. -> repay_short
 * Come and take it. -> fight
+
+~ repay_liar
+gold -50
+set vistani_repaid
+Stanimir: Forty for the box, ten for the flute solo. Sit, but sit where I can see your hands. And nobody sings.
+-> menu
+
+~ repay_short
+gold -40
+set vistani_repaid
+attitude stanimir indifferent
+Stanimir: Forty. You owe me ten and a true word, and I will never see either. Sit if you must. The wine is not free tonight.
+-> menu
 
 ~ fight
 Stanimir: As you like. Nobody robs my fire twice.

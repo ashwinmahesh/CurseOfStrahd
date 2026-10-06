@@ -59,6 +59,9 @@ give signal_whistle
 
 ~ laugh_fail
 Blinsky [sad]: That was very brave. It was not funny, but it was brave. Most things here are one or the other.
+Narrator: Piccolo applauds, slowly, then reaches into the nearest purse and takes a coin. Admission, apparently.
+gold -1
+Blinsky [sad]: Piccolo is a critic. He has never once paid to see anything, and he charges for everything. Like all critics.
 -> menu
 
 ~ bye

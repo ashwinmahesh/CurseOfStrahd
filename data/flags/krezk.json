@@ -295,6 +295,11 @@
       "id": "ezmerelda_met",
       "type": "bool",
       "summary": "The party has met Ezmerelda d'Avenir (at the abbey switchback when the Tarokka names her). Van Richten's Tower may read it."
+    },
+    {
+      "id": "krezk_threatened",
+      "type": "bool",
+      "summary": "The party threatened Krezk's wall and was answered with an arrow (gate). Persuasion at the gate is no longer offered, and the watchman and Dmitri remember it."
     }
   ]
 }

@@ -82,13 +82,17 @@ Narrator: His boat is still tied at the foot of the jetty. Nobody will mind now 
 ~ bluto_nets
 Narrator: Bluto stands among his drying racks up to the elbows in a net so full it has split, and silver fish flap all round his feet on the shingle. He is gutting them as fast as he can, and weeping while he does it.
 Bluto: She paid. You see? She paid. A whole year of nothing, and the morning after, this. The lake keeps her bargains.
-* [Insight DC 12] Is he mad, or is he right? -> nets_insight
+* [Insight DC 12] Is he mad, or is he right? -> nets_insight | nets_unread
 * We're taking you to the Vistani camp. Let her father decide what you're owed. -> to_vistani
 * (Draw steel.) You traded a child for a net of fish. -> kill
 * Live with it, Bluto. Every day of your life. -> left
 
 ~ nets_insight
 Narrator: He believes every word. As for the fish: a shoal like this comes in when the water turns cold all at once. It could be the season. It could be anything. The lake isn't telling.
+-> bluto_nets_menu
+
+~ nets_unread
+Narrator: He weeps and guts, weeps and guts. Mad, right, or both: his face won't say, and neither will the lake.
 -> bluto_nets_menu
 
 ~ bluto_nets_menu

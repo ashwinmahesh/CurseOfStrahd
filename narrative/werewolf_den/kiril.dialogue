@@ -72,10 +72,16 @@ Kiril: Now. Get out of my hills, guests, and give the master my regards.
 ~ kids
 Kiril: The pups stay.
 * [Persuasion DC 15] Five half-starved children won't make you an army. They'll make you a headache. -> kids_won | kids_refused
-* [Intimidation DC 15] Look at us, Kiril. Count us. Then count your wolves. -> kids_won | kids_refused
-* [if gold >= 100] (Toss him a purse.) A hundred gold buys a lot of deer. -> kids_bought
-* [if gold < 100] We have nothing to trade. -> kids_refused
+* [Intimidation DC 15] Look at us, Kiril. Count us. Then count your wolves. -> kids_won | kids_counted
+* [if gold >= 100 and not flag.kiril_price_raised] (Toss him a purse.) A hundred gold buys a lot of deer. -> kids_bought
+* [if gold >= 150 and flag.kiril_price_raised] (Toss him a heavier purse.) A hundred and fifty, then. -> kids_bought_dear
+* [if (gold < 100 and not flag.kiril_price_raised) or (gold < 150 and flag.kiril_price_raised)] We have nothing to trade. -> kids_refused
 * Then we'll take them. -> kids_fight
+
+~ kids_counted
+set kiril_price_raised
+Kiril [smile]: I counted. Fewer of you than of us, and I've teeth left over. Now the pups cost a hundred and fifty. Fifty for making me do sums in my own den.
+-> kids
 
 ~ kids_won
 Kiril: ...Ha. You've got some wolf in you. Fine. Take the pups. They whine all night anyway, and the master can wait for his army till next moon.
@@ -86,6 +92,13 @@ gold -100
 set kiril_bribed
 Narrator: Kiril weighs the purse in one big hand, then tosses it to the nearest of his wolves without looking.
 Kiril: A wolf can be bought. A wolf just can't stay bought. Take the pups before I remember I'm hungry.
+-> kids_freed
+
+~ kids_bought_dear
+gold -150
+set kiril_bribed
+Narrator: He weighs the heavier purse, grins, and tosses it over his shoulder to the nearest wolf.
+Kiril: A hundred for the pups, fifty for the arithmetic. Take them before I remember I'm hungry.
 -> kids_freed
 
 ~ kids_freed

@@ -155,13 +155,20 @@ interject name:silvain_aster: I would like it recorded that I am being extremely
 
 ~ ally_refused
 Rictavio: And don't tell me what Eva's cards say. I know what they say. I won't stand beside people who handed a town to him, whatever the cards want.
-* [Persuasion DC 15] We made a bad bargain. Help us make it right. -> ally_won
+* [Persuasion DC 15] We made a bad bargain. Help us make it right. -> ally_won | ally_doubted
 * Then go. -> ally_lost
 
 ~ ally_won
 Rictavio: ...Words are cheap in this valley. Deeds are what I'll watch. I'll come, and I'll be watching.
 join rictavio
 quest find_the_ally found
+-> END
+
+~ ally_doubted
+set rictavio_gone
+set tower_rumor
+Rictavio: A bad bargain, and a pretty speech about it. I've had better speeches from vampires. Much better.
+Rictavio: I'm going home to think: a tower on the little lake under the mountain, west of Zarovich. If you do something worth hearing about, come and tell me there. Bring proof. Not speeches.
 -> END
 
 ~ ally_lost

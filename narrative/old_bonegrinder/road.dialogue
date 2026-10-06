@@ -12,6 +12,8 @@ set bonegrinder_rumor
 Narrator: A handcart comes squeaking round the bend, heaped high under a white cloth, and behind it, pushing, a little old woman in a flour-dusted shawl.
 if flag.morgantha_driven_off
 Morgantha [sly]: Well, well. The brave one from the village square. Morgantha said she'd remember you, duckling. Out here there's nobody to watch you be brave.
+elif flag.morgantha_threatened
+Morgantha [sly]: My plump little hero from the village square! Still shouting at old women? Out here, dearie, there's nobody to hear you do it.
 elif flag.morgantha_met
 Morgantha [smile]: My ducklings from the village, out on Morgantha's lane! She's on her way home to bake. You must visit. Up the hill, past the dead oak. Bring an appetite.
 else
