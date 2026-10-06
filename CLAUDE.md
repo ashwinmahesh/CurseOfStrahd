@@ -36,7 +36,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - Colours only from art/palette/palette.json, plus art/palette/ui_palette.json for menus (via Look) — run
   `make palette` after editing the lists. Menu ornaments and icons: `make ui_art`.
 - Spell and item icons: game-icons.net silhouettes (art/sourced/game_icons, CC BY 3.0) picked per key in
-  art/icons.json and framed by `make icons`; a spell or item's data `icon` names its key, else its id is the key.
+  art/icons.json as `<silhouette>@<tint>` (spells coloured by flavour, items in their natural colours; tints in the
+  same file) and framed by `make icons`; a spell or item's data `icon` names its key, else its id is the key.
   Credit any new artist in art/credits.json (tests/unit/test_icons.gd checks).
 - Images: Gemini (gemini-3.1-flash-image, owner decision 2026-10-06) via tools/art/generate.sh only;
   provider and model pinned in art/manifest.json. Key: GEMINI_API_KEY, sent as a header. Gemini gives opaque

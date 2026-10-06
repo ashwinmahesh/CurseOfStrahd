@@ -1,6 +1,7 @@
 extends TestCase
 ## Spell and item icons (art/icons.json -> make icons -> art/icons/): every spell and item in the data has one, every
-## catalog key is built, magic items fall back to their template's or base item's icon, and every artist is credited.
+## catalog key is built in a defined tint, magic items fall back to their template's or base item's icon, and every
+## artist is credited.
 
 const CATALOG := "res://art/icons.json"
 const FIX := "Add its key to art/icons.json (a game-icons.net silhouette) and run make icons."
@@ -27,6 +28,26 @@ func test_every_catalog_key_is_built() -> void:
 	for kind: String in ["spells", "items"]:
 		for key: String in cat[kind] as Dictionary:
 			assert_true(ResourceLoader.exists("res://art/icons/%s/%s.png" % [kind, key]), "%s/%s isn't built: run make icons" % [kind, key])
+
+
+## Spells take a flavour's colours and items their material's ("<silhouette>@<tint>"): every tint used is defined, in
+## palette colours only.
+func test_every_tint_is_defined_in_palette_colours() -> void:
+	var cat := _catalog()
+	var tints := cat["tints"] as Dictionary
+	var palette := {}
+	for f: String in ["res://art/palette/palette.json", "res://art/palette/ui_palette.json"]:
+		palette.merge(JSON.parse_string(FileAccess.get_file_as_string(f)) as Dictionary)
+	for t: String in tints:
+		var spec := tints[t] as Dictionary
+		var names: Array = (spec["face"] as Array) + (spec.get("bg", []) as Array) + ([spec["glow"]] if spec.has("glow") else [])
+		for n: Variant in names:
+			assert_true(palette.has(str(n)), "tint %s uses %s, which isn't a palette colour" % [t, n])
+	for kind: String in ["spells", "items"]:
+		for key: String in cat[kind] as Dictionary:
+			var entry := str((cat[kind] as Dictionary)[key])
+			if entry.contains("@"):
+				assert_true(tints.has(entry.get_slice("@", 1)), "%s/%s: no tint %s" % [kind, key, entry.get_slice("@", 1)])
 
 
 ## The order agreed with the magic items data: the item's own icon, its template's, its base item's icon, the base id.
