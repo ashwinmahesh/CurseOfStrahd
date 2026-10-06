@@ -543,12 +543,13 @@ func rebuild() -> void:
 
 
 func _quick_save() -> void:
-	var err := SaveSystem.save("quick")
+	var err := SaveSystem.quick_save()
 	hud.toast("Saved." if err == OK else "Can't save now.")
 
 
+## F9: back to the game's own slot as last saved.
 func _quick_load() -> void:
-	if SaveSystem.load_slot("quick") == OK:
+	if SaveSystem.current_slot != "" and SaveSystem.load_slot(SaveSystem.current_slot) == OK:
 		get_tree().reload_current_scene()
 	else:
 		hud.toast("No quick save yet.")
