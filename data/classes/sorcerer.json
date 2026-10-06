@@ -460,6 +460,7 @@
           "id": "metamagic_options",
           "name": "Metamagic",
           "summary": "Learn two more Metamagic options.",
+          "text": "You learn two more Metamagic options, as the Metamagic column of the Sorcerer table shows (four in all).",
           "implemented": "data"
         }
       ]

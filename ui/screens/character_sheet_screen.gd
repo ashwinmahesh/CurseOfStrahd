@@ -16,9 +16,6 @@ const TAB_ICONS := {"Actions": "attack", "Features": "character", "Spells": "spe
 ## Names other screens used for the old tabs.
 const TAB_ALIASES := {"Overview": "Actions", "Abilities & Skills": "Actions", "Features & Traits": "Features",
 	"Inventory": "Equipment", "Active Effects": "Effects"}
-## How a feature is used, as a coloured tag (passive features get none).
-const ACTION_TAGS := {"action": ["Action", "rose"], "bonus_action": ["Bonus Action", "flame"],
-	"reaction": ["Reaction", "lilac"], "free": ["Free", "bile"], "special": ["Special", "moonlight"]}
 const RECHARGE := {"short": ["Short Rest", "moonlight"], "long": ["Long Rest", "gilt"],
 	"short_one": ["Long Rest · 1 back on a Short", "gilt"], "turn": ["Each turn", "bile"]}
 const SCHOOL_COLOURS := {"abjuration": "moonlight", "conjuration": "candle", "divination": "silver",
@@ -96,58 +93,29 @@ func _restore_scroll(v: int) -> void:
 
 
 func _column_rule() -> Control:
-	return SheetParts.drawn(Vector2(2, 0), func(c: Control) -> void:
+	return UiParts.drawn(Vector2(2, 0), func(c: Control) -> void:
 		var gilt := Color(Look.color("gilt_dark"), 0.8)
 		c.draw_line(Vector2(1, 8), Vector2(1, c.size.y - 8), gilt, 1.0)
-		SheetParts.diamond(c, Vector2(1, 4), 3.0, Look.color("gilt"), true)
-		SheetParts.diamond(c, Vector2(1, c.size.y - 4), 3.0, Look.color("gilt"), true))
+		UiParts.diamond(c, Vector2(1, 4), 3.0, Look.color("gilt"), true)
+		UiParts.diamond(c, Vector2(1, c.size.y - 4), 3.0, Look.color("gilt"), true))
 
 
 # --- The party ------------------------------------------------------------------------------------
 
 func _party_strip(ch: Character) -> HBoxContainer:
-	var strip := HBoxContainer.new()
-	strip.add_theme_constant_override("separation", 8)
-	for i in st.party.size():
-		strip.add_child(_chip(i))
+	var strip := UiParts.party_chips(st.party, index, func(i: int) -> void:
+		index = i
+		_draw())
 	if st.can_level_up(ch):
 		var up := UiKit.button("Level up", func() -> void: root.call("open_screen", "level_up", index), 16)
 		up.custom_minimum_size = Vector2(0, 46)
 		up.add_theme_color_override("font_color", Look.color("gilt_light"))
 		strip.add_child(up)
-	var gap := Control.new()
-	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	strip.add_child(gap)
+	strip.add_child(UiParts.gap())
 	var hint := UiKit.label("← →  character   ·   Q  E  tab   ·   hover a number to see where it comes from", 13, "bone")
 	hint.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	strip.add_child(hint)
 	return strip
-
-
-## A party member's chip: their portrait and first name; the open one is lit.
-func _chip(i: int) -> Button:
-	var m := st.party[i]
-	var b := UiKit.button(m.name.get_slice(" ", 0), func() -> void:
-		index = i
-		_draw(), 16)
-	var path := "res://art/portraits/%s.png" % CombatToken.art_for(m)
-	if ResourceLoader.exists(path):
-		b.icon = load(path) as Texture2D
-	b.expand_icon = true
-	b.custom_minimum_size = Vector2(132, 46)
-	b.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	var tint := Look.color("pewter") if m.hp <= 0 else Color.WHITE
-	for k: String in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
-		b.add_theme_color_override(k, tint)
-	if i == index:
-		var on := UiKit.button_style("hover")
-		on.border_color = Look.color("gilt_light")
-		on.set_border_width_all(2)
-		on.border_width_bottom = 3
-		b.add_theme_stylebox_override("normal", on)
-		b.add_theme_color_override("font_color", Look.color("gilt_light"))
-	b.tooltip_text = "%s · %s · %d / %d HP" % [m.name, m.class_summary(), m.hp, m.max_hp()]
-	return b
 
 
 # --- Left: the hero -------------------------------------------------------------------------------
@@ -156,7 +124,7 @@ func _hero(ch: Character) -> VBoxContainer:
 	var col := VBoxContainer.new()
 	col.custom_minimum_size = Vector2(HERO_W, 0)
 	col.add_theme_constant_override("separation", 6)
-	col.add_child(_portrait(ch))
+	col.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 196.0, ch.hp <= 0, ch.dead))
 	var who := UiKit.title(ch.name)
 	who.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(who)
@@ -174,67 +142,32 @@ func _hero(ch: Character) -> VBoxContainer:
 	return col
 
 
-## The portrait in a double gilt frame with lozenges at the corners; greyed when down, faded when dead.
-func _portrait(ch: Character) -> Control:
-	var side := 196.0
-	var holder := Control.new()
-	holder.custom_minimum_size = Vector2(side, side)
-	holder.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var back := ColorRect.new()
-	back.color = Look.color("ui_black")
-	back.position = Vector2(6, 6)
-	back.size = Vector2(side - 12, side - 12)
-	holder.add_child(back)
-	var pic := UiKit.portrait(CombatToken.art_for(ch), side - 12)
-	pic.position = Vector2(6, 6)
-	pic.size = Vector2(side - 12, side - 12)
-	pic.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	if ch.dead:
-		pic.modulate = Color(Look.color("pewter"), 0.45)
-	elif ch.hp <= 0:
-		pic.modulate = Look.color("pewter")
-	holder.add_child(pic)
-	var frame := SheetParts.drawn(Vector2(side, side), func(c: Control) -> void:
-		var r := Rect2(Vector2.ZERO, c.size)
-		c.draw_rect(r.grow(-1), Look.color("gilt"), false, 2.0)
-		c.draw_rect(r.grow(-5), Color(Look.color("gilt_dark"), 0.9), false, 1.0)
-		for p: Vector2 in [Vector2(1, 1), Vector2(c.size.x - 1, 1), Vector2(1, c.size.y - 1), c.size - Vector2(1, 1)]:
-			SheetParts.diamond(c, p, 7.0, Look.color("void"), true)
-			SheetParts.diamond(c, p, 5.0, Look.color("gilt_light"), true))
-	holder.add_child(frame)
-	return holder
-
-
 func _hit_points(ch: Character) -> VBoxContainer:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 3)
 	var head := HBoxContainer.new()
-	head.add_child(SheetParts.label("HIT POINTS", 12, "parchment", SheetParts.caps_font()))
+	head.add_child(UiParts.label("HIT POINTS", 12, "parchment", UiParts.caps_font()))
 	var gap := Control.new()
 	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(gap)
 	if ch.dead:
-		head.add_child(SheetParts.pill("Dead", "vampire_red"))
+		head.add_child(UiParts.pill("Dead", "vampire_red"))
 	elif ch.hp <= 0:
-		head.add_child(SheetParts.pill("Stable" if ch.stable else "Unconscious", "vampire_red"))
+		head.add_child(UiParts.pill("Stable" if ch.stable else "Unconscious", "vampire_red"))
 	elif ch.is_bloodied():
-		head.add_child(SheetParts.pill("Bloodied", "vampire_red"))
+		head.add_child(UiParts.pill("Bloodied", "vampire_red"))
 	if ch.temp_hp > 0:
-		head.add_child(SheetParts.pill("+%d temporary" % ch.temp_hp, "moonlight"))
+		head.add_child(UiParts.pill("+%d temporary" % ch.temp_hp, "moonlight"))
 	box.add_child(head)
-	var text := "%d / %d" % [ch.hp, ch.max_hp()]
-	box.add_child(SheetParts.bar(ch.hp, ch.max_hp(), ch.temp_hp, text, "vampire_red" if ch.is_bloodied() else "crimson",
-		func() -> Control: return SheetParts.breakdown_tip(ch.max_hp_breakdown(), "Hit Point maximum", str(ch.max_hp()),
-			"%d of %d now%s. Bloodied at half or less." % [ch.hp, ch.max_hp(), ", plus %d temporary" % ch.temp_hp if ch.temp_hp > 0 else ""]),
-		HERO_W))
+	box.add_child(UiParts.hp_bar(ch, HERO_W))
 	if ch.dead:
 		box.add_child(UiKit.label("Only magic such as Revivify can bring %s back." % ch.name.get_slice(" ", 0), 13, "rose", HERO_W))
 	elif ch.hp <= 0:
 		var saves := HBoxContainer.new()
 		saves.add_theme_constant_override("separation", 8)
 		saves.add_child(UiKit.label("Death saves", 13, "parchment"))
-		saves.add_child(SheetParts.pips(3, ch.death_successes, "bile"))
-		saves.add_child(SheetParts.pips(3, ch.death_failures, "vampire_red"))
+		saves.add_child(UiParts.pips(3, ch.death_successes, "bile"))
+		saves.add_child(UiParts.pips(3, ch.death_failures, "vampire_red"))
 		box.add_child(saves)
 	return box
 
@@ -244,29 +177,29 @@ func _core_numbers(ch: Character) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 4)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_child(SheetParts.shield(ch.ac_value(), func() -> Control:
-		return SheetParts.breakdown_tip(ch.armor_class(), "Armor Class")))
+	row.add_child(UiParts.shield(ch.ac_value(), func() -> Control:
+		return UiParts.breakdown_tip(ch.armor_class(), "Armor Class")))
 	var init := ch.initiative_bonus()
-	row.add_child(SheetParts.plaque(init.signed(), "Initiative", func() -> Control:
-		return SheetParts.breakdown_tip(init, "Initiative", init.signed())))
+	row.add_child(UiParts.plaque(init.signed(), "Initiative", func() -> Control:
+		return UiParts.breakdown_tip(init, "Initiative", init.signed())))
 	var speed := ch.speed()
-	row.add_child(SheetParts.plaque(str(speed.total()), "Speed", func() -> Control:
+	row.add_child(UiParts.plaque(str(speed.total()), "Speed", func() -> Control:
 		var other: Array[String] = []
 		for kind: String in ["climb", "swim", "fly"]:
 			if ch.speed(kind).total() > 0:
 				other.append("%s %d ft" % [kind.capitalize(), ch.speed(kind).total()])
-		return SheetParts.breakdown_tip(speed, "Speed", "%d ft" % speed.total(), ", ".join(other)), "FEET"))
+		return UiParts.breakdown_tip(speed, "Speed", "%d ft" % speed.total(), ", ".join(other)), "FEET"))
 	var pb := Breakdown.new("Proficiency Bonus")
 	pb.add("Character level %d" % ch.character_level(), ch.proficiency_bonus())
-	row.add_child(SheetParts.plaque(UiKit.signed(ch.proficiency_bonus()), "Proficiency", func() -> Control:
-		return SheetParts.breakdown_tip(pb, "Proficiency Bonus", UiKit.signed(ch.proficiency_bonus()),
+	row.add_child(UiParts.plaque(UiKit.signed(ch.proficiency_bonus()), "Proficiency", func() -> Control:
+		return UiParts.breakdown_tip(pb, "Proficiency Bonus", UiKit.signed(ch.proficiency_bonus()),
 			"Added to attacks, saves and skills you're proficient in, and to your spell save DC.")))
 	return row
 
 
 ## Hit Point Dice, passive scores, senses, size and load as a compact two-column list.
 func _details(ch: Character) -> PanelContainer:
-	var card := SheetParts.card("ui_oxblood", "gilt_dark", 0.45, 8)
+	var card := UiParts.card("ui_oxblood", "gilt_dark", 0.45, 8)
 	var list := VBoxContainer.new()
 	list.add_theme_constant_override("separation", 1)
 	card.add_child(list)
@@ -276,11 +209,11 @@ func _details(ch: Character) -> PanelContainer:
 		var e := hd[d] as Dictionary
 		hd_text.append("%d / %d d%s" % [int(e["total"]) - int(e["spent"]), int(e["total"]), d])
 	list.add_child(_detail("Hit Point Dice", ", ".join(hd_text), func() -> Control:
-		return SheetParts.rules_tip("Hit Point Dice", "Left / total", "On a Short Rest, spend any number: roll each and add your Constitution modifier to heal. A Long Rest restores them all.")))
+		return UiParts.rules_tip("Hit Point Dice", "Left / total", "On a Short Rest, spend any number: roll each and add your Constitution modifier to heal. A Long Rest restores them all.")))
 	for skill: StringName in [&"perception", &"insight", &"investigation"]:
 		var b := ch.passive_score(skill)
 		list.add_child(_detail("Passive " + str(skill).capitalize(), str(b.total()), func() -> Control:
-			return SheetParts.breakdown_tip(b, "Passive " + str(skill).capitalize())))
+			return UiParts.breakdown_tip(b, "Passive " + str(skill).capitalize())))
 	var senses: Array[String] = []
 	if ch.darkvision() > 0:
 		senses.append("Darkvision %d ft" % ch.darkvision())
@@ -291,15 +224,15 @@ func _details(ch: Character) -> PanelContainer:
 	var cap := ch.carrying_capacity()
 	var carried := ch.carried_weight()
 	list.add_child(_detail("Carrying", "%.0f / %d lb" % [carried, cap.total()], func() -> Control:
-		return SheetParts.breakdown_tip(cap, "Carrying capacity", "%d lb" % cap.total(), "Carrying %.1f lb." % carried),
+		return UiParts.breakdown_tip(cap, "Carrying capacity", "%d lb" % cap.total(), "Carrying %.1f lb." % carried),
 		"rose" if carried > cap.total() else "vellum"))
 	list.add_child(_detail("Size", str(ch.size).capitalize(), Callable()))
 	if ch.heroic_inspiration:
 		list.add_child(_detail("Heroic Inspiration", "Ready", func() -> Control:
-			return SheetParts.rules_tip("Heroic Inspiration", "", "Reroll one die right after rolling it and use the new roll. The game offers it after a missed attack."), "gilt_light"))
+			return UiParts.rules_tip("Heroic Inspiration", "", "Reroll one die right after rolling it and use the new roll. The game offers it after a missed attack."), "gilt_light"))
 	if ch.exhaustion > 0:
 		list.add_child(_detail("Exhaustion", "Level %d" % ch.exhaustion, func() -> Control:
-			return SheetParts.rules_tip("Exhaustion %d" % ch.exhaustion, "",
+			return UiParts.rules_tip("Exhaustion %d" % ch.exhaustion, "",
 				str(Compendium.shared().condition_data("exhaustion").get("summary", ""))), "rose"))
 	return card
 
@@ -314,7 +247,7 @@ func _detail(name_text: String, value: String, tip: Callable, colour: String = "
 	row.add_child(v)
 	if not tip.is_valid():
 		return row
-	return SheetParts.tipped(row, tip)
+	return UiParts.tipped(row, tip)
 
 
 # --- Middle: abilities, saves and skills ---------------------------------------------------------
@@ -323,7 +256,7 @@ func _abilities(ch: Character) -> VBoxContainer:
 	var col := VBoxContainer.new()
 	col.custom_minimum_size = Vector2(MID_W, 0)
 	col.add_theme_constant_override("separation", 8)
-	col.add_child(SheetParts.section("Abilities & Saves"))
+	col.add_child(UiParts.section("Abilities & Saves"))
 	var grid := GridContainer.new()
 	grid.columns = 3
 	grid.add_theme_constant_override("h_separation", 24)
@@ -333,8 +266,8 @@ func _abilities(ch: Character) -> VBoxContainer:
 	var centre := CenterContainer.new()
 	centre.add_child(grid)
 	col.add_child(centre)
-	col.add_child(SheetParts.section("Skills"))
-	var card := SheetParts.card("ui_oxblood", "gilt_dark", 0.45, 8)
+	col.add_child(UiParts.section("Skills"))
+	var card := UiParts.card("ui_oxblood", "gilt_dark", 0.45, 8)
 	var cols := HBoxContainer.new()
 	cols.add_theme_constant_override("separation", 18)
 	card.add_child(cols)
@@ -352,13 +285,13 @@ func _abilities(ch: Character) -> VBoxContainer:
 	var legend := HBoxContainer.new()
 	legend.add_theme_constant_override("separation", 6)
 	legend.alignment = BoxContainer.ALIGNMENT_CENTER
-	legend.add_child(SheetParts.mark(1))
+	legend.add_child(UiParts.mark(1))
 	legend.add_child(UiKit.label("Proficient", 12, "parchment"))
 	legend.add_child(Control.new())
-	legend.add_child(SheetParts.mark(2))
+	legend.add_child(UiParts.mark(2))
 	legend.add_child(UiKit.label("Expertise", 12, "parchment"))
 	legend.add_child(Control.new())
-	legend.add_child(SheetParts.mark(0))
+	legend.add_child(UiParts.mark(0))
 	legend.add_child(UiKit.label("Untrained", 12, "parchment"))
 	col.add_child(legend)
 	return col
@@ -368,19 +301,19 @@ func _ability_cell(ch: Character, ab: StringName) -> VBoxContainer:
 	var cell := VBoxContainer.new()
 	cell.add_theme_constant_override("separation", 0)
 	var full := str(Creature.ABILITY_NAMES[ab])
-	cell.add_child(SheetParts.medallion(full, ch.ability_mod(ab), ch.ability_score(ab), func() -> Control:
-		return SheetParts.breakdown_tip(ch.ability_breakdown(ab), full, "%d (%s)" % [ch.ability_score(ab), UiKit.signed(ch.ability_mod(ab))],
+	cell.add_child(UiParts.medallion(full, ch.ability_mod(ab), ch.ability_score(ab), func() -> Control:
+		return UiParts.breakdown_tip(ch.ability_breakdown(ab), full, "%d (%s)" % [ch.ability_score(ab), UiKit.signed(ch.ability_mod(ab))],
 			"Modifier = (score − 10) ÷ 2, rounded down.")))
 	var save := ch.save_bonus(ab)
 	var prof := ch.save_proficiency(ab)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 5)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_child(SheetParts.mark(1 if prof != "" else 0))
+	row.add_child(UiParts.mark(1 if prof != "" else 0))
 	row.add_child(UiKit.label("Save", 13, "gilt" if prof != "" else "parchment"))
-	row.add_child(SheetParts.label(save.signed(), 17, "ivory" if prof != "" else "vellum", SheetParts.figure_font()))
-	cell.add_child(SheetParts.tipped(row, func() -> Control:
-		return SheetParts.breakdown_tip(save, "%s saving throw" % full, save.signed(), ("Proficient from %s." % prof) if prof != "" else "")))
+	row.add_child(UiParts.label(save.signed(), 17, "ivory" if prof != "" else "vellum", UiParts.figure_font()))
+	cell.add_child(UiParts.tipped(row, func() -> Control:
+		return UiParts.breakdown_tip(save, "%s saving throw" % full, save.signed(), ("Proficient from %s." % prof) if prof != "" else "")))
 	return cell
 
 
@@ -391,18 +324,18 @@ func _skill_row(ch: Character, skill: StringName) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
 	row.custom_minimum_size = Vector2(0, 25)
-	row.add_child(SheetParts.mark(rank))
+	row.add_child(UiParts.mark(rank))
 	var n := UiKit.label(nice, 14, "gilt_light" if rank > 0 else "vellum")
 	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(n)
 	row.add_child(UiKit.label(str(Creature.ABILITY_SHORT[Abilities.SKILLS[skill]]), 11, "bone"))
-	var v := SheetParts.label(b.signed(), 16, "ivory" if rank > 0 else "vellum", SheetParts.figure_font())
+	var v := UiParts.label(b.signed(), 16, "ivory" if rank > 0 else "vellum", UiParts.figure_font())
 	v.custom_minimum_size = Vector2(30, 0)
 	v.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	row.add_child(v)
-	return SheetParts.tipped(row, func() -> Control:
+	return UiParts.tipped(row, func() -> Control:
 		var why := "Expertise: twice the Proficiency Bonus." if rank >= 2 else ("Proficient." if rank == 1 else "")
-		return SheetParts.breakdown_tip(b, nice, b.signed(), why))
+		return UiParts.breakdown_tip(b, nice, b.signed(), why))
 
 
 # --- Right: the tabs ------------------------------------------------------------------------------
@@ -411,27 +344,10 @@ func _tab_pane(ch: Character) -> VBoxContainer:
 	var col := VBoxContainer.new()
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	col.add_theme_constant_override("separation", 0)
-	var strip := HBoxContainer.new()
-	strip.add_theme_constant_override("separation", 3)
-	for t in TABS:
-		var b := UiKit.button(t, func() -> void:
-			tab = t
-			_draw(), 15, str(TAB_ICONS.get(t, "")))
-		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		var s := UiKit.button_style("hover" if t == tab else "normal")
-		s.content_margin_left = 8
-		s.content_margin_right = 8
-		if t == tab:
-			s.border_color = Look.color("gilt_light")
-			s.border_width_bottom = 0
-			b.add_theme_color_override("font_color", Look.color("gilt_light"))
-		else:
-			s.bg_color = Color(Look.color("ui_black"), 0.95)
-		b.add_theme_stylebox_override("normal", s)
-		strip.add_child(b)
-	col.add_child(strip)
-	var pane := SheetParts.card("ui_oxblood", "gilt", 0.35, 12)
-	(pane.get_theme_stylebox("panel") as StyleBoxFlat).set_border_width_all(2)
+	col.add_child(UiParts.tab_strip(TABS, tab, func(t: String) -> void:
+		tab = t
+		_draw(), TAB_ICONS))
+	var pane := UiParts.pane()
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	col.add_child(pane)
 	if tab == "Notes":
@@ -463,14 +379,8 @@ func _tab_box() -> VBoxContainer:
 	return box
 
 
-## A row card: content on a faint crimson ground with a fine gilt edge.
 func _row(content: Control, tip: Callable = Callable()) -> Control:
-	var card := SheetParts.card("ui_oxblood", "gilt_dark", 0.55, 7)
-	card.add_child(content)
-	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	if not tip.is_valid():
-		return card
-	return SheetParts.tipped(card, tip)
+	return UiParts.row(content, tip)
 
 
 func _empty(text: String) -> Label:
@@ -479,49 +389,22 @@ func _empty(text: String) -> Label:
 	return l
 
 
-## A smaller button for inside rows, so a row with one is no taller than one without.
-func _small_button(text: String, on_press: Callable, icon_id: String = "") -> Button:
-	var b := UiKit.button(text, on_press, 13, icon_id)
-	_compact(b)
-	return b
-
-
-func _compact(b: Button) -> void:
-	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
-		var st_box := UiKit.button_style(state)
-		st_box.content_margin_top = 3
-		st_box.content_margin_bottom = 3
-		st_box.content_margin_left = 9
-		st_box.content_margin_right = 9
-		b.add_theme_stylebox_override(state, st_box)
-	b.add_theme_font_size_override("font_size", 13)
-	b.add_theme_constant_override("icon_max_width", 16)
-	b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-
-
-func _gap() -> Control:
-	var g := Control.new()
-	g.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	g.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	return g
-
-
 # --- Actions --------------------------------------------------------------------------------------
 
 func _actions(ch: Character) -> VBoxContainer:
 	var box := _tab_box()
-	box.add_child(SheetParts.section("Attacks"))
+	box.add_child(UiParts.section("Attacks"))
 	for a in ch.attacks():
 		box.add_child(_attack_row(a))
 	if not ch.spellcasting.is_empty():
-		box.add_child(SheetParts.section("Spellcasting"))
+		box.add_child(UiParts.section("Spellcasting"))
 		for e in ch.spellcasting:
 			box.add_child(_caster_row(ch, str(e["class_id"])))
 	var slots := _slots_strip(ch)
 	if slots != null:
 		box.add_child(slots)
 	if not ch.resources.is_empty():
-		box.add_child(SheetParts.section("Resources"))
+		box.add_child(UiParts.section("Resources"))
 		for res_id: String in ch.resources:
 			box.add_child(_resource_row(ch, res_id))
 	return box
@@ -534,24 +417,24 @@ func _attack_row(a: WeaponProfile) -> Control:
 	n.custom_minimum_size = Vector2(170, 0)
 	n.clip_text = true
 	row.add_child(n)
-	var hit := SheetParts.label(a.attack.signed(), 20, "gilt_light", SheetParts.figure_font())
+	var hit := UiParts.label(a.attack.signed(), 20, "gilt_light", UiParts.figure_font())
 	hit.custom_minimum_size = Vector2(38, 0)
 	hit.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	row.add_child(hit)
 	row.add_child(UiKit.label("to hit", 12, "parchment"))
-	var dmg := SheetParts.label(_damage_text(a), 18, "ivory", SheetParts.figure_font())
+	var dmg := UiParts.label(_damage_text(a), 18, "ivory", UiParts.figure_font())
 	dmg.custom_minimum_size = Vector2(70, 0)
 	dmg.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	row.add_child(dmg)
 	row.add_child(UiKit.label(str(a.damage_type).capitalize(), 13, "parchment"))
-	row.add_child(_gap())
+	row.add_child(UiParts.gap())
 	row.add_child(UiKit.label(_reach_text(a), 12, "bone"))
 	if a.mastery != "":
-		row.add_child(SheetParts.pill(a.mastery.capitalize(), "moonlight"))
+		row.add_child(UiParts.pill(a.mastery.capitalize(), "moonlight"))
 	return _row(row, func() -> Control:
 		var box := VBoxContainer.new()
-		box.add_child(SheetParts.breakdown_tip(a.attack, a.name, "%s to hit" % a.attack.signed()))
-		box.add_child(SheetParts.breakdown_tip(a.damage_bonus, "Damage", "%s %s" % [_damage_text(a), str(a.damage_type).capitalize()],
+		box.add_child(UiParts.breakdown_tip(a.attack, a.name, "%s to hit" % a.attack.signed()))
+		box.add_child(UiParts.breakdown_tip(a.damage_bonus, "Damage", "%s %s" % [_damage_text(a), str(a.damage_type).capitalize()],
 			"Dice: %s" % a.damage_dice))
 		var extra: Array[String] = []
 		if not a.properties.is_empty():
@@ -563,7 +446,7 @@ func _attack_row(a: WeaponProfile) -> Control:
 		if not a.proficient:
 			extra.append("Not proficient: no Proficiency Bonus on the attack.")
 		if not extra.is_empty():
-			box.add_child(SheetParts.wrapped("\n".join(extra), 13, "moonlight", SheetParts.TIP_WIDTH))
+			box.add_child(UiParts.wrapped("\n".join(extra), 13, "moonlight", UiParts.TIP_WIDTH))
 		return box)
 
 
@@ -592,11 +475,11 @@ func _caster_row(ch: Character, class_id: String) -> Control:
 	who.add_child(UiKit.label("casts with %s" % Creature.ABILITY_NAMES[ab], 12, "parchment"))
 	who.custom_minimum_size = Vector2(170, 0)
 	row.add_child(who)
-	row.add_child(_gap())
+	row.add_child(UiParts.gap())
 	var dc := ch.spell_save_dc(class_id)
 	var atk := ch.spell_attack_bonus(class_id)
-	row.add_child(_figure_pair("Save DC", str(dc.total()), func() -> Control: return SheetParts.breakdown_tip(dc, "Spell save DC")))
-	row.add_child(_figure_pair("Spell attack", atk.signed(), func() -> Control: return SheetParts.breakdown_tip(atk, "Spell attack", atk.signed())))
+	row.add_child(_figure_pair("Save DC", str(dc.total()), func() -> Control: return UiParts.breakdown_tip(dc, "Spell save DC")))
+	row.add_child(_figure_pair("Spell attack", atk.signed(), func() -> Control: return UiParts.breakdown_tip(atk, "Spell attack", atk.signed())))
 	return _row(row)
 
 
@@ -604,8 +487,8 @@ func _figure_pair(caption: String, value: String, tip: Callable) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
 	row.add_child(UiKit.label(caption, 13, "parchment"))
-	row.add_child(SheetParts.label(value, 20, "gilt_light", SheetParts.figure_font()))
-	var t := SheetParts.tipped(row, tip)
+	row.add_child(UiParts.label(value, 20, "gilt_light", UiParts.figure_font()))
+	var t := UiParts.tipped(row, tip)
 	t.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	return t
 
@@ -623,9 +506,9 @@ func _slots_strip(ch: Character) -> Control:
 		var lvl := i + 1
 		var chip := HBoxContainer.new()
 		chip.add_theme_constant_override("separation", 6)
-		chip.add_child(SheetParts.label(ActionCatalog._ordinal(lvl), 12, "parchment", SheetParts.caps_font()))
-		chip.add_child(SheetParts.pips(slots[i], ch.slots_left(lvl), "moonlight"))
-		flow.add_child(SheetParts.tipped(chip, func() -> Control:
+		chip.add_child(UiParts.label(ActionCatalog._ordinal(lvl), 12, "parchment", UiParts.caps_font()))
+		chip.add_child(UiParts.pips(slots[i], ch.slots_left(lvl), "moonlight"))
+		flow.add_child(UiParts.tipped(chip, func() -> Control:
 			var pact_here := int(pact["count"]) if int(pact["level"]) == lvl else 0
 			var body := "A slot of this level casts a spell of this level or lower."
 			var note := ""
@@ -635,7 +518,7 @@ func _slots_strip(ch: Character) -> Control:
 				body += " They come back on a Long Rest."
 				if pact_here > 0:
 					note = "Includes %d Pact Magic slot%s, which come back on a Short Rest too." % [pact_here, "" if pact_here == 1 else "s"]
-			return SheetParts.rules_tip("Level %d spell slots" % lvl, "%d of %d left" % [ch.slots_left(lvl), slots[i]], body, [], note)))
+			return UiParts.rules_tip("Level %d spell slots" % lvl, "%d of %d left" % [ch.slots_left(lvl), slots[i]], body, [], note)))
 	if flow.get_child_count() == 0:
 		flow.free()
 		return null
@@ -655,12 +538,12 @@ func _resource_row(ch: Character, res_id: String) -> Control:
 	var n := UiKit.label(str(r["name"]), 16, "vellum" if left > 0 else "bone")
 	n.custom_minimum_size = Vector2(190, 0)
 	row.add_child(n)
-	row.add_child(SheetParts.pips(total, left))
-	row.add_child(_gap())
+	row.add_child(UiParts.pips(total, left))
+	row.add_child(UiParts.gap())
 	if res_id.begins_with("spell:"):
-		row.add_child(SheetParts.pill("Free cast", "lilac"))
+		row.add_child(UiParts.pill("Free cast", "lilac"))
 	var rc := RECHARGE.get(str(r["recharge"]), [str(r["recharge"]).capitalize(), "gilt"]) as Array
-	row.add_child(SheetParts.pill(str(rc[0]), str(rc[1])))
+	row.add_child(UiParts.pill(str(rc[0]), str(rc[1])))
 	return _row(row, func() -> Control:
 		var body := ""
 		if res_id.begins_with("spell:"):
@@ -670,7 +553,7 @@ func _resource_row(ch: Character, res_id: String) -> Control:
 				if str(f["name"]) == str(r["name"]) or str(f["id"]) == res_id:
 					body = str(f["text"]) if str(f["text"]) != "" else str(f["summary"])
 					break
-		return SheetParts.rules_tip(str(r["name"]), "From %s" % r["source"], body,
+		return UiParts.rules_tip(str(r["name"]), "From %s" % r["source"], body,
 			[["Uses", "%d of %d left" % [left, total]], ["Comes back", str(rc[0])]]))
 
 
@@ -711,36 +594,16 @@ func _features(ch: Character) -> VBoxContainer:
 	for key in order:
 		if not groups.has(key):
 			continue
-		box.add_child(SheetParts.section(str(titles.get(key, "Other"))))
+		box.add_child(UiParts.section(str(titles.get(key, "Other"))))
 		for f: Variant in groups[key]:
 			box.add_child(_feature_row(f as Dictionary))
-	box.add_child(SheetParts.section("Training & Languages"))
+	box.add_child(UiParts.section("Training & Languages"))
 	box.add_child(_training(ch))
 	return box
 
 
 func _feature_row(f: Dictionary) -> Control:
-	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 2)
-	var head := HBoxContainer.new()
-	head.add_theme_constant_override("separation", 8)
-	var n := UiKit.label(str(f["name"]), 16, "gilt_light")
-	head.add_child(n)
-	var tag := ACTION_TAGS.get(str(f["action"]), []) as Array
-	if not tag.is_empty():
-		head.add_child(SheetParts.pill(str(tag[0]), str(tag[1])))
-	if str(f["implemented"]) == "text":
-		head.add_child(SheetParts.pill("Rules text only", "bone"))
-	head.add_child(_gap())
-	head.add_child(UiKit.label(_feature_source(f), 12, "bone"))
-	col.add_child(head)
-	var summary := str(f["summary"])
-	if summary != "":
-		col.add_child(UiKit.label(summary, 14, "vellum", PANE_W - 20.0))
-	var text := str(f["text"]) if str(f["text"]) != "" else summary
-	return _row(col, func() -> Control:
-		return SheetParts.rules_tip(str(f["name"]), str(f["source"]), text, [],
-			"Rules text only for now: the game doesn't apply this one for you yet." if str(f["implemented"]) == "text" else ""))
+	return UiParts.feature_row(f, _feature_source(f), PANE_W)
 
 
 ## "Level 3", "Life Domain 3", or the feat's name ("Magic Initiate").
@@ -776,7 +639,7 @@ func _training(ch: Character) -> Control:
 			names.append(_nice(str(id)))
 		if names.is_empty() and str(pair[0]) == "Weapon Mastery":
 			continue
-		var cap := SheetParts.label(str(pair[0]).to_upper(), 11, "parchment", SheetParts.caps_font())
+		var cap := UiParts.label(str(pair[0]).to_upper(), 11, "parchment", UiParts.caps_font())
 		cap.custom_minimum_size = Vector2(120, 0)
 		grid.add_child(cap)
 		grid.add_child(UiKit.label(", ".join(names) if not names.is_empty() else "—", 14, "vellum", PANE_W - 160.0))
@@ -831,8 +694,8 @@ func _spells(ch: Character) -> VBoxContainer:
 	for lvl: int in levels:
 		var right: Control = null
 		if lvl > 0 and lvl <= slots.size() and slots[lvl - 1] > 0:
-			right = SheetParts.pips(slots[lvl - 1], ch.slots_left(lvl), "moonlight")
-		box.add_child(SheetParts.section("Cantrips" if lvl == 0 else "Level %d" % lvl, right))
+			right = UiParts.pips(slots[lvl - 1], ch.slots_left(lvl), "moonlight")
+		box.add_child(UiParts.section("Cantrips" if lvl == 0 else "Level %d" % lvl, right))
 		var list := by_level[lvl] as Array
 		list.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 			return str((a["s"] as Dictionary).get("name", "")) < str((b["s"] as Dictionary).get("name", "")))
@@ -848,8 +711,11 @@ func _spell_row(ch: Character, k: Dictionary, s: Dictionary, cast: Dictionary, u
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
 	var school := str(s.get("school", ""))
-	row.add_child(SheetParts.drawn(Vector2(10, 22), func(c: Control) -> void:
-		SheetParts.diamond(c, Vector2(5, 12), 5.0, Look.color(str(SCHOOL_COLOURS.get(school, "parchment"))), true)))
+	if UiParts.has_icons():
+		UiParts.add_icon(row, "spell", id, 36.0)
+	else:
+		row.add_child(UiParts.drawn(Vector2(10, 22), func(c: Control) -> void:
+			UiParts.diamond(c, Vector2(5, 12), 5.0, Look.color(str(SCHOOL_COLOURS.get(school, "parchment"))), true)))
 	var left := VBoxContainer.new()
 	left.add_theme_constant_override("separation", 0)
 	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -858,19 +724,19 @@ func _spell_row(ch: Character, k: Dictionary, s: Dictionary, cast: Dictionary, u
 	head.add_child(UiKit.label(str(s.get("name", id)), 16, "vellum"))
 	var how := str(k["kind"])
 	if how == "always":
-		head.add_child(SheetParts.pill("Always prepared", "gilt"))
+		head.add_child(UiParts.pill("Always prepared", "gilt"))
 	elif how in ["granted", "bonus"]:
-		head.add_child(SheetParts.pill(str(k["source"]), "lilac"))
+		head.add_child(UiParts.pill(str(k["source"]), "lilac"))
 	var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 	if unit in ["bonus_action", "reaction"]:
-		var tag := ACTION_TAGS[unit] as Array
-		head.add_child(SheetParts.pill(str(tag[0]), str(tag[1])))
+		var tag := UiParts.ACTION_TAGS[unit] as Array
+		head.add_child(UiParts.pill(str(tag[0]), str(tag[1])))
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
-		head.add_child(SheetParts.pill("Conc.", "moonlight"))
+		head.add_child(UiParts.pill("Conc.", "moonlight"))
 	if bool(s.get("ritual", false)):
-		head.add_child(SheetParts.pill("Ritual", "bile"))
+		head.add_child(UiParts.pill("Ritual", "bile"))
 	if st.spell_active(id):
-		head.add_child(SheetParts.pill("Active", "bile"))
+		head.add_child(UiParts.pill("Active", "bile"))
 	left.add_child(head)
 	left.add_child(UiKit.label(_spell_facts(ch, k, s), 13, "parchment"))
 	row.add_child(left)
@@ -937,7 +803,7 @@ func _spell_tip(ch: Character, k: Dictionary, s: Dictionary) -> Control:
 		foot += ": cast it %d time%s without a slot per %s." % [int(k["uses"]), "" if int(k["uses"]) == 1 else "s",
 			"Short or Long Rest" if str(k["recharge"]) == "short" else "Long Rest"]
 	var text := str(s.get("text", "")) if str(s.get("text", "")) != "" else str(s.get("summary", ""))
-	return SheetParts.rules_tip(str(s.get("name", k["id"])), ("%s cantrip" % school) if lvl == 0 else "Level %d %s" % [lvl, school],
+	return UiParts.rules_tip(str(s.get("name", k["id"])), ("%s cantrip" % school) if lvl == 0 else "Level %d %s" % [lvl, school],
 		text, facts, foot)
 
 
@@ -1012,7 +878,7 @@ func _duration(s: Dictionary) -> String:
 func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 	var id := str(o["id"])
 	if not bool(o["legal"]):
-		var no := _small_button("Cast", func() -> void: pass, "spells")
+		var no := UiParts.small_button("Cast", func() -> void: pass, "spells")
 		no.disabled = true
 		no.tooltip_text = str(o["reason"])
 		row.add_child(no)
@@ -1023,17 +889,17 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 		pick.add_item("free", lvl)
 	for sl: int in o["slots"] as Array:
 		pick.add_item(ActionCatalog._ordinal(sl) + " slot", sl)
-	_compact(pick)
+	UiParts.compact(pick)
 	pick.visible = pick.item_count > 1
 	row.add_child(pick)
 	if bool(o["self_only"]):
-		row.add_child(_small_button("Cast", func() -> void: _do_cast(ch, id, pick, [ch]), "spells"))
+		row.add_child(UiParts.small_button("Cast", func() -> void: _do_cast(ch, id, pick, [ch]), "spells"))
 		return
 	var menu := MenuButton.new()
 	menu.text = "Cast on…"
 	menu.flat = false
 	UiKit.button_look(menu)
-	_compact(menu)
+	UiParts.compact(menu)
 	menu.icon = UiKit.icon("spells")
 	var popup := menu.get_popup()
 	for i in st.party.size():
@@ -1057,12 +923,12 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 ## Exploring spells (Light, Detect Magic, Find Traps ...): Cast, or as a Ritual.
 func _utility_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 	var id := str(o["id"])
-	var cast := _small_button("Cast", func() -> void: _do_utility(ch, id, false), "spells")
+	var cast := UiParts.small_button("Cast", func() -> void: _do_utility(ch, id, false), "spells")
 	cast.disabled = not bool(o["legal"])
 	cast.tooltip_text = str(o["reason"])
 	row.add_child(cast)
 	if bool(o["ritual"]):
-		var rit := _small_button("Ritual", func() -> void: _do_utility(ch, id, true))
+		var rit := UiParts.small_button("Ritual", func() -> void: _do_utility(ch, id, true))
 		rit.tooltip_text = "As a Ritual: 10 more minutes, no slot"
 		row.add_child(rit)
 
@@ -1089,19 +955,19 @@ func _do_cast(ch: Character, spell_id: String, pick: OptionButton, targets: Arra
 
 func _equipment(ch: Character) -> VBoxContainer:
 	var box := _tab_box()
-	box.add_child(SheetParts.section("Worn and wielded"))
+	box.add_child(UiParts.section("Worn and wielded"))
 	var slots := HBoxContainer.new()
 	slots.add_theme_constant_override("separation", 8)
 	for slot in Character.EQUIP_SLOTS:
 		slots.add_child(_slot_card(ch, slot))
 	box.add_child(slots)
-	box.add_child(SheetParts.section("Attunement", SheetParts.pips(Character.MAX_ATTUNED, ch.attuned.size(), "lilac")))
+	box.add_child(UiParts.section("Attunement", UiParts.pips(Character.MAX_ATTUNED, ch.attuned.size(), "lilac")))
 	if ch.attuned.is_empty():
 		box.add_child(UiKit.label("No attuned magic items (%d at most; attuning takes a Short Rest)." % Character.MAX_ATTUNED, 14, "bone", PANE_W))
 	for item_id in ch.attuned:
 		var data := Compendium.shared().item_data(item_id)
 		box.add_child(_row(UiKit.label(str(data.get("name", item_id)), 15, "lilac"), _item_tip(data)))
-	box.add_child(SheetParts.section("Pack"))
+	box.add_child(UiParts.section("Pack"))
 	var flow := HFlowContainer.new()
 	flow.add_theme_constant_override("h_separation", 6)
 	flow.add_theme_constant_override("v_separation", 6)
@@ -1110,21 +976,25 @@ func _equipment(ch: Character) -> VBoxContainer:
 			continue
 		var data := Compendium.shared().item_data(str(e["id"]))
 		var text := str(data.get("name", e["id"])) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else "")
-		var chip := SheetParts.card("ui_black", "gilt_dark", 0.8, 5)
-		chip.add_child(UiKit.label(text, 14, "vellum"))
+		var chip := UiParts.card("ui_black", "gilt_dark", 0.8, 5)
+		var chip_row := HBoxContainer.new()
+		chip_row.add_theme_constant_override("separation", 6)
+		UiParts.add_icon(chip_row, "item", str(e["id"]), 24.0)
+		chip_row.add_child(UiKit.label(text, 14, "vellum"))
+		chip.add_child(chip_row)
 		chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		flow.add_child(SheetParts.tipped(chip, _item_tip(data)))
+		flow.add_child(UiParts.tipped(chip, _item_tip(data)))
 	if flow.get_child_count() == 0:
 		flow.add_child(UiKit.label("Nothing else carried.", 14, "bone"))
 	box.add_child(flow)
-	box.add_child(SheetParts.section("Load"))
+	box.add_child(UiParts.section("Load"))
 	var cap := ch.carrying_capacity()
 	var carried := ch.carried_weight()
 	var load := HBoxContainer.new()
 	load.add_theme_constant_override("separation", 12)
-	load.add_child(SheetParts.bar(carried, cap.total(), 0.0, "%.0f / %d lb" % [carried, cap.total()],
+	load.add_child(UiParts.bar(carried, cap.total(), 0.0, "%.0f / %d lb" % [carried, cap.total()],
 		"vampire_red" if carried > cap.total() else "gilt_dark", func() -> Control:
-			return SheetParts.breakdown_tip(cap, "Carrying capacity", "%d lb" % cap.total(), "Carrying %.1f lb." % carried), 300.0))
+			return UiParts.breakdown_tip(cap, "Carrying capacity", "%d lb" % cap.total(), "Carrying %.1f lb." % carried), 300.0))
 	load.add_child(UiKit.label("Party purse: %d gp" % int(st.gold), 15, "gilt_light"))
 	box.add_child(load)
 	var open := UiKit.button("Open inventory", func() -> void: root.call("open_screen", "inventory", index), 15, "inventory")
@@ -1137,20 +1007,20 @@ func _slot_card(ch: Character, slot: String) -> Control:
 	var item := ch.equipped(slot)
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 1)
-	col.add_child(SheetParts.label(slot.replace("_", " ").to_upper(), 11, "parchment", SheetParts.caps_font()))
+	col.add_child(UiParts.label(slot.replace("_", " ").to_upper(), 11, "parchment", UiParts.caps_font()))
 	if item.is_empty():
 		col.add_child(UiKit.label("Empty", 15, "bone"))
 	else:
 		col.add_child(UiKit.label(str(item.get("name", "")), 15, "vellum", 160.0))
 		col.add_child(UiKit.label(_item_stat(ch, item), 14, "gilt_light"))
-	var card := SheetParts.card("ui_oxblood", "gilt_dark", 0.55, 8)
+	var card := UiParts.card("ui_oxblood", "gilt_dark", 0.55, 8)
 	card.custom_minimum_size = Vector2(0, 84)
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.add_child(col)
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if item.is_empty():
 		return card
-	var t := SheetParts.tipped(card, _item_tip(item))
+	var t := UiParts.tipped(card, _item_tip(item))
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	return t
 
@@ -1175,7 +1045,7 @@ func _item_tip(data: Dictionary) -> Callable:
 		if not magic.is_empty():
 			sub = "%s magic item" % str(magic.get("rarity", "")).replace("_", " ").capitalize()
 		var body := str(data.get("text", "")) if str(data.get("text", "")) != "" else str(data.get("summary", ""))
-		return SheetParts.rules_tip(str(data.get("name", "")), sub, body,
+		return UiParts.rules_tip(str(data.get("name", "")), sub, body,
 			[["Weight", "%s lb" % str(data.get("weight_lb", 0))], ["Value", "%s gp" % str(data.get("cost_gp", 0))]])
 
 
@@ -1284,7 +1154,7 @@ func _effect_row(title_text: String, summary: String, source: String, duration: 
 	row.add_child(right)
 	if text == "":
 		return _row(row)
-	return _row(row, func() -> Control: return SheetParts.rules_tip(title_text, source, text))
+	return _row(row, func() -> Control: return UiParts.rules_tip(title_text, source, text))
 
 
 # --- Notes ----------------------------------------------------------------------------------------

@@ -114,6 +114,70 @@
       "class": "fighter",
       "hp": 0,
       "choices": {}
+    },
+    {
+      "level": 6,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {
+        "fighter.6.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "fighter.6.ability_score_improvement/ability_score_improvement.abilities": [
+          "str",
+          "con"
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {
+        "champion.7.additional_fighting_style": [
+          "great_weapon_fighting"
+        ]
+      }
+    },
+    {
+      "level": 8,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {
+        "fighter.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "fighter.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "con",
+          "wis"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 10,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {
+        "fighter.1.weapon_mastery": [
+          "greatsword",
+          "flail",
+          "javelin",
+          "spear",
+          "longsword"
+        ]
+      }
+    },
+    {
+      "level": 11,
+      "class": "fighter",
+      "hp": 0,
+      "choices": {}
     }
   ]
 }

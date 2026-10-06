@@ -1,0 +1,42 @@
+{
+  "id": "gift_of_sykane",
+  "name": "The Hollow Belly",
+  "vestige": "Sykane, the hollow belly",
+  "summary": "Vampiric Touch a few times a day, and resistance to necrotic damage. The price: 1 fewer Hit Point per level, and you can't spend Hit Dice on a day you haven't fed.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "spell",
+        "value": "vampiric_touch",
+        "ability": "cha",
+        "uses": {
+          "count": "pb",
+          "recharge": "long"
+        }
+      },
+      {
+        "stat": "resistance",
+        "value": "necrotic"
+      }
+    ],
+    "spells": [
+      "vampiric_touch"
+    ],
+    "text": "Your hand can drink. Life runs up your arm like warm wine, and whatever is killing you finds less to work with."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "hp_max",
+        "value": "-level"
+      }
+    ],
+    "flaw": "You are always hungry, and bread doesn't help.",
+    "text": "The emptiness in you is real. You cannot spend Hit Dice to heal during a Short Rest on a day when you haven't drained a living creature."
+  },
+  "implemented": "partial: the Hit Dice restriction is text only (no rest conditions yet)."
+}

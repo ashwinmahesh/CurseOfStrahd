@@ -1,0 +1,20 @@
+{
+  "id": "phantom_warden",
+  "name": "Phantom Warden",
+  "title": "Ghost of the Gate",
+  "summary": "The ghost of the man-at-arms who kept Argynvostholt's gate the night it fell, standing guard now in the mausoleum doorway.",
+  "portrait": "phantom_warden",
+  "sprite": "phantom_warden",
+  "attitude": "indifferent",
+  "voice": "docs/voice/phantom_warden.md",
+  "monster": "phantom_warrior",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "phantom_warrior",
+    "order_of_the_silver_dragon",
+    "argynvostholt"
+  ],
+  "region": "argynvostholt",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "wolves_in_the_hills",
+  "name": "The Pack in the Hills",
+  "summary": "A pack of werewolves dens in the hills above Lake Zarovich. Its leader serves the castle, and its old leader hangs in chains for refusing to.",
+  "giver": "zuleika_toranescu",
+  "region": "werewolf_den",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Werewolves den in the hills above Lake Zarovich, and lately they have been carrying off children from the farms below Krezk.",
+      "objectives": [
+        "Find the den in the hills above the lake"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "At the den's mouth, a werewolf named Zuleika asked us to free her mate Emil, the pack's old leader, whom Kiril Stoyanovich hung in silver chains for refusing to steal children. Kiril and his favourites are out on the Krezk road.",
+      "objectives": [
+        "Free Emil from his chains in the den"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "emil_freed",
+      "journal": "We freed Emil. By the old law he howled his challenge, and Kiril is coming home to answer it.",
+      "objectives": [
+        "Decide who leads the pack when Kiril comes"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "emil_leads",
+      "journal": "We stood beside Emil and Kiril died in his own den. Emil leads the pack again: no more stolen children, no more running at the castle's whistle.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "kiril_leads",
+      "journal": "We stood aside and Emil died. Kiril Stoyanovich leads the pack, for the castle, and he let us walk out of his hills.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "pack_broken",
+      "journal": "There is no pack in the hills above Lake Zarovich any more. Kiril is dead, and so is Emil.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

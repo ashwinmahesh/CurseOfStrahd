@@ -1,0 +1,19 @@
+{
+  "id": "tsolenka_sergeant",
+  "name": "Sergeant Dorin Valcu",
+  "title": "Ghost of the Tsolenka Watch",
+  "summary": "The last sergeant of the watch over the Tsolenka gate, dead at his post for centuries and still asking travellers for the watchword.",
+  "portrait": "tsolenka_sergeant",
+  "sprite": "tsolenka_sergeant",
+  "attitude": "indifferent",
+  "voice": "docs/regions/berez.md",
+  "monster": "phantom_warrior",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "soldier",
+    "tsolenka_pass"
+  ],
+  "region": "tsolenka_pass",
+  "pronouns": "he/him"
+}

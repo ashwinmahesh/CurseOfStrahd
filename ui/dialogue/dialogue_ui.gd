@@ -25,6 +25,10 @@ var _history: Array[String] = []
 ## The options on screen now (the runner's option dictionaries), for the controller focus and for tests.
 var options_shown: Array = []
 var _spread: HBoxContainer
+var _frame_art: Control
+var _options_scroll: ScrollContainer
+## The options never take more than this share of the screen's height; past it they scroll.
+const OPTIONS_SHARE := 0.45
 
 
 func _init() -> void:
@@ -57,18 +61,46 @@ func _ready() -> void:
 	_panel.offset_right = 640
 	_panel.offset_top = -330
 	_panel.offset_bottom = -24
+	# A long list of options grows the box upward, never off the bottom of the screen.
+	_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	add_child(_panel)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 18)
 	_panel.add_child(row)
 	var left := VBoxContainer.new()
+	left.add_theme_constant_override("separation", 6)
+	# The speaker in the sheet's gilt frame, with their name on a plaque beneath.
+	var holder := Control.new()
+	holder.custom_minimum_size = Vector2(212, 212)
+	var back := ColorRect.new()
+	back.color = Look.color("ui_black")
+	back.position = Vector2(6, 6)
+	back.size = Vector2(200, 200)
+	holder.add_child(back)
 	_portrait = TextureRect.new()
+	_portrait.position = Vector2(6, 6)
+	_portrait.size = Vector2(200, 200)
 	_portrait.custom_minimum_size = Vector2(200, 200)
 	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	left.add_child(_portrait)
-	_name = _label("", 24, "gilt_light")
+	_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	holder.add_child(_portrait)
+	holder.add_child(UiParts.drawn(Vector2(212, 212), func(c: Control) -> void:
+		if _portrait.texture == null:
+			return
+		var r := Rect2(Vector2.ZERO, c.size)
+		c.draw_rect(r.grow(-1), Look.color("gilt"), false, 2.0)
+		c.draw_rect(r.grow(-5), Color(Look.color("gilt_dark"), 0.9), false, 1.0)
+		for p: Vector2 in [Vector2(1, 1), Vector2(c.size.x - 1, 1), Vector2(1, c.size.y - 1), c.size - Vector2(1, 1)]:
+			UiParts.diamond(c, p, 7.0, Look.color("void"), true)
+			UiParts.diamond(c, p, 5.0, Look.color("gilt_light"), true)))
+	_frame_art = holder.get_child(2) as Control
+	left.add_child(holder)
+	_name = _label("", 22, "gilt_light")
 	_name.add_theme_font_override("font", UiKit.display_font())
+	_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_name.custom_minimum_size = Vector2(212, 0)
+	_name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	left.add_child(_name)
 	row.add_child(left)
 	var right := VBoxContainer.new()
@@ -85,7 +117,15 @@ func _ready() -> void:
 	right.add_child(_text)
 	_options = VBoxContainer.new()
 	_options.add_theme_constant_override("separation", 4)
-	right.add_child(_options)
+	# Past a share of the screen the options scroll (the focused one is kept in view), so every option stays on
+	# screen and clickable however many there are.
+	_options_scroll = ScrollContainer.new()
+	_options_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_options_scroll.follow_focus = true
+	_options.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_options_scroll.add_child(_options)
+	_options.minimum_size_changed.connect(_fit_options)
+	right.add_child(_options_scroll)
 	_hint = _label("Space / click: continue", 13, "parchment")
 	right.add_child(_hint)
 	# The Tarokka spread: each card Madam Eva turns stays face up above the conversation.
@@ -185,6 +225,7 @@ func _show(beat: Dictionary) -> void:
 			var colour := "bile" if bool(beat["success"]) else "vampire_red"
 			var said := str(beat.get("said", ""))
 			_portrait.texture = null
+			_frame_art.queue_redraw()
 			_name.text = str(beat["who"])
 			_text.text = "%s[color=#%s]%s rolls %s: %d vs DC %d, %s[/color]\n[font_size=14][color=#%s]%s[/color][/font_size]" % [
 				("[i]\"%s\"[/i]\n" % _esc(said)) if said != "" else "", Look.color(colour).to_html(false), beat["who"], beat["skill"],
@@ -216,6 +257,7 @@ func _show(beat: Dictionary) -> void:
 			return
 		"pick_member":
 			_portrait.texture = null
+			_frame_art.queue_redraw()
 			_name.text = ""
 			_text.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("vampire_red").to_html(false), _esc(str(beat["text"]))]
 			var picks: Array = []
@@ -228,12 +270,14 @@ func _show(beat: Dictionary) -> void:
 func _line(beat: Dictionary) -> void:
 	if bool(beat["narrator"]):
 		_portrait.texture = null
+		_frame_art.queue_redraw()
 		_name.text = ""
 		_text.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("parchment").to_html(false), _esc(str(beat["text"]))]
 		return
 	_name.text = str(beat["name"])
 	var path := "res://art/portraits/%s.png" % beat["portrait"]
 	_portrait.texture = load(path) as Texture2D if str(beat["portrait"]) != "" and ResourceLoader.exists(path) else null
+	_frame_art.queue_redraw()
 	var colour := "moonlight" if bool(beat["party"]) else "vellum"
 	_text.text = "[color=#%s]%s[/color]" % [Look.color(colour).to_html(false), _esc(str(beat["text"]))]
 
@@ -268,6 +312,12 @@ func _show_options(options: Array) -> void:
 	_focus = 0
 	if not _option_buttons.is_empty():
 		_option_buttons[0].grab_focus()
+
+
+## The options' area is as tall as its options, up to OPTIONS_SHARE of the screen; past that it scrolls.
+func _fit_options() -> void:
+	var cap := get_viewport().get_visible_rect().size.y * OPTIONS_SHARE if is_inside_tree() else 400.0
+	_options_scroll.custom_minimum_size = Vector2(0, minf(_options.get_combined_minimum_size().y, cap))
 
 
 ## Options read as lines of text; the one under the mouse or keyboard gets a crimson band with a gilt edge.

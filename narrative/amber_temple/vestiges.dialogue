@@ -1,0 +1,1190 @@
+# The sixteen talking sarcophagi of the Amber Temple (docs/regions/amber_temple.md §4.3; voices: docs/voice/amber_vestiges.md).
+# Ring of amber (amber_temple_faceless_god): zantras, fekre, taar_haak, shami_amourae, yog, drizlash.
+# Hall of vestiges (amber_temple_vault): khirad, norganas, savnok, seriach, sykane, tarakamedes, tenebrous, yrrga,
+# zhudun, dahlver_nar. Each node: sealed / already gave its gift / heard before / first hearing, then a menu (want,
+# offer, the lid inscription, personal hooks). The offer reaches `dark_gift <id>`: the player picks who accepts, or
+# no one. Refusal options come first in each menu. Gifts: data/dark_gifts/.
+
+~ sealed
+Narrator: The amber is dark and cold. Whatever is inside is still there, but the wardens' seal holds, and for once it has nothing to say.
+-> END
+
+# ================================================================================================ The ring of amber
+
+~ zantras
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_zantras
+Narrator: The crowned figure no longer looks at the room. It looks only at whoever carries its gift, the way a proud parent watches a child on a stage.
+vestige_zantras: Stand up straight. They're watching.
+-> END
+endif
+if flag.vestige_zantras_heard
+vestige_zantras: My audience returns. I knew you couldn't stay away. Nobody ever can.
+-> zantras_menu
+endif
+set vestige_zantras_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: In the amber stands a gaunt figure crowned with something that might be gold and might be teeth. One hand is raised to bless a crowd that left a very long time ago. Its eyes follow whoever is talking.
+vestige_zantras: At last. An audience. Do you know how long it has been since anyone looked at me? Come closer. You, at the front. You were made to be looked at, and nobody has noticed. I could fix that.
+-> zantras_menu
+
+~ zantras_menu
+* What do you want with us? -> zantras_want
+* What are you offering? -> zantras_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> zantras_lid | zantras_lid_fail
+* [if guest:ireena] (It's looking at Ireena.) -> zantras_ireena
+* (Step away from the amber.) -> END
+
+~ zantras_want
+vestige_zantras: A king is only a mirror the crowd stands in front of. Mine broke a long time ago. I need a new one, with a pulse.
+interject tag:proud: I won't pretend that isn't tempting. I will pretend it's beneath me, which is different.
+-> zantras_menu
+
+~ zantras_offer
+vestige_zantras: When you walk into a room, it will turn. When you speak, people will lean in. Kings will stammer beside you, and you will never again be the one nobody remembers.
+* And the price? -> zantras_price
+* No. -> zantras_refuse
+* I accept. -> zantras_accept
+
+~ zantras_price
+vestige_zantras: Hardly worth the mention. You'll need them to keep looking. Every hour. And people who aren't looking at you will stop being interesting. What use were they anyway?
+* No. -> zantras_refuse
+* I accept. -> zantras_accept
+
+~ zantras_lid
+Narrator: The wardens' inscription, in our own plain words: "Zantras, who crowned beggars. Every king it made was pulled apart by the crowd that loved him. Do not look at it for long."
+-> zantras_menu
+
+~ zantras_lid_fail
+Narrator: Frost has softened the lid's letters to dimples. You make out the name, and the word "crowd", and nothing kind.
+-> zantras_menu
+
+~ zantras_ireena
+vestige_zantras: And you, my dear. You already have it, don't you? Everyone looks at you. Strangers, wolves, lords on hills. Do you hate it yet?
+interject guest:ireena: Every day of my life.
+vestige_zantras: Then give it to one of them. Gifts can be passed along, you know, if you're generous.
+-> zantras_menu
+
+~ zantras_accept
+dark_gift gift_of_zantras
+if gift:gift_of_zantras
+set dark_gifts_taken += 1
+Narrator: {name} straightens without meaning to. In the dim hall, the light finds them first now, and stays.
+vestige_zantras: There. Now they'll see you. Make sure they never stop.
+else
+vestige_zantras: No one? A crowd of nobodies. How fitting. Off you go, then. Nobody will notice.
+endif
+-> END
+
+~ zantras_refuse
+vestige_zantras: Then go back to being furniture. I'll be here when you tire of it.
+-> END
+
+~ fekre
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_fekre
+Narrator: The bubbles in the clouded amber drift toward whoever carries Fekre's gift, like children crowding a window.
+vestige_fekre: There's my darling. Keeping warm? Keeping everyone warm? Good.
+-> END
+endif
+if flag.vestige_fekre_heard
+vestige_fekre: Back again, my poor dears. Still coughing? You'll be coughing by spring.
+-> fekre_menu
+endif
+set vestige_fekre_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: A swollen, motherly shape fills the clouded amber, ringed with tiny bubbles like a rash. The air near the lid tastes of sickrooms and boiled linen.
+vestige_fekre: Oh, my poor lambs, you've come so far in the cold. Your lips are cracked. That one's cough will settle in the chest. Come to mother. Mother takes care of fevers.
+-> fekre_menu
+
+~ fekre_menu
+* What do you want with us? -> fekre_want
+* What are you offering? -> fekre_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> fekre_lid | fekre_lid_fail
+* (Step away from the amber.) -> END
+
+~ fekre_want
+vestige_fekre: Children, sweetling. Mine are everywhere: every fever, every flux, every rash in every village. I would so like one that walks.
+interject class:cleric: I have nursed plague wards. You are not a mother. You're what mothers pray against.
+vestige_fekre: And yet they all call for mother, at the end. Ask any child with a fever.
+-> fekre_menu
+
+~ fekre_offer
+vestige_fekre: No poison will ever touch you again, my lamb. No plague, no rot in a wound. And when someone hurts you, you can breathe it back on them and watch them wilt.
+* And the price? -> fekre_price
+* No. -> fekre_refuse
+* I accept. -> fekre_accept
+
+~ fekre_price
+vestige_fekre: Mother's children like to visit. They'll stay with you, and with whoever sits near you. And a body that holds so much sickness is slow to mend. Healing will do half its work on you. Only half, dear.
+* No. -> fekre_refuse
+* I accept. -> fekre_accept
+
+~ fekre_lid
+Narrator: The inscription, in plain words: "Fekre, the mother of fevers. She emptied a city by loving it. Wash your hands after."
+-> fekre_menu
+
+~ fekre_lid_fail
+Narrator: The lid is crusted with something that isn't frost. You decide not to scrape it off to read underneath.
+-> fekre_menu
+
+~ fekre_accept
+dark_gift gift_of_fekre
+if gift:gift_of_fekre
+set dark_gifts_taken += 1
+Narrator: {name} coughs once, hard, and then breathes easier than they have in weeks. Somewhere behind you, someone sneezes.
+vestige_fekre: There, my darling. Now you'll never be lonely again.
+else
+vestige_fekre: Nobody? Ungrateful children. Never mind. You'll come back when you're feverish. Everyone does.
+endif
+-> END
+
+~ fekre_refuse
+vestige_fekre: Off you go, then. Wrap up warm. Not that it helps.
+-> END
+
+~ taar_haak
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_taar_haak
+Narrator: All five mouths in the amber seem to have turned toward whoever carries the gift, and all five are grinning.
+vestige_taar_haak: FOUND ANYTHING? BROKEN IT? GOOD. MORE.
+-> END
+endif
+if flag.vestige_taar_haak_heard
+vestige_taar_haak: Back. Still soft. One of us said you'd be back. One of us said you'd run. Three of us bet on blood.
+-> taar_haak_menu
+endif
+set vestige_taar_haak_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: Five heads on five thick necks crowd the amber, every mouth open. You can't tell whether they are roaring or laughing. The inside of the lid is scored with claw marks.
+vestige_taar_haak: SMALL. SOFT. WHICH OF YOU HITS HARDEST? That one. No, that one. We'll decide later. Come closer, little fist.
+-> taar_haak_menu
+
+~ taar_haak_menu
+* What do you want with us? -> taar_haak_want
+* What are you offering? -> taar_haak_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> taar_haak_lid | taar_haak_lid_fail
+* (Step away from the amber.) -> END
+
+~ taar_haak_want
+vestige_taar_haak: War. Any war. Yours will do. One of us is hungry, one of us is angry, and the other three are worse.
+interject name:ilse_varga: I've served under men like you. Five at once is new. The ending is always the same.
+vestige_taar_haak: Was it a good ending? Tell us about the ending.
+-> taar_haak_menu
+
+~ taar_haak_offer
+vestige_taar_haak: Arms that break doors. A back that carries the dead home. You'll kill the things that laugh at you now, and you'll enjoy it. That's the best part.
+* And the price? -> taar_haak_price
+* No. -> taar_haak_refuse
+* I accept. -> taar_haak_accept
+
+~ taar_haak_price
+vestige_taar_haak: We come too. All five, in your skull. Thinking is slow. Arguing is slower. You'll stop doing both. And once you start, you won't stop. Stopping is for cowards. We hate cowards.
+* No. -> taar_haak_refuse
+* I accept. -> taar_haak_accept
+
+~ taar_haak_lid
+Narrator: The inscription, in plain words: "Great Taar Haak, the five-throated war. The armies that worshipped it did not survive it."
+-> taar_haak_menu
+
+~ taar_haak_lid_fail
+Narrator: Most of the inscription has been clawed away, from the inside. That tells you more than the words would have.
+-> taar_haak_menu
+
+~ taar_haak_accept
+dark_gift gift_of_taar_haak
+if gift:gift_of_taar_haak
+set dark_gifts_taken += 1
+Narrator: {name}'s shoulders crack like logs on a fire. Their hands open and close, open and close, as if looking for a throat.
+vestige_taar_haak: GO. FIND SOMETHING. BREAK IT. We'll watch from the inside.
+else
+vestige_taar_haak: COWARDS. ALL OF YOU. Two of us are disappointed. Three of us expected it.
+endif
+-> END
+
+~ taar_haak_refuse
+vestige_taar_haak: Run, then, soft things. Something bigger will catch you. We'd have liked to watch.
+-> END
+
+~ shami_amourae
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_shami_amourae
+Narrator: The figure in the clear amber has turned over in its sleep, toward whoever carries its gift, and its smile has grown a little wider.
+vestige_shami_amourae: There you are. Have you been enjoying yourself? Don't answer. I can tell.
+-> END
+endif
+if flag.vestige_shami_amourae_heard
+vestige_shami_amourae: You came back. Of course you did. Sit with me a while.
+-> shami_amourae_menu
+endif
+set vestige_shami_amourae_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: A lovely figure lies curled in the clear amber as if asleep in a warm bed, one hand cupped as though holding out something sweet. When you look closer, the smile has a few too many teeth.
+vestige_shami_amourae: Mm. You're cold. You're always cold here, aren't you? Nobody in this valley has touched you kindly in weeks. Come and sit by me. Just for a little while.
+-> shami_amourae_menu
+
+~ shami_amourae_menu
+* What do you want with us? -> shami_amourae_want
+* What are you offering? -> shami_amourae_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> shami_amourae_lid | shami_amourae_lid_fail
+* [name:tamsin_tealeaf] Do you know who the woman in my locket is? -> shami_amourae_locket
+* (Step away from the amber.) -> END
+
+~ shami_amourae_want
+vestige_shami_amourae: To be wanted, darling. Isn't that what everyone wants? I'm only more honest about it than you.
+-> shami_amourae_menu
+
+~ shami_amourae_offer
+vestige_shami_amourae: Anyone you smile at will want to say yes, even the ones with claws. Especially them. And everything sweet will be sweeter: every cup, every kiss, every quiet hour.
+* And the price? -> shami_amourae_price
+* No. -> shami_amourae_refuse
+* I accept. -> shami_amourae_accept
+
+~ shami_amourae_price
+vestige_shami_amourae: Only that you'll be as easy to persuade as you make everyone else. And you won't want to refuse a pleasure ever again. Why would you? I've never understood people who refuse.
+interject tag:devout: That's not a price. That's a leash with ribbons on it.
+* No. -> shami_amourae_refuse
+* I accept. -> shami_amourae_accept
+
+~ shami_amourae_lid
+Narrator: The inscription, in plain words: "Shami-Amourae, the honeyed hand. Its lovers died smiling. All of them."
+-> shami_amourae_menu
+
+~ shami_amourae_lid_fail
+Narrator: Someone has kissed the lid so often that the inscription has worn smooth. The prints of lips are still in the frost.
+-> shami_amourae_menu
+
+~ shami_amourae_locket
+vestige_shami_amourae: Oh, she's lovely. A great many men have loved that face, little thief, and one loves it still, up in his castle. Take my gift and she'll look at you that way instead. Just once. You'll remember it forever.
+Player: That's a no. My knees have gone to water, but that is a very firm no.
+-> shami_amourae_menu
+
+~ shami_amourae_accept
+dark_gift gift_of_shami_amourae
+if gift:gift_of_shami_amourae
+set dark_gifts_taken += 1
+Narrator: {name} sighs like someone sinking into a hot bath, and doesn't notice the sound they've made.
+vestige_shami_amourae: There. Isn't that better? Don't thank me. Just come back.
+else
+vestige_shami_amourae: Nobody? Not even a little? You'll lie awake wondering. I'll know.
+endif
+-> END
+
+~ shami_amourae_refuse
+vestige_shami_amourae: Shy. That's sweet too. I'll be here, darling. I'm always here.
+-> END
+
+~ yog
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_yog
+Narrator: The hulk in the amber hasn't moved. It never moves. But the floor under your boots hums, once, like a pleased cat.
+vestige_yog: Good. Endure.
+-> END
+endif
+if flag.vestige_yog_heard
+vestige_yog: ...Soft. Still.
+-> yog_menu
+endif
+set vestige_yog_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: A squat, horned hulk like a boulder that grew limbs. Its hide is cracked like a dry riverbed. When it speaks, the voice comes up through the floor into the soles of your feet.
+vestige_yog: Soft. You are... soft. Everything cuts you. That is... sad.
+-> yog_menu
+
+~ yog_menu
+* What do you want with us? -> yog_want
+* What are you offering? -> yog_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> yog_lid | yog_lid_fail
+* (Step away from the amber.) -> END
+
+~ yog_want
+vestige_yog: Want is soft. I... endure.
+interject name:hedda_ironvow: Stone remembers, my folk say. Stone doesn't love. There's a reason we always say both.
+-> yog_menu
+
+~ yog_offer
+vestige_yog: Skin like mine. Blades break. Teeth break. You... stay.
+* And the price? -> yog_price
+* No. -> yog_refuse
+* I accept. -> yog_accept
+
+~ yog_price
+vestige_yog: Stone does not hurry. Stone does not... feel. You will be slow. You will not feel the sun. Or a hand. Does it matter? Hands are soft.
+* No. -> yog_refuse
+* I accept. -> yog_accept
+
+~ yog_lid
+Narrator: The inscription, in plain words: "Yog, the unbroken. It outlasted everyone who worshipped it. That was the whole of its gift, and the whole of its price."
+-> yog_menu
+
+~ yog_lid_fail
+Narrator: The letters are cut so shallow that the stone seems to have healed over them. Of course it has.
+-> yog_menu
+
+~ yog_accept
+dark_gift gift_of_yog
+if gift:gift_of_yog
+set dark_gifts_taken += 1
+Narrator: {name}'s skin greys and tightens with the creak of old leather. When a friend touches their arm, {name} doesn't turn around.
+vestige_yog: Good. Now... endure.
+else
+vestige_yog: ...Soft.
+endif
+-> END
+
+~ yog_refuse
+vestige_yog: Then break. I will be here after.
+-> END
+
+~ drizlash
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_drizlash
+Narrator: Every black eye in the amber turns at once to whoever carries the gift. Four small black eyes along their hairline turn back.
+vestige_drizlash: Seeing well? Seeing everything? Yes, yes, yes.
+-> END
+endif
+if flag.vestige_drizlash_heard
+vestige_drizlash: Back, back, back. I watched you go. I watched you come. I watch.
+-> drizlash_menu
+endif
+set vestige_drizlash_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: Something spidery is folded in on itself in the amber, legs over legs, crowned with a ring of small black eyes. Every eye turns to you at once.
+vestige_drizlash: There you are, there you are. I saw you on the stair. I saw you on the ledge. I see the knife in the small one's boot. I see everything, and I could let you see it too.
+-> drizlash_menu
+
+~ drizlash_menu
+* What do you want with us? -> drizlash_want
+* What are you offering? -> drizlash_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> drizlash_lid | drizlash_lid_fail
+* (Step away from the amber.) -> END
+
+~ drizlash_want
+vestige_drizlash: Walls. Webs. The dark corners nobody looks in. Room to spin, room to spin.
+interject class:rogue: Walking up walls is a terrible idea, and I'd use it every night of my life.
+-> drizlash_menu
+
+~ drizlash_offer
+vestige_drizlash: Walk the walls. Walk the ceiling. See in the black as if it were noon. And spin, spin, spin: a web from your own palms to hold what you catch.
+* And the price? -> drizlash_price
+* No. -> drizlash_refuse
+* I accept. -> drizlash_accept
+
+~ drizlash_price
+vestige_drizlash: My eyes. You'll wear four of mine. They don't close, and they don't like the sun. And people stare. People always stare at eyes.
+* No. -> drizlash_refuse
+* I accept. -> drizlash_accept
+
+~ drizlash_lid
+Narrator: The inscription, in plain words: "Drizlash, who spins between the walls. Its priests lived in the dark, and were glad of it, and never came out."
+-> drizlash_menu
+
+~ drizlash_lid_fail
+Narrator: Webs as fine as breath cover the lid. Under them the letters are there, but the webs move when you try to read.
+-> drizlash_menu
+
+~ drizlash_accept
+dark_gift gift_of_drizlash
+if gift:gift_of_drizlash
+set dark_gifts_taken += 1
+Narrator: {name} blinks, and four small black eyes along their hairline blink a moment later.
+vestige_drizlash: Now you see. Now you see. Now you see.
+else
+vestige_drizlash: No one, no one. I'll watch you go, then. I'll watch you all the way down.
+endif
+-> END
+
+~ drizlash_refuse
+vestige_drizlash: Go, go. I'll see you. I always see you.
+-> END
+
+# ================================================================================================ The hall of vestiges
+
+~ khirad
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_khirad
+Narrator: The thin figure in the amber has stopped reading its missing sky. It looks at whoever carries its gift with something like pity.
+vestige_khirad: You've seen how it ends by now. I'm sorry. I'm always sorry, after.
+-> END
+endif
+if flag.vestige_khirad_heard
+vestige_khirad: You came back. I read that you would. You were taller in the reading.
+-> khirad_menu
+endif
+set vestige_khirad_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: A thin figure in the amber has its face tipped up, eyes wide, lips moving, as if reading a sky that isn't there. The amber over its eyes is scratched, from the inside.
+vestige_khirad: You came. I read that you would, eleven centuries ago, in a star that has since gone out. Sit. Let me tell you how this ends.
+-> khirad_menu
+
+~ khirad_menu
+* What do you want with us? -> khirad_want
+* What are you offering? -> khirad_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> khirad_lid | khirad_lid_fail
+* [name:silvain_aster] Where is Aurel Mirescu? -> khirad_aurel
+* (Step away from the amber.) -> END
+
+~ khirad_want
+vestige_khirad: Someone to read to. The stars are dull company. They only know one story, and they insist on telling it to the end.
+-> khirad_menu
+
+~ khirad_offer
+vestige_khirad: Sight. You'll know the next breath before it's drawn, the next blade before it falls. And once a day you may look anywhere at all, as if you stood there.
+* And the price? -> khirad_price
+* No. -> khirad_refuse
+* I accept. -> khirad_accept
+
+~ khirad_price
+vestige_khirad: You'll see every way a moment can end. Most of them end badly. You won't sleep well. Nobody who reads the stars sleeps well. Ask any of us. Ask me.
+* No. -> khirad_refuse
+* I accept. -> khirad_accept
+
+~ khirad_lid
+Narrator: The inscription, in plain words: "Khirad, who reads the stars backward. Everything it foretold came true. Its readers wished it hadn't."
+-> khirad_menu
+
+~ khirad_lid_fail
+Narrator: The inscription has been scratched over with tiny star charts. Someone sat here a long time, copying what the vestige told them.
+-> khirad_menu
+
+~ khirad_aurel
+vestige_khirad: Reading. Still. In a high room, by a window that is always lit. He has been reading a very long time, and he cannot stop. Take my gift, and you may look in on him tonight.
+if flag.eva_question == "aurel"
+interject name:silvain_aster: Madam Eva said the same thing. "Reading still." Two seers agreeing is either evidence or a conspiracy.
+endif
+Player: That is precisely the answer I was afraid of, from precisely the source I can't trust. Thank you. I think.
+-> khirad_menu
+
+~ khirad_accept
+dark_gift gift_of_khirad
+if gift:gift_of_khirad
+set dark_gifts_taken += 1
+Narrator: {name}'s pupils widen and stay wide. For a heartbeat they look at each of you as though remembering your funerals.
+vestige_khirad: There. Now you know. I'm sorry.
+else
+vestige_khirad: No one. I read that too. I always hope I've misread.
+endif
+-> END
+
+~ khirad_refuse
+vestige_khirad: As you like. It ends the same way either way. Only the knowing changes.
+-> END
+
+~ norganas
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_norganas
+Narrator: The blurred shape in the milky amber seems a little sharper than before, as if it had been fed.
+vestige_norganas: Hello. Have we... no. You wouldn't remember.
+-> END
+endif
+if flag.vestige_norganas_heard
+vestige_norganas: Hello. Have we met? ...No, I don't suppose you'd know either.
+-> norganas_menu
+endif
+set vestige_norganas_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: Something in the milky amber is blurred, as though the sculptor kept rubbing it out and starting again. The longer you look, the less you could say what shape it is.
+vestige_norganas: Hello. Have we... no. No, we haven't. Nobody remembers meeting me. That is rather the point of me.
+-> norganas_menu
+
+~ norganas_menu
+* What do you want with us? -> norganas_want
+* What are you offering? -> norganas_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> norganas_lid | norganas_lid_fail
+* [if flag.exethanter_met] Exethanter, the warden upstairs. Did he bargain with you? -> norganas_warden
+* (Step away from the amber.) -> END
+
+~ norganas_want
+vestige_norganas: Quiet. Every name, every war, every song, rubbed out. A clean page. Doesn't that sound restful? You look so tired.
+-> norganas_menu
+
+~ norganas_offer
+vestige_norganas: Point. That's all it takes. Point at anything that lives, and I'll rub it out from the inside. Once a day. You'll be the most frightening thing in any room you walk into.
+* And the price? -> norganas_price
+* No. -> norganas_refuse
+* I accept. -> norganas_accept
+
+~ norganas_price
+vestige_norganas: I eat what you know. A little now. A little more each time you use me. You won't miss it. You won't remember what it was.
+interject class:wizard: Everything I am is what I know. You're offering me a sword and asking for the hand.
+* No. -> norganas_refuse
+* I accept. -> norganas_accept
+
+~ norganas_lid
+Narrator: The inscription, in plain words: "Norganas, the eraser. It has been forgotten twice already." Below, in a newer, shakier hand: "Warden, if you can't remember why you carved this: you asked it to take the voices. It took you."
+-> norganas_menu
+
+~ norganas_lid_fail
+Narrator: The inscription is there, and you read it, and a moment later you can't recall a word of it. You read it again. The same thing happens.
+-> norganas_menu
+
+~ norganas_warden
+set exethanter_bargain_known
+vestige_norganas: Who? ...Oh. The careful one. He asked me to take the whispering out of his head. I took the whispering. Then I kept taking. He was delicious. He still is, a little at a time.
+-> norganas_menu
+
+~ norganas_accept
+dark_gift gift_of_norganas
+if gift:gift_of_norganas
+set dark_gifts_taken += 1
+Narrator: {name} opens their mouth to say something, and can't think what it was. It doesn't seem important.
+vestige_norganas: There. Lighter already.
+else
+vestige_norganas: No one? Never mind. You'll forget I asked.
+endif
+-> END
+
+~ norganas_refuse
+vestige_norganas: Goodbye. I won't remember you. You'll find it harder to return the favour.
+-> END
+
+~ savnok
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_savnok
+Narrator: The hooded figure's hands are folded over its box, and the box is silent. It has nothing more to say to you. It has already said it.
+vestige_savnok: ...Kept.
+-> END
+endif
+if flag.vestige_savnok_heard
+vestige_savnok: ...Still carrying them? Heavy, aren't they.
+-> savnok_menu
+endif
+set vestige_savnok_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: A hooded figure sits with its mouth sewn shut and its hands folded over a small closed box. The voice, when it comes, comes from inside the box.
+vestige_savnok: ...You have secrets. Everyone does. Shall I keep them for you?
+-> savnok_menu
+
+~ savnok_menu
+* What do you want with us? -> savnok_want
+* What are you offering? -> savnok_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> savnok_lid | savnok_lid_fail
+* (Step away from the amber.) -> END
+
+~ savnok_want
+vestige_savnok: ...Keys. Locks. Things unsaid.
+interject name:tamsin_tealeaf: A box that talks. Do you know how many years I've waited for a box to talk back?
+-> savnok_menu
+
+~ savnok_offer
+vestige_savnok: A locked mind. No charm, no whisper, no lord's sweet voice will ever open it. The one on the hill opens minds like letters. Not yours. And lies will come as easily as breathing.
+* And the price? -> savnok_price
+* No. -> savnok_refuse
+* I accept. -> savnok_accept
+
+~ savnok_price
+vestige_savnok: ...A locked box doesn't open from the inside either. You won't speak a true word of yourself again. You won't hear much. And no one will quite believe you, even when you mean it.
+* No. -> savnok_refuse
+* I accept. -> savnok_accept
+
+~ savnok_lid
+Narrator: The inscription, in plain words: "Savnok, the locked mouth. Its keepers never told us what it wanted. They couldn't."
+-> savnok_menu
+
+~ savnok_lid_fail
+Narrator: The lid has no inscription at all, only a keyhole carved in the stone with no lock behind it.
+-> savnok_menu
+
+~ savnok_accept
+dark_gift gift_of_savnok
+if gift:gift_of_savnok
+set dark_gifts_taken += 1
+Narrator: {name}'s face goes smooth, like a door closing quietly at the end of a long hall.
+vestige_savnok: ...Kept.
+else
+vestige_savnok: ...Then keep them yourselves. See how long you last.
+endif
+-> END
+
+~ savnok_refuse
+vestige_savnok: ...
+Narrator: The box says nothing at all, which somehow feels like the last word.
+-> END
+
+~ seriach
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_seriach
+Narrator: The hound heads on the chains in the amber all point the same way, at whoever carries the gift, the way dogs point at game.
+vestige_seriach: Running well? They're never far behind you now.
+-> END
+endif
+if flag.vestige_seriach_heard
+vestige_seriach: Back. The dogs knew. They always know.
+-> seriach_menu
+endif
+set vestige_seriach_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: A lean figure in the amber holds a fistful of chains, and every chain ends in the snarling head of a hound. The amber around the hounds is clouded, like smoke.
+vestige_seriach: Hear them? They've had your scent since the stair. Good noses, my dogs. They never lose a quarry. Want one of them to run with you?
+-> seriach_menu
+
+~ seriach_menu
+* What do you want with us? -> seriach_want
+* What are you offering? -> seriach_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> seriach_lid | seriach_lid_fail
+* (Step away from the amber.) -> END
+
+~ seriach_want
+vestige_seriach: The hunt. Always the hunt. Whose hunt hardly matters.
+interject class:ranger: Hounds that never lose a scent. In my trade that's not a gift. It's a curse on a leash.
+-> seriach_menu
+
+~ seriach_offer
+vestige_seriach: Fire in the blood. Your blows will burn like my hounds' teeth, and flame will slide off you like rain off a dog's back.
+* And the price? -> seriach_price
+* No. -> seriach_refuse
+* I accept. -> seriach_accept
+
+~ seriach_price
+vestige_seriach: My hounds will follow you. Always. Every beast you meet will smell them and bolt, or bite. And fire hates the cold, hunter. Look where you're standing.
+* No. -> seriach_refuse
+* I accept. -> seriach_accept
+
+~ seriach_lid
+Narrator: The inscription, in plain words: "Seriach, master of the burning hounds. Its hunts did not end when the quarry died."
+-> seriach_menu
+
+~ seriach_lid_fail
+Narrator: The lid is scored all over with claw marks and scorches. If there were words, the dogs have had them.
+-> seriach_menu
+
+~ seriach_accept
+dark_gift gift_of_seriach
+if gift:gift_of_seriach
+set dark_gifts_taken += 1
+Narrator: {name}'s breath smokes, though the air is no colder than before. Far off, inside the mountain, something howls.
+vestige_seriach: Run, now. They'll keep up.
+else
+vestige_seriach: No one. Pity. The dogs were looking forward to it.
+endif
+-> END
+
+~ seriach_refuse
+vestige_seriach: Then run as you are. Slowly. My dogs will find that funny.
+-> END
+
+~ sykane
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_sykane
+Narrator: The jaw in the amber has stopped chewing. It is listening, hungrily, to whoever carries its gift.
+vestige_sykane: Have you eaten? You haven't. I can tell. Go and eat.
+-> END
+endif
+if flag.vestige_sykane_heard
+vestige_sykane: Back. Warm. So warm. Closer...
+-> sykane_menu
+endif
+set vestige_sykane_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: An emaciated shape in the amber, its ribs opened like a cage door with nothing inside. Its jaw works all the time, chewing nothing.
+vestige_sykane: Hungry. So hungry. You're warm, all of you, so warm. Could you spare... no. No, I'd take too much. Let me give you something instead. Then you can feed me.
+if flag.death_house_sacrificed
+vestige_sykane: One of you has fed something before. Under a house, wasn't it? I can smell it on your hands. You know how it's done.
+endif
+-> sykane_menu
+
+~ sykane_menu
+* What do you want with us? -> sykane_want
+* What are you offering? -> sykane_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> sykane_lid | sykane_lid_fail
+* (Step away from the amber.) -> END
+
+~ sykane_want
+vestige_sykane: Fill me. I can never be filled. Fill me anyway.
+-> sykane_menu
+
+~ sykane_offer
+vestige_sykane: A hand that drinks. Touch them and take their life into you, warm, warm, warm. And death's cold won't bite you the way it used to.
+* And the price? -> sykane_price
+* No. -> sykane_refuse
+* I accept. -> sykane_accept
+
+~ sykane_price
+vestige_sykane: You'll be hungry. Like me. A little emptier every day, and nothing fills it but what you take. On a day you haven't fed, you won't mend.
+* No. -> sykane_refuse
+* I accept. -> sykane_accept
+
+~ sykane_lid
+Narrator: The inscription, in plain words: "Sykane, the hollow belly. Its priests ate first. Then they ate each other."
+-> sykane_menu
+
+~ sykane_lid_fail
+Narrator: The inscription has been gnawed. By teeth. Small ones, patient ones.
+-> sykane_menu
+
+~ sykane_accept
+dark_gift gift_of_sykane
+if gift:gift_of_sykane
+set dark_gifts_taken += 1
+Narrator: A hunger opens in {name} like a door, and the nearest warm thing in the room is a friend.
+vestige_sykane: Yes. Yes. Now you understand.
+else
+vestige_sykane: No? No? Then go. Go before I... go.
+endif
+-> END
+
+~ sykane_refuse
+vestige_sykane: Go. Quickly. While I'm still being polite.
+-> END
+
+~ tarakamedes
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_tarakamedes
+Narrator: The red amber is colder than ever, and under the floor something very large has turned its head toward whoever carries its gift.
+vestige_tarakamedes: Not yet, little one. Not yet. But I'm keeping your place.
+-> END
+endif
+if flag.vestige_tarakamedes_heard
+vestige_tarakamedes: Back again, warm thing. Everyone comes back to me. Usually only once.
+-> tarakamedes_menu
+endif
+set vestige_tarakamedes_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: The skull and coiled spine of a dragon fill the amber, packed so tight the bones have cracked. The amber is the dark red of old blood, and it is cold even to look at.
+vestige_tarakamedes: Little warm things. You stand on the graves of my servants and don't even know it. Kneel or don't. The grave is patient either way.
+-> tarakamedes_menu
+
+~ tarakamedes_menu
+* What do you want with us? -> tarakamedes_want
+* What are you offering? -> tarakamedes_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> tarakamedes_lid | tarakamedes_lid_fail
+* [name:ilse_varga] Some of my company are dead. Can you give them back? -> tarakamedes_kestrel
+* [if flag.doru_cure_promised] Is there a cure for a vampire's bite? -> tarakamedes_doru
+* [if guest:kasimir_velikov and not flag.kasimir_bargain and not flag.patrina_fate and not flag.patrina_destroyed] (Kasimir steps up to the amber.) -> tarakamedes_kasimir
+* (Step away from the amber.) -> END
+
+~ tarakamedes_want
+vestige_tarakamedes: Every life ends in my mouth. I would like, once, to be thanked for it.
+-> tarakamedes_menu
+
+~ tarakamedes_offer
+vestige_tarakamedes: The dead will hear you. They'll rise when you call and answer when you ask. And the grave's cold won't bite you any more. It knows you'll be along.
+* And the price? -> tarakamedes_price
+* No. -> tarakamedes_refuse
+* I accept. -> tarakamedes_accept
+
+~ tarakamedes_price
+vestige_tarakamedes: You'll owe me, only at the end. When you fall, I'll be waiting just under the floor of the world, and I'll pull. Gently. Without stopping.
+* No. -> tarakamedes_refuse
+* I accept. -> tarakamedes_accept
+
+~ tarakamedes_lid
+Narrator: The inscription, in plain words: "Tarakamedes, the dragon in the grave. Its faithful went down into the earth to serve it. None came back up."
+-> tarakamedes_menu
+
+~ tarakamedes_lid_fail
+Narrator: The lid is so cold that your breath freezes on it, and the frost fills the letters before you can read them.
+-> tarakamedes_menu
+
+~ tarakamedes_kestrel
+vestige_tarakamedes: Give them back? No. Lend them back. They'd stand in a line for you again, sergeant. They'd even answer when you counted them. They just wouldn't be warm.
+Player: Forty. I'd count forty, and not one of them would be warm. No.
+-> tarakamedes_menu
+
+~ tarakamedes_doru
+vestige_tarakamedes: For the priest's boy, in the village? There is no cure. There is only me. Bring him here and I'll make him something that doesn't need blood. You wouldn't like what it needs instead.
+interject class:cleric: Then we keep looking. Or we keep our word another way.
+-> tarakamedes_menu
+
+~ tarakamedes_kasimir
+Kasimir: My sister. Patrina. Her bones lie under the castle and her voice is in this temple. Can you put them together again?
+vestige_tarakamedes: Bones, voice, breath. The work of a moment. The price is yours, elf: every year you have left, but one. One year with her. Then you come down to me.
+Kasimir: One year. I have wasted three hundred.
+* Let him choose. -> tarakamedes_kasimir_yes
+* [Persuasion DC 15] She went to the castle the first time, Kasimir. She'll go again. -> tarakamedes_kasimir_no | tarakamedes_kasimir_yes
+* [if flag.patrina_met] You heard her. She doesn't want to be bought back. -> tarakamedes_kasimir_no
+
+~ tarakamedes_kasimir_yes
+set kasimir_bargain = "made"
+set patrina_fate = "restored"
+quest patrinas_wail restored
+Kasimir: Then I will be brave once, and late. Take it.
+Narrator: The red amber flares. Kasimir staggers, and when he straightens, his white hair has gone the grey of old ash and there are lines at his eyes that weren't there a breath ago.
+Narrator: Far above, in the hall of echoes, the wailing stops. Later you'll find footprints in the frost: bare, narrow, walking out through the doors and down the mountain, toward the castle.
+Kasimir [sad]: She didn't wait. Of course she didn't wait. She never once waited for me.
+-> END
+
+~ tarakamedes_kasimir_no
+set kasimir_bargain = "refused"
+Kasimir: ...Yes. You're right. I know you're right. It is a terrible thing, to be talked out of the only brave thing I nearly did.
+vestige_tarakamedes: Patience, elf. Everyone comes down to me in the end. I don't need to bargain for you.
+-> END
+
+~ tarakamedes_accept
+dark_gift gift_of_tarakamedes
+if gift:gift_of_tarakamedes
+set dark_gifts_taken += 1
+Narrator: {name}'s breath fogs, though nobody else's does. Under the floor, something very large shifts, and settles.
+vestige_tarakamedes: I'll see you again. Everyone does.
+else
+vestige_tarakamedes: No one. It makes no difference. I'll have you all eventually, without the paperwork.
+endif
+-> END
+
+~ tarakamedes_refuse
+vestige_tarakamedes: Walk away, then. Every road you take goes downhill to me.
+-> END
+
+~ tenebrous
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_tenebrous
+Narrator: The absence in the amber has grown a little, as if it had made room for company.
+vestige_tenebrous: Shh. Keep the lights low. You and I don't need them.
+-> END
+endif
+if flag.vestige_tenebrous_heard
+vestige_tenebrous: Shh. You brought a light again.
+-> tenebrous_menu
+endif
+set vestige_tenebrous_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: At first there is nothing in this sarcophagus. Then your eyes adjust, and the nothing has a shape: a figure-shaped absence in the amber, darker than the dark around it.
+vestige_tenebrous: Shh. Don't light anything. Light is so loud. Come into the dark with me. It's quiet here. It's always quiet here.
+-> tenebrous_menu
+
+~ tenebrous_menu
+* What do you want with us? -> tenebrous_want
+* What are you offering? -> tenebrous_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> tenebrous_lid | tenebrous_lid_fail
+* (Step away from the amber.) -> END
+
+~ tenebrous_want
+vestige_tenebrous: The last candle out. The last star. And then, at last, rest.
+interject class:cleric: You want the last light out. I carry one. We have nothing to discuss.
+-> tenebrous_menu
+
+~ tenebrous_offer
+vestige_tenebrous: The dark will be your house. You'll see in it and walk in it unseen, and call it down over any room like a curtain.
+* And the price? -> tenebrous_price
+* No. -> tenebrous_refuse
+* I accept. -> tenebrous_accept
+
+~ tenebrous_price
+vestige_tenebrous: Light will be your enemy. Sunlight, holy fire, the bright things priests throw. They'll cut you like a thief caught in a doorway.
+* No. -> tenebrous_refuse
+* I accept. -> tenebrous_accept
+
+~ tenebrous_lid
+Narrator: The inscription, in plain words: "Tenebrous, the last shadow. When the stars go out, this is what remains. We put it here to make sure it waits its turn."
+-> tenebrous_menu
+
+~ tenebrous_lid_fail
+Narrator: Your light won't settle on the lid. It slides off the letters as if the stone were wet with ink.
+-> tenebrous_menu
+
+~ tenebrous_accept
+dark_gift gift_of_tenebrous
+if gift:gift_of_tenebrous
+set dark_gifts_taken += 1
+Narrator: When {name} steps back from the amber, their shadow follows a moment late, as if it had to be persuaded.
+vestige_tenebrous: Shh. There. Isn't that better?
+else
+vestige_tenebrous: Shh. No one. Then go back to your noise.
+endif
+-> END
+
+~ tenebrous_refuse
+vestige_tenebrous: Shh. The dark will still be here. It always is.
+-> END
+
+~ yrrga
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_yrrga
+Narrator: The great eye isn't looking past you any more. It's looking at whoever carries its gift, and they're looking back.
+vestige_yrrga: Now you see it too. Don't look away. You can't anyway.
+-> END
+endif
+if flag.vestige_yrrga_heard
+vestige_yrrga: You came back. You still can't see it, can you? It's right behind you.
+-> yrrga_menu
+endif
+set vestige_yrrga_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: One great lidless eye fills the amber, its pupil as wide as a cartwheel. It isn't looking at you. It's looking at something just behind you, and it has been for a very long time.
+vestige_yrrga: Oh. You can't see it. You can't see any of it. The masks, the borrowed skins, the thing standing just behind the one you love. How do you live like that?
+-> yrrga_menu
+
+~ yrrga_menu
+* What do you want with us? -> yrrga_want
+* What are you offering? -> yrrga_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> yrrga_lid | yrrga_lid_fail
+* (Step away from the amber.) -> END
+
+~ yrrga_want
+vestige_yrrga: To look. To be looked through. To show you what's there.
+-> yrrga_menu
+
+~ yrrga_offer
+vestige_yrrga: Your eyes, made true. Illusions, disguises, invisible things, borrowed faces: none of them will fool you up close. Not even his. You'd see the lord on the hill as he is.
+* And the price? -> yrrga_price
+* No. -> yrrga_refuse
+* I accept. -> yrrga_accept
+
+~ yrrga_price
+vestige_yrrga: You'll see what's really there. All of it, all the time. Courage is mostly not seeing. You'll lose it.
+* No. -> yrrga_refuse
+* I accept. -> yrrga_accept
+
+~ yrrga_lid
+Narrator: The inscription, in plain words: "Yrrga, the eye that opened outside. Its priests put out their own eyes. It was a mercy, and they knew it."
+-> yrrga_menu
+
+~ yrrga_lid_fail
+Narrator: You bend to read the lid, and feel the eye on the back of your neck the whole time. You read nothing. You straighten up quickly.
+-> yrrga_menu
+
+~ yrrga_accept
+dark_gift gift_of_yrrga
+if gift:gift_of_yrrga
+set dark_gifts_taken += 1
+Narrator: {name}'s eyes water, then clear. They look at each of you in turn, for too long, and say nothing about what they see.
+vestige_yrrga: Welcome to the world.
+else
+vestige_yrrga: No one. Keep your blindfolds, then. They're very comfortable, I'm told.
+endif
+-> END
+
+~ yrrga_refuse
+vestige_yrrga: Go on, then. Don't look behind you.
+-> END
+
+~ zhudun
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_zhudun
+Narrator: The grey star's cold light leans toward whoever carries its gift, the way a plant leans toward a window.
+vestige_zhudun: You're shining. Faintly. It suits you.
+-> END
+endif
+if flag.vestige_zhudun_heard
+vestige_zhudun: You came back to the light. Even a cold one.
+-> zhudun_menu
+endif
+set vestige_zhudun_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: A dull grey sphere hangs in black amber, giving off a cold light that lights nothing around it. Looking at it is like looking at the moon through ice.
+vestige_zhudun: I was a sun once. Worlds turned around me. Now I am a cinder in a jar. Come closer. I still have a little light.
+-> zhudun_menu
+
+~ zhudun_menu
+* What do you want with us? -> zhudun_want
+* What are you offering? -> zhudun_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> zhudun_lid | zhudun_lid_fail
+* [name:hedda_ironvow] You're not the dawn. -> zhudun_hedda
+* (Step away from the amber.) -> END
+
+~ zhudun_want
+vestige_zhudun: To shine again. On someone. Anyone.
+-> zhudun_menu
+
+~ zhudun_offer
+vestige_zhudun: My light, under your skin: cold, and untouched by the holy fire your priests throw. And once a day, a door into the black between the stars, opened in your enemies' midst.
+* And the price? -> zhudun_price
+* No. -> zhudun_refuse
+* I accept. -> zhudun_accept
+
+~ zhudun_price
+vestige_zhudun: A dead star is cold all the way through. You'll be frailer, slow to warm, and fire will find you like dry kindling. And you'll glow in the dark, always, just a little. Grey.
+* No. -> zhudun_refuse
+* I accept. -> zhudun_accept
+
+~ zhudun_lid
+Narrator: The inscription, in plain words: "Zhudun, the dead star. It burned out. It did not go out."
+-> zhudun_menu
+
+~ zhudun_lid_fail
+Narrator: The grey light makes every letter look the same. You give up before your eyes start to ache.
+-> zhudun_menu
+
+~ zhudun_hedda
+vestige_zhudun: No. But you haven't felt your dawn since you came through the mist, have you, little priestess? Not once. I can feel how cold you are. Let me be your light. I'm right here, and he isn't.
+Player: Mm. He isn't here. That's what faith is for. You don't need any; you're right here. That's how I know you're not him.
+-> zhudun_menu
+
+~ zhudun_accept
+dark_gift gift_of_zhudun
+if gift:gift_of_zhudun
+set dark_gifts_taken += 1
+Narrator: {name} glows, faintly, grey, like a candle seen through frosted glass. It doesn't warm the room at all.
+vestige_zhudun: There. Shine for me.
+else
+vestige_zhudun: No one. Then stay in your little dark. I'll go on shining at nobody. I'm used to it.
+endif
+-> END
+
+~ zhudun_refuse
+vestige_zhudun: Go and look for your dawn, then. Tell me if you find it.
+-> END
+
+~ dahlver_nar
+if flag.amber_temple_sealed
+-> sealed
+endif
+if gift:gift_of_dahlver_nar
+Narrator: Every tooth in the great jaw seems to be smiling at whoever carries the gift. They have a great deal in common now.
+vestige_dahlver_nar: Hello, hello. How are our teeth? Chewing well?
+-> END
+endif
+if flag.vestige_dahlver_nar_heard
+vestige_dahlver_nar: Back again, back again. Say something. Anything. We do love a new voice.
+-> dahlver_nar_menu
+endif
+set vestige_dahlver_nar_heard
+if not flag.amber_voices_begun
+set amber_voices_begun
+if not quest.the_amber_temple >= voices_heard
+quest the_amber_temple voices_heard
+endif
+endif
+Narrator: A huge jaw fills the amber, lined with row on row of teeth: a man's, a horse's, a child's milk teeth, a wolf's fang. No two come from the same mouth.
+vestige_dahlver_nar: Hello. Hello. Hello. Don't mind us; we're all in here, every mouth we ever borrowed. Say something, would you? We'd love a new voice.
+-> dahlver_nar_menu
+
+~ dahlver_nar_menu
+* What do you want with us? -> dahlver_nar_want
+* What are you offering? -> dahlver_nar_offer
+* [History DC 13] Read the wardens' inscription on the lid. -> dahlver_nar_lid | dahlver_nar_lid_fail
+* (Step away from the amber.) -> END
+
+~ dahlver_nar_want
+vestige_dahlver_nar: Mouths. Teeth. Voices. We collect, you see. We're collectors.
+interject name:tamsin_tealeaf: I've known fences like you. Never sell to them. They pay well, and then you're part of the collection.
+-> dahlver_nar_menu
+
+~ dahlver_nar_offer
+vestige_dahlver_nar: You'll be so hard to kill. Cut you, burn you, drop you off a mountain, and something in you keeps chewing on, and on, and gets back up.
+* And the price? -> dahlver_nar_price
+* No. -> dahlver_nar_refuse
+* I accept. -> dahlver_nar_accept
+
+~ dahlver_nar_price
+vestige_dahlver_nar: Your teeth. All of them, overnight, for some of ours. People won't like your smile. And when you're tired you'll talk in other people's voices. They'll be fine. Mostly.
+* No. -> dahlver_nar_refuse
+* I accept. -> dahlver_nar_accept
+
+~ dahlver_nar_lid
+Narrator: The inscription, in plain words: "Dahlver-Nar, the mouth of borrowed teeth. It cannot make anything. It only keeps."
+-> dahlver_nar_menu
+
+~ dahlver_nar_lid_fail
+Narrator: Someone has pressed teeth into the soft stone of the lid, in rows, over the words. You stop trying to read it.
+-> dahlver_nar_menu
+
+~ dahlver_nar_accept
+dark_gift gift_of_dahlver_nar
+if gift:gift_of_dahlver_nar
+set dark_gifts_taken += 1
+Narrator: {name} winces and puts a hand to their jaw. When they take it away and smile, nobody smiles back.
+vestige_dahlver_nar: Lovely. Lovely. Say something. Ah, that's a good one.
+else
+vestige_dahlver_nar: Nobody? Pity. Pity. Pity. We'll remember your voices anyway.
+endif
+-> END
+
+~ dahlver_nar_refuse
+vestige_dahlver_nar: Goodbye, goodbye, goodbye. We'll practise your voices while you're away.
+-> END

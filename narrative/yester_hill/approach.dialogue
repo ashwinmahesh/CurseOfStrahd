@@ -1,0 +1,78 @@
+# Yester Hill below the crown: the back gully (a quiet way up), the cage post in the wardens' camp (Elvir's last
+# words), and Kostin waiting at the foot of the hill if the party talked him out of his faith at the winery.
+
+~ gully
+Narrator: A cleft runs up the hill's west flank, choked with thorn and loose shale, out of sight of the camp on the shoulder.
+if flag.yester_sneaked or flag.yester_heard
+Narrator: You've been up it once. The thorns remember you, and so, probably, does the hill.
+-> END
+endif
+if flag.kostin_fled and not flag.kostin_doubts
+Narrator: Near the head of it something pale moves and goes still: a druid on a rock, watching the gully. Somebody warned them.
+* [Stealth DC 16] Go up anyway, slowly, keeping to the shadow. -> sneaked | heard
+* Not this way. -> END
+else
+* [Stealth DC 13] Find a quiet way up the gully. -> sneaked | heard
+* Not this way. -> END
+endif
+
+~ sneaked
+set yester_sneaked
+Narrator: You find a way that keeps to the shadow: thorn, shale, a loose stone caught before it can fall. Take it, and nobody on the crown will know you're coming until you're there.
+interject name:ilse_varga: The flank is ours. Nobody moves till I count three. One.
+-> END
+
+~ heard
+set yester_heard
+Narrator: Halfway up the first stretch a stone goes out from under a boot and bounces all the way down, loudly, the way stones do when it matters. Up on the crown the humming stops for one breath, and then goes on.
+-> END
+
+~ cage_post
+Narrator: Four wicker cages hang from a frame of poles, each big enough for a man to crouch in. Three are open and empty. The fourth has had its door torn off, and its post is scored all over.
+if flag.elvir_message_found
+Narrator: The words are still there. They'll be there a long while.
+-> END
+endif
+Narrator: Not scratches: letters, cut with a fingernail or a tooth, over and over until they were deep enough to last. I SENT HIM. I TOLD HIM FLY. TELL FATHER. E.
+set elvir_message_found
+set elvir_truth_known
+if not flag.martikovs_reconciled
+quest elvir_martikov truth_found
+endif
+if guest:adrian_martikov
+set adrian_truth_shared
+Narrator: Adrian reads it once. Then he lays his hand over the words, as if to keep them warm.
+Adrian [sad]: He was always the stubborn one. A thorn through his leg, and he's still giving orders.
+endif
+interject tag:devout: Mm. He wanted it known. That's the last thing a dying man can give you, if he's able: what he wants known.
+-> END
+
+~ kostin
+set kostin_hill_met
+Narrator: On a stone by the track at the foot of the hill sits Kostin, the druid from the press house. He has no staff now, and he's torn strips from his robe to bind his feet.
+Kostin: I couldn't go up. Two days I've sat here, trying. Every time I stand I hear roots, and nothing else.
+Kostin: Listen. There's a gully on the west side; the wardens never watch it. And Mother has your stone in the effigy's chest. When the chant ends, the thing wakes.
+-> kostin_menu
+
+~ kostin_menu
+* [if not flag.kostin_why_asked] Why tell us? -> kostin_why
+* [if flag.elvir_story_heard and not flag.elvir_truth_known] A raven-man died up there last spring. -> kostin_elvir
+* Go home, Kostin. -> kostin_go
+
+~ kostin_why
+set kostin_why_asked
+Kostin: Because you said the land was older than him, and I can't stop hearing it. I'd like to be wrong about everything. It would be restful.
+-> kostin_menu
+
+~ kostin_elvir
+set elvir_truth_known
+if not flag.martikovs_reconciled
+quest elvir_martikov truth_found
+endif
+Kostin: The black-eyed one. I took him water in the cage. He wasn't afraid of Mother, and it made her furious. He said he'd ordered his brother to fly, and it was the best order he ever gave. He told the tree so, at the end.
+-> kostin_menu
+
+~ kostin_go
+Kostin: Home. I'll have to find out where that is. Somewhere the trees only drink rain.
+Narrator: He gets up, carefully, and walks away along the track without looking at the hill once.
+-> END

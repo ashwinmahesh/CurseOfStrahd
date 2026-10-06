@@ -1,0 +1,17 @@
+{
+  "id": "sergei_von_zarovich",
+  "name": "Sergei von Zarovich",
+  "title": "A Reflection in the Pool",
+  "summary": "Strahd's younger brother, killed on his wedding day four centuries ago. His spirit waits in the Pool of the White Sun and can only be seen in the water, by the one he was to marry.",
+  "portrait": "sergei_von_zarovich",
+  "sprite": "sergei_von_zarovich",
+  "attitude": "friendly",
+  "voice": "docs/voice/sergei_von_zarovich.md",
+  "guest": false,
+  "tags": [
+    "spirit",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

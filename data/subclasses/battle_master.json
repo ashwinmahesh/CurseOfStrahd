@@ -243,6 +243,7 @@
         "id": "student_of_war",
         "name": "Student of War",
         "summary": "Proficiency with one Artisan's Tool and one Fighter skill.",
+        "text": "You gain proficiency with one kind of Artisan's Tools of your choice and in one skill of your choice from the Fighter's skill list.",
         "implemented": "data",
         "choices": [
           {
@@ -294,6 +295,7 @@
         "id": "improved_combat_superiority",
         "name": "Improved Combat Superiority",
         "summary": "Superiority Dice become d10s.",
+        "text": "Your Superiority Dice become d10s.",
         "implemented": "data"
       }
     },

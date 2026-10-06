@@ -86,7 +86,15 @@
         "id": "zealous_presence",
         "name": "Zealous Presence",
         "summary": "Bonus Action: up to ten allies gain Advantage on attacks and saves until your next turn; once per Long Rest or spend a Rage use.",
+        "text": "As a Bonus Action you let out a divinely charged battle cry. Up to ten other creatures of your choice within 60 feet gain Advantage on attack rolls and saving throws until the start of your next turn. You can't do this again until you finish a Long Rest, unless you expend a use of your Rage (no action required) to restore it.",
         "action": "bonus_action",
+        "resource": {
+          "id": "zealous_presence",
+          "name": "Zealous Presence",
+          "max": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "zealous_presence",
         "implemented": "text"
       }
     },

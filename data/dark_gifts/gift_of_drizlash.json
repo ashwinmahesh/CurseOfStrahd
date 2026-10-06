@@ -1,0 +1,48 @@
+{
+  "id": "gift_of_drizlash",
+  "name": "The Eyes of Drizlash",
+  "vestige": "Drizlash, who spins between the walls",
+  "summary": "A 30 ft climbing speed, darkvision 120 ft, and Web a few times a day. The price: Charisma -2, extra eyes that never close, and trouble in sunlight.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_faceless_god (the ring of amber)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "speed_set",
+        "kind": "climb",
+        "value": 30
+      },
+      {
+        "stat": "darkvision",
+        "value": 120
+      },
+      {
+        "stat": "spell",
+        "value": "web",
+        "ability": "wis",
+        "uses": {
+          "count": "pb",
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "web"
+    ],
+    "text": "Walls and ceilings are floors to you now, the dark is a lit room, and you can spin a web from your palms."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "cha",
+        "value": -2
+      }
+    ],
+    "flaw": "Four small black eyes have opened along your hairline. They don't close, and people can't stop looking at them.",
+    "text": "Your new eyes can't bear the day: in direct sunlight you have Disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight."
+  },
+  "implemented": "partial: the sunlight penalty is text only (no sunlight modifiers for characters yet)."
+}

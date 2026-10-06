@@ -49,6 +49,7 @@
         "id": "war_domain_spells",
         "name": "War Domain Spells",
         "summary": "Always prepared: Guiding Bolt, Magic Weapon, Shield of Faith, Spiritual Weapon; more at 5, 7 and 9.",
+        "text": "Your domain keeps these spells prepared for you: Guiding Bolt, Magic Weapon, Shield of Faith and Spiritual Weapon at Cleric level 3, Crusader's Mantle and Spirit Guardians at 5, Fire Shield and Freedom of Movement at 7, Hold Monster and Steel Wind Strike at 9.",
         "implemented": "data"
       }
     },
@@ -76,6 +77,7 @@
         "id": "war_gods_blessing",
         "name": "War God's Blessing",
         "summary": "Channel Divinity: cast Shield of Faith or Spiritual Weapon without a slot or Concentration (1 minute).",
+        "text": "You can spend a use of Channel Divinity to cast Shield of Faith or Spiritual Weapon instead of using a spell slot. Cast this way, the spell needs no Concentration and lasts 1 minute, ending early if you cast it again.",
         "implemented": "engine",
         "uses_resource": "channel_divinity"
       }

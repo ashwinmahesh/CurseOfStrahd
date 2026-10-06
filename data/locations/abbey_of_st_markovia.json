@@ -1,0 +1,373 @@
+{
+  "id": "abbey_of_st_markovia",
+  "name": "The Abbey of St. Markovia",
+  "region": "abbey_of_st_markovia",
+  "summary": "A walled stone abbey on a shelf of the mountain above Krezk: a church wing, an east wing of old wards, a bell tower, a cart shed and a walled garden. Built by a saint for the sick and the motherless; kept now by the Abbot and the Belview family he has been improving.",
+  "text": "The switchback track arrives at the abbey gate. Inside: the courtyard with its well and a statue of Markovia, the church doors to the north, the wards to the east and the garden door to the west.",
+  "map": {
+    "rows": [
+      "                                    ",
+      "  ################################  ",
+      "  #.......################.......#  ",
+      "  #.......################.......#  ",
+      "  #.......########################  ",
+      "  #.......########################  ",
+      "  #.......########################  ",
+      "  #.......########################  ",
+      "  #.......................########  ",
+      "  #.......................########  ",
+      "  #...............=.......########  ",
+      "  #.......................########  ",
+      "  #.........##............########  ",
+      "  #####.....##....=.......########  ",
+      "  #####...................########  ",
+      "  #####...................########  ",
+      "  #.......................########  ",
+      "  #...................==.........#  ",
+      "  #..............................#  ",
+      "  #..............................#  ",
+      "  #######.########################  ",
+      "     .........                      ",
+      "    .........=.                     ",
+      "    ...........                     ",
+      "    ...........                     ",
+      "    .=.........                     ",
+      "     .........                      ",
+      "       ....                         ",
+      "       ....                         ",
+      "       ....                         "
+    ],
+    "theme": "village",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "switchback_top",
+      "name": "The top of the switchback",
+      "cells": [
+        [
+          3,
+          21
+        ],
+        [
+          15,
+          29
+        ]
+      ]
+    },
+    {
+      "id": "abbey_gate",
+      "name": "The abbey gate",
+      "cells": [
+        [
+          3,
+          17
+        ],
+        [
+          14,
+          20
+        ]
+      ]
+    },
+    {
+      "id": "abbey_courtyard",
+      "name": "The courtyard",
+      "cells": [
+        [
+          3,
+          8
+        ],
+        [
+          25,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "cloister_walk",
+      "name": "The cloister walk",
+      "cells": [
+        [
+          15,
+          17
+        ],
+        [
+          32,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "west_court",
+      "name": "The west court",
+      "cells": [
+        [
+          3,
+          2
+        ],
+        [
+          9,
+          7
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      8,
+      27
+    ],
+    "from_krezk": [
+      8,
+      27
+    ],
+    "from_road": [
+      9,
+      27
+    ],
+    "from_chapel": [
+      17,
+      9
+    ],
+    "from_wards": [
+      24,
+      11
+    ],
+    "from_garden": [
+      3,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "switchback_down",
+      "cell": [
+        8,
+        29
+      ],
+      "to": "krezk",
+      "spawn": "from_abbey",
+      "label": "Down the switchback to Krezk"
+    },
+    {
+      "id": "abbey_road",
+      "cell": [
+        9,
+        29
+      ],
+      "to": "travel",
+      "label": "The road down the mountain"
+    },
+    {
+      "id": "church_doors",
+      "cell": [
+        17,
+        7
+      ],
+      "to": "abbey_of_st_markovia_shrine",
+      "spawn": "default",
+      "label": "Into the church of St. Markovia"
+    },
+    {
+      "id": "wards_door",
+      "cell": [
+        26,
+        11
+      ],
+      "to": "abbey_of_st_markovia_wards",
+      "spawn": "default",
+      "label": "The wards"
+    },
+    {
+      "id": "garden_door",
+      "cell": [
+        2,
+        10
+      ],
+      "to": "abbey_of_st_markovia_garden",
+      "spawn": "default",
+      "label": "The walled garden"
+    }
+  ],
+  "doors": [
+    {
+      "id": "abbey_gate",
+      "cell": [
+        9,
+        20
+      ],
+      "label": "The abbey gate"
+    }
+  ],
+  "props": [
+    {
+      "id": "markovia_statue",
+      "cell": [
+        18,
+        10
+      ],
+      "kind": "examine",
+      "label": "A statue of a woman",
+      "model": "statue_knight"
+    },
+    {
+      "id": "abbey_well",
+      "cell": [
+        18,
+        13
+      ],
+      "kind": "examine",
+      "label": "The courtyard well",
+      "model": "well_stone"
+    },
+    {
+      "id": "bell_tower",
+      "cell": [
+        12,
+        13
+      ],
+      "kind": "examine",
+      "label": "The bell tower",
+      "model": "palisade"
+    },
+    {
+      "id": "abbey_bench",
+      "cell": [
+        22,
+        17
+      ],
+      "kind": "decor",
+      "label": "Stone bench",
+      "model": "wall_low"
+    },
+    {
+      "id": "view_of_krezk",
+      "cell": [
+        5,
+        25
+      ],
+      "kind": "examine",
+      "label": "The view down to Krezk",
+      "model": "rocks"
+    },
+    {
+      "id": "abbey_facade",
+      "cell": [
+        20,
+        7
+      ],
+      "kind": "examine",
+      "label": "The church front",
+      "model": "church_front"
+    },
+    {
+      "id": "wards_windows",
+      "cell": [
+        26,
+        8
+      ],
+      "kind": "examine",
+      "label": "The barred windows of the wards",
+      "model": "shutters"
+    }
+  ],
+  "containers": [
+    {
+      "id": "cart_shed_crate",
+      "cell": [
+        6,
+        16
+      ],
+      "label": "Clovin's handcart",
+      "items": [
+        {
+          "id": "sack",
+          "qty": 2
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "jug",
+          "qty": 2
+        }
+      ],
+      "gold": 6,
+      "model": "cart"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        9,
+        19
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        17,
+        8
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        25,
+        11
+      ],
+      "kind": "torch",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "ezmerelda",
+      "cell": [
+        12,
+        24
+      ],
+      "dialogue": "abbey_of_st_markovia/ezmerelda:start",
+      "when": "tarokka.ally.npc == ezmerelda and not guest:ezmerelda",
+      "approach": 5
+    },
+    {
+      "npc": "clovin_belview",
+      "cell": [
+        11,
+        18
+      ],
+      "dialogue": "abbey_of_st_markovia/clovin:start",
+      "when": "not (flag.abbot_struck_down and not flag.abbot_fate)",
+      "approach": 4
+    },
+    {
+      "npc": "belview",
+      "cell": [
+        19,
+        14
+      ],
+      "dialogue": "abbey_of_st_markovia/belviews:courtyard"
+    },
+    {
+      "npc": "ireena",
+      "cell": [
+        16,
+        16
+      ],
+      "dialogue": "abbey_of_st_markovia/unveiling:ireena_waiting",
+      "when": "flag.ireena_waits_in_courtyard and not guest:ireena"
+    }
+  ],
+  "narration": {
+    "enter": "enter:abbey_of_st_markovia"
+  },
+  "rest": "risky"
+}

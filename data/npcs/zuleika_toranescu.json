@@ -1,0 +1,19 @@
+{
+  "id": "zuleika_toranescu",
+  "name": "Zuleika Toranescu",
+  "title": "Emil's Mate, Keeper of the Shrine",
+  "summary": "Emil's wife, a werewolf who tends the shrine of Mother Night, grows herbs at the cave mouth and feeds the stolen children when Kiril isn't looking. She wants her husband free and Kiril dead, and she cannot do either alone.",
+  "portrait": "zuleika_toranescu",
+  "sprite": "zuleika_toranescu",
+  "attitude": "indifferent",
+  "voice": "docs/voice/zuleika_toranescu.md",
+  "monster": "werewolf",
+  "guest": false,
+  "tags": [
+    "werewolf",
+    "lycanthrope",
+    "werewolf_den"
+  ],
+  "region": "werewolf_den",
+  "pronouns": "she/her"
+}

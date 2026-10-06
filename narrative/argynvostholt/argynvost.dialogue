@@ -1,0 +1,105 @@
+# The echo of the silver dragon Argynvost, frost on the chapel window (docs/voice/argynvost.md).
+# The beacon and the fire in his bones (quest the_dark_beacon), the oath, the skull, his last words to Vladimir.
+
+~ start
+if not flag.argynvost_echo_met
+-> first
+endif
+if flag.order_fate == "ride"
+Argynvost: They're going to march. I can hear them in the hall, sharpening swords that don't need it. It's a better noise than the old one.
+elif flag.order_fate == "grudge"
+Argynvost [sad]: You swore with him. I heard it through the floor. I don't blame you; he can be very convincing. He convinced forty knights, once.
+else
+Argynvost: You came back. The house notices. So do I, what's left of me.
+endif
+-> menu
+
+~ first
+set argynvost_echo_met
+Narrator: Frost creeps across the coloured glass of the great window, though the air hasn't changed, and draws in it a long, patient head with eyes like two lamps.
+Argynvost: Oh. Visitors with heartbeats. I had forgotten the sound. Like rain on a roof. Please, keep doing it.
+Argynvost: I was Argynvost. This was my house, and those are my knights in the hall. I'm what's left of me: an echo, and not a loud one.
+if guest:ireena
+Argynvost: And you, child. You have an old face. Older than you are. I'm sorry for it.
+endif
+-> menu
+
+~ menu
+* What happened here? -> fall
+* Why can't your knights rest? -> knights
+* [if not flag.argynvost_beacon_lit] Why is the beacon dark? -> beacon
+* [if flag.vladimir_guilt_seen and not flag.vladimir_last_words_known] Vladimir carries something he can't put down. What is it? -> last_words
+* What oath did your knights swear? -> oath
+* [if flag.dragon_fire_kindled and not flag.argynvost_beacon_lit] We carry your fire. -> carry
+* [class:cleric] Did your knights ever pray to you? -> prayed
+* Goodbye. -> bye
+
+~ fall
+set argynvost_skull_known
+Argynvost: A young lord came over the mountains with an army and a great deal of patience. We held the passes, then the road, then the house. The house held for one night.
+Argynvost: At the end I went out into the courtyard in my own shape. It was a good fight. It was not enough of one. They took my head to his castle afterwards. I gather it's on a wall.
+interject tag:curious: Does it... hurt? Being on a wall?
+Argynvost: Only my pride. And I was always told I had too much.
+-> menu
+
+~ knights
+Argynvost: Vladimir holds them. He swore them to vengeance over my body, and they rose for it, and they have never been dismissed. A soldier doesn't leave his post without leave. He's never given it.
+Argynvost: And I'm held with them, I think. You can't leave a house while everyone you love is still standing guard in it.
+* What did you ask of him, at the end? -> last_words
+* Could they be released? -> beacon
+* I see. -> menu
+
+~ last_words
+set vladimir_last_words_known
+Argynvost: I asked him to let them go. "Let them go home. Don't keep them for me." I said it plainly. I had very little breath left for poetry.
+Argynvost [sad]: He heard me. He held my head and heard me, and then he stood up and swore them all to vengeance in my name. I don't blame him. He was a boy, really. I would like him to stop.
+interject name:ilse_varga: He couldn't face going home without you. So he made sure nobody went.
+Argynvost: Yes. Exactly that. You understand him better than he'd like.
+-> menu
+
+~ beacon
+if not flag.dragon_fire_kindled and not flag.order_fate
+quest the_dark_beacon echo
+endif
+set argynvost_skull_known
+Argynvost: I lit it every night for a hundred years, so the valley would know someone was awake. It went out when I did. It's very dark out there without it.
+Argynvost: It needs my fire. My skull is in his castle; bring it home to my bones and the beacon will burn as it should, for good, and all of us will rest.
+Argynvost: But there's a little fire left in my bones, out in the mausoleum. Not much. Enough for one night, and one night is all they need to remember who they were and go home.
+-> beacon_menu
+
+~ beacon_menu
+* How do we take fire from bones? -> kindle_how
+* What will Vladimir do? -> vladimir_will
+* We'll think on it. -> menu
+
+~ kindle_how
+Argynvost: Hold a light to them, any light, and ask. They'll know whose hands are asking. Carry what catches up the tower to the cradle at the top, and don't let it go out. It won't want to. Neither do I.
+interject class:wizard: Fire from frost. That isn't how fire works.
+Argynvost: No. It's how I work. I'm told it was very annoying.
+-> beacon_menu
+
+~ vladimir_will
+Argynvost: He'll feel it the moment it moves. He'll come up the stair after you. If you can, be kind to him. If you can't, be quick. He'll get up again from anything else; he won't get up from the light.
+-> beacon_menu
+
+~ oath
+set order_oath_learned
+Argynvost: They wrote it themselves. I only corrected the spelling.
+Argynvost: "I will keep the watch while others sleep. I will shield the sleeper and the stranger alike. I will lift up the fallen and ask no price."
+Argynvost: "I will take nothing that is not given. And when the light goes out, I will be the light."
+Argynvost: It's carved on a stone by the door, there. Notice it says nothing about hate. Vladimir has never noticed.
+-> menu
+
+~ carry
+Argynvost: I know. I can feel it, like a hand on my back. Go up. Don't hurry on the stair; it's older than it looks. And if he comes, remember he was mine before he was angry.
+-> menu
+
+~ prayed
+Argynvost: On bad nights, I'm afraid they did. I kept the chapel for them, and they kept looking at my window. I told them the Morninglord was a far better listener. He also didn't eat their sheep.
+interject class:cleric: Mm. He'd have liked you.
+Argynvost: We corresponded, in a way. Mostly one way.
+-> menu
+
+~ bye
+Argynvost: Keep the watch, friends. Somebody should.
+-> END

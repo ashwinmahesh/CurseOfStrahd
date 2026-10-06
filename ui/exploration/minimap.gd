@@ -58,17 +58,17 @@ func show_location(v: LocationView) -> void:
 	_rim.queue_redraw()
 
 
-## Map colours by the kind of place, in the game's gothic tones: dark sepia ground; pines in the wilds, blood-dark
-## roofs in a town and black walls with a gilt edge indoors.
+## Map colours by the kind of place, in the game's gothic tones: grey ground outdoors with dark pines in the wilds and
+## blood-dark roofs in a town; dark planks and black walls with a gilt edge indoors.
 static func colours_for(theme: String) -> Dictionary:
-	var c := {"floor": "bone", "raised": "parchment", "wall": "void", "edge": "gilt_dark", "low": "walnut", "rough": "bone_dark",
+	var c := {"floor": "walnut", "raised": "leather", "wall": "void", "edge": "gilt_dark", "low": "umber", "rough": "peat",
 		"water": "moon_blue", "water_edge": "night_deep"}
 	if theme in ArenaBoard.WILD:
-		c.merge({"wall": "bog", "edge": "bog_deep", "low": "umber"}, true)
+		c.merge({"floor": "slate", "raised": "pewter", "wall": "bog", "edge": "bog_deep", "low": "umber", "rough": "stone"}, true)
 	elif theme in ArenaBoard.TOWNS or theme == "shrine_yard":
-		c.merge({"wall": "blood_deep", "edge": "void", "low": "umber"}, true)
+		c.merge({"floor": "slate", "raised": "pewter", "wall": "blood_deep", "edge": "void", "low": "umber", "rough": "stone"}, true)
 	elif theme == "dungeon":
-		c.merge({"floor": "slate", "raised": "pewter", "rough": "stone"}, true)
+		c.merge({"floor": "stone", "raised": "slate", "rough": "stone_deep"}, true)
 	var out := {}
 	for k: String in c:
 		out[k] = Look.color(str(c[k]))
@@ -237,7 +237,11 @@ func _draw_way_out(e: Dictionary) -> void:
 		_arrow(tip, toward, 18.0, colour)
 		return
 	_content.draw_circle(at, 9.0, Color(colour, 0.25), true, -1.0, true)
-	_arrow(at + dir * 7.0, dir, 13.0, colour)
+	if dir == Vector2.ZERO:
+		_content.draw_circle(at, 5.0, Look.color("ink"), true, -1.0, true)
+		_content.draw_circle(at, 3.5, colour, true, -1.0, true)
+	else:
+		_arrow(at + dir * 7.0, dir, 13.0, colour)
 
 
 func _arrow(tip: Vector2, dir: Vector2, length: float, colour: Color) -> void:

@@ -1,0 +1,29 @@
+{
+  "id": "the_pool_of_the_white_sun",
+  "name": "The Pool of the White Sun",
+  "summary": "At the pool in Krezk, Ireena saw a young man in the water who knew her by another name.",
+  "giver": "ireena",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "seen",
+      "journal": "At the Pool of the White Sun, Ireena saw Sergei von Zarovich in the water beside her reflection, Strahd's brother, dead four hundred years. She remembered being Tatyana: a chapel full of white flowers, a wall, a stair. The water is the only door he has.",
+      "objectives": [
+        "Ireena must choose"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "promised",
+      "journal": "Ireena promised Sergei she will come back to the pool when Strahd is dead. Until then she goes where we go.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "stayed",
+      "journal": "Ireena chose her own life: Ireena Kolyana, not Tatyana. She said goodbye to the young man in the water.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

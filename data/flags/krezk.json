@@ -1,0 +1,300 @@
+{
+  "region": "krezk",
+  "flags": [
+    {
+      "id": "krezk_arrived",
+      "type": "bool",
+      "summary": "The watchman at Krezk's gate has stopped the party once and named the rule: the gate opens only for a reason (gate). Later visits skip the speech."
+    },
+    {
+      "id": "krezk_abbey_directed",
+      "type": "bool",
+      "summary": "The watchman told the party to go up to the abbey, because the Abbot takes in anyone and the burgomaster listens to him (gate). The Abbot remarks on it."
+    },
+    {
+      "id": "krezk_persuade_tried",
+      "type": "bool",
+      "summary": "The party has made its one Persuasion attempt at Krezk's gate."
+    },
+    {
+      "id": "krezk_reason",
+      "type": "string",
+      "summary": "Why Dmitri opened Krezk's gate: ireena, abbot (he vouched), wine (news of the Wizard of Wines), cleric (a priest for his son), persuaded, cowed (threatened; Dmitri stays cold and won't shelter Ireena) or wolves (the party fought off the wolves at night)."
+    },
+    {
+      "id": "krezk_gate_open",
+      "type": "bool",
+      "summary": "THE GATE: Dmitri opened Krezk's gate to the party (gate:opened). The gate door opens; the watchman's later lines play. Later regions may read it."
+    },
+    {
+      "id": "krezk_wolves_driven_off",
+      "type": "bool",
+      "summary": "The party beat the wolves that came up the road at night while the gate was shut (encounter gate_wolves). A reason the gate opens."
+    },
+    {
+      "id": "dmitri_met",
+      "type": "bool",
+      "summary": "The party has met Dmitri Krezkov, burgomaster of Krezk (at the gate or at home)."
+    },
+    {
+      "id": "krezk_refuge_offered",
+      "type": "bool",
+      "summary": "Dmitri offered Ireena refuge behind Krezk's wall (at the gate for Kolyan's sake, or at home). Unlocks asking her whether she'll stay."
+    },
+    {
+      "id": "ireena_in_krezk",
+      "type": "bool",
+      "summary": "Ireena stays in Krezk at the Krezkovs' house and has left the party (krezk/ireena). The castle and Phase 6 may read where she is."
+    },
+    {
+      "id": "ismark_in_krezk",
+      "type": "bool",
+      "summary": "Ismark stayed in Krezk to guard Ireena and left the party."
+    },
+    {
+      "id": "ilya_heard",
+      "type": "bool",
+      "summary": "The party knows Ilya Krezkov, the burgomaster's last son, is dying of a fever (Dmitri, Anna, the gate or the Abbot)."
+    },
+    {
+      "id": "ilya_fate",
+      "type": "string",
+      "summary": "What became of Ilya: healed (a cleric's prayer, or the Abbot's hands in the wedding, repentant or broken endings) or frail (the White Sun's water broke the fever; he lives, weak). Unset: never cured; the epilogue may read it as his death in the winter."
+    },
+    {
+      "id": "anna_met",
+      "type": "bool",
+      "summary": "The party has met Anna Krezkova at her son's bedside."
+    },
+    {
+      "id": "anna_chest_noticed",
+      "type": "bool",
+      "summary": "Anna has noticed her chest was robbed (once)."
+    },
+    {
+      "id": "krezkov_chest_robbed",
+      "type": "bool",
+      "summary": "Somebody opened Anna's locked chest in the Krezkovs' bedroom (container flag)."
+    },
+    {
+      "id": "anna_dress_given",
+      "type": "bool",
+      "summary": "Anna Krezkova gave the party her own wedding dress."
+    },
+    {
+      "id": "anna_dress_declined",
+      "type": "bool",
+      "summary": "The party refused to take Anna's wedding dress; she pointed them to the abbey matron's locked room."
+    },
+    {
+      "id": "anna_dress_returned",
+      "type": "bool",
+      "summary": "The party gave the Abbot a different dress and brought Anna's own back to her."
+    },
+    {
+      "id": "wedding_dress_found",
+      "type": "bool",
+      "summary": "The party has a wedding dress for the Abbot's bride from outside the abbey: Anna Krezkova's (krezk/anna), or one another region provides (it should also set wedding_dress_source, e.g. \"vallaki\")."
+    },
+    {
+      "id": "wards_dress_found",
+      "type": "bool",
+      "summary": "The party opened the matron's trunk in the abbey wards and found an unworn wedding dress (container flag)."
+    },
+    {
+      "id": "wedding_dress_delivered",
+      "type": "bool",
+      "summary": "The party gave the Abbot a wedding dress; Vasilka was woken in the church (unveiling)."
+    },
+    {
+      "id": "wedding_dress_source",
+      "type": "string",
+      "summary": "Whose dress Vasilka wore or the party carries: anna (Anna Krezkova's own), wards (the abbey matron's), or another region's value (e.g. vallaki). Dmitri and the Abbot read it; the epilogue may."
+    },
+    {
+      "id": "white_sun_water",
+      "type": "bool",
+      "summary": "The party filled flasks from the Pool of the White Sun (two holy water, once). Unlocks breaking Ilya's fever."
+    },
+    {
+      "id": "white_sun_prayed",
+      "type": "bool",
+      "summary": "The party lit a candle and prayed at the shrine of the White Sun."
+    },
+    {
+      "id": "pool_offerings_taken",
+      "type": "bool",
+      "summary": "The party stole the coins wished into the Pool of the White Sun. Kasha scolds them."
+    },
+    {
+      "id": "kasha_met",
+      "type": "bool",
+      "summary": "The party has met Kasha Varo, keeper of the shrine of the White Sun."
+    },
+    {
+      "id": "kasha_scolded",
+      "type": "bool",
+      "summary": "Kasha has scolded the party about the stolen wishes (once)."
+    },
+    {
+      "id": "turned_earth_found",
+      "type": "bool",
+      "summary": "A search of the graves by the pool found one dug and refilled in secret (the Abbot's bride was made from Krezk's dead)."
+    },
+    {
+      "id": "ireena_pool_vision",
+      "type": "bool",
+      "summary": "At the Pool of the White Sun, Ireena saw Sergei von Zarovich in the water and remembered being Tatyana (krezk/pool). Phase 6 (her ending) and the Abbot's unveiling read it."
+    },
+    {
+      "id": "ireena_pool_choice",
+      "type": "string",
+      "summary": "What Ireena chose at the pool: promised (she will return to the pool and Sergei once Strahd is dead) or stayed (she chose her own life as Ireena). Her fate stays open for Phase 6, which reads this."
+    },
+    {
+      "id": "clovin_met",
+      "type": "bool",
+      "summary": "The party has met Clovin Belview at the abbey gate."
+    },
+    {
+      "id": "clovin_met_on_road",
+      "type": "bool",
+      "summary": "The party met Clovin with his broken handcart on the road to Krezk (random event)."
+    },
+    {
+      "id": "clovin_befriended",
+      "type": "bool",
+      "summary": "The party fixed Clovin's cart or shared his last wine; he is glad to see them."
+    },
+    {
+      "id": "markovia_letter_read",
+      "type": "bool",
+      "summary": "The party read St. Markovia's last letter aloud to Clovin. Unlocks the plain way to the Abbot's repentance at the unveiling."
+    },
+    {
+      "id": "markovia_story_heard",
+      "type": "bool",
+      "summary": "The Abbot told the party his version of St. Markovia: brave, and mistaken."
+    },
+    {
+      "id": "abbot_met",
+      "type": "bool",
+      "summary": "The party has met the Abbot in the abbey church."
+    },
+    {
+      "id": "abbot_saw_ireena",
+      "type": "bool",
+      "summary": "The Abbot has seen Ireena and recognised Tatyana in her. If she is in the church when Vasilka wakes, he wants her instead."
+    },
+    {
+      "id": "abbot_nature_known",
+      "type": "bool",
+      "summary": "Religion, a cleric or a paladin showed the party the Abbot is a celestial gone wrong. Unlocks the Religion appeal at the unveiling."
+    },
+    {
+      "id": "abbot_bride_revealed",
+      "type": "bool",
+      "summary": "The Abbot told the party he is making a bride for the lord of Barovia."
+    },
+    {
+      "id": "abbot_dress_asked",
+      "type": "bool",
+      "summary": "The party agreed to bring the Abbot a wedding dress (quest the_abbots_bride asked)."
+    },
+    {
+      "id": "abbot_dress_refused",
+      "type": "bool",
+      "summary": "The party refused the Abbot's request for a dress; they can change their minds."
+    },
+    {
+      "id": "abbot_vouched",
+      "type": "bool",
+      "summary": "The Abbot vouched for the party to Krezk. A reason the gate opens."
+    },
+    {
+      "id": "abbot_cells_noted",
+      "type": "bool",
+      "summary": "The Abbot has reproached the party for opening his wards (once)."
+    },
+    {
+      "id": "abbot_persuade_tried",
+      "type": "bool",
+      "summary": "The party has made its one Persuasion attempt to turn the Abbot from the wedding."
+    },
+    {
+      "id": "abbot_religion_tried",
+      "type": "bool",
+      "summary": "The party has made its one Religion appeal to the Abbot at the unveiling."
+    },
+    {
+      "id": "bride_defeated",
+      "type": "bool",
+      "summary": "The party destroyed Vasilka and the Belviews defending her wedding (encounter bride_defends). The Abbot kneels and the party judges him."
+    },
+    {
+      "id": "abbot_struck_down",
+      "type": "bool",
+      "summary": "The party killed the Abbot in battle in his church (encounter abbot_wrath)."
+    },
+    {
+      "id": "abbot_fate",
+      "type": "string",
+      "summary": "THE ABBOT'S FATE, set at the region's climax: wedding (Vasilka went to the castle; also when the party fled with Ireena), repentant (he unmade his work, healed Ilya and walked up the mountain to be judged), broken (his bride destroyed, he sits mute in his church) or slain. Krezk, the Belviews, Phase 6 and the epilogue read it."
+    },
+    {
+      "id": "vasilka_fate",
+      "type": "string",
+      "summary": "What became of Vasilka: sent (to the castle as Strahd's bride), laid_to_rest, destroyed (in the fight), abandoned (left standing in the church after the Abbot died) or never_woke (the Abbot died before she was woken). Phase 6 reads sent."
+    },
+    {
+      "id": "abbot_told_strahd",
+      "type": "bool",
+      "summary": "The party fled the Abbot with Ireena and he wrote to the castle to say where she sleeps. Strahd's scenes in Phase 6 may read it."
+    },
+    {
+      "id": "ireena_waits_in_courtyard",
+      "type": "bool",
+      "summary": "The party sent Ireena out of the church before the unveiling; she waits by the courtyard well until they collect her."
+    },
+    {
+      "id": "krezk_milestone_reached",
+      "type": "bool",
+      "summary": "Guard: the region's one milestone has been given (unveiling:the_end)."
+    },
+    {
+      "id": "belview_family_met",
+      "type": "bool",
+      "summary": "The party has been into the Belviews' kitchen in the wards."
+    },
+    {
+      "id": "wards_cells_freed",
+      "type": "bool",
+      "summary": "The party calmly let the Abbot's failed 'improvements' out of the barred cells; they fled onto the mountain. The Abbot and Krezk notice."
+    },
+    {
+      "id": "wards_cells_riot",
+      "type": "bool",
+      "summary": "Opening the cells went wrong; triggers encounter wards_cells."
+    },
+    {
+      "id": "wards_cells_fought",
+      "type": "bool",
+      "summary": "The party fought the starving Belviews from the cells (encounter wards_cells)."
+    },
+    {
+      "id": "vasilka_examined",
+      "type": "bool",
+      "summary": "The party looked closely at Vasilka on her table and saw she was made of several women."
+    },
+    {
+      "id": "garden_sentry_burned",
+      "type": "bool",
+      "summary": "The party destroyed the stitched scarecrows in the abbey garden (encounter garden_sentry)."
+    },
+    {
+      "id": "ezmerelda_met",
+      "type": "bool",
+      "summary": "The party has met Ezmerelda d'Avenir (at the abbey switchback when the Tarokka names her). Van Richten's Tower may read it."
+    }
+  ]
+}

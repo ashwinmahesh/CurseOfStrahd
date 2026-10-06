@@ -1,0 +1,69 @@
+# Stefania Martikov, Davian's daughter (docs/voice/stefania_martikov.md): at the camp, then in the yard by the house.
+# She tells Elvir's story, and when Davian travels with the party as the Tarokka's ally she hears the family's news.
+
+~ start
+if not flag.stefania_met
+set stefania_met
+Narrator: A woman with her sleeves rolled to the elbow is stirring a pot over the fire, one child on her hip and two more trying to climb a tree behind her.
+Stefania: You're the ones Adrian found. Good. Sit, eat, and don't feed the children; they lie about being hungry. Mirela, out of that tree. I'm Stefania. I keep this family alive, mostly by shouting at it.
+elif flag.winery_reclaimed
+Stefania: A roof! Walls! A floor nobody's growing things through! I've scrubbed the kitchen twice and it still smells of druid. What can I do for you?
+else
+Stefania: Back again. There's soup. There's always soup.
+endif
+-> menu
+
+~ menu
+* [if not flag.elvir_story_heard] Your father won't speak of Elvir. -> elvir
+* [if flag.elvir_story_heard and not flag.martikovs_reconciled] How do we mend things between them? -> mend
+* [if guest:davian_martikov] We have news for the family. -> news
+* [if guest:adrian_martikov and flag.yester_hill_resolved] Adrian's home. -> adrian_home
+* [if flag.winery_first_cart and flag.wizard_of_wines_milestone_reached] Any word from the first cart? -> cart_news
+* How are the children holding up? -> children
+* Goodbye. -> END
+
+~ elvir
+set elvir_story_heard
+quest elvir_martikov heard
+Stefania: No. He won't. Last spring Father sent Elvir and Adrian to watch Yester Hill. The druids' things caught them in the bracken. Adrian came home alone, all blood and feathers, and said "I flew." Nothing else. Not then, not since.
+Stefania: Elvir was the youngest. The loud one. Father raised a cairn for him with nothing under it, and he's hardly said a kind word to Adrian since.
+interject tag:patient: And you? What do you think happened?
+Stefania: I think my brother would have died for Elvir without stopping to think. So something stopped him. I'd give a great deal to know what.
+-> menu
+
+~ mend
+Stefania: Bring Father the truth. He can't argue with the truth; he's never had the practice. Elvir was taken up that hill. If anything of him is left, it's up there.
+if flag.adrian_told_order
+Stefania: And Adrian told you something, didn't he? He never tells me anything. ...Good. Better you than nobody.
+endif
+-> menu
+
+~ news
+Stefania: Father's standing right behind you and you're telling me? He'll love that. Go on, then, both of you.
+-> wizard_of_wines/davian:menu
+
+~ adrian_home
+leave adrian_martikov
+Stefania: Home. Get in here. You stink of smoke and you've torn your good coat. ...You're all right? Good. Good.
+Adrian: I'm all right.
+-> menu
+
+~ cart_news
+if flag.winery_first_cart == "vallaki"
+Stefania: The cart came back from Vallaki empty and the driver came back drunk. Urwin sent a note, three words: "About time, Father." Father laughed until he had to sit down.
+elif flag.winery_first_cart == "village"
+Stefania: The cart came back from the village under the castle. They rang the church bell when it rolled in. The driver says nobody there had heard it ring for anything but a burial in years.
+else
+Stefania: The cart came back from Krezk. They opened the gate for it, and the burgomaster counted the casks in himself. He sent us back a pear tree. I don't know what to do with a pear tree.
+endif
+-> menu
+
+~ children
+if flag.winery_reclaimed
+Stefania: Sleeping in beds again, which they're furious about; they'd got used to roosting. Viorel bit his cousin yesterday in raven form. I've told him that's twice as rude.
+else
+Stefania: They think it's an adventure, which is the only mercy in it. Toma has decided he's going to kill a druid. He's seven. I've told him he finishes his porridge first.
+endif
+interject tag:cheerful: I could teach them a coin trick. Purely for morale.
+Stefania: If a single coin goes missing in this camp, I'll know who to shout at.
+-> menu

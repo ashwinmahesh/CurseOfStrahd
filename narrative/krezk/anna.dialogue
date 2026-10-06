@@ -1,0 +1,145 @@
+# Anna Krezkova at her son Ilya's bedside, and Ilya himself (docs/voice/anna_krezkova.md, docs/voice/ilya_krezkov.md).
+# start: Anna. The wedding dress she kept for a daughter, the cures for Ilya (a cleric, the White Sun's water, the
+# Abbot), and what she says after. ilya: the boy.
+
+~ start
+if flag.krezkov_chest_robbed and not flag.anna_chest_noticed
+set anna_chest_noticed
+Anna Krezkova [angry]: Someone has been through my chest. My mother's ring is gone, and the money we kept for the boy's stone. I won't ask who. I don't want to know what kind of guests we keep.
+-> menu
+endif
+if flag.ilya_fate == "healed"
+Anna Krezkova [smile]: Look at him. No, don't, he'll show off. He's eaten three bowls of porridge and asked to see the abbey. I said yes. I said yes to everything today.
+-> menu
+elif flag.ilya_fate == "frail"
+Anna Krezkova: He sleeps like a child sleeps now, not like a candle going out. Thin as a reed, but he sleeps. The White Sun did that. And you.
+-> menu
+endif
+if not flag.anna_met
+set anna_met
+Narrator: A small room, too warm, smelling of vinegar and willow bark. A woman sits by the bed holding a boy's hand in both of hers. She is singing under her breath, and she doesn't stop when you come in, only looks up.
+Anna Krezkova: You're the strangers Dmitri let in. Come and see him, then. Everyone does, and goes away again. I've stopped minding.
+if not flag.ilya_heard
+set ilya_heard
+quest the_burgomasters_son heard
+endif
+else
+Anna Krezkova: Come in. Quietly. He's sleeping, or something like it.
+endif
+-> menu
+
+~ menu
+* How long has he been like this? -> how_long
+* [Medicine DC 13] Let us look at him. -> medicine_ok | medicine_fail
+* [Cleric] Let me pray over him. -> cleric_cure
+* [if flag.white_sun_water and not flag.ilya_fate] Bathe his brow with water from the Pool of the White Sun. -> water_cure
+* [if flag.abbot_dress_asked and not flag.anna_dress_given and not flag.wedding_dress_delivered] The Abbot asked us for a wedding dress. He says he'll come down for Ilya if he gets one. -> dress
+* [if flag.anna_dress_given and flag.wedding_dress_delivered and flag.wedding_dress_source != "anna" and not flag.anna_dress_returned] We didn't need your dress after all. Here it is. -> dress_returned
+* [if not flag.ilya_fate] Talk to the boy. -> ilya
+* We'll leave you with him. -> END
+
+~ how_long
+Anna Krezkova: A month. It came with the carter's cough in the autumn and it found him and it won't let go. He burns all night and shivers all day. He's stopped asking for things. That was the worst day.
+Anna Krezkova: The Abbot would come if Dmitri asked. Dmitri won't ask. He thinks there's a price. Of course there's a price. There's a price for breathing.
+-> menu
+
+~ medicine_ok
+Narrator: The fever is the kind that sits in the blood and won't be sweated out. Willow bark won't touch it. Prayer with a real answer behind it might, or a hand that has healed before.
+Anna Krezkova: That's what I've been telling Dmitri for a month. It sounds better from a stranger.
+-> menu
+
+~ medicine_fail
+Narrator: Hot skin, a racing pulse, a cough that rattles. You've seen fevers break, and you've seen them not. You can't tell which this is.
+-> menu
+
+~ cleric_cure
+Narrator: You kneel by the bed and lay a hand on the boy's chest and pray. For a moment nothing. Then the warmth under your palm changes: not the fever's heat, but a cleaner one, like sun through a shutter.
+if name:hedda_ironvow
+interject name:hedda_ironvow: There. Mm. There it goes. Out you go, you miserable thing. This boy has goats to shout at.
+else
+interject class:cleric: There. Feel that? That's it leaving.
+endif
+Narrator: Ilya opens his eyes, frowns at the ceiling as if it owes him money, and says he's hungry.
+Anna Krezkova [smile]: Oh. Oh, my heart.
+set ilya_fate = "healed"
+quest the_burgomasters_son healed
+gold +40
+Anna Krezkova: Take this. Don't argue. It was for his stone, and he won't need one now.
+-> END
+
+~ water_cure
+Narrator: You wet a cloth in the pool water and lay it across his brow. The water doesn't warm against his skin the way it should. It stays cool, and slowly, the boy's breathing slows to match it.
+Anna Krezkova: His fever. Feel. It's going.
+Narrator: It goes, but not all the way. Whatever the water has done, it has done it to the fever and not to the sickness under it. He'll live. He'll be thin a long while.
+set ilya_fate = "frail"
+quest the_burgomasters_son frail
+Anna Krezkova [sad]: He'll live. I can do the rest. I've done harder.
+-> END
+
+~ dress
+if flag.anna_dress_declined
+Anna Krezkova: Back again, and empty-handed, by the look of you. The abbey's matron kept her door locked, then. Or you didn't look.
+endif
+if flag.ilya_fate == "healed"
+Anna Krezkova: You saved my son. You could ask me for the roof and I'd go up and start on the nails. What does he want a wedding dress for?
+else
+Anna Krezkova: A dress. That's his price? Not my soul, not my firstborn? He's had five of my firstborns, by now, one way and another. What does he want a wedding dress for?
+endif
+* Tell her the truth: it's for a bride he's made from the dead, for the lord of the castle. -> dress_truth
+* He didn't say. -> dress_lie
+* No. We can't take this from you. -> dress_declined
+
+~ dress_truth
+Narrator: You tell her. She listens all the way through, holding the boy's hand, and her face does nothing at all.
+Anna Krezkova: So. He's sewing a girl for the devil, and he wants her married in white. And if I give it, he'll come down and put his hand on my son.
+Anna Krezkova [sad]: I kept it for a daughter. I had three. They're by the pool. Give it to his poor stitched girl. At least someone will wear it.
+-> dress_given
+
+~ dress_lie
+Narrator: She looks at you the way mothers look at children who have just said they didn't touch the honey.
+Anna Krezkova: Then I won't ask. It's in the chest at the foot of my bed. Take it. If it buys my son a morning, he can make a scarecrow's wedding out of it for all I care.
+-> dress_given
+
+~ dress_declined
+set anna_dress_declined
+Anna Krezkova: You'd rather find another? Up in that abbey, perhaps. The nuns left everything behind when they went; they say the matron's room is still locked. Find one there, then. Find it quickly.
+-> menu
+
+~ dress_given
+set wedding_dress_found
+set anna_dress_given
+set wedding_dress_source = "anna"
+quest the_abbots_bride dress_found
+Narrator: Anna lifts out a dress of heavy cream wool and old lace, folded in lavender. It has been mended in two places by a careful hand, and never worn since.
+interject tag:loyal: We'll bring it back to you if there's any way at all.
+Anna Krezkova: Bring back the Abbot instead. Down this mountain, to this bed.
+-> END
+
+~ dress_returned
+set anna_dress_returned
+Narrator: You put the folded dress back in her lap. She runs her thumb along the lace, at the place where it was mended.
+Anna Krezkova [smile]: You found another. You came back to give this to me, when nobody would have known. Well. Krezk will hear about you.
+-> menu
+
+~ ilya
+Narrator: The boy is thin and flushed, his hair stuck to his forehead. His eyes open when you lean over him, and fix on you with the frank interest of a child who has met very few new people.
+Ilya Krezkov: Are you from outside the wall?
+* We are. We've come a long way. -> ilya_outside
+* Rest, Ilya. -> menu
+
+~ ilya_outside
+Ilya Krezkov: Is it true the sun's bigger outside? Kasha says so. Kasha says at the pool you can see what it used to look like.
+if guest:ireena
+interject guest:ireena: It isn't bigger. But it's out there, Ilya. I've seen it. Get well and go and look.
+endif
+Ilya Krezkov: When I'm better I'm going to climb the wall and look. Papa says no. Papa says no to everything.
+Narrator: He's asleep again before you can answer, mid-thought, the way children and the very sick do.
+-> menu
+
+~ ilya_well
+Narrator: A thin boy in a too-big coat is leaning over the well, shouting his own name down it to hear it come back.
+Ilya Krezkov: You're the ones from outside! I'm better. I'm going to climb the wall. Papa says I'm not, but he said I wasn't going to get better either, and look.
+if flag.abbot_fate == "repentant" or flag.abbot_fate == "wedding" or flag.abbot_fate == "broken"
+Ilya Krezkov: The angel came. He had cold hands and he smelled like summer. He told me to be good. I said I'd try. He said that was what he'd said, once.
+endif
+-> END

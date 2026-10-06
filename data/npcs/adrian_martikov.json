@@ -1,0 +1,25 @@
+{
+  "id": "adrian_martikov",
+  "name": "Adrian Martikov",
+  "title": "Davian's Eldest",
+  "summary": "Davian's eldest son and the better vintner, though his father would sooner drink vinegar than say so. Quiet, dry, and carrying his younger brother's death like a stone in his coat. He was the raven on the Svalich road.",
+  "portrait": "adrian_martikov",
+  "sprite": "adrian_martikov",
+  "attitude": "indifferent",
+  "voice": "docs/voice/adrian_martikov.md",
+  "monster": "wereraven",
+  "guest": true,
+  "tags": [
+    "barovian",
+    "vintner",
+    "wereraven",
+    "keepers_of_the_feather",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "he/him",
+  "guest_build": {
+    "monster": "wereraven",
+    "note": "Comes along for the climb up Yester Hill if the party lets him, and goes home after."
+  }
+}

@@ -1,0 +1,60 @@
+# Party banter at the Wizard of Wines. Each node opens with an `if` gate: the node is eligible only while its
+# condition holds. Party members speak only through interjections; a line plays if a matching member is present.
+
+~ banter_wine_country
+if flag.davian_met and not flag.winery_reclaimed
+interject name:tamsin_tealeaf: A whole winery, and not one bottle left whole. The druids smashed the lot. I've never hated anyone on behalf of a bottle before.
+interject name:ilse_varga: Siege logic. Burn the stores, starve the garrison. They know what they're doing.
+interject name:tamsin_tealeaf: That's worse. I wanted them to be stupid.
+endif
+-> END
+
+~ banter_ravens
+if flag.davian_met and not flag.keepers_allied
+interject tag:bookish: Lycanthropy, but ravens. The literature is very thin. I'd like it noted that I am being extremely restrained about asking them questions.
+interject tag:blunt: Noted. Keep being restrained.
+endif
+-> END
+
+~ banter_father_and_son
+if flag.elvir_story_heard and not flag.martikovs_reconciled
+interject name:hedda_ironvow: The old man grieves like stone weathers. Slowly, from the outside in, and he calls it standing firm.
+interject name:ilse_varga: He sent two soldiers out and one came back. Every officer I ever served under did the same sums. Most of them blamed the one who came back.
+endif
+-> END
+
+~ banter_stones
+if flag.winery_stone_hiding_told and not flag.winery_stone_recovered
+interject class:wizard: Three stones that make vines grow where nothing should. Payment for one winter's lodging. That wizard either loved wine more than anyone ever has, or the stones were the cheapest thing in his pockets.
+interject tag:curious: Or he's coming back for the casks.
+endif
+-> END
+
+~ banter_reconciled
+if flag.martikovs_reconciled
+interject name:tamsin_tealeaf: Did you see the old man's face? When he gave Adrian the press? I'm not crying. It's the vinegar.
+interject name:hedda_ironvow: Mm. It's the vinegar. Stone remembers. So do fathers, eventually.
+endif
+-> END
+
+~ banter_wine_flows
+if flag.winery_wine_flows
+interject tag:cheerful: First real wine in this whole valley, and we're the reason. I'm going to be insufferable about this.
+interject tag:blunt: You were already insufferable.
+interject tag:cheerful: Now I'll have a reason.
+endif
+-> END
+
+~ banter_kept_the_fee
+if flag.winery_strongbox_kept
+interject class:cleric: We took the old man's strongbox in a war he was losing. I'd like that remembered when we're being proud of ourselves.
+interject class:rogue: Remembered. It was a very good lock, though.
+endif
+-> END
+
+~ banter_keepers
+if flag.keepers_allied
+interject tag:curious: There's a raven on that fence. And that one. And that one. They've been following us since the winery.
+interject name:silvain_aster: We have, technically, been adopted by a secret society of shapechanging birds. I'm writing it down before anyone can talk me out of it.
+endif
+-> END

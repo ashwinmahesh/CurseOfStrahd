@@ -101,6 +101,18 @@
         "id": "fey_reinforcements",
         "name": "Fey Reinforcements",
         "summary": "Summon Fey is always ready: cast it once per Long Rest without a slot or Material components, and you can choose a version without Concentration.",
+        "text": "You can cast Summon Fey without a Material component, and once without a spell slot, regaining that free casting when you finish a Long Rest. Whenever you begin casting it, you can make it need no Concentration; its duration then becomes 1 minute for that casting.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "summon_fey",
+            "always_prepared": true,
+            "uses": {
+              "count": 1,
+              "recharge": "long"
+            }
+          }
+        ],
         "implemented": "text"
       }
     },

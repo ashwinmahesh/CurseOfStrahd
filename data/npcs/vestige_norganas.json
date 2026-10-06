@@ -1,0 +1,16 @@
+{
+  "id": "vestige_norganas",
+  "name": "Norganas",
+  "title": "A Voice in the Amber",
+  "summary": "A vestige sealed in a sarcophagus of amber in the Amber Temple: the last ember of a dead or forgotten power, still able to speak and to bargain. A blurred shape in milky amber, as though the sculptor kept rubbing it out and starting again.",
+  "portrait": "vestige_amber",
+  "attitude": "indifferent",
+  "voice": "docs/voice/amber_vestiges.md",
+  "guest": false,
+  "tags": [
+    "vestige",
+    "amber_temple"
+  ],
+  "pronouns": "it",
+  "region": "amber_temple"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "the_burgomasters_son",
+  "name": "The Burgomaster's Son",
+  "summary": "Ilya Krezkov, the burgomaster's last child, has been burning with fever for a month.",
+  "giver": "anna_krezkova",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Dmitri and Anna Krezkov have buried five children. Their sixth, Ilya, eight years old, has had a fever for a month that nothing in Krezk can break. Anna wants the Abbot's help. Dmitri would rather not owe the Abbot anything.",
+      "objectives": [
+        "Find a way to cure Ilya"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "abbot_offer",
+      "journal": "The Abbot of St. Markovia offered a bargain: bring him a wedding dress for his bride, and he will go down to Krezk and lay his hands on Ilya.",
+      "objectives": [
+        "Bring the Abbot a wedding dress",
+        "Or find another cure"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "frail",
+      "journal": "Water from the Pool of the White Sun broke Ilya's fever. He will live, but he is very weak, and the sickness under the fever is still there.",
+      "objectives": [
+        "A healer's prayer, or the Abbot's hands, could finish what the water began"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "healed",
+      "journal": "Ilya Krezkov is well. He is out at the well shouting his own name down it, and threatening to climb the wall.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

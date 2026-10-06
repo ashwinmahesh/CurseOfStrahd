@@ -11,7 +11,8 @@ signal round_started(round: int)
 ## Escape with nothing to cancel: the game opens its pause menu (the arena has none).
 signal menu_requested
 
-const STEP_TIME := 0.13
+## Seconds per square for a token moving on the board (owner 2026-10-06: half the old speed, it read unnaturally fast).
+const STEP_TIME := 0.26
 const AI_PAUSE := 0.35
 ## How long damage and healing numbers stay over a creature.
 const FLOAT_TIME := 2.4

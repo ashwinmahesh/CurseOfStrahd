@@ -1,0 +1,20 @@
+{
+  "id": "patrina_velikovna",
+  "name": "Patrina Velikovna",
+  "title": "The Wailing Scholar",
+  "summary": "Kasimir Velikov's sister, a dusk elf who climbed to the Amber Temple to learn what the lord of the valley knew, and went to his castle after. Stoned by her own people, she came back here as a banshee to the one place she was ever free.",
+  "portrait": "patrina_velikovna",
+  "sprite": "patrina_velikovna",
+  "attitude": "hostile",
+  "voice": "docs/voice/patrina_velikovna.md",
+  "monster": "banshee",
+  "guest": false,
+  "tags": [
+    "dusk_elf",
+    "banshee",
+    "undead",
+    "amber_temple"
+  ],
+  "pronouns": "she/her",
+  "region": "amber_temple"
+}

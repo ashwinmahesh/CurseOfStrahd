@@ -15,6 +15,9 @@ func play(c: Combatant) -> CombatResult:
 	if not c.can_act():
 		return CombatResult.new()
 	var ch := c.creature as Character
+	if ch == null:
+		# A guest with a stat block (Ilinca, Emil, Sir Godfrey...): it fights as its own monster AI would.
+		return e.ai.play_turn(c)
 	if ch.class_level_of("cleric") > 0:
 		return _cleric(c)
 	if ch.class_level_of("wizard") > 0:

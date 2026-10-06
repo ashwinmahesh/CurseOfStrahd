@@ -1,0 +1,171 @@
+# The beacon at the top of Argynvostholt's tower: the climax of the beacon path (docs/regions/argynvostholt.md §4).
+# cradle: the beacon's cradle (prop). fallen: Vladimir after the fight beacon_stand (approach, or the cradle again).
+# light: the lighting; Godfrey's last choice if the cards named him; then vladimir:climax_end (the milestone).
+
+~ cradle
+if flag.argynvost_beacon_lit
+Narrator: The beacon burns silver in its cradle, without heat and without smoke. From up here its light lies on the treetops all the way to the castle.
+-> END
+endif
+if flag.beacon_stand_won
+-> fallen
+endif
+if treasure_at:argynvostholt_beacon
+Narrator: Beside the cradle, the lamp-keeper's iron locker is bolted to the stones. When you nudge it with a boot, something heavier than lamp oil shifts inside.
+endif
+if not flag.dragon_fire_kindled
+Narrator: A great iron cradle on a stone plinth, full of ash so old it has set like mortar. Soot climbs the parapet behind it in a long black tongue.
+if flag.argynvost_echo_met
+Narrator: It wants the dragon's fire, and you aren't carrying it. That waits in the mausoleum, in the frost on his bones.
+endif
+-> END
+endif
+if flag.order_fate == "ride"
+-> ride_warning
+endif
+if flag.order_fate == "grudge"
+-> pact_warning
+endif
+-> confront
+
+~ confront
+Narrator: You raise the silver flame toward the cradle, and behind you, slow and heavy on the stair, comes armour.
+Vladimir: Put it down.
+Narrator: Vladimir Horngaard stands on the top step with his sword drawn, and more of them are on the stair behind him, climbing. He felt the dragon's fire move through his house.
+Vladimir: If that burns, the Order goes out like a row of candles, and he sits in his castle with nobody left, living or dead, who hates him properly. I will not let you give him that.
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: Vladimir. Please. Look at what's in their hands.
+endif
+* [if flag.vladimir_last_words_known] He told you to let them go home. You've known it for four hundred years. -> words
+* [if not flag.beacon_persuade_failed] [Persuasion DC 17] Hating him isn't fighting him. It's keeping him company. Let them rest. -> persuaded | refuses
+* Stand aside, Vladimir. The beacon burns tonight. -> stand
+* (Lower the flame.) We'll leave it dark. -> back_down
+
+~ words
+Narrator: The point of the sword drops an inch. Then another.
+Vladimir: He told you. Of course he told you. He never could keep a thing to himself.
+Vladimir: I held his head and he said it, and I could not bear to go where he was going and tell him I had lost his house. So I kept them here, so that none of us would have to.
+Vladimir: Light it. I will stand with you while it catches. I owe him that much.
+set vladimir_fate = "made_peace"
+-> light
+
+~ persuaded
+Vladimir: Company. ...Four hundred years in the front row, and he has never once looked up at us.
+Vladimir: Light it, then. Quickly, before I remember why not.
+set vladimir_fate = "made_peace"
+-> light
+
+~ refuses
+set beacon_persuade_failed
+Vladimir: Fine words. The young lord had fine words too, the night a voice at the gate asked for it to be opened. The Order defends its house.
+-> fight
+
+~ stand
+Vladimir: Then the Order defends its house.
+-> fight
+
+~ fight
+set beacon_stand_begun
+interject class:wizard: Fire and radiance stop them knitting! Everything else is just a delay!
+combat beacon_stand
+
+~ back_down
+Narrator: You lower the flame. Vladimir watches it all the way down, then turns and goes back down the stair without a word, and his knights go with him.
+-> END
+
+~ fallen
+Narrator: Vladimir is down on the stones by the stair, his body already trying to knit itself whole with a sound like ice forming on a pond. His voice comes from inside the armour, quite calm.
+Vladimir: I will be up again within a day. I always am. Unless you light that.
+Vladimir: Go on, then. I can feel it waiting. So can he.
+* Light the beacon. -> light_fought
+* Not yet. -> END
+
+~ light_fought
+set vladimir_fate = "released"
+-> light
+
+~ ride_warning
+Narrator: The silver flame leans toward the cradle on its own, like a dog toward a door. Down in the hall, the Order is sharpening swords for the castle.
+Narrator: If the beacon burns tonight, they lie down tonight, and they won't march.
+* Light it anyway. Let them rest. -> light
+* Not yet. Let them march first. -> END
+
+~ pact_warning
+Narrator: The silver flame leans toward the cradle on its own. You swore an oath over Vladimir's table that this house would go on watching.
+* Light it. That oath was a mistake. -> pact_break
+* (Lower the flame.) An oath is an oath. -> END
+
+~ pact_break
+set vladimir_pact_broken
+Narrator: Armour on the stair, coming fast.
+Vladimir: Oathbreakers. In my own tower. I should have seen it in your faces; the living always look like that when they mean it.
+-> fight
+
+# ---------------------------------------------------------------- The lighting
+
+~ light
+set argynvost_beacon_lit
+set order_fate = "rest"
+quest the_dark_beacon lit
+quest the_order_of_the_silver_dragon rest
+Narrator: The flame touches the old ash, and the beacon takes it like a long-held breath let go.
+Narrator: Silver light goes up out of the cradle and over the parapet, over the treetops and the whole dark valley, all the way to the castle on its rock.
+Argynvost: There. There it is. Oh, look at it.
+Narrator: Below you, the house goes quiet in a new way. Along the long table in the hall, armoured heads lift toward the windows and then bow, and the knights are only men sitting very still.
+if flag.vladimir_fate == "made_peace"
+Vladimir: It is warmer than I remembered. He always said it would not be, and it always was.
+Argynvost: Come home, boy. You held the gate long enough.
+Narrator: Vladimir Horngaard sits down with his back to the parapet, like a man at the end of a long march, and lays his sword across his knees, and doesn't get up.
+elif flag.vladimir_fate == "released"
+Vladimir: So that is what it looks like from up here. In four hundred years I never once came up to see.
+Argynvost: Come home, boy. You held the gate long enough.
+Narrator: The voice in the armour stops, and the wounds stop closing, and the armour is only armour.
+else
+Narrator: Down in the great hall, at the head of the table, a commander sits back in a winged chair and lets his sword lie.
+Argynvost: Come home, boy. You held the gate long enough.
+endif
+-> godfrey_check
+
+~ godfrey_check
+if guest:sir_godfrey_gwilym
+-> godfrey_stays
+endif
+if tarokka.ally.npc == sir_godfrey_gwilym
+-> godfrey_asks
+endif
+if flag.godfrey_met
+Narrator: In a small room downstairs, under a wall of charcoal names, a big knight in dented plate sits down on his cot and is still.
+endif
+-> farewell
+
+~ godfrey_stays
+Narrator: Sir Godfrey has gone very still beside you, his face turned up to the light like a man in the first sun after a long winter.
+Sir Godfrey Gwilym: It's calling. It's warm. ...Not yet. I promised somebody a ride. I'll come when the castle's done, and the light will still be here.
+-> farewell
+
+~ godfrey_asks
+Narrator: Steps on the stair: Sir Godfrey, climbing slowly, one hand on the wall. The light falls on his face, and he shuts his eyes in it.
+Sir Godfrey Gwilym: The cards. The old woman's cards wanted me, didn't they? I can feel the light pulling. I could go now. I'd like to.
+Sir Godfrey Gwilym: Or I could stay for one more ride. Your choice. I've made enough of mine.
+* Ride with us, Sir Godfrey. One more. -> godfrey_joins
+* Rest, Sir Godfrey. You've earned it. -> godfrey_rests
+
+~ godfrey_joins
+Sir Godfrey Gwilym: One more. I'll remember this light till then. That's an easy thing to remember.
+join sir_godfrey_gwilym
+quest find_the_ally found
+-> farewell
+
+~ godfrey_rests
+quest find_the_ally lost
+Sir Godfrey Gwilym: Thank you. Tell the old woman her cards were right about me, and that I was very tired.
+Narrator: He sits down on the top step with his back to the wall and his face to the light, and is still.
+-> farewell
+
+~ farewell
+set argynvost_skull_known
+Argynvost: Thank you, friends. Most of me goes with them now. A piece stays with my skull, wherever he hung it. Bring it home to my bones when you can, and this light will never go out again.
+interject class:cleric: Go with the dawn, old dragon.
+Argynvost: Keep the watch.
+Narrator: The frost on the parapet melts all at once and runs down the stones like rain.
+-> argynvostholt/vladimir:climax_end

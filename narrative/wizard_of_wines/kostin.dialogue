@@ -1,0 +1,66 @@
+# Kostin, the young druid holding the winery for Yester Hill (docs/voice/kostin.md).
+# confront: in the press house, by the vat where the Mash grew (approach). Every branch ends in the Mash fight;
+# talking him round (kostin_doubts) or scaring him off (kostin_fled) decides whether he is in it, and what waits
+# on Yester Hill (yester_hill/approach:kostin, the summit fight's variants).
+
+~ confront
+Narrator: A young man in a robe of green-dyed sacking stands by the great press with one hand on the rim of a vat, as if he were comforting it. The mash inside shifts under his palm, and he doesn't flinch.
+if flag.winery_hall_cleared
+Kostin [angry]: You killed my brothers in the hall. They were singing to the vats. They were happy, for once.
+else
+Kostin: Visitors. The bird-man sent you. He'll send anyone now; he's run out of birds.
+endif
+Kostin: This house belongs to the land, and the land belongs to its lord. You are standing in his press house with mud on your boots.
+-> choices
+
+~ choices
+* Then we'll take it back. -> fight
+* [Intimidation DC 15] Run back to your hill, boy, and tell them we're coming. -> scared | fight_fail
+* [Nature DC 14] The land was here before your lord, and it'll be here after him. He's a tenant. -> doubt_nature | doubt_fail
+* [Druid] (Speak the old words for the green that answers to no master.) -> doubt_druid
+* [Persuasion DC 16] Nobody on that hill will thank you for dying in a barn. Walk away. -> doubt_persuade | doubt_fail
+* [if not flag.kostin_asked_hill] What's on Yester Hill? -> hill_question
+
+~ hill_question
+set kostin_asked_hill
+Kostin: Our Mother. Our tree. And the Lord-in-the-Land, lying in the earth, waiting for a heart. When it beats he'll stand up and walk east, and these vines will be the first thing he treads on.
+interject class:wizard: A golem of earth with a magic stone for a heart. Ambitious. Badly sourced, but ambitious.
+-> choices
+
+~ fight
+Kostin: Then feed the vat.
+combat press_house_mash
+
+~ fight_fail
+Kostin: I've stood on that hill at midnight with the tree singing. You don't frighten me. You don't even interest me.
+combat press_house_mash
+
+~ scared
+set kostin_fled
+Narrator: He tries to hold your stare and can't. With a sound halfway between a curse and a sob he kicks the hoops off the vat and bolts out of the back door, west.
+Kostin: Mother will know you're coming! She'll be ready for you!
+combat press_house_mash
+
+~ doubt_nature
+Narrator: For a moment the young druid looks at the press, the rafters, the vines through the open door, as if counting how old each of them is.
+-> doubt
+
+~ doubt_druid
+interject class:druid: The green keeps no lord, brother. It had none before the castle. It'll have none when the castle is a hill of moss.
+-> doubt
+
+~ doubt_persuade
+Narrator: He opens his mouth to argue, and finds he's thinking about it instead, which is plainly a new experience.
+-> doubt
+
+~ doubt
+set kostin_doubts
+set kostin_fled
+Kostin: ...She says the land and the lord are one. She says if I listen I'll hear his heart in the roots. I've listened. I never heard anything but roots.
+Narrator: He takes his hand off the vat. Something in it lunges after the hand; he steps back, and keeps stepping, out of the back door and away west without looking round.
+Kostin: It doesn't know me anymore. It's yours.
+combat press_house_mash
+
+~ doubt_fail
+Kostin [angry]: A tenant. You sound like the bird-man. He said the same, and look where he sleeps now.
+combat press_house_mash

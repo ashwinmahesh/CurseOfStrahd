@@ -445,6 +445,7 @@
                 "id": "gift_of_the_protectors",
                 "name": "Gift of the Protectors",
                 "summary": "Creatures who write their names in your Book of Shadows drop to 1 Hit Point instead of 0, once per Long Rest.",
+                "text": "A new page appears in your Book of Shadows. With your permission a creature can take an action to write its name there; the page holds as many names as your Charisma modifier (minimum one). When a creature named there drops to 0 Hit Points without being killed outright, it drops to 1 Hit Point instead; after that happens, no one benefits again until you finish a Long Rest. A Magic action erases a name you touch.",
                 "implemented": "engine",
                 "prerequisites": {
                   "level": 9,
@@ -484,6 +485,7 @@
                 "id": "lifedrinker",
                 "name": "Lifedrinker",
                 "summary": "Once per turn a pact weapon hit deals an extra 1d6 Necrotic, Psychic or Radiant, and you can spend a Hit Point Die to heal.",
+                "text": "Once per turn when you hit a creature with your pact weapon, it takes an extra 1d6 Necrotic, Psychic or Radiant damage (your choice), and you can expend one of your Hit Point Dice to roll it and regain Hit Points equal to the roll plus your Constitution modifier (minimum 1).",
                 "implemented": "engine",
                 "prerequisites": {
                   "level": 9,
@@ -813,6 +815,7 @@
           "id": "contact_patron",
           "name": "Contact Patron",
           "summary": "Contact Other Plane is always prepared; cast it once per Long Rest without a slot and succeed on its save.",
+          "text": "You can now speak with your patron directly. You always have Contact Other Plane prepared, and once per Long Rest you can cast it without a spell slot to reach your patron, automatically succeeding on the spell's saving throw.",
           "modifiers": [
             {
               "stat": "spell",
@@ -824,7 +827,7 @@
               }
             }
           ],
-          "implemented": "text"
+          "implemented": "data"
         }
       ]
     },
@@ -845,8 +848,31 @@
         {
           "id": "mystic_arcanum",
           "name": "Mystic Arcanum",
-          "summary": "Choose a level 6 Warlock spell you can cast once per Long Rest without a slot.",
-          "implemented": "text"
+          "summary": "Choose a level 6 Warlock spell; cast it once per Long Rest without a spell slot.",
+          "text": "Your patron grants you an arcanum: one level 6 Warlock spell of your choice. You can cast it once without expending a spell slot and regain that casting when you finish a Long Rest. You gain another arcanum, of level 7, 8 and 9, at Warlock levels 13, 15 and 17. Whenever you gain a Warlock level you can swap an arcanum for another Warlock spell of the same level.",
+          "choice": {
+            "id": "arcanum",
+            "kind": "spell",
+            "count": 1,
+            "filter": {
+              "list": "warlock",
+              "level": 6,
+              "granted": true
+            },
+            "replaceable": "level_up"
+          },
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "@arcanum",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              }
+            }
+          ],
+          "implemented": "data"
         }
       ]
     },
@@ -879,8 +905,31 @@
         {
           "id": "mystic_arcanum",
           "name": "Mystic Arcanum",
-          "summary": "Choose a level 7 Warlock spell you can cast once per Long Rest without a slot.",
-          "implemented": "text"
+          "summary": "Choose a level 7 Warlock spell; cast it once per Long Rest without a spell slot.",
+          "text": "Another arcanum: choose a level 7 Warlock spell you can cast once per Long Rest without a spell slot.",
+          "choice": {
+            "id": "arcanum",
+            "kind": "spell",
+            "count": 1,
+            "filter": {
+              "list": "warlock",
+              "level": 7,
+              "granted": true
+            },
+            "replaceable": "level_up"
+          },
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "@arcanum",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              }
+            }
+          ],
+          "implemented": "data"
         }
       ]
     },
@@ -901,8 +950,31 @@
         {
           "id": "mystic_arcanum",
           "name": "Mystic Arcanum",
-          "summary": "Choose a level 8 Warlock spell you can cast once per Long Rest without a slot.",
-          "implemented": "text"
+          "summary": "Choose a level 8 Warlock spell; cast it once per Long Rest without a spell slot.",
+          "text": "Another arcanum: choose a level 8 Warlock spell you can cast once per Long Rest without a spell slot.",
+          "choice": {
+            "id": "arcanum",
+            "kind": "spell",
+            "count": 1,
+            "filter": {
+              "list": "warlock",
+              "level": 8,
+              "granted": true
+            },
+            "replaceable": "level_up"
+          },
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "@arcanum",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              }
+            }
+          ],
+          "implemented": "data"
         }
       ]
     },
@@ -935,8 +1007,31 @@
         {
           "id": "mystic_arcanum",
           "name": "Mystic Arcanum",
-          "summary": "Choose a level 9 Warlock spell you can cast once per Long Rest without a slot.",
-          "implemented": "text"
+          "summary": "Choose a level 9 Warlock spell; cast it once per Long Rest without a spell slot.",
+          "text": "Another arcanum: choose a level 9 Warlock spell you can cast once per Long Rest without a spell slot.",
+          "choice": {
+            "id": "arcanum",
+            "kind": "spell",
+            "count": 1,
+            "filter": {
+              "list": "warlock",
+              "level": 9,
+              "granted": true
+            },
+            "replaceable": "level_up"
+          },
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "@arcanum",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              }
+            }
+          ],
+          "implemented": "data"
         }
       ]
     },

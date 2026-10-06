@@ -260,18 +260,18 @@ def semantic_checks(data):
 
 
 # Regions later phases build (plan §6). References into them are pending, not errors.
-LATER_REGIONS = {"old_bonegrinder", "wizard_of_wines", "yester_hill", "krezk", "abbey_of_st_markovia", "argynvostholt",
-                 "van_richtens_tower", "werewolf_den", "berez", "lake_zarovich", "tsolenka_pass", "amber_temple",
-                 "castle_ravenloft", "ravenloft"}
+LATER_REGIONS = {"castle_ravenloft", "ravenloft"}  # regions 5-10 are built (Phase 5); the castle is Phase 6
 
 
 def campaign_checks(data, errors, pending):
     """The Tarokka, travel maps, random encounter tables, shops and guests (ADR 0010)."""
     locations, npcs, monsters, items = data["locations"], data["npcs"], data["monsters"], data["items"]
 
+    spot_places = {pl for loc in locations.values() for pl in loc.get("treasure_spots", {})}
+
     def place_ok(ref, region, where, kind="place"):
         loc = ref.split(":")[0]
-        if loc in locations:
+        if loc in locations or ref in spot_places:
             return
         if region in LATER_REGIONS or any(loc.startswith(r) for r in LATER_REGIONS):
             pending.append(f"{where}: {kind} '{ref}' (region {region}, a later phase)")

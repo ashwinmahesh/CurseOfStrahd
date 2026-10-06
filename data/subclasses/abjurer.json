@@ -38,7 +38,7 @@
         "id": "abjuration_savant",
         "name": "Abjuration Savant (new spell level)",
         "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Abjuration spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -48,7 +48,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -57,7 +58,7 @@
         "id": "abjuration_savant",
         "name": "Abjuration Savant (new spell level)",
         "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Abjuration spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -67,7 +68,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -76,7 +78,7 @@
         "id": "abjuration_savant",
         "name": "Abjuration Savant (new spell level)",
         "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Abjuration spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -86,7 +88,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -95,7 +98,7 @@
         "id": "abjuration_savant",
         "name": "Abjuration Savant (new spell level)",
         "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Abjuration spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -105,7 +108,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -187,6 +191,7 @@
         "id": "projected_ward",
         "name": "Projected Ward",
         "summary": "Reaction: your Arcane Ward absorbs damage dealt to a creature within 30 feet.",
+        "text": "When a creature you can see within 30 feet of you takes damage, you can take a Reaction to let your Arcane Ward soak that damage instead. If the damage drops the ward to 0 Hit Points, the protected creature takes whatever is left.",
         "implemented": "engine",
         "action": "reaction"
       }
@@ -197,7 +202,7 @@
         "id": "spell_breaker",
         "name": "Spell Breaker",
         "summary": "Counterspell and Dispel Magic always prepared; add Proficiency Bonus to dispel checks.",
-        "implemented": "engine",
+        "text": "You always have Counterspell and Dispel Magic prepared. You can cast Dispel Magic as a Bonus Action and add your Proficiency Bonus to its ability check. When you cast either spell with a spell slot and it fails to stop a spell, the slot isn't expended.",
         "modifiers": [
           {
             "stat": "spell",
@@ -209,7 +214,8 @@
             "value": "dispel_magic",
             "ability": "int"
           }
-        ]
+        ],
+        "implemented": "engine"
       }
     },
     {

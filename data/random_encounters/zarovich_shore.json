@@ -1,0 +1,142 @@
+{
+  "id": "zarovich_shore",
+  "map": "lake_zarovich_trail",
+  "chance_day": 0.1,
+  "chance_night": 0.35,
+  "summary": "The lake path between Vallaki's west gate and the fishers' landing: reeds, shingle and black water. Quiet by day; by night the lake gives things back.",
+  "entries": [
+    {
+      "id": "the_drowned",
+      "weight": 3,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            20,
+            5
+          ],
+          "name": "Drowned fisher"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            24,
+            8
+          ],
+          "name": "Drowned fisher"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            22,
+            11
+          ],
+          "name": "Drowned fisher"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            14
+          ],
+          "name": "Drowned fisher"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            28,
+            10
+          ]
+        }
+      ],
+      "text": "Figures are wading up out of the reeds, streaming lake water, with weed in their hair and their eyes gone white. The lake is giving back what it took, and it wants something in exchange."
+    },
+    {
+      "id": "marsh_lights",
+      "weight": 1,
+      "when": "night",
+      "once": true,
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            20,
+            6
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            25,
+            8
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            23,
+            12
+          ]
+        }
+      ],
+      "text": "Pale lights bob out over the reeds, three of them, and drift toward you, swaying, the way a lantern sways in the hand of someone walking. Nobody is holding them."
+    },
+    {
+      "id": "shore_wolves",
+      "weight": 2,
+      "when": "day and flag.wolf_pack_leader != \"emil\"",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            13
+          ]
+        }
+      ],
+      "text": "Dire wolves come down the shore at a lope, heads low, spreading out to cut you off from the water."
+    },
+    {
+      "id": "drowned_bell",
+      "weight": 2,
+      "once": true,
+      "dialogue": "lake_zarovich/events:drowned_bell"
+    },
+    {
+      "id": "shore_howl",
+      "weight": 1,
+      "when": "night and not flag.den_way_known and not flag.pack_resolved",
+      "once": true,
+      "dialogue": "lake_zarovich/events:howl_call"
+    }
+  ]
+}

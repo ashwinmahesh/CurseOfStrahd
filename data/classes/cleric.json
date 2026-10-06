@@ -394,6 +394,7 @@
           "id": "blessed_strikes",
           "name": "Blessed Strikes",
           "summary": "Choose Divine Strike (+1d8 Necrotic or Radiant on a weapon hit) or Potent Spellcasting (+Wis to Cleric cantrip damage).",
+          "text": "Your god lends force to your attacks or your cantrips; choose one. Divine Strike: once on each of your turns, a weapon attack that hits a creature deals an extra 1d8 Necrotic or Radiant damage, your pick. Potent Spellcasting: your Cleric cantrips add your Wisdom modifier to the damage they deal.",
           "choice": {
             "kind": "option",
             "count": 1,

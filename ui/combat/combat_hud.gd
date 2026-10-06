@@ -240,13 +240,33 @@ func _build_hotbar() -> void:
 	panel.add_child(row)
 	var card := VBoxContainer.new()
 	card.custom_minimum_size = Vector2(150, 0)
-	_hot_name = _label("", 18, "vellum")
+	_hot_name = _label("", 19, "gilt_light")
+	_hot_name.add_theme_font_override("font", UiKit.display_font())
 	card.add_child(_hot_name)
+	# The character in the sheet's gilt frame.
+	var holder := Control.new()
+	holder.custom_minimum_size = Vector2(124, 124)
+	var under := ColorRect.new()
+	under.color = Look.color("ui_black")
+	under.position = Vector2(5, 5)
+	under.size = Vector2(114, 114)
+	holder.add_child(under)
 	_portrait = TextureRect.new()
-	_portrait.custom_minimum_size = Vector2(120, 120)
+	_portrait.position = Vector2(5, 5)
+	_portrait.size = Vector2(114, 114)
+	_portrait.custom_minimum_size = Vector2(114, 114)
 	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	card.add_child(_portrait)
+	_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	holder.add_child(_portrait)
+	holder.add_child(UiParts.drawn(Vector2(124, 124), func(c: Control) -> void:
+		var r := Rect2(Vector2.ZERO, c.size)
+		c.draw_rect(r.grow(-1), Look.color("gilt"), false, 2.0)
+		c.draw_rect(r.grow(-5), Color(Look.color("gilt_dark"), 0.9), false, 1.0)
+		for p: Vector2 in [Vector2(1, 1), Vector2(c.size.x - 1, 1), Vector2(1, c.size.y - 1), c.size - Vector2(1, 1)]:
+			UiParts.diamond(c, p, 7.0, Look.color("void"), true)
+			UiParts.diamond(c, p, 5.0, Look.color("gilt_light"), true)))
+	card.add_child(holder)
 	_hot_stats = _label("", 15, "vellum")
 	card.add_child(_hot_stats)
 	row.add_child(card)
@@ -259,14 +279,16 @@ func _build_hotbar() -> void:
 	_economy = EconomyShapes.new()
 	top.add_child(_economy)
 	var mv := VBoxContainer.new()
-	mv.add_child(_label("Movement", 14, "parchment"))
+	mv.add_child(UiParts.caption("Movement", 11))
 	_move_bar = ProgressBar.new()
 	_move_bar.custom_minimum_size = Vector2(220, 14)
 	_move_bar.show_percentage = false
 	var fill := StyleBoxFlat.new()
-	fill.bg_color = Look.color("sickly")
+	fill.bg_color = Look.color("moon_blue")
 	var back := StyleBoxFlat.new()
-	back.bg_color = Look.color("ui_oxblood")
+	back.bg_color = Look.color("void")
+	back.border_color = Look.color("gilt_dark")
+	back.set_border_width_all(1)
 	_move_bar.add_theme_stylebox_override("fill", fill)
 	_move_bar.add_theme_stylebox_override("background", back)
 	mv.add_child(_move_bar)
@@ -274,7 +296,7 @@ func _build_hotbar() -> void:
 	mv.add_child(_move_label)
 	top.add_child(mv)
 	_slot_box = VBoxContainer.new()
-	_slot_box.add_child(_label("Spell slots", 14, "parchment"))
+	_slot_box.add_child(UiParts.caption("Spell slots", 11))
 	_slot_row = HBoxContainer.new()
 	_slot_row.add_theme_constant_override("separation", 10)
 	_slot_box.add_child(_slot_row)
@@ -466,16 +488,11 @@ func _refresh_strip() -> void:
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 2)
 		card.add_child(v)
-		var tex := TextureRect.new()
-		tex.texture = _portrait_for(c)
-		tex.custom_minimum_size = Vector2(70, 70) if active else Vector2(52, 52)
-		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		if c.is_down():
-			tex.modulate = Color(0.5, 0.5, 0.5)
-		v.add_child(tex)
+		v.add_child(UiParts.framed_portrait(CombatToken.art_id(c), 72.0 if active else 54.0, c.is_down(), c.creature.dead))
 		var short := c.name().get_slice(" ", 0) if c.side != &"enemy" else c.name().replace("Dire Wolf", "Dire")
-		v.add_child(_label(short, 13 if not active else 15, "vellum"))
+		var sl := _label(short, 13 if not active else 15, "gilt_light" if active else "vellum")
+		sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		v.add_child(sl)
 		v.add_child(_hp_bar(c, 60 if not active else 76))
 		card.mouse_entered.connect(func() -> void: inspect_requested.emit("hover:" + c.id))
 		_strip.add_child(card)
@@ -494,17 +511,13 @@ func _refresh_party() -> void:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		card.add_child(row)
-		var tex := TextureRect.new()
-		tex.texture = _portrait_for(c)
-		tex.custom_minimum_size = Vector2(64, 64)
-		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		if c.is_down():
-			tex.modulate = Color(0.45, 0.45, 0.45)
-		row.add_child(tex)
+		row.add_child(UiParts.framed_portrait(CombatToken.art_id(c), 64.0, c.is_down(), c.creature.dead))
 		var v := VBoxContainer.new()
-		v.add_child(_label(c.name() + (" (guest)" if c.side == &"guest" else ""), 17, "vellum"))
-		v.add_child(_hp_bar(c, 170))
+		v.add_theme_constant_override("separation", 3)
+		var nm := _label(c.name() + (" (guest)" if c.side == &"guest" else ""), 17, "gilt_light" if on else "vellum")
+		nm.add_theme_font_override("font", UiKit.display_font())
+		v.add_child(nm)
+		v.add_child(_hp_bar(c, 170, 10.0))
 		var cr := c.creature
 		var status := "%d/%d" % [cr.hp, cr.max_hp()]
 		if cr.temp_hp > 0:
@@ -521,6 +534,8 @@ func _refresh_party() -> void:
 		btn.flat = true
 		btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		btn.set_anchors_preset(Control.PRESET_FULL_RECT)
+		for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
 		card.add_child(btn)
 		_party_box.add_child(card)
@@ -586,9 +601,17 @@ func _refresh_hotbar() -> void:
 		b.text = t
 		b.toggle_mode = true
 		b.button_pressed = t == tab
-		b.add_theme_stylebox_override("normal", _style("ui_black", "gilt_dark", 2))
-		b.add_theme_stylebox_override("pressed", _style("blood", "gilt_light", 2))
-		b.add_theme_stylebox_override("hover", _style("ui_oxblood", "gilt_light", 2))
+		UiKit.button_look(b)
+		UiParts.compact(b)
+		b.add_theme_font_size_override("font_size", 15)
+		var on := UiKit.button_style("hover")
+		on.border_color = Look.color("gilt_light")
+		on.set_border_width_all(2)
+		on.content_margin_top = 3
+		on.content_margin_bottom = 3
+		b.add_theme_stylebox_override("pressed", on)
+		b.add_theme_stylebox_override("hover_pressed", on)
+		b.add_theme_color_override("font_pressed_color", Look.color("gilt_light"))
 		b.pressed.connect(func() -> void:
 			tab = t
 			focus_slot = -1
@@ -610,14 +633,27 @@ func _refresh_hotbar() -> void:
 		var key := "%d " % ((i + 1) % 10) if i < 10 else ""
 		b.text = "%s%s\n%s" % [key, a["label"], a["sub"]]
 		b.add_theme_font_size_override("font_size", 13)
+		# A dark face like every other button, its cost told by the colour of its top edge (and the word in the tooltip).
 		var colour := str(COST_COLOURS.get(str(a["cost"]), "slate"))
-		var border := "gilt_light" if i == focus_slot else "void"
-		b.add_theme_stylebox_override("normal", _style(colour if usable else "ui_oxblood", border, 2 if i != focus_slot else 3))
-		b.add_theme_stylebox_override("hover", _style(colour if usable else "ui_oxblood", "gilt_light", 2))
-		b.add_theme_stylebox_override("pressed", _style("blood", "gilt_light", 2))
-		b.add_theme_stylebox_override("disabled", _style("ui_oxblood", border, 2))
+		var focused := i == focus_slot
+		b.add_theme_stylebox_override("normal", _slot_style("ui_oxblood", "gilt_light" if focused else "gilt_dark", focused))
+		b.add_theme_stylebox_override("hover", _slot_style("ui_wine", "gilt_light", true))
+		b.add_theme_stylebox_override("pressed", _slot_style("blood", "gilt_light", true))
+		b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+		b.add_theme_stylebox_override("disabled", _slot_style("ui_black", "gilt_light" if focused else "ui_oxblood", focused))
+		var stripe := ColorRect.new()
+		stripe.color = Look.color(colour) if usable else Color(Look.color(colour), 0.35)
+		stripe.anchor_right = 1.0
+		stripe.offset_left = 2
+		stripe.offset_right = -2
+		stripe.offset_top = 2
+		stripe.offset_bottom = 6
+		stripe.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.add_child(stripe)
 		b.add_theme_color_override("font_color", Look.color("ivory"))
+		b.add_theme_color_override("font_hover_color", Look.color("gilt_light"))
 		b.add_theme_color_override("font_disabled_color", Look.color("bone"))
+		UiParts.texture_on_button(b, UiParts.action_icon(a), 32)
 		b.disabled = not usable
 		var reason := str(a["reason"]) if not bool(a["legal"]) else ""
 		if not mine and reason == "":
@@ -643,11 +679,13 @@ func _refresh_slot_pips(c: Combatant) -> void:
 	for p in pips:
 		var left := int(p["left"])
 		var total := int(p["total"])
-		var l := _label("%s %s%s" % [ActionCatalog._ordinal(int(p["level"])), "●".repeat(left), "○".repeat(total - left)], 16,
-			"moonlight" if left > 0 else "gilt_dark")
-		l.tooltip_text = "Level %d spell slots: %d of %d left" % [int(p["level"]), left, total]
-		l.mouse_filter = Control.MOUSE_FILTER_PASS
-		_slot_row.add_child(l)
+		var chip := HBoxContainer.new()
+		chip.add_theme_constant_override("separation", 4)
+		chip.add_child(UiParts.caption(ActionCatalog._ordinal(int(p["level"])), 11))
+		chip.add_child(UiParts.pips(total, left, "moonlight"))
+		chip.tooltip_text = "Level %d spell slots: %d of %d left" % [int(p["level"]), left, total]
+		chip.mouse_filter = Control.MOUSE_FILTER_PASS
+		_slot_row.add_child(chip)
 
 
 ## The right-click menu on a hotbar slot: Info, Use, and for spells each slot level it can be cast with.
@@ -956,28 +994,18 @@ func _portrait_for(c: Combatant) -> Texture2D:
 	return tex
 
 
-func _hp_bar(c: Combatant, width: int) -> ProgressBar:
-	var bar := ProgressBar.new()
-	bar.custom_minimum_size = Vector2(width, 8)
-	bar.show_percentage = false
+## Hit Points as the sheet's bar: crimson, brighter when Bloodied. Enemies show only whether they're Bloodied (the
+## party can't see their exact Hit Points).
+func _hp_bar(c: Combatant, width: int, height: float = 8.0) -> Control:
 	var cr := c.creature
-	var frac := clampf(float(cr.hp) / maxf(1.0, float(cr.max_hp())), 0.0, 1.0)
-	var colour := "sickly"
-	if c.side == &"enemy":
-		frac = 0.0 if cr.dead else (0.5 if cr.is_bloodied() else 1.0)
-		colour = "crimson" if cr.is_bloodied() else "sickly"
-	elif frac <= 0.5:
-		colour = "gilt" if frac > 0.25 else "crimson"
-	bar.max_value = 1.0
-	bar.step = 0.001
-	bar.value = frac
-	var fill := StyleBoxFlat.new()
-	fill.bg_color = Look.color(colour)
-	var back := StyleBoxFlat.new()
-	back.bg_color = Look.color("void")
-	bar.add_theme_stylebox_override("fill", fill)
-	bar.add_theme_stylebox_override("background", back)
-	return bar
+	if c.side != &"enemy":
+		var bar := UiParts.hp_bar(cr, float(width), height, false)
+		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		return bar
+	var frac := 0.0 if cr.dead else (0.5 if cr.is_bloodied() else 1.0)
+	var enemy := UiParts.bar(frac, 1.0, 0.0, "", "vampire_red" if cr.is_bloodied() else "crimson", Callable(), float(width), height)
+	enemy.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return enemy
 
 
 func _label(text: String, size: int, colour: String) -> Label:
@@ -1001,6 +1029,18 @@ func _style(bg: String, border: String, width: int) -> StyleBoxFlat:
 
 
 ## End Turn is a crimson seal ringed in gilt.
+## A hotbar slot: a dark face with a fine gilt edge, bright when focused.
+func _slot_style(bg: String, edge: String, bright: bool) -> StyleBoxFlat:
+	var s := StyleBoxFlat.new()
+	s.bg_color = Color(Look.color(bg), 0.95)
+	s.border_color = Look.color(edge)
+	s.set_border_width_all(2 if bright else 1)
+	s.set_corner_radius_all(2)
+	s.set_content_margin_all(5)
+	s.content_margin_top = 9
+	return s
+
+
 func _round_style(bg: String, ring: String = "gilt") -> StyleBoxFlat:
 	var s := StyleBoxFlat.new()
 	s.bg_color = Look.color(bg)

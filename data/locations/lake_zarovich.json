@@ -1,0 +1,366 @@
+{
+  "id": "lake_zarovich",
+  "name": "Lake Zarovich: the Fishers' Landing",
+  "region": "lake_zarovich",
+  "summary": "A shingle landing on the south-west shore of Lake Zarovich: a rotten jetty, drying racks with no fish on them, empty huts, and Bluto Krogarov's shack, the last fisher on the lake.",
+  "text": "Black water to the far shore and the wolf hills above it. The fishers left a year ago when the nets stopped filling; only Bluto stayed. His rowboat is tied at the jetty's foot.",
+  "map": {
+    "rows": [
+      "####################################",
+      "#wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwww..wwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwww..wwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwww..wwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwww..wwwwwwwwwwwwwwww#",
+      "#~~~~wwwwwwwwwwww..wwwwwwwwwww~~~~~#",
+      "#~~~~~~~~~~~wwwww..wwwwww~~~~~~~~~~#",
+      "#..................................#",
+      "#..................................#",
+      "#...........................#......#",
+      "#....#........===..................#",
+      "##.................................#",
+      "##.................................#",
+      "#.................................##",
+      "#..................................#",
+      "#........#.........................#",
+      "#.......................=..........#",
+      "#.....#..........................#.#",
+      "#.#.............................##.#",
+      "#.##..........................#....#",
+      "#..................................#",
+      "#################..#################"
+    ],
+    "theme": "riverside",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "lz_jetty",
+      "name": "The jetty",
+      "cells": [
+        [
+          17,
+          3
+        ],
+        [
+          18,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "lz_shore",
+      "name": "The reeds",
+      "cells": [
+        [
+          1,
+          9
+        ],
+        [
+          34,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "lz_landing",
+      "name": "The landing",
+      "cells": [
+        [
+          11,
+          11
+        ],
+        [
+          25,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "lz_bluto_hut",
+      "name": "Bluto's shack",
+      "cells": [
+        [
+          26,
+          11
+        ],
+        [
+          34,
+          18
+        ]
+      ]
+    },
+    {
+      "id": "lz_old_huts",
+      "name": "The empty huts",
+      "cells": [
+        [
+          1,
+          11
+        ],
+        [
+          10,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "lz_path",
+      "name": "The lake path",
+      "cells": [
+        [
+          11,
+          20
+        ],
+        [
+          25,
+          22
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      17,
+      21
+    ],
+    "from_road": [
+      17,
+      21
+    ]
+  },
+  "exits": [
+    {
+      "id": "lz_road",
+      "cell": [
+        17,
+        23
+      ],
+      "to": "travel",
+      "label": "The lake path, back toward Vallaki"
+    },
+    {
+      "id": "lz_road_2",
+      "cell": [
+        18,
+        23
+      ],
+      "to": "travel",
+      "label": "The lake path, back toward Vallaki"
+    }
+  ],
+  "props": [
+    {
+      "id": "lz_boat",
+      "cell": [
+        18,
+        8
+      ],
+      "kind": "examine",
+      "label": "Bluto's rowboat",
+      "model": "log",
+      "dialogue": "lake_zarovich/landing:boat"
+    },
+    {
+      "id": "lz_bluto_shack",
+      "cell": [
+        28,
+        11
+      ],
+      "kind": "examine",
+      "label": "Bluto's shack",
+      "model": "cottage"
+    },
+    {
+      "id": "lz_empty_hut_west",
+      "cell": [
+        5,
+        12
+      ],
+      "kind": "examine",
+      "label": "An empty hut",
+      "model": "cottage"
+    },
+    {
+      "id": "lz_empty_hut_south",
+      "cell": [
+        9,
+        17
+      ],
+      "kind": "examine",
+      "label": "An empty hut",
+      "model": "cottage"
+    },
+    {
+      "id": "lz_nets",
+      "cell": [
+        15,
+        12
+      ],
+      "kind": "examine",
+      "label": "Drying racks",
+      "model": "fence"
+    },
+    {
+      "id": "lz_fishers_shrine",
+      "cell": [
+        13,
+        19
+      ],
+      "kind": "examine",
+      "label": "A fishers' shrine",
+      "model": "shrine_small"
+    },
+    {
+      "id": "lz_flat_rock",
+      "cell": [
+        24,
+        18
+      ],
+      "kind": "examine",
+      "label": "A flat rock above the water",
+      "model": "boulder"
+    },
+    {
+      "id": "lz_fishers_notice",
+      "cell": [
+        6,
+        13
+      ],
+      "kind": "book",
+      "label": "A notice on a hut door",
+      "model": "notice_papers",
+      "codex": "lz_fishers_notice",
+      "text": "To whoever comes after: the lake has given nothing for a year. We have gone to my sister's in Vallaki. The boats are yours if you want them; the lake is yours if you want it. We don't. - the Petrescus, and Old Toma, and the Brancu boys"
+    },
+    {
+      "id": "lz_reed_satchel",
+      "cell": [
+        6,
+        9
+      ],
+      "kind": "search",
+      "label": "Something caught in the reeds",
+      "model": "satchel",
+      "search_dc": 13,
+      "item": "dagger"
+    },
+    {
+      "id": "lz_ribbon",
+      "cell": [
+        17,
+        6
+      ],
+      "kind": "examine",
+      "label": "A ribbon tied to a jetty post",
+      "model": "charms",
+      "when": "tarokka.ally.npc == arabelle and not flag.arabelle_rescued and not flag.arabelle_lost",
+      "flag": "arabelle_ribbon_found"
+    }
+  ],
+  "containers": [
+    {
+      "id": "lz_bluto_chest",
+      "cell": [
+        27,
+        12
+      ],
+      "label": "Bluto's sea chest",
+      "model": "footlocker",
+      "lock_dc": 10,
+      "gold": 2,
+      "items": [
+        {
+          "id": "net",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "lz_hut_locker",
+      "cell": [
+        4,
+        13
+      ],
+      "label": "A locker left behind",
+      "model": "chest",
+      "gold": 6,
+      "items": [
+        {
+          "id": "hooded_lantern",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        }
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "bluto",
+      "cell": [
+        18,
+        5
+      ],
+      "dialogue": "lake_zarovich/landing:bluto_pier",
+      "approach": 9,
+      "when": "flag.arabelle_rescued and not flag.bluto_fate"
+    },
+    {
+      "npc": "bluto",
+      "cell": [
+        22,
+        13
+      ],
+      "dialogue": "lake_zarovich/landing:bluto_nets",
+      "approach": 7,
+      "when": "flag.arabelle_lost and not flag.bluto_fate"
+    },
+    {
+      "npc": "bluto",
+      "cell": [
+        27,
+        13
+      ],
+      "dialogue": "lake_zarovich/landing:bluto_after",
+      "when": "flag.bluto_fate == \"saved\" or flag.bluto_fate == \"left\""
+    },
+    {
+      "npc": "arabelle",
+      "cell": [
+        17,
+        3
+      ],
+      "dialogue": "lake_zarovich/arabelle_ally:start",
+      "approach": 9,
+      "when": "tarokka.ally.npc == arabelle and flag.arabelle_rescued and not guest:arabelle and not flag.arabelle_sent_home and flag.bluto_fate"
+    }
+  ],
+  "narration": {
+    "enter": "enter:lake_zarovich"
+  },
+  "rest": "risky"
+}

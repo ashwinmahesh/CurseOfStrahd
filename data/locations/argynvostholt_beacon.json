@@ -1,0 +1,422 @@
+{
+  "id": "argynvostholt_beacon",
+  "name": "The Beacon Tower",
+  "region": "argynvostholt",
+  "summary": "The tower of Argynvostholt: a long stair winding up inside the walls to the open lantern room, where the dragon's beacon has stood cold for four hundred years.",
+  "text": "A stair spirals up inside thick walls, its steps worn into hollows by boots. At the top, a round platform open to the sky behind a low parapet, and in its middle, on a stone plinth, a great iron cradle full of old ash.",
+  "map": {
+    "rows": [
+      "############  ",
+      "#1122222233#  ",
+      "#1122222233#  ",
+      "#11######33#  ",
+      "#11######33#  ",
+      "#11######44#  ",
+      "#11######44#  ",
+      "#11######44#  ",
+      "#..######44#  ",
+      "############  ",
+      "              ",
+      "##############",
+      "#............#",
+      "#............#",
+      "#............#",
+      "#.....11.....#",
+      "#.....11.....#",
+      "#............#",
+      "#............#",
+      "#............#",
+      "#~..........~#",
+      "##############"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "holt_tower_stair",
+      "name": "The tower stair",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          10,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "holt_lantern_room",
+      "name": "The lantern room",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          12,
+          20
+        ]
+      ],
+      "light": "dim"
+    }
+  ],
+  "spawns": {
+    "default": [
+      1,
+      7
+    ],
+    "stair_foot": [
+      2,
+      7
+    ],
+    "stair_top": [
+      10,
+      7
+    ],
+    "lantern_landing": [
+      2,
+      13
+    ]
+  },
+  "exits": [
+    {
+      "id": "tower_down",
+      "cell": [
+        1,
+        8
+      ],
+      "to": "argynvostholt_upper",
+      "spawn": "from_tower",
+      "label": "Down to the hall of heroes"
+    },
+    {
+      "id": "stair_up",
+      "cell": [
+        10,
+        8
+      ],
+      "to": "argynvostholt_beacon",
+      "spawn": "lantern_landing",
+      "label": "Up to the lantern room"
+    },
+    {
+      "id": "stair_down",
+      "cell": [
+        1,
+        12
+      ],
+      "to": "argynvostholt_beacon",
+      "spawn": "stair_top",
+      "label": "Down to the turns of the stair"
+    }
+  ],
+  "props": [
+    {
+      "id": "holt_beacon_cradle",
+      "cell": [
+        6,
+        15
+      ],
+      "kind": "examine",
+      "label": "The beacon's cradle",
+      "model": "brazier",
+      "dialogue": "argynvostholt/beacon:cradle",
+      "burning": "flag.argynvost_beacon_lit"
+    },
+    {
+      "id": "holt_stair_hollows",
+      "cell": [
+        5,
+        1
+      ],
+      "kind": "examine",
+      "label": "Worn steps",
+      "model": "stairs"
+    },
+    {
+      "id": "holt_parapet_castle",
+      "cell": [
+        6,
+        21
+      ],
+      "kind": "examine",
+      "label": "The parapet, facing the castle",
+      "model": "wall_low"
+    },
+    {
+      "id": "holt_parapet_valley",
+      "cell": [
+        13,
+        16
+      ],
+      "kind": "examine",
+      "label": "The parapet, facing the valley",
+      "model": "wall_low"
+    },
+    {
+      "id": "holt_lamp_soot",
+      "cell": [
+        7,
+        16
+      ],
+      "kind": "examine",
+      "label": "Soot on the plinth",
+      "model": "scorch",
+      "when": "not flag.argynvost_beacon_lit"
+    }
+  ],
+  "containers": [
+    {
+      "id": "holt_lampkeeper_locker",
+      "cell": [
+        11,
+        13
+      ],
+      "label": "The lamp-keeper's locker",
+      "model": "chest_iron",
+      "items": [
+        {
+          "id": "torch",
+          "qty": 2
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        }
+      ],
+      "gold": 15
+    }
+  ],
+  "lights": [],
+  "npcs": [
+    {
+      "npc": "vladimir_horngaard",
+      "cell": [
+        3,
+        18
+      ],
+      "dialogue": "argynvostholt/beacon:fallen",
+      "when": "flag.beacon_stand_won and not flag.argynvost_beacon_lit",
+      "facing": "east",
+      "approach": 8
+    }
+  ],
+  "encounters": [
+    {
+      "id": "lamp_dark",
+      "trigger": "enter_area:holt_lantern_room",
+      "when": "not flag.lamp_dark_cleared and level >= 8",
+      "text": "The ash in the cradle stirs with no wind to stir it. The dark that settled into the dead lamp gathers itself into shapes, and the shapes have been waiting a long time for someone to bring a light up here.",
+      "surprise": "",
+      "flag": "lamp_dark_cleared",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            4,
+            17
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            9,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamp_dark",
+      "trigger": "enter_area:holt_lantern_room",
+      "when": "not flag.lamp_dark_cleared and level >= 7",
+      "text": "The ash in the cradle stirs with no wind to stir it. The dark that settled into the dead lamp gathers itself into shapes, and the shapes have been waiting a long time for someone to bring a light up here.",
+      "surprise": "",
+      "flag": "lamp_dark_cleared",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            4,
+            17
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            9,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamp_dark",
+      "trigger": "enter_area:holt_lantern_room",
+      "when": "not flag.lamp_dark_cleared",
+      "text": "The ash in the cradle stirs with no wind to stir it. The dark that settled into the dead lamp gathers itself into shapes, and the shapes have been waiting a long time for someone to bring a light up here.",
+      "surprise": "",
+      "flag": "lamp_dark_cleared",
+      "monsters": [
+        {
+          "monster": "wraith",
+          "cell": [
+            9,
+            17
+          ],
+          "hp": 50
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            3,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "id": "beacon_stand",
+      "trigger": "dialogue",
+      "when": "not flag.beacon_stand_won and level >= 8",
+      "text": "Vladimir comes off the last step with his greatsword already moving. Behind him on the stair, dead knights in black plate, climbing.",
+      "surprise": "",
+      "flag": "beacon_stand_won",
+      "monsters": [
+        {
+          "monster": "vladimir_horngaard",
+          "cell": [
+            3,
+            15
+          ],
+          "name": "Vladimir Horngaard"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            2,
+            17
+          ],
+          "name": "Dead Knight",
+          "hp": 110
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            4,
+            13
+          ],
+          "name": "Dead Knight",
+          "hp": 110
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            1,
+            19
+          ],
+          "name": "Phantom Man-at-Arms"
+        }
+      ]
+    },
+    {
+      "id": "beacon_stand",
+      "trigger": "dialogue",
+      "when": "not flag.beacon_stand_won and level >= 7",
+      "text": "Vladimir comes off the last step with his greatsword already moving. Behind him on the stair, dead knights in black plate, climbing.",
+      "surprise": "",
+      "flag": "beacon_stand_won",
+      "monsters": [
+        {
+          "monster": "vladimir_horngaard",
+          "cell": [
+            3,
+            15
+          ],
+          "name": "Vladimir Horngaard",
+          "hp": 170
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            2,
+            17
+          ],
+          "name": "Dead Knight",
+          "hp": 110
+        }
+      ]
+    },
+    {
+      "id": "beacon_stand",
+      "trigger": "dialogue",
+      "when": "not flag.beacon_stand_won",
+      "text": "Vladimir comes off the last step with his greatsword already moving. Behind him on the stair, dead knights in black plate, climbing.",
+      "surprise": "",
+      "flag": "beacon_stand_won",
+      "monsters": [
+        {
+          "monster": "vladimir_horngaard",
+          "cell": [
+            3,
+            15
+          ],
+          "name": "Vladimir Horngaard",
+          "hp": 150
+        }
+      ]
+    }
+  ],
+  "treasure_spots": {
+    "argynvostholt_beacon": {
+      "container": "holt_lampkeeper_locker"
+    }
+  },
+  "narration": {
+    "enter": "enter:argynvostholt_beacon"
+  },
+  "rest": "no",
+  "rest_text": "The wind on the tower top never stops, and neither does the feeling of being watched from the castle."
+}

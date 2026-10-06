@@ -1,0 +1,41 @@
+# Things in the mill that talk back: the soul bags in the loft and the lamp oil in the cart shed.
+
+# --- The soul bags (loft), once Morgantha is gone and Bella has no claim on them ---
+
+~ soul_bags
+Narrator: A dozen little bags of greasy leather hang from the hooks, each tied with a hair ribbon, each faintly warm. Hold one to your ear and, very far away, somebody is crying.
+if class:cleric
+interject class:cleric: Souls, taken in their sleep and kept like coins in a purse. We are not leaving them like this.
+endif
+* Cut them open. -> free
+* Leave them hanging. -> END
+
+~ free
+set soul_bag_freed
+Narrator: The bags split under the knife like overripe plums, and something goes out of the loft past you, many somethings, all in a hurry to be elsewhere. The air is lighter afterwards, as if someone had opened a window.
+if flag.bonegrinder_bargain == "dream"
+Narrator: Something small and warm comes home. Whichever of you paid Morgantha with a dream remembers it, all at once, and has to sit down.
+endif
+-> END
+
+# --- Burning the mill (the cart shed), once the children are out ---
+
+~ burn
+if treasure_at:old_bonegrinder
+Narrator: You uncork the oil, and stop. Nobody has raked through the ashes at the back of that oven yet, and something about that oven nags at you.
+-> END
+endif
+if flag.offalia_asleep and not flag.offalia_slain and not flag.offalia_at_large
+Narrator: Offalia is still snoring on the bakery floor. Whatever you mean to do about her, do it first.
+-> END
+endif
+Narrator: Lamp oil, kindling, and a mill that has dried in its own oven's heat for longer than anyone in the valley remembers. It would go up like paper.
+* Burn it down. -> burn_it
+* Leave it standing. -> END
+
+~ burn_it
+set bonegrinder_burned
+Narrator: It goes up faster than you would believe: the stair, the loft, the straw, the sails last of all, turning at last as the fire takes them. The ravens lift off the oak in one black sheet and circle it, shouting.
+interject tag:blunt: Good.
+interject class:wizard: The millstone will come through it. Stone always does. Nobody will ever grind anything on it again.
+-> END

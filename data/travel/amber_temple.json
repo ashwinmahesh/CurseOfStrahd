@@ -1,0 +1,20 @@
+{
+  "id": "amber_temple",
+  "name": "The Amber Temple",
+  "places": [
+    {
+      "id": "amber_temple",
+      "name": "The Amber Temple",
+      "location": "amber_temple_entrance",
+      "spawn": "from_pass",
+      "pos": [
+        0.42,
+        0.11
+      ],
+      "region": "amber_temple",
+      "when": "flag.tsolenka_gate_open or flag.kasimir_sister_told or guest:kasimir_velikov or tarokka.tome.region == amber_temple or tarokka.symbol.region == amber_temple or tarokka.sword.region == amber_temple",
+      "summary": "A temple cut into the ice high above the Tsolenka Pass, its doors watched by colossi of amber. The things sealed inside it talk, and bargain."
+    }
+  ],
+  "roads": []
+}

@@ -93,6 +93,7 @@
         "id": "nature_speaker",
         "name": "Nature Speaker",
         "summary": "Cast Commune with Nature, only as a Ritual, using Wisdom.",
+        "text": "You can cast Commune with Nature, but only as a Ritual. Wisdom is your spellcasting ability for it.",
         "modifiers": [
           {
             "stat": "spell",

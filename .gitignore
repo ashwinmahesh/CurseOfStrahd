@@ -19,3 +19,5 @@ __pycache__/
 !art/sprites/props/*.png.import
 # The travel map keeps its mipmaps, so it shrinks cleanly when zoomed out (docs/ui/travel_map.md).
 !art/ui/map/*.png.import
+# Spell and item icons keep mipmaps so lists can draw them small (make icons).
+!art/icons/**/*.png.import

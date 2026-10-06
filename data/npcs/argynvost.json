@@ -1,0 +1,19 @@
+{
+  "id": "argynvost",
+  "name": "Argynvost",
+  "title": "The Silver Dragon's Echo",
+  "summary": "What remains of the silver dragon who built Argynvostholt and founded its Order: a voice, a chill, and a long head drawn in frost across the chapel window. Fading, kind, and still keeping watch.",
+  "portrait": "argynvost",
+  "sprite": "argynvost_echo",
+  "attitude": "friendly",
+  "voice": "docs/voice/argynvost.md",
+  "guest": false,
+  "tags": [
+    "dragon",
+    "spirit",
+    "order_of_the_silver_dragon",
+    "argynvostholt"
+  ],
+  "region": "argynvostholt",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,73 @@
+# Kasha Varo, who sweeps the shrine yard of the White Sun and sings to the pool (docs/voice/kasha_varo.md).
+# She knows the pool's moods, the graves around it, and what she's seen in the water over sixty years.
+
+~ start
+if flag.pool_offerings_taken and not flag.kasha_scolded
+set kasha_scolded
+Kasha Varo [angry]: Somebody's been in the pool after the wishes. Sixty years of wishes. I hope it was worth nine gold to be the sort of person who does that. No, don't tell me. The pool knows, and the pool doesn't gossip. I do.
+-> menu
+endif
+if not flag.kasha_met
+set kasha_met
+Narrator: A tiny old woman in three shawls is sweeping snow off the stones around the pool with a broom taller than she is. She is singing to the water, tunelessly and with great affection.
+Kasha Varo: Mind the edge. The pool doesn't like boots. Kasha Varo, if you're asking. You weren't, but people ought to, so I tell them anyway.
+if guest:ireena
+Narrator: She stops sweeping. She looks at Ireena for a long moment, and then, very slowly, makes the sign of the sun over her own heart.
+Kasha Varo: You've been here before, girl. Long before me. Don't ask me how I know; my knees know things, and I've stopped arguing with them.
+endif
+else
+Kasha Varo: Back again. The pool remembers you. It remembers everybody, but it's polite about it.
+endif
+-> menu
+
+~ menu
+* What is this place? -> place
+* What's special about the pool? -> pool
+* Whose graves are these? -> graves
+* [if treasure_at:krezk_pool_of_the_white_sun] Have you seen anything strange in the water lately? -> strange
+* [if flag.ireena_pool_vision] Have you ever seen a young man in the water? -> young_man
+* [if flag.abbot_fate] The Abbot. Have you heard? -> abbot_after
+* Goodbye, Kasha. -> END
+
+~ place
+Kasha Varo: The shrine of the White Sun. The morning lord, in Vallaki they'd say, but we're older than Vallaki and we call him what our grandmothers did. Krezk was built round this pool, not the other way.
+Kasha Varo: The wall's for the wolves. The pool's for us.
+-> menu
+
+~ pool
+Kasha Varo: It doesn't freeze. Never has. Snow falls in and stops being snow. And when the sun goes behind the clouds, look in it quick, and you'll see the sun stays in the water a breath longer than it stays in the sky.
+Kasha Varo: It remembers, you see. The sun used to come here properly. The water's been holding onto it ever since, the way you'd keep a letter.
+interject tag:curious: Does it do anything? Heal? Bless?
+Kasha Varo: Fill a flask and find out. It doesn't do anything for people who ask what it does. That's my experience. Sixty years of it.
+-> menu
+
+~ graves
+Kasha Varo: Krezk's. All of us end up round the pool, sooner or later. The little stones by the pavilion are the burgomaster's. Five of them. Anna comes and sits with them on Tuesdays.
+if flag.abbot_bride_revealed or flag.vasilka_examined or flag.turned_earth_found
+Kasha Varo [afraid]: And some of them are lighter than they should be, if you take my meaning. I've found earth turned that I didn't turn. I put it back. I say a prayer. It's all I can do.
+interject tag:blunt: The Abbot's bride. That's where he got her.
+Kasha Varo: I didn't say that. I'd never say that. Not out loud, where the mountain can hear.
+endif
+-> menu
+
+~ strange
+Kasha Varo: Since the autumn there's something down in the middle that shines when the sun's gone in. Not a coin. Coins don't shine like that.
+Kasha Varo: I don't go in after it. My knees are the oldest residents of Krezk and they've earned their rest. You've young knees. Wade in, if you want it.
+-> menu
+
+~ young_man
+Kasha Varo: Once. When I was a girl, and once again the winter my husband died. A young man in old clothes, looking up out of the water as if he'd lost something.
+Kasha Varo: I thought he was a saint. Now I've seen your red-haired girl look at him, I think he's only someone waiting. Which is holier, in the end.
+-> menu
+
+~ abbot_after
+if flag.abbot_fate == "repentant"
+Kasha Varo: A light went up off the mountain at dawn. I stood here and watched it go and I didn't know whether to cheer or cry, so I swept. It's what I do with things I don't understand.
+elif flag.abbot_fate == "slain"
+Kasha Varo [sad]: Dead, they say. Something that was sent here to look after us, and went wrong, and you put it right the only way you could. I'll light it a candle. Somebody ought to.
+elif flag.abbot_fate == "broken"
+Kasha Varo: Sitting in his chapel, the Belviews say, not speaking. Well. I've sat by this pool not speaking for sixty years, and it's done me no harm. Maybe he'll come to something.
+else
+Kasha Varo [angry]: A cart went by in the night, they say, with a bride in it. I don't want to hear about it. I'll pray for her. She's ours, whatever she's made of.
+endif
+-> menu

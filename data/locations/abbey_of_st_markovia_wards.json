@@ -1,0 +1,531 @@
+{
+  "id": "abbey_of_st_markovia_wards",
+  "name": "The Wards of St. Markovia",
+  "region": "abbey_of_st_markovia",
+  "summary": "The abbey's east wing: the Belview family's warren in the old kitchen, the infirmary hall, the foundling ward where the abbey once raised the valley's orphans, a row of barred cells, the matron's locked room, and the surgery where Vasilka lies waiting under a sheet.",
+  "map": {
+    "rows": [
+      "##############################",
+      "#.=.=.=.=.=..#...............#",
+      "#............#...............#",
+      "#.=.=.=.=.=..#...............#",
+      "#............##=============##",
+      "######..######...............#",
+      "#............................#",
+      "#............................#",
+      "####.#######.#######..########",
+      "#.=.....#.......#..........=.#",
+      "#.......#.......#......=.=...#",
+      "#.......#.......#=...........#",
+      "#########.......##############",
+      "############.#################",
+      "#........=...........#########",
+      "#..==...........==...#########",
+      "#....................#########",
+      "#..........===.......#########",
+      "#.==.......===.......#########",
+      "#.=..................#########",
+      "#....................#########",
+      "##########.###################"
+    ],
+    "theme": "dungeon",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "belview_kitchen",
+      "name": "The Belviews' kitchen",
+      "cells": [
+        [
+          1,
+          13
+        ],
+        [
+          20,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "wards_hall",
+      "name": "The infirmary hall",
+      "cells": [
+        [
+          9,
+          8
+        ],
+        [
+          15,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "foundling_ward",
+      "name": "The foundling ward",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          12,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "ward_cells",
+      "name": "The cells",
+      "cells": [
+        [
+          14,
+          1
+        ],
+        [
+          28,
+          3
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "wards_corridor",
+      "name": "The long corridor",
+      "cells": [
+        [
+          1,
+          5
+        ],
+        [
+          28,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "matron_room",
+      "name": "The matron's room",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          7,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "abbey_surgery",
+      "name": "The surgery",
+      "cells": [
+        [
+          17,
+          8
+        ],
+        [
+          28,
+          11
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      10,
+      20
+    ]
+  },
+  "exits": [
+    {
+      "id": "wards_out",
+      "cell": [
+        10,
+        21
+      ],
+      "to": "abbey_of_st_markovia",
+      "spawn": "from_wards",
+      "label": "Out to the courtyard"
+    }
+  ],
+  "doors": [
+    {
+      "id": "matron_door",
+      "cell": [
+        4,
+        8
+      ],
+      "label": "The matron's door",
+      "locked": true,
+      "lock_dc": 13
+    }
+  ],
+  "props": [
+    {
+      "id": "kitchen_hearth",
+      "cell": [
+        9,
+        14
+      ],
+      "kind": "examine",
+      "label": "The kitchen hearth",
+      "model": "hearth"
+    },
+    {
+      "id": "belview_straw",
+      "cell": [
+        3,
+        15
+      ],
+      "kind": "examine",
+      "label": "Straw beds",
+      "model": "straw"
+    },
+    {
+      "id": "foundling_cots",
+      "cell": [
+        4,
+        1
+      ],
+      "kind": "examine",
+      "label": "Rows of little cots",
+      "model": "crib"
+    },
+    {
+      "id": "foundling_names",
+      "cell": [
+        1,
+        4
+      ],
+      "kind": "examine",
+      "label": "Names scratched by the door",
+      "model": "papers"
+    },
+    {
+      "id": "ward_cells_bars",
+      "cell": [
+        20,
+        4
+      ],
+      "kind": "examine",
+      "label": "The cell bars",
+      "model": "barred_door",
+      "dialogue": "abbey_of_st_markovia/belviews:cells"
+    },
+    {
+      "id": "surgery_table",
+      "cell": [
+        23,
+        10
+      ],
+      "kind": "decor",
+      "label": "The long table",
+      "model": "table_round"
+    },
+    {
+      "id": "surgery_basin",
+      "cell": [
+        17,
+        11
+      ],
+      "kind": "examine",
+      "label": "A basin and instruments",
+      "model": "workbench"
+    },
+    {
+      "id": "vasilka_slippers",
+      "cell": [
+        25,
+        10
+      ],
+      "kind": "examine",
+      "label": "A pair of white slippers",
+      "model": "ledge"
+    },
+    {
+      "id": "matron_bed",
+      "cell": [
+        2,
+        9
+      ],
+      "kind": "decor",
+      "label": "The matron's bed",
+      "model": "bed_small"
+    }
+  ],
+  "containers": [
+    {
+      "id": "foundling_locker",
+      "cell": [
+        12,
+        2
+      ],
+      "label": "A foundling's locker",
+      "items": [
+        {
+          "id": "blanket",
+          "qty": 1
+        },
+        {
+          "id": "candle",
+          "qty": 2
+        }
+      ],
+      "gold": 3,
+      "model": "drawer"
+    },
+    {
+      "id": "bridal_trunk",
+      "cell": [
+        7,
+        9
+      ],
+      "label": "The matron's trunk",
+      "items": [
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "gold": 12,
+      "model": "trunk",
+      "flag": "wards_dress_found"
+    },
+    {
+      "id": "surgery_cabinet",
+      "cell": [
+        27,
+        9
+      ],
+      "label": "Instrument cabinet",
+      "items": [
+        {
+          "id": "healers_kit",
+          "qty": 1
+        },
+        {
+          "id": "vial",
+          "qty": 3
+        },
+        {
+          "id": "antitoxin",
+          "qty": 1
+        }
+      ],
+      "gold": 0,
+      "model": "case"
+    },
+    {
+      "id": "belview_pot",
+      "cell": [
+        10,
+        14
+      ],
+      "label": "The Belviews' stew pot",
+      "items": [
+        {
+          "id": "ration",
+          "qty": 2
+        }
+      ],
+      "gold": 2
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        9,
+        14
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        24,
+        9
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        22,
+        9
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        12,
+        6
+      ],
+      "kind": "lamp",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "belview",
+      "cell": [
+        7,
+        17
+      ],
+      "dialogue": "abbey_of_st_markovia/belviews:kitchen"
+    },
+    {
+      "npc": "vasilka",
+      "cell": [
+        24,
+        10
+      ],
+      "dialogue": "abbey_of_st_markovia/vasilka:on_the_table",
+      "when": "not flag.wedding_dress_delivered and not flag.vasilka_fate"
+    },
+    {
+      "npc": "vasilka",
+      "cell": [
+        24,
+        10
+      ],
+      "dialogue": "abbey_of_st_markovia/vasilka:never_woke",
+      "when": "flag.vasilka_fate == \"never_woke\""
+    }
+  ],
+  "encounters": [
+    {
+      "id": "wards_cells",
+      "trigger": "flag:wards_cells_riot",
+      "when": "level >= 7",
+      "text": "The bars bang open all down the row. They come out low and fast, in every shape the Abbot ever tried, and every one of them is screaming in somebody else's voice.",
+      "monsters": [
+        {
+          "monster": "berserker",
+          "cell": [
+            14,
+            6
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            28,
+            6
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            15,
+            5
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            15,
+            7
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            27,
+            5
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            27,
+            7
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            14,
+            7
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            28,
+            7
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wards_cells_fought"
+    },
+    {
+      "id": "wards_cells",
+      "trigger": "flag:wards_cells_riot",
+      "text": "The bars bang open all down the row. They come out low and fast, in every shape the Abbot ever tried, and every one of them is screaming in somebody else's voice.",
+      "monsters": [
+        {
+          "monster": "berserker",
+          "cell": [
+            28,
+            6
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            15,
+            5
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            15,
+            7
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            27,
+            5
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            27,
+            7
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wards_cells_fought"
+    }
+  ],
+  "narration": {
+    "enter": "enter:abbey_of_st_markovia_wards"
+  },
+  "rest": "no",
+  "rest_text": "Something in the cells is saying your name, in your own voice, over and over. Nobody sleeps here.",
+  "treasure_spots": {
+    "abbey_of_st_markovia_wards": {
+      "container": "foundling_locker"
+    }
+  }
+}

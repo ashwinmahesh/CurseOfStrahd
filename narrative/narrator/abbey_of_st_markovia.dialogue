@@ -1,0 +1,204 @@
+# Narrator: the Abbey of St. Markovia (docs/voice/narrator.md). The Abbey is one of the scariest places in the game
+# (rule 7): the humour is thin and dry, and some lines carry none at all.
+
+# ---------------------------------------------------------------- The grounds
+
+~ enter:abbey_of_st_markovia
+| The track comes up over the last switchback onto a shelf of the mountain, and there it is: grey stone walls, a bell tower, slate roofs furred with snow. It's very quiet. Then, from somewhere inside, something laughs in a voice that is almost a child's.
+| [flag.abbot_fate == "repentant"] The abbey is quiet in a new way. The window that was always lit is dark, and the Belviews are out in the courtyard in the daylight, blinking at it.
+| [flag.abbot_fate == "slain"] The abbey stands silent on its shelf. Nobody lights the lamp at the gate any more. The Belviews have, though, for the first time, put washing out on a line.
+| [flag.abbot_fate == "wedding"] The abbey's bell is ringing, slowly, though there's nobody in the tower. Somebody inside is still celebrating.
+cooldown 30
+
+~ enter:switchback_top
+| The top of the switchback: a ledge of rock and snow with Krezk laid out far below, small as a toy behind its wall. The wind up here has opinions about everything.
+once
+
+~ enter:abbey_gate
+| The abbey gate stands open. It looks as if it's never been shut, and has rusted that way on purpose.
+once
+
+~ enter:abbey_courtyard
+| A courtyard of worn flags round a well and a statue. Footprints in the snow go in every direction, and some of them aren't any shape that has a name.
+once
+
+~ enter:cloister_walk
+| A covered walk along the wall, with stone benches. On one bench someone has left a neat pile of feathers, sorted by size.
+once
+
+~ enter:west_court
+| A narrow court in the lee of the church, sheltered from the wind. The snow here is untrodden, except for one line of bare footprints that walks to the wall and stops.
+once
+
+~ examine:markovia_statue
+| A woman in a plain habit, a mace in one hand, the other held out palm up as if asking you to come with her. The face was carved with great care. Much later, someone very gently chiselled away the eyes.
+
+~ examine:abbey_well
+| A deep well with a wooden lid. Someone has scratched a word into the lid, over and over, in a child's hand: HOME.
+
+~ examine:bell_tower
+| A squat bell tower with no rope. The bell is still up there. On still nights, Krezk says, it rings anyway.
+
+~ examine:view_of_krezk
+| Krezk, far below, behind its wall: a fistful of roofs, a thread of smoke, and the round eye of the pool at its north end, the only thing down there not white.
+
+~ examine:abbey_facade
+| The church front: a pointed arch, a carved sunburst over the doors with its gilt rubbed away, and the doors themselves, very old and very clean.
+
+~ examine:wards_windows
+| A row of windows on the upper floor of the east wing, barred from outside. In one of them, a hand presses flat against the glass, and slides away.
+
+# ---------------------------------------------------------------- The church
+
+~ enter:abbey_of_st_markovia_shrine
+| A plain church, cold and clean, rows of pews under a great gilded sunburst. Candles burn all along the altar rail. Nobody lit them that you saw.
+| [flag.abbot_fate == "broken"] The candles are out. In the grey light from the door, a figure sits on the altar step and doesn't look up.
+| [flag.abbot_fate == "repentant" or flag.abbot_fate == "slain"] A plain church, cold and quiet, with the sunburst above an empty altar. It feels, for the first time, like a room people could pray in.
+cooldown 20
+
+~ enter:church_nave
+| The pews are worn smooth. On the backs of some, small hands have carved small names, the way children do in church when the sermon is long.
+once
+
+~ enter:church_chancel
+| The chancel, two steps up. The altar is spotless. So is the floor around it, scrubbed pale, the way you'd scrub a floor after something that needed scrubbing.
+once
+
+~ enter:abbot_cell
+| A cell with a plank cot, no blanket, a stool and a ledger on a shelf. Nothing else. Whoever lives here doesn't sleep, or doesn't need to, or has forgotten how.
+once
+
+~ enter:sacristy
+| The sacristy: vestments on pegs, a chest, the smell of old incense. One white surplice hangs apart from the others, freshly pressed, as if for an occasion.
+once
+
+~ enter:church_porch
+| A stone porch. Somebody has hung a sprig of dried flowers over the door, and it has been there so long it's the colour of the stone.
+once
+
+~ examine:markovia_altar
+| A plain stone altar with a sunburst carved on its face. In the stone of the top, if you look closely, there are two shallow hollows worn by someone kneeling with their hands on it for a very long time.
+
+~ examine:abbey_organ
+| A small pipe organ with half its pipes missing. The keys that are left are worn down to the wood in the middle, where someone has played the same few notes for years.
+
+~ examine:abbot_cot
+| A cot of bare planks. There's no hollow in the wood where a body would lie. It has never been slept on.
+
+~ examine:markovia_plaque
+| A bronze plaque, green with age: FOR MARKOVIA, WHO WENT UP THE ROAD, AND THE TWELVE WHO WENT WITH HER. Someone has scratched a thirteenth line under it and then scratched it out.
+
+~ examine:church_pews
+| Pews for sixty. There have not been sixty people in here at once for a very long time.
+
+# ---------------------------------------------------------------- The wards
+
+~ enter:abbey_of_st_markovia_wards
+| The east wing smells of straw, wet fur and boiled bones. Somewhere further in, something is calling for its mother in a voice it learned from someone else.
+cooldown 20
+
+~ enter:belview_kitchen
+| A great vaulted kitchen gone to straw and bones. A dozen shapes look up from the hearth at once, and every one of them makes the same small noise you just made.
+once
+
+~ enter:wards_hall
+| The old infirmary hall, cold as a well, with hooks on the walls where the beds' curtains used to hang. The flagstones have been worn into a path by a great many feet, and lately by a great many paws.
+once
+
+~ enter:foundling_ward
+| Rows of little cots, each with a name scratched on the frame. The abbey raised the valley's orphans here once. The blankets are still folded at the foot of each one, waiting.
+once
+
+~ enter:ward_cells
+| A row of narrow cells behind iron bars. It's dark in there, and the dark is breathing, quick and shallow, from more chests than you can count.
+once
+
+~ enter:wards_corridor
+| A long corridor of whitewashed stone. On the wall, at a child's height, someone has drawn a line of little suns in charcoal, all the way to the end, as if to light the way.
+once
+
+~ enter:matron_room
+| A room that has been locked for a long time and smells like it: lavender gone to dust, a narrow bed, a trunk, a hairbrush with grey hair still in it.
+once
+
+~ enter:abbey_surgery
+| The old surgery, scrubbed white. Instruments laid out in rows of shining patience. At the far end, on a long table under a sheet, someone lies very still.
+once
+
+~ examine:kitchen_hearth
+| A huge hearth with a black pot over a low fire. Something in the pot is bubbling. You decide, as a group, not to look.
+
+~ examine:belview_straw
+| Straw beds, heaped together for warmth, with a few treasures tucked into them: a button, a spoon, a bird's skull, a scrap of ribbon.
+
+~ examine:foundling_cots
+| Little cots with names scratched on the frames: Ana, Tomas, the twins, Little Bird. On one, under the name, a smaller hand has added: I WAS HERE.
+
+~ examine:foundling_names
+| Names scratched in the plaster by the door, at a child's height. Dozens of them. Beside the last one, someone has drawn a sun with a smiling face.
+
+~ examine:surgery_basin
+| A basin, a cloth, and a row of needles laid out in order of size. The thread on the smallest one is so fine you can only see it when it catches the candle.
+
+~ examine:vasilka_slippers
+| A pair of small white slippers set side by side at the foot of the table, with the toes turned toward the door.
+
+~ open:matron_door
+| The door gives with a dry crack, low down by the hinge. Lavender dust comes out to meet you.
+
+~ open:bridal_trunk
+| Under a layer of old linen, wrapped in blue paper, lies a wedding dress of plain white wool with a high collar, never worn. Pinned to the paper, a note in a careful hand: for when the war is over.
+
+# ---------------------------------------------------------------- The garden
+
+~ enter:abbey_of_st_markovia_garden
+| A walled garden under frost: raised beds of black stalks, a tool shed, a few small graves in the corner. Along the north wall, a row of scarecrows hangs on poles, their sacking faces all turned toward the gate you came in by.
+| [flag.garden_sentry_burned] A walled garden under frost. The poles along the north wall stand empty, and the snow beneath them is black with ash.
+cooldown 20
+
+~ enter:scarecrow_row
+| Up close, the scarecrows aren't stuffed with straw. Their seams are stitched with the same fine thread as everything else in this house.
+once
+
+~ enter:frost_beds
+| Raised beds of frozen stalks: cabbages gone to black lace, beans that never ripened. Someone still weeds them.
+once
+
+~ enter:nuns_graves
+| The nuns' graves, small and neat, each with a sunburst cut into the headstone and a name: Sister this, Sister that. The last stone has no name, only the date the abbey emptied.
+once
+
+~ enter:garden_shed_yard
+| A tool shed leaning against the garden wall, its door held shut with a loop of wire.
+once
+
+~ examine:stitched_sentry
+| A scarecrow taller than the others, in a monk's old habit, with a sacking face and a mouth sewn shut with neat black stitches. Its arms are folded tight across its chest, as if it were holding something it was told to keep.
+
+~ examine:frost_bed
+| Black stalks in hard ground. One bed has been dug over recently, deep, and filled in again, and nothing has been planted in it.
+
+~ examine:nuns_graves
+| Small graves, kept tidy. Someone has put a candle stub on each one, and lit none of them.
+
+~ examine:tool_shed
+| A shed of grey boards. Through the gaps you can see rakes, a shovel, sacks. And on a nail, a sickle hung very carefully, blade inward.
+
+# ---------------------------------------------------------------- Fights at the abbey
+
+~ combat:start
+| [at:abbey_of_st_markovia_shrine and flag.wedding_dress_delivered and not flag.abbot_struck_down] The Belviews' humming doesn't stop when the fighting starts. It gets louder.
+| [at:abbey_of_st_markovia_shrine] Every candle in the church goes white at once.
+| [at:abbey_of_st_markovia_garden] The scarecrows come down off their poles in silence. They have no breath to shout with.
+| [at:abbey_of_st_markovia_wards] The cells empty all at once, and the noise is everyone's voice but their own.
+cooldown 10
+
+~ combat:victory
+| [at:abbey_of_st_markovia_shrine and flag.abbot_struck_down] The light goes out of the air slowly, settling like dust. The church is just a church.
+| [at:abbey_of_st_markovia_shrine and flag.bride_defeated] The humming stops. In the silence, somebody at the back of the church begins, very quietly, to cry.
+| [at:abbey_of_st_markovia_garden] Straw and sacking lie scattered through the frost beds. Nothing moves in the garden except the snow.
+| [at:abbey_of_st_markovia_wards] It's quiet in the wards. You'd forgotten they could be.
+cooldown 10
+
+~ rest:long:abbey_of_st_markovia
+| You sleep in the cart shed with a watch at the door. All night, something walks the cloister in slow, even steps, and every hour it stops outside and listens, and goes on.

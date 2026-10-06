@@ -1,0 +1,127 @@
+# Meetings on the miller's lane (random table bonegrinder_lane, map old_bonegrinder_track). Morgantha on her rounds
+# while the coven stands; afterwards whichever daughter is still loose; and the Keepers settling a debt.
+
+# --- Morgantha's cart on the lane (day, before the mill is settled) ---
+
+~ morgantha_cart
+if flag.morgantha_cart_met
+-> END
+endif
+set morgantha_cart_met
+set bonegrinder_rumor
+Narrator: A handcart comes squeaking round the bend, heaped high under a white cloth, and behind it, pushing, a little old woman in a flour-dusted shawl.
+if flag.morgantha_driven_off
+Morgantha [sly]: Well, well. The brave one from the village square. Morgantha said she'd remember you, duckling. Out here there's nobody to watch you be brave.
+elif flag.morgantha_met
+Morgantha [smile]: My ducklings from the village, out on Morgantha's lane! She's on her way home to bake. You must visit. Up the hill, past the dead oak. Bring an appetite.
+else
+Morgantha [smile]: Pastries! Fresh dream pastries! Oh, new faces on my lane. Lovely. Come and visit Morgantha's mill, dearies. Up the hill, past the dead oak. Bring an appetite.
+endif
+-> cart_menu
+
+~ cart_menu
+* [if gold >= 1] One pastry, please. (1 gp) -> buy
+* Who buys pastries out here? -> customers
+* [Insight DC 14] Watch her hands. -> hands_ok | hands_fail
+* Strike her down, here on the road. -> strike
+* Let us pass. -> pass
+
+~ buy
+gold -1
+give dream_pastry 1
+set dream_pastries_bought += 1
+Morgantha [smile]: There. Warm as a kiss. Eat it tonight, pet, and dream of whoever you've lost. Morgantha will know if you don't.
+-> cart_menu
+
+~ customers
+if flag.vallaki_backed == "wachter"
+Morgantha: Vallaki, dearie. Lady Wachter orders two dozen a week for her book club. Such a refined lady. Such deep sleepers, her friends.
+elif flag.vallaki_backed == "baron"
+Morgantha: Vallaki, dearie. All those festivals make everybody so terribly cheerful. Folk need a good long sleep afterwards.
+else
+Morgantha: Everybody, dearie. The farms, the village, Vallaki. Folk who've lost somebody. In this valley that's everybody.
+endif
+-> cart_menu
+
+~ hands_ok
+set morgantha_suspected
+Narrator: Under the flour her nails are black and hooked and far too long, and she pushes a loaded cart uphill without once breathing hard.
+-> cart_menu
+
+~ hands_fail
+Narrator: Floury old hands on a cart's handles. She catches you looking and wiggles her fingers at you.
+-> cart_menu
+
+~ strike
+Narrator: Steel comes out. Morgantha smiles at it the way a grandmother smiles at a child's wooden sword.
+Morgantha [sly]: Out on the open road, dearie, with all these ravens watching? Come up to the mill. We'll do it properly there.
+Narrator: She steps sideways into nothing, cart and all, and the lane is empty. The smell of honey hangs in the air for a long while.
+-> END
+
+~ pass
+Morgantha [smile]: Off you go. Everybody comes up the hill in the end.
+-> END
+
+# --- Bella's cart, once she holds the mill ---
+
+~ bella_cart
+Narrator: The pastry cart comes round the bend again, but the woman pushing it is young and lovely, with a red ribbon in her hair and a new shawl.
+Bella [smile]: My partners in business! Trade's slower without Mother's touch, but they tell me my pastries are lighter. Try one? For old times' sake? No. Wise.
+-> bella_menu
+
+~ bella_menu
+* How's the mill? -> bella_mill
+* This ends here, Bella. -> bella_end
+* Good day, Bella. -> END
+
+~ bella_mill
+Bella: Quiet. I've had the sails turning; Mother never let them. Everything I grind comes out very fine now. Business is good. Everybody is so tired in this valley.
+-> bella_menu
+
+~ bella_end
+Bella [sly]: Ah. I wondered when you'd remember you were heroes.
+set bella_slain
+if flag.offalia_slain
+set bonegrinder_fate = "destroyed"
+set pastry_trade = "ended"
+else
+set bonegrinder_fate = "broken"
+endif
+combat bella_on_the_road
+
+# --- Offalia in the hedgerow, while she's loose ---
+
+~ offalia_hedge
+Narrator: A large woman in a floury apron sits in the ditch with her legs stuck out, stripping a bramble of its berries with both hands and crying with her mouth full.
+if flag.morgantha_slain
+Offalia [sad]: Mother's gone. I went home and the oven was cold. Nobody tells me what to do now. I've eaten all the hedges.
+else
+Offalia [sad]: I looked all along the road and Mother wasn't there. Mother's cross with me. I can feel it from here.
+endif
+* [if not flag.morgantha_slain] Your mother wants you home, Offalia. -> offalia_home
+* We can't leave you loose in the valley. -> offalia_end
+* Leave her to her berries. -> END
+
+~ offalia_home
+set offalia_lured = false
+set offalia_at_large = false
+Offalia [smile]: Really? She's not cross? Oh, thank you, thank you. I'll go straight home. I'll only stop at the good hedges.
+Narrator: She heaves herself out of the ditch and sets off up the lane toward the mill, humming. You may come to regret that.
+-> END
+
+~ offalia_end
+set offalia_slain
+if flag.morgantha_slain and flag.bella_slain
+set bonegrinder_fate = "destroyed"
+set pastry_trade = "ended"
+endif
+Offalia [angry]: You're the ones. You're the ones from the mill.
+combat offalia_on_the_road
+
+# --- The Keepers pay a debt (after Ilinca vouched for the party) ---
+
+~ raven_flight
+Narrator: Ravens come down the lane in one long black line, low over your heads. One drops something in the road at {leader}'s feet as it passes: a little stoppered bottle tied with a black feather.
+give potion_of_healing 1
+interject tag:curious: Odd coin, she said. I like odd coin.
+-> END

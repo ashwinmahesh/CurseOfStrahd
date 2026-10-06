@@ -57,6 +57,9 @@ func test_the_map_opens_on_what_the_party_knows_and_zooms_within_the_art() -> vo
 	t.zoom_at(Vector2(30, 30), 0.001)
 	assert_eq(t.zoom, 1.0, "and never shows less than the whole valley")
 	assert_eq(t.pan, Vector2.ZERO, "the art always covers the panel")
+	var via := t.road_points({"id": "round_the_lake", "via": [[0.2, 0.53]]}, t.to_panel(Vector2(0.32, 0.48)), t.to_panel(Vector2(0.075, 0.48)))
+	var bend := t.to_panel(Vector2(0.2, 0.53))
+	assert_true(Array(via).any(func(q: Vector2) -> bool: return q.distance_to(bend) < 1.0), "a road with via points goes through them")
 	t.select("vallaki")
 	await _frames(2)
 	var go := t.find_child("SetOut", true, false) as Button
@@ -93,6 +96,12 @@ func test_ways_out_to_other_regions_are_marked_and_doors_are_not() -> void:
 	assert_true(bool(outs[0]["region"]) and bool(outs[0]["open"]), "the opening road's way into the village is marked")
 	assert_eq(str(outs[0]["destination"]), "Village of Barovia", "and names where it goes")
 	road.queue_free()
+	var abbey := LocationView.create("abbey_of_st_markovia", st, Narrator.new(), Dice.roller, "default")
+	add_child(abbey)
+	for e in ExitSigns.ways_out(abbey):
+		if str(e["id"]) == "garden_door":
+			assert_eq(e["dir"], Vector2i.ZERO, "a gate inside the map gets no arrow pointing off an edge")
+	abbey.queue_free()
 
 
 func test_the_minimap_follows_the_party_north_up() -> void:

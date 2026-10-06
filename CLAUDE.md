@@ -6,7 +6,7 @@ Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverag
 
 ## Commands (add new ones to the Makefile)
 make run | arena | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
-make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | standin | wireframes
+make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 
@@ -36,6 +36,10 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 ## Art
 - Colours only from art/palette/palette.json, plus art/palette/ui_palette.json for menus (via Look) — run
   `make palette` after editing the lists. Menu ornaments and icons: `make ui_art`.
+- Spell and item icons: game-icons.net silhouettes (art/sourced/game_icons, CC BY 3.0) picked per key in
+  art/icons.json as `<silhouette>@<tint>` (spells coloured by flavour, items in their natural colours; tints in the
+  same file) and framed by `make icons`; a spell or item's data `icon` names its key, else its id is the key.
+  Credit any new artist in art/credits.json (tests/unit/test_icons.gd checks).
 - Images: Gemini (gemini-3.1-flash-image, owner decision 2026-10-06) via tools/art/generate.sh only;
   provider and model pinned in art/manifest.json. Key: GEMINI_API_KEY, sent as a header. Gemini gives opaque
   images, so ask for a plain flat white background; the pipeline removes it. OpenAI is a fallback

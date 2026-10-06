@@ -38,7 +38,7 @@
         "id": "divination_savant",
         "name": "Divination Savant (new spell level)",
         "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Divination spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -48,7 +48,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -57,7 +58,7 @@
         "id": "divination_savant",
         "name": "Divination Savant (new spell level)",
         "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Divination spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -67,7 +68,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -76,7 +78,7 @@
         "id": "divination_savant",
         "name": "Divination Savant (new spell level)",
         "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Divination spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -86,7 +88,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -95,7 +98,7 @@
         "id": "divination_savant",
         "name": "Divination Savant (new spell level)",
         "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Divination spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -105,7 +108,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -187,6 +191,7 @@
         "id": "expert_divination",
         "name": "Expert Divination",
         "summary": "Casting a level 2+ Divination spell with a slot refunds a lower-level slot (level 5 or lower).",
+        "text": "When you cast a Divination spell of level 2 or higher with a spell slot, you regain one expended spell slot of a lower level than the one you used, and no higher than level 5.",
         "implemented": "engine"
       }
     },
@@ -196,6 +201,7 @@
         "id": "the_third_eye",
         "name": "The Third Eye",
         "summary": "Bonus Action: darkvision 120 ft, See Invisibility, read any language or see the Invisible nearby.",
+        "text": "As a Bonus Action, choose one benefit that lasts until you start a Short or Long Rest: Darkvision out to 120 feet; Greater Comprehension, letting you read any language; or See Invisibility, which you can cast without a spell slot. You can't use this feature again until you finish a Short or Long Rest.",
         "implemented": "engine"
       }
     },

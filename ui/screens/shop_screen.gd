@@ -33,46 +33,58 @@ func _draw() -> void:
 		var c := _frame.get_child(0)
 		_frame.remove_child(c)
 		c.queue_free()
-	var top := HBoxContainer.new()
-	top.add_theme_constant_override("separation", 10)
-	for i in st.party.size():
-		top.add_child(UiKit.button(("▸ " if i == index else "") + st.party[i].name, func() -> void:
-			index = i
-			_draw(), 14))
-	top.add_child(UiKit.label("   Purse: %s gp" % _money(st.gold), 18, "gilt_light"))
-	top.add_child(UiKit.button("Done", _close, 15))
+	var top := UiParts.party_chips(st.party, index, func(i: int) -> void:
+		index = i
+		_draw())
+	top.add_child(UiParts.gap())
+	var purse := HBoxContainer.new()
+	purse.add_theme_constant_override("separation", 6)
+	purse.add_child(UiParts.caption("Purse", 12))
+	purse.add_child(UiParts.figure("%s gp" % _money(st.gold), 22, "gilt_light"))
+	purse.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	top.add_child(purse)
+	var done := UiKit.button("Done", _close, 16)
+	done.custom_minimum_size = Vector2(0, 46)
+	top.add_child(done)
 	_frame.add_child(top)
 	if _note != "":
-		_frame.add_child(UiKit.label(_note, 15, "bile"))
+		_frame.add_child(UiParts.row(UiKit.label(_note, 15, "bile")))
 	var cols := HBoxContainer.new()
-	cols.add_theme_constant_override("separation", 24)
+	cols.add_theme_constant_override("separation", 18)
+	cols.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_frame.add_child(cols)
 	# Their wares
 	var wares := VBoxContainer.new()
-	wares.add_child(UiKit.header("For sale"))
+	wares.add_theme_constant_override("separation", 5)
 	var ch := st.party[index]
 	var any := false
 	for w in st.shop_wares(npc_id):
 		any = true
 		var row := HBoxContainer.new()
-		var stock := "" if int(w["qty"]) < 0 else "  (%d left)" % int(w["qty"])
-		var l := UiKit.label("%s · %s gp%s" % [w["name"], _money(float(w["price"])), stock], 15, "vellum", 420)
-		l.tooltip_text = str(Compendium.shared().item_data(str(w["id"])).get("summary", ""))
-		l.mouse_filter = Control.MOUSE_FILTER_PASS
-		row.add_child(l)
+		row.add_theme_constant_override("separation", 10)
 		var id := str(w["id"])
-		var b := UiKit.button("Buy for %s" % ch.name.get_slice(" ", 0), func() -> void: _buy(id), 13)
+		UiParts.add_icon(row, "item", id)
+		var n := UiKit.label(str(w["name"]), 15, "vellum")
+		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(n)
+		if int(w["qty"]) >= 0:
+			row.add_child(UiKit.label("%d left" % int(w["qty"]), 12, "bone"))
+		var price := UiParts.figure("%s gp" % _money(float(w["price"])), 16, "gilt_light")
+		price.custom_minimum_size = Vector2(72, 0)
+		price.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		row.add_child(price)
+		var b := UiParts.small_button("Buy for %s" % ch.name.get_slice(" ", 0), func() -> void: _buy(id))
 		b.disabled = st.gold < float(w["price"])
 		if b.disabled:
 			b.tooltip_text = "Not enough gold"
 		row.add_child(b)
-		wares.add_child(row)
+		wares.add_child(UiParts.row(row, LootWindow._item_tip(Compendium.shared().item_data(id))))
 	if not any:
-		wares.add_child(UiKit.label("Nothing left to sell you.", 15, "parchment"))
-	cols.add_child(UiKit.scroll(wares, Vector2(660, 620)))
+		wares.add_child(UiKit.label("Nothing left to sell you.", 15, "bone"))
+	cols.add_child(_side("For sale", wares))
 	# Our pack
 	var pack := VBoxContainer.new()
-	pack.add_child(UiKit.header("%s's pack" % ch.name.get_slice(" ", 0)))
+	pack.add_theme_constant_override("separation", 5)
 	for e in ch.inventory:
 		if int(e["qty"]) <= 0:
 			continue
@@ -80,13 +92,30 @@ func _draw() -> void:
 		var data := Compendium.shared().item_data(id)
 		var offer := st.shop_offer(npc_id, id)
 		var row := HBoxContainer.new()
-		row.add_child(UiKit.label("%s%s%s" % [data.get("name", id), " ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else "",
-			" (equipped)" if str(e.get("slot", "")) != "" else ""], 15, "vellum", 380))
-		var b := UiKit.button("Sell for %s gp" % _money(offer) if offer >= 0.0 else "Won't buy", func() -> void: _sell(id), 13)
+		row.add_theme_constant_override("separation", 10)
+		UiParts.add_icon(row, "item", id)
+		var n := UiKit.label("%s%s" % [data.get("name", id), " ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""], 15, "vellum")
+		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(n)
+		if str(e.get("slot", "")) != "":
+			row.add_child(UiParts.pill("Equipped", "moonlight"))
+		var b := UiParts.small_button("Sell for %s gp" % _money(offer) if offer >= 0.0 else "Won't buy", func() -> void: _sell(id))
 		b.disabled = offer < 0.0
 		row.add_child(b)
-		pack.add_child(row)
-	cols.add_child(UiKit.scroll(pack, Vector2(620, 620)))
+		pack.add_child(UiParts.row(row, LootWindow._item_tip(data)))
+	cols.add_child(_side("%s's pack" % ch.name.get_slice(" ", 0), pack))
+
+
+func _side(title: String, list: VBoxContainer) -> Control:
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 6)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(UiParts.section(title))
+	var pane := UiParts.pane(10)
+	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pane.add_child(UiParts.fill_scroll(list))
+	col.add_child(pane)
+	return col
 
 
 func _buy(item_id: String) -> void:

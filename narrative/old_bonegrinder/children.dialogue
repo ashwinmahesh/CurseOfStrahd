@@ -1,0 +1,112 @@
+# Ilka and Toma Sarnov in the cages (voices: docs/regions/old_bonegrinder.md §3). `freed` is the region's climax:
+# the children come out (after Morgantha falls, or after a bargain), the party reaches its milestone, and Ilinca takes
+# them home or to Vallaki. Every way of freeing them passes through `freed`.
+
+~ start
+if flag.children_rescued
+-> END
+endif
+if flag.morgantha_slain
+-> rescue
+endif
+if flag.sarnov_children_met
+-> again
+endif
+set sarnov_children_met
+if not quest.children_of_the_mill
+quest children_of_the_mill heard
+endif
+Narrator: Two cages hang from the rafters like birdcages for very large birds. In one, a thin girl with a set jaw and scraped knuckles. In the other, a small boy asleep against the bars, with crumbs on his chin.
+Ilka [afraid]: Are you real? Don't wake Toma. He sleeps better than me. She gives him the pastries and he dreams about our sister.
+Toma: Granny's nice. Granny gives me cake.
+Ilka [angry]: She is not our granny, Toma.
+Narrator: In her chair, Morgantha rocks, and listens, and smiles.
+-> menu
+
+~ again
+Ilka [afraid]: Is she watching? She's always watching. Get us out. Please.
+-> menu
+
+~ menu
+* How long have you been in here? -> how_long
+* Who brought you here? -> who
+* Hold on. We'll get you out. -> END
+
+~ how_long
+Ilka: Eleven days. I scratch the bar each time the light comes in. She lets us out to wash. She weighs us on the flour scale. Toma's getting heavier. I've stopped eating.
+interject tag:cheerful: Clever girl. Very clever girl.
+-> menu
+
+~ who
+Ilka: Mama brought us. She said we were going visiting. She sat downstairs with Granny Morgantha a long time, and then she went home with a basket, and we didn't.
+Ilka [sad]: I'm not stupid. I know what that means. Toma doesn't. Don't tell him.
+-> menu
+
+# --- After Morgantha falls ---
+
+~ rescue
+Narrator: The cages hang still. The girl has both hands on the bars, white at the knuckles. The boy is awake now, staring at the rocking chair, which has finally stopped.
+Ilka: Is she dead? Really dead? She said she couldn't die. She said it every night.
+interject tag:blunt: She could. She did.
+Narrator: Morgantha's keys hang on a ring at what was her apron. The cages open at the second try, and the children climb out as stiff as old men.
+-> freed
+
+# --- The climax: the children are out ---
+
+~ freed
+set children_rescued
+quest children_of_the_mill children_freed
+xp milestone
+if not flag.morgantha_slain
+set bonegrinder_fate = "bargain"
+set pastry_trade = "thriving"
+endif
+Toma: Are we going home? I want to go home. I want Mama.
+Ilka: Toma.
+Ilka [sad]: Did Mama sell us? You can tell me. I'd rather know.
+* Tell her the truth: yes, she did. -> truth
+* Lie to her: no, you were only lost. -> lie
+
+~ truth
+set sarnov_truth_told
+Ilka: I knew. I only wanted somebody to say it out loud, so it was real and I could stop thinking about it.
+interject tag:devout: None of it was your doing. Not one bit. Remember that part as well.
+-> destination
+
+~ lie
+Narrator: Ilka looks at you a long moment, and decides to let you have the lie. It is the kindest thing anyone does in the mill today.
+-> destination
+
+~ destination
+if guest:ilinca_vrana
+Ilinca: I'll take them down. Home, or to Vallaki: Urwin Martikov keeps a warm inn and a soft heart, and he won't ask questions. Your choice. You've earned it.
+else
+Narrator: A raven lands on the sill of the loft's one window and shakes itself, unhurriedly, into an old woman in a black shawl.
+if not flag.ilinca_met
+set ilinca_met
+Ilinca: Ilinca Vrana. I was the midwife who brought these two into the world. I've watched this mill from the oak for eleven days, waiting for someone to be brave or stupid. Thank you for being both.
+endif
+Ilinca: I'll take them down. Home, or to Vallaki: Urwin Martikov keeps a warm inn and a soft heart, and he won't ask questions. Your choice.
+endif
+* Take them home to the village. -> home
+* Take them to the Blue Water Inn in Vallaki. -> vallaki
+
+~ home
+set bonegrinder_children_fate = "home"
+Ilinca: Home it is. Their mother will weep, and she'll mean it. Whether that's enough is between her and them. I'll stand in her kitchen until it's settled.
+-> farewell
+
+~ vallaki
+set bonegrinder_children_fate = "vallaki"
+Ilinca: Vallaki, then. Urwin will feed them soup until they're sick of it. Their mother can go on believing whatever lets her sleep.
+-> farewell
+
+~ farewell
+set ilinca_vouched
+Ilinca: The Keepers owe you for this. We pay our debts slowly, in odd coin. Tell any raven-eyed innkeeper in Vallaki that Ilinca sent you.
+if guest:ilinca_vrana
+leave ilinca_vrana
+endif
+Narrator: She takes a child by each hand and goes down the stair with them, slowly, talking about soup the whole way.
+interject tag:cheerful: Bye, Toma! No more cake!
+-> old_bonegrinder/aftermath:reckon

@@ -1,0 +1,80 @@
+# Things on the crown of Yester Hill that open a scene: the black tree (burn it or leave it), the splintered heart of
+# Wintersplinter (the second stone), and Elvir Martikov's bones among the roots.
+
+~ tree
+if not flag.yester_hill_resolved
+Narrator: The bark is black and crazed like the skin of a burnt hand. Up close the tree smells of iron, and the earth round its roots is dark and wet, though it hasn't rained.
+-> END
+endif
+if flag.gulthias_tree_burned
+Narrator: A black stump in a ring of ash, ticking as it cools. Nothing grows near it. Nothing will, for a good while.
+-> END
+endif
+Narrator: With the chant ended, the tree is only a tree, and somehow that's worse: a crooked black thing with its roots deep in a hill of old graves, waiting for the next person to feed it.
+* Burn it. Use their own fire. -> burn
+* Leave it standing. -> leave_tree
+
+~ burn
+set gulthias_tree_burned
+Narrator: The ritual fire goes into the roots by the armful. For a long moment the tree won't catch. Then it does, all at once, and it makes a sound as it burns, high and thin, like a kettle, or like something that isn't one.
+Narrator: All down the slope, every blight on the hill folds up where it stands and falls into a heap of dry brush.
+if guest:adrian_martikov
+Adrian: That's for my brother. ...No. That's for the next one. Elvir would say so.
+endif
+interject tag:devout: Fire's a kind of dawn. The small kind. It'll do.
+-> END
+
+~ leave_tree
+Narrator: You leave it standing. The roots don't move. Walking away, you have the strong impression that they will once you've gone.
+-> END
+
+~ heart
+set yester_stone_recovered
+Narrator: Wintersplinter lies across the crown in splinters long as spears. In the split heartwood, where a heart would be, sits a green stone the size of a plum, pulsing faintly, like something trying to get its breath back.
+if not flag.gulthias_tree_burned
+Narrator: A thread of black runs through the green, fine as a hair: the same black as the tree's bark.
+interject class:wizard: The tree's in it. A little. Good soil and time will draw it out, I think. Or fire.
+endif
+interject tag:curious: It's warm. It's warm like a hand is warm. I don't love that.
+-> END
+
+~ elvir
+Narrator: Among the roots, half drawn into the earth, lie the bones of a young man in the rags of a black coat. At the throat is a wooden clasp carved like a raven, the twin of the one Davian wears.
+if guest:adrian_martikov
+Adrian: ...Elvir. Hello. I'm sorry I took so long.
+endif
+-> elvir_menu
+
+~ elvir_menu
+* [if spell:speak_with_dead and not flag.elvir_spoke] Ask the dead man how he came here. -> speak_dead
+* [if not flag.elvir_examined] [Medicine DC 12] How did he die? -> medicine_ok | medicine_fail
+* Cut him free. He's going home. -> carry
+* Leave him for now. -> END
+
+~ speak_dead
+set elvir_spoke
+set elvir_truth_known
+if not flag.martikovs_reconciled
+quest elvir_martikov truth_found
+endif
+Narrator: The jaw moves, stiffly, and a voice comes out of the dark between the bones: young, furious and very tired.
+Narrator: "Bracken. A root through my leg. Adrian wouldn't go, so I gave him the order in Father's voice. Tell Father it was mine. Tell him I was good at it."
+-> elvir_menu
+
+~ medicine_ok
+set elvir_examined
+Narrator: The left shin is pierced clean through, an old wound that never knitted. The fingertips are worn to the knuckle, as if he spent a long time scratching at something hard.
+-> elvir_menu
+
+~ medicine_fail
+set elvir_examined
+Narrator: A year among the roots has kept most of the story to itself.
+-> elvir_menu
+
+~ carry
+set elvir_remains_recovered
+Narrator: The roots give him up slowly, one at a time. You wrap what's left of him in a cloak. He weighs almost nothing.
+if guest:adrian_martikov
+Adrian: I'll carry him. ...Please. Let me carry him.
+endif
+-> END

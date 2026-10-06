@@ -1,0 +1,19 @@
+{
+  "id": "tsolenka_watchman",
+  "name": "Phantom Watchman",
+  "title": "The Tsolenka Watch",
+  "summary": "One of the dead soldiers who still stand their posts in the Tsolenka guard tower, grey and correct.",
+  "portrait": "tsolenka_watchman",
+  "sprite": "tsolenka_watchman",
+  "attitude": "indifferent",
+  "voice": "docs/regions/berez.md",
+  "monster": "phantom_warrior",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "soldier",
+    "tsolenka_pass"
+  ],
+  "region": "tsolenka_pass",
+  "pronouns": "he/him"
+}

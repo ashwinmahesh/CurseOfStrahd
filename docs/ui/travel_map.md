@@ -5,14 +5,16 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 
 ## Travel map (`ui/screens/travel_screen.gd`)
 
-- The art is one illustrated sheet of the whole valley in the game's gothic tone (dark blood-stained vellum,
-  near-black pines, grey-green mist, the castle in a red glow, after the title art), `art/ui/map/barovia.png`
-  (2528×1696, 3:2, generated at 2K; manifest id `travel_map_barovia`). It has no roads and no text: the game draws
-  the known roads and the place names on top, so they stay sharp at any zoom and only show what the party knows.
+- The art is the whole valley painted as the land itself in the game's gothic tone (dark moorland, near-black pines,
+  grey-green mist rolling in from the edges, the castle in a red glow, after the title art; no paper or parchment),
+  `art/ui/map/barovia.png` (2528×1696, 3:2, generated at 2K; manifest id `travel_map_barovia`). It has no roads and no
+  text: the game draws the known roads and the place names on top, so they stay sharp at any zoom and only show
+  what the party knows.
   Overlay colours follow the rest of the UI: names in vellum with a dark outline, roads as bone dashes, the route in
   bright red on a dark halo, hours on black tags with a gilt edge.
 - The map panel is 1152×768 at zoom 1 (the whole valley). It opens zoomed in on the known places (at most 1.6×);
-  the wheel zooms up to 2.4×, dragging pans, and the art always covers the panel. A click on a place picks it.
+  the wheel zooms up to 2.4×, dragging pans, and the art always covers the panel. A click on a place picks it. Zoomed
+  in, only the places in view get marks and names.
 - A place's `pos` in `data/travel/barovia.json` is a fraction of the art (x right, y down). Put new places on their
   landmark in the art:
 
@@ -25,14 +27,23 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 | Tser Pool (the dark pond among the Vistani wagons) | 0.53, 0.49 |
 | Vallaki (the walled town on the lake shore) | 0.32, 0.48 |
 | Castle Ravenloft (on its pillar of rock) | 0.695, 0.73 |
-| Walled hill town at the far left (Krezk) | 0.075, 0.51 |
-| Small village with a church, upper left (the abbey, or another hamlet) | 0.07, 0.36 |
-| Ruined mansion, top centre (Argynvostholt) | 0.455, 0.23 |
-| Windmill on a hill, upper right (Old Bonegrinder) | 0.69, 0.24 |
+| Krezk (the walled hill town at the far left) | 0.075, 0.48 |
+| Abbey of St. Markovia (the small village with a church, upper left) | 0.07, 0.36 |
+| Argynvostholt (the ruined mansion, top centre) | 0.455, 0.23 |
+| Old Bonegrinder (the windmill on a hill, upper right) | 0.69, 0.24 |
+| The Wizard of Wines (the vineyard and winery by Vallaki's west wall) | 0.235, 0.54 |
+| Yester Hill (the hill crowned with standing stones below Krezk) | 0.152, 0.578 |
 | Wayside cross on the road east of Vallaki | 0.42, 0.48 |
 | Lake Zarovich (middle of the water) | 0.22, 0.39 |
 
   Keep places between 0.05 and 0.95: the mist covers the edges (a test checks it).
+- A place with no picture on the art yet (Berez, Lake Baratok and Van Richten's Tower, the Amber Temple, Tsolenka
+  Pass) gets one painted in: a section of the map is cut out, Gemini paints the landmark inside a marked circle, and
+  only that circle is blended back into the full art (art/generated/map/barovia_west_* is the Wizard of Wines and
+  Yester Hill pass). Ask the map thread for it.
+- A road can take a `via` list of points (fractions of the art, like `pos`) to go round a lake or a mountain:
+  `"via": [[0.2, 0.53]]` takes the Krezk road along the south shore of Lake Zarovich. The map draws a smooth curve
+  through them; without `via` a road is a gently bowed line.
 - Roads are drawn as dashes with a slight bow; the chosen route is solid red with each leg's hours on a tag.
   The party's place has a pulsing crimson mark; the destination's name sits on a crimson plaque. At night the sheet
   gets a moonlit wash.
@@ -41,8 +52,9 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 
 - Top right of the exploration HUD, above the location's name and the clock; hidden with the HUD in combat and
   conversations, so it never covers the combat HUD.
-- Drawn from the location's grid rows (16 px a square, mipmapped, shown at 9 px a square) in gothic tones: dark
-  sepia ground, `#` as dark pines in the wilds, blood-dark roofs in towns and black walls with a gilt edge indoors;
+- Drawn from the location's grid rows (16 px a square, mipmapped, shown at 9 px a square) in gothic tones: grey
+  ground outdoors with `#` as dark pines in the wilds and blood-dark roofs in towns, dark planks and black walls with a
+  gilt edge indoors;
   low cover, rough ground and water.
   Doors are drawn as they stand now; a secret door nobody has found shows as wall.
 - North up, centred on the leader's token. Marks: the party (the leader in gold), guests, people here, doors into
@@ -59,5 +71,6 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   an arrow pointing off the map. Shut ways are drawn dim and say "not yet". An open way out that's off the screen
   gets a smaller plaque at the edge of the play area (clear of the party cards, the minimap, the Narrator and the
   buttons), its arrow pointing toward it.
+- A way out inside the map (the abbey's garden gate) gets the square and the plaque but no chevrons or arrow.
 - It's a screen-space overlay on the HUD layer, so it stays crisp, the palette pass never touches it and it sits on top
   of whatever the world assets put at the exit. Ground marks stay off squares where the party stands.

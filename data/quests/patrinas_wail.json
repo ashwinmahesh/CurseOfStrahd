@@ -1,0 +1,43 @@
+{
+  "id": "patrinas_wail",
+  "name": "The Wailing Hall",
+  "summary": "In the frozen reading hall of the Amber Temple, a dead woman weeps over a book that will not stay whole.",
+  "region": "amber_temple",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "A spirit haunts the reading hall of the Amber Temple: a dusk elf woman scarred by stones, turning the pages of a book that crumbles at her touch. She came here to learn what the lord of the valley knew.",
+      "objectives": [
+        "Learn who she is",
+        "Lay her to rest, or don't"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "named",
+      "journal": "The weeping spirit is Patrina Velikovna, Kasimir's sister, stoned by her own people after she went to the castle. She has not forgiven the brother who stood at the back of the crowd.",
+      "objectives": [
+        "Lay Patrina to rest, or don't"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "at_rest",
+      "journal": "Patrina closed her book, and it didn't crumble. She asked us to tell her brother she is done waiting, and faded like breath from a window.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "restored",
+      "journal": "Kasimir gave the dragon in the grave every year he had left but one, and Patrina walked out of the temple alive, barefoot in the snow, toward the castle. She did not wait for him.",
+      "objectives": [],
+      "ends": "failure"
+    },
+    {
+      "id": "destroyed",
+      "journal": "Patrina Velikovna's spirit is destroyed. The reading hall is quiet now, and only cold.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "id": "abbey_of_st_markovia_garden",
+  "name": "The Abbey Garden",
+  "region": "abbey_of_st_markovia",
+  "summary": "The abbey's walled kitchen garden, gone to frost: raised beds of black stalks, a tool shed, the nuns' little graveyard in the corner, and a row of scarecrows along the north wall that the Abbot stitched himself.",
+  "map": {
+    "rows": [
+      "########################",
+      "#.......=...=...=......#",
+      "#......................#",
+      "#.~~~~~~~~....~~~~~~~~.#",
+      "#......................#",
+      "#...........=..........#",
+      "#.~~~~~~~~....~~~~~~~~.#",
+      "#......................#",
+      "#......................#",
+      "#.~~~~~~~~....~~~~~~~~.#",
+      "#......................#",
+      "#......................#",
+      "#..####..........=.=.=.#",
+      "#..####................#",
+      "#..####...........=.=..#",
+      "#......................#",
+      "#......................#",
+      "###########..###########"
+    ],
+    "theme": "shrine_yard",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "scarecrow_row",
+      "name": "The scarecrows",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          22,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "frost_beds",
+      "name": "The frost beds",
+      "cells": [
+        [
+          1,
+          6
+        ],
+        [
+          22,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "nuns_graves",
+      "name": "The nuns' graves",
+      "cells": [
+        [
+          15,
+          12
+        ],
+        [
+          22,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "garden_shed_yard",
+      "name": "By the tool shed",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          14,
+          16
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      11,
+      16
+    ]
+  },
+  "exits": [
+    {
+      "id": "garden_out",
+      "cell": [
+        11,
+        17
+      ],
+      "to": "abbey_of_st_markovia",
+      "spawn": "from_garden",
+      "label": "Back to the courtyard"
+    },
+    {
+      "id": "garden_out_east",
+      "cell": [
+        12,
+        17
+      ],
+      "to": "abbey_of_st_markovia",
+      "spawn": "from_garden",
+      "label": "Back to the courtyard"
+    }
+  ],
+  "props": [
+    {
+      "id": "stitched_sentry",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "examine",
+      "label": "A scarecrow with a stitched mouth",
+      "model": "coats"
+    },
+    {
+      "id": "scarecrow_west",
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "decor",
+      "label": "Scarecrow",
+      "model": "coats"
+    },
+    {
+      "id": "scarecrow_mid",
+      "cell": [
+        12,
+        1
+      ],
+      "kind": "decor",
+      "label": "Scarecrow",
+      "model": "coats"
+    },
+    {
+      "id": "scarecrow_east",
+      "cell": [
+        16,
+        1
+      ],
+      "kind": "decor",
+      "label": "Scarecrow",
+      "model": "coats"
+    },
+    {
+      "id": "frost_bed",
+      "cell": [
+        5,
+        6
+      ],
+      "kind": "examine",
+      "label": "A frozen bed",
+      "model": "rags"
+    },
+    {
+      "id": "nuns_graves",
+      "cell": [
+        19,
+        12
+      ],
+      "kind": "examine",
+      "label": "The nuns' graves",
+      "model": "gravestone"
+    },
+    {
+      "id": "tool_shed",
+      "cell": [
+        5,
+        12
+      ],
+      "kind": "examine",
+      "label": "The tool shed",
+      "model": "door"
+    }
+  ],
+  "containers": [
+    {
+      "id": "garden_shed",
+      "cell": [
+        7,
+        13
+      ],
+      "label": "The tool shed",
+      "items": [
+        {
+          "id": "sickle",
+          "qty": 1
+        },
+        {
+          "id": "shovel",
+          "qty": 1
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "sack",
+          "qty": 2
+        }
+      ],
+      "gold": 0,
+      "model": "crate"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        12,
+        16
+      ],
+      "kind": "lamp",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "encounters": [
+    {
+      "id": "garden_sentry",
+      "trigger": "enter_area:scarecrow_row",
+      "text": "The scarecrows turn their sacking heads all together, with a noise like dry leaves, and climb down off their poles.",
+      "monsters": [
+        {
+          "monster": "scarecrow",
+          "cell": [
+            12,
+            4
+          ],
+          "name": "The Stitched Sentry",
+          "hp": 60
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            8,
+            2
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            16,
+            2
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            12,
+            2
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            4,
+            4
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "garden_sentry_burned"
+    }
+  ],
+  "narration": {
+    "enter": "enter:abbey_of_st_markovia_garden"
+  },
+  "rest": "risky",
+  "treasure_spots": {
+    "abbey_of_st_markovia_garden": {
+      "encounter": "garden_sentry"
+    }
+  }
+}

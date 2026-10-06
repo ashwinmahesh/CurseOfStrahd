@@ -101,6 +101,63 @@
       "class": "rogue",
       "hp": 0,
       "choices": {}
+    },
+    {
+      "level": 6,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {
+        "rogue.6.expertise": [
+          "acrobatics",
+          "perception"
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 8,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {
+        "rogue.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "rogue.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "dex",
+          "con"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 10,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {
+        "rogue.10.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "rogue.10.ability_score_improvement/ability_score_improvement.abilities": [
+          "con",
+          "wis"
+        ]
+      }
+    },
+    {
+      "level": 11,
+      "class": "rogue",
+      "hp": 0,
+      "choices": {}
     }
   ]
 }

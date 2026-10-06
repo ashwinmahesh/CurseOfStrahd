@@ -29,6 +29,7 @@
         "id": "second_story_work",
         "name": "Second-Story Work",
         "summary": "Climb Speed equal to your Speed; jump distance uses Dexterity.",
+        "text": "You have a Climb Speed equal to your Speed, and you can use Dexterity instead of Strength to work out your jump distance.",
         "implemented": "engine",
         "modifiers": [
           {
@@ -48,6 +49,7 @@
         "id": "supreme_sneak",
         "name": "Supreme Sneak",
         "summary": "Stealth Attack Cunning Strike (1d6): stay Invisible from Hide if you end the turn behind cover.",
+        "text": "You gain a new Cunning Strike option, Stealth Attack (cost 1d6): if you have the Invisible condition from the Hide action, this attack doesn't end it as long as you finish the turn behind Three-Quarters Cover or Total Cover.",
         "implemented": "engine"
       }
     },

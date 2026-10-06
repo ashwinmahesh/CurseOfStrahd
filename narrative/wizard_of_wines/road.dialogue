@@ -1,0 +1,18 @@
+# Events on the vineyard roads (data/random_encounters/vineyard_road.json).
+
+~ keepers_word
+if flag.raven_word_heard
+-> END
+endif
+set raven_word_heard
+Narrator: A raven lands on the road ahead, drops something at your feet and waits. It's a vine leaf, fresh and green, the first leaf you've seen in this valley that isn't half dead.
+if flag.winery_wine_flows
+Narrator: It caws twice, briskly, like a man clearing his throat to say thank you, and flies off toward the vineyards.
+elif flag.winery_reclaimed
+Narrator: It looks at the leaf, then west toward Yester Hill, then at you, with great meaning, and goes.
+else
+Narrator: It looks at the leaf, then toward the vineyards south of the lake road, then back at you, as if you were being slow on purpose.
+endif
+interject tag:curious: I think we just got a letter.
+-> END
+

@@ -1,0 +1,19 @@
+{
+  "id": "abbot",
+  "name": "The Abbot",
+  "title": "Master of the Abbey of St. Markovia",
+  "summary": "A young-looking monk with golden hair and an unlined face who keeps the abbey above Krezk. He is a celestial sent long ago to guard the valley's faith, bent by centuries of watching it suffer, and he means to cure its lord of loneliness with a bride he has stitched from the dead.",
+  "portrait": "abbot",
+  "sprite": "abbot",
+  "attitude": "friendly",
+  "voice": "docs/voice/abbot.md",
+  "monster": "deva",
+  "guest": false,
+  "tags": [
+    "celestial",
+    "fallen",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "he/him"
+}

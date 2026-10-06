@@ -1,0 +1,110 @@
+# Offalia Wormwiggle, Morgantha's younger daughter (voice: docs/regions/old_bonegrinder.md §3): a night hag in the
+# shape of a round, rosy baker's wife. She minds the oven. Feed her, fool her, or fight her alone (bakery_offalia);
+# whatever is left of her at the end follows Mother up the stair for the coven's last stand.
+
+~ start
+if flag.offalia_met
+-> again
+endif
+set offalia_met
+if not quest.children_of_the_mill
+quest children_of_the_mill heard
+endif
+Narrator: A round, rosy woman in a floury apron turns from the oven with a tray in her bare hands. The tray is hot enough to hiss. She doesn't seem to mind.
+Offalia [smile]: Ooh, visitors! Are you deliveries? Mother never said there'd be deliveries. You're ever so big for deliveries.
+if species:halfling
+interject species:halfling: I am not a delivery.
+Offalia [smile]: No, you're just the right size for one. Mother would say so. Mother says so about everybody.
+endif
+-> menu
+
+~ again
+Offalia [smile]: Back again! Did you want a pastry? They're still warm. They're always still warm.
+-> menu
+
+~ menu
+* We're here for the children. -> children
+* What are you baking? -> baking
+* [if flag.bonegrinder_recipe_read] We read your mother's receipt book. -> receipts
+* [if item:dream_pastry] Have a pastry. One of your mother's. -> feed
+* [Deception DC 13] Your mother's down on the road, calling for you. -> lure_ok | lure_fail
+* Step away from the oven, Offalia. Now. -> fight
+* Leave her to her baking. -> END
+
+~ children
+Offalia: The little ones? They're Mother's. Paid for and everything. They're upstairs, keeping. Mother says you don't touch what's keeping.
+Offalia [sad]: I'm not allowed to touch them. Not even the small one. Not yet.
+interject class:cleric: "Not yet."
+interject tag:blunt: Heard it.
+-> menu
+
+~ baking
+Offalia [smile]: Dream pastries! Two hundred a week. Mother does the honey, Bella does the wrapping because she's got nice hands, and I do the flour. I'm best at the flour.
+* Where does the flour come from? -> flour
+* Two hundred a week. Who eats them all? -> customers
+* Never mind the baking. -> menu
+
+~ flour
+Offalia: From the big stone, silly. You put things in the top and turn it, and it comes out the bottom soft as soft. Mother says you mustn't waste anything. Not the marrow. Not the teeth.
+Narrator: She says it the way any other cook would say "not the rind".
+interject species:dwarf: I've ground a lot of things in my time. Ore. Grudges. Never that.
+-> menu
+
+~ customers
+Offalia: Everybody! The village. The farms. Folk on the Vallaki road. Mother writes them in her book with what they owe. Nobody can pay, after a while. That's the best part. That's when Mother goes visiting.
+-> menu
+
+~ receipts
+Offalia [afraid]: You read Mother's book? Nobody reads Mother's book. Did you get flour on it? Please say you didn't get flour on it.
+-> menu
+
+~ feed
+take dream_pastry 1
+set offalia_asleep
+quest children_of_the_mill bakery_cleared
+Narrator: Her eyes go perfectly round. She takes it between two fingers, very politely, and eats it in one bite. Then she sits down on the floor, slowly, smiles at nothing at all, and begins to snore.
+interject tag:cheerful: Sweet dreams, Offalia. Honestly meant. Mostly.
+-> END
+
+~ lure_ok
+set offalia_lured
+set offalia_at_large
+quest children_of_the_mill bakery_cleared
+Offalia [afraid]: On the road? Mother never goes down to the road on a baking day! Is she cross? She sounds cross when she calls like that.
+Narrator: She is out of the door and off down the hill at a startling speed, still holding the tray. You hear her calling "Coming, Mother!" all the way down to the pines.
+-> END
+
+~ lure_fail
+Offalia [smile]: Silly. Mother's upstairs. I can hear her rocking. Can't you hear her rocking?
+Narrator: You can, now that you listen. Creak. Creak. Creak.
+-> menu
+
+~ fight
+Offalia [angry]: Nobody tells me to step away from Mother's oven. Nobody. Only Mother.
+interject class:fighter: Somebody just did.
+combat bakery_offalia
+
+# --- Asleep on the bakery floor (after the dream pastry) ---
+
+~ asleep
+Narrator: Offalia snores on the bakery floor with crumbs on her chin, smiling at whatever she's dreaming. Now and then her fingers twitch, kneading.
+* End her while she sleeps. -> coup
+* Leave her be. -> leave_asleep
+
+~ coup
+set offalia_slain
+Narrator: It takes longer than it should, and all of you together, and she never once stops smiling. Nobody speaks afterwards. There isn't anything that would help.
+interject tag:devout: That was necessary. I'll pray about whether it was right.
+if flag.morgantha_slain
+-> old_bonegrinder/aftermath:reckon
+endif
+-> END
+
+~ leave_asleep
+if flag.morgantha_slain
+set offalia_at_large
+Narrator: You leave her snoring. She'll wake in an hour, or a day, to a cold oven and an empty loft, and go out looking for her mother.
+-> old_bonegrinder/aftermath:reckon
+endif
+Narrator: You step around her. She smacks her lips in her sleep and murmurs something about marrow.
+-> END

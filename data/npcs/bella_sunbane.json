@@ -1,0 +1,20 @@
+{
+  "id": "bella_sunbane",
+  "name": "Bella Sunbane",
+  "title": "Morgantha's Elder Daughter",
+  "summary": "A lovely young woman with flour-white hands and a red ribbon, who wraps the pastries at Old Bonegrinder and is bored of it. Under the face, a night hag who would like her mother dead and her mother's soul bags for herself.",
+  "portrait": "bella_sunbane",
+  "sprite": "bella_sunbane",
+  "attitude": "indifferent",
+  "voice": "docs/regions/old_bonegrinder.md",
+  "monster": "night_hag",
+  "guest": false,
+  "tags": [
+    "hag",
+    "disguised",
+    "coven",
+    "old_bonegrinder"
+  ],
+  "region": "old_bonegrinder",
+  "pronouns": "she/her"
+}

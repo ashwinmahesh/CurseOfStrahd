@@ -1,0 +1,49 @@
+{
+  "id": "wizard_of_wines",
+  "name": "The Wizard of Wines and Yester Hill",
+  "places": [
+    {
+      "id": "wizard_of_wines",
+      "name": "The Wizard of Wines",
+      "location": "wizard_of_wines",
+      "spawn": "from_road",
+      "pos": [
+        0.235,
+        0.54
+      ],
+      "region": "wizard_of_wines",
+      "summary": "The Martikov family's winery in the hills south of the lake road, whose wine every tavern in the valley pours. Lately, nobody's has."
+    },
+    {
+      "id": "yester_hill",
+      "name": "Yester Hill",
+      "location": "yester_hill",
+      "spawn": "from_road",
+      "pos": [
+        0.152,
+        0.578
+      ],
+      "region": "yester_hill",
+      "when": "flag.yester_hill_known or tarokka.tome.region == yester_hill or tarokka.symbol.region == yester_hill or tarokka.sword.region == yester_hill",
+      "summary": "A bald hill of old graves west of the vineyards, where druids sing to a black tree."
+    }
+  ],
+  "roads": [
+    {
+      "id": "vallaki_to_wizard_of_wines",
+      "from": "vallaki",
+      "to": "wizard_of_wines",
+      "hours": 3,
+      "table": "vineyard_road",
+      "name": "The lake road west, and the lane up through the vines"
+    },
+    {
+      "id": "wizard_of_wines_to_yester_hill",
+      "from": "wizard_of_wines",
+      "to": "yester_hill",
+      "hours": 2,
+      "table": "vineyard_road",
+      "name": "The barrow track over the moor"
+    }
+  ]
+}

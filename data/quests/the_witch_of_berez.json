@@ -1,0 +1,60 @@
+{
+  "id": "the_witch_of_berez",
+  "name": "The Witch of Berez",
+  "summary": "In the drowned village of Berez, Strahd's old nurse keeps house in a hut that walks, with one of the Wizard of Wines' stolen gems and a secret about a dead girl.",
+  "giver": "baba_lysaga",
+  "region": "berez",
+  "stages": [
+    {
+      "id": "arrived",
+      "journal": "Berez is a village the Luna drowned. Its only living resident is Baba Lysaga, a tiny old woman who lives in a hut on a stump in the middle of the marsh. The hut stands up when it likes. She calls Strahd her boy.",
+      "objectives": [
+        "Find out what the witch keeps in her hut"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "invited",
+      "journal": "Baba Lysaga fed us supper in her hut, sang to a cradle with something green in it, and talked about her boy as if he were still in swaddling. She watched our hands the whole time.",
+      "objectives": [
+        "Look around her hut",
+        "Decide what to do about the witch"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "truth",
+      "journal": "Marina, the girl Strahd loved in Berez, didn't die by the villagers' hand. Baba Lysaga killed her with a thorned doll over her own hearth, and let Strahd drown Berez for it. He doesn't know.",
+      "objectives": [
+        "Use it on her, tell Strahd, or keep it to ourselves"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "strahd_told",
+      "journal": "We told Strahd what his nurse did to Marina. He thanked us, very politely, and went to see to his house.",
+      "objectives": [
+        "Go back to the hut on the stump"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "slain",
+      "journal": "Baba Lysaga is dead, and Berez has no one left in it at all.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "bargained",
+      "journal": "We bought the green gem from Baba Lysaga with our silence about Marina. She hates us for it, and she keeps her word, for now.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "broken",
+      "journal": "Strahd broke her hut and walked away from her. We left Baba Lysaga in the mud beside it, with nothing left to keep house for.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

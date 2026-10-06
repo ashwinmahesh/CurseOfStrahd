@@ -1,0 +1,469 @@
+{
+  "id": "van_richtens_tower_interior",
+  "name": "Van Richten's Tower",
+  "region": "van_richtens_tower",
+  "summary": "Three round rooms stacked inside the black tower: the archmage's old hall, now a hunter's storeroom; a workroom of notes and maps; and a lantern room at the top where Van Richten keeps what matters, behind a ward that smells of thunderstorms.",
+  "text": "Stone stairs wind up inside the wall. Every room is tidy in the way of a man who expects to leave in a hurry.",
+  "map": {
+    "rows": [
+      "##############",
+      "####......####",
+      "###........###",
+      "##..........##",
+      "##.=........##",
+      "##.=........##",
+      "##..........##",
+      "##..........##",
+      "###........###",
+      "####......####",
+      "##############",
+      "              ",
+      "##############",
+      "####......####",
+      "###........###",
+      "##..........##",
+      "##..........##",
+      "##....===...##",
+      "##..........##",
+      "##..........##",
+      "###........###",
+      "####......####",
+      "##############",
+      "              ",
+      "##############",
+      "####......####",
+      "###........###",
+      "##..........##",
+      "##..........##",
+      "##..........##",
+      "##........=.##",
+      "##..........##",
+      "###........###",
+      "####......####",
+      "##############"
+    ],
+    "theme": "manor",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "vrt_hall",
+      "name": "The hunter's storeroom",
+      "cells": [
+        [
+          2,
+          1
+        ],
+        [
+          11,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "vrt_workroom",
+      "name": "The workroom",
+      "cells": [
+        [
+          2,
+          13
+        ],
+        [
+          11,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "vrt_lantern_room",
+      "name": "The lantern room",
+      "cells": [
+        [
+          2,
+          25
+        ],
+        [
+          11,
+          33
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      6,
+      8
+    ],
+    "from_door": [
+      6,
+      8
+    ],
+    "hall_from_above": [
+      9,
+      2
+    ],
+    "workroom_from_below": [
+      9,
+      14
+    ],
+    "workroom_from_above": [
+      4,
+      14
+    ],
+    "lantern_from_below": [
+      4,
+      26
+    ]
+  },
+  "exits": [
+    {
+      "id": "vrt_out",
+      "cell": [
+        6,
+        10
+      ],
+      "to": "van_richtens_tower",
+      "spawn": "from_tower",
+      "label": "Out to the island"
+    },
+    {
+      "id": "vrt_out_2",
+      "cell": [
+        7,
+        10
+      ],
+      "to": "van_richtens_tower",
+      "spawn": "from_tower",
+      "label": "Out to the island"
+    },
+    {
+      "id": "vrt_stairs_up_1",
+      "cell": [
+        10,
+        1
+      ],
+      "to": "van_richtens_tower_interior",
+      "spawn": "workroom_from_below",
+      "label": "Stairs up to the workroom"
+    },
+    {
+      "id": "vrt_stairs_down_2",
+      "cell": [
+        10,
+        13
+      ],
+      "to": "van_richtens_tower_interior",
+      "spawn": "hall_from_above",
+      "label": "Stairs down to the storeroom"
+    },
+    {
+      "id": "vrt_stairs_up_2",
+      "cell": [
+        3,
+        13
+      ],
+      "to": "van_richtens_tower_interior",
+      "spawn": "lantern_from_below",
+      "label": "Stairs up to the lantern room"
+    },
+    {
+      "id": "vrt_stairs_down_3",
+      "cell": [
+        3,
+        25
+      ],
+      "to": "van_richtens_tower_interior",
+      "spawn": "workroom_from_above",
+      "label": "Stairs down to the workroom"
+    }
+  ],
+  "props": [
+    {
+      "id": "vrt_hearth",
+      "cell": [
+        1,
+        6
+      ],
+      "kind": "examine",
+      "label": "The hearth",
+      "model": "hearth",
+      "dialogue": "van_richtens_tower/tower:hearth"
+    },
+    {
+      "id": "vrt_cot",
+      "cell": [
+        10,
+        7
+      ],
+      "kind": "examine",
+      "label": "A camp cot",
+      "model": "bed_small"
+    },
+    {
+      "id": "vrt_trophies",
+      "cell": [
+        12,
+        4
+      ],
+      "kind": "examine",
+      "label": "A wall of trophies",
+      "model": "trophy_wolf"
+    },
+    {
+      "id": "vrt_casebook",
+      "cell": [
+        5,
+        16
+      ],
+      "kind": "book",
+      "label": "A casebook on the table",
+      "model": "book",
+      "codex": "van_richten_casebook",
+      "flag": "van_richten_notes_read",
+      "text": "Casebook, Barovia, in a small, precise hand. 'S. is old, patient, and bored, and boredom is the only weakness I have seen him show. He cannot cross running water of his own will. He must be asked in, once. Sunlight undoes him. A stake holds him, it does not end him: that wants the sun, or the blade the cards keep hiding. He reads what people write about him. I am writing this anyway.' Lower down: 'The wolves in the hills above Zarovich answer to him through their leader, a brute called Kiril. Their old leader would not. I have marked the den on the map.' And in the margin, underlined twice: 'The lantern-room ward drinks from the copper rod in the hearth. PULL IT before you go up, you old fool. You nearly cooked yourself in the spring.'"
+    },
+    {
+      "id": "vrt_disguise_ledger",
+      "cell": [
+        9,
+        16
+      ],
+      "kind": "book",
+      "label": "A ledger of disguises",
+      "model": "ledger",
+      "codex": "van_richten_disguises",
+      "flag": "van_richten_identity_known",
+      "text": "A ledger of costumes, each with a name, a town and a date. The last entry is fresh: 'RICTAVIO. Vallaki, the Blue Water Inn. A half-elf showman, loud, harmless, forgettable. Scarlet coat; the hat does the rest. The tiger travels as the act. Nobody looks twice at a man who wants to be looked at.'"
+    },
+    {
+      "id": "vrt_valley_map",
+      "cell": [
+        12,
+        16
+      ],
+      "kind": "examine",
+      "label": "A map of the valley",
+      "model": "drawings",
+      "flag": "den_way_known"
+    },
+    {
+      "id": "vrt_jars",
+      "cell": [
+        2,
+        19
+      ],
+      "kind": "examine",
+      "label": "Jars and bottles",
+      "model": "jars"
+    },
+    {
+      "id": "vrt_letter",
+      "cell": [
+        9,
+        32
+      ],
+      "kind": "book",
+      "label": "A sealed letter",
+      "model": "letter",
+      "codex": "van_richten_letter",
+      "flag": "van_richten_letter_found",
+      "text": "For Ezmerelda, if she is stubborn enough to read it. 'If you are holding this, I am dead, or you are more stubborn than I hoped, which would not surprise me. I keyed the ward to you because everyone I have ever taught is in the ground, and you are the last. Go home. You won't. Then at least go carefully. You were the best of them. You still are. R.'"
+    },
+    {
+      "id": "vrt_window",
+      "cell": [
+        12,
+        29
+      ],
+      "kind": "examine",
+      "label": "The lantern-room window",
+      "model": "window"
+    }
+  ],
+  "containers": [
+    {
+      "id": "vrt_supply_crate",
+      "cell": [
+        3,
+        7
+      ],
+      "label": "A crate of supplies",
+      "model": "crate",
+      "gold": 0,
+      "items": [
+        {
+          "id": "holy_water",
+          "qty": 2
+        },
+        {
+          "id": "torch",
+          "qty": 3
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        },
+        {
+          "id": "ration",
+          "qty": 4
+        }
+      ]
+    },
+    {
+      "id": "vrt_workroom_cabinet",
+      "cell": [
+        11,
+        19
+      ],
+      "label": "A medicine cabinet",
+      "model": "cabinet_small",
+      "items": [
+        {
+          "id": "healers_kit",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        },
+        {
+          "id": "antitoxin",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "van_richten_strongbox",
+      "cell": [
+        7,
+        33
+      ],
+      "label": "Van Richten's strongbox",
+      "model": "chest_iron",
+      "gold": 120,
+      "flag": "van_richten_strongbox_opened",
+      "items": [
+        {
+          "id": "holy_water",
+          "qty": 3
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        },
+        {
+          "id": "spell_scroll_level_1",
+          "qty": 1
+        }
+      ]
+    }
+  ],
+  "traps": [
+    {
+      "id": "vrt_lightning_ward",
+      "label": "The lightning ward on the floor nails",
+      "cells": [
+        [
+          2,
+          28
+        ],
+        [
+          3,
+          28
+        ],
+        [
+          4,
+          28
+        ],
+        [
+          5,
+          28
+        ],
+        [
+          6,
+          28
+        ],
+        [
+          7,
+          28
+        ],
+        [
+          8,
+          28
+        ],
+        [
+          9,
+          28
+        ],
+        [
+          10,
+          28
+        ],
+        [
+          11,
+          28
+        ]
+      ],
+      "detect_dc": 15,
+      "disarm_dc": 16,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d10",
+      "damage_type": "lightning",
+      "when": "not flag.tower_ward_lowered and not guest:rictavio",
+      "text": "Blue fire leaps from every nail in the floor at once, and the room smells of a lightning-struck tree."
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        6,
+        4
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        7,
+        16
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        6,
+        30
+      ],
+      "kind": "magic",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "rictavio",
+      "cell": [
+        5,
+        15
+      ],
+      "dialogue": "van_richtens_tower/van_richten:start",
+      "approach": 6,
+      "when": "flag.rictavio_gone and not guest:rictavio and not flag.van_richten_reunited"
+    }
+  ],
+  "narration": {
+    "enter": "enter:van_richtens_tower_interior"
+  },
+  "rest": "safe",
+  "treasure_spots": {
+    "van_richtens_tower": {
+      "container": "van_richten_strongbox"
+    }
+  }
+}

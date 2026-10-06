@@ -41,54 +41,72 @@ func _draw() -> void:
 		_frame.remove_child(c)
 		c.queue_free()
 	var ch := _ch()
-	var strip := HBoxContainer.new()
-	strip.add_theme_constant_override("separation", 8)
-	for i in st.party.size():
-		strip.add_child(UiKit.button(("▸ " if i == index else "") + st.party[i].name, func() -> void:
-			index = i
-			selected = ""
-			_draw(), 14))
-	strip.add_child(UiKit.label("   Purse: %d gp" % int(st.gold), 16, "gilt_light"))
+	var strip := UiParts.party_chips(st.party, index, func(i: int) -> void:
+		index = i
+		selected = ""
+		_draw())
+	strip.add_child(UiParts.gap())
+	var purse := HBoxContainer.new()
+	purse.add_theme_constant_override("separation", 6)
+	purse.add_child(UiParts.caption("Purse", 12))
+	purse.add_child(UiParts.figure("%d gp" % int(st.gold), 22, "gilt_light"))
+	purse.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	strip.add_child(purse)
 	_frame.add_child(strip)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_frame.add_child(row)
 	# Paper doll
 	var doll := VBoxContainer.new()
-	doll.custom_minimum_size = Vector2(340, 0)
-	doll.add_child(UiKit.portrait(CombatToken.art_for(ch), 140))
-	doll.add_child(UiKit.header("Equipped"))
+	doll.custom_minimum_size = Vector2(330, 0)
+	doll.add_theme_constant_override("separation", 8)
+	var who := HBoxContainer.new()
+	who.add_theme_constant_override("separation", 12)
+	who.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 120.0, ch.hp <= 0, ch.dead))
+	who.add_child(UiParts.shield(ch.ac_value(), func() -> Control: return UiParts.breakdown_tip(ch.armor_class(), "Armor Class")))
+	doll.add_child(who)
+	var n := UiKit.title(ch.name)
+	n.add_theme_font_size_override("font_size", 24)
+	doll.add_child(n)
+	doll.add_child(UiParts.section("Equipped"))
 	for slot in Character.EQUIP_SLOTS:
-		var item := ch.equipped(slot)
-		var name_text := str(item.get("name", "—"))
-		var b := UiKit.button("%s: %s" % [slot.replace("_", " ").capitalize(), name_text], func() -> void:
-			if not item.is_empty():
-				selected = str(item["id"])
-				_draw(), 14)
-		doll.add_child(b)
-	doll.add_child(UiKit.stat("Armor Class", str(ch.ac_value()), ch.armor_class()))
+		doll.add_child(_slot_row(ch, slot))
+	doll.add_child(UiParts.section("Load"))
 	var cap := ch.carrying_capacity().total()
 	var carried := ch.carried_weight()
 	var over := carried > cap
-	doll.add_child(UiKit.stat("Carrying", "%.1f / %d lb%s" % [carried, cap, " · overloaded" if over else ""], ch.carrying_capacity()))
+	doll.add_child(UiParts.bar(carried, cap, 0.0, "%.1f / %d lb" % [carried, cap], "vampire_red" if over else "gilt_dark",
+		func() -> Control: return UiParts.breakdown_tip(ch.carrying_capacity(), "Carrying capacity", "%d lb" % cap,
+			"Overloaded: Speed drops." if over else ""), 330.0))
+	if over:
+		doll.add_child(UiKit.label("Overloaded", 14, "vampire_red"))
 	row.add_child(doll)
 	# Backpack
 	var pack := VBoxContainer.new()
 	pack.custom_minimum_size = Vector2(560, 0)
-	var filters := HBoxContainer.new()
-	for f: String in FILTERS:
-		filters.add_child(UiKit.button(("▸ " if f == filter else "") + f, func() -> void:
-			filter = f
-			_draw(), 13))
-	pack.add_child(filters)
+	pack.add_theme_constant_override("separation", 0)
+	pack.add_child(UiParts.tab_strip(Array(FILTERS, TYPE_STRING, "", null), filter, func(f: String) -> void:
+		filter = f
+		_draw(), {}, 14))
+	var pane := UiParts.pane(10)
+	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var inner := VBoxContainer.new()
+	inner.add_theme_constant_override("separation", 6)
+	pane.add_child(inner)
 	var sorts := HBoxContainer.new()
-	sorts.add_child(UiKit.label("Sort:", 13, "parchment"))
+	sorts.add_theme_constant_override("separation", 4)
+	sorts.add_child(UiParts.caption("Sort", 11))
 	for s: String in ["name", "weight", "value"]:
-		sorts.add_child(UiKit.button(("▸ " if s == sort_by else "") + s.capitalize(), func() -> void:
+		var sb := UiParts.small_button(s.capitalize(), func() -> void:
 			sort_by = s
-			_draw(), 13))
-	pack.add_child(sorts)
+			_draw())
+		if s == sort_by:
+			UiParts.light_up(sb)
+		sorts.add_child(sb)
+	inner.add_child(sorts)
 	var list := VBoxContainer.new()
+	list.add_theme_constant_override("separation", 4)
 	var rows: Array[Dictionary] = []
 	for e in ch.inventory:
 		if int(e["qty"]) <= 0:
@@ -107,42 +125,96 @@ func _draw() -> void:
 				return float(da.get("cost_gp", 0)) > float(db.get("cost_gp", 0))
 		return str(da.get("name", "")) < str(db.get("name", "")))
 	if rows.is_empty():
-		list.add_child(UiKit.label("Nothing here yet.", 15, "parchment"))
+		list.add_child(UiKit.label("Nothing here yet.", 15, "bone"))
 	for r in rows:
 		var e := r["e"] as Dictionary
 		var data := r["d"] as Dictionary
 		var slot := str(e.get("slot", ""))
-		var text := "%s%s%s · %s lb" % [data.get("name", e["id"]), " ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else "",
-			" (equipped)" if slot != "" else "", str(data.get("weight_lb", 0))]
 		var id := str(e["id"])
-		var b := UiKit.button(("▸ " if id == selected else "") + text, func() -> void:
+		var line := HBoxContainer.new()
+		line.add_theme_constant_override("separation", 10)
+		UiParts.add_icon(line, "item", id)
+		var nm := UiKit.label(str(data.get("name", id)) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""), 15, "gilt_light" if id == selected else "vellum")
+		nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		line.add_child(nm)
+		if slot != "":
+			line.add_child(UiParts.pill("Equipped", "moonlight"))
+		if bool(data.get("quest", false)):
+			line.add_child(UiParts.pill("Quest", "flame"))
+		if not (data.get("magic", {}) as Dictionary).is_empty():
+			line.add_child(UiParts.pill("Magic", "lilac"))
+		var wt := UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment")
+		wt.custom_minimum_size = Vector2(52, 0)
+		wt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		line.add_child(wt)
+		list.add_child(UiParts.click_row(line, func() -> void:
 			selected = id
-			_draw(), 14)
-		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		list.add_child(b)
+			_draw(), id == selected))
+	var scroll := UiParts.fill_scroll(list)
+	inner.add_child(scroll)
+	pack.add_child(pane)
 	var at_safe := _stash_open()
-	pack.add_child(UiKit.scroll(list, Vector2(540, 400 if at_safe else 560)))
 	if at_safe:
 		# The party stash (plan §5.6): kept at safe places like an inn.
-		pack.add_child(UiKit.header("Party stash"))
+		pack.add_child(UiParts.section("Party stash"))
 		var sl := VBoxContainer.new()
+		sl.add_theme_constant_override("separation", 4)
 		if st.stash.is_empty():
-			sl.add_child(UiKit.label("Empty. Select an item and choose Stash it.", 13, "parchment"))
+			sl.add_child(UiKit.label("Empty. Select an item and choose Stash it.", 13, "bone"))
 		for se in st.stash:
 			var sid := str(se["id"])
 			var srow := HBoxContainer.new()
-			srow.add_child(UiKit.label("%s ×%d" % [Compendium.shared().display_name("items", sid), int(se["qty"])], 14, "vellum", 380))
-			srow.add_child(UiKit.button("Take", func() -> void:
+			srow.add_theme_constant_override("separation", 8)
+			UiParts.add_icon(srow, "item", sid, 24.0)
+			var sn := UiKit.label("%s ×%d" % [Compendium.shared().display_name("items", sid), int(se["qty"])], 14, "vellum")
+			sn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			srow.add_child(sn)
+			srow.add_child(UiParts.small_button("Take", func() -> void:
 				st.stash_take(sid, _ch())
-				_draw(), 13))
-			sl.add_child(srow)
-		pack.add_child(UiKit.scroll(sl, Vector2(540, 150)))
+				_draw()))
+			sl.add_child(UiParts.row(srow))
+		var stash_scroll := UiKit.scroll(sl, Vector2(540, 130))
+		pack.add_child(stash_scroll)
 	row.add_child(pack)
 	# Item card
 	_card = VBoxContainer.new()
-	_card.custom_minimum_size = Vector2(520, 0)
-	row.add_child(UiKit.scroll(_card, Vector2(520, 680)))
+	_card.add_theme_constant_override("separation", 8)
+	var card_pane := UiParts.pane(14)
+	card_pane.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	card_pane.add_child(UiParts.fill_scroll(_card))
+	row.add_child(card_pane)
 	_draw_card()
+
+
+## An equipment slot as a row you can click to see the item: the slot's name, the item and its one key number.
+func _slot_row(ch: Character, slot: String) -> Control:
+	var item := ch.equipped(slot)
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 10)
+	if not item.is_empty():
+		UiParts.add_icon(line, "item", str(item["id"]))
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 0)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(UiParts.caption(slot.replace("_", " "), 10))
+	col.add_child(UiKit.label(str(item.get("name", "Empty")), 15, "vellum" if not item.is_empty() else "bone"))
+	line.add_child(col)
+	if not item.is_empty():
+		var stat := ""
+		if Gear.is_shield(item):
+			stat = "+%d AC" % int((item["armor"] as Dictionary).get("base_ac", 2))
+		elif Gear.is_armor(item):
+			stat = "AC %d" % int((item["armor"] as Dictionary).get("base_ac", 10))
+		elif Gear.is_weapon(item):
+			var p := WeaponProfile.build(ch, item)
+			stat = "%s · %s" % [p.attack.signed(), p.damage_dice + ("%+d" % p.damage_bonus.total() if p.damage_bonus.total() != 0 else "")]
+		line.add_child(UiParts.figure(stat, 15, "gilt_light"))
+	if item.is_empty():
+		return UiParts.row(line)
+	var id := str(item["id"])
+	return UiParts.click_row(line, func() -> void:
+		selected = id
+		_draw(), id == selected)
 
 
 func _passes(data: Dictionary) -> bool:
@@ -165,37 +237,56 @@ func _draw_card() -> void:
 	for c in _card.get_children():
 		c.queue_free()
 	if selected == "":
-		_card.add_child(UiKit.label("Pick an item to see what it does for %s." % _ch().name, 15, "parchment", 500))
+		_card.add_child(UiKit.label("Pick an item to see what it does for %s." % _ch().name.get_slice(" ", 0), 15, "bone", 420))
 		return
 	var ch := _ch()
 	var data := Compendium.shared().item_data(selected)
-	_card.add_child(UiKit.header(str(data.get("name", selected))))
-	_card.add_child(UiKit.label("%s · %s lb · %s gp" % [str(data.get("category", "")).capitalize(), str(data.get("weight_lb", 0)), str(data.get("cost_gp", 0))], 14, "parchment"))
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 10)
+	UiParts.add_icon(head, "item", selected, 48.0)
+	var t := UiKit.title(str(data.get("name", selected)))
+	t.add_theme_font_size_override("font_size", 26)
+	head.add_child(t)
+	_card.add_child(head)
+	var facts := HBoxContainer.new()
+	facts.add_theme_constant_override("separation", 6)
+	for f: Array in [["Kind", str(data.get("category", "")).capitalize()], ["Weight", "%s lb" % str(data.get("weight_lb", 0))],
+			["Value", "%s gp" % str(data.get("cost_gp", 0))]]:
+		var box := VBoxContainer.new()
+		box.add_theme_constant_override("separation", -2)
+		box.add_child(UiParts.caption(str(f[0]), 10))
+		box.add_child(UiParts.figure(str(f[1]), 16))
+		var tile := UiParts.card("ui_black", "gilt_dark", 0.8, 5)
+		tile.custom_minimum_size = Vector2(110, 0)
+		tile.add_child(box)
+		facts.add_child(tile)
+	_card.add_child(facts)
 	if Gear.is_weapon(data):
 		var p := WeaponProfile.build(ch, data)
-		_card.add_child(UiKit.label("For %s: %s" % [ch.name.get_slice(" ", 0), p.describe()], 15, "vellum", 500))
+		_card.add_child(UiKit.label("For %s: %s" % [ch.name.get_slice(" ", 0), p.describe()], 15, "vellum", 420))
 		if not ch.weapon_proficient(data):
-			_card.add_child(UiKit.label("~ Not proficient: no Proficiency Bonus on attacks", 14, "gilt", 500))
+			_card.add_child(UiKit.label("~ Not proficient: no Proficiency Bonus on attacks", 14, "gilt", 420))
 		var w := data.get("weapon", {}) as Dictionary
 		if str(w.get("mastery", "")) != "":
 			var usable := str(w["mastery"]) in ch.weapon_masteries or selected in ch.weapon_masteries
 			_card.add_child(UiKit.label("Mastery %s: %s%s" % [str(w["mastery"]).capitalize(), ActionCatalog.MASTERY_TEXT.get(str(w["mastery"]), ""),
-				"" if usable else " (not one of your masteries)"], 14, "moonlight" if usable else "bone", 500))
+				"" if usable else " (not one of your masteries)"], 14, "moonlight" if usable else "bone", 420))
 		var main := ch.equipped("main_hand")
 		if Gear.is_weapon(main) and str(main["id"]) != selected:
 			var mp := WeaponProfile.build(ch, main)
 			var diff := p.average_damage() - mp.average_damage()
-			_card.add_child(UiKit.label("Compared with your %s: %s average damage (%.1f vs %.1f)" % [main["name"], ("▲ %.1f more" % diff) if diff > 0 else ("▼ %.1f less" % -diff) if diff < 0 else "the same", p.average_damage(), mp.average_damage()], 14, "vellum", 500))
+			_card.add_child(UiKit.label("Compared with your %s: %s average damage (%.1f vs %.1f)" % [main["name"], ("▲ %.1f more" % diff) if diff > 0 else ("▼ %.1f less" % -diff) if diff < 0 else "the same", p.average_damage(), mp.average_damage()], 14, "vellum", 420))
 	elif Gear.is_armor(data):
 		var arm := data["armor"] as Dictionary
 		_card.add_child(UiKit.label("%s armor: AC %d%s%s" % [str(arm["kind"]).capitalize(), int(arm.get("base_ac", 10)),
 			"" if int(arm.get("dex_cap", 99)) == 0 else " + Dex" + (" (max %d)" % int(arm["dex_cap"]) if int(arm.get("dex_cap", 99)) < 10 else ""),
-			", Stealth Disadvantage" if bool(arm.get("stealth_disadvantage", false)) else ""], 15, "vellum", 500))
+			", Stealth Disadvantage" if bool(arm.get("stealth_disadvantage", false)) else ""], 15, "vellum", 420))
 		if not ch.trained_for(data):
-			_card.add_child(UiKit.label("~ No training: Disadvantage on Strength and Dexterity rolls, and no spellcasting", 14, "gilt", 500))
+			_card.add_child(UiKit.label("~ No training: Disadvantage on Strength and Dexterity rolls, and no spellcasting", 14, "gilt", 420))
 		if int(arm.get("strength", 0)) > ch.ability_score(&"str"):
-			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "gilt", 500))
-	_card.add_child(UiKit.label(str(data.get("text", data.get("summary", ""))), 14, "vellum", 500))
+			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "gilt", 420))
+	_card.add_child(UiParts.section("Description"))
+	_card.add_child(UiKit.label(str(data.get("text", data.get("summary", ""))), 14, "vellum", 420))
 	# Magic items: rarity and attunement (three items at most; attuning takes a Short Rest).
 	var magic := data.get("magic", {}) as Dictionary
 	if not magic.is_empty():
@@ -205,7 +296,7 @@ func _draw_card() -> void:
 			req = " (requires attunement %s)" % needs
 		elif needs is bool and bool(needs):
 			req = " (requires attunement)"
-		_card.add_child(UiKit.label("%s magic item%s" % [str(magic.get("rarity", "")).replace("_", " ").capitalize(), req], 14, "moonlight", 500))
+		_card.add_child(UiKit.label("%s magic item%s" % [str(magic.get("rarity", "")).replace("_", " ").capitalize(), req], 14, "moonlight", 420))
 		if req != "":
 			if selected in ch.attuned:
 				_card.add_child(UiKit.button("End attunement", func() -> void:
@@ -222,7 +313,8 @@ func _draw_card() -> void:
 				_card.add_child(att)
 			_card.add_child(UiKit.label("Attuned: %d of %d" % [ch.attuned.size(), Character.MAX_ATTUNED], 13, "parchment"))
 	# Actions
-	var acts := HBoxContainer.new()
+	_card.add_child(UiParts.section("Actions"))
+	var acts := HFlowContainer.new()
 	acts.add_theme_constant_override("separation", 6)
 	var entry := _entry(selected)
 	var slot := str(entry.get("slot", ""))
@@ -248,31 +340,37 @@ func _draw_card() -> void:
 			_draw(), 14))
 	if (data.get("effects", []) as Array).size() > 0 and str(data.get("category", "")) == "potion":
 		acts.add_child(UiKit.button("Drink", _drink, 14))
+	acts.add_theme_constant_override("h_separation", 6)
+	acts.add_theme_constant_override("v_separation", 6)
 	_card.add_child(acts)
 	var give := HBoxContainer.new()
-	give.add_child(UiKit.label("Give to:", 14, "parchment"))
+	give.add_theme_constant_override("separation", 6)
+	give.add_child(UiParts.caption("Give to", 11))
 	for i in st.party.size():
 		if i == index:
 			continue
 		var other := st.party[i]
-		give.add_child(UiKit.button(other.name.get_slice(" ", 0), func() -> void: _give(other), 13))
+		give.add_child(UiParts.small_button(other.name.get_slice(" ", 0), func() -> void: _give(other)))
 	_card.add_child(give)
 	var quest := bool(data.get("quest", false))
-	var drop := UiKit.button("Drop one", func() -> void:
+	var drop := UiParts.small_button("Drop one", func() -> void:
 		if slot != "":
 			ch.unequip(slot)
 		_remove_one(ch, selected)
-		_draw(), 13)
+		_draw())
 	drop.disabled = quest
 	if quest:
 		drop.tooltip_text = "Can't drop: needed for a quest"
-	_card.add_child(drop)
+	var bottom := HBoxContainer.new()
+	bottom.add_theme_constant_override("separation", 6)
+	bottom.add_child(drop)
 	if _stash_open() and not quest:
-		_card.add_child(UiKit.button("Stash it", func() -> void:
+		bottom.add_child(UiParts.small_button("Stash it", func() -> void:
 			st.stash_put(selected, ch)
 			if _entry(selected).is_empty():
 				selected = ""
-			_draw(), 13))
+			_draw()))
+	_card.add_child(bottom)
 
 
 ## The stash is reachable where it's safe to rest (an inn, a home).

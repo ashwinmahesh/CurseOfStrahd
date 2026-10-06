@@ -1,0 +1,255 @@
+{
+  "region": "berez",
+  "flags": [
+    {
+      "id": "berez_witch_met",
+      "type": "bool",
+      "summary": "The party met Baba Lysaga at her window (berez/lysaga:window); later visits greet them as returning."
+    },
+    {
+      "id": "berez_scarecrows_burned",
+      "type": "bool",
+      "summary": "The scarecrows around the stump were fought and burned (encounter berez_scarecrows). Lysaga complains; the field's Narrator line changes."
+    },
+    {
+      "id": "berez_lights_quenched",
+      "type": "bool",
+      "summary": "The marsh lights in the drowned lane were fought at night (encounter berez_drowned_lights)."
+    },
+    {
+      "id": "berez_diary_read",
+      "type": "bool",
+      "summary": "The party read the drowned burgomaster's diary (prop berez_burgomaster_diary): Marina died with a thorn-scratch over her heart. Opens the deduction at her bier."
+    },
+    {
+      "id": "berez_strahd_met",
+      "type": "bool",
+      "summary": "Strahd met the party at Marina's monument by night (berez/marina:strahd); he comes only once."
+    },
+    {
+      "id": "berez_milestone_reached",
+      "type": "bool",
+      "summary": "Guard: the region's one milestone (berez/lysaga:milestone) has been given."
+    },
+    {
+      "id": "lysaga_guests",
+      "type": "bool",
+      "summary": "Baba Lysaga invited the party into her hut (window: travellers, the lie, or Marina's name). Opens the hut's door; the scarecrows stay still."
+    },
+    {
+      "id": "lysaga_flattered",
+      "type": "bool",
+      "summary": "The party claimed her boy sent them and she believed it (Deception 15): she talks about him at supper and admits his carriage brought the gem."
+    },
+    {
+      "id": "lysaga_supper_eaten",
+      "type": "bool",
+      "summary": "The supper scene at her hearth has played (berez/lysaga:supper)."
+    },
+    {
+      "id": "lysaga_suspected",
+      "type": "bool",
+      "summary": "The party watched her closely (Insight at supper, or Ireena refused the almond stew); she notices being watched."
+    },
+    {
+      "id": "lysaga_jar_heard",
+      "type": "bool",
+      "summary": "She boasted that she keeps the mountain wizard's memory in a jar on her shelf (berez/lysaga:wizard). The Mad Mage reacts to it."
+    },
+    {
+      "id": "lysaga_doll_studied",
+      "type": "bool",
+      "summary": "The party examined the thorned doll over her hearth (berez/hut:poppet)."
+    },
+    {
+      "id": "lysaga_bargained",
+      "type": "bool",
+      "summary": "The party traded silence about Marina for the gem and her pantry (berez/lysaga:bargain_struck). She lives; the pantry opens."
+    },
+    {
+      "id": "lysaga_lured",
+      "type": "bool",
+      "summary": "The party lit Marina's grave-lamp while the witch lived, and she flew to the monument to fight without her hut (berez/marina:lamp)."
+    },
+    {
+      "id": "lysaga_slain_in_hut",
+      "type": "bool",
+      "summary": "Baba Lysaga died in her own hut (encounter lysaga_in_hut); the hut dies with her. Her last words follow."
+    },
+    {
+      "id": "lysaga_slain_at_monument",
+      "type": "bool",
+      "summary": "Baba Lysaga died at Marina's monument (encounter lysaga_at_monument); the masterless hut guards its stump."
+    },
+    {
+      "id": "lysaga_slain_at_stump",
+      "type": "bool",
+      "summary": "Baba Lysaga and her hut died together at her door (encounter lysaga_and_hut, the hard way)."
+    },
+    {
+      "id": "lysaga_slain_scorned",
+      "type": "bool",
+      "summary": "The party finished Baba Lysaga in the mud after Strahd broke her hut (encounter lysaga_scorned)."
+    },
+    {
+      "id": "lysaga_left_broken",
+      "type": "bool",
+      "summary": "After Strahd broke her hut, the party left Baba Lysaga alive in the mud (berez/lysaga:leave_broken); she threw them the gem."
+    },
+    {
+      "id": "lysaga_dead",
+      "type": "bool",
+      "summary": "Baba Lysaga is dead (set by her last words, wherever she fell). Later regions and the epilogue read it."
+    },
+    {
+      "id": "lysaga_fate",
+      "type": "string",
+      "summary": "How the witch of Berez ended: slain, bargained (alive, silence bought) or broken (alive, ruined by Strahd). Castle Ravenloft and the epilogue read it."
+    },
+    {
+      "id": "creeping_hut_destroyed",
+      "type": "bool",
+      "summary": "Baba Lysaga's creeping hut is dead: with her in the hut or at her door, or fought masterless after the lure."
+    },
+    {
+      "id": "marina_vault_found",
+      "type": "bool",
+      "summary": "The party dug out the stair under Marina's statue (berez/marina:dig); the vault exit opens."
+    },
+    {
+      "id": "marina_lamp_lit",
+      "type": "bool",
+      "summary": "The party lit the grave-lamp at Marina's feet."
+    },
+    {
+      "id": "marina_body_examined",
+      "type": "bool",
+      "summary": "Medicine at Marina's bier found the thorn-scratch over her heart (berez/marina:bier_medicine)."
+    },
+    {
+      "id": "marina_truth_known",
+      "type": "bool",
+      "summary": "The party knows Baba Lysaga killed Marina (the doll, her slip in front of Ireena, the deduction at the bier, or her last words). Castle Ravenloft may read it."
+    },
+    {
+      "id": "strahd_knows_marina_truth",
+      "type": "bool",
+      "summary": "The party told Strahd his nurse killed Marina (berez/marina:strahd_truth). He breaks her hut; she is found ruined. Castle Ravenloft and the epilogue read it."
+    },
+    {
+      "id": "ireena_saw_marina",
+      "type": "bool",
+      "summary": "Ireena saw Marina's statue and knew the vault's steps without being told (berez/marina:monument)."
+    },
+    {
+      "id": "winery_gem_berez_found",
+      "type": "bool",
+      "summary": "The party has the Wizard of Wines' third stone from Berez (the cradle, the bargain, or the broken witch). Also moves quest the_third_stone to found; the Wizard of Wines package reads both."
+    },
+    {
+      "id": "mordenkainen_met",
+      "type": "bool",
+      "summary": "The party met the Mad Mage on Mount Baratok."
+    },
+    {
+      "id": "mordenkainen_eyes_read",
+      "type": "bool",
+      "summary": "Insight showed the Mad Mage keeps looking at the cairn on the summit."
+    },
+    {
+      "id": "mordenkainen_name_spoken",
+      "type": "bool",
+      "summary": "A wizard named the spell he mutters, and his own name with it; it hurt him."
+    },
+    {
+      "id": "mordenkainen_spellbook_found",
+      "type": "bool",
+      "summary": "The party opened the warded cairn and found his spellbook (mount_baratok/events:cairn)."
+    },
+    {
+      "id": "mordenkainen_name_back",
+      "type": "bool",
+      "summary": "He read his own name in the spellbook; the last page will finish the cure."
+    },
+    {
+      "id": "mordenkainen_talked_back",
+      "type": "bool",
+      "summary": "The party tried Arcana 16 to talk him back to himself (one try)."
+    },
+    {
+      "id": "mordenkainen_memory_jar_taken",
+      "type": "bool",
+      "summary": "The party has the witch's jar holding the wizard's memory (from her shelf, or demanded in the bargain)."
+    },
+    {
+      "id": "mordenkainen_restored",
+      "type": "bool",
+      "summary": "Mordenkainen has his memory back (jar, Greater Restoration, spellbook, or Arcana). Only now can he join; the castle (Phase 6) may read it."
+    },
+    {
+      "id": "mordenkainen_promised_aid",
+      "type": "bool",
+      "summary": "Restored and not the Tarokka ally, Mordenkainen promised to come when the party goes up to the castle (Phase 6 should read it)."
+    },
+    {
+      "id": "baratok_storm_seen",
+      "type": "bool",
+      "summary": "The party saw the Mad Mage's evening lightning on the ridge (mount_baratok/events:lightning_ridge)."
+    },
+    {
+      "id": "baratok_ward_found",
+      "type": "bool",
+      "summary": "The ward around the summit cairn was spotted (trap baratok_ward)."
+    },
+    {
+      "id": "tsolenka_watchword_known",
+      "type": "bool",
+      "summary": "Mordenkainen told the party the Tsolenka watchword: cold hearth, shut door."
+    },
+    {
+      "id": "tsolenka_watch_met",
+      "type": "bool",
+      "summary": "The ghost watch challenged the party in the guard tower."
+    },
+    {
+      "id": "tsolenka_watch_fate",
+      "type": "string",
+      "summary": "How the party got past the watch: passed (watchword or a believed lie), released (rites or the truth), fought. The Amber Temple package may read it."
+    },
+    {
+      "id": "tsolenka_lie_tried",
+      "type": "bool",
+      "summary": "The party tried claiming to be the relief (one try)."
+    },
+    {
+      "id": "tsolenka_release_tried",
+      "type": "bool",
+      "summary": "Persuasion or Religion to release the watch failed once; those options close."
+    },
+    {
+      "id": "tsolenka_watch_released",
+      "type": "bool",
+      "summary": "The watch was laid to rest and is gone from the tower."
+    },
+    {
+      "id": "tsolenka_watch_fought",
+      "type": "bool",
+      "summary": "The watch was fought and destroyed (encounter tsolenka_watch)."
+    },
+    {
+      "id": "tsolenka_gate_open",
+      "type": "bool",
+      "summary": "The Tsolenka portcullis is up (tsolenka_pass/watch:winch_up): the road to the Amber Temple opens on the travel map. The Amber Temple package reads it."
+    },
+    {
+      "id": "roc_seen",
+      "type": "bool",
+      "summary": "The roc of Mount Ghakis flew over the party on a mountain road (tsolenka_pass/events:roc_shadow)."
+    },
+    {
+      "id": "roc_driven_off",
+      "type": "bool",
+      "summary": "The roc of Mount Ghakis was fought on the bridge (encounter roc_of_ghakis); the bridge is safe by day."
+    }
+  ]
+}

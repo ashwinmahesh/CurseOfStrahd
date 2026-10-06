@@ -1,0 +1,187 @@
+{
+  "id": "berez_marinas_monument",
+  "name": "Beneath Marina's Monument",
+  "region": "berez",
+  "summary": "A dry stone vault under the statue on the mound, where the girl Strahd loved in Berez lies on a bier as if asleep, with his candles burning at her head and his roses at her feet.",
+  "text": "A stair under the plinth comes down into one square room cut from the rock. The marsh is all around it and not a drop has got in.",
+  "map": {
+    "rows": [
+      "##############",
+      "#..#......#..#",
+      "#..#......#..#",
+      "#............#",
+      "#.....==.....#",
+      "#.....==.....#",
+      "#............#",
+      "#..#......#..#",
+      "#..#......#..#",
+      "#####....#####",
+      "######..######",
+      "######..######"
+    ],
+    "theme": "church",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "marina_vault",
+      "name": "Marina's vault",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          12,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "marina_vault_stair",
+      "name": "The stair",
+      "cells": [
+        [
+          5,
+          9
+        ],
+        [
+          8,
+          11
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      6,
+      10
+    ],
+    "from_mound": [
+      6,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "marina_vault_up",
+      "cell": [
+        6,
+        11
+      ],
+      "to": "berez",
+      "spawn": "from_vault",
+      "label": "The stair up to the mound"
+    },
+    {
+      "id": "marina_vault_up_2",
+      "cell": [
+        7,
+        11
+      ],
+      "to": "berez",
+      "spawn": "from_vault",
+      "label": "The stair up to the mound"
+    }
+  ],
+  "props": [
+    {
+      "id": "marina_bier",
+      "cell": [
+        6,
+        4
+      ],
+      "kind": "examine",
+      "label": "Marina",
+      "model": "coffin",
+      "dialogue": "berez/marina:bier"
+    },
+    {
+      "id": "marina_candles",
+      "cell": [
+        5,
+        3
+      ],
+      "kind": "examine",
+      "label": "Tall candles",
+      "model": "candelabra"
+    },
+    {
+      "id": "marina_verse",
+      "cell": [
+        6,
+        0
+      ],
+      "kind": "book",
+      "label": "Words cut in the wall",
+      "model": "relief",
+      "codex": "marina_verse",
+      "text": "Cut into the stone in a fine, unhurried hand: I found you again in a village of nobody, and they took you from me in the night. I have taken them from the world. It does not help. Sleep, and keep your face for me."
+    },
+    {
+      "id": "marina_portrait",
+      "cell": [
+        13,
+        4
+      ],
+      "kind": "examine",
+      "label": "A portrait",
+      "model": "painting"
+    },
+    {
+      "id": "marina_roses",
+      "cell": [
+        8,
+        5
+      ],
+      "kind": "examine",
+      "label": "Roses on the floor",
+      "model": "leaves"
+    }
+  ],
+  "containers": [
+    {
+      "id": "marinas_dowry_chest",
+      "cell": [
+        1,
+        1
+      ],
+      "label": "A painted dowry chest",
+      "model": "chest_painted",
+      "items": [],
+      "gold": 150
+    },
+    {
+      "id": "berez_vault_niche",
+      "cell": [
+        12,
+        1
+      ],
+      "label": "A niche of offerings",
+      "model": "jewel_box",
+      "items": [],
+      "gold": 30
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        6,
+        3
+      ],
+      "kind": "magic",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "narration": {
+    "enter": "enter:berez_marinas_monument"
+  },
+  "rest": "no",
+  "rest_text": "Not here. Not beside her.",
+  "treasure_spots": {
+    "berez_marinas_monument": {
+      "container": "marinas_dowry_chest"
+    }
+  }
+}

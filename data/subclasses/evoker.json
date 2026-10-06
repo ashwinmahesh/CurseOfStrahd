@@ -38,7 +38,7 @@
         "id": "evocation_savant",
         "name": "Evocation Savant (new spell level)",
         "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Evocation spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -48,7 +48,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -57,7 +58,7 @@
         "id": "evocation_savant",
         "name": "Evocation Savant (new spell level)",
         "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Evocation spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -67,7 +68,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -76,7 +78,7 @@
         "id": "evocation_savant",
         "name": "Evocation Savant (new spell level)",
         "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Evocation spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -86,7 +88,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -95,7 +98,7 @@
         "id": "evocation_savant",
         "name": "Evocation Savant (new spell level)",
         "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Evocation spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -105,7 +108,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -187,6 +191,7 @@
         "id": "sculpt_spells",
         "name": "Sculpt Spells",
         "summary": "Choose 1 + spell level creatures to automatically succeed against your Evocation spell and take no damage.",
+        "text": "When you cast an Evocation spell that affects other creatures you can see, you can pick a number of them equal to 1 plus the spell's level. They automatically succeed on their saving throws against it, and take no damage where a success would normally halve it.",
         "implemented": "engine"
       }
     },
@@ -196,7 +201,7 @@
         "id": "empowered_evocation",
         "name": "Empowered Evocation",
         "summary": "Add your Intelligence modifier to one damage roll of your Wizard Evocation spells.",
-        "implemented": "data",
+        "text": "Whenever you cast a Wizard spell of the Evocation school, you can add your Intelligence modifier to one damage roll of that spell.",
         "modifiers": [
           {
             "stat": "spell_damage",
@@ -206,7 +211,8 @@
               "spell_class": "wizard"
             }
           }
-        ]
+        ],
+        "implemented": "data"
       }
     },
     {
