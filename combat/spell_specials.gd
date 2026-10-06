@@ -227,3 +227,267 @@ func dimension_door(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		var spot := sp()._free_cell_near(cell, ally.size_cells)
 		if e.grid.distance_ft(cell, c.size_cells, spot, ally.size_cells) <= 5:
 			sp()._teleport(ally, spot, r)
+
+
+# --- Turn hooks ---------------------------------------------------------------------------------------
+
+## Start of `c`'s turn: Confusion's d10, Compulsion's forced march.
+func turn_start(c: Combatant) -> void:
+	if not c.is_alive() or c.creature.hp <= 0:
+		return
+	if c.creature.has_flag("confused"):
+		_confusion_turn(c)
+	for fx: Effect in c.creature.effects.duplicate():
+		if fx.source_id == "compulsion" and StringName("charmed") in fx.conditions and fx in c.creature.effects:
+			_compelled_march(c, fx)
+
+
+## End of `c`'s turn: Compelled Duel ends if its caster finishes a turn more than 30 ft from the target.
+func turn_end(c: Combatant) -> void:
+	var e := enc()
+	for t in e.living():
+		for fx: Effect in t.creature.effects.duplicate():
+			if fx.source_id == "compelled_duel" and fx.caster_id == c.id and e.distance(c, t) > 30:
+				_end_duel(c, "the duellist strayed more than 30 ft")
+				return
+
+
+## Confusion (2024): no Bonus Actions or Reactions, and a d10 at the start of each turn: 1, it moves its full Speed
+## in a random direction and does nothing else; 2-6, it neither moves nor acts; 7-8, it stays put and makes one melee
+## attack against a random creature within reach (or nothing); 9-10, it acts normally.
+func _confusion_turn(c: Combatant) -> void:
+	var e := enc()
+	c.bonus_available = false
+	var roll := e.dice.roll_one(10, "Confusion (%s)" % c.name())
+	match roll:
+		1:
+			var dirs := [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
+			var way: Vector2i = dirs[e.dice.roll_one(4, "Confusion direction") - 1]
+			e.log.add("info", "Confusion (d10: 1): %s wanders off %s" % [c.name(), ["north", "east", "south", "west"][dirs.find(way)]], c.id)
+			var r := CombatResult.new()
+			e.march(c, Vector2(way), c.movement_left, r)
+			c.movement_left = 0
+			c.action_available = false
+		2, 3, 4, 5, 6:
+			e.log.add("info", "Confusion (d10: %d): %s stands dazed" % [roll, c.name()], c.id)
+			c.movement_left = 0
+			c.action_available = false
+		7, 8:
+			c.movement_left = 0
+			c.action_available = false
+			var near: Array[Combatant] = []
+			for o in e.living():
+				if o != c and not o.is_down() and e.distance(c, o) <= c.reach_ft():
+					near.append(o)
+			var opt := e.best_melee_option(c, null)
+			if near.is_empty() or opt.is_empty():
+				e.log.add("info", "Confusion (d10: %d): %s lashes at nothing" % [roll, c.name()], c.id)
+			else:
+				var victim := near[e.dice.roll_one(near.size(), "Confusion target") - 1]
+				e.log.add("info", "Confusion (d10: %d): %s attacks %s at random" % [roll, c.name(), victim.name()], c.id)
+				e._resolve_attack(c, victim, opt, {})
+		_:
+			e.log.add("info", "Confusion (d10: %d): %s acts normally" % [roll, c.name()], c.id)
+
+
+## Compulsion: a charmed creature spends its movement going the way the caster named, then repeats its save.
+func _compelled_march(c: Combatant, fx: Effect) -> void:
+	var e := enc()
+	var caster := e.get_c(fx.caster_id)
+	if caster == null or not caster.has_meta("compel_dir"):
+		return
+	var dv := caster.get_meta("compel_dir") as Array
+	var r := CombatResult.new()
+	e.log.add("info", "%s is compelled to march (Compulsion)" % c.name(), c.id)
+	e.march(c, Vector2(float(dv[0]), float(dv[1])), c.movement_left, r)
+	c.movement_left = 0
+	sp()._repeat_save(c, fx, [])
+
+
+# --- Compelled Duel -------------------------------------------------------------------------------------
+
+## Disadvantage on attack rolls against anyone but the duellist who compelled it.
+func duel_disadvantage(attacker: Combatant, target: Combatant) -> String:
+	for fx: Effect in attacker.creature.effects:
+		if fx.source_id == "compelled_duel" and fx.caster_id != target.id:
+			return "Compelled Duel"
+	return ""
+
+
+## The duellist it may not wander more than 30 ft from, or null.
+func duel_anchor(c: Combatant) -> Combatant:
+	for fx: Effect in c.creature.effects:
+		if fx.source_id == "compelled_duel":
+			return enc().get_c(fx.caster_id)
+	return null
+
+
+## The duel ends when its caster attacks someone else, casts a spell at another enemy, or an ally hurts the target.
+func duel_check_attack(caster: Combatant, target: Combatant) -> void:
+	var foe := _dueled_by(caster)
+	if foe != null and foe != target:
+		_end_duel(caster, "%s turned on someone else" % caster.name())
+
+
+func duel_check_damage(source: Combatant, target: Combatant) -> void:
+	if source == null:
+		return
+	for fx: Effect in target.creature.effects:
+		if fx.source_id == "compelled_duel" and fx.caster_id != source.id:
+			var caster := enc().get_c(fx.caster_id)
+			if caster != null and caster.allied_with(source):
+				_end_duel(caster, "an ally of the duellist joined in")
+			return
+
+
+func _dueled_by(caster: Combatant) -> Combatant:
+	for t in enc().living():
+		for fx: Effect in t.creature.effects:
+			if fx.source_id == "compelled_duel" and fx.caster_id == caster.id:
+				return t
+	return null
+
+
+func _end_duel(caster: Combatant, why: String) -> void:
+	if caster.creature.concentration != null and caster.creature.concentration.source_id == "compelled_duel":
+		caster.creature.concentration.end(why)
+		enc().log.add("info", "Compelled Duel ends: %s" % why, caster.id)
+
+
+# --- Dominate Beast ----------------------------------------------------------------------------------
+
+## A dominated Beast fights for the caster's side under the player's command until the spell ends.
+func dominate(ctx: Dictionary, t: Combatant) -> void:
+	var c := ctx["c"] as Combatant
+	var e := enc()
+	if t.has_meta("dominated_from"):
+		return
+	t.set_meta("dominated_from", [str(t.side), str(t.controller)])
+	t.side = &"guest" if c.side == &"party" else c.side
+	t.controller = c.controller
+	e.log.add("condition", "%s bends to %s's will" % [t.name(), c.name()], t.id)
+	for fx: Effect in t.creature.effects:
+		if fx.source_id == "dominate_beast":
+			var tid := t.id
+			fx.data["on_end"] = {"kind": "undominate", "target": tid}
+			fx.on_end = func() -> void: undominate(tid)
+
+
+func undominate(tid: String) -> void:
+	var e := enc()
+	if e == null:
+		return
+	var t := e.get_c(tid)
+	if t == null or not t.has_meta("dominated_from"):
+		return
+	var was := t.get_meta("dominated_from") as Array
+	t.remove_meta("dominated_from")
+	t.side = StringName(str(was[0]))
+	t.controller = StringName(str(was[1]))
+	e.log.add("info", "%s shakes off the domination" % t.name(), t.id)
+
+
+# --- Dissonant Whispers ---------------------------------------------------------------------------------
+
+## On a failed save the target spends its Reaction to move as far from the caster as its Speed allows (and that
+## movement can provoke Opportunity Attacks).
+func flee_with_reaction(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+	var c := ctx["c"] as Combatant
+	var e := enc()
+	if not t.reaction_available or not t.can_act() or t.creature.has_flag("no_reactions") or t.speed() <= 0:
+		return
+	t.reaction_available = false
+	e.log.add("info", "%s flees from the whispers" % t.name(), t.id)
+	e.flee(t, c, t.speed(), r)
+
+
+# --- Heat Metal ---------------------------------------------------------------------------------------
+
+## The metal a creature carries that Heat Metal can heat: "weapon" (droppable), "armor", or "".
+func metal_of(t: Combatant) -> String:
+	const NOT_METAL := ["club", "quarterstaff", "greatclub", "sling", "shortbow", "longbow", "blowgun", "dart", "whip", "unarmed_strike"]
+	if t.creature is Character:
+		var ch := t.creature as Character
+		var main := ch.equipped("main_hand")
+		if not main.is_empty() and not str(main.get("id", "")) in NOT_METAL and main.has("weapon"):
+			return "weapon"
+		var armor := ch.equipped("armor")
+		if not armor.is_empty() and str((armor.get("armor", {}) as Dictionary).get("kind", "")) in ["medium", "heavy"] and str(armor.get("id", "")) != "hide_armor":
+			return "armor"
+		return ""
+	var m := t.creature as Monster
+	var note := str(m.data.get("ac_note", "")).to_lower()
+	for word: String in ["mail", "plate", "breastplate", "scale", "splint", "ring"]:
+		if note.contains(word):
+			return "armor"
+	for a: Variant in m.data.get("actions", []):
+		if bool((a as Dictionary).get("weapon", false)):
+			return "weapon"
+	return ""
+
+
+## Heat Metal's searing: Fire damage to the creature touching the object, then a Constitution save: on a failure it
+## drops a held object; if it doesn't drop it, it has Disadvantage on attack rolls and ability checks until the start
+## of the caster's next turn.
+func heat_metal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+	var c := ctx["c"] as Combatant
+	var s := ctx["s"] as Dictionary
+	var e := enc()
+	var metal := metal_of(t)
+	if metal == "":
+		r.lines.append(e.log.add("info", "%s carries nothing metal to heat" % t.name(), t.id))
+		return
+	var rolled := sp().roll_damage_parts(ctx, s.get("damage", []) as Array, false, t)
+	var dr := e.deal_damage(c, t, [{"amount": int(rolled["total"]), "type": "fire", "spell": true}], false, str(s["name"]), [str(rolled["text"])])
+	r.damage += dr.final
+	if not t.is_alive() or t.creature.hp <= 0:
+		return
+	var dc := (ctx["nums"]["dc"] as Breakdown).total()
+	var sv := t.creature.roll_save(e.dice, &"con", dc, [], [], "Constitution save vs Heat Metal (%s)" % t.name())
+	if not sv.success and metal == "weapon":
+		if t.creature is Character:
+			(t.creature as Character).unequip("main_hand")
+		else:
+			t.set_meta("disarmed", true)
+		e.log.add("info", "%s drops the searing weapon" % t.name(), t.id, [sv.describe()])
+		return
+	var fx := Effect.new("Searing metal", &"spell", "heat_metal").with_modifier("disadvantage", {"on": "attack"}).with_modifier("disadvantage", {"on": "check:all"})
+	fx.caster_id = c.id
+	fx.stack_key = "spell:heat_metal:grip"
+	fx.ends = Effect.Ends.START_OF_TURN
+	fx.turn_owner_id = c.id
+	t.creature.add_effect(fx)
+	e.log.add("condition", "%s grits its teeth around the searing metal (Disadvantage on attacks and checks)" % t.name(), t.id, [sv.describe()])
+
+
+# --- Cantrips -------------------------------------------------------------------------------------------
+
+## Eldritch Blast's beams: one more at character levels 5, 11 and 17.
+func beams(c: Combatant) -> int:
+	return 1 + Spellcasting.cantrip_tier(c.creature.character_level())
+
+
+## Sorcerous Burst: each 8 rolled adds another d8, up to the spellcasting modifier in extra dice. Returns the extra
+## total and a note.
+func sorcerous_burst_extra(ctx: Dictionary, text: String) -> Dictionary:
+	var e := enc()
+	var cap := maxi(0, int((ctx["nums"] as Dictionary).get("mod", 0)))
+	var eights := 0
+	var open := text.find("[")
+	var close := text.find("]")
+	if open >= 0 and close > open:
+		for part in text.substr(open + 1, close - open - 1).split(","):
+			if part.strip_edges() == "8":
+				eights += 1
+	var extra := 0
+	var rolls: Array[String] = []
+	var added := 0
+	while eights > 0 and added < cap:
+		eights -= 1
+		var v := e.dice.roll_one(8, "Sorcerous Burst extra die")
+		added += 1
+		extra += v
+		rolls.append(str(v))
+		if v == 8:
+			eights += 1
+	return {"total": extra, "text": "Sorcerous Burst: %d extra d8 [%s]" % [added, ", ".join(rolls)] if added > 0 else ""}

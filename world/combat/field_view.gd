@@ -10,7 +10,11 @@ const GLIDE_TIME := 0.25
 const ZONE_COLOURS := {"darkness": "void", "fog_cloud": "mist_blue", "stinking_cloud": "sickly", "web": "bone",
 	"sleet_storm": "frost", "silence": "night", "spirit_guardians": "candle", "cloud_of_daggers": "silver",
 	"entangle": "moss", "grease": "umber", "aura_of_vitality": "bile", "crusaders_mantle": "flame",
-	"faerie_fire": "orchid", "gust_of_wind": "moonlight"}
+	"faerie_fire": "orchid", "gust_of_wind": "moonlight", "hunger_of_hadar": "void", "spike_growth": "umber",
+	"moonbeam": "moonlight", "wall_of_fire": "flame", "wind_wall": "mist_blue", "evards_black_tentacles": "night",
+	"conjure_animals": "bone", "conjure_woodland_beings": "moss", "conjure_minor_elementals": "ember",
+	"guardian_of_faith": "candle", "cordon_of_arrows": "silver", "ice_storm": "frost", "aura_of_life": "bile",
+	"aura_of_purity": "moonlight", "call_lightning": "moon_blue", "plant_growth": "moss", "confusion": "orchid"}
 
 var board: ArenaBoard
 var _nodes: Dictionary = {}   ## object id -> Node3D
@@ -76,6 +80,10 @@ func _make(f: FieldObject) -> Node3D:
 			return _hand()
 		FieldObject.Kind.ILLUSION:
 			return _double()
+		FieldObject.Kind.HOUND:
+			return _hound()
+		FieldObject.Kind.VINE:
+			return _vine()
 	var zone := Node3D.new()
 	zone.name = "Zone_" + f.spell_id
 	_paint_zone(zone, f)
@@ -192,6 +200,37 @@ func _double() -> Node3D:
 	cm.radius = 0.28
 	cm.height = 1.1
 	_part(root, cm, Vector3(0, 0.55, 0), _glow("moonlight", 0.35))
+	return root
+
+
+## Mordenkainen's Faithful Hound: a pale phantom dog (only its caster sees it; the player's view is the caster's).
+func _hound() -> Node3D:
+	var root := Node3D.new()
+	root.name = "FaithfulHound"
+	var body := CapsuleMesh.new()
+	body.radius = 0.16
+	body.height = 0.62
+	_part(root, body, Vector3(0, 0.36, 0), _glow("moonlight", 0.45), Vector3(90, 0, 0))
+	var head := SphereMesh.new()
+	head.radius = 0.13
+	head.height = 0.26
+	_part(root, head, Vector3(0, 0.52, 0.32), _glow("moonlight", 0.55))
+	return root
+
+
+## Grasping Vine: a green stalk rising from its square.
+func _vine() -> Node3D:
+	var root := Node3D.new()
+	root.name = "GraspingVine"
+	var stalk := CylinderMesh.new()
+	stalk.top_radius = 0.04
+	stalk.bottom_radius = 0.12
+	stalk.height = 1.4
+	_part(root, stalk, Vector3(0, 0.7, 0), _glow("moss", 0.9))
+	var tip := TorusMesh.new()
+	tip.inner_radius = 0.12
+	tip.outer_radius = 0.18
+	_part(root, tip, Vector3(0.1, 1.35, 0), _glow("bog", 0.9), Vector3(0, 0, 70))
 	return root
 
 

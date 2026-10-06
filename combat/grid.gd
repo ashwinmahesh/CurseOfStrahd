@@ -166,31 +166,42 @@ const MOVE_FLY := 1
 const MOVE_CLIMB := 2
 ## Incorporeal Movement: through walls and creatures, as Difficult Terrain.
 const MOVE_INCORPOREAL := 4
+## Difficult Terrain doesn't hinder it (Freedom of Movement).
+const MOVE_UNHINDERED := 8
 
 
 func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable, slowed: Callable, mode: int = 0) -> int:
 	var d := to - from
 	if absi(d.x) > 1 or absi(d.y) > 1 or d == Vector2i.ZERO:
 		return -1
-	var difficult := false
+	# Feet spent per foot moved: 2 in Difficult Terrain, more where a spell says so (`slowed` may return a number:
+	# Plant Growth's overgrowth costs 4).
+	var mult := 1
 	for c in footprint(to, size_cells):
 		if (mode & MOVE_INCORPOREAL) != 0:
 			if not in_bounds(c) or has_flag(c, VOID):
 				return -1
 			if is_solid(c) or bool(blocked.call(c)):
-				difficult = true
+				mult = maxi(mult, 2)
 			continue
 		if is_solid(c) or bool(blocked.call(c)):
 			return -1
-		if (has_flag(c, DIFFICULT) and (mode & MOVE_FLY) == 0) or bool(slowed.call(c)):
-			difficult = true
+		if (mode & MOVE_UNHINDERED) != 0:
+			continue
+		if has_flag(c, DIFFICULT) and (mode & MOVE_FLY) == 0:
+			mult = maxi(mult, 2)
+		var sv: Variant = slowed.call(c)
+		if sv is int and int(sv) > 1:
+			mult = maxi(mult, int(sv))
+		elif bool(sv):
+			mult = maxi(mult, 2)
 	if d.x != 0 and d.y != 0 and (mode & MOVE_INCORPOREAL) == 0:
 		# Diagonals can't cut the corner of a wall or other square-filling feature.
 		for c: Vector2i in [from + Vector2i(d.x, 0), from + Vector2i(0, d.y)]:
 			for fc in footprint(c, size_cells):
 				if (flags(fc) & (WALL | LOW | VOID)) != 0:
 					return -1
-	var cost := FEET * (2 if difficult else 1)
+	var cost := FEET * mult
 	if (mode & MOVE_FLY) != 0:
 		return cost
 	var rise := height(to) - height(from)

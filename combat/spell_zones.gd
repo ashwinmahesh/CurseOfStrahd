@@ -136,6 +136,10 @@ func on_moved(c: Combatant, from: Vector2i) -> void:
 	for o: FieldObject in objects.duplicate():
 		if o.expired() or not o.covers(c) or not _affects(o, c):
 			continue
+		# Spike Growth: every 5 feet travelled into or within the area hurts.
+		if o.has_trigger("per_square"):
+			_affect(o, c, "per_square", CombatResult.new(), {})
+			continue
 		if not (o.has_trigger("enter") or o.has_trigger("moved_into")):
 			continue
 		var was := false
@@ -164,6 +168,15 @@ func turn_start(c: Combatant) -> void:
 	for o: FieldObject in objects.duplicate():
 		if o.expired():
 			continue
+		# Mordenkainen's Faithful Hound bites an enemy beside it at the start of its caster's turn.
+		if o.caster_id == c.id and bool(o.rule("bite", false)):
+			_bite(o, c)
+		# Aura of Life: an ally at 0 Hit Points starting its turn in the aura regains 1.
+		if int(o.rule("revive_downed", 0)) > 0 and o.covers(c) and _affects(o, c) and c.creature.hp <= 0 and not c.creature.dead:
+			c.creature.heal(int(o.rule("revive_downed", 1)), o.name)
+			c.creature.remove_condition(&"unconscious", "0 Hit Points")
+			enc().log.add("heal", "%s stirs back to 1 Hit Point (%s)" % [c.name(), o.name], c.id)
+			enc().events.append({"type": "heal", "id": c.id, "amount": 1})
 		if o.has_trigger("start_turn") and o.covers(c) and _affects(o, c):
 			_affect(o, c, "start_turn", CombatResult.new(), {})
 		if o.has_trigger("near_start_turn") and _near(o, c) and _affects(o, c):
@@ -180,10 +193,37 @@ func turn_end(c: Combatant) -> void:
 	for o: FieldObject in objects.duplicate():
 		if o.expired():
 			continue
-		if o.has_trigger("end_turn") and o.covers(c) and _affects(o, c):
+		if o.has_trigger("end_turn") and (o.covers(c) or _on_side(o, c)) and _affects(o, c):
 			_affect(o, c, "end_turn", CombatResult.new(), {})
 		elif o.has_trigger("near_end_turn") and _near(o, c) and _affects(o, c):
 			_affect(o, c, "end_turn", CombatResult.new(), {})
+
+
+## Wall of Fire's burning side: squares within 10 ft of the wall on the side the caster chose.
+func _on_side(o: FieldObject, c: Combatant) -> bool:
+	var side := o.rule("side_cells", []) as Array
+	if side.is_empty():
+		return false
+	for cell in c.footprint():
+		if [cell.x, cell.y] in side:
+			return true
+	return false
+
+
+## The hound's bite: the nearest enemy within 5 ft of it makes the save or takes the damage.
+func _bite(o: FieldObject, caster: Combatant) -> void:
+	var best: Combatant = null
+	var best_d := 1 << 30
+	for t in enc().hostiles_of(caster):
+		if t.is_down():
+			continue
+		var d := enc().grid.distance_ft(o.cell, 1, t.cell, t.size_cells)
+		if d <= int(o.rule("reach", 5)) and d < best_d:
+			best = t
+			best_d = d
+	if best != null:
+		o.hit_on_turn.erase(best.id)
+		_affect(o, best, "bite", CombatResult.new(), {})
 
 
 ## Within the object's reach (Flaming Sphere: within 5 ft of the sphere).
@@ -198,7 +238,16 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 	if not t.is_alive():
 		return
 	var turn_key := "%d:%d" % [e.round_no, e.turn_index]
-	if bool(o.rule("once_per_turn", true)) and str(o.hit_on_turn.get(t.id, "")) == turn_key:
+	var ctx := spells().context_for_object(o)
+	if ctx.is_empty():
+		return
+	var label := "%s (%s)" % [o.name, _trigger_words(trigger)]
+	# Hunger of Hadar's cold at the start of a turn: damage with no save, apart from the end-of-turn acid.
+	if trigger == "start_turn" and o.rules.has("start_damage"):
+		var cold := spells().roll_damage_parts(ctx, o.rules["start_damage"] as Array, false, t)
+		e.deal_damage(e.get_c(o.caster_id), t, [{"amount": int(cold["total"]), "type": str(cold["type"]), "spell": true}], false, label, [str(cold["text"])])
+		return
+	if trigger != "per_square" and bool(o.rule("once_per_turn", true)) and str(o.hit_on_turn.get(t.id, "")) == turn_key:
 		return
 	var has_save := o.rules.has("save")
 	var has_damage := not (o.rule("damage", []) as Array).is_empty()
@@ -206,10 +255,11 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 	if not has_save and not has_damage and effects.is_empty():
 		return
 	o.hit_on_turn[t.id] = turn_key
-	var ctx := spells().context_for_object(o)
-	if ctx.is_empty():
-		return
-	var label := "%s (%s)" % [o.name, _trigger_words(trigger)]
+	# Cordon of Arrows: each strike uses up one piece of ammunition.
+	if o.rules.has("charges"):
+		o.rules["charges"] = int(o.rules["charges"]) - 1
+		if int(o.rules["charges"]) <= 0:
+			o.ended = true
 	var failed := true
 	var details: Array[String] = []
 	if has_save:
@@ -228,7 +278,12 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 			amount = amount / 2 if bool(o.rule("half", false)) else 0
 		details.append(str(rolled["text"]))
 		if amount > 0:
-			e.deal_damage(e.get_c(o.caster_id), t, [{"amount": amount, "type": str(rolled["type"]), "spell": true}], false, label, details)
+			var dr := e.deal_damage(e.get_c(o.caster_id), t, [{"amount": amount, "type": str(rolled["type"]), "spell": true}], false, label, details)
+			# Guardian of Faith vanishes once it has dealt its total.
+			if o.rules.has("damage_cap"):
+				o.rules["dealt"] = int(o.rules.get("dealt", 0)) + dr.final
+				if int(o.rules["dealt"]) >= int(o.rules["damage_cap"]):
+					o.ended = true
 		else:
 			r.lines.append(e.log.add("info", "%s avoids %s" % [t.name(), label], t.id, details))
 	elif has_save:
@@ -249,6 +304,10 @@ static func _trigger_words(trigger: String) -> String:
 			return "starting a turn there"
 		"end_turn":
 			return "ending a turn there"
+		"per_square":
+			return "moving through it"
+		"bite":
+			return "its bite"
 	return trigger
 
 
@@ -266,6 +325,34 @@ func refresh_auras() -> void:
 				var o := get_object(fx.stack_key.substr(5))
 				if o == null or o.expired() or not o.covers(t) or not _affects(o, t):
 					t.creature.remove_effect(fx)
+			elif fx.stack_key.begins_with("near:"):
+				var o2 := get_object(fx.stack_key.substr(5))
+				if o2 == null or o2.expired():
+					t.creature.remove_effect(fx)
+	# A benefit to the caster while near the object (Conjure Animals: Advantage on Strength saves within 5 ft).
+	for o in objects:
+		if o.expired() or not o.rules.has("caster_near"):
+			continue
+		var near := o.rules["caster_near"] as Dictionary
+		var caster := e.get_c(o.caster_id)
+		if caster == null:
+			continue
+		var key0 := "near:%s" % o.id
+		var close := false
+		for cell: Variant in o.rule("core_cells", [[o.cell.x, o.cell.y]]) as Array:
+			if e.grid.distance_ft(Vector2i(int((cell as Array)[0]), int((cell as Array)[1])), 1, caster.cell, caster.size_cells) <= int(near.get("radius", 5)):
+				close = true
+		var has := caster.creature.effects.any(func(x: Effect) -> bool: return x.stack_key == key0)
+		if close and not has:
+			var fx0 := Effect.new(o.name, &"spell", o.spell_id)
+			fx0.stack_key = key0
+			for md: Variant in near.get("modifiers", []):
+				fx0.modifiers.append(Modifier.make((md as Dictionary).duplicate(true), o.name, &"spell", o.spell_id))
+			caster.creature.add_effect(fx0)
+		elif not close and has:
+			for x: Effect in caster.creature.effects.duplicate():
+				if x.stack_key == key0:
+					caster.creature.remove_effect(x)
 	for o in objects:
 		if o.expired() or not o.rules.has("inside"):
 			continue
@@ -296,8 +383,14 @@ func difficult_cells(c: Combatant) -> Dictionary:
 			continue
 		if bool(o.rule("terrain_affected_only", false)) and not _affects(o, c):
 			continue
+		var cost: Variant = true
+		if o.rules.has("terrain_cost"):
+			cost = int(o.rules["terrain_cost"])
 		for cell in o.cells:
-			out[cell] = true
+			var have: Variant = out.get(cell, null)
+			if have is int and (cost is bool or int(have) >= int(cost)):
+				continue
+			out[cell] = cost
 	return out
 
 

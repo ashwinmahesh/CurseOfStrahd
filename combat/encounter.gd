@@ -353,7 +353,7 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 				if grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells) < now:
 					blocked[cell] = true
 	return grid.reachable(c.cell, c.size_cells, feet, _has_fn(blocked),
-		_has_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
+		_value_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
 
 
 ## How `c` moves: flying (a fly speed at least its walking speed, Fly, Gaseous Form) or climbing (Spider Climb).
@@ -365,6 +365,8 @@ func move_mode(c: Combatant) -> int:
 		mode |= CombatGrid.MOVE_CLIMB
 	if c.creature.has_flag("incorporeal_movement"):
 		mode |= CombatGrid.MOVE_INCORPOREAL
+	if c.creature.has_flag("freedom_of_movement"):
+		mode |= CombatGrid.MOVE_UNHINDERED
 	return mode
 
 
@@ -407,8 +409,9 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 				blocked[cell] = true
 			if slows:
 				slowed[cell] = true
-	for cell: Vector2i in spells.zones.difficult_cells(c):
-		slowed[cell] = true
+	var terrain := spells.zones.difficult_cells(c)
+	for cell: Vector2i in terrain:
+		slowed[cell] = terrain[cell] if terrain[cell] is int else true
 	if c.creature.has_flag("pass_through_creatures"):
 		blocked = {}
 	return {"blocked": blocked, "slowed": slowed, "occupied": occupied}
@@ -416,6 +419,11 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 
 static func _has_fn(set: Dictionary) -> Callable:
 	return func(cell: Vector2i) -> bool: return set.has(cell)
+
+
+## The value stored for a square (true, or a movement multiplier), or false.
+static func _value_fn(set: Dictionary) -> Callable:
+	return func(cell: Vector2i) -> Variant: return set.get(cell, false)
 
 
 # --- Turns ----------------------------------------------------------------------------------------
@@ -606,6 +614,39 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 	return _walk(c, path, 1, r, {})
 
 
+## Moves `c` (not on its own turn) up to `feet` toward the reachable square that best follows `dir` (Confusion,
+## Compulsion). The movement can provoke Opportunity Attacks.
+func march(c: Combatant, dir: Vector2, feet: int, r: CombatResult) -> CombatResult:
+	var origin := center_of(c)
+	return _move_best(c, feet, r, func(cell: Vector2i) -> float: return (Vector2(cell) + Vector2(0.5, 0.5) - origin).dot(dir.normalized()))
+
+
+## Moves `c` up to `feet` as far from `away` as it can get (Dissonant Whispers).
+func flee(c: Combatant, away: Combatant, feet: int, r: CombatResult) -> CombatResult:
+	return _move_best(c, feet, r, func(cell: Vector2i) -> float: return float(grid.distance_ft(away.cell, away.size_cells, cell, c.size_cells)))
+
+
+func _move_best(c: Combatant, feet: int, r: CombatResult, score: Callable) -> CombatResult:
+	var keep := c.movement_left
+	c.movement_left = feet
+	var reach := reachable_for(c)
+	var best := c.cell
+	var best_s := float(score.call(c.cell))
+	for cell: Vector2i in reach:
+		if bool((reach[cell] as Dictionary)["occupied"]):
+			continue
+		var sc := float(score.call(cell))
+		if sc > best_s + 0.01:
+			best_s = sc
+			best = cell
+	if best == c.cell:
+		c.movement_left = keep
+		return r
+	var res := _walk(c, CombatGrid.path_to(reach, best), 1, r, {})
+	c.movement_left = keep
+	return res
+
+
 func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled: Dictionary) -> CombatResult:
 	while i < path.size():
 		var to := path[i]
@@ -639,7 +680,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 					if c.is_down() or c.speed() <= 0 or state != State.ACTIVE:
 						return r
 		var occ := _occupancy_for(c)
-		var step := grid.step_cost(c.cell, to, c.size_cells, _has_fn(occ["blocked"] as Dictionary), _has_fn(occ["slowed"] as Dictionary), move_mode(c))
+		var step := grid.step_cost(c.cell, to, c.size_cells, _has_fn(occ["blocked"] as Dictionary), _value_fn(occ["slowed"] as Dictionary), move_mode(c))
 		if c.creature.has_condition(&"prone"):
 			step *= 2
 		if c.has_meta("jumping"):

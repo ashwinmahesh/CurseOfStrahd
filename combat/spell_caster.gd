@@ -375,8 +375,18 @@ func area_for(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2, s
 	var g := enc().grid
 	var center := enc().center_of(c)
 	var self_origin := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
-	if shape == "emanation":
+	if shape == "emanation" and self_origin:
 		return g.area_cells("emanation", size, center, Vector2.RIGHT, 5, c.cell, c.size_cells)
+	if shape == "emanation":
+		# An Emanation from something placed at the point (Conjure Animals' Large pack, Guardian of Faith): its own
+		# squares count too.
+		var osz := int(area.get("origin_size", 1))
+		var oc := Vector2i(floori(point.x - osz / 2.0 + 0.5), floori(point.y - osz / 2.0 + 0.5)) if osz > 1 else Vector2i(floori(point.x), floori(point.y))
+		var em := g.area_cells("emanation", size, Vector2(oc) + Vector2(osz / 2.0, osz / 2.0), Vector2.RIGHT, 5, oc, osz)
+		for f in CombatGrid.footprint(oc, osz):
+			if g.in_bounds(f) and not f in em:
+				em.append(f)
+		return em
 	if self_origin:
 		var dir := direction.normalized() if direction.length() > 0.01 else Vector2(c.facing)
 		if dir.length() < 0.01:
@@ -1377,7 +1387,7 @@ func _run_pushes(ctx: Dictionary, pushes: Array[Dictionary]) -> void:
 		return
 	var e := enc()
 	var c := ctx["c"] as Combatant
-	var origin := e.center_of(c)
+	var origin: Vector2 = ctx.get("pull_origin", e.center_of(c))
 	pushes.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		var ta := a["target"] as Combatant
 		var tb := b["target"] as Combatant
@@ -2204,8 +2214,12 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 	o.save_dc = (ctx["nums"]["dc"] as Breakdown).total()
 	o.cells = cells
 	o.cell = c.cell if cells.is_empty() else cells[0]
+	# Call Lightning: the storm cloud spreads wider than the first bolt.
+	if z.has("storm_radius") and (ctx["point"] as Vector2) != Vector2.INF:
+		o.cells = enc().grid.area_cells("sphere", int(z["storm_radius"]), ctx["point"] as Vector2)
 	o.origin = ctx["point"] as Vector2 if (ctx["point"] as Vector2) != Vector2.INF else enc().center_of(c)
-	o.follows_caster = str((s.get("area", {}) as Dictionary).get("shape", "")) == "emanation"
+	o.follows_caster = str((s.get("area", {}) as Dictionary).get("shape", "")) == "emanation" \
+		and str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
 	z["size"] = int((s.get("area", {}) as Dictionary).get("size", 5))
 	if not z.has("damage") and s.has("damage") and bool(z.get("uses_spell_damage", true)):
 		z["damage"] = s["damage"]
@@ -2222,6 +2236,20 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 			if not (p as Dictionary).has("type"):
 				(p as Dictionary)["type"] = _damage_type(ctx, p as Dictionary)
 		z["damage"] = parts
+	# Cordon of Arrows: pieces of ammunition, two more per slot level above the spell's.
+	if z.has("charges"):
+		z["charges"] = int(z["charges"]) + int(z.get("charges_per_slot", 0)) * maxi(0, int(ctx["slot"]) - int(s.get("level", 0)))
+	# The squares of what the area spreads from (Conjure Animals' pack).
+	var area_d := s.get("area", {}) as Dictionary
+	if int(area_d.get("origin_size", 1)) > 1 and (ctx["point"] as Vector2) != Vector2.INF:
+		var osz := int(area_d["origin_size"])
+		var pt := ctx["point"] as Vector2
+		var oc := Vector2i(floori(pt.x - osz / 2.0 + 0.5), floori(pt.y - osz / 2.0 + 0.5))
+		z["core_cells"] = CombatGrid.footprint(oc, osz).map(func(x: Vector2i) -> Array: return [x.x, x.y])
+		o.cell = oc
+	# Wall of Fire: the side that burns, 10 ft deep along the wall (the side `direction` points to).
+	if z.has("side_ft") and str(area_d.get("shape", "")) == "wall":
+		z["side_cells"] = _wall_side(ctx, cells, int(z["side_ft"]))
 	o.rules = z
 	if bool(z.get("spare_allies", false)):
 		for a in enc().allies_of(c):
@@ -2237,6 +2265,24 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 	_light_vs_darkness(o, int(ctx["slot"]))
 	zones.add(o, r)
 	r.lines.append(enc().log.add("spell", "%s fills %d squares" % [s["name"], cells.size()], c.id))
+
+
+## Squares within `feet` of a wall on one side of it: the side the cast's direction's left-hand normal points to.
+func _wall_side(ctx: Dictionary, wall: Array[Vector2i], feet: int) -> Array:
+	var e := enc()
+	var dir := (ctx["direction"] as Vector2) if ctx.has("direction") and (ctx["direction"] as Vector2).length() > 0.01 else Vector2.RIGHT
+	dir = dir.normalized()
+	var normal := Vector2(-dir.y, dir.x)
+	var origin := ctx["point"] as Vector2
+	var out: Array = []
+	var depth := feet / float(CombatGrid.FEET)
+	for cell in wall:
+		for step in range(1, int(depth) + 1):
+			var p := Vector2(cell) + Vector2(0.5, 0.5) + normal * step
+			var sc := Vector2i(floori(p.x), floori(p.y))
+			if e.grid.in_bounds(sc) and not sc in wall and not [sc.x, sc.y] in out and (p - origin).dot(normal) > 0:
+				out.append([sc.x, sc.y])
+	return out
 
 
 ## Darkness dispels light from spells of level 2 or lower that it overlaps; Daylight dispels Darkness of level 3
@@ -2268,7 +2314,8 @@ func _place_object(ctx: Dictionary, tgt: Array[Combatant], r: CombatResult) -> v
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
 	var od := s["object"] as Dictionary
-	var kinds := {"weapon": FieldObject.Kind.WEAPON, "sphere": FieldObject.Kind.SPHERE, "lights": FieldObject.Kind.LIGHTS, "hand": FieldObject.Kind.HAND}
+	var kinds := {"weapon": FieldObject.Kind.WEAPON, "sphere": FieldObject.Kind.SPHERE, "lights": FieldObject.Kind.LIGHTS, "hand": FieldObject.Kind.HAND,
+		"hound": FieldObject.Kind.HOUND, "vine": FieldObject.Kind.VINE}
 	var o := FieldObject.new(kinds.get(str(od.get("kind", "weapon")), FieldObject.Kind.WEAPON), str(s["id"]), str(s["name"]))
 	o.caster_id = c.id
 	o.slot = int(ctx["slot"])
@@ -2280,19 +2327,44 @@ func _place_object(ctx: Dictionary, tgt: Array[Combatant], r: CombatResult) -> v
 		o.rules["damage"] = s["damage"]
 	o.keep_with(ctx["conc"] as Concentration)
 	if ctx["conc"] == null:
-		o.rounds_left = 10 * int((s.get("duration", {}) as Dictionary).get("amount", 1))
+		o.rounds_left = _duration_rounds(s.get("duration", {}) as Dictionary)
 	zones.add(o, r)
 	enc().events.append({"type": "summon", "caster": c.id, "cell": o.cell})
 	r.lines.append(enc().log.add("spell", "%s appears" % s["name"], c.id))
 	if s.has("sustain"):
 		_grant_sustained(ctx, tgt)
 	if str(od.get("on_appear", "")) == "attack":
+		# It strikes a creature within its reach as it appears (Spiritual Weapon 5 ft; Grasping Vine 30 ft): the one
+		# chosen, else the nearest enemy.
+		var reach := int(od.get("reach", 5))
 		var near: Combatant = null
 		for t in tgt:
-			if enc().grid.distance_ft(o.cell, 1, t.cell, t.size_cells) <= 5:
+			if enc().grid.distance_ft(o.cell, 1, t.cell, t.size_cells) <= reach:
 				near = t
+		if near == null and tgt.is_empty():
+			var best := 1 << 30
+			for h in enc().hostiles_of(c):
+				var dh := enc().grid.distance_ft(o.cell, 1, h.cell, h.size_cells)
+				if not h.is_down() and dh <= reach and dh < best:
+					best = dh
+					near = h
 		if near != null and near.is_alive():
+			ctx["pull_origin"] = Vector2(o.cell) + Vector2(0.5, 0.5)
 			spell_attack(ctx, near, r)
+
+
+## How many rounds a duration lasts (1 minute = 10 rounds).
+static func _duration_rounds(d: Dictionary) -> int:
+	match str(d.get("kind", "")):
+		"rounds":
+			return int(d.get("amount", 1))
+		"minutes":
+			return int(d.get("amount", 1)) * 10
+		"hours":
+			return int(d.get("amount", 1)) * 600
+		"days":
+			return int(d.get("amount", 1)) * 14400
+	return 10
 
 
 func weapon_of(c: Combatant) -> FieldObject:
@@ -2395,6 +2467,8 @@ func sustained_actions(c: Combatant) -> Array[Dictionary]:
 			why = economy_block(c, "action" if str(a["cost"]) in ["action", "magic"] else str(a["cost"]))
 		if why == "" and int(a["used_round"]) == enc().round_no and int(a["used_turn"]) == enc().turn_index:
 			why = "Not on the turn you cast it"
+		if why == "" and bool((a["def"] as Dictionary).get("once_per_turn", false)) and str(a.get("last_turn", "")) == "%d:%d" % [enc().round_no, enc().turn_index]:
+			why = "Already used this turn"
 		entry["legal"] = why == ""
 		entry["reason"] = why
 		out.append(entry)
@@ -2438,6 +2512,7 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 	for x in sustained:
 		if str(x["id"]) == action_id:
 			x["maintained_round"] = e.round_no
+			x["last_turn"] = "%d:%d" % [e.round_no, e.turn_index]
 	match str(a["do"]):
 		"attack":
 			var obj := zones.object_of(str(a["caster_id"]), str(a["spell_id"]))
@@ -2449,6 +2524,8 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 				e.events.append({"type": "summon", "caster": str(a["caster_id"]), "cell": cell})
 			if t != null:
 				e.log.add("spell", "%s: %s" % [c.name(), a["label"]], c.id)
+				if obj != null:
+					ctx["pull_origin"] = Vector2(obj.cell) + Vector2(0.5, 0.5)
 				var sub_s := s.duplicate()
 				if d.has("attack"):
 					sub_s["attack"] = d["attack"]
@@ -2471,9 +2548,11 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 			for k: String in ["area", "save", "save_success", "damage"]:
 				if d.has(k):
 					sub_s2[k] = d[k]
-			sub_s2["range"] = {"kind": "self"}
+			if not bool(d.get("at_point", false)):
+				sub_s2["range"] = {"kind": "self"}
 			sub_s2.erase("sustain")
 			sub_s2.erase("effects")
+			sub_s2.erase("zone")
 			var sub2 := ctx.duplicate()
 			sub2["s"] = sub_s2
 			var cells := area_for(c, sub_s2, point, direction, int(a["slot"]))
@@ -2492,6 +2571,9 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 					moved.append(cl + Vector2i(dv))
 				obj2.cells = moved
 				obj2.cell = to
+				if obj2.rules.has("core_cells"):
+					obj2.rules["core_cells"] = (obj2.rules["core_cells"] as Array).map(func(x: Variant) -> Array:
+						return [int((x as Array)[0]) + int(dv.x), int((x as Array)[1]) + int(dv.y)])
 			else:
 				obj2.cell = to
 				obj2.cells = [to]
@@ -2517,6 +2599,15 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 		"dash":
 			c.movement_left += c.speed()
 			e.log.add("info", "%s Dashes (+%d ft, %s)" % [c.name(), c.speed(), s["name"]], c.id)
+		"disengage":
+			c.disengaged = true
+			e.log.add("info", "%s Disengages (%s)" % [c.name(), s["name"]], c.id)
+		"compel":
+			var dirv := direction if direction.length() > 0.01 else ((point - e.center_of(c)) if point != Vector2.INF else Vector2.ZERO)
+			if dirv.length() < 0.01:
+				return CombatResult.fail("Choose a direction")
+			c.set_meta("compel_dir", [dirv.normalized().x, dirv.normalized().y])
+			e.log.add("spell", "%s names a direction: the charmed must go that way (%s)" % [c.name(), s["name"]], c.id)
 		"heal_one":
 			if t == null:
 				t = c
@@ -2601,6 +2692,14 @@ func _sustained_check(c: Combatant, a: Dictionary, d: Dictionary, t: Combatant, 
 		"heal_one":
 			if t != null and e.distance(c, t) > int(d.get("range", 30)):
 				return "Out of the aura"
+		"area":
+			if bool(d.get("at_point", false)):
+				if point == Vector2.INF:
+					return "Choose a point"
+				var storm := zones.object_of(str(a["caster_id"]), str(a["spell_id"]))
+				var within := int(d.get("within_object", 0))
+				if storm != null and within > 0 and (point - storm.origin).length() * CombatGrid.FEET > within + 0.01:
+					return "The point must be under the storm (%d ft)" % within
 		"move_mark":
 			var old := e.get_c(str(a["target_id"]))
 			if old != null and old.is_alive() and old.creature.hp > 0:
