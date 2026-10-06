@@ -28,6 +28,9 @@ var _options: Array[Dictionary] = []
 var _pending_jump: String = ""
 var _guard: int = 0
 var _picking := false       ## waiting for the player to choose a party member (the `sacrifice` statement)
+var _queued: Array[Dictionary] = []   ## beats a statement produced beyond its first (a Tarokka card, then the verse)
+## The NPC being spoken to (shops open for them).
+var npc_id: String = ""
 
 
 func _init(state: StoryState, dice_: DiceRoller, narrator_: Narrator = null) -> void:
@@ -39,6 +42,8 @@ func _init(state: StoryState, dice_: DiceRoller, narrator_: Narrator = null) -> 
 ## Starts at "file_key:node" (e.g. "death_house/rose_thorn:start"). False if it doesn't exist.
 func start(ref: String) -> bool:
 	speaker = st.leader_character()
+	_queued.clear()
+	_picking = false
 	finished = false
 	combat = ""
 	return _goto(ref)
@@ -77,6 +82,8 @@ func next() -> Dictionary:
 		return _options_beat()
 	if _picking:
 		return _pick_beat()
+	if not _queued.is_empty():
+		return _queued.pop_front()
 	if _pending_jump != "":
 		var j := _pending_jump
 		_pending_jump = ""
@@ -162,6 +169,32 @@ func next() -> Dictionary:
 			"combat":
 				combat = str(s["encounter"])
 				finished = true
+			"tarokka_draw":
+				pc += 1
+				Tarokka.ensure_drawn(st)
+			"tarokka_read":
+				pc += 1
+				var slot := str(s["slot"])
+				Tarokka.ensure_drawn(st)
+				var card_id := str(st.tarokka.get(slot, ""))
+				if card_id == "":
+					continue
+				var o := Tarokka.outcome(slot, card_id)
+				_queued.append(_line_beat(str(s["speaker"]), "", str(o.get("verse", ""))))
+				return {"kind": "notice", "text": "%s: %s" % [Tarokka.SLOT_NAMES.get(slot, slot), Tarokka.card(card_id).get("name", card_id)],
+					"card": card_id, "slot": slot}
+			"shop":
+				pc += 1
+				if npc_id != "":
+					return {"kind": "shop", "npc": npc_id}
+			"join":
+				pc += 1
+				if st.add_guest(str(s["npc"])):
+					return {"kind": "notice", "text": "%s joins the party" % Compendium.shared().display_name("npcs", str(s["npc"]))}
+			"leave":
+				pc += 1
+				if st.remove_guest(str(s["npc"])):
+					return {"kind": "notice", "text": "%s leaves the party" % Compendium.shared().display_name("npcs", str(s["npc"]))}
 			"sacrifice":
 				pc += 1
 				if _living().size() >= 2:

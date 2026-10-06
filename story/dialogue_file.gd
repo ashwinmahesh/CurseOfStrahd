@@ -144,6 +144,16 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 			return {"t": "xp"}
 		"sacrifice":
 			return {"t": "sacrifice"}
+		"tarokka":
+			if parts.size() >= 2 and parts[1] == "draw":
+				return {"t": "tarokka_draw"}
+			if parts.size() >= 3 and parts[1] == "read":
+				return {"t": "tarokka_read", "slot": parts[2], "speaker": parts[3] if parts.size() > 3 else "madam_eva"}
+		"shop":
+			return {"t": "shop"}
+		"join", "leave":
+			if parts.size() == 2:
+				return {"t": parts[0], "npc": parts[1]}
 		"combat":
 			if parts.size() == 2:
 				return {"t": "combat", "encounter": parts[1]}

@@ -238,6 +238,10 @@ func world_action(cell: Vector2i, id: String) -> void:
 		"spells":
 			open_screen("sheet", int(parts[1]))
 			(screen as CharacterSheetScreen).show_tab("Spells")
+		"trade":
+			var thing := view.thing_at(cell)
+			if not thing.is_empty():
+				open_shop(str((thing["spec"] as Dictionary)["npc"]))
 		_:
 			view.act(cell, id)
 
@@ -259,6 +263,17 @@ func _command(name_: String) -> void:
 
 # --- Conversations, loot, fights ------------------------------------------------------------------
 
+## A merchant's shop; `from_dialogue` resumes the conversation when it closes.
+func open_shop(npc_id: String, from_dialogue: bool = false) -> void:
+	var shop := ShopScreen.new()
+	add_child(shop)
+	shop.open_for(self, st, npc_id)
+	shop.closed.connect(func() -> void:
+		_refresh()
+		if from_dialogue and dialogue != null:
+			dialogue.resume())
+
+
 func start_dialogue(ref: String, _npc_id: String) -> void:
 	if ref == "" or dialogue != null:
 		return
@@ -268,7 +283,10 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	dialogue = DialogueUI.new()
 	add_child(dialogue)
 	dialogue.ended.connect(_dialogue_ended)
-	if not dialogue.play(DialogueRunner.new(st, Dice.roller, narrator), ref):
+	dialogue.shop_requested.connect(func(npc: String) -> void: open_shop(npc, true))
+	var runner := DialogueRunner.new(st, Dice.roller, narrator)
+	runner.npc_id = _npc_id
+	if not dialogue.play(runner, ref):
 		dialogue.queue_free()
 		dialogue = null
 		hud.visible = true

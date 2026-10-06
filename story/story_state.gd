@@ -27,6 +27,15 @@ var location_states: Dictionary = {}      ## location id -> {doors: {id: "open"|
 var last_check: bool = false
 ## Party members lost for good: [{name, id, how, day}] (the roll of honour in the party screen).
 var fallen: Array[Dictionary] = []
+## The playthrough's seed: it decides the Tarokka reading (and nothing that a die roll decides).
+var playthrough_seed: int = 0
+## Madam Eva's reading once drawn: {tome, symbol, sword, ally, enemy} -> card id (story/tarokka.gd).
+var tarokka: Dictionary = {}
+## Story allies travelling with the party (ADR 0010): the npc ids, and their creatures in the same order.
+var guest_ids: Array[String] = []
+var guests: Array[Creature] = []
+## Merchants' stock as it stands: npc id -> {item id: quantity left} (only items with limited stock).
+var shops: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
@@ -218,6 +227,124 @@ func lose_member(ch: Character, how: String) -> void:
 	fallen.append({"name": ch.name, "id": ch.id, "how": how, "day": day})
 
 
+# --- Shops (ADR 0010) -----------------------------------------------------------------------------
+
+## What `npc_id` sells now: [{id, name, price, qty (-1 = always)}].
+func shop_wares(npc_id: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
+	var stock := shops.get(npc_id, {}) as Dictionary
+	for e: Variant in shop.get("sells", []):
+		var w := e as Dictionary
+		var id := str(w["id"])
+		var data := Compendium.shared().item_data(id)
+		var qty := int(w.get("qty", -1))
+		if qty >= 0:
+			qty = int(stock.get(id, qty))
+		if qty == 0:
+			continue
+		var price := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * float(shop.get("markup", 1.0))
+		out.append({"id": id, "name": str(data.get("name", id)), "price": price, "qty": qty})
+	return out
+
+
+## What `npc_id` pays for one `item_id`, or -1 if they don't buy that kind of thing.
+func shop_offer(npc_id: String, item_id: String) -> float:
+	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
+	var data := Compendium.shared().item_data(item_id)
+	if data.is_empty() or str(data.get("category", "")) == "quest":
+		return -1.0
+	var buys := shop.get("buys", []) as Array
+	if not buys.is_empty() and not str(data.get("category", "")) in buys:
+		return -1.0
+	return snappedf(float(data.get("cost_gp", 0)) * float(shop.get("sell_rate", 0.5)), 0.01)
+
+
+## Buys one `item_id` from `npc_id` for `ch`. Returns "" or why not.
+func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
+	for w in shop_wares(npc_id):
+		if str(w["id"]) != item_id:
+			continue
+		if gold < float(w["price"]):
+			return "Not enough gold"
+		gold -= float(w["price"])
+		ch.add_item(item_id, 1)
+		if int(w["qty"]) > 0:
+			if not shops.has(npc_id):
+				shops[npc_id] = {}
+			(shops[npc_id] as Dictionary)[item_id] = int(w["qty"]) - 1
+		return ""
+	return "Not for sale"
+
+
+## Sells one `item_id` from `ch` to `npc_id`. Returns "" or why not.
+func shop_sell(npc_id: String, item_id: String, ch: Character) -> String:
+	var offer := shop_offer(npc_id, item_id)
+	if offer < 0.0:
+		return "They don't buy that"
+	for e in ch.inventory:
+		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+			if str(e.get("slot", "")) != "" and int(e["qty"]) <= 1:
+				ch.unequip(str(e["slot"]))
+			e["qty"] = int(e["qty"]) - 1
+			if int(e["qty"]) <= 0:
+				ch.inventory.erase(e)
+			gold += offer
+			return ""
+	return "Not carried"
+
+
+# --- Guests (ADR 0010) ----------------------------------------------------------------------------
+
+## The creature a story ally fights as: their guest_build stat block (or a pregen-style character at a set level).
+static func make_guest(npc_id: String) -> Creature:
+	var npc := Compendium.shared().get_entry("npcs", npc_id)
+	if npc.is_empty():
+		return null
+	var gb := npc.get("guest_build", {}) as Dictionary
+	var cr: Creature = null
+	if gb.has("pregen"):
+		var ch := Pregens.build(str(gb["pregen"]), int(gb.get("level", 1)))
+		ch.finish_long_rest()
+		cr = ch
+	else:
+		var data := Compendium.shared().monster_data(str(gb.get("monster", npc.get("monster", "commoner"))))
+		if data.is_empty():
+			return null
+		cr = Monster.from_data(data)
+	cr.name = str(npc.get("name", npc_id))
+	cr.id = "guest_" + npc_id
+	return cr
+
+
+## Adds a story ally to the party's company. Returns false if they're already along or unknown.
+func add_guest(npc_id: String) -> bool:
+	if npc_id in guest_ids:
+		return false
+	var cr := StoryState.make_guest(npc_id)
+	if cr == null:
+		return false
+	guest_ids.append(npc_id)
+	guests.append(cr)
+	return true
+
+
+func remove_guest(npc_id: String) -> bool:
+	var i := guest_ids.find(npc_id)
+	if i < 0:
+		return false
+	guest_ids.remove_at(i)
+	guests.remove_at(i)
+	return true
+
+
+func _guests_to_dict() -> Array:
+	var out: Array = []
+	for i in guest_ids.size():
+		out.append({"npc": guest_ids[i], "state": guests[i].state_to_dict()})
+	return out
+
+
 # --- Saving ---------------------------------------------------------------------------------------
 
 func to_dict() -> Dictionary:
@@ -231,7 +358,8 @@ func to_dict() -> Dictionary:
 		"quests": quests.duplicate(true), "attitudes": attitudes.duplicate(true), "visited": visited.duplicate(true),
 		"codex": codex.duplicate(), "narrator": narrator.duplicate(true), "milestones": milestones, "start_level": start_level,
 		"day": day, "minute_of_day": minute_of_day, "location": location, "positions": pos,
-		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true)}
+		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
+		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true)}
 
 
 static func from_dict(d: Dictionary) -> StoryState:
@@ -268,4 +396,14 @@ static func from_dict(d: Dictionary) -> StoryState:
 	st.last_check = bool(d.get("last_check", false))
 	for f: Variant in d.get("fallen", []):
 		st.fallen.append((f as Dictionary).duplicate())
+	st.playthrough_seed = int(d.get("seed", 0))
+	st.tarokka = (d.get("tarokka", {}) as Dictionary).duplicate()
+	st.shops = (d.get("shops", {}) as Dictionary).duplicate(true)
+	for g: Variant in d.get("guests", []):
+		var gd := g as Dictionary
+		var cr := StoryState.make_guest(str(gd["npc"]))
+		if cr != null:
+			cr.state_from_dict(gd.get("state", {}) as Dictionary)
+			st.guest_ids.append(str(gd["npc"]))
+			st.guests.append(cr)
 	return st

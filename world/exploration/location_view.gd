@@ -659,6 +659,10 @@ func actions_at(cell: Vector2i) -> Dictionary:
 			title = str(npc.get("name", spec["npc"]))
 			out.append({"id": "talk", "label": "Talk", "enabled": str(spec.get("dialogue", "")) != "",
 				"why": "" if str(spec.get("dialogue", "")) != "" else "Nothing to say"})
+			if npc.has("shop"):
+				var closed := str((npc["shop"] as Dictionary).get("closed", ""))
+				var open := closed == "" or not StoryConditions.check(closed, st)
+				out.append({"id": "trade", "label": "Trade", "enabled": open, "why": "" if open else "Closed for now"})
 		"door", "container":
 			title = str(spec.get("label", "the door" if str(thing["kind"]) == "door" else "the chest")).capitalize()
 			var verb := "Open" if str(thing["kind"]) == "door" else "Open and look inside"

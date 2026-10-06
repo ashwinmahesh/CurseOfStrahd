@@ -42,6 +42,11 @@ attitude npc_id friendly           Sets an NPC's attitude (hostile, indifferent,
 xp milestone                       Milestone advancement: every party member may level up (plan §5.6).
 sacrifice                          The player picks a living party member, who dies for good and leaves the
                                    party (StoryState.fallen keeps their name). Skipped if only one is alive.
+tarokka draw                       Draws Madam Eva's reading (once per playthrough; docs/contracts/campaign.md).
+tarokka read tome [speaker]        Turns the card for a slot (tome, symbol, sword, ally, enemy): a notice with
+                                   the card, then the verse spoken by `speaker` (default madam_eva).
+shop                               Opens the shop of the NPC being spoken to; the conversation resumes after.
+join ireena / leave ireena         A story ally joins or leaves the party as a guest (ADR 0010).
 check Skill DC n -> ok | fail      A check with no choice (e.g. a passive moment). Uses the best party member.
 interject <selector>: Text         A party member matching the selector says Text, if one is present (the first
                                    match in marching order): class:rogue, species:elf, background:criminal,
@@ -55,7 +60,9 @@ narrate trigger_key                Plays a Narrator trigger (below) inline.
 
 `flag.<id>` (truthy), `not flag.<id>`, `flag.<id> == 3` / `!= >= <= > <`, `class:cleric`, `species:elf`,
 `background:acolyte`, `tag:pious`, `item:holy_symbol_amulet` (anyone carries it), `quest.<id> == stage_id`,
-`attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `gold >= 25` (the party's purse), `level >= 3`
+`attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `day`, `hour >= 20`, `tarokka.drawn`,
+`tarokka.sword == swords_3`, `tarokka.sword.region == vallaki`, `tarokka.ally.npc == ezmerelda`, `guest:ireena`,
+`gold >= 25` (the party's purse), `level >= 3`
 (the lowest character level in the party), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
 and parentheses.
 

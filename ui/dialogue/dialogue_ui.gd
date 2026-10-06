@@ -6,6 +6,8 @@ extends CanvasLayer
 ## decides anything itself. Keys 1-9 pick options; Space, Enter or a click continues; controller: d-pad and A.
 
 signal ended(combat: String)
+## A `shop` line: the game opens the shop for `npc` and calls resume() when it closes.
+signal shop_requested(npc: String)
 
 var runner: DialogueRunner
 var _panel: PanelContainer
@@ -90,6 +92,12 @@ func play(r: DialogueRunner, ref: String) -> bool:
 	return true
 
 
+## Back from the shop: the conversation carries on.
+func resume() -> void:
+	visible = true
+	_advance()
+
+
 func _advance() -> void:
 	_clear_options()
 	var beat := runner.next()
@@ -120,6 +128,10 @@ func _show(beat: Dictionary) -> void:
 			_waiting_continue = true
 		"options":
 			_show_options(beat["options"] as Array)
+		"shop":
+			visible = false
+			shop_requested.emit(str(beat["npc"]))
+			return
 		"pick_member":
 			_portrait.texture = null
 			_name.text = ""

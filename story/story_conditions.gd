@@ -3,8 +3,9 @@ extends RefCounted
 ## Evaluates dialogue and location conditions (docs/contracts/dialogue.md): `flag.x`, `flag.x >= 2`, `class:cleric`,
 ## `species:elf`, `background:acolyte`, `tag:pious`, `name:ilse_varga`, `item:holy_symbol_amulet`,
 ## `quest.q == stage`, `quest.q >= stage` (by stage order), `attitude.npc == friendly`, `visited:loc`, `night`,
-## `gold >= 25` (the party's purse), `level >= 3` (the lowest character level in the party), `check.last`, `true`,
-## `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
+## `day`, `hour >= 20`, `gold >= 25` (the party's purse), `level >= 3` (the lowest character level in the party),
+## `tarokka.drawn`, `tarokka.sword == swords_3`, `tarokka.ally.npc == ezmerelda` (ADR 0010), `guest:ireena`,
+## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
 var st: StoryState
 var _tokens: Array[String] = []
@@ -118,6 +119,20 @@ func _term() -> bool:
 		return false
 	if t == "night":
 		return st.is_night()
+	if t == "day":
+		return not st.is_night()
+	if t == "hour":
+		return _compare(st.minute_of_day / 60, op if op != "" else ">=", _literal(rhs) if op != "" else 0)
+	if t.begins_with("tarokka."):
+		var path := t.substr(8)
+		if path == "drawn":
+			return not st.tarokka.is_empty()
+		var value := Tarokka.field(st, path)
+		if op == "":
+			return value != ""
+		return (value == str(_literal(rhs))) == (op == "==")
+	if t.begins_with("guest:"):
+		return t.substr(6) in st.guest_ids
 	if t == "check.last":
 		return st.last_check
 	if t == "gold":
