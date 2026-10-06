@@ -3,7 +3,8 @@
   "name": "Elephant",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "huge",
   "type": "beast",
@@ -60,12 +61,46 @@
           "type": "piercing"
         }
       ],
-      "conditions": [
-        "prone"
-      ],
-      "summary": "Gore: +8 to hit, 2d8+6 Piercing."
+      "summary": "Tusks; after a 20-ft charge a Huge or smaller target falls Prone.",
+      "charge": {
+        "feet": 20,
+        "on_hit": [
+          {
+            "do": "condition",
+            "condition": "prone",
+            "max_size": "huge"
+          }
+        ]
+      }
     }
   ],
   "ai_profile": "brute",
-  "summary": "A colossal beast that tramples what it knocks down."
+  "summary": "A colossal beast that tramples what it knocks down.",
+  "bonus_actions": [
+    {
+      "id": "trample",
+      "name": "Trample",
+      "kind": "save",
+      "do": "trample",
+      "save": {
+        "ability": "dex",
+        "dc": 16,
+        "success": "half"
+      },
+      "targets": {
+        "range": 5,
+        "requires": [
+          "prone"
+        ]
+      },
+      "damage": [
+        {
+          "average": 17,
+          "dice": "2d10+6",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Stamps on a Prone creature within 5 ft: DC 16 Dex save, 2d10+6 Bludgeoning (half on a success)."
+    }
+  ]
 }

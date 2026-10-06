@@ -3,7 +3,9 @@
   "name": "Swarm of Insects",
   "source": {
     "book": "MM2025",
-    "note": "Numbers follow the 2014 Monster Manual swarm of insects (the one Curse of Strahd uses for Baba Lysaga's swarms); the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Reach is 5 ft here (the 2014 bites need the target in the swarm's space), and the weaker bites start at Bloodied, as for the 2024 swarms."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "The 2024 Swarm of Insects. Checked against SRD 5.2.1. Climb or Fly is the GM's choice: Fly here."
   },
   "size": "medium",
   "type": "beast",
@@ -12,20 +14,20 @@
     "swarm"
   ],
   "alignment": "unaligned",
-  "ac": 12,
+  "ac": 11,
   "initiative": 1,
   "hp": {
-    "average": 22,
-    "dice": "5d8"
+    "average": 19,
+    "dice": "3d8+6"
   },
   "speed": {
     "walk": 20,
-    "climb": 20
+    "fly": 20
   },
   "abilities": {
     "str": 3,
     "dex": 13,
-    "con": 10,
+    "con": 14,
     "int": 1,
     "wis": 7,
     "cha": 1
@@ -79,16 +81,16 @@
       },
       "damage": [
         {
-          "average": 10,
-          "dice": "4d4",
-          "type": "piercing",
+          "average": 6,
+          "dice": "2d4+1",
+          "type": "poison",
           "when": "while the swarm isn't Bloodied",
           "if": "not_bloodied"
         },
         {
-          "average": 5,
-          "dice": "2d4",
-          "type": "piercing",
+          "average": 3,
+          "dice": "1d4+1",
+          "type": "poison",
           "when": "instead, while the swarm is Bloodied",
           "if": "bloodied"
         }

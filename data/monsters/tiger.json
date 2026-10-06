@@ -3,7 +3,8 @@
   "name": "Tiger",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "beast",
@@ -40,18 +41,6 @@
   "traits": [],
   "actions": [
     {
-      "id": "multiattack",
-      "name": "Multiattack",
-      "kind": "multiattack",
-      "multiattack": [
-        {
-          "action": "rend",
-          "count": 2
-        }
-      ],
-      "summary": "Two Rend attacks."
-    },
-    {
       "id": "rend",
       "name": "Rend",
       "kind": "melee",
@@ -61,17 +50,25 @@
       },
       "damage": [
         {
-          "average": 6,
-          "dice": "1d6+3",
+          "average": 10,
+          "dice": "2d6+3",
           "type": "slashing"
         }
       ],
       "conditions": [
         "prone"
       ],
-      "summary": "Rend: +5 to hit, 1d6+3 Slashing."
+      "summary": "A pounce that knocks a Large or smaller target Prone."
     }
   ],
   "ai_profile": "brute",
-  "summary": "A striped hunter that pounces on prey."
+  "summary": "A striped hunter that pounces on prey.",
+  "bonus_actions": [
+    {
+      "id": "nimble_escape",
+      "name": "Nimble Escape",
+      "do": "dash_or_disengage",
+      "summary": "Disengages (or hides) as a Bonus Action."
+    }
+  ]
 }

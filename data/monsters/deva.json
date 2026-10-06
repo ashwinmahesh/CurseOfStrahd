@@ -3,7 +3,9 @@
   "name": "Deva",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Deva. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Hit Points, Divine Aid (its uses and spells) and the Shape-Shift details. Shape-Shift and Exalted Restoration are text only. The Abbot of Krezk uses this block under his own name."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "Shape-shifting is its at-will Shapechange (Beast or Humanoid only, no Concentration)."
   },
   "size": "medium",
   "type": "celestial",
@@ -119,15 +121,8 @@
       "id": "spellcasting",
       "name": "Spellcasting",
       "kind": "spellcasting",
-      "summary": "Casts Detect Evil and Good at will; Commune and Raise Dead once a day each (Wis, DC 17).",
-      "text": "Wisdom is its spellcasting ability (spell save DC 17); it needs no Material components. At will: Detect Evil and Good. 1/day each: Commune, Raise Dead."
-    },
-    {
-      "id": "shape_shift",
-      "name": "Shape-Shift",
-      "kind": "special",
-      "summary": "Takes the form of a Humanoid or Beast, or returns to its true form.",
-      "text": "It keeps its mind and its ability to speak; the new form's body replaces its own until it changes back. Text only for the engine."
+      "summary": "Charisma, DC 17: Detect Evil and Good and Shapechange (Beast or Humanoid) at will; Commune and Raise Dead once a day.",
+      "text": "It casts with Charisma (save DC 17), needing no Material components. At will: Detect Evil and Good, and Shapechange limited to Beast or Humanoid forms, without Concentration and without the spell's Temporary Hit Points. 1/day each: Commune, Raise Dead."
     }
   ],
   "bonus_actions": [
@@ -149,11 +144,11 @@
     }
   ],
   "spellcasting": {
-    "ability": "wis",
+    "ability": "cha",
     "dc": 17,
-    "attack": 9,
     "at_will": [
-      "detect_evil_and_good"
+      "detect_evil_and_good",
+      "shapechange"
     ],
     "per_day": {
       "1": [

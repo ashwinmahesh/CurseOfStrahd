@@ -3,7 +3,8 @@
   "name": "Priest",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Priest. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the skill bonuses, the spell list and Divine Aid's uses and spells."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "humanoid",

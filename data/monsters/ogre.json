@@ -3,7 +3,8 @@
   "name": "Ogre",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Ogre. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. The Javelin is entered as a thrown (ranged) attack only; up close the ogre uses its Greatclub."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "giant",

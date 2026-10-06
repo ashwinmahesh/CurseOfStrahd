@@ -3,7 +3,9 @@
   "name": "Earth Elemental",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "The 2024 Earth Elemental. Checked against SRD 5.2.1."
   },
   "size": "large",
   "type": "elemental",
@@ -64,10 +66,13 @@
       "multiattack": [
         {
           "action": "slam",
-          "count": 2
+          "count": 2,
+          "or": [
+            "rock_launch"
+          ]
         }
       ],
-      "summary": "Two Slams."
+      "summary": "Two attacks, Slam or Rock Launch in any mix."
     },
     {
       "id": "slam",
@@ -85,6 +90,32 @@
         }
       ],
       "summary": "Slam: +8 to hit, 2d8+5 Bludgeoning."
+    },
+    {
+      "id": "rock_launch",
+      "name": "Rock Launch",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 8,
+        "range": [
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "1d6+5",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "prone",
+          "max_size": "large"
+        }
+      ],
+      "summary": "A hurled rock that knocks a Large or smaller target Prone."
     }
   ],
   "ai_profile": "brute",

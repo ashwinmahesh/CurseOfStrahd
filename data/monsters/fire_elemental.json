@@ -3,7 +3,9 @@
   "name": "Fire Elemental",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "Water Susceptibility is text only (no water on the grid)."
   },
   "size": "large",
   "type": "elemental",
@@ -56,10 +58,54 @@
   "proficiency_bonus": 3,
   "traits": [
     {
+      "id": "fire_aura",
+      "name": "Fire Aura",
+      "action": "passive",
+      "aura": {
+        "radius": 10,
+        "trigger": "own_turn_end",
+        "damage": {
+          "dice": "1d10",
+          "type": "fire"
+        },
+        "riders": [
+          {
+            "do": "burning"
+          }
+        ]
+      },
+      "summary": "At the end of its turns, everything within 10 ft takes 1d10 Fire and starts burning.",
+      "implemented": "engine"
+    },
+    {
+      "id": "fire_form",
+      "name": "Fire Form",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "enters_spaces"
+        },
+        {
+          "stat": "flag",
+          "value": "fire_form"
+        }
+      ],
+      "summary": "Can enter creatures' spaces; the first time each turn it does, that creature takes 1d10 Fire and starts burning.",
+      "implemented": "engine"
+    },
+    {
       "id": "illumination",
       "name": "Illumination",
       "action": "passive",
-      "summary": "Sheds bright light 30 ft and dim light 30 ft more.",
+      "summary": "Sheds Bright Light 30 ft and Dim Light 30 ft more.",
+      "implemented": "text"
+    },
+    {
+      "id": "water_susceptibility",
+      "name": "Water Susceptibility",
+      "action": "passive",
+      "summary": "Takes 1d6 Cold for every 5 ft it moves through water or every gallon splashed on it.",
       "implemented": "text"
     }
   ],
@@ -91,7 +137,12 @@
           "type": "fire"
         }
       ],
-      "summary": "Burn: +6 to hit, 2d6+3 Fire."
+      "summary": "A searing touch that sets the target burning.",
+      "on_hit": [
+        {
+          "do": "burning"
+        }
+      ]
     }
   ],
   "ai_profile": "brute",

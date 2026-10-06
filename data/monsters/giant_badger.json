@@ -3,7 +3,8 @@
   "name": "Giant Badger",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "beast",
@@ -11,8 +12,8 @@
   "ac": 13,
   "initiative": 0,
   "hp": {
-    "average": 13,
-    "dice": "2d8+4"
+    "average": 15,
+    "dice": "2d8+6"
   },
   "speed": {
     "walk": 30,
@@ -21,7 +22,7 @@
   "abilities": {
     "str": 13,
     "dex": 10,
-    "con": 15,
+    "con": 17,
     "int": 2,
     "wis": 12,
     "cha": 5

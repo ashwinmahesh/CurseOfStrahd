@@ -3,7 +3,8 @@
   "name": "Giant Hyena",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "beast",
@@ -53,9 +54,21 @@
           "type": "piercing"
         }
       ],
-      "summary": "Bite: +5 to hit, 2d6+3 Piercing."
+      "summary": "Bone-cracking jaws."
     }
   ],
   "ai_profile": "brute",
-  "summary": "A hyena as big as a horse."
+  "summary": "A hyena as big as a horse.",
+  "bonus_actions": [
+    {
+      "id": "rampage",
+      "name": "Rampage",
+      "do": "rampage",
+      "uses": {
+        "count": 1,
+        "per": "day"
+      },
+      "summary": "Once a day, right after it hurts an already Bloodied creature: moves up to half its Speed and bites again."
+    }
+  ]
 }

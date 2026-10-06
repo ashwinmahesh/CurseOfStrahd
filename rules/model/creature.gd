@@ -391,6 +391,7 @@ func d20_sources(keys: Array[String]) -> Dictionary:
 	var dis: Array[String] = []
 	var situation := armor_situation()
 	situation["incapacitated"] = has_condition(&"incapacitated")
+	situation["bloodied"] = is_bloodied()
 	for m in modifiers_for(&"advantage"):
 		if m.matches_any(keys) and not m.source_name in adv and m.applies_when(situation):
 			adv.append(m.source_name)
@@ -760,6 +761,10 @@ func is_condition_immune(c: StringName) -> bool:
 	return condition_immunity_source(c) != ""
 
 
+## The Restrained source a restraining grapple adds; it ends when the Grappled condition does.
+const GRAPPLE_RESTRAINT := "held fast"
+
+
 func add_condition(c: StringName, source: String = "") -> bool:
 	if c == &"exhaustion":
 		return add_exhaustion(1)
@@ -787,6 +792,9 @@ func remove_condition(c: StringName, source: String = "") -> void:
 		if sources.is_empty():
 			conditions.erase(c)
 	log_event({"type": "condition_removed", "creature": id, "condition": str(c)})
+	# A hold that also restrains (a roc's talons, a vine blight's constriction) lets go with the grapple.
+	if c == &"grappled" and not conditions.has(c):
+		remove_condition(&"restrained", GRAPPLE_RESTRAINT)
 
 
 func add_exhaustion(levels: int = 1) -> bool:

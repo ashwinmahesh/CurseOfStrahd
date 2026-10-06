@@ -3,16 +3,18 @@
   "name": "Efreeti",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "The 2024 Efreeti. Checked against SRD 5.2.1. Its spells and Wishes are text only."
   },
   "size": "large",
   "type": "elemental",
-  "alignment": "lawful evil",
+  "alignment": "neutral",
   "ac": 17,
   "initiative": 1,
   "hp": {
-    "average": 200,
-    "dice": "16d10+112"
+    "average": 212,
+    "dice": "17d10+119"
   },
   "speed": {
     "walk": 40,
@@ -24,7 +26,7 @@
     "con": 24,
     "int": 16,
     "wis": 15,
-    "cha": 16
+    "cha": 19
   },
   "immunities": [
     "fire"
@@ -39,7 +41,35 @@
   "cr": 11,
   "xp": 7200,
   "proficiency_bonus": 4,
-  "traits": [],
+  "traits": [
+    {
+      "id": "elemental_restoration",
+      "name": "Elemental Restoration",
+      "action": "passive",
+      "summary": "Slain away from the Elemental Plane of Fire, it reforms there days later.",
+      "implemented": "text"
+    },
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "wishes",
+      "name": "Wishes",
+      "action": "passive",
+      "summary": "May know Wish, granted only to others who ask; three castings, then a year's rest.",
+      "implemented": "text"
+    }
+  ],
   "actions": [
     {
       "id": "multiattack",
@@ -47,19 +77,18 @@
       "kind": "multiattack",
       "multiattack": [
         {
-          "action": "scimitar",
-          "count": 2
-        },
-        {
-          "action": "hurl_flame",
-          "count": 1
+          "action": "heated_blade",
+          "count": 3,
+          "or": [
+            "hurl_flame"
+          ]
         }
       ],
-      "summary": "Two Scimitar attacks and a Hurl Flame."
+      "summary": "Three attacks, Heated Blade or Hurl Flame in any mix."
     },
     {
-      "id": "scimitar",
-      "name": "Scimitar",
+      "id": "heated_blade",
+      "name": "Heated Blade",
       "kind": "melee",
       "attack": {
         "bonus": 10,
@@ -72,34 +101,64 @@
           "type": "slashing"
         },
         {
-          "average": 7,
-          "dice": "2d6",
+          "average": 13,
+          "dice": "2d12",
           "type": "fire"
         }
       ],
-      "summary": "Scimitar: +10 to hit, 2d6+6 Slashing."
+      "summary": "A blade glowing with heat."
     },
     {
       "id": "hurl_flame",
       "name": "Hurl Flame",
       "kind": "ranged",
       "attack": {
-        "bonus": 7,
+        "bonus": 8,
         "range": [
-          120,
           120
         ]
       },
       "damage": [
         {
-          "average": 17,
-          "dice": "5d6",
+          "average": 24,
+          "dice": "7d6",
           "type": "fire"
         }
       ],
-      "summary": "Hurl Flame: +7 to hit, 5d6 Fire."
+      "summary": "A ball of fire flung up to 120 ft."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Charisma, DC 16: Detect Magic and Elementalism at will; Wall of Fire (at 7th level), Invisibility, Plane Shift and more once a day."
     }
   ],
   "ai_profile": "brute",
-  "summary": "A towering genie of fire, cruel and proud."
+  "summary": "A towering genie of fire, cruel and proud.",
+  "saves": {
+    "wis": 6,
+    "cha": 8
+  },
+  "spellcasting": {
+    "ability": "cha",
+    "dc": 16,
+    "at_will": [
+      "detect_magic",
+      "elementalism"
+    ],
+    "per_day": {
+      "1": [
+        "gaseous_form",
+        "invisibility",
+        "major_image",
+        "plane_shift",
+        "tongues",
+        "wall_of_fire"
+      ]
+    },
+    "levels": {
+      "wall_of_fire": 7
+    }
+  }
 }

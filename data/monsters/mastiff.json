@@ -3,7 +3,8 @@
   "name": "Mastiff",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "beast",
@@ -26,10 +27,12 @@
     "cha": 7
   },
   "skills": {
-    "perception": 3
+    "perception": 5
   },
-  "senses": {},
-  "passive_perception": 13,
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 15,
   "languages": [],
   "cr": 0.125,
   "xp": 25,
@@ -54,9 +57,12 @@
       "conditions": [
         "prone"
       ],
-      "summary": "Bite: +3 to hit, 1d6+1 Piercing."
+      "summary": "A bite that drags a Medium or smaller target Prone."
     }
   ],
   "ai_profile": "brute",
-  "summary": "A loyal guard dog."
+  "summary": "A loyal guard dog.",
+  "saves": {
+    "wis": 3
+  }
 }

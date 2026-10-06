@@ -3,7 +3,9 @@
   "name": "Wraith",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Wraith. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the resistance list and whether Life Drain's Hit Point loss allows a save. Create Specter is text only."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "Create Specter is text only."
   },
   "size": "medium",
   "type": "undead",
@@ -32,10 +34,8 @@
     "bludgeoning",
     "cold",
     "fire",
-    "lightning",
     "piercing",
-    "slashing",
-    "thunder"
+    "slashing"
   ],
   "immunities": [
     "necrotic",
@@ -49,7 +49,8 @@
     "petrified",
     "poisoned",
     "prone",
-    "restrained"
+    "restrained",
+    "unconscious"
   ],
   "senses": {
     "darkvision": 60

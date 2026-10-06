@@ -75,7 +75,8 @@
           "do": "grapple",
           "escape_dc": 12,
           "max_size": "large",
-          "limit": 1
+          "limit": 1,
+          "restrain": true
         }
       ]
     },

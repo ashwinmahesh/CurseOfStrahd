@@ -3,7 +3,8 @@
   "name": "Air Elemental",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "elemental",
@@ -56,7 +57,21 @@
   "cr": 5,
   "xp": 1800,
   "proficiency_bonus": 3,
-  "traits": [],
+  "traits": [
+    {
+      "id": "air_form",
+      "name": "Air Form",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "enters_spaces"
+        }
+      ],
+      "summary": "Can enter and stay in a creature's space, and slip through gaps an inch wide.",
+      "implemented": "engine"
+    }
+  ],
   "actions": [
     {
       "id": "multiattack",
@@ -85,7 +100,40 @@
           "type": "thunder"
         }
       ],
-      "summary": "Thunderous Slam: +8 to hit, 2d8+5 Thunder."
+      "summary": "A blast of compressed air."
+    },
+    {
+      "id": "whirlwind",
+      "name": "Whirlwind",
+      "kind": "save",
+      "recharge": "4-6",
+      "save": {
+        "ability": "str",
+        "dc": 13,
+        "success": "half"
+      },
+      "targets": {
+        "in_space": true,
+        "max_size": "medium"
+      },
+      "damage": [
+        {
+          "average": 24,
+          "dice": "4d10+2",
+          "type": "thunder"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "push",
+          "feet": 20
+        },
+        {
+          "do": "condition",
+          "condition": "prone"
+        }
+      ],
+      "summary": "Recharge 4-6. A Medium or smaller creature in its space: DC 13 Str save or 4d10+2 Thunder, flung 20 ft and Prone (half damage only on a success)."
     }
   ],
   "ai_profile": "brute",

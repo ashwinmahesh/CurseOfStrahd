@@ -3,7 +3,9 @@
   "name": "Boar",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "Gore's 20-ft charge is engine-checked (distance closed since the turn began)."
   },
   "size": "medium",
   "type": "beast",
@@ -31,7 +33,24 @@
   "cr": 0.25,
   "xp": 50,
   "proficiency_bonus": 2,
-  "traits": [],
+  "traits": [
+    {
+      "id": "bloodied_fury",
+      "name": "Bloodied Fury",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "attack",
+          "when": {
+            "bloodied": true
+          }
+        }
+      ],
+      "summary": "Advantage on attack rolls while Bloodied.",
+      "implemented": "engine"
+    }
+  ],
   "actions": [
     {
       "id": "gore",
@@ -48,10 +67,24 @@
           "type": "piercing"
         }
       ],
-      "conditions": [
-        "prone"
-      ],
-      "summary": "Gore: +3 to hit, 1d6+1 Piercing."
+      "summary": "Tusks; a 20-ft charge adds 1d6 and knocks a Medium or smaller target Prone.",
+      "charge": {
+        "feet": 20,
+        "damage": [
+          {
+            "average": 3,
+            "dice": "1d6",
+            "type": "piercing"
+          }
+        ],
+        "on_hit": [
+          {
+            "do": "condition",
+            "condition": "prone",
+            "max_size": "medium"
+          }
+        ]
+      }
     }
   ],
   "ai_profile": "brute",

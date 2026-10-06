@@ -254,6 +254,9 @@ func _effect_actions(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 			var esc := _entry("escape_effect:%d" % fx.id, COMMON, "Break free: %s" % fx.name, "%s DC %d" % [str(fx.escape["skill"]).capitalize(), int(fx.escape["dc"])],
 				"action", why, "none", "An ability check against the spell's save DC ends it on you.")
 			out.append(esc)
+	if c.creature.effects.any(func(fx: Effect) -> bool: return bool(fx.data.get("douse", false))):
+		out.append(_entry("douse", COMMON, "Put out the flames", "drop Prone and roll", "action", why, "none",
+			"Use your action to fall Prone and roll on the ground, ending the Burning on you."))
 	var sleepers := false
 	for a in e.allies_of(c):
 		if e.distance(c, a) <= 5 and e.sleeper(a) != null:
@@ -508,6 +511,7 @@ const ACTION_TEXT := {
 	"shove_prone": "One of your attacks: the target makes a Strength or Dexterity save or falls Prone.",
 	"shove_push": "One of your attacks: the target makes a Strength or Dexterity save or is pushed 5 ft away.",
 	"escape": "A Strength (Athletics) or Dexterity (Acrobatics) check against the grapple's DC to break free.",
+	"douse": "Drop Prone and roll on the ground to put out the flames burning you.",
 	"stand": "Standing up costs half your Speed.",
 	"drop_prone": "Drop Prone for free: ranged attacks against you have Disadvantage, melee attacks from within 5 ft have Advantage.",
 	"influence": "Try to change a creature's attitude with words. Nothing here will listen.",
@@ -824,6 +828,8 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 			return e.stabilize(c, t, true)
 		"escape":
 			return e.escape_grapple(c)
+		"douse":
+			return e.douse(c)
 		"stand":
 			return e.stand_up(c)
 		"drop_prone":

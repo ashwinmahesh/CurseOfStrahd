@@ -3,7 +3,8 @@
   "name": "Rhinoceros",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "large",
   "type": "beast",
@@ -48,10 +49,24 @@
           "type": "piercing"
         }
       ],
-      "conditions": [
-        "prone"
-      ],
-      "summary": "Gore: +7 to hit, 2d8+5 Piercing."
+      "summary": "A horn; a 20-ft charge adds 2d8 and knocks a Large or smaller target Prone.",
+      "charge": {
+        "feet": 20,
+        "damage": [
+          {
+            "average": 9,
+            "dice": "2d8",
+            "type": "piercing"
+          }
+        ],
+        "on_hit": [
+          {
+            "do": "condition",
+            "condition": "prone",
+            "max_size": "large"
+          }
+        ]
+      }
     }
   ],
   "ai_profile": "brute",
