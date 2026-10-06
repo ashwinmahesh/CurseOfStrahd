@@ -9,7 +9,10 @@ covers them:
   scripts, scenes, shaders, art JSON       make validate, make lint when rules/, combat/ or story/ changed, and the
                                            tests that use a changed file directly or through one other script
                                            (a scene in between is free)
-  the Makefile, project.godot, the test runner, anything not listed: make ci
+  Makefile targets other than ci's            make -n of the targets the change reaches (a recipe or a variable they
+                                           use); a change to import, validate, lint, test, ci or a variable they
+                                           use runs make ci
+  project.godot, the test runner, anything not listed: make ci
 Lint and tests skip the import (make check has already imported if anything changed since the last one).
 make check [BASE=<branch>] [DRY=1]  (DRY prints the plan only). Stdlib only.
 """
@@ -30,6 +33,7 @@ CODE_EXT = {".gd", ".tscn", ".tres", ".gdshader"}
 EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "tools/logcheck.sh", "tools/lint_gd.sh")
 LINTED = ("rules/", "combat/", "story/")
 MAX_COST = 2  # a test that uses the change (1) or uses a script that does (2); scenes and resources cost nothing
+CI_TARGETS = {"import", "validate", "lint", "test", "ci", "check"}
 
 
 def git(*args: str) -> str:
@@ -53,6 +57,62 @@ def read(path: str, fork: str) -> str:
         return git("show", f"{fork}:{path}")
     except subprocess.CalledProcessError:
         return ""
+
+
+def make_units(text: str) -> dict[str, str]:
+    """Each Makefile target's prerequisites and recipe, and each variable's value ("$NAME"); comments dropped."""
+    units: dict[str, str] = {}
+    lines = text.splitlines()
+    target = None
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        while line.endswith("\\") and i + 1 < len(lines):
+            i += 1
+            line = line[:-1] + " " + lines[i].strip()
+        i += 1
+        if line.startswith("\t"):
+            if target:
+                units[target] += line.strip() + "\n"
+            continue
+        target = None
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        var = re.match(r"^([\w.]+)\s*(?::=|\?=|\+=|=)\s*(.*)$", line)
+        if var:
+            units["$" + var.group(1)] = units.get("$" + var.group(1), "") + var.group(2) + "\n"
+            continue
+        rule = re.match(r"^([\w.-]+)[\w.\s-]*:(?!=)(.*)$", line)
+        if rule and rule.group(1) != ".PHONY":
+            target = rule.group(1)
+            units[target] = rule.group(2).strip() + "\n"
+    return units
+
+
+def makefile_reach(old: str, new: str) -> tuple[bool, list[str]]:
+    """(touches ci, targets to dry-run) for a Makefile edit."""
+    a, b = make_units(old), make_units(new)
+    changed = {k for k in set(a) | set(b) if a.get(k) != b.get(k)}
+
+    def used_by(names: set[str], units: dict[str, str]) -> set[str]:
+        """The names plus every variable and prerequisite they use, transitively."""
+        seen, todo = set(), list(names)
+        while todo:
+            n = todo.pop()
+            if n in seen or n not in units:
+                seen.add(n)
+                continue
+            seen.add(n)
+            todo += ["$" + v for v in re.findall(r"\$[({](\w+)", units[n])]
+            if not n.startswith("$"):
+                todo += units[n].splitlines()[0].split()
+        return seen
+
+    ci = used_by(CI_TARGETS, b) | used_by(CI_TARGETS, a) | {"$SHELL", "$.SHELLFLAGS"}
+    if changed & ci:
+        return True, sorted(changed & ci)
+    reach = [t for t in b if not t.startswith("$") and used_by({t}, b) & changed]
+    return False, sorted(reach)
 
 
 def kind(path: str) -> str:
@@ -112,10 +172,20 @@ def is_test(path: str) -> bool:
 
 def plan(files: list[str], fork: str) -> dict:
     kinds = {p: kind(p) for p in files}
-    out = {"validate": False, "lint": False, "import": False, "tests": [], "why": []}
+    out = {"validate": False, "lint": False, "import": False, "tests": [], "why": [], "dry": []}
+    if "Makefile" in kinds:
+        try:
+            old = git("show", f"{fork}:Makefile")
+        except subprocess.CalledProcessError:
+            old = ""
+        touches_ci, names = makefile_reach(old, read("Makefile", fork))
+        kinds["Makefile"] = "everything" if touches_ci else "makefile"
+        if touches_ci:
+            out["why"].append("Makefile (%s)" % ", ".join(names))
+        out["dry"] = [] if touches_ci else names
     if any(k == "everything" for k in kinds.values()):
         out["tests"] = "all"
-        out["why"] = [p for p, k in kinds.items() if k == "everything"]
+        out["why"] += [p for p, k in kinds.items() if k == "everything" and p != "Makefile"]
         return out
     out["import"] = any(k == "asset" for k in kinds.values())
     out["validate"] = any(k in ("data", "code", "tool") for k in kinds.values())
@@ -178,6 +248,8 @@ def main() -> int:
             steps.append(["-o", "import", "lint"])
         if p["tests"]:
             steps.append(["-o", "import", "test", "FILES=" + ",".join(p["tests"])])
+        if p["dry"]:
+            steps.append(["-n", *p["dry"]])
         print("  tests: %s" % (", ".join(p["tests"]) if p["tests"] else "none"))
         print("  runs: %s" % (" · ".join("make " + " ".join(s) for s in steps) if steps else "nothing (docs only)"))
     if a.dry_run:
