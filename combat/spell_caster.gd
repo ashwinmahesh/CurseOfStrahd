@@ -55,13 +55,24 @@ func _comp() -> Compendium:
 
 # --- What can be cast -----------------------------------------------------------------------------
 
+## The character whose spells `c` casts: itself, or its true self while Shapechange holds it in another form (the
+## spell keeps the caster's mind and spellcasting; slots and Concentration stay the real self's).
+func caster_char(c: Combatant) -> Character:
+	if c.creature is Character:
+		return c.creature as Character
+	var e := enc()
+	if e != null and e.shapes.keeps_spells(c):
+		return e.shapes.original(c) as Character
+	return null
+
+
 ## Every spell `c` knows with whether it can cast it now and why not:
 ## {id, name, level, class_id, ability, free: bool, casting: action|bonus_action|reaction, legal, reason}
 func castable(c: Combatant) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	if not c.creature is Character:
+	if caster_char(c) == null:
 		return out
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var seen := {}
 	for k in ch.known_spells():
 		var id := str(k["id"])
@@ -112,7 +123,7 @@ func castable(c: Combatant) -> Array[Dictionary]:
 func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	if not has_combat_rules(s):
 		return "No effect in a fight (%s)" % _out_of_combat_word(s)
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var unit := str(entry["casting"])
 	if unit == "reaction":
 		return "Cast as a Reaction when it triggers"
@@ -187,9 +198,9 @@ func has_combat_rules(s: Dictionary) -> bool:
 
 
 func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
-	if not c.creature is Character or not can_react(c):
+	if caster_char(c) == null or not can_react(c):
 		return false
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	if not ch.knows_spell(spell_id):
 		return false
 	var s := _comp().spell_data(spell_id)
@@ -216,7 +227,7 @@ func _lowest_slot(ch: Character, from_level: int) -> int:
 ## Shield (2024): +5 AC until the start of your next turn, as a Reaction, with a level 1 slot (the lowest
 ## available). Also stops Magic Missile.
 func cast_shield(c: Combatant) -> void:
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var l := _lowest_slot(ch, 1)
 	if l > 0:
 		ch.expend_slot(l)
@@ -233,7 +244,7 @@ func cast_shield(c: Combatant) -> void:
 ## caster): the Reaction and the lowest slot are spent, then the spell resolves against the trigger.
 func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant) -> CombatResult:
 	var e := enc()
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var s := _comp().spell_data(spell_id)
 	var slot := _lowest_slot(ch, int(s.get("level", 1)))
 	if slot == 0 or not can_react(c):
@@ -292,9 +303,9 @@ func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> Comba
 ## A spell cast before the fight (Mage Armor, Find Familiar, Animate Dead): its lowest slot is spent and its effect
 ## applied, with Concentration if it needs it.
 func precast(c: Combatant, spell_id: String) -> bool:
-	if not c.creature is Character:
+	if caster_char(c) == null:
 		return false
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var s := _comp().spell_data(spell_id)
 	var entry := _entry_any(c, spell_id)
 	if s.is_empty() or entry.is_empty():
@@ -332,7 +343,7 @@ func _entry(c: Combatant, spell_id: String) -> Dictionary:
 
 ## {dc: Breakdown, attack: Breakdown, mod: int}
 func numbers(c: Combatant, entry: Dictionary) -> Dictionary:
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var cid := str(entry.get("class_id", ""))
 	if cid != "" and not ch.spellcasting_entry(cid).is_empty():
 		var ab := StringName(str(ch.spellcasting_entry(cid)["ability"]))
@@ -445,6 +456,9 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 	for v in creatures_in(cells):
 		if enc().items.spell_blocked(c, v) != "":
 			continue
+		# A conjured object (Bigby's Hand) is only hurt by what targets it.
+		if v.creature.has_flag("spell_object"):
+			continue
 		match mode:
 			"others":
 				if v == c:
@@ -520,7 +534,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	if not bool(entry["legal"]):
 		return CombatResult.fail(str(entry["reason"]))
 	var s := _comp().spell_data(spell_id)
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var level := int(s.get("level", 0))
 	var use_free := bool(entry["free"]) and (bool(opts.get("free", false)) or slot <= level or "psionic_sorcery" in meta)
 	# Tome of the Stilled Tongue: the next Wizard spell needs no slot.
@@ -655,9 +669,9 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 	if not free:
 		enc().class_features.after_cast(c, s, slot)
 	enc().ravenloft.after_cast(c, s, slot)
-	if slot <= 0 or free or not c.creature is Character:
+	if slot <= 0 or free or caster_char(c) == null:
 		return
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var e := enc()
 	if str(s.get("school", "")) == "abjuration" and CombatFeatures.has_feature(c, "arcane_ward"):
 		var cap := ch.resource_max("arcane_ward")
@@ -745,7 +759,7 @@ func cast_free(c: Combatant, spell_id: String, targets: Array, point: Vector2, o
 			conc = c.creature.begin_concentration(spell_id, str(s["name"]))
 	var entry := _entry_any(c, spell_id)
 	if entry.is_empty():
-		entry = {"class_id": "cleric" if c.creature is Character and (c.creature as Character).class_level_of("cleric") > 0 else ""}
+		entry = {"class_id": "cleric" if caster_char(c) != null and caster_char(c).class_level_of("cleric") > 0 else ""}
 	var nums := numbers(c, entry)
 	e.log.add("spell", "%s casts %s (no slot)" % [c.name(), s["name"]], c.id)
 	var cells: Array[Vector2i] = []
@@ -1074,9 +1088,9 @@ func _damage_type(ctx: Dictionary, part: Dictionary = {}) -> String:
 func _damage_bonus(ctx: Dictionary) -> Breakdown:
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
-	if not c.creature is Character:
+	if caster_char(c) == null:
 		return Breakdown.new("Damage bonus")
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var preview := ch.spell_preview(str(s["id"]), int(ctx["slot"]))
 	return preview.get("damage_bonus", Breakdown.new("Damage bonus")) as Breakdown
 
@@ -1544,14 +1558,14 @@ const PSIONIC_SPELLS := ["arms_of_hadar", "calm_emotions", "detect_thoughts", "d
 ## The class casting options `c` could add to spell `s` now.
 func class_cast_options(c: Combatant, s: Dictionary) -> Array[String]:
 	var out: Array[String] = []
-	if not c.creature is Character:
+	if caster_char(c) == null:
 		return out
 	var classes := s.get("classes", []) as Array
 	if CombatFeatures.has_feature(c, "psychic_spells") and "warlock" in classes and (s.has("damage") or str(s.get("school", "")) in ["enchantment", "illusion"]):
 		out.append("psychic_spells")
 	var lvl := int(s.get("level", 0))
 	if CombatFeatures.has_feature(c, "psionic_sorcery") and str(s.get("id", "")) in PSIONIC_SPELLS and lvl >= 1 \
-			and (c.creature as Character).resource_left("sorcery_points") >= lvl:
+			and caster_char(c).resource_left("sorcery_points") >= lvl:
 		out.append("psionic_sorcery")
 	return out
 
@@ -1567,9 +1581,9 @@ const METAMAGIC_COST := {"careful": 1, "distant": 1, "empowered": 1, "extended":
 func _metamagic_check(c: Combatant, s: Dictionary, meta: Array) -> String:
 	if meta.is_empty():
 		return ""
-	if not c.creature is Character:
+	if caster_char(c) == null:
 		return "No Metamagic"
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var cost := 0
 	var main := 0
 	for m: String in meta:
@@ -1613,7 +1627,7 @@ func _pay_metamagic(c: Combatant, meta: Array) -> void:
 		cost += int(METAMAGIC_COST.get(m, 0))
 	if cost == 0:
 		return
-	(c.creature as Character).spend_resource("sorcery_points", cost)
+	caster_char(c).spend_resource("sorcery_points", cost)
 	enc().log.add("info", "%s shapes the spell: %s (%d Sorcery Points)" % [c.name(), ", ".join(meta.map(func(x: String) -> String: return x.capitalize())), cost], c.id)
 
 
@@ -1654,8 +1668,8 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 		return
 	var dice := Spellcasting.heal_dice(s, int(ctx["slot"]))
 	var bonus := Breakdown.new("Healing bonus")
-	if c.creature is Character:
-		var preview := (c.creature as Character).spell_preview(str(s["id"]), int(ctx["slot"]))
+	if caster_char(c) != null:
+		var preview := caster_char(c).spell_preview(str(s["id"]), int(ctx["slot"]))
 		dice = str(preview.get("heal_dice", ""))
 		bonus = preview.get("heal_bonus", Breakdown.new("")) as Breakdown
 	elif bool((s.get("heal", {}) as Dictionary).get("add_mod", false)):
@@ -2208,8 +2222,8 @@ func _custom(ctx: Dictionary, t: Combatant, params: Dictionary, r: CombatResult)
 				t.set_meta("form", "humanoid")
 				r.lines.append(e.log.add("info", "%s is forced back into its true form (%s)" % [t.name(), s["name"]], t.id))
 		"goodberry":
-			if c.creature is Character:
-				(c.creature as Character).add_item("goodberry", int(params.get("count", 10)))
+			if caster_char(c) != null:
+				caster_char(c).add_item("goodberry", int(params.get("count", 10)))
 				r.lines.append(e.log.add("info", "%s holds %d Goodberries" % [c.name(), int(params.get("count", 10))], c.id))
 		"warding_bond":
 			var fx2 := Effect.new("Warding Bond (link)", &"spell", "warding_bond").lasting(s.get("duration", {}) as Dictionary)
@@ -2385,9 +2399,9 @@ func _revivify(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 func _arcane_vigor(ctx: Dictionary, r: CombatResult) -> void:
 	var c := ctx["c"] as Combatant
 	var e := enc()
-	if not c.creature is Character:
+	if caster_char(c) == null:
 		return
-	var ch := c.creature as Character
+	var ch := caster_char(c)
 	var want := 2 + maxi(0, int(ctx["slot"]) - 2)
 	var total := 0
 	var rolls: Array[String] = []
@@ -2446,8 +2460,8 @@ func _dispel(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	_prune_sustained()
 	r.lines.append(e.log.add("spell", "Dispel Magic on %s: %s" % [t.name(), ", ".join(ended) if not ended.is_empty() else "nothing to end"], c.id))
 	# Spell Breaker: a Dispel Magic that fails to end a spell gives the slot back.
-	if bool(ctx.get("dispel_failed", false)) and CombatFeatures.has_feature(c, "spell_breaker") and slot > 0 and c.creature is Character:
-		var cch := c.creature as Character
+	if bool(ctx.get("dispel_failed", false)) and CombatFeatures.has_feature(c, "spell_breaker") and slot > 0 and caster_char(c) != null:
+		var cch := caster_char(c)
 		if cch.slots_used[slot - 1] > 0:
 			cch.slots_used[slot - 1] -= 1
 			e.log.add("info", "%s keeps the spell slot (Spell Breaker)" % c.name(), c.id)
@@ -2485,8 +2499,8 @@ func context_for_object(o: FieldObject) -> Dictionary:
 	if c == null:
 		return {}
 	var s := _comp().spell_data(o.spell_id)
-	var entry := _entry_any(c, o.spell_id) if c.creature is Character else {}
-	var nums := numbers(c, entry) if c.creature is Character else {"dc": Breakdown.new("DC").add("DC", o.save_dc), "attack": Breakdown.new("Attack"), "mod": 0}
+	var entry := _entry_any(c, o.spell_id) if caster_char(c) != null else {}
+	var nums := numbers(c, entry) if caster_char(c) != null else {"dc": Breakdown.new("DC").add("DC", o.save_dc), "attack": Breakdown.new("Attack"), "mod": 0}
 	return {"c": c, "s": s, "slot": o.slot, "nums": nums, "conc": o.concentration, "opts": {}, "choice": str(o.rules.get("choice", ""))}
 
 
@@ -2658,6 +2672,8 @@ func _place_object(ctx: Dictionary, tgt: Array[Combatant], r: CombatResult) -> v
 	zones.add(o, r)
 	enc().events.append({"type": "summon", "caster": c.id, "cell": o.cell})
 	r.lines.append(enc().log.add("spell", "%s appears" % s["name"], c.id))
+	if str(s["id"]) == "bigbys_hand":
+		specials.mid.spawn_hand(c, o)
 	if s.has("sustain"):
 		_grant_sustained(ctx, tgt)
 	if str(od.get("on_appear", "")) == "attack":
@@ -2729,9 +2745,9 @@ func spiritual_weapon_attack(c: Combatant, target: Combatant, cell: Vector2i) ->
 
 
 func _entry_any(c: Combatant, spell_id: String) -> Dictionary:
-	if not c.creature is Character:
+	if caster_char(c) == null:
 		return {}
-	for k in (c.creature as Character).known_spells():
+	for k in caster_char(c).known_spells():
 		if str(k["id"]) == spell_id:
 			return k
 	return {}
