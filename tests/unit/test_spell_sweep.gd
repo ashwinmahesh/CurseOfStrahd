@@ -40,6 +40,10 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 	bless.spell_level = 1
 	ally.creature.add_effect(bless)
 	f1.creature.add_effect(bless)
+	# Something for Remove Curse to lift.
+	for who: Combatant in [ally, f1]:
+		var curse := Effect.new("Cursed", &"monster", "curse").with_modifier("flag", {"value": "curse:test"})
+		who.creature.add_effect(curse)
 	TestCombat.start_with(e, c)
 	var data := Compendium.shared().spell_data(spell_id)
 	var cat := ActionCatalog.new(e)
