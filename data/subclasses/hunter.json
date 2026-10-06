@@ -86,6 +86,7 @@
         "id": "superior_hunters_prey",
         "name": "Superior Hunter's Prey",
         "summary": "Once per turn, when Hunter's Mark damages a creature, deal the same extra damage to another creature within 30 feet of it.",
+        "text": "Once per turn, when you deal damage to a creature marked by your Hunter's Mark, you can also deal the spell's extra damage to a different creature you can see within 30 feet of the first.",
         "implemented": "text"
       }
     },

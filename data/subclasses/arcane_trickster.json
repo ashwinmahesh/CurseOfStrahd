@@ -92,6 +92,7 @@
         "id": "magical_ambush",
         "name": "Magical Ambush",
         "summary": "While you're Invisible, a creature has Disadvantage on saves against your spells this turn.",
+        "text": "If you are Invisible when you cast a spell on a creature, it has Disadvantage on every saving throw it makes against that spell this turn.",
         "implemented": "engine"
       }
     },

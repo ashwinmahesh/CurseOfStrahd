@@ -81,6 +81,21 @@
         "id": "beguiling_defenses",
         "name": "Beguiling Defenses",
         "summary": "Immunity to Charmed; Reaction to turn part of a creature's damage back on it.",
+        "text": "You are immune to the Charmed condition. And right after a creature you can see hits you with an attack roll, you can take a Reaction to halve the damage you take (round down) and force the attacker to make a Wisdom saving throw against your spell save DC; on a failure it takes Psychic damage equal to the damage you took. Once you use this Reaction you need a Long Rest before using it again, unless you expend a Pact Magic spell slot (no action required) to restore it.",
+        "action": "reaction",
+        "modifiers": [
+          {
+            "stat": "condition_immunity",
+            "value": "charmed"
+          }
+        ],
+        "resource": {
+          "id": "beguiling_defenses",
+          "name": "Beguiling Defenses",
+          "max": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "beguiling_defenses",
         "implemented": "text"
       }
     },

@@ -1,7 +1,7 @@
 extends TestCase
-## The rules content is all there and every class and subclass can be built and levelled 1 to 7 through
-## CharacterBuilder and LevelUpController with no dead ends (plan §5.6 acceptance). All twelve 2024 PHB classes
-## since Phase 4 (P4-01).
+## The rules content is all there and every class and subclass can be built and levelled 1 to 11 (the Phase 5 level
+## cap, ADR 0011) through CharacterBuilder and LevelUpController with no dead ends (plan §5.6 acceptance). All twelve
+## 2024 PHB classes since Phase 4 (P4-01); levels 8 to 11 since Phase 5 (P5-01).
 
 
 func test_phase_1_content_counts() -> void:
@@ -22,7 +22,7 @@ func test_phase_1_content_counts() -> void:
 		assert_true(c.spells_for("wizard", level).size() >= 20, "wizard level %d spells" % level)
 
 
-func test_every_class_and_subclass_builds_and_levels_to_7() -> void:
+func test_every_class_and_subclass_builds_and_levels_to_11() -> void:
 	var c := Compendium.shared()
 	for sub in c.all("subclasses"):
 		var cls := str(sub["class"])
@@ -37,7 +37,7 @@ func test_every_class_and_subclass_builds_and_levels_to_7() -> void:
 		if ch == null:
 			fail("%s level 1: %s" % [sub["id"], b.errors()])
 			continue
-		for level in range(2, 8):
+		for level in range(2, 12):
 			var up := LevelUpController.new(ch)
 			up.choose_class(cls)
 			if level == 3:
@@ -46,7 +46,10 @@ func test_every_class_and_subclass_builds_and_levels_to_7() -> void:
 			if not up.confirm():
 				fail("%s level %d: %s" % [sub["id"], level, up.errors()])
 				break
-		assert_eq(ch.character_level(), 7, "%s reached level 7" % sub["id"])
+		assert_eq(ch.character_level(), 11, "%s reached level 11" % sub["id"])
+		assert_eq(ch.proficiency_bonus(), 4, "%s Proficiency Bonus at 11" % sub["id"])
+		var open: Array = ch.pending_choices().map(func(pc: Choice) -> String: return pc.key)
+		assert_eq(open, [], "%s has nothing left to choose" % sub["id"])
 		assert_eq(str(ch.subclasses.get(cls, "")), str(sub["id"]))
 		assert_true(ch.max_hp() > 0)
 		for f in ch.features:

@@ -491,6 +491,7 @@
           "id": "acrobatic_movement",
           "name": "Acrobatic Movement",
           "summary": "Without armor or a Shield, move along vertical surfaces and across liquids on your turn.",
+          "text": "While you wear no armor and wield no Shield, on your turn you can move along vertical surfaces and across liquids without falling during the move.",
           "implemented": "text"
         }
       ]
@@ -502,12 +503,14 @@
           "id": "heightened_focus",
           "name": "Heightened Focus",
           "summary": "Flurry of Blows makes three strikes, and Patient Defense and Step of the Wind gain extra benefits.",
+          "text": "Your Focus features grow stronger. Flurry of Blows: spend 1 Focus Point to make three Unarmed Strikes instead of two. Patient Defense: when you spend a Focus Point on it, you also gain Temporary Hit Points equal to two rolls of your Martial Arts die. Step of the Wind: when you spend a Focus Point on it, you can take along a willing Large or smaller creature within 5 feet; it moves with you and ends in a space within 5 feet of you, without provoking Opportunity Attacks.",
           "implemented": "engine"
         },
         {
           "id": "self_restoration",
           "name": "Self-Restoration",
           "summary": "End Charmed, Frightened or Poisoned on yourself at the end of each turn; going without food and water doesn't exhaust you.",
+          "text": "At the end of each of your turns you can end one of these conditions on yourself: Charmed, Frightened or Poisoned. Going without food or water also gives you no Exhaustion.",
           "implemented": "engine"
         }
       ]

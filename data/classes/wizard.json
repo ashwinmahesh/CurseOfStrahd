@@ -191,6 +191,7 @@
           "id": "ritual_adept",
           "name": "Ritual Adept",
           "summary": "Cast any Ritual spell in your spellbook as a Ritual without preparing it.",
+          "text": "You can cast any spell in your spellbook that has the Ritual tag as a Ritual without having it prepared, as long as you have the spellbook in hand.",
           "implemented": "text"
         },
         {
@@ -210,6 +211,7 @@
           "id": "scholar",
           "name": "Scholar",
           "summary": "Expertise in one of Arcana, History, Investigation, Medicine, Nature or Religion that you're proficient in.",
+          "text": "Pick one skill you're proficient in among Arcana, History, Investigation, Medicine, Nature and Religion; you gain Expertise in it.",
           "choice": {
             "kind": "expertise",
             "count": 1,
@@ -275,6 +277,7 @@
           "id": "memorize_spell",
           "name": "Memorize Spell",
           "summary": "After a Short Rest, swap one prepared spell for another in your spellbook.",
+          "text": "Whenever you finish a Short Rest, you can study your spellbook and swap one level 1+ spell you have prepared for another level 1+ spell from the book.",
           "implemented": "text"
         }
       ]

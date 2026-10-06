@@ -38,6 +38,7 @@
         "id": "blessing_of_the_trickster",
         "name": "Blessing of the Trickster",
         "summary": "Magic action: you or a willing creature within 30 feet has Advantage on Stealth checks until your next Long Rest.",
+        "text": "As a Magic action, you choose yourself or a willing creature within 30 feet; it has Advantage on Dexterity (Stealth) checks until you finish a Long Rest or use this feature again.",
         "implemented": "engine",
         "action": "action"
       }
@@ -60,6 +61,7 @@
         "id": "trickery_domain_spells",
         "name": "Trickery Domain Spells",
         "summary": "Always prepared: Charm Person, Disguise Self, Invisibility, Pass without Trace; more at 5, 7 and 9.",
+        "text": "Your domain keeps these spells prepared for you: Charm Person, Disguise Self, Invisibility and Pass without Trace at Cleric level 3, Hypnotic Pattern and Nondetection at 5, Confusion and Dimension Door at 7, Dominate Person and Modify Memory at 9.",
         "implemented": "data"
       }
     },
@@ -69,6 +71,7 @@
         "id": "tricksters_transposition",
         "name": "Trickster's Transposition",
         "summary": "When you create or move your duplicate, you can swap places with it.",
+        "text": "Whenever you take the Bonus Action to create or move the illusion of Invoke Duplicity, you can teleport to swap places with it.",
         "implemented": "engine"
       }
     },

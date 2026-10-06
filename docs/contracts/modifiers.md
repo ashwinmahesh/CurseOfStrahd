@@ -58,7 +58,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `carry_size_step` | value | count as this many sizes larger for carrying capacity (Powerful Build: 1) |
 | `reach` | value | + reach in ft |
 | `spell` | value, ability, uses, always_prepared, at_level, at_class_level | grants a spell. `ability` is an ability id or `choice` (the player picks; species list it in `spellcasting_ability_choice`); from a class or subclass feature it defaults to that class's spellcasting ability and the spell uses that class's DC and attack. `uses: {"count":1,"recharge":"long"}` = once free per rest; `count` may be a formula (`"mod:wis"` with `"min": 1`), or `"count_column": "favored_enemy"` reads the class table |
-| `flag` | value | a named switch bespoke code reads (`potent_cantrip`, `relentless_endurance`, `jack_of_all_trades`, `martial_arts`, `circle_forms`, `evasion`) |
+| `flag` | value | a named switch bespoke code reads (`potent_cantrip`, `relentless_endurance`, `jack_of_all_trades`, `martial_arts`, `circle_forms`, `evasion`; `tireless`: a Short Rest also removes a level of Exhaustion; `celestial_resilience`: Temporary Hit Points of class level + Charisma modifier after a rest) |
 | `extra_damage` | dice, type, on (`weapon`), vs, penalty | extra dice on weapon and Unarmed Strike hits (Crusader's Mantle, Enlarge +1d4; Reduce −1d4 with `penalty`) |
 | `damage_penalty_die` | dice | subtract a die from the creature's weapon damage (Ray of Enfeeblement) |
 | `attacked_penalty_die` | dice | attack rolls against the creature subtract the die (Blade Ward) |
@@ -70,6 +70,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `size_step` | value | one size up or down while it lasts (Enlarge/Reduce, Large Form) |
 | `inspiration_die` | die, on | a die the creature may add to one failed roll (Bardic Inspiration) |
 | `retaliate` | value or dice, type, within | a creature that hits this one with a melee attack from within `within` ft takes the damage (Armor of Agathys `5*slot_level` Cold, Fire Shield 2d8) |
+| `spell_list` | value | the granting class may also prepare spells from that class's list, and they count as its own (Magical Secrets: `cleric`, `druid`, `wizard`) |
 
 ### `when` filters
 `armor`: `any` (wearing any armor), `none`, `light`, `medium`, `heavy`. `shield`: true/false.
@@ -104,7 +105,9 @@ spellcasting_ability, lineage, beast_form. `filter` narrows the pool: `{"categor
 (Blessed Warrior, Druidic Warrior). `count_column` takes the count from the class table (Weapon Mastery,
 Invocations, Metamagic, Known Forms).
 
-More filters: spells `lists` (several class lists: Magical Discoveries), `ritual: true`, `known_only: true` (point
+More filters: spells `lists` (several class lists: Magical Discoveries), `ritual: true`, `granted: true` (the pick is
+cast only through the feature's own `spell` modifier, never added to the class's spells: Mystic Arcanum; with an exact
+`level` the count is capped by the spells of that level the game has), `known_only: true` (point
 at a spell the class already knows instead of learning one; with `damaging: true` only damaging ones: Agonizing
 Blast), `list` empty = any class's list (Pact of the Tome); tools `tool_kind` as one kind or a list (Monk:
 artisan or musical instrument); weapon masteries `melee: true` (Barbarian); beast forms `cr_column` and
