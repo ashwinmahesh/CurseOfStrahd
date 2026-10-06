@@ -1,17 +1,18 @@
 class_name GridOverlay
 extends Node3D
-## Squares painted on the combat floor: where the active creature can move, the path it would take, an area of
-## effect template, valid targets, and the cursor. One flat quad per square per layer, drawn just above the floor.
+## Marks painted on the combat floor, only while they answer something the player is pointing at (owner 2026-10-06:
+## the always-lit blue squares of where a creature could move were noise). Hovering the floor shows a dotted trail to
+## a ring where the creature would stop, red when the walk provokes; aiming shows an area template and who can be
+## targeted; a controller's cursor is a pale ring. Drawn just above the floor, one instance per mark per layer.
 
 const LAYERS := {
-	"reach": {"colour": "moon_blue", "alpha": 0.35, "lift": 0.012, "size": 0.92},
-	"dash": {"colour": "night", "alpha": 0.3, "lift": 0.011, "size": 0.92},
-	"path": {"colour": "wick", "alpha": 0.75, "lift": 0.02, "size": 0.34},
+	"path": {"colour": "wick", "alpha": 0.85, "lift": 0.02, "size": 0.2, "shape": "dot"},
+	"goal": {"colour": "wick", "alpha": 0.85, "lift": 0.022, "size": 0.78, "shape": "ring"},
+	"danger": {"colour": "crimson", "alpha": 0.9, "lift": 0.023, "size": 0.78, "shape": "ring"},
+	"cursor": {"colour": "ivory", "alpha": 0.55, "lift": 0.021, "size": 0.78, "shape": "ring"},
 	"area": {"colour": "candle", "alpha": 0.5, "lift": 0.016, "size": 0.96},
-	"danger": {"colour": "crimson", "alpha": 0.45, "lift": 0.017, "size": 0.96},
 	"target": {"colour": "vampire_red", "alpha": 0.55, "lift": 0.018, "size": 0.98},
 	"friendly": {"colour": "flame", "alpha": 0.5, "lift": 0.018, "size": 0.98},
-	"cursor": {"colour": "ivory", "alpha": 0.4, "lift": 0.022, "size": 1.0},
 	"weapon": {"colour": "lilac", "alpha": 0.6, "lift": 0.019, "size": 0.6},
 }
 
@@ -30,11 +31,29 @@ static func create(board_: ArenaBoard) -> GridOverlay:
 
 func _make_layer(key: String) -> void:
 	var spec := LAYERS[key] as Dictionary
+	var size := float(spec["size"])
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
-	var pm := PlaneMesh.new()
-	pm.size = Vector2(float(spec["size"]), float(spec["size"]))
-	mm.mesh = pm
+	match str(spec.get("shape", "square")):
+		"dot":
+			var dot := CylinderMesh.new()
+			dot.top_radius = size / 2.0
+			dot.bottom_radius = size / 2.0
+			dot.height = 0.004
+			dot.radial_segments = 16
+			dot.rings = 1
+			mm.mesh = dot
+		"ring":
+			var ring := TorusMesh.new()
+			ring.outer_radius = size / 2.0
+			ring.inner_radius = size / 2.0 - 0.06
+			ring.rings = 32
+			ring.ring_segments = 4
+			mm.mesh = ring
+		_:
+			var pm := PlaneMesh.new()
+			pm.size = Vector2(size, size)
+			mm.mesh = pm
 	var mmi := MultiMeshInstance3D.new()
 	mmi.name = "Layer_" + key
 	mmi.multimesh = mm
@@ -55,23 +74,48 @@ func _make_layer(key: String) -> void:
 
 ## Paints `cells` on layer `key` (replacing what was there).
 func show_cells(key: String, cells: Array) -> void:
-	var mmi := _layers[key] as MultiMeshInstance3D
-	var mm := mmi.multimesh
-	var lift := float((LAYERS[key] as Dictionary)["lift"])
-	mm.instance_count = cells.size()
-	for i in cells.size():
-		var cell: Vector2i = cells[i]
-		var y := board.floor_y(cell) + lift
-		if board.grid.has_flag(cell, CombatGrid.LOW):
-			y += ArenaBoard.LOW_H
-		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, Vector3(cell.x + 0.5, y, cell.y + 0.5)))
+	var spots: Array[Vector3] = []
+	for cell: Vector2i in cells:
+		spots.append(_spot(cell))
+	_place(key, spots)
+
+
+## A walk from the first of `cells` to the last as a dotted trail on layer `key`: a dot between each pair of squares
+## and on each square between the ends (the walker stands on the first, a ring marks the last), so the line reads as
+## one path and diagonals don't look broken.
+func show_trail(key: String, cells: Array) -> void:
+	var spots: Array[Vector3] = []
+	for i in range(1, cells.size()):
+		var here := _spot(cells[i] as Vector2i)
+		var mid := (_spot(cells[i - 1] as Vector2i) + here) / 2.0
+		mid.y = maxf(here.y, _spot(cells[i - 1] as Vector2i).y)   # on the edge of a step up, not in the air
+		spots.append(mid)
+		if i < cells.size() - 1:
+			spots.append(here)
+	_place(key, spots)
 
 
 func clear(key: String) -> void:
-	show_cells(key, [])
+	_place(key, [])
 
 
 func clear_all() -> void:
 	for key: String in LAYERS:
 		if key != "weapon":
 			clear(key)
+
+
+## Where a mark sits on a square: its centre, on the floor or on top of a low wall.
+func _spot(cell: Vector2i) -> Vector3:
+	var y := board.floor_y(cell)
+	if board.grid.has_flag(cell, CombatGrid.LOW):
+		y += ArenaBoard.LOW_H
+	return Vector3(cell.x + 0.5, y, cell.y + 0.5)
+
+
+func _place(key: String, spots: Array[Vector3]) -> void:
+	var mm := (_layers[key] as MultiMeshInstance3D).multimesh
+	var lift := float((LAYERS[key] as Dictionary)["lift"])
+	mm.instance_count = spots.size()
+	for i in spots.size():
+		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, spots[i] + Vector3(0, lift, 0)))

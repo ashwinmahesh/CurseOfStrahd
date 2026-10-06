@@ -16,6 +16,12 @@ const STEP_TIME := 0.26
 const AI_PAUSE := 0.35
 ## How long damage and healing numbers stay over a creature.
 const FLOAT_TIME := 2.4
+## The opening beat before the first turn (owner 2026-10-06: going into a fight felt abrupt): the camera takes in the
+## field, the foes step into view, the HUD fades up and Initiative is rolled.
+const INTRO_TIME := 1.5
+## The part of the screen the combat HUD leaves clear, as the opening shot frames the fight: |x| up to .x, and y from
+## .z (bottom) to .y (top), in -1..1 screen units.
+const CLEAR_VIEW := Vector3(0.5, 0.55, -0.4)
 
 enum Mode { BUSY, IDLE, TARGET, PROMPT, OVER }
 
@@ -48,6 +54,12 @@ var input_locked := false
 ## The story's Narrator speaks rarely in combat (crits, falls, kills, victory; plan §5.7); none in the arena.
 var narrator: Narrator = null
 var story: StoryState = null
+## The fight's opening beat is playing (begin): the first turn waits for it.
+var _opening := false
+## The camera's zoom before the opening shot pulled it out.
+var _zoom_before := 13.0
+## The view is fading out after the fight (close_softly): nothing more is played.
+var _closed := false
 
 
 ## Starts showing `encounter` on `board_` with `rig_` and the creatures' `tokens_` (id -> CombatToken). Starts the
@@ -82,13 +94,86 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 		if e.intro != "":
 			e.log.add("narr", e.intro, "")
 		e.start(surprised)
-	rig.follow = tokens[e.current().id] as Node3D
-	hud.banner("Roll Initiative", 2.2)
+	# The opening beat: the camera takes in the field and the HUD fades up while Initiative is rolled; the first turn
+	# waits for it. The rules are already running (round 1 saves itself as usual).
+	var opened := Time.get_ticks_msec()
+	_opening = true
+	_frame_the_fight(rig.follow == null)
+	LayerFade.fade(self, hud, true, 0.4, 0.2).finished.connect(func() -> void: hud.banner("Roll Initiative", INTRO_TIME))
 	for c in e.combatants:
 		if c.surprised:
 			e.log.add("info", "%s is surprised: Disadvantage on Initiative" % c.name(), c.id)
 	await _play_events()
+	var left := INTRO_TIME - (Time.get_ticks_msec() - opened) / 1000.0
+	if left > 0.0:
+		await create_tween().tween_interval(left).finished
+	if _closed:
+		return
+	_end_opening()
 	_advance()
+
+
+## The opening shot: the camera eases to the middle of everyone in the fight and pulls out until they all show in the
+## part of the screen the HUD leaves clear, so the player sees what they're up against. `snap` puts it there at once
+## (a scene that opens on the fight, like the arena). The first turn brings it back in (_end_opening).
+func _frame_the_fight(snap: bool) -> void:
+	_zoom_before = rig.distance
+	var spots: Array[Vector3] = []
+	for c in e.combatants:
+		if c.is_alive() and tokens.has(c.id):
+			spots.append(board.cell_center(c.cell, c.size_cells) + Vector3(0, 0.6, 0))
+	if spots.is_empty():
+		return
+	if snap:
+		rig.snap_to_target()   # settles the rig's heading first
+	var lo := Vector3(INF, INF, INF)
+	var hi := Vector3(-INF, -INF, -INF)
+	for p in spots:
+		lo = lo.min(p)
+		hi = hi.max(p)
+	var mid := (lo + hi) / 2.0 - Vector3(0, 0.6, 0)
+	var dist := rig.distance
+	while dist < rig.zoom_max and not _all_in_view(spots, mid, dist):
+		dist += 0.5
+	dist = minf(dist, rig.zoom_max)
+	rig.follow = null
+	if snap:
+		rig.global_position = mid
+		rig.distance = dist
+		return
+	var tw := create_tween().set_parallel(true).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(rig, "global_position", mid, 0.8)
+	tw.tween_property(rig, "distance", dist, 0.8)
+
+
+## Whether every point in `spots` would show in the screen's clear middle (inside the turn order, party list, log and
+## hotbar) with the rig at `at`, `dist` away: the rig's camera worked out by hand, as it isn't there yet.
+func _all_in_view(spots: Array[Vector3], at: Vector3, dist: float) -> bool:
+	var pitch := deg_to_rad(CameraRig.PITCH_DEG)
+	var turn := Basis(Vector3.UP, rig.rotation.y)
+	var basis := turn * Basis(Vector3.RIGHT, pitch)
+	var eye := at + turn * Vector3(0, -sin(pitch) * dist + 0.6, cos(pitch) * dist)
+	var size := get_viewport().get_visible_rect().size
+	var half_h := tan(deg_to_rad(rig.camera.fov) / 2.0)
+	var half_w := half_h * size.x / maxf(1.0, size.y)
+	for p in spots:
+		var v := basis.inverse() * (p - eye)
+		if v.z >= -0.1:
+			return false
+		var x := v.x / (-v.z * half_w)
+		var y := v.y / (-v.z * half_h)
+		if absf(x) > CLEAR_VIEW.x or y > CLEAR_VIEW.y or y < CLEAR_VIEW.z:
+			return false
+	return true
+
+
+## The end of the opening beat: round 1 is announced and the camera eases back in to the zoom it had, on whoever acts
+## first (_advance sets it following them).
+func _end_opening() -> void:
+	_opening = false
+	if e.state == Encounter.State.ACTIVE:
+		hud.banner("Round %d" % e.round_no, 1.0)
+	create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).tween_property(rig, "distance", _zoom_before, 0.9)
 
 
 ## Removes the view's overlay and HUD (the board and tokens belong to the caller).
@@ -96,10 +181,23 @@ func close() -> void:
 	queue_free()
 
 
+## Ends the view without a snap (the story, after a fight): input stops at once, the floor marks go, the combat HUD
+## fades out, then the view frees itself.
+func close_softly() -> void:
+	_closed = true
+	input_locked = true
+	mode = Mode.OVER
+	overlay.clear_all()
+	hud.hide_tooltip()
+	LayerFade.fade(self, hud, false, 0.35).finished.connect(queue_free)
+
+
 # --- Turn flow ------------------------------------------------------------------------------------
 
 ## Decides what happens next: a reaction prompt, an enemy turn, the player's turn, or the end.
 func _advance() -> void:
+	if _closed:
+		return   # the story took the fight back (close_softly); a turn still in flight stops here
 	_refresh_all()
 	if e.state == Encounter.State.OVER:
 		mode = Mode.OVER
@@ -684,10 +782,10 @@ func _target_under() -> CombatToken:
 func _update_hover() -> void:
 	var c := _player()
 	overlay.clear("path")
+	overlay.clear("goal")
 	overlay.clear("danger")
 	if c == null or mode in [Mode.BUSY, Mode.PROMPT, Mode.OVER]:
 		hud.hide_tooltip()
-		overlay.clear("reach")
 		overlay.clear("cursor")
 		return
 	overlay.show_cells("cursor", [hover_cell] if hover_cell.x >= 0 else [])
@@ -696,12 +794,7 @@ func _update_hover() -> void:
 	if mode == Mode.TARGET:
 		_target_hover(c, t, at)
 		return
-	# Idle: where you can go, and what a click would do.
-	var reach_cells: Array = []
-	for cell: Vector2i in _reach:
-		if cell != c.cell and not bool((_reach[cell] as Dictionary)["occupied"]):
-			reach_cells.append(cell)
-	overlay.show_cells("reach", reach_cells)
+	# Idle: what a click would do. Nothing is lit until the pointer asks: the floor shows a walk only to where it points.
 	if t != null and t.combatant != c:
 		var o := t.combatant
 		if c.hostile_to(o):
@@ -725,14 +818,13 @@ func _update_hover() -> void:
 		return
 	var mp := catalog.move_preview(c, hover_cell, _reach)
 	if bool(mp["ok"]):
-		overlay.show_cells("path", mp["path"] as Array)
-		var danger: Array = []
-		if not (mp["warnings"] as Array).is_empty():
-			for w: String in mp["warnings"]:
-				if w.contains("Opportunity"):
-					danger.append(hover_cell)
-					break
-		overlay.show_cells("danger", danger)
+		# A dotted trail from the creature to a ring where it would stop; the ring is red if the walk provokes.
+		overlay.show_trail("path", mp["path"] as Array)
+		var provokes := false
+		for w: String in mp["warnings"]:
+			provokes = provokes or w.contains("Opportunity")
+		overlay.clear("cursor")
+		overlay.show_cells("danger" if provokes else "goal", [hover_cell])
 		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], [], mp["warnings"] as Array, at)
 	else:
 		hud.show_tooltip(str(mp["reason"]), [], [], at)
@@ -935,7 +1027,8 @@ func _play_events() -> void:
 				_stop_walking(walking)
 				_refresh_all()
 			"round":
-				hud.banner("Round %d" % int(ev["round"]), 1.0)
+				if not _opening:   # the opening beat shows "Roll Initiative", then round 1
+					hud.banner("Round %d" % int(ev["round"]), 1.0)
 				round_started.emit(int(ev["round"]))
 			"over":
 				_refresh_all()
