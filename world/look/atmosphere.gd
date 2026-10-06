@@ -240,7 +240,7 @@ func _apply_static() -> void:
 
 
 ## Where the mist gathers on a map, one texel per square: thickest among the trees (wall squares), over water and
-## in brambles and mud, thinning to `open` in the middle of clearings and roads.
+## empty ground and in brambles and mud, thinning to `open` in the middle of clearings and roads.
 static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
 	var img := Image.create(grid.width, grid.depth, false, Image.FORMAT_R8)
 	var dist := {}
@@ -248,7 +248,7 @@ static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
 	for z in grid.depth:
 		for x in grid.width:
 			var c := Vector2i(x, z)
-			if grid.has_flag(c, CombatGrid.WALL) or grid.has_flag(c, CombatGrid.WATER):
+			if grid.has_flag(c, CombatGrid.WALL) or grid.has_flag(c, CombatGrid.VOID):
 				dist[c] = 0
 				todo.append(c)
 	var i := 0

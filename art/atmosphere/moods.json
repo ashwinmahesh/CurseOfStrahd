@@ -1,14 +1,62 @@
 {
-  "about": "Each place's atmosphere (world/look/atmosphere.gd, docs/art/atmosphere.md): its light by time of day, the mist and cloud shadows of the screen pass, the colour grade, weather, water, and the land drawn around the map. Colours are palette names. A location takes its mood from `places` (its id), else the longest of `prefixes` its id starts with, else `regions` (\"<region>\", or \"<region>/indoors\" for its indoor maps), else `themes` (\"<theme>\" or \"<theme>/indoors\"), else `outdoors` or `indoors`. A mood can be `like` another and change only what differs. Places without a mood of their own yet keep the look they had before the atmosphere pass (`outdoors_plain`, `indoors_plain`).",
+  "about": "Each place's atmosphere (world/look/atmosphere.gd, docs/art/atmosphere.md): its light by time of day, the mist and cloud shadows of the screen pass, the colour grade, weather, water, and the land drawn around the map. Colours are palette names. A location takes its mood from `places` (its id), else the longest of `prefixes` its id starts with, else `regions` (\"<region>\", or \"<region>/indoors\" for its indoor maps), else `themes` (\"<theme>\" or \"<theme>/indoors\"), else `outdoors` or `indoors`. A mood can be `like` another and change only what differs.",
   "places": {
     "into_the_mists_road": "svalich_road",
-    "village_of_barovia": "barovia_village"
+    "svalich_crossroads": "crossroads",
+    "tser_falls": "tser_falls",
+    "tser_pool": "tser_pool",
+    "tser_pool_eva_tent": "eva_tent",
+    "vallaki_vistani_camp": "vistani_camp",
+    "lake_zarovich": "lake_zarovich",
+    "lake_zarovich_trail": "svalich_woods",
+    "amber_temple_road": "blizzard",
+    "tsolenka_pass": "blizzard",
+    "krezk_pool_of_the_white_sun": "white_sun",
+    "yester_hill_gulthias_tree": "yester_hill",
+    "abbey_of_st_markovia_garden": "abbey",
+    "old_bonegrinder_track": "svalich_woods",
+    "amber_temple_entrance": "high_snow",
+    "death_house_dungeon_1": "death_house_crypt",
+    "death_house_dungeon_2": "death_house_crypt"
   },
-  "prefixes": {},
-  "regions": {},
-  "themes": {},
-  "outdoors": "outdoors_plain",
-  "indoors": "indoors_plain",
+  "prefixes": {
+    "castle_ravenloft_catacombs": "ravenloft_crypt",
+    "castle_ravenloft_larders": "ravenloft_crypt"
+  },
+  "regions": {
+    "village_of_barovia": "barovia_village",
+    "krezk": "krezk",
+    "abbey_of_st_markovia": "abbey",
+    "vallaki": "vallaki",
+    "wizard_of_wines": "wizard_of_wines",
+    "old_bonegrinder": "bonegrinder",
+    "argynvostholt": "argynvostholt",
+    "van_richtens_tower": "lakeside",
+    "berez": "berez",
+    "mount_baratok": "high_snow",
+    "werewolf_den": "werewolf_den",
+    "yester_hill": "yester_hill",
+    "castle_ravenloft": "ravenloft",
+    "death_house/indoors": "death_house",
+    "amber_temple/indoors": "amber_temple",
+    "castle_ravenloft/indoors": "ravenloft_halls",
+    "werewolf_den/indoors": "cave",
+    "argynvostholt/indoors": "haunted"
+  },
+  "themes": {
+    "svalich_road": "svalich_woods",
+    "forest": "svalich_woods",
+    "road": "svalich_woods",
+    "wilderness": "svalich_woods",
+    "village": "barovia_village",
+    "riverside": "lake_zarovich",
+    "dungeon/indoors": "crypt",
+    "church/indoors": "chapel",
+    "tavern/indoors": "tavern",
+    "dungeon": "crypt"
+  },
+  "outdoors": "svalich_woods",
+  "indoors": "indoors",
   "moods": {
     "svalich_woods": {
       "key_angle": [
@@ -149,6 +197,86 @@
       "like": "svalich_woods",
       "mists_edge": "east"
     },
+    "crossroads": {
+      "like": "svalich_woods",
+      "weather": [
+        "leaves",
+        {
+          "kind": "crows",
+          "amount": 6
+        }
+      ]
+    },
+    "tser_falls": {
+      "like": "svalich_woods",
+      "mist": {
+        "height": 1.8,
+        "cover": 0.62,
+        "thickness": 1.6,
+        "open": 0.5
+      },
+      "surround": {
+        "rise": 6.0,
+        "hills": 2.5
+      },
+      "water": {
+        "flow": [
+          0.0,
+          0.45
+        ]
+      }
+    },
+    "tser_pool": {
+      "like": "svalich_woods",
+      "mist": {
+        "open": 0.45
+      },
+      "weather": [
+        "leaves",
+        "embers",
+        {
+          "kind": "wisps",
+          "amount": 18,
+          "core": "wick",
+          "rim": "flame",
+          "size": 0.08
+        }
+      ]
+    },
+    "lake_zarovich": {
+      "like": "svalich_woods",
+      "mist": {
+        "height": 1.5,
+        "cover": 0.6,
+        "thickness": 1.5,
+        "open": 0.4,
+        "wind": [
+          0.25,
+          0.05
+        ]
+      },
+      "surround": {
+        "rise": 2.0,
+        "hills": 1.0,
+        "trees": 0.7
+      },
+      "weather": [
+        "leaves",
+        {
+          "kind": "crows",
+          "amount": 3,
+          "height": 9.0
+        }
+      ]
+    },
+    "lakeside": {
+      "like": "lake_zarovich",
+      "mist": {
+        "height": 1.8,
+        "cover": 0.68,
+        "thickness": 1.8
+      }
+    },
     "barovia_village": {
       "like": "svalich_woods",
       "mist": {
@@ -178,45 +306,512 @@
         }
       ]
     },
-    "outdoors_plain": {
-      "key_angle": [
-        -55,
-        35
+    "krezk": {
+      "like": "barovia_village",
+      "surround": {
+        "ground": "mountain/scree",
+        "trees": 0.55,
+        "dead": 0.15,
+        "rise": 7.0,
+        "hills": 2.5
+      },
+      "weather": [
+        "chimney_smoke",
+        "window_light",
+        {
+          "kind": "snow",
+          "amount": 60,
+          "wind": 0.6
+        }
       ],
-      "fog_density": 0.02,
       "times": {
         "day": {
-          "sky": "ash_violet",
-          "ambient": "mist_blue",
-          "ambient_energy": 1.0125,
-          "key": "frost",
-          "key_energy": 0.95,
-          "fog": "grave"
+          "sky": "pewter",
+          "ambient": "frost",
+          "grade": {
+            "shadows": "night",
+            "lights": "frost",
+            "amount": 0.3
+          }
         },
         "dusk": {
-          "sky": "bruise_deep",
-          "ambient": "lilac",
-          "ambient_energy": 0.675,
-          "key": "ember",
-          "key_energy": 0.3,
-          "fog": "grave"
-        },
-        "night": {
-          "sky": "night_deep",
-          "ambient": "mist_blue",
-          "ambient_energy": 0.525,
-          "key": "moonlight",
-          "key_energy": 0.45,
-          "fog": "grave"
+          "grade": {
+            "shadows": "night",
+            "lights": "parchment",
+            "amount": 0.3
+          }
         }
       }
     },
-    "indoors_plain": {
-      "key_angle": [
-        -55,
-        35
+    "white_sun": {
+      "like": "krezk",
+      "water": {
+        "deep": "moon_blue",
+        "shallow": "mist_blue",
+        "foam": "ivory",
+        "glint": "wick"
+      },
+      "weather": [
+        {
+          "kind": "snow",
+          "amount": 40,
+          "wind": 0.4
+        }
+      ]
+    },
+    "abbey": {
+      "like": "krezk",
+      "mist": {
+        "height": 1.4,
+        "cover": 0.6,
+        "wind": [
+          0.9,
+          0.3
+        ]
+      },
+      "surround": {
+        "ground": "mountain/scree",
+        "trees": 0.25,
+        "dead": 0.6,
+        "rise": 10.0,
+        "hills": 3.0
+      },
+      "weather": [
+        "window_light",
+        {
+          "kind": "snow",
+          "amount": 160,
+          "wind": 1.6
+        },
+        {
+          "kind": "crows",
+          "amount": 2
+        }
+      ]
+    },
+    "vallaki": {
+      "like": "barovia_village",
+      "surround": {
+        "ground": "village/grass",
+        "road": "village/mud_road",
+        "trees": 0.7,
+        "dead": 0.2,
+        "rise": 3.0
+      },
+      "clouds": {
+        "strength": 0.3
+      },
+      "weather": [
+        "chimney_smoke",
+        "window_light",
+        {
+          "kind": "rain",
+          "amount": 380
+        }
       ],
-      "fog_density": 0.008,
+      "times": {
+        "day": {
+          "sky": "stone",
+          "grade": {
+            "shadows": "night",
+            "lights": "silver",
+            "amount": 0.35
+          },
+          "saturation": 0.85
+        }
+      }
+    },
+    "vistani_camp": {
+      "like": "svalich_woods",
+      "mist": {
+        "open": 0.45
+      },
+      "weather": [
+        "leaves",
+        "embers",
+        {
+          "kind": "wisps",
+          "amount": 20,
+          "core": "wick",
+          "rim": "flame",
+          "size": 0.08
+        }
+      ]
+    },
+    "wizard_of_wines": {
+      "like": "barovia_village",
+      "surround": {
+        "trees": 0.6,
+        "dead": 0.2,
+        "rise": 5.0,
+        "hills": 2.0
+      },
+      "weather": [
+        "chimney_smoke",
+        "window_light",
+        {
+          "kind": "rain",
+          "amount": 220
+        },
+        {
+          "kind": "crows",
+          "amount": 7
+        }
+      ]
+    },
+    "bonegrinder": {
+      "like": "barovia_village",
+      "surround": {
+        "trees": 0.6,
+        "dead": 0.5,
+        "rise": 5.0,
+        "hills": 2.0
+      },
+      "weather": [
+        "leaves",
+        "window_light",
+        {
+          "kind": "crows",
+          "amount": 8,
+          "radius": 6.0
+        }
+      ],
+      "times": {
+        "day": {
+          "grade": {
+            "shadows": "bruise_deep",
+            "lights": "bone",
+            "amount": 0.35
+          }
+        }
+      }
+    },
+    "argynvostholt": {
+      "like": "barovia_village",
+      "mist": {
+        "height": 1.7,
+        "cover": 0.62,
+        "thickness": 1.7,
+        "open": 0.55
+      },
+      "surround": {
+        "trees": 0.6,
+        "dead": 0.55,
+        "rise": 6.0,
+        "hills": 2.5
+      },
+      "weather": [
+        "leaves",
+        {
+          "kind": "wisps",
+          "amount": 14,
+          "core": "frost",
+          "rim": "moonlight",
+          "size": 0.1
+        }
+      ],
+      "times": {
+        "day": {
+          "grade": {
+            "shadows": "night",
+            "lights": "silver",
+            "amount": 0.4
+          },
+          "saturation": 0.75
+        },
+        "dusk": {
+          "grade": {
+            "shadows": "night",
+            "lights": "lilac",
+            "amount": 0.4
+          }
+        },
+        "night": {
+          "grade": {
+            "shadows": "night_deep",
+            "lights": "moonlight",
+            "amount": 0.5
+          }
+        }
+      }
+    },
+    "berez": {
+      "like": "svalich_woods",
+      "mist": {
+        "height": 1.7,
+        "cover": 0.62,
+        "thickness": 1.9,
+        "open": 0.5,
+        "wind": [
+          0.15,
+          0.05
+        ]
+      },
+      "surround": {
+        "ground": "marsh/marsh_mud",
+        "trees": 0.45,
+        "dead": 0.7,
+        "rise": 1.5,
+        "hills": 0.8
+      },
+      "water": {
+        "deep": "bog_deep",
+        "shallow": "bog",
+        "foam": "sickly",
+        "glint": "bile",
+        "flow": [
+          0.03,
+          0.01
+        ]
+      },
+      "weather": [
+        {
+          "kind": "wisps",
+          "amount": 22,
+          "core": "bile",
+          "rim": "sickly",
+          "size": 0.12
+        },
+        {
+          "kind": "crows",
+          "amount": 3
+        }
+      ],
+      "times": {
+        "day": {
+          "mist": "bone",
+          "grade": {
+            "shadows": "bog_deep",
+            "lights": "bone",
+            "amount": 0.4
+          },
+          "saturation": 0.8
+        },
+        "dusk": {
+          "mist": "bone",
+          "grade": {
+            "shadows": "bog_deep",
+            "lights": "parchment",
+            "amount": 0.4
+          }
+        },
+        "night": {
+          "mist": "moss",
+          "grade": {
+            "shadows": "bog_deep",
+            "lights": "moonlight",
+            "amount": 0.45
+          }
+        }
+      }
+    },
+    "high_snow": {
+      "like": "svalich_woods",
+      "mist": {
+        "height": 1.1,
+        "cover": 0.45,
+        "wind": [
+          1.1,
+          0.3
+        ],
+        "open": 0.4
+      },
+      "ground_variation": 0.15,
+      "surround": {
+        "ground": "mountain/snow",
+        "road": "mountain/scree",
+        "trees": 0.2,
+        "dead": 0.1,
+        "rise": 12.0,
+        "hills": 4.0
+      },
+      "weather": [
+        {
+          "kind": "snow",
+          "amount": 200,
+          "wind": 1.4
+        }
+      ],
+      "times": {
+        "day": {
+          "sky": "silver",
+          "ambient": "frost",
+          "ambient_energy": 0.7,
+          "mist": "frost",
+          "fog": "silver",
+          "grade": {
+            "shadows": "moon_blue",
+            "lights": "ivory",
+            "amount": 0.3
+          }
+        },
+        "dusk": {
+          "mist": "lilac",
+          "grade": {
+            "shadows": "bruise",
+            "lights": "frost",
+            "amount": 0.35
+          }
+        },
+        "night": {
+          "mist": "mist_blue",
+          "grade": {
+            "shadows": "night",
+            "lights": "frost",
+            "amount": 0.45
+          }
+        }
+      }
+    },
+    "blizzard": {
+      "like": "high_snow",
+      "mist": {
+        "height": 1.6,
+        "cover": 0.6,
+        "wind": [
+          2.2,
+          0.6
+        ],
+        "thickness": 1.6
+      },
+      "weather": [
+        {
+          "kind": "snow",
+          "amount": 480,
+          "wind": 3.5
+        }
+      ],
+      "surround": {
+        "void": "drop"
+      }
+    },
+    "werewolf_den": {
+      "like": "svalich_woods",
+      "surround": {
+        "ground": "mountain/scree",
+        "trees": 0.65,
+        "dead": 0.3,
+        "rise": 7.0,
+        "hills": 3.0
+      },
+      "weather": [
+        "leaves",
+        {
+          "kind": "crows",
+          "amount": 2
+        }
+      ]
+    },
+    "yester_hill": {
+      "like": "svalich_woods",
+      "surround": {
+        "trees": 0.5,
+        "dead": 0.7,
+        "rise": 4.0,
+        "hills": 2.0
+      },
+      "weather": [
+        {
+          "kind": "crows",
+          "amount": 9,
+          "radius": 8.0
+        },
+        "leaves"
+      ],
+      "times": {
+        "day": {
+          "sky": "stone",
+          "grade": {
+            "shadows": "bog_deep",
+            "lights": "bone",
+            "amount": 0.4
+          },
+          "saturation": 0.8
+        },
+        "dusk": {
+          "sky": "bruise_deep",
+          "grade": {
+            "shadows": "bog_deep",
+            "lights": "candle",
+            "amount": 0.4
+          }
+        },
+        "night": {
+          "grade": {
+            "shadows": "bog_deep",
+            "lights": "moonlight",
+            "amount": 0.45
+          }
+        }
+      }
+    },
+    "ravenloft": {
+      "like": "svalich_woods",
+      "lightning": true,
+      "mist": {
+        "height": 1.5,
+        "cover": 0.6,
+        "wind": [
+          1.2,
+          0.4
+        ],
+        "thickness": 1.6
+      },
+      "surround": {
+        "ground": "mountain/scree",
+        "trees": 0.35,
+        "dead": 0.6,
+        "rise": 9.0,
+        "hills": 3.0
+      },
+      "weather": [
+        {
+          "kind": "rain",
+          "amount": 520,
+          "length": 0.65
+        },
+        {
+          "kind": "crows",
+          "amount": 6,
+          "height": 10.0
+        }
+      ],
+      "times": {
+        "day": {
+          "sky": "stone",
+          "grade": {
+            "shadows": "bruise_deep",
+            "lights": "pewter",
+            "amount": 0.45
+          },
+          "saturation": 0.8
+        },
+        "dusk": {
+          "sky": "blood_deep",
+          "grade": {
+            "shadows": "bruise_deep",
+            "lights": "rose",
+            "amount": 0.45
+          }
+        },
+        "night": {
+          "sky": "night_deep",
+          "grade": {
+            "shadows": "bruise_deep",
+            "lights": "moonlight",
+            "amount": 0.5
+          }
+        }
+      }
+    },
+    "indoors": {
+      "key_angle": [
+        -60,
+        30
+      ],
+      "ambient_occlusion": 1.6,
+      "contrast": 1.08,
+      "vignette": 0.55,
       "times": {
         "any": {
           "sky": "void",
@@ -224,7 +819,186 @@
           "ambient_energy": 0.75,
           "key": "moonlight",
           "key_energy": 0.25,
-          "fog": "grave"
+          "fog": "void",
+          "grade": {
+            "shadows": "bruise",
+            "lights": "flame",
+            "amount": 0.2
+          }
+        }
+      },
+      "keep_greys": true
+    },
+    "tavern": {
+      "like": "indoors",
+      "times": {
+        "any": {
+          "ambient": "ember_deep",
+          "ambient_energy": 0.9,
+          "grade": {
+            "shadows": "ember_deep",
+            "lights": "flame",
+            "amount": 0.25
+          }
+        }
+      }
+    },
+    "eva_tent": {
+      "like": "indoors",
+      "times": {
+        "any": {
+          "ambient": "plum",
+          "ambient_energy": 0.8,
+          "grade": {
+            "shadows": "bruise_deep",
+            "lights": "flame",
+            "amount": 0.3
+          }
+        }
+      }
+    },
+    "chapel": {
+      "like": "indoors",
+      "key_angle": [
+        -50,
+        60
+      ],
+      "times": {
+        "any": {
+          "ambient": "night",
+          "ambient_energy": 0.7,
+          "key": "moonlight",
+          "key_energy": 0.45,
+          "grade": {
+            "shadows": "night",
+            "lights": "parchment",
+            "amount": 0.25
+          }
+        }
+      }
+    },
+    "crypt": {
+      "like": "indoors",
+      "mist": {
+        "height": 0.45,
+        "cover": 0.55,
+        "scale": 0.3,
+        "wind": [
+          0.08,
+          0.03
+        ],
+        "thickness": 1.2,
+        "bands": 3,
+        "open": 0.6
+      },
+      "times": {
+        "any": {
+          "ambient": "bog_deep",
+          "ambient_energy": 0.65,
+          "mist": "slate",
+          "mist_strength": 0.35,
+          "grade": {
+            "shadows": "bog_deep",
+            "lights": "flame",
+            "amount": 0.25
+          }
+        }
+      }
+    },
+    "cave": {
+      "like": "crypt",
+      "times": {
+        "any": {
+          "ambient": "grave",
+          "mist": "stone"
+        }
+      }
+    },
+    "death_house": {
+      "like": "indoors",
+      "times": {
+        "any": {
+          "ambient": "grave",
+          "ambient_energy": 0.7,
+          "grade": {
+            "shadows": "bruise_deep",
+            "lights": "bone",
+            "amount": 0.3
+          }
+        }
+      }
+    },
+    "amber_temple": {
+      "like": "crypt",
+      "times": {
+        "any": {
+          "ambient": "night",
+          "ambient_energy": 0.7,
+          "mist": "frost",
+          "mist_strength": 0.3,
+          "grade": {
+            "shadows": "night",
+            "lights": "flame",
+            "amount": 0.35
+          }
+        }
+      }
+    },
+    "ravenloft_halls": {
+      "like": "indoors",
+      "times": {
+        "any": {
+          "ambient": "bruise_deep",
+          "ambient_energy": 0.7,
+          "grade": {
+            "shadows": "blood_deep",
+            "lights": "flame",
+            "amount": 0.3
+          }
+        }
+      }
+    },
+    "ravenloft_crypt": {
+      "like": "crypt",
+      "times": {
+        "any": {
+          "ambient": "bruise_deep",
+          "mist": "bruise",
+          "grade": {
+            "shadows": "blood_deep",
+            "lights": "lilac",
+            "amount": 0.35
+          }
+        }
+      }
+    },
+    "death_house_crypt": {
+      "like": "crypt",
+      "times": {
+        "any": {
+          "ambient": "grave",
+          "mist": "bone_dark",
+          "grade": {
+            "shadows": "bruise_deep",
+            "lights": "bone",
+            "amount": 0.3
+          }
+        }
+      }
+    },
+    "haunted": {
+      "like": "indoors",
+      "times": {
+        "any": {
+          "ambient": "night",
+          "ambient_energy": 0.7,
+          "key": "moonlight",
+          "key_energy": 0.35,
+          "grade": {
+            "shadows": "night_deep",
+            "lights": "moonlight",
+            "amount": 0.35
+          }
         }
       }
     }

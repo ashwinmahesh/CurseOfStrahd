@@ -58,8 +58,8 @@ void fragment() {
 	vec3 tex = (t1 + t2) * 0.5;
 	float d = depth_at(p);
 	float wob = vnoise(p * 1.3 + atmo_time * 0.4) - 0.5;
-	float dd = clamp(d + wob * 0.12, 0.0, 1.0);
-	vec3 base = mix(shallow, deep, smoothstep(0.55, 0.95, dd));
+	float dd = clamp(d + wob * 0.06, 0.0, 1.0);
+	vec3 base = mix(shallow, deep, step(0.45, dd + wob * 0.15));
 	base = mix(base, base * tex * 2.2, tex_amount);
 	// Highlight lines riding the current.
 	float ridge = sin((p.x * 0.8 + p.y * 1.7) * 1.6 + vnoise(p * 0.7 + atmo_time * 0.25) * 6.0 - atmo_time * 1.1);
@@ -67,9 +67,10 @@ void fragment() {
 		base = mix(base, glint, 0.55);
 	}
 	// Foam where the water meets the shore, lapping in and out.
-	float lap = 0.56 + 0.05 * sin(atmo_time * 1.4 + (p.x + p.y) * 0.9);
+	// The mask is 0 on land and 0.25 a square out, so the shore itself sits at about 0.12.
+	float lap = 0.2 + 0.035 * sin(atmo_time * 1.4 + (p.x + p.y) * 0.9);
 	if (use_mask && dd < lap) {
-		base = mix(base, foam, dd < lap - 0.06 ? 0.9 : 0.55);
+		base = mix(base, foam, dd < lap - 0.04 ? 0.85 : 0.5);
 	}
 	ALBEDO = base;
 }
