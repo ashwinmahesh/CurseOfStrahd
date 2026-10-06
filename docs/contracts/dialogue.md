@@ -99,7 +99,7 @@ cooldown 3
 ```
 
 - `{name}` is the acting character's first name, `{target}` the target's name.
-- Voice-over (ADR 0012): a line is voiced by its exact text, so a line holding `{name}`, `{leader}` or `{target}`
+- Voice-over (ADR 0013): a line is voiced by its exact text, so a line holding `{name}`, `{leader}` or `{target}`
   is never voiced, and editing a voiced line leaves it silent until `make voice` records it again.
 - A variant with a `[condition]` prefix is only eligible when it holds; the most specific eligible variants win
   (conditioned before plain), and the game avoids repeating a variant until the others have played.

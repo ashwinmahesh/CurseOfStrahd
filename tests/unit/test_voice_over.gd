@@ -1,5 +1,5 @@
 extends TestCase
-## Spoken lines (ADR 0012): the game finds a line's clip by the same key tools/audio/voice_lines.py gives it, a line
+## Spoken lines (ADR 0013): the game finds a line's clip by the same key tools/audio/voice_lines.py gives it, a line
 ## with no clip is silent, and every recorded clip belongs to a speaker the game knows and loads.
 
 

@@ -1,4 +1,4 @@
-"""ElevenLabs API calls for the voice pipeline (ADR 0012). Stdlib only.
+"""ElevenLabs API calls for the voice pipeline (ADR 0013). Stdlib only.
 
 The key comes from ELEVENLABS_API_KEY (read from ~/.zshrc if the shell doesn't have it, like GEMINI_API_KEY in
 tools/art/generate_gemini.py) and is sent as the xi-api-key header, never in a URL, a file or a log.

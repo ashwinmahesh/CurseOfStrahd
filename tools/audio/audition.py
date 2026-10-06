@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Casting voices for the voice pipeline (ADR 0012). Auditions go to captures/voice_auditions/<speaker>/ (not in git).
+"""Casting voices for the voice pipeline (ADR 0013). Auditions go to captures/voice_auditions/<speaker>/ (not in git).
 
   audition.py voices [--search old]                      the voices on the account (premade and saved)
   audition.py design <speaker> "<description>" [--text T] three new voices from a description (Voice Design)

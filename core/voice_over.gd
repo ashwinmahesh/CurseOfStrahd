@@ -1,6 +1,6 @@
 class_name VoiceOver
 extends RefCounted
-## Spoken lines (ADR 0012). A line plays its recorded clip if it has one: res://audio/voice/<speaker>/<key>.mp3, made
+## Spoken lines (ADR 0013). A line plays its recorded clip if it has one: res://audio/voice/<speaker>/<key>.mp3, made
 ## by tools/audio/generate_voice.py, where the key is a hash of the line's text. A line nobody has voiced yet (or one
 ## edited since it was) is simply silent, so nothing depends on audio. One voice speaks at a time: a new line, or
 ## moving on, cuts the last. The volume is the player's, kept beside music and effects in user://settings.cfg.

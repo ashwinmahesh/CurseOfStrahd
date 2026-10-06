@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Every line the game can voice, and the clip each one plays (ADR 0012).
+"""Every line the game can voice, and the clip each one plays (ADR 0013).
 
 A clip is keyed by its speaker and a hash of its text: res://audio/voice/<speaker>/<key>.mp3, where key is the first
 16 hex digits of the SHA-1 of the line's text (VoiceOver.key in core/voice_over.gd computes the same). An edited line

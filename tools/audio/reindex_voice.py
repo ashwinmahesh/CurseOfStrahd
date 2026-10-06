@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuilds audio/voice/manifest.json from the clips on disk and audio/voice/generation_log.jsonl (ADR 0012).
+"""Rebuilds audio/voice/manifest.json from the clips on disk and audio/voice/generation_log.jsonl (ADR 0013).
 
 Two `make voice` runs at once each write the manifest they started with, so the last one to finish drops the
 other's entries; the clips and the log are always complete. This puts the manifest back: every clip on disk, with

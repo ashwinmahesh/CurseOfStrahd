@@ -225,7 +225,7 @@ func _advance() -> void:
 
 func _show(beat: Dictionary) -> void:
 	_waiting_continue = false
-	# A line speaks its recorded clip, if it has one (ADR 0012); anything else ends the last line's voice.
+	# A line speaks its recorded clip, if it has one (ADR 0013); anything else ends the last line's voice.
 	if str(beat["kind"]) == "line":
 		VoiceOver.say(str(beat.get("speaker_id", "")), str(beat["text"]))
 	else:

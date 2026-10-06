@@ -318,7 +318,7 @@ func narrate(text: String, portrait: String = DialogueRunner.NARRATOR_PORTRAIT) 
 		_narr_face.add_child(UiParts.framed_portrait(portrait, 76.0))
 	_narr.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("parchment").to_html(false), text.replace("[", "[lb]")]
 	_narr_time = clampf(3.0 + text.length() * 0.05, 4.0, 10.0)
-	# The Narrator speaks it, if it's recorded (ADR 0012); the box stays up until the voice is done.
+	# The Narrator speaks it, if it's recorded (ADR 0013); the box stays up until the voice is done.
 	_narr_time = maxf(_narr_time, VoiceOver.say(VoiceOver.NARRATOR, text) + 1.0)
 
 

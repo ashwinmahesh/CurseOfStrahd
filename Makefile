@@ -46,7 +46,7 @@ ci: validate lint test
 palette:
 	python3 tools/art/build_palette.py
 
-## Spoken lines (ADR 0012): generates the clips that are missing with the pinned ElevenLabs model (audio/voice/casting.json).
+## Spoken lines (ADR 0013): generates the clips that are missing with the pinned ElevenLabs model (audio/voice/casting.json).
 ## make voice [SPEAKER="narrator madam_eva"] [LIMIT=n] [DRY=1] [MAX_USD=5] [RECAST=1] [PRUNE=1]
 voice:
 	python3 tools/audio/generate_voice.py $(if $(SPEAKER),--speaker $(SPEAKER),) $(if $(LIMIT),--limit $(LIMIT),) $(if $(DRY),--dry-run,) $(if $(MAX_USD),--max-usd $(MAX_USD),) $(if $(RECAST),--recast,) $(if $(PRUNE),--prune,)

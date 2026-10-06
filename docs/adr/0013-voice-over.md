@@ -1,4 +1,4 @@
-# ADR 0012: Voice-over with ElevenLabs
+# ADR 0013: Voice-over with ElevenLabs
 
 Status: accepted (owner decision 2026-10-06: "lets start generating spoken audio using elevenlabs")
 

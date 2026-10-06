@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generates the voice clips that are missing (ADR 0012): make voice [SPEAKER="narrator ..."] [LIMIT=n] [DRY=1]
+"""Generates the voice clips that are missing (ADR 0013): make voice [SPEAKER="narrator ..."] [LIMIT=n] [DRY=1]
 
 For every voiced line (tools/audio/voice_lines.py) whose speaker has a voice in audio/voice/casting.json and whose
 clip audio/voice/<speaker>/<key>.mp3 doesn't exist yet, asks ElevenLabs for it with the pinned model, output format
