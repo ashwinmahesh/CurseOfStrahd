@@ -4,7 +4,7 @@ extends Node3D
 ## make capture SCENE=res://scenes/test/sprite_gallery.tscn [-- --ids=wolf,ilse_varga] shoots each phase.
 
 const SPACING := 1.7
-const PER_ROW := 8
+const PER_ROW := 6
 ## Seconds per phase: walk, then attack.
 const WALK_TIME := 2.0
 const ATTACK_TIME := 1.0
@@ -26,31 +26,36 @@ func _ready() -> void:
 	env.environment.background_color = Look.color("void")
 	add_child(env)
 	var rows := ceili(float(ids.size()) / PER_ROW)
+	# Rows run across the screen: the lineup turns with the camera's fixed 45 degree heading.
+	var lineup := Node3D.new()
+	lineup.rotation.y = deg_to_rad(45.0)
+	add_child(lineup)
 	var floor_mesh := MeshInstance3D.new()
 	var pm := PlaneMesh.new()
 	pm.size = Vector2(PER_ROW * SPACING + 2.0, rows * SPACING + 2.0)
 	floor_mesh.mesh = pm
 	floor_mesh.material_override = Look.cel("grave")
-	add_child(floor_mesh)
+	lineup.add_child(floor_mesh)
 	for i in ids.size():
 		var frames := DirectionalSprite.frames_for(ids[i])
 		var s := DirectionalSprite.create(frames, float(CombatToken.HEIGHTS.get(ids[i], 1.2)))
 		var row := floorf(float(i) / PER_ROW)
 		s.position = Vector3((i % PER_ROW - (PER_ROW - 1) / 2.0) * SPACING, 0, (row - (rows - 1) / 2.0) * SPACING)
 		s.set_step_time(0.18)
-		add_child(s)
+		lineup.add_child(s)
 		sprites.append(s)
 		var label := Label3D.new()
 		label.text = ids[i]
 		label.font_size = 28
 		label.pixel_size = 0.006
-		label.position = s.position + Vector3(0, -0.05, 0.45)
+		label.position = s.position + Vector3(0, 0.02, 0.5)
 		label.rotation_degrees = Vector3(-90, 0, 0)
 		label.modulate = Look.color("vellum")
-		add_child(label)
+		label.render_priority = 10
+		lineup.add_child(label)
 	rig = CameraRig.new()
 	add_child(rig)
-	rig.distance = 4.0 + rows * 2.2
+	rig.distance = clampf(9.0 + rows * 2.5, CameraRig.ZOOM_MIN, CameraRig.ZOOM_MAX)
 	rig.snap_to_target()
 	add_child(Look.make_post_process())
 	_set_facing()

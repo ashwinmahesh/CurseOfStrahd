@@ -42,8 +42,9 @@ of the reference (arms barely move). 21:9 leaves room for a swung weapon.
 - **Feet**: each pose stands where the view stands, by the median column of its lowest fifth (between the feet).
 - **Frames** (12 fps, per-frame durations): wind-up squashed, wind-up held, strike stretched and leaning in
   (the hit frame), strike, strike settling, back to the standing view. About 0.6 s, blow at 0.2 s.
-- **Cells** are 1.75x the walk cell's width and 1.25x its height (672 x 480), same pixel scale and same centre,
-  so a raised sword or a lunge fits and the figure keeps its size and ground line (the game centres each frame).
+- **Cells** are as big as the character's widest and tallest pose needs: rendered large, then cropped evenly
+  round the walk cell's centre at its pixel scale, so a raised sword or a lunge fits and the figure keeps its size
+  and ground line (the game centres each frame). At least 1.25x the walk cell's width.
 - **Checks** (`--check`): figures merged or clipped by the picture's edge, or frame 1 not shaped like the view
   (Gemini put a new pose first). Flagged strips are redrawn.
 

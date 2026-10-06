@@ -5,6 +5,7 @@ same angle. Frame 1 copies the view from the turnaround sheet, so its height tel
 the sheet; frames 2 and 3 are the new poses (wind-up and strike, or two strides).
 """
 import json
+import math
 from pathlib import Path
 
 import numpy as np
@@ -202,6 +203,24 @@ def finish_sheet(sheet, saturate=1.0):
     if hasattr(cutout, "merge_islands"):
         sheet = cutout.merge_islands(sheet)
     return sheet
+
+
+def crop_even(frames, cell, min_wide, margin):
+    """Crops every frame by the same amount on opposite sides (so the centre stays put) to the smallest even size
+    that holds all their opaque pixels plus `margin`, no smaller than the walk cell's height and `min_wide` x its
+    width. Returns (frames, (width, height))."""
+    h, w = frames[0].shape[:2]
+    cy, cx = h / 2.0, w / 2.0
+    half_w, half_h = cell * min_wide / 2.0, cell / 2.0
+    for f in frames:
+        ys, xs = np.nonzero(f[..., 3] > 0.5)
+        if len(xs):
+            half_w = max(half_w, cx - xs.min() + margin, xs.max() + 1 - cx + margin)
+            half_h = max(half_h, cy - ys.min() + margin, ys.max() + 1 - cy + margin)
+    nw = min(w, 2 * int(math.ceil(half_w)))
+    nh = min(h, 2 * int(math.ceil(half_h)))
+    x0, y0 = (w - nw) // 2, (h - nh) // 2
+    return [f[y0:y0 + nh, x0:x0 + nw].copy() for f in frames], (nw, nh)
 
 
 def edge_touch(frame, margin=1):

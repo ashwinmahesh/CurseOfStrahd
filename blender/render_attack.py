@@ -12,9 +12,9 @@ line up with the walk sheet: same pixel size, same ground line, feet where they 
 
 Six frames per direction, timed by per-frame durations: wind-up (squash), wind-up held (anticipation), strike (stretched,
 leaning in: the hit frame), strike, strike settling, back to the standing view. Squash, stretch and lean are applied in
-Blender on top of the drawn poses. Cells are 1.75x the walk cell's width and 1.25x its height (672 x 480 for 384 px
-walk cells), at the same pixel scale and centred the same way, so a raised sword or a lunge has room and the
-figure keeps its size and ground line in game.
+Blender on top of the drawn poses. Cells are as big as the widest and tallest pose needs (cropped evenly round the
+walk cell's centre, at its pixel scale, so the figure keeps its size and ground line in game), at least 1.25x the
+walk cell's width.
 
 Writes art/sprites/<id>/attack.png (rows = directions, cols = frames) and attack.tres (attack_<dir>, not looping,
 metadata hit_frame, and casts: the attack is a spell gesture, so the game also plays it when the character casts). The game merges attack.tres into walk.tres's animations (DirectionalSprite.frames_for).
@@ -38,9 +38,12 @@ import render_walk as rw  # noqa: E402
 
 FPS = 12.0
 # Attack cells are wider and taller than walk cells, with the same pixel scale and the same centre, so a swung
-# weapon or a lunge fits and the figure stands on the same ground line (the game centres every frame).
-WIDE = 1.75
-TALL = 1.25
+# weapon or a lunge fits and the figure stands on the same ground line (the game centres every frame). Frames are
+# rendered at the largest size, then cropped evenly to the smallest cell that holds every frame.
+MAX_WIDE = 2.5
+MAX_TALL = 1.6
+MIN_WIDE = 1.25
+MARGIN = 6
 # (pose, squash x, squash y, lean degrees forward, relative duration). Index 2 is the hit.
 FRAMES = [
     ("windup", 1.04, 0.96, -2.0, 1.0),
@@ -108,10 +111,11 @@ def main():
     if len(strips) < len(names):
         raise SystemExit(f"{a.id}: unusable strips: {json.dumps(problems)} (tools/art/anim_keyframes.py)")
     warnings += [f"{v}: {w}" for v, ws in problems.items() for w in ws]
-    ch, cw = int(round(a.cell * TALL)), int(round(a.cell * WIDE))
+    # Even sizes keep the walk cell's centre on a pixel boundary.
+    ch, cw = 2 * int(round(a.cell * MAX_TALL / 2)), 2 * int(round(a.cell * MAX_WIDE / 2))
     scene = cutout.reset_scene(cw, ch)
     cam = cutout.ortho_camera(scene, (0, -10, rw.FIGURE_HEIGHT * 0.52), (math.radians(90), 0, 0),
-                              rw.FIGURE_HEIGHT * 1.12 * TALL)
+                              rw.FIGURE_HEIGHT * 1.12 * ch / a.cell)
     cam.data.sensor_fit = "VERTICAL"
     views = {}
     for name, fig in zip(names, figures):
@@ -157,6 +161,7 @@ def main():
             if edges:
                 clipped.add(f"{d} ({edges})")
             frames.append(frame)
+    frames, (cw, ch) = anim.crop_even(frames, a.cell, MIN_WIDE, MARGIN)
     out_dir = cutout.ROOT / "art" / "sprites" / a.id
     out_dir.mkdir(parents=True, exist_ok=True)
     sheet_out = anim.finish_sheet(cutout.pack_grid(frames, len(FRAMES)), float(s.get("saturate", 1.0)))

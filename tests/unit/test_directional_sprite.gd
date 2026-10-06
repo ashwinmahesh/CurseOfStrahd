@@ -65,9 +65,10 @@ func test_every_sprite_attacks_in_every_direction() -> void:
 			assert_true(n >= 4, "%s %s has frames" % [id, anim])
 			assert_false(frames.get_animation_loop(anim), "%s %s plays once" % [id, anim])
 			assert_between(hit, 1, n - 2, "%s hit frame inside the swing" % id)
-			# Attack cells are 1.25x the walk cell's height at the same scale, centred alike (render_attack.py).
-			assert_eq(frames.get_frame_texture(anim, 0).get_height(),
-				roundi(frames.get_frame_texture(&"idle_s", 0).get_height() * 1.25), "%s %s cell height" % [id, anim])
+			# Attack cells grow evenly round the walk cell's centre at its scale (render_attack.py), so the figure
+			# keeps its size and ground line: at least as big, and bigger by an even number of pixels.
+			var grow := frames.get_frame_texture(anim, 0).get_height() - frames.get_frame_texture(&"idle_s", 0).get_height()
+			assert_true(grow >= 0 and grow % 2 == 0, "%s %s cell grows evenly (%d)" % [id, anim, grow])
 		assert_eq(DirectionalSprite.cell_size(frames), frames.get_frame_texture(&"idle_s", 0).get_height(),
 			id + " sized by its walk cell")
 

@@ -840,6 +840,10 @@ func _play_events() -> void:
 					var drawn := str(ev["attacker"]) != cast_by and a.start_attack(Vector2(dir.x, dir.z))
 					if drawn:
 						await a.wait_for_strike()
+						if _cap_tool != null and not _cap_swing_done:
+							# Capture: the first drawn attack at the moment its blow lands.
+							_cap_swing_done = true
+							_cap_tool.call("_shot", _cap_out + "_7_swing.png")
 					else:
 						a.face(Vector2(dir.x, dir.z), false)
 					var tw2 := create_tween()
@@ -1012,6 +1016,7 @@ func debug_move_leader(_point: Vector3) -> void:
 ## controls every party member.
 var _cap_tool: Node = null
 var _cap_out := ""
+var _cap_swing_done := false
 var _cap_prompt_done := false
 
 
