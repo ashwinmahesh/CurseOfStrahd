@@ -1159,10 +1159,11 @@ func _use_container(ct: Dictionary, method: String = "auto") -> void:
 	if ct.has("flag"):
 		st.set_flag(str(ct["flag"]))
 	var left := (st.loc_state(loc_id).get("contents", {}) as Dictionary).get(id, {}) as Dictionary
-	if not left.is_empty():
-		loot_opened.emit(id, (left["items"] as Array).duplicate(true), float(left["gold"]))
-	else:
-		loot_opened.emit(id, (ct.get("items", []) as Array).duplicate(true), float(ct.get("gold", 0)))
+	var items := (left["items"] as Array).duplicate(true) if not left.is_empty() else (ct.get("items", []) as Array).duplicate(true)
+	# A Tarokka treasure spot (ADR 0011): whatever the reading hid here is in the chest too.
+	for treasure in Tarokka.take_from(Tarokka.place_for(loc, "container", id), st):
+		items.append({"id": treasure, "qty": 1})
+	loot_opened.emit(id, items, float(left["gold"]) if not left.is_empty() else float(ct.get("gold", 0)))
 
 
 ## Called by the loot window when everything's been taken.
@@ -1595,3 +1596,17 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 		_say("combat:victory")
 	_save_positions()
 	combat_ended.emit(outcome)
+	if outcome == "victory":
+		_spoils(encounter_id, spec)
+
+
+## What a won fight leaves (the encounter's `loot`, and a Tarokka treasure if this fight is a treasure spot), in the
+## loot window like a chest. Leftovers stay as "fight:<id>".
+func _spoils(encounter_id: String, spec: Dictionary) -> void:
+	var loot := spec.get("loot", {}) as Dictionary
+	var items := (loot.get("items", []) as Array).duplicate(true)
+	for treasure in Tarokka.take_from(Tarokka.place_for(loc, "encounter", encounter_id), st):
+		items.append({"id": treasure, "qty": 1})
+	var gold := float(loot.get("gold", 0))
+	if not items.is_empty() or gold > 0.0:
+		loot_opened.emit.call_deferred("fight:" + encounter_id, items, gold)

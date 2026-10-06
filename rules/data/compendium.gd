@@ -5,7 +5,7 @@ extends RefCounted
 
 const FOLDERS: Array[String] = ["classes", "subclasses", "species", "backgrounds", "feats", "spells", "items",
 	"monsters", "conditions", "pregens", "encounters", "locations", "npcs", "quests", "tarokka", "travel",
-	"random_encounters", "magic_items"]
+	"random_encounters", "magic_items", "dark_gifts"]
 
 static var _shared: Compendium = null
 

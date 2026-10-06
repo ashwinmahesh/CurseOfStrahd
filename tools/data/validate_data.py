@@ -24,7 +24,7 @@ FOLDERS = {
     "items": "item", "magic_items": "item", "monsters": "monster", "conditions": "condition", "pregens": "pregen",
     "encounters": "encounter", "locations": "location", "npcs": "npc", "quests": "quest",
     "tarokka": {"cards": "tarokka_cards", "outcomes": "tarokka_outcomes"}, "travel": "travel",
-    "random_encounters": "random_table",
+    "random_encounters": "random_table", "dark_gifts": "dark_gift",
 }
 
 TYPES = {
@@ -114,7 +114,7 @@ def validate(value, schema, base, path, errors):
 
 
 # Content beyond this character level may reference data that later phases add (level 4+ spells).
-PHASE_MAX_LEVEL = 5
+PHASE_MAX_LEVEL = 11
 
 
 def load_all():
@@ -253,6 +253,8 @@ def semantic_checks(data):
             if band != enc["difficulty"]:
                 errors.append(f"encounters/{eid}: {xp} XP is a {band} encounter for {len(enc['party'])} level {level} characters, not {enc['difficulty']}")
     story_checks(data, errors, need)
+    pending.extend(pending_list)
+    pending_list.clear()
     campaign_checks(data, errors, pending)
     return errors, pending
 
@@ -319,9 +321,16 @@ def campaign_checks(data, errors, pending):
                 x, z = m["cell"]
                 if rows and not (0 <= z < len(rows) and 0 <= x < len(rows[z]) and rows[z][x] in ".~1234"):
                     errors.append(f"{w}: {m['monster']} at {m['cell']} isn't on open floor of {t['map']}")
+    # Every travel file is part of one map (ADR 0011): roads may join places from any file; place ids are unique.
+    all_places = {}
+    for mid, tm in data.get("travel", {}).items():
+        for p in tm["places"]:
+            if p["id"] in all_places:
+                errors.append(f"travel/{mid}: place '{p['id']}' is already in travel/{all_places[p['id']]}")
+            all_places[p["id"]] = mid
     for mid, tm in data.get("travel", {}).items():
         w = f"travel/{mid}"
-        ids = {p["id"] for p in tm["places"]}
+        ids = set(all_places)
         for p in tm["places"]:
             place_ok(p["location"], p["region"], f"{w} place {p['id']}", "location")
         for r in tm["roads"]:
@@ -342,6 +351,69 @@ def campaign_checks(data, errors, pending):
 
 
 OPEN_FLOOR = ".~1234"
+pending_list = []
+
+
+def treasure_checks(data, parsed, errors, pending):
+    """Treasure spots, `tarokka give`, allies and dark gifts (ADR 0011)."""
+    out = data.get("tarokka", {}).get("outcomes", {})
+    places = {}
+    for slot in ("tome", "symbol", "sword"):
+        for cid, o in out.get(slot, {}).items():
+            places[o["place"]] = o["region"]
+    spot_of = {}
+    for lid, loc in data["locations"].items():
+        w = f"locations/{lid}"
+        cts = {c["id"] for c in loc.get("containers", [])}
+        encs = {e["id"] for e in loc.get("encounters", [])}
+        for place, spot in loc.get("treasure_spots", {}).items():
+            if place not in places:
+                errors.append(f"{w}: treasure spot '{place}' isn't a place in data/tarokka/outcomes.json")
+            if place in spot_of:
+                errors.append(f"{w}: treasure spot '{place}' is already in locations/{spot_of[place]}")
+            spot_of[place] = lid
+            if "container" in spot and spot["container"] not in cts:
+                errors.append(f"{w}: treasure spot '{place}': no container '{spot['container']}' here")
+            if "encounter" in spot and spot["encounter"] not in encs:
+                errors.append(f"{w}: treasure spot '{place}': no encounter '{spot['encounter']}' here")
+            if "dialogue" in spot:
+                fkey, _, node = spot["dialogue"].rpartition(":")
+                if fkey not in parsed or node not in parsed[fkey]["nodes"]:
+                    errors.append(f"{w}: treasure spot '{place}': no dialogue node '{spot['dialogue']}'")
+                elif not any(pl == place for pl, _ in parsed[fkey].get("tarokka_give", [])):
+                    errors.append(f"{w}: treasure spot '{place}': {fkey} never says `tarokka give {place}`")
+    gives = {}
+    for key, p in parsed.items():
+        for place, where in p.get("tarokka_give", []):
+            gives.setdefault(place, []).append(where)
+            if place not in places:
+                errors.append(f"narrative/{where}: tarokka give '{place}' isn't a Tarokka place")
+        for gid, where in p.get("dark_gifts", []):
+            if gid not in data.get("dark_gifts", {}):
+                errors.append(f"narrative/{where}: unknown dark gift '{gid}'")
+    for place, region in sorted(places.items()):
+        if region == "castle_ravenloft" or place in spot_of:
+            continue
+        msg = f"data/tarokka/outcomes.json: place '{place}' (region {region}) has no treasure spot in any location"
+        (pending if region in LATER_REGIONS else errors).append(msg)
+    joins = set()
+    for f in (ROOT / "narrative").rglob("*.dialogue"):
+        for line in f.read_text().splitlines():
+            t = line.strip()
+            if t.startswith("join "):
+                joins.add(t.split()[1])
+    for cid, o in out.get("ally", {}).items():
+        npc = o.get("npc", "")
+        if npc == "" or o["region"] == "castle_ravenloft":
+            continue
+        n = data["npcs"].get(npc)
+        later = o["region"] in LATER_REGIONS
+        if n is None:
+            continue  # reported by campaign_checks
+        if not n.get("guest") or not (n.get("guest_build") or n.get("monster")):
+            (pending if later else errors).append(f"npcs/{npc}: the {cid} card's ally needs guest: true and a guest_build (or monster)")
+        if npc not in joins:
+            (pending if later else errors).append(f"data/tarokka/outcomes.json ally.{cid}: no conversation says `join {npc}`")
 
 
 def story_checks(data, errors, need):
@@ -509,6 +581,7 @@ def story_checks(data, errors, need):
             flags_read.setdefault(fid, []).extend(wh)
         for fid, wh in p["flags_set"].items():
             flags_set.setdefault(fid, []).extend(wh)
+    treasure_checks(data, parsed, errors, pending_list)
     for ref, w in dialogue_refs:
         fkey, _, node = ref.rpartition(":")
         if fkey not in parsed:

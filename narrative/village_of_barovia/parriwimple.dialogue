@@ -14,6 +14,7 @@ endif
 * What's the pastry woman like? -> pie_lady
 * [if flag.burial_agreed and not flag.parriwimple_pallbearer and not flag.burgomaster_buried] Could you help carry the burgomaster's coffin? -> coffin
 * [if not flag.parriwimple_befriended] Say something kind to him. -> befriend
+* [if tarokka.ally.npc == parriwimple and not guest:parriwimple] Madam Eva's cards named you, Parriwimple. Come with us. -> ally
 * Goodbye. -> END
 
 ~ counting
@@ -56,6 +57,14 @@ set parriwimple_befriended
 Narrator: A spark, a puff of colored light, a floating flour-dust star. Parriwimple watches it with his whole face.
 Parriwimple [smile]: Again. No. Don't, Uncle will charge you for the flour. But that was the best thing I ever saw. I'll remember you.
 -> menu
+
+~ ally
+Parriwimple: Me? In the cards? Nobody ever saw me in anything before.
+Narrator: He sets down a sack of flour, very gently, as if it might wake.
+Parriwimple: Uncle says I'm not to leave the shop. Uncle says a lot. I can carry your packs. I can carry you, if you fall down. I'll count the days we're gone so he knows.
+interject tag:kind: You'll do more than carry, Parriwimple.
+join parriwimple
+-> END
 
 ~ graveside
 Parriwimple: The grave's ready. I put the dirt in a neat pile, so it goes back in neat. Uncle says neat is respect.

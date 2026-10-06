@@ -379,6 +379,17 @@
         }
       ],
       "gold": 3
+    },
+    {
+      "id": "izek_doll_chest",
+      "cell": [
+        3,
+        9
+      ],
+      "label": "Izek's chest",
+      "model": "chest",
+      "items": [],
+      "gold": 0
     }
   ],
   "traps": [
@@ -665,5 +676,10 @@
     "enter": "enter:vallaki_burgomaster_mansion"
   },
   "rest": "no",
-  "rest_text": "The Baron's guest beds have been re-stuffed for the festival, and Lady Lydia will not have them slept in before then. Or after."
+  "rest_text": "The Baron's guest beds have been re-stuffed for the festival, and Lady Lydia will not have them slept in before then. Or after.",
+  "treasure_spots": {
+    "vallaki_burgomaster_mansion:izek_quarters": {
+      "container": "izek_doll_chest"
+    }
+  }
 }

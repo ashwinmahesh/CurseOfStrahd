@@ -520,6 +520,36 @@
               }
             },
             "description": "Quest stage reached on victory."
+          },
+          "loot": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "What the fight leaves when won (a loot window).",
+            "properties": {
+              "gold": {
+                "type": "number",
+                "minimum": 0
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "qty": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -542,6 +572,27 @@
     "rest_text": {
       "type": "string",
       "description": "Why resting isn't possible (shown when rest is 'no')."
+    },
+    "treasure_spots": {
+      "description": "Tarokka places this location holds (ADR 0011): place id (data/tarokka/outcomes.json) -> the container, fight or conversation where the treasure the reading put there is found.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "minProperties": 1,
+        "maxProperties": 1,
+        "properties": {
+          "container": {
+            "type": "string"
+          },
+          "encounter": {
+            "type": "string"
+          },
+          "dialogue": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "$defs": {

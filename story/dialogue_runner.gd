@@ -29,6 +29,7 @@ var _pending_jump: String = ""
 var _guard: int = 0
 var _picking := false       ## waiting for the player to choose a party member (`sacrifice`, `respec`)
 var _pick_purpose := "sacrifice"
+var _gift := ""                ## the dark gift on offer (`dark_gift`)
 var _last_check: Dictionary = {}        ## {who, test, skill, said} of the last check rolled
 var _check_jumps: Array[String] = []    ## [ok, fail] targets of the last check
 var _queued: Array[Dictionary] = []   ## beats a statement produced beyond its first (a Tarokka card, then the verse)
@@ -203,6 +204,25 @@ func next() -> Dictionary:
 				_queued.append(_line_beat(str(s["speaker"]), "", str(o.get("verse", ""))))
 				return {"kind": "notice", "text": "%s: %s" % [Tarokka.SLOT_NAMES.get(slot, slot), Tarokka.card(card_id).get("name", card_id)],
 					"card": card_id, "slot": slot}
+			"tarokka_give":
+				pc += 1
+				# The treasures the reading hid here, handed to the party's leader (ADR 0011).
+				var got := Tarokka.take_from(str(s["place"]), st)
+				if got.is_empty():
+					continue
+				var taker := st.leader_character()
+				for item in got:
+					st.give_item(item, 1, taker)
+				for item in got.slice(1):
+					_queued.append({"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", item)]})
+				return {"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", got[0])]}
+			"dark_gift":
+				pc += 1
+				if Compendium.shared().has("dark_gifts", str(s["gift"])) and not _living().is_empty():
+					_picking = true
+					_pick_purpose = "dark_gift"
+					_gift = str(s["gift"])
+					return _pick_beat()
 			"shop":
 				pc += 1
 				if npc_id != "":
@@ -252,16 +272,27 @@ func _pick_beat() -> Dictionary:
 		names.append(ch.name)
 	var text := "Choose who it will be. They will not come back." if _pick_purpose == "sacrifice" \
 		else "Whose fate will the cards read anew? (They return to level 1 and are built again; they keep their belongings.)"
+	if _pick_purpose == "dark_gift":
+		var g := Compendium.shared().get_entry("dark_gifts", _gift)
+		text = "Who accepts %s? %s It can never be given back." % [g.get("name", _gift), g.get("summary", "")]
+		names.append("No one")
 	return {"kind": "pick_member", "text": text, "members": names, "purpose": _pick_purpose}
 
 
 ## Answers a `sacrifice` beat: the `i`th living party member dies for good and leaves the party.
 func pick_member(i: int) -> Dictionary:
 	var living := _living()
+	if _picking and _pick_purpose == "dark_gift" and i == living.size():
+		_picking = false
+		st.set_flag("refused_" + _gift, true)
+		return {"kind": "notice", "text": "No one takes it."}
 	if not _picking or i < 0 or i >= living.size():
 		return next()
 	_picking = false
 	var ch := living[i]
+	if _pick_purpose == "dark_gift":
+		ch.accept_dark_gift(_gift)
+		return {"kind": "notice", "text": "%s accepts %s." % [ch.name, Compendium.shared().display_name("dark_gifts", _gift)]}
 	if _pick_purpose == "respec":
 		return {"kind": "respec", "index": st.party.find(ch), "name": ch.name}
 	st.lose_member(ch, "gave their life on the altar beneath Death House")

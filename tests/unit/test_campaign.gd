@@ -165,3 +165,69 @@ func test_waiting_until_an_hour_and_where_the_party_is() -> void:
 	r.next()
 	assert_eq(st.day, day + 1, "noon has passed: the next noon")
 	assert_true(StoryConditions.check("at:vallaki", st))
+
+
+## Phase 5 (ADR 0011): the travel map is every file in data/travel/ merged.
+func test_region_travel_files_join_the_one_map() -> void:
+	var c := Compendium.shared()
+	c.tables["travel"]["test_region"] = {"id": "test_region", "name": "Test", "places": [
+		{"id": "test_place", "name": "Test place", "location": "village_of_barovia", "pos": [0.5, 0.5], "region": "test"}],
+		"roads": [{"id": "test_road", "from": "test_place", "to": "village_of_barovia", "hours": 1}]}
+	assert_eq(str(Travel.place("test_place").get("name", "")), "Test place", "a region's place is on the map")
+	assert_true(Travel.map_data()["roads"].any(func(r: Variant) -> bool: return str((r as Dictionary)["id"]) == "test_road"))
+	assert_false(Travel.place("village_of_barovia").is_empty(), "barovia.json's places are still there")
+	c.tables["travel"].erase("test_region")
+
+
+## Treasure spots: what the reading hid at a place is found once, by a chest, a fight or a conversation.
+func test_treasure_spots_hand_over_the_reading_once() -> void:
+	var st := _party()
+	st.tarokka = {"tome": "swords_1", "symbol": "stars_2", "sword": "coins_3", "ally": "high_0", "enemy": "high_1"}
+	assert_true(StoryConditions.check("treasure_at:place_swords_1", st))
+	assert_false(StoryConditions.check("treasure_at:place_swords_2", st))
+	var loc := {"treasure_spots": {"place_swords_1": {"container": "chest"}, "place_coins_3": {"encounter": "fight"}}}
+	assert_eq(Tarokka.place_for(loc, "container", "chest"), "place_swords_1")
+	assert_eq(Tarokka.take_from("place_swords_1", st), ["tome_of_strahd"] as Array[String])
+	assert_true(bool(st.get_flag("treasure_found_tome")))
+	assert_true(Tarokka.take_from("place_swords_1", st).is_empty(), "found once")
+	assert_false(StoryConditions.check("treasure_at:place_swords_1", st))
+	DialogueFile.register(DialogueFile.parse("~ hand\ntarokka give place_coins_3\n-> END\n", "test/hand"))
+	var r := DialogueRunner.new(st, DiceRoller.new(1))
+	r.start("test/hand:hand")
+	var b := r.next()
+	assert_eq(str(b["kind"]), "notice")
+	assert_true(str(b["text"]).contains(Compendium.shared().display_name("items", "sunsword")))
+	assert_true(st.party_has_item("sunsword"))
+	r.start("test/hand:hand")
+	assert_eq(str(r.next()["kind"]), "end", "nothing left to give")
+
+
+## Dark gifts: offered to a party member the player picks (or nobody); kept for good, benefit and cost both.
+func test_dark_gifts_are_accepted_for_good_or_refused() -> void:
+	var c := Compendium.shared()
+	var saved := (c.tables.get("dark_gifts", {}) as Dictionary).duplicate()
+	c.tables["dark_gifts"] = {"test_gift": {"id": "test_gift", "name": "The test gift", "vestige": "Test", "summary": "Power.",
+		"benefit": {"modifiers": [{"stat": "ability", "ability": "cha", "value": 4, "max": 22}], "text": ""},
+		"cost": {"modifiers": [{"stat": "speed", "value": -10}], "flaw": "", "text": ""}}}
+	var st := _party()
+	var ilse := st.party[0]
+	var cha := ilse.ability_score(&"cha")
+	var speed := ilse.speed().total()
+	DialogueFile.register(DialogueFile.parse("~ offer\ndark_gift test_gift\n-> END\n", "test/gift"))
+	var r := DialogueRunner.new(st, DiceRoller.new(1))
+	r.start("test/gift:offer")
+	var pick := r.next()
+	assert_eq(str(pick["kind"]), "pick_member")
+	assert_eq(str((pick["members"] as Array).back()), "No one", "refusing is a choice")
+	r.pick_member(0)
+	assert_eq(ilse.dark_gifts(), ["test_gift"] as Array[String])
+	assert_eq(ilse.ability_score(&"cha"), cha + 4, "the benefit")
+	assert_eq(ilse.speed().total(), speed - 10, "and the cost")
+	assert_true(StoryConditions.check("gift:test_gift", st))
+	var copy := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	assert_eq(copy.party[0].dark_gifts(), ["test_gift"] as Array[String], "kept in a save")
+	r.start("test/gift:offer")
+	var again := r.next()
+	r.pick_member((again["members"] as Array).size() - 1)
+	assert_true(bool(st.get_flag("refused_test_gift")))
+	c.tables["dark_gifts"] = saved

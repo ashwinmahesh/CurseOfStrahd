@@ -8,7 +8,7 @@
   "attitude": "friendly",
   "voice": "docs/voice/parriwimple.md",
   "monster": "tough",
-  "guest": false,
+  "guest": true,
   "tags": [
     "barovian",
     "village_of_barovia"

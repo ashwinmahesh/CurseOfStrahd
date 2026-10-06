@@ -227,6 +227,28 @@
         }
       ],
       "flag": "arrigal_chest_opened"
+    },
+    {
+      "id": "camp_edge_cache",
+      "cell": [
+        14,
+        20
+      ],
+      "label": "A sack under the brambles",
+      "model": "chest",
+      "items": [],
+      "gold": 0
+    },
+    {
+      "id": "luvash_chest",
+      "cell": [
+        5,
+        13
+      ],
+      "label": "Luvash's chest",
+      "model": "chest",
+      "items": [],
+      "gold": 0
     }
   ],
   "lights": [
@@ -316,5 +338,13 @@
   "narration": {
     "enter": "enter:vallaki_vistani_camp"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "treasure_spots": {
+    "vallaki_vistani_camp:camp_edge": {
+      "container": "camp_edge_cache"
+    },
+    "vallaki_vistani_camp:luvash_wagon": {
+      "container": "luvash_chest"
+    }
+  }
 }

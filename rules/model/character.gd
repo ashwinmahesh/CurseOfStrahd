@@ -140,10 +140,43 @@ func pending_choices() -> Array[Choice]:
 
 func intrinsic_modifiers() -> Array[Modifier]:
 	var items := item_modifiers()
-	if items.is_empty():
+	var gifts := gift_modifiers()
+	if items.is_empty() and gifts.is_empty():
 		return _modifiers
 	var out := _modifiers.duplicate()
 	out.append_array(items)
+	out.append_array(gifts)
+	return out
+
+
+# --- Dark gifts (the Amber Temple, ADR 0011): accepted for good, kept in the build ------------------------------
+
+## The dark gifts this character carries (data/dark_gifts/ ids).
+func dark_gifts() -> Array[String]:
+	var out: Array[String] = []
+	for g: Variant in build.get("dark_gifts", []):
+		out.append(str(g))
+	return out
+
+
+## Takes a dark gift for good: its benefit and its cost both apply from now on.
+func accept_dark_gift(gift_id: String) -> void:
+	if gift_id in dark_gifts():
+		return
+	var list := build.get("dark_gifts", []) as Array
+	list.append(gift_id)
+	build["dark_gifts"] = list
+	refresh()
+
+
+## The modifiers of every dark gift carried: the benefit's and the cost's.
+func gift_modifiers() -> Array[Modifier]:
+	var out: Array[Modifier] = []
+	for id in dark_gifts():
+		var data := compendium.get_entry("dark_gifts", id)
+		for part: String in ["benefit", "cost"]:
+			for md: Variant in (data.get(part, {}) as Dictionary).get("modifiers", []):
+				out.append(Modifier.make(md as Dictionary, "%s (%s)" % [data.get("name", id), part], &"dark_gift", id, ""))
 	return out
 
 

@@ -1,0 +1,70 @@
+{
+  "$id": "dark_gift.schema.json",
+  "title": "A dark gift of the Amber Temple (ADR 0011)",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "vestige",
+    "summary",
+    "benefit",
+    "cost"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "part": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "spells": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Spells the gift lets its bearer cast (as granted spells)."
+        },
+        "flaw": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "vestige": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object"
+    },
+    "benefit": {
+      "$ref": "#/$defs/part"
+    },
+    "cost": {
+      "$ref": "#/$defs/part"
+    },
+    "implemented": {
+      "type": "string"
+    }
+  }
+}
