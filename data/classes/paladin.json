@@ -106,7 +106,8 @@
     "focus": "holy",
     "prepared_column": "prepared",
     "ritual": "prepared",
-    "swap_prepared": "long_rest"
+    "swap_prepared": "long_rest",
+    "swap_prepared_max": 1
   },
   "subclass_level": 3,
   "subclass_feature_levels": [
@@ -462,7 +463,7 @@
           "text": "As a Magic action you spend a use of Channel Divinity and raise your Holy Symbol or weapon. Choose up to a number of creatures equal to your Charisma modifier (at least one) that you can see within 60 feet. Each must succeed on a Wisdom saving throw or be Frightened for 1 minute or until it takes any damage. While Frightened this way, on each of its turns it can do only one of these: move, take an action, or take a Bonus Action.",
           "action": "action",
           "uses_resource": "paladin_channel_divinity",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

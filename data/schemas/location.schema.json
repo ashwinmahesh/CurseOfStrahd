@@ -90,6 +90,16 @@
               "dim",
               "dark"
             ]
+          },
+          "floor": {
+            "type": "string",
+            "pattern": "^[a-z_]+/[a-z_]+$",
+            "description": "The room's floor: a texture surface, theme/surface in art/textures/manifest.json (docs/art/set_dressing.md). Optional; otherwise the catalog's room rules or the map's theme decide."
+          },
+          "walls": {
+            "type": "string",
+            "pattern": "^[a-z_]+/[a-z_]+$",
+            "description": "The room's walls: a texture surface, theme/surface in art/textures/manifest.json. Optional."
           }
         }
       }

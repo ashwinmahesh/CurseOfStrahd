@@ -159,3 +159,165 @@ func test_pointing_at_a_tall_piece_picks_it() -> void:
 	assert_eq(v.pick_cell(cam, screen), Vector2i(1, 9), "pointing at the cabinet's top picks the cabinet")
 	assert_eq(str(v.thing_at(v.pick_cell(cam, screen)).get("kind", "")), "container")
 	v.queue_free()
+
+
+## Owner report (2026-10-06): some pieces overlapped walls or each other. In every location, no two standing pieces
+## on different squares overlap, a piece wider than its square has open floor all round it, and no two pieces hang on
+## the same wall face.
+func test_no_piece_overlaps_another_or_a_wall() -> void:
+	var problems: Array[String] = []
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		var standing: Array[Sprite3D] = []
+		var hung := {}
+		for n in board.find_children("*", "Sprite3D", true, false):
+			var sp := n as Sprite3D
+			if not sp.is_visible_in_tree() or sp.has_meta("ground_cover") or sp in board.occluders or sp.axis != Vector3.AXIS_Z:
+				continue
+			if sp.billboard == BaseMaterial3D.BILLBOARD_DISABLED:
+				if sp.get_parent().name.begins_with("AgainstWall") or sp.get_parent().name.begins_with("Door") or sp.name == "Leaf":
+					continue
+				var key := "%.2f,%.2f,%.2f" % [sp.global_position.x, sp.global_position.z, sp.global_rotation.y]
+				if hung.has(key):
+					problems.append("%s: two pieces hung at %s" % [loc_id, key])
+				hung[key] = true
+				continue
+			standing.append(sp)
+		for i in standing.size():
+			var a := standing[i]
+			var ra := a.texture.get_width() * a.pixel_size * a.global_basis.x.length() / 2.0
+			var ca := board.grid.cell_at(a.global_position)
+			if board.grid.has_flag(ca, CombatGrid.WALL):
+				continue   # it stands in for the wall block itself (a camp's wagons)
+			# A building-sized piece (a cottage, a dead tree over a yard wall) may reach past walls; it clears the
+			# trees it stands among instead.
+			if ra > 0.55 and not (a.has_meta("art") and SetDressing.is_big(str(a.get_meta("art")))):
+				for dx: int in [-1, 0, 1]:
+					for dy: int in [-1, 0, 1]:
+						var nb := ca + Vector2i(dx, dy)
+						if (dx != 0 or dy != 0) and board.grid.in_bounds(nb) and board.grid.has_flag(nb, CombatGrid.WALL) \
+								and not board.house_cells.has(nb) and _drawn(board, nb):
+							var msg := "%s: %s at %s is %.2f wide beside a wall" % [loc_id, a.texture.resource_path.get_file(), ca, ra * 2.0]
+							if not msg in problems:
+								problems.append(msg)
+			for j in range(i + 1, standing.size()):
+				var b := standing[j]
+				var cb := board.grid.cell_at(b.global_position)
+				if ca == cb or board.grid.has_flag(cb, CombatGrid.WALL) or not b.is_visible_in_tree():
+					continue
+				var rb := b.texture.get_width() * b.pixel_size * b.global_basis.x.length() / 2.0
+				var d := Vector2(a.global_position.x - b.global_position.x, a.global_position.z - b.global_position.z).length()
+				if d < ra + rb - 0.15:
+					problems.append("%s: %s at %s overlaps %s at %s" % [loc_id, a.texture.resource_path.get_file(), ca,
+						b.texture.resource_path.get_file(), cb])
+		v.queue_free()
+		await _frames(1)
+	assert_eq(problems, [] as Array[String], "overlaps")
+
+
+## Rooms have their own surfaces (owner request 2026-10-06): every surface the catalog's room rules and place looks
+## name, and every area's own `floor` and `walls`, is a texture that exists.
+func test_room_and_place_surfaces_exist() -> void:
+	var cat := SetDressing.catalog()
+	var named: Array[String] = []
+	for rule: Variant in cat.get("rooms", []):
+		for v: Variant in ((rule as Array)[1] as Dictionary).values():
+			named.append(str(v))
+	for look: Variant in (cat.get("place_looks", {}) as Dictionary).values():
+		for v: Variant in (look as Dictionary).values():
+			named.append(str(v))
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		for a: Variant in (locs[loc_id] as Dictionary).get("areas", []):
+			for key: String in ["floor", "walls"]:
+				if (a as Dictionary).has(key):
+					named.append(str((a as Dictionary)[key]))
+	for s in named:
+		assert_true(Look.cel_textured(s) != null, "texture exists: " + s)
+
+
+## A bathroom reads as a bathroom: its tiles come from the room rules by the area's name.
+func test_a_bathroom_has_tiles() -> void:
+	var v := _view("death_house_third")
+	await _frames(2)
+	var tiles := Look.cel_textured("interior/tile_floor", 0.22)
+	var found := false
+	for n in v.board.get_children():
+		if n is MeshInstance3D and (n as MeshInstance3D).material_override == tiles:
+			found = true
+			break
+	assert_true(found, "the bathroom's floor is tiled")
+	v.queue_free()
+
+
+## Death House book check: the attic's secret stair down isn't drawn until it's found, and is once it is. A door that's
+## only barred stays drawn.
+func test_a_secret_stair_shows_only_once_found() -> void:
+	var v := _view("death_house_attic")
+	await _frames(2)
+	var stair := v.exit_nodes.get("secret_stair_down", null) as Node3D
+	assert_true(stair != null, "the secret stair has a piece")
+	if stair == null:
+		return
+	assert_false(stair.visible, "not drawn before anyone finds it")
+	GameState.story.set_flag("death_house_secret_stair_found")
+	v.refresh_exits()
+	assert_true(stair.visible, "drawn once found")
+	v.queue_free()
+	var village := _view("village_of_barovia")
+	await _frames(2)
+	var door := village.exit_nodes.get("mansion_door", null) as Node3D
+	assert_true(door != null and door.visible, "the burgomaster's barred door is still drawn")
+	village.queue_free()
+
+
+## Whether a wall square's scenery is drawn (a big piece hides the trees it stands among).
+func _drawn(board: ArenaBoard, c: Vector2i) -> bool:
+	for n: Node3D in board.dressing.get(c, []):
+		if n.visible:
+			return true
+	return false
+
+
+## Owner report (2026-10-06): the opening road's cottage was drawn far too small. Every standing piece with a real
+## height (catalog "feet") is drawn close to it in every location, people being 6 ft (1.2 units).
+func test_pieces_are_drawn_at_their_real_size() -> void:
+	var feet := SetDressing.catalog().get("feet", {}) as Dictionary
+	var problems: Array[String] = []
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		var v := _view(loc_id)
+		await _frames(1)
+		for n in v.board.find_children("*", "Node3D", true, false):
+			if not n.has_meta("art") or not feet.has(str(n.get_meta("art"))):
+				continue
+			var art := str(n.get_meta("art"))
+			var sp: Sprite3D = n as Sprite3D if n is Sprite3D else null
+			if sp == null:
+				var inner := n.find_children("*", "Sprite3D", true, false)
+				if inner.is_empty():
+					continue
+				sp = inner[0] as Sprite3D
+			var info := SetDressing.manifest()[art] as Dictionary
+			var px := (sp as PropView).front_pixel if sp is PropView else sp.pixel_size
+			var drawn := float(info["world_height"]) * px / float(info["pixel_size"]) * sp.global_basis.y.length()
+			var real := float(feet[art]) / 5.0
+			if drawn < real * 0.7 or drawn > real * 1.35:
+				var msg := "%s: %s drawn %.2f units tall, really %.2f" % [loc_id, art, drawn, real]
+				if not msg in problems:
+					problems.append(msg)
+		v.queue_free()
+		await _frames(1)
+	assert_eq(problems, [] as Array[String], "off scale")
+	# The opening road's cottage in particular: full size, and the trees around it cleared.
+	var road := _view("into_the_mists_road")
+	await _frames(1)
+	var cottage := road.prop_nodes["edge_cottage_shutters"] as Node3D
+	var pic := cottage.find_children("*", "Sprite3D", true, false)[0] as Sprite3D
+	assert_true(pic.texture.get_height() * pic.pixel_size > 3.0, "the cottage stands about 16 ft tall")
+	for d: Vector2i in [Vector2i(-1, 0), Vector2i(0, 1), Vector2i(-1, 1)]:
+		assert_false(_drawn(road.board, Vector2i(6, 9) + d), "no tree in front of the cottage at %s" % (Vector2i(6, 9) + d))
+	road.queue_free()

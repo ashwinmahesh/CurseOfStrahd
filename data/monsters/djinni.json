@@ -3,7 +3,9 @@
   "name": "Djinni",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "The 2024 Djinni. Checked against SRD 5.2.1. Create Whirlwind, its spells and Wishes are text only."
   },
   "size": "large",
   "type": "elemental",
@@ -11,8 +13,8 @@
   "ac": 17,
   "initiative": 2,
   "hp": {
-    "average": 161,
-    "dice": "14d10+84"
+    "average": 218,
+    "dice": "19d10+114"
   },
   "speed": {
     "walk": 30,
@@ -40,7 +42,35 @@
   "cr": 11,
   "xp": 7200,
   "proficiency_bonus": 4,
-  "traits": [],
+  "traits": [
+    {
+      "id": "elemental_restoration",
+      "name": "Elemental Restoration",
+      "action": "passive",
+      "summary": "Slain away from the Elemental Plane of Air, it reforms there days later.",
+      "implemented": "text"
+    },
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "wishes",
+      "name": "Wishes",
+      "action": "passive",
+      "summary": "May know Wish, granted only to others who ask; three castings, then a year's rest.",
+      "implemented": "text"
+    }
+  ],
   "actions": [
     {
       "id": "multiattack",
@@ -48,15 +78,18 @@
       "kind": "multiattack",
       "multiattack": [
         {
-          "action": "scimitar",
-          "count": 3
+          "action": "storm_blade",
+          "count": 3,
+          "or": [
+            "storm_bolt"
+          ]
         }
       ],
-      "summary": "Three Scimitar attacks."
+      "summary": "Three attacks, Storm Blade or Storm Bolt in any mix."
     },
     {
-      "id": "scimitar",
-      "name": "Scimitar",
+      "id": "storm_blade",
+      "name": "Storm Blade",
       "kind": "melee",
       "attack": {
         "bonus": 9,
@@ -69,14 +102,79 @@
           "type": "slashing"
         },
         {
-          "average": 3,
-          "dice": "1d6",
+          "average": 7,
+          "dice": "2d6",
           "type": "lightning"
         }
       ],
-      "summary": "Scimitar: +9 to hit, 2d6+5 Slashing."
+      "summary": "A blade crackling with lightning."
+    },
+    {
+      "id": "storm_bolt",
+      "name": "Storm Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 9,
+        "range": [
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "3d8",
+          "type": "thunder"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "prone",
+          "max_size": "large"
+        }
+      ],
+      "summary": "A thunderbolt that knocks a Large or smaller target Prone."
+    },
+    {
+      "id": "create_whirlwind",
+      "name": "Create Whirlwind",
+      "kind": "special",
+      "summary": "A 20-ft-radius whirlwind it holds with Concentration: DC 17 Str save or Restrained and battered (6d6 Thunder each turn).",
+      "text": "The djinni whips up a whirlwind 20 feet in radius and 60 feet tall at a point within 120 feet, keeping it going with Concentration and shifting it up to 20 feet at the start of each of its turns. A creature the whirlwind sweeps over, or one that walks into it, makes a DC 17 Strength saving throw (once a turn; the djinni is never caught). On a failure it is Restrained and carried along inside, takes 21 (6d6) Thunder damage at the start of each of its turns, and repeats the save at the end of each of its turns, breaking free on a success."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Charisma, DC 17: Detect Magic at will; Tongues and Wind Walk twice a day; Invisibility, Gaseous Form and Plane Shift once."
     }
   ],
   "ai_profile": "brute",
-  "summary": "A proud genie of the air with a scimitar crackling with lightning."
+  "summary": "A proud genie of the air whose blade and bolts crackle with storm.",
+  "saves": {
+    "dex": 6,
+    "wis": 7
+  },
+  "spellcasting": {
+    "ability": "cha",
+    "dc": 17,
+    "at_will": [
+      "detect_evil_and_good",
+      "detect_magic"
+    ],
+    "per_day": {
+      "2": [
+        "create_food_and_water",
+        "tongues",
+        "wind_walk"
+      ],
+      "1": [
+        "creation",
+        "gaseous_form",
+        "invisibility",
+        "major_image",
+        "plane_shift"
+      ]
+    }
+  }
 }

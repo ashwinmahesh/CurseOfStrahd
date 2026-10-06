@@ -40,7 +40,7 @@
         "name": "Battering Roots",
         "summary": "On your turn your reach with Heavy or Versatile melee weapons grows by 10 feet, and their hits can add Push or Topple.",
         "text": "During your turn, roots of the World Tree lengthen your reach by 10 feet with any Melee weapon that has the Heavy or Versatile property. When you hit with such a weapon on your turn, you can apply the Push or Topple mastery property in addition to another mastery property you're using with it.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

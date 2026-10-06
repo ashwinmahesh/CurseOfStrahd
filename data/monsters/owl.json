@@ -3,7 +3,8 @@
   "name": "Owl",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "tiny",
   "type": "beast",
@@ -38,7 +39,21 @@
   "cr": 0,
   "xp": 10,
   "proficiency_bonus": 2,
-  "traits": [],
+  "traits": [
+    {
+      "id": "flyby",
+      "name": "Flyby",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "flyby"
+        }
+      ],
+      "summary": "Doesn't provoke Opportunity Attacks when it flies out of reach.",
+      "implemented": "engine"
+    }
+  ],
   "actions": [
     {
       "id": "talons",
@@ -55,7 +70,7 @@
           "type": "slashing"
         }
       ],
-      "summary": "Talons: +3 to hit, 1 Slashing."
+      "summary": "Tiny talons."
     }
   ],
   "ai_profile": "brute",

@@ -3,7 +3,8 @@
   "name": "Giant Constrictor Snake",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "huge",
   "type": "beast",
@@ -40,6 +41,22 @@
   "traits": [],
   "actions": [
     {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bite",
+          "count": 1
+        },
+        {
+          "action": "constrict",
+          "count": 1
+        }
+      ],
+      "summary": "A Bite and Constrict."
+    },
+    {
       "id": "bite",
       "name": "Bite",
       "kind": "melee",
@@ -54,15 +71,20 @@
           "type": "piercing"
         }
       ],
-      "summary": "Bite: +6 to hit, 2d6+4 Piercing."
+      "summary": "A lunging bite with 10 ft reach."
     },
     {
       "id": "constrict",
       "name": "Constrict",
-      "kind": "melee",
-      "attack": {
-        "bonus": 6,
-        "reach": 5
+      "kind": "save",
+      "save": {
+        "ability": "str",
+        "dc": 14,
+        "success": "none"
+      },
+      "targets": {
+        "range": 10,
+        "max_size": "large"
       },
       "damage": [
         {
@@ -71,10 +93,14 @@
           "type": "bludgeoning"
         }
       ],
-      "conditions": [
-        "grappled"
+      "on_fail": [
+        {
+          "do": "grapple",
+          "escape_dc": 14,
+          "limit": 1
+        }
       ],
-      "summary": "Constrict: +6 to hit, 2d8+4 Bludgeoning."
+      "summary": "DC 14 Str save by a Large or smaller creature within 10 ft, or 2d8+4 Bludgeoning and Grappled (escape DC 14)."
     }
   ],
   "ai_profile": "brute",

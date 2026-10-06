@@ -21,7 +21,7 @@ const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "rea
 const SLOT_SIZE := Vector2(132, 50)
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
-	"Keyboard: L minimizes or restores the combat log · 1-0 use hotbar slots · Z / X change tab · Enter confirms (casts early with fewer targets) · Esc cancels · Space ends the turn · [ and ] change the spell slot · T jumps to the next target · Tab inspects the next party member.",
+	"Keyboard: L minimizes or restores the combat log · 1-0 use hotbar slots · Z / X change tab · Enter confirms (casts early with fewer targets) · Esc cancels · Space ends the turn · [ and ] change the spell slot · T jumps to the next target · Tab inspects the next party member · F5 quicksaves and F9 loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: WASD or arrows pan · Q / E rotate · mouse wheel zooms.",
 	"Controller: left stick moves the cursor · A confirms · B cancels · X next target · Y ends the turn · hold LB for the radial menu (right stick picks, release to choose) · LT / RT pick a hotbar slot · RB uses it · d-pad left/right changes the spell slot · View inspects the next party member.",
 	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
@@ -644,10 +644,10 @@ func _refresh_hotbar() -> void:
 		var stripe := ColorRect.new()
 		stripe.color = Look.color(colour) if usable else Color(Look.color(colour), 0.35)
 		stripe.anchor_right = 1.0
-		stripe.offset_left = 2
-		stripe.offset_right = -2
+		stripe.offset_left = 17
+		stripe.offset_right = -17
 		stripe.offset_top = 2
-		stripe.offset_bottom = 6
+		stripe.offset_bottom = 5
 		stripe.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(stripe)
 		b.add_theme_color_override("font_color", Look.color("ivory"))
@@ -1023,7 +1023,8 @@ func _style(bg: String, border: String, width: int) -> StyleBoxFlat:
 	s.bg_color = Color(Look.color(bg), 0.94)
 	s.border_color = Look.color(border)
 	s.set_border_width_all(width)
-	s.set_corner_radius_all(4)
+	s.set_corner_radius_all(8)
+	s.corner_detail = 1
 	s.set_content_margin_all(6)
 	return s
 
@@ -1035,8 +1036,12 @@ func _slot_style(bg: String, edge: String, bright: bool) -> StyleBoxFlat:
 	s.bg_color = Color(Look.color(bg), 0.95)
 	s.border_color = Look.color(edge)
 	s.set_border_width_all(2 if bright else 1)
-	s.set_corner_radius_all(2)
+	# Long hexagons like every other button (the owner's Crimson concept).
+	s.set_corner_radius_all(14)
+	s.corner_detail = 1
 	s.set_content_margin_all(5)
+	s.content_margin_left = 14
+	s.content_margin_right = 14
 	s.content_margin_top = 9
 	return s
 
@@ -1058,7 +1063,8 @@ func _panel(border: String = "gilt_dark", bg: String = "ui_black", ornate: bool 
 	s.bg_color = Color(Look.color(bg), 0.9)
 	s.border_color = Look.color(border)
 	s.set_border_width_all(2)
-	s.set_corner_radius_all(2)
+	s.set_corner_radius_all(10)
+	s.corner_detail = 1
 	s.set_content_margin_all(14 if ornate else 10)
 	p.add_theme_stylebox_override("panel", s)
 	if ornate:

@@ -3,7 +3,9 @@
   "name": "Water Elemental",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "Whelm's suffocation isn't tracked; it can hold two creatures of any size up to Large."
   },
   "size": "large",
   "type": "elemental",
@@ -53,7 +55,28 @@
   "cr": 5,
   "xp": 1800,
   "proficiency_bonus": 3,
-  "traits": [],
+  "traits": [
+    {
+      "id": "freeze",
+      "name": "Freeze",
+      "action": "passive",
+      "summary": "Cold damage slows it by 20 ft until the end of its next turn.",
+      "implemented": "engine"
+    },
+    {
+      "id": "water_form",
+      "name": "Water Form",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "enters_spaces"
+        }
+      ],
+      "summary": "Can enter and stay in a creature's space, and slip through gaps an inch wide.",
+      "implemented": "engine"
+    }
+  ],
   "actions": [
     {
       "id": "multiattack",
@@ -85,7 +108,45 @@
       "conditions": [
         "prone"
       ],
-      "summary": "Slam: +7 to hit, 2d8+4 Bludgeoning."
+      "summary": "A crashing wave that knocks a Medium or smaller target Prone."
+    },
+    {
+      "id": "whelm",
+      "name": "Whelm",
+      "kind": "save",
+      "recharge": "4-6",
+      "save": {
+        "ability": "str",
+        "dc": 15,
+        "success": "half"
+      },
+      "area": {
+        "shape": "space"
+      },
+      "targets": {
+        "in_space": true
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "4d8+4",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "grapple",
+          "escape_dc": 14,
+          "max_size": "large",
+          "limit": 2,
+          "restrain": true,
+          "hold_damage": {
+            "dice": "2d8",
+            "type": "bludgeoning"
+          }
+        }
+      ],
+      "summary": "Recharge 4-6. Each creature in its space: DC 15 Str save or 4d8+4 Bludgeoning, held (escape DC 14), Restrained and battered 2d8 each of its turns."
     }
   ],
   "ai_profile": "brute",

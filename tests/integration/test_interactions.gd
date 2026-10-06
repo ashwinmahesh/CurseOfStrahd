@@ -282,6 +282,7 @@ func test_the_loot_window_takes_the_gold_alone() -> void:
 	(take[0] as Button).pressed.emit()
 	await _frames(1)
 	assert_eq(GameState.story.gold, 7.0, "the coins are in the purse")
-	assert_eq(loot.items.size(), 1, "the dagger is still there")
+	# (Random treasure, ADR 0012, may add more to the chest; the dagger is what this test put there.)
+	assert_true(loot.items.any(func(it: Variant) -> bool: return str((it as Dictionary).get("id", "")) == "dagger"), "the dagger is still there")
 	assert_true(root.get("loot") != null, "the window stays open for the rest")
 

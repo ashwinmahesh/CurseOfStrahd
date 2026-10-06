@@ -3,7 +3,8 @@
   "name": "Knight",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Knight. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Radiant damage on both attacks and the Frightened immunity."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "humanoid",

@@ -3,7 +3,8 @@
   "name": "Weasel",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "tiny",
   "type": "beast",
@@ -29,7 +30,7 @@
   "senses": {
     "darkvision": 60
   },
-  "passive_perception": 11,
+  "passive_perception": 13,
   "languages": [],
   "cr": 0,
   "xp": 10,
@@ -51,9 +52,14 @@
           "type": "piercing"
         }
       ],
-      "summary": "Bite: +5 to hit, 1 Piercing."
+      "summary": "A tiny bite."
     }
   ],
   "ai_profile": "brute",
-  "summary": "A quick little biter."
+  "summary": "A quick little biter.",
+  "skills": {
+    "acrobatics": 5,
+    "perception": 3,
+    "stealth": 5
+  }
 }

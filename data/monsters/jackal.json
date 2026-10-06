@@ -3,7 +3,8 @@
   "name": "Jackal",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024"
   },
   "size": "small",
   "type": "beast",
@@ -57,13 +58,13 @@
       "name": "Bite",
       "kind": "melee",
       "attack": {
-        "bonus": 2,
+        "bonus": 1,
         "reach": 5
       },
       "damage": [
         {
           "average": 1,
-          "dice": "1d2",
+          "dice": "1d4-1",
           "type": "piercing"
         }
       ],

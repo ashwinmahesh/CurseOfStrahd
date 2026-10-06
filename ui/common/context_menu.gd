@@ -12,7 +12,8 @@ var _ids: Array[String] = []
 const ICONS := {"talk": "talk", "look": "search", "search_here": "search", "open": "door", "force": "door", "go": "door",
 	"pick": "key", "key": "key", "disarm": "key", "trade": "trade", "use": "inventory", "walk": "map", "avoid": "sneak",
 	"lead": "party", "sheet": "character", "inventory": "inventory", "spells": "spells", "info": "journal",
-	"cast": "spells", "meta": "spells", "ready": "attack", "choice": "attack"}
+	"cast": "spells", "meta": "spells", "ready": "attack", "choice": "attack", "knock": "spells", "chime": "inventory",
+	"mystery_key": "key"}
 
 
 func _init() -> void:

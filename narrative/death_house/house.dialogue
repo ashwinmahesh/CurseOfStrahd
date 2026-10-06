@@ -3,7 +3,7 @@
 
 ~ family_portrait
 narrate examine:hall_family_portrait
-Narrator: A handsome family in oils: a broad, smiling man, a narrow woman who isn't smiling, a girl of ten with her chin up, and a small boy holding a stuffed wolf by one ear.
+Narrator: A handsome family in oils above the mantel: a broad, smiling man cradling a swaddled baby, a narrow woman looking at that baby the way you'd look at a stain, a girl of ten with her chin up, and a small boy holding a stuffed wolf by one ear.
 if flag.death_house_heard_plea
   Narrator: The children from the road: the same faces, the same wolf. The varnish has gone brown with age, and the dust on the frame is thick enough to write in.
   if not flag.death_house_saw_through_lure

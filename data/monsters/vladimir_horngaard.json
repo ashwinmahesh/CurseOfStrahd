@@ -3,6 +3,7 @@
   "name": "Vladimir Horngaard",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. His Hit Points (remembered as about 192; 23d8 + 92 here), hit dice, Strength and the Greatsword's numbers need the book. The extra damage against Strahd and Vengeful Glare are text only (the engine has no sworn foe yet); Regeneration runs but not its pause after Fire or Radiant damage."
   },
   "size": "medium",

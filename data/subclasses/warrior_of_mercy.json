@@ -87,7 +87,7 @@
           "recharge": "long"
         },
         "uses_resource": "flurry_of_healing_and_harm",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

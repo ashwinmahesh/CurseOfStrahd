@@ -4,6 +4,7 @@
   "art": "izek",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. For the engine, Hurl Flame may replace one of the two axe blows (in the book it is its own action; either way he throws one bolt a turn when no foe is in reach), and the Battleaxe always deals its one-handed damage."
   },
   "size": "medium",
@@ -48,7 +49,7 @@
       "action": "passive",
       "summary": "His melee weapon hits roll one extra damage die; the Battleaxe numbers already include it.",
       "text": "When Izek hits with a melee weapon, the attack deals one more of the weapon's damage dice. The Battleaxe damage below already counts that die.",
-      "implemented": "data"
+      "implemented": "engine"
     }
   ],
   "actions": [

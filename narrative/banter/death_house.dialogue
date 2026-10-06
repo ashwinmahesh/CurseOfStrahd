@@ -90,8 +90,8 @@ endif
 -> END
 
 ~ bt_criminal_keepsakes
-if visited:dh_reliquary and background:criminal
-  interject background:criminal: Shelves of other people's lockets. The cult robbed its dead and kept a tidy shop. I'm not taking any of those. Not those.
+if visited:dh_lower_landing and background:criminal
+  interject background:criminal: Alcoves full of other people's keepsakes. The cult robbed its dead and kept the pieces like relics. I'm not taking any of those. Not those.
 endif
 -> END
 

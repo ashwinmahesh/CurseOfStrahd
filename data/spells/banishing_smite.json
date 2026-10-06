@@ -37,6 +37,9 @@
       "type": "force"
     }
   ],
+  "banish_at_hp": 50,
+  "save": "cha",
+  "save_success": "none",
   "tags": [
     "damage",
     "control"

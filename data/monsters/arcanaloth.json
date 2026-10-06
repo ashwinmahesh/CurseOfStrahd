@@ -3,7 +3,8 @@
   "name": "Arcanaloth",
   "source": {
     "book": "MM2025",
-    "note": "Numbers follow the 2014 Monster Manual arcanaloth; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical weapons is entered as plain Bludgeoning, Piercing and Slashing resistance, as the 2024 books do for such creatures. Its innate spells use the main DC 17 in the engine (the book gives them DC 15). The Claws' poison save and Teleport are text only; Fire Bolt runs as an attack; spell slots are listed per spell."
+    "edition": "2014",
+    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual arcanaloth; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical weapons is entered as plain Bludgeoning, Piercing and Slashing resistance, as the 2024 books do for such creatures. Its innate spells use the main DC 17 in the engine (the book gives them DC 15). The Claws' poison save and Teleport are text only; Fire Bolt runs as an attack; spell slots are listed per spell."
   },
   "size": "medium",
   "type": "fiend",

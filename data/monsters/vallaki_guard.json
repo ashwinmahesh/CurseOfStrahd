@@ -3,7 +3,9 @@
   "name": "Town Guard",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Guard, kept under the Vallaki watch's id so the watch's fights use its sprite; any town's guards can use it. Entered from knowledge, not yet checked against the book. The engine has it stab with the spear, never throw it."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "The 2024 Guard, kept under the Vallaki watch's id so the watch's fights use its sprite; any town's guards can use it."
   },
   "size": "medium",
   "type": "humanoid",

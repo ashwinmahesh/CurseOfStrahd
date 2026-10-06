@@ -70,7 +70,11 @@
       "effect": "condition",
       "params": {
         "condition": "restrained",
-        "until": "target_turn_start"
+        "repeat_save": "start_of_turn",
+        "repeat_fail_damage": {
+          "dice": "4d8",
+          "type": "choice"
+        }
       }
     }
   ],
@@ -80,7 +84,8 @@
       "start_turn"
     ],
     "affects": "enemies",
-    "damage_type_choice": "yes"
+    "damage_type_choice": "yes",
+    "hold_one": true
   },
   "tags": [
     "damage",

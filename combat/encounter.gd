@@ -374,6 +374,11 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 				var cell := Vector2i(x, y)
 				if grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells) < now:
 					blocked[cell] = true
+	# Forcecage: no stepping out of a cage, or into one; Antilife Shell keeps most creatures out.
+	for cell3: Vector2i in spells.specials.high.cage_blocks(c):
+		blocked[cell3] = true
+	for cell4: Vector2i in spells.specials.mid.shell_blocks(c):
+		blocked[cell4] = true
 	# Compelled Duel: no square more than 30 ft from the duellist.
 	var anchor := spells.specials.duel_anchor(c)
 	if anchor != null:
@@ -428,7 +433,8 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		if o == c or not o.is_alive() or o == partner:
 			continue
 		var o_size := Creature.SIZES.find(o.creature.size)
-		var swarmy := o.creature.has_flag("swarm") or c.creature.has_flag("swarm")
+		# Swarms, and elementals made of air, fire or water, can move into (and stay in) other creatures' spaces.
+		var swarmy := o.creature.has_flag("swarm") or c.creature.has_flag("swarm") or c.creature.has_flag("enters_spaces")
 		if swarmy:
 			continue
 		var passable := c.allied_with(o) or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
@@ -445,6 +451,9 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		slowed[cell] = terrain[cell] if terrain[cell] is int else true
 	if c.creature.has_flag("pass_through_creatures"):
 		blocked = {}
+	# Wall of Force and Wall of Stone: no one walks through.
+	for wcell: Vector2i in spells.specials.mid.blocked_cells():
+		blocked[wcell] = true
 	return {"blocked": blocked, "slowed": slowed, "occupied": occupied}
 
 
@@ -522,6 +531,13 @@ func end_turn() -> CombatResult:
 	_check_over()
 	if state != State.ACTIVE:
 		return CombatResult.new()
+	# Time Stop: the caster's next turn comes straight away.
+	if c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0 and c.is_alive() and c.can_act():
+		c.set_meta("time_stop", int(c.get_meta("time_stop")) - 1)
+		log.add("turn", "Time is still stopped: another turn for %s" % c.name(), c.id)
+		_begin_turn()
+		return CombatResult.new()
+	c.remove_meta("time_stop")
 	for i in order.size():
 		turn_index += 1
 		if turn_index >= order.size():
@@ -705,7 +721,7 @@ func _move_best(c: Combatant, feet: int, r: CombatResult, score: Callable) -> Co
 func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled: Dictionary) -> CombatResult:
 	while i < path.size():
 		var to := path[i]
-		if not c.creature.has_flag("flyby"):
+		if not c.creature.has_flag("flyby") and not c.creature.has_flag("agile"):
 			for p in _provokers(c, c.cell, to):
 				var key := "%s@%d" % [p.id, i]
 				if handled.has(key):
@@ -1099,6 +1115,8 @@ func answer_reaction(use: bool) -> CombatResult:
 
 
 func _after_step(c: Combatant, from: Vector2i) -> void:
+	spells.specials.mid.shell_moved(c)
+	monster_actions.entered_space(c)
 	spells.on_enter_cell(c, from)
 
 
@@ -1443,6 +1461,26 @@ func escape_effect(c: Combatant, effect_id: int) -> CombatResult:
 	return CombatResult.new()
 
 
+## Putting out the flames on yourself (Burning, 2024 rules glossary): an action, and you fall Prone.
+func douse(c: Combatant) -> CombatResult:
+	var why := _action_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	var burning: Array[Effect] = []
+	for x: Effect in c.creature.effects:
+		if bool(x.data.get("douse", false)):
+			burning.append(x)
+	if burning.is_empty():
+		return CombatResult.fail("Not burning")
+	spend_action(c)
+	for fx in burning:
+		c.creature.remove_effect(fx)
+	c.creature.add_condition(&"prone", "Rolled on the ground")
+	log.add("info", "%s drops and rolls, putting out the flames" % c.name(), c.id)
+	events.append({"type": "condition", "id": c.id})
+	return CombatResult.new()
+
+
 ## The effect keeping `c` magically asleep or entranced (Sleep, Hypnotic Pattern), or null.
 func sleeper(c: Combatant) -> Effect:
 	for fx: Effect in c.creature.effects:
@@ -1686,6 +1724,10 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "Can't attack yourself"
 	if spells.specials.sphere_blocks(c, target):
 		return "A sphere of force is in the way"
+	if spells.specials.high.box_between(c, target) or spells.specials.mid.wall_between(c, target):
+		return "A wall is in the way"
+	if bool(option["melee"]) and spells.specials.mid.shell_blocks_reach(c, target):
+		return "The Antilife Shell keeps you out of reach"
 	var item_block := items.attack_blocked(c, target, option)
 	if item_block != "":
 		return item_block
@@ -1953,6 +1995,7 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 		class_features.kept_rage(c)
 	spells.end_sanctuary(c, "attacked")
 	spells.trigger_ends(c, "attack_roll")
+	monster_actions.end_vanish(c)
 	if c.hidden and not features.has_feat(c, "skulker"):
 		reveal(c, "attacked")
 	if bool(opts.get("reaction", false)) and features.has_feat(target, "speedy") and not bool(opts.get("readied", false)):
@@ -1977,7 +2020,13 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	var t := c.creature.roll_d20(dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
 		sit["disadvantage"] as Array[String], label, p.crit_range, attacked_dice(target))
 	target.creature.consume_attacked()
-	if not option.get("melee", true) and c.creature is Character:
+	# Sundering Blow: the next attack by someone else against the creature gets +5.
+	for m: Dictionary in marks.duplicate():
+		if str(m["kind"]) == "attack_bonus_against" and str(m.get("target", "")) == target.id and str(m.get("not_by", "")) != c.id:
+			t.add_bonus(int(m.get("bonus", 5)), str(m.get("source", "")))
+			marks.erase(m)
+			break
+	if not option.get("melee", true) and c.creature is Character and not bool((st["opts"] as Dictionary).get("free_ammo", false)):
 		if str(option.get("kind", "")) == "thrown":
 			_spend_item(c, p.item_id)
 		elif str(option.get("kind", "")) != "blade":
@@ -2090,6 +2139,14 @@ func _after_hit(st: Dictionary) -> CombatResult:
 		dice_list.append(extra as Dictionary)
 	dice_list.append_array(features.hit_damage_dice(c, target, option, st))
 	dice_list.append_array(items.hit_damage_dice(c, target, option, st))
+	# A charge (giant elk, goat, boars, rhinoceros): extra or bigger damage after a straight run at the target.
+	var charge := monster_actions.charge_of(c, target, option)
+	if not charge.is_empty():
+		c.set_meta("charged_vs", target.id)
+		if bool(charge.get("replace", false)):
+			st["replace_weapon_damage"] = true
+		for cd: Variant in charge.get("damage", []):
+			dice_list.append({"dice": str((cd as Dictionary)["dice"]), "type": str((cd as Dictionary)["type"]), "label": "Charge"})
 	# Lightning Arrow: the bolt's damage instead of the weapon's.
 	var replaced := bool(st.get("replace_weapon_damage", false))
 	if replaced:
@@ -2154,6 +2211,9 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 			"item": (option["profile"] as WeaponProfile).item_id, "ranged_weapon": str(option.get("kind", "")) in ["weapon", "thrown"] and not bool(option["melee"])})
 	var all_details := details.duplicate()
 	all_details.append_array(dmg_text)
+	# Rampage (giant hyena) answers a hit on a creature that was already Bloodied.
+	if c.creature is Monster and target.creature.is_bloodied():
+		c.set_meta("hit_bloodied", "%d:%d" % [round_no, turn_index])
 	var dr := deal_damage(c, target, arr, critical, (option["profile"] as WeaponProfile).name, all_details, true)
 	r.damage = dr.final
 	if target.is_down():
@@ -2161,6 +2221,7 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 	_on_hit_effects(c, target, option, dr, r)
 	if bool(option["melee"]):
 		retaliate(c, target)
+		spells.specials.high.holy_aura_hit(c, target)
 	features.after_hit(c, target, option, dr, st, r)
 	items.after_hit(c, target, option, dr, st, r)
 	_queue_sentinels(c, target)
@@ -2220,6 +2281,9 @@ func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: Strin
 func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: bool, label: String,
 		details: Array = [], log_it: bool = true) -> DamageResult:
 	target = monster_actions.redirect_shared(target)
+	# Time Stop ends when the caster affects anyone else.
+	if source != null and source != target:
+		spells.specials.high.time_stop_broken(source, "it affected another creature")
 	# Otiluke's Resilient Sphere: nothing passes through the globe either way.
 	if source != null and spells.specials.sphere_blocks(source, target):
 		log.add("info", "The sphere of force around %s turns the damage aside" % (target.name() if target.creature.has_flag("sphered") else source.name()), target.id)
@@ -2310,6 +2374,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 			target.remove_meta("mounted_on")
 			mt.remove_meta("ridden_by")
 	if target.creature.dead and was_up:
+		monster_actions.death_burst(target)
 		target.set_meta("died_round", round_no)
 		log.add("death", "%s dies" % target.name(), target.id)
 		events.append({"type": "death", "id": target.id})
@@ -2333,8 +2398,19 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	items.on_damaged(source, target, dr.final, parts)
 	if dr.final > 0:
 		spells.specials.duel_check_damage(source, target)
+	# Thought Shield (Great Old One 10): Psychic damage dealt to the warlock hits its source too.
+	if source != null and source != target and dr.final > 0 and CombatFeatures.has_feature(target, "thought_shield") and not target.has_meta("reflecting"):
+		var psy := 0
+		for p: Variant in parts:
+			if str((p as Dictionary)["type"]) == "psychic":
+				psy += int((p as Dictionary)["amount"])
+		if psy > 0:
+			target.set_meta("reflecting", true)
+			deal_damage(target, source, [{"amount": mini(psy, dr.final), "type": "psychic"}], false, "Thought Shield")
+			target.remove_meta("reflecting")
 	if dr.final > 0 and target.is_alive():
 		monster_actions.loathsome_limbs(target, parts)
+		monster_actions.damage_traits(target, parts)
 	if target.is_down():
 		monster_actions.body_dropped(target)
 	if dr.final > 0 and source != null and source != target and target.is_alive():
@@ -2399,6 +2475,10 @@ func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
 		return
 	if not target.creature is Character or target.creature.hp <= 0 or distance(target, source) > 60 or not can_see(target, source):
 		return
+	# Retaliation (Berserker 10): a melee attack back at a creature within 5 ft that hurt you.
+	if CombatFeatures.has_feature(target, "retaliation") and spells.can_react(target) and distance(target, source) <= 5 and not best_melee_option(target, source).is_empty():
+		reaction_queue.append({"kind": "retaliation", "reactor": target.id, "trigger": source.id})
+		return
 	var cfr := class_features.damage_reaction(source, target)
 	if not cfr.is_empty():
 		reaction_queue.append(cfr)
@@ -2439,6 +2519,8 @@ func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 			return spells.can_react(reactor) and reactor.creature.has_flag("fount_of_moonlight")
 		"misty_escape":
 			return spells.can_react(reactor) and reactor.creature.hp > 0
+		"retaliation":
+			return spells.can_react(reactor) and reactor.creature.hp > 0 and get_c(str(q["trigger"])) != null and distance(reactor, get_c(str(q["trigger"]))) <= 5
 	return false
 
 
@@ -2460,6 +2542,8 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 			return _opportunity_attack(reactor, trigger)
 		"misty_escape":
 			return class_features.misty_escape(reactor, trigger)
+		"retaliation":
+			return _opportunity_attack(reactor, trigger)
 		"fount_of_moonlight":
 			reactor.reaction_available = false
 			var dc := (spells.numbers(reactor, spells._entry_any(reactor, "fount_of_moonlight"))["dc"] as Breakdown).total()
@@ -2495,6 +2579,7 @@ const _QUEUED_TEXT := {
 	"hellish_rebuke": ["Reaction: Hellish Rebuke?", "%s hurt %s. Answer with Hellish Rebuke: a Dex save or Fire damage.", "Reaction and a spell slot"],
 	"storms_thunder": ["Reaction: Storm's Thunder?", "%s hurt %s. Answer with 1d8 Thunder damage.", "Reaction and a use of Giant Ancestry"],
 	"sentinel": ["Reaction: Sentinel?", "%s attacks someone beside %s. Make an Opportunity Attack against it?", "Reaction"],
+	"retaliation": ["Reaction: Retaliation?", "%s hurt %s. Strike back with a melee attack?", "Reaction"],
 	"misty_escape": ["Reaction: Misty Escape?", "%s hurt %s. Vanish with Misty Step (Steps of the Fey or a slot)?", "Reaction and a use of Steps of the Fey"],
 	"fount_of_moonlight": ["Reaction: Fount of Moonlight?", "%s hurt %s. Flare moonlight at it: a Constitution save or Blinded?", "Reaction"],
 	"berserk_lashing": ["Reaction: Berserk Lashing?", "%s hurt %s. Lash out with a Slam at a random creature within 5 ft?", "Reaction"],
@@ -2608,6 +2693,20 @@ func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: Da
 				events.append({"type": "condition", "id": target.id})
 		if act.has("on_hit"):
 			monster_actions.apply_riders(c, target, act["on_hit"] as Array, {str(p.damage_type): dr.final}, str(act.get("name", "")))
+		if str(c.get_meta("charged_vs", "")) == target.id and act.has("charge"):
+			monster_actions.apply_riders(c, target, (act["charge"] as Dictionary).get("on_hit", []) as Array, {}, "%s (charge)" % act.get("name", ""))
+		# Celestial Spirit (Defender): a creature within 10 ft gains Temporary Hit Points.
+		if act.has("ally_temp_hp"):
+			var ath := act["ally_temp_hp"] as Dictionary
+			var best: Combatant = null
+			for a2 in allies_of(c):
+				if a2 != c and a2.is_alive() and distance(c, a2) <= int(ath.get("range", 10)) and (best == null or a2.creature.temp_hp < best.creature.temp_hp):
+					best = a2
+			if best == null:
+				best = c
+			var amt := int(_roll_damage_dice(str(ath.get("dice", "1d10")), false, 0, "Radiant Mace")["total"])
+			if best.creature.add_temp_hp(amt, str(act.get("name", ""))):
+				log.add("heal", "%s gains %d Temporary Hit Points (%s)" % [best.name(), amt, act.get("name", "")], best.id)
 
 
 func _spend_ammo(c: Combatant, p: WeaponProfile) -> void:

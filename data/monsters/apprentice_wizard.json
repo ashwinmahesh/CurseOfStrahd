@@ -3,6 +3,7 @@
   "name": "Apprentice Wizard",
   "source": {
     "book": "custom",
+    "edition": "2014",
     "note": "The apprentice wizard of Volo's Guide to Monsters (2016) in the 2024 layout, for Victor Vallakovich; the 2024 books have no such block (their Mage Apprentice is CR 2). Entered from knowledge, not yet checked against the book. Fire Bolt runs as an attack; the two 1st-level slots are listed as one use a day of each spell."
   },
   "size": "medium",

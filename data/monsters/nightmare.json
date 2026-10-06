@@ -3,7 +3,9 @@
   "name": "Nightmare",
   "source": {
     "book": "MM2025",
-    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "Confer Fire Resistance and Ethereal Stride are text only."
   },
   "size": "large",
   "type": "fiend",
@@ -16,7 +18,8 @@
   },
   "speed": {
     "walk": 60,
-    "fly": 90
+    "fly": 90,
+    "hover": true
   },
   "abilities": {
     "str": 18,
@@ -45,6 +48,13 @@
       "action": "passive",
       "summary": "Sheds bright light 10 ft and dim light 10 ft more.",
       "implemented": "text"
+    },
+    {
+      "id": "confer_fire_resistance",
+      "name": "Confer Fire Resistance",
+      "action": "passive",
+      "summary": "Can give its rider Resistance to Fire.",
+      "implemented": "text"
     }
   ],
   "actions": [
@@ -63,12 +73,18 @@
           "type": "bludgeoning"
         },
         {
-          "average": 7,
-          "dice": "2d6",
+          "average": 10,
+          "dice": "3d6",
           "type": "fire"
         }
       ],
-      "summary": "Hooves: +6 to hit, 2d8+4 Bludgeoning."
+      "summary": "Flaming hooves."
+    },
+    {
+      "id": "ethereal_stride",
+      "name": "Ethereal Stride",
+      "kind": "special",
+      "summary": "It and up to three willing creatures within 5 ft shift to or from the Ethereal Plane."
     }
   ],
   "ai_profile": "brute",

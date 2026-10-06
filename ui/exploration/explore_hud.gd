@@ -78,7 +78,9 @@ func build(state: StoryState) -> void:
 	s.bg_color = Color(Look.color("ui_black"), 0.85)
 	s.border_color = Look.color("gilt_dark")
 	s.set_border_width_all(2)
-	s.set_corner_radius_all(2)
+	# Bevelled corners like every other panel (owner, 2026-10-06: not plain squares).
+	s.set_corner_radius_all(10)
+	s.corner_detail = 1
 	s.set_content_margin_all(18)
 	narr_panel.add_theme_stylebox_override("panel", s)
 	narr_panel.anchor_left = 0.5
@@ -316,6 +318,8 @@ func narrate(text: String, portrait: String = DialogueRunner.NARRATOR_PORTRAIT) 
 		_narr_face.add_child(UiParts.framed_portrait(portrait, 76.0))
 	_narr.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("parchment").to_html(false), text.replace("[", "[lb]")]
 	_narr_time = clampf(3.0 + text.length() * 0.05, 4.0, 10.0)
+	# The Narrator speaks it, if it's recorded (ADR 0013); the box stays up until the voice is done.
+	_narr_time = maxf(_narr_time, VoiceOver.say(VoiceOver.NARRATOR, text) + 1.0)
 
 
 func narration_showing() -> bool:
@@ -323,6 +327,7 @@ func narration_showing() -> bool:
 
 
 func close_narration() -> void:
+	VoiceOver.stop()
 	_narr_time = 0.0
 	(get_node("NarratorBox") as PanelContainer).visible = false
 

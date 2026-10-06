@@ -1,5 +1,5 @@
 {
-  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it.",
+  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it.",
   "container_default": "chest",
   "models": {
     "hearth": "fireplace",
@@ -223,7 +223,49 @@
     "holt_dragon_bookcase_2": {
       "art": "book_shelf",
       "front": "shelves_front_b"
-    }
+    },
+    "den_stag_head": "stag_head",
+    "den_stuffed_wolf_a": "stuffed_wolf",
+    "den_stuffed_wolf_b": "stuffed_wolf",
+    "den_stuffed_wolf_c": "stuffed_wolf",
+    "hall_hearth": "fireplace_sword",
+    "hall_carvings": "carved_paneling",
+    "kitchen_stove": "oven_brick",
+    "dining_hearth": "fireplace_valley",
+    "hall_family_portrait": "family_portrait",
+    "upper_armor_west": "armor_wolf_helm",
+    "upper_armor_east": "armor_wolf_helm",
+    "library_hearth": "fireplace_windmill",
+    "study_skeleton": "skeleton_leather",
+    "conservatory_hearth": "fireplace_dancers",
+    "master_portrait": "portrait_couple",
+    "bath_barrel": "barrel_spigot",
+    "clawfoot_tub": "tub_wooden",
+    "nursery_crib": "crib_shroud",
+    "nursemaid_mirror": "mirror_full",
+    "third_storage_shelves": {
+      "art": "shelves",
+      "front": "linen_shelves_front"
+    },
+    "spare_doll": "doll_yellow",
+    "shrine_statue": "statue_strahd",
+    "shrine_shackles": "skeleton_shackles",
+    "prison_skeleton": "skeleton_shackles",
+    "initiate_pallets": "straw_pallet",
+    "reliquary_niches": "wall_alcoves",
+    "den_mother_night": "statue_mother_night",
+    "frozen_pilgrim": "frozen_traveller",
+    "sanctum_braziers": "brazier_green",
+    "marina_bier": "bier",
+    "lysaga_poppet": "poppet",
+    "bonegrinder_receipt_book": "receipt_table",
+    "baratok_frozen_birds": "frozen_birds",
+    "bonegrinder_soul_bags": "soul_bags",
+    "bonegrinder_soul_bags_sealed": "soul_bags",
+    "den_silver_chains": "wall_chains",
+    "exethanter_notes": "notes_wall",
+    "bonegrinder_brake": "gear_brake",
+    "baratok_glass_ring": "glass_ring"
   },
   "low_cover": {
     "wild": [
@@ -352,11 +394,37 @@
     "shrine_yard": [
       "bramble_a",
       "bramble_b"
+    ],
+    "amber_temple_entrance": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "amber_temple_road": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "mount_baratok": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "mount_baratok_trail": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "tsolenka_pass": [
+      "snowdrift",
+      "ice_patch"
     ]
   },
   "doors": {
     "default": "door_wood",
     "rules": [
+      [
+        [
+          "mirror"
+        ],
+        "mirror_full"
+      ],
       [
         [
           "curtain"
@@ -408,6 +476,9 @@
         "statue": "statue_knight",
         "height": 2.1,
         "width": 1.16
+      },
+      "honey_doors": {
+        "art": "amber_doors"
       }
     }
   },
@@ -534,14 +605,404 @@
     }
   },
   "scales": {
-    "stair_riser": 1.6,
-    "bed": 1.25,
-    "bed_small": 1.2,
-    "coffin": 1.3,
-    "harpsichord": 1.4,
-    "bathtub": 1.25
+    "stair_riser": 1.3
   },
   "town_walls": {
     "krezk": 2.6
-  }
+  },
+  "rooms": [
+    [
+      [
+        "bath"
+      ],
+      {
+        "floor": "interior/tile_floor",
+        "wall": "interior/tile_wall"
+      }
+    ],
+    [
+      [
+        "kitchen",
+        "bakery",
+        "pantry",
+        "larder",
+        "scullery"
+      ],
+      {
+        "floor": "interior/kitchen_flags",
+        "wall": "interior/kitchen_wall"
+      }
+    ],
+    [
+      [
+        "den of wolves",
+        "library",
+        "study",
+        "office",
+        "stacks",
+        "reading room",
+        "dining",
+        "tasting room"
+      ],
+      {
+        "floor": "interior/parquet",
+        "wall": "interior/wood_panel"
+      }
+    ],
+    [
+      [
+        "entrance",
+        "foyer",
+        "entry hall",
+        "main hall",
+        "great hall",
+        "upper hall",
+        "landing",
+        "gallery",
+        "hall of heroes"
+      ],
+      {
+        "floor": "interior/marble_floor"
+      }
+    ],
+    [
+      [
+        "nursery",
+        "children"
+      ],
+      {
+        "floor": "interior/wood_planks",
+        "wall": "interior/wallpaper_nursery"
+      }
+    ],
+    [
+      [
+        "conservatory"
+      ],
+      {
+        "floor": "interior/tile_floor",
+        "wall": "interior/wallpaper_green"
+      }
+    ],
+    [
+      [
+        "bedroom",
+        "suite",
+        "'s room",
+        "parlour",
+        "parlor"
+      ],
+      {
+        "floor": "interior/carpet",
+        "wall": "interior/wallpaper_green"
+      }
+    ],
+    [
+      [
+        "chapel",
+        "nave",
+        "chancel",
+        "altar",
+        "vestry",
+        "sacristy",
+        "porch",
+        "shrine"
+      ],
+      {
+        "floor": "church/stone_flags",
+        "wall": "church/stone_wall"
+      }
+    ],
+    [
+      [
+        "crypt",
+        "vault",
+        "undercroft",
+        "mausoleum",
+        "dragon's rest",
+        "tomb",
+        "sanctum",
+        "vestige"
+      ],
+      {
+        "floor": "dungeon/stone_floor",
+        "wall": "dungeon/stone_wall"
+      }
+    ],
+    [
+      [
+        "cells",
+        "barracks",
+        "guardroom",
+        "armory",
+        "gatehouse",
+        "dormitory",
+        "winch"
+      ],
+      {
+        "floor": "dungeon/stone_floor",
+        "wall": "dungeon/damp_brick"
+      }
+    ],
+    [
+      [
+        "surgery",
+        "infirmary",
+        "foundling ward"
+      ],
+      {
+        "floor": "interior/tile_floor",
+        "wall": "interior/whitewash"
+      }
+    ],
+    [
+      [
+        "workshop",
+        "workroom",
+        "press floor",
+        "storeroom",
+        "storage"
+      ],
+      {
+        "floor": "interior/workshop_boards"
+      }
+    ]
+  ],
+  "place_looks": {
+    "amber_temple_faceless_god": {
+      "floor": "amber/black_stone",
+      "wall": "amber/amber_wall"
+    },
+    "amber_temple_library": {
+      "floor": "amber/black_stone",
+      "wall": "amber/amber_wall"
+    },
+    "amber_temple_vault": {
+      "floor": "amber/black_stone",
+      "wall": "amber/amber_wall"
+    },
+    "amber_temple_entrance": {
+      "floor": "amber/black_stone",
+      "wall": "amber/amber_wall",
+      "difficult": "mountain/snow"
+    },
+    "amber_temple_road": {
+      "floor": "mountain/snow",
+      "rock_walls": "mountain/cliff"
+    },
+    "tsolenka_pass": {
+      "floor": "mountain/snow",
+      "rock_walls": "mountain/cliff"
+    },
+    "mount_baratok": {
+      "floor": "mountain/scree",
+      "rock_walls": "mountain/cliff",
+      "difficult": "mountain/snow"
+    },
+    "mount_baratok_trail": {
+      "floor": "mountain/scree",
+      "rock_walls": "mountain/cliff"
+    },
+    "werewolf_den": {
+      "rock_walls": "mountain/cliff"
+    },
+    "werewolf_den_caves": {
+      "floor": "cave/rock_floor",
+      "wall": "cave/rock_wall"
+    },
+    "wizard_of_wines_cellar": {
+      "wall": "dungeon/damp_brick"
+    },
+    "berez": {
+      "difficult": "marsh/marsh_mud"
+    },
+    "berez_marsh_track": {
+      "difficult": "marsh/marsh_mud"
+    },
+    "abbey_of_st_markovia_wards": {
+      "floor": "church/stone_flags",
+      "wall": "interior/whitewash"
+    },
+    "berez_baba_lysagas_hut": {
+      "wall": "interior/kitchen_wall"
+    },
+    "old_bonegrinder": {
+      "floor": "interior/kitchen_flags"
+    },
+    "mount_baratok_hut": {
+      "wall": "interior/wood_panel"
+    }
+  },
+  "feet": {
+    "altar_church": 4.5,
+    "altar_stone": 4.5,
+    "amber_sarcophagus": 5,
+    "armchair": 4.5,
+    "armor_stand": 6,
+    "armor_wolf_helm": 7,
+    "bar_counter": 4.5,
+    "bar_front": 3.5,
+    "barn_collapsed": 14,
+    "barrel": 3.5,
+    "barrel_spigot": 5,
+    "barrow": 8,
+    "bathtub": 3.5,
+    "beacon_cradle": 6,
+    "bed": 4,
+    "bed_canopy": 8,
+    "bed_small": 4,
+    "bier": 4,
+    "bird_case": 5,
+    "bones": 2,
+    "book_shelf": 7,
+    "book_shelf_front": 7,
+    "bookshelf": 7,
+    "boulder": 3.5,
+    "brazier": 3.5,
+    "brazier_green": 3.5,
+    "bridge_parapet": 3.5,
+    "cabinet_glass": 6.5,
+    "cabinet_glass_front": 6.5,
+    "cabinet_small": 4,
+    "cabinet_small_front": 4,
+    "cage_covered": 5,
+    "cage_hanging": 7,
+    "cairn": 3,
+    "campfire": 2.5,
+    "candelabra": 5,
+    "carcass": 2.5,
+    "cart_broken": 5,
+    "cask_rack": 5,
+    "cask_rack_front": 5,
+    "chair_high": 4.5,
+    "charms": 6,
+    "chest": 3,
+    "chest_iron": 3,
+    "chest_of_drawers_front": 4,
+    "chest_painted": 3,
+    "clock_standing": 7,
+    "clock_tall": 7,
+    "coats": 6,
+    "coffin": 4,
+    "colossus": 30,
+    "cottage": 16,
+    "counter_front": 3.5,
+    "crate": 3,
+    "crib": 3.5,
+    "crib_shroud": 3.5,
+    "crow_barrel": 4,
+    "crypt": 4.5,
+    "crypt_small": 3.5,
+    "desk": 4.5,
+    "desk_front": 3.5,
+    "doll": 2,
+    "doll_yellow": 2,
+    "dollhouse": 4.5,
+    "dragon_bones": 8,
+    "dressing_table": 5.5,
+    "dressing_table_front": 5.5,
+    "druid_totem": 10,
+    "fence": 3.5,
+    "fishing_nets": 6,
+    "footlocker": 2.5,
+    "frozen_birds": 3,
+    "frozen_traveller": 4,
+    "gallows": 15,
+    "grave_mound": 2.5,
+    "gravestone": 3,
+    "gulthias_tree": 30,
+    "handcart": 4,
+    "harp": 6,
+    "harpsichord": 4.5,
+    "hay_bale": 2.5,
+    "horse": 7,
+    "hut_lysaga": 22,
+    "jewel_box": 3.5,
+    "lantern_post": 9,
+    "lectern": 4,
+    "letters_table": 3.5,
+    "linen_shelves_front": 6.5,
+    "log": 2.5,
+    "market_stall": 9,
+    "milestone": 3,
+    "millstone": 2.5,
+    "mobile": 6,
+    "music_box": 3.5,
+    "notice_board": 8,
+    "oil_lamp": 4,
+    "perch": 5,
+    "pew": 4,
+    "pipe_organ": 9,
+    "pipe_organ_front": 9,
+    "poppet": 1.5,
+    "puppet_theatre": 6,
+    "receipt_table": 3.5,
+    "reeds": 4,
+    "refuse_mound": 3,
+    "ribbon_tree": 18,
+    "roc_nest": 3.5,
+    "rocking_chair": 4,
+    "rocking_horse": 3.5,
+    "rowboat": 3,
+    "sack": 2.5,
+    "satchel": 1,
+    "scarecrow": 7,
+    "scarecrow_stitched": 7,
+    "settee": 4,
+    "sheeted_furniture": 5.5,
+    "shelves": 6.5,
+    "shelves_front": 6.5,
+    "shelves_front_b": 6.5,
+    "shop_counter": 4.5,
+    "shrine_small": 6,
+    "sideboard": 5,
+    "sideboard_front": 3.5,
+    "signpost": 8,
+    "signpost_broken": 6,
+    "skeleton_leather": 3.5,
+    "soul_bags": 6,
+    "spinning_wheel": 4,
+    "stair_riser": 6,
+    "standing_stones": 10,
+    "statue_faceless": 25,
+    "statue_head": 1.5,
+    "statue_knight": 7,
+    "statue_mother_night": 8,
+    "statue_saint": 9,
+    "statue_strahd": 7,
+    "stocks": 4.5,
+    "stocks_broken": 3.5,
+    "stone_bench": 2.5,
+    "strahd_effigy": 20,
+    "strongbox": 2,
+    "stuffed_wolf": 4,
+    "stump": 2.5,
+    "surgery_table": 4,
+    "sword_leaning": 4,
+    "table": 3.5,
+    "table_chairs": 4.5,
+    "table_set": 4,
+    "tent": 14,
+    "torch": 7,
+    "toy_chest": 3.5,
+    "trunk": 3,
+    "tub_wooden": 3.5,
+    "vardo": 10,
+    "vines": 5,
+    "wagon": 9,
+    "wall_low": 3,
+    "wardrobe": 7,
+    "wardrobe_front": 7,
+    "well": 8,
+    "well_stone": 4,
+    "wicker_cage": 7,
+    "wicker_sun": 18,
+    "wine_press": 8,
+    "wine_shelf_front": 6.5,
+    "wine_vat": 5,
+    "woodpile": 4,
+    "workbench": 4.5,
+    "workbench_front": 3.5
+  },
+  "big_width": 1.6
 }

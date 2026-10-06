@@ -3,7 +3,8 @@
   "name": "Zombie",
   "source": {
     "book": "MM2025",
-    "checked_against": "BR2024"
+    "checked_against": "BR2024",
+    "edition": "2024"
   },
   "size": "medium",
   "type": "undead",

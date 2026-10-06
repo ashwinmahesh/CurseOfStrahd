@@ -28,6 +28,7 @@ static func build(grid_: CombatGrid, theme_: String = "shrine_yard", place_: Str
 	b.grid = grid_
 	b.theme = theme_
 	b.place = place_
+	b._look = (SetDressing.catalog().get("place_looks", {}) as Dictionary).get(place_, {}) as Dictionary
 	b._rng.seed = 7   # cosmetic only (dressing placement), never rules
 	b._build()
 	return b
@@ -86,14 +87,17 @@ func _load_textures() -> void:
 	var own := str((SetDressing.catalog().get("floors", {}) as Dictionary).get(place, ""))
 	if own != "":
 		floor_s = own
+	floor_s = str(_look.get("floor", floor_s))
 	if floor_s != "":
 		_floor_tex = Look.cel_textured(floor_s, 0.22)
-	var mud := Look.theme_surface(t, "difficult")
+	var mud := str(_look.get("difficult", Look.theme_surface(t, "difficult")))
 	if mud != "":
 		_mud_tex = Look.cel_textured(mud, 0.22)
-	var wall := Look.theme_surface(t, "wall")
+	var wall := str(_look.get("wall", Look.theme_surface(t, "wall")))
 	if wall != "":
 		_wall_tex = Look.cel_textured(wall)
+	if str(_look.get("rock_walls", "")) != "":
+		_rock_tex = Look.cel_textured(str(_look["rock_walls"]))
 	var roof := Look.theme_surface(t, "roof")
 	if roof != "":
 		_roof_tex = Look.cel_textured(roof)
@@ -153,7 +157,16 @@ func _build() -> void:
 			mud = yard_mud
 		_wall_tex = Look.cel_textured("church/stone_wall")
 		_roof_tex = Look.cel_textured("village/roof_slate")
+		if _look.has("floor") and Look.cel_textured(str(_look["floor"]), 0.22) != null:
+			grass = Look.cel_textured(str(_look["floor"]), 0.22)
+			stone = grass
+			_floor_tex = grass
+		if str(_look.get("rock_walls", "")) != "":
+			_rock_tex = Look.cel_textured(str(_look["rock_walls"]))
 	_floor_mat = grass
+	if place != "" and Compendium.shared().has("locations", place):
+		SetDressing.reserve(self, Compendium.shared().get_entry("locations", place))
+		_plan_rooms(Compendium.shared().get_entry("locations", place))
 	if theme in TOWNS:
 		_yard = TownBuilder.plan(self)
 	elif theme == "shrine_yard" and place != "":
@@ -181,6 +194,9 @@ func _build() -> void:
 				mat = dais
 			elif (x + z * 3) % 7 < 3:
 				mat = stone
+			var room := _room_at(c)
+			if room.has("floor") and (f & CombatGrid.DIFFICULT) == 0 and h <= 0.0:
+				mat = room["floor"] as Material
 			_box("Floor", Vector3(1, 0.2 + h, 1), Vector3(x + 0.5, (h - 0.2) / 2.0, z + 0.5), mat)
 			var dressed := get_child_count()
 			if (f & CombatGrid.DIFFICULT) != 0:
@@ -199,7 +215,17 @@ var occluders: Array[Sprite3D] = []
 var dressing: Dictionary = {}
 ## Squares holding a door (SetDressing.door): not wall for hanging pictures or picking a wall's direction.
 var door_cells: Dictionary = {}
+## Squares a location's things stand on (SetDressing.reserve), and wall faces with a piece hung on them.
+var occupied: Dictionary = {}
+var used_faces: Dictionary = {}
 var _floor_mat: Material = null
+## This place's own look (catalog "place_looks": the Amber Temple's black stone, Mount Baratok's snow and cliffs) and
+## its rooms' surfaces (catalog "rooms", matched on the location's area names: a bathroom's tiles, a kitchen's flags).
+var _look: Dictionary = {}
+var _rooms: Array[Dictionary] = []     ## [{rect: Rect2i, floor: Material, wall: Material}]
+var _rock_tex: Material = null
+## The location's areas as rectangles (a wall piece hangs on the side facing its own area).
+var areas: Array[Rect2i] = []
 ## Towns (TownBuilder): the houses ({root, walls, upper, aabb ...}), which house each square belongs to, the window
 ## pieces by "x,y,dx,dy" (a door hung there hides its window), and the squares of low yard wall.
 var buildings: Array[Dictionary] = []
@@ -244,6 +270,75 @@ func _find_wagons() -> void:
 
 func _on_border(c: Vector2i) -> bool:
 	return c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
+
+
+## Matches each of the location's areas to a room style (catalog "rooms": words in its name -> floor and wall).
+func _plan_rooms(loc: Dictionary) -> void:
+	var rules: Array = []
+	for a: Variant in loc.get("areas", []):
+		var area := a as Dictionary
+		var name_ := ("%s %s" % [str(area.get("name", "")), str(area.get("id", "")).replace("_", " ")]).to_lower()
+		var cells0 := area.get("cells", []) as Array
+		var q0 := Vector2i(int(cells0[0][0]), int(cells0[0][1]))
+		var q1 := Vector2i(int(cells0[1][0]), int(cells0[1][1]))
+		areas.append(Rect2i(Vector2i(mini(q0.x, q1.x), mini(q0.y, q1.y)), (q1 - q0).abs() + Vector2i.ONE))
+		if area.has("floor") or area.has("walls"):
+			# The data names this room's own surfaces (an area's `floor` and `walls`).
+			rules = [[[name_], {"floor": area.get("floor", ""), "wall": area.get("walls", "")}]] + (SetDressing.catalog().get("rooms", []) as Array)
+		else:
+			rules = SetDressing.catalog().get("rooms", []) as Array
+		for rule: Variant in rules:
+			var hit := false
+			for w: String in (rule as Array)[0]:
+				hit = hit or name_.contains(w)
+			if not hit:
+				continue
+			var style := (rule as Array)[1] as Dictionary
+			var cells := area.get("cells", []) as Array
+			var p0 := Vector2i(int(cells[0][0]), int(cells[0][1]))
+			var p1 := Vector2i(int(cells[1][0]), int(cells[1][1]))
+			var r := Rect2i(Vector2i(mini(p0.x, p1.x), mini(p0.y, p1.y)), (p1 - p0).abs() + Vector2i.ONE)
+			var room := {"rect": r}
+			if str(style.get("floor", "")) != "" and Look.cel_textured(str(style["floor"]), 0.22) != null:
+				room["floor"] = Look.cel_textured(str(style["floor"]), 0.22)
+			if str(style.get("wall", "")) != "" and Look.cel_textured(str(style["wall"])) != null:
+				room["wall"] = Look.cel_textured(str(style["wall"]))
+			_rooms.append(room)
+			break
+
+
+## The styled room a square is in ({} if none). Smaller rooms win where areas overlap.
+func _room_at(c: Vector2i) -> Dictionary:
+	var best: Dictionary = {}
+	for r: Dictionary in _rooms:
+		var rect := r["rect"] as Rect2i
+		if rect.has_point(c) and (best.is_empty() or rect.get_area() < (best["rect"] as Rect2i).get_area()):
+			best = r
+	return best
+
+
+## The room a wall square belongs to, from the open squares beside it (the faces the camera sees first).
+func _wall_room(c: Vector2i) -> Dictionary:
+	for d in SetDressing.FACES:
+		var n := c + d
+		if grid.in_bounds(n) and not grid.has_flag(n, CombatGrid.WALL) and not grid.has_flag(n, CombatGrid.VOID):
+			var r := _room_at(n)
+			if r.has("wall"):
+				return r
+	return {}
+
+
+## Rock instead of trees (catalog place_looks "rock_walls"): a craggy column of cliff on each wall square, taller at
+## the map's edge, so mountains and caves are walled by rock.
+func _rock(c: Vector2i) -> void:
+	_box("Ground", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), _floor_mat)
+	_has_ground[c] = true
+	var first := get_child_count()
+	var h := (3.2 if _on_border(c) else 2.2) + _rng.randf_range(-0.6, 0.6)
+	var w := _rng.randf_range(0.95, 1.08)
+	var rock := _box("Rock", Vector3(w, h, w), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), _rock_tex)
+	rock.rotation.y = _rng.randf_range(-0.12, 0.12)
+	_dress(c, first)
 
 
 ## A town house's walls.
@@ -333,6 +428,11 @@ func clear_cell(c: Vector2i) -> void:
 		_cleared[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), _floor_mat)
 
 
+## A wall square drawn as a tree or a rock column (it has ground of its own under it).
+func is_tree(c: Vector2i) -> bool:
+	return grid.in_bounds(c) and _has_ground.has(c) and dressing.has(c) and not _wagon_cells.has(c)
+
+
 ## Puts a square's scenery back (its prop is gone).
 func restore_cell(c: Vector2i) -> void:
 	for n: Node3D in dressing.get(c, []):
@@ -390,6 +490,9 @@ func _wall(c: Vector2i) -> void:
 	if theme == "camp" and _wagon_cells.has(c):
 		_wagon(c)
 		return
+	if _rock_tex != null and not house_cells.has(c) and (theme in WILD or theme == "shrine_yard" or theme in TOWNS and _on_border(c)):
+		_rock(c)
+		return
 	if theme in WILD:
 		_tree(c)
 		return
@@ -398,7 +501,9 @@ func _wall(c: Vector2i) -> void:
 		var colour := {"manor": "umber", "tavern": "walnut", "shop": "walnut", "townhouse": "umber", "church": "slate",
 			"attic": "peat"}.get(theme, "stone_deep") as String
 		var h := 1.15
-		_box("Wall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), _wall_tex if _wall_tex != null else Look.cel(colour))
+		var room_wall := _wall_room(c)
+		var wall_mat: Material = room_wall["wall"] as Material if room_wall.has("wall") else (_wall_tex if _wall_tex != null else Look.cel(colour))
+		_box("Wall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), wall_mat)
 		# The cut face reads as the dark inside of the wall, so rooms stand out of the dark rather than out of a slab.
 		_box("WallCap", Vector3(1.02, 0.1, 1.02), Vector3(c.x + 0.5, h + 0.05, c.y + 0.5), Look.cel(CUT_FACE))
 		return
@@ -543,10 +648,19 @@ func _low_cover(c: Vector2i) -> void:
 			choices = sets.get(key + ("_wall_run" if bool(run["by_wall"]) and sets.has(key + "_wall_run") else "_run"), choices) as Array
 	if not choices.is_empty():
 		# Crates and carts in town, stumps and boulders in the woods, a room's furniture indoors.
-		var pick := str(choices[(c.x * 7 + c.y * 3) % choices.size()])
+		# The first choice (from the square's position) that fits the room around it: a wagon only where there's
+		# space for a wagon.
+		var room := SetDressing.room_at(self, c)
+		var start := (c.x * 7 + c.y * 3) % choices.size()
+		var pick := str(choices[start])
+		for k in choices.size():
+			var cand := str(choices[(start + k) % choices.size()])
+			if SetDressing.has_art(cand) and SetDressing.footprint(cand) <= room * 1.05:
+				pick = cand
+				break
 		if SetDressing.has_art(pick):
 			# Fixed in place and turned like the location's own props (against a wall, or facing south).
-			SetDressing.stand_piece(self, self, pick, c, 0.8 if pick in ["wagon", "market_stall"] else 1.0)
+			SetDressing.stand_piece(self, self, pick, c)
 			return
 	if theme in INTERIORS:
 		# Furniture: a table, a bed, a pew.
@@ -579,8 +693,9 @@ func _low_cover(c: Vector2i) -> void:
 ## Difficult terrain: brambles in the woods, rubble underground and indoors (catalog "difficult"); a town's mud
 ## is its texture alone. Elsewhere (the arena) a few thorny cones.
 func _brambles(c: Vector2i) -> void:
-	var key := _dressing_key() if theme in WILD or theme == "dungeon" else ("interior" if theme in INTERIORS else theme)
-	var choices := (SetDressing.catalog().get("difficult", {}) as Dictionary).get(key, []) as Array
+	var sets := SetDressing.catalog().get("difficult", {}) as Dictionary
+	var key := place if sets.has(place) else (_dressing_key() if theme in WILD or theme == "dungeon" else ("interior" if theme in INTERIORS else theme))
+	var choices := sets.get(key, []) as Array
 	if not choices.is_empty():
 		var pick := str(choices[(c.x * 5 + c.y * 11) % choices.size()])
 		if SetDressing.has_art(pick):
@@ -591,7 +706,9 @@ func _brambles(c: Vector2i) -> void:
 				flat.rotation.y = _rng.randf_range(0.0, TAU)
 				add_child(flat)
 			else:
-				prop_sprite(pick, at, _rng.randf_range(0.85, 1.15))
+				var bush := prop_sprite(pick, at, _rng.randf_range(0.85, 1.15))
+				if bush != null:
+					bush.set_meta("ground_cover", true)   # brambles may grow into each other
 			return
 	if theme in TOWNS:
 		return

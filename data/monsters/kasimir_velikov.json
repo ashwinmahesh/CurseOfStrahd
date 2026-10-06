@@ -3,6 +3,7 @@
   "name": "Kasimir Velikov",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd appendix block (2016) in the 2024 layout: a wizard (the book's mage with dusk-elf traits), not a warlock. Entered from knowledge, not yet checked against the book. His Hit Points and challenge rating especially need the book. AC assumes Mage Armor is up; Fire Bolt runs as an attack; spell slots are listed per spell."
   },
   "size": "medium",

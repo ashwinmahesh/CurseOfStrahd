@@ -55,6 +55,7 @@ static func populate(c: Choice, ch: Character) -> void:
 		_:
 			for v in c.from:
 				c.options.append(ChoiceOption.make(v, v.replace("_", " ").capitalize()))
+	_swap_limits(c)
 
 
 ## Problems with a choice's picks, as sentences the player can act on. Incomplete choices are reported too.
@@ -79,7 +80,114 @@ static func errors(c: Choice, ch: Character) -> Array[String]:
 		out.append("%s: choose %d more (%s)." % [c.label, missing, c.source])
 	elif c.picks.size() > c.count:
 		out.append("%s: %d chosen but only %d allowed (%s)." % [c.label, c.picks.size(), c.count, c.source])
+	if swap_open(c) and swapped_out(c).size() > c.swap_max:
+		out.append("%s: %s (%d changed) (%s)." % [c.label, _swap_rule(c), swapped_out(c).size(), c.source])
 	return out
+
+
+# --- Swap chances (2024: changing prepared spells after a Long Rest, a spell and a cantrip at a level up) ---------
+
+## Opens a chance to swap earlier picks: `earlier` is the list it starts from, `occasion` "long_rest" or "level_up".
+## On the choice's own occasion up to `replace_max` earlier picks may go (any when -1); on any other occasion they all
+## stay and only new picks can be added (a Cleric's list grows at a level up but changes after a Long Rest). What a
+## Short Rest lets you change, a Long Rest does too.
+static func open_swap(c: Choice, earlier: Array[String], occasion: String) -> void:
+	c.swap_from = earlier.duplicate()
+	var fits := occasion != "" and (c.replaceable == occasion or (c.replaceable == "short_rest" and occasion == "long_rest"))
+	c.swap_max = c.replace_max if fits else 0
+
+
+## Ends a swap chance: the picks are free again.
+static func close_swap(c: Choice) -> void:
+	c.swap_from.clear()
+	c.swap_max = -1
+
+
+## True while a swap chance limits the choice (open_swap with a limit).
+static func swap_open(c: Choice) -> bool:
+	return not c.swap_from.is_empty() and c.swap_max >= 0
+
+
+## Earlier picks the open chance has let go so far.
+static func swapped_out(c: Choice) -> Array[String]:
+	var out: Array[String] = []
+	for p in c.swap_from:
+		if not p in c.picks:
+			out.append(p)
+	return out
+
+
+## The picks after the player toggles `id`. Picking past the count drops the oldest pick; inside a limited swap chance it
+## drops only a pick made during the chance, so an earlier pick leaves only when the player unpicks it, and a locked pick
+## never does.
+static func toggled(c: Choice, id: String, on: bool) -> Array:
+	var picks: Array = c.picks.duplicate()
+	if on and not id in picks:
+		picks.append(id)
+		while picks.size() > c.count:
+			var drop := 0
+			if swap_open(c):
+				drop = -1
+				for i in picks.size():
+					if not str(picks[i]) in c.swap_from and str(picks[i]) != id:
+						drop = i
+						break
+			if drop < 0:
+				return c.picks.duplicate()
+			picks.remove_at(drop)
+	elif not on:
+		var o := c.option(id)
+		if o != null and o.locked:
+			return picks
+		picks.erase(id)
+	return picks
+
+
+## What the open chance allows, for the line under the choice's title; "" when nothing limits it.
+static func swap_note(c: Choice) -> String:
+	if not swap_open(c):
+		return ""
+	var noun := "cantrip" if c.kind == "cantrip" else "spell"
+	if c.swap_max == 0:
+		return "Pick the new %ss; the others %s." % [noun, _swap_when(c)]
+	return "Replace up to %d %s%s: unpick it, then pick the new one (%d of %d replaced)." % [c.swap_max, noun,
+		"" if c.swap_max == 1 else "s", mini(swapped_out(c).size(), c.swap_max), c.swap_max]
+
+
+## Once the chance's earlier picks are used up the rest stay locked; while the list is full of earlier picks only, new
+## options wait until the player unpicks the one they're replacing.
+static func _swap_limits(c: Choice) -> void:
+	if not swap_open(c):
+		return
+	var out := swapped_out(c).size()
+	var only_earlier := true
+	for p in c.picks:
+		if not p in c.swap_from:
+			only_earlier = false
+	var noun := "cantrip" if c.kind == "cantrip" else "spell"
+	for o in c.options:
+		var picked := o.id in c.picks
+		if picked and o.id in c.swap_from and out >= c.swap_max:
+			o.lock(_swap_rule(c))
+		elif not picked and o.legal and c.picks.size() >= c.count and only_earlier:
+			o.block("Unpick the %s you're replacing first" % noun if out < c.swap_max else _swap_rule(c))
+
+
+static func _swap_rule(c: Choice) -> String:
+	var noun := "cantrip" if c.kind == "cantrip" else "spell"
+	if c.swap_max == 0:
+		return "Your earlier %ss %s" % [noun, _swap_when(c)]
+	return "Only %d %s%s can change %s" % [c.swap_max, noun, "" if c.swap_max == 1 else "s",
+		"after a Long Rest" if c.replaceable == "long_rest" else "at a level up"]
+
+
+static func _swap_when(c: Choice) -> String:
+	match c.replaceable:
+		"long_rest":
+			return "change after a Long Rest"
+		"level_up":
+			return "change when this class gains a level"
+	return "can't change"
 
 
 static func warnings(c: Choice) -> Array[String]:

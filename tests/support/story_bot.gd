@@ -313,9 +313,67 @@ func talk(npc_id: String) -> bool:
 	return false
 
 
+## Travels by map toward `location_id`. The map shows only places the party has been to, one road from there, or
+## heard of (Travel.known), so a far place is reached the way a player does it: set out for the known place nearest
+## it by road, look again from there, and go on.
+func _go_by_map(location_id: String) -> bool:
+	for hop in 8:
+		if _known_place_toward(location_id, false) != "":
+			return await _go_by_map_once(location_id)
+		var step := _known_place_toward(location_id, true)
+		if step == "" or not await _go_by_map_once(str(Travel.place(step)["location"]).get_slice(":", 0)):
+			note("no way on toward %s" % location_id)
+			return false
+	return false
+
+
+## The known place to set out for: one whose location is `location_id` or walks to it, or (`nearest`) the known
+## place fewest road hours from such a place, counting every open road, known or not; "" if there's none.
+func _known_place_toward(location_id: String, nearest: bool) -> String:
+	var ends: Array[String] = []
+	for p: Variant in Travel.map_data().get("places", []):
+		var pl := p as Dictionary
+		var loc := str(pl["location"]).get_slice(":", 0)
+		if loc == location_id or not _route(loc, location_id).is_empty():
+			ends.append(str(pl["id"]))
+	var known := {}
+	for k in Travel.known(st()):
+		known[str(k["id"])] = true
+	if not nearest:
+		for e in ends:
+			if known.has(e):
+				return e
+		return ""
+	var dist := {}
+	var open: Array[String] = []
+	for e in ends:
+		dist[e] = 0.0
+		open.append(e)
+	while not open.is_empty():
+		open.sort_custom(func(a: String, b: String) -> bool: return float(dist[a]) < float(dist[b]))
+		var here := open.pop_front() as String
+		for r: Variant in Travel.map_data().get("roads", []):
+			var road := r as Dictionary
+			if not StoryConditions.check(str(road.get("when", "")), st()):
+				continue
+			var there := str(road["to"]) if str(road["from"]) == here else (str(road["from"]) if str(road["to"]) == here else "")
+			if there == "":
+				continue
+			var d := float(dist[here]) + float(road["hours"])
+			if not dist.has(there) or d < float(dist[there]):
+				dist[there] = d
+				open.append(there)
+	var best := ""
+	for id: String in known:
+		var at := str(Travel.place(id)["location"]).get_slice(":", 0)
+		if dist.has(id) and at != view().loc_id and (best == "" or float(dist[id]) < float(dist[best])):
+			best = id
+	return best
+
+
 ## Walks to the nearest road out (an exit to "travel"), opens the map and sets out for the place nearest
 ## `location_id` (by walking from that place's location). Fights and events on the road are handled by settle().
-func _go_by_map(location_id: String) -> bool:
+func _go_by_map_once(location_id: String) -> bool:
 	var target := ""
 	for p: Variant in Travel.map_data().get("places", []):
 		var pl := p as Dictionary

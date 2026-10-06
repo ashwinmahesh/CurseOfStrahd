@@ -2,33 +2,33 @@
   "id": "death_house_dungeon_1",
   "name": "Death House, Dungeon (Upper Level)",
   "region": "death_house",
-  "summary": "Below the house, cut into the rock: the Durst family crypts, the cult's dormitory and refectory, a reliquary of victims' belongings, a well where something lurks, and Gustav and Elisabeth Durst, still keeping house. Stairs lead further down toward the chanting.",
+  "summary": "Below the house, cut into the rock: the Durst family crypts, the cult's quarters around an old well, a dining hall and larder, a passage strewn with bones where the cult's dead still wait, a shrine to the lord in the castle, and Gustav and Elisabeth Durst, still keeping house behind a door that isn't one. Stairs lead further down toward the chanting.",
   "map": {
     "theme": "dungeon",
     "light": "dark",
     "rows": [
       "##############################",
-      "###...##.##.##.##.####.......#",
-      "###...#............~.#......=#",
-      "#.........~.................=#",
-      "#.....#.........~....#......=#",
-      "#.....#..............#.......#",
-      "#############..#######.......#",
-      "#############..###############",
-      "#.......#####..###############",
-      "#.==..=.#####..#####.......=##",
-      "#.......#..........#........##",
-      "#.==....#..........#........##",
-      "#..........======.......==..##",
-      "#.==....#..........#........##",
-      "#.......#..........#........##",
-      "#.......#####.################",
-      "#########..........#.....#####",
-      "#########........~.#.....#####",
-      "#########....##....#........##",
-      "#########.~..##.............##",
-      "#########.......~..#........##",
-      "#########..........#........##",
+      "##.#####.#.#.#.#.######......#",
+      "#....#.............~.##......#",
+      "#...................~##......#",
+      "#....#...............##......#",
+      "##.##########.############.###",
+      "#.....#######.#########......#",
+      "#.....####.##.##.######......#",
+      "#.....###.........#####.===..#",
+      "#.....##..........#####......#",
+      "#.....###....#..........===..#",
+      "########..........#####......#",
+      "#########.........#####......#",
+      "###########.###.#########.####",
+      "###.............#########.####",
+      "###.#####################.####",
+      "#.......#....#....=.##.......#",
+      "#.......#....#......##.......#",
+      "#.........=.........##.......#",
+      "#.......#....#......##.......#",
+      "#.##.####....#......##.......#",
+      "#...#####################.####",
       "##############################"
     ]
   },
@@ -42,132 +42,216 @@
           1
         ],
         [
-          5,
-          5
+          4,
+          4
         ]
-      ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced"
     },
     {
       "id": "dh_family_crypts",
       "name": "Family Crypts",
       "cells": [
         [
-          7,
+          6,
           1
         ],
         [
           20,
-          5
+          4
         ]
-      ]
-    },
-    {
-      "id": "dh_crypt_passage",
-      "name": "Narrow Passage",
-      "cells": [
-        [
-          13,
-          6
-        ],
-        [
-          14,
-          9
-        ]
-      ]
-    },
-    {
-      "id": "dh_cult_refectory",
-      "name": "Refectory",
-      "cells": [
-        [
-          9,
-          10
-        ],
-        [
-          18,
-          14
-        ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_cult_dormitory",
-      "name": "Dormitory",
+      "name": "Initiates' Quarters",
       "cells": [
         [
           1,
-          8
+          6
         ],
         [
-          7,
-          15
-        ]
-      ]
-    },
-    {
-      "id": "dh_durst_chambers",
-      "name": "The Dursts' Chambers",
-      "cells": [
-        [
-          20,
-          9
-        ],
-        [
-          27,
-          14
+          5,
+          10
         ]
       ],
-      "light": "dim"
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/stone_wall"
     },
     {
-      "id": "dh_reliquary",
-      "name": "Reliquary",
+      "id": "dh_well_chamber",
+      "name": "Well and Cultist Quarters",
       "cells": [
         [
+          8,
+          7
+        ],
+        [
+          17,
+          13
+        ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced"
+    },
+    {
+      "id": "dh_pit_passage",
+      "name": "Narrow Passage",
+      "cells": [
+        [
+          18,
+          10
+        ],
+        [
           22,
+          10
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "dh_cult_refectory",
+      "name": "Dining Hall",
+      "cells": [
+        [
+          23,
+          6
+        ],
+        [
+          28,
+          12
+        ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "dh_larder",
+      "name": "Larder",
+      "cells": [
+        [
+          23,
           1
         ],
         [
           28,
-          6
+          4
         ]
-      ]
-    },
-    {
-      "id": "dh_well_chamber",
-      "name": "Well Chamber",
-      "cells": [
-        [
-          9,
-          16
-        ],
-        [
-          18,
-          21
-        ]
-      ]
+      ],
+      "light": "dark",
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/damp_brick"
     },
     {
       "id": "dh_lower_stair",
       "name": "Stair Down",
       "cells": [
         [
-          20,
+          22,
           16
         ],
         [
-          27,
+          28,
           21
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "dh_ghoul_passage",
+      "name": "Bone-Strewn Passage",
+      "cells": [
+        [
+          3,
+          14
+        ],
+        [
+          15,
+          14
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
+    },
+    {
+      "id": "dh_shrine",
+      "name": "The Darklord's Shrine",
+      "cells": [
+        [
+          1,
+          16
+        ],
+        [
+          7,
+          20
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "dh_trapdoor_stair",
+      "name": "Trapdoor Stair",
+      "cells": [
+        [
+          1,
+          21
+        ],
+        [
+          3,
+          21
+        ]
+      ],
+      "light": "dark",
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced"
+    },
+    {
+      "id": "dh_durst_chambers",
+      "name": "The Cult Leaders' Den",
+      "cells": [
+        [
+          9,
+          16
+        ],
+        [
+          12,
+          20
+        ]
+      ],
+      "light": "dim",
+      "floor": "church/stone_flags",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "dh_durst_quarters",
+      "name": "The Cult Leaders' Quarters",
+      "cells": [
+        [
+          14,
+          16
+        ],
+        [
+          19,
+          20
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "dungeon/stone_wall"
     }
   ],
   "spawns": {
     "default": [
-      3,
+      2,
       3
     ],
     "from_secret_stair": [
-      3,
+      2,
       3
     ],
     "from_downstairs": [
@@ -179,7 +263,7 @@
     {
       "id": "secret_stair_up",
       "cell": [
-        3,
+        2,
         1
       ],
       "to": "death_house_attic",
@@ -189,19 +273,31 @@
     {
       "id": "stairs_down",
       "cell": [
-        27,
-        18
+        25,
+        21
       ],
       "to": "death_house_dungeon_2",
       "spawn": "from_upstairs",
       "label": "Stairs down"
+    },
+    {
+      "id": "trapdoor_up",
+      "cell": [
+        3,
+        21
+      ],
+      "to": "village_of_barovia",
+      "spawn": "from_death_house",
+      "label": "The trapdoor",
+      "when": "flag.death_house_sacrificed",
+      "locked_text": "A wooden trapdoor in the ceiling, bolted from this side. The bolts slide, and still it won't lift: something heavy is sitting on it, the way the house sits on everything down here."
     }
   ],
   "doors": [
     {
       "id": "crypt_gate",
       "cell": [
-        6,
+        5,
         3
       ],
       "label": "an iron crypt gate"
@@ -209,44 +305,75 @@
     {
       "id": "dormitory_door",
       "cell": [
-        8,
-        12
+        2,
+        5
       ],
-      "label": "the dormitory door"
-    },
-    {
-      "id": "durst_door",
-      "cell": [
-        19,
-        12
-      ],
-      "label": "a heavy oak door"
-    },
-    {
-      "id": "reliquary_door",
-      "cell": [
-        21,
-        3
-      ],
-      "label": "the reliquary door",
-      "locked": true,
-      "lock_dc": 13
+      "label": "a low door"
     },
     {
       "id": "well_door",
       "cell": [
         13,
-        15
+        7
       ],
       "label": "a damp door"
     },
     {
+      "id": "refectory_door",
+      "cell": [
+        22,
+        10
+      ],
+      "label": "a door with a grease-dark handle"
+    },
+    {
+      "id": "larder_door",
+      "cell": [
+        26,
+        5
+      ],
+      "label": "the larder door"
+    },
+    {
       "id": "lower_stair_door",
       "cell": [
-        19,
-        19
+        25,
+        13
       ],
       "label": "a door carved with a hand"
+    },
+    {
+      "id": "shrine_door",
+      "cell": [
+        3,
+        15
+      ],
+      "label": "a door of black wood"
+    },
+    {
+      "id": "durst_door",
+      "cell": [
+        8,
+        18
+      ],
+      "label": "a heavy oak door"
+    },
+    {
+      "id": "durst_quarters_door",
+      "cell": [
+        13,
+        18
+      ],
+      "label": "a bedroom door"
+    },
+    {
+      "id": "shrine_secret_door",
+      "cell": [
+        1,
+        20
+      ],
+      "label": "a seam behind the statue's alcove",
+      "secret_dc": 15
     }
   ],
   "props": [
@@ -257,19 +384,30 @@
         1
       ],
       "kind": "examine",
-      "label": "the oldest crypts",
+      "label": "the oldest crypt",
       "model": "crypt"
     },
     {
-      "id": "crypt_parents",
+      "id": "crypt_gustav",
       "cell": [
-        11,
+        10,
         1
       ],
       "kind": "examine",
-      "label": "Gustav and Elisabeth's crypts",
+      "label": "Gustav Durst's crypt",
       "model": "crypt",
-      "dialogue": "death_house/dungeon:crypt_parents"
+      "dialogue": "death_house/dungeon:crypt_gustav"
+    },
+    {
+      "id": "crypt_elisabeth",
+      "cell": [
+        12,
+        1
+      ],
+      "kind": "examine",
+      "label": "Elisabeth Durst's crypt",
+      "model": "crypt",
+      "dialogue": "death_house/dungeon:crypt_elisabeth"
     },
     {
       "id": "crypt_children",
@@ -285,7 +423,7 @@
     {
       "id": "crypt_walter",
       "cell": [
-        17,
+        16,
         1
       ],
       "kind": "examine",
@@ -296,18 +434,58 @@
     {
       "id": "dormitory_pegs",
       "cell": [
-        8,
-        9
+        6,
+        8
       ],
       "kind": "examine",
       "label": "pegs of black robes",
       "model": "robe_pegs"
     },
     {
-      "id": "cult_ledger",
+      "id": "initiate_pallet_a",
+      "cell": [
+        2,
+        7
+      ],
+      "kind": "decor",
+      "label": "a straw pallet",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "initiate_pallet_b",
+      "cell": [
+        2,
+        9
+      ],
+      "kind": "decor",
+      "label": "a straw pallet",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "initiate_pallet_c",
+      "cell": [
+        4,
+        7
+      ],
+      "kind": "decor",
+      "label": "a straw pallet",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "dungeon_well",
       "cell": [
         13,
-        12
+        10
+      ],
+      "kind": "examine",
+      "label": "the well",
+      "model": "well_stone"
+    },
+    {
+      "id": "cult_ledger",
+      "cell": [
+        23,
+        7
       ],
       "kind": "book",
       "label": "the cult's ledger",
@@ -319,48 +497,89 @@
     {
       "id": "refectory_bones",
       "cell": [
-        17,
-        14
+        28,
+        12
       ],
       "kind": "examine",
       "label": "a heap of gnawed bones",
       "model": "bones"
     },
     {
+      "id": "larder_net",
+      "cell": [
+        28,
+        1
+      ],
+      "kind": "examine",
+      "label": "a sagging net of meat",
+      "model": "sack"
+    },
+    {
+      "id": "shrine_statue",
+      "cell": [
+        4,
+        20
+      ],
+      "kind": "examine",
+      "label": "a painted wooden statue",
+      "model": "statue_knight",
+      "dialogue": "death_house/dungeon:shrine_statue"
+    },
+    {
+      "id": "shrine_shackles",
+      "cell": [
+        1,
+        15
+      ],
+      "kind": "examine",
+      "label": "skeletons in rusty shackles",
+      "model": "skeleton_shackles"
+    },
+    {
+      "id": "shrine_shackles_b",
+      "cell": [
+        6,
+        15
+      ],
+      "kind": "decor",
+      "label": "skeletons in rusty shackles",
+      "model": "skeleton_shackles"
+    },
+    {
       "id": "durst_supper",
       "cell": [
-        24,
-        12
+        10,
+        18
       ],
       "kind": "examine",
       "label": "a set supper table",
       "model": "table_set"
     },
     {
-      "id": "reliquary_trophies",
+      "id": "den_candlesticks",
       "cell": [
-        25,
-        0
+        9,
+        16
       ],
-      "kind": "examine",
-      "label": "shelves of keepsakes",
-      "model": "shelves"
+      "kind": "decor",
+      "label": "iron candlesticks",
+      "model": "candelabra"
     },
     {
-      "id": "dungeon_well",
+      "id": "durst_bed",
       "cell": [
-        13,
-        18
+        18,
+        16
       ],
-      "kind": "examine",
-      "label": "the well",
-      "model": "well"
+      "kind": "decor",
+      "label": "a rotting bed",
+      "model": "bed"
     },
     {
       "id": "chanting_stair",
       "cell": [
         25,
-        16
+        20
       ],
       "kind": "examine",
       "label": "the stair down",
@@ -371,10 +590,10 @@
     {
       "id": "dormitory_footlockers",
       "cell": [
-        6,
-        9
+        5,
+        10
       ],
-      "label": "the cultists' footlockers",
+      "label": "the initiates' footlockers",
       "model": "footlocker",
       "items": [
         {
@@ -389,52 +608,124 @@
       "gold": 9
     },
     {
-      "id": "reliquary_shelf",
+      "id": "alcove_chest_a",
       "cell": [
-        28,
-        3
+        10,
+        7
       ],
-      "label": "the reliquary shelves",
-      "model": "shelves",
+      "label": "a cultist's chest",
+      "model": "chest",
+      "gold": 17
+    },
+    {
+      "id": "alcove_chest_b",
+      "cell": [
+        16,
+        7
+      ],
+      "label": "a cultist's chest",
+      "model": "chest",
+      "gold": 30
+    },
+    {
+      "id": "alcove_chest_c",
+      "cell": [
+        8,
+        9
+      ],
+      "label": "a cultist's chest",
+      "model": "chest",
+      "gold": 50
+    },
+    {
+      "id": "alcove_chest_d",
+      "cell": [
+        8,
+        11
+      ],
+      "label": "a cultist's chest",
+      "model": "chest",
+      "gold": 25
+    },
+    {
+      "id": "alcove_chest_e",
+      "cell": [
+        11,
+        13
+      ],
+      "label": "a cultist's chest",
+      "model": "chest",
       "items": [
         {
-          "id": "holy_symbol_amulet",
+          "id": "shortsword",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "durst_wardrobe",
+      "cell": [
+        14,
+        16
+      ],
+      "label": "a wardrobe carved with faces",
+      "model": "wardrobe",
+      "items": [
+        {
+          "id": "robe",
+          "qty": 2
+        },
+        {
+          "id": "candle",
+          "qty": 10
+        }
+      ]
+    },
+    {
+      "id": "durst_footlocker",
+      "cell": [
+        19,
+        20
+      ],
+      "label": "a faded footlocker",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "cloak_of_protection",
           "qty": 1
         },
         {
           "id": "potion_of_healing",
-          "qty": 2
+          "qty": 4
         },
         {
-          "id": "holy_water",
+          "id": "chain_shirt",
           "qty": 1
-        }
-      ],
-      "gold": 60
-    },
-    {
-      "id": "durst_strongbox",
-      "cell": [
-        27,
-        9
-      ],
-      "label": "a strongbox",
-      "model": "strongbox",
-      "lock_dc": 14,
-      "items": [
+        },
         {
-          "id": "spell_scroll_level_1",
+          "id": "alchemists_fire",
+          "qty": 1
+        },
+        {
+          "id": "bullseye_lantern",
+          "qty": 1
+        },
+        {
+          "id": "thieves_tools",
+          "qty": 1
+        },
+        {
+          "id": "spellbook",
           "qty": 1
         }
-      ],
-      "gold": 75
+      ]
     }
   ],
   "lights": [
     {
       "cell": [
-        24,
-        13
+        11,
+        18
       ],
       "kind": "candle",
       "bright_ft": 5,
@@ -442,8 +733,8 @@
     },
     {
       "cell": [
-        28,
-        3
+        4,
+        19
       ],
       "kind": "magic",
       "bright_ft": 0,
@@ -455,48 +746,63 @@
       "id": "passage_pit",
       "cells": [
         [
-          13,
-          8
+          20,
+          10
         ]
       ],
-      "label": "a covered pit",
-      "detect_dc": 13,
-      "disarm_dc": 13,
+      "label": "a covered spiked pit",
+      "detect_dc": 15,
+      "disarm_dc": 15,
       "save": {
         "ability": "dex",
         "dc": 12
       },
       "damage": "2d6",
-      "damage_type": "bludgeoning",
-      "text": "The flagstone tips, and the dark beneath it is ten feet deep."
+      "damage_type": "piercing",
+      "text": "The flagstone tips, and the dark beneath it is ten feet deep and full of spikes."
     }
   ],
   "npcs": [
     {
       "npc": "gustav_durst",
       "cell": [
-        20,
-        12
+        10,
+        17
       ],
       "dialogue": "death_house/dursts:start",
       "when": "not flag.death_house_dursts_destroyed",
-      "facing": "west"
+      "facing": "south"
     },
     {
       "npc": "elisabeth_durst",
       "cell": [
-        24,
-        11
+        11,
+        19
       ],
       "dialogue": "death_house/dursts:start",
       "when": "not flag.death_house_dursts_destroyed",
-      "facing": "west"
+      "facing": "north"
     }
   ],
   "encounters": [
     {
-      "id": "dormitory_ghouls",
-      "trigger": "enter_area:dh_cult_dormitory",
+      "id": "crypt_insects",
+      "trigger": "dialogue",
+      "flag": "death_house_insects_scattered",
+      "monsters": [
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            12,
+            2
+          ]
+        }
+      ],
+      "text": "The crypt was full of something, and now the passage is."
+    },
+    {
+      "id": "passage_ghouls",
+      "trigger": "enter_area:dh_ghoul_passage",
       "when": "not flag.death_house_ghouls_destroyed",
       "flag": "death_house_ghouls_destroyed",
       "monsters": [
@@ -504,64 +810,108 @@
           "monster": "ghoul",
           "cell": [
             5,
-            10
+            14
           ]
         },
         {
           "monster": "ghoul",
           "cell": [
-            6,
-            12
+            7,
+            14
           ]
         },
         {
           "monster": "ghoul",
           "cell": [
-            4,
+            9,
+            14
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            11,
             14
           ]
         }
       ],
-      "text": "The cult kept its appetite."
+      "text": "The bones in the passage stand up, and some of them still have meat on."
     },
     {
-      "id": "well_grick",
-      "trigger": "enter_area:dh_well_chamber",
+      "id": "larder_grick",
+      "trigger": "enter_area:dh_larder",
       "when": "not flag.death_house_grick_slain",
       "flag": "death_house_grick_slain",
       "monsters": [
         {
           "monster": "grick",
           "cell": [
-            11,
-            20
+            27,
+            2
           ]
         }
       ],
       "text": "Part of the wall uncoils."
     },
     {
-      "id": "reliquary_shadows",
-      "trigger": "enter_area:dh_reliquary",
-      "when": "not flag.death_house_shadows_destroyed",
+      "id": "shrine_shadows",
+      "trigger": "dialogue",
       "flag": "death_house_shadows_destroyed",
       "monsters": [
         {
           "monster": "shadow",
           "cell": [
-            24,
-            5
+            1,
+            16
           ]
         },
         {
           "monster": "shadow",
           "cell": [
-            27,
-            5
+            7,
+            16
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            1,
+            18
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            7,
+            18
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            4,
+            16
           ]
         }
       ],
-      "text": "The shadows on the shelves were not cast by anything."
+      "text": "Five shadows peel off the walls, and none of them is yours."
+    },
+    {
+      "id": "den_mimic",
+      "trigger": "open:durst_door",
+      "when": "not flag.death_house_mimic_slain",
+      "flag": "death_house_mimic_slain",
+      "monsters": [
+        {
+          "monster": "mimic",
+          "cell": [
+            8,
+            18
+          ],
+          "name": "The Door"
+        }
+      ],
+      "text": "The door has teeth."
     },
     {
       "id": "durst_reunion",
@@ -571,16 +921,16 @@
         {
           "monster": "ghast",
           "cell": [
-            21,
-            11
+            10,
+            17
           ],
           "name": "Gustav Durst"
         },
         {
-          "monster": "ghoul",
+          "monster": "ghast",
           "cell": [
-            23,
-            13
+            11,
+            19
           ],
           "name": "Elisabeth Durst"
         }
@@ -596,16 +946,16 @@
         {
           "monster": "ghast",
           "cell": [
-            21,
-            11
+            10,
+            17
           ],
           "name": "Gustav Durst"
         },
         {
-          "monster": "ghoul",
+          "monster": "ghast",
           "cell": [
-            23,
-            13
+            11,
+            19
           ],
           "name": "Elisabeth Durst"
         }

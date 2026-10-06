@@ -3,6 +3,7 @@
   "name": "Rictavio",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd appendix block (2016) in the 2024 layout: Rudolph van Richten in disguise. Entered from knowledge, not yet checked against the book. The prepared spell list especially needs the book. Undead Slayer is text only for the engine; spell slots are listed per spell."
   },
   "size": "medium",

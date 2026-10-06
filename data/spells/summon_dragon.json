@@ -35,6 +35,17 @@
   "upcast": {
     "text": "Use the slot level in the stat block: higher slots give the spirit more Hit Points, AC and attacks."
   },
+  "choice": {
+    "kind": "option",
+    "label": "Element",
+    "from": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ]
+  },
   "tags": [
     "summon"
   ],

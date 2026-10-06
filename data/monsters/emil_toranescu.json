@@ -3,6 +3,7 @@
   "name": "Emil Toranescu",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd gives Emil the Werewolf's statistics; these are the 2024 Werewolf's numbers (data/monsters/werewolf.json, checked against BR2024) under his name, so he can join the party as a guest. Not checked against the book."
   },
   "size": "medium",

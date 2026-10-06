@@ -52,6 +52,9 @@ var _flash_color := Color.WHITE
 var _base_modulate := Color.WHITE
 var _active := false
 var _highlight := false
+## How far the creature has come into view (0 to 1): a fight's foes fade in as it starts and its survivors fade out
+## as it ends (emerge, fade_away), rather than popping.
+var _fade := 1.0
 
 
 static func art_id(c: Combatant) -> String:
@@ -218,24 +221,18 @@ func refresh() -> void:
 	if cr.dead:
 		_base_modulate = Color(0.45, 0.4, 0.45, 0.0)
 		_leave_remains()
-		_ring.visible = false
-		_bar_back.visible = false
-		_bar_fill.visible = false
-		_status.visible = false
 	elif cr.hp <= 0:
 		_base_modulate = Color(0.6, 0.55, 0.6, 0.85)
 	if sprite != null:
 		var down := not cr.dead and (cr.hp <= 0 or cr.has_condition(&"prone"))
 		sprite.visible = not down
 		_lying.visible = down
-		_lying.modulate = Color(0.6, 0.55, 0.65) if cr.hp <= 0 else Color.WHITE
 		if cr.dead and sprite.modulate.a > 0.01 and is_inside_tree():
 			var tw := create_tween()
 			tw.tween_property(sprite, "modulate", _base_modulate, 0.7)
 		else:
-			sprite.modulate = _base_modulate
-	elif body != null:
-		body.visible = not cr.dead
+			sprite.modulate = _faded(_base_modulate)
+	_show_fade()
 
 
 ## Names show only for the creature whose turn it is and the one under the cursor, to keep the field readable.
@@ -265,8 +262,51 @@ func set_active(on: bool) -> void:
 func set_highlight(on: bool) -> void:
 	_highlight = on
 	_label.modulate = Look.color("wick") if on else Look.color("vellum")
-	_ring.scale = Vector3.ONE * (1.15 if on else 1.0)
 	_label.visible = (_active or _highlight) and not combatant.creature.dead
+	_show_fade()
+
+
+## Fades the creature into view over `seconds` after `delay`: a fight's foes stepping out of the dark. Its ring grows
+## in under it as it arrives; its health bar shows once it's there.
+func emerge(delay: float, seconds: float) -> void:
+	_set_fade(0.0)
+	var tw := create_tween()
+	tw.tween_interval(delay)
+	tw.tween_method(_set_fade, 0.0, 1.0, seconds).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+
+
+## Fades the creature out of view over `seconds`, then frees it (a fight's survivors as the party walks on).
+func fade_away(seconds: float) -> void:
+	var tw := create_tween()
+	tw.tween_method(_set_fade, _fade, 0.0, seconds).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	tw.tween_callback(queue_free)
+
+
+func _set_fade(f: float) -> void:
+	_fade = f
+	if sprite != null and _flash <= 0.0 and not combatant.creature.dead:
+		sprite.modulate = _faded(_base_modulate)
+	_show_fade()
+
+
+## `c` as drawn at the creature's current fade.
+func _faded(c: Color) -> Color:
+	return Color(c, c.a * _fade)
+
+
+## The ring, bar, conditions and the figure lying down follow the fade (a dead creature keeps only its remains).
+func _show_fade() -> void:
+	var cr := combatant.creature
+	var there := not cr.dead and _fade > 0.0
+	_ring.visible = there
+	_ring.scale = Vector3.ONE * (1.15 if _highlight else 1.0) * lerpf(0.5, 1.0, _fade)
+	_bar_back.visible = there and _fade >= 1.0
+	_bar_fill.visible = _bar_back.visible
+	_status.visible = there and _fade >= 1.0
+	if _lying != null:
+		_lying.modulate = _faded(Color(0.6, 0.55, 0.65) if cr.hp <= 0 else Color.WHITE)
+	if sprite == null and body != null:
+		body.visible = there and _fade >= 0.5
 
 
 ## Faces a ground direction (x, z) and plays walking or idle. `step_time` (seconds per square) paces the walk cycle.
@@ -312,6 +352,6 @@ func _process(delta: float) -> void:
 		return
 	if _flash > 0.0 and not combatant.creature.dead:
 		_flash -= delta
-		sprite.modulate = _flash_color if fmod(_flash, 0.1) > 0.05 else _base_modulate
+		sprite.modulate = _faded(_flash_color if fmod(_flash, 0.1) > 0.05 else _base_modulate)
 		if _flash <= 0.0:
-			sprite.modulate = _base_modulate
+			sprite.modulate = _faded(_base_modulate)

@@ -50,6 +50,46 @@ The top of a tall piece is drawn over the squares behind it, so the mouse now te
 camera first, and for pieces the texture's alpha, so only painted pixels count. Floor pieces and empty floor fall
 back to the floor square (`GridPick`).
 
+## Rooms and places have their own surfaces (owner request, 2026-10-06)
+
+"We want a variety of textures and assets to really capture the visual feel." The board picks each room's floor and
+walls, most specific first:
+
+1. An area's own `floor` and `walls` in the location data (texture surfaces such as `interior/tile_floor`; optional,
+   in `data/schemas/location.schema.json`).
+2. The catalog's `rooms` rules, matched on words in the area's name or id: bathrooms are tiled with damp tiles on
+   the walls, kitchens and bakeries have stone flags and sooty brick, libraries, studies, dens and dining rooms
+   parquet and dark panelling, halls and landings marble, bedrooms and parlours carpet and green damask, nurseries
+   bird wallpaper, chapels and naves stone, crypts and vaults dungeon stone, cells and barracks damp brick, the
+   surgery whitewash and tiles, workshops sawdust boards.
+3. The place's look (`place_looks`): the Amber Temple's black stone veined with amber, Mount Baratok's scree and snow
+   inside cliffs, the Tsolenka Pass's snow, the werewolf caves' rock, Berez's marsh mud.
+4. The map's theme, as before.
+
+A wall square takes the style of the room on its open side. `rock_walls` draws a place's wall squares as craggy
+columns of cliff instead of trees. Textures: 26 new sets, from `tools/art/texture_recipes.json` (`make textures`).
+
+## Real-world sizes (owner report, 2026-10-06)
+
+"There is a small hut in the opening area... ensure we are sizing resources according to how big they should be."
+The cottage had been shrunk to fit one square among the trees. Every standing piece now has the height of its picture
+at real size in catalog `feet` (a person is 6 ft and one unit is 5 ft; low, deep things such as beds and tables count
+the top seen from above): a wardrobe 7 ft, a table 3.5, a bed 4, a cottage 16, a gallows 15. A piece wider than
+`big_width` (1.6 units) at that size, such as a cottage, tent, wagon or the standing stones, keeps its size whatever
+the room and clears the trees (and the board's own stumps and brambles) on the squares it covers, plus one more row
+on the west and south, the sides the opening camera looks from, so no tree stands in front of it. Furniture against
+a wall is squeezed sideways to its square but keeps its height. `test_pieces_are_drawn_at_their_real_size` builds
+every location and fails on any piece drawn under 70% or over 135% of its real size.
+
+## Pieces don't overlap (owner report, 2026-10-06)
+
+Every square a location's things stand on is reserved before the board is dressed (`SetDressing.reserve`). A standing
+piece is no wider than its square unless all eight squares around it are open floor with nothing on them; the
+board's own furniture picks a choice that fits (a wagon only where a wagon has room); furniture against a wall is
+one square wide when the next square along the wall has something; and one wall face holds one piece (a second moves
+to another open face; a piece of furniture against a wall claims the face behind it). A wall piece hangs on the side
+facing its own area first. `test_no_piece_overlaps_another_or_a_wall` builds every location and fails on any overlap.
+
 ## How a thing finds its art
 
 `art/sprites/props/catalog.json`, read by `world/look/set_dressing.gd` (`SetDressing`):

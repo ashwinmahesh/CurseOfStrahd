@@ -37,6 +37,7 @@
       "type": "necrotic"
     }
   ],
+  "reduce_max_hp": true,
   "tags": [
     "damage",
     "debuff"

@@ -2,7 +2,7 @@
   "id": "death_house_dungeon_2",
   "name": "Death House, Dungeon (Lower Level)",
   "region": "death_house",
-  "summary": "The cult's heart: a flooded passage full of rats, a winch room that raises the portcullis, the robing room, the antechamber, and the ritual chamber where the cult's shades chant around the altar and Lorghoth the Decayer sleeps in a mound of refuse.",
+  "summary": "The cult's heart: a reliquary of strange relics at the foot of the stairs, an old prison, a flooded passage to a rusted portcullis and the winch that raises it, and the ritual chamber where the cult's shades chant around the altar and Lorghoth the Decayer sleeps in a mound of refuse.",
   "map": {
     "theme": "dungeon",
     "light": "dark",
@@ -34,7 +34,7 @@
   "areas": [
     {
       "id": "dh_lower_landing",
-      "name": "Bottom of the Stairs",
+      "name": "Reliquary",
       "cells": [
         [
           1,
@@ -44,7 +44,9 @@
           6,
           5
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_flooded_passage",
@@ -58,11 +60,13 @@
           22,
           5
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
     },
     {
       "id": "dh_robing_room",
-      "name": "Robing Room",
+      "name": "Prison",
       "cells": [
         [
           1,
@@ -72,7 +76,9 @@
           6,
           11
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
     },
     {
       "id": "dh_winch_room",
@@ -86,7 +92,9 @@
           22,
           10
         ]
-      ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
     },
     {
       "id": "dh_ritual_antechamber",
@@ -100,7 +108,9 @@
           28,
           9
         ]
-      ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
     },
     {
       "id": "dh_ritual_chamber",
@@ -115,7 +125,9 @@
           20
         ]
       ],
-      "light": "dim"
+      "light": "dim",
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
     }
   ],
   "spawns": {
@@ -179,13 +191,33 @@
       "model": "bones_water"
     },
     {
+      "id": "reliquary_niches",
+      "cell": [
+        4,
+        0
+      ],
+      "kind": "examine",
+      "label": "alcoves of strange relics",
+      "model": "shelves_wall"
+    },
+    {
+      "id": "reliquary_niches_b",
+      "cell": [
+        5,
+        0
+      ],
+      "kind": "decor",
+      "label": "alcoves of strange relics",
+      "model": "shelves_wall"
+    },
+    {
       "id": "robing_hooks",
       "cell": [
         0,
         8
       ],
       "kind": "examine",
-      "label": "hooks of robes",
+      "label": "rusty shackles and old robes",
       "model": "robe_pegs"
     },
     {
@@ -248,7 +280,7 @@
         6,
         11
       ],
-      "label": "a robing chest",
+      "label": "a chest of cult robes",
       "model": "chest",
       "items": [
         {
@@ -264,6 +296,16 @@
           "qty": 6
         }
       ]
+    },
+    {
+      "id": "prison_skeleton",
+      "cell": [
+        1,
+        10
+      ],
+      "label": "a skeleton in a black robe",
+      "model": "bones",
+      "gold": 25
     }
   ],
   "lights": [
@@ -299,29 +341,6 @@
     }
   ],
   "encounters": [
-    {
-      "id": "drowned_rats",
-      "trigger": "enter_area:dh_flooded_passage",
-      "when": "not flag.death_house_rats_scattered",
-      "flag": "death_house_rats_scattered",
-      "monsters": [
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            15,
-            3
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            18,
-            4
-          ]
-        }
-      ],
-      "text": "The water is moving against the current."
-    },
     {
       "id": "lorghoth_rises",
       "trigger": "dialogue",

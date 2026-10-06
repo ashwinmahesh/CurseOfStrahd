@@ -3,7 +3,9 @@
   "name": "Giant Spider",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Giant Spider. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Bite's Poison damage and the Web's save. Web is text only (the engine has no restraint that lasts until a web is broken)."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "Web: the Restrained target (or anyone) frees it with an action and a DC 13 Strength (Athletics) check; the book has the web destroyed instead (AC 10, HP 5). See deviations.md."
   },
   "size": "large",
   "type": "beast",
@@ -31,7 +33,6 @@
     "stealth": 7
   },
   "senses": {
-    "blindsight": 10,
     "darkvision": 60
   },
   "passive_perception": 14,
@@ -87,10 +88,29 @@
     {
       "id": "web",
       "name": "Web",
-      "kind": "special",
+      "kind": "save",
       "summary": "Recharge 5-6. DC 13 Dex save by a creature within 60 ft or Restrained by webbing until it is broken.",
       "text": "The webbing has AC 10 and 5 Hit Points, is vulnerable to Fire and immune to Bludgeoning, Poison and Psychic damage. Text only for the engine.",
-      "recharge": "5-6"
+      "recharge": "5-6",
+      "save": {
+        "ability": "dex",
+        "dc": 13,
+        "success": "none"
+      },
+      "targets": {
+        "range": 60
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "permanent",
+          "escape": {
+            "skill": "athletics",
+            "dc": 13
+          }
+        }
+      ]
     }
   ],
   "ai_profile": "brute",

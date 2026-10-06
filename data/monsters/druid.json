@@ -3,7 +3,9 @@
   "name": "Druid",
   "source": {
     "book": "MM2025",
-    "note": "Numbers follow the 2014 Monster Manual druid (the one Curse of Strahd's Yester Hill uses); the 2024 Druid differs and isn't entered yet. Entered from knowledge, not yet checked against the book. For the engine Shillelagh is assumed cast, Produce Flame (the 2024 cantrip) runs as an attack, and spell slots are listed per spell."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "The 2024 Druid. Checked against SRD 5.2.1."
   },
   "size": "medium",
   "type": "humanoid",
@@ -12,11 +14,11 @@
     "druid"
   ],
   "alignment": "neutral",
-  "ac": 11,
+  "ac": 13,
   "initiative": 1,
   "hp": {
-    "average": 27,
-    "dice": "5d8+5"
+    "average": 44,
+    "dice": "8d8+8"
   },
   "speed": {
     "walk": 30
@@ -26,91 +28,108 @@
     "dex": 12,
     "con": 13,
     "int": 12,
-    "wis": 15,
+    "wis": 16,
     "cha": 11
   },
   "skills": {
-    "medicine": 4,
+    "medicine": 5,
     "nature": 3,
-    "perception": 4
+    "perception": 5
   },
-  "passive_perception": 14,
+  "passive_perception": 15,
   "languages": [
+    "Common",
     "Druidic",
-    "two other languages"
+    "Sylvan"
   ],
   "cr": 2,
   "xp": 450,
   "proficiency_bonus": 2,
   "gear": [
-    "quarterstaff"
+    "studded_leather"
   ],
   "actions": [
     {
-      "id": "quarterstaff",
-      "name": "Quarterstaff",
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "vine_staff",
+          "count": 2,
+          "or": [
+            "verdant_wisp"
+          ]
+        }
+      ],
+      "summary": "Two attacks, Vine Staff or Verdant Wisp in any mix."
+    },
+    {
+      "id": "vine_staff",
+      "name": "Vine Staff",
       "kind": "melee",
       "attack": {
-        "bonus": 4,
+        "bonus": 5,
         "reach": 5
       },
       "damage": [
         {
-          "average": 6,
-          "dice": "1d8+2",
+          "average": 7,
+          "dice": "1d8+3",
           "type": "bludgeoning"
+        },
+        {
+          "average": 2,
+          "dice": "1d4",
+          "type": "poison"
         }
       ],
-      "summary": "Swings a quarterstaff charged with Shillelagh.",
-      "text": "Melee attack: +2 to hit (+4 with Shillelagh), reach 5 ft. Hit: 3 (1d6) Bludgeoning damage, 4 (1d8) with both hands, or 6 (1d8 + 2) with Shillelagh.",
-      "weapon": true
+      "summary": "A staff wound with thorny vines."
     },
     {
-      "id": "produce_flame",
-      "name": "Produce Flame",
+      "id": "verdant_wisp",
+      "name": "Verdant Wisp",
       "kind": "ranged",
       "attack": {
-        "bonus": 4,
+        "bonus": 5,
         "range": [
-          60
+          90
         ]
       },
       "damage": [
         {
-          "average": 4,
-          "dice": "1d8",
-          "type": "fire"
+          "average": 10,
+          "dice": "3d6",
+          "type": "radiant"
         }
       ],
-      "summary": "Hurls a flame from its palm up to 60 ft.",
-      "text": "Ranged spell attack: +4 to hit, range 60 ft., one target. Hit: 4 (1d8) Fire damage."
+      "summary": "A mote of green light flung up to 90 ft."
     },
     {
       "id": "spellcasting",
       "name": "Spellcasting",
       "kind": "spellcasting",
-      "summary": "A 4th-level druid (Wis, DC 12): Entangle, Thunderwave, Barkskin (AC 16) and nature magic.",
-      "text": "The druid casts spells as a 4th-level druid, using Wisdom (spell save DC 12, +4 to hit with spell attacks). Cantrips (at will): Druidcraft, Produce Flame, Shillelagh. 1st level (4 slots): Entangle, Longstrider, Speak with Animals, Thunderwave. 2nd level (3 slots): Animal Messenger, Barkskin (its AC becomes 16)."
+      "summary": "Wisdom, DC 13: Entangle and Thunderwave twice a day; Moonbeam, Longstrider and Animal Messenger once.",
+      "text": "It casts with Wisdom (save DC 13). At will: Druidcraft, Speak with Animals. 2/day each: Entangle, Thunderwave. 1/day each: Animal Messenger, Longstrider, Moonbeam."
     }
   ],
   "spellcasting": {
     "ability": "wis",
-    "dc": 12,
-    "attack": 4,
+    "dc": 13,
+    "attack": 5,
     "at_will": [
       "druidcraft",
-      "shillelagh"
+      "speak_with_animals"
     ],
     "per_day": {
-      "4": [
+      "2": [
         "entangle",
-        "longstrider",
-        "speak_with_animals",
         "thunderwave"
       ],
-      "3": [
+      "1": [
         "animal_messenger",
-        "barkskin"
+        "longstrider",
+        "moonbeam"
       ]
     }
   },

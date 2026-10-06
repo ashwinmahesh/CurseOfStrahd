@@ -310,9 +310,23 @@ func attune(item_id: String) -> bool:
 	if attune_blocker(item_id) != "":
 		return false
 	attuned.append(item_id)
+	# Attuning to an item teaches its properties (a disguised one shows what it is, and its curse takes hold).
+	var e := entry_of(item_id)
+	if not e.is_empty():
+		e["identified"] = true
 	_item_mods_key = ""
 	refresh_item_resources()
 	return true
+
+
+## Identifies the carried `item_id` (Identify, or a Short Rest spent studying it): its true name and properties
+## show from now on. Returns its name, or "" if it isn't carried. A curse stays hidden until someone attunes to it.
+func identify(item_id: String) -> String:
+	var e := entry_of(item_id)
+	if e.is_empty():
+		return ""
+	e["identified"] = true
+	return str(compendium.item_data(item_id).get("name", item_id))
 
 
 ## "" if attunement to `item_id` can end now; a cursed item holds on until the curse is lifted (Remove Curse).
@@ -765,6 +779,7 @@ func _register_choice(def: Dictionary, key: String, src: Dictionary, label: Stri
 	c.class_id = str(src.get("class_id", ""))
 	c.level = int(src.get("character_level", character_level()))
 	c.replaceable = str(def.get("replaceable", ""))
+	c.replace_max = int(def.get("replace_max", -1))
 	c.per_ability = int(def.get("per_ability", 1))
 	c.max_score = int(def.get("max", 20))
 	for v: Variant in def.get("from", []):
@@ -954,8 +969,10 @@ func _build_spellcasting() -> void:
 			entry["pact_level"] = int(level_v) if level_v != null else 0
 		var cantrip_count := cantrips_max - fixed_cantrips.size()
 		if cantrip_count > 0:
+			# 2024: every class swaps one cantrip at a time (a level up, or a Wizard's Long Rest).
 			entry["cantrips"] = _register_choice({"kind": "cantrip", "count": cantrip_count,
-				"filter": {"list": list, "level": 0}, "replaceable": str(sc.get("swap_cantrip", "level_up"))},
+				"filter": {"list": list, "level": 0}, "replaceable": str(sc.get("swap_cantrip", "level_up")),
+				"replace_max": 1},
 				"%s.cantrips" % cid, src, "%s cantrips" % name_).duplicate()
 		var book := sc.get("spellbook", {}) as Dictionary
 		if not book.is_empty():
@@ -972,8 +989,12 @@ func _build_spellcasting() -> void:
 				filter["lists"] = lists
 			if not book.is_empty():
 				filter["from_choice"] = "%s.spellbook" % cid
+			# One spell per level up (Bard, Sorcerer, Warlock); after a Long Rest any number, or `swap_prepared_max`
+			# (Paladin and Ranger replace one).
+			var swap := str(sc.get("swap_prepared", "long_rest"))
 			entry["prepared"] = _register_choice({"kind": "spell", "count": prepared_max, "filter": filter,
-				"replaceable": str(sc.get("swap_prepared", "long_rest"))}, "%s.prepared" % cid, src, "Prepared spells").duplicate()
+				"replaceable": swap, "replace_max": int(sc.get("swap_prepared_max", 1 if swap == "level_up" else -1))},
+				"%s.prepared" % cid, src, "Prepared spells").duplicate()
 		# Domain spells and similar: always prepared, not counted against the limit.
 		if subclasses.has(cid):
 			var sub2 := compendium.subclass_data(str(subclasses[cid]))
@@ -1837,6 +1858,7 @@ func put_in(container_id: String, item_id: String) -> String:
 		return "rift"
 	var st := remove_one(item_id)
 	if bool(spec.get("devours", false)) and (item_id in FOOD or str(data.get("category", "")) == "consumable"):
+		ce["identified"] = true
 		return "devoured"
 	if not ce.has("contents"):
 		ce["contents"] = []

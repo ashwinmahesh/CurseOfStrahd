@@ -30,6 +30,14 @@ static func for_spell(spell_id: String, slot: int, option: String, nums: Diction
 			return construct_spirit(slot, option if option != "" else "stone", atk, dc)
 		"summon_elemental":
 			return elemental_spirit(slot, option if option != "" else "fire", atk)
+		"summon_celestial":
+			return celestial_spirit(slot, option if option != "" else "avenger", atk)
+		"summon_dragon":
+			return draconic_spirit(slot, option if option != "" else "fire", atk, dc)
+		"summon_fiend":
+			return fiendish_spirit(slot, option if option != "" else "devil", atk, dc)
+		"animate_objects":
+			return animated_object(slot, option if option != "" else "small", atk, int(nums.get("mod", 3)))
 		"animate_dead":
 			var z := Compendium.shared().monster_data(option if option != "" else "zombie")
 			if z.is_empty():
@@ -335,6 +343,104 @@ static func elemental_spirit(slot: int, kind: String, atk: int) -> Dictionary:
 			{"id": "slam", "name": "Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 5}, "damage": [{"dice": "1d10+%d" % (4 + lvl), "type": dtype}], "summary": "Melee spell attack."},
 		],
 		"ai_profile": "brute", "summary": "A spirit of the elements bound to the caster's will.", "text": "Summon Elemental.",
+	}
+
+
+## Celestial Spirit (Summon Celestial; Large Celestial): AC 11 + level (Defender +2), HP 40 + 10 per level above 5,
+## Speed 30, Fly 40, resists Radiant, can't be Charmed or Frightened. Avenger: Radiant Bow (150/600 ft) 2d6 + 2 + level
+## Radiant. Defender: Radiant Mace 1d10 + 3 + level Radiant, and a creature within 10 ft gains 1d10 Temporary Hit Points.
+## Attacks equal to half the level; Healing Touch once a day: 2d8 + level.
+static func celestial_spirit(slot: int, kind: String, atk: int) -> Dictionary:
+	var lvl := maxi(5, slot)
+	var attack: Dictionary
+	if kind == "defender":
+		attack = {"id": "radiant_mace", "name": "Radiant Mace", "kind": "melee", "attack": {"bonus": atk, "reach": 5},
+			"damage": [{"dice": "1d10+%d" % (3 + lvl), "type": "radiant"}], "ally_temp_hp": {"dice": "1d10", "range": 10}, "summary": "Radiant damage; an ally within 10 ft gains 1d10 Temporary Hit Points."}
+	else:
+		attack = {"id": "radiant_bow", "name": "Radiant Bow", "kind": "ranged", "attack": {"bonus": atk, "range": [150, 600]},
+			"damage": [{"dice": "2d6+%d" % (2 + lvl), "type": "radiant"}], "summary": "Radiant damage."}
+	return {
+		"id": "celestial_spirit", "name": "Celestial Spirit (%s)" % kind.capitalize(), "size": "large", "type": "celestial",
+		"ac": 11 + lvl + (2 if kind == "defender" else 0), "hp": {"average": 40 + 10 * (lvl - 5), "dice": str(40 + 10 * (lvl - 5))},
+		"speed": {"walk": 30, "fly": 40}, "abilities": {"str": 16, "dex": 14, "con": 16, "int": 10, "wis": 14, "cha": 16},
+		"senses": {"darkvision": 60}, "resistances": ["radiant"], "condition_immunities": ["charmed", "frightened"],
+		"cr": 0, "xp": 0, "proficiency_bonus": 3, "initiative": 2, "summon": true,
+		"actions": [{"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": str(attack["id"]), "count": _attacks(lvl)}], "summary": "Attacks equal to half the spell's level."}, attack,
+			{"id": "healing_touch", "name": "Healing Touch", "do": "heal", "heal": "2d8+%d" % lvl, "range": 5, "uses": {"count": 1, "per": "long"},
+				"summary": "A creature within 5 ft regains 2d8 + %d Hit Points (once a day)." % lvl}],
+		"traits": [], "ai_profile": "brute", "summary": "A celestial spirit.", "text": "Summon Celestial.",
+	}
+
+
+## Draconic Spirit (Summon Dragon; Large Dragon): AC 14 + level, HP 50 + 10 per level above 5, Speed 30, Fly 60, Swim
+## 30, resists its element, immune to Charmed, Frightened and Poisoned. Rend 1d6 + 4 + level Piercing (attacks equal to
+## half the level) and a Breath Weapon in their place: a 30-ft Cone, Dex save, 2d6 of its element.
+static func draconic_spirit(slot: int, element: String, atk: int, dc: int) -> Dictionary:
+	var lvl := maxi(5, slot)
+	return {
+		"id": "draconic_spirit", "name": "Draconic Spirit (%s)" % element.capitalize(), "size": "large", "type": "dragon",
+		"ac": 14 + lvl, "hp": {"average": 50 + 10 * (lvl - 5), "dice": str(50 + 10 * (lvl - 5))},
+		"speed": {"walk": 30, "fly": 60, "swim": 30}, "abilities": {"str": 19, "dex": 14, "con": 17, "int": 10, "wis": 14, "cha": 14},
+		"senses": {"blindsight": 30, "darkvision": 60}, "resistances": [element], "condition_immunities": ["charmed", "frightened", "poisoned"],
+		"cr": 0, "xp": 0, "proficiency_bonus": 3, "initiative": 2, "summon": true,
+		"actions": [
+			{"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": "rend", "count": _attacks(lvl), "or": ["breath"]}], "summary": "Rend attacks equal to half the spell's level; Breath Weapon can replace one."},
+			{"id": "rend", "name": "Rend", "kind": "melee", "attack": {"bonus": atk, "reach": 10}, "damage": [{"dice": "1d6+%d" % (4 + lvl), "type": "piercing"}], "summary": "Piercing damage."},
+			{"id": "breath", "name": "Breath Weapon", "kind": "save", "save": {"ability": "dex", "dc": dc, "success": "half"}, "targets": {"range": 30, "count": 99},
+				"damage": [{"dice": "2d6", "type": element}], "summary": "A 30-ft Cone: Dex save, 2d6 %s, half on a success." % element.capitalize()},
+		],
+		"ai_profile": "brute", "summary": "A draconic spirit.", "text": "Summon Dragon.",
+	}
+
+
+## Fiendish Spirit (Summon Fiend; Large Fiend): AC 12 + level, HP 50 (Demon), 40 (Devil) or 60 (Yugoloth) + 15 per level
+## above 6, Speed 40 (Devil: Fly 60), resists Fire, immune to Poison. Demon: Bite 1d12 + 3 + level Necrotic and Death
+## Throes (a 10-ft burst of 2d10 + level Fire when it dies). Devil: Fiery Strike (melee or 150 ft) 2d6 + 3 + level Fire,
+## Magic Resistance. Yugoloth: Claws 1d8 + 3 + level Slashing, then a 30-ft teleport.
+static func fiendish_spirit(slot: int, kind: String, atk: int, dc: int) -> Dictionary:
+	var lvl := maxi(6, slot)
+	var hp := {"demon": 50, "devil": 40, "yugoloth": 60}.get(kind, 50) as int
+	var speed := {"walk": 40}
+	var attack: Dictionary
+	var traits: Array = []
+	match kind:
+		"demon":
+			attack = {"id": "bite", "name": "Bite", "kind": "melee", "attack": {"bonus": atk, "reach": 5}, "damage": [{"dice": "1d12+%d" % (3 + lvl), "type": "necrotic"}], "summary": "Necrotic damage."}
+			traits.append({"id": "death_throes", "name": "Death Throes", "action": "passive", "death_burst": {"radius": 10, "save": {"ability": "dex", "dc": dc}, "damage": {"dice": "2d10+%d" % lvl, "type": "fire"}},
+				"summary": "When it dies it explodes: creatures within 10 ft make a Dex save, 2d10 + level Fire, half on a success."})
+		"yugoloth":
+			attack = {"id": "claws", "name": "Claws", "kind": "melee", "attack": {"bonus": atk, "reach": 5}, "damage": [{"dice": "1d8+%d" % (3 + lvl), "type": "slashing"}], "summary": "Slashing damage; it can then teleport 30 ft."}
+		_:
+			speed["fly"] = 60
+			attack = {"id": "fiery_strike", "name": "Fiery Strike", "kind": "melee", "attack": {"bonus": atk, "reach": 5, "range": [150]}, "damage": [{"dice": "2d6+%d" % (3 + lvl), "type": "fire"}], "summary": "Fire damage, in melee or at range."}
+			traits.append({"id": "magic_resistance", "name": "Magic Resistance", "action": "passive", "modifiers": [{"stat": "advantage", "on": "save_vs:spell"}], "summary": "Advantage on saves against spells."})
+			traits.append({"id": "devils_sight", "name": "Devil's Sight", "action": "passive", "modifiers": [{"stat": "flag", "value": "devils_sight"}], "summary": "Sees through magical Darkness."})
+	return {
+		"id": "fiendish_spirit", "name": "Fiendish Spirit (%s)" % kind.capitalize(), "size": "large", "type": "fiend",
+		"ac": 12 + lvl, "hp": {"average": hp + 15 * (lvl - 6), "dice": str(hp + 15 * (lvl - 6))}, "speed": speed,
+		"abilities": {"str": 13, "dex": 16, "con": 15, "int": 10, "wis": 10, "cha": 16}, "senses": {"darkvision": 60},
+		"resistances": ["fire"], "immunities": ["poison"], "condition_immunities": ["poisoned"],
+		"cr": 0, "xp": 0, "proficiency_bonus": 3, "initiative": 3, "summon": true, "traits": traits,
+		"actions": [{"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": str(attack["id"]), "count": _attacks(lvl)}], "summary": "Attacks equal to half the spell's level."}, attack],
+		"ai_profile": "brute", "summary": "A fiendish spirit.", "text": "Summon Fiend.",
+	}
+
+
+## Animated Object (Animate Objects): AC 15, HP 10 (Medium or smaller), 20 (Large) or 40 (Huge), Speed 30, Slam with
+## the caster's spell attack: 1d4 + 3 (Medium or smaller), 2d6 + 3 (Large) or 2d12 + 3 (Huge) Force plus the caster's
+## spellcasting modifier, the die growing with the slot. Numbers not yet checked against the book (deviations).
+static func animated_object(slot: int, size: String, atk: int, mod: int) -> Dictionary:
+	var up := maxi(0, slot - 5)
+	var hp := {"large": 20, "huge": 40}.get(size, 10) as int
+	var dice := {"large": "%dd6" % (2 + up), "huge": "%dd12" % (2 + up)}.get(size, "%dd4" % (1 + up)) as String
+	return {
+		"id": "animated_object", "name": "Animated Object", "size": size if size in ["large", "huge"] else "small", "type": "construct",
+		"ac": 15, "hp": {"average": hp, "dice": str(hp)}, "speed": {"walk": 30},
+		"abilities": {"str": 16, "dex": 10, "con": 10, "int": 3, "wis": 3, "cha": 1}, "senses": {"blindsight": 30},
+		"immunities": ["poison", "psychic"], "condition_immunities": ["charmed", "exhaustion", "frightened", "paralyzed", "poisoned"],
+		"cr": 0, "xp": 0, "proficiency_bonus": 3, "initiative": 0, "summon": true,
+		"actions": [{"id": "slam", "name": "Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 5}, "damage": [{"dice": "%s+%d" % [dice, 3 + mod], "type": "force"}], "summary": "Force damage."}],
+		"ai_profile": "brute", "summary": "An animated object.", "text": "Animate Objects.",
 	}
 
 

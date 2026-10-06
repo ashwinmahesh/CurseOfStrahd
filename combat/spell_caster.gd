@@ -35,7 +35,7 @@ var summoned: Dictionary = {}
 
 
 ## Spells that call up a creature on a chosen square (combat/summon_blocks.gd).
-const SUMMON_SPELLS := ["find_familiar", "summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration",
+const SUMMON_SPELLS := ["find_familiar", "summon_celestial", "summon_dragon", "summon_fiend", "summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration",
 	"summon_construct", "summon_elemental"]
 
 
@@ -66,8 +66,14 @@ func castable(c: Combatant) -> Array[Dictionary]:
 	for k in ch.known_spells():
 		var id := str(k["id"])
 		if seen.has(id):
+			# Prepared and granted both: the granted free casting isn't lost.
+			if str(k["kind"]) == "granted" and ch.resource_left("spell:%s" % id) > 0:
+				var prev := seen[id] as Dictionary
+				prev["free"] = true
+				if str(prev["reason"]).begins_with("No spell slots") or str(prev["reason"]).begins_with("Already cast a spell with a slot"):
+					prev["legal"] = true
+					prev["reason"] = ""
 			continue
-		seen[id] = true
 		var s := _comp().spell_data(id)
 		if s.is_empty():
 			continue
@@ -75,6 +81,9 @@ func castable(c: Combatant) -> Array[Dictionary]:
 		var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 		# Mage Hand Legerdemain (Arcane Trickster 3): Mage Hand as a Bonus Action.
 		if id == "mage_hand" and CombatFeatures.has_feature(c, "mage_hand_legerdemain"):
+			unit = "bonus_action"
+		# Spell Breaker (Abjurer 10): Dispel Magic as a Bonus Action.
+		if id == "dispel_magic" and CombatFeatures.has_feature(c, "spell_breaker"):
 			unit = "bonus_action"
 		# Pact of the Chain: Find Familiar as a Magic action without a slot.
 		var chain := id == "find_familiar" and ClassFeatures.knows_invocation(c, "pact_of_the_chain")
@@ -94,6 +103,7 @@ func castable(c: Combatant) -> Array[Dictionary]:
 			entry["legal"] = false
 			entry["reason"] = why
 		out.append(entry)
+		seen[id] = entry
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		return int(a["level"]) < int(b["level"]) or (int(a["level"]) == int(b["level"]) and str(a["name"]) < str(b["name"])))
 	return out
@@ -165,7 +175,7 @@ static func _out_of_combat_word(s: Dictionary) -> String:
 
 ## True if the spell does something the combat engine can resolve.
 func has_combat_rules(s: Dictionary) -> bool:
-	if str(s.get("id", "")) in SPECIAL or str(s.get("id", "")) in SUMMON_SPELLS or str(s.get("id", "")) in SpellSpecials.HANDLED:
+	if str(s.get("id", "")) in SPECIAL or str(s.get("id", "")) in SUMMON_SPELLS or str(s.get("id", "")) in SpellSpecials.HANDLED or str(s.get("id", "")) in HighMagic.HANDLED or str(s.get("id", "")) in MidMagic.HANDLED:
 		return true
 	for k: String in ["attack", "heal", "damage", "temp_hp", "zone", "object", "sustain"]:
 		if s.has(k):
@@ -362,6 +372,8 @@ func range_ft(s: Dictionary, caster: Combatant = null) -> int:
 		"touch":
 			return 5
 		"self":
+			if (s.get("targets", {}) as Dictionary).has("within"):
+				return int((s["targets"] as Dictionary)["within"])
 			if s.has("attack") and not s.has("area"):
 				return 5
 			if s.has("object") or s.has("sustain"):
@@ -444,6 +456,8 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 				if v != c and not c.allied_with(v):
 					continue
 		out.append(v)
+	out.assign(out.filter(func(v: Combatant) -> bool: return not specials.high.in_antimagic(v) or str(s.get("id", "")) == "antimagic_field"))
+	out.assign(out.filter(func(v: Combatant) -> bool: return not specials.mid.globe_blocks(c, v, int(s.get("level", 0)))))
 	var cap := int(s.get("area_max_targets", 0))
 	if cap > 0 and out.size() > cap:
 		out.sort_custom(func(a: Combatant, b: Combatant) -> bool: return enc().distance(c, a) < enc().distance(c, b))
@@ -564,13 +578,15 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			specials.duel_check_attack(c, tt)
 	var nums := numbers(c, entry)
 	var conc: Concentration = null
+	# Fey Reinforcements (Fey Wanderer 11): Summon Fey without Concentration, lasting 1 minute.
+	var fey_free := spell_id == "summon_fey" and CombatFeatures.has_feature(c, "fey_reinforcements") and bool(opts.get("no_concentration", true))
 	# Spirits of Ill Omen, Second Skin: some castings need no Concentration (RavenloftFeatures.skips_concentration).
 	var unbound := e.ravenloft.skips_concentration(c, s, use_free) if bool((s.get("duration", {}) as Dictionary).get("concentration", false)) else {}
 	if not unbound.is_empty():
 		s = s.duplicate(true)
 		s["duration"] = unbound
 		e.log.add("info", "%s casts %s without Concentration" % [c.name(), s["name"]], c.id)
-	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
+	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)) and not fey_free:
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
 		zones.prune()
 		_prune_sustained()
@@ -581,9 +597,12 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	var cells: Array[Vector2i] = []
 	if s.has("area"):
 		cells = area_for(c, s, point, direction, slot)
+	# Fire Storm's ten 10-ft Cubes and Meteor Swarm's four Spheres at the points chosen (opts.points).
+	if opts.has("points") and spell_id in ["fire_storm", "meteor_swarm"]:
+		cells = multi_area(c, spell_id, opts["points"] as Array)
 	# Wall of Fire as a ring 20 ft across.
-	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and choice_of(s, opts) == "ring" and point != Vector2.INF:
-		cells = _ring(point, 10)
+	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and choice_of(s, opts) in ["ring", "globe"] and point != Vector2.INF:
+		cells = _ring(point, 10 if choice_of(s, opts) == "ring" else 15)
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells,
 		"targets": tgt.map(func(t: Combatant) -> String: return t.id)})
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": nums, "conc": conc, "opts": opts, "point": point,
@@ -660,14 +679,16 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 
 ## A monster casting from its stat block (combat/monster_actions.gd): the action economy as usual, no slots, the
 ## stat block's DC and attack bonus in `nums`, at `level`.
-func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Array, point: Vector2, nums: Dictionary) -> CombatResult:
+func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Array, point: Vector2, nums: Dictionary, opts: Dictionary = {}) -> CombatResult:
 	var e := enc()
 	var s := _comp().spell_data(spell_id)
 	var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 	var why := economy_block(c, unit)
+	if why == "" and (c.creature.has_flag("cant_cast") or specials.high.in_antimagic(c)):
+		why = "Can't cast spells here"
 	if why != "":
 		return CombatResult.fail(why)
-	var check := _check_targets(c, s, level, targets, point, {})
+	var check := _check_targets(c, s, level, targets, point, opts)
 	if str(check["why"]) != "":
 		return CombatResult.fail(str(check["why"]))
 	if unit == "bonus_action":
@@ -682,13 +703,17 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 	e.log.add("spell", "%s casts %s%s" % [c.name(), s["name"], " (level %d)" % level if level > int(s.get("level", 0)) else ""], c.id)
 	var cells: Array[Vector2i] = []
 	if s.has("area"):
-		var dir := Vector2.ZERO
-		if not tgt.is_empty():
+		var dir: Vector2 = opts.get("direction", Vector2.ZERO)
+		if not tgt.is_empty() and dir == Vector2.ZERO:
 			dir = (e.center_of(tgt[0]) - e.center_of(c)).normalized()
 		cells = area_for(c, s, point, dir, level)
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells, "targets": tgt.map(func(t: Combatant) -> String: return t.id)})
-	var ctx := {"c": c, "s": s, "slot": level, "nums": nums, "conc": conc, "opts": {}, "point": point, "cells": cells,
-		"choice": choice_of(s, {}), "direction": Vector2.ZERO, "cell": check["cell"]}
+	if opts.has("points") and spell_id in ["fire_storm", "meteor_swarm"]:
+		cells = multi_area(c, spell_id, opts["points"] as Array)
+	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and choice_of(s, opts) in ["ring", "globe"] and point != Vector2.INF:
+		cells = _ring(point, 10 if choice_of(s, opts) == "ring" else 15)
+	var ctx := {"c": c, "s": s, "slot": level, "nums": nums, "conc": conc, "opts": opts, "point": point, "cells": cells,
+		"choice": choice_of(s, opts), "direction": opts.get("direction", Vector2.ZERO), "cell": check["cell"]}
 	var r := CombatResult.new()
 	_resolve(ctx, tgt, cells, r)
 	_finish_concentration(ctx)
@@ -704,6 +729,8 @@ func cast_free(c: Combatant, spell_id: String, targets: Array, point: Vector2, o
 	var s := _comp().spell_data(spell_id)
 	if s.is_empty():
 		return CombatResult.fail("Unknown spell")
+	if specials.high.in_antimagic(c):
+		return CombatResult.fail("Can't cast spells inside an Antimagic Field")
 	var level := int(s.get("level", 0))
 	var check := _check_targets(c, s, level, targets, point, opts)
 	if str(check["why"]) != "":
@@ -770,10 +797,15 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		if (id in ["misty_step", "dimension_door", "flaming_sphere"] or id in SUMMON_SPELLS) and e.occupant_at(cell) != null:
 			out["why"] = "That square is occupied"
 			return out
+		if specials.high.antimagic_at(cell) and (id in ["misty_step", "dimension_door"] or id in SUMMON_SPELLS):
+			out["why"] = "Magic can't reach into the Antimagic Field"
+			return out
 		if id == "misty_step" and not e.grid.can_see(c.cell, c.size_cells, cell, 1):
 			out["why"] = "You must see the square you teleport to"
 			return out
 		out["cell"] = cell
+		return out
+	if id in ["animate_objects"]:
 		return out
 	if tkind == "self" and not s.has("area"):
 		tgt = [c]
@@ -814,6 +846,18 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 			only = "humanoid"
 		if only != "" and str(t.creature.creature_type) != only:
 			out["why"] = "%s only affects %ss" % [s["name"], only.capitalize()]
+			return out
+		if t != c and specials.mid.wall_between(c, t):
+			out["why"] = "A wall is in the way"
+			return out
+		if t != c and specials.mid.globe_blocks(c, t, slot):
+			out["why"] = "A Globe of Invulnerability turns the spell aside"
+			return out
+		if specials.high.in_antimagic(t) and t != c:
+			out["why"] = "%s is inside an Antimagic Field" % t.name()
+			return out
+		if t != c and specials.high.box_between(c, t):
+			out["why"] = "A wall of force is in the way"
 			return out
 		if t != c and specials.sphere_blocks(c, t):
 			out["why"] = "A sphere of force stands between you and %s" % t.name()
@@ -881,6 +925,8 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			_spare_the_dying(ctx, tgt[0], r)
 			return
 		"misty_step":
+			if specials.high.teleport_blocked(ctx, c):
+				return
 			var start := c.cell
 			_teleport(c, ctx["cell"] as Vector2i, r)
 			enc().class_features.fey_step_rider(c, start)
@@ -904,7 +950,8 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 					_dismiss(oldf.id)
 			_summon(ctx, ctx["cell"] as Vector2i, r)
 			return
-		"summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration", "summon_construct", "summon_elemental":
+		"summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration", "summon_construct", "summon_elemental", \
+				"summon_celestial", "summon_dragon", "summon_fiend":
 			_summon(ctx, ctx["cell"] as Vector2i, r)
 			return
 		"true_strike":
@@ -940,6 +987,17 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		_generic(ctx, tgt, cells, r)
 	if s.has("sustain"):
 		_grant_sustained(ctx, tgt)
+	# Eldritch Hex (Great Old One 10): the hexed creature also has Disadvantage on saves of the chosen ability.
+	if str(s["id"]) == "hex" and CombatFeatures.has_feature(c, "eldritch_hex") and not tgt.is_empty() and str(ctx.get("choice", "")) != "":
+		var eh := Effect.new("Eldritch Hex", &"spell", "hex").with_modifier("disadvantage", {"on": "save:%s" % ctx["choice"]})
+		eh.caster_id = c.id
+		eh.stack_key = "spell:hex:eldritch"
+		_set_duration(eh, ctx, tgt[0], "spell")
+		var hc := ctx["conc"] as Concentration
+		if hc != null:
+			hc.attach(tgt[0].creature, eh)
+		else:
+			tgt[0].creature.add_effect(eh)
 
 
 func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
@@ -1395,6 +1453,10 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			var amount := int(rolled["total"])
 			if success:
 				amount = amount / 2 if half_on_success else 0
+				# Circle of Power: a success against a magical effect that would deal half deals none.
+				if t.creature.has_flag("circle_of_power"):
+					amount = 0
+					details.append("Circle of Power: no damage")
 			# Shield Master's Interpose Shield: a Reaction turns a successful Dexterity save's half damage into none.
 			if success and ab == &"dex" and half_on_success and e.features.has_feat(t, "shield_master") and e.features.wields_shield(t) and can_react(t) \
 					and e._reaction_decision(t, "interpose_shield") != "never":
@@ -1408,6 +1470,11 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			if amount > 0:
 				var dr := e.deal_damage(c, t, [{"amount": amount, "type": _damage_type(ctx), "spell": true}], false, str(s["name"]), details)
 				r.damage += dr.final
+				# Harm: a failed save lowers the Hit Point maximum by the Necrotic damage taken (never below 1).
+				if bool(s.get("reduce_max_hp", false)) and not success and dr.final > 0 and t.is_alive():
+					var cut := mini(dr.final, t.creature.max_hp() - 1)
+					if cut > 0:
+						e.monster_actions.drain_max_hp(t, cut, str(s["name"]))
 			else:
 				r.lines.append(e.log.add("info", "%s saves against %s" % [t.name(), s["name"]], t.id, details))
 		else:
@@ -1604,7 +1671,8 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 		var pmax := DiceRoller.parse_expr(dice)
 		total = int(pmax["count"]) * int(pmax["sides"]) + int(pmax["modifier"])
 	total = e.ravenloft.spell_healing(ctx, t, dice, total)
-	var amount := total + bonus.total() + int((s.get("heal", {}) as Dictionary).get("flat", 0))
+	var amount := total + bonus.total() + int((s.get("heal", {}) as Dictionary).get("flat", 0)) \
+		+ int((s.get("upcast", {}) as Dictionary).get("heal_flat", 0)) * maxi(0, int(ctx["slot"]) - int(s.get("level", 0)))
 	# Moon Sickle: healing spells cast while holding it heal 1d4 more.
 	amount += e.items.healing_bonus(c, ctx)
 	var healed := t.creature.heal(amount, str(s["name"]))
@@ -1816,12 +1884,17 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 	var rs := str(params.get("repeat_save", ""))
 	if rs != "":
 		fxo.repeat_save = {"ability": str(params.get("repeat_ability", s.get("save", "wis"))), "dc": (ctx["nums"]["dc"] as Breakdown).total(),
-			"when": "start" if rs == "start_of_turn" else ("manual" if rs == "manual" else "end"), "on_damage": bool(params.get("repeat_on_damage", false)),
+			"when": "start" if rs == "start_of_turn" else ("manual" if rs in ["manual", "action"] else "end"), "by_action": rs == "action", "on_damage": bool(params.get("repeat_on_damage", false)),
 			"damage_advantage": bool(params.get("damage_advantage", false))}
 		if params.has("repeat_if"):
 			fxo.repeat_save["if"] = str(params["repeat_if"])
 		if params.has("repeat_fail_damage"):
-			fxo.repeat_save["fail_damage"] = params["repeat_fail_damage"]
+			var rfd := (params["repeat_fail_damage"] as Dictionary).duplicate()
+			if str(rfd.get("type", "")) == "choice":
+				rfd["type"] = choice
+			fxo.repeat_save["fail_damage"] = rfd
+		if params.has("three_saves"):
+			fxo.repeat_save["three"] = str(params["three_saves"])
 	var esc := str(params.get("escape", ""))
 	if esc.begins_with("check:"):
 		fxo.escape = {"skill": esc.substr(6), "dc": (ctx["nums"]["dc"] as Breakdown).total()}
@@ -1854,6 +1927,8 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 			tn += int(DiceRoller.parse_expr(tup)["count"]) * (slot - int(s.get("level", 0)))
 		td["dice"] = "%dd%d" % [tn, int(tb["sides"])]
 		fxo.data["turn_damage"] = td
+	if params.has("turn_heal"):
+		fxo.data["turn_heal"] = int(params["turn_heal"])
 	# Temporary Hit Points at the start of each of its turns (Heroism: the spellcasting modifier).
 	if params.has("turn_temp_hp"):
 		var th: Variant = params["turn_temp_hp"]
@@ -2086,15 +2161,23 @@ func _delayed_damage(ctx: Dictionary, t: Combatant, params: Dictionary) -> void:
 	fx.modifiers.append(Modifier.of("flag", {"value": "lingering_damage"}, str(s["name"]), &"spell"))
 	var part := {"dice": str(params.get("dice", "2d4")), "type": str(params.get("type", "acid")), "upcast": str(params.get("upcast", ""))}
 	fx.data["on_end"] = {"kind": "delayed_damage", "target": t.id, "caster": c.id, "spell": str(s["id"]), "slot": int(ctx["slot"]), "part": part}
-	var ctx_copy := ctx.duplicate()
+	# Only what the later roll needs, and the creatures by id: a copy of the whole context could hold the target
+	# (a queued push) and keep it alive through this very effect.
+	var caster_id := c.id
+	var slot := int(ctx["slot"])
+	var spell_id := str(s["id"])
 	var weak_t: WeakRef = weakref(t)
 	fx.on_end = func() -> void:
 		var tt := weak_t.get_ref() as Combatant
 		var ee := enc()
 		if tt == null or ee == null or not tt.is_alive() or ee.state != Encounter.State.ACTIVE:
 			return
-		var rolled := roll_damage_parts(ctx_copy, [part], false, tt)
-		ee.deal_damage(ee.get_c(c.id), tt, [{"amount": int(rolled["total"]), "type": str(rolled["type"]), "spell": true}], false,
+		var cc := ee.get_c(caster_id)
+		if cc == null:
+			return
+		var later := {"c": cc, "s": _comp().spell_data(spell_id), "slot": slot, "nums": {}, "opts": {}}
+		var rolled := roll_damage_parts(later, [part], false, tt)
+		ee.deal_damage(cc, tt, [{"amount": int(rolled["total"]), "type": str(rolled["type"]), "spell": true}], false,
 			str(s["name"]), [str(rolled["text"])])
 	t.creature.add_effect(fx)
 
@@ -2343,7 +2426,11 @@ func _dispel(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 			continue
 		if fx.spell_level > slot:
 			var test := c.creature.roll_check(e.dice, ab, 10 + fx.spell_level)
+			# Spell Breaker (Abjurer 10): Proficiency Bonus on the check.
+			if CombatFeatures.has_feature(c, "spell_breaker"):
+				test.add_bonus(c.creature.proficiency_bonus(), "Spell Breaker")
 			if not test.success:
+				ctx["dispel_failed"] = true
 				continue
 		t.creature.remove_effect(fx)
 		if fx.concentration != null and fx.concentration.source_id == fx.source_id:
@@ -2358,6 +2445,12 @@ func _dispel(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	zones.prune()
 	_prune_sustained()
 	r.lines.append(e.log.add("spell", "Dispel Magic on %s: %s" % [t.name(), ", ".join(ended) if not ended.is_empty() else "nothing to end"], c.id))
+	# Spell Breaker: a Dispel Magic that fails to end a spell gives the slot back.
+	if bool(ctx.get("dispel_failed", false)) and CombatFeatures.has_feature(c, "spell_breaker") and slot > 0 and c.creature is Character:
+		var cch := c.creature as Character
+		if cch.slots_used[slot - 1] > 0:
+			cch.slots_used[slot - 1] -= 1
+			e.log.add("info", "%s keeps the spell slot (Spell Breaker)" % c.name(), c.id)
 
 
 ## True Strike (2024): a weapon attack using the spellcasting ability for attack and damage, Radiant or the
@@ -2472,6 +2565,20 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 	_light_vs_darkness(o, int(ctx["slot"]))
 	zones.add(o, r)
 	r.lines.append(enc().log.add("spell", "%s fills %d squares" % [s["name"], cells.size()], c.id))
+
+
+## The union of several small areas (a creature in more than one is still affected once).
+func multi_area(c: Combatant, spell_id: String, points: Array) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	var g := enc().grid
+	var cap := 10 if spell_id == "fire_storm" else 4
+	for i in mini(cap, points.size()):
+		var p: Vector2 = points[i]
+		var part: Array[Vector2i] = g.area_cells("cube", 10, Vector2(floorf(p.x), floorf(p.y) + 1.0), Vector2.RIGHT) if spell_id == "fire_storm" else g.area_cells("sphere", 40, p)
+		for cell in part:
+			if not cell in out:
+				out.append(cell)
+	return out
 
 
 ## The squares of a ring wall `radius_ft` from its centre.
@@ -2825,6 +2932,32 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 		"dash":
 			c.movement_left += c.speed()
 			e.log.add("info", "%s Dashes (+%d ft, %s)" % [c.name(), c.speed(), s["name"]], c.id)
+		"volley":
+			return specials.mid.volley(c, t if t != null else specials.mid._nearest_foe(c), r)
+		"eyebite":
+			if t == null:
+				return CombatResult.fail("Choose a creature within 60 ft")
+			var ectx := ctx.duplicate()
+			ectx["choice"] = str(a["choice"])
+			specials.mid.eye(ectx, t, r)
+		"repeat":
+			if t == null:
+				return CombatResult.fail("Choose a creature")
+			var rctx := ctx.duplicate()
+			rctx["choice"] = str(a["choice"])
+			e.log.add("spell", "%s: %s" % [c.name(), a["label"]], c.id)
+			var one: Array[Combatant] = [t]
+			_save_spell(rctx, one, r)
+		"bigby":
+			var hand := zones.object_of(str(a["caster_id"]), str(a["spell_id"]))
+			if hand != null and point != Vector2.INF:
+				hand.cell = Vector2i(floori(point.x), floori(point.y))
+				hand.cells = [hand.cell]
+				zones.moved_object(hand, r)
+			specials.mid.bigby(ctx, str(d.get("mode", "push")), t, r)
+		"end_spell":
+			e.log.add("spell", "%s lets %s go" % [c.name(), s["name"]], c.id)
+			_end_spell_of(c, str(a["spell_id"]), "let go")
 		"disengage":
 			c.disengaged = true
 			e.log.add("info", "%s Disengages (%s)" % [c.name(), s["name"]], c.id)
@@ -2971,7 +3104,7 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
 	var e := enc()
-	var block := SummonBlocks.for_spell(str(s["id"]), int(ctx["slot"]), str(ctx.get("choice", "")), ctx["nums"] as Dictionary)
+	var block: Dictionary = ctx["summon_block"] if ctx.has("summon_block") else SummonBlocks.for_spell(str(s["id"]), int(ctx["slot"]), str(ctx.get("choice", "")), ctx["nums"] as Dictionary)
 	if block.is_empty():
 		return
 	var m := Monster.from_data(block, e.dice)
@@ -3002,6 +3135,12 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		marker.on_end = func() -> void: _dismiss(sid)
 	if e.state == Encounter.State.ACTIVE:
 		e.insert_after(c, sc)
+	# A summon cast without Concentration (Fey Reinforcements, Spirits of Ill Omen) lasts its duration in rounds.
+	var sd := s.get("duration", {}) as Dictionary
+	if conc == null and not bool(ctx.get("precast", false)) and str(sd.get("kind", "")) in ["rounds", "minutes"]:
+		sc.set_meta("vanish_round", e.round_no + _duration_rounds(sd))
+	elif conc == null and str(s["id"]) == "summon_fey":
+		sc.set_meta("vanish_round", e.round_no + 10)
 	e.events.append({"type": "summon_creature", "id": sc.id, "cell": cell, "caster": c.id})
 	r.lines.append(e.log.add("spell", "%s appears beside %s" % [m.name, c.name()], c.id))
 
@@ -3065,6 +3204,13 @@ func rehook_effects() -> void:
 					var ubid := str(oe["target"])
 					var ub_round := int(oe.get("round", 0))
 					fx.on_end = func() -> void: specials.unbanish(ubid, ub_round)
+				"burst_bead":
+					var bead := str(oe.get("object", ""))
+					fx.on_end = func() -> void: specials.high.burst_bead(bead)
+				"fall":
+					var fid := str(oe["target"])
+					var ft := int(oe.get("feet", 100))
+					fx.on_end = func() -> void: specials.high.fall(fid, ft)
 				"undominate":
 					var udid := str(oe["target"])
 					fx.on_end = func() -> void: specials.undominate(udid)
@@ -3149,6 +3295,13 @@ func from_dict(d: Dictionary) -> void:
 func turn_start(c: Combatant) -> void:
 	var e := enc()
 	zones.turn_start(c)
+	specials.high.tick_suppressed(c.id, true)
+	if c.has_meta("vanish_round") and enc().round_no >= int(c.get_meta("vanish_round")):
+		_dismiss(c.id)
+	specials.high.caster_turn_start(c)
+	specials.high.creature_turn_start(c)
+	specials.mid.panic_turn(c)
+	specials.mid.ai_turn(c)
 	_prune_sustained()
 	_turn_start_effects(c)
 	_repeat_saves(c, "start")
@@ -3188,6 +3341,12 @@ func _turn_start_effects(c: Combatant) -> void:
 		if not td.is_empty() and str(td.get("when", "start")) == "start":
 			var rolled := e._roll_damage_dice(str(td["dice"]), false, 0, fx.name)
 			e.deal_damage(e.get_c(fx.caster_id), c, [{"amount": int(rolled["total"]), "type": str(td.get("type", "fire")), "spell": true}], false, fx.name, [str(rolled["text"])])
+		# Regenerate: 1 Hit Point at the start of each turn.
+		if fx.data.has("turn_heal") and not c.creature.has_flag("cant_regain_hp"):
+			var hg := c.creature.heal(int(fx.data["turn_heal"]), fx.name)
+			if hg > 0:
+				c.creature.remove_condition(&"unconscious", "0 Hit Points")
+				e.log.add("heal", "%s regains %d Hit Point (%s)" % [c.name(), hg, fx.name], c.id)
 		if fx.data.has("turn_temp_hp") and c.creature.hp > 0:
 			var amount := int(fx.data["turn_temp_hp"])
 			if amount > 0 and c.creature.add_temp_hp(amount, fx.name):
@@ -3197,6 +3356,9 @@ func _turn_start_effects(c: Combatant) -> void:
 func turn_end(c: Combatant) -> void:
 	var e := enc()
 	zones.turn_end(c)
+	specials.high.caster_turn_end(c)
+	specials.high.prism_turn_end(c)
+	specials.high.tick_suppressed(c.id, false)
 	specials.turn_end(c)
 	_repeat_saves(c, "end")
 	_sustained_turn_end(c)
@@ -3241,6 +3403,24 @@ func _repeat_save(c: Combatant, fx: Effect, adv: Array[String]) -> void:
 	var dc := int(fx.repeat_save.get("dc", 10))
 	var test := c.creature.roll_save(e.dice, ab, dc, adv, [], "%s save to end %s (%s)" % [Creature.ABILITY_NAMES[ab], fx.name, c.name()])
 	var then_kind := str(fx.repeat_save.get("then", ""))
+	# Contagion and Flesh to Stone: three successes end it; three failures settle it (lasting, or Petrified).
+	var three := str(fx.repeat_save.get("three", ""))
+	if three != "":
+		var key := "wins" if test.success else "fails"
+		fx.data[key] = int(fx.data.get(key, 0)) + 1
+		e.log.add("info", "%s %s the save against %s (%d of 3)" % [c.name(), "wins" if test.success else "fails", fx.name, int(fx.data[key])], c.id, [test.describe()])
+		if int(fx.data.get("wins", 0)) >= 3:
+			c.creature.remove_effect(fx)
+			e.log.add("info", "%s throws off %s" % [c.name(), fx.name], c.id)
+		elif int(fx.data.get("fails", 0)) >= 3:
+			fx.repeat_save = {}
+			if three == "petrify":
+				fx.conditions = [&"petrified"]
+				e.log.add("condition", "%s turns to stone" % c.name(), c.id)
+			else:
+				e.log.add("condition", "%s succumbs to %s for its full course" % [c.name(), fx.name], c.id)
+		e.events.append({"type": "condition", "id": c.id})
+		return
 	if test.success:
 		c.creature.remove_effect(fx)
 		e.log.add("info", "%s shakes off %s" % [c.name(), fx.name], c.id, [test.describe()])

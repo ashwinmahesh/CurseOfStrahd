@@ -85,7 +85,27 @@ func capture_shots(tool: Node, out: String) -> void:
 		add_child(ps)
 		ps.open(root, GameState.story, 0)
 		await _shoot(tool, "%s_prepare.png" % out)
-		ps.queue_free()
+		ps.free()
+		# After a Long Rest Silvain has swapped Fire Bolt for another cantrip: the Wizard's one swap is used.
+		var before := PrepareScreen.snapshot(GameState.story)
+		var cantrips := silvain.choice("wizard.cantrips")
+		ChoiceOptions.populate(cantrips, silvain)
+		for o in cantrips.options:
+			if o.legal and not o.id in cantrips.picks:
+				var picks: Array = cantrips.picks.duplicate()
+				picks[0] = o.id
+				(silvain.build["choices"] as Dictionary)["wizard.cantrips"] = picks
+				silvain.refresh()
+				break
+		var ps2 := PrepareScreen.new()
+		ps2.earlier = before
+		add_child(ps2)
+		ps2.open(root, GameState.story, 0)
+		await tool.call("wait_frames", 4)
+		for sc in ps2.find_children("*", "ScrollContainer", true, false):
+			(sc as ScrollContainer).scroll_vertical = 100000
+		await _shoot(tool, "%s_prepare_swapped.png" % out)
+		ps2.queue_free()
 	if _wants("level_up"):
 		GameState.story.milestones = 10
 		root.call("open_screen", "level_up", 2)

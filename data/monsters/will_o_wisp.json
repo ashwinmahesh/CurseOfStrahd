@@ -3,7 +3,9 @@
   "name": "Will-o'-Wisp",
   "source": {
     "book": "MM2025",
-    "note": "The 2024 Will-o'-Wisp. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: Shock's attack bonus and damage, and the resistance list. Consume Life, Vanish and its light are text only."
+    "checked_against": "SRD5.2",
+    "edition": "2024",
+    "note": "Vanish ends on an attack or Consume Life; the wisp's Concentration on it isn't tracked."
   },
   "size": "tiny",
   "type": "undead",
@@ -68,13 +70,6 @@
       "implemented": "text"
     },
     {
-      "id": "variable_illumination",
-      "name": "Variable Illumination",
-      "action": "passive",
-      "summary": "Glows; it can brighten, dim or put out its light at will.",
-      "implemented": "text"
-    },
-    {
       "id": "incorporeal_movement",
       "name": "Incorporeal Movement",
       "action": "passive",
@@ -86,6 +81,13 @@
         }
       ],
       "implemented": "engine"
+    },
+    {
+      "id": "illumination",
+      "name": "Illumination",
+      "action": "passive",
+      "summary": "Sheds Bright Light 20 ft and Dim Light 20 ft more.",
+      "implemented": "text"
     }
   ],
   "actions": [
@@ -111,16 +113,15 @@
     {
       "id": "consume_life",
       "name": "Consume Life",
-      "kind": "special",
       "summary": "A living creature at 0 Hit Points within 5 ft makes a DC 10 Con save or dies; the wisp regains 10 (3d6) Hit Points.",
-      "text": "Text only for the engine."
+      "do": "consume_life",
+      "dc": 10
     },
     {
       "id": "vanish",
       "name": "Vanish",
-      "kind": "special",
       "summary": "Turns Invisible, light and all, until it attacks, uses Consume Life or loses Concentration.",
-      "text": "Text only for the engine."
+      "do": "vanish"
     }
   ],
   "regions": [

@@ -574,14 +574,6 @@
           "name": "Druid of Yester Hill"
         },
         {
-          "monster": "druid",
-          "cell": [
-            13,
-            15
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
           "monster": "berserker",
           "cell": [
             8,
@@ -664,14 +656,6 @@
           "cell": [
             9,
             8
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            22,
-            15
           ],
           "name": "Druid of Yester Hill"
         },

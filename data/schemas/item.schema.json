@@ -773,7 +773,18 @@
     },
     "appears_as": {
       "$ref": "common.schema.json#/$defs/id",
-      "description": "What the item passes for until it's used or identified (Potion of Poison looks like a Potion of Healing)."
+      "description": "What the item passes for until it's identified or attuned to (Potion of Poison looks like a Potion of Healing)."
+    },
+    "disguise": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "summary", "text"],
+      "description": "What the item shows until it's identified or attuned to, when it imitates no real item (Armor of Vulnerability passes for armor of resistance). A template's name may use {base}.",
+      "properties": {
+        "name": {"type": "string"},
+        "summary": {"type": "string"},
+        "text": {"type": "string"}
+      }
     },
     "attune_requires": {
       "type": "array",
@@ -830,6 +841,23 @@
     "icon_fallback": {
       "type": "boolean",
       "description": "A template's icon is only its default base item's, for lists; the finished item uses its base item's icon."
+    },
+    "codex": {
+      "type": "object",
+      "required": [
+        "title",
+        "text"
+      ],
+      "additionalProperties": false,
+      "description": "A codex entry the item adds when read (our words).",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
     }
   }
 }

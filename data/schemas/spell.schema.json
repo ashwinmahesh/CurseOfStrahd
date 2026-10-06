@@ -239,6 +239,10 @@
         "creature_type": {
           "type": "string",
           "description": "Only creatures of this type can be targeted (Hold Person: humanoid)."
+        },
+        "within": {
+          "type": "integer",
+          "description": "A Self-range spell's target distance (Eyebite: 60)."
         }
       }
     },
@@ -364,6 +368,10 @@
         "area": {
           "type": "integer",
           "description": "Feet added to the area's size per slot level (Fog Cloud)."
+        },
+        "heal_flat": {
+          "type": "integer",
+          "description": "Hit Points of healing added per slot level (Heal: 10)."
         }
       }
     },
@@ -518,7 +526,8 @@
               "end_turn",
               "near_start_turn",
               "near_end_turn",
-              "per_square"
+              "per_square",
+              "caster_end_turn"
             ]
           }
         },
@@ -665,6 +674,38 @@
         "rounds": {
           "type": "integer",
           "description": "How long it lasts in rounds, when the spell's duration doesn't say."
+        },
+        "prismatic": {
+          "type": "boolean"
+        },
+        "heal_allies": {
+          "type": "object",
+          "description": "Conjure Celestial: the caster's side regains these dice instead of taking damage."
+        },
+        "storm_round": {
+          "type": "integer"
+        },
+        "tsunami": {
+          "type": "integer",
+          "description": "Tsunami: d10s of damage left; the wall moves 50 ft each caster turn."
+        },
+        "drift_away": {
+          "type": "integer",
+          "description": "Feet the area drifts away from its caster at the start of the caster's turns."
+        },
+        "include_caster": {
+          "type": "boolean",
+          "description": "An Emanation that includes its caster's own space."
+        },
+        "cage": {
+          "type": "string"
+        },
+        "hold_one": {
+          "type": "boolean",
+          "description": "It holds one creature at a time (Conjure Elemental)."
+        },
+        "blocks": {
+          "type": "boolean"
         }
       }
     },
@@ -730,7 +771,12 @@
               "maintain",
               "move_mark",
               "disengage",
-              "compel"
+              "compel",
+              "end_spell",
+              "volley",
+              "eyebite",
+              "repeat",
+              "bigby"
             ]
           },
           "cost": {
@@ -812,6 +858,9 @@
           "within_object": {
             "type": "integer",
             "description": "The point must be within this many feet of the spell's area (Call Lightning's storm)."
+          },
+          "mode": {
+            "type": "string"
           }
         }
       }
@@ -900,6 +949,14 @@
     "area_targets_by_choice": {
       "type": "object",
       "description": "Who the area affects for each cast-time choice (Calm Emotions' suppression: allies)."
+    },
+    "banish_at_hp": {
+      "type": "integer",
+      "description": "Banishing Smite: a target left at this many Hit Points or fewer saves or is banished."
+    },
+    "reduce_max_hp": {
+      "type": "boolean",
+      "description": "Harm: a failed save lowers the Hit Point maximum by the damage taken."
     },
     "icon": {
       "type": "string",

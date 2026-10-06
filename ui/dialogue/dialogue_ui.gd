@@ -51,7 +51,9 @@ func _ready() -> void:
 	s.bg_color = Color(Look.color("ui_black"), 0.95)
 	s.border_color = Look.color("gilt_dark")
 	s.set_border_width_all(2)
-	s.set_corner_radius_all(2)
+	# Bevelled corners like every other panel (owner, 2026-10-06: not plain squares).
+	s.set_corner_radius_all(10)
+	s.corner_detail = 1
 	s.set_content_margin_all(24)
 	s.shadow_color = Color(Look.color("void"), 0.6)
 	s.shadow_size = 10
@@ -223,6 +225,11 @@ func _advance() -> void:
 
 func _show(beat: Dictionary) -> void:
 	_waiting_continue = false
+	# A line speaks its recorded clip, if it has one (ADR 0013); anything else ends the last line's voice.
+	if str(beat["kind"]) == "line":
+		VoiceOver.say(str(beat.get("speaker_id", "")), str(beat["text"]))
+	else:
+		VoiceOver.stop()
 	match str(beat["kind"]):
 		"end":
 			ended.emit(str(beat.get("combat", "")))
@@ -337,15 +344,17 @@ func _fit_options() -> void:
 	_options_scroll.custom_minimum_size = Vector2(0, minf(_options.get_combined_minimum_size().y, cap))
 
 
-## Options read as lines of text; the one under the mouse or keyboard gets a crimson band with a gilt edge.
+## Options read as lines of text; the one under the mouse or keyboard gets a crimson band with pointed ends and a
+## fine gilt edge, like the menu's buttons.
 func _option_look(b: Button) -> void:
 	var plain := StyleBoxEmpty.new()
-	plain.content_margin_left = 14
+	plain.content_margin_left = 20
 	plain.content_margin_top = 4
 	plain.content_margin_bottom = 4
-	var lit := UiKit.style("ui_oxblood", "gilt", 0, 0.95)
-	lit.border_width_left = 3
-	lit.content_margin_left = 14
+	var lit := UiKit.style("ui_oxblood", "gilt_dark", 1, 0.95)
+	lit.set_corner_radius_all(14)
+	lit.corner_detail = 1
+	lit.content_margin_left = 20
 	lit.content_margin_top = 4
 	lit.content_margin_bottom = 4
 	for state: String in ["normal", "disabled"]:
