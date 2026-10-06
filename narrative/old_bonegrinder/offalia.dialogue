@@ -75,8 +75,11 @@ Narrator: She is out of the door and off down the hill at a startling speed, sti
 -> END
 
 ~ lure_fail
+set coven_knows_liars
 Offalia [smile]: Silly. Mother's upstairs. I can hear her rocking. Can't you hear her rocking?
 Narrator: You can, now that you listen. Creak. Creak. Creak.
+Offalia: I'm telling Mother you told a fib. Mother likes to know who fibs. She writes them in her book.
+Narrator: Upstairs, the rocking stops for a moment, then starts again.
 -> menu
 
 ~ fight

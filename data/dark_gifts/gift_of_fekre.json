@@ -1,0 +1,47 @@
+{
+  "id": "gift_of_fekre",
+  "name": "Fekre's Fever",
+  "vestige": "Fekre, the mother of fevers",
+  "summary": "Immunity to poison, and Blight once per long rest. The price: Charisma -2, and every healing spell or potion does you only half its good.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_faceless_god (the ring of amber)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "immunity",
+        "value": "poison"
+      },
+      {
+        "stat": "condition_immunity",
+        "value": "poisoned"
+      },
+      {
+        "stat": "spell",
+        "value": "blight",
+        "ability": "con",
+        "uses": {
+          "count": 1,
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "blight"
+    ],
+    "text": "Every sickness you will ever catch has already passed through you and moved in. Poison finds nothing left to spoil, and once a day you can breathe the rot out onto someone else."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "cha",
+        "value": -2
+      }
+    ],
+    "flaw": "Sickness keeps you company. Milk sours where you sleep, dogs cough when you pass, and whoever nurses you falls ill.",
+    "text": "Your body has made room for the fever and none for mending: healing from spells and potions restores only half as many Hit Points to you."
+  },
+  "implemented": "partial: halved healing is text only (the engine has no 'healing received' modifier yet)."
+}

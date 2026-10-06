@@ -1,0 +1,36 @@
+{
+  "id": "gift_of_yrrga",
+  "name": "The Outside Eye",
+  "vestige": "Yrrga, the eye that opened outside",
+  "summary": "Truesight out to 30 ft. The price: Wisdom -2, and Disadvantage on saves against being Frightened, because now you see what's really there.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "sense",
+        "kind": "truesight",
+        "value": 30
+      }
+    ],
+    "text": "Disguises, illusions, invisible things and borrowed shapes: up close, you see straight through all of them."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "wis",
+        "value": -2
+      },
+      {
+        "stat": "disadvantage",
+        "on": "save_vs:frightened"
+      }
+    ],
+    "flaw": "You see what stands behind the world, close up, all the time. You have stopped sleeping in the dark.",
+    "text": "The truth is not good for the nerves."
+  },
+  "implemented": "data"
+}

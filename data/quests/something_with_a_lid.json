@@ -1,0 +1,43 @@
+{
+  "id": "something_with_a_lid",
+  "name": "Something with a Lid",
+  "summary": "Exethanter, the forgetful lich of the Amber Temple, has lost his phylactery. He hid it very cleverly.",
+  "giver": "exethanter",
+  "region": "amber_temple",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Exethanter, the last warden of the Amber Temple, has lost 'a thing with a lid': his phylactery, without which he would not come back if destroyed. He hid it so cleverly that he can't find it. He thinks it's somewhere sensible.",
+      "objectives": [
+        "Find Exethanter's 'thing with a lid'"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "On the top shelf of Exethanter's own study: a clay jar, sealed with wax, labelled in his hand NOT THE PHYLACTERY.",
+      "objectives": [
+        "Decide what to do with the jar"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "returned",
+      "journal": "We gave Exethanter his phylactery. He tucked it inside his robe, thanked us, and promised to remember why.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "kept",
+      "journal": "We kept Exethanter's phylactery, 'for safekeeping'. He understood exactly what that meant, and has become very cooperative.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "smashed",
+      "journal": "We smashed Exethanter's phylactery. When this body fails, he will not come back. He thanked us, and asked us to leave him alone for a while.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

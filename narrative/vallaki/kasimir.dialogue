@@ -15,6 +15,7 @@ endif
 * Who are you? -> who
 * Why do the Vistani shelter an elf? -> vistani
 * [Insight DC 13] What is he grieving for? -> grief_ok | grief_fail
+* [if not flag.kasimir_sister_told] (Sit with him a while, and say nothing.) -> sit
 * [if flag.kasimir_sister_told] Tell us about the temple in the mountains. -> temple
 * [if tarokka.ally.npc == kasimir_velikov and not guest:kasimir_velikov] Madam Eva's cards named you as our ally. -> ally
 * Goodbye. -> bye
@@ -33,8 +34,17 @@ endif
 -> menu
 
 ~ grief_ok
-set kasimir_sister_told
 Narrator: Grief, yes, but older and sharper than grief: the kind of guilt that has had centuries to settle into the bones.
+-> grief_told
+
+~ sit
+time +60
+Narrator: You sit. He mends. The camp's fire burns down and is built up again, and nobody says anything for a long while, which seems to be the point.
+Kasimir: You are patient. The young rarely are. Very well; you have paid for it.
+-> grief_told
+
+~ grief_told
+set kasimir_sister_told
 Kasimir: My sister, Patrina. Cleverer than me, prouder than me. She went up to the castle of her own will, to learn what its lord knew. Our own people stoned her for it, and I stood at the back and did not stop them.
 Kasimir: Her bones lie under his castle now. They say there is a temple high in the mountains, sealed in amber, where death itself can be argued with. One day I will go there and argue.
 interject class:cleric: Some doors are shut for a reason.

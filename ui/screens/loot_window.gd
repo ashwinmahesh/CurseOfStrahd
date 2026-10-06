@@ -25,21 +25,28 @@ func show_loot(state: StoryState, cid: String, its: Array, g: float, v: Location
 	items = its
 	gold = g
 	view = v
-	var box := UiKit.screen_frame(self, "Loot", Vector2(720, 520))
+	var box := UiKit.screen_frame(self, "Loot", Vector2(760, 560))
 	var row := HBoxContainer.new()
-	row.add_child(UiKit.label("Give to:", 15, "parchment"))
+	row.add_theme_constant_override("separation", 10)
+	row.add_child(UiParts.caption("Give to", 12))
 	_to = OptionButton.new()
 	for ch in st.party:
 		_to.add_item(ch.name)
+	_to.custom_minimum_size = Vector2(220, 0)
 	row.add_child(_to)
 	box.add_child(row)
 	_list = VBoxContainer.new()
-	box.add_child(UiKit.scroll(_list, Vector2(680, 300)))
+	_list.add_theme_constant_override("separation", 5)
+	var pane := UiParts.pane(10)
+	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pane.add_child(UiParts.fill_scroll(_list))
+	box.add_child(pane)
 	var buttons := HBoxContainer.new()
 	buttons.add_theme_constant_override("separation", 10)
-	buttons.add_child(UiKit.button("Take all", _take_all))
-	buttons.add_child(UiKit.button("Send to who can carry", _send_all))
-	buttons.add_child(UiKit.button("Close", _close))
+	buttons.add_child(UiKit.button("Send to who can carry", _send_all, 15))
+	buttons.add_child(UiKit.button("Close", _close, 15))
+	buttons.add_child(UiParts.gap())
+	buttons.add_child(UiParts.primary_button("Take all", _take_all, "inventory"))
 	box.add_child(buttons)
 	_redraw()
 
@@ -48,22 +55,34 @@ func _redraw() -> void:
 	for c in _list.get_children():
 		c.queue_free()
 	if gold > 0.0:
-		_list.add_child(UiKit.label("%d gp" % int(gold), 16, "gilt_light"))
+		var coins := HBoxContainer.new()
+		coins.add_theme_constant_override("separation", 10)
+		coins.add_child(UiParts.figure("%d" % int(gold), 20, "gilt_light"))
+		coins.add_child(UiKit.label("gold pieces, for the party purse", 15, "parchment"))
+		_list.add_child(UiParts.row(coins))
 	if items.is_empty() and gold <= 0.0:
-		_list.add_child(UiKit.label("Empty.", 15, "parchment"))
+		_list.add_child(UiKit.label("Empty.", 15, "bone"))
 	for i in items.size():
 		var it := items[i] as Dictionary
 		var data := Compendium.shared().item_data(str(it["id"]))
 		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 10)
+		UiParts.add_icon(row, "item", str(it["id"]))
 		var qty := int(it.get("qty", 1))
-		var l := UiKit.label("%s%s · %s lb" % [data.get("name", it["id"]), " ×%d" % qty if qty > 1 else "", str(data.get("weight_lb", 0))], 16)
-		l.custom_minimum_size = Vector2(420, 0)
-		l.tooltip_text = str(data.get("summary", ""))
-		l.mouse_filter = Control.MOUSE_FILTER_PASS
-		row.add_child(l)
+		var n := UiKit.label("%s%s" % [data.get("name", it["id"]), " ×%d" % qty if qty > 1 else ""], 16, "vellum")
+		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(n)
+		row.add_child(UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment"))
 		var idx := i
-		row.add_child(UiKit.button("Take one", func() -> void: _take(idx, 1), 14))
-		_list.add_child(row)
+		row.add_child(UiParts.small_button("Take one", func() -> void: _take(idx, 1)))
+		_list.add_child(UiParts.row(row, _item_tip(data)))
+
+
+static func _item_tip(data: Dictionary) -> Callable:
+	return func() -> Control:
+		var body := str(data.get("text", "")) if str(data.get("text", "")) != "" else str(data.get("summary", ""))
+		return UiParts.rules_tip(str(data.get("name", "")), str(data.get("category", "")).capitalize(), body,
+			[["Weight", "%s lb" % str(data.get("weight_lb", 0))], ["Value", "%s gp" % str(data.get("cost_gp", 0))]])
 
 
 func _target() -> Character:

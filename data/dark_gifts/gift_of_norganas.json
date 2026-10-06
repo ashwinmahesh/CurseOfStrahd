@@ -1,0 +1,39 @@
+{
+  "id": "gift_of_norganas",
+  "name": "The Eraser's Finger",
+  "vestige": "Norganas, the eraser",
+  "summary": "Finger of Death once per long rest. The price: Intelligence -4, and each casting takes a memory you loved.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "spell",
+        "value": "finger_of_death",
+        "ability": "cha",
+        "uses": {
+          "count": 1,
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "finger_of_death"
+    ],
+    "text": "Once a day you can point at a living thing and unmake it, from the inside out."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "int",
+        "value": -4
+      }
+    ],
+    "flaw": "Every time you use it, a memory you loved goes with the dead. You won't know which until you reach for it.",
+    "text": "The vestige eats what you know. It starts at once, and it never quite finishes."
+  },
+  "implemented": "data"
+}

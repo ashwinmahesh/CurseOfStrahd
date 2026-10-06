@@ -1,0 +1,206 @@
+# Master Vosk (docs/voice/vosk.md): an arcanaloth posing as a mild scholar, the broker who writes down the
+# vestiges' bargains and takes a commission on each. start: in the library (once; then he goes down to the vaults).
+# sanctum: the region's climax by the hollow sarcophagus. Outcomes (vosk_fate): banished (his true name, from
+# Exethanter or his notes), paid (someone lay down in the hollow: gift_of_the_hollow), or the fight vosk_unmasked
+# (vosk_destroyed). Every outcome leads to amber_temple/vault:revelation, which holds the region's milestone.
+
+~ start
+set vosk_met
+if not quest.the_amber_temple >= broker_met
+quest the_amber_temple broker_met
+endif
+Narrator: At a table stacked with books sits a stooped, pleasant-faced man in a scholar's gown, spectacles low on his nose, a cup of something steaming at his elbow. Nothing else in this library is warm.
+Vosk [smile]: Oh! Company. Forgive me, I've been reading so long I'd forgotten other people were real. Vosk. Master Vosk, if you're formal. A scholar, like yourselves. Well. Like some of you.
+-> menu
+
+~ menu
+* What are you studying? -> studying
+* How long have you been here? -> how_long
+* What do you know about the sarcophagi? -> sarcophagi
+* [Insight DC 17] Something about him is wrong. -> insight_ok | insight_fail
+* [if flag.dark_gifts_taken >= 1] One of us took a gift. -> gift_taken
+* [name:silvain_aster] Did a scholar named Aurel Mirescu pass through here? -> aurel
+* [if guest:ireena] (He keeps looking at Ireena.) -> ireena
+* Goodbye. -> leave
+
+~ studying
+Vosk: Contracts, mostly. This temple is full of them, if you know how to read. Every sarcophagus is a standing offer, and every offer has terms. I find terms fascinating. People never read them.
+interject tag:bookish: You're a scholar of bargains.
+Vosk: Of the people who make them. The bargains are all rather alike.
+-> menu
+
+~ how_long
+Vosk: A little longer than you. I came for a season and the snow closed the pass. Then it opened again, and I found I didn't want to leave. The warden is very hospitable, when he remembers I'm here.
+-> menu
+
+~ sarcophagi
+Vosk: Oh, you must listen to them. Everyone should, once. You'll never meet anything so honest. They tell you exactly what they'll give you, and very nearly what it costs.
+Vosk: The oldest are in the vaults. And at the very bottom there's a sarcophagus with nothing in it at all, which is the most interesting of the lot. I'm going down there myself, presently. Do come and find me.
+-> menu
+
+~ insight_ok
+set vosk_suspected
+Narrator: His spectacles have no glass in them. His tea steams but gives off no smell. And when he turns toward the candle, the shadow he throws on the shelves has two tall, pointed ears.
+interject class:cleric: That is not a man.
+Vosk [smile]: Isn't it? How rude of me. Let's not make a scene in a library.
+-> menu
+
+~ insight_fail
+Narrator: A mild man, a little lonely, too fond of the sound of his own sentences. If there's anything else to him, it's well hidden.
+-> menu
+
+~ gift_taken
+Narrator: Vosk's nose lifts, very slightly, like a dog's at a kitchen door.
+Vosk [smile]: So someone did. Congratulations. Most people only look. Don't let the warden lecture you; he took one himself, long ago. Everyone here has.
+-> menu
+
+~ aurel
+Vosk: Mirescu? Thin, ink to the elbows, never finished a sentence without a footnote? Of course. He sat just there. He was going up to the castle to read, he said.
+Narrator: He says it warmly, and it fits like a borrowed coat.
+* [Insight DC 13] Did he, though? -> aurel_lie | aurel_true
+* Thank you. -> menu
+
+~ aurel_lie
+set vosk_suspected
+Narrator: Every detail he gave you, you gave him first, in the way you said the name. He has never met Aurel. He has met you, and that was enough.
+interject name:silvain_aster: You read my face and recited it back to me. That is the single most offensive thing anyone has ever done to me in a library.
+Vosk [smile]: You'd be amazed what people will pay for the thing they most want to hear.
+-> menu
+
+~ aurel_true
+Narrator: He seems sincere. Then again, so does the snow, until you're under it.
+-> menu
+
+~ ireena
+Vosk: Forgive me, my dear. You have a face I've seen before, in a very old portrait and on a very old contract. The same face. A different signature.
+Ireena [afraid]: I don't know what that means.
+Vosk [smile]: No. But someone does.
+-> menu
+
+~ leave
+Vosk: Of course. I'll be going down to the vaults myself; the light's better there. Come and find me at the bottom. I'd like to show you something nobody else can.
+Narrator: He gathers three books under his arm, nods politely and goes off into the stacks. You don't hear his footsteps, though the floor is bare stone.
+-> END
+
+# ------------------------------------------------------------------------------------------ The sanctum (climax)
+
+~ sanctum
+if not flag.vosk_met
+set vosk_met
+if not quest.the_amber_temple >= broker_met
+quest the_amber_temple broker_met
+endif
+Narrator: At the bottom of the temple, beside a great hollow sarcophagus, a stooped scholar in spectacles is waiting, a book open in his hands as if he'd been reading by the amber's glow.
+Vosk [smile]: Ah, visitors. Vosk, a scholar of the temple. I've been expecting someone for a while, and here you are.
+else
+Narrator: Master Vosk waits beside the hollow sarcophagus, his books stacked neatly on the floor, his hands folded.
+Vosk [smile]: You came down. I knew you would. Everyone does, eventually.
+endif
+if not quest.the_amber_temple >= hollow_found
+quest the_amber_temple hollow_found
+endif
+Vosk: Do you know what this is? Of course you don't. This is where your prince came, long ago, when he was only a prince. He stood exactly where you're standing and asked for time.
+Vosk: The thing in this amber gave it to him. Then it went into him, and it's in him still. And the amber, as you see, is empty. Room for one more.
+if flag.dark_gifts_taken >= 2
+Vosk [smile]: You've been generous upstairs. My commission thanks you. I thought you might be ready for something larger.
+endif
+-> sanctum_menu
+
+~ sanctum_menu
+* Who are you, really? -> who
+* What's your part in this? -> part
+* [if flag.vosk_named] Ashkarreth. -> named
+* [Arcana DC 16] What does the empty amber still hold? -> hollow_ok | hollow_fail
+* What are you offering? -> offer
+
+~ who
+Vosk: A broker. Someone has to write the terms down, and the vestiges have no hands. I take a small commission on every bargain struck in this house. Very small. A soul here, a soul there.
+if flag.vosk_suspected
+Vosk [smile]: You saw my ears in the library, I expect. I did wonder.
+endif
+-> sanctum_menu
+
+~ part
+Vosk: I witnessed his contract. I'm rather proud of it. One prince, one brother, one valley, and the whole arrangement still running after four hundred years. Most bargains don't outlast a generation.
+interject tag:blunt: You sold him to it.
+Vosk: I introduced them. He did the selling. I only took my fee.
+-> sanctum_menu
+
+~ hollow_ok
+Narrator: The amber remembers its tenant the way a glove remembers a hand. It wasn't a god; it was a hunger with a name.
+Narrator: And it is still tied to this place, by a thread as fine as hair that runs out of the mountain and down into the valley.
+interject class:wizard: It isn't gone. It's in him, and still tied to its sarcophagus, and he's tied to the land. It's all one knot.
+-> sanctum_menu
+
+~ hollow_fail
+Narrator: It's empty amber. It's the emptiest thing you have ever seen, and you can't say why.
+-> sanctum_menu
+
+~ offer
+Vosk: This. The Thirst lives in your prince, but its amber still fits. Lay one of you down in it for a moment, and the Thirst will know them too. A second vessel. A rival. An heir. Call it what you like.
+Vosk: Think of it: as strong as he is, as hard to kill, never growing old. The one thing in this valley he couldn't simply take. And I'd have my fee, and we'd all be happy.
+interject guest:kasimir_velikov: My sister asked for far less than this, once. Look what it made of her.
+* We'll take nothing from you. -> refuse
+* [if flag.vosk_named] Ashkarreth. We know your name. -> named
+* [Deception DC 18] Agree, then step aside at the last moment. -> trick_ok | trick_fail
+* (Lie down in the amber.) -> accept
+
+~ accept
+dark_gift gift_of_the_hollow
+if gift:gift_of_the_hollow
+set vosk_fate = "paid"
+set dark_gifts_taken += 1
+quest the_amber_temple broker_paid
+Narrator: The amber is warm, and it fits. For a moment you feel the whole valley at once, every road and grave and pulse in it, and on a hill far away, something turns its head toward you.
+Narrator: When you climb out, Vosk is closing his book with a soft, satisfied clap.
+Vosk [smile]: Concluded. A pleasure doing business. Do give him my regards; he'll want to meet you now.
+Narrator: He takes off his spectacles, and his face comes away with them. The jackal underneath bows, low and courtly, and is gone.
+-> amber_temple/vault:revelation
+endif
+Vosk: No one? You came all this way down to say no one. Well. I've been told no before. Never for very long.
+-> refuse
+
+~ refuse
+Vosk: Nothing? Not even something small for the road? A pity. I do hate a wasted trip.
+Narrator: He takes off his spectacles, and his face comes away with them.
+combat vosk_unmasked
+
+~ trick_ok
+set vosk_weakened
+Narrator: You let him lead you to the amber, and at the last moment you aren't there. His hands close on air, and the hollow takes the only thing within reach: his own shadow, with its two tall ears.
+Vosk: That's mine. Give that back. That's MINE.
+Narrator: Without his shadow he is thinner, smaller, a scholar-shaped scrap of something. He comes for you anyway.
+combat vosk_unmasked
+
+~ trick_fail
+Narrator: He sees the step before you take it. He has been watching people try that since before your grandparents were born.
+Vosk [smile]: Oh, that was nearly good.
+combat vosk_unmasked
+
+~ named
+Narrator: You say the name. For the first time since you met him, Vosk stops smiling. His spectacles fall and break on the floor, and the face behind them is a jackal's, its ears flat.
+Vosk: That was in the warden's notes. I told him to burn those. He forgot. Of course he forgot.
+Vosk: Very well. Bound by my name, I answer. What do you want of me?
+-> named_menu
+
+~ named_menu
+* Leave this temple, and never broker another bargain in this valley. -> banish
+* How is the devil's bargain broken? -> named_break
+* (Strike him while he's bound.) -> named_attack
+
+~ named_break
+Vosk: Broken? It's a contract, not a pot. It ends when its terms end: when he does, or when the land does. You can't have one without the other quite as much as you would like.
+Vosk: But since you ask, under compulsion: the Thirst holds him to the valley and the valley to him. Hurt one, and the other feels it. That's all you get, and it's more than he ever did.
+-> named_menu
+
+~ banish
+set vosk_fate = "banished"
+quest the_amber_temple broker_banished
+Vosk: Never? That is a very long word for a mortal to use. ...Agreed. Bound and agreed.
+Narrator: He gathers his books one by one and walks into the hollow amber as if it were a doorway. For him, it is. The amber flickers once and he's gone.
+Narrator: All through the temple, the voices in the sarcophagi fall silent for a moment, as if a door had shut somewhere in a house they live in.
+-> amber_temple/vault:revelation
+
+~ named_attack
+Narrator: He sees it coming, and for once he doesn't smile.
+combat vosk_unmasked

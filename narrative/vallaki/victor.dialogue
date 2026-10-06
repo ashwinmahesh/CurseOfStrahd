@@ -90,7 +90,9 @@ Victor: That makes one of us.
 -> END
 
 ~ persuade_fail
+attitude victor_vallakovich hostile
 Victor [angry]: You sound like Mother. Get out of my attic.
+Narrator: He turns his back and starts redrawing a line that didn't need redrawing, pressing so hard the chalk snaps.
 -> menu
 
 ~ encourage
@@ -111,9 +113,22 @@ Victor: Get out. Get out of my attic. I hope you're stuck here forever. I hope y
 ~ ally
 if flag.victor_circle == "broken"
 Victor [angry]: With you? You ruined six weeks of work with your boots.
-* [Persuasion DC 12] Out of this house. Out of this town. Isn't that what you wanted? -> ally_yes | ally_no
-* Suit yourself. -> END
+-> ally_sulk
+elif attitude.victor_vallakovich == hostile
+Victor [angry]: With you? You told me I'd die in my own circle. I'm still alive. Out of spite, mostly.
+-> ally_sulk
 endif
+-> ally_yes
+
+~ ally_sulk
+* [Persuasion DC 12] Out of this house. Out of this town. Isn't that what you wanted? -> ally_yes | ally_no
+* [if gold >= 10] (Hold out ten gold.) For chalk. All the chalk in Barovia, wherever we end up. -> ally_chalk
+* Suit yourself. -> END
+
+~ ally_chalk
+gold -10
+Victor: Ten gold of chalk. That's... that is actually a great deal of chalk. The Vistani sell it by the stick.
+Victor: Fine. Bribery. At least it's honest.
 -> ally_yes
 
 ~ ally_yes

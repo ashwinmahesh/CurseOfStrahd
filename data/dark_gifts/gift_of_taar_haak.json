@@ -1,0 +1,41 @@
+{
+  "id": "gift_of_taar_haak",
+  "name": "The Five Throats",
+  "vestige": "Great Taar Haak, the five-throated war",
+  "summary": "Strength +4 (up to 22) and 1 more Hit Point per level. The price: Intelligence -2, Disadvantage on Wisdom saves, and a rage that won't stop at surrender.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_faceless_god (the ring of amber)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "str",
+        "value": 4,
+        "max": 22
+      },
+      {
+        "stat": "hp_max",
+        "value": "level"
+      }
+    ],
+    "text": "Your arms thicken, your neck with them. Doors give, chains give, people give."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "int",
+        "value": -2
+      },
+      {
+        "stat": "disadvantage",
+        "on": "save:wis"
+      }
+    ],
+    "flaw": "Once you have drawn blood you cannot stop while anything within reach is still standing, including whatever is begging.",
+    "text": "Five voices argue in your skull about whom to kill first. It makes careful thought harder, and it makes you very easy to provoke."
+  },
+  "implemented": "data"
+}

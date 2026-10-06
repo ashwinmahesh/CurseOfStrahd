@@ -63,11 +63,15 @@ endif
 
 ~ price
 Madam Eva: The cards are free. The one who turns them is not. Ten gold, or one true thing that one of you has told nobody. The cards take either. They prefer the second.
-if flag.nicu_kin_told
+if flag.nicu_kin_told and not flag.eva_caught_lying
 Madam Eva [sad]: No. Put your purse away. You brought our Nicu home to his people, as much of him as the road left. That is paid already, and more.
 set eva_reading_paid = "kin"
 attitude madam_eva friendly
 -> reading
+endif
+if flag.nicu_kin_told and flag.eva_caught_lying
+attitude madam_eva friendly
+Madam Eva: You brought our Nicu home, and then you lied to me at my own table. The one cancels the other. Pay like a stranger.
 endif
 -> price_menu
 
@@ -205,7 +209,9 @@ Madam Eva [sly]: Hm. Then perhaps the cards are mistaken. They are not. But perh
 -> price
 
 ~ robbed_lie_fail
+set eva_caught_lying
 Madam Eva: Liar. A bad one, which is almost to your credit. Give it back, or keep it and listen to what it costs you.
+Narrator: She doesn't write it down. She doesn't need to; you watch her remember it.
 * Give it back. -> repay
 * Keep it. -> robbed_keep
 

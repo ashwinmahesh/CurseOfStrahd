@@ -340,6 +340,21 @@
       "id": "kolyan_raised",
       "type": "bool",
       "summary": "Kolyan Indirovich was raised from his grave by the party (the horseman card's ally, Phase 5)."
+    },
+    {
+      "id": "bildrath_surcharge",
+      "type": "bool",
+      "summary": "A failed Intimidation haggle at Bildrath's (bildrath): he puts ten percent on the dear things for the rest of the game (the healer's kit at 55 gp, the potion at 550 gp)."
+    },
+    {
+      "id": "ireena_door_threatened",
+      "type": "bool",
+      "summary": "The party failed to bully Ireena into opening the mansion door (ireena: door). She remembers the voice when they first meet in the parlour."
+    },
+    {
+      "id": "morgantha_threatened",
+      "type": "bool",
+      "summary": "The party failed to frighten Morgantha's cart out of the village (morgantha). She remembers: a mocking greeting on the lane and at the mill, and the children cost 200 gp instead of 150 at Old Bonegrinder."
     }
   ]
 }

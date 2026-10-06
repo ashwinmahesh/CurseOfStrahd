@@ -29,6 +29,8 @@ interject background:criminal: What a lovely, sturdy counter. Very... sturdy.
 ~ buy
 if flag.bildrath_discount
 Bildrath [weary]: For you, the special price. Nine times. I'll never recover. Rope ten, torches one for five, rations five a day, oil one a flask. Healer's kit forty-five. The potion, four hundred and fifty.
+elif flag.bildrath_surcharge
+Bildrath: For you, the rude price. Rope, torches, rations and oil as posted. The healer's kit, fifty-five. The potion, five hundred and fifty. Menace is itemized.
 else
 Bildrath: Rope, ten gold. Torches, one gold for five. Rations, five gold a day. Lamp oil, one gold a flask. A healer's kit, fifty. And the potion in the case, five hundred.
 endif
@@ -37,10 +39,12 @@ interject class:rogue: That much? For one potion? I've stolen less. In theory. H
 * Five torches. (1 gp) -> buy_torches
 * Three days of rations. (15 gp) -> buy_rations
 * A flask of oil. (1 gp) -> buy_oil
-* [if not flag.bildrath_discount] A healer's kit. (50 gp) -> buy_kit
+* [if not flag.bildrath_discount and not flag.bildrath_surcharge] A healer's kit. (50 gp) -> buy_kit
 * [if flag.bildrath_discount] A healer's kit. (45 gp) -> buy_kit_discount
-* [if not flag.bildrath_discount and not flag.bildrath_potion_sold] The potion. (500 gp) -> buy_potion
+* [if flag.bildrath_surcharge and gold >= 55] A healer's kit. (55 gp) -> buy_kit_rude
+* [if not flag.bildrath_discount and not flag.bildrath_surcharge and not flag.bildrath_potion_sold] The potion. (500 gp) -> buy_potion
 * [if flag.bildrath_discount and not flag.bildrath_potion_sold] The potion. (450 gp) -> buy_potion_discount
+* [if flag.bildrath_surcharge and gold >= 550 and not flag.bildrath_potion_sold] The potion. (550 gp) -> buy_potion_rude
 * That's all. -> menu
 
 ~ buy_rope
@@ -79,6 +83,12 @@ give healers_kit 1
 Bildrath [weary]: Forty-five. I want you to know this hurts me more than it hurts you.
 -> buy
 
+~ buy_kit_rude
+gold -55
+give healers_kit 1
+Bildrath: Fifty-five. Fifty for the kit, five for the tone of voice. Parriwimple, note that the account is settled. The tone is not.
+-> buy
+
 ~ buy_potion
 gold -500
 give potion_of_healing 1
@@ -91,6 +101,13 @@ gold -450
 give potion_of_healing 1
 set bildrath_potion_sold
 Bildrath [weary]: Four hundred and fifty. Take it before I change my mind. Take it. Go on.
+-> buy
+
+~ buy_potion_rude
+gold -550
+give potion_of_healing 1
+set bildrath_potion_sold
+Bildrath: Five hundred and fifty. The extra fifty is for threatening the proprietor. I'll frame it.
 -> buy
 
 ~ sell
@@ -128,7 +145,7 @@ Bildrath: Seven gold. Heavy. I'll have Parriwimple carry it. I'll have Parriwimp
 ~ haggle
 Bildrath: Haggling is a form of theft that takes longer.
 * [Persuasion DC 18] A loyal customer is worth more than one sale. (one try) -> haggle_ok | haggle_fail
-* [Intimidation DC 18] Lower the prices. (one try) -> haggle_ok | haggle_fail
+* [Intimidation DC 18] Lower the prices. (one try) -> haggle_ok | haggle_threat_fail
 * Never mind. -> menu
 
 ~ haggle_ok
@@ -140,6 +157,13 @@ Narrator: For all his outrage, he looks at you with something new: respect, the 
 ~ haggle_fail
 set bildrath_haggle_failed
 Bildrath: No. The prices are posted. They will stay posted. You may look at them as long as you like; looking is free, for now.
+-> menu
+
+~ haggle_threat_fail
+set bildrath_haggle_failed
+set bildrath_surcharge
+Bildrath: Lower them? No. I'll raise them. Ten percent on the dear things, for menacing the proprietor. Parriwimple, the ledger. Under "Customers, Rude".
+Narrator: Parriwimple writes it down very slowly, so you can watch him do it.
 -> menu
 
 ~ news

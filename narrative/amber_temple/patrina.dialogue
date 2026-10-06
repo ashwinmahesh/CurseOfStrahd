@@ -1,0 +1,150 @@
+# Patrina Velikovna (docs/voice/patrina_velikovna.md), Kasimir Velikov's sister, a banshee in the hall of echoes.
+# Kasimir (data/npcs/kasimir_velikov.json, narrative/vallaki/kasimir.dialogue) tells the party of her
+# (kasimir_sister_told) and joins as a guest if the Tarokka names him. Outcomes (patrina_fate): rest (laid to rest,
+# by word, prayer or her brother), restored (Kasimir's bargain with Tarakamedes, in vestiges.dialogue), or the
+# fight patrina_wails (patrina_destroyed).
+
+~ start
+if not flag.patrina_met
+-> first
+endif
+Narrator: Patrina is at her desk again, turning pages that crumble at her touch and re-form, and crumble.
+Patrina: You again. Have you come to stare, or have you finally brought me something worth reading?
+if guest:kasimir_velikov and not flag.patrina_named
+-> kasimir_meets
+endif
+-> menu
+
+~ first
+set patrina_met
+quest patrinas_wail heard
+Narrator: At the one desk not furred with frost sits a dusk elf woman, as translucent as breath on glass, her white hair floating as if she were under water. Her face is beautiful and ruined, scored with the marks of stones.
+Narrator: She turns a page. It crumbles. She turns it again.
+Patrina: Living people. In my library. Do you know how long it's been since anyone in this valley had the nerve to climb up here and read?
+if guest:kasimir_velikov
+-> kasimir_meets
+endif
+-> menu
+
+~ menu
+* Who are you? -> who
+* [if flag.kasimir_sister_told and not flag.patrina_named] You're Patrina. Kasimir's sister. -> named_by_kasimir
+* What are you reading? -> reading
+* [if flag.patrina_named and not guest:kasimir_velikov] Your brother grieves for you. He's sorry. -> brother
+* [Religion DC 16] Your bones lie under the castle. Let them lie, and rest. -> rest_prayer | rest_prayer_fail
+* (Leave her to her reading.) -> leave
+* (Draw steel.) -> fight
+
+~ who
+Patrina: A student. I was the cleverest of my people, which was not difficult, and the only curious one, which was.
+Patrina: I came up here to learn what the lord of the valley knew. Then I went down to his castle to learn the rest.
+Patrina: My people threw stones at me until I stopped moving. So I came back here. It's the only place I was ever free.
+* [Insight DC 14] She doesn't regret the castle. What, then? -> who_insight | who_insight_fail
+* Go on. -> menu
+
+~ who_insight
+Narrator: Not the castle, and not him. What she can't forgive is the crowd, and one face at the back of it that didn't throw a stone and didn't stop anyone else either.
+-> menu
+
+~ who_insight_fail
+Narrator: Her face gives you nothing but its scars. Whatever she feels about the castle, she has had a long time to bury it.
+-> menu
+
+~ named_by_kasimir
+set patrina_named
+quest patrinas_wail named
+Patrina [angry]: Kasimir. You've met Kasimir. Is he still mending nets by a Vistani fire and calling it penance?
+Patrina: He stood at the back. Did he tell you? Everyone was throwing, and my brother stood at the back with empty hands, and watched.
+-> menu
+
+~ reading
+Patrina: The same page I was reading when I left. It's about him: how a prince became a lord forever. I thought if I understood it, he would see me as an equal.
+Patrina: He did, for a while. That's the trouble with being clever. Someone always finds a use for it.
+interject tag:bookish: I know that page's kind. One reads it to understand, and it reads you back.
+-> menu
+
+~ brother
+Narrator: The pages stop turning.
+Patrina: Sorry. He's sorry. Three hundred years, and he sends strangers up a mountain to say it for him.
+* [Persuasion DC 15] He's been too afraid to come. That's the only thing he's ever been, and he knows it. -> brother_ok | brother_fail
+* He'd bring you back, if he could. -> bring_back
+
+~ brother_ok
+Patrina: ...Afraid. Yes. He always was. And he admits it now? That's new. That's very nearly brave.
+-> at_rest
+
+~ brother_fail
+Patrina [angry]: Then let him be afraid a little longer. Get out of my library.
+Narrator: She draws a breath she doesn't need, and the frost on the desks begins to sing with it.
+* Back away, quickly. -> leave
+* (Draw steel.) -> fight
+
+~ bring_back
+Patrina: Bring me back. To what? To a valley that stoned me, a brother who watched, and a lord who has had four centuries to find someone cleverer?
+Patrina: No. I've done my living. If Kasimir wants to do something for me, he can stop being sorry and start being brave. He'll know what I mean.
+-> menu
+
+~ rest_prayer
+Narrator: You speak the old words for the dead, the ones every faith in the valley shares: rest, and be remembered, and let the living go.
+Patrina: Rest. Everyone always wants me to rest. ...Perhaps I'm tired. Perhaps I've been tired for a long time.
+-> at_rest
+
+~ rest_prayer_fail
+Patrina: Your gods don't climb this high. Mine never did either. Don't preach at me in my own library.
+-> menu
+
+~ at_rest
+set patrina_fate = "rest"
+quest patrinas_wail at_rest
+Narrator: For a long time she says nothing. Then she closes the book on her desk, gently, and it doesn't crumble.
+Patrina: Tell him I'm done waiting. Tell him the stones didn't hurt as much as the quiet afterward. He'll understand that. He was always very good at quiet.
+Narrator: She fades the way breath fades from a window. The frost on the other desks melts, just a little, and doesn't come back.
+-> END
+
+~ leave
+Patrina: Go, then. Everyone does.
+-> END
+
+~ fight
+Patrina [angry]: Of course. Stones, or steel. It's always one or the other with people like you.
+combat patrina_wails
+
+# ------------------------------------------------------------------------------------- With Kasimir (Tarokka ally)
+
+~ kasimir_meets
+set patrina_named
+quest patrinas_wail named
+Narrator: Kasimir has stopped walking. He stands in the archway with his hands at his sides, as if he has forgotten what they are for.
+Kasimir: Patrina.
+Patrina: ...Kasimir. You climbed a mountain. You. I'd have bet my bones against it, if I still had the use of them.
+Kasimir: I stood at the back. I have stood at the back for three hundred years. I came up here to stop.
+Patrina [angry]: Then say it properly. Not to them. To me.
+* [Persuasion DC 13] (Help Kasimir find the words.) -> kasimir_words_ok | kasimir_words_fail
+* (Let him speak for himself.) -> kasimir_alone
+* [if not flag.kasimir_bargain] Kasimir. In the vaults below, there's a vestige that could bring her back. -> kasimir_tempted
+
+~ kasimir_words_ok
+Narrator: You don't give him a speech. You give him a place to start, and he takes it.
+Kasimir: I was afraid of them, and I was afraid of you, and I let them do it so that I would never have to be as brave as you were. I'm sorry. I have been sorry every day.
+-> kasimir_rest
+
+~ kasimir_words_fail
+Narrator: What you offer comes out too smooth, a speech for a stage. Kasimir shakes his head at you, kindly, and finds his own.
+-> kasimir_alone
+
+~ kasimir_alone
+Narrator: It takes him a long time. When it comes it's barely a whisper, and it is the whole truth.
+Kasimir: I let them, Patrina. Because I was afraid of being you.
+-> kasimir_rest
+
+~ kasimir_rest
+set kasimir_at_peace
+Patrina: ...There. That wasn't so hard. Three centuries, and it took you one breath.
+Patrina: Go home, little brother. Don't bring me back. Don't make bargains. Be brave somewhere I can't see you; it will annoy me less.
+-> at_rest
+
+~ kasimir_tempted
+Patrina [angry]: Don't you dare. Don't you dare buy me back from a thing in a box, like a coat out of pawn.
+Kasimir: ...She's right. She was always right. That was the whole trouble with her.
+set kasimir_bargain = "refused"
+-> kasimir_alone

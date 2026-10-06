@@ -87,6 +87,15 @@
       "hours": 2,
       "table": "baratok_slopes",
       "name": "The path up from the tower's lake"
+    },
+    {
+      "id": "tsolenka_pass_to_amber_temple",
+      "from": "tsolenka_pass",
+      "to": "amber_temple",
+      "hours": 3,
+      "table": "amber_temple_road",
+      "name": "The road over the Tsolenka Pass",
+      "when": "flag.tsolenka_gate_open"
     }
   ]
 }

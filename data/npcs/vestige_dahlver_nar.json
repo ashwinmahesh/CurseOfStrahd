@@ -1,0 +1,16 @@
+{
+  "id": "vestige_dahlver_nar",
+  "name": "Dahlver-Nar",
+  "title": "A Voice in the Amber",
+  "summary": "A vestige sealed in a sarcophagus of amber in the Amber Temple: the last ember of a dead or forgotten power, still able to speak and to bargain. A gaping jaw lined with rows of teeth, each tooth a different shape, as if taken from a different mouth.",
+  "portrait": "vestige_amber",
+  "attitude": "indifferent",
+  "voice": "docs/voice/amber_vestiges.md",
+  "guest": false,
+  "tags": [
+    "vestige",
+    "amber_temple"
+  ],
+  "pronouns": "it",
+  "region": "amber_temple"
+}

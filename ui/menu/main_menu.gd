@@ -62,6 +62,12 @@ func _title() -> void:
 	var slots := SaveSystem.list_slots()
 	var cont := UiKit.button("Continue", func() -> void: _load(str(slots[0]["slot"])), 24)
 	cont.disabled = slots.is_empty()
+	if not slots.is_empty():
+		var prime := UiParts.primary_button("Continue", func() -> void: _load(str(slots[0]["slot"])))
+		prime.add_theme_font_size_override("font_size", 24)
+		prime.size_flags_horizontal = Control.SIZE_FILL
+		cont.free()
+		cont = prime
 	_box.add_child(cont)
 	_box.add_child(UiKit.button("New game", _new_game, 24))
 	var load := UiKit.button("Load", _show_loads, 24)
@@ -86,11 +92,14 @@ func _credits() -> void:
 		var lines := (sec as Dictionary)["lines"] as Array
 		if lines.is_empty():
 			continue
-		body.add_child(UiKit.header(str((sec as Dictionary)["title"])))
+		body.add_child(UiParts.section(str((sec as Dictionary)["title"])))
 		for line: Variant in lines:
 			body.add_child(UiKit.label(str(line), 15, "vellum", 1000))
-	frame.add_child(UiKit.scroll(body, Vector2(1040, 600)))
-	frame.add_child(UiKit.button("Close", func() -> void: layer.queue_free(), 16))
+	var pane := UiParts.pane(14)
+	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pane.add_child(UiParts.fill_scroll(body))
+	frame.add_child(pane)
+	frame.add_child(UiParts.primary_button("Close", func() -> void: layer.queue_free()))
 
 
 func _gap(h: float) -> Control:
@@ -103,17 +112,24 @@ func _new_game() -> void:
 	for c in _box.get_children():
 		c.queue_free()
 	_box.add_child(UiKit.title("Who goes into the mists?"))
+	_box.add_child(UiParts.section("The pregenerated party"))
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
 	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
 		var data := Compendium.shared().get_entry("pregens", id)
 		var col := VBoxContainer.new()
-		col.add_child(UiKit.portrait(id, 140))
-		col.add_child(UiKit.label(str(data.get("name", id)), 15, "gilt_light"))
-		col.add_child(UiKit.label(str(data.get("summary", "")), 12, "parchment", 150))
+		col.add_theme_constant_override("separation", 4)
+		col.add_child(UiParts.framed_portrait(id, 140.0))
+		var n := UiKit.label(str(data.get("name", id)), 17, "gilt_light")
+		n.add_theme_font_override("font", UiKit.display_font())
+		col.add_child(n)
+		col.add_child(UiKit.label(str(data.get("summary", "")), 12, "parchment", 140))
 		row.add_child(col)
-	_box.add_child(row)
-	_box.add_child(UiKit.button("Pregenerated party: play as is", _pregen_party, 18))
+	var plate := UiParts.card("ui_black", "gilt_dark", 0.82, 12)
+	plate.add_child(row)
+	_box.add_child(plate)
+	_box.add_child(UiParts.primary_button("Pregenerated party: play as is", _pregen_party))
+	(_box.get_child(_box.get_child_count() - 1) as Button).size_flags_horizontal = Control.SIZE_FILL
 	_box.add_child(UiKit.button("Pregenerated party: edit them first", func() -> void: _open_creator(true), 18))
 	_box.add_child(UiKit.button("Build all four from scratch", func() -> void: _open_creator(false), 18))
 	var copy := UiKit.button("Copy from a save", func() -> void: pass, 18)
@@ -170,8 +186,9 @@ func _show_loads() -> void:
 	_box.add_child(UiKit.title("Load"))
 	for s in SaveSystem.list_slots():
 		var slot := str(s["slot"])
-		var b := UiKit.button("%s · %s · Day %d · %s" % [slot, s["location"], int(s["day"]), str(s["saved_at"]).replace("T", " ")], func() -> void: _load(slot), 14)
-		b.tooltip_text = str(s["party"])
+		var b := UiKit.button("%s · Day %d" % [s["location"], int(s["day"])], func() -> void: _load(slot), 17)
+		b.tooltip_text = "%s · %s\n%s" % [slot, str(s["saved_at"]).replace("T", " "), s["party"]]
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		_box.add_child(b)
 	_box.add_child(UiKit.button("Back", _title, 16))
 

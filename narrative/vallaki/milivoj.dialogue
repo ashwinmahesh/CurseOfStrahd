@@ -8,6 +8,8 @@ if not flag.milivoj_met
 set milivoj_met
 Narrator: A big young man in a sheepskin is digging a grave with a good deal more force than the earth requires. He doesn't look up.
 Milivoj: Grave's not for you. Unless you keep standing on the edge of it.
+elif attitude.milivoj == hostile
+Milivoj [angry]: You. My collar's still creased. Grave's still not for you, but I've started measuring.
 else
 Milivoj: You again. Still digging. Still not for you.
 endif
@@ -31,7 +33,19 @@ Milivoj [angry]: Says who? The priest? He'd never say that. He wouldn't.
 * [Intimidation DC 13] Take him by the collar. -> scare_ok | scare_fail
 * [Persuasion DC 13] Nobody's going to hang you. Just tell us the truth. -> plead_ok | plead_fail
 * [if flag.lid_scrapes_found] Only someone who knew the trick of the lid could open it without breaking it. -> confess
+* [if flag.henrik_confessed] Henrik already told us. Twenty gold, at night, for the saint. -> named
+* [if gold >= 20] (Hold out twenty gold.) Henrik paid you twenty. We'll match it, for the truth. -> bought
 * We'll be back. -> END
+
+~ named
+Narrator: He stops digging. He looks at the spade for a while, as if it might have an opinion.
+Milivoj [sad]: Henrik. Of course Henrik. He couldn't keep a secret in a coffin.
+-> confess
+
+~ bought
+gold -20
+Milivoj: ...Twenty. Same as him. Funny how that's what everything in this town costs.
+-> confess
 
 ~ insight_ok
 Narrator: He can't hold your eyes. His hands go white on the spade handle, and there's dirt under his nails that didn't come from this grave: it's pale and dry, like dust from a stone box.
@@ -47,7 +61,9 @@ Milivoj [afraid]: All right! All right. Let go. I'll tell you.
 -> confess
 
 ~ scare_fail
+attitude milivoj hostile
 Milivoj [angry]: Go on, then. Hit me. You'll have to dig your own hole after; I'm not doing it for free.
+Narrator: He shrugs your hand off his collar and plants the spade between you, blade up.
 -> accuse
 
 ~ plead_ok

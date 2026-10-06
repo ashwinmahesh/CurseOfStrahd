@@ -1,0 +1,163 @@
+# The vaults under the Amber Temple (docs/regions/amber_temple.md §4.5-4.6): the honey-glow doors, the hollow
+# sarcophagus, the copper pact ledger, Exethanter's arrival after the broker is dealt with, the revelation (the
+# region's one milestone) and the wardens' last rite (sealing the temple).
+
+~ honey_door
+if flag.honey_door_opened
+Narrator: The honey-glow doors stand unsealed. The light behind them is the colour of a summer evening, which is the cruellest thing in the temple.
+-> END
+endif
+Narrator: Two doors of solid amber, lit from within like honey held up to a candle. There's no handle, no lock and no hinge you can see: only a ring of carved glyphs on the floor in front of them.
+if treasure_at:amber_temple_vault
+Narrator: Through the amber, blurred and golden, you can make out heaps of things inside. One of them is not like the rest, and it pulls at you.
+endif
+interject class:rogue: No keyhole. I take that personally.
+* [if flag.warden_word_known] Speak the wardens' word. -> open_word
+* [Arcana DC 17] Unpick the glyphs one at a time. -> open_arcana | open_fail
+* [Strength DC 20] Put your shoulders to the doors. -> open_force | open_fail
+* (Press a bleeding hand to the amber.) -> open_blood
+* Leave the doors sealed. -> END
+
+~ open_word
+set honey_door_opened
+Narrator: You speak the word. The glyphs on the floor go dark one after another, like a row of lamps blown out, and the doors swing inward without a sound.
+-> END
+
+~ open_arcana
+set honey_door_opened
+Narrator: The glyphs are a sentence, and each waits for the next to be spoken. You find the grammar, and speak them all backward. The doors swing open, and nothing in the alcove beside them stirs.
+-> END
+
+~ open_fail
+Narrator: The doors don't give, and the glyphs under your feet brighten, offended. In the dark alcove beside the doors, something tall turns its head.
+* [if flag.warden_word_known] Speak the wardens' word, quickly. -> open_word
+* Back away from the doors. -> END
+* (Keep at it until they give.) -> open_force
+
+~ open_force
+set honey_door_opened
+set honey_door_forced
+Narrator: Something cracks deep in the amber, and the doors grind inward on hinges nobody has used in three hundred years. In the alcove beside them, the guardian steps out of the dark.
+-> END
+
+~ open_blood
+set honey_door_opened
+set honey_door_forced
+Narrator: The amber drinks. You feel it, a tug at the wrist like a child pulling your hand, and then the doors are open and your hand is white and cold. In the alcove beside them, something tall wakes up hungry.
+-> END
+
+~ hollow
+if not quest.the_amber_temple >= hollow_found
+quest the_amber_temple hollow_found
+endif
+Narrator: The largest sarcophagus in the temple, and the only one with nothing in it. The amber is hollow: a man-shaped space, smooth as the inside of an egg, as if whatever lay here had been poured out.
+Narrator: Its name has been chiselled off the lid. Whoever did the chiselling kept going, down through the stone, as if afraid the letters might grow back.
+interject guest:ireena: I've dreamed of this room. I've never been here, and I've dreamed of it.
+if flag.vosk_fate or flag.vosk_destroyed
+-> revelation
+endif
+-> END
+
+~ pact_ledger
+Narrator: A thick book chained to a stone lectern, its pages beaten from copper so that they would never burn or rot. The wardens kept their most important record where no flame could reach it.
+* Read the last entry. -> pact_text
+* Leave it. -> END
+
+~ pact_text
+Narrator: The last entry is scratched into the copper in two hands. The first is a warden's. The second is very fine and very sure, and you have seen it before, on letters.
+Narrator: "Petitioner: Strahd, son of Barov, a prince of the western wars. He asks to stay young for as long as he wants anything, and to keep whatever he has taken. Brought before the one whose name we do not write."
+Narrator: "Terms, as the Thirst set them: one life he loves, given by his own hand on the day he most wants to be happy."
+Narrator: "In return the Thirst lives in him and he in it, and he and the land he rules are one thing, until the end of both. Witnessed."
+Narrator: Under it, two marks: a warden's signature, Exethanter, and a small, neat sketch of a jackal's head.
+if item:tome_of_strahd
+-> pact_tome
+endif
+if not flag.strahd_pact_known
+set strahd_pact_known = "ledger"
+endif
+-> pact_after
+
+~ pact_tome
+set strahd_pact_known = "full"
+Narrator: You open the Tome beside the copper book. His own pages tell the same night from the other side: a long climb, a courteous old warden, a voice in the dark that understood him at last.
+Narrator: Read together, they say what neither says alone. He didn't bargain to live forever. He bargained to stop growing older than her. Everything after was the price.
+interject name:silvain_aster: The primary source and the contract, side by side. I have waited my whole life for a footnote like this. I find I don't enjoy it at all.
+-> pact_after
+
+~ pact_after
+interject class:cleric: He gave his brother to a thing in a box, and the land has paid the rest ever since.
+interject tag:blunt: Then the land is how it ends. Noted.
+if flag.stanimir_tale_heard
+interject tag:curious: Stanimir's story by the fire had a prince, a brother and a bride. It left out the box.
+endif
+-> END
+
+# ------------------------------------------------------------------------------------------ After the broker
+
+~ aftermath
+if flag.amber_seal_decided
+Exethanter: Still here? So am I. It's what I do.
+-> END
+endif
+if not flag.exethanter_came_down
+set exethanter_came_down
+Narrator: Exethanter comes shuffling into the sanctum with a broom in one hand and a lantern in the other, and stops at the edge of the light.
+if flag.vosk_destroyed
+Exethanter: Was there a fight? There's always a fight down here, sooner or later. I come down afterward to sweep. Oh. Is that... was that a jackal?
+elif flag.vosk_fate == "banished"
+Exethanter: The jackal's gone. I felt him go, like a draught shutting off. I've been cold for three hundred years and never noticed.
+else
+Exethanter: The jackal's gone, and he left smiling. He's never left smiling before. What did you give him?
+endif
+if flag.exethanter_remembers
+Exethanter: It's on the back of my hand, see? "He showed the prince the way down." I've read it nine times since you left. It doesn't get easier. It isn't supposed to.
+endif
+endif
+if not flag.amber_milestone_given
+-> revelation
+endif
+-> sealing
+
+~ revelation
+if flag.amber_milestone_given
+-> END
+endif
+set amber_milestone_given
+quest the_amber_temple pact_learned
+Narrator: You stand at the bottom of the temple, beside the hollow where the devil's bargain was struck. For the first time since the stair, none of the voices in the amber are talking. They're listening.
+if flag.strahd_pact_known
+Narrator: You know now what he paid and what he's owed: the Thirst lives in him, and he and his land are one thing, to the end of both. It isn't a weakness. It's a shape, and shapes can be broken.
+else
+Narrator: The record of what he paid is here somewhere. The copper book on the lectern hasn't been opened in a very long time.
+endif
+if gift:gift_of_the_hollow
+Narrator: And one of you carries a little of the same Thirst now. You can feel it, if you hold still: a thread as fine as hair, running out of the mountain and down to a castle on a hill.
+endif
+xp milestone
+if flag.exethanter_came_down and not flag.amber_seal_decided and not flag.exethanter_destroyed and not flag.exethanter_hostile and flag.exethanter_phylactery != "smashed"
+-> sealing
+endif
+-> END
+
+~ sealing
+Exethanter: There's a rite. The wardens' last one, the one we were meant to use if it ever came to this. It seals every sarcophagus at once. Nobody would ever hear them again. Nobody could ever bargain here again.
+Exethanter: It wants a warden, which I am, and a reason, which I think you've given me. Shall I?
+* Seal it. Nobody should ever bargain here again. -> seal
+* Leave it open. We may need what's here. -> leave_open
+* Not yet. -> END
+
+~ seal
+set amber_seal_decided
+set amber_temple_sealed
+quest the_amber_temple temple_sealed
+Narrator: The rite is short, and Exethanter remembers every word of it. One by one, down the gallery and up through the great hall, the sarcophagi go dark, and a silence settles over the temple like snow over a grave.
+if flag.dark_gifts_taken >= 1
+Narrator: Whoever carries a gift still feels it, warm under the skin. The seal keeps the vestiges in. It can't take back what they have already given.
+endif
+Exethanter: There. Done. I think I'll sit down now. I think I'll sit down for a very long time.
+-> END
+
+~ leave_open
+set amber_seal_decided
+Exethanter: Of course. Practical. We said that too, the first year. I'll just... sweep.
+-> END

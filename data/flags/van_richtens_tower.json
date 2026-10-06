@@ -321,6 +321,11 @@
       "id": "mother_night_studied",
       "type": "bool",
       "summary": "The party has made its one Religion attempt on the shrine of Mother Night."
+    },
+    {
+      "id": "kiril_price_raised",
+      "type": "bool",
+      "summary": "The party failed to stare Kiril down over the stolen children (kiril: kids). His price for the pups rises from 100 to 150 gp."
     }
   ]
 }

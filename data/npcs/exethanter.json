@@ -1,0 +1,20 @@
+{
+  "id": "exethanter",
+  "name": "Exethanter",
+  "title": "The Last Warden of the Amber",
+  "summary": "The last of the wizards who built the Amber Temple to imprison the vestiges: a lich in a tea-coloured robe pinned all over with notes, courteous, fussy and forgetting nearly everything, including where he hid his own phylactery.",
+  "portrait": "exethanter",
+  "sprite": "exethanter",
+  "attitude": "indifferent",
+  "voice": "docs/voice/exethanter.md",
+  "monster": "exethanter",
+  "guest": false,
+  "tags": [
+    "lich",
+    "warden",
+    "undead",
+    "amber_temple"
+  ],
+  "pronouns": "he/him",
+  "region": "amber_temple"
+}

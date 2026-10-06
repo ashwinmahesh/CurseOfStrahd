@@ -13,7 +13,8 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   Overlay colours follow the rest of the UI: names in vellum with a dark outline, roads as bone dashes, the route in
   bright red on a dark halo, hours on black tags with a gilt edge.
 - The map panel is 1152×768 at zoom 1 (the whole valley). It opens zoomed in on the known places (at most 1.6×);
-  the wheel zooms up to 2.4×, dragging pans, and the art always covers the panel. A click on a place picks it.
+  the wheel zooms up to 2.4×, dragging pans, and the art always covers the panel. A click on a place picks it. Zoomed
+  in, only the places in view get marks and names.
 - A place's `pos` in `data/travel/barovia.json` is a fraction of the art (x right, y down). Put new places on their
   landmark in the art:
 
@@ -26,14 +27,23 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 | Tser Pool (the dark pond among the Vistani wagons) | 0.53, 0.49 |
 | Vallaki (the walled town on the lake shore) | 0.32, 0.48 |
 | Castle Ravenloft (on its pillar of rock) | 0.695, 0.73 |
-| Walled hill town at the far left (Krezk) | 0.075, 0.51 |
-| Small village with a church, upper left (the abbey, or another hamlet) | 0.07, 0.36 |
-| Ruined mansion, top centre (Argynvostholt) | 0.455, 0.23 |
-| Windmill on a hill, upper right (Old Bonegrinder) | 0.69, 0.24 |
+| Krezk (the walled hill town at the far left) | 0.075, 0.48 |
+| Abbey of St. Markovia (the small village with a church, upper left) | 0.07, 0.36 |
+| Argynvostholt (the ruined mansion, top centre) | 0.455, 0.23 |
+| Old Bonegrinder (the windmill on a hill, upper right) | 0.69, 0.24 |
+| The Wizard of Wines (the vineyard and winery by Vallaki's west wall) | 0.235, 0.54 |
+| Yester Hill (the hill crowned with standing stones below Krezk) | 0.152, 0.578 |
 | Wayside cross on the road east of Vallaki | 0.42, 0.48 |
 | Lake Zarovich (middle of the water) | 0.22, 0.39 |
 
   Keep places between 0.05 and 0.95: the mist covers the edges (a test checks it).
+- A place with no picture on the art yet (Berez, Lake Baratok and Van Richten's Tower, the Amber Temple, Tsolenka
+  Pass) gets one painted in: a section of the map is cut out, Gemini paints the landmark inside a marked circle, and
+  only that circle is blended back into the full art (art/generated/map/barovia_west_* is the Wizard of Wines and
+  Yester Hill pass). Ask the map thread for it.
+- A road can take a `via` list of points (fractions of the art, like `pos`) to go round a lake or a mountain:
+  `"via": [[0.2, 0.53]]` takes the Krezk road along the south shore of Lake Zarovich. The map draws a smooth curve
+  through them; without `via` a road is a gently bowed line.
 - Roads are drawn as dashes with a slight bow; the chosen route is solid red with each leg's hours on a tag.
   The party's place has a pulsing crimson mark; the destination's name sits on a crimson plaque. At night the sheet
   gets a moonlit wash.
@@ -61,5 +71,6 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   an arrow pointing off the map. Shut ways are drawn dim and say "not yet". An open way out that's off the screen
   gets a smaller plaque at the edge of the play area (clear of the party cards, the minimap, the Narrator and the
   buttons), its arrow pointing toward it.
+- A way out inside the map (the abbey's garden gate) gets the square and the plaque but no chevrons or arrow.
 - It's a screen-space overlay on the HUD layer, so it stays crisp, the palette pass never touches it and it sits on top
   of whatever the world assets put at the exit. Ground marks stay off squares where the party stands.

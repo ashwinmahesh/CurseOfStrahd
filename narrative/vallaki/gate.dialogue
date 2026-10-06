@@ -46,7 +46,9 @@ Town Guard: Fine. Fine! In you go. But you'll smile when the Baron passes, or it
 -> rules
 
 ~ bully_fail
+set vallaki_watch_wary
 Town Guard: I've eleven more like me on that wall and a Baron who enjoys a punishment more than a festival. Let's both be cheerful about this, shall we?
+Narrator: The other watchman takes a stub of chalk from his pocket and writes something on the gatepost, looking at each of your faces as he does it.
 interject tag:blunt: He's right. Twelve spears. Bad odds for a doorway.
 -> rules
 
@@ -64,6 +66,9 @@ Town Guard: Lovely. Hold it like that until you're out of sight. All will be wel
 -> END
 
 ~ guard
+if flag.vallaki_watch_wary and not flag.festival_over
+Town Guard: Oh, it's you. "Stand aside." Pyotr drew your faces on the gatepost. Smiling, mind. It's the law.
+endif
 if flag.vallaki_backed == "baron"
 Town Guard [smile]: Marshals! The Baron says you're to be saluted. Consider yourselves saluted. All is well. It's official now; there was a proclamation.
 elif flag.vallaki_backed == "wachter"
@@ -125,7 +130,8 @@ Lockup Warden: Empty. Somebody let them out. Somebody I'm not going to remember,
 endif
 Lockup Warden: The Baron's malcontents. A cobbler who said it might rain. A widow who laughed at the wrong part of a speech. A boy who drew the Baron. Badly. Until the next festival.
 * [Persuasion DC 14] They've done nothing. Let them go home. -> free_ok | free_fail
-* [if gold >= 15] (Press fifteen gold into his hand.) Let them go home. -> free_bribe
+* [if gold >= 15 and not flag.vallaki_watch_wary] (Press fifteen gold into his hand.) Let them go home. -> free_bribe
+* [if gold >= 25 and flag.vallaki_watch_wary] (Press twenty-five gold into his hand.) Let them go home. -> free_bribe_wary
 * Goodbye. -> END
 
 ~ free_ok
@@ -142,6 +148,12 @@ Lockup Warden: And then I go in the stocks instead, and who lets me out? No. Sor
 gold -15
 set malcontents_freed
 Lockup Warden: Well. That's a sum. That's a rusted lock, that is. Off you go, all three. Quickly.
+-> END
+
+~ free_bribe_wary
+gold -25
+set malcontents_freed
+Lockup Warden: Twenty-five. The lads at the gate described you, see. Shouting at spears. Being memorable costs extra in this town. Off you go, all three. Quickly.
 -> END
 
 ~ mansion_guard

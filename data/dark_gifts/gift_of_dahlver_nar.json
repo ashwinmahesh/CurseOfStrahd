@@ -1,0 +1,39 @@
+{
+  "id": "gift_of_dahlver_nar",
+  "name": "A Mouth of Borrowed Teeth",
+  "vestige": "Dahlver-Nar, the mouth of borrowed teeth",
+  "summary": "2 more Hit Points per level, and Advantage on death saving throws. The price: Charisma -2, Disadvantage on Persuasion, and a mouthful of teeth that aren't yours.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "hp_max",
+        "value": "2*level"
+      },
+      {
+        "stat": "advantage",
+        "on": "death_save"
+      }
+    ],
+    "text": "You become very hard to finish. Something in you keeps chewing on, long after it should have stopped."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "ability",
+        "ability": "cha",
+        "value": -2
+      },
+      {
+        "stat": "disadvantage",
+        "on": "check:persuasion"
+      }
+    ],
+    "flaw": "Your teeth are other people's. When you are tired, they talk in other people's voices.",
+    "text": "Every tooth in your head is replaced overnight with a dead stranger's. Nobody likes your smile."
+  },
+  "implemented": "data"
+}

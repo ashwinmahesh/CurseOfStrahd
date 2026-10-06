@@ -1,0 +1,46 @@
+{
+  "id": "gift_of_tenebrous",
+  "name": "The Last Shadow",
+  "vestige": "Tenebrous, the last shadow",
+  "summary": "Darkvision 120 ft, Advantage on Stealth, and Darkness a few times a day. The price: vulnerability to radiant damage.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "darkvision",
+        "value": 120
+      },
+      {
+        "stat": "advantage",
+        "on": "check:stealth"
+      },
+      {
+        "stat": "spell",
+        "value": "darkness",
+        "ability": "cha",
+        "uses": {
+          "count": "pb",
+          "recharge": "long"
+        }
+      }
+    ],
+    "spells": [
+      "darkness"
+    ],
+    "text": "The dark takes you in like family. You can call it into a room and walk through it unseen."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "vulnerability",
+        "value": "radiant"
+      }
+    ],
+    "flaw": "Candles gutter as you pass, and your shadow follows a little late, as if it had to be persuaded.",
+    "text": "You belong to the dark now, and light treats you as a trespasser: holy fire and sunlight cut you to the bone."
+  },
+  "implemented": "data"
+}
