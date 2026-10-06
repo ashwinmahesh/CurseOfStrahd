@@ -1,0 +1,694 @@
+{
+  "id": "wizard_of_wines_winery",
+  "name": "The Winery",
+  "region": "wizard_of_wines",
+  "summary": "The Martikovs' winery: a tasting room with a long bar, Davian's office, the fermenting hall with its great vats, a bottling room, and the stair down to the cellars. The druids have made it their barracks.",
+  "text": "The winery smells of old wine gone to vinegar and of something else under it, green and wet, like a pond in summer. The floorboards have been pried up in rows, as if someone were looking for something.",
+  "map": {
+    "rows": [
+      "################################",
+      "#........#.....................#",
+      "#........#..==...==...==...==..#",
+      "#........#..==...==...==...==..#",
+      "#........#.....................#",
+      "#........#.....................#",
+      "#........#..==...==...==...==..#",
+      "####.#####..==...==...==...==..#",
+      "#..............................#",
+      "#..............................#",
+      "#..............###.######.######",
+      "#..............#...............#",
+      "#..=====.......#..=.=.=.=.=.=..#",
+      "#..............#...............#",
+      "#..............#..=.=.=.=.=.=..#",
+      "#.........==...................#",
+      "#..==.....==...#..=.=.=.=.=.=..#",
+      "#..==..........#...............#",
+      "#..............#...............#",
+      "#######.########################"
+    ],
+    "theme": "tavern",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "winery_entry",
+      "name": "The tasting room",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          14,
+          18
+        ]
+      ]
+    },
+    {
+      "id": "winery_office",
+      "name": "Davian's office",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          8,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "ferment_hall",
+      "name": "The fermenting hall",
+      "cells": [
+        [
+          10,
+          1
+        ],
+        [
+          30,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "bottling_room",
+      "name": "The bottling room",
+      "cells": [
+        [
+          16,
+          11
+        ],
+        [
+          30,
+          18
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      7,
+      18
+    ],
+    "from_cellar": [
+      29,
+      1
+    ]
+  },
+  "exits": [
+    {
+      "id": "winery_front_door",
+      "cell": [
+        7,
+        19
+      ],
+      "to": "wizard_of_wines",
+      "spawn": "from_winery",
+      "label": "Out to the yard"
+    },
+    {
+      "id": "cellar_stair_down",
+      "cell": [
+        30,
+        1
+      ],
+      "to": "wizard_of_wines_cellar",
+      "spawn": "default",
+      "label": "Stairs down to the cellar"
+    }
+  ],
+  "doors": [
+    {
+      "id": "office_door",
+      "cell": [
+        4,
+        7
+      ],
+      "label": "Office door"
+    },
+    {
+      "id": "bottling_door",
+      "cell": [
+        15,
+        15
+      ],
+      "label": "Bottling room door"
+    }
+  ],
+  "props": [
+    {
+      "id": "tasting_bar",
+      "cell": [
+        5,
+        11
+      ],
+      "kind": "examine",
+      "label": "The tasting bar",
+      "model": "bar"
+    },
+    {
+      "id": "founders_portrait",
+      "cell": [
+        2,
+        5
+      ],
+      "kind": "examine",
+      "label": "A portrait over the desk",
+      "model": "painting"
+    },
+    {
+      "id": "davian_ledger",
+      "cell": [
+        6,
+        2
+      ],
+      "kind": "book",
+      "label": "The winery ledger",
+      "model": "ledger",
+      "codex": "martikov_ledger",
+      "text": "The Martikov ledger, in three hands over three generations. Casks out: to Vallaki, to the village under the castle, to Krezk, to the abbey on the hill. The last column, in Davian's heavy hand, stops three months ago in the middle of a line. Further back, a page with one entry and nothing else on it: Elvir. Spring. No cask this year."
+    },
+    {
+      "id": "fermenting_vats",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "examine",
+      "label": "The fermenting vats",
+      "model": "barrel"
+    },
+    {
+      "id": "pried_floorboards",
+      "cell": [
+        24,
+        9
+      ],
+      "kind": "examine",
+      "label": "Pried-up floorboards",
+      "model": "rubble"
+    },
+    {
+      "id": "bottle_racks",
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "examine",
+      "label": "Racks of empty bottles",
+      "model": "shelves"
+    }
+  ],
+  "containers": [
+    {
+      "id": "davian_strongbox",
+      "cell": [
+        2,
+        2
+      ],
+      "label": "Davian's strongbox",
+      "model": "strongbox",
+      "lock_dc": 15,
+      "gold": 60,
+      "items": [],
+      "flag": "winery_strongbox_opened"
+    },
+    {
+      "id": "druid_bedrolls",
+      "cell": [
+        27,
+        9
+      ],
+      "label": "The druids' bedrolls",
+      "model": "sack",
+      "items": [
+        {
+          "id": "bedroll",
+          "qty": 2
+        },
+        {
+          "id": "herbalism_kit",
+          "qty": 1
+        },
+        {
+          "id": "druidic_focus_mistletoe",
+          "qty": 1
+        }
+      ],
+      "gold": 12
+    },
+    {
+      "id": "bottling_shelf",
+      "cell": [
+        29,
+        17
+      ],
+      "label": "A shelf of bottling supplies",
+      "model": "shelf",
+      "items": [
+        {
+          "id": "glass_bottle",
+          "qty": 3
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        },
+        {
+          "id": "candle",
+          "qty": 4
+        }
+      ],
+      "gold": 0
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        5,
+        13
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        4,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        20,
+        9
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        23,
+        17
+      ],
+      "kind": "window",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "adrian_martikov",
+      "cell": [
+        20,
+        5
+      ],
+      "dialogue": "wizard_of_wines/adrian:start",
+      "when": "flag.winery_reclaimed and not guest:adrian_martikov",
+      "facing": "south"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "winery_occupation",
+      "trigger": "enter_area:ferment_hall",
+      "when": "not flag.winery_hall_cleared and flag.gulthias_tree_burned",
+      "text": "Three druids stand among heaps of dead brush that were blights until the tree on the hill burned. They have had a bad week, and they mean to share it.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            20,
+            4
+          ],
+          "name": "Druid of Yester Hill",
+          "hp": 35
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            25,
+            5
+          ],
+          "name": "Druid of Yester Hill",
+          "hp": 35
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            8
+          ],
+          "name": "Druid of Yester Hill",
+          "hp": 35
+        }
+      ],
+      "surprise": "",
+      "flag": "winery_hall_cleared"
+    },
+    {
+      "id": "winery_occupation",
+      "trigger": "enter_area:ferment_hall",
+      "when": "not flag.winery_hall_cleared and level >= 7",
+      "text": "Druids look up from the vats, where they have been feeding something green and pulpy into the wine. Around them the floor heaves, and things of twig and needle unfold from the mash.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            20,
+            4
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            25,
+            5
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            28,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            14,
+            5
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            8
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            24,
+            8
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            29,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            21,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            26,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            12,
+            9
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            9
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            23,
+            9
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            1
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            11,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            17,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            22,
+            5
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "winery_hall_cleared"
+    },
+    {
+      "id": "winery_occupation",
+      "trigger": "enter_area:ferment_hall",
+      "when": "not flag.winery_hall_cleared and level >= 6",
+      "text": "Druids look up from the vats, where they have been feeding something green and pulpy into the wine. Around them the floor heaves, and things of twig and needle unfold from the mash.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            20,
+            4
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            25,
+            5
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            14,
+            5
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            8
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            24,
+            8
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            21,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            26,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            12,
+            9
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            9
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            23,
+            9
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            1
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            11,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            17,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            22,
+            5
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "winery_hall_cleared"
+    },
+    {
+      "id": "winery_occupation",
+      "trigger": "enter_area:ferment_hall",
+      "when": "not flag.winery_hall_cleared",
+      "text": "Druids look up from the vats, where they have been feeding something green and pulpy into the wine. Around them the floor heaves, and things of twig and needle unfold from the mash.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            20,
+            4
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            25,
+            5
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            14,
+            5
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            8
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            21,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            26,
+            1
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            12,
+            9
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "winery_hall_cleared"
+    }
+  ],
+  "narration": {
+    "enter": "enter:wizard_of_wines_winery"
+  },
+  "rest": "safe"
+}

@@ -1,0 +1,95 @@
+# Narrator: Yester Hill (docs/voice/narrator.md). Second person, present tense, one or two sentences.
+
+# ---------------------------------------------------------------- The hill
+
+~ enter:yester_hill
+| The hill rises bald out of the moor, as if the grass knew better. Smoke goes up from a camp on its shoulder, and from the crown comes a sound like a great many people humming one long note.
+| [flag.yester_hill_resolved and not flag.gulthias_tree_burned] The humming has stopped. The hill is only a hill now, bald and quiet, and you find you don't trust the quiet at all.
+| [flag.gulthias_tree_burned] A thread of grey smoke still rises from the crown. Down here the dead blights lie in heaps along the track, like brush cut for a fire nobody lit.
+cooldown 30
+
+~ enter:hill_foot
+| Low mounds ring the foot of the hill, old graves without stones. The track threads between them. Your boots, you notice, choose not to step on any.
+once
+
+~ enter:back_gully
+| The gully is narrow, thorny and steep, and the shale shifts under every step like something turning over in its sleep.
+once
+
+~ enter:wardens_camp
+| A camp on the hill's shoulder: hide tents, a fire, a frame of poles hung with wicker cages. Bones are piled by the fire, picked and sorted, the way a careful cook sorts them.
+| [flag.wardens_camp_cleared] The wardens' fire has burned down to coals. The cages creak on their poles in a wind you can't feel.
+cooldown 20
+
+~ enter:barrow_slope
+| The path switchbacks up the bare slope between cairns of skulls the size of turnips. Every cairn faces the crown, the way a congregation faces an altar.
+once
+
+~ enter:hill_crest
+| The crest. The humming is very loud up here, and under it there's another sound: slow, deep, irregular, like something enormous learning how to have a pulse.
+| [flag.yester_hill_resolved] The crest is quiet. From here you can see the whole valley east to the castle on its rock, which seems, for once, a long way off.
+cooldown 20
+
+~ examine:barrow_mounds
+| Grave mounds, very old, sunk and grassed over. Something has burrowed into one of them recently, and not to get out.
+
+~ examine:wicker_cages
+| Four cages of woven willow, each big enough for a crouching man. The willow is still green. The druids grew them that shape, which is somehow worse than weaving.
+
+~ examine:wardens_fire
+| A big fire, well banked, ringed with stones painted green. A haunch of something turns on a spit. You decide not to identify it.
+| [class:ranger] {name} reads the fire at a glance: eight men, two days' wood, and no watch posted on the west side. Careless, or very sure of themselves.
+
+~ examine:hill_view
+| From the crest you can see the vineyards to the east, Lake Zarovich like a dropped mirror, and beyond everything, the castle on its rock. It looks back. It always does.
+| [flag.winery_wine_flows] From the crest you can see a green smudge on the hills to the east where the Martikov vines are. It's the only green in the whole grey valley, and it looks like defiance.
+
+~ examine:bone_cairn
+| Skulls, stacked with care, every face turned uphill. Some are old as the hill. A few are not.
+
+# ---------------------------------------------------------------- The crown
+
+~ enter:yester_hill_gulthias_tree
+| Inside a ring of standing stones stands a tree with bark like a burnt hand. Beside it lies a man of earth and timber forty feet long, cloaked, with a face you have seen before.
+| [flag.yester_sneaked and not flag.yester_hill_resolved] You come over the lip of the crown on your bellies. Nobody turns. The humming goes on, and the earth man's chest rises, very slightly, and falls.
+| [flag.gulthias_tree_burned] Inside the ring of stones there's a black stump, a broken earth giant, and a great deal of ash. The wind has started, very carefully, to blow it away.
+| [flag.yester_hill_resolved and not flag.gulthias_tree_burned] The tree stands over the broken effigy as if nothing happened. Its roots have moved since the fight. You're nearly sure of that.
+cooldown 20
+
+~ enter:ritual_ring
+| Inside the ring the ground is warm, like the flank of a sleeping animal, and every step you take is answered from somewhere deep under your feet.
+once
+
+~ enter:summit_edge
+| The crown's edge, where the earth bank drops away to the moor on three sides. It would be a lovely view in any other country.
+once
+
+~ examine:strahd_effigy
+| A man of packed earth and split timber, forty feet long, lying on his back with a cloak of turf. The face is crude but you'd know it anywhere. In the chest, under the turf, something green beats like a heart.
+| [flag.yester_hill_resolved] The effigy is split from collar to belt, the earth spilling out of it like grain from a burst sack. It looks smaller broken, the way the dead do.
+
+~ examine:ritual_fire
+| A fire in an iron basket, fed with something that burns green at the edges. The smoke goes straight up into the dark and doesn't drift, as if it were being drawn.
+
+~ examine:standing_stones
+| An old standing stone, carved long ago with spirals worn almost smooth. Somebody newer has daubed a crude castle over the spirals in red clay.
+| [class:cleric] {name} runs a thumb over the spirals under the red daub. Older faith, older by far than this one. Whoever cut these would not have liked what they're used for now.
+
+~ open:gulthias_roots
+| You reach in among the roots. They're warm. One of them, you'd swear, flexes against your wrist.
+| [treasure_at:yester_hill_gulthias_tree] You reach in among the roots, and your fingers close on something that is not a root, not cold, and not yours.
+
+~ open:ritual_offerings
+| Offerings to the tree: coins, herbs, a healer's kit, a staff of black wood. The faithful brought their best. It didn't help them.
+
+# ---------------------------------------------------------------- Fights
+
+~ combat:start
+| [at:yester_hill_gulthias_tree and not flag.yester_hill_resolved] Under your feet the hill's slow heartbeat stops, and then begins again, fast.
+| [at:yester_hill and not flag.wardens_camp_cleared] The wild men come over the fire with a roar, as happy as anyone you've ever seen.
+cooldown 10
+
+~ combat:victory
+| [at:yester_hill_gulthias_tree] The crown goes quiet. Somewhere below, on the moor, a bird starts to sing, and stops as if surprised at itself.
+| [at:yester_hill] The fire crackles. The cages creak. Nobody comes to see what the noise was.
+cooldown 10

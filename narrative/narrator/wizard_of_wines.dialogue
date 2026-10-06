@@ -1,0 +1,213 @@
+# Narrator: the Wizard of Wines (docs/voice/narrator.md). Second person, present tense, one or two sentences.
+# Book props (the ledger, the tally board, Ruxandra's letter) have no examine: line, so their own text is shown.
+
+# ---------------------------------------------------------------- The vineyard and the yard
+
+~ enter:wizard_of_wines
+| A lane climbs between rows of vines the colour of a paper bag left out in the rain. At the top stand a house, a winery and a tall barn, all shut, with ravens on every roof.
+| [flag.winery_reclaimed and not flag.winery_wine_flows] Smoke rises from the Martikov chimney again. The vines are still brown, but somebody has swept the yard, which in Barovia is a declaration of war.
+| [flag.winery_wine_flows] The rows nearest the house have turned green, a green so loud after the rest of the valley that it almost hurts. Somewhere up in the yard, a man is singing badly in a cellar.
+| [flag.gulthias_tree_burned and not flag.winery_reclaimed] Heaps of dead brush lie in the vine rows where the blights fell when the tree burned, like scarecrows somebody forgot to finish.
+cooldown 30
+
+~ enter:lane_foot
+| The foot of the lane, where the cart road from the lake turns off. A sign on a post says WIZARD OF WINES, and somebody has scratched NO under it with a knife.
+once
+
+~ enter:vine_lane
+| The lane runs straight up between the rows. On both sides the dead vines rustle, though the air is perfectly still.
+| [flag.vineyard_cleared or flag.gulthias_tree_burned] The lane runs straight up between the rows, and the vines stay vines. You notice yourself noticing that.
+cooldown 20
+
+~ enter:vineyard_west
+| Row on row of trellised vines, the leaves curled brown at the edges like old letters. Between the rows the ground has been trampled by feet that weren't quite feet.
+once
+
+~ enter:vineyard_east
+| The east rows, where the grapes still hang: small, hard and purple-black, like a fist of bruises. A few of the leaves are green, stubbornly.
+once
+
+~ enter:winery_yard
+| A cobbled yard between the house, the winery and the press house, with a well in the middle and a wine cart sitting on its axle by the gate. The winery door hangs open. Something inside is humming.
+| [flag.winery_reclaimed] The yard is swept, the doors stand open on purpose now, and a raven sits on the well-head like a sentry who takes the job seriously.
+cooldown 20
+
+~ enter:martikov_camp
+| A camp under the trees at the vineyard's edge: tents made of blankets and sailcloth, a cook-fire, three children pretending not to stare. Every branch above you holds a raven, and every raven is watching.
+| [flag.winery_reclaimed] The camp under the trees is struck, the tents folded, the fire cold. Only the cairn of river stones stays, and the ravens.
+cooldown 30
+
+# ---------------------------------------------------------------- The winery
+
+~ enter:wizard_of_wines_winery
+| The winery smells of wine gone to vinegar and of something under it, green and wet, like a pond in high summer. The floorboards have been levered up in rows.
+| [flag.winery_reclaimed] The winery smells of vinegar, lye and scrubbing. The floorboards are back down, most of them, with new nails shining in the old wood.
+cooldown 20
+
+~ enter:winery_entry
+| The tasting room: a long bar, a few tables, and a row of cups hung on hooks, every one of them clean. The druids haven't touched the cups. They don't drink, apparently. It explains a great deal.
+once
+
+~ enter:winery_office
+| A small office with a big desk. Ledgers on the shelf, a portrait over the desk, and a strongbox in the corner wearing a lock the size of a fist.
+once
+
+~ enter:ferment_hall
+| The fermenting hall: eight great vats in two rows under the beams. The vats are full, and what's in them is breathing.
+| [flag.winery_hall_cleared] The fermenting hall is quiet. The mash in the vats has gone still and grey, like porridge nobody wanted.
+cooldown 20
+
+~ enter:bottling_room
+| Racks of empty bottles to the ceiling, waiting, with the terrible patience of glass.
+once
+
+~ examine:tasting_bar
+| The bar is oak, polished by three generations of elbows. Carved under the lip, where only the bar-keeper would see it, is a tiny raven.
+| [class:rogue] {name} checks under the bar out of habit: a cudgel, a cash tin, and a raven carved where only the person serving would see it. A family that plans ahead.
+
+~ examine:founders_portrait
+| A stern man with black eyes and a white beard, holding a bunch of grapes the way other men in portraits hold swords. The resemblance to Davian is so strong it's almost rude.
+
+~ examine:fermenting_vats
+| Each vat is taller than a man and full to a hand's breadth of the rim with mash gone the colour of pondweed. Something at the bottom of the nearest one turns over in its sleep.
+| [flag.winery_hall_cleared] The mash has gone grey and still. Adrian is going to have to empty every one of these by hand, and you'd rather not be here when he starts.
+
+~ examine:pried_floorboards
+| Whole rows of floorboards levered up and thrown aside, the joists scraped, the earth beneath dug into. Somebody wanted something under this floor very badly, and didn't find it.
+
+~ examine:bottle_racks
+| Hundreds of empty bottles, every one washed and stoppered with a cork against the dust. The Martikovs expected to fill them this autumn. The druids expected otherwise.
+
+~ open:davian_strongbox
+| The lock is excellent, and it was made to keep out people with less time than you.
+
+# ---------------------------------------------------------------- The cellars
+
+~ enter:wizard_of_wines_cellar
+| The cellar stair goes down into the right kind of cold, the kind that smells of oak and old wine. From somewhere at the far end comes a sound of scraping.
+| [flag.cellar_dig_cleared] The cellar is quiet now except for the drip of a cask somebody cracked. The far end smells of turned earth.
+| [treasure_at:wizard_of_wines_cellar] Under the smell of oak there's something else down here: a cold that isn't the cellar's, pooling in the vaults like water.
+cooldown 20
+
+~ enter:cellar_stair_foot
+| At the foot of the stair stands a cask bigger than the rest, black with age, its hoops brown with rust. The druids' axes have been at every cask in sight but this one.
+once
+
+~ enter:cask_vaults
+| Vault after vault of casks on their racks, chalked with years. Several have been holed with an axe, and the floor is sticky with somebody's best vintage.
+once
+
+~ enter:old_vintages
+| A side vault of bottles so old the dust on them has grown a pelt. Nobody has been in here for a very long time except the spiders, who seem to have opened a few.
+once
+
+~ enter:the_dig
+| The cellar's far wall has been broken through, and beyond it the earth floor is a field of holes, as if something very large and very stupid has been looking for a coin.
+| [flag.cellar_dig_cleared] The dig is abandoned now: holes, spoil heaps, a lantern guttering on a stone, and nothing at all found.
+cooldown 20
+
+~ examine:cask_racks
+| Each cask is chalked with a year. The oldest years are in a hand you saw in the office ledger, then a heavier hand, then Davian's. The newest chalk on the rack says only: next year.
+
+~ examine:dig_holes
+| Holes, dozens of them, knee-deep and ragged, clawed rather than dug. In one of them something has given up and left its claws behind.
+
+~ examine:old_bottles
+| The labels have rotted away, but the wax seals are still good, each stamped with a little raven. One bottle lies apart from the rest, wrapped in a cloth, as if it were being kept for somebody.
+
+~ open:dry_cask
+| You knock on it. It answers hollow, like a door with nobody home, and the bung comes away in your hand.
+| [treasure_at:wizard_of_wines_cellar] You knock on it, and it answers hollow. Inside, where wine should be, something cold is waiting.
+
+# ---------------------------------------------------------------- The press house
+
+~ enter:wizard_of_wines_press_house
+| The press house is all height and shadow, built round the great wine press like a church round its altar. The air is thick with the smell of crushed fruit going bad on purpose.
+| [flag.press_house_cleared] The press house is empty and smells of rot and lamp oil. The great press stands where it always has, waiting for a harvest worth crushing.
+cooldown 20
+
+~ enter:press_floor
+| The great press fills the middle of the floor, its screw as thick as a man's waist. Beside it stands a vat full to the brim, and the surface of the mash is moving.
+| [flag.press_house_cleared] The floor round the press is stained to the knee with what's left of the Mash.
+cooldown 20
+
+~ enter:press_door
+| Just inside the door, a wall of tools on pegs: rakes, forks, a cooper's hammer, and a ledger-board scored with a hundred years of notches.
+once
+
+~ enter:wizards_corner
+| Against the east wall stands a rack of small casks, each sealed with wax and stamped with a pointed hat. The dust on them is undisturbed, as if even the druids felt they shouldn't.
+once
+
+~ examine:great_press
+| A wine press as old as the winery, oak and iron, worked by a bar that takes four men to turn. The wood is stained purple to the grain, and smooth wherever a hand has pushed it for a hundred years.
+
+~ examine:mash_vat
+| The vat's hoops are straining. The mash in it is the colour of moss, and as you watch, a bubble the size of a fist rises, bursts, and smells of the bottom of a pond.
+
+~ examine:wizards_casks
+| One small cask for every year, set by for a wizard who never came back to drink them. The oldest seal is cracked, and the cask beneath it is quite dry.
+| [treasure_at:wizard_of_wines_press_house] One small cask for every year, set by for a wizard who never came. One of them, low on the rack, is colder to the touch than the rest.
+
+~ open:wizards_rack
+| You break a seal stamped with a pointed hat. Somewhere, you hope, a wizard is not keeping count.
+
+# ---------------------------------------------------------------- The yard and the camp
+
+~ examine:winery_sign
+| A painted sign over the gate: a wizard in a starry hat pouring wine into a cup held up by a raven. The paint is fresh on the raven and peeling everywhere else.
+
+~ examine:winery_broken_cart
+| The last wine cart, loaded and never sent, sitting on its broken axle by the gate. The casks have been stove in. The druids made very sure nobody in the valley got a drink.
+
+~ examine:winery_loaded_cart
+| The cart has a new wheel and a load of casks lashed under canvas, ready to roll. Someone has tied a black feather to the shaft for luck.
+
+~ examine:yard_well
+| A stone well with a good rope and a sweet smell. The water is cold and clean. In Barovia that alone is worth a pilgrimage.
+
+~ examine:martikov_house
+| The family house, shuttered tight. Bramble has crept up to the sill in three months, and somebody has been sleeping in the hayloft who wasn't invited.
+| [flag.winery_reclaimed] The shutters are open, and a child's face appears in one window, makes a face at you, and vanishes.
+
+~ examine:withered_vines
+| Up close the vines aren't dead, quite. They're waiting, like a man holding his breath under water. The grapes on them are small, hard and sour.
+| [class:druid] {name} lays a hand on the bark and feels it at once: something in the roots, holding on, waiting for a reason not to let go.
+| [flag.winery_stones_returned >= 1] Up close, the vines nearest the house have put out small, bright, absolutely unreasonable new leaves.
+
+~ examine:east_vines
+| One row at the bottom of the east vineyard is still green, just. The ravens sit along its trellis like a guard of honour.
+
+~ examine:martikov_fire
+| A cook-fire, a black pot, a ladle, and a heap of carefully split wood. The Martikovs have been camping for three months and have made it look like a habit.
+
+~ examine:martikov_tents
+| Blankets and old sailcloth stretched between the trees. Inside one, a row of children's boots; inside another, an old man's wine-stained coat folded with great care.
+
+~ examine:elvir_cairn
+| A cairn of smooth river stones, waist high, with a carved wooden raven on top. Nothing is buried under it. You can tell, somehow, from the way the stones are laid: carefully, and with nowhere to put anything.
+
+~ examine:elvir_grave
+| The cairn has a grave beneath it now, the earth still dark. Someone has pushed a vine cutting into the soil at its head, and the cutting has put out a single green leaf.
+
+~ examine:raven_roost
+| A dead oak with a raven on every branch. When you look up, every one of them looks down. When you look away, you can feel them going back to their conversation.
+| [flag.keepers_allied] The ravens in the dead oak bob their heads at you as you pass, all together, like a choir taking a bow.
+
+# ---------------------------------------------------------------- Checks, rests and fights
+
+~ rest:long:wizard_of_wines
+| You sleep with your backs to a winery wall and ravens on the roof above you. Twice in the night a raven calls, and both times nothing comes.
+| [flag.winery_reclaimed] You sleep in the Martikovs' house, under blankets that smell of lavender and old wine. Nobody in Barovia has slept this well in years, and you know it, and it keeps you awake for a while.
+
+~ combat:start
+| [at:wizard_of_wines_winery and not flag.winery_hall_cleared] The vats boil over, and what climbs out of the mash has opinions about guests.
+| [at:wizard_of_wines_press_house and not flag.press_house_cleared] The vat's hoops go off like pistol shots, one, two, three.
+| [at:wizard_of_wines_cellar and not flag.cellar_dig_cleared] The needle-things straighten up out of their holes all at once, like dogs who've heard the gate.
+| [at:wizard_of_wines] The vines rise up off their trellises on both sides of the lane, and the vineyard comes for you row by row.
+cooldown 10
+
+~ combat:victory
+| [at:wizard_of_wines] The vines lie down again. Some of them, you're nearly sure, look relieved.
+| [at:wizard_of_wines_press_house] The Mash goes still in a spreading stain. The great press stands over it like a judge who has heard enough.
+cooldown 10

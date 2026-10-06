@@ -1,0 +1,29 @@
+# Things in the winery and its cellars that open a scene: the founder's cask, where Davian hid the last stone.
+
+~ founders_cask
+Narrator: The founder's cask is older than the house: black oak, bound in iron gone brown, so big a man could stand up inside it. The druids have chopped at every cask in the cellar except this one, because it was too much trouble.
+if flag.winery_stone_hiding_told
+* Turn the third hoop and pull. -> open_cask
+* Leave it for now. -> END
+else
+* [Investigation DC 14] Something's wrong with the end of this cask. -> find_cask | miss_cask
+* Leave it. -> END
+endif
+
+~ find_cask
+Narrator: The end sounds wrong when you knock: higher, emptier, a door rather than a wall. The third hoop down turns a quarter-inch further than any hoop should.
+-> open_cask
+
+~ miss_cask
+Narrator: An old cask, and a great one. If it's hiding anything, it's better at hiding than you are at finding.
+-> END
+
+~ open_cask
+set winery_stone_recovered
+Narrator: The hoop turns with a grudging click, and the whole end of the cask swings out on hidden pins. Inside, wrapped in a wine-stained shirt, lies a stone as green as a leaf held up to the sun, and faintly warm.
+if guest:adrian_martikov
+Adrian: The founder's cask. Of course. He told Stefania and not me. Of course he did.
+endif
+interject name:tamsin_tealeaf: Now that is a hiding place. I'd have looked under the floor. So did the druids, by the look of the floor.
+interject class:wizard: There's an enchantment in it: old, patient, very simple. Grow. Whoever made it wanted nothing else from the world.
+-> END

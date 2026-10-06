@@ -1,0 +1,477 @@
+{
+  "id": "wizard_of_wines_press_house",
+  "name": "The Press House",
+  "region": "wizard_of_wines",
+  "summary": "A tall barn of a building around the great wine press, where the Martikovs crush the harvest. A rack against the east wall holds a cask set aside every year for the wizard who gave the winery its name, and never came back to drink it.",
+  "text": "The great press stands in the middle of the floor like an altar, its screw as thick as a man. The vat beside it is full to the brim, and the surface of the mash is moving.",
+  "map": {
+    "rows": [
+      "########################",
+      "#......................#",
+      "#.==...................#",
+      "#......................#",
+      "#........====..........#",
+      "#........====..........#",
+      "#........====..........#",
+      "#......................#",
+      "#......................#",
+      "#......................#",
+      "#......................#",
+      "#....................==#",
+      "#....................==#",
+      "#....................==#",
+      "#....................==#",
+      "###########.############"
+    ],
+    "theme": "shop",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "press_floor",
+      "name": "The press floor",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          22,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "press_door",
+      "name": "Inside the door",
+      "cells": [
+        [
+          1,
+          10
+        ],
+        [
+          16,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "wizards_corner",
+      "name": "The wizard's rack",
+      "cells": [
+        [
+          17,
+          10
+        ],
+        [
+          22,
+          14
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      11,
+      14
+    ]
+  },
+  "exits": [
+    {
+      "id": "press_house_out",
+      "cell": [
+        11,
+        15
+      ],
+      "to": "wizard_of_wines",
+      "spawn": "from_press_house",
+      "label": "Out to the yard"
+    }
+  ],
+  "props": [
+    {
+      "id": "great_press",
+      "cell": [
+        8,
+        5
+      ],
+      "kind": "examine",
+      "label": "The great press",
+      "model": "winch"
+    },
+    {
+      "id": "mash_vat",
+      "cell": [
+        15,
+        3
+      ],
+      "kind": "examine",
+      "label": "A vat of mash",
+      "model": "barrel",
+      "when": "not flag.press_house_cleared"
+    },
+    {
+      "id": "wizards_casks",
+      "cell": [
+        20,
+        13
+      ],
+      "kind": "examine",
+      "label": "The wizard's casks",
+      "model": "barrel"
+    },
+    {
+      "id": "press_tally",
+      "cell": [
+        2,
+        3
+      ],
+      "kind": "book",
+      "label": "A tally board",
+      "model": "tally_board",
+      "codex": "wizards_tally",
+      "text": "A board of old oak, notched once for every year, a hundred and more of them. Above the notches someone has carved: ONE CASK EACH YEAR, FOR THE WIZARD, WHEN HE COMES. Below, in a newer hand: he hasn't. Keep notching."
+    },
+    {
+      "id": "ruxandra_letter",
+      "cell": [
+        13,
+        8
+      ],
+      "kind": "book",
+      "label": "A letter pinned with a thorn",
+      "model": "letter",
+      "codex": "ruxandra_letter",
+      "text": "Kostin. The last stone is in that house. Pull up every board, empty every cask. The Lord-in-the-Land has been patient with the bird-people long enough. When the effigy wakes it will walk east to the vines and finish what you could not. Be gone from there by then. R."
+    }
+  ],
+  "containers": [
+    {
+      "id": "wizards_rack",
+      "cell": [
+        20,
+        12
+      ],
+      "label": "The wizard's rack",
+      "model": "barrel",
+      "items": [
+        {
+          "id": "jug",
+          "qty": 1
+        }
+      ],
+      "gold": 8
+    },
+    {
+      "id": "press_tools",
+      "cell": [
+        2,
+        13
+      ],
+      "label": "A tool chest",
+      "model": "chest",
+      "items": [
+        {
+          "id": "carpenters_tools",
+          "qty": 1
+        },
+        {
+          "id": "crowbar",
+          "qty": 1
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "kostin_satchel",
+      "cell": [
+        12,
+        9
+      ],
+      "label": "Kostin's satchel",
+      "model": "satchel",
+      "when": "flag.press_house_cleared and not flag.kostin_fled",
+      "items": [
+        {
+          "id": "herbalism_kit",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "gold": 18
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        6,
+        8
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        18,
+        2
+      ],
+      "kind": "window",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "kostin",
+      "cell": [
+        12,
+        8
+      ],
+      "dialogue": "wizard_of_wines/kostin:confront",
+      "when": "not flag.press_house_cleared and not flag.kostin_fled",
+      "facing": "south",
+      "approach": 7
+    }
+  ],
+  "encounters": [
+    {
+      "id": "press_house_mash",
+      "trigger": "dialogue",
+      "when": "flag.gulthias_tree_burned and flag.kostin_fled",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
+      "monsters": [
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "The Mash"
+        }
+      ],
+      "surprise": "",
+      "flag": "press_house_cleared"
+    },
+    {
+      "id": "press_house_mash",
+      "trigger": "dialogue",
+      "when": "flag.gulthias_tree_burned",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Kostin",
+          "hp": 44
+        },
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "The Mash"
+        }
+      ],
+      "surprise": "",
+      "flag": "press_house_cleared"
+    },
+    {
+      "id": "press_house_mash",
+      "trigger": "dialogue",
+      "when": "flag.kostin_fled",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
+      "monsters": [
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "The Mash"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            3
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            9
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            9
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            8,
+            2
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "press_house_cleared"
+    },
+    {
+      "id": "press_house_mash",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Kostin",
+          "hp": 44
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            6,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "The Mash"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            3
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "press_house_cleared"
+    },
+    {
+      "id": "press_house_mash",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Kostin",
+          "hp": 44
+        },
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "The Mash"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            3
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "press_house_cleared"
+    },
+    {
+      "id": "press_house_mash",
+      "trigger": "dialogue",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Kostin",
+          "hp": 44
+        },
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "The Mash",
+          "hp": 90
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            3
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "press_house_cleared"
+    }
+  ],
+  "narration": {
+    "enter": "enter:wizard_of_wines_press_house"
+  },
+  "rest": "risky",
+  "treasure_spots": {
+    "wizard_of_wines_press_house": {
+      "container": "wizards_rack"
+    }
+  }
+}

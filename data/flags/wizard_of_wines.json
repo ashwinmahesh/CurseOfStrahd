@@ -1,0 +1,290 @@
+{
+  "region": "wizard_of_wines",
+  "flags": [
+    {
+      "id": "davian_met",
+      "type": "bool",
+      "summary": "The party has met Davian Martikov at his family's camp and heard about the three stones (davian:first_meeting). Read by Adrian, the road event and the Narrator."
+    },
+    {
+      "id": "adrian_met",
+      "type": "bool",
+      "summary": "Adrian Martikov met the party at the foot of the lane (adrian:first_meeting); he then waits at the camp."
+    },
+    {
+      "id": "adrian_apology_heard",
+      "type": "bool",
+      "summary": "The party apologised to Adrian for striking him as a raven on the Svalich road (only offered if raven_harmed). Softens Davian and Adrian."
+    },
+    {
+      "id": "adrian_side_heard",
+      "type": "bool",
+      "summary": "Adrian told the party his one-line version of Elvir's death (\"I flew\")."
+    },
+    {
+      "id": "adrian_told_order",
+      "type": "bool",
+      "summary": "Insight 13: Adrian admitted Elvir ordered him to fly for help. Opens Davian's Persuasion route to reconciliation."
+    },
+    {
+      "id": "adrian_truth_shared",
+      "type": "bool",
+      "summary": "Adrian has seen or heard Elvir's message (at the cage with the party, or told at the winery)."
+    },
+    {
+      "id": "adrian_went_to_hill",
+      "type": "bool",
+      "summary": "Adrian came to Yester Hill as a guest (adrian:come_along). Davian thanks the party for bringing him back."
+    },
+    {
+      "id": "stefania_met",
+      "type": "bool",
+      "summary": "The party has met Stefania Martikov at the camp."
+    },
+    {
+      "id": "davian_why_asked",
+      "type": "bool",
+      "summary": "Asked Davian why the druids came for his family (once)."
+    },
+    {
+      "id": "winery_stone_hiding_told",
+      "type": "bool",
+      "summary": "Davian told the party the last stone is in the founder's cask at the foot of the cellar stair (third hoop, pull). Without it, Investigation 14 at the cask finds it."
+    },
+    {
+      "id": "yester_hill_known",
+      "type": "bool",
+      "summary": "Davian told the party about the druids' work on Yester Hill. The travel map shows Yester Hill once this is set (data/travel/wizard_of_wines.json) or a treasure is there."
+    },
+    {
+      "id": "vineyard_cleared",
+      "type": "bool",
+      "summary": "The blights in the vine rows were beaten on the lane (encounter vineyard_ambush)."
+    },
+    {
+      "id": "winery_hall_cleared",
+      "type": "bool",
+      "summary": "The druids and blights in the fermenting hall are beaten (encounter winery_occupation)."
+    },
+    {
+      "id": "press_house_cleared",
+      "type": "bool",
+      "summary": "The Mash (and Kostin, if he stayed) are beaten in the press house (encounter press_house_mash)."
+    },
+    {
+      "id": "cellar_dig_cleared",
+      "type": "bool",
+      "summary": "The digging blights and their druid overseer in the cellar are beaten (encounter cellar_dig, optional)."
+    },
+    {
+      "id": "kostin_asked_hill",
+      "type": "bool",
+      "summary": "Asked Kostin what is on Yester Hill (once)."
+    },
+    {
+      "id": "kostin_fled",
+      "type": "bool",
+      "summary": "Kostin left the press house before the fight, scared off (Intimidation 15) or talked round (sets kostin_doubts too). Scared: he warns Yester Hill (an extra druid at the summit, a harder gully)."
+    },
+    {
+      "id": "kostin_doubts",
+      "type": "bool",
+      "summary": "Kostin was talked out of his faith (Nature 14, Persuasion 16, or a druid). He waits at the foot of Yester Hill with the gully and Elvir's story, and is not in the summit fight."
+    },
+    {
+      "id": "kostin_hill_met",
+      "type": "bool",
+      "summary": "Kostin spoke with the party at the foot of Yester Hill (once)."
+    },
+    {
+      "id": "kostin_why_asked",
+      "type": "bool",
+      "summary": "Asked Kostin at the hill why he is helping (once)."
+    },
+    {
+      "id": "winery_reclaimed",
+      "type": "bool",
+      "summary": "THE WINERY IS THE MARTIKOVS' AGAIN (davian:reclaim, after the hall and the press house are cleared). The family moves home; half of the region's milestone. Later regions may read it."
+    },
+    {
+      "id": "winery_stone_recovered",
+      "type": "bool",
+      "summary": "The party took the hidden stone out of the founder's cask (winery:open_cask)."
+    },
+    {
+      "id": "winery_stone_returned",
+      "type": "bool",
+      "summary": "The cellar stone is back in Davian's hands and planted."
+    },
+    {
+      "id": "yester_stone_recovered",
+      "type": "bool",
+      "summary": "The party took the stone out of Wintersplinter's splintered heartwood (summit:heart)."
+    },
+    {
+      "id": "yester_stone_returned",
+      "type": "bool",
+      "summary": "The Yester Hill stone is back with Davian and planted."
+    },
+    {
+      "id": "berez_stone_returned",
+      "type": "bool",
+      "summary": "The third stone, taken back from the witch of Berez, is planted (davian:return_berez). Reached when Berez sets winery_gem_berez_found (data/flags/berez.json, region 9b) or moves quest the_third_stone to found."
+    },
+    {
+      "id": "winery_stones_returned",
+      "type": "int",
+      "summary": "How many of the three vine stones are back in the Martikov soil (0-3). 1+: wine flows; 2+: the Keepers' oath; 3: the Berez stone came home (region 9b moves quest the_third_stone to found)."
+    },
+    {
+      "id": "winery_wine_flows",
+      "type": "bool",
+      "summary": "The winery is reclaimed and at least one stone is planted: wine flows again from the Wizard of Wines. Vallaki, the village, Krezk and the epilogue may read it."
+    },
+    {
+      "id": "winery_first_cart",
+      "type": "string",
+      "summary": "Where the first cart of wine went: vallaki, village (of Barovia) or krezk. Krezk (region 7) may read it for its gate; the epilogue reads it."
+    },
+    {
+      "id": "winery_strongbox_opened",
+      "type": "bool",
+      "summary": "Someone opened Davian's strongbox in the winery office (container flag). Davian notices once he's home."
+    },
+    {
+      "id": "davian_strongbox_noticed",
+      "type": "bool",
+      "summary": "Davian has confronted the party about his strongbox (once)."
+    },
+    {
+      "id": "winery_strongbox_kept",
+      "type": "bool",
+      "summary": "The party kept Davian's money (called it a fee, or was caught lying). Davian counts the spoons; a banter."
+    },
+    {
+      "id": "keepers_allied",
+      "type": "bool",
+      "summary": "THE KEEPERS OF THE FEATHER PLEDGED THEIR HELP: the winery reclaimed and two stones returned (davian:keepers_oath). Later regions (Castle Ravenloft, Argynvostholt, the epilogue) may read it for ravens scouting, carrying word or joining a fight."
+    },
+    {
+      "id": "wizard_of_wines_milestone_reached",
+      "type": "bool",
+      "summary": "Guard: the region's one milestone (level 6 to 7) is given, when the winery is reclaimed and Yester Hill is broken (davian:milestone)."
+    },
+    {
+      "id": "davian_ally_asked",
+      "type": "bool",
+      "summary": "The party told Davian about the Tarokka before his winery was free; he said not yet."
+    },
+    {
+      "id": "elvir_story_heard",
+      "type": "bool",
+      "summary": "Stefania told the party how Elvir was lost and why Davian blames Adrian (quest elvir_martikov heard)."
+    },
+    {
+      "id": "elvir_truth_known",
+      "type": "bool",
+      "summary": "The party knows Elvir ordered Adrian to fly: from his message on the cage post, Kostin, Ruxandra, or Speak with Dead. Opens Davian's reconciliation. Later regions may read it."
+    },
+    {
+      "id": "elvir_message_found",
+      "type": "bool",
+      "summary": "The party read Elvir's words scratched into the cage post on Yester Hill."
+    },
+    {
+      "id": "elvir_examined",
+      "type": "bool",
+      "summary": "The party has made its one Medicine check on Elvir's bones."
+    },
+    {
+      "id": "elvir_spoke",
+      "type": "bool",
+      "summary": "Elvir's bones answered a Speak with Dead (once)."
+    },
+    {
+      "id": "elvir_remains_recovered",
+      "type": "bool",
+      "summary": "The party cut Elvir's bones out of the Gulthias tree's roots to carry home."
+    },
+    {
+      "id": "elvir_buried",
+      "type": "bool",
+      "summary": "Elvir is buried under his cairn at the end of the last green row (davian:burial). The cairn prop becomes a grave."
+    },
+    {
+      "id": "davian_refused_once",
+      "type": "bool",
+      "summary": "Davian refused Adrian's word on Elvir (a failed or dropped Persuasion); that route is closed."
+    },
+    {
+      "id": "davian_insight_tried",
+      "type": "bool",
+      "summary": "The party has made its one Insight check on Davian's grief."
+    },
+    {
+      "id": "martikovs_reconciled",
+      "type": "bool",
+      "summary": "Davian forgave Adrian and gave him the press (quest elvir_martikov reconciled). Changes the ally scene, Adrian's lines and the epilogue."
+    },
+    {
+      "id": "raven_word_heard",
+      "type": "bool",
+      "summary": "A Keepers' raven brought the party a green leaf on the road (vineyard_road event, once)."
+    },
+    {
+      "id": "yester_sneaked",
+      "type": "bool",
+      "summary": "The party found a quiet way up Yester Hill's back gully (Stealth 13, or 16 if Kostin warned them). Ruxandra lets them strike first."
+    },
+    {
+      "id": "yester_heard",
+      "type": "bool",
+      "summary": "The party was heard on the gully; Ruxandra mentions it."
+    },
+    {
+      "id": "yester_struck_first",
+      "type": "bool",
+      "summary": "The party struck before the chant ended: the druids are surprised and Wintersplinter is half-made (summit_ritual variant)."
+    },
+    {
+      "id": "ruxandra_met",
+      "type": "bool",
+      "summary": "Ruxandra has spoken to the party on the crown."
+    },
+    {
+      "id": "ruxandra_asked_tree",
+      "type": "bool",
+      "summary": "Asked Ruxandra about the tree (once)."
+    },
+    {
+      "id": "yester_circle_broken",
+      "type": "bool",
+      "summary": "Religion 15: Ruxandra's circle lost its nerve and fled; she fights alone beside Wintersplinter."
+    },
+    {
+      "id": "yester_druids_fate",
+      "type": "string",
+      "summary": "What became of the druids of Yester Hill: fled (Intimidation 17 before the fight; Wintersplinter fights alone), spared (Ruxandra let go after the fight) or killed. Spared or fled with the tree still standing: they ambush the party on the road once. The epilogue reads it."
+    },
+    {
+      "id": "wardens_camp_cleared",
+      "type": "bool",
+      "summary": "The painted wild men in the camp on the hill's shoulder are beaten (encounter wardens_camp_fight, optional)."
+    },
+    {
+      "id": "yester_hill_resolved",
+      "type": "bool",
+      "summary": "YESTER HILL IS BROKEN: Wintersplinter destroyed on the crown (encounter summit_ritual). Half of the region's milestone. Later regions may read it."
+    },
+    {
+      "id": "yester_hill_reported",
+      "type": "bool",
+      "summary": "The party told Davian about Yester Hill (once)."
+    },
+    {
+      "id": "gulthias_tree_burned",
+      "type": "bool",
+      "summary": "The party burned the Gulthias tree on Yester Hill. Every blight in the region dies (encounters and the road table change), the stone comes clean, and the druids can't return. Later regions and the epilogue may read it."
+    }
+  ]
+}
