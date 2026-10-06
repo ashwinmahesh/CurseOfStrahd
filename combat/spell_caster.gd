@@ -174,7 +174,7 @@ func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 
 ## Whether `c` can take a Reaction now (it has one, can act, and nothing stops it: Shocking Grasp, Slow).
 func can_react(c: Combatant) -> bool:
-	return c.reaction_available and c.can_act() and not c.creature.has_flag("no_reactions") \
+	return c.reaction_available and c.can_act() and not c.creature.has_flag("no_reactions") and not c.creature.has_flag("slowed") \
 		and not enc().has_mark("no_reactions", c.id)
 
 
@@ -929,11 +929,11 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 		if str(s["id"]) == "sleep" and t.creature.is_condition_immune(&"exhaustion"):
 			r.lines.append(e.log.add("info", "%s doesn't sleep: unaffected" % t.name(), t.id))
 			continue
-		var auto_success := bool(s.get("willing_skip_save", false)) and c.allied_with(t)
+		var willing := bool(s.get("willing_skip_save", false)) and c.allied_with(t)
 		var test: D20Test = null
-		var success := auto_success
+		var success := false
 		var details: Array[String] = []
-		if not auto_success:
+		if not willing:
 			test = t.creature.roll_d20(e.dice, D20Test.Kind.SAVING_THROW, save_bd, dc, keys, adv, dis,
 				"%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], s["name"], t.name()])
 			success = test.success
@@ -1446,6 +1446,10 @@ func _custom(ctx: Dictionary, t: Combatant, params: Dictionary, r: CombatResult)
 			fx.modifiers.append(Modifier.of("flag", {"value": "mirror_image"}, "Mirror Image", &"spell"))
 			t.creature.add_effect(fx)
 			r.lines.append(e.log.add("condition", "Three illusory duplicates surround %s" % t.name(), t.id))
+		"goodberry":
+			if c.creature is Character:
+				(c.creature as Character).add_item("goodberry", int(params.get("count", 10)))
+				r.lines.append(e.log.add("info", "%s holds %d Goodberries" % [c.name(), int(params.get("count", 10))], c.id))
 		"warding_bond":
 			var fx2 := Effect.new("Warding Bond (link)", &"spell", "warding_bond").lasting(s.get("duration", {}) as Dictionary)
 			fx2.turn_owner_id = c.id
@@ -1615,7 +1619,8 @@ func _revivify(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	e.events.append({"type": "heal", "id": t.id, "amount": 1})
 
 
-## Arcane Vigor: spend up to two unspent Hit Point Dice (+1 per slot level above 2), heal the roll + modifier.
+## Arcane Vigor: spend up to two unspent Hit Point Dice (+1 per slot level above 2): roll them and heal the total
+## plus your spellcasting ability modifier.
 func _arcane_vigor(ctx: Dictionary, r: CombatResult) -> void:
 	var c := ctx["c"] as Combatant
 	var e := enc()
@@ -1624,25 +1629,26 @@ func _arcane_vigor(ctx: Dictionary, r: CombatResult) -> void:
 	var ch := c.creature as Character
 	var want := 2 + maxi(0, int(ctx["slot"]) - 2)
 	var total := 0
-	var spent := 0
+	var rolls: Array[String] = []
 	var hd := ch.hit_dice()
 	var dice: Array = hd.keys()
-	dice.sort()
-	dice.reverse()
+	dice.sort_custom(func(a: Variant, b: Variant) -> bool: return int(a) > int(b))
 	for die: Variant in dice:
-		while spent < want and int((hd[die] as Dictionary).get("left", 0)) > 0:
-			var rolled := ch.spend_hit_die(e.dice, int(die))
-			if rolled <= 0:
-				break
-			total += rolled
-			spent += 1
-			hd = ch.hit_dice()
-	if spent == 0:
+		var entry := hd[die] as Dictionary
+		var left := int(entry["total"]) - int(entry["spent"])
+		while want > 0 and left > 0:
+			ch.hit_dice_spent[str(die)] = int(ch.hit_dice_spent.get(str(die), 0)) + 1
+			var v := e.dice.roll_one(int(die), "Arcane Vigor (d%s)" % die)
+			total += v
+			rolls.append("d%s: %d" % [die, v])
+			left -= 1
+			want -= 1
+	if rolls.is_empty():
 		r.lines.append(e.log.add("info", "%s has no Hit Point Dice left to spend" % c.name(), c.id))
 		return
 	var amount := total + int((ctx["nums"] as Dictionary)["mod"])
 	var healed := c.creature.heal(amount, "Arcane Vigor")
-	r.lines.append(e.log.add("heal", "%s spends %d Hit Point Dice and regains %d Hit Points" % [c.name(), spent, healed], c.id))
+	r.lines.append(e.log.add("heal", "%s spends %d Hit Point Dice and regains %d Hit Points" % [c.name(), rolls.size(), healed], c.id, rolls))
 	e.events.append({"type": "heal", "id": c.id, "amount": healed})
 
 

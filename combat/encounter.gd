@@ -696,6 +696,38 @@ func stabilize(c: Combatant, target: Combatant, use_kit: bool) -> CombatResult:
 	return CombatResult.new()
 
 
+## Drinking a potion or eating a Goodberry (2024: a Bonus Action), or giving it to a creature within 5 ft.
+func use_item(c: Combatant, item_id: String, target: Combatant) -> CombatResult:
+	var why := _bonus_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if item_count(c, item_id) <= 0:
+		return CombatResult.fail("None left")
+	if target == null or distance(c, target) > 5:
+		return CombatResult.fail("Must be within 5 ft")
+	var item := Compendium.shared().item_data(item_id)
+	c.bonus_available = false
+	_spend_item(c, item_id)
+	for fx: Variant in item.get("effects", []):
+		var d := fx as Dictionary
+		if str(d.get("effect", "")) != "heal":
+			continue
+		var p := d.get("params", {}) as Dictionary
+		if target.creature.has_flag("cant_regain_hp"):
+			log.add("info", "%s can't regain Hit Points right now" % target.name(), target.id)
+			continue
+		var amount := int(p.get("flat", 0))
+		var text := ""
+		if p.has("dice"):
+			var rolled := _roll_damage_dice(str(p["dice"]), false, 0, str(item.get("name", "")))
+			amount += int(rolled["total"])
+			text = str(rolled["text"])
+		var healed := target.creature.heal(amount, str(item.get("name", "")))
+		log.add("heal", "%s uses %s: %s regains %d Hit Points" % [c.name(), item.get("name", item_id), target.name(), healed], c.id, [text])
+		events.append({"type": "heal", "id": target.id, "amount": healed})
+	return CombatResult.new()
+
+
 func has_kit(c: Combatant) -> bool:
 	if not c.creature is Character:
 		return false
@@ -1500,7 +1532,7 @@ func _apply_hit(c: Combatant, target: Combatant, option: Dictionary, critical: b
 	if target.is_down():
 		r.killed.append(target.id)
 	_on_hit_effects(c, target, option, dr, r)
-	return r
+	return run_reaction_queue(r)
 
 
 ## Rolls damage dice (doubled on a Critical Hit; dice below `minimum` count as `minimum`).

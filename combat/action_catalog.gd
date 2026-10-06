@@ -334,6 +334,10 @@ func _spell_targeting(data: Dictionary) -> String:
 		return "none"
 	if str(t.get("kind", "")) == "enemy":
 		return "enemy"
+	if str(t.get("kind", "")) == "ally" and int(t.get("count", 1)) <= 1 and int((data.get("upcast", {}) as Dictionary).get("targets", 0)) == 0:
+		return "ally"
+	if str(data.get("id", "")) == "spare_the_dying":
+		return "dying"
 	var tags := data.get("tags", []) as Array
 	if data.has("object") or str(data.get("id", "")) in ["misty_step", "summon_fey", "summon_undead"]:
 		return "place"
@@ -342,7 +346,7 @@ func _spell_targeting(data: Dictionary) -> String:
 	if str(t.get("count", "")) == "any" or int(t.get("count", 1)) > 1 or int((data.get("upcast", {}) as Dictionary).get("targets", 0)) > 0 \
 			or str(data.get("id", "")) in ["magic_missile", "scorching_ray"]:
 		return "multi"
-	if "healing" in tags or "buff" in tags or "defense" in tags:
+	if "healing" in tags or "buff" in tags or "defense" in tags or "restoration" in tags:
 		return "ally"
 	if str(data.get("id", "")) == "spare_the_dying":
 		return "dying"
@@ -350,6 +354,27 @@ func _spell_targeting(data: Dictionary) -> String:
 
 
 func _items(c: Combatant, out: Array[Dictionary]) -> void:
+	# Potions and Goodberries: a Bonus Action to drink or eat one, or give it to a creature within 5 ft.
+	if c.creature is Character:
+		var seen := {}
+		for entry in (c.creature as Character).inventory:
+			var iid := str(entry["id"])
+			if seen.has(iid) or int(entry["qty"]) <= 0:
+				continue
+			var item := Compendium.shared().item_data(iid)
+			var heal := {}
+			for fx: Variant in item.get("effects", []):
+				if str((fx as Dictionary).get("effect", "")) == "heal":
+					heal = (fx as Dictionary).get("params", {}) as Dictionary
+			if heal.is_empty():
+				continue
+			seen[iid] = true
+			var amount := str(heal.get("dice", str(heal.get("flat", 1))))
+			var it := _entry("item:" + iid, ITEMS, str(item.get("name", iid)), "%d left · heal %s" % [e.item_count(c, iid), amount], "bonus",
+				e._bonus_check(c), "ally", str(item.get("summary", "")))
+			it["range"] = 5
+			it["kind"] = "item"
+			out.append(it)
 	if e.has_kit(c):
 		var kit := _entry("healers_kit", ITEMS, "Healer's Kit", "stabilize, no check", "action", e._action_check(c), "dying")
 		kit["range"] = 5
@@ -713,6 +738,8 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 			return e.features.preserve_life(c)
 		"wake":
 			return e.wake(c, t)
+		"item":
+			return e.use_item(c, id.substr(5), t if t != null else c)
 	return CombatResult.fail(str(action.get("reason", "Not available")))
 
 

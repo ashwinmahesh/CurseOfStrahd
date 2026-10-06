@@ -619,7 +619,7 @@ func _refresh_hotbar() -> void:
 		var reason := str(a["reason"]) if not bool(a["legal"]) else ""
 		if not mine and reason == "":
 			reason = "Not %s's turn" % c.name()
-		b.tooltip_text = "%s (%s)%s%s\nRight-click for more" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else ""]
+		b.tooltip_text = "%s (%s)%s%s\nRight-click for more%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else "", (" (choose the %s)" % str(a.get("choice_label", "")).to_lower()) if a.has("choices") else ""]
 		var act := a
 		b.pressed.connect(func() -> void: action_chosen.emit(act))
 		b.gui_input.connect(func(ev: InputEvent) -> void:
@@ -655,6 +655,13 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 	var mine := shown != null and e.current() == shown and e.state == Encounter.State.ACTIVE
 	_menu.add_item("Use", 1)
 	_menu.set_item_disabled(_menu.get_item_index(1), not (bool(action["legal"]) and mine))
+	var choices := action.get("choices", []) as Array
+	if not choices.is_empty():
+		_menu.add_separator(str(action.get("choice_label", "Choose")))
+		for i in choices.size():
+			var ch0 := choices[i] as Dictionary
+			_menu.add_item("%s: %s" % [action["label"], ch0["label"]], 200 + i)
+			_menu.set_item_disabled(_menu.get_item_index(200 + i), not (bool(action["legal"]) and mine))
 	if str(action["kind"]) == "spell" and shown != null:
 		var levels := catalog.slot_choices(shown, str(action["spell_id"]))
 		if not levels.is_empty():
@@ -677,6 +684,14 @@ func _on_menu(id: int) -> void:
 		show_details(str(d["title"]), d["lines"] as Array)
 	elif id == 1:
 		action_chosen.emit(action)
+	elif id >= 200:
+		var picked := action.duplicate(true)
+		var ch0 := (action["choices"] as Array)[id - 200] as Dictionary
+		var opts := (picked.get("opts", {}) as Dictionary).duplicate()
+		opts["choice"] = str(ch0["value"])
+		picked["opts"] = opts
+		picked["sub"] = str(action["sub"]).get_slice(" · ", 0) + " · " + str(ch0["label"])
+		action_chosen.emit(picked)
 	elif id >= 100:
 		cast_at_level.emit(action, id - 100)
 

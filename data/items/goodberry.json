@@ -1,0 +1,28 @@
+{
+  "id": "goodberry",
+  "name": "Goodberry",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 0,
+  "cost_gp": 0,
+  "stackable": true,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "effects": [
+    {
+      "effect": "heal",
+      "params": {
+        "flat": 1,
+        "target": "creature",
+        "range": 5
+      }
+    }
+  ],
+  "summary": "Bonus Action to eat (or feed to a creature within 5 ft): regain 1 Hit Point and a day's nourishment. Made by Goodberry; they lose their potency after 24 hours.",
+  "text": "A berry conjured by the Goodberry spell. A creature can take a Bonus Action to eat one, or feed one to a creature within 5 feet, which regains 1 Hit Point; one berry is enough food for a day. Uneaten berries lose their potency 24 hours after the spell was cast."
+}
