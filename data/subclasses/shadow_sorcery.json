@@ -6,7 +6,7 @@
     "book": "RtHW",
     "note": "Entered from the 2025 Unearthed Arcana (Horror Subclasses) and published reviews of Ravenloft: The Horrors Within; compare every number with the book before setting checked_against."
   },
-  "summary": "Sorcerers whose magic wells up from the Shadowfell, commanding darkness, undeath and woe.",
+  "summary": "Sorcerers whose power seeps up from the Shadowfell, bending darkness, undeath and misfortune to their will.",
   "role_tags": [
     "control",
     "striker"
@@ -38,7 +38,7 @@
         "id": "eyes_of_the_dark",
         "name": "Eyes of the Dark",
         "summary": "Darkvision 120 feet and Blindsight 10 feet; you see through the Darkness of your own spells.",
-        "text": "You have Darkvision with a range of 120 feet and Blindsight with a range of 10 feet. When a spell you cast creates an area of Darkness, you can see normally through that spell's Darkness.",
+        "text": "Senses: Darkvision 120 ft and Blindsight 10 ft. Darkness created by your own spells doesn't hamper your sight.",
         "modifiers": [
           {
             "stat": "darkvision",
@@ -59,7 +59,7 @@
         "id": "shadow_spells",
         "name": "Shadow Spells",
         "summary": "Bane, Darkness, Inflict Wounds and Pass without Trace always prepared; more at levels 5, 7 and 9.",
-        "text": "When you reach a Sorcerer level shown, you always have these spells prepared: Bane, Darkness, Inflict Wounds, Pass without Trace (3); Hunger of Hadar, Summon Undead (5); Greater Invisibility, Phantasmal Killer (7); Contagion, Creation (9).",
+        "text": "Always prepared from the Sorcerer level shown: 3 Bane, Darkness, Inflict Wounds, Pass without Trace; 5 Hunger of Hadar, Summon Undead; 7 Greater Invisibility, Phantasmal Killer; 9 Contagion, Creation.",
         "implemented": "data"
       }
     },
@@ -69,7 +69,7 @@
         "id": "spirits_of_ill_omen",
         "name": "Spirits of Ill Omen",
         "summary": "Summon Undead needs no Material component and is free once per Long Rest; you can cast it without Concentration (1 minute).",
-        "text": "You can cast Summon Undead without a Material component, and once without a spell slot, regaining that use on a Long Rest. When you start casting it, you can make it not require Concentration; its duration is then 1 minute, and it ends early if you cast it again.",
+        "text": "Summon Undead needs no Material component from you, and one casting per Long Rest needs no slot. Any casting can drop Concentration if you choose as you begin: it then lasts 1 minute and ends if you cast the spell again.",
         "modifiers": [
           {
             "stat": "spell",
@@ -90,7 +90,7 @@
         "id": "shadow_walk",
         "name": "Shadow Walk",
         "summary": "Bonus Action in Dim Light or Darkness: teleport up to 120 feet to another dim or dark space.",
-        "text": "While you are in Dim Light or Darkness, you can take a Bonus Action to teleport up to 120 feet to an unoccupied space you can see that is also in Dim Light or Darkness.",
+        "text": "Cost: a Bonus Action, standing in Dim Light or Darkness. Teleport up to 120 ft to a free space you can see that is itself dim or dark.",
         "action": "bonus_action",
         "implemented": "engine"
       }
@@ -101,7 +101,7 @@
         "id": "umbral_form",
         "name": "Umbral Form",
         "summary": "Bonus Action: shadow form for 1 minute (Resistance to all but Force and Radiant, move through creatures, a Charisma save to stay up at 0). Once per Long Rest or 6 Sorcery Points.",
-        "text": "As a Bonus Action you become a shadow for 1 minute, until you are Incapacitated, or until you end it (no action). Incorporeal Movement: you can move through occupied spaces as Difficult Terrain, taking 1d10 Force damage if you end your turn in one. Shadow Resilience: Resistance to all damage except Force and Radiant. Strength of the Grave: if you would drop to 0 Hit Points and not die outright, you can make a Charisma saving throw (DC 5 + half the damage taken); on a success your Hit Points become three times your Sorcerer level instead. Once used, you can't again until a Long Rest unless you spend 6 Sorcery Points (no action).",
+        "text": "Cost: a Bonus Action. For 1 minute (ending early if you're Incapacitated or choose to) you are living shadow: Resistance to every damage type but Force and Radiant; you pass through creatures as Difficult Terrain, taking 1d10 Force damage if a turn ends with you inside one; and when you would fall to 0 Hit Points without dying, a Charisma save (DC 5 + half the damage) leaves you at three times your Sorcerer level instead. Recharges on a Long Rest, or at once for 6 Sorcery Points (free).",
         "action": "bonus_action",
         "resource": {
           "id": "umbral_form",

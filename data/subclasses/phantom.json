@@ -6,7 +6,7 @@
     "book": "RtHW",
     "note": "Entered from the 2025 Unearthed Arcana (Horror Subclasses) and published reviews of Ravenloft: The Horrors Within; compare every number with the book before setting checked_against."
   },
-  "summary": "Rogues who walk the veil between life and death, striking with the wails of the dead and gathering the trinkets of departed souls.",
+  "summary": "Rogues who walk beside death itself, striking with the cries of the dead and carrying trinkets of departed souls.",
   "role_tags": [
     "striker",
     "scout"
@@ -54,7 +54,7 @@
         "id": "wails_from_the_grave",
         "name": "Wails from the Grave",
         "summary": "After Sneak Attack, a second creature within 30 feet of the first takes half your Sneak Attack dice as Necrotic (Dexterity-modifier uses per Long Rest).",
-        "text": "Right after you deal Sneak Attack damage to a creature on your turn, you can pick a second creature you can see within 30 feet of the first. Roll half your Sneak Attack dice (round up); the second creature takes that much Necrotic damage. You can do this a number of times equal to your Dexterity modifier (minimum once), regaining all uses on a Long Rest.",
+        "text": "Trigger: your Sneak Attack damage lands on a creature during your turn. Effect: choose a second creature in sight within 30 ft of the first and roll half your Sneak Attack dice, rounding up; it takes that total as Necrotic damage. Uses: Dexterity modifier (at least 1) per Long Rest.",
         "resource": {
           "id": "wails_from_the_grave",
           "name": "Wails from the Grave",
@@ -72,7 +72,7 @@
         "id": "whispers_of_the_dead",
         "name": "Whispers of the Dead",
         "summary": "After each rest, gain one skill or tool proficiency you lack (it replaces the previous one).",
-        "text": "Whenever you finish a Short or Long Rest, a ghostly presence lends you its knowledge: choose one skill or tool proficiency you lack and gain it. You lose it when you use this feature to choose a different one.",
+        "text": "After each Short or Long Rest, pick a skill or tool you aren't proficient with: a ghost lends you proficiency in it until you next use this to pick something else.",
         "choice": {
           "kind": "skill",
           "count": 1,
@@ -93,7 +93,7 @@
         "id": "tokens_of_the_departed",
         "name": "Tokens of the Departed",
         "summary": "Gain soul trinkets each Long Rest (2, more later): Advantage on death and Constitution saves while you hold one; spend one for a free Wails or an Augury; regain one when a creature dies near you.",
-        "text": "Whenever you finish a Long Rest you gain two soul trinkets, Tiny curios that last until your next Long Rest and teleport back to you if you move more than 30 feet from them (three at Rogue 13, four at 17). Death's Knell: when you deal Sneak Attack damage on your turn, you can destroy a trinket to use Wails from the Grave without expending a use. Life Essence: while you have at least one, you have Advantage on Death Saving Throws and Constitution saving throws. Spirit Query: as a Magic action, destroy a trinket to cast Augury with no components, using Dexterity. When a creature you can see within 30 feet of you dies, you can take a Reaction to regain one expended trinket.",
+        "text": "Each Long Rest leaves you with two soul trinkets (three from Rogue 13, four from 17): Tiny curios that crumble at your next Long Rest and blink back onto you if they end up more than 30 ft away. Holding at least one gives Advantage on Death Saving Throws and Constitution saves. Break one when your Sneak Attack lands to use Wails from the Grave without spending a use (Death's Knell), or as a Magic action to cast Augury with no components and Dexterity as the casting ability (Spirit Query). When a creature dies within 30 ft and in sight, a Reaction gets you one spent trinket back.",
         "uses_resource": "soul_trinkets",
         "implemented": "engine"
       }
@@ -104,7 +104,7 @@
         "id": "voice_of_death",
         "name": "Voice of Death",
         "summary": "Cast Speak with Dead once per Short Rest without a slot or components, using Dexterity.",
-        "text": "You can cast Speak with Dead once without a spell slot and without components, using Dexterity as your spellcasting ability; you regain the use on a Short or Long Rest.",
+        "text": "Speak with Dead once per Short or Long Rest: no slot, no components, Dexterity as the casting ability.",
         "modifiers": [
           {
             "stat": "spell",
@@ -125,7 +125,7 @@
         "id": "ghost_walk",
         "name": "Ghost Walk",
         "summary": "Bonus Action: a spectral form for 10 minutes (fly 10 ft and hover, attacks against you have Disadvantage, move through creatures). Once per Long Rest or a soul trinket.",
-        "text": "As a Bonus Action you take a spectral form for 10 minutes or until you end it (no action). Flight: a Fly Speed of 10 feet and you can hover. Hazy Form: attack rolls against you have Disadvantage. Incorporeal Movement: you can move through occupied spaces as Difficult Terrain, taking 1d10 Force damage if you end your turn in one. Once used, you can't again until a Long Rest unless you destroy a soul trinket (no action) to restore the use.",
+        "text": "Cost: a Bonus Action. For 10 minutes (or until you end it, free) you are a ghost: you fly at 10 ft and can hover; attackers roll at Disadvantage against you; and you pass through creatures as Difficult Terrain, taking 1d10 Force damage if a turn ends with you inside one. Recharges on a Long Rest, or at once by breaking a soul trinket (free).",
         "action": "bonus_action",
         "resource": {
           "id": "ghost_walk",
@@ -143,7 +143,7 @@
         "id": "deaths_friend",
         "name": "Death's Friend",
         "summary": "Wails from the Grave also hits the first creature; regain a soul trinket on Initiative if you have none.",
-        "text": "Death's Lament: when you use Wails from the Grave, both the first and the second creature take the Necrotic damage. Draw of Death: when you roll Initiative with no soul trinkets left, you regain one.",
+        "text": "Death's Lament: Wails from the Grave now hurts the first creature as well as the second. Draw of Death: rolling Initiative with no soul trinkets gives you one.",
         "implemented": "engine"
       }
     }

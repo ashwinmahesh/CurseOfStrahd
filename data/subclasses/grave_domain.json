@@ -6,7 +6,7 @@
     "book": "RtHW",
     "note": "Entered from the 2025 Unearthed Arcana (Horror Subclasses) and published reviews of Ravenloft: The Horrors Within; compare every number with the book before setting checked_against."
   },
-  "summary": "Shepherds of the boundary between life and death who put the restless dead to rest and hold death back for those with work left to do.",
+  "summary": "Clerics who keep watch over the line between the living and the dead, laying the undead to rest and holding death off for those with work unfinished.",
   "role_tags": [
     "healer",
     "support"
@@ -39,7 +39,7 @@
         "id": "circle_of_mortality",
         "name": "Circle of Mortality",
         "summary": "Once per turn +1d4 Necrotic against a Bloodied creature; healing dice for someone at 0 Hit Points are always maximum.",
-        "text": "Pull of Death: once per turn, when you damage a Bloodied creature with a spell or an attack roll, it takes an extra 1d4 Necrotic damage. Return to Life: when a spell or Channel Divinity of yours would roll dice to restore Hit Points to a creature at 0 Hit Points, each of those dice counts as its highest number instead of being rolled.",
+        "text": "Pull of Death: a Bloodied creature that takes damage from your spell or attack roll takes 1d4 more Necrotic (once per turn). Return to Life: whenever your spell or Channel Divinity would heal a creature at 0 Hit Points with dice, skip the roll and take every die at its maximum.",
         "implemented": "engine"
       }
     },
@@ -49,7 +49,7 @@
         "id": "grave_domain_spells",
         "name": "Grave Domain Spells",
         "summary": "Bane, Chill Touch, Detect Evil and Good, Gentle Repose and Ray of Enfeeblement always prepared; more at levels 5, 7 and 9.",
-        "text": "When you reach a Cleric level shown, you always have these spells prepared: Bane, Chill Touch, Detect Evil and Good, Gentle Repose, Ray of Enfeeblement (3); Revivify, Vampiric Touch (5); Blight, Dispel Evil and Good (7); Hold Monster, Raise Dead (9).",
+        "text": "Always prepared from the Cleric level shown: 3 Bane, Chill Touch, Detect Evil and Good, Gentle Repose, Ray of Enfeeblement; 5 Revivify, Vampiric Touch; 7 Blight, Dispel Evil and Good; 9 Hold Monster, Raise Dead.",
         "implemented": "data"
       }
     },
@@ -59,7 +59,7 @@
         "id": "path_to_the_grave",
         "name": "Path to the Grave",
         "summary": "Bonus Action, Channel Divinity: curse a creature within 30 feet (Disadvantage on attacks and saves); a hit can end it for 1d8 + Cleric level Necrotic or Radiant.",
-        "text": "As a Bonus Action you present your Holy Symbol and expend a use of Channel Divinity to curse one creature you can see within 30 feet until the start of your next turn. While cursed it has Disadvantage on attack rolls and saving throws. When you or an ally you can see hits it with an attack roll, you can end the curse (no action) so that attack deals extra Necrotic or Radiant damage (your choice) equal to 1d8 plus your Cleric level.",
+        "text": "Cost: a Bonus Action and a Channel Divinity use, holy symbol raised. Target: a creature in sight within 30 ft. Until the start of your next turn it rolls attacks and saving throws at Disadvantage. The first time you, or an ally in your sight, hits it with an attack roll, you may cash the curse in (free) for 1d8 + your Cleric level extra damage on that hit, Necrotic or Radiant as you choose.",
         "action": "bonus_action",
         "uses_resource": "channel_divinity",
         "implemented": "engine"
@@ -71,7 +71,7 @@
         "id": "sentinel_at_deaths_door",
         "name": "Sentinel at Death's Door",
         "summary": "Reaction: halve the damage of an attack that hits you or a Bloodied creature you see within 30 feet (Wisdom-modifier uses per Long Rest).",
-        "text": "When you, or a Bloodied creature you can see within 30 feet of you, is hit by an attack roll, you can take a Reaction to halve that attack's damage. You can do this a number of times equal to your Wisdom modifier (minimum once) and regain all uses on a Long Rest.",
+        "text": "Trigger: an attack roll hits you, or hits a Bloodied creature in your sight within 30 ft. Reaction: that attack does half damage. Uses: Wisdom modifier (at least 1) per Long Rest.",
         "action": "reaction",
         "resource": {
           "id": "sentinel_at_deaths_door",
@@ -90,7 +90,7 @@
         "id": "divine_reaper",
         "name": "Divine Reaper",
         "summary": "Channel Divinity lets a one-target Necromancy or domain spell take a second target; heal 3 × Cleric level when an enemy dies near you (once per Short Rest).",
-        "text": "Enhanced Necromancy: when you cast a Necromancy spell of level 5 or lower that targets one creature, or a spell from your Grave Domain Spells, you can expend a use of Channel Divinity to target a second creature in range (costly or consumed components are needed for each target). Keeper of Souls: when an enemy dies within 60 feet of you, you or a creature you can see within 60 feet regains Hit Points equal to three times your Cleric level; not while you're Incapacitated, and once per Short or Long Rest.",
+        "text": "Enhanced Necromancy: spend a Channel Divinity use when casting a single-target Necromancy spell of level 5 or lower, or one of your Grave Domain spells, to aim it at a second creature in range too (each target needs its own costly or consumed components). Keeper of Souls: once per Short or Long Rest, when a foe dies within 60 ft and you aren't Incapacitated, you or someone you see within 60 ft heals three times your Cleric level.",
         "resource": {
           "id": "keeper_of_souls",
           "name": "Keeper of Souls",

@@ -6,7 +6,7 @@
     "book": "RtHW",
     "note": "Entered from the 2025 Unearthed Arcana (Horror Subclasses) and published reviews of Ravenloft: The Horrors Within; compare every number with the book before setting checked_against."
   },
-  "summary": "Bards who call the spirits of the dead through cards and candles, for help that is powerful but never quite under control.",
+  "summary": "Bards who reach past death with cards, candles and ink, borrowing the help of restless and unpredictable spirits.",
   "role_tags": [
     "support",
     "control"
@@ -18,7 +18,7 @@
         "id": "channeler",
         "name": "Channeler",
         "summary": "Guidance (60-foot range); proficiency with playing cards, which (like a crystal, orb, candle or ink pen) serve as your Bard focus.",
-        "text": "Guiding Whispers: you know the Guidance cantrip, and its range is 60 feet when you cast it. Spiritual Focus: you gain a set of playing cards and proficiency with them, and you can use them, a crystal or orb, a candle or an ink pen as a Spellcasting Focus for your Bard spells.",
+        "text": "Two parts. Cantrip: Guidance is yours, and you can cast it on a creature up to 60 ft away. Tools: you get a deck of playing cards and proficiency with it; the deck, a crystal or orb, a candle or an ink pen can each serve as the focus for your Bard spells.",
         "modifiers": [
           {
             "stat": "spell",
@@ -39,7 +39,7 @@
         "id": "spirits_from_beyond",
         "name": "Spirits from Beyond",
         "summary": "Bonus Action, a Bardic Inspiration use: roll the die and a spirit acts on a creature you see within 30 feet (heal, blast, teleport, frighten and more).",
-        "text": "While holding a Spellcasting Focus, you can take a Bonus Action and expend a use of Bardic Inspiration to channel a spirit. Roll your Bardic Inspiration die, read the result on the Spirits from Beyond table, and choose one creature you can see within 30 feet as the spirit's target; it takes effect at once, and any save uses your Bard spell save DC. 1 Beloved: the target regains Hit Points equal to one roll of your Bardic Inspiration die plus your Charisma modifier. 2 Sharpshooter: the target takes Force damage equal to one roll of the die plus your Charisma modifier. 3 Avenger: until the end of your next turn, any creature that hits the target with a melee attack takes Force damage equal to a roll of the die. 4 Renegade: the target can use its Reaction at once to teleport up to 30 feet to an unoccupied space it can see. 5 Fortune Teller: the target has Advantage on D20 Tests until the start of your next turn. 6 Wayfarer: the target gains Temporary Hit Points equal to a roll of the die plus your Bard level, and its Speed is 10 feet higher while it has them. 7 Trickster: Wisdom save; on a failure two rolls of the die in Psychic damage and Charmed until the start of your next turn, on a success half the damage only. 8 Shade: the target is Invisible until the end of its next turn or until it attacks, deals damage or casts a spell; when that ends, each creature within 5 feet of it makes a Constitution save or takes two rolls of the die in Necrotic damage. 9 Arsonist: Dexterity save, four rolls of the die in Fire damage, half on a success. 10 Coward: the target and each creature of your choice within 30 feet of it make a Wisdom save or are Frightened until the start of your next turn; while Frightened this way a creature's Speed is halved and it takes an action or a Bonus Action, not both. 11 Brute: each creature of your choice within 30 feet of the target makes a Strength save; on a failure three rolls of the die in Thunder damage and Prone, on a success half the damage only. 12 Controlled Channeling: you pick any other row.",
+        "text": "Cost: a Bonus Action and one Bardic Inspiration use, with a Spellcasting Focus in hand. Pick a creature in sight within 30 ft, roll your Bardic Inspiration die and look up the spirit below; it acts on that creature at once (saves against it use your Bard spell save DC). 1 Beloved: heals die + Cha. 2 Sharpshooter: die + Cha Force damage. 3 Avenger: through the end of your next turn, whoever lands a melee attack roll on the creature takes a die of Force damage. 4 Renegade: the creature may spend its Reaction to teleport 30 ft to a free space it sees. 5 Fortune Teller: Advantage on its D20 Tests until your next turn begins. 6 Wayfarer: Temporary Hit Points of die + Bard level, and +10 ft Speed for as long as any remain. 7 Trickster: Wis save; fail = 2 dice Psychic and Charmed until your next turn begins, pass = half damage only. 8 Shade: Invisible through the end of its next turn, ending early if it attacks, deals damage or casts; when it ends, creatures within 5 ft of it make a Con save or take 2 dice Necrotic. 9 Arsonist: Dex save, 4 dice Fire, half on a pass. 10 Coward: it and any creatures you choose within 30 ft of it make a Wis save or are Frightened until your next turn begins, at half Speed and limited to an action or a Bonus Action. 11 Brute: creatures you choose within 30 ft of it make a Str save; fail = 3 dice Thunder and Prone, pass = half damage only. 12 Controlled Channeling: choose any other row.",
         "action": "bonus_action",
         "uses_resource": "bardic_inspiration",
         "implemented": "engine"
@@ -51,7 +51,7 @@
         "id": "empowered_channeling",
         "name": "Empowered Channeling",
         "summary": "Once per turn +1d6 to a Bard spell's damage or healing; Spirit Guardians always prepared, free once per Long Rest, and once per Short Rest it can also give Half Cover.",
-        "text": "Power from Beyond: once per turn, when you cast a Bard spell that deals damage or restores Hit Points, roll a d6 and add it to one damage roll or to the Hit Points restored. Spiritual Manifestation: you always have Spirit Guardians prepared and can cast it once without a slot, regaining that on a Long Rest. When you start casting it you can have the spirits also shield the living: you and your allies within its Emanation have Half Cover. Once you do that, you can't again until you finish a Short or Long Rest.",
+        "text": "Power from Beyond: one Bard spell per turn that harms or heals gains a d6, added to one of its damage rolls or to the healing. Spiritual Manifestation: Spirit Guardians is always prepared for you and one casting per Long Rest needs no slot. As you begin a casting you may also have the spirits ward the living (once per Short or Long Rest): you and allies inside the Emanation get Half Cover.",
         "modifiers": [
           {
             "stat": "spell",
@@ -78,7 +78,7 @@
         "id": "mystical_connection",
         "name": "Mystical Connection",
         "summary": "Roll twice on the Spirits from Beyond table and pick either effect.",
-        "text": "Whenever you roll on the Spirits from Beyond table, you can roll the die twice and choose which of the two effects happens.",
+        "text": "Each time you consult the Spirits from Beyond table, roll the die a second time and keep the result you prefer.",
         "implemented": "engine"
       }
     }
