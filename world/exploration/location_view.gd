@@ -43,6 +43,7 @@ var tokens: Dictionary = {}          ## combatant id -> CombatToken
 var npc_tokens: Dictionary = {}      ## npc id -> CombatToken
 var _env: Environment
 var _sun: DirectionalLight3D
+var atmosphere: Atmosphere
 var guest_members: Array[Combatant] = []   ## story allies following the party (StoryState.guests)
 var _npc_shown: Array[Dictionary] = []   ## [{spec, token, cell, low_before}] for the NPC entries standing here now
 var door_nodes: Dictionary = {}      ## door id -> Node3D
@@ -110,6 +111,7 @@ func _ready() -> void:
 	rig.camera.current = true
 	post = Look.make_post_process()
 	rig.camera.add_child(post)
+	atmosphere.attach(rig, post)
 	rig.follow = tokens[members[0].id] as Node3D if not members.is_empty() else null
 	rig.snap_to_target()
 	st.location = loc_id
@@ -125,27 +127,16 @@ func _ready() -> void:
 # --- Building -------------------------------------------------------------------------------------
 
 func _build_environment() -> void:
-	var light := str(loc["map"].get("light", "dim"))
-	var outdoors := bool(loc["map"].get("outdoors", false))
-	_env = Environment.new()
-	_env.background_mode = Environment.BG_COLOR
-	_env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	_env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
-	_env.fog_enabled = true
-	_env.fog_light_color = Look.color("grave")
-	_env.fog_density = 0.02 if outdoors else 0.008
-	var we := WorldEnvironment.new()
-	we.environment = _env
-	add_child(we)
-	_sun = DirectionalLight3D.new()
-	_sun.shadow_enabled = true
-	_sun.rotation_degrees = Vector3(-55, 35, 0)
-	add_child(_sun)
+	# Light, sky, fog, mist, weather and the land around the map: the place's mood (Atmosphere, docs/art/atmosphere.md).
+	atmosphere = Atmosphere.create(loc_id, loc, board)
+	add_child(atmosphere)
+	_env = atmosphere.env
+	_sun = atmosphere.sun
 	# The party's lantern (or a Light cantrip): it goes where the leader goes, lit when it's dark.
 	lantern = OmniLight3D.new()
 	lantern.light_color = Look.color("candle")
 	lantern.omni_range = 7.0
-	lantern.light_energy = 1.6
+	lantern.light_energy = 2.4
 	lantern.position = Vector3(0, 1.6, 0)
 	update_daylight()
 
@@ -153,39 +144,16 @@ func _build_environment() -> void:
 ## The time of day outdoors (plan §5.2 day and night): an overcast Barovian day, a red dusk and dawn, and a blue
 ## night when the lantern comes out. Indoors only the map's light level counts.
 func update_daylight() -> void:
-	if _env == null:
+	if atmosphere == null:
 		return
 	var light := str(loc["map"].get("light", "dim"))
 	var outdoors := bool(loc["map"].get("outdoors", false))
 	var phase := time_phase()
-	var base := {"bright": 1.2, "dim": 0.75, "dark": 0.35}.get(light, 0.75) as float
 	if not outdoors:
-		_env.background_color = Look.color("void")
-		_env.ambient_light_color = Look.color("bruise")
-		_env.ambient_light_energy = base
-		_sun.light_color = Look.color("moonlight")
-		_sun.light_energy = 0.25 if light != "dark" else 0.08
+		atmosphere.set_phase("any")
 		lantern.visible = light != "bright" or st.spell_active("light")
 		return
-	match phase:
-		"day":
-			_env.background_color = Look.color("ash_violet")
-			_env.ambient_light_color = Look.color("mist_blue")
-			_env.ambient_light_energy = base * 1.35
-			_sun.light_color = Look.color("frost")
-			_sun.light_energy = 0.95
-		"dusk", "dawn":
-			_env.background_color = Look.color("bruise_deep")
-			_env.ambient_light_color = Look.color("lilac")
-			_env.ambient_light_energy = base * 0.9
-			_sun.light_color = Look.color("ember")
-			_sun.light_energy = 0.3
-		_:
-			_env.background_color = Look.color("night_deep")
-			_env.ambient_light_color = Look.color("mist_blue")
-			_env.ambient_light_energy = base * 0.7
-			_sun.light_color = Look.color("moonlight")
-			_sun.light_energy = 0.45
+	atmosphere.set_phase(phase)
 	lantern.visible = phase == "night" or light == "dark" or st.spell_active("light")
 
 
