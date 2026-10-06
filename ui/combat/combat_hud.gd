@@ -71,7 +71,7 @@ var _confirm_text: Label
 var _pips: HBoxContainer
 var _slot_box: VBoxContainer
 var _slot_row: HBoxContainer
-var _menu: PopupMenu
+var _menu: ContextMenu
 var _menu_action: Dictionary = {}
 var _death_button: Button
 var radial: RadialMenu
@@ -111,9 +111,8 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 	radial.offset_top = -radial.custom_minimum_size.y / 2.0
 	radial.picked.connect(func(choice: String) -> void: radial_picked.emit(choice))
 	add_child(radial)
-	_menu = PopupMenu.new()
-	_menu.add_theme_font_size_override("font_size", 16)
-	_menu.id_pressed.connect(_on_menu)
+	_menu = ContextMenu.new()
+	_menu.picked.connect(_on_menu)
 	add_child(_menu)
 	_controls = _panel("parchment")
 	_controls.anchor_left = 0.5
@@ -650,35 +649,32 @@ func _refresh_slot_pips(c: Combatant) -> void:
 ## The right-click menu on a hotbar slot: Info, Use, and for spells each slot level it can be cast with.
 func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 	_menu_action = action
-	_menu.clear()
-	_menu.add_item("Info", 0)
 	var mine := shown != null and e.current() == shown and e.state == Encounter.State.ACTIVE
-	_menu.add_item("Use", 1)
-	_menu.set_item_disabled(_menu.get_item_index(1), not (bool(action["legal"]) and mine))
+	var usable := bool(action["legal"]) and mine
+	var why := "" if usable else (str(action.get("reason", "")) if mine else "Not this character's turn")
+	var items: Array[Dictionary] = [{"id": "info", "label": "Info"}, {"id": "use", "label": "Use", "enabled": usable, "why": why}]
 	if str(action["kind"]) == "spell" and shown != null:
 		var levels := catalog.slot_choices(shown, str(action["spell_id"]))
 		if not levels.is_empty():
-			_menu.add_separator("Casting level")
+			items.append({"separator": "Casting level"})
 			var ch := shown.creature as Character
 			for l in levels:
-				_menu.add_item("Cast at level %d (%d slot%s left)" % [l, ch.slots_left(l), "" if ch.slots_left(l) == 1 else "s"], 100 + l)
-				_menu.set_item_disabled(_menu.get_item_index(100 + l), not (bool(action["legal"]) and mine))
-	_menu.reset_size()
-	_menu.position = Vector2i(at)
-	_menu.popup()
+				items.append({"id": "cast:%d" % l, "label": "Cast at level %d (%d slot%s left)" % [l, ch.slots_left(l), "" if ch.slots_left(l) == 1 else "s"],
+					"enabled": usable, "why": why})
+	_menu.show_actions(str(action.get("label", "")), items, at)
 
 
-func _on_menu(id: int) -> void:
+func _on_menu(id: String) -> void:
 	var action := _menu_action
 	if action.is_empty() or shown == null:
 		return
-	if id == 0:
+	if id == "info":
 		var d := catalog.details(shown, action)
 		show_details(str(d["title"]), d["lines"] as Array)
-	elif id == 1:
+	elif id == "use":
 		action_chosen.emit(action)
-	elif id >= 100:
-		cast_at_level.emit(action, id - 100)
+	elif id.begins_with("cast:"):
+		cast_at_level.emit(action, int(id.get_slice(":", 1)))
 
 
 func menu_open() -> bool:

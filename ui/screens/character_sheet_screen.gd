@@ -67,6 +67,13 @@ func _draw() -> void:
 	tabs.tab_changed.connect(func(t: int) -> void: _tab_index = t)
 
 
+## Switches to a tab by its title ("Spells", "Active Effects" ...).
+func show_tab(title: String) -> void:
+	var names := ["Overview", "Abilities & Skills", "Features & Traits", "Spells", "Active Effects", "Notes"]
+	_tab_index = maxi(0, names.find(title))
+	_draw()
+
+
 func _tab(tabs: TabContainer, title: String, content: Control) -> void:
 	var s := UiKit.scroll(content, Vector2(1440, 520))
 	s.name = title

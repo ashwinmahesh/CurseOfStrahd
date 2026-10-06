@@ -630,6 +630,156 @@ func _spring_trap(trap: Dictionary, victim: Combatant) -> void:
 
 # --- Interactions ---------------------------------------------------------------------------------
 
+## The right-click menu for a square (plan §5.6): {title, actions: [{id, label, enabled, why}]}. Party members get
+## Lead / Character / Inventory (the game root opens those screens); things get their verbs (Talk, Open, Pick the
+## lock, Force it, Use the key, Disarm, Read, Pull, Go ...) plus Look; bare floor gets Walk here and Search here.
+func actions_at(cell: Vector2i) -> Dictionary:
+	var out: Array[Dictionary] = []
+	for i in members.size():
+		if members[i].cell == cell:
+			var ch := members[i].creature as Character
+			out.append({"id": "lead:%d" % i, "label": "Lead the party", "enabled": i != 0 and ch.hp > 0,
+				"why": "Already leading" if i == 0 else ("Can't lead while down" if ch.hp <= 0 else "")})
+			out.append({"id": "sheet:%d" % i, "label": "Character sheet"})
+			out.append({"id": "inventory:%d" % i, "label": "Inventory"})
+			out.append({"id": "spells:%d" % i, "label": "Cast a spell...", "enabled": not ch.known_spells().is_empty(),
+				"why": "" if not ch.known_spells().is_empty() else "No spells"})
+			return {"title": ch.name, "actions": out}
+	var thing := thing_at(cell)
+	if thing.is_empty():
+		if grid.in_bounds(cell) and not grid.is_solid(cell):
+			out.append({"id": "walk", "label": "Walk here"})
+			out.append({"id": "search_here", "label": "Search here (Perception)"})
+		return {"title": "", "actions": out}
+	var spec := thing["spec"] as Dictionary
+	var title := str(thing["label"]).get_slice(" ", 0)
+	match str(thing["kind"]):
+		"npc":
+			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
+			title = str(npc.get("name", spec["npc"]))
+			out.append({"id": "talk", "label": "Talk", "enabled": str(spec.get("dialogue", "")) != "",
+				"why": "" if str(spec.get("dialogue", "")) != "" else "Nothing to say"})
+		"door", "container":
+			title = str(spec.get("label", "the door" if str(thing["kind"]) == "door" else "the chest")).capitalize()
+			var verb := "Open" if str(thing["kind"]) == "door" else "Open and look inside"
+			if str(thing["kind"]) == "door" and not StoryConditions.check(str(spec.get("when", "")), st):
+				out.append({"id": "open", "label": verb, "enabled": false, "why": "It won't budge"})
+			elif _locked(spec):
+				var key := str(spec.get("key", ""))
+				if key != "":
+					var has := st.party_has_item(key)
+					out.append({"id": "key", "label": "Unlock with the %s" % Compendium.shared().display_name("items", key),
+						"enabled": has, "why": "" if has else "Nobody carries the key"})
+				var dc := int(spec.get("lock_dc", 15))
+				var picker := _lock_picker()
+				if dc > 0:
+					if picker != null:
+						var adv: Array[String] = []
+						var b := _pick_bonus(picker, adv)
+						out.append({"id": "pick", "label": "Pick the lock (%s, %s%s)" % [picker.name.get_slice(" ", 0), b.signed(),
+							", Advantage" if not adv.is_empty() else ""]})
+					else:
+						out.append({"id": "pick", "label": "Pick the lock", "enabled": false, "why": "Nobody has thieves' tools"})
+					var strong := _best(&"athletics")
+					out.append({"id": "force", "label": "Force it (%s, Athletics %s, harder than picking)" % [strong.name.get_slice(" ", 0),
+						strong.skill_bonus(&"athletics").signed()]})
+				elif key == "":
+					out.append({"id": "open", "label": verb, "enabled": false, "why": "Locked; it needs its key"})
+			else:
+				out.append({"id": "open", "label": verb})
+		"prop":
+			title = str(spec.get("label", "it")).capitalize()
+			out.append({"id": "use", "label": str(thing["label"]).get_slice(" ", 0)})
+		"trap":
+			title = str(spec.get("label", "a trap")).capitalize()
+			var who := _lock_picker()
+			if who != null:
+				var adv2: Array[String] = []
+				out.append({"id": "disarm", "label": "Disarm (%s, %s)" % [who.name.get_slice(" ", 0), _pick_bonus(who, adv2).signed()]})
+			else:
+				out.append({"id": "disarm", "label": "Disarm", "enabled": false, "why": "Nobody has thieves' tools"})
+			out.append({"id": "avoid", "label": "Walk around it (the party already does)", "enabled": false})
+		"exit":
+			title = str(spec.get("label", "The way on"))
+			var open := StoryConditions.check(str(spec.get("when", "")), st)
+			out.append({"id": "go", "label": "Go: %s" % Compendium.shared().get_entry("locations", str(spec["to"])).get("name", spec["to"]),
+				"enabled": open, "why": "" if open else str(spec.get("locked_text", "The way is barred."))})
+	out.append({"id": "look", "label": "Look"})
+	return {"title": title, "actions": out}
+
+
+## Does a right-click menu choice for `cell` (party-member ids are the game root's). Walks next to things first.
+func act(cell: Vector2i, action_id: String) -> void:
+	if busy or in_combat or members.is_empty():
+		return
+	var thing := thing_at(cell)
+	match action_id:
+		"walk":
+			walk_to(cell)
+			return
+		"search_here":
+			walk_to(cell, search)
+			return
+		"look":
+			_look(cell, thing)
+			return
+		"go":
+			walk_to(cell)
+			return
+	if thing.is_empty():
+		return
+	var spec := thing["spec"] as Dictionary
+	var then := Callable()
+	match action_id:
+		"talk", "use", "open":
+			then = func() -> void: interact(thing)
+		"key", "pick", "force":
+			if str(thing["kind"]) == "door":
+				then = func() -> void: _use_door(spec, action_id)
+			else:
+				then = func() -> void: _use_container(spec, action_id)
+		"disarm":
+			then = func() -> void: _disarm(spec)
+	if not then.is_valid():
+		return
+	var stand := _adjacent_free(cell)
+	if stand == Vector2i(-1, -1):
+		toast.emit("Can't reach it")
+	elif stand == leader().cell:
+		then.call()
+	else:
+		walk_to(stand, then)
+
+
+## "Look": what the party can tell at a glance, without walking over.
+func _look(cell: Vector2i, thing: Dictionary) -> void:
+	if thing.is_empty():
+		narration.emit("Nothing there but %s." % ("floor" if not grid.is_solid(cell) else "wall"))
+		return
+	var spec := thing["spec"] as Dictionary
+	match str(thing["kind"]):
+		"npc":
+			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
+			var att := st.attitude(str(spec["npc"]))
+			narration.emit("%s%s. %s%s" % [npc.get("name", spec["npc"]), (", " + str(npc["title"])) if str(npc.get("title", "")) != "" else "",
+				str(npc.get("summary", "")), (" (%s)" % att) if att != "" else ""])
+		"door", "container":
+			var state := "locked" if _locked(spec) else "unlocked"
+			if str(thing["kind"]) == "container" and bool((st.loc_state(loc_id)["looted"] as Dictionary).get(str(spec["id"]), false)):
+				state = "empty"
+			narration.emit("%s: %s." % [str(spec.get("label", "It")).capitalize(), state])
+		"trap":
+			var save := spec.get("save", {}) as Dictionary
+			narration.emit("%s. Springing it means a %s saving throw%s." % [str(spec.get("label", "A trap")).capitalize(),
+				Creature.ABILITY_NAMES.get(StringName(str(save.get("ability", "dex"))), "Dexterity"),
+				(" and %s damage" % spec["damage"]) if spec.has("damage") else ""])
+		"exit":
+			narration.emit("%s, to %s." % [spec.get("label", "A way on"), Compendium.shared().get_entry("locations", str(spec["to"])).get("name", spec["to"])])
+		_:
+			if not _say("look:" + str(spec.get("id", "")), leader().creature as Character):
+				narration.emit(str(spec.get("label", "Something")).capitalize() + ".")
+
+
 ## What's at a square for the hover hint and clicks: {kind, id, label} or {}.
 func thing_at(cell: Vector2i) -> Dictionary:
 	for shown in _npc_shown:
@@ -724,13 +874,13 @@ func _locked(spec: Dictionary) -> bool:
 	return state != "unlocked" and state != DOOR_OPEN
 
 
-func _use_door(door: Dictionary) -> void:
+func _use_door(door: Dictionary, method: String = "auto") -> void:
 	var id := str(door["id"])
 	if not StoryConditions.check(str(door.get("when", "")), st):
 		narration.emit("It won't budge.")
 		return
 	if _locked(door):
-		if not _unlock(door):
+		if not _unlock(door, method):
 			return
 	(st.loc_state(loc_id)["doors"] as Dictionary)[id] = DOOR_OPEN
 	grid.set_flag(_cell(door["cell"]), CombatGrid.WALL, false)
@@ -743,31 +893,31 @@ func _use_door(door: Dictionary) -> void:
 
 ## Tries a key, thieves' tools (2024: Dexterity check, + Proficiency Bonus with the tools, Advantage with Sleight of
 ## Hand too) or force (Strength (Athletics)), with the best party member for the job. Returns true if it opens.
-func _unlock(spec: Dictionary) -> bool:
+## `method`: "auto" (a key, else thieves' tools, else force), "key", "pick" or "force" (the right-click menu).
+func _unlock(spec: Dictionary, method: String = "auto") -> bool:
 	var id := str(spec["id"])
 	var key := str(spec.get("key", ""))
-	if key != "" and st.party_has_item(key):
+	if key != "" and st.party_has_item(key) and method in ["auto", "key"]:
 		(st.loc_state(loc_id)["doors"] as Dictionary)[id] = "unlocked"
 		toast.emit("Unlocked with the %s" % Compendium.shared().display_name("items", key))
 		return true
+	if method == "key":
+		narration.emit("None of you has the key.")
+		return false
 	var dc := int(spec.get("lock_dc", 15))
 	if dc <= 0:
 		narration.emit("Locked, and no lock to pick: you'll need the key.")
 		return false
-	var picker: Character = null
-	for ch in st.party:
-		if ch.hp > 0 and st.member_matches(ch, "item:thieves_tools") and (picker == null or ch.ability_mod(&"dex") > picker.ability_mod(&"dex")):
-			picker = ch
+	var picker := _lock_picker() if method in ["auto", "pick"] else null
+	if method == "pick" and picker == null:
+		narration.emit("Nobody has thieves' tools.")
+		return false
 	var t: D20Test
 	var who: Character
 	if picker != null:
 		who = picker
-		var bonus := picker.ability_check_bonus(&"dex")
 		var adv: Array[String] = []
-		if picker.has_proficiency("tools", "thieves_tools"):
-			bonus.add("Thieves' Tools proficiency", picker.proficiency_bonus())
-			if picker.skill_rank(&"sleight_of_hand") > 0:
-				adv.append("Sleight of Hand proficiency")
+		var bonus := _pick_bonus(picker, adv)
 		t = picker.roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, picker.check_keys(&"dex"), adv, [], "%s picks the lock" % picker.name)
 	else:
 		who = _best(&"athletics")
@@ -783,6 +933,25 @@ func _unlock(spec: Dictionary) -> bool:
 	return false
 
 
+## The living party member best at picking locks (thieves' tools in hand, highest Dexterity), or null.
+func _lock_picker() -> Character:
+	var picker: Character = null
+	for ch in st.party:
+		if ch.hp > 0 and st.member_matches(ch, "item:thieves_tools") and (picker == null or ch.ability_mod(&"dex") > picker.ability_mod(&"dex")):
+			picker = ch
+	return picker
+
+
+## 2024 Thieves' Tools: Dexterity check + Proficiency Bonus with the tools, Advantage with Sleight of Hand too.
+static func _pick_bonus(picker: Character, adv: Array[String]) -> Breakdown:
+	var bonus := picker.ability_check_bonus(&"dex")
+	if picker.has_proficiency("tools", "thieves_tools"):
+		bonus.add("Thieves' Tools proficiency", picker.proficiency_bonus())
+		if picker.skill_rank(&"sleight_of_hand") > 0:
+			adv.append("Sleight of Hand proficiency")
+	return bonus
+
+
 func _best(skill: StringName) -> Character:
 	var best: Character = null
 	for ch in st.party:
@@ -791,9 +960,9 @@ func _best(skill: StringName) -> Character:
 	return best
 
 
-func _use_container(ct: Dictionary) -> void:
+func _use_container(ct: Dictionary, method: String = "auto") -> void:
 	var id := str(ct["id"])
-	if _locked(ct) and not _unlock(ct):
+	if _locked(ct) and not _unlock(ct, method):
 		return
 	_say("open:" + id)
 	if _trigger_encounter("open:" + id):
@@ -903,10 +1072,7 @@ func search() -> void:
 
 
 func _disarm(trap: Dictionary) -> void:
-	var who: Character = null
-	for ch in st.party:
-		if ch.hp > 0 and st.member_matches(ch, "item:thieves_tools") and (who == null or ch.ability_mod(&"dex") > who.ability_mod(&"dex")):
-			who = ch
+	var who := _lock_picker()
 	if who == null:
 		narration.emit("Without thieves' tools you can only walk around it.")
 		return

@@ -16,6 +16,8 @@ var loot: LootWindow = null
 var _hover := Vector2i(-1, -1)
 var _move_repeat := 0.0
 var _dialogue_ref := ""
+var menu: ContextMenu                ## the right-click menu on things in the world
+var _menu_cell := Vector2i(-1, -1)
 
 
 func _ready() -> void:
@@ -35,6 +37,12 @@ func _ready() -> void:
 		_refresh())
 	hud.sheet_requested.connect(func(i: int) -> void: open_screen("sheet", i))
 	hud.command.connect(_command)
+	var menu_layer := CanvasLayer.new()
+	menu_layer.layer = 25
+	add_child(menu_layer)
+	menu = ContextMenu.new()
+	menu.picked.connect(func(id: String) -> void: world_action(_menu_cell, id))
+	menu_layer.add_child(menu)
 	var where := st.location if st.location != "" else FIRST_LOCATION
 	var spawn := "" if st.location == where else "default"
 	# Captures (tools/capture) may start anywhere: --location=<id> [--spawn=<name>].
@@ -112,6 +120,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		var cell := GridPick.cell_under(view.rig.camera, view.grid, (event as InputEventMouseButton).position)
 		if cell.x >= 0:
 			view.click(cell)
+	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
+		var at := (event as InputEventMouseButton).position
+		open_world_menu(GridPick.cell_under(view.rig.camera, view.grid, at), at)
 	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo:
 		match (event as InputEventKey).physical_keycode:
 			KEY_C:
@@ -146,6 +157,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				open_screen("journal", 0)
 			JOY_BUTTON_START:
 				open_screen("menu", 0)
+			JOY_BUTTON_BACK:
+				_menu_nearby()
 			JOY_BUTTON_LEFT_SHOULDER:
 				open_screen("sheet", 0)
 			JOY_BUTTON_RIGHT_SHOULDER:
@@ -184,6 +197,46 @@ func _interact_nearby() -> void:
 			view.interact(thing)
 			return
 	hud.toast("Nothing to use here")
+
+
+## The right-click menu for a square: what can be done with the person, thing, party member or floor there.
+func open_world_menu(cell: Vector2i, at: Vector2) -> void:
+	if cell.x < 0 or view.busy:
+		return
+	var m := view.actions_at(cell)
+	if (m["actions"] as Array).is_empty():
+		return
+	_menu_cell = cell
+	var items: Array[Dictionary] = []
+	items.assign(m["actions"] as Array)
+	menu.show_actions(str(m["title"]), items, at)
+
+
+## Controller Back: the menu for the nearest thing beside the leader, at the middle of the screen.
+func _menu_nearby() -> void:
+	var c := view.leader().cell
+	for d: Vector2i in [Vector2i.ZERO] + CombatGrid.DIRS:
+		if not view.thing_at(c + d).is_empty():
+			open_world_menu(c + d, get_viewport().get_visible_rect().size / 2.0)
+			return
+	hud.toast("Nothing to use here")
+
+
+func world_action(cell: Vector2i, id: String) -> void:
+	var parts := id.split(":")
+	match parts[0]:
+		"lead":
+			view.set_leader(int(parts[1]))
+			_refresh()
+		"sheet":
+			open_screen("sheet", int(parts[1]))
+		"inventory":
+			open_screen("inventory", int(parts[1]))
+		"spells":
+			open_screen("sheet", int(parts[1]))
+			(screen as CharacterSheetScreen).show_tab("Spells")
+		_:
+			view.act(cell, id)
 
 
 func _command(name_: String) -> void:
@@ -316,6 +369,24 @@ func _quick_load() -> void:
 func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_1_explore.png")
+	# The right-click menu on the nearest door, person or thing.
+	var best := Vector2i(-1, -1)
+	var best_d := 1 << 30
+	for x in view.grid.width:
+		for y in view.grid.depth:
+			var cell := Vector2i(x, y)
+			var k := str(view.thing_at(cell).get("kind", ""))
+			if k in ["door", "npc", "container"]:
+				var d := view.grid.distance_ft(view.leader().cell, 1, cell, 1)
+				if d < best_d:
+					best_d = d
+					best = cell
+	if best.x >= 0:
+		var at := view.rig.camera.unproject_position(view.board.cell_center(best) + Vector3(0, 0.6, 0))
+		open_world_menu(best, at)
+		await tool.call("wait_frames", 8)
+		tool.call("_shot", out + "_1b_menu.png")
+		menu.hide()
 	var shown := view.get("_npc_shown") as Array
 	if not shown.is_empty():
 		var spec := (shown[0] as Dictionary)["spec"] as Dictionary
@@ -334,7 +405,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	for kind: String in ["sheet", "inventory", "journal", "party", "rest"]:
 		open_screen(kind, 2 if kind == "sheet" else 0)
 		if kind == "sheet":
-			((screen as CharacterSheetScreen).get("_frame") as Node).find_children("*", "TabContainer", true, false)[0].set("current_tab", 3)
+			(screen as CharacterSheetScreen).show_tab("Spells")
 		await tool.call("wait_frames", 10)
 		tool.call("_shot", out + "_%d_%s.png" % [n, kind])
 		n += 1

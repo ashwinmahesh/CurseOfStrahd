@@ -93,7 +93,7 @@ func _wall(c: Vector2i) -> void:
 			"attic": "peat"}.get(theme, "stone_deep") as String
 		var h := 1.15
 		_box("Wall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), Look.cel(colour))
-		_box("WallCap", Vector3(1.02, 0.1, 1.02), Vector3(c.x + 0.5, h + 0.05, c.y + 0.5), Look.cel("ink"))
+		_box("WallCap", Vector3(1.02, 0.1, 1.02), Vector3(c.x + 0.5, h + 0.05, c.y + 0.5), Look.cel("bone_dark"))
 		return
 	if theme == "village":
 		# Houses: plaster walls and dark timber.

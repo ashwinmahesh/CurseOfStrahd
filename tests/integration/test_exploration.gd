@@ -206,3 +206,34 @@ func test_npc_speaks_on_approach_and_leaves_when_the_story_moves_on() -> void:
 	await _frames(2)
 	assert_true(v.thing_at(Vector2i(4, 2)).is_empty(), "his condition no longer holds")
 	assert_false(v.grid.has_flag(Vector2i(4, 2), CombatGrid.LOW), "his square is free again")
+
+
+func test_right_click_menus_offer_the_right_actions() -> void:
+	var v := _view()
+	var door := v.actions_at(Vector2i(5, 3))
+	var ids: Array = (door["actions"] as Array).map(func(a: Dictionary) -> String: return str(a["id"]))
+	assert_true("pick" in ids and "force" in ids and "look" in ids, str(ids))
+	var npc := v.actions_at(Vector2i(4, 2))
+	assert_eq(str(npc["title"]), "Ismark Kolyanovich")
+	assert_eq(str((npc["actions"] as Array)[0]["id"]), "talk")
+	var me := v.actions_at(v.leader().cell)
+	assert_eq(str((me["actions"] as Array)[0]["id"]), "lead:0")
+	assert_false(bool((me["actions"] as Array)[0]["enabled"]), "already leading")
+	var ground := v.actions_at(Vector2i(2, 2))
+	assert_eq(str((ground["actions"] as Array)[0]["id"]), "walk")
+	# Forcing the door from the menu walks over and tries Athletics until it gives.
+	for i in 8:
+		if not v.grid.has_flag(Vector2i(5, 3), CombatGrid.WALL):
+			break
+		v.act(Vector2i(5, 3), "force")
+		await _walk_until_idle()
+		await _frames(1)
+		if v.grid.has_flag(Vector2i(5, 3), CombatGrid.WALL) and str((GameState.story.loc_state("test_hall")["doors"] as Dictionary).get("inner_door", "")) == "unlocked":
+			v.act(Vector2i(5, 3), "open")
+			await _walk_until_idle()
+	assert_false(v.grid.has_flag(Vector2i(5, 3), CombatGrid.WALL), "forced open")
+	root.call("open_world_menu", Vector2i(4, 2), Vector2(300, 300))
+	assert_true((root.get("menu") as ContextMenu).visible, "the menu shows")
+	root.call("world_action", v.leader().cell, "spells:2")
+	await _frames(1)
+	assert_true(root.get("screen") is CharacterSheetScreen)

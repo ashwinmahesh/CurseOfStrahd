@@ -195,7 +195,7 @@ func narrate(text: String) -> void:
 
 
 func hint(text: String, at: Vector2) -> void:
-	_hint.text = text
+	_hint.text = (text + "\nRight-click: more") if text != "" else ""
 	_hint.position = at + Vector2(18, 14)
 
 
