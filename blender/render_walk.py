@@ -2,7 +2,7 @@
 (plan §7 steps 4-6).
 
 blender -b --python blender/render_walk.py -- --turnaround <png> --id <asset_id>
-        [--side-faces left] [--cell 192] [--frames 8] [--static]
+        [--side-faces left] [--cell 384] [--frames 8] [--static]
 
 The sheet shows views left to right: either 5 (front, front three-quarter, side, back three-quarter,
 back — best, gives true diagonals) or 3 (front, side, back; diagonals reuse front/back turned 25
@@ -55,7 +55,7 @@ def args():
     p.add_argument("--turnaround", required=True)
     p.add_argument("--id", required=True)
     p.add_argument("--side-faces", default="right", choices=["left", "right"])
-    p.add_argument("--cell", type=int, default=192)
+    p.add_argument("--cell", type=int, default=384)
     p.add_argument("--frames", type=int, default=8)
     p.add_argument("--static", action="store_true", help="one still frame per direction, no rig")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])

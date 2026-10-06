@@ -8,7 +8,6 @@ extends Node3D
 ## Sprite height in world units (1 unit = 5 ft) by creature, so a halfling stands half a human's height.
 const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.0, "silvain_aster": 1.25,
 	"zombie": 1.25, "wolf": 0.8, "dire_wolf": 1.35}
-const CELL_PX := 192
 
 var combatant: Combatant
 var sprite: DirectionalSprite
@@ -48,16 +47,14 @@ func _build() -> void:
 	var frames := load("res://art/sprites/%s/walk.tres" % aid) as SpriteFrames if ResourceLoader.exists("res://art/sprites/%s/walk.tres" % aid) else null
 	var size_units := float(c.size_cells)
 	if frames != null:
-		sprite = DirectionalSprite.create(frames, float(HEIGHTS.get(aid, 1.2)), CELL_PX)
+		sprite = DirectionalSprite.create(frames, float(HEIGHTS.get(aid, 1.2)))
 		sprite.play(&"idle_s")
 		add_child(sprite)
 		body = sprite
 		_lying = Sprite3D.new()
 		_lying.texture = frames.get_frame_texture(&"idle_s", 0)
 		_lying.pixel_size = sprite.pixel_size
-		_lying.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
-		_lying.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-		_lying.shaded = false
+		DirectionalSprite.setup_material(_lying)
 		_lying.rotation_degrees = Vector3(-90, 0, -90)
 		_lying.position = Vector3(0, 0.03, 0)
 		_lying.visible = false

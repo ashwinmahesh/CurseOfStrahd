@@ -63,7 +63,7 @@ func _ready() -> void:
 	rig = CameraRig.new()
 	add_child(rig)
 	rig.zoom_max = 30.0
-	rig.distance = 20.0
+	rig.distance = 14.0
 	rig.rotate_step(-1)   # look north-east: the party bottom-left, the enemies up the screen
 	rig.camera.current = true
 	post = Look.make_post_process()

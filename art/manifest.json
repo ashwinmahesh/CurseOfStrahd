@@ -32,7 +32,7 @@
       "sprites": "art/sprites/ilse_varga/walk.tres",
       "portrait": "art/portraits/ilse_varga.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Human fighter (party). Tabard snaps to rust/brown under the palette. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Human fighter (party). Tabard snaps to rust/brown under the palette. Needs art QA before final."
     },
     {
       "id": "tamsin_tealeaf",
@@ -42,7 +42,7 @@
       "sprites": "art/sprites/tamsin_tealeaf/walk.tres",
       "portrait": "art/portraits/tamsin_tealeaf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Halfling rogue (party). Drawn alone, so he fills the cell like a human: use about half a human's height_units. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Halfling rogue (party). Drawn alone, so he fills the cell like a human: use about half a human's height_units. Needs art QA before final."
     },
     {
       "id": "hedda_ironvow",
@@ -52,7 +52,7 @@
       "sprites": "art/sprites/hedda_ironvow/walk.tres",
       "portrait": "art/portraits/hedda_ironvow.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Dwarf cleric (party). Sheet had touching shield/mace silhouettes; split by the new connected-component pass in blender/lib/cutout.py. Use a smaller height_units than humans. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Dwarf cleric (party). Sheet had touching shield/mace silhouettes; split by the new connected-component pass in blender/lib/cutout.py. Use a smaller height_units than humans. Needs art QA before final."
     },
     {
       "id": "silvain_aster",
@@ -62,7 +62,7 @@
       "sprites": "art/sprites/silvain_aster/walk.tres",
       "portrait": "art/portraits/silvain_aster.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. High elf wizard (party). Staff below the hips is kept rigid by the new prop pass (cutout.split_props); robe hem still swings with the legs. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. High elf wizard (party). Staff below the hips is kept rigid by the new prop pass (cutout.split_props); robe hem still swings with the legs. Needs art QA before final."
     },
     {
       "id": "zombie",
@@ -72,7 +72,7 @@
       "sprites": "art/sprites/zombie/walk.tres",
       "portrait": "art/portraits/zombie.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian villager zombie (enemy). Hunched pose survives the rig. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian villager zombie (enemy). Hunched pose survives the rig. Needs art QA before final."
     },
     {
       "id": "wolf",
@@ -82,7 +82,7 @@
       "sprites": "art/sprites/wolf/walk.tres",
       "portrait": "art/portraits/wolf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 192 px cells, same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Grey wolf: the grey fur snaps to pale bone/pewter under the palette. Needs art QA before final."
+      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Grey wolf: the grey fur snaps to pale bone/pewter under the palette. Needs art QA before final."
     },
     {
       "id": "dire_wolf",
@@ -92,7 +92,7 @@
       "sprites": "art/sprites/dire_wolf/walk.tres",
       "portrait": "art/portraits/dire_wolf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 192 px cells, same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Large dire wolf, second generation (first came out maroon, not black). Use a bigger height_units than the wolf. Needs art QA before final."
+      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Large dire wolf, second generation (first came out maroon, not black). Use a bigger height_units than the wolf. Needs art QA before final."
     },
     {
       "id": "ilse_varga_portrait",

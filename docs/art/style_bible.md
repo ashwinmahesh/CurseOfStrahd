@@ -13,6 +13,9 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
 - Night scenes sit in purples and blues; warmth comes only from candles, fire and blood.
 - The in-game post-process snaps every pixel to the palette at a 2x pixel grid with light ordered dithering.
   Sprites are also quantized in the pipeline so they hold up when the pass is off.
+- Character sprites are the exception (owner, 2026-10-06: they read blurry and grainy through the pass): their
+  sheets are rendered at 384 px cells, mipmapped, and drawn after the pass at full screen resolution. They keep the
+  palette because the pipeline already quantized them.
 
 ## Line and shading
 - Outlines: dark ink (`void`), heavy on silhouettes, lighter inside. The post-process adds outlines to 3D geometry.
