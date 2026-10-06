@@ -151,7 +151,7 @@ Lady Wachter: You again. Come to see how the losers live? Very comfortably, as i
 Narrator: Lady Wachter sits in the Baron's stocks with her back straight and her hair still pinned. People walk wide around her, and she watches each of them go as if writing down their names.
 Lady Wachter: Come to gloat? Please do. There's so little else to look at.
 * Was it worth it? -> stocks_worth
-* [Insight DC 12] What is she waiting for? -> stocks_insight
+* [Insight DC 12] What is she waiting for? -> stocks_insight | stocks_insight_fail
 * Goodbye. -> END
 
 ~ stocks_worth
@@ -162,12 +162,16 @@ Lady Wachter: Ask me again in a year, when Vargas is still holding festivals and
 Narrator: She is not afraid, and she is not resigned. She is waiting for nightfall, and for a visitor, with the calm of someone who has never once been let down by him.
 -> END
 
+~ stocks_insight_fail
+Narrator: She meets your eyes over the board as if she were the one doing the reading. Whatever she's waiting for, she can wait longer than you can look.
+-> END
+
 ~ after_rule
 Narrator: Lady Wachter sits in the Baron's great hall, in the Baron's chair, with her own tea service on his table. The festival portraits are stacked face to the wall.
 Lady Wachter [smile]: My friends. Sit. You've done this town a great service, whatever the priest says from his pulpit.
 * What happens to Vallaki now? -> rule_now
 * [if guest:ireena] And Ireena? -> rule_ireena
-* [Insight DC 13] What did she promise the castle? -> rule_insight
+* [Insight DC 13] What did she promise the castle? -> rule_insight | rule_insight_fail
 * Goodbye, my lady. -> END
 
 ~ rule_now
@@ -180,6 +184,10 @@ Lady Wachter: It's more than Vargas ever got.
 Lady Wachter: Kolyan's girl is welcome to stay, of course. More than welcome. I'd see her very well looked after, and so would my lord.
 Ireena [angry]: I'd sooner sleep in the lake.
 Lady Wachter: People have, my dear. Ask the fishermen.
+-> after_rule
+
+~ rule_insight_fail
+Narrator: She refills your cup before you notice it's empty, and the question goes down with the tea. Whatever she promised, it isn't written on her face.
 -> after_rule
 
 ~ rule_insight

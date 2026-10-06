@@ -62,6 +62,12 @@ interject name:silvain_aster: I would like it noted that I just watched Rudolph 
 if flag.den_children_freed
 Rictavio: Eva's cards again. And I hear five children walked down out of the wolves' hills because of you. That counts for something. It counts for a great deal.
 -> ally_join
+elif flag.children_rescued
+Rictavio: Eva's cards again. And the ravens tell me two children came home from a hags' mill on the Vallaki road, because of you. Hags don't give anything back. That counts.
+-> ally_join
+elif flag.argynvost_beacon_lit
+Rictavio: Eva's cards again. And there's a silver light on the ridge over Argynvostholt, where there's been none for four hundred years. Somebody lit it. That counts for a great deal.
+-> ally_join
 endif
 Rictavio: I told you once what I think of people who help this valley choose its masters. Words are cheap here. What have you done since?
 * [Persuasion DC 15] We've learned. Come and watch us prove it. -> ally_join | ally_no

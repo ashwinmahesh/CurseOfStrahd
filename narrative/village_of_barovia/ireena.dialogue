@@ -8,7 +8,7 @@ Ireena: Whatever you are, you've come to the wrong door. My father is dead, my b
 * We're travelers. We mean no harm. -> door_plain
 * [Persuasion DC 13] We can help you. Let us in. -> door_open | door_shut
 * [Cleric] I'm a priest. Let me pray over your father. -> door_cleric
-* [Intimidation DC 15] Open the door. Now. -> door_forced | door_shut
+* [Intimidation DC 15] Open the door. Now. -> door_forced | door_threat_fail
 * Leave her be. -> END
 
 ~ door_plain
@@ -41,6 +41,12 @@ Ireena [angry]: Fine. Come in. Slowly, and with your hands where I can see them.
 Ireena: No. I've heard sweeter voices than yours at this door, and they had claws. Find Ismark at the tavern.
 -> END
 
+~ door_threat_fail
+set ireena_door_threatened
+Narrator: Something heavy scrapes across the floor on the other side and thumps against the door. A wardrobe, by the sound of it.
+Ireena [angry]: "Now." He says "now" too, at the window, in a much nicer voice. Find Ismark at the tavern, and pray he vouches for you.
+-> END
+
 # --- The parlor ---
 
 ~ start
@@ -59,6 +65,9 @@ if flag.ismark_met
 Ireena: Ismark said you'd come. He also said you were "probably not monsters". From him, that's a glowing reference. I'm Ireena.
 else
 Ireena: Ireena Kolyana. This is my father's house. It's still his, until he's in the ground.
+endif
+if flag.ireena_door_threatened
+Ireena [angry]: And I know your voice. You're the one who told my door to open. Now. Keep that voice down in this house.
 endif
 interject name:tamsin_tealeaf: Oh. Oh, that's... no. No, I'm fine. I'm fine.
 if flag.burial_agreed and not flag.donavich_will_officiate and not flag.donavich_refused_rites

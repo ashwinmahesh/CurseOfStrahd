@@ -244,6 +244,11 @@
       "id": "lost_bundle_tracked",
       "type": "bool",
       "summary": "The party has made its one Survival check on the peddler's drag marks."
+    },
+    {
+      "id": "eva_caught_lying",
+      "type": "bool",
+      "summary": "Madam Eva caught the party lying about Stanimir's strongbox (madam_eva: robbed). The free reading owed for bringing Nicu home is cancelled; they pay like strangers."
     }
   ]
 }

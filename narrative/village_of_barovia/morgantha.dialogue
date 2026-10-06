@@ -98,7 +98,9 @@ Morgantha [sly]: Well. Aren't you brave. Morgantha's going, duckling. But Morgan
 -> END
 
 ~ threat_fail
+set morgantha_threatened
 Morgantha [smile]: Out? Oh, I'll go when I've sold out, my plump little hero. Mind your manners. Manners keep you fresh.
+Narrator: She looks at each of your faces in turn, slowly, the way a cook reads a list of what's in the larder.
 -> menu
 
 ~ refuse

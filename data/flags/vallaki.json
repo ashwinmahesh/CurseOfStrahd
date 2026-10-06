@@ -425,6 +425,11 @@
       "id": "kasimir_sister_told",
       "type": "bool",
       "summary": "Kasimir told the party about his sister Patrina, buried under the castle, and the amber temple where he hopes to undo her death. Amber Temple (later phase) may read."
+    },
+    {
+      "id": "vallaki_watch_wary",
+      "type": "bool",
+      "summary": "The party failed to bully their way past the east gate (gate). The watch has their faces chalked on the gatepost: the gate guard says so, and the lockup warden's bribe goes up from 15 to 25 gp."
     }
   ]
 }
