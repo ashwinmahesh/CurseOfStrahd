@@ -30,6 +30,16 @@ func _draw() -> void:
 		c.queue_free()
 	var page := VBoxContainer.new()
 	page.add_theme_constant_override("separation", 12)
+	if not st.bench.is_empty() or st.party.size() < StoryState.PARTY_CAP:
+		# Who travels is chosen outside fights and conversations (the roster screen).
+		var top := HBoxContainer.new()
+		top.add_child(UiParts.gap())
+		var roster := UiParts.small_button("Change who travels", func() -> void: root.call("open_screen", "roster", 0))
+		var calm := ModeController.mode == ModeController.Mode.EXPLORATION
+		roster.disabled = not calm
+		roster.tooltip_text = "" if calm else "Not in the middle of a fight or a conversation."
+		top.add_child(roster)
+		_frame.add_child(top)
 	_frame.add_child(UiParts.fill_scroll(page))
 	var cols := HBoxContainer.new()
 	cols.add_theme_constant_override("separation", 12)

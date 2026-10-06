@@ -4,6 +4,7 @@
   "pronouns": "she/her",
   "summary": "Human Fighter (Champion), Soldier. A greatsword, heavy armor and the stubbornness to outlast the night.",
   "hook": "Her mercenary company vanished on a fog-bound road a year ago; the only trace was a sealed letter of invitation signed with a single ornate S.",
+  "roster": true,
   "build": {
     "name": "Ilse Varga",
     "species": "human",

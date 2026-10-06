@@ -4,6 +4,7 @@
   "pronouns": "they/them",
   "summary": "High Elf Wizard (Evoker), Sage. Fire, frost and a growing spellbook.",
   "hook": "They are hunting a book rumored to be written in a vampire's own hand, its last owner a scholar who walked into the mists and wrote home once: 'He knows I am reading.'",
+  "roster": true,
   "build": {
     "name": "Silvain Aster",
     "species": "elf",

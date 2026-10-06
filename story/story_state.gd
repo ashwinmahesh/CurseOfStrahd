@@ -6,6 +6,10 @@ extends RefCounted
 ## Pure data with to_dict()/from_dict(); GameState (core/) holds one and saves it.
 
 var party: Array[Character] = []
+## Roster members at camp: the rest of the company, out of the party for now (owner, 2026-10-06: the player swaps
+## who travels, up to PARTY_CAP at once, outside fights and conversations). They don't speak in the story; they level
+## with the party (Pregens.catch_up when they rejoin).
+var bench: Array[Character] = []
 ## Index into party of the character leading in exploration and speaking in dialogue.
 var leader: int = 0
 var gold: float = 0.0
@@ -226,6 +230,55 @@ func target_level() -> int:
 
 func can_level_up(ch: Character) -> bool:
 	return ch.character_level() < target_level()
+
+
+# --- The roster -----------------------------------------------------------------------------------
+
+## Most characters travelling at once.
+const PARTY_CAP := 4
+
+
+## Everyone the player can choose from: the party, then those at camp.
+func roster() -> Array[Character]:
+	var out: Array[Character] = party.duplicate()
+	out.append_array(bench)
+	return out
+
+
+## `incoming` (at camp) takes `outgoing`'s place in the party and marching order; `outgoing` goes to camp.
+func swap_members(outgoing: Character, incoming: Character) -> bool:
+	var i := party.find(outgoing)
+	var j := bench.find(incoming)
+	if i < 0 or j < 0 or incoming.dead:
+		return false
+	party[i] = incoming
+	bench[j] = outgoing
+	Pregens.catch_up(incoming, target_level())
+	return true
+
+
+## Someone at camp joins the party at the back, while there's room.
+func bring_along(ch: Character) -> bool:
+	var j := bench.find(ch)
+	if j < 0 or party.size() >= PARTY_CAP or ch.dead:
+		return false
+	bench.remove_at(j)
+	party.append(ch)
+	Pregens.catch_up(ch, target_level())
+	return true
+
+
+## A party member goes to camp; the party never goes below one.
+func send_to_camp(ch: Character) -> bool:
+	var i := party.find(ch)
+	if i < 0 or party.size() <= 1:
+		return false
+	party.remove_at(i)
+	if positions.size() > i:
+		positions.remove_at(i)
+	bench.append(ch)
+	leader = clampi(leader, 0, party.size() - 1)
+	return true
 
 
 # --- Time -----------------------------------------------------------------------------------------
@@ -449,7 +502,10 @@ func to_dict() -> Dictionary:
 	var pos: Array = []
 	for p in positions:
 		pos.append([p.x, p.y])
-	return {"party": members, "leader": leader, "gold": gold, "stash": stash.duplicate(true), "flags": flags.duplicate(true),
+	var benched: Array = []
+	for ch in bench:
+		benched.append(ch.to_dict())
+	return {"party": members, "bench": benched, "leader": leader, "gold": gold, "stash": stash.duplicate(true), "flags": flags.duplicate(true),
 		"quests": quests.duplicate(true), "attitudes": attitudes.duplicate(true), "visited": visited.duplicate(true),
 		"codex": codex.duplicate(), "narrator": narrator.duplicate(true), "milestones": milestones, "start_level": start_level,
 		"day": day, "minute_of_day": minute_of_day, "location": location, "positions": pos,
@@ -470,6 +526,10 @@ static func from_dict(d: Dictionary) -> StoryState:
 			loaded.append(ch)
 			saved[ch.id] = (m as Dictionary).get("state", {})
 	Creature.relink_concentration(loaded, saved)
+	for m: Variant in d.get("bench", []):
+		var ch := Character.from_dict(m as Dictionary)
+		if ch != null:
+			st.bench.append(ch)
 	st.leader = int(d.get("leader", 0))
 	st.gold = float(d.get("gold", 0.0))
 	for e: Variant in d.get("stash", []):

@@ -376,8 +376,10 @@ func _place_party() -> void:
 		(tokens[members[0].id] as Node3D).add_child(lantern)
 
 
-## Swaps in party members whose character changed (Madam Eva's respec) where the old ones stood.
+## Swaps in party members whose character changed (Madam Eva's respec, a swap on the roster screen) where the old ones
+## stood; someone sent to camp leaves, and someone brought along steps in beside the party.
 func rebuild_party() -> void:
+	_fit_party_size()
 	for i in mini(members.size(), st.party.size()):
 		if members[i].creature == st.party[i]:
 			continue
@@ -397,6 +399,57 @@ func rebuild_party() -> void:
 			rig.follow = fresh
 			if lantern != null and lantern.get_parent() == null:
 				fresh.add_child(lantern)
+
+
+## Matches the figures to the party's size (the roster screen): figures for members who left go, and members who
+## joined stand on free squares near the leader. rebuild_party then swaps any changed faces in place.
+func _fit_party_size() -> void:
+	var left: Array[Combatant] = []
+	for cb in members:
+		if not cb.creature in st.party:
+			left.append(cb)
+	for cb in left:
+		if members.size() <= st.party.size():
+			break
+		members.erase(cb)
+		if tokens.has(cb.id):
+			var tok := tokens[cb.id] as CombatToken
+			if lantern != null and lantern.get_parent() == tok:
+				tok.remove_child(lantern)
+			tok.queue_free()
+			tokens.erase(cb.id)
+	if members.size() < st.party.size() and not members.is_empty():
+		var taken: Array[Vector2i] = []
+		for cb in members:
+			taken.append(cb.cell)
+		var cells := _cells_around(members[0].cell, st.party.size() + members.size())
+		for i in range(members.size(), st.party.size()):
+			var cell := members[0].cell
+			for c in cells:
+				if not c in taken:
+					cell = c
+					break
+			taken.append(cell)
+			var cb := Combatant.new(st.party[i], &"party", cell)
+			members.append(cb)
+			var tok := CombatToken.create(cb)
+			tok.position = board.cell_center(cell)
+			add_child(tok)
+			tokens[cb.id] = tok
+	# Members keep the party's order (a swap puts the newcomer in the leaver's place).
+	var ordered: Array[Combatant] = []
+	for ch in st.party:
+		for cb in members:
+			if cb.creature == ch:
+				ordered.append(cb)
+	if ordered.size() == members.size():
+		members = ordered
+	if lantern != null and not members.is_empty() and lantern.get_parent() == null:
+		(tokens[members[0].id] as Node3D).add_child(lantern)
+	if not members.is_empty():
+		rig.follow = tokens[members[0].id] as Node3D
+	_save_positions()
+	place_guests()
 
 
 ## Puts the party's guests behind the last member (called again when someone joins or leaves).
