@@ -30,12 +30,9 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
+    "kind": "ally",
     "count": 1
   },
-  "conditions": [
-    "invisible"
-  ],
   "upcast": {
     "targets": 1
   },

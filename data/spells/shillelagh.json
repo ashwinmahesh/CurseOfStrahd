@@ -26,20 +26,8 @@
     "amount": 1
   },
   "targets": {
-    "kind": "object",
-    "count": 1,
-    "description": "A Club or Quarterstaff you are holding."
+    "kind": "self"
   },
-  "damage": [
-    {
-      "dice": "1d8",
-      "type_choice": [
-        "force",
-        "bludgeoning"
-      ],
-      "add_mod": true
-    }
-  ],
   "cantrip_scaling": {
     "text": "The weapon damage die becomes a d10 at character level 5, a d12 at level 11 and 2d6 at level 17."
   },
@@ -48,5 +36,33 @@
     "damage"
   ],
   "summary": "Your Club or Quarterstaff deals a d8 (scaling) using your spellcasting ability, as Force damage if you like.",
-  "text": "A Club or Quarterstaff you are holding is filled with nature's power for the duration. Its damage die becomes a d8, and for melee attacks with it you can use your spellcasting ability instead of Strength for the attack and damage rolls. When such an attack deals damage, you can make it Force damage or keep the weapon's normal damage type. The spell ends early if you cast it again or let go of the weapon. The damage die becomes a d10 at character level 5, a d12 at level 11 and 2d6 at level 17."
+  "text": "A Club or Quarterstaff you are holding is filled with nature's power for the duration. Its damage die becomes a d8, and for melee attacks with it you can use your spellcasting ability instead of Strength for the attack and damage rolls. When such an attack deals damage, you can make it Force damage or keep the weapon's normal damage type. The spell ends early if you cast it again or let go of the weapon. The damage die becomes a d10 at character level 5, a d12 at level 11 and 2d6 at level 17.",
+  "choice": {
+    "kind": "damage_type",
+    "label": "Damage type",
+    "from": [
+      "force",
+      "bludgeoning"
+    ]
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "modifiers": [
+          {
+            "stat": "weapon_override",
+            "items": [
+              "club",
+              "quarterstaff"
+            ],
+            "die": "tier:1d8,1d10,1d12,2d6",
+            "ability": "spell",
+            "damage_type": "choice"
+          }
+        ]
+      }
+    }
+  ]
 }

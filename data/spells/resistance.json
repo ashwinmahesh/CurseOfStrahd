@@ -27,7 +27,7 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
+    "kind": "ally",
     "count": 1,
     "description": "One willing creature you touch."
   },
@@ -36,5 +36,37 @@
     "buff"
   ],
   "summary": "A willing creature reduces damage of one chosen type by 1d4, once per turn.",
-  "text": "Touch a willing creature and choose one damage type: Acid, Bludgeoning, Cold, Fire, Lightning, Necrotic, Piercing, Poison, Radiant, Slashing or Thunder. Until the spell ends, whenever the creature takes damage of that type, it reduces the total damage by 1d4. A creature can gain this reduction only once per turn."
+  "text": "Touch a willing creature and choose one damage type: Acid, Bludgeoning, Cold, Fire, Lightning, Necrotic, Piercing, Poison, Radiant, Slashing or Thunder. Until the spell ends, whenever the creature takes damage of that type, it reduces the total damage by 1d4. A creature can gain this reduction only once per turn.",
+  "choice": {
+    "kind": "damage_type",
+    "label": "Damage type",
+    "from": [
+      "acid",
+      "bludgeoning",
+      "cold",
+      "fire",
+      "lightning",
+      "necrotic",
+      "piercing",
+      "poison",
+      "radiant",
+      "slashing",
+      "thunder"
+    ]
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "damage_reduction_die",
+            "dice": "1d4",
+            "type": "choice",
+            "once_per_turn": true
+          }
+        ]
+      }
+    }
+  ]
 }

@@ -38,9 +38,6 @@
   },
   "save": "con",
   "save_success": "none",
-  "conditions": [
-    "poisoned"
-  ],
   "effects": [
     {
       "effect": "condition",
@@ -53,5 +50,33 @@
     "control"
   ],
   "summary": "20-foot-radius gas: creatures starting a turn in it make a Con save or are Poisoned and lose their action.",
-  "text": "A 20-foot-radius Sphere of nauseating yellow gas forms, centered on a point within 90 feet. The cloud is Heavily Obscured and lasts for the duration unless a strong wind (such as the one from Gust of Wind) disperses it. Each creature that starts its turn in the Sphere makes a Constitution saving throw; on a failure it has the Poisoned condition until the end of that turn, and while Poisoned this way it can't take an action or a Bonus Action."
+  "text": "A 20-foot-radius Sphere of nauseating yellow gas forms, centered on a point within 90 feet. The cloud is Heavily Obscured and lasts for the duration unless a strong wind (such as the one from Gust of Wind) disperses it. Each creature that starts its turn in the Sphere makes a Constitution saving throw; on a failure it has the Poisoned condition until the end of that turn, and while Poisoned this way it can't take an action or a Bonus Action.",
+  "zone": {
+    "triggers": [
+      "start_turn"
+    ],
+    "obscured": "heavy",
+    "save": "con",
+    "effects": [
+      {
+        "effect": "condition",
+        "params": {
+          "until": "this_turn_end",
+          "condition": "poisoned"
+        }
+      },
+      {
+        "effect": "modifiers",
+        "params": {
+          "until": "this_turn_end",
+          "modifiers": [
+            {
+              "stat": "flag",
+              "value": "no_action_or_bonus"
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

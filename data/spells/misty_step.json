@@ -16,7 +16,8 @@
     "unit": "bonus_action"
   },
   "range": {
-    "kind": "self"
+    "kind": "feet",
+    "feet": 30
   },
   "components": {
     "v": true
@@ -25,7 +26,8 @@
     "kind": "instantaneous"
   },
   "targets": {
-    "kind": "self"
+    "kind": "point",
+    "description": "an unoccupied space you can see within 30 feet"
   },
   "tags": [
     "movement"

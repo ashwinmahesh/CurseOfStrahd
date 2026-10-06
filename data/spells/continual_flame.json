@@ -29,7 +29,7 @@
     "kind": "until_dispelled"
   },
   "targets": {
-    "kind": "object",
+    "kind": "ally",
     "count": 1
   },
   "effects": [

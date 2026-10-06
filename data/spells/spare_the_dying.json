@@ -31,7 +31,8 @@
     "description": "A creature with 0 Hit Points that isn't dead."
   },
   "cantrip_scaling": {
-    "text": "Range doubles: 30 feet at character level 5, 60 feet at level 11, 120 feet at level 17."
+    "range_doubles": true,
+    "text": "The range doubles at character levels 5, 11 and 17 (30, 60 and 120 feet)."
   },
   "tags": [
     "healing"

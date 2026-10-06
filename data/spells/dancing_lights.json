@@ -34,20 +34,30 @@
     "count": 4,
     "description": "Up to four lights at points within range, or one Medium humanlike form."
   },
-  "effects": [
-    {
-      "effect": "light",
-      "params": {
-        "bright": 0,
-        "dim": 10,
-        "count": 4
-      }
-    }
-  ],
   "tags": [
     "light",
     "utility"
   ],
   "summary": "Up to four hovering lights (or one glowing Medium form), each shedding Dim Light in a 10-foot radius.",
-  "text": "You make up to four torch-sized lights appear within range, hovering for the duration and looking like torches, lanterns or glowing orbs; or you merge all four into one glowing form of Medium size with a vaguely humanlike shape. Each light, or the merged form, sheds Dim Light in a 10-foot radius. As a Bonus Action you can move the lights up to 60 feet to spaces within range. Each light must stay within 20 feet of another light from this spell, and a light that goes beyond the spell's range vanishes."
+  "text": "You make up to four torch-sized lights appear within range, hovering for the duration and looking like torches, lanterns or glowing orbs; or you merge all four into one glowing form of Medium size with a vaguely humanlike shape. Each light, or the merged form, sheds Dim Light in a 10-foot radius. As a Bonus Action you can move the lights up to 60 feet to spaces within range. Each light must stay within 20 feet of another light from this spell, and a light that goes beyond the spell's range vanishes.",
+  "object": {
+    "kind": "lights",
+    "range": 120,
+    "rules": {
+      "light": {
+        "bright": 0,
+        "dim": 10
+      }
+    }
+  },
+  "sustain": [
+    {
+      "do": "move_object",
+      "cost": "bonus_action",
+      "move": 60,
+      "label": "Move the lights",
+      "sub": "60 ft",
+      "help": "Move the lights up to 60 ft."
+    }
+  ]
 }

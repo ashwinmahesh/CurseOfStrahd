@@ -51,5 +51,23 @@
     "control"
   ],
   "summary": "Spinning daggers fill a 5-ft Cube: 4d4 Slashing to creatures there, once per turn; you can teleport it.",
-  "text": "You fill a 5-foot Cube centered on a point within range with whirling daggers. Each creature in the Cube takes 4d4 Slashing damage. A creature also takes that damage when it enters the Cube, when it ends its turn there, or when the Cube is moved into its space, but no creature takes this damage more than once per turn. On your later turns you can take a Magic action to teleport the Cube up to 30 feet. The damage increases by 2d4 for each spell slot level above 2."
+  "text": "You fill a 5-foot Cube centered on a point within range with whirling daggers. Each creature in the Cube takes 4d4 Slashing damage. A creature also takes that damage when it enters the Cube, when it ends its turn there, or when the Cube is moved into its space, but no creature takes this damage more than once per turn. On your later turns you can take a Magic action to teleport the Cube up to 30 feet. The damage increases by 2d4 for each spell slot level above 2.",
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn",
+      "moved_into"
+    ]
+  },
+  "sustain": [
+    {
+      "do": "move_object",
+      "cost": "magic",
+      "move": 30,
+      "label": "Move Cloud of Daggers",
+      "sub": "teleport 30 ft",
+      "help": "A Magic action: teleport the Cube up to 30 ft."
+    }
+  ]
 }

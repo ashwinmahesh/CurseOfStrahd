@@ -35,5 +35,19 @@
     "buff"
   ],
   "summary": "While you concentrate, every attack roll made against you takes a 1d4 penalty.",
-  "text": "Until the spell ends, whenever a creature makes an attack roll against you, it subtracts 1d4 from that roll."
+  "text": "Until the spell ends, whenever a creature makes an attack roll against you, it subtracts 1d4 from that roll.",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "modifiers": [
+          {
+            "stat": "attacked_penalty_die",
+            "dice": "1d4"
+          }
+        ]
+      }
+    }
+  ]
 }

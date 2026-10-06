@@ -33,14 +33,49 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
-    "count": 1,
-    "description": "a willing creature"
+    "kind": "ally",
+    "count": 1
   },
   "tags": [
     "buff",
     "defense"
   ],
   "summary": "Protects a willing creature from Aberrations, Celestials, Elementals, Fey, Fiends and Undead.",
-  "text": "A willing creature you touch is protected from Aberrations, Celestials, Elementals, Fey, Fiends and Undead until the spell ends. Creatures of those types have Disadvantage on attack rolls against it, and they can't possess it or give it the Charmed or Frightened condition. If it is already possessed, Charmed or Frightened by such a creature, it has Advantage on any new saving throw against that effect. Concentration, up to 10 minutes. The Holy Water (25+ GP) is consumed."
+  "text": "A willing creature you touch is protected from Aberrations, Celestials, Elementals, Fey, Fiends and Undead until the spell ends. Creatures of those types have Disadvantage on attack rolls against it, and they can't possess it or give it the Charmed or Frightened condition. If it is already possessed, Charmed or Frightened by such a creature, it has Advantage on any new saving throw against that effect. Concentration, up to 10 minutes. The Holy Water (25+ GP) is consumed.",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "attacked_with_by_type",
+            "value": "disadvantage",
+            "types": [
+              "aberration",
+              "celestial",
+              "elemental",
+              "fey",
+              "fiend",
+              "undead"
+            ]
+          },
+          {
+            "stat": "condition_immunity_by_type",
+            "conditions": [
+              "charmed",
+              "frightened"
+            ],
+            "types": [
+              "aberration",
+              "celestial",
+              "elemental",
+              "fey",
+              "fiend",
+              "undead"
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

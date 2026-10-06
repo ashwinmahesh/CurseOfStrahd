@@ -31,9 +31,8 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature_or_object",
-    "count": 1,
-    "description": "a creature, or an object nobody is wearing or carrying"
+    "kind": "creature",
+    "count": 1
   },
   "save": "con",
   "save_success": "none",
@@ -42,5 +41,67 @@
     "debuff"
   ],
   "summary": "Grow or shrink a creature or object one size: Strength Advantage or Disadvantage and +1d4 or -1d4 damage.",
-  "text": "Choose a creature, or an object that nobody is wearing or carrying, that you can see within range. An unwilling creature can make a Constitution saving throw; on a success the spell has no effect. Everything a creature wears and carries changes size with it; an item it drops returns to normal size at once, and a thrown weapon or piece of ammunition returns to normal size right after it hits or misses. Enlarge: the target grows by one size category (Medium to Large, for example), has Advantage on Strength checks and Strength saving throws, and its attacks with its enlarged weapons or Unarmed Strikes deal an extra 1d4 damage on a hit. Reduce: the target shrinks by one size category (Medium to Small, for example), has Disadvantage on Strength checks and Strength saving throws, and its attacks with its reduced weapons or Unarmed Strikes deal 1d4 less damage on a hit (to a minimum of 1)."
+  "text": "Choose a creature, or an object that nobody is wearing or carrying, that you can see within range. An unwilling creature can make a Constitution saving throw; on a success the spell has no effect. Everything a creature wears and carries changes size with it; an item it drops returns to normal size at once, and a thrown weapon or piece of ammunition returns to normal size right after it hits or misses. Enlarge: the target grows by one size category (Medium to Large, for example), has Advantage on Strength checks and Strength saving throws, and its attacks with its enlarged weapons or Unarmed Strikes deal an extra 1d4 damage on a hit. Reduce: the target shrinks by one size category (Medium to Small, for example), has Disadvantage on Strength checks and Strength saving throws, and its attacks with its reduced weapons or Unarmed Strikes deal 1d4 less damage on a hit (to a minimum of 1).",
+  "choice": {
+    "kind": "option",
+    "label": "Enlarge or Reduce",
+    "from": [
+      "enlarge",
+      "reduce"
+    ]
+  },
+  "willing_skip_save": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "enlarge",
+        "modifiers": [
+          {
+            "stat": "size_step",
+            "value": 1
+          },
+          {
+            "stat": "advantage",
+            "on": "check:str"
+          },
+          {
+            "stat": "advantage",
+            "on": "save:str"
+          },
+          {
+            "stat": "extra_damage",
+            "dice": "1d4",
+            "on": "weapon"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "reduce",
+        "modifiers": [
+          {
+            "stat": "size_step",
+            "value": -1
+          },
+          {
+            "stat": "disadvantage",
+            "on": "check:str"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:str"
+          },
+          {
+            "stat": "extra_damage",
+            "dice": "1d4",
+            "on": "weapon",
+            "penalty": true
+          }
+        ]
+      }
+    }
+  ]
 }

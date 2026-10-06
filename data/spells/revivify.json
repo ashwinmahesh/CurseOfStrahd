@@ -32,10 +32,7 @@
   "targets": {
     "kind": "creature",
     "count": 1,
-    "description": "a creature that died within the last minute"
-  },
-  "heal": {
-    "flat": 1
+    "description": "a creature that has died within the last minute"
   },
   "tags": [
     "restoration",

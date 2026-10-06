@@ -52,8 +52,30 @@ func play_turn(c: Combatant) -> CombatResult:
 	var e := enc()
 	var fear := e.features.fleeing_from(c)
 	if fear != null:
-		last_plan = {"kind": "flee", "why": "Turned"}
-		return _flee(c, fear, false)
+		var by_spell := c.creature.has_flag("fear_flee")
+		last_plan = {"kind": "flee", "why": "Fear" if by_spell else "Turned"}
+		return _flee(c, fear, by_spell)
+	if c.creature.has_flag("ethereal"):
+		last_plan = {"kind": "wait", "why": "on the Ethereal Plane"}
+		return CombatResult.new()
+	if c.creature.has_flag("indifferent"):
+		e.log.add("info", "%s doesn't care to fight (Calm Emotions)" % c.name(), c.id)
+		last_plan = {"kind": "wait", "why": "Calm Emotions"}
+		return CombatResult.new()
+	if c.creature.has_flag("crowned") and c.can_act():
+		var crowned := _crown_turn(c)
+		if crowned != null:
+			return crowned
+	if c.creature.has_flag("command_drop"):
+		e.log.add("info", "%s drops what it holds and ends its turn (Command: Drop)" % c.name(), c.id)
+		c.set_meta("dropped_weapon", true)
+		last_plan = {"kind": "wait", "why": "Command: Drop"}
+		return CombatResult.new()
+	if c.creature.has_flag("command_approach"):
+		var caster2 := _commander(c)
+		if caster2 != null:
+			last_plan = {"kind": "approach", "why": "Command: Approach"}
+			return _approach(c, {"target": caster2, "dash": false})
 	if c.creature.has_flag("command_grovel"):
 		c.creature.add_condition(&"prone", "Command")
 		e.log.add("condition", "%s grovels and falls Prone (Command)" % c.name(), c.id)
@@ -88,6 +110,38 @@ func play_turn(c: Combatant) -> CombatResult:
 			return e.search(c)
 	e.log.add("info", "%s waits" % c.name(), c.id)
 	return CombatResult.new()
+
+
+func _effect_of(c: Combatant, source_id: String) -> Effect:
+	for fx: Effect in c.creature.effects:
+		if fx.source_id == source_id:
+			return fx
+	return null
+
+
+## Crown of Madness: before moving, the creature uses its action to make a melee attack against a creature the
+## caster picks (here: the nearest creature other than itself and the caster that it can reach).
+func _crown_turn(c: Combatant) -> CombatResult:
+	var e := enc()
+	var caster := e.get_c(str(c.get_meta("crowned_by", "")))
+	var best: Combatant = null
+	var opt := {}
+	for o in e.living():
+		if o == c or o == caster or o.is_down():
+			continue
+		var mo := e.best_melee_option(c, o)
+		if mo.is_empty() or e.distance(c, o) > (mo["profile"] as WeaponProfile).reach:
+			continue
+		if best == null or (caster != null and caster.hostile_to(o) and not caster.hostile_to(best)):
+			best = o
+			opt = mo
+	if best == null:
+		return null
+	e.log.add("info", "%s lashes out at %s (Crown of Madness)" % [c.name(), best.name()], c.id)
+	last_plan = {"kind": "attack", "why": "Crown of Madness"}
+	if c.creature is Monster:
+		return e.monster_attack(c, best, str(opt.get("action_id", "")))
+	return e.attack(c, best, str(opt["id"]))
 
 
 func _commander(c: Combatant) -> Combatant:

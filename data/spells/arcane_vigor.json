@@ -27,9 +27,6 @@
   "targets": {
     "kind": "self"
   },
-  "heal": {
-    "add_mod": true
-  },
   "upcast": {
     "text": "You can roll one more unspent Hit Point Die for each slot level above 2."
   },

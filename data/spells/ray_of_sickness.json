@@ -36,9 +36,6 @@
       "type": "poison"
     }
   ],
-  "conditions": [
-    "poisoned"
-  ],
   "upcast": {
     "damage": "1d8"
   },
@@ -46,6 +43,7 @@
     {
       "effect": "condition",
       "params": {
+        "until": "caster_turn_end",
         "condition": "poisoned"
       }
     }

@@ -35,6 +35,7 @@ var nick_used: bool = false
 var extra_actions: int = 0               ## Action Surge taken before the action was used
 var surged: bool = false
 var magic_action_used: bool = false      ## at most one Magic action a turn (Action Surge's can't be Magic)
+var haste_action: bool = false           ## Haste's extra action: one weapon attack, Dash, Disengage, Hide or Utilize
 var moved: bool = false                  ## moved this turn (Steady Aim)
 var stood_up: bool = false
 var hidden: bool = false
@@ -95,8 +96,9 @@ func footprint() -> Array[Vector2i]:
 	return CombatGrid.footprint(cell, size_cells)
 
 
+## Speed for moving on the grid: walking, or flying when that's faster (Fly, flying monsters, Gaseous Form).
 func speed() -> int:
-	return creature.speed().total()
+	return maxi(creature.speed().total(), creature.speed("fly").total())
 
 
 ## Reach for melee attacks and Opportunity Attacks (5 ft, more with Reach weapons or stat-block reach).
@@ -127,6 +129,7 @@ func reset_turn() -> void:
 	extra_actions = 0
 	surged = false
 	magic_action_used = false
+	haste_action = false
 	moved = false
 	stood_up = false
 	death_save_rolled = false

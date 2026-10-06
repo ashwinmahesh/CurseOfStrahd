@@ -17,7 +17,8 @@
     "unit": "action"
   },
   "range": {
-    "kind": "self"
+    "kind": "feet",
+    "feet": 120
   },
   "components": {
     "s": true,
@@ -28,7 +29,7 @@
     "kind": "instantaneous"
   },
   "targets": {
-    "kind": "creature_or_object",
+    "kind": "enemy",
     "count": 1,
     "description": "The target of one attack with the component weapon, at that weapon's range."
   },
@@ -41,5 +42,13 @@
     "buff"
   ],
   "summary": "Make one weapon attack using your spellcasting ability; it may deal Radiant damage, plus more at levels 5+.",
-  "text": "Make one attack with the weapon used as the spell's material component. The attack uses your spellcasting ability instead of Strength or Dexterity for its attack and damage rolls, and if it deals damage you choose whether that damage is Radiant or the weapon's normal type. From character level 5 the attack also deals extra Radiant damage (whichever type you chose): 1d6 at level 5, 2d6 at level 11 and 3d6 at level 17."
+  "text": "Make one attack with the weapon used as the spell's material component. The attack uses your spellcasting ability instead of Strength or Dexterity for its attack and damage rolls, and if it deals damage you choose whether that damage is Radiant or the weapon's normal type. From character level 5 the attack also deals extra Radiant damage (whichever type you chose): 1d6 at level 5, 2d6 at level 11 and 3d6 at level 17.",
+  "choice": {
+    "kind": "damage_type",
+    "label": "Damage",
+    "from": [
+      "radiant",
+      "weapon"
+    ]
+  }
 }

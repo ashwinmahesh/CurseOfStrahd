@@ -30,26 +30,13 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
-    "count": 1,
-    "description": "a willing creature"
+    "kind": "ally",
+    "count": 1
   },
   "effects": [
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
-        "choice": {
-          "kind": "damage_type",
-          "count": 1,
-          "from": [
-            "acid",
-            "cold",
-            "fire",
-            "lightning",
-            "thunder"
-          ]
-        },
         "modifiers": [
           {
             "stat": "resistance",
@@ -64,5 +51,16 @@
     "buff"
   ],
   "summary": "A willing creature gains Resistance to Acid, Cold, Fire, Lightning or Thunder damage (your choice).",
-  "text": "For up to 1 hour, the willing creature you touch has Resistance to one damage type you choose when you cast the spell: Acid, Cold, Fire, Lightning or Thunder."
+  "text": "For up to 1 hour, the willing creature you touch has Resistance to one damage type you choose when you cast the spell: Acid, Cold, Fire, Lightning or Thunder.",
+  "choice": {
+    "kind": "damage_type",
+    "label": "Damage type",
+    "from": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "thunder"
+    ]
+  }
 }

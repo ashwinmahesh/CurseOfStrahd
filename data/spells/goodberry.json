@@ -34,5 +34,14 @@
     "utility"
   ],
   "summary": "Ten magic berries; eating one (Bonus Action) restores 1 Hit Point and feeds a creature for a day.",
-  "text": "Ten magic berries appear in your hand and stay magical for 24 hours. A creature can take a Bonus Action to eat one berry, which restores 1 Hit Point and gives enough nourishment to sustain a creature for one day. Any berries not eaten disappear when the spell ends."
+  "text": "Ten magic berries appear in your hand and stay magical for 24 hours. A creature can take a Bonus Action to eat one berry, which restores 1 Hit Point and gives enough nourishment to sustain a creature for one day. Any berries not eaten disappear when the spell ends.",
+  "effects": [
+    {
+      "effect": "custom",
+      "params": {
+        "id": "goodberry",
+        "count": 10
+      }
+    }
+  ]
 }

@@ -44,7 +44,7 @@
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
+        "repeat_save": "end_of_turn",
         "modifiers": [
           {
             "stat": "ac",
@@ -57,8 +57,11 @@
           },
           {
             "stat": "flag",
-            "value": "slowed",
-            "text": "Speed halved; no Reactions; action or Bonus Action, not both; one attack per Attack action; 25% failure for Somatic spells."
+            "value": "slowed"
+          },
+          {
+            "stat": "speed_percent",
+            "value": 50
           }
         ]
       }
@@ -69,5 +72,7 @@
     "control"
   ],
   "summary": "Up to six creatures: Wis save or half Speed, -2 AC and Dex saves, no Reactions, one action or Bonus Action.",
-  "text": "Choose up to six creatures in a 40-foot Cube within 120 feet. Each makes a Wisdom saving throw; on a failure it is affected for the duration. An affected creature's Speed is halved, it takes a -2 penalty to AC and to Dexterity saving throws, and it can't take Reactions. On its turns it can take either an action or a Bonus Action, not both, and if it takes the Attack action it can make only one attack. If it casts a spell with a Somatic component, there is a 25 percent chance the spell fails because its gestures are too slow. An affected creature repeats the save at the end of each of its turns, ending the spell on itself on a success."
+  "text": "Choose up to six creatures in a 40-foot Cube within 120 feet. Each makes a Wisdom saving throw; on a failure it is affected for the duration. An affected creature's Speed is halved, it takes a -2 penalty to AC and to Dexterity saving throws, and it can't take Reactions. On its turns it can take either an action or a Bonus Action, not both, and if it takes the Attack action it can make only one attack. If it casts a spell with a Somatic component, there is a 25 percent chance the spell fails because its gestures are too slow. An affected creature repeats the save at the end of each of its turns, ending the spell on itself on a success.",
+  "area_targets": "enemies",
+  "area_max_targets": 6
 }

@@ -19,6 +19,8 @@ static func from_data(entry: Dictionary, dice: DiceRoller, errors: Array[String]
 	var e := Encounter.new(grid, dice)
 	e.title = str(entry.get("name", ""))
 	e.intro = str(entry.get("text", ""))
+	e.ambient_light = str(map.get("light", "bright"))
+	e.sunlit = bool(map.get("sunlight", false))
 	var level := int(entry.get("party_level", 1))
 	for p: Variant in entry["party"]:
 		var pd := p as Dictionary

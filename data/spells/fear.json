@@ -38,14 +38,26 @@
   },
   "save": "wis",
   "save_success": "none",
-  "conditions": [
-    "frightened"
-  ],
   "effects": [
     {
       "effect": "condition",
       "params": {
+        "repeat_save": "end_of_turn",
+        "repeat_if": "no_sight_of_caster",
         "condition": "frightened"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "repeat_save": "end_of_turn",
+        "repeat_if": "no_sight_of_caster",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "fear_flee"
+          }
+        ]
       }
     }
   ],

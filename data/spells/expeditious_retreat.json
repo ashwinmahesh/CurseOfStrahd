@@ -34,5 +34,14 @@
     "movement"
   ],
   "summary": "Dash now, and Dash as a Bonus Action on later turns while the spell lasts.",
-  "text": "When you cast this spell you take the Dash action, and until the spell ends you can take the Dash action as a Bonus Action. Concentration, up to 10 minutes."
+  "text": "When you cast this spell you take the Dash action, and until the spell ends you can take the Dash action as a Bonus Action. Concentration, up to 10 minutes.",
+  "sustain": [
+    {
+      "do": "dash",
+      "cost": "bonus_action",
+      "label": "Dash (Expeditious Retreat)",
+      "sub": "Bonus Action",
+      "help": "Take the Dash action as a Bonus Action."
+    }
+  ]
 }

@@ -37,10 +37,6 @@
   },
   "save": "wis",
   "save_success": "none",
-  "conditions": [
-    "prone",
-    "incapacitated"
-  ],
   "upcast": {
     "targets": 1
   },
@@ -48,12 +44,18 @@
     {
       "effect": "condition",
       "params": {
+        "repeat_save": "end_of_turn",
+        "repeat_on_damage": true,
+        "damage_advantage": true,
         "condition": "prone"
       }
     },
     {
       "effect": "condition",
       "params": {
+        "repeat_save": "end_of_turn",
+        "repeat_on_damage": true,
+        "damage_advantage": true,
         "condition": "incapacitated"
       }
     }

@@ -12,7 +12,7 @@
   ],
   "casting_time": {
     "unit": "reaction",
-    "trigger": "you take damage from a creature you can see within 60 feet of you"
+    "trigger": "When a creature you can see within 60 feet damages you."
   },
   "range": {
     "kind": "feet",

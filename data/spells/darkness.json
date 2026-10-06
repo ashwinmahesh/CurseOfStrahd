@@ -41,5 +41,10 @@
     "utility"
   ],
   "summary": "Magical Darkness fills a 15-ft-radius Sphere that Darkvision can't see through; dispels level 1-2 light spells.",
-  "text": "Magical Darkness fills a 15-foot-radius Sphere centered on a point within range for the duration. Darkvision can't see through it and nonmagical light can't illuminate it. Alternatively, you cast the spell on an object that nobody is wearing or carrying, and the Darkness fills a 15-foot Emanation from that object; covering the object with something opaque, such as a bowl or helm, blocks the Darkness. If any part of the area overlaps Bright Light or Dim Light created by a spell of level 2 or lower, that spell is dispelled."
+  "text": "Magical Darkness fills a 15-foot-radius Sphere centered on a point within range for the duration. Darkvision can't see through it and nonmagical light can't illuminate it. Alternatively, you cast the spell on an object that nobody is wearing or carrying, and the Darkness fills a 15-foot Emanation from that object; covering the object with something opaque, such as a bowl or helm, blocks the Darkness. If any part of the area overlaps Bright Light or Dim Light created by a spell of level 2 or lower, that spell is dispelled.",
+  "zone": {
+    "obscured": "heavy",
+    "darkness": true,
+    "triggers": []
+  }
 }

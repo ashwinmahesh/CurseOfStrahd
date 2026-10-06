@@ -44,6 +44,7 @@ func actions_for(c: Combatant) -> Array[Dictionary]:
 	_standard(c, out)
 	_class_actions(c, out)
 	_spells(c, out)
+	_sustained(c, out)
 	_items(c, out)
 	_passives(c, out)
 	return out
@@ -213,11 +214,71 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 			if pw == "" and e.features.preserve_life_room(c).is_empty():
 				pw = "No Bloodied allies within 30 ft"
 			out.append(_entry("preserve_life", tab, "Preserve Life", "%d HP to share" % (5 * ch.class_level_of("cleric")), "action", pw, "none"))
-	if e.spells.has_spiritual_weapon(c):
-		var sww := bwhy
-		var swa := _entry("spiritual_weapon_attack", tab, "Spiritual Weapon", "move 20 ft + attack", "bonus", sww, "enemy",
-			"The weapon flies up to 20 ft to a creature and strikes it (melee spell attack).")
-		out.append(swa)
+	_effect_actions(c, out, tab)
+
+
+## Actions that come from effects on the creature: breaking free of Web or Entangle, shaking a sleeping ally
+## awake, and Haste's extra action.
+func _effect_actions(c: Combatant, out: Array[Dictionary], tab: String) -> void:
+	var why := e._action_check(c)
+	for fx: Effect in c.creature.effects:
+		if not fx.escape.is_empty():
+			var esc := _entry("escape_effect:%d" % fx.id, COMMON, "Break free: %s" % fx.name, "%s DC %d" % [str(fx.escape["skill"]).capitalize(), int(fx.escape["dc"])],
+				"action", why, "none", "An ability check against the spell's save DC ends it on you.")
+			out.append(esc)
+	var sleepers := false
+	for a in e.allies_of(c):
+		if e.distance(c, a) <= 5 and e.sleeper(a) != null:
+			sleepers = true
+	if sleepers:
+		var w := _entry("wake", COMMON, "Wake", "shake an ally", "action", why, "ally", "Use your action to shake a magically sleeping or entranced creature within 5 ft awake.")
+		w["range"] = 5
+		out.append(w)
+	if c.haste_action and c.creature.has_flag("hasted"):
+		var hw := e._turn_check(c)
+		if hw == "" and not c.can_act():
+			hw = "Can't act"
+		out.append(_entry("haste:dash", tab, "Haste: Dash", "extra action", "free", hw, "none", "Haste's extra action: Dash."))
+		out.append(_entry("haste:disengage", tab, "Haste: Disengage", "extra action", "free", hw, "none", "Haste's extra action: Disengage."))
+		out.append(_entry("haste:hide", tab, "Haste: Hide", "extra action", "free", hw if hw != "" else e.hide_blocker(c), "none", "Haste's extra action: Hide."))
+		var best := e.best_melee_option(c, null)
+		for o in e.attack_options(c):
+			if str(o["kind"]) == "unarmed":
+				continue
+			var ha := _entry("haste:attack:" + str(o["id"]), tab, "Haste: %s" % (o["profile"] as WeaponProfile).name, "one attack", "free", hw, "enemy",
+				"Haste's extra action: one weapon attack.")
+			ha["option_id"] = str(o["id"])
+			var p := o["profile"] as WeaponProfile
+			ha["range"] = p.reach if bool(o["melee"]) else (p.long_range if p.long_range > 0 else p.normal_range)
+			out.append(ha)
+		if best.is_empty():
+			pass
+
+
+## Actions a spell keeps granting while it lasts (Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's
+## roll, Dragon's Breath, Produce Flame's hurl...).
+func _sustained(c: Combatant, out: Array[Dictionary]) -> void:
+	var tab := SPELLS if c.creature is Character and not (c.creature as Character).spellcasting.is_empty() else class_tab(c)
+	for a in e.spells.sustained_actions(c):
+		var d := a["def"] as Dictionary
+		var targeting := "none"
+		match str(a["do"]):
+			"attack":
+				targeting = "enemy"
+			"area", "aim":
+				targeting = "direction"
+			"move_object":
+				targeting = "point"
+			"heal_one":
+				targeting = "ally"
+		var cost := "bonus" if str(a["cost"]) == "bonus_action" else "action"
+		var entry := _entry("sustain:" + str(a["id"]), tab, str(a["label"]), str(d.get("sub", "")), cost, str(a["reason"]), targeting,
+			str(d.get("help", "")))
+		entry["kind"] = "sustain"
+		entry["sustain_id"] = str(a["id"])
+		entry["range"] = int(d.get("range", int(d.get("move", 0)) + int(d.get("reach", 0))))
+		entry["spell_id"] = str(a["spell_id"])
+		out.append(entry)
 
 
 func _spells(c: Combatant, out: Array[Dictionary]) -> void:
@@ -242,6 +303,15 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		a["count"] = int(t.get("count", 1))
 		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"]
 		a["concentration"] = bool((data.get("duration", {}) as Dictionary).get("concentration", false))
+		var choice := data.get("choice", {}) as Dictionary
+		if not choice.is_empty() and str(s["id"]) != "command":
+			var opts_list: Array = []
+			for v: Variant in choice.get("from", []):
+				opts_list.append({"value": str(v), "label": str(v).replace("_", " ").capitalize()})
+			a["choices"] = opts_list
+			a["choice_label"] = str(choice.get("label", "Choose"))
+			a["opts"] = {"choice": str((opts_list[0] as Dictionary)["value"])}
+			a["sub"] = str(a["sub"]) + " · " + str((opts_list[0] as Dictionary)["label"])
 		if str(s["id"]) == "command":
 			# One slot per word the engine knows (Approach and Drop: deviations.md).
 			for word: String in SpellCaster.COMMAND_WORDS:
@@ -262,8 +332,15 @@ func _spell_targeting(data: Dictionary) -> String:
 	var t := data.get("targets", {}) as Dictionary
 	if str(t.get("kind", "creature")) == "self":
 		return "none"
+	if str(t.get("kind", "")) == "enemy":
+		return "enemy"
 	var tags := data.get("tags", []) as Array
-	if int(t.get("count", 1)) > 1 or str(data.get("id", "")) in ["magic_missile", "scorching_ray"]:
+	if data.has("object") or str(data.get("id", "")) in ["misty_step", "summon_fey", "summon_undead"]:
+		return "place"
+	if str(data.get("id", "")) == "revivify":
+		return "dead"
+	if str(t.get("count", "")) == "any" or int(t.get("count", 1)) > 1 or int((data.get("upcast", {}) as Dictionary).get("targets", 0)) > 0 \
+			or str(data.get("id", "")) in ["magic_missile", "scorching_ray"]:
 		return "multi"
 	if "healing" in tags or "buff" in tags or "defense" in tags:
 		return "ally"
@@ -567,6 +644,20 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 			var all_opts := (action.get("opts", {}) as Dictionary).duplicate()
 			all_opts.merge(opts, true)
 			return e.spells.cast(c, str(action["spell_id"]), slot, targets, point, dir, all_opts)
+		"sustain":
+			var sid := str(action["sustain_id"])
+			var a := e.spells.sustained_for(c, str(action["spell_id"]))
+			var pt := point
+			if t != null and pt == Vector2.INF:
+				var obj := e.spells.zones.object_of(str(a.get("caster_id", c.id)), str(action["spell_id"]))
+				if obj != null and obj.kind != FieldObject.Kind.ZONE:
+					var cell := _weapon_cell(c, t, obj.cell)
+					pt = Vector2(cell.x + 0.5, cell.y + 0.5)
+			return e.spells.use_sustained(c, sid, targets, pt, dir)
+		"escape_effect":
+			return e.escape_effect(c, int(id.get_slice(":", 1)))
+		"haste":
+			return e.haste_action_use(c, id.get_slice(":", 1), t, id.substr(("haste:attack:").length()) if id.begins_with("haste:attack:") else "")
 	match id:
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")
@@ -620,12 +711,8 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 			return e.features.turn_undead(c)
 		"preserve_life":
 			return e.features.preserve_life(c)
-		"spiritual_weapon_attack":
-			if t == null:
-				return CombatResult.fail("Choose a target")
-			var w := e.spells.spirit_weapons.get(c.id, {}) as Dictionary
-			var cell := _weapon_cell(c, t, w.get("cell", c.cell) as Vector2i)
-			return e.spells.spiritual_weapon_attack(c, t, cell)
+		"wake":
+			return e.wake(c, t)
 	return CombatResult.fail(str(action.get("reason", "Not available")))
 
 
@@ -660,12 +747,32 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 		"dying":
 			if t.creature.hp > 0 or t.creature.dead:
 				return "Choose a dying creature"
+		"dead":
+			if not t.creature.dead:
+				return "Choose a creature that died"
+			if e.distance(c, t) > maxi(rng, 5):
+				return "Out of reach"
+			return ""
 	if t.creature.dead:
 		return "%s is dead" % t.name()
+	if str(action["kind"]) == "sustain":
+		var a := e.spells.sustained_for(c, str(action["spell_id"]))
+		var obj := e.spells.zones.object_of(str(a.get("caster_id", c.id)), str(action["spell_id"])) if not a.is_empty() else null
+		if obj != null and obj.kind != FieldObject.Kind.ZONE:
+			if e.grid.distance_ft(obj.cell, 1, t.cell, t.size_cells) > rng:
+				return "Too far from the %s (%d ft)" % [obj.name, rng]
+			return ""
+	if str(action["kind"]) == "spell" and c.creature.has_condition(&"charmed"):
+		var charm := e.charm_blocks(c, t)
+		if charm != "" and c.hostile_to(t):
+			return charm
 	match str(action["kind"]):
 		"attack", "offhand":
 			var o := e.option_by_id(c, str(action["option_id"]))
 			return e.attack_legal(c, t, o)
+		"haste":
+			if str(action["option_id"]) != "":
+				return e.attack_legal(c, t, e.option_by_id(c, str(action["option_id"])))
 	if rng > 0 and t != c and e.distance(c, t) > rng:
 		return "Out of range (%d ft, range %d ft)" % [e.distance(c, t), rng]
 	if t != c and int(e.cover(c, t)["cover"]) == CombatGrid.Cover.TOTAL:

@@ -36,7 +36,11 @@
         "modifiers": [
           {
             "stat": "attacked_with",
-            "value": "disadvantage"
+            "value": "disadvantage",
+            "unless_sense": [
+              "blindsight",
+              "truesight"
+            ]
           }
         ]
       }

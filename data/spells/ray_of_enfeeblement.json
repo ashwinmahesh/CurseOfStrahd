@@ -37,7 +37,7 @@
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
+        "repeat_save": "end_of_turn",
         "modifiers": [
           {
             "stat": "disadvantage",
@@ -46,15 +46,30 @@
           {
             "stat": "disadvantage",
             "on": "save:str"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "attack:str"
+          },
+          {
+            "stat": "damage_penalty_die",
+            "dice": "1d8"
           }
         ]
       }
     },
     {
-      "effect": "custom",
+      "effect": "modifiers",
       "params": {
-        "id": "ray_of_enfeeblement",
-        "repeat_save": "end_of_turn"
+        "on": "success",
+        "until": "caster_turn_start",
+        "consume": "next_attack",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "attack"
+          }
+        ]
       }
     }
   ],

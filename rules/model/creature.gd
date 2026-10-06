@@ -415,7 +415,7 @@ func roll_initiative(dice: DiceRoller) -> D20Test:
 ## penalty dice (Bless, Bane) and the explanation all come together here.
 func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: int, keys: Array[String],
 		extra_adv: Array[String] = [], extra_dis: Array[String] = [], label: String = "",
-		crit_range: int = 20) -> D20Test:
+		crit_range: int = 20, extra_dice: Array = []) -> D20Test:
 	for m in modifiers_for(&"auto_fail"):
 		if m.matches_any(keys):
 			var failed := D20Test.automatic_failure(kind, target, label, m.source_name)
@@ -440,6 +440,13 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 			var r := int(dice.roll_expr(m.text("dice", "1d4"), m.source_name)["total"])
 			extra -= r
 			extra_text += " - %s %d" % [m.source_name, r]
+	# Dice from someone else's effect (Blade Ward: attack rolls against its caster subtract 1d4).
+	for xd: Variant in extra_dice:
+		var x := xd as Dictionary
+		var r2 := int(dice.roll_expr(str(x.get("dice", "1d4")), str(x.get("source", "")))["total"])
+		var sgn := int(x.get("sign", 1))
+		extra += r2 * sgn
+		extra_text += " %s %s %d" % ["+" if sgn > 0 else "-", x.get("source", ""), r2]
 	var t := D20Test.roll(dice, kind, bonus.total(), target, adv.size(), dis.size(), label, crit_range,
 		extra, extra_text.strip_edges())
 	if has_flag("luck"):
@@ -448,7 +455,24 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 	t.advantage_sources = adv
 	t.disadvantage_sources = dis
 	log_event({"type": "d20", "creature": id, "text": t.describe()})
+	consume_effects(keys)
 	return t
+
+
+## Removes effects that last only until the creature's next D20 Test with one of `keys` (Mind Sliver).
+func consume_effects(keys: Array[String]) -> void:
+	for e: Effect in effects.duplicate():
+		for k in e.consume_on:
+			if k in keys:
+				remove_effect(e)
+				break
+
+
+## Removes effects that last only until the next attack roll against this creature (Guiding Bolt).
+func consume_attacked() -> void:
+	for e: Effect in effects.duplicate():
+		if e.consume_when_attacked:
+			remove_effect(e)
 
 
 # --- Hit Points, damage and healing --------------------------------------------------------------
@@ -807,6 +831,10 @@ func remove_effect(e: Effect) -> void:
 	if e in effects:
 		effects.erase(e)
 		log_event({"type": "effect_removed", "creature": id, "effect": e.name})
+		if e.on_end.is_valid():
+			var f := e.on_end
+			e.on_end = Callable()
+			f.call()
 
 
 func remove_effects_named(effect_name: String) -> void:
@@ -936,8 +964,12 @@ func speed(kind: String = "walk") -> Breakdown:
 		if k == "walk" or k == kind:
 			b.add_nonzero(m.source_name, mod_value(m, ctx))
 	_speed_adjustments(b)
+	for m in modifiers_for(&"speed_percent"):
+		var pct := mod_value(m, ctx)
+		var now := b.sum()
+		b.add(m.source_name, now * pct / 100 - now)
 	for m in modifiers_for(&"speed_set"):
-		if mod_value(m, ctx) == 0:
+		if mod_value(m, ctx) == 0 and m.text("kind", "walk") == kind:
 			b.set_override(0, m.source_name)
 	if b.sum() < 0:
 		b.set_floor(0, "minimum 0")
@@ -954,6 +986,16 @@ func darkvision() -> int:
 	var ctx := formula_context()
 	for m in modifiers_for(&"darkvision"):
 		best = maxi(best, mod_value(m, ctx))
+	return best
+
+
+## Range in feet of a special sense (blindsight, tremorsense, truesight), from the stat block or modifiers.
+func sense_range(kind: String) -> int:
+	var best := int(base_senses.get(kind, 0))
+	var ctx := formula_context()
+	for m in modifiers_for(&"sense"):
+		if m.text("kind") == kind:
+			best = maxi(best, mod_value(m, ctx))
 	return best
 
 

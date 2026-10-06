@@ -37,12 +37,16 @@
     "kind": "point"
   },
   "upcast": {
-    "text": "The fog's radius grows by 20 feet for each slot level above 1."
+    "area": 20
   },
   "tags": [
     "control",
     "utility"
   ],
   "summary": "A 20-foot-radius Sphere of fog that is Heavily Obscured.",
-  "text": "A 20-foot-radius Sphere of fog fills the area around a point within range. The Sphere is Heavily Obscured. It lasts for the duration unless a strong wind, such as one from Gust of Wind, blows it away. Concentration, up to 1 hour. Using a Higher-Level Spell Slot: the radius increases by 20 feet for each slot level above 1."
+  "text": "A 20-foot-radius Sphere of fog fills the area around a point within range. The Sphere is Heavily Obscured. It lasts for the duration unless a strong wind, such as one from Gust of Wind, blows it away. Concentration, up to 1 hour. Using a Higher-Level Spell Slot: the radius increases by 20 feet for each slot level above 1.",
+  "zone": {
+    "obscured": "heavy",
+    "triggers": []
+  }
 }

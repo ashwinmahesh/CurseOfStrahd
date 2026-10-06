@@ -28,15 +28,13 @@
     "amount": 1
   },
   "targets": {
-    "kind": "creature",
+    "kind": "ally",
     "count": 1
   },
   "effects": [
     {
-      "effect": "custom",
+      "effect": "end_condition",
       "params": {
-        "id": "end_condition",
-        "count": 1,
         "conditions": [
           "poisoned"
         ]
@@ -45,7 +43,6 @@
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
         "modifiers": [
           {
             "stat": "resistance",

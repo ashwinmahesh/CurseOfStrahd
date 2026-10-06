@@ -2,93 +2,298 @@
   "$id": "spell.schema.json",
   "title": "Spell",
   "type": "object",
-  "required": ["id", "name", "source", "level", "school", "classes", "casting_time", "range", "components", "duration", "summary", "text"],
+  "required": [
+    "id",
+    "name",
+    "source",
+    "level",
+    "school",
+    "classes",
+    "casting_time",
+    "range",
+    "components",
+    "duration",
+    "summary",
+    "text"
+  ],
   "additionalProperties": false,
   "properties": {
-    "id": {"$ref": "common.schema.json#/$defs/id"},
-    "name": {"type": "string"},
-    "source": {"$ref": "common.schema.json#/$defs/source"},
-    "level": {"type": "integer", "minimum": 0, "maximum": 9},
-    "school": {"type": "string", "enum": ["abjuration", "conjuration", "divination", "enchantment", "evocation", "illusion", "necromancy", "transmutation"]},
-    "classes": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["bard", "cleric", "druid", "paladin", "ranger", "sorcerer", "warlock", "wizard"]}},
-    "casting_time": {
-      "type": "object",
-      "required": ["unit"],
-      "additionalProperties": false,
-      "properties": {
-        "unit": {"type": "string", "enum": ["action", "bonus_action", "reaction", "minute", "hour"]},
-        "amount": {"type": "integer", "minimum": 1},
-        "trigger": {"type": "string", "description": "Reaction trigger in our own words."}
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "common.schema.json#/$defs/source"
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9
+    },
+    "school": {
+      "type": "string",
+      "enum": [
+        "abjuration",
+        "conjuration",
+        "divination",
+        "enchantment",
+        "evocation",
+        "illusion",
+        "necromancy",
+        "transmutation"
+      ]
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "bard",
+          "cleric",
+          "druid",
+          "paladin",
+          "ranger",
+          "sorcerer",
+          "warlock",
+          "wizard"
+        ]
       }
     },
-    "ritual": {"type": "boolean"},
-    "range": {
+    "casting_time": {
       "type": "object",
-      "required": ["kind"],
+      "required": [
+        "unit"
+      ],
       "additionalProperties": false,
       "properties": {
-        "kind": {"type": "string", "enum": ["self", "touch", "feet", "miles", "sight", "unlimited", "special"]},
-        "feet": {"type": "integer", "minimum": 0},
-        "miles": {"type": "integer", "minimum": 0}
+        "unit": {
+          "type": "string",
+          "enum": [
+            "action",
+            "bonus_action",
+            "reaction",
+            "minute",
+            "hour"
+          ]
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "trigger": {
+          "type": "string",
+          "description": "Reaction trigger in our own words."
+        }
+      }
+    },
+    "ritual": {
+      "type": "boolean"
+    },
+    "range": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "self",
+            "touch",
+            "feet",
+            "miles",
+            "sight",
+            "unlimited",
+            "special"
+          ]
+        },
+        "feet": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "miles": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
     "area": {
       "type": "object",
-      "required": ["shape", "size"],
+      "required": [
+        "shape",
+        "size"
+      ],
       "additionalProperties": false,
       "properties": {
-        "shape": {"type": "string", "enum": ["cone", "cube", "cylinder", "emanation", "line", "sphere", "wall"]},
-        "size": {"type": "integer", "minimum": 0, "description": "Feet: cone length, cube side, cylinder/sphere/emanation radius, line length, wall length."},
-        "width": {"type": "integer"},
-        "height": {"type": "integer"}
+        "shape": {
+          "type": "string",
+          "enum": [
+            "cone",
+            "cube",
+            "cylinder",
+            "emanation",
+            "line",
+            "sphere",
+            "wall"
+          ]
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Feet: cone length, cube side, cylinder/sphere/emanation radius, line length, wall length."
+        },
+        "width": {
+          "type": "integer"
+        },
+        "height": {
+          "type": "integer"
+        }
       }
     },
     "components": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "v": {"type": "boolean"},
-        "s": {"type": "boolean"},
-        "m": {"type": "string", "description": "Material component, plainly described."},
-        "m_cost_gp": {"type": "number", "minimum": 0},
-        "m_consumed": {"type": "boolean"}
+        "v": {
+          "type": "boolean"
+        },
+        "s": {
+          "type": "boolean"
+        },
+        "m": {
+          "type": "string",
+          "description": "Material component, plainly described."
+        },
+        "m_cost_gp": {
+          "type": "number",
+          "minimum": 0
+        },
+        "m_consumed": {
+          "type": "boolean"
+        }
       }
     },
     "duration": {
       "type": "object",
-      "required": ["kind"],
+      "required": [
+        "kind"
+      ],
       "additionalProperties": false,
       "properties": {
-        "kind": {"type": "string", "enum": ["instantaneous", "rounds", "minutes", "hours", "days", "until_dispelled", "special"]},
-        "amount": {"type": "integer", "minimum": 1},
-        "concentration": {"type": "boolean"},
-        "until_triggered": {"type": "boolean"}
+        "kind": {
+          "type": "string",
+          "enum": [
+            "instantaneous",
+            "rounds",
+            "minutes",
+            "hours",
+            "days",
+            "until_dispelled",
+            "special"
+          ]
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "concentration": {
+          "type": "boolean"
+        },
+        "until_triggered": {
+          "type": "boolean"
+        }
       }
     },
     "targets": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "kind": {"type": "string", "enum": ["self", "creature", "ally", "enemy", "object", "point", "area", "creature_or_object"]},
-        "count": {"type": "integer", "minimum": 1},
-        "description": {"type": "string"}
+        "kind": {
+          "type": "string",
+          "enum": [
+            "self",
+            "creature",
+            "ally",
+            "enemy",
+            "object",
+            "point",
+            "area",
+            "creature_or_object"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "creature_type": {
+          "type": "string",
+          "description": "Only creatures of this type can be targeted (Hold Person: humanoid)."
+        }
       }
     },
-    "attack": {"type": "string", "enum": ["melee", "ranged"]},
-    "save": {"$ref": "common.schema.json#/$defs/ability"},
-    "save_success": {"type": "string", "enum": ["half", "none", "special"], "description": "What a successful save does to the damage or effect."},
+    "attack": {
+      "type": "string",
+      "enum": [
+        "melee",
+        "ranged"
+      ]
+    },
+    "save": {
+      "$ref": "common.schema.json#/$defs/ability"
+    },
+    "save_success": {
+      "type": "string",
+      "enum": [
+        "half",
+        "none",
+        "special"
+      ],
+      "description": "What a successful save does to the damage or effect."
+    },
     "damage": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["dice"],
+        "required": [
+          "dice"
+        ],
         "additionalProperties": false,
         "properties": {
-          "dice": {"$ref": "common.schema.json#/$defs/dice"},
-          "type": {"$ref": "common.schema.json#/$defs/damage_type"},
-          "type_choice": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}},
-          "add_mod": {"type": "boolean", "description": "Add the spellcasting ability modifier."},
-          "per": {"type": "string", "description": "When the dice are per missile/ray/beam/turn, e.g. dart, ray, turn."}
+          "dice": {
+            "$ref": "common.schema.json#/$defs/dice"
+          },
+          "type": {
+            "$ref": "common.schema.json#/$defs/damage_type"
+          },
+          "type_choice": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/damage_type"
+            }
+          },
+          "add_mod": {
+            "type": "boolean",
+            "description": "Add the spellcasting ability modifier."
+          },
+          "per": {
+            "type": "string",
+            "description": "When the dice are per missile/ray/beam/turn, e.g. dart, ray, turn."
+          },
+          "upcast": {
+            "$ref": "common.schema.json#/$defs/dice",
+            "description": "Upcast dice for this part when it differs from the spell's."
+          },
+          "scales": {
+            "type": "boolean",
+            "description": "False: this part doesn't grow with the slot."
+          }
         }
       }
     },
@@ -96,32 +301,66 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "dice": {"$ref": "common.schema.json#/$defs/dice"},
-        "add_mod": {"type": "boolean"},
-        "flat": {"type": "integer"}
+        "dice": {
+          "$ref": "common.schema.json#/$defs/dice"
+        },
+        "add_mod": {
+          "type": "boolean"
+        },
+        "flat": {
+          "type": "integer"
+        }
       }
     },
     "temp_hp": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "dice": {"$ref": "common.schema.json#/$defs/dice"},
-        "add_mod": {"type": "boolean"},
-        "flat": {"type": "integer"}
+        "dice": {
+          "$ref": "common.schema.json#/$defs/dice"
+        },
+        "add_mod": {
+          "type": "boolean"
+        },
+        "flat": {
+          "type": "integer"
+        }
       }
     },
-    "conditions": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/condition"}, "description": "Conditions a failed save or a hit imposes."},
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/condition"
+      },
+      "description": "Conditions a failed save or a hit imposes."
+    },
     "upcast": {
       "type": "object",
       "additionalProperties": false,
       "description": "Per slot level above the spell's level.",
       "properties": {
-        "damage": {"$ref": "common.schema.json#/$defs/dice"},
-        "heal": {"$ref": "common.schema.json#/$defs/dice"},
-        "temp_hp": {"type": "integer"},
-        "targets": {"type": "integer"},
-        "projectiles": {"type": "integer"},
-        "text": {"type": "string"}
+        "damage": {
+          "$ref": "common.schema.json#/$defs/dice"
+        },
+        "heal": {
+          "$ref": "common.schema.json#/$defs/dice"
+        },
+        "temp_hp": {
+          "type": "integer"
+        },
+        "targets": {
+          "type": "integer"
+        },
+        "projectiles": {
+          "type": "integer"
+        },
+        "text": {
+          "type": "string"
+        },
+        "area": {
+          "type": "integer",
+          "description": "Feet added to the area's size per slot level (Fog Cloud)."
+        }
       }
     },
     "cantrip_scaling": {
@@ -129,14 +368,397 @@
       "additionalProperties": false,
       "description": "Cantrip upgrades at character levels 5, 11 and 17.",
       "properties": {
-        "damage": {"$ref": "common.schema.json#/$defs/dice", "description": "Dice added at each of levels 5, 11 and 17."},
-        "beams": {"type": "boolean", "description": "The upgrade adds beams/projectiles rather than dice."},
-        "text": {"type": "string"}
+        "damage": {
+          "$ref": "common.schema.json#/$defs/dice",
+          "description": "Dice added at each of levels 5, 11 and 17."
+        },
+        "beams": {
+          "type": "boolean",
+          "description": "The upgrade adds beams/projectiles rather than dice."
+        },
+        "text": {
+          "type": "string"
+        },
+        "range_doubles": {
+          "type": "boolean",
+          "description": "The range doubles at levels 5, 11 and 17 (Spare the Dying)."
+        }
       }
     },
-    "effects": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/effect_ref"}},
-    "tags": {"type": "array", "items": {"type": "string", "enum": ["damage", "healing", "buff", "debuff", "control", "defense", "utility", "detection", "movement", "communication", "summon", "social", "light", "restoration"]}},
-    "summary": {"type": "string", "minLength": 1},
-    "text": {"type": "string", "minLength": 1, "description": "The complete rule in our own words: every number and condition a player needs, never copied text."}
+    "effects": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/effect_ref"
+      }
+    },
+    "choice": {
+      "type": "object",
+      "description": "A choice made when casting (docs/contracts/spells.md): a damage type, a condition, an ability, a skill or an option. 'choice' in effect data becomes the pick.",
+      "required": [
+        "kind",
+        "from"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "damage_type",
+            "condition",
+            "ability",
+            "skill",
+            "option"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "from": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "area_targets": {
+      "type": "string",
+      "enum": [
+        "all",
+        "others",
+        "enemies",
+        "allies"
+      ],
+      "description": "Who an area affects: everyone, everyone but the caster (default for areas from Self), creatures of your choice (the caster's foes), or you and your allies."
+    },
+    "area_max_targets": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "At most this many creatures in the area (Slow: six)."
+    },
+    "miss": {
+      "type": "string",
+      "enum": [
+        "half"
+      ],
+      "description": "What a missed spell attack still does (Melf's Acid Arrow: half the damage)."
+    },
+    "drain": {
+      "type": "boolean",
+      "description": "The caster regains half the damage dealt (Vampiric Touch)."
+    },
+    "save_disadvantage_for": {
+      "type": "string",
+      "description": "Creatures of this type save with Disadvantage (Shatter: construct)."
+    },
+    "save_advantage_if_fighting": {
+      "type": "boolean",
+      "description": "Targets you or your allies are fighting save with Advantage (Charm Person)."
+    },
+    "willing_skip_save": {
+      "type": "boolean",
+      "description": "Allies (willing creatures) don't make the save (Enlarge/Reduce, Levitate)."
+    },
+    "living_only": {
+      "type": "boolean",
+      "description": "No effect on Undead or Constructs."
+    },
+    "secondary": {
+      "type": "object",
+      "description": "A save that follows a spell attack, hit or miss, around the target (Ice Knife's burst).",
+      "additionalProperties": false,
+      "properties": {
+        "radius": {
+          "type": "integer"
+        },
+        "save": {
+          "$ref": "common.schema.json#/$defs/ability"
+        },
+        "save_success": {
+          "type": "string",
+          "enum": [
+            "half",
+            "none"
+          ]
+        },
+        "damage": {
+          "$ref": "#/properties/damage"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/effect_ref"
+          }
+        }
+      }
+    },
+    "zone": {
+      "type": "object",
+      "description": "A lingering area on the grid (combat/spell_zones.gd): its triggers, save, damage, effects on a failure, terrain, sight, sound and aura.",
+      "additionalProperties": false,
+      "properties": {
+        "triggers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "cast",
+              "enter",
+              "moved_into",
+              "start_turn",
+              "end_turn",
+              "near_start_turn",
+              "near_end_turn"
+            ]
+          }
+        },
+        "affects": {
+          "type": "string",
+          "enum": [
+            "all",
+            "others",
+            "enemies",
+            "allies"
+          ]
+        },
+        "once_per_turn": {
+          "type": "boolean"
+        },
+        "save": {
+          "$ref": "common.schema.json#/$defs/ability"
+        },
+        "half": {
+          "type": "boolean"
+        },
+        "damage": {
+          "$ref": "#/properties/damage"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/effect_ref"
+          }
+        },
+        "terrain": {
+          "type": "string",
+          "enum": [
+            "difficult"
+          ]
+        },
+        "terrain_affected_only": {
+          "type": "boolean"
+        },
+        "obscured": {
+          "type": "string",
+          "enum": [
+            "heavy",
+            "light"
+          ]
+        },
+        "darkness": {
+          "type": "boolean"
+        },
+        "silence": {
+          "type": "boolean"
+        },
+        "light": {
+          "type": "object"
+        },
+        "dispels_darkness": {
+          "type": "integer"
+        },
+        "spare_allies": {
+          "type": "boolean"
+        },
+        "damage_type_choice": {
+          "type": "string"
+        },
+        "uses_spell_damage": {
+          "type": "boolean"
+        },
+        "colour": {
+          "type": "string"
+        },
+        "inside": {
+          "type": "object",
+          "description": "What holds while a creature is inside: modifiers and conditions.",
+          "properties": {
+            "modifiers": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/modifier"
+              }
+            },
+            "conditions": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/condition"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "object": {
+      "type": "object",
+      "description": "A spell object on a square (Spiritual Weapon, Flaming Sphere, Dancing Lights, Mage Hand).",
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "weapon",
+            "sphere",
+            "lights",
+            "hand"
+          ]
+        },
+        "range": {
+          "type": "integer"
+        },
+        "on_appear": {
+          "type": "string",
+          "enum": [
+            "attack"
+          ]
+        },
+        "rules": {
+          "type": "object",
+          "description": "Zone-style rules around the object (Flaming Sphere: save at the end of a turn within 5 ft)."
+        }
+      }
+    },
+    "sustain": {
+      "type": "array",
+      "description": "Actions the spell keeps granting while it lasts (Witch Bolt, Spiritual Weapon, Dragon's Breath...).",
+      "items": {
+        "type": "object",
+        "required": [
+          "do",
+          "label"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "do": {
+            "type": "string",
+            "enum": [
+              "attack",
+              "damage",
+              "area",
+              "move_object",
+              "dash",
+              "heal_one",
+              "aim",
+              "maintain"
+            ]
+          },
+          "cost": {
+            "type": "string",
+            "enum": [
+              "action",
+              "magic",
+              "bonus_action",
+              "free"
+            ]
+          },
+          "owner": {
+            "type": "string",
+            "enum": [
+              "caster",
+              "target"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "sub": {
+            "type": "string"
+          },
+          "help": {
+            "type": "string"
+          },
+          "range": {
+            "type": "integer"
+          },
+          "move": {
+            "type": "integer"
+          },
+          "reach": {
+            "type": "integer"
+          },
+          "attack": {
+            "type": "string",
+            "enum": [
+              "melee",
+              "ranged"
+            ]
+          },
+          "damage": {
+            "$ref": "#/properties/damage"
+          },
+          "area": {
+            "type": "object"
+          },
+          "save": {
+            "$ref": "common.schema.json#/$defs/ability"
+          },
+          "save_success": {
+            "type": "string",
+            "enum": [
+              "half",
+              "none"
+            ]
+          },
+          "heal": {
+            "type": "object"
+          },
+          "not_this_turn": {
+            "type": "boolean"
+          },
+          "upkeep": {
+            "type": "boolean"
+          },
+          "auto": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "damage",
+          "healing",
+          "buff",
+          "debuff",
+          "control",
+          "defense",
+          "utility",
+          "detection",
+          "movement",
+          "communication",
+          "summon",
+          "social",
+          "light",
+          "restoration"
+        ]
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The complete rule in our own words: every number and condition a player needs, never copied text."
+    }
   }
 }

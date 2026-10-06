@@ -14,7 +14,7 @@
   ],
   "casting_time": {
     "unit": "reaction",
-    "trigger": "You see a creature within 60 feet of you casting a spell that has Verbal, Somatic, or Material components."
+    "trigger": "When you see a creature within 60 feet casting a spell with Verbal, Somatic or Material components."
   },
   "range": {
     "kind": "feet",

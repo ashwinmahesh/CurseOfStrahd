@@ -29,9 +29,8 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature_or_object",
-    "count": 1,
-    "description": "a creature or loose object of up to 500 pounds"
+    "kind": "creature",
+    "count": 1
   },
   "save": "con",
   "save_success": "none",
@@ -40,5 +39,23 @@
     "movement"
   ],
   "summary": "A creature or object (up to 500 lb) rises up to 20 ft and hangs there; unwilling creatures get a Con save.",
-  "text": "One creature or loose object you can see within range rises straight up as far as 20 feet and stays suspended there for the duration. An object can weigh up to 500 pounds. An unwilling creature that succeeds on a Constitution saving throw is unaffected. The target can move only by pushing or pulling against a fixed object or surface within reach, such as a wall or ceiling, which lets it move as if climbing. On your turn you can change the target's altitude by up to 20 feet up or down: as part of your move if you are the target, otherwise with a Magic action, and the target must stay within range. When the spell ends, a target still in the air floats gently to the ground."
+  "text": "One creature or loose object you can see within range rises straight up as far as 20 feet and stays suspended there for the duration. An object can weigh up to 500 pounds. An unwilling creature that succeeds on a Constitution saving throw is unaffected. The target can move only by pushing or pulling against a fixed object or surface within reach, such as a wall or ceiling, which lets it move as if climbing. On your turn you can change the target's altitude by up to 20 feet up or down: as part of your move if you are the target, otherwise with a Magic action, and the target must stay within range. When the spell ends, a target still in the air floats gently to the ground.",
+  "willing_skip_save": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "levitating"
+          },
+          {
+            "stat": "speed_set",
+            "value": 0
+          }
+        ]
+      }
+    }
+  ]
 }

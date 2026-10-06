@@ -43,5 +43,19 @@
     "debuff"
   ],
   "summary": "Melee spell attack for 1d8 Lightning damage; the target can't make Opportunity Attacks until its next turn.",
-  "text": "Make a melee spell attack against a creature you try to touch. On a hit it takes 1d8 Lightning damage and can't make Opportunity Attacks until the start of its next turn. The damage becomes 2d8 at character level 5, 3d8 at level 11 and 4d8 at level 17."
+  "text": "Make a melee spell attack against a creature you try to touch. On a hit it takes 1d8 Lightning damage and can't make Opportunity Attacks until the start of its next turn. The damage becomes 2d8 at character level 5, 3d8 at level 11 and 4d8 at level 17.",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "until": "target_turn_start",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "no_reactions"
+          }
+        ]
+      }
+    }
+  ]
 }

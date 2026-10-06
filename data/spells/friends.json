@@ -42,6 +42,10 @@
     {
       "effect": "condition",
       "params": {
+        "ends_on": [
+          "damaged_by_caster_side",
+          "attack_roll"
+        ],
         "condition": "charmed"
       }
     }
@@ -51,5 +55,6 @@
     "control"
   ],
   "summary": "A creature you can see fails a Wis save and is Charmed; the spell breaks on any hostile act.",
-  "text": "Target one creature you can see within range. It must succeed on a Wisdom saving throw or have the Charmed condition for the duration. It succeeds automatically if it isn't a Humanoid, if you are fighting it, or if you have cast this spell on it within the past 24 hours. The spell ends early if the target takes damage or if you make an attack roll, deal damage, or force anyone to make a saving throw. When the spell ends, the target knows you Charmed it."
+  "text": "Target one creature you can see within range. It must succeed on a Wisdom saving throw or have the Charmed condition for the duration. It succeeds automatically if it isn't a Humanoid, if you are fighting it, or if you have cast this spell on it within the past 24 hours. The spell ends early if the target takes damage or if you make an attack roll, deal damage, or force anyone to make a saving throw. When the spell ends, the target knows you Charmed it.",
+  "save_advantage_if_fighting": true
 }

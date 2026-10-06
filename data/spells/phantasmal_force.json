@@ -37,17 +37,41 @@
   },
   "save": "int",
   "save_success": "none",
-  "damage": [
-    {
-      "dice": "2d8",
-      "type": "psychic",
-      "per": "turn"
-    }
-  ],
   "tags": [
     "control",
     "damage"
   ],
   "summary": "A creature makes an Int save or perceives a phantasm you craft, which can deal 2d8 Psychic each of your turns.",
-  "text": "Choose a creature you can see within range; it makes an Intelligence saving throw. On a failure you create a phantasmal object, creature or other phenomenon no larger than a 10-foot Cube that only the target can perceive, complete with sound, temperature and other sensations, for the duration. The target can take a Study action to examine the phantasm with an Intelligence (Investigation) check against your spell save DC; on a success it realizes the phantasm is an illusion and the spell ends. Until then the target treats the phantasm as real and explains away anything illogical about it (for example, if it walks onto a phantasmal bridge and survives the fall, it believes something else made it fall). If the phantasm is a dangerous creature or hazard, then on each of your turns it can deal 2d8 Psychic damage to the target if the target is in the phantasm's area or within 5 feet of it; the target perceives the damage as whatever type suits the illusion."
+  "text": "Choose a creature you can see within range; it makes an Intelligence saving throw. On a failure you create a phantasmal object, creature or other phenomenon no larger than a 10-foot Cube that only the target can perceive, complete with sound, temperature and other sensations, for the duration. The target can take a Study action to examine the phantasm with an Intelligence (Investigation) check against your spell save DC; on a success it realizes the phantasm is an illusion and the spell ends. Until then the target treats the phantasm as real and explains away anything illogical about it (for example, if it walks onto a phantasmal bridge and survives the fall, it believes something else made it fall). If the phantasm is a dangerous creature or hazard, then on each of your turns it can deal 2d8 Psychic damage to the target if the target is in the phantasm's area or within 5 feet of it; the target perceives the damage as whatever type suits the illusion.",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "escape": "check:investigation",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "phantasm"
+          }
+        ]
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "damage",
+      "cost": "free",
+      "auto": "caster_turn_start",
+      "range": 9999,
+      "damage": [
+        {
+          "dice": "2d8",
+          "type": "psychic"
+        }
+      ],
+      "label": "Phantasm strikes",
+      "sub": "2d8 psychic",
+      "help": "On each of your turns the phantasm can deal 2d8 Psychic damage to its target."
+    }
+  ]
 }

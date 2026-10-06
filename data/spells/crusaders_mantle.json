@@ -32,17 +32,24 @@
     "kind": "ally",
     "description": "you and your allies while in the aura"
   },
-  "damage": [
-    {
-      "dice": "1d4",
-      "type": "radiant",
-      "per": "hit"
-    }
-  ],
   "tags": [
     "buff",
     "damage"
   ],
   "summary": "30-foot aura: you and allies in it deal an extra 1d4 Radiant damage on weapon and Unarmed Strike hits.",
-  "text": "You radiate a 30-foot Emanation until the spell ends. While inside it, you and each of your allies deal an extra 1d4 Radiant damage whenever you hit with a weapon or an Unarmed Strike."
+  "text": "You radiate a 30-foot Emanation until the spell ends. While inside it, you and each of your allies deal an extra 1d4 Radiant damage whenever you hit with a weapon or an Unarmed Strike.",
+  "zone": {
+    "affects": "allies",
+    "triggers": [],
+    "inside": {
+      "modifiers": [
+        {
+          "stat": "extra_damage",
+          "dice": "1d4",
+          "type": "radiant",
+          "on": "weapon"
+        }
+      ]
+    }
+  }
 }

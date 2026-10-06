@@ -64,8 +64,13 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	p.ability = &"dex" if is_ranged_weapon else &"str"
 	if "finesse" in p.properties and dex_mod > str_mod:
 		p.ability = &"dex"
-	# Tags for `when` filters.
-	p.tags.append("melee" if p.melee else "ranged")
+	# Tags for `when` filters. A thrown melee weapon makes a ranged attack but isn't a Ranged weapon (Archery).
+	if p.melee:
+		p.tags.append("melee")
+	elif as_thrown:
+		p.tags.append("ranged_attack")
+	else:
+		p.tags.append("ranged")
 	for prop: String in ["finesse", "light"]:
 		if prop in p.properties:
 			p.tags.append(prop)
@@ -79,6 +84,37 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	p.proficient = ch.weapon_proficient(item) if ch != null else true
 	if ch != null and p.item_id in ch.weapon_masteries:
 		p.mastery = str(w.get("mastery", ""))
+	p._apply_overrides(c)
+	p._compute(c)
+	return p
+
+
+## Spells that reshape a weapon or an Unarmed Strike while they last (Shillelagh, Alter Self's Natural Weapons):
+## `weapon_override` modifiers with items, die, ability (the spellcasting ability at casting) and damage type.
+func _apply_overrides(c: Creature) -> void:
+	for m in c.modifiers_for(&"weapon_override"):
+		var items := m.data.get("items", []) as Array
+		if not item_id in items:
+			continue
+		if m.data.has("die"):
+			damage_dice = str(m.data["die"])
+		var ab := StringName(m.text("ability", ""))
+		if Creature.ABILITY_NAMES.has(ab) and c.ability_mod(ab) >= c.ability_mod(ability):
+			ability = ab
+		if m.data.has("damage_type"):
+			damage_type = StringName(m.text("damage_type"))
+		notes.append(m.source_name)
+
+
+## The same weapon using another ability for attack and damage (True Strike's spellcasting ability).
+func with_ability(ab: StringName, c: Creature) -> WeaponProfile:
+	var p := WeaponProfile.new()
+	for prop: String in ["item_id", "name", "melee", "thrown", "proficient", "damage_dice", "damage_type", "mastery",
+			"properties", "normal_range", "long_range", "reach", "two_hands"]:
+		p.set(prop, get(prop))
+	p.tags = tags.duplicate()
+	p.ability = ab
+	p.notes = notes.duplicate()
 	p._compute(c)
 	return p
 
@@ -94,6 +130,7 @@ static func unarmed(c: Creature) -> WeaponProfile:
 	p.damage_type = &"bludgeoning"
 	p.tags.assign(["melee", "unarmed"])
 	p.proficient = true
+	p._apply_overrides(c)
 	p._compute(c)
 	return p
 

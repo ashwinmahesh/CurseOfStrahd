@@ -258,6 +258,9 @@ func fleeing_from(c: Combatant) -> Combatant:
 	for fx: Effect in c.creature.effects:
 		if fx.source_id == "turn_undead":
 			return enc().get_c(fx.caster_id)
+		for m in fx.modifiers:
+			if m.stat == &"flag" and m.text("value") == "fear_flee":
+				return enc().get_c(fx.caster_id)
 	return null
 
 

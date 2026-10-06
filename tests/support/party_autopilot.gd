@@ -131,7 +131,7 @@ func _cleric(c: Combatant) -> CombatResult:
 	if c.bonus_available and not foes.is_empty():
 		var near := _nearest(c, foes)
 		if e.spells.has_spiritual_weapon(c):
-			var wcell := e.spells.spirit_weapons[c.id]["cell"] as Vector2i
+			var wcell := e.spells.weapon_of(c).cell
 			var best: Combatant = null
 			for f in foes:
 				if e.grid.distance_ft(wcell, 1, f.cell, f.size_cells) <= 25:

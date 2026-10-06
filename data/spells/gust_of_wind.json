@@ -43,5 +43,31 @@
     "control"
   ],
   "summary": "A 60-ft-long, 10-ft-wide Line of wind pushes creatures 15 ft away (Str save) and slows movement toward you.",
-  "text": "A Line of strong wind 60 feet long and 10 feet wide blasts from you in a direction you choose for the duration. Each creature in the Line must succeed on a Strength saving throw or be pushed 15 feet away from you along the Line, and a creature that ends its turn in the Line must make the same save. Any creature in the Line spends 2 feet of movement for every 1 foot it moves closer to you. The wind disperses gas and vapor and puts out candles and similar unprotected flames in the area; protected flames such as lanterns flicker wildly and have a 50 percent chance to go out. As a Bonus Action on your later turns, you can change the Line's direction."
+  "text": "A Line of strong wind 60 feet long and 10 feet wide blasts from you in a direction you choose for the duration. Each creature in the Line must succeed on a Strength saving throw or be pushed 15 feet away from you along the Line, and a creature that ends its turn in the Line must make the same save. Any creature in the Line spends 2 feet of movement for every 1 foot it moves closer to you. The wind disperses gas and vapor and puts out candles and similar unprotected flames in the area; protected flames such as lanterns flicker wildly and have a 50 percent chance to go out. As a Bonus Action on your later turns, you can change the Line's direction.",
+  "zone": {
+    "triggers": [
+      "cast",
+      "end_turn"
+    ],
+    "save": "str",
+    "affects": "others",
+    "effects": [
+      {
+        "effect": "push",
+        "params": {
+          "feet": 15,
+          "on": "fail"
+        }
+      }
+    ]
+  },
+  "sustain": [
+    {
+      "do": "aim",
+      "cost": "bonus_action",
+      "label": "Gust of Wind: turn",
+      "sub": "Bonus Action",
+      "help": "A Bonus Action: change the Line's direction."
+    }
+  ]
 }

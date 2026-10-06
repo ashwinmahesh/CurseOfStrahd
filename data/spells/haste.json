@@ -29,7 +29,7 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
+    "kind": "ally",
     "count": 1,
     "description": "a willing creature you can see"
   },
@@ -37,7 +37,6 @@
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
         "modifiers": [
           {
             "stat": "ac",
@@ -49,8 +48,11 @@
           },
           {
             "stat": "flag",
-            "value": "hasted",
-            "text": "Speed doubled; one extra limited action each turn; lethargy when the spell ends."
+            "value": "hasted"
+          },
+          {
+            "stat": "speed_percent",
+            "value": 200
           }
         ]
       }

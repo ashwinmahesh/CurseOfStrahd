@@ -29,9 +29,8 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
-    "count": 1,
-    "description": "a willing creature"
+    "kind": "ally",
+    "count": 1
   },
   "upcast": {
     "targets": 1
