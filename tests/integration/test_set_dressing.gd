@@ -6,6 +6,7 @@ extends TestCase
 
 func before_each() -> void:
 	GameState.reset()
+	ModeController.force(ModeController.Mode.EXPLORATION)   # building a place can start a fight in it
 	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
 		var ch := Pregens.build(id, 1)
 		ch.finish_long_rest()
@@ -321,3 +322,101 @@ func test_pieces_are_drawn_at_their_real_size() -> void:
 	for d: Vector2i in [Vector2i(-1, 0), Vector2i(0, 1), Vector2i(-1, 1)]:
 		assert_false(_drawn(road.board, Vector2i(6, 9) + d), "no tree in front of the cottage at %s" % (Vector2i(6, 9) + d))
 	road.queue_free()
+
+
+## Owner report (2026-10-06): a bookcase stood at an angle instead of flat against its wall. In every location, a
+## piece hung on a wall or standing against one is square to it with the wall behind it, and furniture that has a
+## front view is never drawn as a turning billboard.
+func test_wall_pieces_sit_flush_with_their_wall() -> void:
+	var problems: Array[String] = []
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		for n in board.find_children("*", "Node3D", true, false):
+			var node := n as Node3D
+			var against := node.has_meta("against_wall")
+			if against or (node is Sprite3D and (node as Sprite3D).billboard == BaseMaterial3D.BILLBOARD_DISABLED \
+					and (node as Sprite3D).axis == Vector3.AXIS_Z and node.name != "Leaf" and not node.get_parent().has_meta("against_wall") \
+					and not node.get_parent().has_meta("door") and not node.get_parent().name == "Upper"):
+				var yaw := node.global_rotation.y
+				if absf(yaw / (PI / 2.0) - roundf(yaw / (PI / 2.0))) > 0.01:
+					problems.append("%s: %s turned %.0f degrees off its wall" % [loc_id, node.name, rad_to_deg(yaw)])
+					continue
+				var facing := node.global_basis.z
+				var behind := node.global_position - Vector3(facing.x, 0, facing.z).normalized() * (0.55 if against else 0.05)
+				var c := board.grid.cell_at(behind)
+				var backed := board.grid.has_flag(c, CombatGrid.WALL) or board.door_cells.has(c)
+				if against and SetDressing.backing_side(board, board.grid.cell_at(node.global_position)) == Vector2i.ZERO:
+					backed = true   # free-standing furniture, back to the north
+				if not backed:
+					problems.append("%s: %s at %s has no wall behind it" % [loc_id, node.name, board.grid.cell_at(node.global_position)])
+			elif node is Sprite3D and (node as Sprite3D).billboard != BaseMaterial3D.BILLBOARD_DISABLED and node.has_meta("art") \
+					and SetDressing.front_of(str(node.get_meta("art"))) != "":
+				problems.append("%s: %s drawn as a billboard" % [loc_id, node.get_meta("art")])
+		v.queue_free()
+		await _frames(1)
+	assert_eq(problems, [] as Array[String], "not flush")
+
+
+## Owner report (2026-10-06): stairs looked too small and the stairwell down like an odd icon. Stairs are steps now:
+## a flight up climbs most of a storey, a stairwell down opens the floor.
+func test_stairs_are_steps_at_full_size() -> void:
+	var v := _view("death_house_ground")
+	await _frames(2)
+	var up := (v.exit_nodes["stairs_up"] as Node3D).find_children("StairsUp", "Node3D", true, false)
+	assert_false(up.is_empty(), "the stairs up are a flight of steps")
+	var top := 0.0
+	for m in (up[0] as Node3D).find_children("*", "MeshInstance3D", true, false):
+		var mi := m as MeshInstance3D
+		top = maxf(top, mi.position.y + mi.get_aabb().size.y / 2.0)
+	assert_true(top >= 1.4, "about 7 ft high or more (%.2f)" % top)
+	v.queue_free()
+	var low := _view("death_house_dungeon_1")
+	await _frames(2)
+	var down := (low.exit_nodes["stairs_down"] as Node3D).find_children("StairsDown", "Node3D", true, false)
+	assert_false(down.is_empty(), "the stairs down are a stairwell")
+	low.queue_free()
+
+
+## Owner report (2026-10-06): thin brown boards lay on the carpet among the party: their health bars. Out of a fight
+## they're hidden.
+func test_health_bars_only_in_fights() -> void:
+	var v := _view("death_house_ground")
+	await _frames(3)
+	var tok := v.tokens[v.members[0].id] as CombatToken
+	var bar := tok.get("_bar_back") as MeshInstance3D
+	assert_false(bar.visible, "no health bar while exploring")
+	v.queue_free()
+
+
+## Owner report (2026-10-06): props in the secret study showed in the dark before the study was found. They stay
+## hidden, also after the location's props are rebuilt (after a conversation).
+func test_props_in_an_undiscovered_room_stay_hidden() -> void:
+	var v := _view("death_house_upper")
+	await _frames(3)
+	var letter := v.prop_nodes.get("strahd_letter", null) as Node3D
+	assert_true(letter != null and not letter.is_visible_in_tree(), "the letter in the secret study is hidden")
+	v.refresh_npcs()
+	await _frames(1)
+	letter = v.prop_nodes.get("strahd_letter", null) as Node3D
+	assert_true(letter != null and not letter.is_visible_in_tree(), "and stays hidden after the props are rebuilt")
+	v.queue_free()
+
+
+## Room rules are for rooms: Lake Zarovich's fishing landing isn't floored with a manor's marble, and its jetty is
+## planks, not grass running into the lake.
+func test_outdoor_areas_keep_outdoor_ground() -> void:
+	var v := _view("lake_zarovich")
+	await _frames(2)
+	var marble := Look.cel_textured("interior/marble_floor", 0.22)
+	var planks := Look.cel_textured("interior/wood_planks", 0.22)
+	var saw_planks := false
+	for n in v.board.get_children():
+		if n is MeshInstance3D:
+			var m := (n as MeshInstance3D).material_override
+			assert_false(m == marble, "no marble floor outdoors")
+			saw_planks = saw_planks or m == planks
+	assert_true(saw_planks, "the jetty is planks")
+	v.queue_free()

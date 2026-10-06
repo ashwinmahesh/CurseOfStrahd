@@ -3,8 +3,9 @@ extends Node3D
 ## an overview and close shots around its doors, props and containers. Not part of the game.
 ##   make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=death_house_ground NAME=tour FRAMES=20
 ## Godot args after --: --location=<id> [--hour=12] [--shots=8] [--yaw=<camera steps>] [--lit] (brighter ambient, to
-## check placement in dark interiors) [--at=x,z;x,z] (close shots of these squares) [--party=x,z] (the party, with
-## its lantern, stands there instead of at the spawn) [--dist=11] (how far the close shots are)
+## check placement in dark interiors) [--at=x,z;x,z] (close shots of these squares) [--spots=x,z;x,z] (the same)
+## [--party=x,z] (the party, with its lantern, stands there instead of at the spawn) [--dist=11] (how far the
+## close shots are)
 
 var view: LocationView
 var _spots: Array[Vector3] = []
@@ -36,6 +37,14 @@ func _ready() -> void:
 			spawn = ""
 	view = LocationView.create(loc_id, GameState.story, Narrator.new(), Dice.roller, spawn)
 	add_child(view)
+	# --spots=x,z;x,z: close shots of these squares instead.
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--spots="):
+			for pair in a.get_slice("=", 1).split(";", false):
+				var xz := pair.split(",")
+				_spots.append(view.board.cell_center(Vector2i(int(xz[0]), int(xz[1]))))
+	if not _spots.is_empty():
+		return
 	# Spots worth a close look: clusters of doors, props and containers (one shot per cluster).
 	for key: String in ["doors", "props", "containers"]:
 		for t: Variant in view.loc.get(key, []):
