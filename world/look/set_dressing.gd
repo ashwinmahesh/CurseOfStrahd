@@ -305,11 +305,15 @@ static func exit_piece(board: ArenaBoard, spec: Dictionary) -> Node3D:
 	var root := Node3D.new()
 	root.name = "Exit_" + str(spec.get("id", ""))
 	board.add_child(root)
+	# Stairs are the way itself, so they show only while the way is open (LocationView keeps them hidden while the
+	# exit's `when` is false: a secret stair nobody has found). A door stays drawn even when it's barred.
 	if mount == "floor":
 		_lay(board, root, art, cell, 1.0)
+		root.set_meta("only_when_open", true)
 		return root
 	if mount == "stand":
 		_stand(board, root, art, cell, 1.0)
+		root.set_meta("only_when_open", true)
 		return root
 	if _wall_at(board, cell):
 		if _hang(board, root, art, cell, 1.0):

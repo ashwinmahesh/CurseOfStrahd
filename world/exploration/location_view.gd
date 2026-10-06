@@ -204,6 +204,7 @@ func _build_doors() -> void:
 		var piece := SetDressing.exit_piece(board, ex as Dictionary)
 		if piece != null:
 			exit_nodes[str((ex as Dictionary)["id"])] = piece
+	refresh_exits()
 	for d: Variant in loc.get("doors", []):
 		var door := d as Dictionary
 		var cell := _cell(door["cell"])
@@ -216,6 +217,16 @@ func _build_doors() -> void:
 			node = _box(Vector3(0.9, 1.7, 0.9), board.cell_center(cell) + Vector3(0, 0.85, 0), "walnut" if not secret else "slate")
 		node.visible = not open
 		door_nodes[id] = node
+
+
+## Stairs (and other pieces that are the way itself) show only while their exit's `when` holds, so a secret stair
+## isn't drawn before anyone finds it. Checked a few times a second, since many things can open a way.
+func refresh_exits() -> void:
+	for ex: Variant in loc.get("exits", []):
+		var e := ex as Dictionary
+		var node := exit_nodes.get(str(e["id"]), null) as Node3D
+		if node != null and is_instance_valid(node) and bool(node.get_meta("only_when_open", false)):
+			node.visible = StoryConditions.check(str(e.get("when", "")), st)
 
 
 func _build_props() -> void:
@@ -583,7 +594,14 @@ func step(dir: Vector2i) -> void:
 	_queue = [to]
 
 
+var _exit_check := 0.0
+
+
 func _process(delta: float) -> void:
+	_exit_check -= delta
+	if _exit_check <= 0.0:
+		_exit_check = 0.25
+		refresh_exits()
 	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
