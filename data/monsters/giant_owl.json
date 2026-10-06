@@ -1,0 +1,71 @@
+{
+  "id": "giant_owl",
+  "name": "Giant Owl",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 19,
+    "dice": "3d10+3"
+  },
+  "speed": {
+    "walk": 5,
+    "fly": 60
+  },
+  "abilities": {
+    "str": 13,
+    "dex": 15,
+    "con": 12,
+    "int": 8,
+    "wis": 13,
+    "cha": 10
+  },
+  "skills": {
+    "perception": 5,
+    "stealth": 6
+  },
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 15,
+  "languages": [],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "flyby",
+      "name": "Flyby",
+      "action": "passive",
+      "summary": "Doesn't provoke Opportunity Attacks when it flies out of reach.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "talons",
+      "name": "Talons",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "2d6+1",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Talons: +3 to hit, 2d6+1 Slashing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A silent wise hunter."
+}

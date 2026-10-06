@@ -1,0 +1,82 @@
+{
+  "id": "giant_constrictor_snake",
+  "name": "Giant Constrictor Snake",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "huge",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 60,
+    "dice": "8d12+8"
+  },
+  "speed": {
+    "walk": 30,
+    "swim": 30
+  },
+  "abilities": {
+    "str": 19,
+    "dex": 14,
+    "con": 12,
+    "int": 1,
+    "wis": 10,
+    "cha": 3
+  },
+  "skills": {
+    "perception": 2
+  },
+  "senses": {
+    "blindsight": 10
+  },
+  "passive_perception": 12,
+  "languages": [],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d6+4",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite: +6 to hit, 2d6+4 Piercing."
+    },
+    {
+      "id": "constrict",
+      "name": "Constrict",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "2d8+4",
+          "type": "bludgeoning"
+        }
+      ],
+      "conditions": [
+        "grappled"
+      ],
+      "summary": "Constrict: +6 to hit, 2d8+4 Bludgeoning."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A snake big enough to crush a horse in its coils."
+}

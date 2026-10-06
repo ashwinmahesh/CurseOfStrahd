@@ -1,0 +1,93 @@
+{
+  "id": "air_elemental",
+  "name": "Air Elemental",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "elemental",
+  "alignment": "unaligned",
+  "ac": 15,
+  "initiative": 5,
+  "hp": {
+    "average": 90,
+    "dice": "12d10+24"
+  },
+  "speed": {
+    "walk": 10,
+    "fly": 90
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 20,
+    "con": 14,
+    "int": 6,
+    "wis": 10,
+    "cha": 6
+  },
+  "resistances": [
+    "bludgeoning",
+    "lightning",
+    "piercing",
+    "slashing"
+  ],
+  "immunities": [
+    "poison",
+    "thunder"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained",
+    "unconscious"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "primordial"
+  ],
+  "cr": 5,
+  "xp": 1800,
+  "proficiency_bonus": 3,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "thunderous_slam",
+          "count": 2
+        }
+      ],
+      "summary": "Two Thunderous Slams."
+    },
+    {
+      "id": "thunderous_slam",
+      "name": "Thunderous Slam",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "2d8+5",
+          "type": "thunder"
+        }
+      ],
+      "summary": "Thunderous Slam: +8 to hit, 2d8+5 Thunder."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A howling whirl of wind that batters foes with thunder."
+}

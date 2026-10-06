@@ -201,7 +201,12 @@ func power_why(c: Combatant, p: Dictionary, level: int = 0) -> String:
 	if need > 0 and charges_of(p) < need:
 		return "Not enough charges (%d left, needs %d)" % [charges_of(p), need]
 	var uses := power.get("uses", {}) as Dictionary
-	if not uses.is_empty() and uses_spent(p) >= int(uses.get("count", 1)):
+	if power.has("bead") and use_count(p) <= 0:
+		return "No bead of %s on the necklace" % str(power["bead"]).replace("_", " ")
+	for gk: String in ["gem", "needs_gem"]:
+		if power.has(gk) and int(((p["entry"] as Dictionary).get("gems", {}) as Dictionary).get(str(power[gk]), 0)) <= 0:
+			return "No %s left in it" % str(power[gk]).replace("_", " ")
+	if not uses.is_empty() and uses_spent(p) >= use_count(p):
 		var cd := int(((p["entry"] as Dictionary).get("cooldowns", {}) as Dictionary).get(str(power["id"]), 0))
 		if cd > 0:
 			return "Ready again in %d day%s" % [cd, "" if cd == 1 else "s"]
@@ -240,7 +245,21 @@ static func charges_of(p: Dictionary) -> int:
 
 
 static func uses_spent(p: Dictionary) -> int:
-	return int(((p["entry"] as Dictionary).get("uses", {}) as Dictionary).get(str((p["power"] as Dictionary).get("id", "")), 0))
+	return int(((p["entry"] as Dictionary).get("uses", {}) as Dictionary).get(_use_key(p), 0))
+
+
+## Uses are counted per power, except prayer beads: each bead of a kind gives one use a day.
+static func _use_key(p: Dictionary) -> String:
+	var power := p["power"] as Dictionary
+	return "bead:%s" % power["bead"] if power.has("bead") else str(power.get("id", ""))
+
+
+## How many uses a power has: its `uses.count`, or the number of beads of its kind on a Necklace of Prayer Beads.
+static func use_count(p: Dictionary) -> int:
+	var power := p["power"] as Dictionary
+	if power.has("bead"):
+		return ((p["entry"] as Dictionary).get("beads", []) as Array).count(str(power["bead"]))
+	return int((power.get("uses", {}) as Dictionary).get("count", 1))
 
 
 static func spend_use(p: Dictionary) -> void:
@@ -248,7 +267,7 @@ static func spend_use(p: Dictionary) -> void:
 	if not entry.has("uses"):
 		entry["uses"] = {}
 	var u := entry["uses"] as Dictionary
-	var pid := str((p["power"] as Dictionary).get("id", ""))
+	var pid := _use_key(p)
 	u[pid] = int(u.get(pid, 0)) + 1
 	# "Once every N days" (Figurines of Wondrous Power): a countdown of dawns.
 	var per := str(((p["power"] as Dictionary).get("uses", {}) as Dictionary).get("per", ""))
@@ -367,7 +386,7 @@ func _power_sub(c: Combatant, p: Dictionary, spell: Dictionary) -> String:
 		bits.append("%d/%d charges" % [charges_of(p), MagicItems.max_charges(data, p["entry"] as Dictionary)])
 	var uses := power.get("uses", {}) as Dictionary
 	if not uses.is_empty():
-		bits.append("%d/%d left" % [maxi(0, int(uses.get("count", 1)) - uses_spent(p)), int(uses.get("count", 1))])
+		bits.append("%d/%d left" % [maxi(0, use_count(p) - uses_spent(p)), use_count(p)])
 	if (MagicItems.is_consumable(data) or bool(power.get("consume", false))) and not p.has("effect"):
 		var n := 0
 		for e in ch.inventory:
@@ -469,6 +488,12 @@ func _after_use(c: Combatant, p: Dictionary, spell: Dictionary, level: int) -> v
 		entry["charges"] = maxi(0, int(entry.get("charges", 0)) - need)
 		if int(entry["charges"]) <= 0:
 			last_charge(c, iid, data)
+	# Helm of Brilliance: the gem is spent.
+	if power.has("gem"):
+		var gems := entry.get("gems", {}) as Dictionary
+		gems[str(power["gem"])] = maxi(0, int(gems.get(str(power["gem"]), 0)) - 1)
+	if power.has("after"):
+		specials.more.after_power(c, p)
 	if power.has("uses"):
 		spend_use(p)
 		# A granted power used up ends what granted it (the potion's breath is spent).
@@ -712,6 +737,7 @@ func combat_started() -> void:
 		for fx: Effect in c0.creature.effects.duplicate():
 			if bool(fx.data.get("item_toggle", false)) and fx.ends == Effect.Ends.NEVER:
 				c0.creature.remove_effect(fx)
+	specials.combat_started()
 	for c in e.combatants:
 		for it in active(c):
 			var data := it["data"] as Dictionary
@@ -950,6 +976,9 @@ func against_damage(st: Dictionary, total: Callable, cut: Callable, out: Array) 
 ## A magical effect about to land on `t` (spells and item powers): flags like "no_magic:paralyzed" (Ring of Free
 ## Action) strip what magic isn't allowed to do to the wearer.
 func filter_magic_effect(t: Combatant, fxo: Effect) -> void:
+	# Cloak of Arachnida: webs can't hold its wearer.
+	if fxo.source_id == "web" and t.creature.has_flag("web_immune"):
+		fxo.conditions.erase(&"restrained")
 	for cond: StringName in fxo.conditions.duplicate():
 		if t.creature.has_flag("no_magic:%s" % cond):
 			fxo.conditions.erase(cond)
@@ -1032,6 +1061,57 @@ func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
 
 
 # --- Turns and the start of a fight --------------------------------------------------------------
+
+## Lantern of Revealing (Invisible creatures in its Bright Light can be seen), Robe of Eyes (its wearer sees them).
+func reveals_invisible(a: Combatant, b: Combatant) -> bool:
+	var e := enc()
+	if a.creature.has_flag("sees_invisible") and e.distance(a, b) <= 120:
+		return true
+	for o in e.living():
+		if o.creature.has_flag("lantern_of_revealing") and e.distance(o, b) <= 30:
+			return true
+	return false
+
+
+## "" if `c` may attack `target` with `option`; otherwise what stops it (a Cube of Force's barrier, a Scroll of
+## Protection's ward against the attacker's kind).
+func attack_blocked(c: Combatant, target: Combatant, option: Dictionary) -> String:
+	if target.creature.has_flag("cube_everything"):
+		return "A Cube of Force barrier is in the way"
+	if bool(option.get("melee", true)) and target.creature.has_flag("cube_living"):
+		return "A Cube of Force barrier keeps living things out"
+	if not bool(option.get("melee", true)) and target.creature.has_flag("cube_objects"):
+		return "A Cube of Force barrier stops missiles"
+	if target.creature.has_flag("protection_from:%s" % c.creature.creature_type):
+		return "%s's Scroll of Protection keeps %ss away" % [target.name(), c.creature.creature_type]
+	return ""
+
+
+## "" if a spell from `c` can reach `t`; otherwise what stops it.
+func spell_blocked(c: Combatant, t: Combatant) -> String:
+	if c == t:
+		return ""
+	if t.creature.has_flag("cube_spells") or t.creature.has_flag("cube_everything"):
+		return "A Cube of Force barrier keeps spells out"
+	if t.creature.has_flag("protection_from:%s" % c.creature.creature_type):
+		return "A Scroll of Protection keeps the caster's kind away"
+	return ""
+
+
+## Extra Initiative from items (Sword of Kas: + 1d10 while drawn).
+func initiative_bonus(c: Combatant) -> int:
+	if c.creature.has_flag("kas_initiative") and has_active(c, "sword_of_kas"):
+		return enc().dice.roll_one(10, "Sword of Kas")
+	return 0
+
+
+## Extra healing on a healing spell `c` casts (Moon Sickle: 1d4 while held).
+func healing_bonus(c: Combatant, _ctx: Dictionary) -> int:
+	for it in active(c):
+		if "moon_sickle" in (((it["data"] as Dictionary).get("weapon_rules", {}) as Dictionary).get("special", []) as Array):
+			return enc().dice.roll_one(4, "Moon Sickle")
+	return 0
+
 
 ## Advantage on Initiative from items (a Weapon of Warning covers its wielder's allies within 30 ft).
 func initiative_advantage(c: Combatant) -> Array[String]:

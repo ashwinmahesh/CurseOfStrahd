@@ -1,0 +1,62 @@
+{
+  "id": "giant_elk",
+  "name": "Giant Elk",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "huge",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 14,
+  "initiative": 3,
+  "hp": {
+    "average": 42,
+    "dice": "5d12+10"
+  },
+  "speed": {
+    "walk": 60
+  },
+  "abilities": {
+    "str": 19,
+    "dex": 16,
+    "con": 14,
+    "int": 7,
+    "wis": 14,
+    "cha": 10
+  },
+  "skills": {
+    "perception": 4
+  },
+  "senses": {},
+  "passive_perception": 14,
+  "languages": [],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "ram",
+      "name": "Ram",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d6+4",
+          "type": "bludgeoning"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Ram: +6 to hit, 2d6+4 Bludgeoning."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A majestic elk with great antlers."
+}

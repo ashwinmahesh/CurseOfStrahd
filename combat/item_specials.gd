@@ -5,10 +5,13 @@ extends RefCounted
 ## Reaction, Boots of Speed making Opportunity Attacks harder, a Sword of Wounding's wounds). CombatItems calls in.
 
 var _items: WeakRef
+## The rest of the custom powers (wondrous items and artifacts): combat/item_powers.gd.
+var more: ItemPowers
 
 
 func _init(items: CombatItems) -> void:
 	_items = weakref(items)
+	more = ItemPowers.new(self)
 
 
 func items() -> CombatItems:
@@ -186,6 +189,17 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 	var label := str(data.get("name", ""))
 	var iid := str(it["id"])
 	for sp: Variant in _specials(it):
+		if str(sp) == "blackrazor" and not target.is_alive() and _living(target) and not target.has_meta("soul_devoured"):
+			target.set_meta("soul_devoured", true)
+			var gain := target.creature.max_hp()
+			c.creature.add_temp_hp(gain, label)
+			var fed := Effect.new("Blackrazor's feast", &"item", str(it["id"]))
+			fed.stack_key = "blackrazor_fed"
+			fed.lasting({"kind": "hours", "amount": 24})
+			fed.data["ends_without_temp_hp"] = true
+			fed.modifiers.append(Modifier.of("advantage", {"on": ["attack", "save:all", "check:all"]}, label, &"item"))
+			c.creature.add_effect(fed)
+			r.lines.append(e.log.add("heal", "Blackrazor devours %s's soul: %s gains %d Temporary Hit Points" % [target.name(), c.name(), gain], c.id))
 		if not target.is_alive():
 			return
 		match str(sp):
@@ -232,6 +246,15 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 			"vorpal":
 				if _nat20(st):
 					_vorpal(c, target, label, r)
+			"wave":
+				if bool(st.get("critical", false)):
+					var half := target.creature.max_hp() / 2
+					e.deal_damage(c, target, [{"amount": half, "type": "necrotic"}], false, label)
+			"blackrazor":
+				if str(target.creature.creature_type) == "undead":
+					var hurt := e._roll_damage_dice("1d10", false, 0, label)
+					e.deal_damage(null, c, [{"amount": int(hurt["total"]), "type": "necrotic"}], false, "Blackrazor recoils", [str(hurt["text"])])
+					target.creature.heal(e.dice.roll_one(10, label), label)
 	if target.is_alive() and str(option.get("kind", "")) != "thrown":
 		_spent_ammo_on_hit(c, option)
 
@@ -315,6 +338,14 @@ func before_roll(st: Dictionary, out: Array) -> void:
 				dis.erase("long range")
 				if int(sit.get("cover", 0)) < CombatGrid.Cover.TOTAL:
 					st["ac"] = int(st["ac"]) - int(sit.get("cover_bonus", 0))
+	# Cloak of Displacement: attackers have Disadvantage until the wearer is hurt (back at the start of its turn).
+	if has(target, "cloak_of_displacement") and not target.has_meta("displacement_off") and not target.creature.has_condition(&"incapacitated") \
+			and not target.creature.has_condition(&"restrained") and target.speed() > 0:
+		(sit["disadvantage"] as Array[String]).append("Cloak of Displacement (target)")
+	# Boots of Speed: Opportunity Attacks against the wearer have Disadvantage.
+	var opts := st.get("opts", {}) as Dictionary
+	if bool(opts.get("reaction", false)) and not bool(opts.get("readied", false)) and target.creature.has_flag("oa_disadvantage"):
+		(sit["disadvantage"] as Array[String]).append("Boots of Speed (target)")
 	# Oathbow: Disadvantage with every other weapon while the sworn enemy lives.
 	var sworn := str(c.get_meta("oathbow_sworn", ""))
 	if sworn != "" and e.get_c(sworn) != null and e.get_c(sworn).is_alive():
@@ -353,19 +384,56 @@ func before_roll(st: Dictionary, out: Array) -> void:
 						e.log.add("reaction", "%s catches the shot meant for %s on the shield" % [oo.name(), target.name()], oo.id)})
 
 
-## Gloves of Missile Snaring (wondrous items' turn in a later batch).
-func against_damage(_st: Dictionary, _total: Callable, _cut: Callable, _out: Array) -> void:
-	pass
+## Gloves of Missile Snaring: a Reaction cuts a ranged weapon hit by 1d10 + Dex (a free hand needed).
+func against_damage(st: Dictionary, total: Callable, cut: Callable, out: Array) -> void:
+	var e := enc()
+	var target := st["target"] as Combatant
+	var c := st["c"] as Combatant
+	var option := st["option"] as Dictionary
+	if bool(option.get("melee", true)) or not str(option.get("kind", "")) in ["weapon", "thrown", "monster"]:
+		return
+	if not has(target, "gloves_of_missile_snaring") or not e.spells.can_react(target):
+		return
+	var ch := ch_of(target)
+	if ch != null and not ch.equipped("main_hand").is_empty() and not ch.equipped("off_hand").is_empty():
+		return
+	var dex := target.creature.ability_mod(&"dex")
+	out.append({"kind": "missile_snaring", "reactor": target, "trigger": c.id, "title": "Reaction: Gloves of Missile Snaring?",
+		"text": "%s's shot hits %s for %d. Snatch at it: reduce the damage by 1d10 + %d." % [c.name(), target.name(), total.call(), dex],
+		"still": func() -> bool: return e.spells.can_react(target) and int(total.call()) > 0,
+		"use": func() -> void:
+			target.reaction_available = false
+			cut.call(maxi(0, e.dice.roll_one(10, "Missile Snaring") + dex), "Gloves of Missile Snaring")
+			if int(total.call()) <= 0:
+				e.log.add("reaction", "%s catches the missile out of the air" % target.name(), target.id)})
 
 
-func adjust_incoming(_source: Combatant, _target: Combatant, _parts: Array, _label: String) -> void:
-	pass
+## Brooch of Shielding: Magic Missile can't hurt its wearer.
+func adjust_incoming(_source: Combatant, target: Combatant, parts: Array, label: String) -> void:
+	if target.creature.has_flag("immune_magic_missile") and label.contains("Magic Missile"):
+		for p: Variant in parts:
+			(p as Dictionary)["amount"] = 0
+		enc().log.add("info", "%s's Brooch of Shielding drinks in the missile" % target.name(), target.id)
 
 
 ## After damage: the Berserker Axe's curse answering a hostile creature's blow; a Staff of the Python's snake killed
 ## takes the staff with it.
-func on_damaged(source: Combatant, target: Combatant, amount: int, _parts: Array) -> void:
+func on_damaged(source: Combatant, target: Combatant, amount: int, parts: Array) -> void:
 	var e := enc()
+	if amount > 0 and has(target, "cloak_of_displacement"):
+		target.set_meta("displacement_off", true)
+	# A Deck of Illusions creature: anything that strikes it passes through, and it fades.
+	if target.creature.has_flag("illusion") and target.is_alive():
+		e.spells._dismiss(target.id)
+		e.log.add("info", "The illusion is revealed and fades", target.id)
+	# Helm of Brilliance: Fire damage from a failed save against a spell; on a 1 the gems burst.
+	if amount > 0 and has(target, "helm_of_brilliance"):
+		var fire_spell := false
+		for p: Variant in parts:
+			if str((p as Dictionary).get("type", "")) == "fire" and bool((p as Dictionary).get("spell", false)):
+				fire_spell = true
+		if fire_spell and e.dice.roll_one(20, "Helm of Brilliance") == 1:
+			_helm_bursts(target)
 	if target.has_meta("staff_item") and target.creature.dead:
 		var owner := e.get_c(str(target.get_meta("summoner", "")))
 		if owner != null and ch_of(owner) != null:
@@ -500,6 +568,24 @@ func turn_start(c: Combatant) -> void:
 				e.log.add("info", "%s's wounds close" % c.name(), c.id, [t.describe()])
 	if c.creature.has_flag("berserk"):
 		_berserk_turn(c)
+	c.remove_meta("displacement_off")
+	# Periapt of Wound Closure: a dying wearer stabilizes at the start of its turn.
+	if c.creature.has_flag("wound_closure") and c.creature.hp == 0 and not c.creature.dead and not c.creature.stable:
+		c.creature.stabilize()
+		e.log.add("info", "%s's Periapt of Wound Closure stops the bleeding: Stable" % c.name(), c.id)
+	if c.creature.has_flag("artifact_regeneration") and c.creature.hp >= 1:
+		var healed := c.creature.heal(e.dice.roll_one(6, "Regeneration"), "Artifact")
+		if healed > 0:
+			e.log.add("heal", "%s regains %d Hit Points (artifact)" % [c.name(), healed], c.id)
+	# Helm of Brilliance (a diamond left): Undead starting their turn within 30 ft of its wearer take 1d6 Radiant.
+	if str(c.creature.creature_type) == "undead":
+		for o in e.living():
+			if o != c and e.distance(o, c) <= 30 and has(o, "helm_of_brilliance"):
+				var it := items().active_item(o, "helm_of_brilliance")
+				if int(((it["entry"] as Dictionary).get("gems", {}) as Dictionary).get("diamond", 0)) > 0:
+					var rolled := e._roll_damage_dice("1d6", false, 0, "Helm of Brilliance")
+					e.deal_damage(o, c, [{"amount": int(rolled["total"]), "type": "radiant"}], false, "Helm of Brilliance", [str(rolled["text"])])
+					break
 
 
 func turn_end(_c: Combatant) -> void:
@@ -660,7 +746,7 @@ func _arcana_why(c: Combatant, p: Dictionary) -> String:
 				return "Not active"
 	if e == null:
 		return ""
-	return ""
+	return more.why(c, p)
 
 
 func _has_item_effect(c: Combatant, iid: String) -> bool:
@@ -806,7 +892,7 @@ func _use_arcana(c: Combatant, p: Dictionary, targets: Array, point: Vector2, op
 				return CombatResult.fail("Choose a creature within 15 ft")
 			_pay_cost(c, cost)
 			return _tentacles(c, t, label)
-	return CombatResult.fail("%s: not built yet" % power.get("name", "That power"))
+	return more.use(c, p, targets, point, opts)
 
 
 ## Rod of Lordly Might's buttons: a fiery blade (a Flame Tongue longsword), a battleaxe, a spear, or the mace again.
@@ -1243,3 +1329,49 @@ func _dance(c: Combatant, p: Dictionary, t: Combatant, toss: bool) -> CombatResu
 				c.creature.remove_effect(fx2)
 		e.log.add("info", "The Dancing Sword flies back to %s's hand" % c.name(), c.id)
 	return r
+
+
+## Helm of Brilliance: the gems fire beams at everyone within 60 ft (Dex DC 17: Radiant equal to the gems left), and
+## the helm is destroyed.
+func _helm_bursts(c: Combatant) -> void:
+	var e := enc()
+	var it := items().active_item(c, "helm_of_brilliance")
+	if it.is_empty():
+		return
+	var gems := (it["entry"] as Dictionary).get("gems", {}) as Dictionary
+	var n := 0
+	for k: String in gems:
+		n += int(gems[k])
+	e.log.add("spell", "%s's Helm of Brilliance bursts in a storm of light" % c.name(), c.id)
+	for o in e.living():
+		if o == c or e.distance(o, c) > 60:
+			continue
+		var sv := o.creature.roll_save(e.dice, &"dex", 17, [], [], "Dex save (Helm of Brilliance)", ["save_vs:spell"])
+		if not sv.success:
+			e.deal_damage(c, o, [{"amount": n, "type": "radiant"}], false, "Helm of Brilliance", [sv.describe()])
+	var ch := ch_of(c)
+	ch.unequip_item(str(it["id"]))
+	ch.remove_one(str(it["id"]))
+
+
+## When a fight starts: Blackrazor hastens its wielder once a day, the sword deciding when (at the start of a fight).
+func combat_started() -> void:
+	var e := enc()
+	for c in e.combatants:
+		for it in items().active(c):
+			if not "blackrazor" in _specials(it):
+				continue
+			var entry := it["entry"] as Dictionary
+			if int((entry.get("uses", {}) as Dictionary).get("haste", 0)) > 0:
+				continue
+			if not entry.has("uses"):
+				entry["uses"] = {}
+			(entry["uses"] as Dictionary)["haste"] = 1
+			var haste := items().comp().spell_data("haste")
+			if not haste.is_empty():
+				var fx := Effect.new("Haste (Blackrazor)", &"item", str(it["id"]))
+				fx.lasting_rounds(10, c.id)
+				for m: Array in [["ac", {"value": 2}], ["advantage", {"on": "save:dex"}], ["flag", {"value": "hasted"}], ["speed_percent", {"value": 200}]]:
+					fx.modifiers.append(Modifier.of(str(m[0]), m[1] as Dictionary, "Blackrazor", &"item"))
+				c.creature.add_effect(fx)
+				e.log.add("spell", "Blackrazor quickens %s (Haste)" % c.name(), c.id)

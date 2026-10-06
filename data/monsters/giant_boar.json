@@ -1,0 +1,59 @@
+{
+  "id": "giant_boar",
+  "name": "Giant Boar",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 13,
+  "initiative": 0,
+  "hp": {
+    "average": 42,
+    "dice": "5d10+15"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 17,
+    "dex": 10,
+    "con": 16,
+    "int": 2,
+    "wis": 7,
+    "cha": 5
+  },
+  "senses": {},
+  "passive_perception": 8,
+  "languages": [],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "gore",
+      "name": "Gore",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "2d6+3",
+          "type": "piercing"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Gore: +5 to hit, 2d6+3 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A boar as big as a cart, too stubborn to fall."
+}

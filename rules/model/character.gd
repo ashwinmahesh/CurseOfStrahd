@@ -389,6 +389,7 @@ func on_dawn(dice: DiceRoller) -> Array[String]:
 				e["charges"] = mini(cap, have + n)
 				lines.append("%s's %s regains %d charges (%d of %d)" % [name, data.get("name", ""), int(e["charges"]) - have, int(e["charges"]), cap])
 		_reset_uses(e, data, ["dawn"])
+		e.erase("fan_uses")
 		# "Once every N days": a dawn closer.
 		var cds := e.get("cooldowns", {}) as Dictionary
 		for pid: String in cds.keys():
@@ -439,6 +440,8 @@ func _reset_uses(e: Dictionary, data: Dictionary, per: Array) -> void:
 		var pu := pw.get("uses", {}) as Dictionary
 		if str(pu.get("per", "dawn")) in per:
 			u.erase(str(pw.get("id", "")))
+			if pw.has("bead"):
+				u.erase("bead:%s" % pw["bead"])
 
 
 ## Resources some attuned items grant (none yet beyond charges); kept as a hook for refresh().
