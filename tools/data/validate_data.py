@@ -361,6 +361,12 @@ def story_checks(data, errors, need):
                 read([trig.split(":", 1)[1]], w)
             if en.get("flag"):
                 flags_set.setdefault(en["flag"], []).append(w)
+            if en.get("quest"):
+                q = en["quest"]
+                if q["id"] not in quests:
+                    errors.append(f"{w}: encounter {en['id']} moves unknown quest '{q['id']}'")
+                elif q["stage"] not in {st["id"] for st in quests[q["id"]]["stages"]}:
+                    errors.append(f"{w}: encounter {en['id']}: quest {q['id']} has no stage '{q['stage']}'")
             for m in en["monsters"]:
                 if m["monster"] not in data["monsters"]:
                     errors.append(f"{w}: encounter {en['id']} uses unknown monster '{m['monster']}'")

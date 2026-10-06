@@ -188,8 +188,16 @@ func _build_lights() -> void:
 		add_child(omni)
 
 
-## Re-reads which NPCs stand here (their `when` conditions) after a conversation or a fight changes the story.
+## Re-reads which NPCs, props and containers are here (their `when` conditions) after a conversation or a fight
+## changes the story.
 func refresh_npcs() -> void:
+	for id: String in prop_nodes:
+		(prop_nodes[id] as Node).queue_free()
+	prop_nodes.clear()
+	for id: String in container_nodes:
+		(container_nodes[id] as Node).queue_free()
+	container_nodes.clear()
+	_build_props()
 	for shown in _npc_shown:
 		(shown["token"] as Node).queue_free()
 		if not bool(shown["low_before"]):
@@ -433,6 +441,7 @@ func _check_cell_events() -> bool:
 				narration.emit(str(exit.get("locked_text", "The way is barred.")))
 				return true
 			_save_positions()
+			st.advance_minutes(5)   # walking between places takes a few minutes; rests take the hours
 			exit_requested.emit(str(exit["to"]), str(exit.get("spawn", "default")))
 			return true
 	return false
@@ -874,7 +883,8 @@ func _trigger_encounter(trigger: String) -> bool:
 		var spec := en as Dictionary
 		if str(spec["trigger"]) != trigger:
 			continue
-		if bool((st.loc_state(loc_id)["encounters"] as Dictionary).get(str(spec["id"]), false)):
+		if (st.loc_state(loc_id)["encounters"] as Dictionary).get(str(spec["id"]), false) is bool \
+				and bool((st.loc_state(loc_id)["encounters"] as Dictionary).get(str(spec["id"]), false)):
 			continue
 		if not StoryConditions.check(str(spec.get("when", "")), st):
 			continue
@@ -901,9 +911,11 @@ static func _truthy(v: Variant) -> bool:
 ## The fight happens here, on the same grid: the party where it stands, the monsters where the data puts them.
 ## Surprise: a sneaking party whose every Stealth check beats a monster's passive Perception surprises it.
 func start_encounter(encounter_id: String) -> bool:
+	# Several entries may share an id with different `when` conditions (e.g. a lighter version for a lower-level
+	# party): the first whose condition holds is the fight.
 	var spec := {}
 	for en: Variant in loc.get("encounters", []):
-		if str((en as Dictionary)["id"]) == encounter_id:
+		if str((en as Dictionary)["id"]) == encounter_id and (spec.is_empty() or not StoryConditions.check(str(spec.get("when", "")), st)):
 			spec = en as Dictionary
 	if spec.is_empty() or in_combat:
 		return false
@@ -1057,6 +1069,7 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 	GameState.combat_snapshot = {}
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	rig.follow = tokens[leader().id] as Node3D
+	st.advance_minutes(1)
 	if outcome == "victory":
 		(st.loc_state(loc_id)["encounters"] as Dictionary)[encounter_id] = true
 		if spec.has("flag"):
