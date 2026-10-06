@@ -1295,6 +1295,7 @@ func start_encounter(encounter_id: String) -> bool:
 			numbered[str(md["monster"])] = int(numbered.get(str(md["monster"]), 0)) + 1
 			mon.name = "%s %d" % [mon.name, numbered[str(md["monster"])]]
 		e.add(mon, StringName(str(md.get("side", "enemy"))), _cell(md["cell"]))
+	_light_the_fight(e)
 	var surprised: Array[String] = []
 	var who := str(spec.get("surprise", ""))
 	for c in e.combatants:
@@ -1374,6 +1375,28 @@ func _combat_token(c: Combatant) -> CombatToken:
 		if not npc.is_empty():
 			return CombatToken.create(c, str(npc.get("sprite", npc["id"])))
 	return CombatToken.create(c)
+
+
+## The fight sees what the party sees (vision rules live in the encounter): outdoors the hour sets the light (an
+## overcast Barovian day is bright but not true sunlight; night is dark), indoors the map's light does; the
+## location's lamps and candles, and the party's lantern when it's lit, are light sources on the grid.
+func _light_the_fight(e: Encounter) -> void:
+	if bool(loc["map"].get("outdoors", false)):
+		e.ambient_light = {"day": "bright", "dusk": "dim", "dawn": "dim"}.get(time_phase(), "dark") as String
+	else:
+		e.ambient_light = str(loc["map"].get("light", "dim"))
+	e.sunlit = false
+	for l: Variant in loc.get("lights", []):
+		var li := l as Dictionary
+		var o := FieldObject.new(FieldObject.Kind.ZONE, "", str(li.get("kind", "light")))
+		o.cell = _cell(li["cell"])
+		o.rules = {"light": {"bright": int(li.get("bright_ft", 10)), "dim": int(li.get("dim_ft", 10))}}
+		e.spells.zones.objects.append(o)
+	if lantern != null and lantern.visible and not members.is_empty():
+		var lo := FieldObject.new(FieldObject.Kind.ZONE, "", "lantern")
+		lo.caster_id = leader().id
+		lo.rules = {"light": {"bright": 30, "dim": 30}, "light_on": "caster"}
+		e.spells.zones.objects.append(lo)
 
 
 func _stealth_surprise(e: Encounter) -> Array[String]:

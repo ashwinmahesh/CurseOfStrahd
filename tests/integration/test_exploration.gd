@@ -258,3 +258,12 @@ func test_a_guest_follows_and_fights_on_our_side() -> void:
 			assert_true(c.is_player_controlled(), "the player commands guests")
 	root.call("_refresh")
 	GameState.story.remove_guest("ireena")
+
+
+func test_the_fight_inherits_the_light() -> void:
+	var v := _view()
+	assert_true(v.start_encounter("wolves"))
+	await _frames(3)
+	var e := v.combat_view.e
+	assert_eq(e.ambient_light, "dim", "the hall's map light")
+	assert_eq(e.light_at(v.leader().cell), "bright", "the lantern")
