@@ -26,7 +26,7 @@ static func hit(node: Node3D, camera: Camera3D, origin: Vector3, dir: Vector3) -
 	for s in sprites:
 		if s.is_visible_in_tree():
 			best = minf(best, sprite_hit(s, camera, origin, dir))
-	return best
+	return minf(best, ModelPiece.hit(node, origin, dir))   # 3D pieces: their surfaces as drawn
 
 
 ## The ray against one sprite: INF if it misses the sprite's painted pixels.
