@@ -249,3 +249,24 @@ func test_a_bathroom_has_tiles() -> void:
 			break
 	assert_true(found, "the bathroom's floor is tiled")
 	v.queue_free()
+
+
+## Death House book check: the attic's secret stair down isn't drawn until it's found, and is once it is. A door that's
+## only barred stays drawn.
+func test_a_secret_stair_shows_only_once_found() -> void:
+	var v := _view("death_house_attic")
+	await _frames(2)
+	var stair := v.exit_nodes.get("secret_stair_down", null) as Node3D
+	assert_true(stair != null, "the secret stair has a piece")
+	if stair == null:
+		return
+	assert_false(stair.visible, "not drawn before anyone finds it")
+	GameState.story.set_flag("death_house_secret_stair_found")
+	v.refresh_exits()
+	assert_true(stair.visible, "drawn once found")
+	v.queue_free()
+	var village := _view("village_of_barovia")
+	await _frames(2)
+	var door := village.exit_nodes.get("mansion_door", null) as Node3D
+	assert_true(door != null and door.visible, "the burgomaster's barred door is still drawn")
+	village.queue_free()
