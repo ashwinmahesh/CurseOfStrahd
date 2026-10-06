@@ -29,15 +29,15 @@ def main():
     p.add_argument("--id", required=True)
     p.add_argument("--out", required=True)
     a = p.parse_args(sys.argv[sys.argv.index("--") + 1:])
-    w = anim.walk_flags(a.id)
-    sheet = cutout.binarize_alpha(cutout.remove_background(cutout.load_rgba(cutout.ROOT / w["turnaround"])))
-    figures = cutout.find_figures(sheet, w["views"] or rw.view_count(sheet))
+    flags = anim.walk_flags(a.id)
+    sheet = cutout.binarize_alpha(cutout.remove_background(cutout.load_rgba(cutout.ROOT / flags["turnaround"])))
+    figures = cutout.find_figures(sheet, flags["views"] or rw.view_count(sheet))
     names = rw.VIEWS5 if len(figures) == 5 else rw.VIEWS3
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     meta = {}
     for name, fig in zip(names, figures):
-        if w["side_faces"] == "left" and name not in ("front", "back"):
+        if flags["side_faces"] == "left" and name not in ("front", "back"):
             fig = fig[:, ::-1].copy()
         h, w = fig.shape[:2]
         m = int(h * 0.08)

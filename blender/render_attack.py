@@ -77,17 +77,17 @@ def figure_plane(name, kf, ppu, place_x):
 def main():
     a = args()
     s = anim.spec(a.id)
-    w = anim.walk_flags(a.id)
-    sheet = anim.clean_source(cutout.load_rgba(cutout.ROOT / w["turnaround"]))
-    figures = cutout.find_figures(sheet, w["views"] or rw.view_count(sheet))
+    flags = anim.walk_flags(a.id)
+    sheet = anim.clean_source(cutout.load_rgba(cutout.ROOT / flags["turnaround"]))
+    figures = cutout.find_figures(sheet, flags["views"] or rw.view_count(sheet))
     names, dir_view = (rw.VIEWS5, rw.DIR_VIEW5) if len(figures) == 5 else (rw.VIEWS3, rw.DIR_VIEW3)
-    if w["side_faces"] == "left":
+    if flags["side_faces"] == "left":
         figures = [f if n in ("front", "back") else f[:, ::-1].copy() for n, f in zip(names, figures)]
     # The walk sheet's scale (render_walk.py main): the tallest view fills the band; bodies drawn
     # --static also fit the widest view.
     height_px = max(f.shape[0] for f in figures)
     ppu = height_px / rw.FIGURE_HEIGHT
-    if w["body"] != "humanoid" or w["static"]:
+    if flags["body"] != "humanoid" or flags["static"]:
         width_px = max(f.shape[1] for f in figures)
         ppu = max(ppu, width_px / (rw.FIGURE_HEIGHT * 1.12 * 0.94))
 
@@ -165,7 +165,7 @@ def main():
     frames, (cw, ch) = anim.crop_even(frames, a.cell, MIN_WIDE, MARGIN)
     out_dir = cutout.ROOT / "art" / "sprites" / a.id
     out_dir.mkdir(parents=True, exist_ok=True)
-    sheet_out = anim.finish_sheet(cutout.pack_grid(frames, len(FRAMES)), w["saturate"])
+    sheet_out = anim.finish_sheet(cutout.pack_grid(frames, len(FRAMES)), flags["saturate"])
     cutout.save_rgba(sheet_out, out_dir / "attack.png")
     anim.write_frames_tres(out_dir / "attack.tres", f"res://art/sprites/{a.id}/attack.png", (cw, ch),
                            rw.DIRECTIONS, [f[4] for f in FRAMES], "attack", FPS, False,
