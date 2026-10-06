@@ -55,6 +55,76 @@
     },
     "pronouns": {
       "type": "string"
+    },
+    "shop": {
+      "type": "object",
+      "required": [
+        "sells"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "sells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "qty": {
+                "type": "integer",
+                "minimum": -1
+              },
+              "price": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "buys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "markup": {
+          "type": "number",
+          "minimum": 0
+        },
+        "sell_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "closed": {
+          "type": "string"
+        }
+      }
+    },
+    "guest_build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "monster": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "pregen": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "note": {
+          "type": "string"
+        }
+      }
     }
   }
 }

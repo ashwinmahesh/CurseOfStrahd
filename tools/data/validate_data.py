@@ -23,6 +23,8 @@ FOLDERS = {
     "backgrounds": "background", "feats": "feat", "spells": "spell",
     "items": "item", "magic_items": "item", "monsters": "monster", "conditions": "condition", "pregens": "pregen",
     "encounters": "encounter", "locations": "location", "npcs": "npc", "quests": "quest",
+    "tarokka": {"cards": "tarokka_cards", "outcomes": "tarokka_outcomes"}, "travel": "travel",
+    "random_encounters": "random_table",
 }
 
 TYPES = {
@@ -250,7 +252,86 @@ def semantic_checks(data):
             if band != enc["difficulty"]:
                 errors.append(f"encounters/{eid}: {xp} XP is a {band} encounter for {len(enc['party'])} level {level} characters, not {enc['difficulty']}")
     story_checks(data, errors, need)
+    campaign_checks(data, errors, pending)
     return errors, pending
+
+
+# Regions later phases build (plan §6). References into them are pending, not errors.
+LATER_REGIONS = {"old_bonegrinder", "wizard_of_wines", "yester_hill", "krezk", "abbey_of_st_markovia", "argynvostholt",
+                 "van_richtens_tower", "werewolf_den", "berez", "lake_zarovich", "tsolenka_pass", "amber_temple",
+                 "castle_ravenloft", "ravenloft"}
+
+
+def campaign_checks(data, errors, pending):
+    """The Tarokka, travel maps, random encounter tables, shops and guests (ADR 0010)."""
+    locations, npcs, monsters, items = data["locations"], data["npcs"], data["monsters"], data["items"]
+
+    def place_ok(ref, region, where, kind="place"):
+        loc = ref.split(":")[0]
+        if loc in locations:
+            return
+        if region in LATER_REGIONS or any(loc.startswith(r) for r in LATER_REGIONS):
+            pending.append(f"{where}: {kind} '{ref}' (region {region}, a later phase)")
+        else:
+            errors.append(f"{where}: unknown {kind} '{ref}'")
+
+    tk = data.get("tarokka", {})
+    cards = {c["id"]: c for c in tk.get("cards", {}).get("cards", [])}
+    if cards:
+        high = {i for i, c in cards.items() if c["deck"] == "high"}
+        common = {i for i, c in cards.items() if c["deck"] == "common"}
+        if len(high) != 14 or len(common) != 40:
+            errors.append(f"data/tarokka/cards.json: expected 14 high and 40 common cards, got {len(high)} and {len(common)}")
+        out = tk.get("outcomes")
+        if out is None:
+            errors.append("data/tarokka/outcomes.json: missing")
+        else:
+            for slot, deck in (("tome", common), ("symbol", common), ("sword", common), ("ally", high), ("enemy", high)):
+                table = out.get(slot, {})
+                for cid in deck - set(table):
+                    errors.append(f"data/tarokka/outcomes.json: {slot} has no outcome for card '{cid}'")
+                for cid, o in table.items():
+                    w = f"data/tarokka/outcomes.json {slot}.{cid}"
+                    if cid not in deck:
+                        errors.append(f"{w}: not a {'high' if deck is high else 'common'} card")
+                    if slot in ("tome", "symbol", "sword"):
+                        place_ok(o["place"], o["region"], w)
+                    elif slot == "ally":
+                        if o["npc"] not in npcs:
+                            (pending if o["region"] in LATER_REGIONS else errors).append(f"{w}: npc '{o['npc']}'" + (" (a later phase)" if o["region"] in LATER_REGIONS else " unknown"))
+                    else:
+                        place_ok(o["room"], "castle_ravenloft", w, "room")
+    tables = data.get("random_encounters", {})
+    for tid, t in tables.items():
+        w = f"random_encounters/{tid}"
+        if t["map"] not in locations:
+            errors.append(f"{w}: unknown map location '{t['map']}'")
+        for e in t["entries"]:
+            if not e.get("monsters") and not e.get("dialogue"):
+                errors.append(f"{w}: an entry needs monsters or a dialogue")
+            for m in e.get("monsters", []):
+                if m["monster"] not in monsters:
+                    errors.append(f"{w}: unknown monster '{m['monster']}'")
+    for mid, tm in data.get("travel", {}).items():
+        w = f"travel/{mid}"
+        ids = {p["id"] for p in tm["places"]}
+        for p in tm["places"]:
+            place_ok(p["location"], p["region"], f"{w} place {p['id']}", "location")
+        for r in tm["roads"]:
+            for end in (r["from"], r["to"]):
+                if end not in ids:
+                    errors.append(f"{w} road {r['id']}: unknown place '{end}'")
+            if r.get("table") and r["table"] not in tables:
+                errors.append(f"{w} road {r['id']}: unknown random encounter table '{r['table']}'")
+    for nid, n in npcs.items():
+        for e in n.get("shop", {}).get("sells", []):
+            if e["id"] not in items and e["id"] not in data.get("magic_items", {}):
+                errors.append(f"npcs/{nid}: shop sells unknown item '{e['id']}'")
+        gb = n.get("guest_build", {})
+        if gb.get("monster") and gb["monster"] not in monsters:
+            errors.append(f"npcs/{nid}: guest_build monster '{gb['monster']}' unknown")
+        if gb.get("pregen") and gb["pregen"] not in data["pregens"]:
+            errors.append(f"npcs/{nid}: guest_build pregen '{gb['pregen']}' unknown")
 
 
 OPEN_FLOOR = ".~1234"
@@ -446,10 +527,15 @@ def main():
         except json.JSONDecodeError as e:
             errors.append(f"{schema_file.name}: invalid JSON: {e}")
     for folder, schema_name in FOLDERS.items():
-        schema_file = f"{schema_name}.schema.json"
+        schema_file = f"{schema_name}.schema.json" if isinstance(schema_name, str) else ""
         seen = {}
         for data_file in sorted((ROOT / "data" / folder).glob("*.json")):
             rel = data_file.relative_to(ROOT)
+            if isinstance(schema_name, dict):
+                if data_file.stem not in schema_name:
+                    errors.append(f"{rel}: unexpected file (expected {', '.join(schema_name)})")
+                    continue
+                schema_file = f"{schema_name[data_file.stem]}.schema.json"
             try:
                 data = json.loads(data_file.read_text())
             except json.JSONDecodeError as e:

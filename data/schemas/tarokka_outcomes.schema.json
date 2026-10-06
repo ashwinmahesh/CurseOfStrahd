@@ -1,0 +1,178 @@
+{
+  "$id": "tarokka_outcomes.schema.json",
+  "title": "What each Tarokka card means in each slot of the reading",
+  "type": "object",
+  "required": [
+    "id",
+    "tome",
+    "symbol",
+    "sword",
+    "ally",
+    "enemy"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "const": "outcomes"
+    },
+    "tome": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "place",
+          "region",
+          "verse",
+          "hint"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "place": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "verse": {
+            "type": "string",
+            "minLength": 10
+          },
+          "hint": {
+            "type": "string",
+            "minLength": 5
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "symbol": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "place",
+          "region",
+          "verse",
+          "hint"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "place": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "verse": {
+            "type": "string",
+            "minLength": 10
+          },
+          "hint": {
+            "type": "string",
+            "minLength": 5
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sword": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "place",
+          "region",
+          "verse",
+          "hint"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "place": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "verse": {
+            "type": "string",
+            "minLength": 10
+          },
+          "hint": {
+            "type": "string",
+            "minLength": 5
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ally": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "npc",
+          "region",
+          "verse",
+          "hint"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "npc": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "where": {
+            "type": "string"
+          },
+          "verse": {
+            "type": "string",
+            "minLength": 10
+          },
+          "hint": {
+            "type": "string",
+            "minLength": 5
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "enemy": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "room",
+          "verse",
+          "hint"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "room": {
+            "type": "string"
+          },
+          "verse": {
+            "type": "string",
+            "minLength": 10
+          },
+          "hint": {
+            "type": "string",
+            "minLength": 5
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
