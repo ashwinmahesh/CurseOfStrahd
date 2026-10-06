@@ -34,8 +34,10 @@ top, party on the left, hotbar and End Turn at the bottom, log on the right), dr
 5. **End Turn**: a large round button (Space, or hold Y). If the character still has their Action, the first press
    shows "End turn with your Action unused?". Leftover movement doesn't ask (owner feedback 2026-10-06).
 
-On the field: the 5 ft grid appears in combat; hovering the floor shows the movement path with feet used and left,
-and warns before a step that provokes an Opportunity Attack ("leaves Wolf's reach"), naming the creature. Hovering
+On the field: nothing is lit until the pointer asks (owner 2026-10-06: the always-on blue squares of where a creature
+could move were noise). Hovering the floor shows the walk as a dotted trail to a ring where the creature would stop,
+with feet used and left; the ring turns red and the tooltip warns before a step that provokes an Opportunity Attack
+("leaves Wolf's reach"), naming the creature. A square out of reach shows only a pale ring and why. Hovering
 a creature shows the **target tooltip**: hit chance and the d20 needed, damage with average, mastery effects (Graze
 on a miss), Advantage/Disadvantage with their sources, cover, and what the party knows of its defenses.
 
@@ -70,11 +72,29 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
 | Enemy or neutral turn | hotbar dimmed with "Wolf's turn"; the log narrates; reactions can still prompt |
 | Out of an action type | its shape greyed; slots that need it greyed with the reason ("Bonus Action used") |
 | Slot unavailable | greyed with why ("No level 3 slots left", "Needs a free hand", "Incapacitated") |
-| Movement preview | path, feet used and left, Opportunity Attack warnings, difficult terrain shown as doubled cost |
+| Movement preview | dotted path to a ring, feet used and left, Opportunity Attack warnings (red ring), difficult terrain shown as doubled cost |
 | Targeting | template on the grid, creatures listed with chances; Esc/B cancels |
 | Reaction pending | modal prompt; the turn pauses; a timer is never used |
 | Character at 0 HP | frame greyed; on their turn the hotbar shows the Death Saving Throw button and the tally |
-| Combat start | "Roll Initiative" banner, surprise explained per creature; the 5 ft grid fades in |
+| Combat start | an opening beat before the first turn (see below); surprise explained per creature |
+| Combat end | the combat HUD fades out and the exploring HUD back in; survivors who aren't the party fade away |
+
+## Into a fight and out again
+
+Owner 2026-10-06: the switch into combat felt abrupt (the party's figures were swapped for fresh ones facing the
+camera, foes popped in off screen, the HUD cut, the floor lit up). A fight now opens with a short beat
+(`CombatView.INTRO_TIME`) while the rules are already running:
+
+- The party and guests keep the figures they were exploring with (mid-step, facing, the lit lantern) and turn to the
+  nearest foe as their step lands; the foes fade in where they stand, nearest first, facing the party.
+- The camera eases to the middle of the fight and pulls out until everyone shows inside the HUD, so the player sees
+  what they face; the first turn brings it back to the player's zoom on whoever acts first.
+- The exploring HUD fades out and the combat HUD fades up (`LayerFade`); "Roll Initiative" holds over the field, then
+  "Round 1" as the first turn starts. The combat music crossfades in as before.
+
+At the end the party's figures go back to exploring where they stand, the combat HUD fades out and the exploring HUD
+back in. `make capture SCENE=res://tools/capture/combat_transition.tscn LOCATION=<id> ENCOUNTER=<id>` shoots both ways
+as frames and contact sheets.
 
 ## Engine hooks
 
