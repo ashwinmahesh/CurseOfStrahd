@@ -121,6 +121,9 @@ func _build() -> void:
 		for x in grid.width:
 			var c := Vector2i(x, z)
 			var f := grid.flags(c)
+			if (f & CombatGrid.WATER) != 0:
+				_water(c)
+				continue
 			if (f & CombatGrid.VOID) != 0:
 				continue
 			var h := floor_y(c)
@@ -141,6 +144,12 @@ func _build() -> void:
 				_low_cover(c)
 	if theme == "shrine_yard":
 		_lanterns()
+
+
+## Deep water: a dark surface a little below the floor.
+func _water(c: Vector2i) -> void:
+	var m := Look.cel_checker("night", "night_deep", "night_deep")
+	_box("Water", Vector3(1, 0.1, 1), Vector3(c.x + 0.5, -0.18, c.y + 0.5), m)
 
 
 func _wall(c: Vector2i) -> void:

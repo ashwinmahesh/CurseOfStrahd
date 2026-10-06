@@ -131,3 +131,21 @@ func test_shops_buy_sell_and_keep_their_stock() -> void:
 	assert_eq(st.gold, 10.0 + offer)
 	var copy := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
 	assert_eq(copy.shop_wares("test_merchant").size(), 1, "stock survives a save")
+
+
+func test_guest_interjections_time_and_options() -> void:
+	var st := _party()
+	var f := DialogueFile.parse("~ road\ninterject guest:ireena: I know this place.\ntime +45\nif option:respec\nset can_respec\nendif\n-> END\n", "test/road")
+	assert_true(f.errors.is_empty(), str(f.errors))
+	DialogueFile.register(f)
+	var r := DialogueRunner.new(st, DiceRoller.new(1))
+	var start := st.total_minutes()
+	r.start("test/road:road")
+	assert_eq(str(r.next()["kind"]), "end", "no Ireena, no line")
+	assert_eq(st.total_minutes() - start, 45)
+	assert_true(bool(st.get_flag("can_respec")), "respec is on by default")
+	st.add_guest("ireena")
+	r.start("test/road:road")
+	var b := r.next()
+	assert_eq(str(b["speaker_id"]), "ireena")
+	assert_eq(str(b["text"]), "I know this place.")

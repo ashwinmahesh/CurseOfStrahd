@@ -31,7 +31,7 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 ```
 
 - **Map rows** use the combat legend: `.` floor, `#` wall, `=` low obstacle (furniture, Half Cover), `~` Difficult
-  Terrain, `1`-`4` raised floor, space = void. Doors are cells listed in `doors` (drawn as a closed door; a closed
+  Terrain, `1`-`4` raised floor, `w` deep water (not walkable, doesn't block sight), space = void. Doors are cells listed in `doors` (drawn as a closed door; a closed
   door blocks movement and sight until opened).
 - **Light:** `bright`, `dim` or `dark` for the map and each area; `lights` add bright and dim radii. (Vision rules —
   what Darkvision and darkness do to checks and attacks — belong to the spell and ability audit; the world only

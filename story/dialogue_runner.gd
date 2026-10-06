@@ -110,7 +110,13 @@ func next() -> Dictionary:
 				return _line_beat(str(s["speaker"]), str(s["mood"]), str(s["text"]))
 			"interject":
 				pc += 1
-				var who := st.find_member(str(s["selector"]))
+				var sel := str(s["selector"])
+				if sel.begins_with("guest:"):
+					# A story ally travelling with the party says it (Ireena on the road).
+					if sel.substr(6) in st.guest_ids:
+						return _line_beat(sel.substr(6), "", str(s["text"]))
+					continue
+				var who := st.find_member(sel)
 				if who == null:
 					continue
 				return _party_line(who, str(s["text"]))
@@ -173,6 +179,9 @@ func next() -> Dictionary:
 			"combat":
 				combat = str(s["encounter"])
 				finished = true
+			"time":
+				pc += 1
+				st.advance_minutes(int(s["minutes"]))
 			"tarokka_draw":
 				pc += 1
 				Tarokka.ensure_drawn(st)

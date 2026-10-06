@@ -153,6 +153,9 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 			return {"t": "shop"}
 		"respec":
 			return {"t": "respec"}
+		"time":
+			if parts.size() == 2 and parts[1].begins_with("+"):
+				return {"t": "time", "minutes": int(parts[1].substr(1))}
 		"join", "leave":
 			if parts.size() == 2:
 				return {"t": parts[0], "npc": parts[1]}

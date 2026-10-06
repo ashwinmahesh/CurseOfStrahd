@@ -17,6 +17,7 @@ const WALL := 1          ## fills the square to full height: blocks movement, si
 const LOW := 2           ## crate, low wall, rubble heap: blocks movement, gives Half Cover, doesn't block sight
 const DIFFICULT := 4     ## rubble, bog, undergrowth: each square costs double
 const VOID := 8          ## outside the map
+const WATER := 16        ## deep water (`w`): with VOID, not walkable (swimming comes later); doesn't block sight
 
 const DIRS: Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1),
 	Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]
@@ -69,6 +70,8 @@ static func from_rows(rows: Array) -> CombatGrid:
 					g.set_flag(Vector2i(x, z), DIFFICULT)
 				" ":
 					g.set_flag(Vector2i(x, z), VOID)
+				"w":
+					g.set_flag(Vector2i(x, z), VOID | WATER)
 				"1", "2", "3", "4":
 					g.set_height(Vector2i(x, z), int(c) * FEET)
 	return g

@@ -122,7 +122,15 @@ func _long_rest(rule: String) -> void:
 func _narrate(key: String) -> void:
 	if root == null or not root.has_method("narrate_key"):
 		return
-	var text := str(root.call("narrate_key", key))
+	# The place's own line first (rest:long:<location>, then rest:long:<region>), then the general one.
+	var loc := Compendium.shared().get_entry("locations", st.location)
+	var text := ""
+	if not key.begins_with("dream:"):
+		for k: String in ["%s:%s" % [key, st.location], "%s:%s" % [key, loc.get("region", "")]]:
+			if text == "":
+				text = str(root.call("narrate_key", k))
+	if text == "":
+		text = str(root.call("narrate_key", key))
 	if text != "":
 		_log.text += "\n" + text
 

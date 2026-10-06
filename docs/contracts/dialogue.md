@@ -47,6 +47,7 @@ tarokka read tome [speaker]        Turns the card for a slot (tome, symbol, swor
                                    the card, then the verse spoken by `speaker` (default madam_eva).
 shop                               Opens the shop of the NPC being spoken to; the conversation resumes after.
 join ireena / leave ireena         A story ally joins or leaves the party as a guest (ADR 0010).
+time +60                           Time passes in the scene (minutes).
 respec                             The player picks a party member to rebuild from level 1 in the creator (they
                                    keep their belongings and level back up with milestones). Skipped when the
                                    owner switched respec off (pause menu).
@@ -65,7 +66,8 @@ narrate trigger_key                Plays a Narrator trigger (below) inline.
 `background:acolyte`, `tag:pious`, `item:holy_symbol_amulet` (anyone carries it), `quest.<id> == stage_id`,
 `attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `day`, `hour >= 20`, `tarokka.drawn`,
 `tarokka.sword == swords_3`, `tarokka.sword.region == vallaki`, `tarokka.ally.npc == ezmerelda`, `guest:ireena`,
-`spell:speak_with_dead` (an exploring spell the party cast is still running),
+`spell:speak_with_dead` (an exploring spell the party cast is still running), `option:respec` (the owner's
+switch), and `interject guest:ireena: Text` for a story ally travelling with the party,
 `gold >= 25` (the party's purse), `level >= 3`
 (the lowest character level in the party), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
 and parentheses.
@@ -97,7 +99,7 @@ cooldown 3
 
 Trigger keys the game sends: `enter:<location_or_area_id>`, `examine:<prop_id>`, `search:<prop_id>`,
 `check:<skill>:success|failure` (and `check:<skill>:<prop_id>:success|failure`), `trap:<trap_id>:found|triggered`,
-`rest:short`, `rest:long`, `dream:<id>`, `combat:start`, `combat:crit`, `combat:nat1`, `combat:fall`,
+`rest:short`, `rest:long` (and `rest:long:<location or region>` first), `dream:<id>`, `combat:start`, `combat:crit`, `combat:nat1`, `combat:fall`,
 `combat:kill`, `combat:victory`, `death:<character>`.
 
 ## Example
