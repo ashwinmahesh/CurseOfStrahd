@@ -27,6 +27,7 @@ func _ready() -> void:
 		if a.begins_with("--load="):
 			SaveSystem.load_slot(a.get_slice("=", 1))   # captures: start from a save
 	st = GameState.story
+	st.time_passed.connect(_on_time_passed)
 	narrator = Narrator.new()
 	banter = Banter.new()
 	if st.party.is_empty():
@@ -422,6 +423,48 @@ func _arrive(place_id: String) -> void:
 	var loc_ref := str(pl.get("location", ""))
 	enter_location(loc_ref.get_slice(":", 0), str(pl.get("spawn", "default")))
 	hud.toast("%s · %02d:%02d" % [pl.get("name", place_id), st.minute_of_day / 60, st.minute_of_day % 60])
+
+
+# --- Time passing ---------------------------------------------------------------------------------
+
+var _fade: ColorRect = null
+var _fade_label: Label = null
+
+
+## A fade to black and back when time passes (rests, journeys, waiting for noon), with how long it was.
+func _on_time_passed(minutes: int) -> void:
+	if not is_inside_tree():
+		return
+	if _fade == null:
+		var layer := CanvasLayer.new()
+		layer.layer = 40
+		layer.process_mode = Node.PROCESS_MODE_ALWAYS
+		add_child(layer)
+		_fade = ColorRect.new()
+		_fade.color = Color(Look.color("void"), 0.0)
+		_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		layer.add_child(_fade)
+		_fade_label = UiKit.label("", 30, "parchment")
+		_fade_label.set_anchors_preset(Control.PRESET_CENTER)
+		_fade_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_fade_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		_fade_label.modulate.a = 0.0
+		layer.add_child(_fade_label)
+	var hours := float(minutes) / 60.0
+	_fade_label.text = ("%d hours later" % roundi(hours)) if hours >= 1.5 else ("An hour later" if hours >= 0.75 else "Half an hour later")
+	var tw := create_tween()
+	tw.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tw.tween_property(_fade, "color:a", 1.0, 0.45)
+	tw.parallel().tween_property(_fade_label, "modulate:a", 1.0, 0.45)
+	tw.tween_interval(0.9)
+	tw.tween_property(_fade, "color:a", 0.0, 0.6)
+	tw.parallel().tween_property(_fade_label, "modulate:a", 0.0, 0.6)
+
+
+func _exit_tree() -> void:
+	if st != null and st.time_passed.is_connected(_on_time_passed):
+		st.time_passed.disconnect(_on_time_passed)
 
 
 # --- Screens --------------------------------------------------------------------------------------

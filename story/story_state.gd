@@ -222,7 +222,13 @@ func total_minutes() -> int:
 	return (day - 1) * 24 * 60 + minute_of_day
 
 
+## A stretch of time worth showing passed (half an hour or more: a rest, a journey, a long wait).
+signal time_passed(minutes: int)
+
+
 func advance_minutes(minutes: int) -> void:
+	if minutes >= 30:
+		time_passed.emit(minutes)
 	minute_of_day += minutes
 	while minute_of_day >= 24 * 60:
 		minute_of_day -= 24 * 60
