@@ -1013,14 +1013,16 @@ func _pickables() -> Array:
 	for m: Combatant in members + guest_members:
 		if tokens.has(m.id):
 			out.append([tokens[m.id], m.cell])
+	# Nothing in an area the party hasn't found yet can be hovered or clicked (HiddenAreas).
 	for shown in _npc_shown:
-		out.append([shown["token"], shown["cell"]])
+		if not HiddenAreas.hides(self, shown["cell"] as Vector2i):
+			out.append([shown["token"], shown["cell"]])
 	for key: String in ["props", "containers", "doors", "exits"]:
 		var nodes := {"props": prop_nodes, "containers": container_nodes, "doors": door_nodes, "exits": exit_nodes}[key] as Dictionary
 		for t: Variant in loc.get(key, []):
 			var spec := t as Dictionary
 			var node := nodes.get(str(spec.get("id", "")), null) as Node3D
-			if node != null and is_instance_valid(node):
+			if node != null and is_instance_valid(node) and not HiddenAreas.hides(self, _cell(spec["cell"])):
 				out.append([node, _cell(spec["cell"])])
 	return out
 
