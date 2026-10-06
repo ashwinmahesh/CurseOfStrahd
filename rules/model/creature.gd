@@ -30,6 +30,8 @@ var death_successes: int = 0
 var death_failures: int = 0
 var stable: bool = false
 var dead: bool = false
+## Hit Points lost to a Sword of Wounding: healing other than a rest can't bring them back (cleared by a rest).
+var unhealable: int = 0
 ## Player characters (and story NPCs) make Death Saving Throws; monsters die at 0 Hit Points.
 var uses_death_saves: bool = false
 
@@ -405,11 +407,14 @@ func d20_sources(keys: Array[String]) -> Dictionary:
 
 # --- Rolling D20 Tests ---------------------------------------------------------------------------
 
+## `extra_keys` name the action the check belongs to ("search", "study") for features that care (Sharp Eye, Watchers).
 func roll_check(dice: DiceRoller, skill_or_ability: StringName, dc: int, extra_adv: Array[String] = [],
-		extra_dis: Array[String] = [], label: String = "") -> D20Test:
+		extra_dis: Array[String] = [], label: String = "", extra_keys: Array[String] = []) -> D20Test:
 	var bonus := skill_bonus(skill_or_ability) if Abilities.SKILLS.has(skill_or_ability) else ability_check_bonus(skill_or_ability)
 	var text := label if label != "" else "%s (%s)" % [bonus.label, name]
-	return roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, check_keys(skill_or_ability), extra_adv, extra_dis, text)
+	var keys := check_keys(skill_or_ability)
+	keys.append_array(extra_keys)
+	return roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, keys, extra_adv, extra_dis, text)
 
 
 func roll_save(dice: DiceRoller, ab: StringName, dc: int, extra_adv: Array[String] = [],
@@ -575,6 +580,9 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 				r.notes.append("Immunity to %s: %s" % [damage_type, imm])
 			continue
 		var res := resistance_source(damage_type)
+		# Resistance that only covers this damage's source (Shield of Missile Attraction: Ranged weapons).
+		if res == "" and str(pd.get("resisted_by", "")) != "":
+			res = str(pd["resisted_by"])
 		if res != "" and bool(pd.get("ignore_resistance", false)):
 			r.notes.append("%s ignores Resistance" % pd.get("ignore_source", "The attack"))
 			res = ""
@@ -656,7 +664,9 @@ func heal(amount: int, source: String = "") -> int:
 	if dead or amount <= 0:
 		return 0
 	var before := hp
-	hp = mini(max_hp(), hp + amount)
+	# Hit Points a Sword of Wounding took come back only with a Short or Long Rest.
+	var cap := maxi(0, max_hp() - (0 if source in ["Short Rest", "Long Rest", "Hit Point Die"] else unhealable))
+	hp = maxi(before, mini(cap, hp + amount))
 	if before == 0 and hp > 0:
 		_wake_from_zero()
 	log_event({"type": "healed", "creature": id, "amount": hp - before, "source": source})
@@ -958,6 +968,7 @@ func finish_short_rest() -> void:
 	for e: Effect in effects.duplicate():
 		if (e as Effect).ends == Effect.Ends.SHORT_REST:
 			remove_effect(e as Effect)
+	unhealable = 0
 	log_event({"type": "short_rest", "creature": id})
 
 
@@ -974,6 +985,7 @@ func finish_long_rest() -> void:
 	if exhaustion > 0:
 		exhaustion -= 1
 	temp_hp = 0
+	unhealable = 0
 	var was_zero := hp == 0
 	hp = max_hp()
 	if was_zero:
@@ -991,7 +1003,7 @@ func speed(kind: String = "walk") -> Breakdown:
 	var base := int(base_speed.get(kind, 0))
 	var ctx := formula_context()
 	for m in modifiers_for(&"speed_set"):
-		var v := mod_value(m, ctx)
+		var v := _speed_set_value(m, ctx, kind)
 		if v > 0 and m.text("kind", "walk") == kind and v > base:
 			base = v
 	if base <= 0:
@@ -1009,7 +1021,7 @@ func speed(kind: String = "walk") -> Breakdown:
 		var now := b.sum()
 		b.add(m.source_name, now * pct / 100 - now)
 	for m in modifiers_for(&"speed_set"):
-		if mod_value(m, ctx) == 0 and m.text("kind", "walk") == kind:
+		if m.text("kind", "walk") == kind and _speed_set_value(m, ctx, kind) == 0:
 			b.set_override(0, m.source_name)
 	if b.sum() < 0:
 		b.set_floor(0, "minimum 0")
@@ -1017,6 +1029,13 @@ func speed(kind: String = "walk") -> Breakdown:
 
 
 ## Character adds the heavy-armor Strength penalty here.
+## A speed_set value: a number, or "walk" for a speed equal to the creature's walking Speed (Potion of Flying).
+func _speed_set_value(m: Modifier, ctx: Dictionary, kind: String) -> int:
+	if m.text("value") == "walk":
+		return int(base_speed.get("walk", 0)) if kind == "walk" else speed("walk").total()
+	return mod_value(m, ctx)
+
+
 func _speed_adjustments(_b: Breakdown) -> void:
 	pass
 
@@ -1091,7 +1110,7 @@ func state_to_dict() -> Dictionary:
 		fx.append(e.to_dict())
 	return {"hp": hp, "temp_hp": temp_hp, "ward_hp": ward_hp, "exhaustion": exhaustion, "death_successes": death_successes,
 		"death_failures": death_failures, "stable": stable, "dead": dead, "conditions": conds,
-		"resources_used": res, "effects": fx,
+		"resources_used": res, "effects": fx, "unhealable": unhealable,
 		"concentration": {"source": concentration.source_id, "name": concentration.name} if concentration != null else {}}
 
 
@@ -1099,6 +1118,7 @@ func state_from_dict(d: Dictionary) -> void:
 	hp = int(d.get("hp", hp))
 	temp_hp = int(d.get("temp_hp", 0))
 	ward_hp = int(d.get("ward_hp", 0))
+	unhealable = int(d.get("unhealable", 0))
 	exhaustion = int(d.get("exhaustion", 0))
 	death_successes = int(d.get("death_successes", 0))
 	death_failures = int(d.get("death_failures", 0))

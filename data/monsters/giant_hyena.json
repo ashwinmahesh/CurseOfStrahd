@@ -1,0 +1,61 @@
+{
+  "id": "giant_hyena",
+  "name": "Giant Hyena",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 45,
+    "dice": "6d10+12"
+  },
+  "speed": {
+    "walk": 50
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 14,
+    "con": 14,
+    "int": 2,
+    "wis": 12,
+    "cha": 7
+  },
+  "skills": {
+    "perception": 3
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 13,
+  "languages": [],
+  "cr": 1,
+  "xp": 200,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "2d6+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite: +5 to hit, 2d6+3 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A hyena as big as a horse."
+}

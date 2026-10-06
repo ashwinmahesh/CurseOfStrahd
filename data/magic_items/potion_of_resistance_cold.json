@@ -1,0 +1,38 @@
+{
+  "id": "potion_of_resistance_cold",
+  "name": "Potion of Resistance (Cold)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_green",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "cold"
+          }
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "variant_of": "potion_of_resistance",
+  "summary": "Resistance to Cold damage for 1 hour.",
+  "text": "Drink it to gain Resistance to Cold damage, lasting 1 hour."
+}

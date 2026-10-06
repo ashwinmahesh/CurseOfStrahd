@@ -1,0 +1,36 @@
+{
+  "id": "feather_token_tree",
+  "name": "Feather Token (Tree)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 2000.0,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "feather",
+  "variant_of": "feather_token",
+  "powers": [
+    {
+      "id": "use",
+      "name": "Use",
+      "cost": "magic",
+      "consume": true,
+      "custom": "feather_token",
+      "params": {
+        "kind": "tree"
+      },
+      "text": "Outdoors, a nonmagical oak tree springs up.",
+      "combat": false,
+      "field": true
+    }
+  ],
+  "summary": "Outdoors, a nonmagical oak tree springs up.",
+  "text": "A single-use, feather-shaped token that only works outdoors. As a Magic action, touch it to an empty spot on the ground: the token vanishes and an ordinary, nonmagical oak springs up in its place, 60 feet tall with a trunk 5 feet across and a crown spreading 20 feet in every direction at the top."
+}

@@ -204,13 +204,30 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Exploring spells (Light, Detect Magic, Find Traps, others as `spell:` conditions); Ritual casting (+10 minutes, no slot) | story/field_casting.gd, location_view.gd apply_spell_effect | tested (Light, Find Traps); the rest record their duration for the story to read | test_exploration |
 | Arcane Recovery | rest_screen.gd | tested | test_party_screens |
 | Changing prepared spells after a Long Rest | ui/screens/prepare_screen.gd (the class's `swap_prepared`) | tested | test_party_screens |
-| Attunement (three items, requirements, a Short Rest) and magic item modifiers | character.gd attune, item_modifiers | tested | test_classes |
+| Attunement (three items, requirements, a Short Rest) and magic item modifiers | character.gd attune, item_modifiers | tested | test_classes, test_magic_items |
+| Magic items (2024 DMG): 475 entries with their powers; items built on any fitting weapon, armor or ammunition; worn slots; charges, daily uses and dawn; curses; magic ammunition | data/magic_items, rules/equipment/magic_items.gd, character.gd | tested (framework and representative items) | test_magic_items |
+| Item powers in fights: spells cast from items at the item's DC or the wielder's, recipes, toggles, on-hit weapon rules, reactions and defenses | combat/combat_items.gd, item_specials.gd, item_powers.gd | tested (framework and representative items) | test_magic_items |
+| Item powers outside fights: potions, scrolls, exploring spells, manuals, containers, Robe of Useful Items, Deck of Many Things | story/field_items.gd, deck_of_many_things.gd, inventory_screen.gd | implemented | test_magic_items |
+| Random treasure by the party's level, seeded per playthrough and saved; Spell Scrolls name their spell | story/treasure.gd, data/treasure/levels.json | tested | test_magic_items |
 | Buying and selling (shop markup, sell rate, stock) | story_state.gd shop_*, shop_screen.gd | tested | test_campaign |
 | Travel (hours on the road), random encounters (day and night chances), day and night | story/travel.gd, game_root.gd travel | tested | test_travel |
 | Guests fighting under the player's control | location_view.gd guest_members, combat side guest | tested | test_exploration |
 
+## Ravenloft: The Horrors Within (RtHW; combat/ravenloft_features.gd)
+
+| Rule | Code | Status | Test |
+|---|---|---|---|
+| Species: Dhampir (Spider Climb, Trace of Undeath, Vampiric Bite), Hexblood (Fey; Hex Magic; Eerie Token as text), Lupin (Feral Pounce, Howl, Werewolf Instincts), Reborn (Strange Endurance, Escaped Death, Everlasting, Knowledge from a Past Life) | data/species, ravenloft_features.gd | tested: every species builds; Vampiric Bite, Howl, Feral Pounce, Past Life | test_ravenloft |
+| Origin feats Sharp Eye and Survivor; nine Ravenloft Dark Gifts in place of any origin feat (a background's feat can be swapped) | data/feats, character.gd, choice_options.gd, ravenloft_features.gd | tested: the swap, Survivor's reroll, Sharp Eye and Watchers on a Search, a natural 1 waking a gift, Touch of Death, Mist Walker's rest | test_ravenloft |
+| Backgrounds (Haunted One, Investigator, Mist Wanderer, Spirit Medium), Ebonbane, Harkon's Bite | — | not started: waiting for the book's text | — |
+| College of Spirits: Channeler, Spirits from Beyond (all twelve rows), Empowered Channeling (Power from Beyond, Spiritual Manifestation), Mystical Connection | ravenloft_features.gd, spell_caster.gd hooks | implemented; tested: Spirits from Beyond | test_ravenloft |
+| Grave Domain: Circle of Mortality (Pull of Death, Return to Life), Path to the Grave, Sentinel at Death's Door, Divine Reaper (Keeper of Souls; Enhanced Necromancy not started) | ravenloft_features.gd, features.gd divine_spark | implemented; tested: Path to the Grave, Sentinel at Death's Door | test_ravenloft |
+| Hollow Warden: Wrath of the Wild (Ancient Armor, Unnerving Aura, retribution), Hungering Might, Rot and Violence, Ancient Endurance | ravenloft_features.gd | implemented (numbers unconfirmed, deviations.md); tested: Wrath of the Wild | test_ravenloft |
+| Phantom: Wails from the Grave, Whispers of the Dead (rest screen), Tokens of the Departed, Voice of Death, Ghost Walk, Death's Friend | ravenloft_features.gd, prepare_screen.gd | implemented; tested: Wails from the Grave | test_ravenloft |
+| Shadow Sorcery: Eyes of the Dark, Spirits of Ill Omen, Shadow Walk, Umbral Form | ravenloft_features.gd, encounter.gd can_see, spell_caster.gd cast | implemented; tested: Eyes of the Dark, Spirits of Ill Omen | test_ravenloft |
+| Undead Patron: Form of Dread, Grave Touched, Necrotic Husk (Unholy Resuscitation), Superior Dread | ravenloft_features.gd | implemented; tested: Form of Dread, Frightful Avatar, Unholy Resuscitation | test_ravenloft |
+
 ## Not started (later phases)
 
 Influence and NPC attitudes as a rule (attitudes exist in the story; haggling is written into dialogue for now);
-the new classes' level 8-11 features in combat (listed under Classes; the spell and ability thread); magic items' own powers beyond modifiers
-(Phase 5, with the treasures).
+the new classes' level 8-11 features in combat (listed under Classes; the spell and ability thread).

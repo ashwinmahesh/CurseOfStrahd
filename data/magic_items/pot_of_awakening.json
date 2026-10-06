@@ -1,0 +1,19 @@
+{
+  "id": "pot_of_awakening",
+  "name": "Pot of Awakening",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 10,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "pot",
+  "summary": "Plant a shrub in it and in 30 days it becomes an Awakened Shrub.",
+  "text": "This clay pot weighs 10 pounds. Grow an ordinary shrub in it for 30 days and the plant then magically becomes an Awakened Shrub. (It does nothing else in the game.)"
+}

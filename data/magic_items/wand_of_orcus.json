@@ -1,0 +1,141 @@
+{
+  "id": "wand_of_orcus",
+  "name": "Wand of Orcus",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true,
+    "charges": {
+      "max": 7,
+      "regain": "1d4+3",
+      "when": "dawn"
+    },
+    "sentient": true
+  },
+  "theme": "relics",
+  "icon": "wand_of_orcus",
+  "treasure": {
+    "random": false
+  },
+  "template": {
+    "on": "weapon",
+    "items": [
+      "mace"
+    ],
+    "name": "Wand of Orcus"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "ac",
+      "value": 3,
+      "attuned_only": true
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "dice": "2d12",
+        "type": "necrotic"
+      }
+    ]
+  },
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 2,
+      "major_beneficial": 1,
+      "minor_detrimental": 2,
+      "major_detrimental": 1
+    }
+  },
+  "powers": [
+    {
+      "id": "animate_dead",
+      "name": "Animate Dead",
+      "spell": "animate_dead",
+      "charges": 1,
+      "dc": 18
+    },
+    {
+      "id": "blight",
+      "name": "Blight",
+      "spell": "blight",
+      "charges": 2,
+      "dc": 18
+    },
+    {
+      "id": "circle_of_death",
+      "name": "Circle Of Death",
+      "spell": "circle_of_death",
+      "charges": 3,
+      "dc": 18
+    },
+    {
+      "id": "finger_of_death",
+      "name": "Finger Of Death",
+      "spell": "finger_of_death",
+      "charges": 3,
+      "dc": 18
+    },
+    {
+      "id": "power_word_kill",
+      "name": "Power Word Kill",
+      "spell": "power_word_kill",
+      "charges": 4
+    },
+    {
+      "id": "speak_with_dead",
+      "name": "Speak With Dead",
+      "spell": "speak_with_dead",
+      "charges": 1,
+      "combat": false,
+      "field": true
+    },
+    {
+      "id": "undead",
+      "name": "Call Undead",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "params": {
+        "monster": "zombie",
+        "count": 6,
+        "hours": 1
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Once per dawn: undead rise to serve you for an hour."
+    }
+  ],
+  "sentience": {
+    "int": 16,
+    "wis": 12,
+    "cha": 16,
+    "alignment": "chaotic evil",
+    "purpose": "to return to Orcus"
+  },
+  "summary": "Orcus's skull-topped rod: a +3 mace dealing 2d12 Necrotic more, +3 AC, and necromancy (save DC 18).",
+  "text": "Orcus, Demon Prince of Undeath, seldom lets this ghastly rod out of his reach. It fights as a magic Mace with +3 to attack and damage rolls, and each hit adds 2d12 Necrotic damage. Attuned to it, you gain +3 to your Armor Class. It has 7 charges, regains 1d4 + 3 at dawn, and spends them on these spells (save DC 18): Speak with Dead (1), Animate Dead (1), Blight (2), Finger of Death (3), Circle of Death (3) or Power Word Kill (4). Once per dawn it can also summon undead that serve you for 1 hour. A creature that isn't Undead and isn't attuned to the wand takes 10d6 Necrotic damage when it touches it. The wand is sentient and yearns to get back to Orcus."
+}

@@ -1,0 +1,44 @@
+{
+  "id": "robe_of_the_archmagi",
+  "name": "Robe of the Archmagi",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a Sorcerer, Warlock, or Wizard"
+  },
+  "theme": "arcana",
+  "icon": "robe",
+  "modifiers": [
+    {
+      "stat": "ac_formula",
+      "base": 15,
+      "abilities": [
+        "dex"
+      ],
+      "when": {
+        "armor": "none"
+      }
+    },
+    {
+      "stat": "advantage",
+      "on": "save_vs:spell"
+    },
+    {
+      "stat": "spell_dc",
+      "value": 2
+    },
+    {
+      "stat": "spell_attack",
+      "value": 2
+    }
+  ],
+  "worn": "robe",
+  "summary": "AC 15 + Dex without armor, Advantage on saves against spells, and +2 to your spell save DC and spell attacks.",
+  "text": "A finely woven, rune-covered robe that grants three benefits to its wearer. With no armor on, your base Armor Class becomes 15 + your Dexterity modifier. Saving throws you make against spells and any other magical effect have Advantage. Your spell attack bonus and spell save DC both rise by 2."
+}

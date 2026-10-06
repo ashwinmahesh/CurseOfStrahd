@@ -21,6 +21,10 @@ var _colours: Dictionary = {}
 var _centre := Vector2.ZERO        ## the ground point (world x, z) under the middle
 var _content: Control
 var _rim: Control
+## Squares behind undiscovered secret doors (HiddenAreas), left dark until found.
+var _hidden: Dictionary = {}
+var _hidden_sig := ""
+var _check := 0.0
 
 
 func _init() -> void:
@@ -49,13 +53,20 @@ func _init() -> void:
 func show_location(v: LocationView) -> void:
 	view = v
 	_grid = CombatGrid.from_rows(v.loc["map"]["rows"] as Array)
-	ways_out = ExitSigns.ways_out(v)
 	_colours = colours_for(ArenaBoard.theme_for(v.loc["map"] as Dictionary))
-	_tex = ImageTexture.create_from_image(_render())
+	_redo_hidden()
 	_centre = _leader_ground()
 	tooltip_text = "%s\nWheel: zoom · Click: walk there" % str(v.loc.get("name", ""))
 	_content.queue_redraw()
 	_rim.queue_redraw()
+
+
+## Leaves the squares behind undiscovered secret doors (and the ways out there) off the map.
+func _redo_hidden() -> void:
+	_hidden_sig = HiddenAreas.signature(view)
+	_hidden = HiddenAreas.hidden_cells(view)
+	ways_out.assign(ExitSigns.ways_out(view).filter(func(e: Dictionary) -> bool: return not _hidden.has(e["cell"])))
+	_tex = ImageTexture.create_from_image(_render())
 
 
 ## Map colours by the kind of place, in the game's gothic tones: grey ground outdoors with dark pines in the wilds and
@@ -85,6 +96,8 @@ func _render() -> Image:
 	for z in d:
 		for x in w:
 			var c := Vector2i(x, z)
+			if _hidden.has(c):
+				continue
 			var f := _grid.flags(c)
 			var col := Color(0, 0, 0, 0)
 			if (f & CombatGrid.WATER) != 0:
@@ -106,6 +119,8 @@ func _render() -> Image:
 	for z in d:
 		for x in w:
 			var c := Vector2i(x, z)
+			if _hidden.has(c):
+				continue
 			var solid := _grid.has_flag(c, CombatGrid.WALL)
 			var wet := _grid.has_flag(c, CombatGrid.WATER)
 			if not solid and not wet:
@@ -113,7 +128,7 @@ func _render() -> Image:
 			var edge: Color = _colours["edge"] if solid else _colours["water_edge"]
 			for dir: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
 				var n := c + dir
-				if not _grid.in_bounds(n) or _grid.has_flag(n, CombatGrid.WALL | CombatGrid.VOID):
+				if not _grid.in_bounds(n) or _grid.has_flag(n, CombatGrid.WALL | CombatGrid.VOID) or _hidden.has(n):
 					continue
 				var r := Rect2i(x * PX, z * PX, PX, PX)
 				if dir.x > 0:
@@ -145,10 +160,15 @@ func to_map(ground: Vector2) -> Vector2:
 	return _mid() + (ground - _centre) * cell_px
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if view == null or not is_instance_valid(view) or not is_visible_in_tree():
 		return
 	_centre = _leader_ground()   # the token glides from square to square, and the map with it
+	_check -= delta
+	if _check <= 0.0:
+		_check = HiddenAreas.CHECK_EVERY
+		if HiddenAreas.signature(view) != _hidden_sig:
+			_redo_hidden()   # a secret door was found: the room behind it comes onto the map
 	_content.queue_redraw()
 	_rim.queue_redraw()
 
@@ -165,7 +185,7 @@ func _draw_content() -> void:
 		_draw_way_out(e)
 	for npc: Variant in view.npc_tokens.values():
 		var n := npc as Node3D
-		if is_instance_valid(n) and n.visible:
+		if is_instance_valid(n) and n.visible and not _hidden.has(Vector2i(floori(n.global_position.x), floori(n.global_position.z))):
 			var at := to_map(Vector2(n.global_position.x, n.global_position.z))
 			_content.draw_circle(at, 4.0, Look.color("ink"), true, -1.0, true)
 			_content.draw_circle(at, 2.8, Look.color("moonlight"), true, -1.0, true)
@@ -193,6 +213,8 @@ func _draw_doors() -> void:
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		var a := door["cell"] as Array
+		if _hidden.has(Vector2i(int(a[0]), int(a[1]))):
+			continue
 		var r := Rect2(to_map(Vector2(float(a[0]), float(a[1]))), Vector2.ONE * cell_px)
 		var id := str(door["id"])
 		if int(door.get("secret_dc", 0)) > 0 and not bool(found.get(id, false)):

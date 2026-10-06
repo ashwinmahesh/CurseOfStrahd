@@ -1,0 +1,30 @@
+{
+  "id": "ring_of_spell_turning",
+  "name": "Ring of Spell Turning",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "ring",
+  "worn": "ring",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "save_vs:spell"
+    },
+    {
+      "stat": "flag",
+      "value": "spell_turning"
+    }
+  ],
+  "summary": "Advantage on saves against spells; a level 7 or lower spell aimed only at you that you save against rebounds on its caster.",
+  "text": "Saving throws you make against spells have Advantage while you wear this ring, and if you succeed against a spell no higher than level 7, it has no effect on you. When such a spell targeted only you and created no area of effect, you can use your Reaction to send it back at its caster, who must save against it at their own spell save DC."
+}

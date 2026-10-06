@@ -1,0 +1,191 @@
+{
+  "id": "staff_of_thunder_and_lightning",
+  "name": "Staff of Thunder and Lightning",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Thunder and Lightning"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "recipes": {
+    "strike": {
+      "name": "Lightning Strike",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "line",
+        "size": 120,
+        "width": 5
+      },
+      "save": "dex",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "9d6",
+          "type": "lightning"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    },
+    "clap": {
+      "name": "Thunderclap",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 60
+      },
+      "save": "con",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "2d6",
+          "type": "thunder"
+        }
+      ],
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "deafened"
+          }
+        }
+      ]
+    }
+  },
+  "weapon_rules": {
+    "extra": [
+      {
+        "while": "lightning",
+        "dice": "2d6",
+        "type": "lightning",
+        "ends_toggle": "lightning"
+      }
+    ],
+    "on_hit": [
+      {
+        "while": "thunder",
+        "save": "con",
+        "dc": 17,
+        "conditions": [
+          "stunned"
+        ],
+        "until": "caster_turn_end",
+        "ends_toggle": "thunder"
+      }
+    ]
+  },
+  "powers": [
+    {
+      "id": "lightning",
+      "name": "Lightning",
+      "cost": "free",
+      "toggle": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "off_cost": "free",
+      "text": "Arm it (once per dawn): your next melee hit with the staff deals an extra 2d6 Lightning."
+    },
+    {
+      "id": "thunder",
+      "name": "Thunder",
+      "cost": "free",
+      "toggle": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "off_cost": "free",
+      "text": "Arm it (once per dawn): your next melee hit makes the target save (Con DC 17) or be Stunned until the end of your next turn."
+    },
+    {
+      "id": "strike",
+      "name": "Lightning Strike",
+      "recipe": "strike",
+      "dc": 17,
+      "cost": "magic",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Magic action (once per dawn): a 120-ft bolt, 5 ft wide (Dex DC 17, 9d6 Lightning, half on a success)."
+    },
+    {
+      "id": "clap",
+      "name": "Thunderclap",
+      "recipe": "clap",
+      "dc": 17,
+      "cost": "magic",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Magic action (once per dawn): everything within 60 ft makes a Con save (DC 17) or takes 2d6 Thunder and is Deafened for 1 minute (half and not Deafened on a success)."
+    },
+    {
+      "id": "both",
+      "name": "Thunder and Lightning",
+      "cost": "magic",
+      "custom": "thunder_and_lightning",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Magic action (once per dawn): Lightning Strike and Thunderclap together, without using up either."
+    }
+  ],
+  "summary": "+2 quarterstaff with a daily Lightning hit, Thunder hit, Lightning Strike, Thunderclap, and both at once.",
+  "text": "A magic Quarterstaff with +2 to attack and damage rolls and five storm powers. Each power is usable once per dawn. Lightning: on a melee hit with the staff, you can have the target take 2d6 extra Lightning damage. Thunder: when you land a melee hit, the staff can let out a boom heard up to 300 feet away, and the target must make a Constitution saving throw (DC 17) or be Stunned until your next turn ends. Lightning Strike: as a Magic action, loose a bolt from the tip in a Line 120 feet long and 5 feet wide; everything in it rolls a Dexterity saving throw against DC 17, suffering 9d6 Lightning damage if it fails or half as much if it succeeds. Thunderclap: as a Magic action, set off a deafening crash heard up to 600 feet away. Every other creature in a 60-foot radius around you rolls a Constitution saving throw against DC 17: a failure means 2d6 Thunder damage and being Deafened for 1 minute, while a success means only half the damage. Thunder and Lightning: as a Magic action, unleash Lightning Strike and Thunderclap together; this spends only this power's daily use, leaving those two still available."
+}

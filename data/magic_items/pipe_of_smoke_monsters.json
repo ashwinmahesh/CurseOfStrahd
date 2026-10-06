@@ -1,0 +1,32 @@
+{
+  "id": "pipe_of_smoke_monsters",
+  "name": "Pipe of Smoke Monsters",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "pipe",
+  "powers": [
+    {
+      "id": "puff",
+      "name": "Puff",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "exhales smoke shaped like a creature that drifts away"
+      },
+      "field": true,
+      "text": "It exhales smoke shaped like a creature that drifts away. (No other effect in the game.)"
+    }
+  ],
+  "summary": "Puff out smoke shaped like any creature you like.",
+  "text": "While puffing on this pipe, a Magic action lets you blow out smoke shaped like any one creature, about as big as a small dog, which drifts apart a few seconds later. (It does nothing else in the game.)"
+}

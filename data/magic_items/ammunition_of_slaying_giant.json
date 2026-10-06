@@ -1,0 +1,44 @@
+{
+  "id": "ammunition_of_slaying_giant",
+  "name": "Ammunition of Slaying (Giant)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ammunition",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "consumable": false,
+  "theme": "armaments",
+  "variant_of": "ammunition_of_slaying",
+  "template": {
+    "on": "ammunition",
+    "name": "{base} of Giant Slaying",
+    "default": "arrow"
+  },
+  "weapon_rules": {
+    "on_hit": [
+      {
+        "vs": [
+          "giant"
+        ],
+        "save": "con",
+        "dc": 17,
+        "damage": {
+          "dice": "6d10",
+          "type": "piercing"
+        },
+        "save_success": "half"
+      }
+    ],
+    "spent_on_hit": true
+  },
+  "summary": "A Giant it hits makes a DC 17 Con save: 6d10 extra Piercing, half on a success; then it's ordinary.",
+  "text": "Built to kill creatures of the Giant type, this ammunition forces any Giant it damages to attempt a Constitution saving throw against DC 17. On a failure the target suffers 6d10 extra Piercing damage; on a success, half that extra amount. After it has dealt this bonus damage once, the ammunition is ordinary.",
+  "icon": "arrow",
+  "icon_fallback": true
+}

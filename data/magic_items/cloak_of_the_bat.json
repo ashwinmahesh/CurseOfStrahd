@@ -1,0 +1,47 @@
+{
+  "id": "cloak_of_the_bat",
+  "name": "Cloak of the Bat",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "check:stealth"
+    },
+    {
+      "stat": "flag",
+      "value": "bat_cloak"
+    }
+  ],
+  "powers": [
+    {
+      "id": "polymorph",
+      "name": "Polymorph",
+      "spell": "polymorph",
+      "cost": "magic",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "params": {
+        "form": "bat",
+        "self": true
+      },
+      "text": "Once per dawn, in Dim Light or darkness, turn yourself into a Bat (as Polymorph, no Concentration needed? you keep it while you concentrate)."
+    }
+  ],
+  "worn": "cloak",
+  "summary": "Advantage on Stealth; in dim light or darkness you can fly at 40 ft, and once a day turn into a bat.",
+  "text": "Your Dexterity (Stealth) checks have Advantage while you wear it. Where there is only Dim Light or darkness, spreading the cloak's edges like wings makes your Fly Speed 40 feet; letting go of the edges or leaving the Dim Light or darkness takes that flight away. Once per dawn, in those same shadowy conditions, the cloak can also cast Polymorph on you to turn you into a Bat, and you keep your own Intelligence, Wisdom and Charisma scores in that form."
+}

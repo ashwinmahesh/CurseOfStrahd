@@ -73,6 +73,8 @@ func _draw() -> void:
 		stood[m.cell] = true
 	for e in signs:
 		var cell := e["cell"] as Vector2i
+		if HiddenAreas.hides(view, cell):
+			continue   # a way out of a room nobody has found yet
 		var dir := e["dir"] as Vector2i
 		var open := bool(e["open"])
 		var y := view.board.floor_y(cell) + 0.04

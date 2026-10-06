@@ -1,0 +1,74 @@
+{
+  "id": "black_bear",
+  "name": "Black Bear",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "medium",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 11,
+  "initiative": 1,
+  "hp": {
+    "average": 19,
+    "dice": "3d8+6"
+  },
+  "speed": {
+    "walk": 30,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 15,
+    "dex": 12,
+    "con": 14,
+    "int": 2,
+    "wis": 12,
+    "cha": 7
+  },
+  "skills": {
+    "perception": 5
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 15,
+  "languages": [],
+  "cr": 0.5,
+  "xp": 100,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "rend",
+          "count": 2
+        }
+      ],
+      "summary": "Two Rend attacks."
+    },
+    {
+      "id": "rend",
+      "name": "Rend",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Rend: +4 to hit, 1d6+2 Slashing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A black bear."
+}

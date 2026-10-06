@@ -1,0 +1,28 @@
+{
+  "id": "arrow_catching_shield",
+  "name": "Arrow-Catching Shield",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "shield",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "shield",
+    "name": "Arrow-Catching Shield"
+  },
+  "armor_rules": {
+    "ac_vs_ranged": 2,
+    "catch_arrows": true
+  },
+  "summary": "+2 AC against ranged attacks; a Reaction makes you the target of a ranged attack aimed at someone within 5 ft.",
+  "text": "Wield this Shield and you add +2 to your Armor Class whenever a ranged attack roll targets you, on top of the Shield's ordinary AC bonus. If someone within 5 feet of you is targeted by a ranged attack roll, you can spend your Reaction to become the target in their place.",
+  "icon": "shield",
+  "icon_fallback": true
+}

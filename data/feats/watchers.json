@@ -1,0 +1,78 @@
+{
+  "id": "watchers",
+  "name": "Watchers",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. Unseen watchers lend you Beast Sense, Speak with Animals and sharp eyes; a natural 1 lets them unnerve you.",
+  "benefits": [
+    {
+      "id": "watchers_magic",
+      "name": "Watching Eyes",
+      "summary": "Beast Sense and Speak with Animals always prepared, each free once per Long Rest.",
+      "text": "You always have Beast Sense and Speak with Animals prepared, and you can cast each once without a spell slot, regaining those uses on a Long Rest. Intelligence, Wisdom or Charisma is your spellcasting ability for them (choose when you take the gift).",
+      "action": "passive",
+      "choice": {
+        "id": "ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "beast_sense",
+          "ability": "@ability",
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
+        },
+        {
+          "stat": "spell",
+          "value": "speak_with_animals",
+          "ability": "@ability",
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "watchers_search",
+      "name": "Many Eyes",
+      "summary": "Add 1d4 to the checks of your Search action.",
+      "text": "When you make an ability check as part of the Search action, you add 1d4 to it.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "bonus_die",
+          "dice": "1d4",
+          "on": [
+            "search"
+          ]
+        }
+      ],
+      "implemented": "data"
+    }
+  ],
+  "drawback": {
+    "id": "watchers_drawback",
+    "name": "Drawback",
+    "summary": "Disadvantage on saves against Scrying; on a natural 1, a Wisdom save (DC 13 + PB) or Disadvantage on D20 Tests for 1 minute (repeat the save each turn).",
+    "text": "You have Disadvantage on saving throws against the Scrying spell. Whenever you roll a 1 on the d20 of a D20 Test, you make a Wisdom saving throw (DC 13 plus your Proficiency Bonus); on a failure the watchers' attention presses on you: you have Disadvantage on D20 Tests for 1 minute, repeating the save at the end of each of your turns and ending the effect on a success.",
+    "action": "special",
+    "implemented": "engine"
+  }
+}

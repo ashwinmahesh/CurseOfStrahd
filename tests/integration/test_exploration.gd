@@ -107,7 +107,8 @@ func test_a_single_step_plays_the_walk_cycle() -> void:
 func test_locked_door_opens_with_tools_or_force() -> void:
 	var v := _view()
 	assert_true(v.grid.has_flag(Vector2i(5, 3), CombatGrid.WALL), "a closed door blocks")
-	v.click(Vector2i(5, 3))
+	# The tools are on the right-click menu (a plain click only says it's locked: test_interactions.gd).
+	v.act(Vector2i(5, 3), "pick")
 	await _walk_until_idle()
 	await _frames(2)
 	var state := str((GameState.story.loc_state("test_hall")["doors"] as Dictionary).get("inner_door", ""))

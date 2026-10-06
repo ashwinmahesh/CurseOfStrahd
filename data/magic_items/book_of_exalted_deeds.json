@@ -1,0 +1,47 @@
+{
+  "id": "book_of_exalted_deeds",
+  "name": "Book of Exalted Deeds",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": "by a creature of good alignment"
+  },
+  "theme": "relics",
+  "icon": "book",
+  "treasure": {
+    "random": false
+  },
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 2,
+      "major_beneficial": 1,
+      "minor_detrimental": 2
+    }
+  },
+  "powers": [
+    {
+      "id": "study",
+      "name": "Study it (80 hours)",
+      "cost": "action",
+      "custom": "exalted_deeds",
+      "field": true,
+      "combat": false,
+      "text": "Spend 80 hours over 10 days reading it: +2 Wisdom (to 24) and a halo of light; you're never again quite the same."
+    }
+  ],
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "exalted_halo",
+      "attuned_only": true
+    }
+  ],
+  "summary": "The definitive treatise on good: study it for +2 Wisdom (to 24) and a radiant halo; evil creatures who touch it burn.",
+  "text": "This legendary work, the final word on all goodness in the multiverse, is central to many faiths. To absorb its teachings, an attuned creature must devote 80 hours to reading and studying it. Afterward its Wisdom score rises by 2, up to 24, and it can never benefit from the book again. It also gains a halo that casts Bright Light out to 10 feet and Dim Light 10 feet beyond that, and when it makes a Charisma (Persuasion) check aimed at a good creature, it has Advantage. Touching the book deals 5d6 Radiant damage to any creature that isn't good. The book holds one major beneficial property and two minor beneficial ones. (Alignment isn't tracked in the game, so any party member may study it.)"
+}

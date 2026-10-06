@@ -1,0 +1,59 @@
+{
+  "id": "rhinoceros",
+  "name": "Rhinoceros",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 13,
+  "initiative": -1,
+  "hp": {
+    "average": 45,
+    "dice": "6d10+12"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 21,
+    "dex": 8,
+    "con": 15,
+    "int": 2,
+    "wis": 12,
+    "cha": 6
+  },
+  "senses": {},
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "gore",
+      "name": "Gore",
+      "kind": "melee",
+      "attack": {
+        "bonus": 7,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "2d8+5",
+          "type": "piercing"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Gore: +7 to hit, 2d8+5 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "An armored brute with a horn."
+}

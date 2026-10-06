@@ -1,0 +1,51 @@
+{
+  "id": "staff_of_flowers",
+  "name": "Staff of Flowers",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false,
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "crumbles away"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Flowers"
+  },
+  "powers": [
+    {
+      "id": "use",
+      "name": "Flowers",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "flavour",
+      "params": {
+        "text": "makes a flower sprout from it"
+      },
+      "field": true,
+      "text": "It makes a flower sprout from it. (No other effect in the game.)"
+    }
+  ],
+  "summary": "It makes a flower sprout from it.",
+  "text": "Take a Magic action and a flower grows out of the staff. It also works as a Quarterstaff. (Cosmetic only; no further game effect.)"
+}

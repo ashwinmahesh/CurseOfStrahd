@@ -1,0 +1,39 @@
+{
+  "id": "hat_of_vermin",
+  "name": "Hat of Vermin",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false,
+    "charges": {
+      "max": 3,
+      "regain": "all",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "hat",
+  "powers": [
+    {
+      "id": "pull",
+      "name": "Pull out a critter",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "produces a bat, a frog or a rat that wanders off after an hour"
+      },
+      "field": true,
+      "text": "It produces a bat, a frog or a rat that wanders off after an hour. (No other effect in the game.)",
+      "charges": 1
+    }
+  ],
+  "worn": "head",
+  "summary": "3 charges: pull a harmless bat, frog or rat out of the hat.",
+  "text": "This hat holds 3 charges and regains all of them each dawn. As a Magic action while holding it, spend 1 charge and speak a command word to pull out a Rat, a Bat or a Frog (your pick). The creature pops into existence inside the hat and immediately tries to flee from you. It's not under your control and is neither hostile nor friendly, acting like any ordinary animal of its kind, and it vanishes when reduced to 0 Hit Points or once 1 hour passes."
+}

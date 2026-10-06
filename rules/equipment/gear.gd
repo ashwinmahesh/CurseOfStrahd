@@ -5,6 +5,17 @@ extends RefCounted
 
 const ARMOR_KINDS: Array[String] = ["light", "medium", "heavy"]
 const COIN_GP := {"cp": 0.01, "sp": 0.1, "ep": 0.5, "gp": 1.0, "pp": 10.0}
+## A weapon's `ammunition` kind -> the mundane ammunition item.
+const AMMO_IDS := {"arrow": "arrow", "bolt": "crossbow_bolt", "bullet": "sling_bullet", "needle": "blowgun_needle"}
+
+
+## Whether `ammo_item` (mundane or magic, "ammunition_plus_1__arrow") is ammunition of `kind` ("arrow").
+static func ammo_matches(ammo_item: Dictionary, kind: String) -> bool:
+	if str(ammo_item.get("category", "")) != "ammunition":
+		return false
+	var want := str(AMMO_IDS.get(kind, kind))
+	var base := str(ammo_item.get("base_item", ammo_item.get("id", "")))
+	return base == want or (kind == "bullet" and base == "firearm_bullet")
 
 
 static func is_weapon(item: Dictionary) -> bool:
@@ -42,7 +53,7 @@ static func is_martial(item: Dictionary) -> bool:
 static func weapon_proficient(profs: Array, item: Dictionary) -> bool:
 	if not is_weapon(item):
 		return false
-	var item_id := str(item.get("id", ""))
+	var item_id := str(item.get("base_item", item.get("id", "")))
 	if item_id in profs:
 		return true
 	var kind := weapon_kind(item)

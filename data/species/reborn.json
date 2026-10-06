@@ -1,0 +1,113 @@
+{
+  "id": "reborn",
+  "name": "Reborn",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "summary": "People who died and came back (stitched together, raised or simply unwilling to stay dead) with flashes of memories from a life before.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium",
+    "small"
+  ],
+  "speed": 30,
+  "traits": [
+    {
+      "id": "strange_endurance",
+      "name": "Strange Endurance",
+      "summary": "Resistance to Cold, Necrotic or Poison damage (your choice).",
+      "text": "Choose Cold, Necrotic or Poison damage; you have Resistance to it.",
+      "action": "passive",
+      "choice": {
+        "kind": "option",
+        "count": 1,
+        "options": [
+          {
+            "id": "cold",
+            "name": "Cold Resistance",
+            "summary": "Resistance to Cold damage.",
+            "modifiers": [
+              {
+                "stat": "resistance",
+                "value": "cold"
+              }
+            ],
+            "implemented": "data"
+          },
+          {
+            "id": "necrotic",
+            "name": "Necrotic Resistance",
+            "summary": "Resistance to Necrotic damage.",
+            "modifiers": [
+              {
+                "stat": "resistance",
+                "value": "necrotic"
+              }
+            ],
+            "implemented": "data"
+          },
+          {
+            "id": "poison",
+            "name": "Poison Resistance",
+            "summary": "Resistance to Poison damage.",
+            "modifiers": [
+              {
+                "stat": "resistance",
+                "value": "poison"
+              }
+            ],
+            "implemented": "data"
+          }
+        ]
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "escaped_death",
+      "name": "Escaped Death",
+      "summary": "Advantage on Death Saving Throws.",
+      "text": "You have Advantage on Death Saving Throws.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "death_save"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "everlasting",
+      "name": "Everlasting",
+      "summary": "No Exhaustion from thirst, hunger or suffocation; no sleep, and magic can't put you to sleep; a Long Rest is 4 hours of inactivity.",
+      "text": "You don't gain Exhaustion levels from dehydration, malnutrition or suffocation. You don't need to sleep, and magic can't put you to sleep; you can finish a Long Rest in 4 hours if you spend them inactive, staying conscious.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "trance"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "knowledge_from_a_past_life",
+      "name": "Knowledge from a Past Life",
+      "summary": "A skill proficiency; when you fail an ability check, add 1d6 to it (PB times per Long Rest).",
+      "text": "You gain proficiency in one skill of your choice. In addition, when you fail an ability check, you can roll 1d6 and add the number rolled to the check, possibly turning it into a success. You can do this a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "action": "special",
+      "choice": {
+        "kind": "skill",
+        "count": 1
+      },
+      "resource": {
+        "id": "knowledge_from_a_past_life",
+        "name": "Knowledge from a Past Life",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "engine"
+    }
+  ]
+}

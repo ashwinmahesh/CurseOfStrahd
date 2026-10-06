@@ -1,0 +1,36 @@
+{
+  "id": "manual_of_golems",
+  "name": "Manual of Golems",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "book",
+  "treasure": {
+    "random": true
+  },
+  "powers": [
+    {
+      "id": "study",
+      "name": "Study it",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "describes how to build a golem from clay, flesh, iron or stone"
+      },
+      "field": true,
+      "text": "It describes how to build a golem from clay, flesh, iron or stone. (No other effect in the game.)",
+      "combat": false
+    }
+  ],
+  "summary": "Instructions (and the magic) to build a golem, given weeks and a great deal of gold.",
+  "text": "Each copy holds the lore and incantations for building one specific kind of golem. Only a spellcaster with two or more level 5 spell slots can decipher and use it; any other creature attempting to read it suffers 6d6 Psychic damage. Construction demands uninterrupted work with the manual close by, no more than 8 hours of rest a day, and money for supplies, depending on the golem: flesh golem, 50,000 GP and 60 days; clay golem, 65,000 GP and 30 days; stone golem, 80,000 GP and 90 days; iron golem, 100,000 GP and 120 days. When the golem is finished, eldritch fire burns the book away, and sprinkling its ashes on the golem brings it to life. (The game leaves no time in Barovia for such a project.)"
+}

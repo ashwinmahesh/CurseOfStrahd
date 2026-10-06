@@ -1,0 +1,36 @@
+{
+  "id": "eyes_of_charming",
+  "name": "Eyes of Charming",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "eye",
+  "powers": [
+    {
+      "id": "charm_person",
+      "name": "Charm Person",
+      "spell": "charm_person",
+      "charges": 1,
+      "dc": 13,
+      "field": true,
+      "text": "1 charge: cast Charm Person (save DC 13) on a humanoid within 30 ft."
+    }
+  ],
+  "worn": "eyes",
+  "summary": "3 charges: cast Charm Person (save DC 13).",
+  "text": "A pair of crystal lenses worn over the eyes, holding 3 charges that all return each dawn. While you wear them, spending 1 charge lets you target a Humanoid up to 30 feet away with Charm Person (save DC 13), provided the two of you can see each other."
+}

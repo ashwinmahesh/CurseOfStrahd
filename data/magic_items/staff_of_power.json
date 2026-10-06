@@ -1,0 +1,162 @@
+{
+  "id": "staff_of_power",
+  "name": "Staff of Power",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": "by a Sorcerer, Warlock, or Wizard",
+    "charges": {
+      "max": 20,
+      "regain": "2d8+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "plus_two",
+        "text": "loses every property but its +2 bonus"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff_of_power",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Power"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "ac",
+      "value": 2
+    },
+    {
+      "stat": "save",
+      "ability": "all",
+      "value": 2
+    },
+    {
+      "stat": "spell_attack",
+      "value": 2
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "while": "power_strike",
+        "dice": "1d6",
+        "type": "force",
+        "ends_toggle": "power_strike",
+        "spend_charge": 1,
+        "melee": true
+      }
+    ]
+  },
+  "powers": [
+    {
+      "id": "cone_of_cold",
+      "name": "Cone Of Cold",
+      "spell": "cone_of_cold",
+      "charges": 5,
+      "dc": "wielder"
+    },
+    {
+      "id": "fireball",
+      "name": "Fireball (level 5)",
+      "spell": "fireball",
+      "charges": 5,
+      "dc": "wielder",
+      "level": 5
+    },
+    {
+      "id": "globe_of_invulnerability",
+      "name": "Globe Of Invulnerability",
+      "spell": "globe_of_invulnerability",
+      "charges": 6,
+      "dc": "wielder"
+    },
+    {
+      "id": "hold_monster",
+      "name": "Hold Monster",
+      "spell": "hold_monster",
+      "charges": 5,
+      "dc": "wielder"
+    },
+    {
+      "id": "levitate",
+      "name": "Levitate",
+      "spell": "levitate",
+      "charges": 2,
+      "dc": "wielder"
+    },
+    {
+      "id": "lightning_bolt",
+      "name": "Lightning Bolt (level 5)",
+      "spell": "lightning_bolt",
+      "charges": 5,
+      "dc": "wielder",
+      "level": 5
+    },
+    {
+      "id": "magic_missile",
+      "name": "Magic Missile",
+      "spell": "magic_missile",
+      "charges": 1,
+      "dc": "wielder"
+    },
+    {
+      "id": "ray_of_enfeeblement",
+      "name": "Ray Of Enfeeblement",
+      "spell": "ray_of_enfeeblement",
+      "charges": 1,
+      "dc": "wielder"
+    },
+    {
+      "id": "wall_of_force",
+      "name": "Wall Of Force",
+      "spell": "wall_of_force",
+      "charges": 5,
+      "dc": "wielder"
+    },
+    {
+      "id": "power_strike",
+      "name": "Power Strike",
+      "cost": "free",
+      "toggle": true,
+      "charges": 0,
+      "off_cost": "free",
+      "text": "Arm it: your next hit with the staff spends 1 charge for an extra 1d6 Force damage.",
+      "needs_charges": 1
+    },
+    {
+      "id": "retributive_strike",
+      "name": "Retributive Strike",
+      "cost": "magic",
+      "custom": "retributive_strike",
+      "text": "Break the staff: everything within 30 ft takes Force damage by distance and the charges left (Dex DC 17, half); you may be thrown to another plane."
+    }
+  ],
+  "summary": "+2 quarterstaff, +2 AC, saves and spell attacks; 20 charges of powerful spells; Power Strike; Retributive Strike.",
+  "text": "A magic Quarterstaff with +2 to attack and damage rolls. While you hold it, you also get +2 to saving throws, spell attack rolls and Armor Class. It holds 20 charges and recovers 2d8 + 4 of them at dawn. After the last charge is spent, roll 1d20: a 1 strips the staff of everything except its +2 to attack and damage rolls, while a 20 restores 1d8 + 2 charges to it. Power Strike: after a melee hit with the staff, spend 1 charge to add 1d6 Force damage. Spells: spend charges to cast these, using your own spell attack bonus and save DC: Globe of Invulnerability (6 charges); Cone of Cold, Hold Monster, Wall of Force, or Fireball or Lightning Bolt at level 5 (5 charges each); Levitate (2 charges); Magic Missile or Ray of Enfeeblement (1 charge). Retributive Strike: as a Magic action, snap the staff across your knee or on a hard surface. It is destroyed, and its released magic explodes through a 30-foot Emanation around the staff. There is a 50 percent chance you are instantly whisked away to some random plane of existence, escaping the blast; otherwise the explosion deals you 16 Force damage per charge left in the staff. All other creatures caught in it must attempt a Dexterity saving throw (DC 17), taking Force damage on a failure based on distance from the staff: within 10 feet, 8 times the charges; 11 to 20 feet, 6 times; 21 to 30 feet, 4 times. A success halves the damage."
+}

@@ -73,9 +73,13 @@ func test_death_house_doors_props_and_containers() -> void:
 	assert_eq(sp.billboard, BaseMaterial3D.BILLBOARD_DISABLED, "hung flat")
 	assert_true(absf(sp.position.z - 1.0) < 0.05, "on the wall's south face (the wall square is row 0)")
 	var cabinet := v.container_nodes["den_gun_cabinet"] as Node3D
-	assert_true(cabinet.get_child(0) is Sprite3D, "the hunting cabinet is a picture, not a box")
+	var pictures := cabinet.find_children("*", "Sprite3D", true, false)
+	assert_false(pictures.is_empty(), "the hunting cabinet is a picture, not a box")
+	var front := pictures[0] as Sprite3D
+	assert_eq(front.billboard, BaseMaterial3D.BILLBOARD_DISABLED, "it stands flat against the den's west wall")
+	assert_true(absf(front.global_position.x - (1.0 + 0.4)) < 0.05, "its front a little way out from the wall face")
 	v.mark_looted("den_gun_cabinet")
-	assert_true((cabinet.get_child(0) as Sprite3D).modulate.v < 0.9, "an emptied container dims")
+	assert_true(front.modulate.v < 0.9, "an emptied container dims")
 	v.queue_free()
 
 
@@ -117,4 +121,41 @@ func test_village_houses_and_yard_walls() -> void:
 	assert_false((b0["upper"] as Node3D).visible, "its roof hides")
 	board.cut_buildings(behind + Vector3(0, 5, -14), behind, 1.0)
 	assert_true((b0["upper"] as Node3D).visible, "and comes back")
+	v.queue_free()
+
+
+## Owner request (2026-10-06): a piece keeps its facing when the camera turns. Seen from in front it shows its front
+## (mirrored for the other front corner); from behind, its back.
+func test_props_keep_their_facing() -> void:
+	var front_tex := PlaceholderTexture2D.new()
+	front_tex.size = Vector2(40, 30)
+	var back_tex := PlaceholderTexture2D.new()
+	back_tex.size = Vector2(40, 32)
+	var p := PropView.create(front_tex, 0.01, back_tex, 0.01, Vector3(0, 0, 1))
+	add_child(p)
+	p.update_view(Vector3(-5, 5, 5), Vector3(1, 0, 1).normalized())   # the opening camera, south-west
+	assert_eq(p.texture, front_tex, "from the south it shows its front")
+	var first_flip := p.flip_h
+	p.update_view(Vector3(5, 5, 5), Vector3(1, 0, -1).normalized())    # turned: south-east
+	assert_eq(p.texture, front_tex)
+	assert_ne(p.flip_h, first_flip, "from the other front corner, mirrored")
+	p.update_view(Vector3(5, 5, -5), Vector3(-1, 0, -1).normalized())  # north-east: behind it
+	assert_eq(p.texture, back_tex, "from behind it shows its back")
+	p.queue_free()
+
+
+## Owner report (2026-10-06): pointing at the top of a tall piece picked the square behind it. The hunting cabinet
+## stands against the den's west wall; its upper half covers squares further back, and pointing there picks it.
+func test_pointing_at_a_tall_piece_picks_it() -> void:
+	var v := _view("death_house_ground")
+	await _frames(2)
+	var cam := v.rig.camera
+	var cabinet := v.container_nodes["den_gun_cabinet"] as Node3D
+	var front := cabinet.find_children("*", "Sprite3D", true, false)[0] as Sprite3D
+	var tall := front.texture.get_height() * front.pixel_size
+	var high := front.global_position + Vector3(0, tall * 0.85, 0)
+	var screen := cam.unproject_position(high)
+	assert_ne(GridPick.cell_under(cam, v.grid, screen), Vector2i(1, 9), "the floor under that point is another square")
+	assert_eq(v.pick_cell(cam, screen), Vector2i(1, 9), "pointing at the cabinet's top picks the cabinet")
+	assert_eq(str(v.thing_at(v.pick_cell(cam, screen)).get("kind", "")), "container")
 	v.queue_free()

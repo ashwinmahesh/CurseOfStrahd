@@ -1,0 +1,71 @@
+{
+  "id": "baboon",
+  "name": "Baboon",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "small",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 3,
+    "dice": "1d6"
+  },
+  "speed": {
+    "walk": 30,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 8,
+    "dex": 14,
+    "con": 11,
+    "int": 4,
+    "wis": 12,
+    "cha": 6
+  },
+  "senses": {},
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 0,
+  "xp": 10,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "action": "passive",
+      "summary": "Advantage on attack rolls against a target that has a non-Incapacitated ally of this creature within 5 ft.",
+      "implemented": "engine",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "pack_tactics"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 1,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 1,
+          "dice": "1d4-1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite: +1 to hit, 1d4-1 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A noisy baboon."
+}

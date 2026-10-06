@@ -1,0 +1,76 @@
+{
+  "id": "ring_of_elemental_command_earth",
+  "name": "Ring of Elemental Command (Earth)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true,
+    "charges": {
+      "max": 5,
+      "regain": "1d4+1",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "variant_of": "ring_of_elemental_command",
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "acid"
+    },
+    {
+      "stat": "proficiency",
+      "kind": "language",
+      "value": "terran"
+    },
+    {
+      "stat": "flag",
+      "value": "elemental_command:earth"
+    },
+    {
+      "stat": "flag",
+      "value": "earth_glide"
+    }
+  ],
+  "powers": [
+    {
+      "id": "dominate",
+      "name": "Dominate an Earth Elemental",
+      "spell": "dominate_monster",
+      "charges": 2,
+      "dc": 18,
+      "text": "2 charges: cast Dominate Monster (save DC 18) on an Earth Elemental."
+    },
+    {
+      "id": "stone_shape",
+      "name": "Stone Shape",
+      "spell": "stone_shape",
+      "charges": 2,
+      "dc": 18
+    },
+    {
+      "id": "wall_of_stone",
+      "name": "Wall Of Stone",
+      "spell": "wall_of_stone",
+      "charges": 3,
+      "dc": 18
+    },
+    {
+      "id": "earthquake",
+      "name": "Earthquake",
+      "spell": "earthquake",
+      "charges": 5,
+      "dc": 18
+    }
+  ],
+  "summary": "Command over Earth elementals, Resistance to Acid damage, and its element's spells (save DC 18).",
+  "text": "Linked with the Elemental Plane of Earth, this ring gives your attack rolls against Earth Elementals Advantage, while their attack rolls against you have Disadvantage. You also gain Resistance to Acid damage, the ability to pass through earth and stone, and the Terran language. It holds 5 charges, regaining 1d4 + 1 of them at each dawn. For 2 charges you can target an Earth Elemental with Dominate Monster (save DC 18). Other spells it casts, with their charge costs: Earthquake (5), Wall Of Stone (3), Stone Shape (2)."
+}

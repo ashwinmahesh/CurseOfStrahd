@@ -1,0 +1,78 @@
+{
+  "id": "restorative_ointment",
+  "name": "Keoghtom's Ointment",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0.5,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false,
+    "charges": {
+      "max": 5,
+      "start": "1d4+1",
+      "when": "never",
+      "last": {
+        "die": 1,
+        "on": 1,
+        "result": "destroyed",
+        "text": "is empty"
+      }
+    }
+  },
+  "theme": "implements",
+  "icon": "jar",
+  "recipes": {
+    "dose": {
+      "name": "Keoghtom's Ointment",
+      "level": 0,
+      "school": "conjuration",
+      "range": {
+        "kind": "touch"
+      },
+      "targets": {
+        "kind": "creature",
+        "count": 1
+      },
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "healing"
+      ],
+      "effects": [
+        {
+          "effect": "heal",
+          "params": {
+            "dice": "2d8+2"
+          }
+        },
+        {
+          "effect": "end_condition",
+          "params": {
+            "conditions": [
+              "poisoned"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "dose",
+      "name": "Apply a dose",
+      "recipe": "dose",
+      "charges": 1,
+      "cost": "action",
+      "field": true,
+      "text": "Rub a dose on a creature within reach: it regains 2d8 + 2 Hit Points and is cured of poison and disease."
+    }
+  ],
+  "summary": "1d4 + 1 doses: each heals 2d8 + 2 and cures poison and disease.",
+  "text": "This glass jar, 3 inches wide, holds enough thick, faintly aloe-scented salve for 1d4 + 1 doses, and weighs 1/2 pound with its contents. Using an action, one dose can be eaten or smeared on a creature's skin; the recipient recovers 2d8 + 2 Hit Points, loses the Poisoned condition, and has any disease it carries cured."
+}

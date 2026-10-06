@@ -1,0 +1,52 @@
+{
+  "id": "touch_of_death",
+  "name": "Touch of Death",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. Chill Touch that ignores Necrotic Resistance; death has a firmer grip on you.",
+  "benefits": [
+    {
+      "id": "deathly_touch",
+      "name": "Deathly Touch",
+      "summary": "You know Chill Touch; its Necrotic damage ignores Resistance.",
+      "text": "You know the Chill Touch cantrip, cast it without Material components, and its Necrotic damage ignores Resistance to Necrotic damage. Intelligence, Wisdom or Charisma is your spellcasting ability for it (choose when you take the gift).",
+      "action": "passive",
+      "choice": {
+        "id": "ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "chill_touch",
+          "ability": "@ability"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "drawback": {
+    "id": "touch_of_death_drawback",
+    "name": "Drawback",
+    "summary": "Disadvantage on Death Saving Throws.",
+    "text": "You have Disadvantage on Death Saving Throws.",
+    "action": "passive",
+    "implemented": "data",
+    "modifiers": [
+      {
+        "stat": "disadvantage",
+        "on": "death_save"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "eyes_of_the_eagle",
+  "name": "Eyes of the Eagle",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "eye",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "check:perception"
+    },
+    {
+      "stat": "flag",
+      "value": "eagle_eyes"
+    }
+  ],
+  "worn": "eyes",
+  "summary": "Advantage on Wisdom (Perception) checks that rely on sight; you can see clearly a mile away.",
+  "text": "Wearing these crystal lenses gives you Advantage on Wisdom (Perception) checks based on sight. When visibility is clear, you can discern fine detail on any creature or object 2 feet across or larger, however far off it is."
+}

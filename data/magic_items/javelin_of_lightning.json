@@ -1,0 +1,42 @@
+{
+  "id": "javelin_of_lightning",
+  "name": "Javelin of Lightning",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "javelin"
+    ],
+    "name": "Javelin of Lightning"
+  },
+  "powers": [
+    {
+      "id": "bolt",
+      "name": "Lightning Bolt Throw",
+      "cost": "attack",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "custom": "javelin_of_lightning",
+      "targeting": "enemy",
+      "range": 120,
+      "text": "Throw it at a target within 120 ft: it becomes a bolt, a 5-ft line to the target (Dex DC 13, 4d6 Lightning, half on a success); the target takes the javelin's damage + 4d6 Lightning on a hit (once per dawn)."
+    }
+  ],
+  "summary": "Once a day, throw it as a bolt of lightning: a 120-ft line (Dex DC 13, 4d6 Lightning) and 4d6 extra to the target.",
+  "text": "Say the command word as you throw this magic javelin and it becomes a streak of lightning, a 5-foot-wide line running from you to a target up to 120 feet away. Creatures along the line, apart from you and your target, make a Dexterity saving throw against DC 13; each takes 4d6 Lightning damage if it fails, or half as much if it succeeds. On reaching the target the bolt is a javelin again; make a ranged weapon attack, and a hit deals the javelin's normal damage plus 4d6 Lightning damage. After that the lightning is spent until the next dawn, though the javelin still works as a magic weapon.",
+  "icon": "javelin",
+  "icon_fallback": true
+}

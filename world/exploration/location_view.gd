@@ -48,6 +48,7 @@ var _npc_shown: Array[Dictionary] = []   ## [{spec, token, cell, low_before}] fo
 var door_nodes: Dictionary = {}      ## door id -> Node3D
 var container_nodes: Dictionary = {}
 var prop_nodes: Dictionary = {}
+var exit_nodes: Dictionary = {}       ## exit id -> its door or stairs piece (SetDressing.exit_piece)
 var trap_marks: Dictionary = {}
 var lantern: OmniLight3D
 
@@ -86,7 +87,7 @@ var _spawn_name := ""
 func _ready() -> void:
 	assert(not loc.is_empty(), "No location %s" % loc_id)
 	grid = CombatGrid.from_rows(loc["map"]["rows"] as Array)
-	board = ArenaBoard.build(grid, ArenaBoard.theme_for(loc["map"] as Dictionary))
+	board = ArenaBoard.build(grid, ArenaBoard.theme_for(loc["map"] as Dictionary), loc_id)
 	add_child(board)
 	_build_environment()
 	_build_doors()
@@ -111,6 +112,7 @@ func _ready() -> void:
 	_say(str((loc.get("narration", {}) as Dictionary).get("enter", "enter:" + loc_id)))
 	if first and str(loc.get("text", "")) != "":
 		narration.emit(str(loc["text"]))
+	add_child(HiddenAreas.create(self))   # rooms behind undiscovered secret doors stay out of sight
 	_check_areas()
 
 
@@ -199,7 +201,9 @@ func _door_state(id: String) -> String:
 
 func _build_doors() -> void:
 	for ex: Variant in loc.get("exits", []):
-		SetDressing.exit_piece(board, ex as Dictionary)
+		var piece := SetDressing.exit_piece(board, ex as Dictionary)
+		if piece != null:
+			exit_nodes[str((ex as Dictionary)["id"])] = piece
 	for d: Variant in loc.get("doors", []):
 		var door := d as Dictionary
 		var cell := _cell(door["cell"])
@@ -889,25 +893,9 @@ func actions_at(cell: Vector2i) -> Dictionary:
 			if str(thing["kind"]) == "door" and not StoryConditions.check(str(spec.get("when", "")), st):
 				out.append({"id": "open", "label": verb, "enabled": false, "why": "It won't budge"})
 			elif _locked(spec):
-				var key := str(spec.get("key", ""))
-				if key != "":
-					var has := st.party_has_item(key)
-					out.append({"id": "key", "label": "Unlock with the %s" % Compendium.shared().display_name("items", key),
-						"enabled": has, "why": "" if has else "Nobody carries the key"})
-				var dc := int(spec.get("lock_dc", 15))
-				var picker := _lock_picker()
-				if dc > 0:
-					if picker != null:
-						var adv: Array[String] = []
-						var b := _pick_bonus(picker, adv)
-						out.append({"id": "pick", "label": "Pick the lock (%s, %s%s)" % [picker.name.get_slice(" ", 0), b.signed(),
-							", Advantage" if not adv.is_empty() else ""]})
-					else:
-						out.append({"id": "pick", "label": "Pick the lock", "enabled": false, "why": "Nobody has thieves' tools"})
-					var strong := _best(&"athletics")
-					out.append({"id": "force", "label": "Force it (%s, Athletics %s, harder than picking)" % [strong.name.get_slice(" ", 0),
-						strong.skill_bonus(&"athletics").signed()]})
-				elif key == "":
+				var ways := actions_to_unlock(spec)
+				out.append_array(ways)
+				if ways.is_empty():
 					out.append({"id": "open", "label": verb, "enabled": false, "why": "Locked; it needs its key"})
 			else:
 				out.append({"id": "open", "label": verb})
@@ -957,7 +945,7 @@ func act(cell: Vector2i, action_id: String) -> void:
 	match action_id:
 		"talk", "use", "open":
 			then = func() -> void: interact(thing)
-		"key", "pick", "force":
+		"key", "pick", "force", "knock":
 			if str(thing["kind"]) == "door":
 				then = func() -> void: _use_door(spec, action_id)
 			else:
@@ -1004,8 +992,45 @@ func _look(cell: Vector2i, thing: Dictionary) -> void:
 				narration.emit(str(spec.get("label", "Something")).capitalize() + ".")
 
 
+## The square the mouse points at (owner report 2026-10-06): a person, prop, chest, door or way out drawn there
+## first, nearest the camera, since the top of a tall piece lies over the squares behind it; else the floor.
+func pick_cell(camera: Camera3D, screen: Vector2) -> Vector2i:
+	var origin := camera.project_ray_origin(screen)
+	var dir := camera.project_ray_normal(screen)
+	var best := INF
+	var cell := Vector2i(-1, -1)
+	for entry: Array in _pickables():
+		var t := SpritePick.hit(entry[0] as Node3D, camera, origin, dir)
+		if t < best:
+			best = t
+			cell = entry[1] as Vector2i
+	return cell if cell.x >= 0 else GridPick.cell_under(camera, grid, screen)
+
+
+## [node, cell] for everything drawn that the mouse can point at.
+func _pickables() -> Array:
+	var out: Array = []
+	for m: Combatant in members + guest_members:
+		if tokens.has(m.id):
+			out.append([tokens[m.id], m.cell])
+	# Nothing in an area the party hasn't found yet can be hovered or clicked (HiddenAreas).
+	for shown in _npc_shown:
+		if not HiddenAreas.hides(self, shown["cell"] as Vector2i):
+			out.append([shown["token"], shown["cell"]])
+	for key: String in ["props", "containers", "doors", "exits"]:
+		var nodes := {"props": prop_nodes, "containers": container_nodes, "doors": door_nodes, "exits": exit_nodes}[key] as Dictionary
+		for t: Variant in loc.get(key, []):
+			var spec := t as Dictionary
+			var node := nodes.get(str(spec.get("id", "")), null) as Node3D
+			if node != null and is_instance_valid(node) and not HiddenAreas.hides(self, _cell(spec["cell"])):
+				out.append([node, _cell(spec["cell"])])
+	return out
+
+
 ## What's at a square for the hover hint and clicks: {kind, id, label} or {}.
 func thing_at(cell: Vector2i) -> Dictionary:
+	if HiddenAreas.hides(self, cell):
+		return {}
 	for shown in _npc_shown:
 		var spec := shown["spec"] as Dictionary
 		if shown["cell"] == cell:
@@ -1101,6 +1126,7 @@ func _locked(spec: Dictionary) -> bool:
 func _use_door(door: Dictionary, method: String = "auto") -> void:
 	var id := str(door["id"])
 	if not StoryConditions.check(str(door.get("when", "")), st):
+		Audio.sfx("locked")
 		narration.emit("It won't budge.")
 		return
 	if _locked(door):
@@ -1117,8 +1143,9 @@ func _use_door(door: Dictionary, method: String = "auto") -> void:
 
 
 ## Tries a key, thieves' tools (2024: Dexterity check, + Proficiency Bonus with the tools, Advantage with Sleight of
-## Hand too) or force (Strength (Athletics)), with the best party member for the job. Returns true if it opens.
-## `method`: "auto" (a key, else thieves' tools, else force), "key", "pick" or "force" (the right-click menu).
+## Hand too), force (Strength (Athletics)) or the Knock spell, with the best party member for the job. Returns true
+## if it opens. `method`: "auto" (a left click: the key if the party carries it, else the lock rattles and says so;
+## nothing is tried), or "key", "pick", "force" or "knock" (the right-click menu).
 func _unlock(spec: Dictionary, method: String = "auto") -> bool:
 	var id := str(spec["id"])
 	var key := str(spec.get("key", ""))
@@ -1127,14 +1154,21 @@ func _unlock(spec: Dictionary, method: String = "auto") -> bool:
 		Audio.sfx("unlock")
 		toast.emit("Unlocked with the %s" % Compendium.shared().display_name("items", key))
 		return true
+	if method == "auto":
+		Audio.sfx("locked")
+		var can_try := actions_to_unlock(spec).any(func(a: Dictionary) -> bool: return bool(a.get("enabled", true)))
+		toast.emit("Locked. Right-click it to try the lock." if can_try else "Locked. It needs its key.")
+		return false
 	if method == "key":
 		narration.emit("None of you has the key.")
 		return false
+	if method == "knock":
+		return _knock(spec)
 	var dc := int(spec.get("lock_dc", 15))
 	if dc <= 0:
 		narration.emit("Locked, and no lock to pick: you'll need the key.")
 		return false
-	var picker := _lock_picker() if method in ["auto", "pick"] else null
+	var picker := _lock_picker() if method == "pick" else null
 	if method == "pick" and picker == null:
 		narration.emit("Nobody has thieves' tools.")
 		return false
@@ -1158,6 +1192,60 @@ func _unlock(spec: Dictionary, method: String = "auto") -> bool:
 	_say("check:unlock:failure", who, "It holds.")
 	st.advance_minutes(1)
 	return false
+
+
+## Knock (2024): the lock opens, with a knock heard 300 feet away. Spends the caster's lowest slot that works.
+func _knock(spec: Dictionary) -> bool:
+	var caster := _knock_caster()
+	if caster == null:
+		narration.emit("Nobody can cast Knock.")
+		return false
+	var res := FieldCasting.cast_utility(st, caster, "knock", false)
+	if not bool(res["ok"]):
+		toast.emit(str(res["text"]))
+		return false
+	(st.loc_state(loc_id)["doors"] as Dictionary)[str(spec["id"])] = "unlocked"
+	Audio.sfx("unlock")
+	toast.emit("%s casts Knock. A loud knock, and the lock gives." % caster.name.get_slice(" ", 0))
+	return true
+
+
+## The living party member who has Knock ready and a 2nd-level or higher slot to cast it with, or null.
+func _knock_caster() -> Character:
+	for ch in st.party:
+		if ch.hp <= 0 or ch.dead or not ch.known_spells().any(func(k: Dictionary) -> bool: return str(k["id"]) == "knock"):
+			continue
+		for l in range(2, 10):
+			if ch.slots_left(l) > 0:
+				return ch
+	return null
+
+
+## The right-click menu's ways to open a lock: the key, Pick the lock, Force it, Cast Knock (each greyed out with the
+## reason when it can't be tried). [] when none apply, so it needs its key and nobody has it.
+func actions_to_unlock(spec: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var key := str(spec.get("key", ""))
+	if key != "":
+		var has := st.party_has_item(key)
+		out.append({"id": "key", "label": "Unlock with the %s" % Compendium.shared().display_name("items", key),
+			"enabled": has, "why": "" if has else "Nobody carries the key"})
+	if int(spec.get("lock_dc", 15)) > 0:
+		var picker := _lock_picker()
+		if picker != null:
+			var adv: Array[String] = []
+			var b := _pick_bonus(picker, adv)
+			out.append({"id": "pick", "label": "Pick the lock (%s, %s%s)" % [picker.name.get_slice(" ", 0), b.signed(),
+				", Advantage" if not adv.is_empty() else ""]})
+		else:
+			out.append({"id": "pick", "label": "Pick the lock", "enabled": false, "why": "Nobody has thieves' tools"})
+		var strong := _best(&"athletics")
+		out.append({"id": "force", "label": "Force it (%s, Athletics %s, harder than picking)" % [strong.name.get_slice(" ", 0),
+			strong.skill_bonus(&"athletics").signed()]})
+	var caster := _knock_caster()
+	if caster != null:
+		out.append({"id": "knock", "label": "Cast Knock (%s)" % caster.name.get_slice(" ", 0)})
+	return out
 
 
 ## The living party member best at picking locks (thieves' tools in hand, highest Dexterity), or null.
@@ -1202,6 +1290,10 @@ func _use_container(ct: Dictionary, method: String = "auto") -> void:
 		st.set_flag(str(ct["flag"]))
 	var left := (st.loc_state(loc_id).get("contents", {}) as Dictionary).get(id, {}) as Dictionary
 	var items := (left["items"] as Array).duplicate(true) if not left.is_empty() else (ct.get("items", []) as Array).duplicate(true)
+	if left.is_empty():
+		# Scrolls name their spell, and this playthrough's random magic items are in here too (story/treasure.gd).
+		items = Treasure.specify_scrolls(items, st, "%s:%s" % [loc_id, id])
+		items.append_array(((Treasure.placed(st, loc_id).get(id, []) as Array)).duplicate(true))
 	# A Tarokka treasure spot (ADR 0011): whatever the reading hid here is in the chest too.
 	for treasure in Tarokka.take_from(Tarokka.place_for(loc, "container", id), st):
 		items.append({"id": treasure, "qty": 1})
@@ -1251,7 +1343,12 @@ func search() -> void:
 	if busy or in_combat:
 		return
 	var who := leader().creature as Character
-	var t := who.roll_check(dice, &"perception", 0, [], [], "%s searches" % who.name)
+	# Sharp Eye (Ravenloft: The Horrors Within): Advantage on a Search, Proficiency Bonus times per Long Rest.
+	var adv: Array[String] = []
+	if who.feats_taken.any(func(f: Dictionary) -> bool: return str(f["id"]) == "sharp_eye") and who.resource_left("sharp_eye") > 0:
+		who.spend_resource("sharp_eye")
+		adv.append("Sharp Eye")
+	var t := who.roll_check(dice, &"perception", 0, adv, [], "%s searches" % who.name, ["search"])
 	check_rolled.emit(t.describe())
 	st.advance_minutes(1)
 	var found: Array[String] = []
@@ -1370,11 +1467,29 @@ static func _truthy(v: Variant) -> bool:
 
 
 ## What an exploring spell does here and now (FieldCasting.cast_utility): Light lights the lantern, Detect Magic
-## names the magic within 30 ft, Find Traps reveals the traps in sight within 120 ft.
+## names the magic within 30 ft, Find Traps reveals the traps in sight within 120 ft, Knock opens the nearest lock
+## within 60 ft.
 func apply_spell_effect(spell_id: String) -> void:
 	match spell_id:
 		"light":
 			update_daylight()
+		"knock":
+			var nearest := {}
+			var nearest_ft := 61
+			for list: String in ["doors", "containers"]:
+				for d: Variant in loc.get(list, []):
+					var spec := d as Dictionary
+					var c := _cell(spec["cell"])
+					var ft := grid.distance_ft(leader().cell, 1, c, 1)
+					if ft < nearest_ft and _locked(spec) and not thing_at(c).is_empty():
+						nearest = spec
+						nearest_ft = ft
+			if nearest.is_empty():
+				narration.emit("A loud knock echoes, but there's no lock within 60 feet.")
+				return
+			(st.loc_state(loc_id)["doors"] as Dictionary)[str(nearest["id"])] = "unlocked"
+			Audio.sfx("unlock")
+			toast.emit("A loud knock. Unlocked: %s." % str(nearest.get("label", "the lock")))
 		"detect_magic":
 			var found: Array[String] = []
 			for c: Variant in loc.get("containers", []):
@@ -1472,7 +1587,7 @@ func start_encounter(encounter_id: String) -> bool:
 	if sneaking and who == "":
 		surprised.append_array(_stealth_surprise(e))
 	(st.loc_state(loc_id)["encounters"] as Dictionary)[encounter_id] = "started"
-	for m in members + guest_members:
+	for m: Combatant in members + guest_members:
 		(tokens[m.id] as Node3D).visible = false
 	var ctokens := {}
 	for c in e.combatants:
@@ -1518,7 +1633,7 @@ func resume_encounter(snapshot: Dictionary) -> bool:
 	in_combat = true
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, dice, st.party)
-	for m in members + guest_members:
+	for m: Combatant in members + guest_members:
 		(tokens[m.id] as Node3D).visible = false
 	var ctokens := {}
 	for c in e.combatants:
@@ -1596,7 +1711,7 @@ func _combat_grid() -> CombatGrid:
 func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, outcome: String) -> void:
 	for c in e.combatants:
 		if c.side in [&"party", &"guest"]:
-			for m in members + guest_members:
+			for m: Combatant in members + guest_members:
 				if m.creature == c.creature:
 					m.cell = c.cell
 		elif c.creature.dead:
@@ -1607,7 +1722,7 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 	if combat_view != null:
 		combat_view.queue_free()
 		combat_view = null
-	for m in members + guest_members:
+	for m: Combatant in members + guest_members:
 		var tok := tokens[m.id] as CombatToken
 		tok.position = board.cell_center(m.cell)
 		tok.visible = true

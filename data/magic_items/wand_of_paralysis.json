@@ -1,0 +1,74 @@
+{
+  "id": "wand_of_paralysis",
+  "name": "Wand of Paralysis",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wand",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Spellcaster",
+    "charges": {
+      "max": 7,
+      "regain": "1d6+1",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "crumbles into ashes"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "wand",
+  "recipes": {
+    "ray": {
+      "name": "Paralyzing Ray",
+      "level": 0,
+      "school": "enchantment",
+      "range": {
+        "kind": "feet",
+        "feet": 60
+      },
+      "targets": {
+        "kind": "enemy",
+        "count": 1
+      },
+      "save": "con",
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "paralyzed",
+            "repeat_save": "end_of_turn"
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "ray",
+      "name": "Paralyzing Ray",
+      "recipe": "ray",
+      "charges": 1,
+      "dc": 15,
+      "cost": "magic",
+      "text": "Magic action, 1 charge: a thin blue ray at a creature within 60 ft: a DC 15 Con save or Paralyzed for 1 minute (save again at the end of each of its turns)."
+    }
+  ],
+  "summary": "7 charges: a ray that Paralyzes a creature for up to a minute (Con DC 15).",
+  "text": "As a Magic action, spend 1 of its 7 charges and a thin blue ray shoots from the tip at a creature you can see up to 60 feet away. The target must make a Constitution saving throw (DC 15) or be Paralyzed for 1 minute; after each of its turns it gets a new save, breaking free on a success. The wand recovers 1d6 + 1 charges each dawn; spending the last one forces a 1d20 roll, and on a 1 it crumbles to ash and is destroyed."
+}

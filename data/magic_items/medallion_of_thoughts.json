@@ -1,0 +1,36 @@
+{
+  "id": "medallion_of_thoughts",
+  "name": "Medallion of Thoughts",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true,
+    "charges": {
+      "max": 5,
+      "regain": "1d4",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "amulet",
+  "powers": [
+    {
+      "id": "detect_thoughts",
+      "name": "Detect Thoughts",
+      "spell": "detect_thoughts",
+      "charges": 1,
+      "dc": 13,
+      "field": true,
+      "text": "1 charge: cast Detect Thoughts (save DC 13)."
+    }
+  ],
+  "worn": "neck",
+  "summary": "5 charges: cast Detect Thoughts (save DC 13).",
+  "text": "While wearing the medallion, spend 1 of its 5 charges to cast Detect Thoughts from it, with a save DC of 13. Each dawn it gets back 1d4 used charges."
+}

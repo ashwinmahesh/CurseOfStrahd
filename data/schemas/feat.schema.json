@@ -8,7 +8,7 @@
     "id": {"$ref": "common.schema.json#/$defs/id"},
     "name": {"type": "string"},
     "source": {"$ref": "common.schema.json#/$defs/source"},
-    "category": {"type": "string", "enum": ["origin", "general", "fighting_style", "epic_boon"]},
+    "category": {"type": "string", "enum": ["origin", "general", "fighting_style", "epic_boon", "dark_gift"], "description": "dark_gift: a Ravenloft Dark Gift (Ravenloft: The Horrors Within), taken in place of an origin feat. Not the Amber Temple's dark gifts (ADR 0011)."},
     "prerequisites": {
       "type": "object",
       "additionalProperties": false,
@@ -36,6 +36,7 @@
         "max": {"type": "integer"}
       }
     },
-    "benefits": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}}
+    "benefits": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}},
+    "drawback": {"$ref": "common.schema.json#/$defs/feature", "description": "A Ravenloft Dark Gift's drawback (usually on a natural 1). Walked like a benefit."}
   }
 }

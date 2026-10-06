@@ -1,0 +1,59 @@
+{
+  "id": "boar",
+  "name": "Boar",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "medium",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 11,
+  "initiative": 0,
+  "hp": {
+    "average": 13,
+    "dice": "2d8+4"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 13,
+    "dex": 11,
+    "con": 14,
+    "int": 2,
+    "wis": 9,
+    "cha": 5
+  },
+  "senses": {},
+  "passive_perception": 9,
+  "languages": [],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "gore",
+      "name": "Gore",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 4,
+          "dice": "1d6+1",
+          "type": "piercing"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Gore: +3 to hit, 1d6+1 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A charging wild pig."
+}

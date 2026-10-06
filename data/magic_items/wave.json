@@ -1,0 +1,103 @@
+{
+  "id": "wave",
+  "name": "Wave",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true,
+    "sentient": true
+  },
+  "theme": "relics",
+  "icon": "wave",
+  "treasure": {
+    "random": false
+  },
+  "template": {
+    "on": "weapon",
+    "items": [
+      "trident"
+    ],
+    "name": "Wave"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "flag",
+      "value": "water_breathing"
+    },
+    {
+      "stat": "speed_set",
+      "kind": "swim",
+      "value": 60
+    },
+    {
+      "stat": "resistance",
+      "value": "cold",
+      "attuned_only": true
+    }
+  ],
+  "weapon_rules": {
+    "special": [
+      "wave"
+    ]
+  },
+  "powers": [
+    {
+      "id": "dominate_beast",
+      "name": "Dominate Beast",
+      "spell": "dominate_beast",
+      "dc": 15,
+      "charges": 0,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "cube",
+      "name": "Cube of Force",
+      "cost": "magic",
+      "custom": "cube_of_force",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "choice": {
+        "label": "Face",
+        "from": [
+          "5_everything",
+          "6_off"
+        ]
+      },
+      "text": "Once per dawn, the trident acts as a Cube of Force's fifth face."
+    }
+  ],
+  "sentience": {
+    "int": 14,
+    "wis": 10,
+    "cha": 18,
+    "alignment": "neutral",
+    "purpose": "to spread the worship of the sea god"
+  },
+  "summary": "+3 trident of the sea: water breathing, a swim speed, and Critical Hits that drain half the target's vitality.",
+  "text": "This trident, kept in the depths of White Plume Mountain, is a gorgeous weapon etched with waves, seashells and sea creatures. It grants +3 to attack and damage rolls, and a Critical Hit with it deals bonus Necrotic damage amounting to half the target's Hit Point maximum. It doubles as a Weapon of Warning and a Trident of Fish Command. In your hand it lets you breathe underwater and swim at a speed of 60 feet, grants what a Cap of Water Breathing would, and works as a Cube of Force, with you choosing the effect rather than pressing a face. It is sentient (Charisma 18, Intelligence 14, Wisdom 10) and serves a god of the sea."
+}

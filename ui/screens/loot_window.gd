@@ -1,7 +1,7 @@
 class_name LootWindow
 extends CanvasLayer
-## The loot window (docs/ui/inventory.md, inv_02): what a container holds, with Take all, Take one, or Send to whoever
-## can carry it (overloaded characters are skipped, and it says so). Coins go to the party purse.
+## The loot window (docs/ui/inventory.md, inv_02): what a container holds, with Take all, Take one, Take gold, or Send
+## to whoever can carry it (overloaded characters are skipped, and it says so). Coins go to the party purse.
 
 signal closed
 
@@ -58,7 +58,10 @@ func _redraw() -> void:
 		var coins := HBoxContainer.new()
 		coins.add_theme_constant_override("separation", 10)
 		coins.add_child(UiParts.figure("%d" % int(gold), 20, "gilt_light"))
-		coins.add_child(UiKit.label("gold pieces, for the party purse", 15, "parchment"))
+		var what := UiKit.label("gold pieces, for the party purse", 15, "parchment")
+		what.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		coins.add_child(what)
+		coins.add_child(UiParts.small_button("Take gold", take_coins))
 		_list.add_child(UiParts.row(coins))
 	if items.is_empty() and gold <= 0.0:
 		_list.add_child(UiKit.label("Empty.", 15, "bone"))
@@ -92,7 +95,7 @@ func _target() -> Character:
 func _take(i: int, n: int) -> void:
 	var it := items[i] as Dictionary
 	var qty := int(it.get("qty", 1))
-	_target().add_item(str(it["id"]), mini(n, qty))
+	_target().add_item(str(it["id"]), mini(n, qty), it)
 	if qty - n <= 0:
 		items.remove_at(i)
 	else:
@@ -104,7 +107,7 @@ func _take(i: int, n: int) -> void:
 func _take_all() -> void:
 	for it: Variant in items:
 		var d := it as Dictionary
-		_target().add_item(str(d["id"]), int(d.get("qty", 1)))
+		_target().add_item(str(d["id"]), int(d.get("qty", 1)), d)
 	items.clear()
 	_take_gold()
 	_close()
@@ -121,17 +124,26 @@ func _send_all() -> void:
 		var placed := false
 		for ch in st.party:
 			if ch.carried_weight() + weight <= ch.carrying_capacity().total():
-				ch.add_item(str(d["id"]), int(d.get("qty", 1)))
+				ch.add_item(str(d["id"]), int(d.get("qty", 1)), d)
 				placed = true
 				break
 		if not placed:
-			_target().add_item(str(d["id"]), int(d.get("qty", 1)))
+			_target().add_item(str(d["id"]), int(d.get("qty", 1)), d)
 			notes.append("%s is overloaded with %s" % [_target().name, data.get("name", d["id"])])
 	items.clear()
 	_take_gold()
 	if not notes.is_empty() and view != null:
 		view.toast.emit("; ".join(notes))
 	_close()
+
+
+## The coins alone into the party purse; the items stay to be taken or left.
+func take_coins() -> void:
+	if gold <= 0.0:
+		return
+	Audio.sfx("coins")
+	_take_gold()
+	_redraw()
 
 
 func _take_gold() -> void:

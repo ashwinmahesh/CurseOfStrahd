@@ -1,0 +1,74 @@
+{
+  "id": "dhampir",
+  "name": "Dhampir",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "summary": "Mortals touched by vampirism who climb like spiders and feed on the vitality of those they bite.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium",
+    "small"
+  ],
+  "speed": 35,
+  "darkvision": 60,
+  "traits": [
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 60 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 60
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "spider_climb",
+      "name": "Spider Climb",
+      "summary": "A Climb Speed equal to your Speed; from level 3 you can move along walls and ceilings with your hands free.",
+      "text": "You have a Climb Speed equal to your Speed. Starting at character level 3, you can move up, down and across vertical surfaces and upside down along ceilings while leaving your hands free.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "climb_speed_equals_speed"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "trace_of_undeath",
+      "name": "Trace of Undeath",
+      "summary": "Resistance to Necrotic damage.",
+      "text": "You have Resistance to Necrotic damage.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "necrotic"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "vampiric_bite",
+      "name": "Vampiric Bite",
+      "summary": "Unarmed Strike bite: 1d4 + Constitution modifier Piercing. On a hit, PB times per Long Rest, heal the damage dealt or add it to your next attack roll or ability check.",
+      "text": "When you make an Unarmed Strike, you can bite with your fangs instead of using the normal damage: on a hit the bite deals 1d4 plus your Constitution modifier Piercing damage. When you bite a creature that isn't a Construct or an Undead, you can empower yourself in one of these ways: Drain: you regain Hit Points equal to the Piercing damage dealt. Strengthen: you gain a bonus equal to the Piercing damage dealt to the next ability check or attack roll you make within 1 minute. You can empower yourself a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "action": "passive",
+      "resource": {
+        "id": "vampiric_bite",
+        "name": "Vampiric Bite (empower)",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "engine"
+    }
+  ]
+}

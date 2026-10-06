@@ -239,8 +239,8 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 	_cancel_targeting()
 	slot_level = int(action.get("slot", 0))
 	var levels: Array[int] = []
-	if str(action["kind"]) == "spell":
-		levels = catalog.slot_choices(c, str(action["spell_id"]))
+	if str(action["kind"]) in ["spell", "item_spell"]:
+		levels = catalog.level_choices(c, action)
 		if not levels.is_empty():
 			slot_level = level if level in levels else levels[0]
 	if str(action["targeting"]) == "none":
@@ -249,7 +249,7 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 	selected = action
 	picked = []
 	mode = Mode.TARGET
-	if str(action["kind"]) == "spell":
+	if str(action["kind"]) in ["spell", "item_spell"]:
 		hud.set_pips(levels, slot_level)
 	_show_target_marks()
 	_update_hover()
@@ -769,9 +769,9 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		return
 	var why := catalog.target_why(c, selected, o)
 	var lines2: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()]]
-	if str(selected["kind"]) == "spell":
+	if str(selected["kind"]) in ["spell", "item_spell"]:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
-		var prev := (c.creature as Character).spell_preview(str(selected["spell_id"]), slot_level)
+		var prev := catalog.cast_preview(c, selected, slot_level)
 		if data.has("attack") and prev.has("attack"):
 			var opt := {"melee": str(data["attack"]) == "melee", "profile": WeaponProfile.new()}
 			var sit := e.attack_situation(c, o, opt)

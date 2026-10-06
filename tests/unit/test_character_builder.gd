@@ -19,7 +19,7 @@ func test_lists_the_phase_1_classes() -> void:
 	for c: String in ["cleric", "fighter", "rogue", "wizard"]:
 		assert_true(c in ids, c)
 	var preview := CharacterBuilder.new().class_preview("cleric")
-	assert_eq((preview["subclasses"] as Array).size(), 4)
+	assert_eq((preview["subclasses"] as Array).size(), 5, "four PHB domains and the Grave Domain")
 	assert_eq(int(preview["hit_die"]), 8)
 
 

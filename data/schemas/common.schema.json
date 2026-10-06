@@ -133,7 +133,8 @@
             "DMG2024",
             "MM2025",
             "CoS",
-            "custom"
+            "custom",
+            "RtHW"
           ]
         },
         "page": {
@@ -145,9 +146,10 @@
           "enum": [
             "BR2024",
             "PHB2024",
-            "MM2025"
+            "MM2025",
+            "RtHW"
           ],
-          "description": "Set only when the numbers were compared line by line with that source (BR2024 = the free 2024 Basic Rules on D&D Beyond). Absent means entered from knowledge and still needs a check against the book."
+          "description": "Set only when the numbers were compared line by line with that source (BR2024 = the free 2024 Basic Rules on D&D Beyond). Absent means entered from knowledge and still needs a check against the book. RtHW = Ravenloft: The Horrors Within (2026)."
         },
         "note": {
           "type": "string"
@@ -317,7 +319,7 @@
     },
     "choice": {
       "type": "object",
-      "description": "A choice the CharacterBuilder or LevelUpController presents. `kind` picks the reusable UI widget (plan \u00a75.6).",
+      "description": "A choice the CharacterBuilder or LevelUpController presents. `kind` picks the reusable UI widget (plan §5.6).",
       "required": [
         "kind",
         "count"

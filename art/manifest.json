@@ -14,9 +14,13 @@
         "art/generated/map/barovia_map_gothic_b.png",
         "art/ui/title_backdrop.png",
         "art/generated/map/barovia_west_crop.png",
-        "art/generated/map/barovia_west_crop_marked.png"
+        "art/generated/map/barovia_west_crop_marked.png",
+        "art/generated/map/barovia_north_crop.png",
+        "art/generated/map/barovia_north_crop_marked.png",
+        "art/generated/map/barovia_south_crop.png",
+        "art/generated/map/barovia_south_crop_marked.png"
       ],
-      "notes": "The travel map's art, 3:2 at 2K (--size 2K, 2528x1696) so it stays sharp when the map zooms in; imported lossless with mipmaps. History (all 2026-10-06): barovia_map_a from the layout sketch art/generated/map/barovia_layout.png came out as a bright storybook parchment; the owner asked for the game's gothic tone, so barovia_map_gothic_b repainted it on dark vellum with the title art as the colour reference; the owner then said it needn't look like parchment, so this take repaints the ground as the land itself (dark moorland, grey-green fog from the edges, no paper), the gothic map as the layout reference. Two takes; take a (clearly terrain, dark olive moor) is used as is. No roads and no text: the game draws the known roads and names on top. Then the Phase 5 places without a picture were painted in: the western section (barovia_west_crop.png, the spots circled in barovia_west_crop_marked.png) went to Gemini with a prompt to paint the Wizard of Wines vineyard and Yester Hill's standing stones inside the circles; take b (barovia_west_add_b.png) was blended back into the full art only inside two feathered ellipses (Chrome canvas), so nothing else changed. Landmark positions are unchanged and listed in docs/ui/travel_map.md."
+      "notes": "The travel map's art, 3:2 at 2K (--size 2K, 2528x1696) so it stays sharp when the map zooms in; imported lossless with mipmaps. History (all 2026-10-06): barovia_map_a from the layout sketch art/generated/map/barovia_layout.png came out as a bright storybook parchment; the owner asked for the game's gothic tone, so barovia_map_gothic_b repainted it on dark vellum with the title art as the colour reference; the owner then said it needn't look like parchment, so this take repaints the ground as the land itself (dark moorland, grey-green fog from the edges, no paper), the gothic map as the layout reference. Two takes; take a (clearly terrain, dark olive moor) is used as is. No roads and no text: the game draws the known roads and names on top. Then the Phase 5 places without a picture were painted in: the western section (barovia_west_crop.png, the spots circled in barovia_west_crop_marked.png) went to Gemini with a prompt to paint the Wizard of Wines vineyard and Yester Hill's standing stones inside the circles; take b (barovia_west_add_b.png) was blended back into the full art only inside two feathered ellipses (Chrome canvas), so nothing else changed. The last Phase 5 places were painted in the same way: the north section (Van Richten's Tower on its tarn, the werewolf den's cave, the Tsolenka Pass bridge and guard tower, the Amber Temple; take b, barovia_north_add_b.png, since take a kept the circles) and the south section (the drowned Ruins of Berez with the hut on a stump; take b, barovia_south_add_b.png), each blended back only inside feathered ellipses. Landmark positions are unchanged and listed in docs/ui/travel_map.md."
     },
     {
       "id": "party_placeholder",
@@ -191,6 +195,16 @@
       "reference": [
         "art/generated/characters/silvain_aster_turnaround.png"
       ]
+    },
+    {
+      "id": "narrator_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/narrator_hooded.png",
+      "sprites": "art/portraits/narrator.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "The Narrator's avatar (owner request 2026-10-06: a portrait for the Dungeon Master / narrator when they speak), shown on Narrator lines in conversations and in the exploration Narrator box. Picked as the default from four options generated the same day (art/generated/portraits/narrator_hooded, _chronicler, _raven, _mists; the owner chooses). 1024 -> 512 px by blender/portrait.py, background flattened to ash_violet (BG=ash_violet).",
+      "prompt": "Bust portrait of the Narrator, the unseen storyteller who tells this tale of Barovia: a tall hooded figure in a heavy black velvet cowl lined with deep crimson, an aged gold embroidered trim along the hood's edge; inside the hood only darkness and two small cold gold glinting eyes, no face; black-gloved hands hold a closed ancient book bound in crimson leather with gold corner clasps against the chest; front view, still, patient and ominous, lit by cold moonlight from the side (no warm light, no orange tones), flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no scenery in the frame. No border or frame around the picture; the subject runs off the bottom edge of the picture (no rounded cameo or vignette cut-out)."
     },
     {
       "id": "wolf_portrait",
