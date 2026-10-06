@@ -262,7 +262,7 @@
             },
             "replaceable": "long_rest"
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -319,7 +319,7 @@
               }
             ]
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -450,7 +450,7 @@
               "proficient": true
             }
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -461,7 +461,7 @@
           "id": "tireless",
           "name": "Tireless",
           "summary": "Magic action: gain 1d8 + Wisdom Temporary Hit Points (Wisdom-modifier uses per Long Rest); Short Rests also remove a level of Exhaustion.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -563,7 +563,7 @@
           "id": "precise_hunter",
           "name": "Precise Hunter",
           "summary": "Advantage on attack rolls against the creature marked by your Hunter's Mark.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

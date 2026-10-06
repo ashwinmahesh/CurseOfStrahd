@@ -81,6 +81,10 @@ func castable(c: Combatant) -> Array[Dictionary]:
 		var res_id := "spell:%s" % id
 		if str(k["kind"]) == "granted" and ch.resource_left(res_id) > 0:
 			entry["free"] = true
+		# Warlock invocations that cast a spell at will (Armor of Shadows, Fiendish Vigor...).
+		if ClassFeatures.at_will(c, id):
+			entry["free"] = true
+			entry["at_will"] = true
 		var why := _why_not(c, s, entry)
 		if why != "":
 			entry["legal"] = false
@@ -1090,6 +1094,7 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 			_orb_leap(ctx, t, rolled, r)
 	if t.is_alive():
 		_on_spell_hit(ctx, t, r)
+		e.class_features.cantrip_hit(ctx, t)
 	_secondary(ctx, t, r)
 	return test
 
@@ -1237,6 +1242,8 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 	for t in victims:
 		if not t.is_alive():
 			continue
+		if c.hostile_to(t):
+			e.class_features.kept_rage(c)
 		var bonus_text := ""
 		var save_bd := t.creature.save_bonus(ab)
 		if ab == &"dex" and str(s["id"]) != "sacred_flame":
@@ -1420,7 +1427,7 @@ static func metamagic_known(ch: Character) -> Array[String]:
 	for c in ch.choice_defs:
 		if c.kind == "metamagic":
 			for p: Variant in c.picks:
-				out.append(str(p))
+				out.append(str(p).trim_suffix("_spell"))
 	return out
 
 
@@ -1527,6 +1534,11 @@ func _temp_hp(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 		var rolled := e._roll_damage_dice(str(th["dice"]), false, 0, "%s Temporary Hit Points" % s["name"])
 		total += int(rolled["total"])
 		text = str(rolled["text"])
+		# Fiendish Vigor: False Life at its highest number.
+		if str(s["id"]) == "false_life" and ClassFeatures.knows_invocation(ctx["c"] as Combatant, "fiendish_vigor"):
+			var pm := DiceRoller.parse_expr(str(th["dice"]))
+			total += int(pm["count"]) * int(pm["sides"]) + int(pm["modifier"]) - int(rolled["total"])
+			text = "maximum (Fiendish Vigor)"
 	if bool(th.get("add_mod", false)):
 		total += int((ctx["nums"] as Dictionary)["mod"])
 	total += int((s.get("upcast", {}) as Dictionary).get("temp_hp", 0)) * maxi(0, int(ctx["slot"]) - int(s.get("level", 0)))

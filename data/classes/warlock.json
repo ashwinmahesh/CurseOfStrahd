@@ -318,7 +318,7 @@
                     "always_prepared": true
                   }
                 ],
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "ascendant_step",
@@ -332,7 +332,7 @@
                     "always_prepared": true
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 5
                 }
@@ -351,7 +351,7 @@
                 "id": "devouring_blade",
                 "name": "Devouring Blade",
                 "summary": "Thirsting Blade gives you two extra attacks instead of one.",
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 12,
                   "invocation": "thirsting_blade"
@@ -375,7 +375,7 @@
                 "name": "Eldritch Smite",
                 "summary": "Once per turn when your pact weapon hits, spend a Pact Magic slot for extra Force damage and knock a Huge or smaller target Prone.",
                 "text": "Once per turn when you hit a creature with your pact weapon, you can expend a Pact Magic spell slot to deal an extra 1d8 Force damage plus another 1d8 per level of the slot, and you can give the target the Prone condition if it is Huge or smaller.",
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 5,
                   "invocation": "pact_of_the_blade"
@@ -404,7 +404,7 @@
                     "always_prepared": true
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 2
                 }
@@ -484,7 +484,7 @@
                 "id": "lifedrinker",
                 "name": "Lifedrinker",
                 "summary": "Once per turn a pact weapon hit deals an extra 1d6 Necrotic, Psychic or Radiant, and you can spend a Hit Point Die to heal.",
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 9,
                   "invocation": "pact_of_the_blade"
@@ -502,7 +502,7 @@
                     "always_prepared": true
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 2
                 }
@@ -519,7 +519,7 @@
                     "always_prepared": true
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 5
                 }
@@ -536,7 +536,7 @@
                     "always_prepared": true
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 2
                 }
@@ -553,7 +553,7 @@
                     "always_prepared": true
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 5
                 }
@@ -570,7 +570,7 @@
                     "always_prepared": true
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 2
                 }
@@ -581,7 +581,7 @@
                 "summary": "Bonus Action: conjure or bond a pact weapon; use Charisma for its attacks and deal Necrotic, Psychic or Radiant damage with it.",
                 "text": "As a Bonus Action you can conjure a pact weapon in your hand (a Simple or Martial Melee weapon of your choice) or bond with a magic weapon you touch. You are proficient with it while you wield it, can use it as a Spellcasting Focus, and can use your Charisma modifier instead of Strength or Dexterity for its attack and damage rolls; each hit can deal Necrotic, Psychic or Radiant damage or its normal type. The bond ends if you use this feature again, dismiss the weapon, or are more than 5 feet away from it for 1 minute.",
                 "action": "bonus_action",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "pact_of_the_chain",
@@ -628,7 +628,7 @@
                 "name": "Repelling Blast",
                 "summary": "When a damaging Warlock cantrip with an attack roll hits a Large or smaller creature, push it up to 10 feet.",
                 "text": "Choose one of your known Warlock cantrips that requires an attack roll. When you hit a Large or smaller creature with it, you can push the creature up to 10 feet straight away from you.",
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 2,
                   "cantrip": "attack"
@@ -639,7 +639,7 @@
                 "name": "Thirsting Blade",
                 "summary": "Attack twice with your pact weapon when you take the Attack action.",
                 "text": "You gain the Extra Attack feature for your pact weapon only: you can attack twice with it instead of once when you take the Attack action on your turn.",
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 5,
                   "invocation": "pact_of_the_blade"
@@ -658,7 +658,7 @@
                     "at_class_level": 9
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 9
                 }
@@ -676,7 +676,7 @@
                     "at_class_level": 7
                   }
                 ],
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 7
                 }

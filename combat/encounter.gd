@@ -37,6 +37,7 @@ var feature_actions: FeatureActions
 var monster_actions: MonsterActions
 var ai: AiBrain
 var shapes: ShapeChange
+var class_features: ClassFeatures
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.
 var _savage_turn: Dictionary = {}
@@ -62,6 +63,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	monster_actions = MonsterActions.new(self)
 	ai = AiBrain.new(self)
 	shapes = ShapeChange.new(self)
+	class_features = ClassFeatures.new(self)
 
 
 # --- Setup ----------------------------------------------------------------------------------------
@@ -456,6 +458,7 @@ func _begin_turn() -> void:
 	events.append({"type": "turn", "id": c.id, "round": round_no})
 	spells.turn_start(c)
 	feature_actions.turn_start(c)
+	class_features.turn_start(c)
 	monster_actions.turn_start(c)
 	if c.creature.has_flag("dazed"):
 		c.bonus_available = false
@@ -487,6 +490,7 @@ func end_turn() -> CombatResult:
 	_expire_marks(c.id, "end")
 	c.armed.clear()
 	feature_actions.turn_end(c)
+	class_features.turn_end(c)
 	monster_actions.turn_end(c)
 	spells.turn_end(c)
 	spells.zones.prune()
@@ -1446,6 +1450,9 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 		return CombatResult.fail(check)
 	if c.attacks_left <= 0 and not c.action_available:
 		return CombatResult.fail("No attacks left this turn")
+	var beast_why := class_features.companion_why(c)
+	if beast_why != "":
+		return CombatResult.fail(beast_why)
 	var lp := option["profile"] as WeaponProfile
 	if "loading" in lp.properties and not features.has_feat(c, "crossbow_expert") and c.attacks_left > 0 \
 			and str(c.get_meta("loading_fired", "")) == "%d:%d" % [round_no, turn_index]:
@@ -1601,6 +1608,7 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	var duel := spells.specials.duel_disadvantage(c, target)
 	if duel != "":
 		dis.append(duel)
+	class_features.attack_situation(c, target, option, adv, dis)
 	for m in target.creature.modifiers_for(&"attacked_with"):
 		if m.source_name == "Dodging" and (not can_see(target, c) or target.speed() <= 0):
 			continue
@@ -1772,6 +1780,8 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 	var sit := attack_situation(c, target, option)
 	_consume_marks(c, target)
 	spells.specials.duel_check_attack(c, target)
+	if c.hostile_to(target):
+		class_features.kept_rage(c)
 	spells.end_sanctuary(c, "attacked")
 	spells.trigger_ends(c, "attack_roll")
 	if c.hidden and not features.has_feat(c, "skulker"):
@@ -2047,6 +2057,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		details = details.duplicate()
 		details.append("Bestow Curse 1d8: %s" % extra["text"])
 	parts = _reduce_by_dice(target, parts, details)
+	parts = _bastion(target, parts, details)
 	feature_actions.adjust_incoming(source, target, parts)
 	# Mage Slayer: creatures it damages have Disadvantage on the Concentration save.
 	var slayer: Effect = null
@@ -2108,6 +2119,8 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	events.append({"type": "damage", "id": target.id, "amount": dr.final, "critical": critical})
 	if dr.concentration_broken:
 		log.add("info", "%s loses Concentration" % target.name(), target.id, [dr.concentration_save.describe()])
+	if was_up and target.is_down():
+		class_features.on_drop(source, target)
 	if target.creature.dead and was_up:
 		target.set_meta("died_round", round_no)
 		log.add("death", "%s dies" % target.name(), target.id)
@@ -2139,6 +2152,28 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	spells.zones.prune()
 	_check_over()
 	return dr
+
+
+## Bastion of Law (Clockwork Sorcery): the ward's d8s soak damage, rolled one at a time until it's gone.
+func _bastion(target: Combatant, parts: Array, details: Array) -> Array:
+	var left := int(target.get_meta("bastion_dice", 0))
+	if left <= 0:
+		return parts
+	var out: Array = []
+	for p: Variant in parts:
+		out.append((p as Dictionary).duplicate())
+	for p2: Variant in out:
+		var d := p2 as Dictionary
+		while int(d["amount"]) > 0 and left > 0:
+			var cut := dice.roll_one(8, "Bastion of Law")
+			left -= 1
+			d["amount"] = maxi(0, int(d["amount"]) - cut)
+			details.append("Bastion of Law: −%d" % cut)
+	if left <= 0:
+		target.remove_meta("bastion_dice")
+	else:
+		target.set_meta("bastion_dice", left)
+	return out
 
 
 ## The Resistance cantrip: damage of the chosen type is reduced by 1d4, once per turn.

@@ -52,7 +52,7 @@
         "summary": "When you take the Attack action, spend Channel Divinity: Advantage on attacks against one creature within 30 feet for 1 minute.",
         "text": "When you take the Attack action, you can expend a use of Channel Divinity to swear a vow against a creature you can see within 30 feet of you. You have Advantage on attack rolls against it for 1 minute or until you use this feature again. If the creature drops to 0 Hit Points before the vow ends, you can move the vow to a different creature within 30 feet (no action required).",
         "uses_resource": "paladin_channel_divinity",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

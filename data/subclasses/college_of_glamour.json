@@ -40,7 +40,7 @@
         "text": "As a Bonus Action you expend a use of Bardic Inspiration and roll the die. Choose other creatures within 60 feet of you, up to your Charisma modifier (minimum one); each gains Temporary Hit Points equal to twice the roll and can use its Reaction to move up to its Speed without provoking Opportunity Attacks.",
         "action": "bonus_action",
         "uses_resource": "bardic_inspiration",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

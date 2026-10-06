@@ -19,7 +19,7 @@
         "name": "Vitality of the Tree",
         "summary": "When you rage, gain Temporary Hit Points equal to your Barbarian level; each turn while raging, give an ally nearby d6s of Temporary Hit Points.",
         "text": "Vitality Surge: when you enter your Rage, you gain Temporary Hit Points equal to your Barbarian level. Life-Giving Force: at the start of each of your turns while raging, you can choose another creature within 10 feet of you; it gains Temporary Hit Points equal to a roll of d6s numbering your Rage Damage bonus. Those Temporary Hit Points vanish when your Rage ends.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

@@ -36,7 +36,7 @@
         "text": "When a creature you can see within 60 feet of you makes a damage roll or succeeds on an ability check or attack roll, you can take a Reaction and expend a use of Bardic Inspiration; roll the die and subtract the number from the creature's roll, possibly turning a success into a failure.",
         "action": "reaction",
         "uses_resource": "bardic_inspiration",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

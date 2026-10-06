@@ -52,7 +52,7 @@
         "summary": "Channel Divinity: for 10 minutes add your Charisma modifier to attacks with a melee weapon, which glows and can deal Radiant damage.",
         "text": "When you take the Attack action, you can expend a use of Channel Divinity to fill one melee weapon you are holding with positive energy for 10 minutes, or until you use this again or let go of the weapon. You add your Charisma modifier (minimum +1) to attack rolls with it, and each time you hit with it you can make its damage Radiant. The weapon sheds Bright Light in a 20-foot radius and Dim Light for 20 feet beyond.",
         "uses_resource": "paladin_channel_divinity",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -68,7 +68,7 @@
             "value": "charmed"
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

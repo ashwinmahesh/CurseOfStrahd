@@ -20,7 +20,7 @@
         "summary": "Once per turn when an Unarmed Strike hits, spend 1 Focus to add a Martial Arts die + Wisdom Necrotic damage.",
         "text": "Once per turn when you hit a creature with an Unarmed Strike and deal damage, you can spend 1 Focus Point to deal extra Necrotic damage equal to one roll of your Martial Arts die plus your Wisdom modifier.",
         "uses_resource": "focus_points",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -32,7 +32,7 @@
         "text": "As a Magic action you can spend 1 Focus Point to touch a creature and restore Hit Points equal to a roll of your Martial Arts die plus your Wisdom modifier. When you use Flurry of Blows, you can replace one of its Unarmed Strikes with this healing without spending a Focus Point for it.",
         "action": "action",
         "uses_resource": "focus_points",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -69,7 +69,7 @@
         "name": "Physician's Touch",
         "summary": "Hand of Harm can also poison; Hand of Healing can also end Blinded, Deafened, Paralyzed, Poisoned or Stunned.",
         "text": "Hand of Harm: when you use it on a creature, you can also give it the Poisoned condition until the end of your next turn. Hand of Healing: when you use it, you can also end one of these conditions on the creature: Blinded, Deafened, Paralyzed, Poisoned or Stunned.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

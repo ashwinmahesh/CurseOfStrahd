@@ -19,7 +19,7 @@
         "name": "Open Hand Technique",
         "summary": "Each Flurry of Blows hit can Addle (no Reactions), Push (Str save or 15 feet) or Topple (Dex save or Prone).",
         "text": "Whenever you hit a creature with an attack granted by Flurry of Blows, you can impose one of these effects. Addle: it can't take Reactions until the start of its next turn. Push: it makes a Strength saving throw or is pushed up to 15 feet away from you. Topple: it makes a Dexterity saving throw or has the Prone condition.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -38,7 +38,7 @@
           "recharge": "long"
         },
         "uses_resource": "wholeness_of_body",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

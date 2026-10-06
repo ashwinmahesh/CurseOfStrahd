@@ -484,6 +484,7 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 		var mastery := (o["profile"] as WeaponProfile).mastery
 		if mastery in ["push", "topple"] and not out.any(func(x: Dictionary) -> bool: return str(x["id"]) == "skip:" + mastery):
 			out.append({"id": "skip:" + mastery, "label": "Hold back %s" % mastery.capitalize(), "sub": "don't use the mastery this turn", "why": ""})
+	out.append_array(enc().class_features.rider_options(c))
 	return out
 
 
@@ -550,6 +551,7 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 	var e := enc()
 	var p := option["profile"] as WeaponProfile
 	var melee := bool(option["melee"])
+	out.append_array(e.class_features.hit_dice(c, target, option, st))
 	if not c.creature is Character:
 		return out
 	var ch := c.creature as Character
@@ -707,6 +709,7 @@ func flat_damage_bonus(c: Combatant, _target: Combatant, option: Dictionary, st:
 	if has_feat(c, "great_weapon_master") and "heavy" in p.properties and c.took_attack_action and not bool((st["opts"] as Dictionary).get("reaction", false)):
 		bonus += c.creature.proficiency_bonus()
 		notes.append("Great Weapon Master +%d" % c.creature.proficiency_bonus())
+	bonus += enc().class_features.flat_bonus(c, _target, option, notes)
 	return bonus
 
 
@@ -756,6 +759,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 	var opts := st["opts"] as Dictionary
 	var alive := target.is_alive() and not target.is_down()
 	var size_ok := Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large")
+	e.class_features.after_hit(c, target, option, st, r)
 	# Battle Master maneuvers.
 	if st.has("maneuver"):
 		var id := str(st["maneuver"])

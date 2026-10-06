@@ -316,7 +316,7 @@
               "always_prepared": true
             }
           ],
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "primal_order",
@@ -400,7 +400,7 @@
             }
           },
           "uses_resource": "wild_shape",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "wild_companion",
@@ -408,7 +408,7 @@
           "summary": "Spend a Wild Shape use or a spell slot to cast Find Familiar without Material components; the familiar is Fey.",
           "text": "As a Magic action you can expend a spell slot or a use of Wild Shape to cast Find Familiar without Material components. The familiar is a Fey and disappears after a number of hours equal to half your Druid level.",
           "action": "action",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -459,7 +459,7 @@
           "name": "Wild Resurgence",
           "summary": "With no Wild Shape uses left, trade a spell slot for one; once per Long Rest, trade a Wild Shape use for a level 1 slot.",
           "text": "Once on each of your turns, if you have no uses of Wild Shape left, you can expend a spell slot (no action required) to regain one use. Once per Long Rest you can also expend a use of Wild Shape (no action required) to regain a level 1 spell slot.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -505,11 +505,11 @@
                 "id": "primal_strike",
                 "name": "Primal Strike",
                 "summary": "Once per turn, a weapon or Beast form hit deals an extra 1d8 Cold, Fire, Lightning or Thunder damage.",
-                "implemented": "text"
+                "implemented": "engine"
               }
             ]
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -600,7 +600,7 @@
           "id": "improved_elemental_fury",
           "name": "Improved Elemental Fury",
           "summary": "Potent Spellcasting adds 300 feet of range to cantrips; Primal Strike's damage becomes 2d8.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

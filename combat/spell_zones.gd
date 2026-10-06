@@ -370,6 +370,7 @@ func refresh_auras() -> void:
 				fx.conditions.append(StringName(str(cond)))
 			if not fx.modifiers.is_empty() or not fx.conditions.is_empty():
 				t.creature.add_effect(fx)
+	e.class_features.refresh_auras()
 
 
 # --- Terrain and sight ------------------------------------------------------------------------------

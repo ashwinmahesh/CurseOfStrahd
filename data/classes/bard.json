@@ -219,7 +219,7 @@
           "text": "As a Bonus Action you inspire another creature within 60 feet of you that can see or hear you; it gains one Bardic Inspiration die (a d6, growing at levels 5, 10 and 15). Once within the next hour, when it fails a D20 Test, it can roll the die and add the number, possibly turning the failure into a success. A creature can hold only one of these dice at a time. You can do this a number of times equal to your Charisma modifier (minimum once), regaining every use on a Long Rest (from level 5, on a Short Rest too).",
           "action": "bonus_action",
           "uses_resource": "bardic_inspiration",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "spellcasting",
@@ -245,7 +245,7 @@
               "proficient": true
             }
           },
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "jack_of_all_trades",
@@ -309,7 +309,7 @@
           "name": "Font of Inspiration",
           "summary": "Bardic Inspiration comes back on a Short Rest too, and you can trade a spell slot for a use.",
           "text": "You regain all expended uses of Bardic Inspiration when you finish a Short or Long Rest. You can also expend a spell slot (no action required) to regain one use.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -333,7 +333,7 @@
           "summary": "Reaction: a creature within 30 feet that fails a save against Charmed or Frightened rerolls it with Advantage.",
           "text": "When you or a creature within 30 feet of you fails a saving throw against an effect that applies the Charmed or Frightened condition, you can take a Reaction to let it reroll the save with Advantage on the new roll.",
           "action": "reaction",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -375,7 +375,7 @@
               "proficient": true
             }
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },

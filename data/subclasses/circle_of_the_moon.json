@@ -41,7 +41,7 @@
             "value": "circle_forms"
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -71,7 +71,7 @@
         "name": "Moonlight Step",
         "summary": "Bonus Action: teleport 30 feet and gain Advantage on your next attack; Wis-modifier uses per Long Rest or spend a level 2+ slot.",
         "action": "bonus_action",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

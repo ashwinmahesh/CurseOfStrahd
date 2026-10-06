@@ -200,7 +200,7 @@
           "text": "While you aren't wearing Heavy armor you can enter a Rage as a Bonus Action. While it lasts you have Resistance to Bludgeoning, Piercing and Slashing damage, you add your Rage Damage bonus to the damage of attacks that use Strength (with a weapon or an Unarmed Strike), and you have Advantage on Strength checks and Strength saving throws. You can't cast spells or maintain Concentration while raging. The Rage lasts until the end of your next turn and carries on for another turn each time you attack an enemy, force an enemy to make a saving throw, or spend a Bonus Action to keep it going, up to 10 minutes; it ends early if you put on Heavy armor or become Incapacitated. You have two uses (more as the Rages column grows); one comes back on a Short Rest and all of them on a Long Rest.",
           "action": "bonus_action",
           "uses_resource": "rage",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "unarmored_defense",
@@ -240,7 +240,7 @@
             },
             "replaceable": "long_rest"
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -269,7 +269,7 @@
           "summary": "On your first attack of a turn, gain Advantage on Strength attacks, but attacks against you have Advantage until your next turn.",
           "text": "When you make your first attack roll on your turn, you can decide to attack recklessly. Until the start of your next turn, your attack rolls that use Strength have Advantage, and attack rolls against you have Advantage too.",
           "action": "free",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -397,7 +397,7 @@
           "name": "Instinctive Pounce",
           "summary": "When you enter a Rage, move up to half your Speed as part of the same Bonus Action.",
           "text": "As part of the Bonus Action you take to enter your Rage, you can move up to half your Speed.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -509,7 +509,7 @@
           "id": "persistent_rage",
           "name": "Persistent Rage",
           "summary": "Once per Long Rest regain all Rage uses when you roll Initiative; your Rage lasts 10 minutes without being extended.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

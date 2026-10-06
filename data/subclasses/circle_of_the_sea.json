@@ -52,7 +52,7 @@
         "text": "As a Bonus Action you can expend a use of Wild Shape to wreathe yourself in an emanation of ocean spray reaching 5 feet from you for 10 minutes (it ends early if you dismiss it, use it again or become Incapacitated). When it appears, and as a Bonus Action on later turns, choose one creature in it: it makes a Constitution saving throw against your spell save DC. On a failure it takes Cold damage equal to a number of d6s equal to your Wisdom modifier (minimum one) and, if Large or smaller, is pushed up to 15 feet away from you. On a success it takes half as much damage and isn't pushed.",
         "action": "bonus_action",
         "uses_resource": "wild_shape",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -62,7 +62,7 @@
         "name": "Aquatic Affinity",
         "summary": "Wrath of the Sea reaches 10 feet, and you gain a Swim Speed equal to your Speed.",
         "text": "The emanation of your Wrath of the Sea grows to 10 feet, and you gain a Swim Speed equal to your Speed.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

@@ -43,7 +43,7 @@
         "name": "Rage of the Wilds",
         "summary": "Each time you rage choose Bear (resist almost everything), Eagle (Dash and Disengage) or Wolf (allies gain Advantage near you).",
         "text": "Whenever you enter your Rage, choose one of these options; it lasts while the Rage does. Bear: you also have Resistance to every damage type except Force, Necrotic, Psychic and Radiant. Eagle: when you enter the Rage you can take the Disengage and Dash actions as part of that Bonus Action, and while raging you can take both as a single Bonus Action. Wolf: your allies have Advantage on attack rolls against any enemy of yours within 5 feet of you.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

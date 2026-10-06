@@ -64,7 +64,7 @@
         "text": "As a Bonus Action you can expend a use of Channel Divinity to boost your athleticism for 1 hour: you have Advantage on Strength (Athletics) and Dexterity (Acrobatics) checks, and the distance of your Long and High Jumps increases by 10 feet (the extra distance still costs movement).",
         "action": "bonus_action",
         "uses_resource": "paladin_channel_divinity",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -80,7 +80,7 @@
             "value": 10
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

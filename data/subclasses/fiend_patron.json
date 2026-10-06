@@ -49,7 +49,7 @@
         "name": "Dark One's Blessing",
         "summary": "When you or someone near you drops an enemy to 0 Hit Points, you gain Charisma + Warlock level Temporary Hit Points.",
         "text": "When you reduce an enemy to 0 Hit Points, you gain Temporary Hit Points equal to your Charisma modifier plus your Warlock level (minimum 1). You also gain this benefit if someone else reduces an enemy within 10 feet of you to 0 Hit Points.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

@@ -71,8 +71,12 @@ func list(c: Combatant) -> Array[Dictionary]:
 			"Movement from Tactical Shift, Cunning Strike or a maneuver: it doesn't provoke Opportunity Attacks.", c.free_move_ft))
 	if c.creature is Monster and c.is_player_controlled():
 		_creature_actions(c, out, aw, bw)
+	# A druid in Wild Shape can leave the form as a Bonus Action.
+	if e.shapes.is_shaped(c) and e.shapes.original(c) is Character and c.is_player_controlled():
+		out.append(_entry("cf:revert_shape", "Leave Wild Shape", "true form", "bonus", bw, "none", "Bonus Action: return to your true form."))
 	if ch == null:
 		return out
+	e.class_features.list(c, out, aw, bw)
 	# Battle Master: Bonus Action maneuvers and Commander's Strike.
 	var die := f().superiority_die(c)
 	if die > 0:
@@ -306,6 +310,8 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2) -> CombatRe
 			return e.free_move(c, cell)
 		"creature":
 			return _perform_creature(c, id.substr(9), t, cell)
+		"cf":
+			return e.class_features.perform(c, id.substr(3), t, cell, point)
 		"fast_hands_kit":
 			var keep := c.action_available
 			c.action_available = true
@@ -826,6 +832,8 @@ func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	if c == null:
 		return
 	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.
+	if not t.success and t.target > 0 and t.kind == D20Test.Kind.SAVING_THROW:
+		e.class_features.after_failed_save(c, t, keys)
 	if not t.success and t.target > 0:
 		for fx: Effect in cr.effects.duplicate():
 			for m in fx.modifiers:

@@ -20,7 +20,7 @@
         "summary": "Spend 1 Focus for 10 minutes of elemental strikes: +10 feet of reach, Acid, Cold, Fire, Lightning or Thunder damage, and a push or pull.",
         "text": "At the start of your turn you can spend 1 Focus Point to fill yourself with elemental energy for 10 minutes, or until you have the Incapacitated condition. While it lasts your Unarmed Strikes reach 10 feet farther; when you hit with one, you can make its damage Acid, Cold, Fire, Lightning or Thunder, and you can force the target to make a Strength saving throw or be pushed or pulled up to 10 feet (your choice).",
         "uses_resource": "focus_points",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -50,7 +50,7 @@
         "text": "As a Magic action you can spend 2 Focus Points to make elemental energy burst in a 20-foot-radius sphere centered on a point within 120 feet of you. Choose Acid, Cold, Fire, Lightning or Thunder: each creature in the sphere makes a Dexterity saving throw, taking damage of that type equal to three rolls of your Martial Arts die on a failure, or half as much on a success.",
         "action": "action",
         "uses_resource": "focus_points",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

@@ -249,7 +249,7 @@
           "text": "An event in your past left an indelible mark on you. As a Bonus Action you can unleash that magic for 1 minute: the spell save DC of your Sorcerer spells increases by 1, and you have Advantage on the attack rolls of Sorcerer spells you cast. You can do this twice, regaining both uses on a Long Rest.",
           "action": "bonus_action",
           "uses_resource": "innate_sorcery",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -262,7 +262,7 @@
           "summary": "Sorcery Points equal to your Sorcerer level; turn them into spell slots or slots into points.",
           "text": "You have Sorcery Points equal to your Sorcerer level, as the Sorcery Points column shows, and regain all of them on a Long Rest. As a Bonus Action you can create a spell slot by spending points (2 for a level 1 slot, 3 for level 2, 5 for level 3, 6 for level 4, 7 for level 5; no higher than level 5). You can also expend a spell slot (no action required) to gain points equal to its level. Slots you create vanish when you finish a Long Rest.",
           "uses_resource": "sorcery_points",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "metamagic",
@@ -301,7 +301,7 @@
                 "name": "Extended Spell (1 point)",
                 "summary": "Double a spell's duration of 1 minute or more (up to 24 hours) and gain Advantage on its Concentration saves.",
                 "text": "When you cast a spell with a duration of 1 minute or longer, you can double its duration to a maximum of 24 hours. If it requires Concentration, you have Advantage on saving throws you make to keep it.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "heightened_spell",
@@ -347,7 +347,7 @@
               }
             ]
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -422,7 +422,7 @@
           "name": "Sorcery Incarnate",
           "summary": "With no Innate Sorcery uses left, spend 2 Sorcery Points to activate it; while it's active you can use two Metamagic options on a spell.",
           "text": "If you have no uses of Innate Sorcery left, you can use it anyway by spending 2 Sorcery Points when you take the Bonus Action to activate it. While your Innate Sorcery is active, you can use up to two of your Metamagic options on each spell you cast.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
