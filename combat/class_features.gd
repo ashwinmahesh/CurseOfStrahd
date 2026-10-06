@@ -22,6 +22,14 @@ func enc() -> Encounter:
 	return _enc.get_ref() as Encounter
 
 
+## A metadata name built from creature ids ("zombie#2"): only letters, digits and underscores are allowed.
+static func meta_key(s: String) -> String:
+	var out := ""
+	for ch in s:
+		out += ch if (ch >= "a" and ch <= "z") or (ch >= "A" and ch <= "Z") or (ch >= "0" and ch <= "9") or ch == "_" else "_"
+	return out
+
+
 static func has(c: Combatant, id: String) -> bool:
 	return CombatFeatures.has_feature(c, id)
 
@@ -95,7 +103,7 @@ func _turn_key() -> String:
 
 
 func _once(c: Combatant, key: String) -> bool:
-	var k := "once_%s" % key
+	var k := meta_key("once_%s" % key)
 	if str(c.get_meta(k, "")) == _turn_key():
 		return false
 	c.set_meta(k, _turn_key())
@@ -1108,7 +1116,7 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary, adv: 
 				adv.append("Rage of the Wolf")
 				break
 	# Hunter: Escape the Horde (Opportunity Attacks against you), Multiattack Defense.
-	if has(target, "multiattack_defense") and str(target.get_meta("hit_by_%s" % c.id, "")) == _turn_key():
+	if has(target, "multiattack_defense") and str(target.get_meta(meta_key("hit_by_%s" % c.id), "")) == _turn_key():
 		dis.append("Multiattack Defense")
 	if bool(option.get("opportunity", false)) and has(target, "escape_the_horde"):
 		dis.append("Escape the Horde")
@@ -1198,8 +1206,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, st: Dictiona
 	var p := option["profile"] as WeaponProfile
 	var alive := target.is_alive() and not target.is_down()
 	kept_rage(c)
-	target.set_meta("hit_by_%s" % c.id, _turn_key())
-	c.set_meta("hit_by_%s" % target.id, _turn_key())
+	target.set_meta(meta_key("hit_by_%s" % c.id), _turn_key())
 	var monkish := p.item_id == "unarmed_strike" or (level_of(c, "monk") > 0 and p.melee and not "heavy" in p.properties and not "two_handed" in p.properties)
 	# Stunning Strike (Monk 5).
 	if "stunning_strike" in c.armed and alive and monkish and _ch(c).resource_left("focus_points") > 0 and _once(c, "stunning_strike"):

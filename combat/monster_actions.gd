@@ -83,7 +83,7 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 			continue
 		if rd.has("max_size") and Creature.SIZES.find(t.creature.size) > Creature.SIZES.find(StringName(str(rd["max_size"]))):
 			continue
-		if bool(rd.get("immune_on_success", false)) and t.has_meta("immune_%s_%s" % [src.id, act_name]):
+		if bool(rd.get("immune_on_success", false)) and t.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [src.id, act_name])):
 			continue
 		if rd.has("save"):
 			var sv := rd["save"] as Dictionary
@@ -96,7 +96,7 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 			if test.success:
 				e.log.add("info", "%s resists %s" % [t.name(), act_name], t.id, [test.describe()])
 				if bool(rd.get("immune_on_success", false)):
-					t.set_meta("immune_%s_%s" % [src.id, act_name], true)
+					t.set_meta(ClassFeatures.meta_key("immune_%s_%s" % [src.id, act_name]), true)
 				continue
 		match str(rd["do"]):
 			"condition":
@@ -429,7 +429,7 @@ func _aura_on(o: Combatant, c: Combatant, tr: Dictionary) -> void:
 	if e.distance(o, c) > int(aura.get("radius", 5)):
 		return
 	var label := str(tr.get("name", "Aura"))
-	if c.has_meta("immune_%s_%s" % [o.id, label]):
+	if c.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [o.id, label])):
 		return
 	if aura.has("damage"):
 		var sv := aura["save"] as Dictionary
