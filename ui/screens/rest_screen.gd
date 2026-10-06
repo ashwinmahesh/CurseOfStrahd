@@ -127,6 +127,8 @@ func _arcane_recovery_row(ch: Character) -> void:
 	if wiz <= 0 or not _short_done or ch.resource_left("arcane_recovery") <= 0 or ch.dead:
 		return
 	var budget := int(ch.get_meta("arcane_budget", (wiz + 1) / 2))
+	if not _has_recoverable(ch, budget):
+		return
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
 	row.add_child(UiKit.label("%s · Arcane Recovery (%d slot level%s left to recover):" % [ch.name.get_slice(" ", 0), budget, "" if budget == 1 else "s"], 15, "lilac"))
@@ -146,6 +148,7 @@ func _arcane_recovery_row(ch: Character) -> void:
 				ch.remove_meta("arcane_budget")
 			_draw(), 13))
 	if not any:
+		row.queue_free()
 		return
 	row.add_child(UiKit.button("Done", func() -> void:
 		if ch.has_meta("arcane_budget"):

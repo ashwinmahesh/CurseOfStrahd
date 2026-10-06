@@ -345,7 +345,8 @@
             "damage_type",
             "size",
             "spellcasting_ability",
-            "lineage"
+            "lineage",
+            "beast_form"
           ]
         },
         "count": {

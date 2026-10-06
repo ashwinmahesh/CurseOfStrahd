@@ -137,7 +137,7 @@ func all_modifiers() -> Array[Modifier]:
 	var out: Array[Modifier] = []
 	var level := character_level()
 	for m in intrinsic_modifiers():
-		if m.at_level() <= level:
+		if m.at_level() <= level and (m.class_id == "" or class_level_of(m.class_id) >= m.number("at_class_level", 0)):
 			out.append(m)
 	for c in active_conditions():
 		out.append_array(_modifiers_of_condition(c))
@@ -299,6 +299,10 @@ func skill_bonus(skill: StringName) -> Breakdown:
 				b.add("Expertise", 2 * proficiency_bonus())
 			1:
 				b.add("Proficiency", proficiency_bonus())
+			_:
+				# Jack of All Trades (Bard 2): half the Proficiency Bonus, rounded down, to skills you lack.
+				if has_flag("jack_of_all_trades"):
+					b.add("Jack of All Trades", floori(proficiency_bonus() / 2.0))
 	_add_check_modifiers(b, check_keys(skill), skill, ab)
 	_note_advantage(b, check_keys(skill))
 	return b
@@ -378,15 +382,18 @@ func _note_advantage(b: Breakdown, keys: Array[String]) -> void:
 			b.note("Automatic failure (%s)" % m.source_name)
 
 
-## Named sources of Advantage and Disadvantage for a D20 Test with these keys.
+## Named sources of Advantage and Disadvantage for a D20 Test with these keys. A `when` filter can ask about the
+## armor worn or {"incapacitated": false} (Danger Sense).
 func d20_sources(keys: Array[String]) -> Dictionary:
 	var adv: Array[String] = []
 	var dis: Array[String] = []
+	var situation := armor_situation()
+	situation["incapacitated"] = has_condition(&"incapacitated")
 	for m in modifiers_for(&"advantage"):
-		if m.matches_any(keys) and not m.source_name in adv:
+		if m.matches_any(keys) and not m.source_name in adv and m.applies_when(situation):
 			adv.append(m.source_name)
 	for m in modifiers_for(&"disadvantage"):
-		if m.matches_any(keys) and not m.source_name in dis:
+		if m.matches_any(keys) and not m.source_name in dis and m.applies_when(situation):
 			dis.append(m.source_name)
 	var gear := gear_d20_sources(keys)
 	for s: String in gear["advantage"]:
@@ -991,9 +998,10 @@ func speed(kind: String = "walk") -> Breakdown:
 		b.add("No %s speed" % kind, 0)
 		return b
 	b.add(base_label if base_label != "Base" else "Base", base)
+	var situation := armor_situation()
 	for m in modifiers_for(&"speed"):
 		var k := m.text("kind", "walk")
-		if k == "walk" or k == kind:
+		if (k == "walk" or k == kind) and m.applies_when(situation):
 			b.add_nonzero(m.source_name, mod_value(m, ctx))
 	_speed_adjustments(b)
 	for m in modifiers_for(&"speed_percent"):
