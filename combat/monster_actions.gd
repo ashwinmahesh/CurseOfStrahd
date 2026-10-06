@@ -42,6 +42,9 @@ func why_not(c: Combatant, act: Dictionary) -> String:
 		return "Not in this form"
 	if c.has_meta("disarmed") and bool(act.get("weapon", false)):
 		return "Disarmed"
+	# A vine blight can't lash out again while its vine holds someone.
+	if bool(act.get("not_while_grappling", false)) and enc().grapples.values().has(c.id):
+		return "Its vine is holding someone"
 	return ""
 
 
@@ -123,6 +126,8 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 				grapple(src, t, int(rd.get("escape_dc", 10)), int(rd.get("limit", 1)), act_name, bool(rd.get("restrain", false)))
 				if e.grapples.has(t.id) and rd.has("hold_damage"):
 					t.set_meta("hold_damage", rd["hold_damage"])
+				if e.grapples.has(t.id) and rd.has("grip_damage"):
+					t.set_meta("grip_damage", rd["grip_damage"])
 			"burning":
 				set_burning(src, t)
 			"possess":
@@ -163,6 +168,14 @@ func _timed_condition(src: Combatant, t: Combatant, cond: String, until: String,
 	# Webbing and the like: an action and an ability check frees the target.
 	if rd.has("escape"):
 		fx.escape = (rd["escape"] as Dictionary).duplicate()
+	# Repeats the save at the end of each of its turns (a revenant's glare, a soul tome's prison).
+	if rd.has("repeat_save"):
+		fx.repeat_save = (rd["repeat_save"] as Dictionary).duplicate()
+	# Worse for the creature the monster has sworn vengeance on (a revenant's glare paralyzes its quarry).
+	if rd.has("also_if_vowed") and str(t.get_meta("vowed_by", "")) == src.id:
+		fx.conditions.append(StringName(str(rd["also_if_vowed"])))
+	for extra: Variant in rd.get("conditions", []):
+		fx.conditions.append(StringName(str(extra)))
 	if cond != "":
 		fx.conditions.append(StringName(cond))
 	# "Until the end of your next turn" for a summon's rider means its summoner's turn (Fell Glare).
@@ -419,6 +432,7 @@ func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rol
 	var e := enc()
 	var sv := act["save"] as Dictionary
 	var ab := StringName(str(sv["ability"]))
+	var pre_hp := t.creature.hp
 	var immune_key := ClassFeatures.meta_key("immune_%s_%s" % [c.id, str(act.get("name", ""))])
 	if t.has_meta(immune_key):
 		e.log.add("info", "%s is unmoved by %s" % [t.name(), act.get("name", "")], t.id)
@@ -449,6 +463,10 @@ func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rol
 		e.log.add("info", "%s resists %s" % [t.name(), act.get("name", "")], t.id, texts)
 	if test.success and bool(act.get("immune_on_success", false)):
 		t.set_meta(immune_key, true)
+	# A banshee's Deathly Wail: a failed save at that many Hit Points or fewer drops the creature to 0.
+	if not test.success and act.has("drop_at_hp") and t.is_alive() and t.creature.hp > 0 and pre_hp <= int(act["drop_at_hp"]):
+		e.log.add("condition", "%s collapses (%s)" % [t.name(), act.get("name", "")], t.id)
+		e.deal_damage(c, t, [{"amount": t.creature.hp + t.creature.temp_hp, "type": "psychic"}], false, str(act.get("name", "")))
 	if not test.success and t.is_alive():
 		apply_riders(c, t, act.get("on_fail", []) as Array, by_type, str(act.get("name", "")))
 
@@ -552,6 +570,15 @@ func turn_start(c: Combatant) -> void:
 			if healed > 0:
 				e.log.add("heal", "%s regenerates %d Hit Points" % [c.name(), healed], c.id)
 				e.events.append({"type": "heal", "id": c.id, "amount": healed})
+	# A vine blight's or tree blight's grip: the held creature takes damage at the start of its own turn.
+	if c.has_meta("grip_damage"):
+		var by := e.get_c(str(e.grapples.get(c.id, "")))
+		if by == null or not by.is_alive():
+			c.remove_meta("grip_damage")
+		else:
+			var gd := c.get_meta("grip_damage") as Dictionary
+			var gr := e._roll_damage_dice(str(gd["dice"]), false, 0, "Grip")
+			e.deal_damage(by, c, [{"amount": int(gr["total"]), "type": str(gd["type"])}], false, "%s's grip" % by.name(), [str(gr["text"])])
 	# Whelm (water elemental): each creature it holds takes damage at the start of its turn.
 	for k: String in e.grapples.keys():
 		var held := e.get_c(k)
@@ -782,20 +809,28 @@ func end_possession(body: Combatant) -> void:
 ## with 10 Hit Points. True if it did.
 func lycanthrope(t: Combatant) -> bool:
 	var e := enc()
-	if not t.creature.has_flag("curse:lycanthropy"):
+	# "lycanthropy" is the werewolf's curse; "<kind>_lycanthropy" another lycanthrope's (a wereraven's beak).
+	var kind := ""
+	for m0 in t.creature.modifiers_for(&"flag"):
+		var v := m0.text("value")
+		if v == "curse:lycanthropy":
+			kind = "werewolf"
+		elif v.begins_with("curse:") and v.ends_with("_lycanthropy"):
+			kind = v.trim_prefix("curse:").trim_suffix("_lycanthropy")
+	if kind == "":
 		return false
-	var wolf := Compendium.shared().monster_data("werewolf")
+	var wolf := Compendium.shared().monster_data(kind)
 	if wolf.is_empty():
 		return false
 	var m := Monster.from_data(wolf)
-	m.name = "%s (werewolf)" % t.name()
+	m.name = "%s (%s)" % [t.name(), kind]
 	m.hp = 10
 	t.creature.dead = true
 	e.events.append({"type": "vanish", "id": t.id})
 	var w := e.add(m, &"enemy", t.cell)
 	e.insert_after(t, w)
 	e.events.append({"type": "summon_creature", "id": w.id, "cell": w.cell, "caster": t.id})
-	e.log.add("death", "%s changes into a werewolf!" % t.name(), w.id)
+	e.log.add("death", "%s changes into a %s!" % [t.name(), kind], w.id)
 	return true
 
 
@@ -860,8 +895,23 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 			"consume_life":
 				if plan == "consume_life":
 					return _consume_life(c, act)
-			"trample":
-				if plan == "trample" and act.has("save"):
+			"vow":
+				if plan == "vow" and why_not(c, act) == "":
+					var foe: Combatant = null
+					for h in e.hostiles_of(c):
+						if not h.is_down() and e.distance(c, h) <= int((act.get("targets", {}) as Dictionary).get("range", 30)) and e.can_see(c, h) and (foe == null or h.creature.hp > foe.creature.hp):
+							foe = h
+					if foe != null:
+						c.bonus_available = false
+						spend(c, act)
+						for o in e.combatants:
+							if str(o.get_meta("vowed_by", "")) == c.id:
+								o.remove_meta("vowed_by")
+						foe.set_meta("vowed_by", c.id)
+						e.log.add("condition", "%s swears vengeance on %s" % [c.name(), foe.name()], c.id)
+					return CombatResult.new()
+			"trample", "bonus_save":
+				if plan in ["trample", "bonus_save"] and act.has("save"):
 					var st := save_targets(c, act)
 					if not st.is_empty():
 						c.bonus_available = false

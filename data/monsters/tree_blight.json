@@ -2,18 +2,19 @@
   "id": "tree_blight",
   "name": "Tree Blight",
   "source": {
-    "book": "CoS",
-    "edition": "2014",
-    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. The number of attacks in its Multiattack especially needs the book. A root's hit deals no damage of its own here (0) and grabs; the crushing damage each turn, cutting a root, and the Bite (a Bonus Action against a creature it holds) are text only. Wintersplinter on Yester Hill can use this block under its own name."
+    "book": "MM2025",
+    "checked_against": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Tree Blight, read on D&D Beyond (owner's account); Curse of Strahd's Wintersplinter uses it with more Hit Points."
   },
   "size": "huge",
   "type": "plant",
   "alignment": "neutral evil",
   "ac": 15,
-  "initiative": 0,
+  "initiative": 3,
   "hp": {
-    "average": 149,
-    "dice": "13d12+65"
+    "average": 115,
+    "dice": "10d12+50"
   },
   "speed": {
     "walk": 30
@@ -27,7 +28,6 @@
     "cha": 3
   },
   "condition_immunities": [
-    "blinded",
     "deafened"
   ],
   "senses": {
@@ -35,27 +35,12 @@
   },
   "passive_perception": 10,
   "languages": [
-    "understands Common and Druidic but can't speak"
+    "Common and Druidic (understands but can't speak)"
   ],
   "cr": 7,
   "xp": 2900,
   "proficiency_bonus": 3,
-  "traits": [
-    {
-      "id": "false_appearance",
-      "name": "False Appearance",
-      "action": "passive",
-      "summary": "Indistinguishable from a dead tree while it stays still.",
-      "implemented": "text"
-    },
-    {
-      "id": "siege_monster",
-      "name": "Siege Monster",
-      "action": "passive",
-      "summary": "Deals double damage to objects and structures.",
-      "implemented": "text"
-    }
-  ],
+  "traits": [],
   "actions": [
     {
       "id": "multiattack",
@@ -68,10 +53,10 @@
         },
         {
           "action": "grasping_root",
-          "count": 2
+          "count": 1
         }
       ],
-      "summary": "Makes two Branch attacks and two Grasping Root attacks."
+      "summary": "Two Branch attacks and Grasping Root."
     },
     {
       "id": "branch",
@@ -93,37 +78,50 @@
     {
       "id": "grasping_root",
       "name": "Grasping Root",
-      "kind": "melee",
-      "attack": {
-        "bonus": 9,
-        "reach": 15
+      "kind": "save",
+      "save": {
+        "ability": "str",
+        "dc": 17,
+        "success": "none"
       },
-      "damage": [
+      "targets": {
+        "range": 15,
+        "max_size": "large"
+      },
+      "on_fail": [
         {
-          "average": 0,
-          "dice": "0",
-          "type": "bludgeoning"
-        }
-      ],
-      "summary": "Seizes a creature it isn't already holding (escape DC 15); the held creature is crushed each turn.",
-      "text": "The held creature takes 9 (1d6 + 6) Bludgeoning damage at the start of each of its turns. A root has AC 15; 6 or more Slashing damage in one hit cuts it and ends that grapple without hurting the blight.",
-      "on_hit": [
+          "do": "pull",
+          "feet": 10
+        },
         {
           "do": "grapple",
-          "escape_dc": 15,
-          "limit": 2
+          "escape_dc": 16,
+          "limit": 6,
+          "grip_damage": {
+            "dice": "2d6+6",
+            "type": "bludgeoning"
+          }
         }
-      ]
+      ],
+      "summary": "DC 17 Str save by a Large or smaller creature within 15 ft: pulled 10 ft closer and held by a root (escape DC 16), crushed 2d6+6 at the start of each of its turns."
     }
   ],
   "bonus_actions": [
     {
-      "id": "bite",
-      "name": "Bite",
-      "kind": "melee",
-      "attack": {
-        "bonus": 9,
-        "reach": 5
+      "id": "gnash",
+      "name": "Gnash",
+      "kind": "save",
+      "do": "bonus_save",
+      "save": {
+        "ability": "dex",
+        "dc": 17,
+        "success": "half"
+      },
+      "targets": {
+        "range": 15,
+        "requires": [
+          "grappled"
+        ]
       },
       "damage": [
         {
@@ -132,8 +130,7 @@
           "type": "piercing"
         }
       ],
-      "summary": "Bonus Action: bites a creature it holds with a root.",
-      "text": "Text only for the engine."
+      "summary": "A creature it holds: DC 17 Dex save or 3d8+6 Piercing, half on a success."
     }
   ],
   "regions": [

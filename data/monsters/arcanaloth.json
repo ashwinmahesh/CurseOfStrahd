@@ -3,8 +3,9 @@
   "name": "Arcanaloth",
   "source": {
     "book": "MM2025",
-    "edition": "2014",
-    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual arcanaloth; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical weapons is entered as plain Bludgeoning, Piercing and Slashing resistance, as the 2024 books do for such creatures. Its innate spells use the main DC 17 in the engine (the book gives them DC 15). The Claws' poison save and Teleport are text only; Fire Bolt runs as an attack; spell slots are listed per spell."
+    "checked_against": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Arcanaloth, read on D&D Beyond (owner's account). The Soul Tome as an object, Teleport's AI use and Counterspell as a monster Reaction aren't built; Banishing Claw's prison is."
   },
   "size": "medium",
   "type": "fiend",
@@ -12,11 +13,11 @@
     "yugoloth"
   ],
   "alignment": "neutral evil",
-  "ac": 17,
-  "initiative": 1,
+  "ac": 18,
+  "initiative": 5,
   "hp": {
-    "average": 104,
-    "dice": "16d8+32"
+    "average": 175,
+    "dice": "27d8+54"
   },
   "speed": {
     "walk": 30,
@@ -32,23 +33,20 @@
   },
   "saves": {
     "dex": 5,
+    "con": 6,
     "int": 9,
-    "wis": 7,
-    "cha": 7
+    "wis": 7
   },
   "skills": {
-    "arcana": 13,
-    "deception": 9,
-    "insight": 9,
+    "arcana": 9,
+    "deception": 7,
+    "insight": 7,
     "perception": 7
   },
   "resistances": [
-    "bludgeoning",
     "cold",
     "fire",
-    "lightning",
-    "piercing",
-    "slashing"
+    "lightning"
   ],
   "immunities": [
     "acid",
@@ -71,124 +69,140 @@
   "proficiency_bonus": 4,
   "traits": [
     {
+      "id": "fiendish_restoration",
+      "name": "Fiendish Restoration",
+      "action": "passive",
+      "summary": "Slain away from Gehenna, it melts into ichor and re-forms there at once.",
+      "implemented": "text"
+    },
+    {
       "id": "magic_resistance",
       "name": "Magic Resistance",
       "action": "passive",
-      "summary": "Advantage on saving throws against spells and other magical effects.",
       "modifiers": [
         {
           "stat": "advantage",
           "on": "save_vs:spell"
         }
       ],
+      "summary": "Advantage on saving throws against spells and other magical effects.",
       "implemented": "engine"
     },
     {
-      "id": "magic_weapons",
-      "name": "Magic Weapons",
+      "id": "soul_tome",
+      "name": "Soul Tome",
       "action": "passive",
-      "summary": "Its weapon attacks count as magical.",
+      "summary": "Carries a magic tome (AC 17, 35 HP, healing fully each turn) that powers its Banishing Claw.",
       "implemented": "text"
     }
   ],
   "actions": [
     {
-      "id": "claws",
-      "name": "Claws",
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "fiendish_burst",
+          "count": 1,
+          "or": [
+            "banishing_claw"
+          ]
+        },
+        {
+          "action": "fiendish_burst",
+          "count": 2
+        }
+      ],
+      "summary": "Three Fiendish Bursts; one can be a Banishing Claw."
+    },
+    {
+      "id": "banishing_claw",
+      "name": "Banishing Claw",
       "kind": "melee",
       "attack": {
-        "bonus": 7,
+        "bonus": 9,
         "reach": 5
       },
       "damage": [
         {
-          "average": 8,
-          "dice": "2d4+3",
+          "average": 10,
+          "dice": "2d4+5",
           "type": "slashing"
         },
         {
-          "average": 10,
-          "dice": "3d6",
-          "type": "poison",
-          "when": "on a failed DC 14 Constitution save (half on a success)"
+          "average": 19,
+          "dice": "3d12",
+          "type": "psychic"
         }
       ],
-      "summary": "Venomous claws: the target also saves against poison.",
-      "text": "The target makes a DC 14 Constitution save, taking 10 (3d6) Poison damage on a failure or half as much on a success."
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "incapacitated",
+          "save": {
+            "ability": "cha",
+            "dc": 17
+          },
+          "until": "permanent",
+          "modifiers": [
+            {
+              "stat": "flag",
+              "value": "ethereal"
+            }
+          ],
+          "repeat_save": {
+            "ability": "cha",
+            "dc": 17,
+            "when": "end",
+            "bind_after": 3
+          }
+        }
+      ],
+      "summary": "A claw that can drag a creature into the pages of its Soul Tome (DC 17 Cha save each turn to escape; three failures bind it)."
     },
     {
-      "id": "fire_bolt",
-      "name": "Fire Bolt",
-      "kind": "ranged",
+      "id": "fiendish_burst",
+      "name": "Fiendish Burst",
+      "kind": "melee_or_ranged",
       "attack": {
         "bonus": 9,
+        "reach": 5,
         "range": [
           120
         ]
       },
       "damage": [
         {
-          "average": 16,
-          "dice": "3d10",
-          "type": "fire"
+          "average": 31,
+          "dice": "4d12+5",
+          "type": "necrotic"
         }
       ],
-      "summary": "Casts Fire Bolt up to 120 ft."
+      "summary": "A blast of fiendish power, close up or up to 120 ft."
     },
     {
       "id": "spellcasting",
       "name": "Spellcasting",
       "kind": "spellcasting",
-      "summary": "Int, DC 17, +9: a 16th-level wizard's spells up to Finger of Death and Mind Blank, plus innate tricks.",
-      "text": "A 16th-level spellcaster using Intelligence (spell save DC 17, +9 to hit). Cantrips: Fire Bolt, Mage Hand, Minor Illusion, Prestidigitation. 1st level (4 slots): Detect Magic, Identify, Shield, Tenser's Floating Disk. 2nd level (3 slots): Detect Thoughts, Mirror Image, Phantasmal Force, Suggestion. 3rd level (3 slots): Counterspell, Fear, Fireball. 4th level (3 slots): Banishment, Dimension Door. 5th level (2 slots): Contact Other Plane, Hold Monster. 6th level (1 slot): Chain Lightning. 7th level (1 slot): Finger of Death. 8th level (1 slot): Mind Blank. Innate (Charisma, DC 15), at will: Alter Self, Darkness, Heat Metal, Invisibility (self only), Magic Missile."
-    },
-    {
-      "id": "teleport",
-      "name": "Teleport",
-      "kind": "special",
-      "summary": "Teleports up to 60 ft to a space it can see, with what it carries.",
-      "text": "Text only for the engine."
+      "summary": "Intelligence, DC 17: Alter Self, Detect Magic and other small magics at will; Dimension Door, Mind Blank and two divinations once a day."
     }
   ],
   "spellcasting": {
     "ability": "int",
     "dc": 17,
-    "attack": 9,
     "at_will": [
       "alter_self",
-      "darkness",
-      "heat_metal",
-      "invisibility",
-      "magic_missile",
+      "detect_magic",
+      "identify",
       "mage_hand",
-      "minor_illusion",
       "prestidigitation"
     ],
     "per_day": {
-      "4": [
-        "detect_magic",
-        "identify",
-        "shield",
-        "tensers_floating_disk"
-      ],
-      "3": [
-        "detect_thoughts",
-        "mirror_image",
-        "phantasmal_force",
-        "suggestion",
-        "counterspell",
-        "fear",
-        "fireball",
-        "banishment",
-        "dimension_door"
-      ],
-      "2": [
-        "contact_other_plane",
-        "hold_monster"
-      ],
       "1": [
-        "chain_lightning",
-        "finger_of_death",
+        "contact_other_plane",
+        "detect_thoughts",
+        "dimension_door",
         "mind_blank"
       ]
     }
@@ -197,5 +211,24 @@
     "amber_temple"
   ],
   "ai_profile": "spellcaster",
-  "summary": "A jackal-headed fiend sage: poisoned claws, a 16th-level wizard's spells, and teleportation."
+  "summary": "A jackal-headed yugoloth scholar that hoards secrets and sells them dear.",
+  "bonus_actions": [
+    {
+      "id": "teleport",
+      "name": "Teleport",
+      "kind": "special",
+      "summary": "Teleports up to 30 ft to a space it can see."
+    }
+  ],
+  "reactions": [
+    {
+      "id": "counterspell",
+      "name": "Counterspell",
+      "kind": "spellcasting",
+      "cast": [
+        "counterspell"
+      ],
+      "summary": "Casts Counterspell when a spell is cast in range."
+    }
+  ]
 }
