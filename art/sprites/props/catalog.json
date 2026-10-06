@@ -1046,10 +1046,29 @@
       "lectern": "lectern",
       "table_set": "table_set",
       "letters_table": "letters_table",
-      "coffin": "coffin"
+      "coffin": "coffin",
+      "door_house": "door_house",
+      "door_double": "door_double",
+      "door_carved": "door_carved",
+      "church_doors": "church_doors",
+      "gate_iron": "gate_iron",
+      "crypt_gate": "crypt_gate",
+      "portcullis": "portcullis",
+      "curtain": "curtain",
+      "window_tall": "window_tall",
+      "window_stained": "window_stained",
+      "window_shuttered": "window_shuttered"
     },
     "walls": {
-      "interior/wainscot_wall": "wainscot"
+      "interior/wainscot_wall": "wainscot",
+      "interior/wood_panel": "panelling",
+      "interior/carved_panel": "panelling",
+      "interior/plaster_wall": "wall_trim",
+      "interior/wallpaper_green": "wall_trim",
+      "interior/wallpaper_nursery": "wall_trim",
+      "interior/damp_plaster": "wall_trim",
+      "interior/whitewash": "wall_trim",
+      "interior/kitchen_wall": "wall_trim"
     }
   }
 }

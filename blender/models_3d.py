@@ -1303,6 +1303,238 @@ def wainscot(p):
     p.box((W, 0.046, 0.016), (0, -0.023, 0.578), rail)
 
 
+# --- Doors, gates, windows and wall trim (rollout batch 2) -------------------------------------------------------
+# Door leaves are modelled at the 2D leaf's base size (0.86 x 1.15, centred in depth) and scaled to each opening
+# (SetDressing.door); windows and facades hang on a wall face (origin on the face) and keep their 2D glass as a decal.
+
+def _planks(p, W, H, T, n, cols, z0=0.0):
+    pw = W / n
+    for k in range(n):
+        p.box((pw - 0.006, T, H - p.rng.uniform(0.0, 0.012)), (-W / 2 + pw * (k + 0.5), 0, z0 + H / 2), cols[k % len(cols)])
+
+
+@model("door_house", "door", ["door_house"])
+def door_house(p):
+    """The 2D cottage door: grey weathered planks, two iron bands, a latch."""
+    W, H, T = 0.86, 1.15, 0.055
+    _planks(p, W, H, T, 5, ["pal_bone_dark", "pal_bone", "pal_bone_dark"])
+    for z in (0.25, 0.9):
+        p.box((W - 0.04, 0.012, 0.05), (0, -T / 2 - 0.006, z), "pal_stone_deep")
+        p.box((W - 0.1, 0.03, 0.08), (0, T / 2 + 0.015, z), "pal_umber")
+    p.box((0.1, 0.014, 0.025), (W / 2 - 0.12, -T / 2 - 0.007, 0.56), "pal_ink")
+    p.box((0.02, 0.03, 0.06), (W / 2 - 0.08, -T / 2 - 0.02, 0.56), "pal_ink")
+
+
+@model("door_double", "door", ["door_double"])
+def door_double(p):
+    """The 2D double doors: two walnut leaves of raised panels with brass pulls."""
+    W, H, T = 0.86, 1.15, 0.055
+    lw = W / 2
+    for s in (-1, 1):
+        cx = s * lw / 2
+        p.box((lw - 0.008, T, H), (cx, 0, H / 2), WOOD)
+        for z0, h in ((0.08, 0.42), (0.58, 0.48)):
+            for face in (-1, 1):
+                p.box((lw - 0.12, 0.01, h), (cx, face * (T / 2 + 0.003), z0 + h / 2), "pal_peat")
+                p.box((lw - 0.17, 0.014, h - 0.05), (cx, face * (T / 2 + 0.008), z0 + h / 2), "pal_walnut", soft=0.005)
+        p.lathe([(0.0, 0.0), (0.012, 0.0), (0.016, 0.014), (0.0, 0.028)], (s * 0.035, -T / 2 - 0.002, 0.55), "pal_tan",
+                rot=(90, 0, 0), segs=8)
+
+
+@model("door_carved", "door", ["door_carved"],
+       decals=[{"art": "door_carved", "region": [40, 65, 120, 185], "socket": "hand", "width": 0.46}])
+def door_carved(p):
+    """The Death House's carved door: rough planks in a heavy frame, the carved hand cut from the 2D door."""
+    W, H, T = 0.86, 1.15, 0.06
+    _planks(p, W, H, T, 4, [WOOD])
+    for s in (-1, 1):
+        p.box((0.06, 0.02, H), (s * (W / 2 - 0.03), -T / 2 - 0.01, H / 2), "pal_umber")
+    p.box((W, 0.02, 0.06), (0, -T / 2 - 0.01, H - 0.03), "pal_umber")
+    p.socket("hand", (0, -T / 2 - 0.004, 0.62))
+
+
+@model("church_doors", "wall", ["church_doors"],
+       decals=[{"art": "church_doors", "region": [65, 40, 245, 180], "socket": "tympanum", "width": 0.6}])
+def church_doors(p):
+    """The 2D church doors: a pointed stone arch on pilasters, two iron-strapped plank leaves, and the rose window and
+    tracery over them cut from the 2D doors."""
+    W, H = 0.96, 1.9
+    stone, dark = "pal_parchment", "pal_bone"
+    spring = 1.12
+    for s in (-1, 1):
+        p.box((0.14, 0.18, spring), (s * (W / 2 - 0.07), -0.09, spring / 2), stone)
+        p.box((0.17, 0.2, 0.08), (s * (W / 2 - 0.07), -0.1, spring + 0.04), dark)
+        p.box((0.05, 0.01, spring - 0.3), (s * (W / 2 - 0.07), -0.185, 0.12 + (spring - 0.3) / 2), dark)
+    outer = arch(-W / 2, W / 2, spring + 0.08, H - spring - 0.08, n=14)
+    inner = arch(-W / 2 + 0.12, W / 2 - 0.12, spring + 0.08, H - spring - 0.22, n=14)
+    ring = outer + list(reversed(inner))
+    p.prism(ring, 0.16, (0, -0.08, 0), stone)
+    p.prism(inner + [(W / 2 - 0.12, spring + 0.08)], 0.02, (0, -0.02, 0), "pal_stone_deep")
+    lw = (W - 0.28) / 2
+    for s in (-1, 1):
+        cx = s * (lw / 2 + 0.002)
+        p.box((lw - 0.006, 0.05, spring + 0.08), (cx, -0.06, (spring + 0.08) / 2), WOOD)
+        for z in (0.18, 0.95):
+            p.box((lw - 0.02, 0.012, 0.035), (cx, -0.091, z), "pal_ink")
+        p.lathe([(0.0, 0.0), (0.014, 0.0), (0.018, 0.012), (0.0, 0.024)], (s * 0.05, -0.088, 0.58), "pal_ink",
+                rot=(90, 0, 0), segs=8)
+    p.box((0.03, 0.06, spring + 0.08), (0, -0.07, (spring + 0.08) / 2), stone)
+    p.box((W + 0.1, 0.3, 0.05), (0, -0.15, 0.025), dark)
+    p.socket("tympanum", (0, -0.035, spring + 0.08 + 0.3))
+
+
+def _bar_gate(p, W, H, bars, iron, spikes=True, cross=(0.2, 0.6, 1.0)):
+    for k in range(bars):
+        x = -W / 2 + 0.03 + k * (W - 0.06) / (bars - 1)
+        p.cyl(0.012, H - 0.02, (x, 0, 0.0), iron, segs=6)
+        if spikes:
+            p.lathe([(0.016, 0.0), (0.02, 0.01), (0.0, 0.07)], (x, 0, H - 0.02), iron, segs=6)
+    for z in cross:
+        p.box((W, 0.03, 0.03), (0, 0, z * H), iron)
+
+
+@model("gate_iron", "door", ["gate_iron"])
+def gate_iron(p):
+    """The 2D wrought-iron gates: two leaves of spiked bars, scrolls at the top and bottom rails."""
+    W, H = 0.86, 1.15
+    iron = "pal_ink"
+    for s in (-1, 1):
+        cx = s * W / 4
+        sub_w = W / 2 - 0.01
+        for k in range(6):
+            x = cx - sub_w / 2 + 0.03 + k * (sub_w - 0.06) / 5
+            top = H - 0.12 + 0.08 * math.sin(math.pi * (abs(x) / (W / 2)))
+            p.cyl(0.01, top, (x, 0, 0.0), iron, segs=6)
+            p.lathe([(0.016, 0.0), (0.02, 0.012), (0.0, 0.07)], (x, 0, top), iron, segs=6)
+        for z in (0.12, 0.62, H - 0.2):
+            p.box((sub_w, 0.026, 0.026), (cx, 0, z), iron)
+        for k in range(2):
+            x0 = cx - sub_w / 4 + k * sub_w / 2
+            pts = [(x0 + 0.08 * math.cos(a), 0.0, 0.37 + 0.12 * math.sin(a)) for a in (math.pi * j / 8 for j in range(17))]
+            p.tube(pts, 0.007, iron, segs=5)
+    p.cyl(0.03, 0.03, (0.0, -0.02, 0.6), "pal_stone_deep", rot=(90, 0, 0), segs=8)
+
+
+@model("crypt_gate", "door", ["crypt_gate"])
+def crypt_gate(p):
+    """The 2D crypt gate: a frame of flat iron, upright bars and a great padlock."""
+    W, H = 0.86, 1.15
+    iron = "pal_ink"
+    for s in (-1, 1):
+        p.box((0.05, 0.04, H), (s * (W / 2 - 0.025), 0, H / 2), iron)
+    for z in (0.025, 0.55, H - 0.025):
+        p.box((W, 0.04, 0.05), (0, 0, z), iron)
+    _bar_gate(p, W - 0.1, H, 8, iron, spikes=False, cross=())
+    p.box((0.12, 0.05, 0.12), (0, -0.04, 0.55), "pal_stone_deep")
+    p.tube(curve((-0.035, -0.06, 0.6), (0.0, -0.06, 0.68), (0.035, -0.06, 0.6), n=6), 0.01, "pal_stone_deep")
+
+
+@model("portcullis", "door", ["portcullis"])
+def portcullis(p):
+    """The 2D portcullis: a grid of rusted iron bars with spikes along the foot."""
+    W, H = 0.86, 1.15
+    iron = "pal_rust"
+    for k in range(6):
+        x = -W / 2 + 0.05 + k * (W - 0.1) / 5
+        p.box((0.035, 0.035, H - 0.08), (x, 0, 0.08 + (H - 0.08) / 2), iron)
+        p.lathe([(0.0, 0.0), (0.024, 0.08)], (x, 0, 0.0), iron, segs=4, smooth=False)
+    for k in range(6):
+        p.box((W, 0.03, 0.035), (0, -0.03, 0.16 + k * (H - 0.22) / 5), iron)
+    for k in range(6):
+        for j in range(6):
+            p.cyl(0.012, 0.012, (-W / 2 + 0.05 + k * (W - 0.1) / 5, -0.05, 0.16 + j * (H - 0.22) / 5), "pal_stone_deep",
+                  rot=(90, 0, 0), segs=6)
+
+
+@model("curtain", "door", ["curtain"])
+def curtain(p):
+    """The 2D curtain: heavy red drapes hanging in folds from a wooden rod."""
+    W, H = 0.86, 1.15
+    p.cyl(0.018, W + 0.08, (-W / 2 - 0.04, -0.02, H - 0.03), "pal_umber", rot=(0, 90, 0), segs=8)
+    for s in (-1, 1):
+        p.lathe([(0.0, 0.0), (0.026, 0.0), (0.03, 0.02), (0.0, 0.04)], (s * (W / 2 + 0.04), -0.02, H - 0.05), "pal_umber",
+                rot=(0, s * 90, 0), segs=8)
+    n = 28
+    wave = []
+    for i in range(n + 1):
+        x = -W / 2 + i * W / n
+        wave.append((x, -0.02 + 0.03 * math.sin(i * math.pi / 2.5)))
+    band = wave + [(x, z + 0.025) for x, z in reversed(wave)]
+    p.prism(band, H - 0.06, (0, 0, (H - 0.06) / 2), "pal_blood", rot=(90, 0, 0))
+    p.box((W, 0.08, 0.04), (0, -0.02, H - 0.08), "pal_blood_deep")
+
+
+def _window(p, W, H, depth, frame, sill, bottom):
+    """A lancet window set into a wall face: a deep pointed-arch reveal round the 2D window (its glass and tracery, the
+    `glass` decal, W x H, its foot at `bottom`), and a sill. Only the reveal is modelled, so the wall shows round it."""
+    t = 0.05
+    spring = bottom + H - W * 0.62
+    for s in (-1, 1):
+        p.box((t, depth, spring - bottom + 0.01), (s * (W / 2 + t / 2 - 0.01), -depth / 2, (spring + bottom) / 2), frame)
+    outer = arch(-W / 2 - t + 0.01, W / 2 + t - 0.01, spring, W * 0.62 + t + 0.02, n=12)
+    inner = arch(-W / 2 + 0.01, W / 2 - 0.01, spring, W * 0.62, n=12)
+    p.prism(outer + list(reversed(inner)), depth, (0, -depth / 2, 0), frame)
+    p.box((W + 2 * t + 0.06, depth + 0.05, 0.04), (0, -(depth + 0.05) / 2, bottom - 0.02), sill)
+    p.socket("glass", (0, -0.012, bottom + H / 2))
+
+
+@model("window_tall", "wall", ["window_tall"],
+       decals=[{"art": "window_tall", "region": [0, 0, 136, 276], "socket": "glass", "width": 0.34}])
+def window_tall(p):
+    """The 2D lancet window, its moonlit glass and tracery kept, in a deep stone reveal with a sill."""
+    _window(p, 0.34, 0.34 * 276 / 136, 0.08, "pal_slate", "pal_stone", 0.3)
+
+
+@model("window_stained", "wall", ["window_stained"],
+       decals=[{"art": "window_stained", "region": [0, 0, 148, 288], "socket": "glass", "width": 0.34}])
+def window_stained(p):
+    """The 2D stained glass saint, kept whole, in a deep stone reveal with a sill."""
+    _window(p, 0.34, 0.34 * 288 / 148, 0.08, "pal_parchment", "pal_bone", 0.3)
+
+
+@model("window_shuttered", "wall", ["window_shuttered"])
+def window_shuttered(p):
+    """The 2D shuttered window: two plank shutters with iron hinges, closed, in a wooden frame with a sill."""
+    W, H, zc = 0.62, 0.62, 0.62
+    for s in (-1, 1):
+        p.box((0.05, 0.06, H + 0.1), (s * (W / 2 + 0.025), -0.03, zc), "pal_umber")
+    p.box((W + 0.1, 0.06, 0.05), (0, -0.03, zc + H / 2 + 0.025), "pal_umber")
+    p.box((W + 0.16, 0.1, 0.04), (0, -0.05, zc - H / 2 - 0.02), "pal_umber")
+    for s in (-1, 1):
+        cx = s * W / 4
+        for k in range(3):
+            p.box((W / 6 - 0.005, 0.03, H), (cx - W / 6 + k * W / 6, -0.035, zc), WOOD)
+        for z in (zc - H / 3, zc + H / 3):
+            p.box((W / 2 - 0.04, 0.01, 0.03), (cx, -0.055, z), "pal_ink")
+
+
+def _trim(p, colour, rail_z=None, stiles=False, cap=None):
+    """Wall trim on one square's face: a skirting board, optionally a rail, stiles at each end and the middle, a cap."""
+    p.box((1.0, 0.03, 0.07), (0, -0.015, 0.035), colour)
+    p.box((1.0, 0.038, 0.014), (0, -0.019, 0.077), colour)
+    if rail_z is not None:
+        p.box((1.0, 0.03, 0.03), (0, -0.015, rail_z), colour)
+        p.box((1.0, 0.038, 0.012), (0, -0.019, rail_z + 0.02), colour)
+    if stiles:
+        for x, w in ((-0.5 + 0.02, 0.04), (0.0, 0.07), (0.5 - 0.02, 0.04)):
+            p.box((w, 0.02, 1.0), (x, -0.01, 0.084 + 0.5), colour)
+    if cap is not None:
+        p.box((1.0, 0.04, 0.05), (0, -0.02, cap - 0.025), colour)
+
+
+@model("panelling", "wall_face", ["interior/wood_panel", "interior/carved_panel"])
+def panelling(p):
+    """Dark gothic panelling's frame in relief: skirting, stiles and a top rail over the carved panel texture."""
+    _trim(p, "pal_stone_deep", rail_z=None, stiles=True, cap=1.12)
+
+
+@model("wall_trim", "wall_face", ["interior/plaster_wall", "interior/wallpaper_green", "interior/wallpaper_nursery",
+                                   "interior/damp_plaster", "interior/whitewash", "interior/kitchen_wall"])
+def wall_trim(p):
+    """A wooden skirting board and picture rail on papered and plastered walls."""
+    _trim(p, "pal_umber", rail_z=0.92)
+
+
 # --- Export and preview ----------------------------------------------------------------------------------------
 
 def bounds(ob):

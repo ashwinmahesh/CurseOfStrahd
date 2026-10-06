@@ -849,6 +849,321 @@
         "tex_dungeon__stone_wall"
       ],
       "triangles": 288
+    },
+    "door_house": {
+      "file": "art/models/door_house.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_house"
+      ],
+      "size": [
+        0.854,
+        1.148,
+        0.12
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_ink",
+        "pal_stone_deep",
+        "pal_umber"
+      ],
+      "triangles": 132
+    },
+    "door_double": {
+      "file": "art/models/door_double.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_double"
+      ],
+      "size": [
+        0.852,
+        1.15,
+        0.1
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_tan",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 1048
+    },
+    "door_carved": {
+      "file": "art/models/door_carved.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_carved"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.08
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 84,
+      "sockets": {
+        "hand": [
+          0,
+          0.62,
+          0.034
+        ]
+      },
+      "decals": [
+        {
+          "art": "door_carved",
+          "region": [
+            40,
+            65,
+            120,
+            185
+          ],
+          "socket": "hand",
+          "width": 0.46
+        }
+      ]
+    },
+    "church_doors": {
+      "file": "art/models/church_doors.glb",
+      "mount": "wall",
+      "stands_for": [
+        "church_doors"
+      ],
+      "size": [
+        1.06,
+        1.9,
+        0.3
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_ink",
+        "pal_parchment",
+        "pal_stone_deep",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 404,
+      "sockets": {
+        "tympanum": [
+          0,
+          1.5,
+          0.035
+        ]
+      },
+      "decals": [
+        {
+          "art": "church_doors",
+          "region": [
+            65,
+            40,
+            245,
+            180
+          ],
+          "socket": "tympanum",
+          "width": 0.6
+        }
+      ]
+    },
+    "gate_iron": {
+      "file": "art/models/gate_iron.glb",
+      "mount": "door",
+      "stands_for": [
+        "gate_iron"
+      ],
+      "size": [
+        0.85,
+        1.177,
+        0.067
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_stone_deep"
+      ],
+      "triangles": 1268
+    },
+    "crypt_gate": {
+      "file": "art/models/crypt_gate.glb",
+      "mount": "door",
+      "stands_for": [
+        "crypt_gate"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.09
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_stone_deep"
+      ],
+      "triangles": 312
+    },
+    "portcullis": {
+      "file": "art/models/portcullis.glb",
+      "mount": "door",
+      "stands_for": [
+        "portcullis"
+      ],
+      "size": [
+        0.86,
+        1.15,
+        0.086
+      ],
+      "materials": [
+        "pal_rust",
+        "pal_stone_deep"
+      ],
+      "triangles": 900
+    },
+    "curtain": {
+      "file": "art/models/curtain.glb",
+      "mount": "door",
+      "stands_for": [
+        "curtain"
+      ],
+      "size": [
+        1.02,
+        1.138,
+        0.109
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_umber"
+      ],
+      "triangles": 332
+    },
+    "window_tall": {
+      "file": "art/models/window_tall.glb",
+      "mount": "wall",
+      "stands_for": [
+        "window_tall"
+      ],
+      "size": [
+        0.5,
+        0.8,
+        0.13
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone"
+      ],
+      "triangles": 136,
+      "sockets": {
+        "glass": [
+          0,
+          0.645,
+          0.012
+        ]
+      },
+      "decals": [
+        {
+          "art": "window_tall",
+          "region": [
+            0,
+            0,
+            136,
+            276
+          ],
+          "socket": "glass",
+          "width": 0.34
+        }
+      ]
+    },
+    "window_stained": {
+      "file": "art/models/window_stained.glb",
+      "mount": "wall",
+      "stands_for": [
+        "window_stained"
+      ],
+      "size": [
+        0.5,
+        0.772,
+        0.13
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_parchment"
+      ],
+      "triangles": 136,
+      "sockets": {
+        "glass": [
+          0,
+          0.6308,
+          0.012
+        ]
+      },
+      "decals": [
+        {
+          "art": "window_stained",
+          "region": [
+            0,
+            0,
+            148,
+            288
+          ],
+          "socket": "glass",
+          "width": 0.34
+        }
+      ]
+    },
+    "window_shuttered": {
+      "file": "art/models/window_shuttered.glb",
+      "mount": "wall",
+      "stands_for": [
+        "window_shuttered"
+      ],
+      "size": [
+        0.78,
+        0.72,
+        0.1
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 168
+    },
+    "panelling": {
+      "file": "art/models/panelling.glb",
+      "mount": "wall_face",
+      "stands_for": [
+        "interior/wood_panel",
+        "interior/carved_panel"
+      ],
+      "size": [
+        1.0,
+        1.12,
+        0.04
+      ],
+      "materials": [
+        "pal_stone_deep"
+      ],
+      "triangles": 72
+    },
+    "wall_trim": {
+      "file": "art/models/wall_trim.glb",
+      "mount": "wall_face",
+      "stands_for": [
+        "interior/plaster_wall",
+        "interior/wallpaper_green",
+        "interior/wallpaper_nursery",
+        "interior/damp_plaster",
+        "interior/whitewash",
+        "interior/kitchen_wall"
+      ],
+      "size": [
+        1.0,
+        0.946,
+        0.038
+      ],
+      "materials": [
+        "pal_umber"
+      ],
+      "triangles": 48
     }
   }
 }
