@@ -187,6 +187,8 @@ const MAX_ATTUNED := 3
 ## Item ids this character is attuned to (a creature can't attune to two copies of one item).
 var attuned: Array[String] = []
 var _item_mods_key := ""
+## Inside an Antimagic Field: magic items act as mundane ones (set by the combat engine, not saved).
+var magic_suppressed := false
 var _item_mods: Array[Modifier] = []
 
 
@@ -197,6 +199,8 @@ func item_active(e: Dictionary) -> bool:
 	if int(e.get("qty", 0)) <= 0:
 		return false
 	var data := compendium.item_data(str(e["id"]))
+	if magic_suppressed and MagicItems.is_magic(data):
+		return false
 	if MagicItems.needs_attunement(data) and not str(e["id"]) in attuned:
 		return false
 	var slot := str(e.get("slot", ""))
@@ -217,7 +221,7 @@ func item_modifiers() -> Array[Modifier]:
 	for e in inventory:
 		if int(e.get("qty", 0)) > 0:
 			key += "%s:%s;" % [e["id"], e.get("slot", "")]
-	key += "|" + ",".join(attuned)
+	key += "|" + ",".join(attuned) + ("|suppressed" if magic_suppressed else "")
 	if key == _item_mods_key:
 		return _item_mods
 	_item_mods_key = key
@@ -228,6 +232,8 @@ func item_modifiers() -> Array[Modifier]:
 			continue
 		var iid := str(e["id"])
 		var data := compendium.item_data(iid)
+		if magic_suppressed and MagicItems.is_magic(data):
+			continue
 		var mods := (data.get("modifiers", []) as Array).duplicate()
 		# Properties this one item rolled (an artifact's), always "while attuned".
 		for prop: Variant in e.get("artifact_properties", []):

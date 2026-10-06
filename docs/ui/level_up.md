@@ -49,7 +49,8 @@ Constitution increase) and how current Hit Points rise.
 - **Spells** (2024): the class gaining the level may replace one prepared spell (Bard, Sorcerer, Warlock, Eldritch
   Knight, Arcane Trickster) and one cantrip (every caster but the Wizard): unpick it, then pick the new one, with a
   line under the box saying so. Clerics, Druids, Paladins, Rangers and Wizards only add new spells here (their
-  earlier ones are locked, "change after a Long Rest"); Wizards add two spells to the spellbook.
+  earlier ones are locked, "change after a Long Rest"); Wizards add two spells to the spellbook. Weapon Mastery
+  likewise only adds kinds at a level up.
 - A counter shows the choices left; Next is allowed, Confirm isn't until all are made.
 
 ### 4. Summary (`lu_04_summary`)

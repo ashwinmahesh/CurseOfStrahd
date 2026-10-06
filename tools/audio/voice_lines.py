@@ -5,10 +5,13 @@ A clip is keyed by its speaker and a hash of its text: res://audio/voice/<speake
 16 hex digits of the SHA-1 of the line's text (VoiceOver.key in core/voice_over.gd computes the same). An edited line
 gets a new key, so only new or changed lines are generated, and a line written twice shares one clip.
 
-Voiced: NPC lines and story allies' interjections in conversations, Madam Eva's Tarokka verses, the Narrator's lines
-in conversations and its trigger variants, and the Narrator text in location and travel data (first visit, encounter
-intros, traps, barred exits). Not voiced: player options, rolls, notices, party members' lines (interjections, banter,
-"Player:"), book and letter text, and any line holding {name}, {leader} or {target} (filled in at run time).
+Voiced: NPC lines and story allies' interjections in conversations and banter, Madam Eva's Tarokka verses, the
+Narrator's lines in conversations, banter and its trigger variants, the Narrator text in location and travel data
+(first visit, encounter intros, traps, barred exits), and the party's lines: a hero's own (`name:`) lines in that
+hero's voice, and every line any party member could say (`class:`, `species:`, `background:`, `tag:`, "Player:") in
+the voice of each prebuilt hero it fits and in both custom-hero voices (VoiceOver.voice_for picks the one that
+speaks). Not voiced: player options, rolls, notices, book and letter text, and any line holding {name}, {leader} or
+{target} (filled in at run time).
 
 Usage: tools/audio/voice_lines.py [--speaker narrator] [--json]   (prints counts per speaker, or the lines as JSON)
 """
@@ -58,11 +61,33 @@ def speaker_id(name, npcs):
     return low
 
 
+HERO_VOICES = ["hero_female", "hero_male"]   # the custom character's two voices (build.appearance.voice)
+
+
+def _heroes():
+    """{pregen id: {class, species, background, tag, name}} for the party selectors (StoryState.member_matches)."""
+    out = {}
+    for f in sorted((ROOT / "data" / "pregens").glob("*.json")):
+        d = json.loads(f.read_text())
+        b = d.get("build", {})
+        classes = {lv.get("class") for lv in b.get("levels", []) + d.get("level_plan", [])}
+        out[d["id"]] = {"class": classes, "species": {b.get("species")}, "background": {b.get("background")},
+                        "tag": set((b.get("identity") or {}).get("tags", [])), "name": {d["id"]}}
+    return out
+
+
+def party_voices(selector, heroes):
+    """The voices that may speak an interjection: a named hero's own, or every hero it fits plus both custom voices."""
+    kind, _, value = selector.partition(":")
+    if kind == "name":
+        return [value] if value in heroes else []
+    return [h for h, facts in heroes.items() if value in facts.get(kind, set())] + HERO_VOICES
+
+
 def _dialogue_lines(npcs):
+    heroes = _heroes()
     for f in sorted((ROOT / "narrative").glob("*/*.dialogue")):
         region = f.parent.name
-        if region == "banter":
-            continue  # banter plays as one joined box of party lines
         file_key = f"{region}/{f.stem}"
         node = ""
         for raw in f.read_text(encoding="utf-8").splitlines():
@@ -87,11 +112,16 @@ def _dialogue_lines(npcs):
                 sel = m.group(1)
                 if sel.startswith("guest:"):
                     yield sel[6:], m.group(2), where
+                else:
+                    for voice in party_voices(sel, heroes):
+                        yield voice, m.group(2), where
                 continue
             m = RE_LINE.match(line)
             if m:
                 who = m.group(1).strip()
                 if who.lower() == "player":
+                    for voice in list(heroes) + HERO_VOICES:
+                        yield voice, m.group(3), where
                     continue
                 yield (NARRATOR if who.lower() == "narrator" else speaker_id(who, npcs)), m.group(3), where
 

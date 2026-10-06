@@ -574,7 +574,7 @@ func _check_over() -> void:
 	var party_up := false
 	var enemies_up := false
 	for c in combatants:
-		if not c.is_alive() or c.creature.hp <= 0:
+		if not c.is_alive() or c.creature.hp <= 0 or c.creature.has_flag("spell_object"):
 			continue
 		if c.side in [&"party", &"guest"]:
 			party_up = true
@@ -587,6 +587,11 @@ func _check_over() -> void:
 		state = State.OVER
 		outcome = "defeat"
 	if state == State.OVER:
+		# An Antimagic Field doesn't outlast the fight: magic items wake up again.
+		for c in combatants:
+			for who: Creature in [c.creature, shapes.original(c)]:
+				if who is Character:
+					(who as Character).magic_suppressed = false
 		log.add("info", "Victory!" if outcome == "victory" else "The party has fallen.", "")
 		events.append({"type": "over", "outcome": outcome})
 
@@ -2413,6 +2418,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		monster_actions.damage_traits(target, parts)
 	if target.is_down():
 		monster_actions.body_dropped(target)
+		spells.specials.mid.hand_destroyed(target)
 	if dr.final > 0 and source != null and source != target and target.is_alive():
 		_queue_damage_reactions(source, target)
 	spells.zones.prune()

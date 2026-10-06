@@ -179,8 +179,10 @@ func level_choices() -> Array[Choice]:
 ## 2024: gaining a level lets that class replace one spell and one cantrip on its lists (`replaceable` level_up, Bard,
 ## Sorcerer, Warlock, Eldritch Knight, Arcane Trickster; every caster's cantrips but a Wizard's); every other earlier
 ## pick on a class list stays, so a Cleric or Wizard only adds new spells here and reworks the list after a Long Rest.
+## Weapon Mastery is the same: a new level adds kinds, and the earlier ones change after a Long Rest.
 func _open_swap(c: Choice) -> void:
-	if c.class_id == "" or not c.key in ["%s.prepared" % c.class_id, "%s.cantrips" % c.class_id]:
+	var spell_list := c.class_id != "" and c.key in ["%s.prepared" % c.class_id, "%s.cantrips" % c.class_id]
+	if not spell_list and c.kind != "weapon_mastery":
 		return
 	ChoiceOptions.open_swap(c, character.picks_for(c.key), "level_up" if c.class_id == chosen_class else "")
 

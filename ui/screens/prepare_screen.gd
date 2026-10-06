@@ -2,7 +2,8 @@ class_name PrepareScreen
 extends CanvasLayer
 ## Changing prepared spells after a Long Rest (2024 PHB): Clerics, Druids and Wizards (from the spellbook) may change
 ## any number, Paladins and Rangers one spell, and a Wizard one cantrip too; Bards, Sorcerers and Warlocks change one
-## when they gain a level (LevelUpController). One choice box per caster, the same widget character creation uses;
+## when they gain a level (LevelUpController). Weapon Mastery too: Barbarians and Fighters swap one kind, Paladins,
+## Rangers and Rogues any. One choice box per caster, the same widget character creation uses;
 ## each change rebuilds the character at once. The limits count from the list the rest ended with (`earlier`), so
 ## closing and reopening the screen doesn't give a second swap.
 
@@ -24,7 +25,7 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
 	var frame := UiKit.screen_frame(self, "Prepare Spells", Vector2(1300, 820))
-	frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready: Clerics, Druids and Wizards can change any of theirs, Paladins and Rangers one, and Wizards one cantrip too. Always-prepared spells (a domain's, an oath's) don't count. Hover a spell for what it does.", 15, "parchment", 1220))
+	frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready: Clerics, Druids and Wizards can change any of theirs, Paladins and Rangers one, and Wizards one cantrip too. Barbarians and Fighters swap one Weapon Mastery; Paladins, Rangers and Rogues any. Always-prepared spells (a domain's, an oath's) don't count. Hover a spell for what it does.", 15, "parchment", 1220))
 	_box = VBoxContainer.new()
 	_box.add_theme_constant_override("separation", 14)
 	var pane := UiParts.pane(14)

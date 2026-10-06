@@ -16,14 +16,18 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
   every image comes from the pinned Gemini model. The key is `ELEVENLABS_API_KEY`, read from the environment or
   `~/.zshrc` and sent as the `xi-api-key` header, never written anywhere.
 - **A clip is keyed by its speaker and its text**: `res://audio/voice/<speaker>/<key>.mp3`, where `<key>` is the
-  first 16 hex digits of the SHA-1 of the line's trimmed text and `<speaker>` is `narrator` or an npc id. The
+  first 16 hex digits of the SHA-1 of the line's trimmed text and `<speaker>` is `narrator`, an npc id, a prebuilt
+  hero's id or a custom hero's voice (`hero_female`, `hero_male`). The
   dialogue files need no line ids. An edited line gets a new key, so only new or changed lines are generated; the
   same line written twice shares one clip; `make voice PRUNE=1` removes clips no line uses any more.
 - **What is voiced** (`tools/audio/voice_lines.py`): NPC lines and story allies' (`guest:`) interjections, Madam
-  Eva's Tarokka verses, the Narrator's conversation lines and trigger variants, and the Narrator text in location and
-  travel data (first visit, encounter intros, traps, barred exits). **Not voiced:** options, rolls and notices,
-  party members' lines and banter (the player's own characters), books and letters, and lines holding `{name}`,
-  `{leader}` or `{target}` (filled in at run time). Those stay text.
+  Eva's Tarokka verses, the Narrator's conversation lines, banter lines and trigger variants, the Narrator text in
+  location and travel data (first visit, encounter intros, traps, barred exits), and the party's lines (owner,
+  2026-10-06): a hero's `name:` lines in that hero's voice, and every line any party member could say (`class:`,
+  `species:`, `background:`, `tag:` interjections and banter, "Player:") in the voice of each prebuilt hero it fits
+  and in both custom-hero voices, because a custom character (`build.appearance.custom`) speaks in the voice the
+  player picked (`build.appearance.voice`). **Not voiced:** options, rolls and notices, books and letters, and lines
+  holding `{name}`, `{leader}` or `{target}` (filled in at run time). Those stay text.
 - **Casting** is per speaker in `casting.json` (an ElevenLabs voice id, a name, the description it was designed
   from and optional settings). Voices are auditioned with `tools/audio/audition.py` (Voice Design from the speaker's
   voice bible, or a library voice) and the owner picks the Narrator.
@@ -36,7 +40,8 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
   (`VoiceOver.set_volume`, kept in `user://settings.cfg` as `[audio] voice`) for a Voices slider beside Music and
   Effects in the pause menu. Hooks: the conversation screen speaks each line
   beat and stops on any other beat, the explore HUD's Narrator box speaks and stays up until the voice ends, and the
-  combat log's Narrator lines speak.
+  combat log's Narrator lines speak. `beat_voice(beat)` finds a party member's voice (`voice_for`), and banter
+  plays line by line in each speaker's voice (`say_all`) while the box stays up (`hold_narration`).
 
 ## Casting decisions (owner, 2026-10-06)
 
@@ -48,6 +53,10 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
 - **Minor characters** each get a voice designed from their description, used for their lines and then deleted from
   the account (`audition.py release`, `"released": true` in casting.json) to stay within the plan's 30 voice slots.
   Their clips stay; a new or edited line for one of them needs a newly designed voice (`audition.py auto`).
+- **The party:** Hedda, Ilse, Silvain and Tamsin have designed voices with their own accents (a soft Scottish lilt,
+  a light German accent, refined English, a light Irish lilt); the custom character's two choices are library voices
+  with a neutral English accent (Lucie, Julian Vale), which use no voice slot. Argynvost's voice was released to
+  make room.
 - **Children and teens:** ElevenLabs will not design voices for anyone under 18. The children use ready-made library
   voices (`"library": true`); Luminita (17) and Victor (16) have young adult voices.
 
