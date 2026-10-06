@@ -16,7 +16,7 @@ const TRANSITION := 3.0
 ## Lights that light the mist around them (the screen pass takes this many).
 const MAX_GLOWS := 8
 ## The map's light level scales the ambient light (and the key light indoors).
-const LEVELS := {"bright": 1.6, "dim": 1.0, "dark": 0.47}
+const LEVELS := {"bright": 1.6, "dim": 1.0, "dark": 0.55}
 
 static var _moods: Dictionary = {}
 
@@ -185,6 +185,32 @@ func _build_water() -> void:
 		var mi := n as MeshInstance3D
 		if mi != null and mi.material_override != null and (mi.material_override == old or str(mi.name).begins_with("Water")):
 			mi.material_override = water
+	_open_the_lake()
+
+
+## A map's frame of trees standing across a lake (the border squares the data walls off) reads as a row of trees in
+## the water: where the square inside it is water, the frame becomes open water running on past the edge. Only the
+## look changes; the square stays a wall for the rules.
+func _open_the_lake() -> void:
+	var g := board.grid
+	for z in g.depth:
+		for x in g.width:
+			var c := Vector2i(x, z)
+			if not board._on_border(c) or not g.has_flag(c, CombatGrid.WALL) or not board.is_tree(c):
+				continue
+			var inward := Vector2i(clampi(x, 1, g.width - 2), clampi(z, 1, g.depth - 2))
+			if not g.has_flag(inward, CombatGrid.WATER):
+				continue
+			for n: Node3D in board.dressing.get(c, []):
+				n.visible = false
+				board.occluders.erase(n)
+			for n in board.get_children():
+				var mi := n as MeshInstance3D
+				if mi != null and str(mi.name).begins_with("Ground") and absf(mi.position.x - (x + 0.5)) < 0.01 \
+						and absf(mi.position.z - (z + 0.5)) < 0.01:
+					mi.visible = false
+			var w := board.add_box("Water", Vector3(1, 0.1, 1), Vector3(x + 0.5, -0.18, z + 0.5), water)
+			w.name = "WaterEdge"
 
 
 ## Called once the camera and screen pass exist (LocationView._ready): weather follows the camera, the pass gets the
@@ -240,7 +266,7 @@ func _apply_static() -> void:
 
 
 ## Where the mist gathers on a map, one texel per square: thickest among the trees (wall squares), over water and
-## in brambles and mud, thinning to `open` in the middle of clearings and roads.
+## empty ground and in brambles and mud, thinning to `open` in the middle of clearings and roads.
 static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
 	var img := Image.create(grid.width, grid.depth, false, Image.FORMAT_R8)
 	var dist := {}
@@ -248,7 +274,7 @@ static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
 	for z in grid.depth:
 		for x in grid.width:
 			var c := Vector2i(x, z)
-			if grid.has_flag(c, CombatGrid.WALL) or grid.has_flag(c, CombatGrid.WATER):
+			if grid.has_flag(c, CombatGrid.WALL) or grid.has_flag(c, CombatGrid.VOID):
 				dist[c] = 0
 				todo.append(c)
 	var i := 0
@@ -266,6 +292,8 @@ static func mist_mask(grid: CombatGrid, open: float) -> ImageTexture:
 			var w := lerpf(open, 1.0, clampf(1.0 - (float(dist.get(c, 99)) - 1.0) / 3.0, 0.0, 1.0))
 			if grid.has_flag(c, CombatGrid.DIFFICULT):
 				w = minf(1.0, w + 0.25)
+			elif grid.has_flag(c, CombatGrid.WATER):
+				w = minf(w, 0.45)   # a lake keeps its face
 			img.set_pixel(x, z, Color(w, w, w))
 	return ImageTexture.create_from_image(img)
 
@@ -374,6 +402,8 @@ func _apply(k: float) -> void:
 	sun.light_color = (v["key"] as Color).lerp(Look.color("frost"), _flash)
 	sun.light_energy = float(v["key_energy"]) * (1.0 + _flash * 3.0)
 	sun.rotation_degrees = v["key_angle"] as Vector3
+	if water != null:
+		water.set_shader_parameter("reflection", (v["sky"] as Color).lerp(Look.color("moon_blue"), 0.5))
 	if _post == null:
 		return
 	_post.set_shader_parameter("land_color", v["fog"] as Color)
@@ -396,7 +426,7 @@ func _process(delta: float) -> void:
 	if _blend < 1.0:
 		_blend = minf(1.0, _blend + delta / TRANSITION)
 		dirty = true
-	if bool(mood.get("lightning", false)) and outdoors:
+	if bool(mood.get("lightning", false)):
 		dirty = _lightning(delta) or dirty
 	if dirty:
 		_apply(smoothstep(0.0, 1.0, _blend))
@@ -406,7 +436,10 @@ func _process(delta: float) -> void:
 		return
 	if weather != null:
 		for wx in weather.follow:
-			wx.global_position = Vector3(_rig.global_position.x, wx.global_position.y, _rig.global_position.z)
+			if not wx.has_meta("offset"):
+				wx.set_meta("offset", Vector3(wx.position.x, 0.0, wx.position.z))
+			var off := wx.get_meta("offset") as Vector3
+			wx.global_position = Vector3(_rig.global_position.x + off.x, wx.global_position.y, _rig.global_position.z + off.z)
 	if _post == null:
 		return
 	_post.set_shader_parameter("atmo_time", _time)
@@ -417,7 +450,8 @@ func _process(delta: float) -> void:
 	_update_glows()
 
 
-## A storm's lightning: now and then the sky flashes, once or twice, lighting everything cold for an instant.
+## A storm's lightning: now and then the sky flashes, once or twice, lighting everything cold for an instant (indoors,
+## through the windows).
 func _lightning(delta: float) -> bool:
 	var was := _flash
 	_next_flash -= delta
