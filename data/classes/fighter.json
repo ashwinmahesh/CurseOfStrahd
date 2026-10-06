@@ -291,7 +291,8 @@
           "choice": {
             "kind": "fighting_style",
             "count": 1,
-            "replaceable": "level_up"
+            "replaceable": "level_up",
+            "replace_max": 1
           },
           "implemented": "engine"
         },

@@ -132,6 +132,10 @@ static func toggled(c: Choice, id: String, on: bool) -> Array:
 					if not str(picks[i]) in c.swap_from and str(picks[i]) != id:
 						drop = i
 						break
+				# A single pick (a Fighting Style) is swapped by picking the new one.
+				var only := c.option(str(picks[0]))
+				if drop < 0 and c.count == 1 and swapped_out(c).size() < c.swap_max and (only == null or not only.locked):
+					drop = 0
 			if drop < 0:
 				return c.picks.duplicate()
 			picks.remove_at(drop)
@@ -150,12 +154,15 @@ static func swap_note(c: Choice) -> String:
 	var noun := _swap_noun(c)
 	if c.swap_max == 0:
 		return "Pick the new %ss; the others %s." % [noun, _swap_when(c)]
+	if c.count == 1:
+		return "You can switch to another %s." % noun
 	return "Replace up to %d %s%s: unpick it, then pick the new one (%d of %d replaced)." % [c.swap_max, noun,
 		"" if c.swap_max == 1 else "s", mini(swapped_out(c).size(), c.swap_max), c.swap_max]
 
 
 ## Once the chance's earlier picks are used up the rest stay locked; while the list is full of earlier picks only, new
-## options wait until the player unpicks the one they're replacing.
+## options wait until the player unpicks the one they're replacing (a single pick is swapped by picking the new one).
+## An invocation another one of yours needs stays (2024 Eldritch Invocations).
 static func _swap_limits(c: Choice) -> void:
 	if not swap_open(c):
 		return
@@ -169,8 +176,22 @@ static func _swap_limits(c: Choice) -> void:
 		var picked := o.id in c.picks
 		if picked and o.id in c.swap_from and out >= c.swap_max:
 			o.lock(_swap_rule(c))
-		elif not picked and o.legal and c.picks.size() >= c.count and only_earlier:
+		elif not picked and o.legal and c.picks.size() >= c.count and only_earlier and not (c.count == 1 and out < c.swap_max):
 			o.block("Unpick the %s you're replacing first" % noun if out < c.swap_max else _swap_rule(c))
+	if c.kind == "invocation":
+		for o in c.options:
+			var needed_by := _needed_by(c, o.id)
+			if o.id in c.picks and not o.locked and needed_by != "":
+				o.lock("%s needs it" % needed_by)
+
+
+## The name of a picked invocation whose prerequisite is invocation `id`, or "".
+static func _needed_by(c: Choice, id: String) -> String:
+	for x in c.inline_options:
+		var pre := x.get("prerequisites", {}) as Dictionary
+		if str(x.get("id", "")) in c.picks and str(pre.get("invocation", "")) == id:
+			return str(x.get("name", x.get("id", "")))
+	return ""
 
 
 static func _swap_rule(c: Choice) -> String:
@@ -189,6 +210,14 @@ static func _swap_noun(c: Choice) -> String:
 			return "spell"
 		"weapon_mastery":
 			return "weapon choice"
+		"invocation":
+			return "invocation"
+		"maneuver":
+			return "maneuver"
+		"metamagic":
+			return "Metamagic option"
+		"fighting_style":
+			return "Fighting Style"
 	return "choice"
 
 
