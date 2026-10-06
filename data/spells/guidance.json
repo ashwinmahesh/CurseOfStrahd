@@ -35,15 +35,13 @@
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
         "modifiers": [
           {
             "stat": "bonus_die",
             "dice": "1d4",
             "on": [
               "check:choice"
-            ],
-            "text": "Only ability checks that use the one skill chosen at casting."
+            ]
           }
         ]
       }
@@ -53,5 +51,23 @@
     "buff"
   ],
   "summary": "A willing creature adds 1d4 to ability checks using one skill you choose.",
-  "text": "Touch a willing creature and choose a skill. Until the spell ends, the creature adds 1d4 to every ability check it makes using that skill."
+  "text": "Touch a willing creature and choose a skill. Until the spell ends, the creature adds 1d4 to every ability check it makes using that skill.",
+  "choice": {
+    "kind": "skill",
+    "label": "Skill",
+    "from": [
+      "athletics",
+      "acrobatics",
+      "stealth",
+      "perception",
+      "insight",
+      "intimidation",
+      "persuasion",
+      "deception",
+      "medicine",
+      "investigation",
+      "arcana",
+      "religion"
+    ]
+  }
 }

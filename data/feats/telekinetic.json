@@ -34,7 +34,7 @@
           "ability": "@increased"
         }
       ],
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "telekinetic_shove",
@@ -42,7 +42,7 @@
       "summary": "Bonus Action: a creature within 30 ft makes a Str save (DC 8 + mod + PB) or is moved 5 ft toward or away.",
       "text": "As a Bonus Action, you can telekinetically shove one creature you can see within 30 feet of you. The target must succeed on a Strength saving throw (DC 8 plus the modifier of the ability you increased with this feat and your Proficiency Bonus) or be moved 5 feet toward you or away from you.",
       "action": "bonus_action",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

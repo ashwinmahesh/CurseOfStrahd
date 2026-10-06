@@ -30,7 +30,7 @@
       "summary": "Opportunity Attack a creature within 5 ft right after it Disengages or hits a target other than you.",
       "text": "Immediately after a creature within 5 feet of you takes the Disengage action or hits a target other than you with an attack, you can make an Opportunity Attack against that creature.",
       "action": "reaction",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "halt",

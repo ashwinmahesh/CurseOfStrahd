@@ -32,7 +32,7 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
+    "kind": "ally",
     "count": 1
   },
   "upcast": {
@@ -42,5 +42,30 @@
     "buff"
   ],
   "summary": "A creature has Advantage on ability checks with one ability you choose (any but Constitution).",
-  "text": "Touch a creature and choose Strength, Dexterity, Intelligence, Wisdom or Charisma. Until the spell ends, it has Advantage on ability checks that use that ability. You can target one more creature for each spell slot level above 2, choosing a different ability for each target if you like."
+  "text": "Touch a creature and choose Strength, Dexterity, Intelligence, Wisdom or Charisma. Until the spell ends, it has Advantage on ability checks that use that ability. You can target one more creature for each spell slot level above 2, choosing a different ability for each target if you like.",
+  "choice": {
+    "kind": "ability",
+    "label": "Ability",
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ]
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "advantage",
+            "on": "check:choice"
+          }
+        ]
+      }
+    }
+  ]
 }

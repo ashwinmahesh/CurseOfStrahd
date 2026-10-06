@@ -19,10 +19,6 @@
     "kind": "feet",
     "feet": 60
   },
-  "area": {
-    "shape": "sphere",
-    "size": 5
-  },
   "components": {
     "s": true,
     "m": "a drop of water or a piece of ice"
@@ -36,25 +32,30 @@
     "description": "one creature; the burst also hits each creature within 5 feet of it"
   },
   "attack": "ranged",
-  "save": "dex",
-  "save_success": "none",
   "damage": [
     {
       "dice": "1d10",
       "type": "piercing"
-    },
-    {
-      "dice": "2d6",
-      "type": "cold"
     }
   ],
   "upcast": {
-    "damage": "1d6",
-    "text": "Only the Cold damage increases."
+    "text": "The Cold damage increases by 1d6 for each slot level above 1."
   },
   "tags": [
     "damage"
   ],
   "summary": "Ranged spell attack for 1d10 Piercing; the shard then bursts for 2d6 Cold (Dexterity save) within 5 feet.",
-  "text": "Make a ranged spell attack against one creature within range; on a hit it takes 1d10 Piercing damage. Hit or miss, the shard then bursts: the target and every creature within 5 feet of it must succeed on a Dexterity saving throw or take 2d6 Cold damage (no damage on a success). Using a Higher-Level Spell Slot: the Cold damage increases by 1d6 for each slot level above 1."
+  "text": "Make a ranged spell attack against one creature within range; on a hit it takes 1d10 Piercing damage. Hit or miss, the shard then bursts: the target and every creature within 5 feet of it must succeed on a Dexterity saving throw or take 2d6 Cold damage (no damage on a success). Using a Higher-Level Spell Slot: the Cold damage increases by 1d6 for each slot level above 1.",
+  "secondary": {
+    "radius": 5,
+    "save": "dex",
+    "save_success": "none",
+    "damage": [
+      {
+        "dice": "2d6",
+        "type": "cold",
+        "upcast": "1d6"
+      }
+    ]
+  }
 }

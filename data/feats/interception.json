@@ -18,7 +18,7 @@
       "summary": "Reaction when a creature hits someone within 5 ft of you: reduce the damage by 1d10 + PB.",
       "text": "When a creature you can see hits another creature within 5 feet of you with an attack roll, you can take a Reaction to reduce the damage the target takes by 1d10 plus your Proficiency Bonus. You must be holding a Shield or a Simple or Martial weapon to use this Reaction.",
       "action": "reaction",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

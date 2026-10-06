@@ -45,5 +45,6 @@
     "damage"
   ],
   "summary": "Chosen creatures you can see within 5 feet of you fail a Con save to take 1d6 Radiant damage.",
-  "text": "Burning radiance bursts from you in a 5-foot Emanation. Each creature of your choice that you can see in it makes a Constitution saving throw, taking 1d6 Radiant damage on a failure. The damage becomes 2d6 at character level 5, 3d6 at level 11 and 4d6 at level 17."
+  "text": "Burning radiance bursts from you in a 5-foot Emanation. Each creature of your choice that you can see in it makes a Constitution saving throw, taking 1d6 Radiant damage on a failure. The damage becomes 2d6 at character level 5, 3d6 at level 11 and 4d6 at level 17.",
+  "area_targets": "enemies"
 }

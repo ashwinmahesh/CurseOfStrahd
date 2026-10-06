@@ -34,22 +34,20 @@
     "amount": 1
   },
   "targets": {
-    "kind": "point",
-    "description": "a point within range, or an object nobody is wearing or carrying"
+    "kind": "point"
   },
-  "effects": [
-    {
-      "effect": "light",
-      "params": {
-        "bright": 60,
-        "dim": 60,
-        "sunlight": true
-      }
-    }
-  ],
   "tags": [
     "light"
   ],
   "summary": "Sunlight fills a 60-foot-radius Sphere (Bright Light, plus 60 ft. Dim Light) for 1 hour.",
-  "text": "For 1 hour, sunlight spreads from a point within 60 feet and fills a 60-foot-radius Sphere. The area is Bright Light, and Dim Light extends 60 feet beyond it. Instead, you can cast the spell on an object that nobody is wearing or carrying; the sunlight then fills a 60-foot Emanation from that object, and covering the object with something opaque, such as a bowl or helm, blocks the light. If any part of this spell's area overlaps an area of Darkness created by a spell of level 3 or lower, that other spell is dispelled."
+  "text": "For 1 hour, sunlight spreads from a point within 60 feet and fills a 60-foot-radius Sphere. The area is Bright Light, and Dim Light extends 60 feet beyond it. Instead, you can cast the spell on an object that nobody is wearing or carrying; the sunlight then fills a 60-foot Emanation from that object, and covering the object with something opaque, such as a bowl or helm, blocks the light. If any part of this spell's area overlaps an area of Darkness created by a spell of level 3 or lower, that other spell is dispelled.",
+  "zone": {
+    "triggers": [],
+    "light": {
+      "bright": 60,
+      "dim": 60,
+      "sunlight": true
+    },
+    "dispels_darkness": 3
+  }
 }

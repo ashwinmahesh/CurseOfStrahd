@@ -210,7 +210,13 @@
         "name": "Illusory Self",
         "summary": "Reaction: an attack against you automatically misses; once per rest or spend a level 2+ slot.",
         "implemented": "engine",
-        "action": "reaction"
+        "action": "reaction",
+        "resource": {
+          "id": "illusory_self",
+          "name": "Illusory Self",
+          "max": 1,
+          "recharge": "short"
+        }
       }
     },
     {

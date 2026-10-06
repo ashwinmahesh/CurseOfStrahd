@@ -33,10 +33,6 @@
   },
   "save": "con",
   "save_success": "none",
-  "conditions": [
-    "blinded",
-    "deafened"
-  ],
   "upcast": {
     "targets": 1
   },
@@ -44,12 +40,8 @@
     {
       "effect": "condition",
       "params": {
-        "condition": "blinded",
-        "condition_choice": [
-          "blinded",
-          "deafened"
-        ],
-        "repeat_save": "end_of_turn"
+        "repeat_save": "end_of_turn",
+        "condition": "choice"
       }
     }
   ],
@@ -57,5 +49,13 @@
     "debuff"
   ],
   "summary": "A creature you can see makes a Con save or is Blinded or Deafened (your choice) for 1 minute.",
-  "text": "Choose one creature you can see within range. It must succeed on a Constitution saving throw or have the Blinded or Deafened condition (you choose which) for 1 minute. At the end of each of its turns it repeats the save, ending the spell on itself on a success. You can target one more creature for each spell slot level above 2."
+  "text": "Choose one creature you can see within range. It must succeed on a Constitution saving throw or have the Blinded or Deafened condition (you choose which) for 1 minute. At the end of each of its turns it repeats the save, ending the spell on itself on a success. You can target one more creature for each spell slot level above 2.",
+  "choice": {
+    "kind": "condition",
+    "label": "Condition",
+    "from": [
+      "blinded",
+      "deafened"
+    ]
+  }
 }

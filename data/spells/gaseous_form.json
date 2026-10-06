@@ -29,9 +29,8 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
-    "count": 1,
-    "description": "a willing creature"
+    "kind": "ally",
+    "count": 1
   },
   "upcast": {
     "targets": 1
@@ -78,6 +77,22 @@
           {
             "stat": "advantage",
             "on": "save:con"
+          },
+          {
+            "stat": "flag",
+            "value": "cant_cast"
+          },
+          {
+            "stat": "flag",
+            "value": "cant_attack"
+          },
+          {
+            "stat": "flag",
+            "value": "pass_through_creatures"
+          },
+          {
+            "stat": "flag",
+            "value": "speechless"
           }
         ]
       }

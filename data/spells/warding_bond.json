@@ -28,9 +28,8 @@
     "amount": 1
   },
   "targets": {
-    "kind": "creature",
-    "count": 1,
-    "description": "another willing creature"
+    "kind": "ally",
+    "count": 1
   },
   "effects": [
     {

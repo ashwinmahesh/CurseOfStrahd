@@ -13,14 +13,6 @@
       "on": "initiative"
     },
     {
-      "stat": "advantage",
-      "on": "attack"
-    },
-    {
-      "stat": "attacked_with",
-      "value": "disadvantage"
-    },
-    {
       "stat": "flag",
       "value": "concealed"
     }

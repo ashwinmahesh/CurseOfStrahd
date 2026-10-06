@@ -53,5 +53,17 @@
     "damage"
   ],
   "summary": "Ranged spell attack for 3d8 damage of a chosen type; on doubled dice the orb leaps to a new target.",
-  "text": "Choose Acid, Cold, Fire, Lightning, Poison or Thunder, then make a ranged spell attack against one target within range. On a hit it takes 3d8 damage of the chosen type. If two or more of the d8s roll the same number, the orb leaps to a different target of your choice within 30 feet of that target: make a new attack roll and a new damage roll against it. With a level 1 slot the orb leaps at most once. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 1, the orb can leap a number of times up to the slot level, and no creature can be targeted more than once by the same casting. The diamond is not consumed."
+  "text": "Choose Acid, Cold, Fire, Lightning, Poison or Thunder, then make a ranged spell attack against one target within range. On a hit it takes 3d8 damage of the chosen type. If two or more of the d8s roll the same number, the orb leaps to a different target of your choice within 30 feet of that target: make a new attack roll and a new damage roll against it. With a level 1 slot the orb leaps at most once. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 1, the orb can leap a number of times up to the slot level, and no creature can be targeted more than once by the same casting. The diamond is not consumed.",
+  "choice": {
+    "kind": "damage_type",
+    "label": "Damage type",
+    "from": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison",
+      "thunder"
+    ]
+  }
 }

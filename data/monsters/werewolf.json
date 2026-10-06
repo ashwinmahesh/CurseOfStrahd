@@ -102,13 +102,26 @@
           "type": "piercing"
         }
       ],
-      "save": {
-        "ability": "con",
-        "dc": 12,
-        "success": "special"
-      },
       "summary": "Bite usable in wolf or hybrid form; a bitten Humanoid makes a DC 12 Con save or is cursed.",
-      "text": "Usable only in wolf or hybrid form. Hit: 12 (2d8 + 3) Piercing damage. A Humanoid target then makes a DC 12 Constitution saving throw. Failure: the target is cursed with lycanthropy; if it drops to 0 Hit Points while cursed, it instead turns into a Werewolf under the DM's control with 10 Hit Points. Success: the target is immune to this werewolf's curse for 24 hours."
+      "text": "Usable only in wolf or hybrid form. Hit: 12 (2d8 + 3) Piercing damage. A Humanoid target then makes a DC 12 Constitution saving throw. Failure: the target is cursed with lycanthropy; if it drops to 0 Hit Points while cursed, it instead turns into a Werewolf under the DM's control with 10 Hit Points. Success: the target is immune to this werewolf's curse for 24 hours.",
+      "forms": [
+        "wolf",
+        "hybrid"
+      ],
+      "on_hit": [
+        {
+          "do": "curse",
+          "curse": "lycanthropy",
+          "save": {
+            "ability": "con",
+            "dc": 12
+          },
+          "only_types": [
+            "humanoid"
+          ],
+          "immune_on_success": true
+        }
+      ]
     },
     {
       "id": "scratch",
@@ -146,7 +159,11 @@
         }
       ],
       "summary": "Shoots a longbow; usable only in humanoid or hybrid form.",
-      "text": "Usable only in humanoid or hybrid form."
+      "text": "Usable only in humanoid or hybrid form.",
+      "forms": [
+        "humanoid",
+        "hybrid"
+      ]
     }
   ],
   "bonus_actions": [
@@ -155,7 +172,8 @@
       "name": "Shape-Shift",
       "kind": "special",
       "summary": "Turns into a Large hybrid or a Medium wolf (Speed 40 ft.), or back to its humanoid form.",
-      "text": "The werewolf changes into a Large wolf-humanoid hybrid or a Medium wolf, or back into its true humanoid form. Its statistics stay the same in every form except its size, and its Speed is 40 feet while in wolf form. Equipment it wears or carries doesn't change with it."
+      "text": "The werewolf changes into a Large wolf-humanoid hybrid or a Medium wolf, or back into its true humanoid form. Its statistics stay the same in every form except its size, and its Speed is 40 feet while in wolf form. Equipment it wears or carries doesn't change with it.",
+      "do": "shape_shift"
     }
   ],
   "regions": [

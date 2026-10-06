@@ -25,11 +25,8 @@
     "amount": 10
   },
   "targets": {
-    "kind": "creature_or_object",
-    "count": 1,
-    "description": "Hurled flame: one creature or object within 60 feet, as a Magic action."
+    "kind": "self"
   },
-  "attack": "ranged",
   "damage": [
     {
       "dice": "1d8",
@@ -43,7 +40,6 @@
     {
       "effect": "light",
       "params": {
-        "target": "self",
         "bright": 20,
         "dim": 20
       }
@@ -54,5 +50,17 @@
     "damage"
   ],
   "summary": "A flame in your hand gives light; as a Magic action, hurl fire 60 feet for 1d8 Fire damage.",
-  "text": "A flickering flame appears in your hand for the duration. It gives off no heat and ignites nothing, but it sheds Bright Light in a 20-foot radius and Dim Light for a further 20 feet. Casting the spell again ends it. Until the spell ends, you can take a Magic action to hurl fire at a creature or object within 60 feet of you: make a ranged spell attack, and on a hit the target takes 1d8 Fire damage. The damage becomes 2d8 at character level 5, 3d8 at level 11 and 4d8 at level 17."
+  "text": "A flickering flame appears in your hand for the duration. It gives off no heat and ignites nothing, but it sheds Bright Light in a 20-foot radius and Dim Light for a further 20 feet. Casting the spell again ends it. Until the spell ends, you can take a Magic action to hurl fire at a creature or object within 60 feet of you: make a ranged spell attack, and on a hit the target takes 1d8 Fire damage. The damage becomes 2d8 at character level 5, 3d8 at level 11 and 4d8 at level 17.",
+  "sustain": [
+    {
+      "do": "attack",
+      "cost": "magic",
+      "range": 60,
+      "attack": "ranged",
+      "not_this_turn": false,
+      "label": "Hurl Flame",
+      "sub": "60 ft · fire",
+      "help": "A Magic action: a ranged spell attack at a creature within 60 ft."
+    }
+  ]
 }

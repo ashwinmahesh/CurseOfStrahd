@@ -72,7 +72,8 @@
           "type": "bludgeoning"
         }
       ],
-      "summary": "Clubs a target with a mace."
+      "summary": "Clubs a target with a mace.",
+      "weapon": true
     },
     {
       "id": "heavy_crossbow",
@@ -92,7 +93,8 @@
           "type": "piercing"
         }
       ],
-      "summary": "Fires a heavy crossbow bolt."
+      "summary": "Fires a heavy crossbow bolt.",
+      "weapon": true
     }
   ],
   "regions": [

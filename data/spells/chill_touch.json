@@ -44,5 +44,19 @@
     "debuff"
   ],
   "summary": "Melee spell attack for 1d10 Necrotic damage; the target can't regain Hit Points until your next turn ends.",
-  "text": "Make a melee spell attack against one target within your reach. On a hit it takes 1d10 Necrotic damage and can't regain Hit Points until the end of your next turn. The damage becomes 2d10 at character level 5, 3d10 at level 11 and 4d10 at level 17."
+  "text": "Make a melee spell attack against one target within your reach. On a hit it takes 1d10 Necrotic damage and can't regain Hit Points until the end of your next turn. The damage becomes 2d10 at character level 5, 3d10 at level 11 and 4d10 at level 17.",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "until": "caster_turn_end",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "cant_regain_hp"
+          }
+        ]
+      }
+    }
+  ]
 }

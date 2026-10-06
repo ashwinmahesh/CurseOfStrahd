@@ -88,7 +88,8 @@
           "type": "slashing"
         }
       ],
-      "summary": "Slashes with a scimitar."
+      "summary": "Slashes with a scimitar.",
+      "weapon": true
     },
     {
       "id": "pistol",
@@ -108,7 +109,8 @@
           "type": "piercing"
         }
       ],
-      "summary": "Fires a pistol."
+      "summary": "Fires a pistol.",
+      "weapon": true
     }
   ],
   "reactions": [
@@ -118,7 +120,8 @@
       "kind": "special",
       "trigger": "The bandit is hit by a melee attack roll while holding a weapon.",
       "summary": "Reaction: +2 AC against one melee attack that hit it, possibly turning the hit into a miss.",
-      "text": "Trigger: the bandit is hit by a melee attack roll while it holds a weapon. Response: the bandit gains a +2 bonus to its AC against that one attack, which can make the attack miss."
+      "text": "Trigger: the bandit is hit by a melee attack roll while it holds a weapon. Response: the bandit gains a +2 bonus to its AC against that one attack, which can make the attack miss.",
+      "ac_bonus": 2
     }
   ],
   "regions": [

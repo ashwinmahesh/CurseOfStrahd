@@ -74,7 +74,7 @@
           "value": "amorphous"
         }
       ],
-      "implemented": "engine"
+      "implemented": "text"
     },
     {
       "id": "sunlight_weakness",
@@ -88,7 +88,8 @@
           "value": "sunlight_weakness"
         }
       ],
-      "implemented": "engine"
+      "implemented": "engine",
+      "sunlight": "weakness"
     }
   ],
   "actions": [
@@ -108,7 +109,14 @@
         }
       ],
       "summary": "Necrotic touch that lowers the target's Strength by 1d4; at 0 Strength the target dies.",
-      "text": "Hit: 5 (1d6 + 2) Necrotic damage, and the target's Strength score is reduced by 1d4. If this brings the score to 0, the target dies. A Humanoid killed by this attack rises as a new Shadow 1d4 hours later."
+      "text": "Hit: 5 (1d6 + 2) Necrotic damage, and the target's Strength score is reduced by 1d4. If this brings the score to 0, the target dies. A Humanoid killed by this attack rises as a new Shadow 1d4 hours later.",
+      "on_hit": [
+        {
+          "do": "ability_drain",
+          "ability": "str",
+          "dice": "1d4"
+        }
+      ]
     }
   ],
   "bonus_actions": [
@@ -117,7 +125,8 @@
       "name": "Shadow Stealth",
       "kind": "special",
       "summary": "Takes the Hide action while in Dim Light or Darkness.",
-      "text": "If the shadow is in Dim Light or Darkness, it can take the Hide action as a Bonus Action."
+      "text": "If the shadow is in Dim Light or Darkness, it can take the Hide action as a Bonus Action.",
+      "do": "hide_in_dim"
     }
   ],
   "regions": [

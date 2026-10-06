@@ -53,5 +53,24 @@
     "control"
   ],
   "summary": "15-foot Emanation halves foes' Speed and deals 3d8 Radiant (Necrotic if evil) damage, Wis save half.",
-  "text": "Protective spirits circle you in a 15-foot Emanation until the spell ends. If you are good or neutral they look angelic or fey (your choice); if you are evil they look fiendish. When you cast the spell, you can choose creatures it won't affect. Every other creature has its Speed halved in the Emanation, and it makes a Wisdom saving throw whenever the Emanation moves into its space, whenever it enters the Emanation, and whenever it ends its turn there. On a failure it takes 3d8 Radiant damage (Necrotic damage instead if you are evil); on a success it takes half as much. A creature makes this save no more than once per turn. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 3."
+  "text": "Protective spirits circle you in a 15-foot Emanation until the spell ends. If you are good or neutral they look angelic or fey (your choice); if you are evil they look fiendish. When you cast the spell, you can choose creatures it won't affect. Every other creature has its Speed halved in the Emanation, and it makes a Wisdom saving throw whenever the Emanation moves into its space, whenever it enters the Emanation, and whenever it ends its turn there. On a failure it takes 3d8 Radiant damage (Necrotic damage instead if you are evil); on a success it takes half as much. A creature makes this save no more than once per turn. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 3.",
+  "choice": {
+    "kind": "damage_type",
+    "label": "Spirits",
+    "from": [
+      "radiant",
+      "necrotic"
+    ]
+  },
+  "zone": {
+    "triggers": [
+      "enter",
+      "end_turn",
+      "moved_into"
+    ],
+    "spare_allies": true,
+    "terrain": "difficult",
+    "terrain_affected_only": true,
+    "damage_type_choice": "yes"
+  }
 }

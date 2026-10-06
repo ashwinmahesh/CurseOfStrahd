@@ -25,7 +25,7 @@
         "max": "pb",
         "recharge": "short"
       },
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "darkvision",
@@ -39,7 +39,7 @@
           "value": 120
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "relentless_endurance",

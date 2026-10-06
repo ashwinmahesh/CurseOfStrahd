@@ -49,5 +49,6 @@
     "damage"
   ],
   "summary": "A 10-ft-radius Sphere of sound: 3d8 Thunder, Con save for half; Constructs save with Disadvantage.",
-  "text": "A loud noise erupts from a point you choose within range. Each creature in a 10-foot-radius Sphere centered there makes a Constitution saving throw, taking 3d8 Thunder damage on a failure or half as much on a success. A Construct has Disadvantage on this save. Nonmagical objects in the area that nobody is wearing or carrying also take the damage. The damage increases by 1d8 for each spell slot level above 2."
+  "text": "A loud noise erupts from a point you choose within range. Each creature in a 10-foot-radius Sphere centered there makes a Constitution saving throw, taking 3d8 Thunder damage on a failure or half as much on a success. A Construct has Disadvantage on this save. Nonmagical objects in the area that nobody is wearing or carrying also take the damage. The damage increases by 1d8 for each spell slot level above 2.",
+  "save_disadvantage_for": "construct"
 }

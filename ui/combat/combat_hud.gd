@@ -618,7 +618,7 @@ func _refresh_hotbar() -> void:
 		var reason := str(a["reason"]) if not bool(a["legal"]) else ""
 		if not mine and reason == "":
 			reason = "Not %s's turn" % c.name()
-		b.tooltip_text = "%s (%s)%s%s\nRight-click for more" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else ""]
+		b.tooltip_text = "%s (%s)%s%s\nRight-click for more%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else "", (" (choose the %s)" % str(a.get("choice_label", "")).to_lower()) if a.has("choices") else ""]
 		var act := a
 		b.pressed.connect(func() -> void: action_chosen.emit(act))
 		b.gui_input.connect(func(ev: InputEvent) -> void:
@@ -653,6 +653,15 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 	var usable := bool(action["legal"]) and mine
 	var why := "" if usable else (str(action.get("reason", "")) if mine else "Not this character's turn")
 	var items: Array[Dictionary] = [{"id": "info", "label": "Info"}, {"id": "use", "label": "Use", "enabled": usable, "why": why}]
+	var choices := action.get("choices", []) as Array
+	if not choices.is_empty():
+		items.append({"separator": str(action.get("choice_label", "Choose"))})
+		for i in choices.size():
+			var ch0 := choices[i] as Dictionary
+			items.append({"id": "choice:%d" % i, "label": "%s: %s" % [action["label"], ch0["label"]], "enabled": usable, "why": why})
+	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null:
+		items.append({"separator": "Ready"})
+		items.append({"id": "ready", "label": "Ready %s: release it when an enemy comes in range" % action["label"], "enabled": usable, "why": why})
 	if str(action["kind"]) == "spell" and shown != null:
 		var levels := catalog.slot_choices(shown, str(action["spell_id"]))
 		if not levels.is_empty():
@@ -673,6 +682,19 @@ func _on_menu(id: String) -> void:
 		show_details(str(d["title"]), d["lines"] as Array)
 	elif id == "use":
 		action_chosen.emit(action)
+	elif id == "ready":
+		var ready := action.duplicate(true)
+		ready["kind"] = "ready_spell"
+		ready["targeting"] = "none"
+		action_chosen.emit(ready)
+	elif id.begins_with("choice:"):
+		var picked := action.duplicate(true)
+		var ch0 := (action["choices"] as Array)[int(id.get_slice(":", 1))] as Dictionary
+		var opts := (picked.get("opts", {}) as Dictionary).duplicate()
+		opts["choice"] = str(ch0["value"])
+		picked["opts"] = opts
+		picked["sub"] = str(action["sub"]).get_slice(" · ", 0) + " · " + str(ch0["label"])
+		action_chosen.emit(picked)
 	elif id.begins_with("cast:"):
 		cast_at_level.emit(action, int(id.get_slice(":", 1)))
 

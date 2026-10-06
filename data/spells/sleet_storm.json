@@ -39,12 +39,28 @@
   },
   "save": "dex",
   "save_success": "none",
-  "conditions": [
-    "prone"
-  ],
   "tags": [
     "control"
   ],
   "summary": "Sleet fills a 20-foot-radius Cylinder: Heavily Obscured, Difficult Terrain, Dex save or Prone and lose Concentration.",
-  "text": "Until the spell ends, sleet falls in a Cylinder 20 feet in radius and 40 feet tall centered on a point you choose within 150 feet. The area is Heavily Obscured, and exposed flames in it are put out. The ground in the Cylinder is Difficult Terrain. When a creature enters the Cylinder for the first time on a turn or starts its turn there, it makes a Dexterity saving throw; on a failure it has the Prone condition and loses Concentration."
+  "text": "Until the spell ends, sleet falls in a Cylinder 20 feet in radius and 40 feet tall centered on a point you choose within 150 feet. The area is Heavily Obscured, and exposed flames in it are put out. The ground in the Cylinder is Difficult Terrain. When a creature enters the Cylinder for the first time on a turn or starts its turn there, it makes a Dexterity saving throw; on a failure it has the Prone condition and loses Concentration.",
+  "zone": {
+    "triggers": [
+      "enter",
+      "start_turn"
+    ],
+    "terrain": "difficult",
+    "obscured": "heavy",
+    "save": "dex",
+    "effects": [
+      {
+        "effect": "condition",
+        "params": {
+          "plain": true,
+          "breaks_concentration": true,
+          "condition": "prone"
+        }
+      }
+    ]
+  }
 }

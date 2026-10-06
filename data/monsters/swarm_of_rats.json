@@ -86,13 +86,15 @@
           "average": 5,
           "dice": "2d4",
           "type": "piercing",
-          "when": "while the swarm isn't Bloodied"
+          "when": "while the swarm isn't Bloodied",
+          "if": "not_bloodied"
         },
         {
           "average": 2,
           "dice": "1d4",
           "type": "piercing",
-          "when": "instead, while the swarm is Bloodied"
+          "when": "instead, while the swarm is Bloodied",
+          "if": "bloodied"
         }
       ],
       "summary": "Many small bites; the damage drops once the swarm is Bloodied.",

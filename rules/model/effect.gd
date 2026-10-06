@@ -46,11 +46,27 @@ var order: int = 0
 var ends_on_damage: bool = false
 ## Ends if the creature becomes Incapacitated (Dodge).
 var ends_when_incapacitated: bool = false
-## A save the creature repeats at the end of each of its turns to end this effect: {ability, dc}.
+## A save the creature repeats to end this effect: {ability, dc, when: "end"|"start", on_damage: bool,
+## damage_advantage: bool, then: ...}. `when` defaults to the end of each of its turns.
 var repeat_save: Dictionary = {}
 ## Turn ends of the owner to let pass before END_OF_TURN expires: 1 when the effect starts during the owner's own
 ## turn, so "until the end of your next turn" doesn't end with the current one.
 var skip_turn_ends: int = 0
+## Ends after the creature's next D20 Test with one of these keys (Mind Sliver: "save:all"; True Strike-like
+## "attack" buffs). Empty = not consumed.
+var consume_on: Array[String] = []
+## Ends after the next attack roll made against the creature (Guiding Bolt's Advantage).
+var consume_when_attacked: bool = false
+## Things the creature does that end this effect: attack_roll, deal_damage, cast_spell (Invisibility).
+var ends_on: Array[String] = []
+## An action the creature can take to end it with an ability check: {skill, dc} (Web, Entangle).
+var escape: Dictionary = {}
+## Level of the spell that made it (Dispel Magic), 0 for cantrips and non-spells.
+var spell_level: int = 0
+## Counters and links bespoke rules keep on the effect (Mirror Image's duplicates, Warding Bond's caster).
+var data: Dictionary = {}
+## Called once when the effect is removed for any reason (Haste's lethargy).
+var on_end: Callable = Callable()
 
 
 func _init(name_: String = "", source_kind_: StringName = &"spell", source_id_: String = "") -> void:
@@ -174,7 +190,8 @@ func to_dict() -> Dictionary:
 		"conditions": conds, "ends": int(ends), "rounds_left": rounds_left, "minutes_left": minutes_left,
 		"turn_owner_id": turn_owner_id, "stack_key": stack_key, "ends_on_damage": ends_on_damage,
 		"ends_when_incapacitated": ends_when_incapacitated, "repeat_save": repeat_save.duplicate(true),
-		"skip_turn_ends": skip_turn_ends,
+		"skip_turn_ends": skip_turn_ends, "consume_on": consume_on.duplicate(), "consume_when_attacked": consume_when_attacked,
+		"ends_on": ends_on.duplicate(), "escape": escape.duplicate(), "spell_level": spell_level, "data": data.duplicate(true),
 		"concentration": {"caster": conc.caster().id if conc != null and conc.caster() != null else "", "source": conc.source_id if conc != null else ""}}
 
 
@@ -196,6 +213,14 @@ static func from_dict(d: Dictionary) -> Effect:
 	e.ends_when_incapacitated = bool(d.get("ends_when_incapacitated", false))
 	e.repeat_save = (d.get("repeat_save", {}) as Dictionary).duplicate(true)
 	e.skip_turn_ends = int(d.get("skip_turn_ends", 0))
+	for k: Variant in d.get("consume_on", []):
+		e.consume_on.append(str(k))
+	e.consume_when_attacked = bool(d.get("consume_when_attacked", false))
+	for k2: Variant in d.get("ends_on", []):
+		e.ends_on.append(str(k2))
+	e.escape = (d.get("escape", {}) as Dictionary).duplicate()
+	e.spell_level = int(d.get("spell_level", 0))
+	e.data = (d.get("data", {}) as Dictionary).duplicate(true)
 	return e
 
 

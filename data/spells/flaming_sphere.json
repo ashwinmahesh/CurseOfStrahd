@@ -31,11 +31,8 @@
     "concentration": true
   },
   "targets": {
-    "kind": "point",
-    "description": "an unoccupied space on the ground; affects creatures within 5 feet of the sphere"
+    "kind": "point"
   },
-  "save": "dex",
-  "save_success": "half",
   "damage": [
     {
       "dice": "2d6",
@@ -45,20 +42,37 @@
   "upcast": {
     "damage": "1d6"
   },
-  "effects": [
-    {
-      "effect": "light",
-      "params": {
-        "bright": 20,
-        "dim": 20
-      }
-    }
-  ],
   "tags": [
     "damage",
     "control",
     "light"
   ],
   "summary": "Roll a 5-ft ball of fire around; creatures ending a turn within 5 ft of it take 2d6 Fire (Dex half).",
-  "text": "A sphere of fire 5 feet across appears in an unoccupied space on the ground within range and lasts for the duration. Any creature that ends its turn within 5 feet of it makes a Dexterity saving throw, taking 2d6 Fire damage on a failure or half as much on a success. As a Bonus Action you can roll the sphere up to 30 feet along the ground; if you roll it into a creature's space, that creature makes the save against it and the sphere stops moving for the turn. You can roll it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. Flammable objects that nobody is wearing or carrying catch fire when it touches them, and it sheds Bright Light in a 20-foot radius and Dim Light for another 20 feet. The damage increases by 1d6 for each spell slot level above 2."
+  "text": "A sphere of fire 5 feet across appears in an unoccupied space on the ground within range and lasts for the duration. Any creature that ends its turn within 5 feet of it makes a Dexterity saving throw, taking 2d6 Fire damage on a failure or half as much on a success. As a Bonus Action you can roll the sphere up to 30 feet along the ground; if you roll it into a creature's space, that creature makes the save against it and the sphere stops moving for the turn. You can roll it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. Flammable objects that nobody is wearing or carrying catch fire when it touches them, and it sheds Bright Light in a 20-foot radius and Dim Light for another 20 feet. The damage increases by 1d6 for each spell slot level above 2.",
+  "object": {
+    "kind": "sphere",
+    "range": 60,
+    "rules": {
+      "triggers": [
+        "near_end_turn"
+      ],
+      "save": "dex",
+      "half": true,
+      "reach": 5,
+      "light": {
+        "bright": 20,
+        "dim": 20
+      }
+    }
+  },
+  "sustain": [
+    {
+      "do": "move_object",
+      "cost": "bonus_action",
+      "move": 30,
+      "label": "Roll Flaming Sphere",
+      "sub": "30 ft",
+      "help": "A Bonus Action: roll the sphere up to 30 ft; a creature it rolls into makes the save."
+    }
+  ]
 }

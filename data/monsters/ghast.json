@@ -56,7 +56,19 @@
       "action": "passive",
       "summary": "Creatures starting their turn within 5 ft. make a DC 10 Con save or are Poisoned briefly.",
       "text": "Any creature that starts its turn in the 5-foot Emanation around the ghast makes a DC 10 Constitution saving throw. On a failure it has the Poisoned condition until the start of its next turn. On a success it is immune to this ghast's Stench for 24 hours.",
-      "implemented": "text"
+      "implemented": "engine",
+      "aura": {
+        "radius": 5,
+        "trigger": "start_turn",
+        "save": {
+          "ability": "con",
+          "dc": 10
+        },
+        "condition": "poisoned",
+        "until": "target_turn_start",
+        "immune_on_success": true,
+        "affects": "others"
+      }
     }
   ],
   "actions": [
@@ -102,11 +114,22 @@
         "dc": 10,
         "success": "none"
       },
-      "conditions": [
-        "paralyzed"
-      ],
       "summary": "Rakes a target; a non-Undead target makes a DC 10 Con save or is Paralyzed.",
-      "text": "Hit: 10 (2d6 + 3) Slashing damage. If the target is a creature that isn't Undead, it makes a DC 10 Constitution saving throw. On a failure it has the Paralyzed condition until the end of its next turn."
+      "text": "Hit: 10 (2d6 + 3) Slashing damage. If the target is a creature that isn't Undead, it makes a DC 10 Constitution saving throw. On a failure it has the Paralyzed condition until the end of its next turn.",
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "paralyzed",
+          "save": {
+            "ability": "con",
+            "dc": 10
+          },
+          "until": "target_turn_end",
+          "not_types": [
+            "undead"
+          ]
+        }
+      ]
     }
   ],
   "regions": [

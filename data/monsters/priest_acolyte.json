@@ -66,7 +66,8 @@
           "type": "radiant"
         }
       ],
-      "summary": "Strikes with a mace for bludgeoning plus radiant damage."
+      "summary": "Strikes with a mace for bludgeoning plus radiant damage.",
+      "weapon": true
     },
     {
       "id": "radiant_flame",
@@ -105,7 +106,12 @@
         "per": "day"
       },
       "summary": "Once a day: casts Bless, Healing Word or Sanctuary as a Bonus Action.",
-      "text": "Once per day, the priest casts one of Bless, Healing Word or Sanctuary, using Wisdom as its spellcasting ability as for its Spellcasting action. The one use covers all three spells."
+      "text": "Once per day, the priest casts one of Bless, Healing Word or Sanctuary, using Wisdom as its spellcasting ability as for its Spellcasting action. The one use covers all three spells.",
+      "cast": [
+        "bless",
+        "healing_word",
+        "sanctuary"
+      ]
     }
   ],
   "spellcasting": {
@@ -113,7 +119,9 @@
     "at_will": [
       "light",
       "thaumaturgy"
-    ]
+    ],
+    "dc": 12,
+    "attack": 4
   },
   "regions": [
     "village_of_barovia"

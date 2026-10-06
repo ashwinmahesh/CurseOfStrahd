@@ -49,7 +49,7 @@
           "value": "improvised"
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "tavern_brawler_push",
@@ -57,7 +57,7 @@
       "summary": "Once per turn, an Unarmed Strike hit during the Attack action can both damage and push the target 5 feet.",
       "text": "When you hit a creature with an Unarmed Strike as part of the Attack action on your turn, you can deal damage to it and also push it 5 feet away from you. You can use this benefit only once per turn.",
       "action": "special",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

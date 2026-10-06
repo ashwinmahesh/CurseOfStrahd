@@ -191,7 +191,7 @@
           "id": "ritual_adept",
           "name": "Ritual Adept",
           "summary": "Cast any Ritual spell in your spellbook as a Ritual without preparing it.",
-          "implemented": "engine"
+          "implemented": "text"
         },
         {
           "id": "arcane_recovery",
@@ -199,7 +199,7 @@
           "summary": "Once per Long Rest, after a Short Rest, recover slots totalling half your Wizard level (round up).",
           "text": "When you finish a Short Rest you can recover expended spell slots whose levels add up to no more than half your Wizard level (round up), none of level 6 or higher. Once per Long Rest.",
           "uses_resource": "arcane_recovery",
-          "implemented": "engine"
+          "implemented": "text"
         }
       ]
     },
@@ -275,7 +275,7 @@
           "id": "memorize_spell",
           "name": "Memorize Spell",
           "summary": "After a Short Rest, swap one prepared spell for another in your spellbook.",
-          "implemented": "engine"
+          "implemented": "text"
         }
       ]
     },

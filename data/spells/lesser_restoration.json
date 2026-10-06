@@ -28,15 +28,13 @@
     "kind": "instantaneous"
   },
   "targets": {
-    "kind": "creature",
+    "kind": "ally",
     "count": 1
   },
   "effects": [
     {
-      "effect": "custom",
+      "effect": "end_condition",
       "params": {
-        "id": "end_condition",
-        "count": 1,
         "conditions": [
           "blinded",
           "deafened",
@@ -50,5 +48,15 @@
     "restoration"
   ],
   "summary": "Bonus Action: touch a creature to end one condition on it: Blinded, Deafened, Paralyzed or Poisoned.",
-  "text": "You touch a creature and end one of these conditions on it: Blinded, Deafened, Paralyzed or Poisoned."
+  "text": "You touch a creature and end one of these conditions on it: Blinded, Deafened, Paralyzed or Poisoned.",
+  "choice": {
+    "kind": "condition",
+    "label": "Condition",
+    "from": [
+      "blinded",
+      "deafened",
+      "paralyzed",
+      "poisoned"
+    ]
+  }
 }

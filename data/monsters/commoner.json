@@ -64,7 +64,8 @@
           "type": "bludgeoning"
         }
       ],
-      "summary": "Swings a club."
+      "summary": "Swings a club.",
+      "weapon": true
     }
   ],
   "regions": [

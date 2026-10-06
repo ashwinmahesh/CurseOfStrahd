@@ -38,11 +38,6 @@
     {
       "dice": "2d12",
       "type": "lightning"
-    },
-    {
-      "dice": "1d12",
-      "type": "lightning",
-      "per": "turn"
     }
   ],
   "upcast": {
@@ -53,5 +48,22 @@
     "damage"
   ],
   "summary": "Ranged spell attack for 2d12 Lightning; on later turns a Bonus Action deals 1d12 Lightning automatically.",
-  "text": "A sustained arc of lightning links you to a creature within range. Make a ranged spell attack against it; on a hit it takes 2d12 Lightning damage. On each of your later turns while the spell lasts, you can take a Bonus Action to deal 1d12 Lightning damage to the target automatically, even if the first attack missed. The spell ends if the target is ever out of the spell's range or has Total Cover from you. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the initial damage increases by 1d12 for each slot level above 1."
+  "text": "A sustained arc of lightning links you to a creature within range. Make a ranged spell attack against it; on a hit it takes 2d12 Lightning damage. On each of your later turns while the spell lasts, you can take a Bonus Action to deal 1d12 Lightning damage to the target automatically, even if the first attack missed. The spell ends if the target is ever out of the spell's range or has Total Cover from you. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the initial damage increases by 1d12 for each slot level above 1.",
+  "sustain": [
+    {
+      "do": "damage",
+      "cost": "bonus_action",
+      "range": 60,
+      "damage": [
+        {
+          "dice": "1d12",
+          "type": "lightning",
+          "scales": false
+        }
+      ],
+      "label": "Witch Bolt: arc",
+      "sub": "1d12 lightning",
+      "help": "A Bonus Action: 1d12 Lightning damage to the target, no roll needed."
+    }
+  ]
 }

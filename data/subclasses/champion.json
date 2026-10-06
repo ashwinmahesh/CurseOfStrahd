@@ -34,7 +34,7 @@
         "name": "Remarkable Athlete",
         "summary": "Advantage on Initiative and Strength (Athletics) checks; move half your Speed after a Critical Hit.",
         "text": "You have Advantage on Initiative rolls and Strength (Athletics) checks. Right after you score a Critical Hit, you can move up to half your Speed without provoking Opportunity Attacks.",
-        "implemented": "data",
+        "implemented": "engine",
         "modifiers": [
           {
             "stat": "advantage",
@@ -96,6 +96,10 @@
           {
             "stat": "advantage",
             "on": "death_save"
+          },
+          {
+            "stat": "flag",
+            "value": "survivor"
           }
         ]
       }

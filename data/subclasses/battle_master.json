@@ -135,7 +135,7 @@
               "id": "commanding_presence",
               "name": "Commanding Presence",
               "summary": "Add a Superiority Die to a Charisma (Intimidation, Performance or Persuasion) check.",
-              "implemented": "engine"
+              "implemented": "text"
             },
             {
               "id": "disarming_attack",
@@ -225,7 +225,7 @@
               "id": "tactical_assessment",
               "name": "Tactical Assessment",
               "summary": "Add a Superiority Die to an Intelligence (History or Investigation) or Wisdom (Insight) check.",
-              "implemented": "engine"
+              "implemented": "text"
             },
             {
               "id": "trip_attack",
@@ -279,7 +279,13 @@
         "name": "Know Your Enemy",
         "summary": "Bonus Action: learn a creature's Immunities, Resistances and Vulnerabilities.",
         "text": "As a Bonus Action, study a creature within 30 feet to learn its damage and condition Immunities, Resistances and Vulnerabilities. Once per Long Rest, or spend a Superiority Die to do it again.",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "know_your_enemy",
+          "name": "Know Your Enemy (free)",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     },
     {
@@ -297,7 +303,7 @@
         "id": "relentless",
         "name": "Relentless",
         "summary": "Once per turn, roll 1d8 for a maneuver instead of spending a Superiority Die.",
-        "implemented": "engine"
+        "implemented": "text"
       }
     },
     {

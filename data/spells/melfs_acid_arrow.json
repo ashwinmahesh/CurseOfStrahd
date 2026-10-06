@@ -46,9 +46,8 @@
       "params": {
         "dice": "2d4",
         "type": "acid",
-        "when": "end_of_target_next_turn",
-        "on": "hit",
-        "upcast": "1d4"
+        "upcast": "1d4",
+        "on": "hit"
       }
     }
   ],
@@ -56,5 +55,6 @@
     "damage"
   ],
   "summary": "Ranged spell attack: 4d4 Acid on a hit and 2d4 Acid at the end of its next turn; half initial on a miss.",
-  "text": "Make a ranged spell attack against a target within range. On a hit it takes 4d4 Acid damage, then another 2d4 Acid damage at the end of its next turn. On a miss, it takes half the initial damage and none of the later damage. Both the initial and the later damage increase by 1d4 for each spell slot level above 2."
+  "text": "Make a ranged spell attack against a target within range. On a hit it takes 4d4 Acid damage, then another 2d4 Acid damage at the end of its next turn. On a miss, it takes half the initial damage and none of the later damage. Both the initial and the later damage increase by 1d4 for each spell slot level above 2.",
+  "miss": "half"
 }

@@ -31,16 +31,29 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
-    "count": 1,
-    "description": "one creature in the aura (you included), when you cast it and at the start of each of your turns"
-  },
-  "heal": {
-    "dice": "2d6"
+    "kind": "self"
   },
   "tags": [
     "healing"
   ],
   "summary": "30-foot Emanation: on casting and at the start of each of your turns, one creature in it regains 2d6 HP.",
-  "text": "Healing energy surrounds you in a 30-foot Emanation until the spell ends. When you cast the spell, and again at the start of each of your turns while it lasts, you can pick one creature in the aura (yourself included) to regain 2d6 Hit Points. The healing needs no action."
+  "text": "Healing energy surrounds you in a 30-foot Emanation until the spell ends. When you cast the spell, and again at the start of each of your turns while it lasts, you can pick one creature in the aura (yourself included) to regain 2d6 Hit Points. The healing needs no action.",
+  "zone": {
+    "triggers": [],
+    "affects": "allies"
+  },
+  "sustain": [
+    {
+      "do": "heal_one",
+      "cost": "bonus_action",
+      "not_this_turn": false,
+      "range": 30,
+      "heal": {
+        "dice": "2d6"
+      },
+      "label": "Aura of Vitality: heal",
+      "sub": "2d6",
+      "help": "A Bonus Action: one creature in the aura (you included) regains 2d6 Hit Points."
+    }
+  ]
 }

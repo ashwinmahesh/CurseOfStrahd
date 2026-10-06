@@ -43,11 +43,10 @@
     {
       "effect": "condition",
       "params": {
-        "condition": "charmed",
         "ends_on": [
-          "damaged_by_caster_or_allies",
-          "suggestion_completed"
-        ]
+          "damaged_by_caster_side"
+        ],
+        "condition": "charmed"
       }
     }
   ],

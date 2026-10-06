@@ -43,7 +43,7 @@
           "value": 60
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "healing_hands",
@@ -57,7 +57,7 @@
         "max": 1,
         "recharge": "long"
       },
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "light_bearer",
@@ -86,7 +86,8 @@
         "max": 1,
         "recharge": "long"
       },
-      "implemented": "text"
+      "implemented": "engine",
+      "at_level": 3
     }
   ]
 }

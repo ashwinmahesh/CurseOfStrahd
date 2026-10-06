@@ -41,11 +41,23 @@
   },
   "effects": [
     {
+      "effect": "modifiers",
+      "params": {
+        "until": "caster_turn_end",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "no_invisible"
+          }
+        ]
+      }
+    },
+    {
       "effect": "light",
       "params": {
-        "target": "creature",
         "bright": 0,
-        "dim": 10
+        "dim": 10,
+        "until": "caster_turn_end"
       }
     }
   ],

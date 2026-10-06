@@ -25,7 +25,7 @@
           "value": 120
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "dwarven_resilience",
@@ -90,7 +90,7 @@
           }
         }
       ],
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

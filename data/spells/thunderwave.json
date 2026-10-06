@@ -49,5 +49,13 @@
     "control"
   ],
   "summary": "15-foot Cube from you: Constitution save, 2d8 Thunder damage and a 10-foot push; half damage, no push on a success.",
-  "text": "A wave of thunder bursts from you in a 15-foot Cube. Each creature in the Cube makes a Constitution saving throw. On a failure it takes 2d8 Thunder damage and is pushed 10 feet away from you; on a success it takes half as much damage and isn't pushed. Unsecured objects entirely inside the Cube are also pushed 10 feet away from you, and the boom can be heard up to 300 feet away. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 1."
+  "text": "A wave of thunder bursts from you in a 15-foot Cube. Each creature in the Cube makes a Constitution saving throw. On a failure it takes 2d8 Thunder damage and is pushed 10 feet away from you; on a success it takes half as much damage and isn't pushed. Unsecured objects entirely inside the Cube are also pushed 10 feet away from you, and the boom can be heard up to 300 feet away. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 1.",
+  "effects": [
+    {
+      "effect": "push",
+      "params": {
+        "feet": 10
+      }
+    }
+  ]
 }

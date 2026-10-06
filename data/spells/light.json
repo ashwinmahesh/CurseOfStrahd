@@ -28,15 +28,14 @@
     "amount": 1
   },
   "targets": {
-    "kind": "object",
+    "kind": "ally",
     "count": 1,
-    "description": "One Large or smaller object not worn or carried by someone else."
+    "description": "An object you touch: a held torch, a shield or a weapon (the light moves with its bearer)."
   },
   "effects": [
     {
       "effect": "light",
       "params": {
-        "target": "object",
         "bright": 20,
         "dim": 20
       }

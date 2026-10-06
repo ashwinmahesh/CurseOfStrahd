@@ -11,8 +11,8 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 | species | 10 | 9 | 1 |
 | backgrounds | 16 | 4 | 12 |
 | feats | 75 | 17 | 58 |
-| spells | 173 | 157 | 16 |
-| items | 183 | 182 | 1 |
+| spells | 176 | 157 | 19 |
+| items | 184 | 183 | 1 |
 | monsters | 30 | 28 | 2 |
 | conditions | 15 | 15 | 0 |
 
@@ -22,6 +22,6 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 - **species** (PHB2024, 1): Aasimar
 - **backgrounds** (PHB2024, 12): Artisan, Charlatan, Entertainer, Farmer, Guard, Guide, Hermit, Merchant, Noble, Sailor, Scribe, Wayfarer
 - **feats** (PHB2024, 58): Actor, Athlete, Blind Fighting, Boon of Energy Resistance, Boon of Fortitude, Boon of Recovery, Boon of Skill, Boon of Speed, Charger, Chef, Crafter, Crossbow Expert, Crusher, Defensive Duelist, Dual Wielder, Dueling, Durable, Elemental Adept, Fey Touched, Great Weapon Master, Healer, Heavily Armored, Heavy Armor Master, Inspiring Leader, Interception, Keen Mind, Lightly Armored, Lucky, Mage Slayer, Martial Weapon Training, Medium Armor Master, Moderately Armored, Mounted Combatant, Musician, Observant, Piercer, Poisoner, Polearm Master, Protection, Resilient, Ritual Caster, Sentinel, Shadow Touched, Sharpshooter, Shield Master, Skill Expert, Skulker, Slasher, Speedy, Spell Sniper, Tavern Brawler, Telekinetic, Telepathic, Thrown Weapon Fighting, Tough, Unarmed Fighting, War Caster, Weapon Master
-- **spells** (PHB2024, 16): Arcane Vigor, Aura of Vitality, Blade Ward, Cloud of Daggers, Crown of Madness, Crusader's Mantle, Feign Death, Friends, Mind Sliver, Summon Fey, Summon Undead, Thorn Whip, Thunderclap, Toll the Dead, Witch Bolt, Word of Radiance
+- **spells** (PHB2024, 19): Arcane Vigor, Aura of Vitality, Blade Ward, Cloud of Daggers, Crown of Madness, Crusader's Mantle, Etherealness, Feign Death, Friends, Mind Sliver, Phantasmal Killer, Plane Shift, Summon Fey, Summon Undead, Thorn Whip, Thunderclap, Toll the Dead, Witch Bolt, Word of Radiance
 - **items** (PHB2024, 1): Spellbook
 - **monsters** (CoS, 2): Broom of Animated Attack, Strahd Zombie

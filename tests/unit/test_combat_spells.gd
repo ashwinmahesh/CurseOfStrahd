@@ -226,7 +226,7 @@ func test_spiritual_weapon_attacks_again_as_a_bonus_action() -> void:
 	e.end_turn()
 	e.end_turn()
 	assert_eq(e.current().id, h.id)
-	var cell := e.spells.spirit_weapons[h.id]["cell"] as Vector2i
+	var cell := e.spells.weapon_of(h).cell
 	var r2 := e.spells.spiritual_weapon_attack(h, w, cell)
 	assert_true(r2.ok, r2.reason)
 	assert_false(h.bonus_available)

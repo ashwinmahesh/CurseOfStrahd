@@ -27,7 +27,8 @@
     "concentration": true
   },
   "targets": {
-    "kind": "creature",
+    "kind": "ally",
+    "count": 99,
     "description": "any number of creatures within range"
   },
   "effects": [

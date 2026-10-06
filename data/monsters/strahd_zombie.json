@@ -51,7 +51,7 @@
       "action": "passive",
       "summary": "Taking 5+ Bludgeoning or Slashing damage at once can sever a leg, an arm or the head, which fight on.",
       "text": "Each time the zombie takes 5 or more Bludgeoning or Slashing damage from a single source, roll 1d20. 1-8: it loses a leg, if it has one left. 9-16: it loses an arm, if it has one left. 17-20: its head is cut off. Severed parts keep acting on the zombie's initiative with their own action and movement until the zombie drops to 0 Hit Points, at which point every part dies. A severed part has AC 8, and damage dealt to it is subtracted from the zombie's Hit Points. A severed leg can't attack and has a Speed of 5 feet. A severed arm has a Speed of 5 feet and can make one Claw attack on its turn, with Disadvantage; the body loses one Claw attack from its Multiattack for each arm it has lost. A severed head has a Speed of 0 feet and can make a Bite attack only against a target in its own space; the body loses its Bite and has the Blinded condition unless the head can see it. Missing one leg halves the zombie's Speed; missing both gives it the Prone condition, after which it can crawl if it has both arms, crawl at half Speed with one arm, and has a Speed of 0 (and can't gain Speed bonuses) with no arms or legs.",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ],
   "actions": [

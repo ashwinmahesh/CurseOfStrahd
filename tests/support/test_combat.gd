@@ -41,3 +41,22 @@ static func start_with(e: Encounter, first: Combatant) -> void:
 ## Re-seeds the encounter's dice so the next d20 shows `value`.
 static func next_d20(e: Encounter, value: int) -> void:
 	e.dice.reseed(TestChars.seed_for_d20(value))
+
+
+## A pregen that also knows `spell_ids` (added to its first spellcasting entry's prepared list), for testing spells
+## no pregen has.
+static func caster_with(e: Encounter, spell_ids: Array, cell: Vector2i, level: int = 9, id: String = "silvain_aster") -> Combatant:
+	var ch := TestChars.pregen(id, level)
+	var entry := ch.spellcasting[0] as Dictionary
+	var prepared := entry["prepared"] as Array
+	for s: Variant in spell_ids:
+		if not str(s) in prepared:
+			prepared.append(str(s))
+	return e.add(ch, &"party", cell)
+
+
+## A feeble foe for spell tests: every save and AC as low as they go, plenty of Hit Points.
+static func punching_bag(e: Encounter, cell: Vector2i, hp: int = 80, kind: String = "humanoid") -> Combatant:
+	var m := TestChars.dummy(hp, false, {"type": kind, "ac": 1,
+		"abilities": {"str": 1, "dex": 1, "con": 1, "int": 1, "wis": 1, "cha": 1}})
+	return e.add(m, &"enemy", cell)

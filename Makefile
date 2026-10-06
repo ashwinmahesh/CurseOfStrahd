@@ -23,6 +23,7 @@ test: import
 
 validate:
 	python3 tools/data/validate_data.py
+	python3 tools/data/check_implemented.py
 
 ## Compiles every rules/ script standalone (no autoloads allowed there).
 lint: import

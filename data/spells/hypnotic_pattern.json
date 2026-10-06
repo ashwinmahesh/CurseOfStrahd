@@ -39,27 +39,34 @@
   },
   "save": "wis",
   "save_success": "none",
-  "conditions": [
-    "charmed",
-    "incapacitated"
-  ],
   "effects": [
     {
       "effect": "condition",
       "params": {
+        "ends_on": [
+          "damage"
+        ],
+        "wakeable": true,
         "condition": "charmed"
       }
     },
     {
       "effect": "condition",
       "params": {
+        "ends_on": [
+          "damage"
+        ],
+        "wakeable": true,
         "condition": "incapacitated"
       }
     },
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
+        "ends_on": [
+          "damage"
+        ],
+        "wakeable": true,
         "modifiers": [
           {
             "stat": "speed_set",
@@ -73,5 +80,6 @@
     "control"
   ],
   "summary": "30-foot Cube: creatures that see it make a Wisdom save or are Charmed, Incapacitated and at Speed 0.",
-  "text": "A swirling pattern of colors flashes briefly in a 30-foot Cube within 120 feet, then vanishes. Each creature in the area that can see it makes a Wisdom saving throw; on a failure it has the Charmed condition for the duration, and while Charmed this way it has the Incapacitated condition and a Speed of 0. The spell ends for an affected creature if it takes any damage or if someone else uses an action to shake it out of its daze."
+  "text": "A swirling pattern of colors flashes briefly in a 30-foot Cube within 120 feet, then vanishes. Each creature in the area that can see it makes a Wisdom saving throw; on a failure it has the Charmed condition for the duration, and while Charmed this way it has the Incapacitated condition and a Speed of 0. The spell ends for an affected creature if it takes any damage or if someone else uses an action to shake it out of its daze.",
+  "area_targets": "all"
 }

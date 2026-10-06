@@ -122,7 +122,7 @@ func attack_profile(action_id: String) -> WeaponProfile:
 			p.attack.add_nonzero(m.source_name, mod_value(m, ctx))
 	for m in modifiers_for(&"d20"):
 		p.attack.add_nonzero(m.source_name, mod_value(m, ctx))
-	var dmg := a.get("damage", []) as Array
+	var dmg := _damage_entries(a)
 	p.damage_bonus = Breakdown.new("%s damage bonus" % p.name)
 	if not dmg.is_empty():
 		var first := dmg[0] as Dictionary
@@ -137,10 +137,36 @@ func attack_profile(action_id: String) -> WeaponProfile:
 ## AttackResolver's extra_dice option.
 func extra_damage_dice(action_id: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
-	var dmg := action(action_id).get("damage", []) as Array
+	var dmg := _damage_entries(action(action_id))
 	for i in range(1, dmg.size()):
 		var d := dmg[i] as Dictionary
-		if d.has("when"):
+		if d.has("when") and not d.has("if"):
 			continue
 		out.append({"dice": str(d["dice"]), "type": str(d["type"]), "label": str(d["type"]).capitalize()})
 	return out
+
+
+## The damage entries that apply now: entries marked `if: bloodied` / `not_bloodied` (a swarm's weaker bites once
+## it's Bloodied) are kept only when that's true.
+func _damage_entries(a: Dictionary) -> Array:
+	var out: Array = []
+	for d: Variant in a.get("damage", []):
+		var dd := d as Dictionary
+		match str(dd.get("if", "")):
+			"bloodied":
+				if not is_bloodied():
+					continue
+			"not_bloodied":
+				if is_bloodied():
+					continue
+		out.append(dd)
+	return out
+
+
+## Average damage of an action with every damage entry that applies (for the AI's choices).
+func average_damage(action_id: String) -> float:
+	var total := 0.0
+	for d: Variant in _damage_entries(action(action_id)):
+		var p := DiceRoller.parse_expr(str((d as Dictionary)["dice"]))
+		total += int(p["count"]) * (int(p["sides"]) + 1) / 2.0 + int(p["modifier"])
+	return total

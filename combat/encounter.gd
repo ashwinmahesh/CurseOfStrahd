@@ -32,10 +32,20 @@ var pending: ReactionRequest = null
 var studied: Dictionary = {}
 var spells: SpellCaster
 var features: CombatFeatures
+var reactions: Reactions
+var feature_actions: FeatureActions
+var monster_actions: MonsterActions
 var ai: AiBrain
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.
 var _savage_turn: Dictionary = {}
+## The map's light: bright, dim or dark (lanterns, moonlight, a lightless cellar); sunlit maps are in sunlight.
+var ambient_light: String = "bright"
+var sunlit: bool = false
+## Reactions waiting to be offered after the current attack or spell finishes (Hellish Rebuke): {kind, reactor, trigger}.
+var reaction_queue: Array[Dictionary] = []
+## Free extra attacks waiting to be made once the current attack finishes (Cleave): {c, target, option}.
+var cleave_queue: Array[Dictionary] = []
 ## Shown when the fight starts.
 var title: String = ""
 var intro: String = ""
@@ -46,6 +56,9 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	dice = dice_
 	spells = SpellCaster.new(self)
 	features = CombatFeatures.new(self)
+	reactions = Reactions.new(self)
+	feature_actions = FeatureActions.new(self)
+	monster_actions = MonsterActions.new(self)
 	ai = AiBrain.new(self)
 
 
@@ -59,6 +72,8 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 		c.id = "%s_%d" % [base, n]
 		n += 1
 	creature.id = c.id
+	creature.d20_before = feature_actions.before_d20
+	creature.d20_after = feature_actions.after_d20
 	combatants.append(c)
 	return c
 
@@ -93,6 +108,10 @@ func start(surprised_ids: Array = []) -> void:
 		var bonus := c.creature.initiative_bonus()
 		var t := c.creature.roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, 0, c.creature.initiative_keys(), [], dis,
 			"Initiative (%s)" % c.name())
+		# Ambush (Battle Master): a Superiority Die on Initiative.
+		if features.knows_maneuver(c, "ambush") and (c.creature as Character).resource_left("superiority_dice") > 0:
+			(c.creature as Character).spend_resource("superiority_dice")
+			t.add_bonus(dice.roll_one(features.superiority_die(c), "Ambush"), "Ambush")
 		c.initiative_test = t
 		c.initiative = t.total
 		if group != "":
@@ -108,6 +127,22 @@ func start(surprised_ids: Array = []) -> void:
 		if da != db:
 			return da > db
 		return a.side == &"party" and b.side != &"party")
+	# Portent (Diviner): the two (Greater Portent: three) foreseen d20s for this fight.
+	for c in combatants:
+		if CombatFeatures.has_feature(c, "portent") and c.creature is Character:
+			var n := 3 if CombatFeatures.has_feature(c, "greater_portent") else 2
+			c.set_meta("portent_rolls", dice.roll(20, n, "Portent"))
+			log.add("info", "%s foresees: %s (Portent)" % [c.name(), str(c.get_meta("portent_rolls"))], c.id)
+	# Thief's Reflexes (Thief 17): a second turn in the first round, at Initiative − 10.
+	for c: Combatant in combatants.duplicate():
+		if CombatFeatures.has_feature(c, "thiefs_reflexes"):
+			var at := order.size()
+			for i in order.size():
+				if order[i].initiative < c.initiative - 10:
+					at = i
+					break
+			order.insert(at, c)
+			c.set_meta("reflex_turn", true)
 	state = State.ACTIVE
 	round_no = 1
 	log.round_no = 1
@@ -186,13 +221,116 @@ func _layout_hash() -> int:
 	return parts.hash()
 
 
-## Whether `a` can see `b`: line of sight, and `b` isn't Invisible or hidden from it.
+## Whether `a` can see `b`: line of sight through walls, Heavily Obscured squares (Fog Cloud, Darkness), light
+## (Darkvision in the dark; nothing but Blindsight or Truesight in magical Darkness), and `b` being Invisible,
+## hidden or on the Ethereal Plane (See Invisibility and Truesight see the Invisible; Faerie Fire and Starry Wisp
+## take its benefit away; Mind Spike's caster always knows where its target is).
 func can_see(a: Combatant, b: Combatant) -> bool:
+	var dist := distance(a, b)
+	var blind := a.creature.sense_range("blindsight")
+	var truesight := a.creature.sense_range("truesight")
+	var by_sense := (blind > 0 and dist <= blind) or (truesight > 0 and dist <= truesight)
+	if b.creature.has_flag("ethereal"):
+		return truesight > 0 and dist <= truesight and grid.can_see(a.cell, a.size_cells, b.cell, b.size_cells)
+	if not grid.can_see(a.cell, a.size_cells, b.cell, b.size_cells):
+		return false
+	if b.creature.has_flag("tracked_by:%s" % a.id):
+		return true
+	if blind > 0 and dist <= blind:
+		return true
 	if a.creature.has_flag("cant_see"):
 		return false
-	if b.creature.has_condition(&"invisible") or b.hidden:
+	var outlined := b.creature.has_flag("no_invisible")
+	if b.hidden and not outlined:
 		return false
-	return grid.can_see(a.cell, a.size_cells, b.cell, b.size_cells)
+	if b.creature.has_condition(&"invisible") and not outlined:
+		var sees_invisible := a.creature.has_flag("see_invisibility") or (truesight > 0 and dist <= truesight)
+		if not sees_invisible:
+			return false
+	if spells.zones.line_obscured(a.cell, a.size_cells, b.cell, b.size_cells) and not by_sense:
+		return false
+	match light_at(b.cell):
+		"magic_dark":
+			return by_sense
+		"dark":
+			return by_sense or (a.creature.darkvision() >= dist and a.creature.darkvision() > 0) or outlined
+	return true
+
+
+## The light on a square: "bright", "dim", "dark", or "magic_dark" (Darkness), from the map's light and spells.
+func light_at(cell: Vector2i) -> String:
+	if spells.zones.magical_darkness(cell):
+		return "magic_dark"
+	var sl := spells.zones.spell_light(cell)
+	var lvl := str(sl["level"])
+	if lvl == "bright" or ambient_light == "bright":
+		return "bright"
+	if lvl == "dim" or ambient_light == "dim":
+		return "dim"
+	return "dark"
+
+
+## Whether sunlight falls on a creature (Daylight, or a sunlit map): Sunlight Sensitivity and Hypersensitivity.
+func in_sunlight(c: Combatant) -> bool:
+	if sunlit:
+		return true
+	for cell in c.footprint():
+		if bool(spells.zones.spell_light(cell)["sunlight"]) and not spells.zones.magical_darkness(cell):
+			return true
+	return false
+
+
+## Charmed (2024): a Charmed creature can't attack its charmer or target it with damaging abilities or magic.
+## "" if `c` may target `t`.
+func charm_blocks(c: Combatant, t: Combatant) -> String:
+	if not c.creature.has_condition(&"charmed"):
+		return ""
+	for fx: Effect in c.creature.effects:
+		if StringName("charmed") in fx.conditions and fx.caster_id == t.id:
+			return "%s is Charmed by %s and can't attack it" % [c.name(), t.name()]
+	if c.has_meta("charmed_by") and str(c.get_meta("charmed_by")) == t.id:
+		return "%s is Charmed by %s and can't attack it" % [c.name(), t.name()]
+	return ""
+
+
+## Mirror Image: when an attack hits a creature with duplicates (and the attacker relies on sight), roll a d6 per
+## duplicate; any 3 or higher means a duplicate is hit instead and destroyed. True if a duplicate took the hit.
+func mirror_image_takes(t: Combatant, attacker: Combatant, _total: int) -> bool:
+	if not t.creature.has_flag("mirror_image"):
+		return false
+	if attacker.creature.has_flag("cant_see") or attacker.creature.sense_range("blindsight") >= distance(attacker, t) \
+			or attacker.creature.sense_range("truesight") >= distance(attacker, t):
+		return false
+	for fx: Effect in t.creature.effects:
+		if fx.source_id != "mirror_image":
+			continue
+		var n := int(fx.data.get("duplicates", 0))
+		if n <= 0:
+			return false
+		var rolls := dice.roll(6, n, "Mirror Image")
+		var redirected := false
+		for v in rolls:
+			if v >= 3:
+				redirected = true
+		if redirected:
+			fx.data["duplicates"] = n - 1
+			log.add("miss", "The attack strikes one of %s's duplicates (%d left)" % [t.name(), n - 1], t.id, ["Mirror Image d6: %s" % str(rolls)])
+			if n - 1 <= 0:
+				t.creature.remove_effect(fx)
+		return redirected
+	return false
+
+
+## Puts a newly summoned creature into the turn order right after its summoner.
+func insert_after(c: Combatant, sc: Combatant) -> void:
+	var i := order.find(c)
+	sc.initiative = c.initiative
+	if i < 0:
+		order.append(sc)
+		return
+	order.insert(i + 1, sc)
+	if turn_index > i:
+		turn_index += 1
 
 
 ## Squares `c` can reach with its movement (or `budget` feet). A Prone creature crawls (double cost) unless
@@ -213,7 +351,19 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 				if grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells) < now:
 					blocked[cell] = true
 	return grid.reachable(c.cell, c.size_cells, feet, _has_fn(blocked),
-		_has_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary))
+		_has_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
+
+
+## How `c` moves: flying (a fly speed at least its walking speed, Fly, Gaseous Form) or climbing (Spider Climb).
+func move_mode(c: Combatant) -> int:
+	var mode := 0
+	if c.creature.speed("fly").total() > 0 and c.creature.speed("fly").total() >= c.creature.speed().total():
+		mode |= CombatGrid.MOVE_FLY
+	if c.creature.has_flag("spider_climb") or c.creature.speed("climb").total() > 0 or CombatFeatures.has_feature(c, "second_story_work"):
+		mode |= CombatGrid.MOVE_CLIMB
+	if c.creature.has_flag("incorporeal_movement"):
+		mode |= CombatGrid.MOVE_INCORPOREAL
+	return mode
 
 
 ## The creatures `c` is Frightened of and can see.
@@ -243,6 +393,9 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		if o == c or not o.is_alive():
 			continue
 		var o_size := Creature.SIZES.find(o.creature.size)
+		var swarmy := o.creature.has_flag("swarm") or c.creature.has_flag("swarm")
+		if swarmy:
+			continue
 		var passable := c.allied_with(o) or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
 			or absi(o_size - my_size) >= 2 or (c.creature.has_flag("halfling_nimbleness") and o_size > my_size)
 		var slows := not c.allied_with(o) and o.creature.size != &"tiny"
@@ -252,6 +405,10 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 				blocked[cell] = true
 			if slows:
 				slowed[cell] = true
+	for cell: Vector2i in spells.zones.difficult_cells(c):
+		slowed[cell] = true
+	if c.creature.has_flag("pass_through_creatures"):
+		blocked = {}
 	return {"blocked": blocked, "slowed": slowed, "occupied": occupied}
 
 
@@ -269,9 +426,29 @@ func _begin_turn() -> void:
 		o.cast_slot_spell_this_turn = false
 		o.creature.on_turn_start(c.id)
 	_expire_marks(c.id, "start")
+	if c.readied.has("conc"):
+		var held := c.readied["conc"] as Concentration
+		if held != null and not held.ended:
+			held.end("the readied spell wasn't released")
+			log.add("info", "%s lets the readied spell go" % c.name(), c.id)
 	c.reset_turn()
+	if c.creature.has_flag("hasted"):
+		c.haste_action = true
 	log.add("turn", "%s's turn" % c.name(), c.id)
 	events.append({"type": "turn", "id": c.id, "round": round_no})
+	spells.turn_start(c)
+	feature_actions.turn_start(c)
+	monster_actions.turn_start(c)
+	if c.creature.has_flag("dazed"):
+		c.bonus_available = false
+		log.add("info", "%s is Dazed: it can move or act this turn, not both" % c.name(), c.id)
+	if c.has_meta("disarmed"):
+		c.remove_meta("disarmed")
+		log.add("info", "%s picks up what it dropped" % c.name(), c.id)
+	if c.creature.has_flag("no_action_or_bonus"):
+		c.action_available = false
+		c.bonus_available = false
+		log.add("info", "%s can't take an action or a Bonus Action this turn" % c.name(), c.id)
 	if needs_death_save(c) and not c.is_player_controlled():
 		death_save(c)
 
@@ -290,7 +467,11 @@ func end_turn() -> CombatResult:
 	for o in combatants:
 		o.creature.on_turn_end(c.id)
 	_expire_marks(c.id, "end")
-	spells.end_of_turn_saves(c)
+	c.armed.clear()
+	feature_actions.turn_end(c)
+	monster_actions.turn_end(c)
+	spells.turn_end(c)
+	spells.zones.prune()
 	_check_over()
 	if state != State.ACTIVE:
 		return CombatResult.new()
@@ -299,6 +480,7 @@ func end_turn() -> CombatResult:
 		if turn_index >= order.size():
 			turn_index = 0
 			round_no += 1
+			_drop_reflex_turns()
 			log.round_no = round_no
 			log.add("turn", "Round %d" % round_no, "")
 			events.append({"type": "round", "round": round_no})
@@ -306,6 +488,17 @@ func end_turn() -> CombatResult:
 			break
 	_begin_turn()
 	return CombatResult.new()
+
+
+## After round 1, Thief's Reflexes' extra turns leave the order.
+func _drop_reflex_turns() -> void:
+	for c in combatants:
+		if c.has_meta("reflex_turn"):
+			c.remove_meta("reflex_turn")
+			var first := order.find(c)
+			var second := order.find(c, first + 1)
+			if second >= 0:
+				order.remove_at(second)
 
 
 func is_over() -> bool:
@@ -335,10 +528,19 @@ func _check_over() -> void:
 		events.append({"type": "over", "outcome": outcome})
 
 
+## True if something takes this creature's turn out of its controller's hands (Command, Fear, Turn Undead, Crown of
+## Madness, Calm Emotions): the AI plays it as the effect demands, even for a party member.
+func compelled(c: Combatant) -> bool:
+	for f: String in ["command_grovel", "command_halt", "command_flee", "command_approach", "command_drop", "fear_flee", "crowned"]:
+		if c.creature.has_flag(f):
+			return true
+	return features.fleeing_from(c) != null
+
+
 ## Plays the current creature's turn with the AI if it isn't player-controlled.
 func run_ai_turn() -> CombatResult:
 	var c := current()
-	if c == null or c.is_player_controlled():
+	if c == null or (c.is_player_controlled() and not compelled(c)):
 		return CombatResult.fail("Not an AI turn")
 	if not c.can_act() and features.fleeing_from(c) == null:
 		return end_turn()
@@ -405,7 +607,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled: Dictionary) -> CombatResult:
 	while i < path.size():
 		var to := path[i]
-		if not c.disengaged:
+		if not c.creature.has_flag("flyby"):
 			for p in _provokers(c, c.cell, to):
 				var key := "%s@%d" % [p.id, i]
 				if handled.has(key):
@@ -435,9 +637,11 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 					if c.is_down() or c.speed() <= 0 or state != State.ACTIVE:
 						return r
 		var occ := _occupancy_for(c)
-		var step := grid.step_cost(c.cell, to, c.size_cells, _has_fn(occ["blocked"] as Dictionary), _has_fn(occ["slowed"] as Dictionary))
+		var step := grid.step_cost(c.cell, to, c.size_cells, _has_fn(occ["blocked"] as Dictionary), _has_fn(occ["slowed"] as Dictionary), move_mode(c))
 		if c.creature.has_condition(&"prone"):
 			step *= 2
+		if c.has_meta("jumping"):
+			step = 0
 		if step < 0 or step > c.movement_left:
 			break
 		var from := c.cell
@@ -446,8 +650,51 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		c.cell = to
 		c.facing = Vector2(to - from).normalized()
 		events.append({"type": "move", "id": c.id, "from": from, "to": to})
-		_after_step(c)
+		_after_step(c, from)
+		if c.is_down() or state != State.ACTIVE:
+			return r
 		i += 1
+		# Polearm Master's Reactive Strike: entering the reach of a polearm-wielder.
+		for pm in hostiles_of(c):
+			var pkey := "pole:%s" % pm.id
+			if handled.has(pkey) or not features.has_feat(pm, "polearm_master") or not spells.can_react(pm) or not can_see(pm, c):
+				continue
+			var pole := _polearm_option(pm)
+			if pole.is_empty():
+				continue
+			var preach := (pole["profile"] as WeaponProfile).reach
+			if grid.distance_ft(pm.cell, pm.size_cells, to, c.size_cells) <= preach and grid.distance_ft(pm.cell, pm.size_cells, from, c.size_cells) > preach:
+				handled[pkey] = true
+				var pdec := _reaction_decision(pm, "reactive_strike")
+				if pdec == "auto":
+					pm.reaction_available = false
+					log.add("reaction", "%s strikes as %s closes in (Polearm Master)" % [pm.name(), c.name()], pm.id)
+					var psub := _resolve_attack(pm, c, pole, {"reaction": true})
+					if pending != null:
+						var ii := i
+						return then(psub, func() -> CombatResult:
+							if c.is_down() or c.speed() <= 0 or state != State.ACTIVE:
+								return r
+							return _walk(c, path, ii, r, handled))
+					if c.is_down() or state != State.ACTIVE:
+						return r
+				elif pdec == "ask":
+					var preq := ReactionRequest.new("reactive_strike", pm.id, c.id)
+					preq.title = "Reaction: Reactive Strike?"
+					preq.text = "%s enters %s's reach. Strike with the polearm?" % [c.name(), pm.name()]
+					var jj := i
+					preq.continuation = func(use: bool) -> CombatResult:
+						var cont := func() -> CombatResult:
+							if c.is_down() or c.speed() <= 0 or state != State.ACTIVE:
+								return r
+							return _walk(c, path, jj, r, handled)
+						if use:
+							pm.reaction_available = false
+							return then(_resolve_attack(pm, c, pole, {"reaction": true}), cont)
+						return cont.call() as CombatResult
+					pending = preq
+					r.pending = preq
+					return r
 		# Readied attacks trigger when the mover comes into reach.
 		for p in _readied_triggers(c, from, to):
 			var rkey := "ready:%s" % p.id
@@ -487,13 +734,17 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 func _readied_triggers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[Combatant]:
 	var out: Array[Combatant] = []
 	for p in hostiles_of(mover):
-		if p.readied.is_empty() or not p.reaction_available or not p.can_act() or not can_see(p, mover):
+		if p.readied.is_empty() or not p.reaction_available or not p.can_act() or p.creature.has_flag("no_reactions") or not can_see(p, mover):
 			continue
-		var option := option_by_id(p, str(p.readied.get("option", "")))
-		if option.is_empty():
-			continue
-		var prof := option["profile"] as WeaponProfile
-		var reach := prof.reach if bool(option["melee"]) else prof.normal_range
+		var reach := 0
+		if p.readied.has("spell"):
+			reach = spells.range_ft(Compendium.shared().spell_data(str(p.readied["spell"])), p)
+		else:
+			var option := option_by_id(p, str(p.readied.get("option", "")))
+			if option.is_empty():
+				continue
+			var prof := option["profile"] as WeaponProfile
+			reach = prof.reach if bool(option["melee"]) else prof.normal_range
 		var before := grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells)
 		var after := grid.distance_ft(p.cell, p.size_cells, to, mover.size_cells)
 		if after <= reach and before > reach:
@@ -502,6 +753,10 @@ func _readied_triggers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[
 
 
 func _readied_attack(p: Combatant, target: Combatant) -> CombatResult:
+	if p.readied.has("spell"):
+		var held := p.readied.duplicate()
+		p.readied = {}
+		return spells.release_readied(p, held, target)
 	var option := option_by_id(p, str(p.readied.get("option", "")))
 	p.readied = {}
 	if option.is_empty() or attack_legal(p, target, option) != "":
@@ -523,6 +778,40 @@ func ready_attack(c: Combatant, option_id: String) -> CombatResult:
 	spend_action(c)
 	c.readied = {"option": option_id}
 	log.add("info", "%s readies an attack (%s) for the first enemy to come within reach" % [c.name(), option["label"]], c.id)
+	return CombatResult.new()
+
+
+## Ready (2024) with a spell: cast it now (the slot is spent), hold its energy with Concentration, and release it
+## with your Reaction when an enemy comes within the spell's range before the start of your next turn. If
+## Concentration breaks first, the spell is lost.
+func ready_spell(c: Combatant, spell_id: String, slot: int) -> CombatResult:
+	var why := _action_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	var entry := {}
+	for x in spells.castable(c):
+		if str(x["id"]) == spell_id:
+			entry = x
+	if entry.is_empty():
+		return CombatResult.fail("Unknown spell")
+	var s := Compendium.shared().spell_data(spell_id)
+	if str((s.get("casting_time", {}) as Dictionary).get("unit", "")) != "action":
+		return CombatResult.fail("Only a spell with a casting time of an action can be readied")
+	if not bool(entry["legal"]) and str(entry["reason"]) != "Action already used":
+		return CombatResult.fail(str(entry["reason"]))
+	var ch := c.creature as Character
+	var level := int(s.get("level", 0))
+	if level > 0:
+		slot = maxi(slot, level)
+		if ch.slots_left(slot) <= 0:
+			return CombatResult.fail("No level %d slots left" % slot)
+		ch.expend_slot(slot)
+		c.cast_slot_spell_this_turn = true
+	spend_action(c)
+	c.magic_action_used = true
+	var conc := c.creature.begin_concentration("readied:" + spell_id, "a readied %s" % s["name"])
+	c.readied = {"spell": spell_id, "slot": slot, "conc": conc}
+	log.add("spell", "%s readies %s for the first enemy to come within %d ft" % [c.name(), s["name"], spells.range_ft(s, c)], c.id)
 	return CombatResult.new()
 
 
@@ -579,6 +868,38 @@ func stabilize(c: Combatant, target: Combatant, use_kit: bool) -> CombatResult:
 	return CombatResult.new()
 
 
+## Drinking a potion or eating a Goodberry (2024: a Bonus Action), or giving it to a creature within 5 ft.
+func use_item(c: Combatant, item_id: String, target: Combatant) -> CombatResult:
+	var why := _bonus_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if item_count(c, item_id) <= 0:
+		return CombatResult.fail("None left")
+	if target == null or distance(c, target) > 5:
+		return CombatResult.fail("Must be within 5 ft")
+	var item := Compendium.shared().item_data(item_id)
+	c.bonus_available = false
+	_spend_item(c, item_id)
+	for fx: Variant in item.get("effects", []):
+		var d := fx as Dictionary
+		if str(d.get("effect", "")) != "heal":
+			continue
+		var p := d.get("params", {}) as Dictionary
+		if target.creature.has_flag("cant_regain_hp"):
+			log.add("info", "%s can't regain Hit Points right now" % target.name(), target.id)
+			continue
+		var amount := int(p.get("flat", 0))
+		var text := ""
+		if p.has("dice"):
+			var rolled := _roll_damage_dice(str(p["dice"]), false, 0, str(item.get("name", "")))
+			amount += int(rolled["total"])
+			text = str(rolled["text"])
+		var healed := target.creature.heal(amount, str(item.get("name", "")))
+		log.add("heal", "%s uses %s: %s regains %d Hit Points" % [c.name(), item.get("name", item_id), target.name(), healed], c.id, [text])
+		events.append({"type": "heal", "id": target.id, "amount": healed})
+	return CombatResult.new()
+
+
 func has_kit(c: Combatant) -> bool:
 	if not c.creature is Character:
 		return false
@@ -592,9 +913,10 @@ func has_kit(c: Combatant) -> bool:
 func _provokers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[Combatant]:
 	var out: Array[Combatant] = []
 	for p in hostiles_of(mover):
-		if not p.reaction_available or not p.can_act() or not can_see(p, mover):
+		if not spells.can_react(p) or not can_see(p, mover):
 			continue
-		if has_mark("no_reactions", p.id):
+		# Disengage stops Opportunity Attacks, except a Sentinel's against a creature within 5 ft of it.
+		if mover.disengaged and not (features.has_feat(p, "sentinel") and grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells) <= 5):
 			continue
 		var reach := p.reach_ft()
 		var before := grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells)
@@ -604,8 +926,27 @@ func _provokers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[Combata
 	return out
 
 
+## The weapon a Polearm Master reacts with: a Quarterstaff, a Spear, or a Heavy weapon with Reach.
+func _polearm_option(p: Combatant) -> Dictionary:
+	for o in attack_options(p):
+		var pr := o["profile"] as WeaponProfile
+		if bool(o["melee"]) and (pr.item_id in ["quarterstaff", "spear"] or ("heavy" in pr.properties and "reach" in pr.properties)):
+			return o
+	return {}
+
+
 func _opportunity_attack(p: Combatant, target: Combatant) -> CombatResult:
 	var option := best_melee_option(p, target)
+	# War Caster's Reactive Spell: a one-action spell at the creature instead (when it has no melee attack, or the
+	# player's rule for it is "auto").
+	if features.has_feat(p, "war_caster") and (option.is_empty() or str(p.reaction_rules.get("reactive_spell", "never")) == "auto"):
+		for sp in spells.castable(p):
+			var data := Compendium.shared().spell_data(str(sp["id"]))
+			if int(sp["level"]) == 0 and str(sp["casting"]) == "action" and (data.has("attack") or data.has("save")) and not data.has("area") \
+					and spells.range_ft(data, p) >= distance(p, target):
+				p.reaction_available = false
+				log.add("reaction", "%s answers with %s (War Caster)" % [p.name(), data["name"]], p.id)
+				return spells.cast_free(p, str(sp["id"]), [target], Vector2.INF, {})
 	if option.is_empty():
 		return CombatResult.new()
 	p.reaction_available = false
@@ -649,8 +990,8 @@ func answer_reaction(use: bool) -> CombatResult:
 	return res
 
 
-func _after_step(c: Combatant) -> void:
-	spells.on_enter_cell(c)
+func _after_step(c: Combatant, from: Vector2i) -> void:
+	spells.on_enter_cell(c, from)
 
 
 func _check_still_hidden(c: Combatant) -> void:
@@ -674,7 +1015,7 @@ func reveal(c: Combatant, why: String) -> void:
 func stand_up(c: Combatant) -> CombatResult:
 	if not c.creature.has_condition(&"prone"):
 		return CombatResult.fail("Not Prone")
-	var cost := c.speed() / 2
+	var cost := 5 if c.creature.has_flag("hop_up") else c.speed() / 2
 	if c.speed() <= 0 or c.movement_left < cost:
 		return CombatResult.fail("Standing up costs %d ft" % cost)
 	c.movement_left -= cost
@@ -685,6 +1026,68 @@ func stand_up(c: Combatant) -> CombatResult:
 	return CombatResult.new()
 
 
+## Moving with feature movement that doesn't provoke Opportunity Attacks (Tactical Shift, Cunning Strike's
+## Withdraw, Remarkable Athlete, Maneuvering Attack): up to `c.free_move_ft`, not using the creature's movement.
+func free_move(c: Combatant, dest: Vector2i) -> CombatResult:
+	var why := _turn_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if c.free_move_ft <= 0:
+		return CombatResult.fail("No free movement")
+	var reach := reachable_for(c, c.free_move_ft)
+	if not reach.has(dest) or bool((reach[dest] as Dictionary)["occupied"]):
+		return CombatResult.fail("Can't get there with %d ft" % c.free_move_ft)
+	var path := CombatGrid.path_to(reach, dest)
+	var keep_move := c.movement_left
+	var keep_dis := c.disengaged
+	c.movement_left = c.free_move_ft
+	c.disengaged = true
+	var r := _walk(c, path, 1, CombatResult.new(), {})
+	c.free_move_ft = 0
+	c.movement_left = keep_move
+	c.disengaged = keep_dis
+	return r
+
+
+## Jump (the spell): once on each of its turns, a leap of up to 30 ft for 10 ft of movement, over creatures and
+## Difficult Terrain (not through walls). Leaving an enemy's reach still provokes Opportunity Attacks.
+func jump(c: Combatant, dest: Vector2i) -> CombatResult:
+	var why := _turn_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if not c.creature.has_flag("jump"):
+		return CombatResult.fail("No Jump")
+	if int(c.get_meta("jumped_round", -1)) == round_no:
+		return CombatResult.fail("Already jumped this turn")
+	if c.movement_left < 10:
+		return CombatResult.fail("Needs 10 ft of movement")
+	if grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells) > 30:
+		return CombatResult.fail("At most 30 ft")
+	for cell in CombatGrid.footprint(dest, c.size_cells):
+		if grid.is_solid(cell) or (occupant_at(cell) != null and occupant_at(cell) != c):
+			return CombatResult.fail("Can't land there")
+	var path: Array[Vector2i] = [c.cell]
+	var from := center_of(c)
+	var to := Vector2(dest.x + c.size_cells / 2.0, dest.y + c.size_cells / 2.0)
+	var steps := maxi(absi(dest.x - c.cell.x), absi(dest.y - c.cell.y))
+	for i in range(1, steps + 1):
+		var p := from.lerp(to, float(i) / steps)
+		var cell := Vector2i(floori(p.x - c.size_cells / 2.0 + 0.5), floori(p.y - c.size_cells / 2.0 + 0.5))
+		if grid.has_flag(cell, CombatGrid.WALL):
+			return CombatResult.fail("A wall is in the way")
+		if cell != path[path.size() - 1]:
+			path.append(cell)
+	if path[path.size() - 1] != dest:
+		path.append(dest)
+	c.movement_left -= 10
+	c.set_meta("jumped_round", round_no)
+	c.set_meta("jumping", true)
+	log.add("move", "%s leaps %d ft (Jump)" % [c.name(), grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells)], c.id)
+	var r := _walk(c, path, 1, CombatResult.new(), {})
+	c.remove_meta("jumping")
+	return r
+
+
 func drop_prone(c: Combatant) -> CombatResult:
 	if c.speed() <= 0:
 		return CombatResult.fail("Speed 0")
@@ -693,30 +1096,40 @@ func drop_prone(c: Combatant) -> CombatResult:
 	return CombatResult.new()
 
 
-## Moves a creature without using its movement (Push, Shove, Thunderwave): no Opportunity Attacks.
-## Stops at walls and other creatures. Returns the squares moved.
-func forced_move(target: Combatant, away_from: Vector2i, feet: int) -> int:
-	var dir := Vector2(target.cell - away_from)
+## Moves a creature without using its movement (Push, Shove, Thunderwave, Thorn Whip): no Opportunity Attacks.
+## It goes in a straight line away from (or, with `toward`, toward) the grid point `origin`, square by square, and
+## stops at walls and other creatures. Areas it's moved into still affect it. Returns the squares moved.
+func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = false) -> int:
+	var dir := center_of(target) - origin
+	if toward:
+		dir = -dir
 	if dir.length() < 0.01:
 		return 0
 	dir = dir.normalized()
-	var step := Vector2i(roundi(dir.x), roundi(dir.y))
-	if step == Vector2i.ZERO:
-		return 0
+	var start := target.cell
 	var moved := 0
-	for i in feet / CombatGrid.FEET:
-		var nxt := target.cell + step
+	for k in range(1, feet / CombatGrid.FEET + 1):
+		var nxt := start + Vector2i(roundi(dir.x * k), roundi(dir.y * k))
+		if nxt == target.cell:
+			continue
 		var ok := true
 		for cell in CombatGrid.footprint(nxt, target.size_cells):
 			var o := occupant_at(cell)
-			if grid.is_solid(cell) or (o != null and o != target):
+			if not grid.in_bounds(cell) or grid.is_solid(cell) or (o != null and o != target):
 				ok = false
 		if not ok:
 			break
 		events.append({"type": "move", "id": target.id, "from": target.cell, "to": nxt, "forced": true})
+		var was := target.cell
 		target.cell = nxt
 		moved += 1
+		_after_step(target, was)
 	return moved
+
+
+## The middle of a creature's space, in grid units.
+func center_of(c: Combatant) -> Vector2:
+	return Vector2(c.cell.x + c.size_cells / 2.0, c.cell.y + c.size_cells / 2.0)
 
 
 # --- Economy helpers ------------------------------------------------------------------------------
@@ -740,7 +1153,31 @@ func _action_check(c: Combatant) -> String:
 		return "%s can't act (%s)" % [c.name(), "down" if c.creature.hp <= 0 else "Incapacitated"]
 	if not c.action_available:
 		return "Action already used"
+	if c.creature.has_flag("slowed") and not c.bonus_available and not c.surged:
+		return "Slowed: an action or a Bonus Action, not both"
 	return ""
+
+
+## "" if `c` could make one attack of the Attack action now (starting it if it hasn't).
+func features_attack_why(c: Combatant) -> String:
+	var why := _turn_check(c)
+	if why != "":
+		return why
+	if not c.can_act():
+		return "Can't act"
+	if c.attacks_left <= 0 and not c.action_available:
+		return "Action already used"
+	return ""
+
+
+## Uses one attack of the Attack action (starting it if needed): Breath Weapon, Commander's Strike, War Magic.
+func use_one_attack(c: Combatant) -> void:
+	if c.attacks_left > 0:
+		c.attacks_left -= 1
+	elif c.action_available:
+		spend_action(c)
+		c.took_attack_action = true
+		c.attacks_left = attacks_per_action(c) - 1
 
 
 func spend_action(c: Combatant) -> void:
@@ -759,7 +1196,106 @@ func _bonus_check(c: Combatant) -> String:
 		return "%s can't act" % c.name()
 	if not c.bonus_available:
 		return "Bonus Action already used"
+	if c.creature.has_flag("slowed") and not c.action_available:
+		return "Slowed: an action or a Bonus Action, not both"
 	return ""
+
+
+# --- Actions from effects ---------------------------------------------------------------------------
+
+## Breaking free of a spell that allows it (Web, Entangle): an action and the named ability check against the
+## spell's save DC.
+func escape_effect(c: Combatant, effect_id: int) -> CombatResult:
+	var why := _action_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	var fx: Effect = null
+	for x: Effect in c.creature.effects:
+		if x.id == effect_id:
+			fx = x
+	if fx == null or fx.escape.is_empty():
+		return CombatResult.fail("Nothing to break free of")
+	spend_action(c)
+	var skill := StringName(str(fx.escape["skill"]))
+	var t := c.creature.roll_check(dice, skill, int(fx.escape["dc"]))
+	if t.success:
+		c.creature.remove_effect(fx)
+		log.add("info", "%s breaks free of %s" % [c.name(), fx.name], c.id, [t.describe()])
+		events.append({"type": "condition", "id": c.id})
+	else:
+		log.add("info", "%s struggles against %s" % [c.name(), fx.name], c.id, [t.describe()])
+	return CombatResult.new()
+
+
+## The effect keeping `c` magically asleep or entranced (Sleep, Hypnotic Pattern), or null.
+func sleeper(c: Combatant) -> Effect:
+	for fx: Effect in c.creature.effects:
+		if bool(fx.data.get("wakeable", false)):
+			return fx
+	return null
+
+
+## Shaking a creature within 5 ft out of magical sleep or a trance: an action.
+func wake(c: Combatant, t: Combatant) -> CombatResult:
+	var why := _action_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if t == null or distance(c, t) > 5:
+		return CombatResult.fail("Choose a creature within 5 ft")
+	var fx := sleeper(t)
+	if fx == null:
+		return CombatResult.fail("%s isn't magically asleep" % t.name())
+	spend_action(c)
+	t.creature.remove_effect(fx)
+	log.add("info", "%s shakes %s awake" % [c.name(), t.name()], c.id)
+	events.append({"type": "condition", "id": t.id})
+	return CombatResult.new()
+
+
+## Haste's extra action (2024): one weapon attack (only one, whatever Extra Attack says), Dash, Disengage, Hide or
+## Utilize.
+func haste_action_use(c: Combatant, what: String, target: Combatant, option_id: String) -> CombatResult:
+	var why := _turn_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if not c.haste_action or not c.creature.has_flag("hasted"):
+		return CombatResult.fail("No Haste action left")
+	if not c.can_act():
+		return CombatResult.fail("%s can't act" % c.name())
+	match what:
+		"dash":
+			c.haste_action = false
+			c.movement_left += c.speed()
+			log.add("info", "%s Dashes with Haste (+%d ft)" % [c.name(), c.speed()], c.id)
+		"disengage":
+			c.haste_action = false
+			c.disengaged = true
+			log.add("info", "%s Disengages with Haste" % c.name(), c.id)
+		"hide":
+			var spot := hide_blocker(c)
+			if spot != "":
+				return CombatResult.fail(spot)
+			c.haste_action = false
+			var t := c.creature.roll_check(dice, &"stealth", 15)
+			if t.success:
+				c.hidden = true
+				c.stealth_total = t.total
+				c.creature.add_condition(&"invisible", "Hidden")
+			log.add("info", "%s %s (Haste, Stealth %d)" % [c.name(), "hides" if t.success else "fails to hide", t.total], c.id, [t.describe()])
+		"attack":
+			var option := option_by_id(c, option_id)
+			if option.is_empty():
+				return CombatResult.fail("No such attack")
+			var check := attack_legal(c, target, option)
+			if check != "":
+				return CombatResult.fail(check)
+			var sanct := spells.sanctuary_blocks(c, target)
+			if sanct != "":
+				return CombatResult.fail(sanct)
+			c.haste_action = false
+			log.add("info", "%s attacks with Haste's extra action" % c.name(), c.id)
+			return _resolve_attack(c, target, option, {})
+	return CombatResult.new()
 
 
 # --- Attacks --------------------------------------------------------------------------------------
@@ -773,6 +1309,11 @@ func attack_options(c: Combatant) -> Array[Dictionary]:
 			out.append({"id": ("thrown:" if p.thrown else "weapon:") + p.item_id, "label": p.name,
 				"kind": "thrown" if p.thrown else ("unarmed" if p.item_id == "unarmed_strike" else "weapon"),
 				"profile": p, "melee": p.melee, "range": [p.normal_range, p.long_range], "reach": p.reach})
+		if CombatFeatures.has_feature(c, "psychic_blades"):
+			for thrown: bool in [false, true]:
+				var pb := _psychic_blade(c, thrown, c.light_attack_weapon == "psychic_blade")
+				out.append({"id": ("blade:thrown" if thrown else "blade:melee"), "label": pb.name, "kind": "blade",
+					"profile": pb, "melee": not thrown, "range": [pb.normal_range, pb.long_range], "reach": pb.reach})
 	elif c.creature is Monster:
 		var m := c.creature as Monster
 		for a: Variant in m.data.get("actions", []):
@@ -784,6 +1325,18 @@ func attack_options(c: Combatant) -> Array[Dictionary]:
 				"profile": p, "action_id": str(act["id"]), "melee": p.melee, "range": [p.normal_range, p.long_range],
 				"reach": p.reach})
 	return out
+
+
+## Soulknife's Psychic Blade: a Simple Melee weapon with Finesse and Thrown (60/120 ft), 1d6 Psychic + the
+## ability modifier, Vex mastery; the second blade (a Bonus Action after attacking with the first) deals 1d4.
+func _psychic_blade(c: Combatant, thrown: bool, second: bool) -> WeaponProfile:
+	var item := {"id": "psychic_blade", "name": "Psychic Blade", "weapon": {"kind": "simple_melee", "damage": "1d4" if second else "1d6",
+		"damage_type": "psychic", "properties": ["finesse", "thrown", "light"], "range": [60, 120], "mastery": "vex"}}
+	var p := WeaponProfile.build(c.creature, item, thrown)
+	p.mastery = "vex"
+	p.proficient = true
+	p._compute(c.creature)
+	return p
 
 
 func option_by_id(c: Combatant, option_id: String) -> Dictionary:
@@ -809,6 +1362,8 @@ func best_melee_option(c: Combatant, _target: Combatant) -> Dictionary:
 
 ## How many attacks one Attack action gives (Extra Attack; the highest source wins, 2024 multiclass rule).
 func attacks_per_action(c: Combatant) -> int:
+	if c.creature.has_flag("slowed"):
+		return 1
 	var best := 1
 	var ctx := c.creature.formula_context()
 	for m in c.creature.modifiers_for(&"attacks_per_action"):
@@ -832,6 +1387,10 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 		return CombatResult.fail(check)
 	if c.attacks_left <= 0 and not c.action_available:
 		return CombatResult.fail("No attacks left this turn")
+	var lp := option["profile"] as WeaponProfile
+	if "loading" in lp.properties and not features.has_feat(c, "crossbow_expert") and c.attacks_left > 0 \
+			and str(c.get_meta("loading_fired", "")) == "%d:%d" % [round_no, turn_index]:
+		return CombatResult.fail("Loading: one shot with it per action")
 	var sanct := spells.sanctuary_blocks(c, target)
 	if sanct != "":
 		return CombatResult.fail(sanct)
@@ -848,6 +1407,9 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 	var p := option["profile"] as WeaponProfile
 	if "light" in p.properties and c.light_attack_weapon == "":
 		c.light_attack_weapon = p.item_id
+	# Loading: one shot per action, whatever the number of attacks (Crossbow Expert ignores it).
+	if "loading" in p.properties and not features.has_feat(c, "crossbow_expert"):
+		c.set_meta("loading_fired", "%d:%d" % [round_no, turn_index])
 	return _resolve_attack(c, target, option, opts)
 
 
@@ -863,7 +1425,10 @@ func offhand_attack(c: Combatant, target: Combatant, option_id: String) -> Comba
 	var p := option["profile"] as WeaponProfile
 	if c.light_attack_weapon == "" or not c.took_attack_action:
 		return CombatResult.fail("First attack with a Light weapon in the Attack action")
-	if not "light" in p.properties or p.item_id == c.light_attack_weapon:
+	# Dual Wielder: the extra attack can use any melee weapon that isn't Two-Handed. Psychic Blades: a second blade.
+	var dual := features.has_feat(c, "dual_wielder") and bool(option["melee"]) and not "two_handed" in p.properties
+	var blade := c.light_attack_weapon == "psychic_blade" and p.item_id == "psychic_blade"
+	if not blade and ((not "light" in p.properties and not dual) or p.item_id == c.light_attack_weapon):
 		return CombatResult.fail("Needs a different Light weapon")
 	var nick := false
 	var first_mastery := ""
@@ -906,6 +1471,16 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 			return "Out of range (%d ft, range %d/%d)" % [dist, p.normal_range, long]
 	if int(cover(c, target)["cover"]) == CombatGrid.Cover.TOTAL:
 		return "No clear line: Total Cover"
+	if target.creature.has_flag("ethereal"):
+		return "%s is on the Ethereal Plane" % target.name()
+	if c.creature.has_flag("cant_attack"):
+		return "%s can't attack in this form" % c.name()
+	if bool(option["melee"]) and c.creature.has_flag("levitating") != target.creature.has_flag("levitating") \
+			and (option["profile"] as WeaponProfile).reach < 20:
+		return "Out of reach: one of you is floating 20 ft up (Levitate)"
+	var charm := charm_blocks(c, target)
+	if charm != "":
+		return charm
 	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and item_count(c, p.item_id) <= 0:
 		return "No %s left" % p.name.replace(" (thrown)", "")
 	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and not bool(option["melee"]):
@@ -963,6 +1538,14 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	for m in target.creature.modifiers_for(&"attacked_with"):
 		if m.source_name == "Dodging" and (not can_see(target, c) or target.speed() <= 0):
 			continue
+		if bool(m.data.get("if_seen", false)) and not can_see(c, target):
+			continue
+		var skip := false
+		for sense: Variant in m.data.get("unless_sense", []):
+			if c.creature.sense_range(str(sense)) >= dist:
+				skip = true
+		if skip:
+			continue
 		if m.text("value") == "advantage":
 			adv.append("%s (target)" % m.source_name)
 		elif m.text("value") == "disadvantage":
@@ -973,9 +1556,14 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 		else:
 			dis.append("target Prone beyond 5 ft")
 	if not melee:
-		if p.normal_range > 0 and dist > p.normal_range:
+		var sharp := features.has_feat(c, "sharpshooter") and not str(option.get("kind", "")) in ["spell", "thrown"]
+		if p.normal_range > 0 and dist > p.normal_range and not sharp:
 			dis.append("long range")
+		var melee_ok := sharp or (features.has_feat(c, "crossbow_expert") and p.item_id.contains("crossbow")) \
+			or (str(option.get("kind", "")) == "spell" and features.has_feat(c, "spell_sniper"))
 		for h in hostiles_of(c):
+			if melee_ok:
+				break
 			if h.can_act() and distance(c, h) <= 5 and can_see(h, c):
 				dis.append("ranged attack with %s within 5 ft" % h.name())
 				break
@@ -988,32 +1576,83 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 			if a.can_act() and distance(a, target) <= 5:
 				adv.append("Pack Tactics")
 				break
+	for m in target.creature.modifiers_for(&"attacked_with_by_type"):
+		if str(c.creature.creature_type) in (m.data.get("types", []) as Array):
+			dis.append("%s (target)" % m.source_name)
+	if c.creature.has_flag("cursed_attacks:%s" % target.id):
+		dis.append("Bestow Curse")
+	if CombatFeatures.has_feature(c, "assassinate") and round_no == 1 and not target.has_acted:
+		adv.append("Assassinate (it hasn't acted yet)")
+	if features.has_feat(c, "grappler") and str(grapples.get(target.id, "")) == c.id:
+		adv.append("Grappler")
+	var dup := spells.zones.object_of(c.id, "invoke_duplicity")
+	if dup != null and distance(c, target) <= 5 and grid.distance_ft(dup.cell, 1, target.cell, target.size_cells) <= 5:
+		adv.append("Invoke Duplicity")
+	for ally in allies_of(c):
+		var dup2 := spells.zones.object_of(ally.id, "invoke_duplicity")
+		if dup2 != null and CombatFeatures.has_feature(ally, "improved_duplicity") and grid.distance_ft(dup2.cell, 1, target.cell, target.size_cells) <= 5:
+			adv.append("Improved Duplicity")
 	if grapples.has(c.id) and str(grapples[c.id]) != target.id:
 		dis.append("Grappled (attacking someone other than the grappler)")
 	if c.hidden or not can_see(target, c):
-		if not c.creature.has_condition(&"invisible"):
-			adv.append("target can't see you")
-	if not can_see(c, target) and not target.creature.has_condition(&"invisible"):
+		adv.append("target can't see you")
+	if not can_see(c, target):
 		dis.append("you can't see the target")
+	if in_sunlight(c) and monster_actions.sunlight(c) != "":
+		dis.append("Sunlight")
+	if c.has_meta("attack_disadvantage"):
+		dis.append("a severed part")
 	for m in marks:
 		if not _mark_applies(m, c, target):
 			continue
 		if str(m["kind"]) in ["advantage_against", "advantage_next_attack"]:
 			adv.append(str(m["source"]))
-		elif str(m["kind"]) == "disadvantage_next_attack":
+		elif str(m["kind"]) in ["disadvantage_next_attack", "disadvantage_against"]:
 			dis.append(str(m["source"]))
+	# Goading Attack: Disadvantage on attacks against anyone but the Battle Master who goaded it.
+	for m2 in c.creature.modifiers_for(&"flag"):
+		var v := m2.text("value")
+		if v.begins_with("goaded_by:") and v.substr(10) != target.id:
+			dis.append("Goaded")
+	# Elusive (Rogue 18): no Advantage against it while it isn't Incapacitated.
+	if target.creature.has_flag("elusive") and target.can_act():
+		adv.clear()
 	var cov := cover(c, target)
 	var degree := int(cov["cover"])
+	var by := str(cov["by"])
+	# Bulwark of Force: at least Half Cover.
+	if target.creature.has_flag("half_cover") and degree < CombatGrid.Cover.HALF:
+		degree = CombatGrid.Cover.HALF
+		by = "Bulwark of Force"
+	# Sharpshooter (weapons) and Spell Sniper (spell attacks) ignore Half and Three-Quarters Cover.
+	var ranged_kind := str(option.get("kind", ""))
+	if degree in [CombatGrid.Cover.HALF, CombatGrid.Cover.THREE_QUARTERS] and not melee and \
+			((features.has_feat(c, "sharpshooter") and ranged_kind != "spell") or (features.has_feat(c, "spell_sniper") and ranged_kind == "spell")):
+		degree = CombatGrid.Cover.NONE
+		by = ""
 	return {"advantage": adv, "disadvantage": dis, "cover": degree, "cover_bonus": CombatGrid.COVER_BONUS[degree],
-		"cover_by": str(cov["by"])}
+		"cover_by": by}
+
+
+## Dice the target's effects add to attack rolls against it (Blade Ward: −1d4).
+func attacked_dice(target: Combatant) -> Array:
+	var out: Array = []
+	for m in target.creature.modifiers_for(&"attacked_penalty_die"):
+		out.append({"dice": m.text("dice", "1d4"), "sign": -1, "source": m.source_name})
+	return out
 
 
 ## Whether a mark changes `c`'s attack on `target`: Vex (only its attacker), Help (an ally of the helper, not the
 ## helper), Guiding Bolt (anyone), Steady Aim and Sap (the marked attacker's next attack).
 func _mark_applies(m: Dictionary, c: Combatant, target: Combatant) -> bool:
 	match str(m["kind"]):
+		"disadvantage_against":
+			var guard := get_c(str(m.get("guard", "")))
+			return str(m["target"]) == target.id and guard != null and distance(guard, target) <= 5
 		"advantage_against":
 			if str(m["target"]) != target.id:
+				return false
+			if m.has("not_attacker") and str(m["not_attacker"]) == c.id:
 				return false
 			if m.has("attacker"):
 				return str(m["attacker"]) == c.id
@@ -1056,53 +1695,72 @@ func hit_chance(c: Combatant, target: Combatant, option: Dictionary) -> Dictiona
 		"situation": sit, "ac": ac}
 
 
-## The attack itself: roll, Shield, damage (Critical Hits, Sneak Attack, Great Weapon Fighting, Savage Attacker),
-## Uncanny Dodge, defenses, Undead Fortitude, mastery properties and on-hit effects. Pauses for player reactions.
+## The attack itself, in stages that can pause for reactions (combat/reactions.gd): offers before the roll
+## (Warding Flare, Protection, Lucky), the roll, ways to turn the attacker's miss into a hit (Heroic Inspiration,
+## Precision Attack, Guided Strike), reactions that turn a hit into a miss (Shield, Defensive Duelist, Illusory
+## Self), damage (Critical Hits, Sneak Attack and Cunning Strike, Great Weapon Fighting, Savage Attacker, riders the
+## attacker armed), reactions against the damage (Uncanny Dodge, Parry, Interception...), defenses, Undead
+## Fortitude, mastery properties and on-hit effects, then reactions to the damage (Hellish Rebuke) and Riposte.
 func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: Dictionary) -> CombatResult:
 	var r := CombatResult.new()
-	var p := option["profile"] as WeaponProfile
 	var sit := attack_situation(c, target, option)
 	_consume_marks(c, target)
 	spells.end_sanctuary(c, "attacked")
-	if c.hidden:
+	spells.trigger_ends(c, "attack_roll")
+	if c.hidden and not features.has_feat(c, "skulker"):
 		reveal(c, "attacked")
-	var ac := target.creature.ac_value() + int(sit["cover_bonus"])
-	var keys: Array[String] = ["attack", "attack:melee" if bool(option["melee"]) else "attack:ranged"]
+	if bool(opts.get("reaction", false)) and features.has_feat(target, "speedy") and not bool(opts.get("readied", false)):
+		(sit["disadvantage"] as Array[String]).append("Agile Movement")
+	var st := {"c": c, "target": target, "option": option, "opts": opts, "sit": sit, "r": r,
+		"ac": target.creature.ac_value() + int(sit["cover_bonus"])}
+	return reactions.offer(reactions.before_roll(st), func() -> CombatResult: return _roll_attack(st), r)
+
+
+func _roll_attack(st: Dictionary) -> CombatResult:
+	var c := st["c"] as Combatant
+	var target := st["target"] as Combatant
+	var option := st["option"] as Dictionary
+	var sit := st["sit"] as Dictionary
+	var r := st["r"] as CombatResult
+	var p := option["profile"] as WeaponProfile
+	var ac := int(st["ac"])
+	var keys: Array[String] = ["attack", "attack:melee" if bool(option["melee"]) else "attack:ranged", "attack:%s" % p.ability]
 	var label := "%s → %s (%s)" % [c.name(), target.name(), p.name]
 	var t := c.creature.roll_d20(dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
-		sit["disadvantage"] as Array[String], label, p.crit_range)
+		sit["disadvantage"] as Array[String], label, p.crit_range, attacked_dice(target))
+	target.creature.consume_attacked()
 	if not option.get("melee", true) and c.creature is Character:
 		if str(option.get("kind", "")) == "thrown":
 			_spend_item(c, p.item_id)
-		else:
+		elif str(option.get("kind", "")) != "blade":
 			_spend_ammo(c, p)
-	# Heroic Inspiration (2024): reroll a die right after rolling it. Offered on a miss, as a prompt like a reaction.
-	if not t.success and c.creature is Character and (c.creature as Character).heroic_inspiration and c.is_player_controlled():
-		var first := t
-		var decision := _reaction_decision(c, "heroic_inspiration")
-		var reroll := func() -> D20Test:
-			(c.creature as Character).heroic_inspiration = false
-			var t2 := c.creature.roll_d20(dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
-				sit["disadvantage"] as Array[String], label + " (Heroic Inspiration reroll)", p.crit_range)
-			log.add("roll", "%s spends Heroic Inspiration to reroll: %d" % [c.name(), t2.total], c.id, [first.describe(), t2.describe()])
-			return t2
-		if decision == "ask":
-			var req := ReactionRequest.new("heroic_inspiration", c.id, target.id)
-			req.title = "Heroic Inspiration?"
-			req.text = "%s misses %s: %d vs AC %d. Spend Heroic Inspiration to reroll the d20 and use the new roll?" % [c.name(), target.name(), t.total, ac]
-			req.cost = "Heroic Inspiration (regained on a Long Rest)"
-			req.continuation = func(use: bool) -> CombatResult:
-				return _attack_outcome(c, target, option, opts, (reroll.call() as D20Test) if use else first, sit, ac, r)
-			pending = req
-			r.pending = req
-			return r
-		elif decision == "auto":
-			t = reroll.call() as D20Test
-	return _attack_outcome(c, target, option, opts, t, sit, ac, r)
+	st["t"] = t
+	if t.success:
+		return _attack_outcome(st)
+	# Heroic Inspiration (2024): reroll a die right after rolling it.
+	var chain: Array = []
+	if c.creature is Character and (c.creature as Character).heroic_inspiration and c.is_player_controlled():
+		chain.append({"kind": "heroic_inspiration", "reactor": c, "trigger": target.id, "title": "Heroic Inspiration?",
+			"text": "%s misses %s: %d vs AC %d. Spend Heroic Inspiration to reroll the d20 and use the new roll?" % [c.name(), target.name(), t.total, ac],
+			"cost": "Heroic Inspiration (regained on a Long Rest)",
+			"use": func() -> void:
+				(c.creature as Character).heroic_inspiration = false
+				var t2 := c.creature.roll_d20(dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
+					sit["disadvantage"] as Array[String], label + " (Heroic Inspiration reroll)", p.crit_range)
+				log.add("roll", "%s spends Heroic Inspiration to reroll: %d" % [c.name(), t2.total], c.id, [(st["t"] as D20Test).describe(), t2.describe()])
+				st["t"] = t2})
+	chain.append_array(reactions.after_miss_attacker(st))
+	return reactions.offer(chain, func() -> CombatResult: return _attack_outcome(st), r)
 
 
-func _attack_outcome(c: Combatant, target: Combatant, option: Dictionary, opts: Dictionary, t: D20Test,
-		sit: Dictionary, ac: int, r: CombatResult) -> CombatResult:
+func _attack_outcome(st: Dictionary) -> CombatResult:
+	var c := st["c"] as Combatant
+	var target := st["target"] as Combatant
+	var option := st["option"] as Dictionary
+	var sit := st["sit"] as Dictionary
+	var r := st["r"] as CombatResult
+	var t := st["t"] as D20Test
+	var ac := int(st["ac"])
 	var p := option["profile"] as WeaponProfile
 	var details: Array[String] = [t.describe(), p.attack.describe()]
 	if int(sit["cover"]) > 0:
@@ -1115,43 +1773,58 @@ func _attack_outcome(c: Combatant, target: Combatant, option: Dictionary, opts: 
 	if t.success and not critical and distance(c, target) <= 5 and target.creature.has_flag("auto_crit_within_5ft"):
 		critical = true
 		details.append("Automatic Critical Hit: the target can't defend itself within 5 ft")
-	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": t.success, "critical": critical})
-	if not t.success:
-		var e := log.add("miss", "%s misses %s (%d vs AC %d)" % [c.name(), target.name(), t.total, ac], c.id, details)
-		r.lines.append(e)
-		_on_miss(c, target, option, r)
+	var success := t.success
+	if success and mirror_image_takes(target, c, t.total):
+		success = false
+		critical = false
+	st["critical"] = critical
+	st["details"] = details
+	if not success:
+		return _attack_missed(st)
+	var miss := func() -> CombatResult:
+		r.lines.append(log.add("miss", "%s's attack on %s is turned aside (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], target.id, details))
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+		features.after_miss(c, target, option, r)
 		return r
-	# Shield: a hit that +5 AC would turn into a miss.
-	var shield_ok := not critical and t.total < ac + 5 and spells.can_cast_reaction(target, "shield")
-	if shield_ok:
-		var decision := _reaction_decision(target, "shield")
-		if decision == "ask":
-			var req := ReactionRequest.new("shield", target.id, c.id)
-			req.title = "Reaction: Shield?"
-			req.text = "%s hits %s: %d vs AC %d. Shield gives +5 AC until the start of %s's next turn (AC %d), so this attack misses." % [c.name(), target.name(), t.total, ac, target.name(), ac + 5]
-			req.cost = "Reaction and a level 1 spell slot"
-			req.continuation = func(use: bool) -> CombatResult:
-				if use:
-					spells.cast_shield(target)
-					var e2 := log.add("miss", "%s's Shield turns the attack aside (%d vs AC %d)" % [target.name(), t.total, ac + 5], target.id, details)
-					r.lines.append(e2)
-					return r
-				return _after_hit(c, target, option, opts, t, critical, details, r)
-			pending = req
-			r.pending = req
-			return r
-		elif decision == "auto":
-			spells.cast_shield(target)
-			r.lines.append(log.add("miss", "%s's Shield turns the attack aside (%d vs AC %d)" % [target.name(), t.total, ac + 5], target.id, details))
-			return r
-	return _after_hit(c, target, option, opts, t, critical, details, r)
+	var hit_offers := reactions.after_hit_target(st, miss)
+	hit_offers.append_array(monster_actions.parry_offer(st, miss))
+	return reactions.offer(hit_offers, func() -> CombatResult:
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical})
+		return _after_hit(st), r)
 
 
-func _after_hit(c: Combatant, target: Combatant, option: Dictionary, opts: Dictionary, t: D20Test, critical: bool,
-		details: Array[String], r: CombatResult) -> CombatResult:
+func _attack_missed(st: Dictionary) -> CombatResult:
+	var c := st["c"] as Combatant
+	var target := st["target"] as Combatant
+	var option := st["option"] as Dictionary
+	var r := st["r"] as CombatResult
+	var t := st["t"] as D20Test
+	events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+	r.lines.append(log.add("miss", "%s misses %s (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], c.id, st["details"] as Array))
+	_on_miss(c, target, option, r)
+	features.after_miss(c, target, option, r)
+	return reactions.offer(reactions.after_miss_target(st), func() -> CombatResult:
+		if st.has("riposte"):
+			var rp := st["riposte"] as Dictionary
+			var by := rp["by"] as Combatant
+			return _resolve_attack(by, c, rp["option"] as Dictionary, {"reaction": true,
+				"extra_dice": [{"dice": "1d%d" % int(rp["die"]), "type": str(((rp["option"] as Dictionary)["profile"] as WeaponProfile).damage_type), "label": "Riposte"}]})
+		return r, r)
+
+
+func _after_hit(st: Dictionary) -> CombatResult:
+	var c := st["c"] as Combatant
+	var target := st["target"] as Combatant
+	var option := st["option"] as Dictionary
+	var opts := st["opts"] as Dictionary
+	var r := st["r"] as CombatResult
+	var t := st["t"] as D20Test
+	var critical := bool(st["critical"])
 	var p := option["profile"] as WeaponProfile
 	r.hit = true
 	r.critical = critical
+	if c.hidden and features.has_feat(c, "skulker"):
+		reveal(c, "hit with an attack")
 	var parts := {}
 	var dmg_text: Array[String] = []
 	var dice_list: Array[Dictionary] = [{"dice": p.damage_dice, "type": str(p.damage_type), "label": p.name, "weapon": true}]
@@ -1159,12 +1832,26 @@ func _after_hit(c: Combatant, target: Combatant, option: Dictionary, opts: Dicti
 		dice_list.append_array((c.creature as Monster).extra_damage_dice(str(option.get("action_id", ""))))
 	var sneak := features.sneak_attack_dice(c, target, option, t)
 	if sneak != "":
-		dice_list.append({"dice": sneak, "type": str(p.damage_type), "label": "Sneak Attack"})
+		sneak = features.cunning_strike_cost(c, sneak, st)
+		if sneak != "":
+			dice_list.append({"dice": sneak, "type": str(p.damage_type), "label": "Sneak Attack"})
+		st["sneak"] = true
+	for extra: Variant in opts.get("extra_dice", []):
+		dice_list.append(extra as Dictionary)
+	dice_list.append_array(features.hit_damage_dice(c, target, option, st))
+	# Extra damage on weapon and Unarmed Strike hits from spells (Crusader's Mantle, Enlarge) and features.
+	for m in c.creature.modifiers_for(&"damage_penalty_die"):
+		dice_list.append({"dice": m.text("dice", "1d8"), "type": str(p.damage_type), "label": m.source_name, "penalty": true})
+	for m in c.creature.modifiers_for(&"extra_damage"):
+		if m.data.has("vs") and str(m.data["vs"]) != target.id:
+			continue
+		dice_list.append({"dice": m.text("dice", "1d4"), "type": m.text("type", str(p.damage_type)), "label": m.source_name,
+			"penalty": bool(m.data.get("penalty", false))})
 	var turn_key := "%d:%d" % [round_no, turn_index]
 	var savage := c.creature.has_flag("savage_attacker") and str(_savage_turn.get(c.id, "")) != turn_key and c.creature is Character
 	for entry in dice_list:
 		var rolled := _roll_damage_dice(str(entry["dice"]), critical, p.die_minimum if bool(entry.get("weapon", false)) else 0,
-			"%s damage" % entry["label"])
+			"%s damage" % entry["label"], features.damage_reroll_rule(c, p, entry))
 		if savage and bool(entry.get("weapon", false)) and p.item_id != "unarmed_strike":
 			_savage_turn[c.id] = turn_key
 			var again := _roll_damage_dice(str(entry["dice"]), critical, p.die_minimum, "Savage Attacker reroll")
@@ -1172,49 +1859,39 @@ func _after_hit(c: Combatant, target: Combatant, option: Dictionary, opts: Dicti
 				rolled = again
 				dmg_text.append("Savage Attacker: rerolled and kept %d" % int(again["total"]))
 		var ty := str(entry["type"])
+		if bool(entry.get("penalty", false)):
+			parts[str(p.damage_type)] = int(parts.get(str(p.damage_type), 0)) - int(rolled["total"])
+			dmg_text.append("%s −%s: %s" % [entry["label"], entry["dice"], rolled["text"]])
+			continue
 		parts[ty] = int(parts.get(ty, 0)) + int(rolled["total"])
 		dmg_text.append("%s %s%s: %s" % [entry["label"], entry["dice"], " ×2 (Critical Hit)" if critical else "", rolled["text"]])
-	var bonus := p.damage_bonus.total()
-	if bool(opts.get("offhand", false)) and bonus > 0:
+	var bonus := p.damage_bonus.total() + features.flat_damage_bonus(c, target, option, st, dmg_text)
+	if bool(opts.get("offhand", false)) and bonus > 0 and not c.creature.has_flag("two_weapon_fighting") \
+			and not (features.has_feat(c, "crossbow_expert") and p.item_id == "hand_crossbow"):
 		bonus = 0
-		dmg_text.append("Off-hand attack: no ability modifier to damage")
+		dmg_text.append("Light extra attack: no ability modifier to damage")
+	if bool(opts.get("no_mod", false)) and bonus > 0:
+		bonus = maxi(0, bonus - p.damage_bonus.total())
+		dmg_text.append("No ability modifier to this damage")
 	var primary := str(p.damage_type)
 	parts[primary] = maxi(0, int(parts.get(primary, 0)) + bonus)
 	if bonus != 0:
 		dmg_text.append(p.damage_bonus.describe())
-	var total := 0
-	for k: String in parts:
-		total += int(parts[k])
-	# Uncanny Dodge (Rogue 5): halve an attack's damage.
-	if total > 0 and target.reaction_available and target.can_act() and target.creature.has_flag("uncanny_dodge") and can_see(target, c):
-		var decision := _reaction_decision(target, "uncanny_dodge")
-		if decision == "ask":
-			var req := ReactionRequest.new("uncanny_dodge", target.id, c.id)
-			req.title = "Reaction: Uncanny Dodge?"
-			req.text = "%s hits %s for %d damage. Uncanny Dodge halves it (%d)." % [c.name(), target.name(), total, total / 2]
-			req.continuation = func(use: bool) -> CombatResult:
-				if use:
-					target.reaction_available = false
-					for k: String in parts:
-						parts[k] = int(parts[k]) / 2
-					dmg_text.append("Uncanny Dodge: damage halved")
-				return _apply_hit(c, target, option, critical, parts, details, dmg_text, r)
-			pending = req
-			r.pending = req
-			return r
-		elif decision == "auto":
-			target.reaction_available = false
-			for k: String in parts:
-				parts[k] = int(parts[k]) / 2
-			dmg_text.append("Uncanny Dodge: damage halved")
-	return _apply_hit(c, target, option, critical, parts, details, dmg_text, r)
+	var details := st["details"] as Array[String]
+	var r2 := reactions.offer(reactions.against_damage(st, parts, dmg_text), func() -> CombatResult:
+		return _apply_hit(st, parts, details, dmg_text), r)
+	return r2
 
 
-func _apply_hit(c: Combatant, target: Combatant, option: Dictionary, critical: bool, parts: Dictionary,
-		details: Array[String], dmg_text: Array[String], r: CombatResult) -> CombatResult:
+func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_text: Array[String]) -> CombatResult:
+	var c := st["c"] as Combatant
+	var target := st["target"] as Combatant
+	var option := st["option"] as Dictionary
+	var r := st["r"] as CombatResult
+	var critical := bool(st["critical"])
 	var arr: Array = []
 	for k: String in parts:
-		arr.append({"amount": int(parts[k]), "type": k})
+		arr.append({"amount": int(parts[k]), "type": k, "weapon": true, "melee": bool(option["melee"])})
 	var all_details := details.duplicate()
 	all_details.append_array(dmg_text)
 	var dr := deal_damage(c, target, arr, critical, (option["profile"] as WeaponProfile).name, all_details, true)
@@ -1222,18 +1899,27 @@ func _apply_hit(c: Combatant, target: Combatant, option: Dictionary, critical: b
 	if target.is_down():
 		r.killed.append(target.id)
 	_on_hit_effects(c, target, option, dr, r)
-	return r
+	features.after_hit(c, target, option, dr, st, r)
+	_queue_sentinels(c, target)
+	return run_reaction_queue(r)
 
 
 ## Rolls damage dice (doubled on a Critical Hit; dice below `minimum` count as `minimum`).
 ## {total, text}
-func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: String) -> Dictionary:
+func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: String, reroll: Dictionary = {}) -> Dictionary:
 	var parsed := DiceRoller.parse_expr(expr)
 	var count := int(parsed["count"]) * (2 if critical else 1)
 	var total := int(parsed["modifier"])
 	var shown: Array[String] = []
+	var rerolls_left := int(reroll.get("count", 0))
 	if count > 0:
-		for roll in dice.roll(int(parsed["sides"]), count, reason):
+		for roll0 in dice.roll(int(parsed["sides"]), count, reason):
+			var roll := roll0
+			# Tavern Brawler, Piercer: reroll low damage dice (Piercer once per turn).
+			if rerolls_left > 0 and roll <= int(reroll.get("at_most", 1)):
+				rerolls_left -= 1
+				roll = dice.roll_one(int(parsed["sides"]), "%s reroll" % reroll.get("source", ""))
+				shown.append("%d↻" % roll0)
 			var v := roll
 			if minimum > 0 and v < minimum:
 				v = minimum
@@ -1251,8 +1937,27 @@ func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: Strin
 ## damage, death and the log. Returns the DamageResult.
 func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: bool, label: String,
 		details: Array = [], log_it: bool = true) -> DamageResult:
+	target = monster_actions.redirect_shared(target)
+	parts = monster_actions.absorb(target, parts)
 	var was_up := not target.is_down()
+	if source != null and target.creature.has_flag("cursed_necrotic:%s" % source.id):
+		var extra := _roll_damage_dice("1d8", false, 0, "Bestow Curse")
+		parts = parts.duplicate()
+		parts.append({"amount": int(extra["total"]), "type": "necrotic"})
+		details = details.duplicate()
+		details.append("Bestow Curse 1d8: %s" % extra["text"])
+	parts = _reduce_by_dice(target, parts, details)
+	feature_actions.adjust_incoming(source, target, parts)
+	# Mage Slayer: creatures it damages have Disadvantage on the Concentration save.
+	var slayer: Effect = null
+	if source != null and features.has_feat(source, "mage_slayer") and target.creature.concentration != null:
+		slayer = Effect.new("Mage Slayer", &"feature", "mage_slayer").with_modifier("disadvantage", {"on": "concentration"})
+		target.creature.add_effect(slayer)
 	var dr := target.creature.take_damage_parts(parts, critical, dice, label)
+	if slayer != null:
+		target.creature.remove_effect(slayer)
+	if source != null and dr.final > 0:
+		spells.trigger_ends(source, "deal_damage")
 	if dr.final > 0:
 		for e: Effect in target.creature.effects.duplicate():
 			if e.ends_on_damage:
@@ -1283,19 +1988,156 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	if dr.concentration_broken:
 		log.add("info", "%s loses Concentration" % target.name(), target.id, [dr.concentration_save.describe()])
 	if target.creature.dead and was_up:
+		target.set_meta("died_round", round_no)
 		log.add("death", "%s dies" % target.name(), target.id)
 		events.append({"type": "death", "id": target.id})
+		if target.has_meta("vanishes"):
+			events.append({"type": "vanish", "id": target.id})
+	elif dr.dropped_to_zero and not target.creature.dead and monster_actions.lycanthrope(target):
+		pass
+	elif dr.dropped_to_zero and not target.creature.dead and feature_actions.on_zero(target):
+		events.append({"type": "heal", "id": target.id, "amount": 1})
 	elif dr.dropped_to_zero and not target.creature.dead:
 		log.add("death", "%s falls unconscious" % target.name(), target.id)
 		events.append({"type": "down", "id": target.id})
-	if grapples.values().has(target.id) and target.creature.has_flag("no_actions"):
+	if grapples.values().has(target.id) and (target.creature.has_flag("no_actions") or target.is_down()):
 		_release_grapples_by(target)
 	if target.is_down() or target.creature.has_flag("no_actions"):
 		features.end_turning_from(target)
 	if source != null and source != target and dr.final > 0:
 		spells.end_sanctuary(source, "dealt damage")
+	spells.on_damaged(source, target, dr.final, parts)
+	if dr.final > 0 and target.is_alive():
+		monster_actions.loathsome_limbs(target, parts)
+	if target.is_down():
+		monster_actions.body_dropped(target)
+	if dr.final > 0 and source != null and source != target and target.is_alive():
+		_queue_damage_reactions(source, target)
+	spells.zones.prune()
 	_check_over()
 	return dr
+
+
+## The Resistance cantrip: damage of the chosen type is reduced by 1d4, once per turn.
+func _reduce_by_dice(target: Combatant, parts: Array, details: Array) -> Array:
+	var mods := target.creature.modifiers_for(&"damage_reduction_die")
+	if mods.is_empty():
+		return parts
+	var turn_key := "%d:%d" % [round_no, turn_index]
+	var out: Array = []
+	for p: Variant in parts:
+		out.append((p as Dictionary).duplicate())
+	for m in mods:
+		if bool(m.data.get("once_per_turn", true)) and str(target.get_meta("dr_die_turn", "")) == turn_key:
+			break
+		for p: Variant in out:
+			var d := p as Dictionary
+			if str(d["type"]) == m.text("type") and int(d["amount"]) > 0:
+				var cut := int(dice.roll_expr(m.text("dice", "1d4"), m.source_name)["total"])
+				d["amount"] = maxi(0, int(d["amount"]) - cut)
+				target.set_meta("dr_die_turn", turn_key)
+				details.append("%s: −%d" % [m.source_name, cut])
+				break
+	return out
+
+
+## Reactions to being damaged (Hellish Rebuke, Storm's Thunder) wait until the attack or spell that caused them has
+## finished.
+func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
+	if not target.creature is Character or target.creature.hp <= 0 or distance(target, source) > 60 or not can_see(target, source):
+		return
+	for q in reaction_queue:
+		if str(q["reactor"]) == target.id:
+			return
+	if spells.can_cast_reaction(target, "hellish_rebuke"):
+		reaction_queue.append({"kind": "hellish_rebuke", "reactor": target.id, "trigger": source.id})
+	elif CombatFeatures.has_feature(target, "storms_thunder") and (target.creature as Character).resource_left("giant_ancestry") > 0 and spells.can_react(target):
+		reaction_queue.append({"kind": "storms_thunder", "reactor": target.id, "trigger": source.id})
+
+
+## Sentinel's Guardian: a creature within 5 ft of a Sentinel hits someone else: an Opportunity Attack against it.
+func _queue_sentinels(attacker: Combatant, target: Combatant) -> void:
+	for p in hostiles_of(attacker):
+		if p == target or not features.has_feat(p, "sentinel") or not spells.can_react(p) or distance(p, attacker) > 5:
+			continue
+		reaction_queue.append({"kind": "sentinel", "reactor": p.id, "trigger": attacker.id})
+
+
+func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
+	match str(q["kind"]):
+		"hellish_rebuke":
+			return spells.can_cast_reaction(reactor, "hellish_rebuke")
+		"storms_thunder":
+			return spells.can_react(reactor) and (reactor.creature as Character).resource_left("giant_ancestry") > 0
+		"sentinel":
+			return spells.can_react(reactor) and not best_melee_option(reactor, null).is_empty()
+	return false
+
+
+func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> CombatResult:
+	match str(q["kind"]):
+		"hellish_rebuke":
+			return spells.cast_reaction_spell(reactor, "hellish_rebuke", trigger)
+		"storms_thunder":
+			reactor.reaction_available = false
+			(reactor.creature as Character).spend_resource("giant_ancestry")
+			var rolled := _roll_damage_dice("1d8", false, 0, "Storm's Thunder")
+			deal_damage(reactor, trigger, [{"amount": int(rolled["total"]), "type": "thunder"}], false, "Storm's Thunder", [str(rolled["text"])])
+			return CombatResult.new()
+		"sentinel":
+			if distance(reactor, trigger) > reactor.reach_ft():
+				return CombatResult.new()
+			return _opportunity_attack(reactor, trigger)
+	return CombatResult.new()
+
+
+const _QUEUED_TEXT := {
+	"hellish_rebuke": ["Reaction: Hellish Rebuke?", "%s hurt %s. Answer with Hellish Rebuke: a Dex save or Fire damage.", "Reaction and a spell slot"],
+	"storms_thunder": ["Reaction: Storm's Thunder?", "%s hurt %s. Answer with 1d8 Thunder damage.", "Reaction and a use of Giant Ancestry"],
+	"sentinel": ["Reaction: Sentinel?", "%s attacks someone beside %s. Make an Opportunity Attack against it?", "Reaction"],
+}
+
+
+## Offers the queued reactions one by one (asking the player, or the AI deciding), then the queued Cleave attacks,
+## then returns `r`.
+func run_reaction_queue(r: CombatResult) -> CombatResult:
+	while not reaction_queue.is_empty():
+		var q := reaction_queue.pop_front() as Dictionary
+		var reactor := get_c(str(q["reactor"]))
+		var trigger := get_c(str(q["trigger"]))
+		if reactor == null or trigger == null or not trigger.is_alive() or not _queued_ok(q, reactor):
+			continue
+		var kind := str(q["kind"])
+		var decision := _reaction_decision(reactor, kind)
+		if decision == "never":
+			continue
+		var fire := func() -> CombatResult: return _fire_queued(q, reactor, trigger)
+		if decision == "auto":
+			var sub := fire.call() as CombatResult
+			if pending != null:
+				return then(sub, func() -> CombatResult: return run_reaction_queue(r))
+			continue
+		var words := _QUEUED_TEXT[kind] as Array
+		var req := ReactionRequest.new(kind, reactor.id, trigger.id)
+		req.title = str(words[0])
+		req.text = str(words[1]) % [trigger.name(), reactor.name()]
+		req.cost = str(words[2])
+		req.continuation = func(use: bool) -> CombatResult:
+			if use:
+				return then(fire.call() as CombatResult, func() -> CombatResult: return run_reaction_queue(r))
+			return run_reaction_queue(r)
+		pending = req
+		r.pending = req
+		return r
+	while not cleave_queue.is_empty():
+		var cq := cleave_queue.pop_front() as Dictionary
+		var cc := cq["c"] as Combatant
+		var ct := cq["target"] as Combatant
+		if ct.is_alive() and not ct.is_down() and cc.can_act():
+			var sub2 := _resolve_attack(cc, ct, cq["option"] as Dictionary, {"cleave": true, "no_mod": true})
+			if pending != null:
+				return then(sub2, func() -> CombatResult: return run_reaction_queue(r))
+	return r
 
 
 static func _types_of(parts: Array) -> Array[String]:
@@ -1344,7 +2186,7 @@ func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: Da
 					log.add("info", "Topple: %s keeps its feet" % target.name(), target.id, [s.describe()])
 			"push":
 				if Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large"):
-					var moved := forced_move(target, c.cell, 10)
+					var moved := forced_move(target, center_of(c), 10)
 					if moved > 0:
 						log.add("info", "Push: %s is shoved %d ft" % [target.name(), moved * 5], target.id)
 	# Stat-block riders (a wolf's bite knocks Prone; size limits are in the action text).
@@ -1361,6 +2203,8 @@ func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: Da
 			if target.creature.add_condition(StringName(str(cond)), str(act.get("name", ""))):
 				log.add("condition", "%s has the %s condition" % [target.name(), str(cond).capitalize()], target.id)
 				events.append({"type": "condition", "id": target.id})
+		if act.has("on_hit"):
+			monster_actions.apply_riders(c, target, act["on_hit"] as Array, {str(p.damage_type): dr.final}, str(act.get("name", "")))
 
 
 func _spend_ammo(c: Combatant, p: WeaponProfile) -> void:
@@ -1433,8 +2277,9 @@ func dash(c: Combatant, use_bonus: bool = false) -> CombatResult:
 		c.bonus_available = false
 	else:
 		spend_action(c)
-	c.movement_left += c.speed()
-	log.add("info", "%s takes the Dash action (+%d ft)" % [c.name(), c.speed()], c.id)
+	var extra := c.speed() + (10 if features.has_feat(c, "charger") else 0)
+	c.movement_left += extra
+	log.add("info", "%s takes the Dash action (+%d ft)" % [c.name(), extra], c.id)
 	return CombatResult.new()
 
 
@@ -1624,7 +2469,7 @@ func unarmed_special(c: Combatant, target: Combatant, mode: String) -> CombatRes
 			target.creature.add_condition(&"prone", "Shove")
 			log.add("condition", "%s shoves %s Prone" % [c.name(), target.name()], c.id, [s.describe()])
 		_:
-			var moved := forced_move(target, c.cell, 5)
+			var moved := forced_move(target, center_of(c), 5)
 			log.add("info", "%s shoves %s %d ft" % [c.name(), target.name(), moved * 5], c.id, [s.describe()])
 	return r
 
@@ -1640,11 +2485,15 @@ func escape_grapple(c: Combatant) -> CombatResult:
 	spend_action(c)
 	var grappler := get_c(str(grapples[c.id]))
 	var dc := 8 + grappler.creature.ability_mod(&"str") + grappler.creature.proficiency_bonus() if grappler != null else 10
+	if c.has_meta("escape_dc"):
+		dc = int(c.get_meta("escape_dc"))
 	var skill := &"athletics" if c.creature.skill_bonus(&"athletics").total() >= c.creature.skill_bonus(&"acrobatics").total() else &"acrobatics"
 	var t := c.creature.roll_check(dice, skill, dc)
 	if t.success:
 		grapples.erase(c.id)
 		c.creature.remove_condition(&"grappled")
+		c.remove_meta("escape_dc")
+		monster_actions.release_engulf(c)
 		log.add("info", "%s breaks free" % c.name(), c.id, [t.describe()])
 	else:
 		log.add("info", "%s struggles but stays Grappled" % c.name(), c.id, [t.describe()])
@@ -1658,10 +2507,14 @@ func _release_grapples_by(grappler: Combatant) -> void:
 			var t := get_c(k)
 			if t != null:
 				t.creature.remove_condition(&"grappled")
+				if t.has_meta("escape_dc"):
+					t.remove_meta("escape_dc")
+				monster_actions.release_engulf(t)
 
 
 ## Drains scene events (moves, attacks, damage, turns) for animation.
 func drain_events() -> Array[Dictionary]:
+	spells.zones.prune()
 	var out := events.duplicate()
 	events.clear()
 	return out

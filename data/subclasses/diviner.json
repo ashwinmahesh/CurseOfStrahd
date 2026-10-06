@@ -195,7 +195,7 @@
       "feature": {
         "id": "the_third_eye",
         "name": "The Third Eye",
-        "summary": "Bonus Action: darkvision 120 ft, Ethereal sight, read any language or see the Invisible nearby.",
+        "summary": "Bonus Action: darkvision 120 ft, See Invisibility, read any language or see the Invisible nearby.",
         "implemented": "engine"
       }
     },

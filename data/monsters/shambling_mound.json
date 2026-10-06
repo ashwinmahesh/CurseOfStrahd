@@ -61,7 +61,8 @@
           "value": "lightning_absorption"
         }
       ],
-      "implemented": "engine"
+      "implemented": "engine",
+      "absorb": "lightning"
     }
   ],
   "actions": [
@@ -106,7 +107,14 @@
         }
       ],
       "summary": "Reach 10 ft. lash with lightning damage that drags a Medium or smaller target 5 ft. closer.",
-      "text": "Hit: 7 (1d6 + 4) Bludgeoning damage plus 5 (2d4) Lightning damage. If the target is Medium or smaller, the shambling mound pulls it 5 feet straight toward itself."
+      "text": "Hit: 7 (1d6 + 4) Bludgeoning damage plus 5 (2d4) Lightning damage. If the target is Medium or smaller, the shambling mound pulls it 5 feet straight toward itself.",
+      "on_hit": [
+        {
+          "do": "pull",
+          "feet": 5,
+          "max_size": "medium"
+        }
+      ]
     },
     {
       "id": "engulf",
@@ -121,21 +129,28 @@
         "targets": 1,
         "range": 5
       },
-      "damage": [
-        {
-          "average": 10,
-          "dice": "3d6",
-          "type": "lightning",
-          "when": "at the start of each of the target's turns while engulfed"
-        }
-      ],
-      "conditions": [
-        "grappled",
-        "blinded",
-        "restrained"
-      ],
+      "damage": [],
       "summary": "DC 15 Str save or be pulled inside: Grappled, Blinded, Restrained, 10 (3d6) Lightning each turn.",
-      "text": "Strength Saving Throw: DC 15, one Medium or smaller creature within 5 feet. Failure: the target is pulled into the shambling mound's space and has the Grappled condition (escape DC 14). While grappled this way, the target also has the Blinded and Restrained conditions and takes 10 (3d6) Lightning damage at the start of each of its turns. The grappled target moves with the shambling mound when it moves, at no extra movement cost. The mound can hold only one creature with this action at a time."
+      "text": "Strength Saving Throw: DC 15, one Medium or smaller creature within 5 feet. Failure: the target is pulled into the shambling mound's space and has the Grappled condition (escape DC 14). While grappled this way, the target also has the Blinded and Restrained conditions and takes 10 (3d6) Lightning damage at the start of each of its turns. The grappled target moves with the shambling mound when it moves, at no extra movement cost. The mound can hold only one creature with this action at a time.",
+      "targets": {
+        "range": 5,
+        "count": 1,
+        "max_size": "medium"
+      },
+      "on_fail": [
+        {
+          "do": "engulf",
+          "escape_dc": 14,
+          "damage": {
+            "dice": "3d6",
+            "type": "lightning"
+          },
+          "conditions": [
+            "blinded",
+            "restrained"
+          ]
+        }
+      ]
     }
   ],
   "regions": [

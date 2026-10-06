@@ -206,7 +206,16 @@
             "reach",
             "spell",
             "resource",
-            "flag"
+            "flag",
+            "extra_damage",
+            "attacked_penalty_die",
+            "attacked_with_by_type",
+            "condition_immunity_by_type",
+            "damage_reduction_die",
+            "damage_penalty_die",
+            "weapon_override",
+            "speed_percent",
+            "size_step"
           ]
         },
         "value": {
@@ -277,7 +286,7 @@
     },
     "effect_ref": {
       "type": "object",
-      "description": "A reference to a reusable effect primitive in rules/ (see ADR 0003) with its parameters.",
+      "description": "A reusable effect primitive with its parameters (docs/contracts/spells.md lists the params: on, until, consume, ends_on, repeat_save, escape, target, plain...).",
       "required": [
         "effect"
       ],
@@ -292,7 +301,10 @@
             "damage",
             "light",
             "summon",
-            "custom"
+            "custom",
+            "push",
+            "pull",
+            "end_condition"
           ]
         },
         "params": {
@@ -337,8 +349,16 @@
           ]
         },
         "count": {
-          "type": "integer",
-          "minimum": 1
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "string",
+              "description": "A formula such as pb (Ritual Caster)."
+            }
+          ]
         },
         "from": {
           "type": "array",

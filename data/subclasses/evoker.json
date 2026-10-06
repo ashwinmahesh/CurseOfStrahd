@@ -202,7 +202,8 @@
             "stat": "spell_damage",
             "value": "mod:int",
             "when": {
-              "school": "evocation"
+              "school": "evocation",
+              "spell_class": "wizard"
             }
           }
         ]

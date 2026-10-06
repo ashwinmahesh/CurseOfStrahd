@@ -45,15 +45,15 @@
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
+        "until": "caster_turn_end",
+        "consume": "next_save",
         "modifiers": [
           {
             "stat": "penalty_die",
             "dice": "1d4",
             "on": [
               "save:all"
-            ],
-            "text": "Only the target's next saving throw before the end of your next turn; then it ends."
+            ]
           }
         ]
       }

@@ -43,7 +43,7 @@
           "value": "crafter_discount"
         }
       ],
-      "implemented": "engine"
+      "implemented": "text"
     },
     {
       "id": "fast_crafting",

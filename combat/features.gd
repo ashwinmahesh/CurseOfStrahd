@@ -26,6 +26,67 @@ static func has_feature(c: Combatant, feature_id: String) -> bool:
 	return false
 
 
+## A feat the creature took (by feat id; benefit ids can repeat across feats, e.g. "parry").
+func has_feat(c: Combatant, feat_id: String) -> bool:
+	if not c.creature is Character:
+		return false
+	for f in (c.creature as Character).feats_taken:
+		if str(f["id"]) == feat_id:
+			return true
+	return false
+
+
+func knows_maneuver(c: Combatant, maneuver_id: String) -> bool:
+	return c.creature is Character and maneuver_id in (c.creature as Character).maneuvers
+
+
+## The Battle Master's Superiority Die size (8, 10, 12), or 0.
+func superiority_die(c: Combatant) -> int:
+	return _die_from(c, "fighter", "superiority_die")
+
+
+## The Psi Warrior's or Soulknife's Psionic Energy Die size, or 0.
+func psionic_die(c: Combatant) -> int:
+	var d := _die_from(c, "fighter", "psionic_energy_die")
+	return d if d > 0 else _die_from(c, "rogue", "psionic_energy_die")
+
+
+func _die_from(c: Combatant, class_id: String, column: String) -> int:
+	if not c.creature is Character:
+		return 0
+	var v: Variant = (c.creature as Character).class_column(class_id, column)
+	var text := str(v) if v != null else ""
+	return int(text.substr(1)) if text.begins_with("d") else 0
+
+
+func wields_shield(c: Combatant) -> bool:
+	if not c.creature is Character:
+		return false
+	var off := (c.creature as Character).equipped("off_hand")
+	return not off.is_empty() and str(off.get("category", "")) == "shield"
+
+
+func holds_weapon(c: Combatant) -> bool:
+	if not c.creature is Character:
+		return false
+	return not (c.creature as Character).equipped("main_hand").is_empty()
+
+
+func holds_finesse(c: Combatant) -> bool:
+	if not c.creature is Character:
+		return false
+	for slot: String in ["main_hand", "off_hand"]:
+		if "finesse" in Gear.weapon_props((c.creature as Character).equipped(slot)):
+			return true
+	return false
+
+
+## The DC for Battle Master maneuvers, Cunning Strike and similar: 8 + the better of Str/Dex (or `ability`) + PB.
+func maneuver_dc(c: Combatant, ability: StringName = &"") -> int:
+	var mod := c.creature.ability_mod(ability) if ability != &"" else maxi(c.creature.ability_mod(&"str"), c.creature.ability_mod(&"dex"))
+	return 8 + mod + c.creature.proficiency_bonus()
+
+
 func _turn_key() -> String:
 	return "%d:%d" % [enc().round_no, enc().turn_index]
 
@@ -103,6 +164,9 @@ func second_wind(c: Combatant) -> CombatResult:
 	var rolled := e._roll_damage_dice("1d10+%d" % level, false, 0, "Second Wind")
 	var healed := ch.heal(int(rolled["total"]), "Second Wind")
 	var r := CombatResult.new()
+	# Tactical Shift (Fighter 5): move up to half Speed without provoking Opportunity Attacks.
+	if has_feature(c, "tactical_shift"):
+		c.free_move_ft = maxi(c.free_move_ft, c.speed() / 2)
 	r.lines.append(e.log.add("heal", "%s catches a Second Wind and regains %d Hit Points" % [c.name(), healed], c.id,
 		["Second Wind 1d10 + Fighter level %d: %s" % [level, rolled["text"]]]))
 	e.events.append({"type": "heal", "id": c.id, "amount": healed})
@@ -258,6 +322,9 @@ func fleeing_from(c: Combatant) -> Combatant:
 	for fx: Effect in c.creature.effects:
 		if fx.source_id == "turn_undead":
 			return enc().get_c(fx.caster_id)
+		for m in fx.modifiers:
+			if m.stat == &"flag" and m.text("value") == "fear_flee":
+				return enc().get_c(fx.caster_id)
 	return null
 
 
@@ -324,3 +391,445 @@ func preserve_life_room(c: Combatant) -> Dictionary:
 		if room > 0:
 			out[o.id] = room
 	return out
+
+
+# --- Riders on a hit (armed by the player before the attack) ----------------------------------------
+
+## Riders a creature can arm for its next hit: {id, label, sub, cost, group, help}. Battle Master maneuvers that
+## trigger on a hit (one per hit, a Superiority Die each), Cunning Strike effects (paid with Sneak Attack dice),
+## the Goliath's Giant Ancestry boons, the Psi Warrior's Psionic Strike, Tactical Master's mastery swap, and toggles
+## for optional masteries (Push, Topple).
+const HIT_MANEUVERS := {
+	"disarming_attack": ["Disarming Attack", "Str save or drop what it holds"],
+	"distracting_strike": ["Distracting Strike", "next ally attack has Advantage"],
+	"goading_attack": ["Goading Attack", "Wis save or Disadvantage against others"],
+	"menacing_attack": ["Menacing Attack", "Wis save or Frightened"],
+	"pushing_attack": ["Pushing Attack", "Str save or pushed 15 ft"],
+	"trip_attack": ["Trip Attack", "Str save or Prone"],
+	"sweeping_attack": ["Sweeping Attack", "the die hits a second foe"],
+	"maneuvering_attack": ["Maneuvering Attack", "an ally moves without Opportunity Attacks"],
+	"lunging_attack": ["Lunging Attack", "after moving 5 ft: +die"],
+	"feinting_attack": ["Feinting Attack", "+die (after a feint)"],
+}
+const CUNNING := {
+	"poison": ["Poison", 1, "Con save or Poisoned 1 min", 5],
+	"trip": ["Trip", 1, "Dex save or Prone", 5],
+	"withdraw": ["Withdraw", 1, "move half Speed, no Opportunity Attacks", 5],
+	"stealth_attack": ["Stealth Attack", 1, "stay hidden behind cover", 9],
+	"daze": ["Daze", 2, "Con save or Dazed", 14],
+	"knock_out": ["Knock Out", 6, "Con save or Unconscious 1 min", 14],
+	"obscure": ["Obscure", 3, "Dex save or Blinded", 14],
+}
+
+
+func rider_options(c: Combatant) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if not c.creature is Character:
+		return out
+	var ch := c.creature as Character
+	var die := superiority_die(c)
+	if die > 0:
+		for id: String in HIT_MANEUVERS:
+			if knows_maneuver(c, id):
+				var why := "" if ch.resource_left("superiority_dice") > 0 else "No Superiority Dice left"
+				out.append({"id": "maneuver:" + id, "label": HIT_MANEUVERS[id][0], "sub": "d%d · %s" % [die, HIT_MANEUVERS[id][1]], "why": why})
+	if has_feature(c, "cunning_strike"):
+		var lvl := ch.class_level_of("rogue")
+		for id: String in CUNNING:
+			var row := CUNNING[id] as Array
+			if lvl < int(row[3]):
+				continue
+			if id == "stealth_attack" and not has_feature(c, "supreme_sneak"):
+				continue
+			if int(row[3]) == 14 and not has_feature(c, "devious_strikes"):
+				continue
+			var why2 := ""
+			if id == "poison" and enc().item_count(c, "poisoners_kit") <= 0:
+				why2 = "Needs a Poisoner's Kit"
+			out.append({"id": "cunning:" + id, "label": "Cunning Strike: %s" % row[0], "sub": "−%dd6 Sneak Attack · %s" % [row[1], row[2]], "why": why2})
+	for id: String in ["fires_burn", "frosts_chill", "hills_tumble"]:
+		if has_feature(c, id):
+			var why3 := "" if ch.resource_left("giant_ancestry") > 0 else "No Giant Ancestry uses left"
+			var sub := {"fires_burn": "+1d10 Fire", "frosts_chill": "+1d6 Cold, −10 ft Speed", "hills_tumble": "knock Prone"}[id] as String
+			out.append({"id": "giant:" + id, "label": id.replace("_", " ").capitalize().replace("s ", "'s "), "sub": sub, "why": why3})
+	var pdie := psionic_die(c)
+	if pdie > 0 and ch.subclasses.get("fighter", "") == "psi_warrior":
+		var why4 := "" if ch.resource_left("psionic_energy") > 0 else "No Psionic Energy Dice left"
+		out.append({"id": "psionic_strike", "label": "Psionic Strike", "sub": "+d%d + Int Force" % pdie, "why": why4})
+		if has_feature(c, "telekinetic_adept"):
+			out.append({"id": "telekinetic_thrust", "label": "Telekinetic Thrust", "sub": "with Psionic Strike: Str save, Prone or pushed 10 ft", "why": why4})
+	if has_feature(c, "rend_mind"):
+		var rw := "" if ch.resource_left("rend_mind") > 0 or ch.resource_left("psionic_energy") >= 3 else "No uses left"
+		out.append({"id": "rend_mind", "label": "Rend Mind", "sub": "Sneak Attack with a blade: Wis save or Stunned", "why": rw})
+	if has_feature(c, "overchannel"):
+		var uses := int(c.get_meta("overchannel_uses", 0))
+		out.append({"id": "overchannel", "label": "Overchannel", "sub": "max damage on the next level 1-5 spell%s" % ("" if uses == 0 else " · costs Necrotic damage"), "why": ""})
+	if has_feature(c, "tactical_master"):
+		for m: String in ["push", "sap", "slow"]:
+			out.append({"id": "mastery:" + m, "label": "Tactical Master: %s" % m.capitalize(), "sub": "use %s this hit" % m.capitalize(), "why": ""})
+	for o in enc().attack_options(c):
+		var mastery := (o["profile"] as WeaponProfile).mastery
+		if mastery in ["push", "topple"] and not out.any(func(x: Dictionary) -> bool: return str(x["id"]) == "skip:" + mastery):
+			out.append({"id": "skip:" + mastery, "label": "Hold back %s" % mastery.capitalize(), "sub": "don't use the mastery this turn", "why": ""})
+	return out
+
+
+## Arms or disarms a rider for this turn's hits.
+func toggle_rider(c: Combatant, rider_id: String) -> CombatResult:
+	var why := enc()._turn_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if rider_id in c.armed:
+		c.armed.erase(rider_id)
+		enc().log.add("info", "%s won't use %s" % [c.name(), rider_id.get_slice(":", 1).replace("_", " ").capitalize()], c.id)
+	else:
+		if rider_id.begins_with("maneuver:"):
+			for a: String in c.armed.duplicate():
+				if a.begins_with("maneuver:"):
+					c.armed.erase(a)
+		if rider_id.begins_with("cunning:"):
+			var limit := 2 if has_feature(c, "improved_cunning_strike") else 1
+			var mine := c.armed.filter(func(x: String) -> bool: return x.begins_with("cunning:"))
+			while mine.size() >= limit:
+				c.armed.erase(mine.pop_front())
+		c.armed.append(rider_id)
+		enc().log.add("info", "%s readies %s for the next hit" % [c.name(), rider_id.get_slice(":", rider_id.get_slice_count(":") - 1).replace("_", " ").capitalize()], c.id)
+	return CombatResult.new()
+
+
+## Cunning Strike: the armed effects' Sneak Attack dice come off the roll ("5d6" → "4d6"). Returns the dice left
+## (or "" if none) and records the chosen effects in st["cunning"].
+func cunning_strike_cost(c: Combatant, sneak: String, st: Dictionary) -> String:
+	var chosen: Array[String] = []
+	var p := DiceRoller.parse_expr(sneak)
+	var dice := int(p["count"])
+	for a in c.armed:
+		if not a.begins_with("cunning:"):
+			continue
+		var id := a.substr(8)
+		var cost := int((CUNNING.get(id, ["", 1]) as Array)[1])
+		if dice >= cost:
+			dice -= cost
+			chosen.append(id)
+	st["cunning"] = chosen
+	for id in chosen:
+		c.armed.erase("cunning:" + id)
+	return "%dd%d" % [dice, int(p["sides"])] if dice > 0 else ""
+
+
+func _once(c: Combatant, key: String) -> bool:
+	var k := "once_%s" % key
+	var turn := _turn_key()
+	if str(c.get_meta(k, "")) == turn:
+		return false
+	c.set_meta(k, turn)
+	return true
+
+
+func _first_round() -> bool:
+	return enc().round_no == 1
+
+
+## Damage dice features add to a hit: the armed maneuver's Superiority Die, Giant Ancestry, Psionic Strike, Divine
+## Strike, Celestial Revelation, Assassinate in the first round, Charger, Poisoner's dose.
+func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var e := enc()
+	var p := option["profile"] as WeaponProfile
+	var melee := bool(option["melee"])
+	if not c.creature is Character:
+		return out
+	var ch := c.creature as Character
+	# Battle Master: one maneuver per hit, a Superiority Die added to the damage.
+	var die := superiority_die(c)
+	for a: String in c.armed.duplicate():
+		if a.begins_with("maneuver:") and die > 0 and ch.resource_left("superiority_dice") > 0:
+			var id := a.substr(9)
+			if id == "lunging_attack" and not c.moved:
+				continue
+			if id in ["lunging_attack", "sweeping_attack"] and not melee:
+				continue
+			ch.spend_resource("superiority_dice")
+			c.armed.erase(a)
+			st["maneuver"] = id
+			st["sup_die"] = die
+			if id != "sweeping_attack":
+				out.append({"dice": "1d%d" % die, "type": str(p.damage_type), "label": HIT_MANEUVERS[id][0]})
+			break
+	for a: String in c.armed.duplicate():
+		if a.begins_with("giant:") and ch.resource_left("giant_ancestry") > 0:
+			var gid := a.substr(6)
+			ch.spend_resource("giant_ancestry")
+			c.armed.erase(a)
+			st["giant"] = gid
+			if gid == "fires_burn":
+				out.append({"dice": "1d10", "type": "fire", "label": "Fire's Burn"})
+			elif gid == "frosts_chill":
+				out.append({"dice": "1d6", "type": "cold", "label": "Frost's Chill"})
+			break
+	var pdie := psionic_die(c)
+	if "psionic_strike" in c.armed and pdie > 0 and ch.resource_left("psionic_energy") > 0 and e.distance(c, target) <= 30 and _once(c, "psionic_strike"):
+		ch.spend_resource("psionic_energy")
+		c.armed.erase("psionic_strike")
+		out.append({"dice": "1d%d+%d" % [pdie, maxi(0, c.creature.ability_mod(&"int"))], "type": "force", "label": "Psionic Strike"})
+		st["psionic_strike"] = true
+	if has_feature(c, "blessed_strikes") and ch.picks_for("blessed_strikes").has("divine_strike") or has_feature(c, "divine_strike"):
+		if e.current() == c and _once(c, "divine_strike"):
+			var n := 2 if has_feature(c, "improved_blessed_strikes") else 1
+			out.append({"dice": "%dd8" % n, "type": "radiant", "label": "Divine Strike"})
+	if c.creature.has_flag("celestial_revelation") and _once(c, "celestial_revelation"):
+		var cr_type := "necrotic" if c.creature.has_flag("necrotic_shroud") else "radiant"
+		out.append({"dice": str(c.creature.proficiency_bonus()), "type": cr_type, "label": "Celestial Revelation"})
+	if has_feature(c, "assassinate") and _first_round() and st.has("sneak"):
+		out.append({"dice": str(ch.class_level_of("rogue")), "type": str(p.damage_type), "label": "Assassinate"})
+	if has_feat(c, "charger") and melee and c.moved and e.current() == c and _once(c, "charger"):
+		out.append({"dice": "1d8", "type": str(p.damage_type), "label": "Charge"})
+	if c.has_meta("poisoned_weapon") and _once(c, "poison_dose"):
+		c.remove_meta("poisoned_weapon")
+		st["poison_dose"] = true
+	return out
+
+
+## Flat damage bonuses: Great Weapon Master's Heavy Weapon Mastery (+PB on a Heavy weapon hit in the Attack
+## action), Rage-like bonuses later.
+func flat_damage_bonus(c: Combatant, _target: Combatant, option: Dictionary, st: Dictionary, notes: Array[String]) -> int:
+	var p := option["profile"] as WeaponProfile
+	var bonus := 0
+	if has_feat(c, "great_weapon_master") and "heavy" in p.properties and c.took_attack_action and not bool((st["opts"] as Dictionary).get("reaction", false)):
+		bonus += c.creature.proficiency_bonus()
+		notes.append("Great Weapon Master +%d" % c.creature.proficiency_bonus())
+	return bonus
+
+
+## Rerolls on damage dice: Tavern Brawler (Unarmed Strike 1s), Piercer (one Piercing die once per turn).
+func damage_reroll_rule(c: Combatant, p: WeaponProfile, entry: Dictionary) -> Dictionary:
+	if not bool(entry.get("weapon", false)):
+		return {}
+	if has_feat(c, "tavern_brawler") and p.item_id == "unarmed_strike":
+		return {"count": 99, "at_most": 1, "source": "Tavern Brawler"}
+	if has_feat(c, "piercer") and str(p.damage_type) == "piercing" and _once(c, "piercer"):
+		var sides := int(DiceRoller.parse_expr(str(entry["dice"]))["sides"])
+		return {"count": 1, "at_most": sides / 2, "source": "Piercer"}
+	return {}
+
+
+## After a miss: Studied Attacks (Fighter 13).
+func after_miss(c: Combatant, target: Combatant, _option: Dictionary, _r: CombatResult) -> void:
+	var e := enc()
+	if has_feature(c, "studied_attacks"):
+		e.add_mark({"kind": "advantage_against", "target": target.id, "attacker": c.id, "source": "Studied Attacks",
+			"expires_owner": c.id, "expires_phase": "end", "skip": e.own_turn_skip(c), "consume": true})
+
+
+## After a hit: the armed maneuver's effect, Cunning Strike effects, Giant Ancestry riders, Telekinetic Thrust,
+## Eldritch Strike, Crusher, Slasher, Piercer criticals, Sentinel's Halt, Tavern Brawler's push, Shield Master's
+## bash, Cleave, Remarkable Athlete, Great Weapon Master's Hew, Poisoner's dose.
+func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageResult, st: Dictionary, r: CombatResult) -> void:
+	var e := enc()
+	var p := option["profile"] as WeaponProfile
+	var melee := bool(option["melee"])
+	var critical := bool(st.get("critical", false))
+	var opts := st["opts"] as Dictionary
+	var alive := target.is_alive() and not target.is_down()
+	var size_ok := Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large")
+	# Battle Master maneuvers.
+	if st.has("maneuver"):
+		var id := str(st["maneuver"])
+		var die := int(st["sup_die"])
+		var dc := maneuver_dc(c)
+		match id:
+			"disarming_attack":
+				if alive and not _save(target, &"str", dc, "Disarming Attack"):
+					target.set_meta("disarmed", true)
+					e.log.add("condition", "%s drops what it's holding" % target.name(), target.id)
+			"distracting_strike":
+				e.add_mark({"kind": "advantage_against", "target": target.id, "not_attacker": c.id, "source": "Distracting Strike",
+					"expires_owner": c.id, "expires_phase": "start", "consume": true})
+			"goading_attack":
+				if alive and not _save(target, &"wis", dc, "Goading Attack"):
+					var fx := Effect.new("Goaded", &"feature", "goading_attack").with_modifier("flag", {"value": "goaded_by:%s" % c.id})
+					fx.ends = Effect.Ends.END_OF_TURN
+					fx.turn_owner_id = c.id
+					fx.skip_turn_ends = e.own_turn_skip(c)
+					target.creature.add_effect(fx)
+			"menacing_attack":
+				if alive and not _save(target, &"wis", dc, "Menacing Attack", "frightened"):
+					var fx2 := Effect.new("Menaced", &"feature", "menacing_attack").with_condition(&"frightened")
+					fx2.caster_id = c.id
+					fx2.ends = Effect.Ends.END_OF_TURN
+					fx2.turn_owner_id = c.id
+					fx2.skip_turn_ends = e.own_turn_skip(c)
+					target.creature.add_effect(fx2)
+			"pushing_attack":
+				if alive and size_ok and not _save(target, &"str", dc, "Pushing Attack"):
+					e.forced_move(target, e.center_of(c), 15)
+			"trip_attack":
+				if alive and size_ok and not _save(target, &"str", dc, "Trip Attack"):
+					target.creature.add_condition(&"prone", "Trip Attack")
+					e.log.add("condition", "%s is tripped Prone" % target.name(), target.id)
+			"sweeping_attack":
+				var t := st["t"] as D20Test
+				for o in e.hostiles_of(c):
+					if o != target and not o.is_down() and e.distance(o, target) <= 5 and e.distance(c, o) <= p.reach and t.total >= o.creature.ac_value():
+						var rolled := e._roll_damage_dice("1d%d" % die, false, 0, "Sweeping Attack")
+						e.deal_damage(c, o, [{"amount": int(rolled["total"]), "type": str(p.damage_type)}], false, "Sweeping Attack", [str(rolled["text"])])
+						break
+			"maneuvering_attack":
+				for a in e.allies_of(c):
+					if a.can_act() and e.distance(c, a) <= 30:
+						a.free_move_ft = maxi(a.free_move_ft, a.speed() / 2)
+						e.log.add("info", "%s can move %d ft without Opportunity Attacks from %s (Maneuvering Attack)" % [a.name(), a.free_move_ft, target.name()], a.id)
+						break
+		e.events.append({"type": "condition", "id": target.id})
+	# Cunning Strike.
+	var dc_dex := maneuver_dc(c, &"dex")
+	for id: String in st.get("cunning", []):
+		match id:
+			"poison":
+				if alive and not _save(target, &"con", dc_dex, "Cunning Strike: Poison", "poisoned"):
+					var fx3 := Effect.new("Poisoned (Cunning Strike)", &"feature", "cunning_strike").with_condition(&"poisoned")
+					fx3.lasting({"kind": "minutes", "amount": 1})
+					fx3.turn_owner_id = target.id
+					fx3.repeat_save = {"ability": "con", "dc": dc_dex, "when": "end"}
+					target.creature.add_effect(fx3)
+			"trip":
+				if alive and size_ok and not _save(target, &"dex", dc_dex, "Cunning Strike: Trip"):
+					target.creature.add_condition(&"prone", "Cunning Strike")
+			"withdraw":
+				c.free_move_ft = maxi(c.free_move_ft, c.speed() / 2)
+				e.log.add("info", "%s can withdraw %d ft without Opportunity Attacks" % [c.name(), c.free_move_ft], c.id)
+			"stealth_attack":
+				c.set_meta("stealth_attack_turn", _turn_key())
+			"daze":
+				if alive and not _save(target, &"con", dc_dex, "Cunning Strike: Daze"):
+					var fx4 := Effect.new("Dazed", &"feature", "devious_strikes").with_modifier("flag", {"value": "dazed"})
+					fx4.ends = Effect.Ends.END_OF_TURN
+					fx4.turn_owner_id = target.id
+					fx4.skip_turn_ends = e.own_turn_skip(target)
+					target.creature.add_effect(fx4)
+			"knock_out":
+				if alive and not _save(target, &"con", dc_dex, "Cunning Strike: Knock Out", "unconscious"):
+					var fx5 := Effect.new("Knocked Out", &"feature", "devious_strikes").with_condition(&"unconscious")
+					fx5.lasting({"kind": "minutes", "amount": 1})
+					fx5.turn_owner_id = target.id
+					fx5.ends_on_damage = true
+					fx5.repeat_save = {"ability": "con", "dc": dc_dex, "when": "end"}
+					target.creature.add_effect(fx5)
+			"obscure":
+				if alive and not _save(target, &"dex", dc_dex, "Cunning Strike: Obscure", "blinded"):
+					var fx6 := Effect.new("Blinded (Cunning Strike)", &"feature", "devious_strikes").with_condition(&"blinded")
+					fx6.ends = Effect.Ends.END_OF_TURN
+					fx6.turn_owner_id = target.id
+					fx6.skip_turn_ends = e.own_turn_skip(target)
+					target.creature.add_effect(fx6)
+		e.events.append({"type": "condition", "id": target.id})
+	# Envenom Weapons (Assassin 13): the Poison Cunning Strike also deals 2d6 Poison that ignores Resistance.
+	if "poison" in (st.get("cunning", []) as Array) and has_feature(c, "envenom_weapons") and alive:
+		var ev := e._roll_damage_dice("2d6", false, 0, "Envenom Weapons")
+		e.deal_damage(c, target, [{"amount": int(ev["total"]), "type": "poison", "ignore_resistance": true, "ignore_source": "Envenom Weapons"}], false, "Envenom Weapons", [str(ev["text"])])
+	# Death Strike (Assassin 17): a first-round Sneak Attack makes the target save (Con, 8 + Dex + PB) or take double.
+	if st.has("sneak") and has_feature(c, "death_strike") and _first_round() and alive and dr.final > 0:
+		if not _save(target, &"con", maneuver_dc(c, &"dex"), "Death Strike"):
+			e.deal_damage(c, target, [{"amount": dr.final, "type": str(p.damage_type)}], false, "Death Strike", ["Damage doubled"])
+	# Rend Mind (Soulknife 17): a Sneak Attack with a Psychic Blade can stun (Wis save, repeated each turn).
+	if st.has("sneak") and "rend_mind" in c.armed and alive and str(option.get("kind", "")) == "blade":
+		c.armed.erase("rend_mind")
+		var ch2 := c.creature as Character
+		if ch2.resource_left("rend_mind") > 0:
+			ch2.spend_resource("rend_mind")
+		else:
+			ch2.spend_resource("psionic_energy", 3)
+		var rdc := maneuver_dc(c, &"dex")
+		if not _save(target, &"wis", rdc, "Rend Mind", "stunned"):
+			var fx12 := Effect.new("Stunned (Rend Mind)", &"feature", "rend_mind").with_condition(&"stunned")
+			fx12.lasting({"kind": "minutes", "amount": 1})
+			fx12.turn_owner_id = target.id
+			fx12.repeat_save = {"ability": "wis", "dc": rdc, "when": "end"}
+			target.creature.add_effect(fx12)
+	# Giant Ancestry riders.
+	match str(st.get("giant", "")):
+		"frosts_chill":
+			if alive:
+				var fx7 := Effect.new("Frost's Chill", &"feature", "frosts_chill").with_modifier("speed", {"value": -10})
+				fx7.ends = Effect.Ends.START_OF_TURN
+				fx7.turn_owner_id = c.id
+				target.creature.add_effect(fx7)
+		"hills_tumble":
+			if alive and size_ok:
+				target.creature.add_condition(&"prone", "Hill's Tumble")
+				e.log.add("condition", "%s is knocked Prone (Hill's Tumble)" % target.name(), target.id)
+	# Telekinetic Thrust (Psi Warrior 7) with Psionic Strike.
+	if bool(st.get("psionic_strike", false)) and "telekinetic_thrust" in c.armed and alive:
+		c.armed.erase("telekinetic_thrust")
+		if not _save(target, &"str", maneuver_dc(c, &"int"), "Telekinetic Thrust"):
+			if size_ok:
+				target.creature.add_condition(&"prone", "Telekinetic Thrust")
+	# Eldritch Strike (Eldritch Knight 10).
+	if has_feature(c, "eldritch_strike") and alive:
+		var fx8 := Effect.new("Eldritch Strike", &"feature", "eldritch_strike").with_modifier("flag", {"value": "eldritch_struck:%s" % c.id})
+		fx8.ends = Effect.Ends.END_OF_TURN
+		fx8.turn_owner_id = c.id
+		fx8.skip_turn_ends = e.own_turn_skip(c)
+		fx8.consume_on = ["save:all"]
+		target.creature.add_effect(fx8)
+	# Feats with riders.
+	if alive and has_feat(c, "crusher") and str(p.damage_type) == "bludgeoning":
+		if size_ok and _once(c, "crusher") and not "skip:push" in c.armed:
+			e.forced_move(target, e.center_of(c), 5)
+		if critical:
+			e.add_mark({"kind": "advantage_against", "target": target.id, "source": "Crusher", "expires_owner": c.id, "expires_phase": "start"})
+	if alive and has_feat(c, "slasher") and str(p.damage_type) == "slashing":
+		if _once(c, "slasher"):
+			var fx9 := Effect.new("Hamstrung", &"feature", "slasher").with_modifier("speed", {"value": -10})
+			fx9.ends = Effect.Ends.START_OF_TURN
+			fx9.turn_owner_id = c.id
+			target.creature.add_effect(fx9)
+		if critical:
+			e.add_mark({"kind": "disadvantage_next_attack", "attacker": target.id, "source": "Slasher", "expires_owner": c.id, "expires_phase": "start"})
+	if alive and bool(opts.get("reaction", false)) and has_feat(c, "sentinel") and melee:
+		var fx10 := Effect.new("Halted (Sentinel)", &"feature", "sentinel").with_modifier("speed_set", {"value": 0})
+		fx10.ends = Effect.Ends.END_OF_TURN
+		fx10.turn_owner_id = target.id
+		target.creature.add_effect(fx10)
+		target.movement_left = 0
+		e.log.add("condition", "%s is stopped in its tracks (Sentinel)" % target.name(), target.id)
+	if alive and has_feat(c, "tavern_brawler") and p.item_id == "unarmed_strike" and c.took_attack_action and _once(c, "tavern_push"):
+		e.forced_move(target, e.center_of(c), 5)
+	if alive and has_feat(c, "shield_master") and melee and wields_shield(c) and c.took_attack_action and e.current() == c and _once(c, "shield_bash"):
+		if size_ok and not _save(target, &"str", maneuver_dc(c, &"str"), "Shield Bash"):
+			target.creature.add_condition(&"prone", "Shield Bash")
+			e.log.add("condition", "%s is bashed Prone (Shield Master)" % target.name(), target.id)
+	if bool(st.get("poison_dose", false)) and alive:
+		if not _save(target, &"con", 8 + c.creature.ability_mod(&"int") + c.creature.proficiency_bonus(), "Poisoner's dose", "poisoned"):
+			var rolled2 := e._roll_damage_dice("2d8", false, 0, "Poison dose")
+			e.deal_damage(c, target, [{"amount": int(rolled2["total"]), "type": "poison", "ignore_resistance": has_feat(c, "poisoner"), "ignore_source": "Potent Poison"}], false, "Poison", [str(rolled2["text"])])
+			var fx11 := Effect.new("Poisoned (dose)", &"feature", "poisoner").with_condition(&"poisoned")
+			fx11.ends = Effect.Ends.END_OF_TURN
+			fx11.turn_owner_id = c.id
+			fx11.skip_turn_ends = e.own_turn_skip(c)
+			target.creature.add_effect(fx11)
+	# Cleave (mastery): once per turn, a melee hit lets you attack a second creature within 5 ft of the first.
+	if p.mastery == "cleave" and melee and not bool(opts.get("cleave", false)) and e.current() == c and _once(c, "cleave"):
+		for o in e.hostiles_of(c):
+			if o != target and not o.is_down() and e.distance(o, target) <= 5 and e.attack_legal(c, o, option) == "":
+				e.log.add("info", "Cleave: %s swings on into %s" % [c.name(), o.name()], c.id)
+				e.cleave_queue.append({"c": c, "target": o, "option": option})
+				break
+	# Remarkable Athlete (Champion 3): after a Critical Hit, move half Speed without Opportunity Attacks.
+	if critical and has_feature(c, "remarkable_athlete"):
+		c.free_move_ft = maxi(c.free_move_ft, c.speed() / 2)
+	# Great Weapon Master's Hew: a melee crit or a kill grants a Bonus Action attack.
+	if has_feat(c, "great_weapon_master") and melee and (critical or target.is_down()) and e.current() == c:
+		c.bonus_attack = "Hew"
+	if dr == null or r == null:
+		return
+
+
+func _save(t: Combatant, ab: StringName, dc: int, what: String, condition: String = "") -> bool:
+	var e := enc()
+	var keys: Array[String] = []
+	if condition != "":
+		keys.append("save_vs:%s" % condition)
+	var test := t.creature.roll_save(e.dice, ab, dc, [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], what, t.name()], keys)
+	e.log.add("info", "%s %s the %s save" % [t.name(), "succeeds on" if test.success else "fails", what], t.id, [test.describe()])
+	return test.success

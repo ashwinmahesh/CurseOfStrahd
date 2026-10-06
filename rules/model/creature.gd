@@ -23,6 +23,8 @@ var compendium: Compendium = null
 
 var hp: int = 1
 var temp_hp: int = 0
+## Hit Points of a ward that soaks damage first (Abjurer's Arcane Ward).
+var ward_hp: int = 0
 var exhaustion: int = 0
 var death_successes: int = 0
 var death_failures: int = 0
@@ -49,6 +51,11 @@ var base_label: String = "Base"
 
 ## Rules events since the caller last drained them (plan §4.3: the engine returns events).
 var events: Array[Dictionary] = []
+## Hooks the combat engine installs (features that change D20 Tests: Lucky, Portent, Indomitable, Reliable
+## Talent...). before(creature, kind, keys, target) -> {advantage: [], disadvantage: [], natural: int};
+## after(creature, test, keys) changes the finished test in place.
+var d20_before: Callable = Callable()
+var d20_after: Callable = Callable()
 
 
 func _init() -> void:
@@ -415,7 +422,7 @@ func roll_initiative(dice: DiceRoller) -> D20Test:
 ## penalty dice (Bless, Bane) and the explanation all come together here.
 func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: int, keys: Array[String],
 		extra_adv: Array[String] = [], extra_dis: Array[String] = [], label: String = "",
-		crit_range: int = 20) -> D20Test:
+		crit_range: int = 20, extra_dice: Array = []) -> D20Test:
 	for m in modifiers_for(&"auto_fail"):
 		if m.matches_any(keys):
 			var failed := D20Test.automatic_failure(kind, target, label, m.source_name)
@@ -428,6 +435,14 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 	dis.assign(src["disadvantage"])
 	adv.append_array(extra_adv)
 	dis.append_array(extra_dis)
+	var forced := 0
+	if d20_before.is_valid():
+		var pre := d20_before.call(self, kind, keys, target) as Dictionary
+		for x: Variant in pre.get("advantage", []):
+			adv.append(str(x))
+		for x: Variant in pre.get("disadvantage", []):
+			dis.append(str(x))
+		forced = int(pre.get("natural", 0))
 	var extra := 0
 	var extra_text := ""
 	for m in modifiers_for(&"bonus_die"):
@@ -440,15 +455,43 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 			var r := int(dice.roll_expr(m.text("dice", "1d4"), m.source_name)["total"])
 			extra -= r
 			extra_text += " - %s %d" % [m.source_name, r]
+	# Dice from someone else's effect (Blade Ward: attack rolls against its caster subtract 1d4).
+	for xd: Variant in extra_dice:
+		var x := xd as Dictionary
+		var r2 := int(dice.roll_expr(str(x.get("dice", "1d4")), str(x.get("source", "")))["total"])
+		var sgn := int(x.get("sign", 1))
+		extra += r2 * sgn
+		extra_text += " %s %s %d" % ["+" if sgn > 0 else "-", x.get("source", ""), r2]
 	var t := D20Test.roll(dice, kind, bonus.total(), target, adv.size(), dis.size(), label, crit_range,
 		extra, extra_text.strip_edges())
 	if has_flag("luck"):
 		t.reroll_ones(dice, "Luck")
+	if forced > 0:
+		t.set_natural(forced, "Portent")
 	t.breakdown = bonus
 	t.advantage_sources = adv
 	t.disadvantage_sources = dis
+	if d20_after.is_valid():
+		d20_after.call(self, t, keys)
 	log_event({"type": "d20", "creature": id, "text": t.describe()})
+	consume_effects(keys)
 	return t
+
+
+## Removes effects that last only until the creature's next D20 Test with one of `keys` (Mind Sliver).
+func consume_effects(keys: Array[String]) -> void:
+	for e: Effect in effects.duplicate():
+		for k in e.consume_on:
+			if k in keys:
+				remove_effect(e)
+				break
+
+
+## Removes effects that last only until the next attack roll against this creature (Guiding Bolt).
+func consume_attacked() -> void:
+	for e: Effect in effects.duplicate():
+		if e.consume_when_attacked:
+			remove_effect(e)
 
 
 # --- Hit Points, damage and healing --------------------------------------------------------------
@@ -525,6 +568,9 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 				r.notes.append("Immunity to %s: %s" % [damage_type, imm])
 			continue
 		var res := resistance_source(damage_type)
+		if res != "" and bool(pd.get("ignore_resistance", false)):
+			r.notes.append("%s ignores Resistance" % pd.get("ignore_source", "The attack"))
+			res = ""
 		if res != "" and amount > 0:
 			amount = floori(amount / 2.0)
 			r.notes.append("Resistance to %s: %s" % [damage_type, res])
@@ -537,6 +583,16 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 	if dmg <= 0:
 		_log_damage(r)
 		return r
+	# A magical ward (the Abjurer's Arcane Ward) takes damage before anything else.
+	var warded := mini(ward_hp, dmg)
+	if warded > 0:
+		ward_hp -= warded
+		dmg -= warded
+		r.notes.append("Arcane Ward absorbs %d (%d left)" % [warded, ward_hp])
+		r.final = dmg
+		if dmg <= 0:
+			_log_damage(r)
+			return r
 	var absorbed := mini(temp_hp, dmg)
 	temp_hp -= absorbed
 	r.absorbed_by_temp = absorbed
@@ -648,8 +704,8 @@ func roll_death_save(dice: DiceRoller) -> D20Test:
 	_add_d20_modifiers(bonus, ctx)
 	var keys: Array[String] = ["save:all", "death_save"]
 	var t := roll_d20(dice, D20Test.Kind.SAVING_THROW, bonus, 10, keys, [], [], "Death save (%s)" % name)
-	if t.kept == 20:
-		heal(1, "natural 20 on a Death Saving Throw")
+	if t.kept == 20 or (t.kept >= 18 and has_flag("survivor")):
+		heal(1, "natural 20 on a Death Saving Throw" if t.kept == 20 else "Survivor: %d counts as a 20" % t.kept)
 	elif t.kept == 1:
 		death_failures += 2
 	elif t.success:
@@ -807,6 +863,10 @@ func remove_effect(e: Effect) -> void:
 	if e in effects:
 		effects.erase(e)
 		log_event({"type": "effect_removed", "creature": id, "effect": e.name})
+		if e.on_end.is_valid():
+			var f := e.on_end
+			e.on_end = Callable()
+			f.call()
 
 
 func remove_effects_named(effect_name: String) -> void:
@@ -936,8 +996,12 @@ func speed(kind: String = "walk") -> Breakdown:
 		if k == "walk" or k == kind:
 			b.add_nonzero(m.source_name, mod_value(m, ctx))
 	_speed_adjustments(b)
+	for m in modifiers_for(&"speed_percent"):
+		var pct := mod_value(m, ctx)
+		var now := b.sum()
+		b.add(m.source_name, now * pct / 100 - now)
 	for m in modifiers_for(&"speed_set"):
-		if mod_value(m, ctx) == 0:
+		if mod_value(m, ctx) == 0 and m.text("kind", "walk") == kind:
 			b.set_override(0, m.source_name)
 	if b.sum() < 0:
 		b.set_floor(0, "minimum 0")
@@ -954,6 +1018,16 @@ func darkvision() -> int:
 	var ctx := formula_context()
 	for m in modifiers_for(&"darkvision"):
 		best = maxi(best, mod_value(m, ctx))
+	return best
+
+
+## Range in feet of a special sense (blindsight, tremorsense, truesight), from the stat block or modifiers.
+func sense_range(kind: String) -> int:
+	var best := int(base_senses.get(kind, 0))
+	var ctx := formula_context()
+	for m in modifiers_for(&"sense"):
+		if m.text("kind") == kind:
+			best = maxi(best, mod_value(m, ctx))
 	return best
 
 
@@ -1007,7 +1081,7 @@ func state_to_dict() -> Dictionary:
 	var fx: Array = []
 	for e in effects:
 		fx.append(e.to_dict())
-	return {"hp": hp, "temp_hp": temp_hp, "exhaustion": exhaustion, "death_successes": death_successes,
+	return {"hp": hp, "temp_hp": temp_hp, "ward_hp": ward_hp, "exhaustion": exhaustion, "death_successes": death_successes,
 		"death_failures": death_failures, "stable": stable, "dead": dead, "conditions": conds,
 		"resources_used": res, "effects": fx,
 		"concentration": {"source": concentration.source_id, "name": concentration.name} if concentration != null else {}}
@@ -1016,6 +1090,7 @@ func state_to_dict() -> Dictionary:
 func state_from_dict(d: Dictionary) -> void:
 	hp = int(d.get("hp", hp))
 	temp_hp = int(d.get("temp_hp", 0))
+	ward_hp = int(d.get("ward_hp", 0))
 	exhaustion = int(d.get("exhaustion", 0))
 	death_successes = int(d.get("death_successes", 0))
 	death_failures = int(d.get("death_failures", 0))

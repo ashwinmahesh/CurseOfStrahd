@@ -83,13 +83,15 @@
           "average": 5,
           "dice": "1d6+2",
           "type": "piercing",
-          "when": "while the swarm isn't Bloodied"
+          "when": "while the swarm isn't Bloodied",
+          "if": "not_bloodied"
         },
         {
           "average": 2,
           "dice": "1d4",
           "type": "piercing",
-          "when": "instead, while the swarm is Bloodied"
+          "when": "instead, while the swarm is Bloodied",
+          "if": "bloodied"
         }
       ],
       "summary": "Many small bites; the damage drops once the swarm is Bloodied.",
@@ -109,11 +111,30 @@
         "targets": 1,
         "range": 0
       },
-      "conditions": [
-        "deafened"
-      ],
       "summary": "Recharge 6. DC 10 Wis save or Deafened, with Disadvantage on checks and attacks, for a round.",
-      "text": "Wisdom Saving Throw: DC 10, one creature in the swarm's space. Failure: the target has the Deafened condition until the start of the swarm's next turn, and while Deafened this way it also has Disadvantage on ability checks and attack rolls."
+      "text": "Wisdom Saving Throw: DC 10, one creature in the swarm's space. Failure: the target has the Deafened condition until the start of the swarm's next turn, and while Deafened this way it also has Disadvantage on ability checks and attack rolls.",
+      "targets": {
+        "range": 0,
+        "count": 1,
+        "in_space": true
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "deafened",
+          "until": "source_turn_start",
+          "modifiers": [
+            {
+              "stat": "disadvantage",
+              "on": "check:all"
+            },
+            {
+              "stat": "disadvantage",
+              "on": "attack"
+            }
+          ]
+        }
+      ]
     }
   ],
   "regions": [

@@ -30,7 +30,7 @@
       "summary": "After attacking with a Quarterstaff, Spear or Heavy Reach weapon, Bonus Action attack with the other end (d4).",
       "text": "Immediately after you take the Attack action and attack with a Quarterstaff, a Spear or a weapon that has both the Heavy and Reach properties, you can use a Bonus Action to make a melee attack with the opposite end of the weapon. That attack deals Bludgeoning damage, and the weapon's damage die for it is a d4.",
       "action": "bonus_action",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "reactive_strike",
@@ -38,7 +38,7 @@
       "summary": "Reaction: attack a creature that enters your reach while you hold a Quarterstaff, Spear or Heavy Reach weapon.",
       "text": "While you are holding a Quarterstaff, a Spear or a weapon that has both the Heavy and Reach properties, you can take a Reaction to make one melee attack against a creature that enters the reach you have with that weapon.",
       "action": "reaction",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

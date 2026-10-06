@@ -14,7 +14,7 @@
       "summary": "Utilize action: expend a Healer's Kit use; a creature within 5 ft spends a Hit Point Die and heals roll + PB.",
       "text": "If you carry a Healer's Kit, you can take a Utilize action to expend one of its uses and tend a creature within 5 feet of you. That creature can expend one of its Hit Point Dice; you roll that die, and the creature regains Hit Points equal to the result plus your Proficiency Bonus.",
       "action": "action",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "healing_rerolls",

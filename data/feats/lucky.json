@@ -20,7 +20,7 @@
         "max": "pb",
         "recharge": "long"
       },
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "lucky_advantage",
@@ -29,7 +29,7 @@
       "text": "When you roll a d20 for a D20 Test, you can spend 1 Luck Point to give yourself Advantage on that roll.",
       "action": "special",
       "uses_resource": "luck_points",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "lucky_disadvantage",
@@ -38,7 +38,7 @@
       "text": "When a creature rolls a d20 for an attack roll against you, you can spend 1 Luck Point to give that roll Disadvantage.",
       "action": "special",
       "uses_resource": "luck_points",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

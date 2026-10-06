@@ -20,6 +20,7 @@ var e: Encounter
 var catalog: ActionCatalog
 var board: ArenaBoard
 var overlay: GridOverlay
+var field: FieldView
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
@@ -57,6 +58,8 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	catalog = ActionCatalog.new(e)
 	overlay = GridOverlay.create(board)
 	add_child(overlay)
+	field = FieldView.create(board)
+	add_child(field)
 	hud = CombatHud.new()
 	add_child(hud)
 	hud.build(e, catalog)
@@ -108,7 +111,7 @@ func _advance() -> void:
 		return
 	var c := e.current()
 	rig.follow = tokens[c.id] as Node3D
-	if not c.is_player_controlled():
+	if not c.is_player_controlled() or e.compelled(c):
 		mode = Mode.BUSY
 		overlay.clear_all()
 		hud.hide_tooltip()
@@ -144,13 +147,9 @@ func _refresh_all() -> void:
 	_show_weapons()
 
 
+## Spell objects and lingering areas on the field (Spiritual Weapon, Flaming Sphere, Spirit Guardians, Web...).
 func _show_weapons() -> void:
-	var cells: Array = []
-	for cid: String in e.spells.spirit_weapons:
-		var caster := e.get_c(cid)
-		if caster != null and e.spells.has_spiritual_weapon(caster):
-			cells.append((e.spells.spirit_weapons[cid] as Dictionary)["cell"])
-	overlay.show_cells("weapon", cells)
+	field.sync(e.spells.zones.objects)
 
 
 func _player() -> Combatant:
@@ -271,6 +270,13 @@ func _show_target_marks() -> void:
 	var friends: Array = []
 	if c == null or selected.is_empty() or str(selected["targeting"]) in ["point", "direction"]:
 		return
+	if str(selected["targeting"]) == "dead":
+		var dead: Array = []
+		for o2 in e.combatants:
+			if o2.creature.dead and catalog.target_why(c, selected, o2) == "":
+				dead.append_array(o2.footprint())
+		overlay.show_cells("friendly", dead)
+		return
 	for o in e.combatants:
 		if not o.is_alive():
 			continue
@@ -351,6 +357,12 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 	match kind:
 		"point":
 			_perform(selected, [], _aim_point(), Vector2.ZERO)
+		"place":
+			# A square for the object (or teleport), or a creature to put it beside.
+			if t != null and t.combatant != c and c.hostile_to(t.combatant):
+				_perform(selected, [t.combatant], Vector2.INF, Vector2.ZERO)
+			elif hover_cell.x >= 0:
+				_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
 		"direction":
 			_perform(selected, [], Vector2.INF, _aim_dir(c))
 		"multi":
@@ -731,6 +743,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			lines.append("No one in the area")
 		hud.show_tooltip("%s · %s" % [selected["label"], "slot level %d" % int(pv["slot"]) if int(pv["slot"]) > 0 else "cantrip"], lines, pv["warnings"] as Array, at)
 		return
+	if kind == "place" and (t == null or not c.hostile_to(t.combatant)):
+		var rng := int(selected.get("range", 0))
+		var ok := hover_cell.x >= 0 and e.grid.distance_ft(c.cell, c.size_cells, hover_cell, 1) <= rng
+		overlay.show_cells("area", [hover_cell] if hover_cell.x >= 0 else [])
+		hud.show_tooltip(str(selected["label"]), ["Click a square to place it (or an enemy to put it beside them)" if ok else "Out of range (%d ft)" % rng], [], at)
+		return
 	if t == null:
 		var hint := "Choose a target"
 		if kind == "multi":
@@ -840,8 +858,35 @@ func _play_events() -> void:
 					overlay.show_cells("area", cells)
 					await get_tree().create_timer(0.45).timeout
 					overlay.clear("area")
-			"summon":
+			"summon", "object", "object_gone":
 				_show_weapons()
+			"teleport":
+				var tt := tokens.get(str(ev["id"])) as CombatToken
+				if tt != null:
+					tt.flash(Look.color("lilac"), 0.3)
+					tt.position = board.cell_center(ev["to"] as Vector2i, tt.combatant.size_cells)
+					await get_tree().create_timer(0.2).timeout
+			"summon_creature":
+				var sc := e.get_c(str(ev["id"]))
+				if sc != null and not tokens.has(sc.id):
+					var nt := CombatToken.create(sc)
+					nt.position = board.cell_center(sc.cell, sc.size_cells)
+					add_child(nt)
+					tokens[sc.id] = nt
+					nt.flash(Look.color("lilac"), 0.5)
+			"vanish":
+				var vt := tokens.get(str(ev["id"])) as CombatToken
+				if vt != null:
+					var tw3 := create_tween()
+					tw3.tween_property(vt, "scale", Vector3(0.01, 0.01, 0.01), 0.3)
+					tw3.tween_callback(vt.hide)
+			"resize":
+				var rt := tokens.get(str(ev["id"])) as CombatToken
+				if rt != null:
+					var k := float(rt.combatant.size_cells)
+					var tw4 := create_tween()
+					tw4.tween_property(rt, "scale", Vector3(k, k, k) if rt.combatant.size_cells > 1 else Vector3.ONE, 0.3)
+					rt.position = board.cell_center(rt.combatant.cell, rt.combatant.size_cells)
 			"turn":
 				_stop_walking(walking)
 				_refresh_all()
@@ -965,10 +1010,21 @@ func capture_shots(tool: Node, out: String) -> void:
 				_cancel_targeting()
 			break
 		await _autoplay_turn(pilot)
+	var weapon_shot := false
 	for guard in 400:
 		if e.state != Encounter.State.ACTIVE:
 			break
 		await _autoplay_turn(pilot)
+		# Spiritual Weapon on the field (the spell audit's fix: a weapon you can see, not just a highlighted square).
+		if not weapon_shot:
+			for c3 in e.combatants:
+				var w := e.spells.weapon_of(c3)
+				if w != null:
+					weapon_shot = true
+					rig.follow = field.node_for(w.id)
+					await tool.call("wait_frames", 45)
+					tool.call("_shot", out + "_6_weapon.png")
+					break
 	_advance()
 	await tool.call("wait_frames", 40)
 	tool.call("_shot", out + "_5_end.png")

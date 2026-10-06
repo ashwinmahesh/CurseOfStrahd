@@ -208,7 +208,7 @@
               "proficient": true
             }
           },
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "sneak_attack",
@@ -233,7 +233,7 @@
             "kind": "language",
             "count": 1
           },
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "weapon_mastery",
@@ -249,7 +249,7 @@
             },
             "replaceable": "long_rest"
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -329,7 +329,13 @@
           "summary": "Reaction: halve the damage of an attack that hits you.",
           "text": "When an attacker you can see hits you with an attack roll, you can take a Reaction to halve that attack's damage against you (round down).",
           "action": "reaction",
-          "implemented": "engine"
+          "implemented": "engine",
+          "modifiers": [
+            {
+              "stat": "flag",
+              "value": "uncanny_dodge"
+            }
+          ]
         }
       ]
     },
@@ -348,7 +354,7 @@
               "proficient": true
             }
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -360,7 +366,13 @@
           "name": "Evasion",
           "summary": "Dexterity saves for half damage: no damage on a success, half on a failure.",
           "text": "When an effect lets you make a Dexterity saving throw to take half damage, you take none on a success and half on a failure. Not while Incapacitated.",
-          "implemented": "engine"
+          "implemented": "engine",
+          "modifiers": [
+            {
+              "stat": "flag",
+              "value": "evasion"
+            }
+          ]
         },
         {
           "id": "reliable_talent",
@@ -549,7 +561,13 @@
           "id": "elusive",
           "name": "Elusive",
           "summary": "No attack roll has Advantage against you unless you're Incapacitated.",
-          "implemented": "engine"
+          "implemented": "engine",
+          "modifiers": [
+            {
+              "stat": "flag",
+              "value": "elusive"
+            }
+          ]
         }
       ]
     },

@@ -40,5 +40,69 @@
     "debuff"
   ],
   "summary": "Touched creature fails a Wisdom save and is cursed with one of four penalties you choose.",
-  "text": "Touch a creature; it makes a Wisdom saving throw. On a failure it is cursed until the spell ends, suffering one effect of your choice: (1) choose an ability: the target has Disadvantage on ability checks and saving throws that use it; (2) the target has Disadvantage on attack rolls against you; (3) in combat, the target makes a Wisdom saving throw at the start of each of its turns and, on a failure, must take the Dodge action that turn; (4) whenever you deal damage to the target with an attack roll or a spell, it takes an extra 1d8 Necrotic damage. Using a Higher-Level Spell Slot: with a level 4 slot you can keep Concentration for up to 10 minutes; with a level 5 or 6 slot the spell needs no Concentration and lasts 8 hours; with a level 7 or 8 slot it needs no Concentration and lasts 24 hours; with a level 9 slot it lasts until dispelled."
+  "text": "Touch a creature; it makes a Wisdom saving throw. On a failure it is cursed until the spell ends, suffering one effect of your choice: (1) choose an ability: the target has Disadvantage on ability checks and saving throws that use it; (2) the target has Disadvantage on attack rolls against you; (3) in combat, the target makes a Wisdom saving throw at the start of each of its turns and, on a failure, must take the Dodge action that turn; (4) whenever you deal damage to the target with an attack roll or a spell, it takes an extra 1d8 Necrotic damage. Using a Higher-Level Spell Slot: with a level 4 slot you can keep Concentration for up to 10 minutes; with a level 5 or 6 slot the spell needs no Concentration and lasts 8 hours; with a level 7 or 8 slot it needs no Concentration and lasts 24 hours; with a level 9 slot it lasts until dispelled.",
+  "choice": {
+    "kind": "option",
+    "label": "Curse",
+    "from": [
+      "ability",
+      "attacks",
+      "dodge",
+      "necrotic"
+    ]
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "ability",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:wis"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:wis"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "attacks",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "cursed_attacks:caster"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "dodge",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "cursed_dodge"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "necrotic",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "cursed_necrotic:caster"
+          }
+        ]
+      }
+    }
+  ]
 }

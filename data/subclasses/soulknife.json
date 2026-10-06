@@ -109,7 +109,13 @@
         "id": "psychic_veil",
         "name": "Psychic Veil",
         "summary": "Magic action: become Invisible for 1 hour; once per Long Rest or spend a die.",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "psychic_veil",
+          "name": "Psychic Veil (free)",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     },
     {
@@ -118,7 +124,13 @@
         "id": "rend_mind",
         "name": "Rend Mind",
         "summary": "Sneak Attack with a Psychic Blade can Stun the target for 1 minute (Wis save).",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "rend_mind",
+          "name": "Rend Mind (free)",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     }
   ]

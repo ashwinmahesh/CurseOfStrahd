@@ -32,29 +32,23 @@
     "concentration": true
   },
   "targets": {
-    "kind": "point",
-    "description": "an unoccupied space you can see within range"
+    "kind": "point"
   },
   "upcast": {
     "text": "Use the slot level as the spell's level in the Fey Spirit stat block."
   },
-  "effects": [
-    {
-      "effect": "summon",
-      "params": {
-        "creature": "fey_spirit",
-        "count": 1,
-        "option": [
-          "fuming",
-          "mirthful",
-          "tricksy"
-        ]
-      }
-    }
-  ],
   "tags": [
     "summon"
   ],
   "summary": "Summon a Fey Spirit (Fuming, Mirthful or Tricksy) that fights beside you for up to 1 hour.",
-  "text": "You call forth a Fey spirit, which appears in an unoccupied space you can see within 90 feet and uses the Fey Spirit stat block below. When you cast the spell, choose a mood: Fuming, Mirthful or Tricksy. The spirit looks like a Fey creature of your choice marked by that mood, which sets the rider on its Fey Step. It disappears when it drops to 0 Hit Points or when the spell ends. It counts as an ally of you and your allies. In combat it shares your Initiative count but takes its turn right after yours. It follows your verbal commands (no action required by you); if you give none, it takes the Dodge action and uses its movement to avoid danger. Fey Spirit (Small Fey): AC 12 + the spell's level; Hit Points 30 + 10 for each spell level above 3; Speed 30 ft., Fly 30 ft.; Str 13, Dex 16, Con 14, Int 14, Wis 11, Cha 16; Condition Immunity Charmed; Darkvision 60 ft., Passive Perception 10; speaks Sylvan and understands the languages you know; uses your Proficiency Bonus. Multiattack: it makes a number of Fey Blade attacks equal to half the spell's level (round down). Fey Blade: melee attack roll using your spell attack modifier, reach 5 ft.; on a hit, 2d6 + 3 + the spell's level Force damage. Fey Step (Bonus Action): it teleports up to 30 feet to an unoccupied space it can see, then its mood applies. Fuming: it has Advantage on the next attack roll it makes before the end of this turn. Mirthful: one creature it can see within 10 feet makes a Wisdom saving throw against your spell save DC or is Charmed by you and the spirit for 1 minute or until it takes any damage. Tricksy: it fills a 10-foot Cube within 5 feet of it with magical Darkness that lasts until the end of its next turn. Using a Higher-Level Spell Slot: use the slot's level as the spell's level in the stat block."
+  "text": "You call forth a Fey spirit, which appears in an unoccupied space you can see within 90 feet and uses the Fey Spirit stat block below. When you cast the spell, choose a mood: Fuming, Mirthful or Tricksy. The spirit looks like a Fey creature of your choice marked by that mood, which sets the rider on its Fey Step. It disappears when it drops to 0 Hit Points or when the spell ends. It counts as an ally of you and your allies. In combat it shares your Initiative count but takes its turn right after yours. It follows your verbal commands (no action required by you); if you give none, it takes the Dodge action and uses its movement to avoid danger. Fey Spirit (Small Fey): AC 12 + the spell's level; Hit Points 30 + 10 for each spell level above 3; Speed 30 ft., Fly 30 ft.; Str 13, Dex 16, Con 14, Int 14, Wis 11, Cha 16; Condition Immunity Charmed; Darkvision 60 ft., Passive Perception 10; speaks Sylvan and understands the languages you know; uses your Proficiency Bonus. Multiattack: it makes a number of Fey Blade attacks equal to half the spell's level (round down). Fey Blade: melee attack roll using your spell attack modifier, reach 5 ft.; on a hit, 2d6 + 3 + the spell's level Force damage. Fey Step (Bonus Action): it teleports up to 30 feet to an unoccupied space it can see, then its mood applies. Fuming: it has Advantage on the next attack roll it makes before the end of this turn. Mirthful: one creature it can see within 10 feet makes a Wisdom saving throw against your spell save DC or is Charmed by you and the spirit for 1 minute or until it takes any damage. Tricksy: it fills a 10-foot Cube within 5 feet of it with magical Darkness that lasts until the end of its next turn. Using a Higher-Level Spell Slot: use the slot's level as the spell's level in the stat block.",
+  "choice": {
+    "kind": "option",
+    "label": "Mood",
+    "from": [
+      "fuming",
+      "mirthful",
+      "tricksy"
+    ]
+  }
 }

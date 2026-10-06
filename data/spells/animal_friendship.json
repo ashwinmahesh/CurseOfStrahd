@@ -31,7 +31,8 @@
   "targets": {
     "kind": "creature",
     "count": 1,
-    "description": "a Beast you can see"
+    "creature_type": "beast",
+    "description": "A Beast you can see."
   },
   "save": "wis",
   "save_success": "none",
@@ -45,6 +46,9 @@
     {
       "effect": "condition",
       "params": {
+        "ends_on": [
+          "damaged_by_caster_side"
+        ],
         "condition": "charmed"
       }
     }

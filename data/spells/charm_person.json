@@ -46,6 +46,9 @@
     {
       "effect": "condition",
       "params": {
+        "ends_on": [
+          "damaged_by_caster_side"
+        ],
         "condition": "charmed"
       }
     }
@@ -55,5 +58,6 @@
     "social"
   ],
   "summary": "A Humanoid fails a Wisdom save and is Charmed by you and Friendly for 1 hour, or until harmed.",
-  "text": "One Humanoid you can see within range makes a Wisdom saving throw, with Advantage if you or your allies are fighting it. On a failure it has the Charmed condition for 1 hour, ending early if you or your allies damage it, and it is Friendly toward you while Charmed. When the spell ends, the creature knows you charmed it. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1."
+  "text": "One Humanoid you can see within range makes a Wisdom saving throw, with Advantage if you or your allies are fighting it. On a failure it has the Charmed condition for 1 hour, ending early if you or your allies damage it, and it is Friendly toward you while Charmed. When the spell ends, the creature knows you charmed it. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1.",
+  "save_advantage_if_fighting": true
 }

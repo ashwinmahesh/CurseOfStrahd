@@ -32,19 +32,30 @@
   "targets": {
     "kind": "creature",
     "count": 1,
-    "description": "a creature you can see; non-Humanoids succeed automatically"
+    "creature_type": "humanoid",
+    "description": "a Humanoid you can see"
   },
   "save": "wis",
   "save_success": "none",
-  "conditions": [
-    "charmed"
-  ],
   "effects": [
     {
       "effect": "condition",
       "params": {
-        "condition": "charmed",
-        "repeat_save": "end_of_turn"
+        "repeat_save": "end_of_turn",
+        "condition": "charmed"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "repeat_save": "end_of_turn",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "crowned",
+            "caster": true
+          }
+        ]
       }
     }
   ],
@@ -52,5 +63,15 @@
     "control"
   ],
   "summary": "A creature makes a Wis save or is Charmed and must attack a creature you choose on each of its turns.",
-  "text": "One creature you can see within range makes a Wisdom saving throw; a creature that isn't a Humanoid succeeds automatically. On a failure it has the Charmed condition for the duration and a spectral crown appears on its head. On each of its turns, before moving, it must use its action to make a melee attack against a creature other than itself that you mentally choose. If you choose no one, or no such creature is within its reach, it acts normally that turn. It repeats the save at the end of each of its turns, ending the spell on itself on a success. On each of your later turns you must take a Magic action to keep control of the target, or the spell ends."
+  "text": "One creature you can see within range makes a Wisdom saving throw; a creature that isn't a Humanoid succeeds automatically. On a failure it has the Charmed condition for the duration and a spectral crown appears on its head. On each of its turns, before moving, it must use its action to make a melee attack against a creature other than itself that you mentally choose. If you choose no one, or no such creature is within its reach, it acts normally that turn. It repeats the save at the end of each of its turns, ending the spell on itself on a success. On each of your later turns you must take a Magic action to keep control of the target, or the spell ends.",
+  "sustain": [
+    {
+      "do": "maintain",
+      "cost": "magic",
+      "upkeep": true,
+      "label": "Crown of Madness: keep control",
+      "sub": "Magic action",
+      "help": "Each of your later turns needs a Magic action or the spell ends."
+    }
+  ]
 }

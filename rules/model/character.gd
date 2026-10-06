@@ -391,7 +391,7 @@ func _register_choice(def: Dictionary, key: String, src: Dictionary, label: Stri
 	var c := Choice.new()
 	c.key = key
 	c.kind = str(def.get("kind", "option"))
-	c.count = int(def.get("count", 1))
+	c.count = Formula.evaluate(def.get("count", 1), {"pb": proficiency_bonus(), "level": character_level()}) if def.get("count", 1) is String else int(def.get("count", 1))
 	c.label = label if label != "" else c.kind.capitalize()
 	c.source = str(src["label"])
 	c.source_kind = str(src["kind"])
@@ -573,7 +573,9 @@ func _collect_granted_spells() -> void:
 		if spell_id == "":
 			continue
 		var uses := m.data.get("uses", {}) as Dictionary
-		granted_spells.append({"id": spell_id, "ability": m.text("ability"), "uses": int(uses.get("count", 0)),
+		var n_uses: Variant = uses.get("count", 0)
+		granted_spells.append({"id": spell_id, "ability": m.text("ability"),
+			"uses": Formula.evaluate(n_uses, {"pb": proficiency_bonus(), "level": character_level()}) if n_uses is String else int(n_uses),
 			"recharge": str(uses.get("recharge", "")), "always_prepared": bool(m.data.get("always_prepared", true)),
 			"at_level": m.at_level(), "source": m.source_name})
 
@@ -688,7 +690,7 @@ func spell_preview(spell_id: String, slot_level: int = 0) -> Dictionary:
 		var bonus := Breakdown.new("%s damage bonus" % s["name"])
 		if bool(first.get("add_mod", false)):
 			bonus.add("%s modifier" % ABILITY_SHORT[ab], mod)
-		var situation := {"spell": true, "school": str(s.get("school", ""))}
+		var situation := {"spell": true, "school": str(s.get("school", "")), "spell_class": class_id}
 		if level == 0:
 			for m in modifiers_for(&"cantrip_damage"):
 				if m.applies_when(situation):
@@ -1007,6 +1009,8 @@ func auto_equip() -> void:
 			if not has_armor_training(str(a["kind"])):
 				continue
 			var cap: Variant = a.get("dex_cap", null)
+			if cap != null and int(cap) == 2 and has_flag("dexterous_wearer") and ability_score(&"dex") >= 16:
+				cap = 3
 			var ac := int(a["base_ac"]) + (dex if cap == null else mini(dex, int(cap)))
 			if ac > best_ac:
 				best_ac = ac
@@ -1055,6 +1059,9 @@ func armor_class() -> Breakdown:
 		var a := armor["armor"] as Dictionary
 		base.add(str(armor["name"]), int(a["base_ac"]))
 		var cap: Variant = a.get("dex_cap", null)
+		# Medium Armor Master: the Dexterity cap rises to 3 with Dexterity 16 or higher.
+		if cap != null and int(cap) == 2 and has_flag("dexterous_wearer") and ability_score(&"dex") >= 16:
+			cap = 3
 		if cap == null:
 			base.add("Dex modifier", dex)
 		elif int(cap) > 0:

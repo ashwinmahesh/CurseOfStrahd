@@ -68,8 +68,8 @@
       "text": "The hag has Advantage on saving throws against spells and other magical effects.",
       "modifiers": [
         {
-          "stat": "flag",
-          "value": "magic_resistance"
+          "stat": "advantage",
+          "on": "save_vs:spell"
         }
       ],
       "implemented": "engine"
@@ -154,7 +154,8 @@
         "phantasmal_killer",
         "plane_shift"
       ]
-    }
+    },
+    "attack": 6
   },
   "regions": [
     "svalich_road"

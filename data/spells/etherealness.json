@@ -1,0 +1,40 @@
+{
+  "id": "etherealness",
+  "name": "Etherealness",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered for the Night Hag's spellcasting; check against the book."
+  },
+  "level": 7,
+  "school": "conjuration",
+  "classes": [
+    "bard",
+    "cleric",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "movement",
+    "defense"
+  ],
+  "summary": "You step into the Border Ethereal for up to 8 hours, out of reach of the material world.",
+  "text": "You step into the border regions of the Ethereal Plane, where it overlaps your current plane. You stay there for the duration or until you take an action to end the spell. While there you can move in any direction, see and hear the plane you left in shades of gray out to 60 feet, and affect or be affected only by other creatures on the Ethereal Plane. When the spell ends you return to the plane you left, in the spot you now occupy (or the nearest unoccupied space). In a fight, the caster leaves the battle."
+}

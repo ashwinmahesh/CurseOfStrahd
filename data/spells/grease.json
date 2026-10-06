@@ -37,12 +37,27 @@
   },
   "save": "dex",
   "save_success": "none",
-  "conditions": [
-    "prone"
-  ],
   "tags": [
     "control"
   ],
   "summary": "Grease makes a 10-foot square Difficult Terrain; creatures there fail a Dexterity save or fall Prone.",
-  "text": "Nonflammable grease covers a 10-foot square of ground centered on a point within range and makes it Difficult Terrain for 1 minute. Each creature standing in the area when the grease appears makes a Dexterity saving throw or has the Prone condition. A creature that enters the area or ends its turn there must also succeed on that save or fall Prone."
+  "text": "Nonflammable grease covers a 10-foot square of ground centered on a point within range and makes it Difficult Terrain for 1 minute. Each creature standing in the area when the grease appears makes a Dexterity saving throw or has the Prone condition. A creature that enters the area or ends its turn there must also succeed on that save or fall Prone.",
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn"
+    ],
+    "terrain": "difficult",
+    "save": "dex",
+    "effects": [
+      {
+        "effect": "condition",
+        "params": {
+          "plain": true,
+          "condition": "prone"
+        }
+      }
+    ]
+  }
 }

@@ -36,7 +36,7 @@
           "value": "athlete_climb_speed"
         }
       ],
-      "implemented": "engine"
+      "implemented": "text"
     },
     {
       "id": "hop_up",
@@ -64,7 +64,7 @@
           "value": "athlete_jumping"
         }
       ],
-      "implemented": "engine"
+      "implemented": "text"
     }
   ]
 }

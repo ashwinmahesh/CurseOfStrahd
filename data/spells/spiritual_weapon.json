@@ -47,5 +47,21 @@
     "summon"
   ],
   "summary": "A floating spectral weapon makes melee spell attacks for 1d8 + modifier Force; Bonus Action to move and attack.",
-  "text": "You create a floating spectral force shaped like a weapon of your choice in a space within range; it lasts for the duration. When it appears you can immediately make one melee spell attack against a creature within 5 feet of it, dealing Force damage equal to 1d8 plus your spellcasting ability modifier on a hit. As a Bonus Action on your later turns, you can move it up to 20 feet and repeat the attack against a creature within 5 feet of it. The damage increases by 1d8 for each spell slot level above 2."
+  "text": "You create a floating spectral force shaped like a weapon of your choice in a space within range; it lasts for the duration. When it appears you can immediately make one melee spell attack against a creature within 5 feet of it, dealing Force damage equal to 1d8 plus your spellcasting ability modifier on a hit. As a Bonus Action on your later turns, you can move it up to 20 feet and repeat the attack against a creature within 5 feet of it. The damage increases by 1d8 for each spell slot level above 2.",
+  "object": {
+    "kind": "weapon",
+    "range": 60,
+    "on_appear": "attack"
+  },
+  "sustain": [
+    {
+      "do": "attack",
+      "cost": "bonus_action",
+      "move": 20,
+      "reach": 5,
+      "label": "Spiritual Weapon: strike",
+      "sub": "move 20 ft + attack",
+      "help": "A Bonus Action: the weapon flies up to 20 ft and makes a melee spell attack against a creature within 5 ft of it."
+    }
+  ]
 }

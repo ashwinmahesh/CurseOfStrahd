@@ -20,6 +20,14 @@ const PROFILES := {
 	"brute": {"oa_fear": 0.3, "finish": 1.0, "nearest": false, "flee_bloodied": false},
 	"mindless": {"oa_fear": 0.0, "finish": 0.0, "nearest": true, "flee_bloodied": false},
 	"cowardly": {"oa_fear": 1.5, "finish": 1.0, "nearest": false, "flee_bloodied": true},
+	## Bats, ravens, shadows, specters, scouts, vampire spawn: strike, then pull back.
+	"skirmisher": {"oa_fear": 1.2, "finish": 1.2, "nearest": false, "flee_bloodied": false, "retreat": true},
+	## Swarms: pour into the nearest foe's space.
+	"swarm": {"oa_fear": 0.0, "finish": 0.5, "nearest": true, "flee_bloodied": false},
+	## Night hag: spells from range, flees through the Ethereal Plane when badly hurt.
+	"spellcaster": {"oa_fear": 1.5, "finish": 1.0, "nearest": false, "flee_bloodied": false, "caster": true},
+	## Priests: heal and bless allies, then fight.
+	"support": {"oa_fear": 1.0, "finish": 1.0, "nearest": false, "flee_bloodied": false, "support": true},
 }
 
 var _enc: WeakRef
@@ -52,8 +60,30 @@ func play_turn(c: Combatant) -> CombatResult:
 	var e := enc()
 	var fear := e.features.fleeing_from(c)
 	if fear != null:
-		last_plan = {"kind": "flee", "why": "Turned"}
-		return _flee(c, fear, false)
+		var by_spell := c.creature.has_flag("fear_flee")
+		last_plan = {"kind": "flee", "why": "Fear" if by_spell else "Turned"}
+		return _flee(c, fear, by_spell)
+	if c.creature.has_flag("ethereal"):
+		last_plan = {"kind": "wait", "why": "on the Ethereal Plane"}
+		return CombatResult.new()
+	if c.creature.has_flag("indifferent"):
+		e.log.add("info", "%s doesn't care to fight (Calm Emotions)" % c.name(), c.id)
+		last_plan = {"kind": "wait", "why": "Calm Emotions"}
+		return CombatResult.new()
+	if c.creature.has_flag("crowned") and c.can_act():
+		var crowned := _crown_turn(c)
+		if crowned != null:
+			return crowned
+	if c.creature.has_flag("command_drop"):
+		e.log.add("info", "%s drops what it holds and ends its turn (Command: Drop)" % c.name(), c.id)
+		c.set_meta("dropped_weapon", true)
+		last_plan = {"kind": "wait", "why": "Command: Drop"}
+		return CombatResult.new()
+	if c.creature.has_flag("command_approach"):
+		var caster2 := _commander(c)
+		if caster2 != null:
+			last_plan = {"kind": "approach", "why": "Command: Approach"}
+			return _approach(c, {"target": caster2, "dash": false})
 	if c.creature.has_flag("command_grovel"):
 		c.creature.add_condition(&"prone", "Command")
 		e.log.add("condition", "%s grovels and falls Prone (Command)" % c.name(), c.id)
@@ -72,6 +102,29 @@ func play_turn(c: Combatant) -> CombatResult:
 	if not c.can_act():
 		return CombatResult.new()
 	var prof := profile(c)
+	var ma := e.monster_actions
+	# Bonus Actions that come first: Shape-Shift into fighting form, Divine Aid for a fallen ally, Fey Step.
+	if c.creature is Monster:
+		if not e.hostiles_of(c).is_empty():
+			ma.bonus_action(c, "shift")
+		if bool(prof.get("support", false)):
+			var aid := ma.bonus_action(c, "support")
+			if aid.is_paused():
+				return aid
+		ma.bonus_action(c, "fey_step")
+		var spell_plan := _spell_plan(c, prof)
+		if not spell_plan.is_empty():
+			last_plan = spell_plan
+			var sr := ma.cast(c, str(spell_plan["spell"]), spell_plan["targets"] as Array, spell_plan.get("point", Vector2.INF) as Vector2)
+			if sr.ok or sr.is_paused():
+				return e.then(sr, func() -> CombatResult: return _after_main(c))
+		var save_plan := _save_action_plan(c)
+		if not save_plan.is_empty():
+			last_plan = save_plan
+			e.spend_action(c)
+			var r0 := CombatResult.new()
+			ma.save_action(c, save_plan["action"] as Dictionary, save_plan["target"] as Combatant, r0)
+			return e.then(r0, func() -> CombatResult: return _after_main(c))
 	if bool(prof["flee_bloodied"]) and c.creature.is_bloodied():
 		var near := _nearest_enemy(c)
 		if near != null:
@@ -81,13 +134,118 @@ func play_turn(c: Combatant) -> CombatResult:
 	last_plan = plan
 	match str(plan["kind"]):
 		"attack":
-			return _move_then_attack(c, plan)
+			return e.then(_move_then_attack(c, plan), func() -> CombatResult: return _after_main(c))
 		"approach":
+			if c.creature is Monster:
+				e.monster_actions.bonus_action(c, "dash")
 			return _approach(c, plan)
 		"search":
 			return e.search(c)
 	e.log.add("info", "%s waits" % c.name(), c.id)
 	return CombatResult.new()
+
+
+## After the main action: skirmishers pull back (Deathless Agility's Disengage, or Shadow Stealth to hide).
+func _after_main(c: Combatant) -> CombatResult:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE or e.current() != c or not c.can_act():
+		return CombatResult.new()
+	var prof := profile(c)
+	if c.creature is Monster:
+		e.monster_actions.bonus_action(c, "hide")
+	if bool(prof.get("retreat", false)) and c.movement_left > 0:
+		var near := _nearest_enemy(c)
+		if near != null and e.distance(c, near) <= 5:
+			if c.creature is Monster:
+				e.monster_actions.bonus_action(c, "retreat")
+			if c.disengaged or c.creature.has_flag("flyby"):
+				return _flee(c, near, false)
+	return CombatResult.new()
+
+
+## A spell worth casting this turn (spellcaster profile): flee through the Ethereal Plane when badly hurt; Phantasmal
+## Killer on the toughest foe while it has uses; otherwise Magic Missile at the weakest foe in range.
+func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
+	var e := enc()
+	if not bool(prof.get("caster", false)) or not c.action_available:
+		return {}
+	var known := {}
+	for sp in e.monster_actions.spells_now(c):
+		known[str(sp["id"])] = sp
+	var foes: Array[Combatant] = []
+	for h in e.hostiles_of(c):
+		if not h.is_down() and e.can_see(c, h):
+			foes.append(h)
+	if c.creature.hp * 4 < c.creature.max_hp() and (known.has("etherealness") or known.has("plane_shift")):
+		return {"kind": "cast", "spell": "etherealness" if known.has("etherealness") else "plane_shift", "targets": [c], "why": "escape"}
+	if foes.is_empty():
+		return {}
+	if known.has("phantasmal_killer"):
+		var tough: Combatant = null
+		for f in foes:
+			if e.distance(c, f) <= 120 and (tough == null or f.creature.hp > tough.creature.hp):
+				tough = f
+		if tough != null:
+			return {"kind": "cast", "spell": "phantasmal_killer", "targets": [tough], "why": "Phantasmal Killer on %s" % tough.name()}
+	if known.has("magic_missile"):
+		var weak: Combatant = null
+		for f2 in foes:
+			if e.distance(c, f2) <= 120 and (weak == null or f2.creature.hp < weak.creature.hp):
+				weak = f2
+		var melee_near := false
+		for f3 in foes:
+			if e.distance(c, f3) <= 5:
+				melee_near = true
+		if weak != null and not melee_near:
+			return {"kind": "cast", "spell": "magic_missile", "targets": [weak], "why": "Magic Missile at %s" % weak.name()}
+	return {}
+
+
+## A saving-throw action worth using as the action (a recharged Cacophony on a foe in the swarm's space).
+func _save_action_plan(c: Combatant) -> Dictionary:
+	var e := enc()
+	if not c.action_available:
+		return {}
+	for a: Variant in MonsterActions.data_of(c).get("actions", []):
+		var act := a as Dictionary
+		if str(act.get("kind", "")) != "save" or not act.has("recharge") or e.monster_actions.why_not(c, act) != "":
+			continue
+		var targets := e.monster_actions.save_targets(c, act)
+		if not targets.is_empty():
+			return {"kind": "save_action", "action": act, "target": targets[0], "why": "%s on %s" % [act.get("name", ""), targets[0].name()]}
+	return {}
+
+
+func _effect_of(c: Combatant, source_id: String) -> Effect:
+	for fx: Effect in c.creature.effects:
+		if fx.source_id == source_id:
+			return fx
+	return null
+
+
+## Crown of Madness: before moving, the creature uses its action to make a melee attack against a creature the
+## caster picks (here: the nearest creature other than itself and the caster that it can reach).
+func _crown_turn(c: Combatant) -> CombatResult:
+	var e := enc()
+	var caster := e.get_c(str(c.get_meta("crowned_by", "")))
+	var best: Combatant = null
+	var opt := {}
+	for o in e.living():
+		if o == c or o == caster or o.is_down():
+			continue
+		var mo := e.best_melee_option(c, o)
+		if mo.is_empty() or e.distance(c, o) > (mo["profile"] as WeaponProfile).reach:
+			continue
+		if best == null or (caster != null and caster.hostile_to(o) and not caster.hostile_to(best)):
+			best = o
+			opt = mo
+	if best == null:
+		return null
+	e.log.add("info", "%s lashes out at %s (Crown of Madness)" % [c.name(), best.name()], c.id)
+	last_plan = {"kind": "attack", "why": "Crown of Madness"}
+	if c.creature is Monster:
+		return e.monster_attack(c, best, str(opt.get("action_id", "")))
+	return e.attack(c, best, str(opt["id"]))
 
 
 func _commander(c: Combatant) -> Combatant:
@@ -155,12 +313,14 @@ func _usable_options(c: Combatant) -> Array[Dictionary]:
 	var best_melee := {}
 	var best_ranged := {}
 	for o in enc().attack_options(c):
-		var avg := (o["profile"] as WeaponProfile).average_damage()
+		if c.creature is Monster and enc().monster_actions.why_not(c, (c.creature as Monster).action(str(o.get("action_id", "")))) != "":
+			continue
+		var avg := _avg(c, o)
 		if bool(o["melee"]):
-			if best_melee.is_empty() or avg > (best_melee["profile"] as WeaponProfile).average_damage():
+			if best_melee.is_empty() or avg > _avg(c, best_melee):
 				best_melee = o
 		elif enc().has_ammo_for(c, o):
-			if best_ranged.is_empty() or avg > (best_ranged["profile"] as WeaponProfile).average_damage():
+			if best_ranged.is_empty() or avg > _avg(c, best_ranged):
 				best_ranged = o
 	var out: Array[Dictionary] = []
 	if not best_melee.is_empty():
@@ -209,7 +369,7 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	c.cell = keep
 	if int((hc["situation"] as Dictionary)["cover"]) == CombatGrid.Cover.TOTAL:
 		return -1e9
-	var avg := p.average_damage()
+	var avg := _avg(c, o)
 	var expected := float(hc["chance"]) * avg
 	var score := expected
 	# Finishing a foe ends its turns for good.
@@ -224,6 +384,14 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 		score -= float(prof["oa_fear"]) * _oa_risk(c, CombatGrid.path_to(reach, cell), threats)
 	score -= cost * 0.01
 	return score
+
+
+## Average damage of an attack option, counting a monster's extra dice and a little for its riders.
+func _avg(c: Combatant, o: Dictionary) -> float:
+	if c.creature is Monster and o.has("action_id"):
+		var act := (c.creature as Monster).action(str(o["action_id"]))
+		return (c.creature as Monster).average_damage(str(o["action_id"])) + (4.0 if act.has("on_hit") else 0.0)
+	return (o["profile"] as WeaponProfile).average_damage()
 
 
 ## Hostiles that could make an Opportunity Attack on `c` this turn: [{p, reach, expected}] (expected damage).
@@ -350,7 +518,10 @@ func _attack_step(c: Combatant, target: Combatant, option_id: String) -> CombatR
 		var queue: Array[String] = []
 		for entry in e.begin_multiattack(c):
 			for i in int(entry["count"]):
-				queue.append(str(entry["action"]))
+				var choices: Array[String] = [str(entry["action"])]
+				for alt: Variant in entry.get("or", []):
+					choices.append(str(alt))
+				queue.append("|".join(choices))
 		return _multi_step(c, t, queue)
 	var r: CombatResult
 	if c.creature is Monster:
@@ -369,18 +540,44 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 	var e := enc()
 	if queue.is_empty() or e.state != Encounter.State.ACTIVE or not c.can_act():
 		return CombatResult.new()
-	var action_id := queue.pop_front() as String
-	var option := e.option_by_id(c, "monster:" + action_id)
-	var t := target
-	if t == null or t.is_down() or option.is_empty() or e.attack_legal(c, t, option) != "":
-		t = null
-		for h in e.hostiles_of(c):
-			if not h.is_down() and not option.is_empty() and e.attack_legal(c, h, option) == "":
-				t = h
-				break
+	var choices := (queue.pop_front() as String).split("|")
+	var m := c.creature as Monster
+	# A save action in the Multiattack (the Spawn's Bite, Engulf) goes first when it has a target.
+	for cid in choices:
+		var act := m.action(cid)
+		if str(act.get("kind", "")) == "save" and e.monster_actions.why_not(c, act) == "":
+			var st := e.monster_actions.save_targets(c, act)
+			if not st.is_empty():
+				var r0 := CombatResult.new()
+				e.monster_actions.save_action(c, act, st[0], r0)
+				return e.then(r0, func() -> CombatResult: return _multi_step(c, target, queue))
+	# Otherwise the best attack among the choices that can reach the target (or another foe): a ranged attack
+	# when the foe is out of reach, the bigger damage when both work.
+	var best_id := ""
+	var t: Combatant = null
+	var best_avg := -1.0
+	for cid2 in choices:
+		var act2 := m.action(cid2)
+		if not act2.has("attack") or e.monster_actions.why_not(c, act2) != "":
+			continue
+		var option := e.option_by_id(c, "monster:" + cid2)
+		var tt := target
+		if tt == null or tt.is_down() or option.is_empty() or e.attack_legal(c, tt, option) != "":
+			tt = null
+			for h in e.hostiles_of(c):
+				if not h.is_down() and not option.is_empty() and e.attack_legal(c, h, option) == "":
+					tt = h
+					break
+		if tt == null:
+			continue
+		var avg := m.average_damage(cid2)
+		if avg > best_avg:
+			best_avg = avg
+			best_id = cid2
+			t = tt
 	if t == null:
 		return _multi_step(c, target, queue)
-	var r := e.monster_attack(c, t, action_id)
+	var r := e.monster_attack(c, t, best_id)
 	return e.then(r, func() -> CombatResult: return _multi_step(c, t, queue))
 
 

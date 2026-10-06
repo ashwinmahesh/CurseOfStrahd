@@ -39,14 +39,24 @@
     {
       "effect": "modifiers",
       "params": {
-        "target": "creature",
         "modifiers": [
           {
             "stat": "attacked_with",
             "value": "advantage",
-            "text": "only for attackers that can see it"
+            "if_seen": true
+          },
+          {
+            "stat": "flag",
+            "value": "no_invisible"
           }
         ]
+      }
+    },
+    {
+      "effect": "light",
+      "params": {
+        "bright": 0,
+        "dim": 10
       }
     }
   ],

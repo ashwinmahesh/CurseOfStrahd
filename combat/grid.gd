@@ -160,25 +160,41 @@ static func _axis_gap(a: int, a_size: int, b: int, b_size: int) -> int:
 ## Feet to step from `from` to the adjacent `to` for a creature of `size_cells`, or -1 if it can't.
 ## `blocked(cell)` says whether another creature bars the square; `slowed(cell)` whether one makes it
 ## Difficult Terrain. Climbing up more than 5 ft costs 1 extra foot per foot climbed; drops over 10 ft are refused.
-func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable, slowed: Callable) -> int:
+## Movement modes for step costs: flying ignores ground Difficult Terrain and heights; climbing (Spider Climb)
+## pays nothing extra to go up.
+const MOVE_FLY := 1
+const MOVE_CLIMB := 2
+## Incorporeal Movement: through walls and creatures, as Difficult Terrain.
+const MOVE_INCORPOREAL := 4
+
+
+func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable, slowed: Callable, mode: int = 0) -> int:
 	var d := to - from
 	if absi(d.x) > 1 or absi(d.y) > 1 or d == Vector2i.ZERO:
 		return -1
 	var difficult := false
 	for c in footprint(to, size_cells):
+		if (mode & MOVE_INCORPOREAL) != 0:
+			if not in_bounds(c) or has_flag(c, VOID):
+				return -1
+			if is_solid(c) or bool(blocked.call(c)):
+				difficult = true
+			continue
 		if is_solid(c) or bool(blocked.call(c)):
 			return -1
-		if has_flag(c, DIFFICULT) or bool(slowed.call(c)):
+		if (has_flag(c, DIFFICULT) and (mode & MOVE_FLY) == 0) or bool(slowed.call(c)):
 			difficult = true
-	if d.x != 0 and d.y != 0:
+	if d.x != 0 and d.y != 0 and (mode & MOVE_INCORPOREAL) == 0:
 		# Diagonals can't cut the corner of a wall or other square-filling feature.
 		for c: Vector2i in [from + Vector2i(d.x, 0), from + Vector2i(0, d.y)]:
 			for fc in footprint(c, size_cells):
 				if (flags(fc) & (WALL | LOW | VOID)) != 0:
 					return -1
 	var cost := FEET * (2 if difficult else 1)
+	if (mode & MOVE_FLY) != 0:
+		return cost
 	var rise := height(to) - height(from)
-	if rise > FEET:
+	if rise > FEET and (mode & MOVE_CLIMB) == 0:
 		cost += rise * 2
 	elif rise < -2 * FEET:
 		return -1
@@ -188,7 +204,7 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 ## Every square reachable within `budget` feet: {cell: {"cost": int, "prev": Vector2i}}. Squares other creatures
 ## occupy may be passed through (when `blocked` allows) but are marked "occupied" so moves can't end there.
 func reachable(start: Vector2i, size_cells: int, budget: int, blocked: Callable, slowed: Callable,
-		occupied: Callable) -> Dictionary:
+		occupied: Callable, mode: int = 0) -> Dictionary:
 	var best := {start: {"cost": 0, "prev": start, "occupied": false}}
 	# Dijkstra with a bucket per cost in feet (costs are small whole numbers).
 	var buckets := {0: [start]}
@@ -200,7 +216,7 @@ func reachable(start: Vector2i, size_cells: int, budget: int, blocked: Callable,
 				continue
 			for d in DIRS:
 				var nxt := cur + d
-				var step := step_cost(cur, nxt, size_cells, blocked, slowed)
+				var step := step_cost(cur, nxt, size_cells, blocked, slowed, mode)
 				if step < 0:
 					continue
 				var total := cost + step
