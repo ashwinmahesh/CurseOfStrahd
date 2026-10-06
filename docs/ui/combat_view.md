@@ -1,6 +1,6 @@
 # Combat view and controls
 
-Status: **draft, waiting for owner sign-off** (added at the owner's request, 2026-10-06) · Owner role: UI/UX ·
+Status: **approved by the owner 2026-10-06 ("Looks good")** (added at the owner's request) · Owner role: UI/UX ·
 Plan §5.3 · Built in Phase 2 · Layout inspired by Baldur's Gate 3's turn-based combat screen (initiative strip on
 top, party on the left, hotbar and End Turn at the bottom, log on the right), drawn in our palette and style.
 

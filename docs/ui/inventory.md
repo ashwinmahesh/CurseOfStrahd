@@ -1,6 +1,6 @@
 # Inventory (core flow 3 of 4)
 
-Status: **draft, waiting for owner sign-off** · Owner role: Character and Party UX · Plan §5.6 "Inventory"
+Status: **approved by the owner 2026-10-06 ("Looks good")** · Owner role: Character and Party UX · Plan §5.6 "Inventory"
 Engine: `Character.inventory / equip / unequip / add_item / carried_weight / carrying_capacity / attacks()`
 (Phase 1), `Gear` helpers, item data in `data/items` (183 items). Paper doll slots beyond armor and hands, the
 stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes their screens now.

@@ -1,6 +1,6 @@
 # Character creation (core flow 1 of 4)
 
-Status: **draft, waiting for owner sign-off** · Owner role: Character and Party UX · Plan §5.1, §5.6
+Status: **approved by the owner 2026-10-06 ("Looks good")** · Owner role: Character and Party UX · Plan §5.1, §5.6
 Engine: `CharacterBuilder` (rules/progression/character_builder.gd), `ChoiceOptions`, `PartyCoverage`.
 Built in Phase 3 for the four Phase 1 classes; Phase 4 adds the other eight classes as data, with no UI change.
 

@@ -1,6 +1,6 @@
 # Party management (core flow 4 of 4)
 
-Status: **draft, waiting for owner sign-off** · Owner role: Character and Party UX · Plan §5.2, §5.6 "Party management"
+Status: **approved by the owner 2026-10-06 ("Looks good")** · Owner role: Character and Party UX · Plan §5.2, §5.6 "Party management"
 Engine: `Character` sheet values and breakdowns, `Creature.effects / active_conditions / resources`,
 `Character.spend_hit_die / finish_short_rest / finish_long_rest / known_spells / spellcasting`, `PartyCoverage`.
 

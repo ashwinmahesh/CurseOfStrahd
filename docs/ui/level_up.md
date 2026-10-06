@@ -1,6 +1,6 @@
 # Level up (core flow 2 of 4)
 
-Status: **draft, waiting for owner sign-off** · Owner role: Character and Party UX · Plan §5.1, §5.6
+Status: **approved by the owner 2026-10-06 ("Looks good")** · Owner role: Character and Party UX · Plan §5.1, §5.6
 Engine: `LevelUpController` (rules/progression/level_up_controller.gd), `ChoiceOptions`.
 
 ## What this screen must do
