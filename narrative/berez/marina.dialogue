@@ -1,0 +1,152 @@
+# Marina's monument on the dry mound, the vault beneath it, and Strahd's visit by night (docs/regions/berez.md §3.1).
+
+# ---------------------------------------------------------------- The statue (prop on the mound)
+
+~ monument
+Narrator: On the only dry ground in Berez stands a young woman in white stone, her hands folded, her face turned toward the castle. Someone has scrubbed the moss from her. At her feet lie fresh black roses, and an iron grave-lamp, unlit.
+if guest:ireena and not flag.ireena_saw_marina
+set ireena_saw_marina
+Narrator: Ireena stops at the foot of the mound. The statue has her face. Not a likeness: her face, the set of the jaw, the small frown.
+Ireena: I've never been here. I know I've never been here. So why do I know there are nine steps under that plinth?
+endif
+if flag.tamsin_locket_recognized
+interject name:tamsin_tealeaf: It's her again. The woman in my locket. How many times can one face happen?
+endif
+-> monument_menu
+
+~ monument_menu
+* Read the plinth. -> plinth
+* [if not flag.marina_vault_found] Dig around the plinth. -> dig
+* [if not flag.marina_lamp_lit] Light the grave-lamp at her feet. -> lamp
+* Leave her in peace. -> END
+
+~ plinth
+Narrator: One word is cut deep into the plinth: MARINA. Below it, smaller, in the same fine and patient hand: Berez took her. I took Berez.
+interject tag:devout: He signed it. He signed a grave, the way you'd sign a letter.
+-> monument_menu
+
+~ dig
+set marina_vault_found
+time +30
+Narrator: Half an hour of scraping silt and pulling reeds bares a slab at the foot of the plinth with an iron ring in it. Under the slab, a stair goes down into the mound, perfectly dry, and somewhere below it a candle is burning.
+if guest:ireena
+Ireena: Nine steps.
+endif
+-> monument_menu
+
+~ lamp
+set marina_lamp_lit
+Narrator: The wick takes at once, as if it had been waiting. A small, steady yellow light stands on the mound in the middle of the black marsh, where everything can see it.
+if flag.lysaga_dead or flag.lysaga_left_broken or flag.strahd_knows_marina_truth
+Narrator: Nothing answers it but the frogs. For a while the statue's face looks almost warm.
+-> END
+endif
+Narrator: Out in the east, a shutter bangs. A scream comes across the reeds, thin and rising, the scream of someone who has seen a light where no light should be.
+Baba Lysaga [angry]: WHO LIT HER LAMP? Who lit that little cat's lamp? I'll have your eyes for candles!
+set lysaga_lured
+if not quest.the_witch_of_berez
+quest the_witch_of_berez arrived
+endif
+combat lysaga_at_monument
+
+# ---------------------------------------------------------------- Marina's bier (prop in the vault)
+
+~ bier
+Narrator: She lies on a bier of white stone under a veil of lace, a girl of perhaps nineteen, with red hair braided over one shoulder. She looks asleep. She has looked asleep for a very long time. There is no smell at all.
+if guest:ireena
+Narrator: Ireena stands at the foot of the bier and doesn't move. The girl on it has her face, too.
+Ireena: He keeps finding us. Doesn't he. Over and over, he keeps finding us, and it never ends well for the girl.
+endif
+-> bier_menu
+
+~ bier_menu
+* [Medicine DC 14] Look, gently, for how she died. -> bier_medicine | bier_medicine_fail
+* [if (flag.berez_diary_read or flag.marina_body_examined) and not flag.marina_truth_known] [Arcana DC 14] A scratch like a thorn's and nothing else. Is that a witch's death? -> bier_deduce | bier_deduce_fail
+* Straighten her veil, and go. -> bier_veil
+* Leave her as she is. -> END
+
+~ bier_medicine
+set marina_body_examined
+Narrator: No wound, no bruise, no poison's colour in the lips. Only, above her heart, a single red scratch, fine as a bramble's, that has never healed in all this time.
+-> bier_menu
+
+~ bier_medicine_fail
+Narrator: She is too perfect to read. Whatever killed her left her exactly as he wanted to remember her.
+-> bier_menu
+
+~ bier_deduce
+set marina_truth_known
+if not quest.the_witch_of_berez >= truth
+quest the_witch_of_berez truth
+endif
+Narrator: A scratch that never heals, over the heart, and no hand laid on her: that is the mark a doll leaves when a thorn goes through it. Somebody in this marsh knows how to make that kind of doll, and lives on a stump.
+-> bier_menu
+
+~ bier_deduce_fail
+Narrator: It could be anything. In Barovia, it usually is.
+-> bier_menu
+
+~ bier_veil
+Narrator: The lace is soft and cold. When you step back, it lies a little straighter than he left it. You suspect he'll notice.
+-> END
+
+# ---------------------------------------------------------------- Strahd at the monument (night, approach)
+
+~ strahd
+set berez_strahd_met
+Narrator: Someone is standing at the foot of the statue with a black rose in his gloved hand. He lays it down with the others before he turns, so that you know you are less important than the rose.
+if flag.strahd_met
+Strahd: My guests. You do get everywhere. I am not sure I like you being here, of all places.
+else
+Strahd: Good evening. You will be the strangers my wolves keep telling me about. I am Strahd von Zarovich, and this is a private grave.
+endif
+if guest:ireena
+Strahd: Ireena. You came to see her. Of course you did.
+Ireena [angry]: I don't know her.
+Strahd: You did once. You will again.
+endif
+-> strahd_menu
+
+~ strahd_menu
+* Who was she? -> strahd_who
+* [Insight DC 15] Watch his face while he looks at her. -> strahd_insight | strahd_insight_fail
+* [if flag.marina_truth_known and not flag.lysaga_dead] Berez didn't kill her. Your nurse did. -> strahd_truth
+* [if flag.marina_truth_known and flag.lysaga_dead] The witch who killed her is dead. We saw to it. -> strahd_truth_dead
+* We'll leave you with her. -> strahd_bye
+
+~ strahd_who
+Strahd: A candlemaker's daughter, which is to say nobody, which is to say someone I had looked for over a very long time. She was frightened of me. They usually are, at first.
+Strahd: The village hid her from me, and in the morning she was dead in their chapel. So I sent the river to ask them why. It is still asking.
+-> strahd_menu
+
+~ strahd_insight
+Narrator: The grief is real. So is the other thing under it, which isn't love so much as a collector's anger at a broken piece. He mourns her the way a man mourns a thing he owned.
+-> strahd_menu
+
+~ strahd_insight_fail
+Narrator: His face is a beautiful closed door.
+-> strahd_menu
+
+~ strahd_truth
+set strahd_knows_marina_truth
+if not quest.the_witch_of_berez >= strahd_told
+quest the_witch_of_berez strahd_told
+endif
+Narrator: He doesn't answer at once. The frogs stop. The wind stops. The flame in the grave-lamp, if it is lit, lies down flat.
+Strahd: Explain.
+Player: A doll of red hair over her hearth, with a thorn through its heart. She kept it. She still handles it.
+Strahd: She sang to me, when I was small. She was the only one who did.
+Strahd: Thank you. That was courageous, and very foolish, and I shall remember both. Now go home, all of you. I have to see to my house.
+Narrator: He is not there any more. Out in the east, a long way off, something made of timber begins to scream.
+-> END
+
+~ strahd_truth_dead
+set strahd_knows_marina_truth
+Strahd: Dead. Lysaga. And you tell me she did this.
+Narrator: For a long moment he looks east, toward the stump, as if he could kill her again from here and is considering it.
+Strahd: Then you have done my work for me without asking, which I will forgive once. Do not let it become a habit.
+-> END
+
+~ strahd_bye
+Strahd: Do. And mind the lamp, if you lit it. She never liked the dark.
+-> END

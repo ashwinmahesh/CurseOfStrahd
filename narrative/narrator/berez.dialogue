@@ -1,0 +1,382 @@
+# Narrator: Berez, Mount Baratok and the Tsolenka Pass (docs/voice/narrator.md). Second person, present tense, one or
+# two sentences. Book props (the burgomaster's diary, Marina's verse, the watch log) have no examine: line here, so
+# their own text is shown.
+
+# ---------------------------------------------------------------- Berez
+
+~ enter:berez
+| The causeway ends where Berez begins: broken walls standing up out of black water, reeds taller than a man, and the smell of a river that came indoors and stayed. Far off in the west a white statue stands on a dry mound. In the east, on a stump wider than a house, a hut is breathing.
+| [flag.lysaga_dead] Berez is quiet now in a way it wasn't before. The frogs have the marsh to themselves, and on the stump in the east nothing breathes at all.
+| [flag.strahd_knows_marina_truth and not flag.lysaga_dead] Something has been through Berez since you were last here. The scarecrows lie face down in the reeds, and out on the stump the hut is lying on its side.
+| [night] Berez at night is all frog-song and black water, and lights in the drowned houses that nobody lit.
+| [flag.lysaga_fate == "bargained"] Berez, and the witch still in it. A shutter on the stump bangs shut as you come in off the causeway, hard, like a door slammed on a family argument.
+cooldown 30
+
+~ enter:berez_causeway
+| The old causeway is logs laid edge to edge, rotted soft, with water standing in the gaps. Somebody has been mending it, recently, with bones.
+once
+
+~ enter:berez_riverbank
+| The Luna slides past to the north, wide and brown and in no hurry, as if it never did anything to anybody.
+once
+
+~ enter:berez_drowned_lane
+| What was the main street is a channel of black water between roofless houses. A child's shoe sits on a windowsill, placed there carefully, by someone, long after the flood.
+| [night and not flag.berez_lights_quenched] Pale lights hang in the doorways of the drowned houses, the way lamps used to.
+cooldown 20
+
+~ enter:berez_burgomaster_ruin
+| The biggest house in Berez, and the only one with stone walls, which only means it took longer to fall. The burgomaster's chair is still at the head of a table under two feet of silt.
+once
+
+~ enter:berez_monument_mound
+| The mound is dry. Everything in Berez is wet except this, and the statue on top of it, and the grass around her feet, which someone keeps cut.
+| [flag.marina_lamp_lit] The grave-lamp still burns at the statue's feet, small and steady, in the middle of all that black water.
+cooldown 20
+
+~ enter:berez_scarecrow_field
+| Scarecrows stand all through the reeds around the stump, on poles, in sacking smocks, with sewn-on faces that all look the same way: at you.
+| [flag.berez_scarecrows_burned] Charred poles and wet ash where the scarecrows stood. A sacking face lies in the mud, still smiling.
+| [flag.strahd_knows_marina_truth or flag.lysaga_dead] The scarecrows lie where they fell, face down, poles snapped. Nothing is watching you from the reeds.
+cooldown 20
+
+~ enter:berez_hut_stump
+| The stump is wider than a cottage and higher than a man, its bark gone black and soft as felt. The hut on top of it shifts its weight from one root to another, the way a horse does in a stall.
+| [flag.creeping_hut_destroyed] The hut lies sprawled across the stump with its roots in the air, like a beetle on its back. Its door hangs open on nothing.
+| [flag.strahd_knows_marina_truth and not flag.creeping_hut_destroyed] The hut lies on its side in the mud below the stump, its root legs snapped like kindling. Someone did this with his hands.
+cooldown 20
+
+~ examine:berez_hut
+| A crooked hut of black timber with one shuttered window and a door that doesn't sit straight. It's breathing. The shutters lift and settle, very slightly, in time.
+| [night] Green firelight leaks round the shutters, and the whole hut is humming to itself, like an old woman over washing.
+
+~ examine:berez_hut_wreck
+| The hut lies broken across its own roots, door open, shutters gone. It smells of cold soup and rot, and for the first time it isn't breathing.
+
+~ examine:berez_scarecrow_post
+| A scarecrow on a pole, in a sacking smock with a face sewn on in red wool. Up close the stuffing isn't all straw. Some of it is hair.
+
+~ examine:berez_jetty
+| A rotten jetty running out into the Luna, with a mooring ring and no boat. The last plank has been gnawed through, by something that wanted it.
+
+~ examine:berez_luna
+| The Luna, slow and wide and the colour of strong tea. Downstream, half a church roof sticks up out of the water like the back of a whale.
+
+~ examine:berez_drowned_house
+| A doorway with no house left behind it, and a horseshoe still nailed over it, points up for luck. It held, in its way: the doorway is the only part standing.
+
+~ examine:berez_drowned_bones
+| Bones in the reeds, picked clean and laid out in a neat row by size, the way a child lines up toys. Someone in Berez likes things tidy.
+
+~ search:berez_sunken_purse
+| Wedged under a root, a traveller's pouch, the leather gone black, with a stoppered vial inside that the water never reached.
+
+~ open:berez_burgomaster_strongbox
+| The burgomaster's strongbox opens on dry velvet: he paid a good smith. Whatever he was saving for, he never got to spend it.
+
+# ---------------------------------------------------------------- Baba Lysaga's hut
+
+~ enter:berez_baba_lysagas_hut
+| It's warm inside, too warm, and close, and the floor tilts a little as the hut settles its weight. Every wall is papered with drawings of the same handsome boy at every age, in charcoal, in the same loving hand.
+| [flag.lysaga_dead] The hut is cold now. The drawings have started to curl off the walls, as if they don't see the point any more.
+| [flag.strahd_knows_marina_truth and not flag.lysaga_dead] Everything in the hut has slid against one wall. The drawings of the boy hang sideways, and the stewpot lies on the floor where the hearth used to be.
+cooldown 20
+
+~ enter:lysaga_hearth_room
+| A hearth with a green fire, a rocking chair worn pale on the arms, a table laid for more guests than she ever has.
+once
+
+~ enter:lysaga_kitchen
+| Strings of onions, strings of mushrooms, strings of things that aren't either. Jars on every shelf, and some of the jars are humming.
+| [treasure_at:berez_baba_lysagas_hut] Jars on every shelf, and some of them humming. Under the humming, from somewhere in the pantry, comes a quieter sound, steady and patient, like something that knows it's been found.
+cooldown 20
+
+~ enter:lysaga_nursery
+| A cradle on rockers beside a copper tub. A mobile of little bones turns above the cradle, though there's no draught.
+once
+
+~ examine:lysaga_hearth
+| A deep hearth with a fire that burns green and gives off far more heat than it should. The stewpot over it has never, you'd bet, been empty.
+| [flag.lysaga_dead] The green fire is out. The pot hangs over cold ash, and what's in it has set like glue.
+
+~ examine:lysaga_rocking_chair
+| A rocking chair worn smooth on the arms, with a cushion embroidered MY BOY in red thread. It rocks a little when nobody is near it.
+
+~ examine:lysaga_drawings
+| Charcoal drawings of a boy: a baby with a full head of dark hair, a child on a pony, a sullen youth, a young man in armour. The last few are of an older man in a high collar, drawn from memory, a little wrong each time.
+
+~ examine:lysaga_oven
+| A clay oven big enough to sit in. You decide not to wonder why that is the first thing you thought.
+
+~ examine:lysaga_tub
+| A copper tub full of something dark that has gone stiff at the edges. It isn't water. She is very old, and she does not look it.
+
+~ examine:lysaga_skull_bowl
+| A great bowl of yellow bone by the door, with a pole for steering. It is the top of a skull, and the skull was the size of a cart.
+| [class:wizard] A great bowl of bone with a pole in it. {name} can see the flying charm worked into the rim. She doesn't take the road; she takes the air.
+
+~ examine:lysaga_charms
+| Bundles of herbs and feathers and little knotted cords hanging from every beam. Several of the knots are tied around teeth.
+
+~ open:lysagas_pantry
+| Sausages, cheese, a sack of flour, and a smell of cloves. It's an ordinary pantry. That's the worst thing in the hut.
+
+# ---------------------------------------------------------------- Marina's vault
+
+~ enter:berez_marinas_monument
+| Nine dry steps down into a vault of white stone. Tall candles burn at the head of a bier without burning down. The marsh is all around this room, and not a drop has got in.
+| [guest:ireena] Nine dry steps down into a vault of white stone. Behind you, Ireena counts them under her breath, and gets the number right before you reach the bottom.
+cooldown 20
+
+~ enter:marina_vault
+| It smells of wax and cold stone and, very faintly, of roses. Whoever keeps this room keeps it the way you keep a promise.
+once
+
+~ enter:marina_vault_stair
+| The steps are worn in the middle by one pair of feet, coming and going, for a very long time.
+once
+
+~ examine:marina_candles
+| Tall white candles in iron stands. They burn, and they don't get any shorter. He wants it always to be the first night.
+
+~ examine:marina_portrait
+| A small portrait of a girl with red hair in a plain dress, a candle in her hand, painted by someone who loved her and couldn't paint. Someone else, much better, has painted over the eyes.
+
+~ examine:marina_roses
+| Black roses on the floor around the bier, dozens of them, the oldest crumbled to dust, the newest still wet. He comes often.
+
+~ open:marinas_dowry_chest
+| A painted chest of the kind a village girl fills with linen for her wedding. The linen is still in it, folded, never used. Under it lies what he put there.
+
+~ open:berez_vault_niche
+| Coins and little silver things left in a niche in the wall, the offerings of somebody who had no one to give them to.
+
+# ---------------------------------------------------------------- The marsh track (road battlefield)
+
+~ enter:berez_marsh_track
+| The track runs on logs across the marsh, with reeds closing in on both sides and black water winking through the gaps.
+cooldown 60
+
+# ---------------------------------------------------------------- Mount Baratok
+
+~ enter:mount_baratok
+| The goat track climbs through dark pines into cold that comes too early for the season. Somewhere above, a small storm is waiting over the summit like a dog outside a door.
+| [flag.mordenkainen_restored] The mountain is still cold, but it's an honest cold now, and the storm over the summit has gone.
+cooldown 30
+
+~ enter:baratok_trail
+| Switchbacks of pine and scree, and on the trees, here and there, marks scratched at head height: names, crossed out, one after another.
+once
+
+~ enter:baratok_hut_yard
+| A yard of frost around a stone hut. Birds hang in the air above it, mid-flight, frozen solid, and nobody has thought to take them down.
+| [flag.mordenkainen_restored] The yard has thawed. The birds that hung over the hut lie on the ground in a neat row, and someone has given them a small, respectful cairn.
+cooldown 20
+
+~ enter:baratok_summit
+| The summit is bare rock and wind. A cairn of flat stones stands at the very top, and the frost around it lies in a perfect ring.
+once
+
+~ enter:baratok_lookout
+| From the lookout the whole western valley lies open: the long grey lake, and on an island near its far shore, a tower.
+once
+
+~ examine:baratok_hut
+| A hut of fitted stones without a speck of mortar, raised by somebody who knew exactly how and has since forgotten. The door is shut. Something inside is talking to itself.
+
+~ examine:baratok_frozen_birds
+| A sparrow, a jay and a crow, hanging in the air at head height, wings out, frozen in mid-flight so perfectly you can count their feathers. They have been there a long time. Nothing has disturbed them.
+
+~ examine:baratok_glass_ring
+| A ring of black glass, wide as a cart wheel, fused out of the rock. The stone in the middle is scorched and fresh.
+
+~ examine:baratok_overlook
+| The lake below is grey as a knife. On its island, a tower stands with one lit window, small as a spark. Somebody else in this valley is keeping a watch.
+
+~ examine:baratok_carved_post
+| A post carved with names, one under another: Osric, Melchior, Bertram, Magnus, Marvellous. Each one has been crossed out, firmly, by the same hand that carved it.
+
+~ examine:baratok_cairn_opened
+| The cairn stones lie where you set them down. The frost ring around them is melting, now there's nothing left to guard.
+
+~ trap:baratok_ward:found
+| The frost around the cairn lies in a perfect ring, and the snow that falls on the ring doesn't settle. Something here is waiting to clap.
+
+~ trap:baratok_ward:triggered
+| The air around the cairn claps shut like two great hands, and the summit rings like a struck bell.
+
+# ---------------------------------------------------------------- The Mad Mage's hut
+
+~ enter:mount_baratok_hut
+| It is colder in the hut than outside. Frost furs the chessboard, the shelves and the old man's beard, and none of it seems to trouble him in the least.
+| [flag.mordenkainen_restored] The hut is warmer. Somebody has lit the hearth for the first time, badly, with far too much magic, and the books on the shelves have writing in them now.
+cooldown 20
+
+~ enter:baratok_hut_room
+| A bed of furs, a chessboard, and a mirror with its face turned to the wall.
+once
+
+~ enter:baratok_hut_study
+| Shelves of books and a wall covered in chalk, and in the corner a stack of slates, each with one word written on it and rubbed out.
+once
+
+~ examine:baratok_chessboard
+| A dragonchess board, three tiers of it, with a game in progress. Every piece on every side is carved from black stone.
+
+~ examine:baratok_mirror
+| A good silver mirror turned to face the wall. On its back, in chalk: DON'T.
+| [flag.mordenkainen_restored] The mirror has been turned round. Its owner looks into it, now and then, as if checking that someone is still there.
+
+~ examine:baratok_chalk_wall
+| Equations in chalk cover the wall from floor to ceiling, beautiful and fluent, and every one of them stops halfway, at the same point, where the writer forgot what he was solving for.
+
+~ examine:baratok_blank_books
+| Shelves of good books, bound in leather, every page blank. On some, a capital M is written at the top of the first page, with a little hook, and nothing after it.
+| [flag.mordenkainen_restored] The blank books aren't blank any more. He has been writing in all of them at once.
+
+~ examine:baratok_cold_hearth
+| A hearth that has never had a fire in it. Frost grows on the firedogs like moss.
+
+~ examine:baratok_bed
+| A bed of wolf furs. The wolves, you notice, died of cold.
+
+# ---------------------------------------------------------------- The mountain roads (road battlefield)
+
+~ enter:mount_baratok_trail
+| A ledge road with rock on one hand and a long drop on the other. The wind up here has opinions.
+cooldown 60
+
+# ---------------------------------------------------------------- The Tsolenka Pass
+
+~ enter:tsolenka_pass
+| The road leaves the pines behind and climbs into bare rock and cloud. Far above, a stone tower straddles the pass with its portcullis down, and between you and it a gorge opens like a wound, crossed by one narrow bridge.
+| [flag.tsolenka_gate_open] The pass, with its bridge and its tower. The portcullis stands up in its slot now, and the road goes on into the cloud.
+cooldown 30
+
+~ enter:tsolenka_climb
+| The cliff road is a ledge cut into the mountain's side, with the drop on your right getting steadily more interested in you.
+once
+
+~ enter:tsolenka_landing
+| The road comes out onto a landing at the head of the bridge. On the stones lies a feather longer than a man.
+| [night] The road comes out onto a landing at the head of the bridge. Above the far crag something huge breathes in its sleep, slow as surf.
+cooldown 20
+
+~ enter:tsolenka_bridge
+| The bridge is two strides wide with a parapet to the knee, and the gorge under it goes down into cloud. The wind pushes at you, like a hand testing a door.
+| [flag.roc_seen and not flag.roc_driven_off and day] The bridge is two strides wide over a gorge full of cloud. You remember the shadow on the ridge road, and find yourself looking up.
+| [flag.roc_driven_off] The bridge, two strides wide over the cloud. The sky above it is empty now, and you find you can cross it without looking up.
+cooldown 20
+
+~ enter:tsolenka_shelf
+| A broad shelf of rock under the crags, scattered with bones too big to be sheep's. Up on the crag at its edge sits a nest built of whole pine trunks.
+once
+
+~ enter:tsolenka_gate_road
+| The road climbs the last steep stretch to the tower. Faces are carved into the tower's stones, soldiers' faces, all looking down the road toward the valley.
+once
+
+~ enter:tsolenka_beyond
+| Past the gate the road goes on, steep and narrow, into cloud so thick you can hear it. Somewhere up there, something golden is catching a light that isn't the sun's.
+once
+
+~ examine:tsolenka_shrine
+| A wayside shrine with a sun carved on it, and offerings frozen to its shelf: a loaf like stone, a wooden horse, a lock of hair. Nobody has left anything new in a very long time.
+| [class:cleric] A shrine of the Morninglord at the foot of the climb. {name} knows the shape of it: travellers prayed here before they went up, and again, if they came down.
+
+~ examine:tsolenka_road_stone
+| A road stone with the distance cut on it, to a place whose name has been chiselled off by someone very thorough.
+
+~ examine:tsolenka_gorge_view
+| The gorge falls away into cloud. A stone kicked over the edge never makes a sound.
+
+~ examine:tsolenka_bridge_parapet
+| The parapet is old work, every stone fitted dry. Long scratches run across its top, in fours, as if something very large once landed here to see what it had caught.
+
+~ examine:tsolenka_roc_bones
+| Bones on the shelf: an ox, a horse, and something that wore armour, picked so clean the mail is still on the ribs.
+
+~ examine:tsolenka_tower_carvings
+| A row of soldiers' faces carved into the tower, each one different, each one stern. Under them, a line of letters: THEY KEPT THE ROAD.
+
+~ examine:tsolenka_brazier
+| A watch brazier on a tripod, full of grey ash. It burns, though nobody feeds it, with a pale flame that gives light and no heat at all.
+
+~ open:roc_nest
+| The nest is pine trunks woven like straw, lined with fleece and bones and what the roc couldn't eat: a purse, a sword, a coat of rings.
+
+# ---------------------------------------------------------------- The guard tower
+
+~ enter:tsolenka_pass_guard_tower
+| Inside, the tower is grey and orderly, swept and squared away, the kind of tidy only soldiers manage. A pale light hangs in the air with nothing to give it off.
+| [flag.tsolenka_watch_released] The tower is empty now, and just a building. Someone has left the guardroom swept.
+cooldown 20
+
+~ enter:tower_vestibule
+| A vestibule with pegs for cloaks, and on every peg a grey cloak that isn't quite there.
+once
+
+~ enter:tower_guardroom
+| A guardroom with a table, a rack of mail and a roster on the wall, and soldiers at their posts in every corner who are no colour at all.
+| [flag.tsolenka_watch_fought or flag.tsolenka_watch_released] The guardroom, empty. The table still has dice on it, mid-game.
+cooldown 20
+
+~ enter:tower_gatehouse
+| A drum of black chain and a crank as long as a spear, and through the murder holes in the floor, the top of the portcullis, waiting.
+once
+
+~ enter:tower_barracks
+| Bunks made up tight enough to bounce a coin, and none of them slept in for a very long time.
+once
+
+~ enter:tower_captains_room
+| The captain's room: a narrow bed, a desk with the watch log on it, and an iron strongbox chained to the wall.
+| [treasure_at:tsolenka_pass_guard_tower] The captain's room. The strongbox chained to the wall is the only thing in the tower that seems to want your attention, and wants it very much.
+cooldown 20
+
+~ examine:tower_bunks
+| Two tiers of bunks, blankets folded square. One has a name scratched into the frame and, under it, a tally of days that stops at a number nobody should have to count to.
+
+~ examine:tower_mail_rack
+| A rack of old mail shirts, oiled and hung. Oiled recently. By whom, you'd rather not think.
+
+~ examine:tower_dice_table
+| A table with a dice game left in the middle: three bone dice, a pile of tin buttons for stakes, and one die still balanced on its corner.
+
+~ examine:tower_roster
+| The watch roster, names chalked in a grid of days. The chalk is fresh. Every name has been marked present every day for longer than chalk lasts.
+
+~ examine:tower_captain_crest
+| A crest over the captain's bed: a sun over mountains, the arms of a crown that ruled this valley before the castle did.
+
+~ open:captains_strongbox
+| The captain's strongbox opens with a sound like a held breath let go.
+
+# ---------------------------------------------------------------- Rests
+
+~ rest:long:berez
+| You sleep in turns on the dry end of the causeway. All night, out on the stump, a hut shifts its weight from root to root, and something hums a lullaby.
+| [flag.lysaga_dead] You sleep in turns on the dry end of the causeway. The marsh is full of small noises, and for once none of them are about you.
+
+~ rest:long:mount_baratok_hut
+| You sleep under wolf furs in a hut colder than the snow outside. Nothing on the mountain comes near the door all night; nothing would dare.
+| [flag.mordenkainen_restored] You sleep by a fire that someone has lit with far too much magic. Your host stays up all night writing, and swears at his own handwriting.
+
+~ rest:long:tsolenka_pass
+| You sleep in the lee of the rock with a watch set. In the night, from the tower above, someone calls the hour, and gets it right.
+
+# ---------------------------------------------------------------- Fights
+
+~ combat:start
+| [at:berez_baba_lysagas_hut] The hut leans with her. Every jar on the shelf is humming the same note.
+| [at:tsolenka_pass and not flag.roc_driven_off] The wind off the wings nearly takes you over the parapet.
+| [at:tsolenka_pass_guard_tower] Grey steel comes out of grey scabbards with no sound at all.
+| [at:berez and flag.lysaga_lured] Every frog in the marsh goes silent at once.
+cooldown 10
+
+~ combat:victory
+| [at:berez_baba_lysagas_hut] The jars stop humming one by one, like a room of people falling asleep.
+| [at:tsolenka_pass] Feathers come down out of the cloud for a long time afterwards.
+| [at:tsolenka_pass_guard_tower] The grey shapes go out like lamps. One of them, before it goes, salutes.
+| [at:berez and flag.berez_scarecrows_burned and not flag.lysaga_dead] Straw and sacking smoulder in the reeds. On the stump, a shutter bangs open.
+cooldown 10

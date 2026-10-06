@@ -1,0 +1,395 @@
+{
+  "id": "tsolenka_pass_guard_tower",
+  "name": "The Tsolenka Guard Tower",
+  "region": "tsolenka_pass",
+  "summary": "The watch tower over the Tsolenka gate: a guardroom where dead soldiers still stand their posts, bunks nobody sleeps in, the winch that raises the portcullis, and the captain's room.",
+  "text": "The door from the road opens into a vestibule and the guardroom. The gatehouse with its winch is to the west, the barracks in the middle, the captain's room to the east behind its own door.",
+  "map": {
+    "rows": [
+      "####################",
+      "#.....#......#.....#",
+      "#..=..#.=..=.#..=..#",
+      "#.....#......#.....#",
+      "#.....#.=..=.#.....#",
+      "#.....#......#.....#",
+      "###.#####..#####.###",
+      "#..................#",
+      "#...=..........=...#",
+      "#..................#",
+      "########.....#######",
+      "########.....#######",
+      "##########.#########"
+    ],
+    "theme": "dungeon",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "tower_vestibule",
+      "name": "The vestibule",
+      "cells": [
+        [
+          8,
+          10
+        ],
+        [
+          12,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "tower_guardroom",
+      "name": "The guardroom",
+      "cells": [
+        [
+          1,
+          7
+        ],
+        [
+          18,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "tower_gatehouse",
+      "name": "The gatehouse",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "tower_barracks",
+      "name": "The barracks",
+      "cells": [
+        [
+          7,
+          1
+        ],
+        [
+          12,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "tower_captains_room",
+      "name": "The captain's room",
+      "cells": [
+        [
+          14,
+          1
+        ],
+        [
+          18,
+          5
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      10,
+      11
+    ],
+    "from_pass": [
+      10,
+      11
+    ]
+  },
+  "exits": [
+    {
+      "id": "tower_out",
+      "cell": [
+        10,
+        12
+      ],
+      "to": "tsolenka_pass",
+      "spawn": "from_tower",
+      "label": "Out to the road"
+    }
+  ],
+  "doors": [
+    {
+      "id": "tower_captain_door",
+      "cell": [
+        16,
+        6
+      ],
+      "label": "The captain's door"
+    }
+  ],
+  "props": [
+    {
+      "id": "tsolenka_gate_winch",
+      "cell": [
+        3,
+        2
+      ],
+      "kind": "examine",
+      "label": "The gate winch",
+      "model": "winch",
+      "dialogue": "tsolenka_pass/watch:winch"
+    },
+    {
+      "id": "tower_bunks",
+      "cell": [
+        8,
+        2
+      ],
+      "kind": "examine",
+      "label": "Bunks",
+      "model": "bed_small"
+    },
+    {
+      "id": "tower_watch_log",
+      "cell": [
+        16,
+        2
+      ],
+      "kind": "book",
+      "label": "The watch log",
+      "model": "ledger",
+      "codex": "tsolenka_watch_log",
+      "text": "The watch log of the Tsolenka tower, in a dozen hands, the last of them steady and square. Each entry is the same: date, weather, the watchword, and the words NOTHING CAME DOWN. Near the end: Two of the lads went up the road at night without orders. They came back talking about voices in the amber. Sent them down to the valley. Gate shut. Watchword unchanged: cold hearth, shut door. After that the dates stop, and the entries do not."
+    },
+    {
+      "id": "tower_mail_rack",
+      "cell": [
+        4,
+        8
+      ],
+      "kind": "examine",
+      "label": "A rack of old mail",
+      "model": "armor_stand"
+    },
+    {
+      "id": "tower_dice_table",
+      "cell": [
+        15,
+        8
+      ],
+      "kind": "examine",
+      "label": "A table with dice",
+      "model": "table_set"
+    },
+    {
+      "id": "tower_roster",
+      "cell": [
+        19,
+        8
+      ],
+      "kind": "examine",
+      "label": "The watch roster",
+      "model": "notice_board"
+    },
+    {
+      "id": "tower_captain_crest",
+      "cell": [
+        16,
+        0
+      ],
+      "kind": "examine",
+      "label": "A crest over the bed",
+      "model": "crest"
+    }
+  ],
+  "containers": [
+    {
+      "id": "tower_footlocker",
+      "cell": [
+        12,
+        1
+      ],
+      "label": "A footlocker",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "crossbow_bolt",
+          "qty": 20
+        },
+        {
+          "id": "blanket",
+          "qty": 1
+        }
+      ],
+      "gold": 20
+    },
+    {
+      "id": "captains_strongbox",
+      "cell": [
+        18,
+        1
+      ],
+      "label": "The captain's strongbox",
+      "model": "strongbox",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "gold": 90,
+      "lock_dc": 15
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        10,
+        7
+      ],
+      "kind": "magic",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "tsolenka_sergeant",
+      "cell": [
+        10,
+        8
+      ],
+      "dialogue": "tsolenka_pass/watch:sergeant",
+      "when": "not flag.tsolenka_watch_released and not flag.tsolenka_watch_fought",
+      "approach": 6
+    },
+    {
+      "npc": "tsolenka_watchman",
+      "cell": [
+        6,
+        7
+      ],
+      "dialogue": "tsolenka_pass/watch:watchman",
+      "when": "not flag.tsolenka_watch_released and not flag.tsolenka_watch_fought"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "tsolenka_watch",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "Five grey soldiers draw five grey swords with one sound, the way a drill sergeant would want it.",
+      "monsters": [
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            10,
+            8
+          ],
+          "name": "Sergeant Dorin Valcu"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            3,
+            8
+          ],
+          "name": "Phantom Watchman"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "Phantom Watchman"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            6,
+            7
+          ],
+          "name": "Phantom Watchman"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            13,
+            9
+          ],
+          "name": "Phantom Watchman"
+        }
+      ],
+      "surprise": "",
+      "flag": "tsolenka_watch_fought",
+      "quest": {
+        "id": "the_tsolenka_gate",
+        "stage": "watch_passed"
+      }
+    },
+    {
+      "id": "tsolenka_watch",
+      "trigger": "dialogue",
+      "text": "Five grey soldiers draw five grey swords with one sound, the way a drill sergeant would want it.",
+      "monsters": [
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            10,
+            8
+          ],
+          "name": "Sergeant Dorin Valcu"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            3,
+            8
+          ],
+          "name": "Phantom Watchman"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "Phantom Watchman"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            6,
+            7
+          ],
+          "name": "Phantom Watchman"
+        }
+      ],
+      "surprise": "",
+      "flag": "tsolenka_watch_fought",
+      "quest": {
+        "id": "the_tsolenka_gate",
+        "stage": "watch_passed"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:tsolenka_pass_guard_tower"
+  },
+  "rest": "risky",
+  "treasure_spots": {
+    "tsolenka_pass_guard_tower": {
+      "container": "captains_strongbox"
+    }
+  }
+}

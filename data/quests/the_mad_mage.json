@@ -1,0 +1,53 @@
+{
+  "id": "the_mad_mage",
+  "name": "The Mad Mage of Mount Baratok",
+  "summary": "A powerful wizard lives alone on Mount Baratok with his memory gone. Someone took it on purpose.",
+  "giver": "mad_mage",
+  "region": "mount_baratok",
+  "stages": [
+    {
+      "id": "met",
+      "journal": "An old wizard lives in a stone hut on Mount Baratok, playing dragonchess against nobody. He doesn't know his own name, and the weather does whatever he forgets he told it to.",
+      "objectives": [
+        "Find a way to give him back his memory"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "book_found",
+      "journal": "Under a warded cairn on the summit of Mount Baratok we found a spellbook in a strong, impatient hand, hidden by someone who didn't want it found, not even by himself.",
+      "objectives": [
+        "Show the spellbook to the old man in the hut"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "jar_found",
+      "journal": "Among Baba Lysaga's jars was one labelled in her scrawl: the wizard on the mountain, his remembering. Something silver moves inside it.",
+      "objectives": [
+        "Take the jar to the hut on Mount Baratok"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "restored",
+      "journal": "He remembers. His name is Mordenkainen. He came to Barovia to destroy Strahd, lost, and had his memory bottled by the witch of Berez.",
+      "objectives": [
+        "Ask him what he knows"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "joined",
+      "journal": "Mordenkainen walks with us now. Madam Eva's cards called him the broken one. He is mending.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "promised",
+      "journal": "Mordenkainen is staying on his mountain to rebuild his spells. When we go up to the castle, he says, he will come.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+# Events on the marsh track between Vallaki and Berez (data/random_encounters/berez_marsh.json).
+
+~ drowned_bell
+Narrator: Somewhere ahead, under the black water, a bell rings. Once, then again, slow, the way a chapel bell rings for a burial. There is no wind. There is no chapel.
+interject tag:curious: Bells don't ring underwater. Do they? They shouldn't.
+* Wade out toward the sound. -> bell_wade
+* [Religion DC 13] Say a word for whoever it's ringing for. -> bell_prayer | bell_prayer_fail
+* Keep to the track. -> bell_leave
+
+~ bell_wade
+time +20
+Narrator: Thigh-deep in the cold, your boots find the bell where it fell: on its side in the silt, green with weed, its clapper still swinging. Wedged in the mouth of it, somebody's offerings from a long time ago, coins gone black.
+gold +18
+Narrator: When you let go of it, the bell stops. When you turn your back, it starts again.
+-> END
+
+~ bell_prayer
+Narrator: The words go out over the water. The bell rings once more, softer, and stops, and does not start again. The marsh feels less crowded afterwards.
+-> END
+
+~ bell_prayer_fail
+Narrator: The words go out over the water, and the bell rings straight through them, as if it has heard a great many prayers and none of them helped.
+-> END
+
+~ bell_leave
+Narrator: You keep to the logs. The bell follows you for a while, always just ahead, and then gives up.
+-> END
+
+~ raven_guide
+Narrator: A raven drops onto a post at the side of the track and looks at you with one eye, then the other, as if checking its arithmetic.
+if flag.keepers_of_the_feather_met or flag.raven_fed
+Narrator: It hops to the next post, and the next, and looks back each time. Following it, you skirt three pools that would have had you up to the neck, and a patch of reeds where something large turns over and goes back to sleep.
+interject tag:cheerful: I'm going to start leaving out bread for every bird in this country.
+-> END
+endif
+Narrator: It caws once, takes off, and circles, unconvinced. Ravens in Barovia are particular about whom they help, and you haven't been introduced.
+* [Animal Handling DC 13] Hold out a crust and wait. -> raven_won | raven_lost
+* Walk on. -> END
+
+~ raven_won
+Narrator: After a long, judging moment it takes the crust, and then leads you round the worst of the pools before it flies off east, toward the drowned village.
+-> END
+
+~ raven_lost
+Narrator: It looks at the crust, looks at you, and leaves with an expression you didn't know a bird could make.
+-> END

@@ -1,0 +1,1017 @@
+{
+  "id": "berez",
+  "name": "The Ruins of Berez",
+  "region": "berez",
+  "summary": "A village the Luna drowned: broken walls standing in reeds and black water, a white statue on the only dry mound, and in the middle, on a stump wider than a house, a hut that breathes.",
+  "text": "The marsh south of the Luna river, where Berez used to be. The track from the road comes in from the south-east along an old causeway. Marina's monument stands on its mound in the west; Baba Lysaga's hut squats on its giant stump in the east, ringed by scarecrows.",
+  "map": {
+    "rows": [
+      "##############################################",
+      "#wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwwwwww11wwwwwwwwwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwwwwww11wwwwwwwwwwwwwwwwwwwwwww#",
+      "#~~~~~~~~~~~~~~~~~~~..~~~~~~~~~~~~~~~~~~~~~~~#",
+      "#~~~~~~..~~~~~............~~~~~~~~....~~~~~~~#",
+      "#~~~~~~..~~~~~............~~~~~~~~....~~~~~~~#",
+      "#.ww..................wwww...........======..#",
+      "#.ww..........======..wwww...........=~~~~=.##",
+      "#.............=~~~~=....~~~.........#.~~~~=.##",
+      "###~~~~~~~~~..=~~~~.....~~~..........=~~~~=..#",
+      "##.~1111111~..=~~~~=.................==..==..#",
+      "#..~1111111~..==..==.........................#",
+      "#..~1111111~................111111.......~~~~#",
+      "#..~1111111~................111111.......~~~~#",
+      "#..~1111111~.~~~............111111..ww...~~~~#",
+      "#..~1111111~.~~~............111111..ww...~~~~#",
+      "#..~1111111~.~~~............111111.......~~~~#",
+      "#..~~~~~~~~~www.............111111...........#",
+      "#~~.........www..........................www.#",
+      "#~~.........www.==.===.............~~~...www.#",
+      "#~~.............=....=.......................#",
+      "#..=====.====...=..........................###",
+      "#..=......~.=........=.....#................##",
+      "#..=........=...======.......................#",
+      "#..=.........................................#",
+      "##.=....................~~~~~~~..............#",
+      "##.=.~......=......wwww.~~~~~~~..www.........#",
+      "#..=........=......wwww.~~~~~~~..www.........#",
+      "#..====.=====~~~~~~wwww........~~~~~~........#",
+      "#............~~~~~~~...........~~~~~~........#",
+      "#.~~~~~....#.~~~~~~~....##.....~~~~~~........#",
+      "#.~~~~~......~~~~~~~...........~~~~~~........#",
+      "#######################################..#####"
+    ],
+    "theme": "riverside",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "berez_causeway",
+      "name": "The causeway",
+      "cells": [
+        [
+          35,
+          23
+        ],
+        [
+          44,
+          32
+        ]
+      ]
+    },
+    {
+      "id": "berez_riverbank",
+      "name": "The riverbank",
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          44,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "berez_drowned_lane",
+      "name": "The drowned lane",
+      "cells": [
+        [
+          12,
+          7
+        ],
+        [
+          22,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "berez_burgomaster_ruin",
+      "name": "The burgomaster's house",
+      "cells": [
+        [
+          3,
+          22
+        ],
+        [
+          12,
+          29
+        ]
+      ]
+    },
+    {
+      "id": "berez_monument_mound",
+      "name": "Marina's mound",
+      "cells": [
+        [
+          2,
+          9
+        ],
+        [
+          11,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "berez_scarecrow_field",
+      "name": "The scarecrow field",
+      "cells": [
+        [
+          23,
+          8
+        ],
+        [
+          38,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "berez_hut_stump",
+      "name": "The great stump",
+      "cells": [
+        [
+          27,
+          12
+        ],
+        [
+          34,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      39,
+      31
+    ],
+    "from_road": [
+      39,
+      31
+    ],
+    "from_hut": [
+      30,
+      20
+    ],
+    "from_vault": [
+      8,
+      16
+    ]
+  },
+  "exits": [
+    {
+      "id": "berez_road",
+      "cell": [
+        39,
+        33
+      ],
+      "to": "travel",
+      "label": "The marsh track back to the road"
+    },
+    {
+      "id": "berez_road_2",
+      "cell": [
+        40,
+        33
+      ],
+      "to": "travel",
+      "label": "The marsh track back to the road"
+    },
+    {
+      "id": "berez_hut_door",
+      "cell": [
+        30,
+        17
+      ],
+      "to": "berez_baba_lysagas_hut",
+      "spawn": "from_stump",
+      "label": "Climb up to the hut's door",
+      "when": "flag.lysaga_guests or flag.lysaga_bargained or flag.lysaga_dead or flag.strahd_knows_marina_truth",
+      "locked_text": "The hut turns its door away from you, the way a cat turns its back. There is no ladder, and the stump is slick as a fish."
+    },
+    {
+      "id": "berez_vault_stair",
+      "cell": [
+        7,
+        15
+      ],
+      "to": "berez_marinas_monument",
+      "spawn": "from_mound",
+      "label": "The stair down beneath the plinth",
+      "when": "flag.marina_vault_found",
+      "locked_text": "Silt and reeds have buried the foot of the plinth. Something under your boots rings hollow."
+    }
+  ],
+  "props": [
+    {
+      "id": "berez_marinas_statue",
+      "cell": [
+        7,
+        13
+      ],
+      "kind": "examine",
+      "label": "Marina's monument",
+      "model": "crypt_small",
+      "dialogue": "berez/marina:monument"
+    },
+    {
+      "id": "berez_hut",
+      "cell": [
+        30,
+        15
+      ],
+      "kind": "examine",
+      "label": "Baba Lysaga's hut",
+      "model": "cottage",
+      "when": "not flag.creeping_hut_destroyed and not flag.strahd_knows_marina_truth"
+    },
+    {
+      "id": "berez_hut_wreck",
+      "cell": [
+        30,
+        15
+      ],
+      "kind": "examine",
+      "label": "The wreck of the hut",
+      "model": "barn_collapsed",
+      "when": "flag.creeping_hut_destroyed or flag.strahd_knows_marina_truth"
+    },
+    {
+      "id": "berez_scarecrow_post",
+      "cell": [
+        25,
+        20
+      ],
+      "kind": "examine",
+      "label": "A scarecrow",
+      "model": "straw",
+      "when": "not flag.berez_scarecrows_burned"
+    },
+    {
+      "id": "berez_jetty",
+      "cell": [
+        21,
+        4
+      ],
+      "kind": "examine",
+      "label": "A rotten jetty",
+      "model": "jetty"
+    },
+    {
+      "id": "berez_luna",
+      "cell": [
+        10,
+        5
+      ],
+      "kind": "examine",
+      "label": "The Luna river",
+      "model": "reeds"
+    },
+    {
+      "id": "berez_drowned_house",
+      "cell": [
+        16,
+        13
+      ],
+      "kind": "examine",
+      "label": "A drowned house",
+      "model": "rubble"
+    },
+    {
+      "id": "berez_drowned_bones",
+      "cell": [
+        24,
+        17
+      ],
+      "kind": "examine",
+      "label": "Bones in the reeds",
+      "model": "bones_water"
+    },
+    {
+      "id": "berez_burgomaster_diary",
+      "cell": [
+        6,
+        24
+      ],
+      "kind": "book",
+      "label": "A swollen diary",
+      "model": "book",
+      "codex": "berez_burgomaster_diary",
+      "flag": "berez_diary_read",
+      "text": "The last pages of the diary of Ivo Dragan, burgomaster of Berez, the ink run with damp. He writes that the lord of the castle has been calling on Marina, the candlemaker's girl, with gifts nobody dares refuse. He hid her in the chapel, under the bell, and sat up with her. In the morning she was dead in her blankets, not a mark on her, only a scratch over the heart like a bramble's. The last entry is one line: The river is coming up the street, and the bell is ringing on its own."
+    },
+    {
+      "id": "berez_sunken_purse",
+      "cell": [
+        18,
+        22
+      ],
+      "kind": "search",
+      "label": "Something in the reeds",
+      "model": "sack",
+      "search_dc": 14,
+      "item": "antitoxin"
+    }
+  ],
+  "containers": [
+    {
+      "id": "berez_burgomaster_strongbox",
+      "cell": [
+        9,
+        27
+      ],
+      "label": "The burgomaster's strongbox",
+      "model": "strongbox",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        },
+        {
+          "id": "ink_pen",
+          "qty": 1
+        }
+      ],
+      "gold": 60,
+      "lock_dc": 15
+    },
+    {
+      "id": "berez_drowned_chest",
+      "cell": [
+        17,
+        10
+      ],
+      "label": "A chest in the flood",
+      "model": "chest",
+      "items": [
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "lamp",
+          "qty": 1
+        }
+      ],
+      "gold": 25
+    },
+    {
+      "id": "berez_fisher_locker",
+      "cell": [
+        19,
+        5
+      ],
+      "label": "A fisherman's locker",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "net",
+          "qty": 1
+        }
+      ],
+      "gold": 8
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        30,
+        14
+      ],
+      "kind": "window",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        7,
+        12
+      ],
+      "kind": "magic",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        6,
+        14
+      ],
+      "dialogue": "berez/lysaga:last_words",
+      "when": "flag.lysaga_slain_at_monument and not flag.lysaga_dead",
+      "approach": 10
+    },
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        31,
+        19
+      ],
+      "dialogue": "berez/lysaga:last_words",
+      "when": "(flag.lysaga_slain_at_stump or flag.lysaga_slain_scorned) and not flag.lysaga_dead",
+      "approach": 10
+    },
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        29,
+        19
+      ],
+      "dialogue": "berez/lysaga:scorned",
+      "when": "flag.strahd_knows_marina_truth and not flag.lysaga_dead and not flag.lysaga_left_broken and not flag.lysaga_slain_scorned",
+      "approach": 8
+    },
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        29,
+        19
+      ],
+      "dialogue": "berez/lysaga:broken",
+      "when": "flag.lysaga_left_broken and not flag.lysaga_dead and not flag.lysaga_slain_scorned"
+    },
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        31,
+        16
+      ],
+      "dialogue": "berez/lysaga:window",
+      "when": "not flag.lysaga_dead and not flag.lysaga_guests and not flag.lysaga_lured",
+      "approach": 7
+    },
+    {
+      "npc": "strahd",
+      "cell": [
+        9,
+        13
+      ],
+      "dialogue": "berez/marina:strahd",
+      "when": "night and not flag.berez_strahd_met",
+      "approach": 6
+    }
+  ],
+  "encounters": [
+    {
+      "id": "berez_scarecrows",
+      "trigger": "enter_area:berez_scarecrow_field",
+      "when": "not flag.lysaga_guests and not flag.lysaga_bargained and not flag.lysaga_dead and not flag.strahd_knows_marina_truth and not flag.lysaga_lured and level >= 9",
+      "text": "The scarecrows in the reeds turn their sacking heads all at once, and climb down off their poles.",
+      "monsters": [
+        {
+          "monster": "scarecrow",
+          "cell": [
+            25,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            36,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            26,
+            18
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            36,
+            18
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            24,
+            21
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            37,
+            21
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            30,
+            10
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            34,
+            21
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            27,
+            15
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            35,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "berez_scarecrows_burned"
+    },
+    {
+      "id": "berez_scarecrows",
+      "trigger": "enter_area:berez_scarecrow_field",
+      "when": "not flag.lysaga_guests and not flag.lysaga_bargained and not flag.lysaga_dead and not flag.strahd_knows_marina_truth and not flag.lysaga_lured and level >= 8",
+      "text": "The scarecrows in the reeds turn their sacking heads all at once, and climb down off their poles.",
+      "monsters": [
+        {
+          "monster": "scarecrow",
+          "cell": [
+            25,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            36,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            26,
+            18
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            36,
+            18
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            24,
+            21
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            30,
+            10
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            27,
+            15
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            35,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "berez_scarecrows_burned"
+    },
+    {
+      "id": "berez_scarecrows",
+      "trigger": "enter_area:berez_scarecrow_field",
+      "when": "not flag.lysaga_guests and not flag.lysaga_bargained and not flag.lysaga_dead and not flag.strahd_knows_marina_truth and not flag.lysaga_lured",
+      "text": "The scarecrows in the reeds turn their sacking heads all at once, and climb down off their poles.",
+      "monsters": [
+        {
+          "monster": "scarecrow",
+          "cell": [
+            25,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            36,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            26,
+            18
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            36,
+            18
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            27,
+            15
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            35,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "berez_scarecrows_burned"
+    },
+    {
+      "id": "berez_drowned_lights",
+      "trigger": "enter_area:berez_drowned_lane",
+      "when": "night and not flag.berez_lights_quenched and level >= 8",
+      "text": "Lights bob up out of the flooded houses, pale and friendly, and drift toward you at the speed of a walk. They are humming.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            15,
+            14
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            20,
+            16
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            13,
+            22
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            18,
+            18
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            21,
+            13
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "berez_lights_quenched"
+    },
+    {
+      "id": "berez_drowned_lights",
+      "trigger": "enter_area:berez_drowned_lane",
+      "when": "night and not flag.berez_lights_quenched",
+      "text": "Lights bob up out of the flooded houses, pale and friendly, and drift toward you at the speed of a walk. They are humming.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            15,
+            14
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            20,
+            16
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            18,
+            18
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "berez_lights_quenched"
+    },
+    {
+      "id": "lysaga_and_hut",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The stump heaves. Roots as thick as a man tear out of the mud, and the hut rises on them, swaying, its door banging like a jaw.",
+      "monsters": [
+        {
+          "monster": "baba_lysagas_creeping_hut",
+          "cell": [
+            29,
+            13
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            33,
+            17
+          ],
+          "hp": 100
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_at_stump"
+    },
+    {
+      "id": "lysaga_and_hut",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The stump heaves. Roots as thick as a man tear out of the mud, and the hut rises on them, swaying, its door banging like a jaw.",
+      "monsters": [
+        {
+          "monster": "baba_lysagas_creeping_hut",
+          "cell": [
+            29,
+            13
+          ],
+          "hp": 120
+        },
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            33,
+            17
+          ],
+          "hp": 85
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_at_stump"
+    },
+    {
+      "id": "lysaga_and_hut",
+      "trigger": "dialogue",
+      "text": "The stump heaves. Roots as thick as a man tear out of the mud, and the hut rises on them, swaying, its door banging like a jaw.",
+      "monsters": [
+        {
+          "monster": "baba_lysagas_creeping_hut",
+          "cell": [
+            29,
+            13
+          ],
+          "hp": 100
+        },
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            33,
+            17
+          ],
+          "hp": 70
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_at_stump"
+    },
+    {
+      "id": "lysaga_at_monument",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "A bowl of yellow bone comes skimming over the reeds, low and fast, with a tiny furious woman standing in it. Behind her the whole marsh rises in a cloud of wings.",
+      "monsters": [
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            7,
+            11
+          ],
+          "hp": 120
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            5,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            9,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            3,
+            16
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            11,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_at_monument"
+    },
+    {
+      "id": "lysaga_at_monument",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "A bowl of yellow bone comes skimming over the reeds, low and fast, with a tiny furious woman standing in it. Behind her the whole marsh rises in a cloud of wings.",
+      "monsters": [
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            7,
+            11
+          ],
+          "hp": 105
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            5,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            9,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            3,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_at_monument"
+    },
+    {
+      "id": "lysaga_at_monument",
+      "trigger": "dialogue",
+      "text": "A bowl of yellow bone comes skimming over the reeds, low and fast, with a tiny furious woman standing in it. Behind her the whole marsh rises in a cloud of wings.",
+      "monsters": [
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            7,
+            11
+          ],
+          "hp": 85
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            5,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            9,
+            12
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_at_monument"
+    },
+    {
+      "id": "creeping_hut_masterless",
+      "trigger": "enter_area:berez_hut_stump",
+      "when": "flag.lysaga_slain_at_monument and not flag.creeping_hut_destroyed and not flag.strahd_knows_marina_truth and level >= 9",
+      "text": "The hut has been waiting for her. When you come instead, it stands up on its roots and screams through its door.",
+      "monsters": [
+        {
+          "monster": "baba_lysagas_creeping_hut",
+          "cell": [
+            29,
+            13
+          ],
+          "hp": 200
+        }
+      ],
+      "surprise": "",
+      "flag": "creeping_hut_destroyed",
+      "quest": {
+        "id": "the_witch_of_berez",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "creeping_hut_masterless",
+      "trigger": "enter_area:berez_hut_stump",
+      "when": "flag.lysaga_slain_at_monument and not flag.creeping_hut_destroyed and not flag.strahd_knows_marina_truth and level >= 8",
+      "text": "The hut has been waiting for her. When you come instead, it stands up on its roots and screams through its door.",
+      "monsters": [
+        {
+          "monster": "baba_lysagas_creeping_hut",
+          "cell": [
+            29,
+            13
+          ],
+          "hp": 160
+        }
+      ],
+      "surprise": "",
+      "flag": "creeping_hut_destroyed",
+      "quest": {
+        "id": "the_witch_of_berez",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "creeping_hut_masterless",
+      "trigger": "enter_area:berez_hut_stump",
+      "when": "flag.lysaga_slain_at_monument and not flag.creeping_hut_destroyed and not flag.strahd_knows_marina_truth",
+      "text": "The hut has been waiting for her. When you come instead, it stands up on its roots and screams through its door.",
+      "monsters": [
+        {
+          "monster": "baba_lysagas_creeping_hut",
+          "cell": [
+            29,
+            13
+          ],
+          "hp": 120
+        }
+      ],
+      "surprise": "",
+      "flag": "creeping_hut_destroyed",
+      "quest": {
+        "id": "the_witch_of_berez",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "lysaga_scorned",
+      "trigger": "dialogue",
+      "text": "She comes up out of the mud with her nails out, shrieking, and the reeds shriek with her.",
+      "monsters": [
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            29,
+            19
+          ],
+          "hp": 60
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_scorned"
+    }
+  ],
+  "narration": {
+    "enter": "enter:berez"
+  },
+  "rest": "risky"
+}

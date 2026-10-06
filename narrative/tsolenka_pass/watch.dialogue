@@ -1,0 +1,133 @@
+# The dead watch of the Tsolenka tower: Sergeant Dorin Valcu, his watchman, and the gate winch
+# (docs/regions/berez.md §3.3).
+
+~ sergeant
+if flag.tsolenka_watch_fate == "passed"
+-> passed_again
+endif
+if not flag.tsolenka_watch_met
+set tsolenka_watch_met
+quest the_tsolenka_gate reached
+Narrator: Five soldiers in old mail stand at their posts around the guardroom, grey as the stone behind them and a little blurred at the edges, like breath on a cold window. One of them steps out into the middle of the floor. He has sergeant's knots on his shoulder and no colour in him anywhere.
+tsolenka_sergeant: Halt. Watchword.
+else
+tsolenka_sergeant: Halt. Watchword.
+Narrator: He says it exactly the same way as last time. You suspect he has said it exactly the same way for centuries.
+endif
+if name:ilse_varga
+interject name:ilse_varga: Still at their posts. Nobody came to relieve them, and they stayed. That's discipline. That's also the worst thing I've ever seen.
+endif
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: My sister came this way. If they stopped her, they'll remember. If they didn't, they let her through to that place, and I don't know which I'd rather hear.
+endif
+-> watch_menu
+
+~ watch_menu
+* [if flag.tsolenka_watchword_known] Cold hearth, shut door. -> watchword
+* [if not flag.tsolenka_lie_tried] [Deception DC 15] We're the relief. Your watch is over. -> relief | relief_fail
+* [if not flag.tsolenka_release_tried] [Persuasion DC 15] Sergeant, the crown that gave you your orders is gone, and so are you. -> release | release_fail
+* [if not flag.tsolenka_release_tried] [Religion DC 13] Let us say the words for your lads, and stand the watch while they rest. -> release | release_fail
+* [Cleric] (Offer the rites of the dead.) -> release
+* What are you guarding? -> guarding
+* [if treasure_at:tsolenka_pass_guard_tower] What's in the captain's room? -> captains_room
+* Stand aside, sergeant, or be made to. -> fight
+* We'll go. -> leave
+
+~ guarding
+tsolenka_sergeant: The road. Nothing comes down the mountain. Nobody goes up it. Those are the orders. I didn't write them; I keep them.
+tsolenka_sergeant: Two of the lads went up once, on their own, at night. They came back talking about voices in the amber that knew their names. We sent them down to the valley. I don't know what became of them.
+interject tag:curious: What's up there, sergeant?
+tsolenka_sergeant: Not my business, traveller. My business is the gate.
+-> watch_menu
+
+~ captains_room
+tsolenka_sergeant: Captain's things. Off limits. And something that came up the road a while back in a dead man's pack, that the captain locked away and wouldn't talk about. You'll keep out of there, if you know what's good.
+-> watch_menu
+
+~ watchword
+set tsolenka_watch_fate = "passed"
+quest the_tsolenka_gate watch_passed
+Narrator: The sergeant's eyes, which are not really there, rest on you for a long moment.
+tsolenka_sergeant: Cold hearth, shut door. That's the word. Pass, then. Winch is through there, in the gatehouse. Mind the chain; it bites. Log it when you're done.
+interject tag:blunt: Log it where?
+tsolenka_sergeant: Anywhere. Nobody reads it.
+-> END
+
+~ relief
+set tsolenka_lie_tried
+set tsolenka_watch_fate = "passed"
+quest the_tsolenka_gate watch_passed
+tsolenka_sergeant: Relief. Relief. About time, I'd say, if I had the breath to say it with.
+Narrator: He turns to his men and says something you don't catch. They stand easier. One of them, very quietly, sits down for the first time in a very long time.
+tsolenka_sergeant: Winch is in the gatehouse. The watch is yours.
+-> END
+
+~ relief_fail
+set tsolenka_lie_tried
+tsolenka_sergeant [angry]: Relief comes with the watchword and a written order, and you've neither. Liars on the mountain road. That's the oldest trick there is.
+Narrator: Five grey hands go to five grey sword hilts, and stay there, waiting for a reason.
+-> watch_menu
+
+~ release
+set tsolenka_watch_released
+set tsolenka_watch_fate = "released"
+quest the_tsolenka_gate watch_passed
+Narrator: The sergeant listens. His men listen. When it's done, nobody moves for a while.
+tsolenka_sergeant: Gone. All of it. The crown, the valley we kept it for. And us.
+tsolenka_sergeant: Well. Somebody might have said. Lads: stand down.
+Narrator: They go one at a time, the youngest first, like candles at the end of a long night. The sergeant goes last. He looks at the gate, and then at you, and nods once, as if signing something over.
+interject class:cleric: Rest. You kept it long enough.
+-> END
+
+~ release_fail
+set tsolenka_release_tried
+tsolenka_sergeant: Nice words. I've heard nice words before, at this gate, from people who wanted to go up the road. Watchword, traveller.
+-> watch_menu
+
+~ fight
+set tsolenka_watch_fate = "fought"
+tsolenka_sergeant: Then you'll be made to, and we'll log it. Watch! To me!
+combat tsolenka_watch
+
+~ leave
+tsolenka_sergeant: Go back down. Go home. That's the best advice this tower has.
+-> END
+
+~ passed_again
+tsolenka_sergeant: Travellers. You've passed. The winch is in the gatehouse. Nothing came down. Nobody went up. Well, you did. I've logged it.
+-> END
+
+# ---------------------------------------------------------------- The watchman at his post
+
+~ watchman
+Narrator: The grey soldier at his post doesn't look at you. His eyes are on the door to the road, exactly where they have been for centuries.
+tsolenka_watchman: Talk to the sergeant.
+-> END
+
+# ---------------------------------------------------------------- The gate winch (prop in the gatehouse)
+
+~ winch
+if flag.tsolenka_gate_open
+Narrator: The chain is run out to its last link and wedged with a peg. Through the murder holes you can see the portcullis standing up in its slot, and the road beyond it climbing into the cloud.
+-> END
+endif
+if not flag.tsolenka_watch_released and not flag.tsolenka_watch_fought and flag.tsolenka_watch_fate != "passed"
+Narrator: A grey hand closes over the crank before yours can. It is cold the way a well is cold.
+tsolenka_sergeant: Not without the watchword, traveller.
+-> END
+endif
+Narrator: A drum of black chain as tall as a man, a crank as long as a spear, and a ratchet that has been oiled by nobody for a very long time.
+* Haul on the winch. -> winch_up
+* Leave it. -> END
+
+~ winch_up
+set tsolenka_gate_open
+quest the_tsolenka_gate open
+Narrator: It takes all of you. The ratchet screams, then clicks, then clicks, and somewhere below the floor the portcullis lifts out of a groove it has worn into the road.
+if flag.tsolenka_watch_fate == "passed"
+tsolenka_sergeant: Gate up. Logged. May whatever you're going to find be worse at waiting than we were.
+endif
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: The road's open. She walked this. I can feel it.
+endif
+-> END
