@@ -6,7 +6,7 @@ BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
 G       := $(GODOT) --path .
 LOGCHK  := tools/logcheck.sh
 
-.PHONY: run import test validate ci palette capture standin sprite
+.PHONY: run import test lint validate ci palette capture standin sprite
 
 run:
 	$(G)
@@ -20,8 +20,12 @@ test: import
 validate:
 	python3 tools/data/validate_data.py
 
+## Compiles every rules/ script standalone (no autoloads allowed there).
+lint: import
+	tools/lint_gd.sh
+
 ## Local CI: everything main must pass before a merge (plan §4, ADR 0001).
-ci: validate test
+ci: validate lint test
 
 palette:
 	python3 tools/art/build_palette.py

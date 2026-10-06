@@ -5,6 +5,8 @@ extends RefCounted
 ## - A natural 20 on an attack roll is a Critical Hit and hits regardless of modifiers or AC;
 ##   a natural 1 on an attack roll misses. Checks and saves have no automatic results.
 ## - Meeting the DC (or AC) succeeds.
+## Creature.roll_* builds these with a Breakdown of the modifier, the named sources of Advantage and
+## Disadvantage, and any bonus dice (Bless), so the combat log can explain every roll.
 
 enum Kind { ABILITY_CHECK, SAVING_THROW, ATTACK_ROLL }
 
@@ -20,18 +22,34 @@ var success: bool = false
 var critical: bool = false
 var natural_one: bool = false
 var label: String = ""
+## Lowest natural roll that is a Critical Hit (Improved Critical: 19). Attack rolls only.
+var crit_range: int = 20
+## Bonus or penalty dice already rolled (Bless +1d4, Bane -1d4): total and text like "Bless 3".
+var extra: int = 0
+var extra_label: String = ""
+## Where the modifier came from, and why Advantage / Disadvantage applied.
+var breakdown: Breakdown = null
+var advantage_sources: Array[String] = []
+var disadvantage_sources: Array[String] = []
+## Automatic failure (Paralyzed and a Dexterity save): no die is rolled.
+var auto_failed: bool = false
+var auto_fail_reason: String = ""
 
 
 ## `advantage_sources` / `disadvantage_sources` are counts so callers can just add up effects.
 static func roll(dice: DiceRoller, kind_: Kind, modifier_: int, target_: int,
-		advantage_sources: int = 0, disadvantage_sources: int = 0, label_: String = "") -> D20Test:
+		advantage_sources_: int = 0, disadvantage_sources_: int = 0, label_: String = "",
+		crit_range_: int = 20, extra_: int = 0, extra_label_: String = "") -> D20Test:
 	var t := D20Test.new()
 	t.kind = kind_
 	t.modifier = modifier_
 	t.target = target_
 	t.label = label_
-	var has_adv := advantage_sources > 0
-	var has_dis := disadvantage_sources > 0
+	t.crit_range = crit_range_
+	t.extra = extra_
+	t.extra_label = extra_label_
+	var has_adv := advantage_sources_ > 0
+	var has_dis := disadvantage_sources_ > 0
 	t.advantage = has_adv and not has_dis
 	t.disadvantage = has_dis and not has_adv
 	var reason := label_ if label_ != "" else str(Kind.keys()[kind_])
@@ -46,20 +64,33 @@ static func roll(dice: DiceRoller, kind_: Kind, modifier_: int, target_: int,
 
 
 ## Resolves an already-known die (for tests and replays).
-static func from_natural(kind_: Kind, natural: int, modifier_: int, target_: int) -> D20Test:
+static func from_natural(kind_: Kind, natural: int, modifier_: int, target_: int, crit_range_: int = 20) -> D20Test:
 	var t := D20Test.new()
 	t.kind = kind_
 	t.rolls = [natural]
 	t.kept = natural
 	t.modifier = modifier_
 	t.target = target_
+	t.crit_range = crit_range_
 	t._resolve()
 	return t
 
 
+## A save or check that fails without a roll (Paralyzed creatures fail Dexterity saves).
+static func automatic_failure(kind_: Kind, target_: int, label_: String, reason: String) -> D20Test:
+	var t := D20Test.new()
+	t.kind = kind_
+	t.target = target_
+	t.label = label_
+	t.auto_failed = true
+	t.auto_fail_reason = reason
+	t.success = false
+	return t
+
+
 func _resolve() -> void:
-	total = kept + modifier
-	critical = kind == Kind.ATTACK_ROLL and kept == 20
+	total = kept + modifier + extra
+	critical = kind == Kind.ATTACK_ROLL and kept >= crit_range
 	natural_one = kind == Kind.ATTACK_ROLL and kept == 1
 	if critical:
 		success = true
@@ -71,13 +102,18 @@ func _resolve() -> void:
 
 ## Combat-log text, e.g. "Attack: d20 14 + 5 = 19 vs AC 16, hit" (plan §5.3).
 func describe() -> String:
+	var name: String = label if label != "" else ["Check", "Save", "Attack"][kind]
+	var vs := "AC" if kind == Kind.ATTACK_ROLL else "DC"
+	if auto_failed:
+		return "%s: automatic failure (%s) vs %s %d" % [name, auto_fail_reason, vs, target]
 	var die := "d20 %d" % kept
 	if rolls.size() == 2:
 		die = "d20 %s (%d, %d)" % ["adv" if advantage else "dis", rolls[0], rolls[1]]
 	var sign := "+" if modifier >= 0 else "-"
-	var vs := "AC" if kind == Kind.ATTACK_ROLL else "DC"
+	var bonus := ""
+	if extra != 0 or extra_label != "":
+		bonus = " %s %s" % ["+" if extra >= 0 else "-", extra_label if extra_label != "" else str(absi(extra))]
 	var outcome := "success" if success else "failure"
 	if kind == Kind.ATTACK_ROLL:
 		outcome = "critical hit" if critical else ("hit" if success else "miss")
-	var name: String = label if label != "" else ["Check", "Save", "Attack"][kind]
-	return "%s: %s %s %d = %d vs %s %d, %s" % [name, die, sign, absi(modifier), total, vs, target, outcome]
+	return "%s: %s %s %d%s = %d vs %s %d, %s" % [name, die, sign, absi(modifier), bonus, total, vs, target, outcome]
