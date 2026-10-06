@@ -179,3 +179,11 @@ func _offered(up: LevelUpController) -> Dictionary:
 	for c in up.level_choices():
 		by_key[c.key] = c
 	return by_key
+
+
+func test_magical_discoveries_swap_one_spell_per_bard_level() -> void:
+	var ch := TestChars.custom("bard", "human", 6, {"bard_subclass": ["college_of_lore"]})
+	var lv := _level(ch, "bard")
+	var c := (lv[1] as Dictionary).get("college_of_lore.6.magical_discoveries") as Choice
+	assert_true(c != null, "Bard 7 may swap a Magical Discovery: %s" % [(lv[1] as Dictionary).keys()])
+	_one_not_two(lv[0] as LevelUpController, c, "spell")
