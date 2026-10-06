@@ -24,7 +24,9 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   "npcs": [{"npc": "rose", "cell": [6, 6], "dialogue": "death_house/rose_thorn:start", "when": "not flag.rose_thorn_gone"}],
   "encounters": [{"id": "nursery_specter", "trigger": "enter_area:nursery", "when": "not flag.nursery_cleared",
                   "monsters": [{"monster": "specter", "cell": [10, 3], "name": "Nursemaid"}], "surprise": "", "flag": "nursery_cleared"}],
-  "narration": {"enter": "enter:death_house_ground"}
+  "narration": {"enter": "enter:death_house_ground"},
+  "rest": "risky",
+  "rest_text": "The house won't let you sleep."
 }
 ```
 
@@ -37,6 +39,7 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 - **Encounter triggers:** `enter_area:<area>`, `open:<door_or_container>`, `examine:<prop>`, `flag:<flag>` (when a
   flag is set, e.g. by dialogue), `dialogue` (only started by a `combat` line). `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md).
+- **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6) or `no` (with `rest_text`); default risky.
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
   with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`.
 

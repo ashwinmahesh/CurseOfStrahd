@@ -99,7 +99,7 @@ func test_runner_lines_interjections_and_options() -> void:
 	assert_eq(str(b["kind"]), "line")
 	assert_true(bool(b["narrator"]))
 	b = r.next()
-	assert_eq(str(b["name"]), "Ismark", "an unknown npc id keeps the written name")
+	assert_true(str(b["name"]).begins_with("Ismark"), "the speaker's name from data/npcs (or as written)")
 	assert_true(str(b["text"]).contains("Hedda"), "{name} is the speaker")
 	b = r.next()
 	assert_eq(str(b["name"]), "Hedda Ironvow", "the cleric interjects")

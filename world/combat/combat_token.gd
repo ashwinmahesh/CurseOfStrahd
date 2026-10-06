@@ -7,9 +7,15 @@ extends Node3D
 
 ## Sprite height in world units (1 unit = 5 ft) by creature, so a halfling stands half a human's height.
 const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.0, "silvain_aster": 1.25,
-	"zombie": 1.25, "wolf": 0.8, "dire_wolf": 1.35}
+	"zombie": 1.25, "wolf": 0.8, "dire_wolf": 1.35, "ismark": 1.32, "ireena": 1.2, "rose": 0.9, "thorn": 0.75,
+	"donavich": 1.15, "bildrath": 1.2, "parriwimple": 1.45, "mad_mary": 1.15, "morgantha": 1.1, "strahd": 1.4,
+	"ghoul": 1.15, "ghast": 1.2, "specter": 1.25, "shadow": 1.2, "cultist": 1.2, "animated_armor": 1.3,
+	"animated_flying_sword": 0.8, "broom_of_animated_attack": 1.0, "grick": 0.9, "shambling_mound": 1.7,
+	"swarm_of_rats": 0.45, "vampire_spawn": 1.25, "strahd_zombie": 1.25, "commoner": 1.2, "noble": 1.25,
+	"villager": 1.2}
 
 var combatant: Combatant
+var art_override := ""
 var sprite: DirectionalSprite
 ## The figure lying on the ground (Prone, or at 0 Hit Points): the front view laid flat.
 var _lying: Sprite3D
@@ -28,14 +34,26 @@ var _highlight := false
 
 
 static func art_id(c: Combatant) -> String:
-	if c.creature is Monster:
-		return str((c.creature as Monster).data.get("id", ""))
-	return c.creature.name.to_snake_case()
+	return art_for(c.creature)
 
 
-static func create(c: Combatant) -> CombatToken:
+## The sprite and portrait id for a creature: a monster's stat block id, a character's chosen look (creation's
+## Appearance step), or its name.
+static func art_for(cr: Creature) -> String:
+	if cr is Monster:
+		return str((cr as Monster).data.get("id", ""))
+	if cr is Character:
+		var look := str(((cr as Character).build.get("appearance", {}) as Dictionary).get("art", ""))
+		if look != "":
+			return look
+	return cr.name.to_snake_case()
+
+
+## `art` overrides which sprite to use (NPCs whose stat block is generic, like a commoner).
+static func create(c: Combatant, art: String = "") -> CombatToken:
 	var t := CombatToken.new()
 	t.combatant = c
+	t.art_override = art
 	t.name = "Token_" + c.id.replace("#", "_")
 	t._build()
 	return t
@@ -43,7 +61,7 @@ static func create(c: Combatant) -> CombatToken:
 
 func _build() -> void:
 	var c := combatant
-	var aid := art_id(c)
+	var aid := art_override if art_override != "" else art_id(c)
 	var frames := load("res://art/sprites/%s/walk.tres" % aid) as SpriteFrames if ResourceLoader.exists("res://art/sprites/%s/walk.tres" % aid) else null
 	var size_units := float(c.size_cells)
 	if frames != null:

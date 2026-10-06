@@ -311,7 +311,8 @@ func _line_beat(speaker_name: String, mood: String, text: String) -> Dictionary:
 func _party_line(who: Character, text: String) -> Dictionary:
 	if who == null:
 		return {"kind": "line", "speaker_id": "player", "name": "You", "portrait": "", "mood": "", "text": _fill(text), "narrator": false, "party": true}
-	return {"kind": "line", "speaker_id": who.id, "name": who.name, "portrait": who.name.to_snake_case(), "mood": "",
+	var look := str((who.build.get("appearance", {}) as Dictionary).get("art", ""))
+	return {"kind": "line", "speaker_id": who.id, "name": who.name, "portrait": look if look != "" else who.name.to_snake_case(), "mood": "",
 		"text": _fill(text), "narrator": false, "party": true}
 
 

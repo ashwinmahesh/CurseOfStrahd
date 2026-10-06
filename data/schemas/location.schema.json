@@ -497,6 +497,19 @@
       "additionalProperties": {
         "type": "string"
       }
+    },
+    "rest": {
+      "type": "string",
+      "enum": [
+        "safe",
+        "risky",
+        "no"
+      ],
+      "description": "Whether a Long Rest is possible here (risky: 1 in 6 to be interrupted)."
+    },
+    "rest_text": {
+      "type": "string",
+      "description": "Why resting isn't possible (shown when rest is 'no')."
     }
   },
   "$defs": {
