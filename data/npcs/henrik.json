@@ -1,0 +1,19 @@
+{
+  "id": "henrik",
+  "name": "Henrik van der Voort",
+  "title": "Coffin Maker",
+  "summary": "Vallaki's coffin maker, a thin, sweating man whose storeroom has guests he did not invite and dare not refuse.",
+  "portrait": "henrik",
+  "sprite": "henrik",
+  "attitude": "indifferent",
+  "voice": "docs/voice/henrik.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "artisan",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

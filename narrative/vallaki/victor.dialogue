@@ -1,0 +1,147 @@
+# Victor Vallakovich, the Baron's son, in the mansion attic with his teleportation circle (docs/voice/victor_vallakovich.md).
+# sanctuary: Lady Wachter won, and Victor (if he didn't vanish) sits in St. Andral's with his mother.
+
+~ start
+if flag.victor_circle_sprung and not flag.victor_circle_mocked
+set victor_circle_mocked
+Victor [sly]: You stepped in it. You actually stepped in it. Grigor at least had the excuse of being told to.
+endif
+if not flag.victor_met
+set victor_met
+quest victors_circle found
+Narrator: The attic is lit by candles and by the chalk circle on the floor, which glows faintly on its own. A thin boy of sixteen or so looks up from a book far too big for him, and is instantly furious.
+Victor [angry]: Out. Did Mother send you? Tell her I've eaten. Tell her I'm practising scales. Tell her whatever keeps her downstairs.
+elif flag.victor_circle == "broken"
+Victor [angry]: Come to scuff something else? There's a nice candle over there. Very breakable. Go on.
+-> settled
+elif flag.victor_circle == "reported"
+Victor [angry]: He took the book. He took the book and he locked it in his desk with the festival ledgers. I hope you're very proud.
+-> settled
+elif flag.victor_circle == "persuaded"
+Victor: Still here. Still not stepping in it. Happy?
+-> settled
+else
+Victor: You again. I'm busy. Recalculating.
+endif
+if flag.victor_notes_read
+Victor [angry]: And you've been reading my notes. Those are private. They're private calculations.
+endif
+-> menu
+
+~ settled
+* [if tarokka.ally.npc == victor_vallakovich] Madam Eva's cards named you, Victor. Come with us. -> ally
+* Goodbye. -> END
+
+~ menu
+* What is that circle? -> circle
+* Where are the two maids, Victor? -> maids
+* [Arcana DC 14] (Study the sigils of the circle.) -> arcana_ok | arcana_fail
+* [class:wizard] (Talk to him as one wizard to another.) -> shop_talk
+* [if flag.victor_circle_flaw_known] The destination sigil is wrong. There's nowhere for it to take you. -> flaw
+* [Persuasion DC 14] You'll die in that circle, Victor. Stop. -> persuade_ok | persuade_fail
+* [if tarokka.ally.npc == victor_vallakovich] Madam Eva's cards named you, Victor. Come with us. -> ally
+* Help him finish it. -> encourage
+* (Scuff the chalk lines until the circle is ruined.) -> break
+* Goodbye. -> END
+
+~ circle
+Victor: A door. Out of this house, out of this town, out of this valley. A teleportation circle, from a book that was never meant for this town. It's nearly right.
+Victor: Do you know what it's like being his son? Every week a festival. Every week I have to stand on the dais and wave. I'd rather be nowhere.
+-> menu
+
+~ maids
+Victor [sad]: Grigor and Mirela. They volunteered. Mostly. I told them it would take them somewhere warm, with sun.
+Victor: It didn't take them anywhere. There was a flash. Then there wasn't anyone. Father thinks they went to Krezk. I let him.
+interject class:cleric: Two people, boy. Two.
+Victor [angry]: I know how many. I can count. I'm the only one in this house who can.
+-> menu
+
+~ arcana_ok
+set victor_circle_flaw_known
+Narrator: The sigils are good work, copied by a careful hand. But the destination glyph doesn't name a place. It reaches for anywhere beyond the mists and finds nothing at all. Whatever stands in that circle isn't sent away. It's simply sent.
+-> menu
+
+~ arcana_fail
+Narrator: Lines, arcs and glyphs, very neatly done. They mean something. They are quite certain of it, even if you aren't.
+-> menu
+
+~ shop_talk
+set victor_circle_flaw_known
+interject class:wizard: Your binding arcs are lovely. Your destination glyph, however, describes the absence of a place. Very precisely. It's a beautiful description of nowhere.
+Victor: That's... no. That's not... let me see.
+Narrator: He looks for a long time. The furious boy goes out of his face and leaves a frightened one.
+-> menu
+
+~ flaw
+set victor_circle = "persuaded"
+quest victors_circle persuaded
+Victor [afraid]: Then there's nowhere. It isn't broken. There's just nowhere for it to go. There's no way out of here at all.
+Victor: Fine. Fine! I won't step in it. I wasn't going to anyway. Not today.
+Victor: Take this. I copied it out of the book. It's the only spell in there that ever did what it said.
+give spell_scroll_level_1
+-> END
+
+~ persuade_ok
+set victor_circle = "persuaded"
+quest victors_circle persuaded
+Victor: ...Fine. I'll leave it. Until I've worked out what's wrong with it. Which might be a while. Which might be never. Are you happy?
+interject tag:cheerful: Very.
+Victor: That makes one of us.
+-> END
+
+~ persuade_fail
+Victor [angry]: You sound like Mother. Get out of my attic.
+-> menu
+
+~ encourage
+set victor_circle = "encouraged"
+Victor [smile]: Finally. Somebody who understands. I'm close. A few more nights. When it's done, I'll be gone, and nobody in this house will ever make me wave at anything again.
+interject class:cleric: We'll regret that.
+-> END
+
+~ break
+set victor_circle = "broken"
+quest victors_circle broken
+attitude victor_vallakovich hostile
+Narrator: You drag your boots through the chalk. The glow sputters along the lines and goes out, like a fuse that has been stamped on.
+Victor [angry]: Six weeks! Six weeks of work! Do you know how hard it is to get chalk in Barovia?
+Victor: Get out. Get out of my attic. I hope you're stuck here forever. I hope you are.
+-> END
+
+~ ally
+if flag.victor_circle == "broken"
+Victor [angry]: With you? You ruined six weeks of work with your boots.
+* [Persuasion DC 12] Out of this house. Out of this town. Isn't that what you wanted? -> ally_yes | ally_no
+* Suit yourself. -> END
+endif
+-> ally_yes
+
+~ ally_yes
+Victor: Out. Out of this attic, out of this house, out of his festivals. With a party of armed lunatics and a fortune-teller's blessing.
+Victor: Yes. Obviously yes. I'll get my book. Don't tell Mother until we're past the gate.
+join victor_vallakovich
+quest find_the_ally found
+interject class:wizard: Rule one: you do not draw anything on any floor without asking me first.
+-> END
+
+~ ally_no
+Victor: No. Go and break someone else's life's work.
+-> END
+
+~ sanctuary
+if tarokka.ally.npc == victor_vallakovich and not guest:victor_vallakovich
+Victor: That fortune-teller's cards named me, didn't they? Lucian told me. Fine. There's nothing left here for me to hide from.
+* Then come with us. -> ally_yes
+* Stay with your mother. -> sanctuary_lines
+endif
+-> sanctuary_lines
+
+~ sanctuary_lines
+if flag.baron_fate == "executed"
+Victor [sad]: She hanged him. In the night. Mother hasn't spoken since. If the circle still worked I'd take her through it, even into nowhere.
+elif flag.baron_fate == "exiled"
+Victor: We leave at dawn. Father's packing bunting. Bunting. I may walk into the lake on the way.
+else
+Victor [angry]: He's in the stocks. My father. Every day. People walk past him to get to the well. I hate him and I want to kill all of them.
+endif
+-> END

@@ -1,0 +1,23 @@
+{
+  "id": "kasimir_velikov",
+  "name": "Kasimir Velikov",
+  "title": "Dusk Elf of the Lakeside Camp",
+  "summary": "A grave, soft-spoken dusk elf who lodges with the Vistani outside Vallaki, mourning a sister he means to bring back from the dead. The Tarokka can name him as the party's ally.",
+  "portrait": "kasimir_velikov",
+  "sprite": "kasimir_velikov",
+  "attitude": "indifferent",
+  "monster": "priest_acolyte",
+  "guest": true,
+  "guest_build": {
+    "monster": "priest_acolyte",
+    "note": "Placeholder until Vallaki or a later phase writes him and gives him his own stat block (a dusk elf mage in the adventure)."
+  },
+  "tags": [
+    "elf",
+    "dusk_elf",
+    "tarokka_ally",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

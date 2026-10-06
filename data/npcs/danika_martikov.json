@@ -1,0 +1,20 @@
+{
+  "id": "danika_martikov",
+  "name": "Danika Martikov",
+  "title": "Mistress of the Blue Water Inn",
+  "summary": "Urwin's wife, who runs the inn's kitchen, its ledger and, when it comes to it, its door. Warm to guests, cold to bullies, and worried about the wine that has stopped coming.",
+  "portrait": "danika_martikov",
+  "sprite": "danika_martikov",
+  "attitude": "indifferent",
+  "voice": "docs/voice/danika_martikov.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "innkeeper",
+    "keepers_of_the_feather",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "find_the_sunsword",
+  "name": "The Sunsword",
+  "summary": "A blade of sunlight that once belonged to the devil's brother, broken from its hilt and lost.",
+  "giver": "madam_eva",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "foretold",
+      "journal": "Madam Eva's third card spoke of a weapon: a sword of sunlight the devil cannot bear to look at. She saw where its hilt lies. {tarokka.sword.hint}",
+      "objectives": [
+        "Find the Sunsword"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "We have the Sunsword's hilt. Held and willed, it grows a blade of light, and it has opinions.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

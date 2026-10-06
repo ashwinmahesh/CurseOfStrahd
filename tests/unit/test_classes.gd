@@ -435,3 +435,31 @@ func test_spellcasting_classes_combine_slots() -> void:
 	assert_eq(ch.class_summary(), "Druid 2 / Ranger 2")
 	assert_eq(ch.spell_slots(), _slots([4, 2]), "2 + 1 = caster level 3")
 	assert_eq(ch.spellcasting.size(), 2, "two Spellcasting features with their own lists")
+
+
+func test_attunement_limits_and_item_modifiers() -> void:
+	var c := Compendium.shared()
+	for i in 4:
+		c.tables["magic_items"]["test_ring_%d" % i] = {"id": "test_ring_%d" % i, "name": "Ring %d" % i, "category": "ring",
+			"magic": {"rarity": "rare", "attunement": true}, "modifiers": [{"stat": "ac", "value": 1}]}
+	c.tables["magic_items"]["test_charm"] = {"id": "test_charm", "name": "Charm", "category": "wondrous",
+		"magic": {"rarity": "uncommon", "attunement": "by a cleric"}, "modifiers": [{"stat": "ac", "value": 1}]}
+	var ilse := TestChars.pregen("ilse_varga", 3)
+	var ac := ilse.ac_value()
+	for i in 4:
+		ilse.add_item("test_ring_%d" % i, 1)
+	assert_eq(ilse.ac_value(), ac, "unattuned rings do nothing")
+	assert_true(ilse.attune("test_ring_0"))
+	assert_eq(ilse.ac_value(), ac + 1)
+	assert_true(ilse.attune("test_ring_1"))
+	assert_true(ilse.attune("test_ring_2"))
+	assert_eq(ilse.attune_blocker("test_ring_3"), "Already attuned to three items")
+	ilse.add_item("test_charm", 1)
+	ilse.end_attunement("test_ring_2")
+	assert_true(ilse.attune_blocker("test_charm").begins_with("Requires attunement"), "a fighter isn't a cleric")
+	var copy := Character.from_dict(JSON.parse_string(JSON.stringify(ilse.to_dict())) as Dictionary)
+	assert_eq(copy.attuned.size(), 2, "attunement is saved")
+	assert_eq(copy.ac_value(), ac + 2)
+	for i in 4:
+		c.tables["magic_items"].erase("test_ring_%d" % i)
+	c.tables["magic_items"].erase("test_charm")

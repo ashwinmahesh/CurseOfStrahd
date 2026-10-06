@@ -1,0 +1,159 @@
+# Stanimir, elder of the Tser Pool camp (docs/voice/stanimir.md). He greets the party as they come into the camp
+# (approach), sells camp goods (shop), tells the old story, and takes the news of his nephew Nicu, the hanged man at
+# the crossroads (crossroads.dialogue). Robbing his strongbox (tser_pool container) turns him; refusing to give it back
+# starts the camp brawl (tser_pool_brawl).
+
+~ start
+if flag.vistani_turned_hostile
+-> hostile
+endif
+if flag.vistani_robbed and not flag.vistani_repaid and not flag.stanimir_deceived
+-> confront
+endif
+if flag.tser_pool_arrived
+-> again
+endif
+set tser_pool_arrived
+if not flag.eva_met
+quest madam_evas_reading invited
+endif
+Narrator: A huge grey-bearded man in a red sash rises from beside the fire with a fiddle in one hand and a cup in the other, and spreads both arms as if you were family come home late.
+Stanimir [smile]: Guests! Off the road, out of the dark, into the light! I am Stanimir. The fire is free, the wine is cheap, and the music is the best in Barovia, because it is the only music in Barovia.
+if guest:ireena
+Stanimir: And you bring the burgomaster's girl, out past the crossroads. Well, well. Sit near the fire, lady. Not too near the trees.
+Ireena: You knew my father?
+Stanimir: Everyone knew your father. He shouted at me for an hour once, about a horse. Best conversation I had that year.
+endif
+if flag.crossroads_gallows_seen
+Narrator: His eyes go to your faces, one by one, and stop. Whatever the road has written on them, he reads part of it.
+endif
+Stanimir: Madam Eva is in the big tent. She has been expecting you. Don't ask me how; I stopped asking forty years ago.
+-> menu
+
+~ again
+if flag.eva_threatened and not flag.eva_reading_done
+Stanimir [angry]: You showed the old woman your teeth in her own tent. I play the fiddle at my fire, friends; I don't play the fool. Mind your manners in that tent.
+endif
+if flag.nicu_kin_told
+Stanimir [sad]: Sit, friends. Sit. The fire is still free, and for you the wine is too.
+else
+Stanimir [smile]: Back at my fire! Good. Sit, drink, tell me lies about the road.
+endif
+-> menu
+
+~ menu
+* [if flag.crossroads_gallows_seen and not flag.nicu_kin_told] We found a young Vistana hanged at the crossroads. -> nicu_news
+* [if not flag.stanimir_wine_shared] Share a cup of your wine. -> wine
+* Show us what you have to trade. -> trade
+* Tell us about Madam Eva. -> about_eva
+* [if not flag.stanimir_tale_heard] Tell us a story. -> tale
+* [if not flag.stanimir_read] [Insight DC 14] Who do your people answer to? -> answer_ok | answer_fail
+* Goodbye. -> END
+
+~ nicu_news
+Narrator: The fiddle goes down on the log beside him, very carefully, as if it might break.
+Stanimir: Silver earring shaped like a horse's head? Black hair, too long? A laugh like a donkey falling downstairs?
+* [if flag.nicu_token_taken] Put the earring in his hand. -> nicu_earring
+* Tell him what you saw. -> nicu_told
+
+~ nicu_earring
+Narrator: His hand closes over the earring and stays closed.
+-> nicu_told
+
+~ nicu_told
+set nicu_kin_told
+quest the_hanged_vistana told
+attitude stanimir friendly
+Stanimir [sad]: Nicu. My sister's boy. He rode to Vallaki to sell a horse, and he came home by the crossroads after all.
+if flag.nicu_cut_down
+Stanimir: You cut him down. Strangers, and you stopped and cut him down, when nobody else on that road would slow their horse.
+if flag.nicu_rites_said
+Stanimir: With words said over him, even. I don't know your gods. I hope they knew him.
+endif
+elif flag.crossroads_dead_cleared
+Stanimir [angry]: He walked again? This land won't even let our dead lie down. Then you gave him his rest the hard way. That is still a gift.
+else
+Stanimir: Still hanging, then. I'll go myself, tonight, with a knife and a good horse, and bring him home.
+endif
+Stanimir: Luminita must hear it from me. Not from you. From me.
+Stanimir: And listen. Somebody in this camp will send word up the hill that you passed this way. That is how it is with us. It will be me, and I will tell him you went east. Small thing. Big thing. Both.
+set stanimir_misdirects
+interject tag:veteran: That's a real favour. Noted.
+-> menu
+
+~ wine
+set stanimir_wine_shared
+Stanimir [smile]: Plum wine, from plums that grew in a summer before any of you were born. Drink! It won't hurt. Much.
+Narrator: It goes down like warm honey and lands like a kick. For a moment the valley feels almost like somewhere people live on purpose.
+interject species:dwarf: Mm. Strong. Too sweet. I'll need a second cup to be certain.
+interject species:halfling: I'd like the recipe. I'd like the recipe very much.
+-> menu
+
+~ trade
+Stanimir: Rope, oil, food that keeps, blankets that keep you. Two potions, very dear, because they are very dear to me.
+shop
+Stanimir: A pleasure! Come again. Bring more gold and less mud.
+-> menu
+
+~ about_eva
+Stanimir: Madam Eva has been old since my grandmother was a girl. She reads the cards for whoever the road brings, and the road brings whoever the cards want.
+Stanimir: Pay her what she asks. It is never only money, and it is never more than you can spare. Usually.
+-> menu
+
+~ tale
+set stanimir_tale_heard
+Stanimir: Once there was a prince who won this valley with his sword, and he had a younger brother whom everybody loved. The brother was to marry a girl as lovely as a spring morning. The prince wanted her.
+Stanimir: On the wedding day, the prince made a bargain with something under the world. He killed his brother. The bride ran from him, and the castle wall was high, and the gorge below it was very deep.
+Stanimir: His own guards filled him with arrows. He did not die. He has been not dying ever since. Drink! It's a wedding story. It should end with a drink.
+if guest:ireena
+Ireena [afraid]: I know the end of that story. I've dreamed it. The wall, and the wind, and somebody calling a name that isn't mine.
+Stanimir: Then we will play something cheerful. Something very loud and very cheerful.
+endif
+interject name:silvain_aster: The chronology is suspect and the sources are unnamed. I believe every word.
+-> menu
+
+~ answer_ok
+set stanimir_read
+set vistani_spies_suspected
+Narrator: His eyes go to the dark line of the hills above the trees, once, before his smile comes back.
+Stanimir: We answer to the road and the cards. And a little, yes, to the man on the hill. He lets our wagons through the mist. A dog doesn't bite the hand that holds the gate.
+-> menu
+
+~ answer_fail
+set stanimir_read
+Stanimir [smile]: To the fire, the fiddle and Madam Eva, in that order on a good day. On a bad day, to my wife.
+-> menu
+
+~ confront
+Narrator: Stanimir is not smiling. Two younger Vistani stand behind him with their thumbs hooked in their belts, close to their knives.
+Stanimir [angry]: My strongbox is lighter by forty gold, and you are the only strangers in my camp. I will ask once.
+* Give it back. -> repay
+* [Deception DC 16] We never touched it. -> lie_ok | lie_fail
+* It's ours now. Come and take it. -> fight
+
+~ repay
+gold -40
+set vistani_repaid
+Stanimir: Good. A guest who takes and then gives back is still a guest. Barely. Sit, but sit where I can see your hands.
+interject name:tamsin_tealeaf: In fairness, it was a very badly hidden strongbox.
+-> menu
+
+~ lie_ok
+set stanimir_deceived
+Narrator: He looks at you for a long moment, and then at the two young men behind him, and you can see him deciding which of them to shout at later.
+Stanimir: Then one of my own owes me an apology. Sit. I'm sorry I asked.
+interject class:cleric: Mm.
+-> menu
+
+~ lie_fail
+Stanimir [angry]: You lie the way I play the flute: loudly and badly. Give it back.
+* Give it back. -> repay
+* Come and take it. -> fight
+
+~ fight
+Stanimir: As you like. Nobody robs my fire twice.
+combat tser_pool_brawl
+
+~ hostile
+Stanimir [angry]: You put a knife to the old woman's throat in my camp. Walk through, if you must. Don't stop, and don't sit.
+-> END

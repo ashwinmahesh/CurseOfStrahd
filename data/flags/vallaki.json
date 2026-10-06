@@ -1,0 +1,430 @@
+{
+  "region": "vallaki",
+  "flags": [
+    {
+      "id": "vallaki_arrived",
+      "type": "bool",
+      "summary": "The party came through Vallaki's east gate and heard the watch's rules (gate). Unlocks the gate guard's later lines."
+    },
+    {
+      "id": "vallaki_ireena_announced",
+      "type": "bool",
+      "summary": "The party told the gate watch that Ireena Kolyana is with them; the Baron greets her by name."
+    },
+    {
+      "id": "vallaki_pledge",
+      "type": "string",
+      "summary": "Whose side the party has promised to take at the festival: baron, wachter or town. Can change until the festival; set on the spot at the festival if still unset."
+    },
+    {
+      "id": "vallaki_backed",
+      "type": "string",
+      "summary": "THE END STATE of Vallaki, set when the festival ends: baron (the Baron kept his chair), wachter (Lady Wachter rules for Strahd) or neither (a council under Father Lucian and Urwin Martikov). Later regions, Strahd's scenes and the epilogue read it."
+    },
+    {
+      "id": "vallaki_milestone_reached",
+      "type": "bool",
+      "summary": "Guard: the one Vallaki milestone (level 5) has been given, at the bones' return or the festival's end, whichever came first."
+    },
+    {
+      "id": "festival_begun",
+      "type": "bool",
+      "summary": "The herald started the Festival of the Blazing Sun; the town fills the square and the Baron gives his speech."
+    },
+    {
+      "id": "festival_climax",
+      "type": "bool",
+      "summary": "The festival fight has started; the festival crowd steps aside and the winner takes the dais after it."
+    },
+    {
+      "id": "festival_over",
+      "type": "bool",
+      "summary": "The festival is over and vallaki_backed is set. NPCs move to their after-the-festival places."
+    },
+    {
+      "id": "festival_sun_soaked",
+      "type": "bool",
+      "summary": "For Lady Wachter, the party soaked the wicker sun the night before; it will not light."
+    },
+    {
+      "id": "festival_sun_guarded",
+      "type": "bool",
+      "summary": "For the Baron, the party kept watch on the wicker sun the night before; it blazes at the festival."
+    },
+    {
+      "id": "wachter_saboteur_caught",
+      "type": "bool",
+      "summary": "Keeping watch on the sun, the party caught one of Lady Wachter's servants with a bucket; the Baron names him at the festival."
+    },
+    {
+      "id": "malcontents_freed",
+      "type": "bool",
+      "summary": "The party talked or bribed the lockup warden into freeing the Baron's malcontents; the Baron has nobody to punish at the festival."
+    },
+    {
+      "id": "baron_betrayed",
+      "type": "bool",
+      "summary": "The party pledged to the Baron and then switched sides; he notices their missing sashes at the festival."
+    },
+    {
+      "id": "wachter_betrayed",
+      "type": "bool",
+      "summary": "The party pledged to Lady Wachter and then switched sides; she remembers it at tea and at the festival."
+    },
+    {
+      "id": "baron_met",
+      "type": "bool",
+      "summary": "The party has been received by Baron Vargas Vallakovich."
+    },
+    {
+      "id": "baron_offer_heard",
+      "type": "bool",
+      "summary": "The Baron asked the party to stand with him at the festival for a hundred gold and a sash."
+    },
+    {
+      "id": "baron_strongbox_opened",
+      "type": "bool",
+      "summary": "The Baron's strongbox in his study has been opened; he blames gloom."
+    },
+    {
+      "id": "baron_fate",
+      "type": "string",
+      "summary": "What became of the Baron: rules (Baron path), deposed (council path; he keeps his house), or, if Lady Wachter won, exiled, stocks or executed (the party's say). Epilogue reads."
+    },
+    {
+      "id": "baron_overthrown",
+      "type": "bool",
+      "summary": "The party beat the Baron's loyal watch at the festival (encounter festival_loyalists)."
+    },
+    {
+      "id": "lady_wachter_met",
+      "type": "bool",
+      "summary": "The party has taken tea with Lady Fiona Wachter at Wachterhaus."
+    },
+    {
+      "id": "wachter_offer_heard",
+      "type": "bool",
+      "summary": "Lady Wachter told the party plainly that she means to unseat the Baron at the festival."
+    },
+    {
+      "id": "wachter_evidence",
+      "type": "bool",
+      "summary": "The party read Strahd's letter on the shrine in Wachterhaus's cellar: proof of her loyalty to the castle."
+    },
+    {
+      "id": "wachter_exposed",
+      "type": "bool",
+      "summary": "The letter (or the truth) has been given to the Baron or Father Lucian, or read out in the square."
+    },
+    {
+      "id": "wachter_panel_hint",
+      "type": "bool",
+      "summary": "A search of the study bookcase found the catch of the secret panel to the cellar."
+    },
+    {
+      "id": "wachter_desk_robbed",
+      "type": "bool",
+      "summary": "Lady Wachter's locked desk drawer was opened; she mentions it."
+    },
+    {
+      "id": "wachter_cult_broken",
+      "type": "bool",
+      "summary": "The party broke up the night meeting in Wachterhaus's cellar (encounter wachter_cellar_cult); her sons are gone and she will not deal with them."
+    },
+    {
+      "id": "wachter_coup_crushed",
+      "type": "bool",
+      "summary": "The party beat Lady Wachter's people at the festival (encounter festival_coup)."
+    },
+    {
+      "id": "wachter_fate",
+      "type": "string",
+      "summary": "What became of Lady Wachter: stocks (Baron path), exiled (Baron path, mercy), ruler (her path), exposed (locked up by the council) or free (council path without proof). Later regions and the epilogue read."
+    },
+    {
+      "id": "izek_met",
+      "type": "bool",
+      "summary": "The party has spoken with Izek Strazni."
+    },
+    {
+      "id": "izek_saw_ireena",
+      "type": "bool",
+      "summary": "Izek has seen Ireena in the square (once)."
+    },
+    {
+      "id": "izek_story_heard",
+      "type": "bool",
+      "summary": "Izek told the party about the wolves that took his arm and his little sister when he was nine."
+    },
+    {
+      "id": "izek_dolls_seen",
+      "type": "bool",
+      "summary": "The party knows about Izek's dolls with Ireena's face (Blinsky, his order book, or the chest in Izek's room)."
+    },
+    {
+      "id": "izek_sister_truth",
+      "type": "bool",
+      "summary": "The party worked out that Ireena is Izek's lost sister."
+    },
+    {
+      "id": "izek_told_truth",
+      "type": "bool",
+      "summary": "Izek was told and believed that Ireena is his sister; he leaves the Baron's service and will not fight for him. Later Ireena scenes read."
+    },
+    {
+      "id": "izek_spurned",
+      "type": "bool",
+      "summary": "Baron path: the Baron refused Izek his 'reward' of Ireena. Izek obeys, for now."
+    },
+    {
+      "id": "izek_claim_made",
+      "type": "bool",
+      "summary": "Baron path: Izek asked for Ireena after the festival (the claim scene has played)."
+    },
+    {
+      "id": "izek_dead",
+      "type": "bool",
+      "summary": "Izek Strazni is dead (encounters izek_confrontation or izek_duel, or he fell in a festival fight)."
+    },
+    {
+      "id": "izek_stopped",
+      "type": "bool",
+      "summary": "The party stopped Izek and the Baron's sergeants turning on the crowd at the festival (encounter festival_izek_rampage)."
+    },
+    {
+      "id": "lucian_met",
+      "type": "bool",
+      "summary": "The party has spoken with Father Lucian at St. Andral's."
+    },
+    {
+      "id": "bones_theft_known",
+      "type": "bool",
+      "summary": "Father Lucian told the party that St. Andral's bones were stolen."
+    },
+    {
+      "id": "lid_scrapes_found",
+      "type": "bool",
+      "summary": "Searching the sarcophagus found lever marks only someone who knew the lid's trick could make; Milivoj can't deny it."
+    },
+    {
+      "id": "milivoj_met",
+      "type": "bool",
+      "summary": "The party has spoken with Milivoj the gravedigger."
+    },
+    {
+      "id": "milivoj_confessed",
+      "type": "bool",
+      "summary": "Milivoj admitted selling the bones to Henrik the coffin maker."
+    },
+    {
+      "id": "milivoj_shielded",
+      "type": "bool",
+      "summary": "The party promised Milivoj not to name him to Father Lucian."
+    },
+    {
+      "id": "henrik_confessed",
+      "type": "bool",
+      "summary": "Henrik confessed that vampire spawn sleep in his storeroom with the bones."
+    },
+    {
+      "id": "church_vigil",
+      "type": "bool",
+      "summary": "The party agreed to keep vigil in St. Andral's at night; triggers encounter church_siege while the bones are missing."
+    },
+    {
+      "id": "church_siege_survived",
+      "type": "bool",
+      "summary": "The party held St. Andral's against the spawn at night (encounter church_siege)."
+    },
+    {
+      "id": "coffin_spawn_destroyed",
+      "type": "bool",
+      "summary": "The party destroyed the spawn in the coffin maker's storeroom by day (encounter storeroom_spawn)."
+    },
+    {
+      "id": "bones_recovered",
+      "type": "bool",
+      "summary": "The party opened the small crate in Henrik's storeroom and took the bones."
+    },
+    {
+      "id": "bones_returned",
+      "type": "bool",
+      "summary": "St. Andral's bones are back in the crypt; the church is holy ground again and can shelter Ireena. Later regions may read."
+    },
+    {
+      "id": "ireena_sanctuary",
+      "type": "string",
+      "summary": "Where Ireena stays in Vallaki: inn (Blue Water Inn), st_andrals (sanctuary), with_party, or moving_on (she won't stay under Lady Wachter). Later regions read; with_party and moving_on mean she is still a guest."
+    },
+    {
+      "id": "ismark_guards_ireena",
+      "type": "bool",
+      "summary": "Ismark stayed behind to guard Ireena at the inn or the church (he left the party). Later regions read."
+    },
+    {
+      "id": "rictavio_met",
+      "type": "bool",
+      "summary": "The party has met Rictavio the showman."
+    },
+    {
+      "id": "rictavio_suspected",
+      "type": "bool",
+      "summary": "Insight (or a sage) saw through Rictavio's bluster."
+    },
+    {
+      "id": "rictavio_journal_read",
+      "type": "bool",
+      "summary": "The party read the journal in Rictavio's wagon, with Dr. R. van Richten's bookplate."
+    },
+    {
+      "id": "rictavio_wagon_opened",
+      "type": "bool",
+      "summary": "The party picked or forced the lock of Rictavio's wagon."
+    },
+    {
+      "id": "rictavio_wagon_noticed",
+      "type": "bool",
+      "summary": "Rictavio has confronted the party about his wagon."
+    },
+    {
+      "id": "rictavio_unmasked",
+      "type": "bool",
+      "summary": "Rictavio admitted he is Rudolph van Richten. Van Richten's Tower and the Tarokka ally scenes may read."
+    },
+    {
+      "id": "rictavio_secret_kept",
+      "type": "bool",
+      "summary": "The party promised to keep Van Richten's identity secret."
+    },
+    {
+      "id": "rictavio_gone",
+      "type": "bool",
+      "summary": "Rictavio left Vallaki rather than stay in Lady Wachter's town. Later regions may read."
+    },
+    {
+      "id": "martikovs_met",
+      "type": "bool",
+      "summary": "The party has spoken with Urwin at the Blue Water Inn."
+    },
+    {
+      "id": "danika_met",
+      "type": "bool",
+      "summary": "The party has met Danika Martikov in the inn's kitchen."
+    },
+    {
+      "id": "wizard_of_wines_hook",
+      "type": "bool",
+      "summary": "The Martikovs told the party the wine from Urwin's father's vineyard, the Wizard of Wines, has stopped coming. Phase 5 (Wizard of Wines) reads."
+    },
+    {
+      "id": "keepers_of_the_feather_met",
+      "type": "bool",
+      "summary": "Urwin revealed the Keepers of the Feather, the wereravens who watch the valley, and vouched for the party to his father. Phase 5 reads."
+    },
+    {
+      "id": "lydia_met",
+      "type": "bool",
+      "summary": "The party has met Lydia Petrovna, the Baron's wife."
+    },
+    {
+      "id": "victor_met",
+      "type": "bool",
+      "summary": "The party has met Victor in the mansion attic."
+    },
+    {
+      "id": "victor_notes_read",
+      "type": "bool",
+      "summary": "The party read Victor's notes about the two maids his circle took."
+    },
+    {
+      "id": "victor_circle_sprung",
+      "type": "bool",
+      "summary": "Someone stepped into Victor's teleportation circle (the trap)."
+    },
+    {
+      "id": "victor_circle_mocked",
+      "type": "bool",
+      "summary": "Victor has mocked the party for stepping in his circle (once)."
+    },
+    {
+      "id": "victor_circle_flaw_known",
+      "type": "bool",
+      "summary": "Arcana or a wizard showed that the circle's destination sigil names nowhere at all."
+    },
+    {
+      "id": "victor_circle",
+      "type": "string",
+      "summary": "What the party did about Victor's circle: persuaded, broken, reported (to the Baron) or encouraged."
+    },
+    {
+      "id": "victor_vanished",
+      "type": "bool",
+      "summary": "Lady Wachter won and Victor, his circle intact, stepped into it and was sent nowhere. Epilogue reads."
+    },
+    {
+      "id": "vistani_camp_met",
+      "type": "bool",
+      "summary": "Arrigal greeted the party at the Vistani camp outside the walls."
+    },
+    {
+      "id": "arrigal_suspected",
+      "type": "bool",
+      "summary": "Insight showed Arrigal would carry Ireena to the castle if he could. Later regions may read."
+    },
+    {
+      "id": "arrigal_chest_opened",
+      "type": "bool",
+      "summary": "Arrigal's strongbox was opened; he says he will remember."
+    },
+    {
+      "id": "luvash_met",
+      "type": "bool",
+      "summary": "The party has spoken with Luvash, the grieving headman."
+    },
+    {
+      "id": "arabelle_tracks_found",
+      "type": "bool",
+      "summary": "Searching the lakeshore found drag marks going down to the water; Bluto appears there."
+    },
+    {
+      "id": "arabelle_rescued",
+      "type": "bool",
+      "summary": "The party saved Arabelle from Bluto and the lake. Lake Zarovich (later phase) and the Vistani read."
+    },
+    {
+      "id": "arabelle_lost",
+      "type": "bool",
+      "summary": "Bluto threw Arabelle into the lake and the party could not bring her up. Later regions read."
+    },
+    {
+      "id": "arabelle_reward_given",
+      "type": "bool",
+      "summary": "Luvash has paid the party for Arabelle's return (once)."
+    },
+    {
+      "id": "vistani_friends",
+      "type": "bool",
+      "summary": "Luvash declared every Vistani wagon in Barovia the party's own. Later Vistani scenes read."
+    },
+    {
+      "id": "blinsky_met",
+      "type": "bool",
+      "summary": "The party has been into Blinsky Toys."
+    },
+    {
+      "id": "arasek_met",
+      "type": "bool",
+      "summary": "The party has met Gunther Arasek at his stall in the square."
+    },
+    {
+      "id": "kasimir_met",
+      "type": "bool",
+      "summary": "The party has spoken with Kasimir Velikov, the dusk elf at the Vistani camp."
+    },
+    {
+      "id": "kasimir_sister_told",
+      "type": "bool",
+      "summary": "Kasimir told the party about his sister Patrina, buried under the castle, and the amber temple where he hopes to undo her death. Amber Temple (later phase) may read."
+    }
+  ]
+}

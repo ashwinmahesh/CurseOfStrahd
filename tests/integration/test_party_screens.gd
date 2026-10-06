@@ -166,3 +166,35 @@ func test_arcane_recovery_after_a_short_rest() -> void:
 	(buttons[0] as Button).pressed.emit()
 	assert_eq(silvain.slots_used[0], 1)
 	assert_eq(silvain.resource_left("arcane_recovery"), 0, "once per Long Rest")
+
+
+func test_preparing_spells_after_a_long_rest() -> void:
+	var hedda := GameState.story.party[2]
+	var list := PrepareScreen.preparable(GameState.story)
+	var keys: Array = list.map(func(e: Dictionary) -> String: return (e["choice"] as Choice).key)
+	assert_true("cleric.prepared" in keys, str(keys))
+	var c := hedda.choice("cleric.prepared")
+	ChoiceOptions.populate(c, hedda)
+	var current: Array = c.picks.duplicate()
+	var other := ""
+	for o in c.options:
+		if o.legal and not o.id in current:
+			other = o.id
+			break
+	assert_true(other != "", "another cleric spell to prepare")
+	var picks: Array = current.duplicate()
+	picks[0] = other
+	(hedda.build["choices"] as Dictionary)["cleric.prepared"] = picks
+	hedda.refresh()
+	var known: Array = hedda.known_spells().map(func(k: Dictionary) -> String: return str(k["id"]))
+	assert_true(other in known, "now prepared")
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	var rest := root.get("screen") as RestScreen
+	rest.call("_long_rest", "safe")
+	await _frames(1)
+	var btn := rest.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text == "Change prepared spells")
+	assert_eq(btn.size(), 1)
+	(btn[0] as Button).pressed.emit()
+	await _frames(2)
+	assert_eq(rest.find_children("*", "PrepareScreen", true, false).size(), 1)

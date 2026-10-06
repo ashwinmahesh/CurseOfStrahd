@@ -1,0 +1,417 @@
+{
+  "id": "tser_pool",
+  "name": "Tser Pool Encampment",
+  "region": "svalich_road",
+  "summary": "A Vistani camp beside a dark pool fed by the Tser Falls: painted wagons around a fire, horses, music, wine, and the great patched tent where Madam Eva reads the Tarokka.",
+  "text": "The Old Svalich Road runs past a clearing on the edge of the Svalich Woods. In it, painted wagons stand in a loose ring around a bonfire, horses doze in a rail pen by the water, and a tent the size of a small house glows from inside.",
+  "map": {
+    "rows": [
+      "#######ww###################################",
+      "#######ww###################################",
+      "##....~ww~.......##..##...................##",
+      "##....~ww~...................=======#.##..##",
+      "##....~~~~~~.................=======...#..##",
+      "##...~wwwwww~........===.....=======....#.##",
+      "##..~~wwwwww~~...............=======......##",
+      "##..~wwwwwwww~...===.........=======......##",
+      "##.~~wwwwwwww~~..............=======......##",
+      "##.~~wwwwwwww~~...........................##",
+      "##.~~wwwwwwww~~.......................#...##",
+      "##..~wwwwwwww~.=.......................##.##",
+      "##..~~wwwwww~~.=.......==.......==........##",
+      "##...~wwwwww~..=.......==.......=.........##",
+      "##....~~~~~~............................#.##",
+      "##......~~................................##",
+      "##.......~~...#....................~~.....##",
+      "####..............................~....#..##",
+      "##...=========...===.......===..........#.##",
+      "##...=....................................##",
+      "##...=.......=............................##",
+      "##...=========......~....~.........#..#...##",
+      "####........#...#.........##........#..#..##",
+      "#####################...####################",
+      "#####################...####################",
+      "............................................",
+      "............................................",
+      "##########..####.#############...###########",
+      "############################################",
+      "############################################"
+    ],
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "tser_road",
+      "name": "The road by the camp",
+      "cells": [
+        [
+          0,
+          23
+        ],
+        [
+          43,
+          29
+        ]
+      ]
+    },
+    {
+      "id": "tser_pool_shore",
+      "name": "The shore of Tser Pool",
+      "cells": [
+        [
+          2,
+          0
+        ],
+        [
+          14,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "tser_horse_pen",
+      "name": "The horse pen",
+      "cells": [
+        [
+          2,
+          18
+        ],
+        [
+          14,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "tser_camp",
+      "name": "The Vistani camp",
+      "cells": [
+        [
+          15,
+          0
+        ],
+        [
+          41,
+          22
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      22,
+      25
+    ],
+    "from_tent": [
+      32,
+      9
+    ]
+  },
+  "exits": [
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        25
+      ],
+      "to": "travel",
+      "label": "The Old Svalich Road, west to Vallaki"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        43,
+        25
+      ],
+      "to": "travel",
+      "label": "The Old Svalich Road, east to the crossroads"
+    },
+    {
+      "id": "eva_tent_flap",
+      "cell": [
+        32,
+        8
+      ],
+      "to": "tser_pool_eva_tent",
+      "spawn": "default",
+      "label": "Madam Eva's tent"
+    }
+  ],
+  "props": [
+    {
+      "id": "tser_bonfire",
+      "cell": [
+        23,
+        12
+      ],
+      "kind": "examine",
+      "label": "The bonfire",
+      "model": "campfire"
+    },
+    {
+      "id": "eva_tent_outside",
+      "cell": [
+        31,
+        8
+      ],
+      "kind": "examine",
+      "label": "The great tent",
+      "model": "tent"
+    },
+    {
+      "id": "vistani_wagons",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "examine",
+      "label": "Painted wagons",
+      "model": "wagon"
+    },
+    {
+      "id": "tser_pool_water",
+      "cell": [
+        13,
+        9
+      ],
+      "kind": "examine",
+      "label": "Tser Pool",
+      "model": "reeds"
+    },
+    {
+      "id": "vistani_horses",
+      "cell": [
+        8,
+        19
+      ],
+      "kind": "examine",
+      "label": "Horses",
+      "model": "horse"
+    },
+    {
+      "id": "wine_casks",
+      "cell": [
+        27,
+        18
+      ],
+      "kind": "examine",
+      "label": "Wine casks",
+      "model": "barrel"
+    },
+    {
+      "id": "ribbon_tree",
+      "cell": [
+        36,
+        3
+      ],
+      "kind": "examine",
+      "label": "A tree hung with ribbons",
+      "model": "ribbon_tree"
+    },
+    {
+      "id": "tser_stream",
+      "cell": [
+        9,
+        3
+      ],
+      "kind": "examine",
+      "label": "The stream from the falls",
+      "model": "reeds"
+    }
+  ],
+  "containers": [
+    {
+      "id": "stanimir_strongbox",
+      "cell": [
+        17,
+        18
+      ],
+      "label": "A strongbox under a wagon",
+      "model": "chest",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        }
+      ],
+      "gold": 40,
+      "lock_dc": 15,
+      "flag": "vistani_robbed"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        23,
+        13
+      ],
+      "kind": "fire",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        32,
+        9
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        22,
+        22
+      ],
+      "kind": "torch",
+      "bright_ft": 20,
+      "dim_ft": 40
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "stanimir",
+      "cell": [
+        22,
+        15
+      ],
+      "dialogue": "svalich_road/stanimir:start",
+      "when": "not flag.tser_pool_brawl_won",
+      "facing": "south",
+      "approach": 6
+    },
+    {
+      "npc": "luminita",
+      "cell": [
+        11,
+        19
+      ],
+      "dialogue": "svalich_road/luminita:start",
+      "when": "not flag.tser_pool_brawl_won",
+      "facing": "east"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "tser_pool_brawl",
+      "trigger": "dialogue",
+      "monsters": [
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            26,
+            15
+          ],
+          "name": "Vistani horse-master"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            18,
+            14
+          ],
+          "name": "Vistani horse-master"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            20,
+            11
+          ],
+          "name": "Vistana with a knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            27,
+            11
+          ],
+          "name": "Vistana with a knife"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            18,
+            8
+          ],
+          "name": "Vistana archer"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Vistana archer"
+        }
+      ],
+      "surprise": "",
+      "flag": "tser_pool_brawl_won",
+      "text": "The fiddle stops mid-note. Every knife in the camp comes out at once."
+    },
+    {
+      "id": "tser_pool_ambush",
+      "trigger": "enter_area:tser_camp",
+      "when": "flag.vistani_turned_hostile and not flag.tser_pool_brawl_won",
+      "monsters": [
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            26,
+            15
+          ],
+          "name": "Vistani horse-master"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            18,
+            14
+          ],
+          "name": "Vistani horse-master"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            20,
+            11
+          ],
+          "name": "Vistana with a knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            27,
+            11
+          ],
+          "name": "Vistana with a knife"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            18,
+            8
+          ],
+          "name": "Vistana archer"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Vistana archer"
+        }
+      ],
+      "surprise": "party",
+      "flag": "tser_pool_brawl_won",
+      "text": "The camp is waiting for you outside the tent: no music, no fire-talk, only knives and drawn bows."
+    }
+  ],
+  "narration": {
+    "enter": "enter:tser_pool"
+  },
+  "rest": "safe"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "bluto",
+  "name": "Bluto Krogarov",
+  "title": "Fisherman of Lake Zarovich",
+  "summary": "A starving fisherman whose nets have come up empty for a year and who has decided the lake wants something better than bait.",
+  "portrait": "bluto",
+  "sprite": "bluto",
+  "attitude": "indifferent",
+  "voice": "docs/voice/bluto.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "fisherman",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

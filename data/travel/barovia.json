@@ -1,0 +1,129 @@
+{
+  "id": "barovia",
+  "name": "Barovia",
+  "places": [
+    {
+      "id": "gates_of_barovia",
+      "name": "The Gates of Barovia",
+      "location": "into_the_mists_road",
+      "spawn": "default",
+      "pos": [
+        0.86,
+        0.56
+      ],
+      "region": "into_the_mists",
+      "summary": "Iron gates between headless stone knights, where the Old Svalich Road comes out of the mists."
+    },
+    {
+      "id": "village_of_barovia",
+      "name": "Village of Barovia",
+      "location": "village_of_barovia",
+      "spawn": "from_west_road",
+      "pos": [
+        0.76,
+        0.56
+      ],
+      "region": "village_of_barovia",
+      "summary": "A shuttered village under the castle's cliff: the Blood of the Vine, the burgomaster's house, the church."
+    },
+    {
+      "id": "svalich_crossroads",
+      "name": "The Ivlis Crossroads",
+      "location": "svalich_crossroads",
+      "spawn": "default",
+      "pos": [
+        0.64,
+        0.53
+      ],
+      "region": "svalich_road",
+      "summary": "Where the Old Svalich Road crosses the River Ivlis: a signpost, a gallows, and the road climbing south to the castle."
+    },
+    {
+      "id": "tser_falls",
+      "name": "Tser Falls",
+      "location": "tser_falls",
+      "spawn": "default",
+      "pos": [
+        0.6,
+        0.44
+      ],
+      "region": "svalich_road",
+      "when": "visited:svalich_crossroads",
+      "summary": "The Ivlis throws itself off a cliff in one long white fall."
+    },
+    {
+      "id": "tser_pool",
+      "name": "Tser Pool",
+      "location": "tser_pool",
+      "spawn": "default",
+      "pos": [
+        0.53,
+        0.49
+      ],
+      "region": "svalich_road",
+      "summary": "A dark pool under the falls where the Vistani camp, and where Madam Eva reads the Tarokka."
+    },
+    {
+      "id": "vallaki",
+      "name": "Vallaki",
+      "location": "vallaki",
+      "spawn": "from_road",
+      "pos": [
+        0.33,
+        0.5
+      ],
+      "region": "vallaki",
+      "summary": "A walled town on the shore of Lake Zarovich, with bells, banners and a festival every week."
+    }
+  ],
+  "roads": [
+    {
+      "id": "gates_to_village",
+      "from": "gates_of_barovia",
+      "to": "village_of_barovia",
+      "hours": 0.5,
+      "table": "svalich_road",
+      "name": "Old Svalich Road"
+    },
+    {
+      "id": "village_to_crossroads",
+      "from": "village_of_barovia",
+      "to": "svalich_crossroads",
+      "hours": 1.5,
+      "table": "svalich_road",
+      "name": "Old Svalich Road"
+    },
+    {
+      "id": "crossroads_to_tser_pool",
+      "from": "svalich_crossroads",
+      "to": "tser_pool",
+      "hours": 1.5,
+      "table": "svalich_road",
+      "name": "Old Svalich Road"
+    },
+    {
+      "id": "crossroads_to_falls",
+      "from": "svalich_crossroads",
+      "to": "tser_falls",
+      "hours": 1,
+      "table": "svalich_woods",
+      "name": "The river track"
+    },
+    {
+      "id": "falls_to_tser_pool",
+      "from": "tser_falls",
+      "to": "tser_pool",
+      "hours": 0.5,
+      "table": "svalich_woods",
+      "name": "The path along the Ivlis"
+    },
+    {
+      "id": "tser_pool_to_vallaki",
+      "from": "tser_pool",
+      "to": "vallaki",
+      "hours": 4,
+      "table": "svalich_woods",
+      "name": "Old Svalich Road, through the Svalich Woods"
+    }
+  ]
+}

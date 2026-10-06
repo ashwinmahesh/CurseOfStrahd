@@ -228,6 +228,7 @@ set ireena_destination = "krezk"
 ~ accept
 set ireena_escort = "accepted"
 set ireena_in_party
+join ireena
 quest escort_ireena accepted
 attitude ireena friendly
 Ireena: Then I'll fetch my sword and my good boots. I'm not made of glass; I'll walk, I'll fight, and I'll take a watch. Don't argue about the watch.
@@ -237,6 +238,7 @@ Ismark: I'm coming too. Don't argue either. It's the only family business I have
 
 ~ ismark_joins
 set ismark_joins_escort
+join ismark
 Ismark [smile]: Ismark the Lesser, off to see the world. Someone tell the tavern. Actually, don't; they'll only throw a party.
 Ireena: The west road, then, past the square. We'll meet you there.
 -> END

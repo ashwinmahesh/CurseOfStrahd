@@ -139,7 +139,98 @@ func pending_choices() -> Array[Choice]:
 
 
 func intrinsic_modifiers() -> Array[Modifier]:
-	return _modifiers
+	var items := item_modifiers()
+	if items.is_empty():
+		return _modifiers
+	var out := _modifiers.duplicate()
+	out.append_array(items)
+	return out
+
+
+# --- Magic items and attunement (2024 DMG/PHB: at most three attuned items) --------------------------
+
+const MAX_ATTUNED := 3
+## Item ids this character is attuned to.
+var attuned: Array[String] = []
+var _item_mods_key := ""
+var _item_mods: Array[Modifier] = []
+
+
+## The modifiers of magic items that work for this character right now: equipped (or carried, for items that work
+## from the pack like a Cloak worn in the armor slot's stead) and, if they require it, attuned.
+func item_modifiers() -> Array[Modifier]:
+	var key := ""
+	for e in inventory:
+		if int(e.get("qty", 0)) > 0:
+			key += "%s:%s;" % [e["id"], e.get("slot", "")]
+	key += "|" + ",".join(attuned)
+	if key == _item_mods_key:
+		return _item_mods
+	_item_mods_key = key
+	_item_mods.clear()
+	for e in inventory:
+		if int(e.get("qty", 0)) <= 0:
+			continue
+		var data := compendium.item_data(str(e["id"]))
+		var mods := data.get("modifiers", []) as Array
+		if mods.is_empty():
+			continue
+		var magic := data.get("magic", {}) as Dictionary
+		var needs: Variant = magic.get("attunement", false)
+		var needs_attune := (needs is bool and bool(needs)) or (needs is String and str(needs) != "")
+		if needs_attune and not str(e["id"]) in attuned:
+			continue
+		var wearable := Gear.is_weapon(data) or Gear.is_armor(data) or Gear.is_shield(data)
+		if wearable and str(e.get("slot", "")) == "":
+			continue
+		for md: Variant in mods:
+			_item_mods.append(Modifier.make(md as Dictionary, str(data.get("name", e["id"])), &"item", str(e["id"]), ""))
+	return _item_mods
+
+
+## "" if this character can attune to `item_id` now, else why not (not carried, doesn't need it, already three,
+## a requirement like "by a cleric" unmet).
+func attune_blocker(item_id: String) -> String:
+	var data := compendium.item_data(item_id)
+	var needs: Variant = (data.get("magic", {}) as Dictionary).get("attunement", false)
+	if not ((needs is bool and bool(needs)) or (needs is String and str(needs) != "")):
+		return "Doesn't need attunement"
+	if item_id in attuned:
+		return "Already attuned"
+	var carried := false
+	for e in inventory:
+		if str(e["id"]) == item_id and int(e.get("qty", 0)) > 0:
+			carried = true
+	if not carried:
+		return "Not carried"
+	if attuned.size() >= MAX_ATTUNED:
+		return "Already attuned to three items"
+	if needs is String:
+		var req := str(needs).to_lower()
+		for cls: String in ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", "wizard"]:
+			if req.contains(cls) and class_level_of(cls) <= 0 and not _any_class_in(req):
+				return "Requires attunement %s" % needs
+	return ""
+
+
+func _any_class_in(req: String) -> bool:
+	for cls: String in ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", "wizard"]:
+		if req.contains(cls) and class_level_of(cls) > 0:
+			return true
+	return false
+
+
+func attune(item_id: String) -> bool:
+	if attune_blocker(item_id) != "":
+		return false
+	attuned.append(item_id)
+	_item_mods_key = ""
+	return true
+
+
+func end_attunement(item_id: String) -> void:
+	attuned.erase(item_id)
+	_item_mods_key = ""
 
 
 # --- The walk ------------------------------------------------------------------------------------
@@ -1306,7 +1397,7 @@ func to_dict() -> Dictionary:
 	return {"build": build.duplicate(true), "state": state_to_dict(), "inventory": inventory.duplicate(true),
 		"currency": currency.duplicate(), "hit_dice_spent": hit_dice_spent.duplicate(),
 		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
-		"heroic_inspiration": heroic_inspiration, "id": id}
+		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate()}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -1323,4 +1414,6 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 		c.slots_used[i] = int(used[i])
 	c.pact_slots_used = int(d.get("pact_slots_used", 0))
 	c.heroic_inspiration = bool(d.get("heroic_inspiration", false))
+	for a: Variant in d.get("attuned", []):
+		c.attuned.append(str(a))
 	return c

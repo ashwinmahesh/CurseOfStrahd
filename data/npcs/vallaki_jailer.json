@@ -1,0 +1,19 @@
+{
+  "id": "vallaki_jailer",
+  "name": "Lockup Warden",
+  "title": "Keeper of the Baron's Lockup",
+  "summary": "The watchman who keeps the lockup by the stockade, where the Baron's malcontents wait for the next festival. He is not unkind. He is very tired.",
+  "portrait": "vallaki_guard",
+  "sprite": "vallaki_guard",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vallaki_guard.md",
+  "monster": "bandit",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "guard",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

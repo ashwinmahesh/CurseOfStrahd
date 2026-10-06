@@ -1,0 +1,57 @@
+{
+  "id": "bones_of_st_andral",
+  "name": "The Bones of St. Andral",
+  "summary": "Someone has stolen the bones of St. Andral from the crypt of Vallaki's church, and with them the only thing that kept the dead out of it.",
+  "giver": "father_lucian",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Father Lucian of St. Andral's told us the saint's bones have been stolen from the crypt beneath his altar. While they lay there, the dead could not set foot in the church. Without them, he fears for his flock and for anyone sheltering under his roof.",
+      "objectives": [
+        "Find out who took the bones",
+        "Bring them back to the crypt"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "milivoj_confessed",
+      "journal": "Milivoj the gravedigger admitted he dug up the bones and sold them to Henrik van der Voort, the coffin maker, for enough coin to feed his brothers and sister through the winter.",
+      "objectives": [
+        "Question Henrik the coffin maker"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "henrik_confessed",
+      "journal": "Henrik confessed: he bought the bones because something told him to. That something sleeps in crates in his storeroom, and it is waiting for a night when the church is undefended.",
+      "objectives": [
+        "Search the coffin maker's storeroom by day",
+        "Or keep vigil at St. Andral's after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "vigil_kept",
+      "journal": "We held St. Andral's through a night of the undead. The church still stands, but its crypt is still empty.",
+      "objectives": [
+        "Recover the bones from the coffin maker's storeroom"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "spawn_destroyed",
+      "journal": "The things in Henrik's storeroom were vampire spawn, and they are destroyed. The saint's bones are somewhere among the crates.",
+      "objectives": [
+        "Take the bones back to Father Lucian"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "bones_returned",
+      "journal": "St. Andral's bones are back in their crypt and Father Lucian has blessed them again. The church is holy ground once more.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

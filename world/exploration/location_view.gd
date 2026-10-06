@@ -218,6 +218,8 @@ func _build_props() -> void:
 		if kind == "search" and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false)):
 			continue
 		var colour := {"examine": "parchment", "book": "ember", "search": "bone", "lever": "pewter", "decor": "stone"}.get(kind, "bone") as String
+		if str(prop.get("burning", "")) != "" and StoryConditions.check(str(prop["burning"]), st):
+			prop_nodes[id + "#fire"] = _flame(_cell(prop["cell"]), 1.6)
 		var sprite := _prop_art(prop)
 		var node: Node3D = null
 		if sprite != "":
@@ -256,6 +258,37 @@ func _build_lights() -> void:
 		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else 2.2
 		omni.position = board.cell_center(_cell(li["cell"])) + Vector3(0, 1.2, 0)
 		add_child(omni)
+		if str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:
+			_flame(_cell(li["cell"]), 0.6 if str(li["kind"]) != "torch" else 0.35)
+
+
+## A flame: a small emissive cone with a flicker of its own (watch fires, braziers, the burning wicker sun).
+func _flame(cell: Vector2i, size: float) -> Node3D:
+	var root := Node3D.new()
+	root.position = board.cell_center(cell)
+	add_child(root)
+	for i in 3:
+		var mi := MeshInstance3D.new()
+		var cm := CylinderMesh.new()
+		cm.top_radius = 0.0
+		cm.bottom_radius = size * (0.45 - i * 0.12)
+		cm.height = size * (1.2 - i * 0.25)
+		mi.mesh = cm
+		mi.position = Vector3(0, cm.height / 2.0, 0)
+		var mat := StandardMaterial3D.new()
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mat.albedo_color = Look.color(["ember", "flame", "wick"][i])
+		mat.emission_enabled = true
+		mat.emission = mat.albedo_color
+		mi.material_override = mat
+		root.add_child(mi)
+	var light := CandleFlicker.new()
+	light.light_color = Look.color("flame")
+	light.omni_range = 4.0 + size * 4.0
+	light.base_energy = 1.8 + size
+	light.position = Vector3(0, size, 0)
+	root.add_child(light)
+	return root
 
 
 ## Re-reads which NPCs, props and containers are here (their `when` conditions) after a conversation or a fight
@@ -466,15 +499,20 @@ func _path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	avoid.erase(to)
 	# Closed doors that would open at a touch are part of the way: the party opens them as it reaches them.
 	var doors := _openable_doors()
-	# An exit set into a wall (a house's front door on the village map) is walked into like a door.
+	# An exit set into a wall or a tent (a house's front door, Madam Eva's tent flap) is walked into like a door.
+	var low_exit := grid.has_flag(to, CombatGrid.LOW) and _exit_at(to)
 	if grid.has_flag(to, CombatGrid.WALL) and _exit_at(to):
 		doors[to] = {}
 	for c: Vector2i in doors:
 		grid.set_flag(c, CombatGrid.WALL, false)
+	if low_exit:
+		grid.set_flag(to, CombatGrid.LOW, false)
 	var reach := grid.reachable(from, 1, 2000, func(c: Vector2i) -> bool: return avoid.has(c),
 		func(_c: Vector2i) -> bool: return false, func(_c: Vector2i) -> bool: return false)
 	for c: Vector2i in doors:
 		grid.set_flag(c, CombatGrid.WALL, true)
+	if low_exit:
+		grid.set_flag(to, CombatGrid.LOW, true)
 	return CombatGrid.path_to(reach, to)
 
 
@@ -512,6 +550,9 @@ func step(dir: Vector2i) -> void:
 
 
 func _process(delta: float) -> void:
+	if board != null and rig != null and rig.camera != null and not members.is_empty() and not board.occluders.is_empty():
+		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
+		board.fade_occluders(rig.camera.global_position, focus, delta)
 	if in_combat or _queue.is_empty():
 		return
 	_step_t -= delta

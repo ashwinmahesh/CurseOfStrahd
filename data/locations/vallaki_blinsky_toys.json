@@ -1,0 +1,193 @@
+{
+  "id": "vallaki_blinsky_toys",
+  "name": "Blinsky Toys",
+  "region": "vallaki",
+  "summary": "Gadof Blinsky's toyshop: shelves of wooden toys built by a man who understands children perfectly well and has decided to make toys for Barovia's instead.",
+  "text": "A crowded little shop: puppets, dolls, music boxes and wind-up creatures on every shelf, every one of them looking at the door. A curtained doorway leads back to the workshop.",
+  "map": {
+    "rows": [
+      "################",
+      "#............=.#",
+      "#..==.....==...#",
+      "#..............#",
+      "#######.########",
+      "#..............#",
+      "#=............=#",
+      "#=...=====....=#",
+      "#=............=#",
+      "#..............#",
+      "#..=.......=...#",
+      "#######.########"
+    ],
+    "theme": "shop",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "toy_shop",
+      "name": "The shop",
+      "cells": [
+        [
+          1,
+          5
+        ],
+        [
+          14,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "toy_workshop",
+      "name": "Workshop",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          14,
+          3
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      7,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "blinsky_front_door",
+      "cell": [
+        7,
+        11
+      ],
+      "to": "vallaki",
+      "spawn": "from_blinsky",
+      "label": "Out to market row"
+    }
+  ],
+  "doors": [
+    {
+      "id": "workshop_curtain",
+      "cell": [
+        7,
+        4
+      ],
+      "label": "Workshop curtain"
+    }
+  ],
+  "props": [
+    {
+      "id": "toy_shelves",
+      "cell": [
+        1,
+        7
+      ],
+      "kind": "examine",
+      "label": "Shelves of toys",
+      "model": "shelves"
+    },
+    {
+      "id": "gallows_puppet",
+      "cell": [
+        14,
+        7
+      ],
+      "kind": "examine",
+      "label": "A puppet theatre",
+      "model": "puppet_theatre"
+    },
+    {
+      "id": "music_box",
+      "cell": [
+        3,
+        10
+      ],
+      "kind": "examine",
+      "label": "A music box",
+      "model": "music_box"
+    },
+    {
+      "id": "red_haired_doll",
+      "cell": [
+        11,
+        10
+      ],
+      "kind": "examine",
+      "label": "A red-haired doll",
+      "model": "doll"
+    },
+    {
+      "id": "blinsky_order_book",
+      "cell": [
+        9,
+        7
+      ],
+      "kind": "book",
+      "label": "Order book on the counter",
+      "model": "ledger",
+      "codex": "blinsky_order_book",
+      "flag": "izek_dolls_seen",
+      "text": "Blinsky's order book: very few orders. Two years of one customer stand out: 'Doll, red hair, green dress. For I.S. Paid.' 'Doll, red hair, grey cloak. For I.S. Paid, with a threat.' 'Doll, red hair, as before but SMILING, for I.S. He was very particular about the smile.' Eleven entries in all."
+    },
+    {
+      "id": "piccolo_perch",
+      "cell": [
+        13,
+        1
+      ],
+      "kind": "examine",
+      "label": "A small perch",
+      "model": "perch"
+    },
+    {
+      "id": "workbench_heads",
+      "cell": [
+        10,
+        2
+      ],
+      "kind": "examine",
+      "label": "Workbench",
+      "model": "workbench"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        7,
+        7
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        4,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "blinsky",
+      "cell": [
+        7,
+        6
+      ],
+      "dialogue": "vallaki/blinsky:start"
+    }
+  ],
+  "narration": {
+    "enter": "enter:vallaki_blinsky_toys"
+  },
+  "rest": "no",
+  "rest_text": "Every toy on every shelf is facing you. Nobody sleeps here, not even Blinsky."
+}

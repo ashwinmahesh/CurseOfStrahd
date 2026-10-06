@@ -1,0 +1,215 @@
+# The Vistani camp outside Vallaki's west gate (docs/voice/arrigal.md, luvash.md, arabelle.md, bluto.md, vistana.md).
+# arrigal greets newcomers; luvash grieves for Arabelle; the vistana at the fire saw the fisherman; bluto is on the
+# lakeshore with a sack; arabelle, once home.
+
+~ arrigal
+if not flag.vistani_camp_met
+set vistani_camp_met
+Narrator: A lean man in a black coat and a silver-buttoned waistcoat rises from the steps of a painted wagon, unhurried, as though he'd been expecting you since before you set out.
+Arrigal: Welcome, travellers. You're far from the road for honest folk and close to the lake for clever ones. Sit at our fire. It costs nothing, tonight.
+if tarokka.drawn or flag.madam_eva_rumor
+Arrigal: You've sat at Madam Eva's table, I think. It's on you like woodsmoke.
+endif
+if flag.tser_pool_brawl_won
+Arrigal [angry]: And you've spilled our blood at Tser Pool. Every camp in the valley knows your faces now. You may sit at this fire because I say so, and for no other reason.
+elif flag.vistani_robbed and not flag.vistani_repaid
+Arrigal: Stanimir's strongbox came up forty gold light after your visit. Our people count, friend. We always count.
+elif flag.nicu_kin_told
+Arrigal: You brought word of Nicu to his people, at the crossroads. That was decently done. We remember decency too.
+endif
+if guest:ireena
+Narrator: His eyes go to Ireena and stay there, politely, the way a merchant's eyes stay on a price.
+Arrigal: And the burgomaster's daughter. Our wagons go where his carriages can't, lady. If you ever want to be somewhere he isn't, you need only ask me.
+Ireena: I've been offered rides by strangers before. I walked.
+endif
+else
+if flag.arrigal_chest_opened
+Arrigal: Someone has been in my strongbox. I won't ask who. I'll simply remember.
+endif
+if flag.vallaki_backed == "wachter"
+Arrigal [smile]: Lady Wachter's town now, I hear. Our lord will be pleased. Our wagons are always welcome where he's pleased.
+else
+Arrigal: Back at our fire. You're becoming regulars.
+endif
+endif
+-> arrigal_menu
+
+~ arrigal_menu
+* Why isn't anyone out looking for the headman's daughter? -> arabelle_q
+* What news on the roads? -> roads
+* [if guest:ireena] [Insight DC 15] What does he want with Ireena? -> insight_ok | insight_fail
+* [if flag.arrigal_suspected] You'd sell her to the castle. -> accuse
+* Goodbye. -> END
+
+~ arabelle_q
+Arrigal: Luvash's girl wandered off. Children do. My brother drinks, which is how he looks for things. The lake will give her back, or it won't. That's the way of lakes.
+interject tag:blunt: That's a cold answer for an uncle.
+Arrigal: It's a cold valley.
+-> arrigal_menu
+
+~ roads
+Arrigal: The roads are his, like everything else. They're quiet for those he wants to arrive, and less quiet for the others. You arrived. Draw your own conclusions.
+-> arrigal_menu
+
+~ insight_ok
+set arrigal_suspected
+Narrator: The offer is sincere in one way only: he'd carry her somewhere, gladly, and very quickly. You've seen that look on men selling horses they've already sold to someone else.
+-> arrigal_menu
+
+~ insight_fail
+Narrator: He's charming, and calm, and impossible to read. That may be the whole of him. It may not.
+-> arrigal_menu
+
+~ accuse
+Arrigal [smile]: I sell nothing, my friend. I carry messages. Some of them are about you. You'll find our people do the same everywhere in this valley, and live longer for it.
+-> arrigal_menu
+
+~ luvash
+if flag.arabelle_rescued
+-> luvash_grateful
+endif
+if flag.arabelle_lost
+Narrator: Luvash sits on the step of his wagon with an empty bottle and doesn't look up when you come.
+Luvash [sad]: You tried. They tell me you tried. Go away now. Please.
+-> END
+endif
+if not flag.luvash_met
+set luvash_met
+quest missing_arabelle asked
+Narrator: A huge man in a red sash sits on the steps of his wagon with a bottle in each hand, shouting at the camp, at the lake, at the sky. The camp walks around him without looking.
+endif
+Luvash [angry]: Go away! Unless you've come to find my girl. Have you come to find my girl? Arabelle. Seven years old. Black hair. Gone from her bed since last night, and my brother says she wandered!
+* We'll find her. -> promise
+* Tell us what happened. -> what
+* Goodbye. -> END
+
+~ promise
+attitude luvash friendly
+Luvash: You will? Strangers? None of my own people will, because Arrigal says not to. Find her and I'll owe you more than I have. Ask at the fire. Somebody saw something. Somebody always sees something.
+-> END
+
+~ what
+Luvash [sad]: She was in her bed when I went to sleep. In the morning, the bed was cold and the wagon door was open. She never opens the door. She's afraid of the lake.
+-> luvash
+
+~ luvash_grateful
+set vistani_friends
+Narrator: Luvash has Arabelle on his knee and both arms round her, and he is not drinking.
+Luvash [smile]: My friends. My friends! Every Vistani wagon in Barovia is your wagon now. Every fire is your fire. I've told them. I've told them all.
+if tarokka.ally.npc == arabelle and not guest:arabelle
+Arabelle: I'm going with them, Papa. The cards said. I saw it before they did.
+Luvash [afraid]: No. No! I only just got you back!
+Arabelle: You'll get me back again. I've seen that too.
+* Arabelle, stay with your father. -> arabelle_stays
+* We'll keep her safe, Luvash. On our lives. -> arabelle_joins
+endif
+if not flag.arabelle_reward_given
+set arabelle_reward_given
+gold +50
+Luvash: Take this. It's not enough. Nothing would be enough.
+endif
+-> END
+
+~ arabelle_stays
+Arabelle: All right. But you'll want me later, at the end. You'll see.
+-> END
+
+~ arabelle_joins
+Luvash [sad]: On your lives. I'll hold you to every one of them.
+join arabelle
+quest find_the_ally found
+Arabelle: Don't worry, Papa. I know how this part goes.
+-> END
+
+~ vistana
+if flag.arabelle_rescued
+Vistana [smile]: The girl's home. Luvash is sober. Two miracles in one week. We'll have to move camp; the luck won't last.
+-> END
+endif
+Vistana: Sit, if you like. Don't touch the horses. Don't ask about the fortunes; I'm off duty.
+if quest.missing_arabelle == asked
+-> vistana_clue
+endif
+-> END
+
+~ vistana_clue
+* We're looking for Arabelle. Did you see anything? -> clue
+* Goodbye. -> END
+
+~ clue
+quest missing_arabelle clue
+Vistana: I saw a man on the shore last night, after the moon went down. Bluto, the fisherman from town, the one with no fish. He had a sack over his shoulder, and the sack was moving.
+Vistana: I told Arrigal. Arrigal said fishermen carry sacks. Go north to the water. Hurry.
+-> END
+
+~ bluto
+Narrator: Up to his thighs in the black water, a gaunt man in a sodden coat is wading out from the shore with a sack over his shoulder. The sack is kicking.
+Bluto: Stay back! Stay back! The lake's hungry. A whole year without a fish. She wants something better than worms, she does, and then the nets'll fill!
+* [Persuasion DC 13] Talk him back to the shore. -> talk_ok | talk_fail
+* [Intimidation DC 13] Tell him exactly what happens to him if he lets go of that sack. -> scare_ok | scare_fail
+* [Athletics DC 12] Charge into the water and grab the sack. -> grab_ok | grab_fail
+
+~ talk_ok
+Narrator: He listens. He doesn't want to, but he listens, and halfway through he starts crying, and the sack slides off his shoulder into your arms.
+-> rescued
+
+~ scare_ok
+Narrator: He looks at your faces and does the sum. He drops the sack in the shallows and runs, splashing, into the reeds.
+-> rescued
+
+~ grab_ok
+Narrator: You hit the water running. Bluto swings at you with a fist like a wet stone and misses, and you have the sack before he can try again.
+-> rescued
+
+~ talk_fail
+Bluto: No! She told me! She told me in the dark!
+Narrator: He heaves the sack out into the deep water. It hits with a slap and sinks at once.
+-> dive
+
+~ scare_fail
+Bluto: You can't scare me worse than she does!
+Narrator: He heaves the sack out into the deep water. It hits with a slap and sinks at once.
+-> dive
+
+~ grab_fail
+Narrator: The lakebed goes out from under your feet. By the time you're up again, spluttering, Bluto has thrown the sack into the deep water.
+-> dive
+
+~ dive
+Narrator: Someone has to go in after it. The water is black and cold enough to stop a heart.
+check Athletics DC 13 -> rescued | dive_again
+
+~ dive_again
+Narrator: Nothing. Weed, and cold, and dark. Up for air. Down again, deeper.
+check Perception DC 12 -> rescued | lost
+
+~ rescued
+set arabelle_rescued
+quest missing_arabelle rescued
+Narrator: Inside the sack is a small girl, soaked, furious and very much alive, with black hair plastered over a solemn face. Bluto has gone, somewhere in the reeds.
+Arabelle: You took a long time. The water was cold. The fish-man is sad; don't hurt him. He'll go in the lake himself, in the end. I've seen it.
+interject tag:cheerful: Hello. We're very glad you're not drowned.
+Arabelle: So am I. Take me to my father. He'll be drinking. He drinks when he's frightened.
+-> END
+
+~ lost
+set arabelle_lost
+quest missing_arabelle lost
+Narrator: When you come up the last time, the water is flat and black and empty, and Bluto has gone, somewhere in the reeds. There is nothing in your hands but lake weed.
+interject class:cleric: Morninglord keep her. We'll tell her father. Somebody has to.
+-> END
+
+~ arabelle
+Arabelle: Hello again.
+if flag.vallaki_backed == "wachter"
+Arabelle: The lady with the teapot sits in the big chair now. She thinks she's safe. She isn't. Nobody near him is.
+elif flag.vallaki_backed == "baron"
+Arabelle: The fat man will hold a festival every week until he runs out of suns.
+elif flag.vallaki_backed == "neither"
+Arabelle: The priest and the bird-man run the town now. The birds are pleased. You can tell by the way they sit.
+elif guest:ireena
+Arabelle: Your red-haired friend has been to the lake before. A long time ago. She'll go again, one day. I don't like that part.
+else
+Arabelle: One of you is going to lie to the man in the castle, and he's going to like it. I don't know which one. I'd tell you if I did.
+endif
+-> END

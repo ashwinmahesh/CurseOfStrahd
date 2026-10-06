@@ -1,0 +1,302 @@
+{
+  "id": "svalich_woods",
+  "map": "road_forest",
+  "chance_day": 0.2,
+  "chance_night": 0.5,
+  "summary": "The Old Svalich Road through the Svalich Woods, between Tser Pool, Tser Falls and Vallaki: close pines and small clearings. Wolves and hunters by day, werewolves and the dead by night.",
+  "entries": [
+    {
+      "id": "wolves_in_the_pines",
+      "weight": 3,
+      "when": "day",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            11
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            13,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            6
+          ]
+        }
+      ],
+      "text": "Grey shapes slip between the trunks on both sides of the road, keeping pace."
+    },
+    {
+      "id": "hunters",
+      "weight": 2,
+      "when": "day and not flag.hunters_met",
+      "once": true,
+      "dialogue": "svalich_road/events:hunters"
+    },
+    {
+      "id": "raven",
+      "weight": 1,
+      "when": "day and not flag.ravens_met",
+      "once": true,
+      "dialogue": "svalich_road/events:ravens"
+    },
+    {
+      "id": "lost_pack",
+      "weight": 1,
+      "when": "day and not flag.lost_bundle_found",
+      "once": true,
+      "dialogue": "svalich_road/events:lost_bundle"
+    },
+    {
+      "id": "strahd_rides",
+      "weight": 1,
+      "when": "not flag.strahd_road_encounter",
+      "once": true,
+      "dialogue": "svalich_road/events:strahd_rides"
+    },
+    {
+      "id": "wolf_pack_night",
+      "weight": 3,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            13
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            3,
+            5
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            13,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            27,
+            7
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            15,
+            16
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            3,
+            14
+          ]
+        }
+      ],
+      "text": "The woods fill with eyes. The howling comes from everywhere at once, which is the point of it."
+    },
+    {
+      "id": "werewolves",
+      "weight": 2,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            5
+          ],
+          "name": "Werewolf"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            26,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            6
+          ]
+        }
+      ],
+      "text": "Something on two legs steps out of the pines ahead, sniffing the air, and grins with far too many teeth."
+    },
+    {
+      "id": "dead_in_the_trees",
+      "weight": 1,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            25,
+            12
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            4,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            5,
+            13
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            24,
+            6
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            16,
+            16
+          ]
+        }
+      ],
+      "text": "The dead come out of the trees on both sides of the road, slow and sure, still wearing the clothes they were buried in."
+    },
+    {
+      "id": "bats_and_wolves",
+      "weight": 1,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            4,
+            5
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            13
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            7,
+            7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            6,
+            11
+          ]
+        }
+      ],
+      "text": "Bats pour out of the canopy like smoke, and under them the wolves come running."
+    }
+  ]
+}

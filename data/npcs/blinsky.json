@@ -1,0 +1,96 @@
+{
+  "id": "blinsky",
+  "name": "Gadof Blinsky",
+  "title": "Toymaker",
+  "summary": "Vallaki's toymaker, a melancholy man in a jester's cap who makes toys no child in Barovia would want and cannot understand why trade is slow.",
+  "portrait": "blinsky",
+  "sprite": "blinsky",
+  "attitude": "indifferent",
+  "voice": "docs/voice/blinsky.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "artisan",
+    "merchant",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him",
+  "shop": {
+    "sells": [
+      {
+        "id": "dice_set",
+        "qty": -1
+      },
+      {
+        "id": "playing_card_set",
+        "qty": -1
+      },
+      {
+        "id": "dragonchess_set",
+        "qty": 2
+      },
+      {
+        "id": "three_dragon_ante_set",
+        "qty": 2
+      },
+      {
+        "id": "flute",
+        "qty": 1
+      },
+      {
+        "id": "pan_flute",
+        "qty": 1
+      },
+      {
+        "id": "drum",
+        "qty": 1
+      },
+      {
+        "id": "bell",
+        "qty": -1
+      },
+      {
+        "id": "ball_bearings",
+        "qty": 3
+      },
+      {
+        "id": "caltrops",
+        "qty": 2
+      },
+      {
+        "id": "string",
+        "qty": -1
+      },
+      {
+        "id": "signal_whistle",
+        "qty": -1
+      },
+      {
+        "id": "mirror",
+        "qty": 1
+      },
+      {
+        "id": "tinkers_tools",
+        "qty": 1
+      },
+      {
+        "id": "woodcarvers_tools",
+        "qty": 1
+      },
+      {
+        "id": "painters_supplies",
+        "qty": 1
+      }
+    ],
+    "buys": [
+      "tool",
+      "treasure",
+      "gear"
+    ],
+    "markup": 1.5,
+    "sell_rate": 0.4,
+    "closed": "night"
+  }
+}

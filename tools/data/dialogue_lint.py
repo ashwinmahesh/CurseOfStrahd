@@ -36,7 +36,8 @@ RE_VARIANT = re.compile(r"^\|\s*(?:\[([^\]]+)\]\s*)?(.+)$")
 RE_COOLDOWN = re.compile(r"^(cooldown\s+\d+|once)$")
 RE_XP = re.compile(r"^xp\s+milestone$")
 RE_SACRIFICE = re.compile(r"^sacrifice$")
-RE_TAROKKA = re.compile(r"^tarokka\s+(draw|read\s+(tome|symbol|sword|ally|enemy))$")
+RE_TAROKKA = re.compile(r"^tarokka\s+(draw|read\s+(tome|symbol|sword|ally|enemy)(\s+[a-z][a-z0-9_]*)?)$")
+RE_TIME = re.compile(r"^time\s+(\+\d+|until\s+\d{1,2})$")
 RE_SHOP = re.compile(r"^(shop|respec)$")
 RE_GUEST = re.compile(rf"^(join|leave)\s+({ID})$")
 RE_FLAG_REF = re.compile(rf"\bflag\.({ID})")
@@ -157,7 +158,7 @@ def parse_file(path):
         if m:
             out["items"].append((m.group(2), where))
             continue
-        if RE_GOLD.match(line) or RE_XP.match(line) or RE_SACRIFICE.match(line) or RE_TAROKKA.match(line) or RE_SHOP.match(line):
+        if RE_GOLD.match(line) or RE_XP.match(line) or RE_SACRIFICE.match(line) or RE_TAROKKA.match(line) or RE_SHOP.match(line) or RE_TIME.match(line):
             continue
         m = RE_GUEST.match(line)
         if m:

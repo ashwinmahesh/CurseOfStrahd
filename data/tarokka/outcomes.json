@@ -1,0 +1,903 @@
+{
+  "id": "outcomes",
+  "tome": {
+    "swords_1": {
+      "place": "argynvostholt_vladimir",
+      "region": "argynvostholt",
+      "verse": "Where a silver dragon once kept his hall, a captain with no heartbeat keeps a grudge instead. It lies within reach of that grudge.",
+      "hint": "Argynvostholt, the dragon's ruined manor: in the keeping of the dead knight who commands it."
+    },
+    "swords_2": {
+      "place": "castle_ravenloft_sergeis_tomb",
+      "region": "castle_ravenloft",
+      "verse": "Two brothers: one walked into the dark, the other was put into the ground. Look where the good one sleeps.",
+      "hint": "Castle Ravenloft's crypts, in the tomb of Strahd's murdered younger brother."
+    },
+    "swords_3": {
+      "place": "tsolenka_pass_guard_tower",
+      "region": "tsolenka_pass",
+      "verse": "High where the road climbs over the mountain's shoulder, a pale tower keeps a gate that nobody uses. Its sentries have not blinked in years.",
+      "hint": "The Tsolenka Pass: the guard tower above the mountain road."
+    },
+    "swords_4": {
+      "place": "castle_ravenloft_treasury",
+      "region": "castle_ravenloft",
+      "verse": "It lies where a lord counts what he has never needed, buried under coin heaped like snowdrifts.",
+      "hint": "Castle Ravenloft's treasury, under heaps of gold."
+    },
+    "swords_5": {
+      "place": "werewolf_den_shrine",
+      "region": "werewolf_den",
+      "verse": "Follow the howling into the high hills above the cold lake. The wolves keep a mother there who never bore them.",
+      "hint": "The werewolves' den in the hills above Lake Zarovich, at their shrine to Mother Night."
+    },
+    "swords_6": {
+      "place": "castle_ravenloft_crypt_of_the_mad_dog",
+      "region": "castle_ravenloft",
+      "verse": "Among his honoured dead lies a general whose own men called him a mad hound. It is in his tomb, under him.",
+      "hint": "Castle Ravenloft's catacombs, in the crypt of a general once called the Mad Dog."
+    },
+    "swords_7": {
+      "place": "amber_temple_faceless_god",
+      "region": "amber_temple",
+      "verse": "Climb to where the snow never melts and the air won't fill your lungs. There is a temple there, and a great statue whose sculptor never finished the face. Look at its feet.",
+      "hint": "The Amber Temple, high in the mountains, beside the statue with no face."
+    },
+    "swords_8": {
+      "place": "castle_ravenloft_audience_hall",
+      "region": "castle_ravenloft",
+      "verse": "A seat made for one, in a hall made for the many who were meant to kneel before it.",
+      "hint": "Castle Ravenloft, at the throne in the audience hall."
+    },
+    "swords_9": {
+      "place": "vallaki_burgomaster_mansion:izek_quarters",
+      "region": "vallaki",
+      "verse": "Behind a town's bright banners stands a house where something has gone wrong, and in it a room crowded with small, still faces. Every one of them is hers.",
+      "hint": "Vallaki, the burgomaster's mansion: a locked room full of dolls."
+    },
+    "swords_master": {
+      "place": "castle_ravenloft_strahds_tomb",
+      "region": "castle_ravenloft",
+      "verse": "It lies in the room where he sleeps the day away, beneath everything, guarded by the oldest dark in the valley.",
+      "hint": "Castle Ravenloft, deepest of all: in Strahd's own tomb."
+    },
+    "stars_1": {
+      "place": "castle_ravenloft_north_tower_peak",
+      "region": "castle_ravenloft",
+      "verse": "Climb his highest tower until your knees shake, and mind the carvings on the parapet. Not all of them are carvings.",
+      "hint": "Castle Ravenloft, at the top of its highest tower, among the stone guardians."
+    },
+    "stars_2": {
+      "place": "tser_pool_eva_tent",
+      "region": "svalich_road",
+      "verse": "You need not walk far. It has been under my own canvas all along, waiting for the hands the cards would send.",
+      "hint": "Madam Eva's tent at Tser Pool. She kept it for us."
+    },
+    "stars_3": {
+      "place": "berez_marinas_monument",
+      "region": "berez",
+      "verse": "In a village the river swallowed, the mud remembers a girl he loved once, and keeps her in stone. Ask the hag who rules the reeds.",
+      "hint": "Berez, the drowned village: at the stone monument to a girl named Marina."
+    },
+    "stars_4": {
+      "place": "argynvostholt_beacon",
+      "region": "argynvostholt",
+      "verse": "The dragon's house has a lamp at its crown that nobody lights any more. Climb to where the light should be.",
+      "hint": "Argynvostholt, at the top of its dark beacon tower."
+    },
+    "stars_5": {
+      "place": "amber_temple_entrance",
+      "region": "amber_temple",
+      "verse": "Far up the mountain road a door is cut into the rock, and two great figures the colour of old resin stand on either side of it. It waits just past them.",
+      "hint": "The Amber Temple, past the amber guardians at its doors."
+    },
+    "stars_6": {
+      "place": "castle_ravenloft_crypt_of_the_wizard",
+      "region": "castle_ravenloft",
+      "verse": "A small magician sleeps among the castle's grand dead, remembered by nothing but his name on a stone. What he carried in his hand unlocks what he guards.",
+      "hint": "Castle Ravenloft's catacombs, in the crypt of a minor wizard; his wand is the key."
+    },
+    "stars_7": {
+      "place": "vallaki_blue_water_inn:rictavio_wagon",
+      "region": "vallaki",
+      "verse": "A ringmaster has rolled into the walled town with a painted wagon he lets nobody near. Ask yourself what a showman keeps locked up that he never shows.",
+      "hint": "Vallaki: in the locked carnival wagon of the showman staying at the Blue Water Inn."
+    },
+    "stars_8": {
+      "place": "castle_ravenloft_study",
+      "region": "castle_ravenloft",
+      "verse": "In his house a lady made of paint and varnish keeps her place above the hearth. She has watched it burn for centuries. Look where she looks.",
+      "hint": "Castle Ravenloft, in the room where a woman's portrait hangs above the fireplace."
+    },
+    "stars_9": {
+      "place": "berez_baba_lysagas_hut",
+      "region": "berez",
+      "verse": "Where the river ate a village whole, an old woman keeps house on the wreck, singing to the child she raised long ago. Take it from her kitchen.",
+      "hint": "Berez: in the hut of the witch Baba Lysaga."
+    },
+    "stars_master": {
+      "place": "van_richtens_tower",
+      "region": "van_richtens_tower",
+      "verse": "A tower stands in a cold mountain lake, and the mage who built it is long dead. Its door still answers to him, and to the one who served him. Find out who they were.",
+      "hint": "The old wizard's tower on Lake Baratok; his name opens it."
+    },
+    "coins_1": {
+      "place": "castle_ravenloft_gargoyle_tomb",
+      "region": "castle_ravenloft",
+      "verse": "Somewhere in his house a famous killer is laid out on a stone slab, with winged stone guardians crouched at his head and his feet. He won't miss it.",
+      "hint": "Castle Ravenloft: a warrior's tomb watched by gargoyles."
+    },
+    "coins_2": {
+      "place": "abbey_of_st_markovia_wards",
+      "region": "abbey_of_st_markovia",
+      "verse": "Above the walled village stands a holy house that has become a kennel for madness. Look in the rooms where the young were once kept.",
+      "hint": "The Abbey of St. Markovia above Krezk, in its old wards."
+    },
+    "coins_3": {
+      "place": "wizard_of_wines_press_house",
+      "region": "wizard_of_wines",
+      "verse": "Follow the vines to the house that pressed the valley's last good wine. A bargain was struck there that nobody has paid.",
+      "hint": "The Wizard of Wines winery, in the press house among the vines."
+    },
+    "coins_4": {
+      "place": "wizard_of_wines_cellar",
+      "region": "wizard_of_wines",
+      "verse": "Somewhere a barrel that held the best vintage in the valley stands as dry as a skull. Knock on it.",
+      "hint": "The Wizard of Wines: in an emptied cask in the winery's cellars."
+    },
+    "coins_5": {
+      "place": "castle_ravenloft_wine_cellar",
+      "region": "castle_ravenloft",
+      "verse": "Down where his wine sleeps in racks, one rack holds no wine. A tradesman was walled in among the bottles, and it is with him.",
+      "hint": "Castle Ravenloft: a dark cellar of bottles that is also somebody's tomb."
+    },
+    "coins_6": {
+      "place": "vallaki_vistani_camp:camp_edge",
+      "region": "vallaki",
+      "verse": "Among the wagons outside the walled town sits an elf with dusk-dark skin who mourns a sister. He keeps it, and he will trade it for a road into the mountains.",
+      "hint": "The Vistani camp outside Vallaki, with the grieving dusk elf."
+    },
+    "coins_7": {
+      "place": "village_of_barovia:churchyard",
+      "region": "village_of_barovia",
+      "verse": "Go back the way you came, to the village, and dig where the mourners stand. It sleeps under somebody else's name.",
+      "hint": "The churchyard in the village of Barovia, among the graves."
+    },
+    "coins_8": {
+      "place": "vallaki_vistani_camp:luvash_wagon",
+      "region": "vallaki",
+      "verse": "It rides in a wagon of my cousins by the lake town, in a chest whose owner has lost a daughter. Bring the girl home, and the lid will open for you.",
+      "hint": "The Vistani camp outside Vallaki, in their chief's locked chest; his missing daughter is the key."
+    },
+    "coins_9": {
+      "place": "castle_ravenloft_hidden_hearth",
+      "region": "castle_ravenloft",
+      "verse": "Find the hearth in his keep that is always burning, and ask why a dead man needs a fire. Behind it is something he keeps and never spends.",
+      "hint": "Castle Ravenloft: hidden behind a hearth, deep inside the keep."
+    },
+    "coins_master": {
+      "place": "castle_ravenloft_ravens_roost",
+      "region": "castle_ravenloft",
+      "verse": "Follow the birds that will not leave his roofs. Where they sleep, a clever hand tucked something bright among the twigs.",
+      "hint": "Castle Ravenloft, among the ravens' nests under its roofs."
+    },
+    "glyphs_1": {
+      "place": "abbey_of_st_markovia_shrine",
+      "region": "abbey_of_st_markovia",
+      "verse": "A holy woman's house stands above the walled village, and its brightest symbol hides a hollow. Look behind the light.",
+      "hint": "The Abbey of St. Markovia above Krezk, behind its sunburst."
+    },
+    "glyphs_2": {
+      "place": "abbey_of_st_markovia_garden",
+      "region": "abbey_of_st_markovia",
+      "verse": "Where frost lies on the beds of a walled garden, a man of straw stands sentry with a stitched mouth. He holds it closer than any gardener would.",
+      "hint": "The abbey garden above Krezk: inside the scarecrow."
+    },
+    "glyphs_3": {
+      "place": "krezk_pool_of_the_white_sun",
+      "region": "krezk",
+      "verse": "Beyond the last gate in the valley, where the walls keep out everything but snow, there is water that remembers the sun. Wade in.",
+      "hint": "Krezk: in the blessed pool beside the shrine of the White Sun."
+    },
+    "glyphs_4": {
+      "place": "castle_ravenloft_tomb_of_barov_and_ravenovia",
+      "region": "castle_ravenloft",
+      "verse": "Go to the woman who bore him. She sleeps beneath his house, and she has kept this for her son's enemies.",
+      "hint": "Castle Ravenloft's catacombs, in the tomb of his mother, Queen Ravenovia."
+    },
+    "glyphs_5": {
+      "place": "yester_hill_gulthias_tree",
+      "region": "yester_hill",
+      "verse": "West of the vines the old dead are heaped into a hill, and from them grows one tree that drinks wrongly. Those who go there in green worship it. Go anyway.",
+      "hint": "Yester Hill, at the foot of the evil tree the druids tend."
+    },
+    "glyphs_6": {
+      "place": "castle_ravenloft_hall_of_bones",
+      "region": "castle_ravenloft",
+      "verse": "Somewhere in his pits, his old enemies were made into furniture. Sit at their table, and mind the lamp.",
+      "hint": "Castle Ravenloft's dungeon, in a hall built of bones."
+    },
+    "glyphs_7": {
+      "place": "old_bonegrinder",
+      "region": "old_bonegrinder",
+      "verse": "A windmill leans on a crag above the road with its sails stopped. Something in it bakes, and something in it cries.",
+      "hint": "The old windmill on the Vallaki road that the villagers call the Bonegrinder."
+    },
+    "glyphs_8": {
+      "place": "amber_temple_vault",
+      "region": "amber_temple",
+      "verse": "In the mountain's golden halls, behind a door that glows like honey held to a candle, the gifts of forgotten gods lie heaped up. It is among them.",
+      "hint": "The Amber Temple, in a treasure heap beyond its amber doors."
+    },
+    "glyphs_9": {
+      "place": "vallaki_wachter_house:wachter_study",
+      "region": "vallaki",
+      "verse": "Behind the walled town's finest door, a widow raises a glass to the castle every night. Her strongbox holds it, and an old enemy's bones keep it company.",
+      "hint": "Vallaki: locked away in Lady Wachter's house, beside a set of old bones."
+    },
+    "glyphs_master": {
+      "place": "castle_ravenloft_chapel",
+      "region": "castle_ravenloft",
+      "verse": "In his house there is a room built for kneeling, and nobody has knelt there in centuries. Look under the dust of its last prayer.",
+      "hint": "Castle Ravenloft, in the ruined chapel."
+    }
+  },
+  "symbol": {
+    "swords_1": {
+      "place": "argynvostholt_vladimir",
+      "region": "argynvostholt",
+      "verse": "Where a silver dragon once kept his hall, a captain with no heartbeat keeps a grudge instead. It lies within reach of that grudge.",
+      "hint": "Argynvostholt, the dragon's ruined manor: in the keeping of the dead knight who commands it."
+    },
+    "swords_2": {
+      "place": "castle_ravenloft_sergeis_tomb",
+      "region": "castle_ravenloft",
+      "verse": "Two brothers: one walked into the dark, the other was put into the ground. Look where the good one sleeps.",
+      "hint": "Castle Ravenloft's crypts, in the tomb of Strahd's murdered younger brother."
+    },
+    "swords_3": {
+      "place": "tsolenka_pass_guard_tower",
+      "region": "tsolenka_pass",
+      "verse": "High where the road climbs over the mountain's shoulder, a pale tower keeps a gate that nobody uses. Its sentries have not blinked in years.",
+      "hint": "The Tsolenka Pass: the guard tower above the mountain road."
+    },
+    "swords_4": {
+      "place": "castle_ravenloft_treasury",
+      "region": "castle_ravenloft",
+      "verse": "It lies where a lord counts what he has never needed, buried under coin heaped like snowdrifts.",
+      "hint": "Castle Ravenloft's treasury, under heaps of gold."
+    },
+    "swords_5": {
+      "place": "werewolf_den_shrine",
+      "region": "werewolf_den",
+      "verse": "Follow the howling into the high hills above the cold lake. The wolves keep a mother there who never bore them.",
+      "hint": "The werewolves' den in the hills above Lake Zarovich, at their shrine to Mother Night."
+    },
+    "swords_6": {
+      "place": "castle_ravenloft_crypt_of_the_mad_dog",
+      "region": "castle_ravenloft",
+      "verse": "Among his honoured dead lies a general whose own men called him a mad hound. It is in his tomb, under him.",
+      "hint": "Castle Ravenloft's catacombs, in the crypt of a general once called the Mad Dog."
+    },
+    "swords_7": {
+      "place": "amber_temple_faceless_god",
+      "region": "amber_temple",
+      "verse": "Climb to where the snow never melts and the air won't fill your lungs. There is a temple there, and a great statue whose sculptor never finished the face. Look at its feet.",
+      "hint": "The Amber Temple, high in the mountains, beside the statue with no face."
+    },
+    "swords_8": {
+      "place": "castle_ravenloft_audience_hall",
+      "region": "castle_ravenloft",
+      "verse": "A seat made for one, in a hall made for the many who were meant to kneel before it.",
+      "hint": "Castle Ravenloft, at the throne in the audience hall."
+    },
+    "swords_9": {
+      "place": "vallaki_burgomaster_mansion:izek_quarters",
+      "region": "vallaki",
+      "verse": "Behind a town's bright banners stands a house where something has gone wrong, and in it a room crowded with small, still faces. Every one of them is hers.",
+      "hint": "Vallaki, the burgomaster's mansion: a locked room full of dolls."
+    },
+    "swords_master": {
+      "place": "castle_ravenloft_strahds_tomb",
+      "region": "castle_ravenloft",
+      "verse": "It lies in the room where he sleeps the day away, beneath everything, guarded by the oldest dark in the valley.",
+      "hint": "Castle Ravenloft, deepest of all: in Strahd's own tomb."
+    },
+    "stars_1": {
+      "place": "castle_ravenloft_north_tower_peak",
+      "region": "castle_ravenloft",
+      "verse": "Climb his highest tower until your knees shake, and mind the carvings on the parapet. Not all of them are carvings.",
+      "hint": "Castle Ravenloft, at the top of its highest tower, among the stone guardians."
+    },
+    "stars_2": {
+      "place": "tser_pool_eva_tent",
+      "region": "svalich_road",
+      "verse": "You need not walk far. It has been under my own canvas all along, waiting for the hands the cards would send.",
+      "hint": "Madam Eva's tent at Tser Pool. She kept it for us."
+    },
+    "stars_3": {
+      "place": "berez_marinas_monument",
+      "region": "berez",
+      "verse": "In a village the river swallowed, the mud remembers a girl he loved once, and keeps her in stone. Ask the hag who rules the reeds.",
+      "hint": "Berez, the drowned village: at the stone monument to a girl named Marina."
+    },
+    "stars_4": {
+      "place": "argynvostholt_beacon",
+      "region": "argynvostholt",
+      "verse": "The dragon's house has a lamp at its crown that nobody lights any more. Climb to where the light should be.",
+      "hint": "Argynvostholt, at the top of its dark beacon tower."
+    },
+    "stars_5": {
+      "place": "amber_temple_entrance",
+      "region": "amber_temple",
+      "verse": "Far up the mountain road a door is cut into the rock, and two great figures the colour of old resin stand on either side of it. It waits just past them.",
+      "hint": "The Amber Temple, past the amber guardians at its doors."
+    },
+    "stars_6": {
+      "place": "castle_ravenloft_crypt_of_the_wizard",
+      "region": "castle_ravenloft",
+      "verse": "A small magician sleeps among the castle's grand dead, remembered by nothing but his name on a stone. What he carried in his hand unlocks what he guards.",
+      "hint": "Castle Ravenloft's catacombs, in the crypt of a minor wizard; his wand is the key."
+    },
+    "stars_7": {
+      "place": "vallaki_blue_water_inn:rictavio_wagon",
+      "region": "vallaki",
+      "verse": "A ringmaster has rolled into the walled town with a painted wagon he lets nobody near. Ask yourself what a showman keeps locked up that he never shows.",
+      "hint": "Vallaki: in the locked carnival wagon of the showman staying at the Blue Water Inn."
+    },
+    "stars_8": {
+      "place": "castle_ravenloft_study",
+      "region": "castle_ravenloft",
+      "verse": "In his house a lady made of paint and varnish keeps her place above the hearth. She has watched it burn for centuries. Look where she looks.",
+      "hint": "Castle Ravenloft, in the room where a woman's portrait hangs above the fireplace."
+    },
+    "stars_9": {
+      "place": "berez_baba_lysagas_hut",
+      "region": "berez",
+      "verse": "Where the river ate a village whole, an old woman keeps house on the wreck, singing to the child she raised long ago. Take it from her kitchen.",
+      "hint": "Berez: in the hut of the witch Baba Lysaga."
+    },
+    "stars_master": {
+      "place": "van_richtens_tower",
+      "region": "van_richtens_tower",
+      "verse": "A tower stands in a cold mountain lake, and the mage who built it is long dead. Its door still answers to him, and to the one who served him. Find out who they were.",
+      "hint": "The old wizard's tower on Lake Baratok; his name opens it."
+    },
+    "coins_1": {
+      "place": "castle_ravenloft_gargoyle_tomb",
+      "region": "castle_ravenloft",
+      "verse": "Somewhere in his house a famous killer is laid out on a stone slab, with winged stone guardians crouched at his head and his feet. He won't miss it.",
+      "hint": "Castle Ravenloft: a warrior's tomb watched by gargoyles."
+    },
+    "coins_2": {
+      "place": "abbey_of_st_markovia_wards",
+      "region": "abbey_of_st_markovia",
+      "verse": "Above the walled village stands a holy house that has become a kennel for madness. Look in the rooms where the young were once kept.",
+      "hint": "The Abbey of St. Markovia above Krezk, in its old wards."
+    },
+    "coins_3": {
+      "place": "wizard_of_wines_press_house",
+      "region": "wizard_of_wines",
+      "verse": "Follow the vines to the house that pressed the valley's last good wine. A bargain was struck there that nobody has paid.",
+      "hint": "The Wizard of Wines winery, in the press house among the vines."
+    },
+    "coins_4": {
+      "place": "wizard_of_wines_cellar",
+      "region": "wizard_of_wines",
+      "verse": "Somewhere a barrel that held the best vintage in the valley stands as dry as a skull. Knock on it.",
+      "hint": "The Wizard of Wines: in an emptied cask in the winery's cellars."
+    },
+    "coins_5": {
+      "place": "castle_ravenloft_wine_cellar",
+      "region": "castle_ravenloft",
+      "verse": "Down where his wine sleeps in racks, one rack holds no wine. A tradesman was walled in among the bottles, and it is with him.",
+      "hint": "Castle Ravenloft: a dark cellar of bottles that is also somebody's tomb."
+    },
+    "coins_6": {
+      "place": "vallaki_vistani_camp:camp_edge",
+      "region": "vallaki",
+      "verse": "Among the wagons outside the walled town sits an elf with dusk-dark skin who mourns a sister. He keeps it, and he will trade it for a road into the mountains.",
+      "hint": "The Vistani camp outside Vallaki, with the grieving dusk elf."
+    },
+    "coins_7": {
+      "place": "village_of_barovia:churchyard",
+      "region": "village_of_barovia",
+      "verse": "Go back the way you came, to the village, and dig where the mourners stand. It sleeps under somebody else's name.",
+      "hint": "The churchyard in the village of Barovia, among the graves."
+    },
+    "coins_8": {
+      "place": "vallaki_vistani_camp:luvash_wagon",
+      "region": "vallaki",
+      "verse": "It rides in a wagon of my cousins by the lake town, in a chest whose owner has lost a daughter. Bring the girl home, and the lid will open for you.",
+      "hint": "The Vistani camp outside Vallaki, in their chief's locked chest; his missing daughter is the key."
+    },
+    "coins_9": {
+      "place": "castle_ravenloft_hidden_hearth",
+      "region": "castle_ravenloft",
+      "verse": "Find the hearth in his keep that is always burning, and ask why a dead man needs a fire. Behind it is something he keeps and never spends.",
+      "hint": "Castle Ravenloft: hidden behind a hearth, deep inside the keep."
+    },
+    "coins_master": {
+      "place": "castle_ravenloft_ravens_roost",
+      "region": "castle_ravenloft",
+      "verse": "Follow the birds that will not leave his roofs. Where they sleep, a clever hand tucked something bright among the twigs.",
+      "hint": "Castle Ravenloft, among the ravens' nests under its roofs."
+    },
+    "glyphs_1": {
+      "place": "abbey_of_st_markovia_shrine",
+      "region": "abbey_of_st_markovia",
+      "verse": "A holy woman's house stands above the walled village, and its brightest symbol hides a hollow. Look behind the light.",
+      "hint": "The Abbey of St. Markovia above Krezk, behind its sunburst."
+    },
+    "glyphs_2": {
+      "place": "abbey_of_st_markovia_garden",
+      "region": "abbey_of_st_markovia",
+      "verse": "Where frost lies on the beds of a walled garden, a man of straw stands sentry with a stitched mouth. He holds it closer than any gardener would.",
+      "hint": "The abbey garden above Krezk: inside the scarecrow."
+    },
+    "glyphs_3": {
+      "place": "krezk_pool_of_the_white_sun",
+      "region": "krezk",
+      "verse": "Beyond the last gate in the valley, where the walls keep out everything but snow, there is water that remembers the sun. Wade in.",
+      "hint": "Krezk: in the blessed pool beside the shrine of the White Sun."
+    },
+    "glyphs_4": {
+      "place": "castle_ravenloft_tomb_of_barov_and_ravenovia",
+      "region": "castle_ravenloft",
+      "verse": "Go to the woman who bore him. She sleeps beneath his house, and she has kept this for her son's enemies.",
+      "hint": "Castle Ravenloft's catacombs, in the tomb of his mother, Queen Ravenovia."
+    },
+    "glyphs_5": {
+      "place": "yester_hill_gulthias_tree",
+      "region": "yester_hill",
+      "verse": "West of the vines the old dead are heaped into a hill, and from them grows one tree that drinks wrongly. Those who go there in green worship it. Go anyway.",
+      "hint": "Yester Hill, at the foot of the evil tree the druids tend."
+    },
+    "glyphs_6": {
+      "place": "castle_ravenloft_hall_of_bones",
+      "region": "castle_ravenloft",
+      "verse": "Somewhere in his pits, his old enemies were made into furniture. Sit at their table, and mind the lamp.",
+      "hint": "Castle Ravenloft's dungeon, in a hall built of bones."
+    },
+    "glyphs_7": {
+      "place": "old_bonegrinder",
+      "region": "old_bonegrinder",
+      "verse": "A windmill leans on a crag above the road with its sails stopped. Something in it bakes, and something in it cries.",
+      "hint": "The old windmill on the Vallaki road that the villagers call the Bonegrinder."
+    },
+    "glyphs_8": {
+      "place": "amber_temple_vault",
+      "region": "amber_temple",
+      "verse": "In the mountain's golden halls, behind a door that glows like honey held to a candle, the gifts of forgotten gods lie heaped up. It is among them.",
+      "hint": "The Amber Temple, in a treasure heap beyond its amber doors."
+    },
+    "glyphs_9": {
+      "place": "vallaki_wachter_house:wachter_study",
+      "region": "vallaki",
+      "verse": "Behind the walled town's finest door, a widow raises a glass to the castle every night. Her strongbox holds it, and an old enemy's bones keep it company.",
+      "hint": "Vallaki: locked away in Lady Wachter's house, beside a set of old bones."
+    },
+    "glyphs_master": {
+      "place": "castle_ravenloft_chapel",
+      "region": "castle_ravenloft",
+      "verse": "In his house there is a room built for kneeling, and nobody has knelt there in centuries. Look under the dust of its last prayer.",
+      "hint": "Castle Ravenloft, in the ruined chapel."
+    }
+  },
+  "sword": {
+    "swords_1": {
+      "place": "argynvostholt_vladimir",
+      "region": "argynvostholt",
+      "verse": "Where a silver dragon once kept his hall, a captain with no heartbeat keeps a grudge instead. It lies within reach of that grudge.",
+      "hint": "Argynvostholt, the dragon's ruined manor: in the keeping of the dead knight who commands it."
+    },
+    "swords_2": {
+      "place": "castle_ravenloft_sergeis_tomb",
+      "region": "castle_ravenloft",
+      "verse": "Two brothers: one walked into the dark, the other was put into the ground. Look where the good one sleeps.",
+      "hint": "Castle Ravenloft's crypts, in the tomb of Strahd's murdered younger brother."
+    },
+    "swords_3": {
+      "place": "tsolenka_pass_guard_tower",
+      "region": "tsolenka_pass",
+      "verse": "High where the road climbs over the mountain's shoulder, a pale tower keeps a gate that nobody uses. Its sentries have not blinked in years.",
+      "hint": "The Tsolenka Pass: the guard tower above the mountain road."
+    },
+    "swords_4": {
+      "place": "castle_ravenloft_treasury",
+      "region": "castle_ravenloft",
+      "verse": "It lies where a lord counts what he has never needed, buried under coin heaped like snowdrifts.",
+      "hint": "Castle Ravenloft's treasury, under heaps of gold."
+    },
+    "swords_5": {
+      "place": "werewolf_den_shrine",
+      "region": "werewolf_den",
+      "verse": "Follow the howling into the high hills above the cold lake. The wolves keep a mother there who never bore them.",
+      "hint": "The werewolves' den in the hills above Lake Zarovich, at their shrine to Mother Night."
+    },
+    "swords_6": {
+      "place": "castle_ravenloft_crypt_of_the_mad_dog",
+      "region": "castle_ravenloft",
+      "verse": "Among his honoured dead lies a general whose own men called him a mad hound. It is in his tomb, under him.",
+      "hint": "Castle Ravenloft's catacombs, in the crypt of a general once called the Mad Dog."
+    },
+    "swords_7": {
+      "place": "amber_temple_faceless_god",
+      "region": "amber_temple",
+      "verse": "Climb to where the snow never melts and the air won't fill your lungs. There is a temple there, and a great statue whose sculptor never finished the face. Look at its feet.",
+      "hint": "The Amber Temple, high in the mountains, beside the statue with no face."
+    },
+    "swords_8": {
+      "place": "castle_ravenloft_audience_hall",
+      "region": "castle_ravenloft",
+      "verse": "A seat made for one, in a hall made for the many who were meant to kneel before it.",
+      "hint": "Castle Ravenloft, at the throne in the audience hall."
+    },
+    "swords_9": {
+      "place": "vallaki_burgomaster_mansion:izek_quarters",
+      "region": "vallaki",
+      "verse": "Behind a town's bright banners stands a house where something has gone wrong, and in it a room crowded with small, still faces. Every one of them is hers.",
+      "hint": "Vallaki, the burgomaster's mansion: a locked room full of dolls."
+    },
+    "swords_master": {
+      "place": "castle_ravenloft_strahds_tomb",
+      "region": "castle_ravenloft",
+      "verse": "It lies in the room where he sleeps the day away, beneath everything, guarded by the oldest dark in the valley.",
+      "hint": "Castle Ravenloft, deepest of all: in Strahd's own tomb."
+    },
+    "stars_1": {
+      "place": "castle_ravenloft_north_tower_peak",
+      "region": "castle_ravenloft",
+      "verse": "Climb his highest tower until your knees shake, and mind the carvings on the parapet. Not all of them are carvings.",
+      "hint": "Castle Ravenloft, at the top of its highest tower, among the stone guardians."
+    },
+    "stars_2": {
+      "place": "tser_pool_eva_tent",
+      "region": "svalich_road",
+      "verse": "You need not walk far. It has been under my own canvas all along, waiting for the hands the cards would send.",
+      "hint": "Madam Eva's tent at Tser Pool. She kept it for us."
+    },
+    "stars_3": {
+      "place": "berez_marinas_monument",
+      "region": "berez",
+      "verse": "In a village the river swallowed, the mud remembers a girl he loved once, and keeps her in stone. Ask the hag who rules the reeds.",
+      "hint": "Berez, the drowned village: at the stone monument to a girl named Marina."
+    },
+    "stars_4": {
+      "place": "argynvostholt_beacon",
+      "region": "argynvostholt",
+      "verse": "The dragon's house has a lamp at its crown that nobody lights any more. Climb to where the light should be.",
+      "hint": "Argynvostholt, at the top of its dark beacon tower."
+    },
+    "stars_5": {
+      "place": "amber_temple_entrance",
+      "region": "amber_temple",
+      "verse": "Far up the mountain road a door is cut into the rock, and two great figures the colour of old resin stand on either side of it. It waits just past them.",
+      "hint": "The Amber Temple, past the amber guardians at its doors."
+    },
+    "stars_6": {
+      "place": "castle_ravenloft_crypt_of_the_wizard",
+      "region": "castle_ravenloft",
+      "verse": "A small magician sleeps among the castle's grand dead, remembered by nothing but his name on a stone. What he carried in his hand unlocks what he guards.",
+      "hint": "Castle Ravenloft's catacombs, in the crypt of a minor wizard; his wand is the key."
+    },
+    "stars_7": {
+      "place": "vallaki_blue_water_inn:rictavio_wagon",
+      "region": "vallaki",
+      "verse": "A ringmaster has rolled into the walled town with a painted wagon he lets nobody near. Ask yourself what a showman keeps locked up that he never shows.",
+      "hint": "Vallaki: in the locked carnival wagon of the showman staying at the Blue Water Inn."
+    },
+    "stars_8": {
+      "place": "castle_ravenloft_study",
+      "region": "castle_ravenloft",
+      "verse": "In his house a lady made of paint and varnish keeps her place above the hearth. She has watched it burn for centuries. Look where she looks.",
+      "hint": "Castle Ravenloft, in the room where a woman's portrait hangs above the fireplace."
+    },
+    "stars_9": {
+      "place": "berez_baba_lysagas_hut",
+      "region": "berez",
+      "verse": "Where the river ate a village whole, an old woman keeps house on the wreck, singing to the child she raised long ago. Take it from her kitchen.",
+      "hint": "Berez: in the hut of the witch Baba Lysaga."
+    },
+    "stars_master": {
+      "place": "van_richtens_tower",
+      "region": "van_richtens_tower",
+      "verse": "A tower stands in a cold mountain lake, and the mage who built it is long dead. Its door still answers to him, and to the one who served him. Find out who they were.",
+      "hint": "The old wizard's tower on Lake Baratok; his name opens it."
+    },
+    "coins_1": {
+      "place": "castle_ravenloft_gargoyle_tomb",
+      "region": "castle_ravenloft",
+      "verse": "Somewhere in his house a famous killer is laid out on a stone slab, with winged stone guardians crouched at his head and his feet. He won't miss it.",
+      "hint": "Castle Ravenloft: a warrior's tomb watched by gargoyles."
+    },
+    "coins_2": {
+      "place": "abbey_of_st_markovia_wards",
+      "region": "abbey_of_st_markovia",
+      "verse": "Above the walled village stands a holy house that has become a kennel for madness. Look in the rooms where the young were once kept.",
+      "hint": "The Abbey of St. Markovia above Krezk, in its old wards."
+    },
+    "coins_3": {
+      "place": "wizard_of_wines_press_house",
+      "region": "wizard_of_wines",
+      "verse": "Follow the vines to the house that pressed the valley's last good wine. A bargain was struck there that nobody has paid.",
+      "hint": "The Wizard of Wines winery, in the press house among the vines."
+    },
+    "coins_4": {
+      "place": "wizard_of_wines_cellar",
+      "region": "wizard_of_wines",
+      "verse": "Somewhere a barrel that held the best vintage in the valley stands as dry as a skull. Knock on it.",
+      "hint": "The Wizard of Wines: in an emptied cask in the winery's cellars."
+    },
+    "coins_5": {
+      "place": "castle_ravenloft_wine_cellar",
+      "region": "castle_ravenloft",
+      "verse": "Down where his wine sleeps in racks, one rack holds no wine. A tradesman was walled in among the bottles, and it is with him.",
+      "hint": "Castle Ravenloft: a dark cellar of bottles that is also somebody's tomb."
+    },
+    "coins_6": {
+      "place": "vallaki_vistani_camp:camp_edge",
+      "region": "vallaki",
+      "verse": "Among the wagons outside the walled town sits an elf with dusk-dark skin who mourns a sister. He keeps it, and he will trade it for a road into the mountains.",
+      "hint": "The Vistani camp outside Vallaki, with the grieving dusk elf."
+    },
+    "coins_7": {
+      "place": "village_of_barovia:churchyard",
+      "region": "village_of_barovia",
+      "verse": "Go back the way you came, to the village, and dig where the mourners stand. It sleeps under somebody else's name.",
+      "hint": "The churchyard in the village of Barovia, among the graves."
+    },
+    "coins_8": {
+      "place": "vallaki_vistani_camp:luvash_wagon",
+      "region": "vallaki",
+      "verse": "It rides in a wagon of my cousins by the lake town, in a chest whose owner has lost a daughter. Bring the girl home, and the lid will open for you.",
+      "hint": "The Vistani camp outside Vallaki, in their chief's locked chest; his missing daughter is the key."
+    },
+    "coins_9": {
+      "place": "castle_ravenloft_hidden_hearth",
+      "region": "castle_ravenloft",
+      "verse": "Find the hearth in his keep that is always burning, and ask why a dead man needs a fire. Behind it is something he keeps and never spends.",
+      "hint": "Castle Ravenloft: hidden behind a hearth, deep inside the keep."
+    },
+    "coins_master": {
+      "place": "castle_ravenloft_ravens_roost",
+      "region": "castle_ravenloft",
+      "verse": "Follow the birds that will not leave his roofs. Where they sleep, a clever hand tucked something bright among the twigs.",
+      "hint": "Castle Ravenloft, among the ravens' nests under its roofs."
+    },
+    "glyphs_1": {
+      "place": "abbey_of_st_markovia_shrine",
+      "region": "abbey_of_st_markovia",
+      "verse": "A holy woman's house stands above the walled village, and its brightest symbol hides a hollow. Look behind the light.",
+      "hint": "The Abbey of St. Markovia above Krezk, behind its sunburst."
+    },
+    "glyphs_2": {
+      "place": "abbey_of_st_markovia_garden",
+      "region": "abbey_of_st_markovia",
+      "verse": "Where frost lies on the beds of a walled garden, a man of straw stands sentry with a stitched mouth. He holds it closer than any gardener would.",
+      "hint": "The abbey garden above Krezk: inside the scarecrow."
+    },
+    "glyphs_3": {
+      "place": "krezk_pool_of_the_white_sun",
+      "region": "krezk",
+      "verse": "Beyond the last gate in the valley, where the walls keep out everything but snow, there is water that remembers the sun. Wade in.",
+      "hint": "Krezk: in the blessed pool beside the shrine of the White Sun."
+    },
+    "glyphs_4": {
+      "place": "castle_ravenloft_tomb_of_barov_and_ravenovia",
+      "region": "castle_ravenloft",
+      "verse": "Go to the woman who bore him. She sleeps beneath his house, and she has kept this for her son's enemies.",
+      "hint": "Castle Ravenloft's catacombs, in the tomb of his mother, Queen Ravenovia."
+    },
+    "glyphs_5": {
+      "place": "yester_hill_gulthias_tree",
+      "region": "yester_hill",
+      "verse": "West of the vines the old dead are heaped into a hill, and from them grows one tree that drinks wrongly. Those who go there in green worship it. Go anyway.",
+      "hint": "Yester Hill, at the foot of the evil tree the druids tend."
+    },
+    "glyphs_6": {
+      "place": "castle_ravenloft_hall_of_bones",
+      "region": "castle_ravenloft",
+      "verse": "Somewhere in his pits, his old enemies were made into furniture. Sit at their table, and mind the lamp.",
+      "hint": "Castle Ravenloft's dungeon, in a hall built of bones."
+    },
+    "glyphs_7": {
+      "place": "old_bonegrinder",
+      "region": "old_bonegrinder",
+      "verse": "A windmill leans on a crag above the road with its sails stopped. Something in it bakes, and something in it cries.",
+      "hint": "The old windmill on the Vallaki road that the villagers call the Bonegrinder."
+    },
+    "glyphs_8": {
+      "place": "amber_temple_vault",
+      "region": "amber_temple",
+      "verse": "In the mountain's golden halls, behind a door that glows like honey held to a candle, the gifts of forgotten gods lie heaped up. It is among them.",
+      "hint": "The Amber Temple, in a treasure heap beyond its amber doors."
+    },
+    "glyphs_9": {
+      "place": "vallaki_wachter_house:wachter_study",
+      "region": "vallaki",
+      "verse": "Behind the walled town's finest door, a widow raises a glass to the castle every night. Her strongbox holds it, and an old enemy's bones keep it company.",
+      "hint": "Vallaki: locked away in Lady Wachter's house, beside a set of old bones."
+    },
+    "glyphs_master": {
+      "place": "castle_ravenloft_chapel",
+      "region": "castle_ravenloft",
+      "verse": "In his house there is a room built for kneeling, and nobody has knelt there in centuries. Look under the dust of its last prayer.",
+      "hint": "Castle Ravenloft, in the ruined chapel."
+    }
+  },
+  "ally": {
+    "artifact": {
+      "npc": "rictavio",
+      "region": "vallaki",
+      "where": "Vallaki, lodging at the Blue Water Inn as the showman Rictavio",
+      "verse": "A ringmaster with a menagerie of one has come to the walled town, laughing too loudly. Under the laugh is a hunter who has buried everyone he ever loved. Earn his trust.",
+      "hint": "Rictavio, the loud showman staying at the Blue Water Inn in Vallaki, is more than he seems."
+    },
+    "beast": {
+      "npc": "emil_toranescu",
+      "region": "werewolf_den",
+      "where": "The werewolf den in the hills, a prisoner of his own pack",
+      "verse": "In the den in the hills, one wolf has started to look at his pack the way you look at the castle. When they turn on him, be there.",
+      "hint": "Emil, a werewolf at odds with his own pack, in their den in the hills above Lake Zarovich."
+    },
+    "broken_one": {
+      "npc": "mordenkainen",
+      "region": "van_richtens_tower",
+      "where": "A hut on Mount Baratok, above Van Richten's lake",
+      "verse": "Up the mountain lives a mage who has forgotten who he is. What he has not forgotten is how to bring down a sky. Help him find himself.",
+      "hint": "A mad wizard who lives alone in a hut on Mount Baratok."
+    },
+    "darklord": {
+      "npc": "",
+      "region": "castle_ravenloft",
+      "where": "Nowhere",
+      "verse": "No hand reaches for yours. The cards set no friend at your side: you will face him with only what you carry.",
+      "hint": "No one. The cards gave us no ally: we will face Strahd alone.",
+      "note": "No ally (the adventure's table gives none for this card). Engine need: an empty npc means 'no ally'."
+    },
+    "donjon": {
+      "npc": "victor_vallakovich",
+      "region": "vallaki",
+      "where": "Vallaki, the burgomaster's mansion, shut in the attic",
+      "verse": "In the walled town's grandest house, a clever young man has made his attic into a cell and a workshop. Free his mind from that house, and he will lend it to you.",
+      "hint": "Victor, the troubled son of Vallaki's burgomaster, shut in the attic of his father's mansion."
+    },
+    "executioner": {
+      "npc": "ismark",
+      "region": "village_of_barovia",
+      "where": "The village of Barovia, or already at your side",
+      "verse": "You have already shaken his hand. A village measured him against his father and found him short. The cards measure differently.",
+      "hint": "Ismark Kolyanovich, Ireena's brother, the one the village calls the Lesser."
+    },
+    "ghost": {
+      "npc": "sir_godfrey_gwilym",
+      "region": "argynvostholt",
+      "where": "Argynvostholt, among the revenant knights",
+      "verse": "The dragon's house is full of dead knights who have forgotten their oath. One of them still remembers, a little. Find him, and make him remember the rest.",
+      "hint": "Sir Godfrey, a dead knight of the dragon's order, at Argynvostholt."
+    },
+    "horseman": {
+      "npc": "kolyan_indirovich",
+      "region": "village_of_barovia",
+      "where": "His grave in the churchyard of the village of Barovia; he must first be given back his life",
+      "verse": "A man of standing lies cold, and a daughter who was never his by blood still keeps his memory. Give breath back to that body and he will stand with you.",
+      "hint": "The late burgomaster Kolyan Indirovich, in the village churchyard, if he can be brought back from the dead."
+    },
+    "innocent": {
+      "npc": "parriwimple",
+      "region": "village_of_barovia",
+      "where": "Bildrath's Mercantile in the village of Barovia",
+      "verse": "A gentle giant of a boy sweeps a shop floor for an uncle who doesn't deserve him. He is stronger than anyone has ever told him.",
+      "hint": "Parriwimple, the big, gentle shop boy at Bildrath's Mercantile in the village of Barovia."
+    },
+    "marionette": {
+      "npc": "pidlwick_ii",
+      "region": "castle_ravenloft",
+      "where": "Somewhere in the towers of Castle Ravenloft",
+      "verse": "Something clockwork walks the castle's stairs on its own: a jester with a wound-down smile. It knows every passage in that house, and it is lonely.",
+      "hint": "Pidlwick II, a clockwork jester who wanders the towers of Castle Ravenloft."
+    },
+    "mists": {
+      "npc": "ezmerelda",
+      "region": "abbey_of_st_markovia",
+      "where": "Wandering; lately seen near the Abbey of St. Markovia above Krezk",
+      "verse": "A hunter of my blood left the wagons to chase what chases us, and the man who taught her. Catch her if you can; lately she has been seen on the road up to the abbey above the walled village.",
+      "hint": "Ezmerelda, a Vistana monster hunter who never stays put; lately seen near the abbey above Krezk."
+    },
+    "raven": {
+      "npc": "davian_martikov",
+      "region": "wizard_of_wines",
+      "where": "The Wizard of Wines winery",
+      "verse": "Among the vines lives an old man whose family wears feathers by night. He is tired, and proud, and he would like very much to be asked.",
+      "hint": "Davian Martikov, the old master of the Wizard of Wines winery."
+    },
+    "seer": {
+      "npc": "kasimir_velikov",
+      "region": "vallaki",
+      "where": "The Vistani camp outside Vallaki",
+      "verse": "Beside the walled town, among my cousins' wagons, sits an elf who lost his sister and won't stop trying to buy her back. Walk his road with him a little way, and he will walk yours.",
+      "hint": "Kasimir, a grieving dusk elf at the Vistani camp outside Vallaki."
+    },
+    "tempter": {
+      "npc": "arabelle",
+      "region": "lake_zarovich",
+      "where": "Somewhere on Lake Zarovich, in danger",
+      "verse": "One of our little ones has wandered where she shouldn't, out onto the big water by the walled town. Someone has her who should not. Go quickly.",
+      "hint": "Arabelle, a missing Vistani girl, somewhere on Lake Zarovich. There is no time to waste."
+    }
+  },
+  "enemy": {
+    "artifact": {
+      "room": "castle_ravenloft_chapel",
+      "verse": "He waits in the room where his family prayed, among the broken pews, under a window that has not let in morning for centuries.",
+      "hint": "Strahd will be waiting in the castle's chapel."
+    },
+    "beast": {
+      "room": "castle_ravenloft_audience_hall",
+      "verse": "He receives you the way a lord receives petitioners: seated high in his great hall, with all the time in the world.",
+      "hint": "Strahd will be waiting on his throne in the audience hall."
+    },
+    "broken_one": {
+      "room": "castle_ravenloft_sergeis_tomb",
+      "verse": "He goes down to stand over his brother's coffin, over the man he could never be. He goes there often.",
+      "hint": "Strahd will be waiting at his brother Sergei's tomb."
+    },
+    "darklord": {
+      "room": "castle_ravenloft_strahds_tomb",
+      "verse": "He will be in the room where his own coffin lies, deep below, where the night is oldest and he is strongest.",
+      "hint": "Strahd will be waiting in his own tomb, at the bottom of the castle."
+    },
+    "donjon": {
+      "room": "castle_ravenloft_hall_of_bones",
+      "verse": "Under the castle, past the cells, there is a room furnished with the dead. He likes to entertain there.",
+      "hint": "Strahd will be waiting in the hall of bones in the castle's dungeon."
+    },
+    "executioner": {
+      "room": "castle_ravenloft_overlook",
+      "verse": "He stands at the castle's lookout, high over the valley, admiring his property. He will turn around when you arrive.",
+      "hint": "Strahd will be waiting on the castle's high balcony overlooking the valley."
+    },
+    "ghost": {
+      "room": "castle_ravenloft_tomb_of_barov_and_ravenovia",
+      "verse": "He has gone down to visit the king who made him. Father and son, both of them stone now.",
+      "hint": "Strahd will be waiting at his father King Barov's tomb."
+    },
+    "horseman": {
+      "room": "castle_ravenloft_catacombs",
+      "verse": "Among the endless crypts below, where his house keeps its dead in rows, he walks between the names.",
+      "hint": "Strahd will be waiting in the castle's catacombs."
+    },
+    "innocent": {
+      "room": "castle_ravenloft_sergeis_tomb",
+      "verse": "He keeps company with the brother he murdered for a woman. He talks to him, sometimes. The brother never answers.",
+      "hint": "Strahd will be waiting at his brother Sergei's tomb."
+    },
+    "marionette": {
+      "room": "castle_ravenloft_heart_of_sorrow",
+      "verse": "Climb until you can hear the castle's pulse, a great glass heart that bleeds for him. He will be standing beside it.",
+      "hint": "Strahd will be waiting near the beating heart at the top of the castle."
+    },
+    "mists": {
+      "room": "castle_ravenloft",
+      "verse": "The mist lies over this card; it will not show me. He will be wherever he chooses, and he will choose well.",
+      "hint": "The cards could not see where Strahd will wait. Anywhere in the castle.",
+      "note": "No fixed room: Strahd moves through the castle (Phase 6 decides)."
+    },
+    "raven": {
+      "room": "castle_ravenloft_tomb_of_barov_and_ravenovia",
+      "verse": "He keeps vigil by the queen who bore him, in the cold beneath his house.",
+      "hint": "Strahd will be waiting at his mother Queen Ravenovia's tomb."
+    },
+    "seer": {
+      "room": "castle_ravenloft_study",
+      "verse": "He will be among his books, by a fire that warms nothing, reading old letters he should have burned.",
+      "hint": "Strahd will be waiting in his study."
+    },
+    "tempter": {
+      "room": "castle_ravenloft_treasury",
+      "verse": "Find the painting of the woman he lost. Behind her lies his hoard, and he will be sitting on it like a dragon, counting what it never bought him.",
+      "hint": "Strahd will be waiting above his treasure vault."
+    }
+  }
+}

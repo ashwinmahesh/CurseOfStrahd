@@ -1,0 +1,22 @@
+{
+  "id": "holy_symbol_of_ravenkind",
+  "name": "Holy Symbol of Ravenkind",
+  "source": {
+    "book": "CoS",
+    "note": "One of the three Tarokka treasures (data/tarokka). Properties paraphrased from the adventure in our own words; every number must be checked against the book when the mechanics are built (Phase 5)."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 0,
+  "quest_locked": true,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "a Cleric or Paladin of good heart",
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4 at dawn"
+    }
+  },
+  "summary": "A platinum sunburst with a raven in flight at its heart and a sunstone in the raven's grip. It is warm to hold, even here.",
+  "text": "A holy symbol made long ago by the faithful who fought the valley's first vampire, and lost when its last keeper never came home. It holds 10 charges and regains 1d6 + 4 of them each dawn. While holding it, its attuned bearer can spend charges: Hold Vampires (1 charge): every vampire and vampire spawn within 30 feet that can see the symbol makes a Wisdom saving throw (DC 15) or is Paralyzed for 1 minute, repeating the save at the end of each of its turns. Sunlight (5 charges): the sunstone blazes with true sunlight, bright in a 30-foot radius and dim for 30 feet beyond, for 10 minutes. The bearer's Turn Undead also bites harder while the symbol is raised: undead make their saving throws against it at a disadvantage."
+}

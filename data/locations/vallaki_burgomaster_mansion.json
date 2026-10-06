@@ -1,0 +1,669 @@
+{
+  "id": "vallaki_burgomaster_mansion",
+  "name": "The Burgomaster's Mansion",
+  "region": "vallaki",
+  "summary": "Baron Vallakovich's mansion: a hall hung with festival banners, a dining room laid for guests who never stay, Izek's bare room off the hall, and in the attic the Baron's son and his circle.",
+  "text": "Bunting on every banister, portraits of the Baron in every pose a man can strike. A narrow stair climbs from the hall to the attic, where the air smells of chalk and something burnt.",
+  "map": {
+    "rows": [
+      "##############################",
+      "#1...........#...............#",
+      "#............#...............#",
+      "#...............===========..#",
+      "#...=....=...#...............#",
+      "#............#...............#",
+      "#............#...............#",
+      "#............####.#######.####",
+      "#######......#.......#.......#",
+      "#....=#......#.......#.....=.#",
+      "#.....#......#..==...#.......#",
+      "#....................#.......#",
+      "#==...#......#......=#.=.....#",
+      "#.....#......#.......#.......#",
+      "#########.####################",
+      "                              ",
+      "##############################",
+      "#1...........................#",
+      "#........................==..#",
+      "#............................#",
+      "#............................#",
+      "#....==.............==.......#",
+      "#............................#",
+      "##############################"
+    ],
+    "theme": "manor",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "great_hall",
+      "name": "Great hall",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          12,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "mansion_foyer",
+      "name": "Foyer",
+      "cells": [
+        [
+          7,
+          8
+        ],
+        [
+          12,
+          13
+        ]
+      ]
+    },
+    {
+      "id": "izek_quarters",
+      "name": "Izek's room",
+      "cells": [
+        [
+          1,
+          9
+        ],
+        [
+          5,
+          13
+        ]
+      ]
+    },
+    {
+      "id": "dining_hall",
+      "name": "Dining hall",
+      "cells": [
+        [
+          14,
+          1
+        ],
+        [
+          28,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "baron_study",
+      "name": "The Baron's study",
+      "cells": [
+        [
+          14,
+          8
+        ],
+        [
+          20,
+          13
+        ]
+      ]
+    },
+    {
+      "id": "lydia_parlor",
+      "name": "Lady Lydia's parlour",
+      "cells": [
+        [
+          22,
+          8
+        ],
+        [
+          28,
+          13
+        ]
+      ]
+    },
+    {
+      "id": "attic",
+      "name": "Victor's attic",
+      "cells": [
+        [
+          1,
+          17
+        ],
+        [
+          28,
+          22
+        ]
+      ],
+      "light": "dim"
+    }
+  ],
+  "spawns": {
+    "default": [
+      9,
+      13
+    ],
+    "hall_stairs": [
+      2,
+      2
+    ],
+    "attic_landing": [
+      2,
+      18
+    ]
+  },
+  "exits": [
+    {
+      "id": "mansion_front_door",
+      "cell": [
+        9,
+        14
+      ],
+      "to": "vallaki",
+      "spawn": "from_mansion",
+      "label": "Out to the square"
+    },
+    {
+      "id": "attic_stairs_up",
+      "cell": [
+        1,
+        1
+      ],
+      "to": "vallaki_burgomaster_mansion",
+      "spawn": "attic_landing",
+      "label": "Up to the attic"
+    },
+    {
+      "id": "attic_stairs_down",
+      "cell": [
+        1,
+        17
+      ],
+      "to": "vallaki_burgomaster_mansion",
+      "spawn": "hall_stairs",
+      "label": "Down to the hall"
+    }
+  ],
+  "doors": [
+    {
+      "id": "izek_door",
+      "cell": [
+        6,
+        11
+      ],
+      "label": "Izek's door"
+    },
+    {
+      "id": "dining_door",
+      "cell": [
+        13,
+        3
+      ],
+      "label": "Dining hall doors"
+    },
+    {
+      "id": "study_door",
+      "cell": [
+        13,
+        11
+      ],
+      "label": "Study door"
+    },
+    {
+      "id": "study_dining_door",
+      "cell": [
+        17,
+        7
+      ],
+      "label": "Study door"
+    },
+    {
+      "id": "parlor_door",
+      "cell": [
+        25,
+        7
+      ],
+      "label": "Parlour door"
+    }
+  ],
+  "props": [
+    {
+      "id": "baron_portraits",
+      "cell": [
+        7,
+        1
+      ],
+      "kind": "examine",
+      "label": "Portraits of the Baron",
+      "model": "painting_row"
+    },
+    {
+      "id": "festival_bunting",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "examine",
+      "label": "Festival bunting",
+      "model": "tapestry"
+    },
+    {
+      "id": "dining_table",
+      "cell": [
+        20,
+        3
+      ],
+      "kind": "examine",
+      "label": "The long table",
+      "model": "table_set"
+    },
+    {
+      "id": "festival_ledger",
+      "cell": [
+        16,
+        10
+      ],
+      "kind": "book",
+      "label": "The festival ledger",
+      "model": "ledger",
+      "codex": "vallaki_festival_ledger",
+      "text": "The Baron's festival accounts, in a round, hopeful hand. Festival of the First Snow: a success. Festival of the Late Harvest: a great success. Festival of the Returning Swallows (no swallows): a success. Beside each, a second column headed MALCONTENTS, and names. The column is longer than the first."
+    },
+    {
+      "id": "izek_dolls",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "examine",
+      "label": "A chest of dolls",
+      "model": "toy_chest",
+      "flag": "izek_dolls_seen"
+    },
+    {
+      "id": "izek_cot",
+      "cell": [
+        1,
+        12
+      ],
+      "kind": "examine",
+      "label": "A soldier's cot",
+      "model": "bed"
+    },
+    {
+      "id": "lydia_sewing",
+      "cell": [
+        23,
+        12
+      ],
+      "kind": "examine",
+      "label": "Sewing table",
+      "model": "sideboard"
+    },
+    {
+      "id": "victor_circle",
+      "cell": [
+        11,
+        19
+      ],
+      "kind": "examine",
+      "label": "A circle chalked on the floor",
+      "model": "rune_circle"
+    },
+    {
+      "id": "ash_marks",
+      "cell": [
+        13,
+        21
+      ],
+      "kind": "examine",
+      "label": "Scorch marks",
+      "model": "scorch"
+    },
+    {
+      "id": "victor_notes",
+      "cell": [
+        20,
+        21
+      ],
+      "kind": "book",
+      "label": "Victor's notes",
+      "model": "papers",
+      "codex": "victor_notes",
+      "flag": "victor_notes_read",
+      "text": "Pages of chalk diagrams, crossed out and redrawn. 'Third attempt. Grigor stepped in at my word. Flash, heat, nothing. Not transported. Not anywhere.' Below, smaller: 'Fourth attempt: Mirela. The same.' At the bottom, underlined twice: 'The fault is in the destination sigil. Or there is nowhere to go.'"
+    },
+    {
+      "id": "victor_spellbook",
+      "cell": [
+        21,
+        21
+      ],
+      "kind": "examine",
+      "label": "A stolen spellbook",
+      "model": "book"
+    }
+  ],
+  "containers": [
+    {
+      "id": "baron_strongbox",
+      "cell": [
+        20,
+        12
+      ],
+      "label": "The Baron's strongbox",
+      "model": "strongbox",
+      "lock_dc": 16,
+      "gold": 60,
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "flag": "baron_strongbox_opened"
+    },
+    {
+      "id": "attic_trunk",
+      "cell": [
+        5,
+        21
+      ],
+      "label": "Old trunk",
+      "model": "trunk",
+      "items": [
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        },
+        {
+          "id": "candle",
+          "qty": 4
+        }
+      ],
+      "gold": 3
+    }
+  ],
+  "traps": [
+    {
+      "id": "victor_circle_trap",
+      "cells": [
+        [
+          10,
+          18
+        ],
+        [
+          11,
+          18
+        ],
+        [
+          12,
+          18
+        ],
+        [
+          10,
+          19
+        ],
+        [
+          11,
+          19
+        ],
+        [
+          12,
+          19
+        ],
+        [
+          10,
+          20
+        ],
+        [
+          11,
+          20
+        ],
+        [
+          12,
+          20
+        ]
+      ],
+      "label": "Teleportation circle",
+      "detect_dc": 10,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "con",
+        "dc": 14
+      },
+      "damage": "4d6",
+      "damage_type": "force",
+      "flag": "victor_circle_sprung",
+      "when": "flag.victor_circle != \"broken\"",
+      "text": "The chalk lines flare white under your boots. For an instant you are everywhere and nowhere, and then you are back, and it hurts."
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        6,
+        3
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        20,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        16,
+        9
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        26,
+        10
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        22,
+        19
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        11,
+        19
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        8,
+        3
+      ],
+      "dialogue": "vallaki/baron:start",
+      "when": "not flag.festival_begun"
+    },
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        8,
+        3
+      ],
+      "dialogue": "vallaki/baron:after",
+      "when": "flag.vallaki_backed == \"baron\""
+    },
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        15,
+        9
+      ],
+      "dialogue": "vallaki/baron:deposed",
+      "when": "flag.vallaki_backed == \"neither\""
+    },
+    {
+      "npc": "lady_wachter",
+      "cell": [
+        8,
+        3
+      ],
+      "dialogue": "vallaki/lady_wachter:after_rule",
+      "when": "flag.vallaki_backed == \"wachter\""
+    },
+    {
+      "npc": "lydia_petrovna",
+      "cell": [
+        25,
+        10
+      ],
+      "dialogue": "vallaki/lydia:start",
+      "when": "not flag.festival_begun or flag.vallaki_backed == \"baron\" or flag.vallaki_backed == \"neither\""
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        3,
+        11
+      ],
+      "dialogue": "vallaki/izek:at_home",
+      "when": "night and not flag.izek_dead and not flag.izek_told_truth and (not flag.festival_begun or flag.vallaki_backed == \"baron\")"
+    },
+    {
+      "npc": "victor_vallakovich",
+      "cell": [
+        22,
+        19
+      ],
+      "dialogue": "vallaki/victor:start",
+      "when": "not flag.victor_vanished and flag.vallaki_backed != \"wachter\" and not guest:victor_vallakovich"
+    },
+    {
+      "npc": "vallaki_guard",
+      "cell": [
+        10,
+        12
+      ],
+      "dialogue": "vallaki/gate:mansion_guard",
+      "when": "flag.vallaki_backed != \"neither\""
+    }
+  ],
+  "encounters": [
+    {
+      "id": "izek_confrontation",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "Izek comes off the cot in one movement, and the arm that isn't his starts to glow like a coal someone has blown on.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            3,
+            11
+          ],
+          "name": "Izek Strazni",
+          "hp": 110
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            10,
+            9
+          ],
+          "name": "Sergeant of the watch"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_dead",
+      "quest": {
+        "id": "izek_obsession",
+        "stage": "izek_slain"
+      }
+    },
+    {
+      "id": "izek_confrontation",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "Izek comes off the cot in one movement, and the arm that isn't his starts to glow like a coal someone has blown on.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            3,
+            11
+          ],
+          "name": "Izek Strazni",
+          "hp": 95
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Sergeant of the watch"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_dead",
+      "quest": {
+        "id": "izek_obsession",
+        "stage": "izek_slain"
+      }
+    },
+    {
+      "id": "izek_confrontation",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "Izek comes off the cot in one movement, and the arm that isn't his starts to glow like a coal someone has blown on.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            3,
+            11
+          ],
+          "name": "Izek Strazni",
+          "hp": 60
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_dead",
+      "quest": {
+        "id": "izek_obsession",
+        "stage": "izek_slain"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:vallaki_burgomaster_mansion"
+  },
+  "rest": "no",
+  "rest_text": "The Baron's guest beds have been re-stuffed for the festival, and Lady Lydia will not have them slept in before then. Or after."
+}

@@ -36,8 +36,14 @@ func frames(n: int) -> void:
 		await test.get_tree().process_frame
 
 
+## Set STORYBOT_ECHO=1 to watch the run live.
+var echo := OS.get_environment("STORYBOT_ECHO") == "1"
+
+
 func note(text: String) -> void:
 	trace.append("[%s] %s" % [view().loc_id if view() != null else "?", text])
+	if echo:
+		print("    bot: ", trace.back())
 
 
 # --- Waiting --------------------------------------------------------------------------------------
@@ -123,6 +129,11 @@ func converse() -> void:
 	for i in 400:
 		if root.get("dialogue") == null:
 			return
+		# A merchant's shop opened from the talk: look, buy nothing, close it (the talk resumes).
+		for n in root.get_children():
+			if n is ShopScreen:
+				(n as ShopScreen).call("_close")
+				await frames(1)
 		if bool(d.get("_waiting_continue")):
 			d.call("_advance")
 			await frames(1)

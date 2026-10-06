@@ -1,0 +1,179 @@
+# Rictavio, the showman at the Blue Water Inn, who is Rudolph van Richten in disguise (docs/voice/rictavio.md).
+
+~ start
+if flag.rictavio_wagon_opened and not flag.rictavio_wagon_noticed
+-> wagon_angry
+endif
+if flag.rictavio_unmasked
+Rictavio: Keep your voice down and your back to the wall. What do you need?
+-> hunter
+endif
+if not flag.rictavio_met
+set rictavio_met
+Narrator: A half-elf in a scarlet coat and a hat with a whole pheasant's worth of feathers is standing on a chair, addressing a taproom that isn't listening.
+Rictavio [smile]: Friends! Strangers! Strange friends! Rictavio, at your service: teller of tales, singer of songs, proprietor of the most marvellous carnival wagon in seven valleys, which none of you may look inside!
+else
+Rictavio [smile]: My audience returns! Twice in one week. In Barovia that's practically a following.
+endif
+-> menu
+
+~ menu
+* What's in the wagon? -> wagon
+* Where have you come from? -> where
+* Tell us a tale. -> tale
+* [Insight DC 15] The bluster is a costume. What's under it? -> insight_ok | insight_fail
+* [background:sage] (Recognise a phrase he used, from a famous treatise on the walking dead.) -> sage
+* [if flag.rictavio_suspected] You're no showman. Who are you hunting? -> hunted
+* [if flag.rictavio_journal_read] We read your journal, Doctor van Richten. -> unmask
+* [if tarokka.ally.npc == rictavio or tarokka.ally.npc == van_richten] Madam Eva's cards named a man like you. -> cards
+* Goodbye. -> bye
+
+~ wagon
+Rictavio: A beast! A marvel! A creature that would eat a horse and then complain about the seasoning. I keep it locked away for its protection as much as yours. Mostly yours.
+interject tag:curious: What kind of beast?
+Rictavio: The hungry kind. Next question!
+-> menu
+
+~ where
+Rictavio: Everywhere, and recently. I go where the audiences are. Here, there are no audiences, so I suppose I've come to rest.
+-> menu
+
+~ tale
+Rictavio: A tale! There was once a hunter who chased a monster across the whole world, and caught it, and killed it. And do you know what he found? That there was always another monster. The end. It goes better with a lute.
+interject tag:blunt: That's not a tale. That's a warning.
+Rictavio: Most good tales are.
+-> menu
+
+~ insight_ok
+set rictavio_suspected
+Narrator: While he talks, his eyes go to the door and the windows every few seconds, the way a soldier checks his flanks. His hands are old, much older than his face, and seamed with burn scars. Those are a hunter's hands, and he's been hunting a long time.
+-> menu
+
+~ insight_fail
+Narrator: He's loud, cheerful and slightly drunk on his own voice. Either that's all he is, or he's very good at being it.
+-> menu
+
+~ sage
+set rictavio_suspected
+interject background:sage: You said the dead have no shadows to be ashamed of. That's from the monographs. The ones on the walking dead, by the doctor from Mordent. I've read them twice.
+Narrator: For a moment the showman's smile stays exactly where it is, and everything behind it goes very still.
+Rictavio: Have you now. A scholar. How dangerous for you.
+-> menu
+
+~ hunted
+Rictavio: Hunting? I hunt applause, and rarely catch it.
+* [Persuasion DC 15] We're hunting the same thing. Let's stop pretending. -> unmask | hunted_fail
+* Fair enough. -> menu
+
+~ hunted_fail
+Rictavio: You're hunting a good night's sleep, I expect. So am I. Goodnight!
+-> menu
+
+~ cards
+Rictavio: Cards! Gypsy nonsense! Fortune-telling for the gullible!
+Narrator: His hand has stopped halfway to his cup. Slowly, he puts the cup down.
+Rictavio: Eva. Of course it was Eva. That old woman has been shuffling me about this valley for longer than I care to count.
+-> unmask
+
+~ unmask
+set rictavio_unmasked
+attitude rictavio friendly
+Narrator: The showman goes out of him like air out of a bladder. What's left is an old man, very tired and very alert, who sits down and lowers his voice.
+Rictavio: Not that name. Not here. Rudolph van Richten made a great many enemies, and some of them have extremely long lives. Rictavio has none. I would like to keep it that way.
+Rictavio: Take these. I've more than I need, and you, I suspect, have less.
+give holy_water 2
+* Your secret is safe with us. -> keep_secret
+* What are you doing in Vallaki? -> why
+
+~ keep_secret
+set rictavio_secret_kept
+Rictavio: Thank you. People rarely keep secrets in Barovia. It's not malice; it's that he asks so nicely.
+-> hunter
+
+~ why
+Rictavio: The same as you, I expect, only for longer. I came to see whether the lord of this valley can be killed. I'm still deciding. I am also, I'm afraid, still deciding whether I care to survive the answer.
+-> hunter
+
+~ hunter
+if flag.vallaki_backed == "wachter" and not flag.rictavio_gone
+Rictavio: This town has chosen its master, and I watched who helped it choose. I won't sleep another night under a roof that bows to him. I'll be gone by morning, wagon and all.
+if tarokka.ally.npc == rictavio
+-> ally_refused
+endif
+set rictavio_gone
+-> END
+endif
+-> hunter_menu
+
+~ hunter_menu
+* [if tarokka.ally.npc == rictavio and not guest:rictavio] Madam Eva's cards named you. Will you hunt with us? -> ally
+* [if flag.bones_theft_known and not flag.bones_returned] The saint's bones are missing from St. Andral's. -> bones_advice
+* What can you tell us about Strahd? -> strahd
+* What should we make of the Baron and Lady Wachter? -> factions
+* [if flag.doru_destroyed or flag.doru_freed] We've met one of his spawn already. -> spawn_talk
+* Goodbye, Doctor. -> bye
+
+~ bones_advice
+Rictavio: Then he means to send his spawn for the church, and whoever is sheltering in it. They'll be close by, somewhere dark, somewhere nobody looks. Spawn sleep by day like anyone who works nights. Find their beds while the sun is up, and you choose the fight.
+Rictavio: And if you can't, bar the church and stand in it. Holy water. Fire. Don't let them get behind you.
+-> hunter_menu
+
+~ strahd
+Rictavio: Clever. Patient. Bored, which is the dangerous part. He plays with people the way a cat plays, and like a cat he gets careless when he's amused. Keep him amused, and wait.
+interject class:wizard: You make it sound like a strategy.
+Rictavio: It's the only one I've ever seen work. Briefly.
+-> hunter_menu
+
+~ factions
+Rictavio: Both of them will get people killed. Vargas from fear, Fiona from faith. One of them only wants the town to be quiet. The other wants it quiet for him. I'd want neither in charge of a dog kennel.
+-> hunter_menu
+
+~ spawn_talk
+if flag.doru_destroyed
+Rictavio: And you put it down. Good. Every one of them was somebody. That's the part the books don't prepare you for.
+else
+Rictavio: And you let it go. I understand. I did that once. It found me again eleven years later, and it remembered my kindness very precisely.
+endif
+-> hunter_menu
+
+~ wagon_angry
+set rictavio_wagon_noticed
+Rictavio: Someone has been in my wagon. No, don't deny it; I leave a hair across the lock. You're alive, so you didn't open the cage. Good. That was the most important thing.
+if flag.rictavio_journal_read
+Rictavio: And you've read my journal, so there's no use in feathers.
+-> unmask
+endif
+-> menu
+
+~ ally
+Rictavio: Eva's cards. I have spent thirty years refusing to be anybody's fortune.
+Rictavio: Very well. I am too old to keep hunting alone, and you are much too young to be doing it at all. I'll come. The wagon stays; the beast in it is the only creature in Barovia I trust to guard my notes.
+join rictavio
+quest find_the_ally found
+interject name:silvain_aster: I would like it recorded that I am being extremely calm about this.
+-> END
+
+~ ally_refused
+Rictavio: And don't tell me what Eva's cards say. I know what they say. I won't stand beside people who handed a town to him, whatever the cards want.
+* [Persuasion DC 15] We made a bad bargain. Help us make it right. -> ally_won
+* Then go. -> ally_lost
+
+~ ally_won
+Rictavio: ...Words are cheap in this valley. Deeds are what I'll watch. I'll come, and I'll be watching.
+join rictavio
+quest find_the_ally found
+-> END
+
+~ ally_lost
+set rictavio_gone
+quest find_the_ally lost
+Rictavio: Goodbye. I hope you find a better ally than your judgement.
+-> END
+
+~ bye
+if flag.rictavio_unmasked
+Rictavio: Stay in the light where you can. And when you can't, stay together.
+else
+Rictavio [smile]: Farewell, farewell! Tell your friends! Tell your enemies! Tell anyone, really; I'm not particular.
+endif
+-> END

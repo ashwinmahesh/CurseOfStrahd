@@ -1,0 +1,107 @@
+# Luminita, horse-tender of the Tser Pool camp (docs/voice/luminita.md). Her brother Nicu is the hanged man at the
+# crossroads (crossroads.dialogue). The party can tell her (quest the_hanged_vistana `told`), give her his earring,
+# or never say. She knows why he was hanged, and it is her fault.
+
+~ start
+if flag.nicu_kin_told
+-> after_news
+endif
+if flag.luminita_met
+-> again
+endif
+set luminita_met
+Narrator: A young woman with a horse brush in her fist looks up from the pen, sees that you are not who she hoped, and goes back to brushing harder than the horse needs.
+Luminita: You came along the road. Did you pass a rider? Black hair, silver earring, a laugh you can hear across a field. Too handsome, and he knows it.
+if not flag.crossroads_gallows_seen
+quest the_hanged_vistana asked
+endif
+-> menu
+
+~ again
+Luminita: Still no rider on the road? No. You'd have said.
+-> menu
+
+~ menu
+* [if flag.crossroads_gallows_seen] We found a Vistana at the crossroads. Hanged. -> tell
+* [if not flag.crossroads_gallows_seen] We passed no one. -> none
+* Who is he? -> who
+* [Animal Handling DC 12] Help her with the horse. -> horse_ok | horse_fail
+* Goodbye. -> END
+
+~ none
+Luminita: Then he's still in Vallaki, drinking the money. Good. I hope he drinks all of it and comes home with a headache.
+-> END
+
+~ who
+Luminita: Nicu. My brother. He rode to Vallaki four days ago to sell a mare, and said he'd be back the next night with a sack of flour and a new song. He always comes back with a new song.
+-> menu
+
+~ horse_ok
+Narrator: The grey gelding stops sidling and leans its whole weight on you, the way horses do when they've decided you are furniture.
+Luminita: Huh. He doesn't do that for anyone but Nicu. Fine. You can stay.
+attitude luminita friendly
+-> menu
+
+~ horse_fail
+Narrator: The gelding steps squarely on a boot. Luminita does not hide her smile very well.
+Luminita: He doesn't like strangers. Neither do I. It's nothing personal; we just have taste.
+-> menu
+
+~ tell
+Narrator: The brush stops.
+Luminita: Hanged. For what?
+Narrator: You tell her about the board round his neck, and the two words written on it.
+Luminita [angry]: He was no thief.
+Luminita [sad]: The mare was mine. I found her loose in the woods with a Vallaki brand on her rump and a broken halter, and I said, sell her, Nicu, sell her back to them, nobody will know. I said nobody will know.
+set luminita_confessed
+interject tag:loyal: You couldn't have known what they'd do.
+interject class:cleric: A rope is the hangman's sin, child. Not yours.
+-> told
+
+~ told
+set nicu_kin_told
+quest the_hanged_vistana told
+attitude luminita friendly
+attitude stanimir friendly
+if flag.nicu_cut_down
+Luminita: You cut him down. Strangers, and you cut him down and put him in the ground.
+Narrator: She goes into the wagon behind her and comes back with a small corked bottle, which she pushes into the nearest hand without looking at whose it is.
+give potion_of_healing
+Luminita: Grandmother's remedy. It tastes like plums and regret. Take it, before I change my mind.
+elif flag.crossroads_dead_cleared
+Luminita: And he got up again, and you put him down. Good. Good. He'd have hated walking around for somebody else.
+else
+Luminita [angry]: And you left him hanging there. For the crows. Go away. I'll ride out to him myself.
+endif
+-> told_menu
+
+~ told_menu
+* [if flag.nicu_token_taken] Give her his earring. -> earring
+* Leave her be. -> END
+
+~ earring
+Narrator: She takes the silver horse's head, looks at it for a long time, and puts it in her own ear without a word.
+Luminita: There. Now he's still riding.
+-> END
+
+~ after_news
+if not flag.luminita_met
+set luminita_met
+Narrator: A young woman in the horse pen looks up, and you know before she speaks that Stanimir has told her.
+Luminita [sad]: You're the ones who found Nicu. Stanimir told me. I don't want to talk about it. Ask me something else.
+elif flag.nicu_cut_down
+Luminita: You again. The ones who cut him down. Sit with the horses if you like. They're better company than people.
+else
+Luminita: You again. I'm still brushing the same horse. It's very clean now.
+endif
+* Ask about Vallaki. -> vallaki
+* Ask about the Vistani by the lake. -> lake_camp
+* Goodbye. -> END
+
+~ vallaki
+Luminita: Walls, bells, banners, and a burgomaster who throws a festival every week and calls you a traitor if you don't smile at it. They hanged my brother for a horse. Smile at the gate.
+-> after_news
+
+~ lake_camp
+Luminita: Our cousins camp by the lake outside Vallaki. Arrigal runs it. He smiles more than I do and means it less. Tell him Luminita says the horse was mine. Watch his face.
+-> after_news

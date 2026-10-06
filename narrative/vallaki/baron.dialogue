@@ -1,0 +1,201 @@
+# Baron Vargas Vallakovich (docs/voice/baron_vargas.md).
+# start: before the festival, in his great hall. after / holding_court: he won (mansion / square). stocks: Lady
+# Wachter won and he is in his own stocks. deposed: the town won; he sulks in his study.
+
+~ start
+if not flag.baron_met
+-> first
+endif
+if flag.izek_dead
+Baron [sad]: Izek's dead. Did you hear? Somebody killed Izek, in my own house. I'm being very brave about it. Look how brave I'm being.
+elif flag.baron_strongbox_opened
+Baron [angry]: Someone has been in my strongbox! Sixty gold of the festival fund, gone! I suspect gloom. Gloom, and possibly Fiona.
+else
+Baron [smile]: Back again! Wonderful. Have you been enjoying Vallaki? Say yes; it's the law.
+endif
+-> menu
+
+~ first
+set baron_met
+Narrator: The Baron is a round man in a velvet coat with a festival ribbon pinned to every button. He crosses the whole hall to meet you with both hands out, as though you might escape if he walked any slower.
+Baron [smile]: Visitors! From outside! In festival week! It's a sign. Everything is a sign, if you look at it cheerfully. Baron Vargas Vallakovich, burgomaster. You may bow. People generally like to.
+if guest:ireena or flag.vallaki_ireena_announced
+Baron: And Kolyan's girl! My dear, my condolences on your father, and my congratulations on escaping that dreary little village. Nobody there ever held a festival in their lives.
+if flag.burgomaster_buried
+Ireena: He was buried properly. With words said over him. That's all he'd have wanted.
+Baron: Properly! Good! A proper burial is a happy burial.
+Ireena [angry]: That is not a thing.
+endif
+endif
+if flag.strahd_first_impression == "defiant"
+Baron [afraid]: They say you defied him. Him. At a funeral, to his face. Please don't do that here. Or near here. Or within sight of my walls.
+elif flag.strahd_first_impression == "violent"
+Baron [afraid]: They say you drew steel on him at a funeral. Heavens. Well, you're very welcome, as long as you do it somewhere else.
+elif flag.strahd_met
+Baron: They say you've met him. Our lord. And here you stand, still cheerful! We must have you at the festival. On the dais!
+endif
+-> menu
+
+~ menu
+* What is this festival for? -> festival
+* What are you afraid of, Baron? -> afraid
+* [Insight DC 13] Read him. What's under the ribbons? -> read_ok | read_fail
+* Who would wish your festival ill? -> enemies
+* [if not flag.baron_offer_heard] What do you want from us? -> offer
+* [if flag.baron_offer_heard and flag.vallaki_pledge != "baron"] We'll stand with you at the festival after all. -> pledge
+* [if flag.vallaki_pledge == "baron"] What do you need from us before the festival? -> orders
+* [if flag.wachter_evidence and not flag.wachter_exposed and flag.vallaki_pledge != "wachter"] We found this in Lady Wachter's cellar. -> evidence
+* [if flag.izek_dolls_seen and not flag.izek_dead] Izek keeps a chest of dolls with one woman's face. -> izek_dolls
+* [if quest.victors_circle == found] Your son's attic circle has killed two of your servants. -> victor_report
+* Goodbye. -> bye
+
+~ festival
+Baron: For? It's for happiness! Every week, a festival. The Festival of the First Frost. The Festival of Neighbourliness, which was compulsory. This week, the Blazing Sun: a great wicker sun, lit at noon, so the sky remembers what it's supposed to be doing.
+Baron: And everyone comes, and everyone cheers, and anyone who doesn't goes in the stocks. Morale, you see. Morale is a wall.
+interject tag:blunt: Morale by order. I've served under a captain like that. Once.
+-> menu
+
+~ afraid
+Baron: Afraid? Nothing! Nothing at all.
+Baron [afraid]: One thing. Unhappiness. It's a draught under the door, you see. He feels it from the castle. Where people are miserable, he comes in. Where they're happy, he has to knock. So: festivals.
+interject class:wizard: There is no literature whatever to support that.
+Baron: Then the literature has never lived here.
+-> menu
+
+~ read_ok
+Narrator: Under the velvet he's sweating. He believes every word, and the belief is the only thing holding him upright. He is not a cruel man by nature; he is a frightened one, and he has found that cruelty is quicker.
+-> menu
+
+~ read_fail
+Narrator: He beams at you with total, impenetrable cheer. It's either the most sincere face in Barovia or the most practised. Possibly both.
+-> menu
+
+~ enemies
+if not quest.wachter_plot
+quest wachter_plot rumored
+endif
+Baron [angry]: Fiona Wachter. She smiles at me in the street. Nobody smiles at me in the street unless I've ordered it. And her book club meets till dawn. Who reads till dawn? What book takes all night?
+Baron: And the priest, Lucian. Gloomy fellow. Gloomy sermons. But harmless. Unlike Fiona.
+-> menu
+
+~ offer
+set baron_offer_heard
+Baron: I need people who can be seen to be on my side. Big ones, with weapons, standing on my dais at the festival where everyone can see. Make sure my sun burns. Fiona's people will try something; they always try something.
+Baron: And if you happen to find out what her book club actually reads, I'd be delighted to hear it. A hundred gold, the title of Festival Marshal, and a sash. Lydia will sew you a sash.
+* We'll stand with you, Baron. -> pledge
+* We'll think about it. -> think
+* We don't work for men who jail people for frowning. -> refuse
+
+~ think
+Baron: Think cheerfully. That's all I ask. That's all I ever ask.
+-> menu
+
+~ refuse
+Baron [angry]: I don't jail them for frowning. I jail them for spreading it. It's a contagion! Ask the priest; he buries the ones who caught it.
+-> menu
+
+~ pledge
+if flag.vallaki_pledge == "wachter"
+set wachter_betrayed
+endif
+set vallaki_pledge = "baron"
+quest festival_of_the_blazing_sun baron_side
+attitude baron_vargas friendly
+Baron [smile]: Marshals! My marshals! Lydia, they'll need sashes! Gold thread!
+Baron: Now listen. The sun must burn. Somebody always tries to spoil it. Keep an eye on it the night before, and catch whoever comes with a bucket. And stand by me when the torches go in.
+interject tag:loyal: We said we'd stand with you. We will.
+-> menu
+
+~ orders
+if not flag.festival_sun_guarded
+Baron: The sun! Watch the sun the night before, that's when they'll come. Wet straw, that's Fiona's style. Sly. Damp.
+endif
+if not flag.wachter_exposed
+Baron: And proof! Proof about Fiona. Her cellar, her desk, her book club. Bring me a page of something wicked and I'll read it out in front of the whole town.
+endif
+Baron: Then come to the square at noon and tell the herald you're ready. All will be well.
+-> menu
+
+~ evidence
+set wachter_exposed
+quest wachter_plot evidence_found
+Narrator: The Baron reads the letter twice, moving his lips. On the second reading, the colour drains out of him from the forehead down.
+Baron [afraid]: From the castle. She writes to him. He writes back. Warmly.
+Baron: Well. Well! Then at the festival I'll have her taken in front of everyone. A traitor at the festival! It'll be the best one yet!
+-> menu
+
+~ izek_dolls
+Baron: Izek's little hobby? Everybody needs a hobby. Mine is festivals. His is dolls. He's harmless. To me.
+if guest:ireena
+Narrator: His eyes flick to Ireena, and back to you, and his smile goes stiff at the corners.
+Baron: They do look rather like... never mind. Never mind! I'm sure it's a coincidence. Most things are, if you don't look at them.
+endif
+-> menu
+
+~ victor_report
+set victor_circle = "reported"
+quest victors_circle reported
+Baron [afraid]: My son? Circles? He told me those girls went to Krezk.
+Baron [angry]: I'll have that book off him. Tonight. He'll sulk. He always sulks. He sulks the way other boys breathe.
+-> menu
+
+~ bye
+Baron: Go and be cheerful somewhere! Spread it about! It's catching, you know, if you do it properly.
+-> END
+
+# ---------------------------------------------------------------- He won
+
+~ after
+if flag.izek_spurned and not flag.izek_dead
+Baron [afraid]: Izek isn't speaking to me. He just stands in the corner of the hall, staring at nothing. I've ordered him to cheer up. It isn't taking.
+endif
+Baron [smile]: My marshals! You'll come to the Festival of Loyalty, won't you? And the Festival of the Thaw after that? There will be one every week until the sun comes back. Possibly after.
+* How is Lady Wachter? -> after_wachter
+* [if flag.wachter_fate == "stocks"] [Persuasion DC 15] Let Lady Wachter out of the stocks. Exile her instead. -> mercy_ok | mercy_fail
+* Goodbye, Baron. -> bye
+
+~ after_wachter
+if flag.wachter_fate == "stocks"
+Baron: In the stocks, and not one bit sorry. Twice a day I go and ask if she's cheered up. She tells me things about my mother.
+else
+Baron: Gone. Exiled, on your word. I hope she's miserable somewhere far away. Somewhere without festivals.
+endif
+-> after
+
+~ mercy_ok
+set wachter_fate = "exiled"
+Baron: Oh, very well. Out of the stocks and out of the gate, and her house to the festival fund. You're too soft, marshals. It's very becoming.
+-> after
+
+~ mercy_fail
+Baron: Mercy? For Fiona? She wrote letters to the castle! No, no. She stays where the town can see her. It's educational.
+-> after
+
+~ holding_court
+Baron [smile]: Marshals! Have you seen my square? Everyone's so happy! Look at them! Don't look too closely. Just generally.
+-> END
+
+# ---------------------------------------------------------------- Lady Wachter won
+
+~ stocks
+Narrator: The former Baron of Vallaki sits in his own stocks with his wrists through the holes and his gold chain gone. Somebody has hung his sash over the board, upside down.
+Baron [sad]: Ah. My marshals. Or hers, I should say. I'm fine! It's very good for the posture.
+Baron: Do you know, nobody's thrown anything? I'd have thrown something. I suppose they're just not festive.
+* Do you regret anything? -> stocks_regret
+* Goodbye, Vargas. -> END
+
+~ stocks_regret
+Baron: Regret? I kept them alive. Every week, a festival, and every week, they were alive at the end of it. Now she'll keep them alive for him. I hope you think that's better. I really do.
+-> END
+
+# ---------------------------------------------------------------- The town won
+
+~ deposed
+Narrator: The Baron sits at his desk in his shirtsleeves with the festival ledger open in front of him, turning the pages without reading them.
+Baron [sad]: The council lets me keep the sash. Lucian insisted. He's kind, Lucian. I always thought it was gloom.
+* What will you do now? -> deposed_now
+* Goodbye, Baron. -> END
+
+~ deposed_now
+Baron: Lydia wants to grow turnips. Victor wants nothing to do with either of us, which is the same as before. And I... I thought I might go to a festival. Somebody else's. Just to see what it's like, not being in charge of the cheering.
+-> END

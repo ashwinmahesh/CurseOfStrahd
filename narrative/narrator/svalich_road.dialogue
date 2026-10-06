@@ -1,0 +1,191 @@
+# Narrator: the Old Svalich Road and Tser Pool (docs/voice/narrator.md). Second person, present tense, one or two
+# sentences. No rest lines here on purpose: rest triggers merge across regions and prefer conditioned variants, so a
+# flag-conditioned rest line from this region would crowd out every other region's rests for the rest of the game.
+
+# ---------------------------------------------------------------- The Ivlis crossroads
+
+~ enter:svalich_crossroads
+| The road crosses the river on a hump of old stone and comes to a crossroads with a signpost, a gallows and nobody else. The gallows, at least, has company.
+| [night] The crossroads at night: a signpost, a gallows, and a field of low mounds that the dark has gone very quiet around.
+| [flag.nicu_cut_down] The gallows rope hangs empty now, and the mound beside the road has settled. Crossroads are patient; this one will have another guest soon enough.
+| [flag.crossroads_dead_cleared and not flag.nicu_cut_down] The field behind the gallows is a ruin of opened mounds. Nothing in it is getting up again, which is the most you can say for anywhere in this valley.
+| [guest:ireena] Ireena slows at the crossroads and reads every arm of the signpost twice, as if it might have changed its mind about where things are.
+cooldown 30
+
+~ enter:crossroads_west_road
+| The road runs west into darker trees, toward Tser Pool and, a long day beyond it, the walls of Vallaki.
+once
+
+~ enter:ivlis_bridge
+| The bridge is older than the road on either side of it, and the river under it is the colour of strong tea. Something white turns over once in the current and is gone.
+| [species:dwarf] {name} knows good masonry when it is under {name}'s boots: the bridge was built by people who expected it to be here for a thousand years. They were right, and gone.
+once
+
+~ enter:crossroads_gallows
+| Low mounds in rough rows, no stones, no names: the people who were hanged here, put in the nearest ground. The grass grows thick on them. Grass does well on a gallows field.
+| [flag.crossroads_dead_cleared] Every mound in the field has been opened from the inside. The grass lies flat around them, as if something very heavy got up and walked.
+| [night and not flag.nicu_cut_down] The field is cold, colder than the night, and the mounds look less like mounds than like people lying very still with blankets pulled up.
+cooldown 10
+
+~ enter:crossroads_falls_track
+| A rutted track climbs north beside the river. You can hear the falls long before you could ever hope to see them.
+once
+
+~ enter:crossroads_junction
+| Four roads meet here, and none of them looks as if it wants you on it.
+once
+
+~ enter:crossroads_east_road
+| East, the road runs back to the village. From here you can see the smoke of a few chimneys, and above them, on its cliff, the castle.
+once
+
+~ enter:crossroads_south_road
+| The road south climbs between dead pines toward the castle. It is the best-kept road in the valley. Somebody wants it used.
+once
+
+~ examine:hanged_mens_field
+| Mounds with no markers. The rope's work, buried where the rope left it. Somebody once tried to plant a little cross on one of them; it is lying in the grass.
+| [class:cleric] Unblessed ground, and a great deal of it. {name} murmurs a word over the nearest mound, and the grass on it stirs, though there is no wind.
+
+~ examine:ivlis_bridge_stones
+| Names are scratched into the parapet, hundreds of them, by people waiting for someone to come along the road. Some of the newest have dates. None of the dates are recent.
+| [class:wizard] {name} reads the scratched names out of habit. A few are in a hand {name} recognises: neat, crossing its sevens. AUREL WAS HERE. HE KNOWS.
+
+~ examine:castle_road_view
+| The castle stands on its spur of black rock against the sky, every window dark but one. The one is not a candle. You don't want to think about what it is.
+
+~ examine:crossroads_milestone
+| A milestone with the village's name chiselled off and a single word scratched in its place: TURN BACK. Under it, in a different hand: WHERE TO?
+
+~ search:bridge_cache
+| Wedged between two footing stones under the bridge, someone's emergency kit: a corked flask of red, wrapped in oilcloth, and nothing else. {name} pockets it, with a nod to whoever planned so well and didn't need it.
+
+# ---------------------------------------------------------------- Tser Pool
+
+~ enter:tser_pool
+| Fiddle music, woodsmoke, and laughter, real laughter, the first you have heard in this valley. Painted wagons ring a bonfire beside a dark pool, and a great patched tent glows from within.
+| [night] The camp's fire is the brightest thing for miles, and the music carries far into the woods. Nothing in the woods seems to mind. That should tell you something about the camp.
+| [flag.tser_pool_brawl_won] The camp is empty. The fire has burned to a red eye in the ashes, and the wagons stand with their doors open. Only the great tent still glows.
+| [flag.nicu_kin_told and not flag.tser_pool_brawl_won] The fiddle is playing something slow tonight. When you come into the firelight, a few of the Vistani nod to you as if you were cousins.
+| [guest:ireena] Heads turn as Ireena comes into the firelight, and the music falters for half a bar. Then the fiddler plays louder, as if to make up for it.
+cooldown 30
+
+~ enter:tser_road
+| The Old Svalich Road runs past the camp under the pines. A track turns off it toward the firelight and the music.
+once
+
+~ enter:tser_pool_shore
+| Tser Pool is black and perfectly still, though a stream pours into it from the north. The reflections in it are a beat behind the things they reflect.
+once
+
+~ enter:tser_horse_pen
+| Horses in a rail pen, sleek and well fed, the best-cared-for living things you have seen in Barovia. They watch you the way the Vistani do: politely, and counting.
+once
+
+~ enter:tser_camp
+| The camp smells of horses, plums and pipe smoke. Every wagon is painted in colours the valley has forgotten: red, gold, a green like summer.
+once
+
+~ examine:tser_bonfire
+| A big, generous fire built by people who don't have to worry about firewood or who sees it. Its smoke goes straight up, which in this valley counts as a miracle.
+
+~ examine:eva_tent_outside
+| A tent of patched canvas the size of a cottage, painted with suns, moons and eyes. Candlelight moves inside it. The eyes painted nearest the flap have been retouched recently.
+
+~ examine:vistani_wagons
+| Little houses on wheels, carved and painted and hung with bells. Every door is shut. Every window has someone behind it.
+| [class:rogue] {name} counts locks out of habit: good ones, and newer than the wagons. The Vistani trust the road. They don't trust the people on it.
+
+~ examine:tser_pool_water
+| The water is black and clear at once, the way a window is clear at night. The pool's bottom isn't visible. You are not sure there is one.
+
+~ examine:vistani_horses
+| Strong, glossy horses with plaited manes. One of them, a grey gelding, watches the road east and won't stop.
+
+~ examine:wine_casks
+| Casks of plum wine, chalked with dates. The oldest date is older than the walls of Vallaki. Somebody has been sampling it for quality ever since.
+
+~ examine:ribbon_tree
+| A pine hung with hundreds of ribbons, each knotted around a scrap of something: hair, a button, a dried flower. Every ribbon is a name, and every name is someone the road took.
+| [flag.nicu_kin_told] A new ribbon hangs on the ribbon tree, knotted around a lock of black hair. It is the brightest red on the tree.
+
+~ examine:tser_stream
+| A cold stream comes down from the north, from Tser Falls, and slides into the pool without a ripple.
+
+# ---------------------------------------------------------------- Madam Eva's tent
+
+~ enter:tser_pool_eva_tent
+| Incense, candle smoke, and the dry smell of very old paper. Charms hang from every rope, turning slowly, though the air in the tent is still.
+| [flag.eva_reading_done] The tent is as you left it. The five cards are back in the deck; the table remembers where they lay.
+cooldown 20
+
+~ enter:eva_tent_inner
+| A low round table, a deck of cards, a chair, and an old woman who looks as if she has been sitting in it since before the tent was put up around her.
+once
+
+~ examine:tarokka_table
+| The table is scarred with centuries of cards being laid down and taken up. The wood is worn into a shallow cross.
+
+~ examine:eva_chest
+| An iron-bound chest behind Madam Eva's chair, with a lock that is older than any key you have seen.
+| [flag.tser_treasure_given] The iron-bound chest stands open and empty. Madam Eva has not bothered to close it; whatever it was waiting for has come and gone.
+
+~ examine:tent_charms
+| Bones, bells, little mirrors, a dried bird's foot, a child's tooth on a thread. Each one is turning, very slowly, to face you.
+
+# ---------------------------------------------------------------- Tser Falls
+
+~ enter:tser_falls
+| The roar arrives before the view does. Then the trees open on a gorge, and the River Ivlis goes over the edge in one long white fall.
+| [night] In the dark the falls are only a roar and a pale ribbon. Something on the far side of the gorge is howling, and the water is not quite loud enough to cover it.
+cooldown 30
+
+~ enter:falls_ledge
+| The rock at the lip is slick with spray and very cold. Beyond it, nothing but white water and a long way down.
+| [flag.falls_werewolf_slain] The lip of the falls is quiet now, apart from the falls. Long scratches in the rock show where the thing that waited here stood up.
+cooldown 10
+
+~ enter:falls_path
+| The path is worn deep by many feet, all going one way and coming back again. People come to the falls to leave things.
+once
+
+~ enter:falls_west_glade
+| A small glade with a cairn at its heart, out of the wind and the spray. It is the quietest place in the valley, which is not saying much.
+once
+
+~ enter:falls_east_glade
+| Pines, ferns, and a pack lying in the bracken where somebody put it down and didn't come back for it.
+once
+
+~ examine:falls_tokens
+| A boulder heaped with little offerings: buttons, a wooden doll, a rusted spoon, ribbons gone grey with spray. Barovians bring the falls something for the ones it took.
+| [guest:ireena] Ireena looks at the doll on the offering stone for a long time, and doesn't touch it.
+
+~ examine:falls_cairn
+| A cairn of river stones, each scratched with a name. You count forty before you stop counting. The newest stone is blank; someone meant to come back and finish it.
+| [name:ilse_varga] {name} counts every stone on the cairn, all the way to the end. She doesn't say the number.
+
+~ examine:falls_marker
+| A weathered marker stone with a carving of a woman in a long dress, falling. Someone has chipped away the face.
+
+# ---------------------------------------------------------------- Road battlefields (random fights and events)
+
+~ enter:road_ambush
+| The road runs on between its ditches, open fields on both sides and stone walls tumbled into the grass. Plenty of room to see what's coming. Plenty of room for it to come.
+| [night] The road at night: open fields, low walls, and a sky without a single star. Anything could cross those fields, and something is.
+cooldown 0
+
+~ enter:road_forest
+| The road narrows between the pines, so close on both sides that the branches meet overhead. The forest is quiet, in the attentive way of a room where everybody has just stopped talking.
+| [night] Under the pines at night the road is a pale stripe in the black. Your lantern makes a small room of light, and the forest leans in to look.
+cooldown 0
+
+~ examine:broken_cart
+| A cart with a broken axle, half in the ditch, picked clean. The harness was cut, not broken. Whoever drove it left in a hurry, and on foot.
+
+~ examine:fallen_trunk
+| A pine as thick as a barrel lies along the edge of the road, felled long ago. Its upper side has been worn smooth by people sitting on it to rest, and by claws.
+
+~ examine:claw_marked_pine
+| Five long grooves in the bark, higher than a tall man can reach, and sap still beading in them. Fresh.
+| [class:ranger] {name} lays a palm flat beside the marks. A wolf's claws, spread like a hand's. Whatever left them was standing up.

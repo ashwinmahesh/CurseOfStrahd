@@ -1,0 +1,18 @@
+{
+  "id": "luminita",
+  "name": "Luminita",
+  "title": "Horse-tender of the Tser Pool Camp",
+  "summary": "A sharp-tongued young Vistana who tends the camp's horses and watches the road for her brother Nicu, who rode to Vallaki to sell a horse and has not come back.",
+  "portrait": "vistana",
+  "sprite": "vistana",
+  "attitude": "indifferent",
+  "voice": "docs/voice/luminita.md",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "she/her"
+}

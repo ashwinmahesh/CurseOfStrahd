@@ -15,6 +15,7 @@ var setting_out := false
 var _map: Control
 var _info: VBoxContainer
 var _target := ""
+var _bounds := Rect2()
 
 
 func _init() -> void:
@@ -41,9 +42,24 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	_show_info()
 
 
+## Where a place sits on the panel: the known places are fitted to the panel with a margin, so a handful of nearby
+## places spread out instead of bunching in a corner of the valley.
 func _pos(pl: Dictionary) -> Vector2:
 	var p := pl["pos"] as Array
-	return Vector2(float(p[0]) * MAP_SIZE.x, float(p[1]) * MAP_SIZE.y)
+	var at := Vector2(float(p[0]), float(p[1]))
+	if _bounds.size == Vector2.ZERO:
+		var lo := Vector2(1, 1)
+		var hi := Vector2(0, 0)
+		for k in Travel.known(st):
+			var kp := k["pos"] as Array
+			lo = lo.min(Vector2(float(kp[0]), float(kp[1])))
+			hi = hi.max(Vector2(float(kp[0]), float(kp[1])))
+		var span := (hi - lo).max(Vector2(0.25, 0.25))
+		var center := (lo + hi) / 2.0
+		_bounds = Rect2(center - span / 2.0, span)
+	var margin := Vector2(140, 90)
+	var rel := (at - _bounds.position) / _bounds.size
+	return margin + rel * (MAP_SIZE - margin * 2.0)
 
 
 func _draw_map() -> void:
@@ -64,12 +80,18 @@ func _draw_map() -> void:
 		_map.draw_line(_pos(a), _pos(b), Look.color("vampire_red") if on_route else Look.color("umber"), 5.0 if on_route else 3.0)
 		var mid := (_pos(a) + _pos(b)) / 2.0
 		_map.draw_string(font, mid + Vector2(6, -6), "%sh" % _hours_text(float(road["hours"])), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("peat"))
+	var n := 0
 	for id: String in places:
 		var pl := places[id] as Dictionary
 		var at := _pos(pl)
 		var colour := Look.color("vampire_red") if id == here else (Look.color("ember") if id == _target else Look.color("ink"))
 		_map.draw_circle(at, 11.0 if id == here else 8.0, colour)
-		_map.draw_string(font, at + Vector2(14, 6), str(pl["name"]), HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Look.color("ink"))
+		# Names alternate above and below their mark so neighbours don't print over each other.
+		var name_s := str(pl["name"])
+		var w := font.get_string_size(name_s, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x
+		var off := Vector2(-w / 2.0, -16.0 if n % 2 == 0 else 30.0)
+		_map.draw_string(font, at + off, name_s, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Look.color("ink"))
+		n += 1
 
 
 func _on_map_input(ev: InputEvent) -> void:
@@ -115,7 +137,9 @@ func _show_info() -> void:
 			var night := arrive < 6 * 60 or arrive >= 19 * 60
 			var names: Array[String] = []
 			for l in legs:
-				names.append(str((l["road"] as Dictionary).get("name", "a road")))
+				var rn := str((l["road"] as Dictionary).get("name", "a road"))
+				if names.is_empty() or names.back() != rn:
+					names.append(rn)
 			_info.add_child(UiKit.label("By %s" % ", then ".join(names), 14, "vellum", 300))
 			_info.add_child(UiKit.label("%s hours · arriving about %02d:%02d%s" % [_hours_text(h), arrive / 60, arrive % 60,
 				" (after dark: the roads are worse at night)" if night else ""], 15, "candle" if night else "parchment", 300))

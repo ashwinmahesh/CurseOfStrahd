@@ -1,0 +1,332 @@
+{
+  "id": "svalich_crossroads",
+  "name": "The River Ivlis Crossroads",
+  "region": "svalich_road",
+  "summary": "Where the Old Svalich Road crosses the River Ivlis and meets the track to Tser Falls and the road climbing south toward the castle. A gallows stands at the junction, and it is not empty.",
+  "text": "A stone bridge carries the road over the Ivlis. East lies the village of Barovia, west Tser Pool and Vallaki, north the river track to the falls; south, a steeper road climbs toward the castle on its cliff. A gallows stands beside the signpost, and behind it a field of unmarked mounds.",
+  "map": {
+    "rows": [
+      "########  ##############..##############",
+      "########  ##############..##############",
+      "####...~  ~##.......................####",
+      "####...~  ~#.=.~..~........##.......####",
+      "######.~  ~..~..............#....##.####",
+      "#####..~  ~......~.=..............#.####",
+      "####...~  ~.~...=.............#.....####",
+      "####...~  ~...~.....111........~....####",
+      "####..#~  ~.=...~...111.............####",
+      "####...~  ~.........111.............####",
+      "####...~  ~..................===....####",
+      "####....==..........................####",
+      "........................................",
+      "........................................",
+      "####....==..........................####",
+      "####...~  ~..~...............==.....####",
+      "####...~  ~.~.............~~........####",
+      "####.#.~  ~.........~...#~..........####",
+      "####...~  ~...#....~.............##.####",
+      "####...~  ~................##.....#.####",
+      "#####..~  ~#.........##.....#.......####",
+      "######.~  ~##.........#............#####",
+      "####...~  ~..#..................#...####",
+      "####...~  ~.........................####",
+      "########  ######..######################",
+      "########  ######..######################"
+    ],
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "crossroads_west_road",
+      "name": "The west road",
+      "cells": [
+        [
+          0,
+          9
+        ],
+        [
+          3,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "ivlis_bridge",
+      "name": "The Ivlis bridge",
+      "cells": [
+        [
+          4,
+          9
+        ],
+        [
+          10,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "crossroads_gallows",
+      "name": "The gallows field",
+      "cells": [
+        [
+          11,
+          2
+        ],
+        [
+          23,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "crossroads_falls_track",
+      "name": "The falls track",
+      "cells": [
+        [
+          24,
+          0
+        ],
+        [
+          35,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "crossroads_junction",
+      "name": "The crossroads",
+      "cells": [
+        [
+          11,
+          11
+        ],
+        [
+          27,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "crossroads_east_road",
+      "name": "The east road",
+      "cells": [
+        [
+          28,
+          11
+        ],
+        [
+          39,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "crossroads_south_road",
+      "name": "The castle road",
+      "cells": [
+        [
+          11,
+          17
+        ],
+        [
+          35,
+          25
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      22,
+      13
+    ]
+  },
+  "exits": [
+    {
+      "id": "road_east",
+      "cell": [
+        39,
+        12
+      ],
+      "to": "travel",
+      "label": "The Old Svalich Road, east to the village"
+    },
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        12
+      ],
+      "to": "travel",
+      "label": "The Old Svalich Road, west to Tser Pool and Vallaki"
+    },
+    {
+      "id": "falls_track",
+      "cell": [
+        24,
+        0
+      ],
+      "to": "travel",
+      "label": "The river track north, to Tser Falls"
+    },
+    {
+      "id": "castle_road",
+      "cell": [
+        16,
+        25
+      ],
+      "to": "travel",
+      "label": "The road south, to Castle Ravenloft",
+      "when": "false",
+      "locked_text": "The road climbs south through dead pines toward the castle on its cliff. Every sensible part of you says: not yet, and not like this."
+    }
+  ],
+  "props": [
+    {
+      "id": "crossroads_gallows",
+      "cell": [
+        21,
+        8
+      ],
+      "kind": "examine",
+      "label": "The gallows",
+      "model": "gallows",
+      "dialogue": "svalich_road/crossroads:gallows"
+    },
+    {
+      "id": "crossroads_signpost",
+      "cell": [
+        23,
+        11
+      ],
+      "kind": "examine",
+      "label": "A signpost",
+      "model": "signpost",
+      "dialogue": "svalich_road/crossroads:signpost"
+    },
+    {
+      "id": "hanged_mens_field",
+      "cell": [
+        15,
+        5
+      ],
+      "kind": "examine",
+      "label": "Unmarked mounds",
+      "model": "grave_mound"
+    },
+    {
+      "id": "ivlis_bridge_stones",
+      "cell": [
+        9,
+        11
+      ],
+      "kind": "examine",
+      "label": "The bridge parapet",
+      "model": "bridge"
+    },
+    {
+      "id": "castle_road_view",
+      "cell": [
+        17,
+        21
+      ],
+      "kind": "examine",
+      "label": "The road south",
+      "model": "signpost_broken"
+    },
+    {
+      "id": "crossroads_milestone",
+      "cell": [
+        33,
+        11
+      ],
+      "kind": "examine",
+      "label": "A milestone",
+      "model": "milestone"
+    },
+    {
+      "id": "bridge_cache",
+      "cell": [
+        10,
+        15
+      ],
+      "kind": "search",
+      "label": "The bridge footings",
+      "search_dc": 13,
+      "item": "potion_of_healing",
+      "model": "rocks"
+    },
+    {
+      "id": "crossroads_raven",
+      "cell": [
+        12,
+        11
+      ],
+      "kind": "decor",
+      "label": "A raven on a fencepost",
+      "model": "crow"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "crossroads_hanged_dead",
+      "trigger": "enter_area:crossroads_gallows",
+      "when": "night and not flag.nicu_cut_down",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            21,
+            8
+          ],
+          "name": "Nicu, the hanged man"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            13,
+            4
+          ],
+          "name": "Hanged dead"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            15,
+            3
+          ],
+          "name": "Hanged dead"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            17,
+            5
+          ],
+          "name": "Hanged dead"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            14,
+            7
+          ],
+          "name": "Hanged dead"
+        }
+      ],
+      "surprise": "",
+      "flag": "crossroads_dead_cleared",
+      "quest": {
+        "id": "the_hanged_vistana",
+        "stage": "risen"
+      },
+      "text": "On the gallows the hanged man lifts his head. Behind him, all across the field, the mounds begin to split."
+    }
+  ],
+  "narration": {
+    "enter": "enter:svalich_crossroads"
+  },
+  "rest": "risky"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "find_the_tome",
+  "name": "The Tome of Strahd",
+  "summary": "A history of the devil, written in his own hand. Madam Eva says it holds the knowledge of his past.",
+  "giver": "madam_eva",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "foretold",
+      "journal": "Madam Eva's first card spoke of history: a book in the devil's own hand, which tells where he came from and what he lost. She saw where it lies. {tarokka.tome.hint}",
+      "objectives": [
+        "Find the Tome of Strahd"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "We have the Tome of Strahd. The handwriting never wavers.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

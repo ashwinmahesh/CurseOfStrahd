@@ -1,0 +1,37 @@
+{
+  "id": "missing_arabelle",
+  "name": "The Missing Girl",
+  "summary": "Arabelle, the young daughter of the Vistani headman Luvash, vanished from the camp outside Vallaki in the night.",
+  "giver": "luvash",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Luvash, headman of the Vistani camp outside Vallaki, is drinking himself senseless because his daughter Arabelle has been missing since last night. His brother Arrigal runs the camp and seems in no hurry to find her.",
+      "objectives": [
+        "Ask around the camp about Arabelle"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "clue",
+      "journal": "A Vistana at the campfire saw a fisherman walking the lakeshore last night with a sack over his shoulder, and the sack was moving.",
+      "objectives": [
+        "Search the lakeshore north of the camp"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "rescued",
+      "journal": "We pulled Arabelle out of Bluto the fisherman's sack before the lake could have her, and brought her home to Luvash.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "lost",
+      "journal": "We were too slow. The lake closed over Bluto's sack, and Luvash's camp mourns a daughter it will never bury.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

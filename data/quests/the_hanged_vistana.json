@@ -1,0 +1,48 @@
+{
+  "id": "the_hanged_vistana",
+  "name": "The Hanged Man at the Crossroads",
+  "summary": "A young Vistana hangs from the gallows where the Old Svalich Road crosses the Ivlis, and a girl at Tser Pool is waiting for her brother to come home.",
+  "giver": "luminita",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "found",
+      "journal": "A young Vistana hangs from the gallows at the Ivlis crossroads, with a board round his neck that says HORSE THIEF. Someone should cut him down before dark.",
+      "objectives": [
+        "Cut the hanged man down",
+        "Find out who he was"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Luminita, who tends the horses at the Tser Pool camp, is waiting for her brother Nicu to come home from Vallaki. He rode out to sell a horse and has not come back.",
+      "objectives": [
+        "Look for Nicu on the road"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "buried",
+      "journal": "We cut the hanged man down at the crossroads and buried him in the soft earth beside the road, where he will not rise.",
+      "objectives": [
+        "Tell his people at Tser Pool"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "risen",
+      "journal": "The hanged man at the crossroads would not stay dead, and nor would the field of old hanged men behind the gallows. We put them all down again.",
+      "objectives": [
+        "Tell his people at Tser Pool"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "told",
+      "journal": "We told Luminita and Stanimir what became of Nicu at the crossroads. The Tser Pool camp will remember who brought him home.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

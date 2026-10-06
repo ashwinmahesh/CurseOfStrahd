@@ -1,0 +1,227 @@
+# Party banter on the Old Svalich Road and at Tser Pool. Each node opens with an `if` gate: it is eligible only while
+# its condition holds, and plays once. Party members speak through interjections; guests (Ireena, Ismark) speak as
+# themselves, so their lines sit behind `guest:` conditions.
+
+~ banter_left_hanging
+if flag.crossroads_gallows_seen and not flag.nicu_cut_down and not flag.crossroads_dead_cleared
+interject class:cleric: We walked past a hanged boy and left him for the crows. I'd like that on someone's conscience other than mine.
+interject tag:blunt: It's on all of ours. Noted. We go back, or we don't. Decide.
+endif
+-> END
+
+~ banter_nicu_buried
+if flag.nicu_cut_down and flag.nicu_rites_said
+interject tag:cheerful: You know, that's the first person in this valley we've put in the ground who actually stayed there.
+interject class:cleric: Mm. Words help. So does a straight grave.
+endif
+-> END
+
+~ banter_nicu_risen
+if flag.crossroads_dead_cleared
+interject tag:veteran: Left him hanging, and he came down on his own. Lesson learned. We cut them down from now on.
+interject tag:bookish: The literature calls it an unquiet death. The literature has never had one try to strangle it.
+endif
+-> END
+
+~ banter_luminita
+if flag.luminita_confessed
+interject tag:curious: She gave him the horse to sell. She thinks it's her rope.
+interject class:cleric: Then someone should keep telling her it isn't, until she believes it. That's most of what healing is.
+endif
+-> END
+
+~ banter_misdirect
+if flag.stanimir_misdirects
+interject tag:veteran: The fiddler's sending word up the hill that we went east. That's a man risking something for us.
+interject tag:curious: Or a man who'll tell the castle the truth the minute it pays better.
+interject tag:veteran: Both. That's how favours work out here.
+endif
+-> END
+
+~ banter_truth_ilse
+if flag.eva_truth_teller == "ilse_varga"
+interject name:tamsin_tealeaf: Ilse. About the fever. I won't bring it up again.
+interject name:ilse_varga: You just did.
+interject name:tamsin_tealeaf: That was the last time. That one doesn't count.
+interject name:ilse_varga: Noted. ...Thank you.
+endif
+-> END
+
+~ banter_truth_hedda
+if flag.eva_truth_teller == "hedda_ironvow"
+interject name:silvain_aster: Hedda. For what it's worth, the theological literature is unanimous that faith which never goes cold was never tested.
+interject name:hedda_ironvow: Mm. Is it unanimous?
+interject name:silvain_aster: It is now. I'm writing it.
+endif
+-> END
+
+~ banter_truth_silvain
+if flag.eva_truth_teller == "silvain_aster"
+interject name:ilse_varga: Aurel. Your friend. Short version: we find the book, we find him, or we find what happened. Either way, we look.
+interject name:silvain_aster: That is the short version. Thank you, Ilse. I'll want the long one in writing, later.
+endif
+-> END
+
+~ banter_truth_tamsin
+if flag.eva_truth_teller == "tamsin_tealeaf"
+interject name:tamsin_tealeaf: Somebody planted it on me. Me! I've never been so insulted in my life.
+interject name:hedda_ironvow: Mm. Better planted than stolen, little one. Planted means you were chosen.
+interject name:tamsin_tealeaf: That's worse. Hedda, that's so much worse.
+endif
+-> END
+
+~ banter_truth_other
+if flag.eva_truth_teller == "other"
+interject tag:curious: Whatever you told the old woman, you don't have to tell us. But you could. If you wanted.
+interject tag:loyal: Leave it. It was paid for. It's spent.
+endif
+-> END
+
+~ banter_forced_reading
+if flag.eva_reading_paid == "forced"
+interject class:cleric: We took a reading by force from an old woman. I would like it written down somewhere that I was against it.
+interject tag:blunt: It's written down. In her face. She won't forget it.
+endif
+-> END
+
+~ banter_brawl
+if flag.tser_pool_brawl_won
+interject tag:cheerful: The only music in Barovia. We stopped it.
+interject tag:veteran: They drew first.
+interject tag:cheerful: Did they? I keep trying to remember that they did.
+endif
+-> END
+
+~ banter_eva_ireena
+if flag.eva_recognized_ireena and guest:ireena
+Ireena: "You have come round again." What did she mean by that? Don't answer. I don't think I want the answer.
+interject name:tamsin_tealeaf: I'm not answering. I'm just holding the locket very tightly.
+endif
+-> END
+
+~ banter_question
+if flag.eva_question == "escape"
+interject tag:blunt: No door out but through him. Good. I prefer a plan with one road.
+elif flag.eva_question == "weakness"
+interject tag:bookish: The three things, the friend and the room. She made it sound like a recipe. Horrible, but a recipe.
+elif flag.eva_question == "kestrel"
+interject name:ilse_varga: Some of them still walking his roads, she said. In his colours. I'll know them. I'll know their faces.
+interject class:cleric: Mm. And when you know them, we'll be beside you.
+elif flag.eva_question == "dawn"
+interject name:hedda_ironvow: Dawn comes, but it never arrives. I've been chewing on that for a mile. It's the worst sermon I've ever heard, and the truest.
+elif flag.eva_question == "aurel"
+interject name:silvain_aster: Still reading, she said. That sounds like him. That sounds exactly like him.
+elif flag.eva_question == "locket"
+interject name:tamsin_tealeaf: Tatyana. The woman in the locket has a name. Somehow that makes it worse.
+elif flag.eva_question == "ireena"
+interject tag:loyal: Keep her away from heights and still water. We can do that. We can do that every single day.
+elif flag.eva_question == "why"
+interject tag:cheerful: Because he was bored. We're the entertainment. I've had worse jobs. Not many.
+endif
+-> END
+
+~ banter_reading
+if tarokka.drawn and tarokka.ally == darklord
+interject tag:blunt: No ally. Fine. Four of us. Count off.
+interject tag:cheerful: Four! I'm four. I mean, I'm one. We're four.
+elif tarokka.drawn
+interject tag:bookish: Five cards, one valley, and a castle at the end. I have never wanted so badly for a fortune-teller to be a fraud.
+interject class:cleric: She isn't. You know she isn't. That's why you're cross.
+endif
+-> END
+
+~ banter_treasure_given
+if flag.tser_treasure_given
+interject tag:curious: She just had it. In a chest. Behind her chair. For years.
+interject tag:veteran: Waiting for the right hands. Keep yours on it.
+endif
+-> END
+
+~ banter_robbery
+if flag.vistani_robbed and flag.vistani_repaid
+interject tag:blunt: We robbed the only friendly fire in the valley, and paid it back. Let's not do the first part again.
+elif flag.vistani_robbed and flag.stanimir_deceived
+interject class:cleric: Stanimir thinks one of his own boys took his gold. Somebody is going to be shouted at for that, and it won't be us.
+interject tag:curious: The old woman knew, though. She looked right at me.
+endif
+-> END
+
+~ banter_strahd_road
+if flag.strahd_road_encounter == "violent"
+interject tag:blunt: I swung at him. My blade went through fog. Next time, sunlight.
+elif flag.strahd_road_encounter == "courteous"
+interject tag:proud: We were polite to him again. I would like it known that I was polite strategically.
+interject tag:blunt: It didn't look strategic.
+elif flag.strahd_road_encounter == "defiant"
+interject tag:cheerful: Off my road, he said. His road. As if he owns the road.
+interject tag:bookish: He does own the road. That's rather the problem.
+elif flag.strahd_road_encounter == "shield"
+Ireena: You stood in front of me. Don't do it again. ...Thank you.
+elif flag.strahd_road_encounter == "silent"
+interject tag:curious: Nobody said a word to him. Was that brave or was that terrified?
+interject tag:veteran: Yes.
+endif
+-> END
+
+~ banter_anca
+if flag.anca_fate == "unwarned"
+interject class:cleric: Two marks on that old woman's throat, and we let her son wheel her into a churchyard. We should have said.
+interject tag:blunt: We should have. Next time we do.
+elif flag.anca_fate == "staked"
+interject tag:cheerful: The boy didn't watch. Good. I watched for him. I'd rather I had that memory than him.
+endif
+-> END
+
+~ banter_procession
+if flag.dead_procession_turned
+interject tag:curious: They just put the coffin down and walked off. Into the fields. Like a funeral going home.
+interject class:cleric: Mm. That is exactly what it was.
+elif flag.dead_procession_destroyed
+interject tag:veteran: Six of them carrying a coffin for one. They'd measured us. I don't like being measured.
+endif
+-> END
+
+~ banter_raven
+if flag.raven_fed
+interject tag:curious: That raven nodded at us. A bird nodded. And then it flew off toward the vineyards like it wanted us to follow.
+interject species:elf: Some birds in old places carry more than seeds. I'd follow it, one day.
+elif flag.raven_harmed
+interject class:druid: We hurt the one creature in this valley that wasn't trying to kill us. The trees noticed.
+interject tag:blunt: It might have been his.
+interject class:druid: It wasn't.
+endif
+-> END
+
+~ banter_hunters
+if flag.hunters_befriended and flag.werewolf_rumor
+interject tag:veteran: Wolves that walk on two legs, a den in the hills, and a mother they pray to. That's not a pack. That's a regiment.
+interject tag:curious: A regiment with fleas.
+elif flag.hunters_fought
+interject class:cleric: Frightened men with bows, and we cut them down on a road. They thought we were his. Maybe they weren't entirely wrong.
+elif flag.werewolf_rumor
+interject class:ranger: Claw marks higher than a man can reach. Something in these woods stands up when it wants to.
+endif
+-> END
+
+~ banter_falls
+if flag.ireena_falls_memory and guest:ireena
+Ireena: At the falls. I wasn't going to jump. I want you to know that. I just couldn't remember, for a moment, whose feet they were.
+interject tag:loyal: Then we'll remember for you. They're yours. Both of them.
+endif
+-> END
+
+~ banter_werewolf
+if flag.falls_werewolf_slain
+interject tag:veteran: That thing at the falls was listening to the water with us. Waiting for one of us to stand too close to the edge.
+interject tag:cheerful: Good thing none of us is the type to stand too close to an edge.
+interject tag:veteran: You were standing on the edge.
+endif
+-> END
+
+~ banter_ismark_road
+if guest:ismark and visited:tser_pool
+Ismark: Do you know, I'd never been to Tser Pool? Twenty years, half a day's walk. Father always said the Vistani would steal my boots.
+interject tag:cheerful: They didn't, though. You've still got your boots.
+Ismark: I've checked twice.
+endif
+-> END

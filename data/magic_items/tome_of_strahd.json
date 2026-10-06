@@ -1,0 +1,14 @@
+{
+  "id": "tome_of_strahd",
+  "name": "Tome of Strahd",
+  "source": {
+    "book": "CoS",
+    "note": "One of the three Tarokka treasures (data/tarokka). Text is ours; its lore pages and what reading it unlocks come with the regions that hide it (Phase 5/6)."
+  },
+  "category": "quest",
+  "weight_lb": 5,
+  "cost_gp": 0,
+  "quest_locked": true,
+  "summary": "A heavy book bound in black leather and clasped with tarnished silver: the vampire's own account of himself, in his own hand.",
+  "text": "Strahd von Zarovich wrote this history over many years: the wars that won him the valley, the pact he made for youth and for love, the brother he envied and the woman who chose death over him. The handwriting never wavers; the author was very sure of himself. The book holds no enchantment. Its power is what it tells: whoever reads it learns where the vampire came from, what he wanted, and what he lost. Reading it through takes a long rest. Strahd knows when it is opened, and he does not like it."
+}

@@ -1,0 +1,409 @@
+{
+  "id": "cards",
+  "cards": [
+    {
+      "id": "artifact",
+      "name": "Artifact",
+      "deck": "high",
+      "summary": "A thing of power, and the hold it takes on whoever holds it."
+    },
+    {
+      "id": "beast",
+      "name": "Beast",
+      "deck": "high",
+      "summary": "The animal inside the person: hunger, rage, the thing that bites."
+    },
+    {
+      "id": "broken_one",
+      "name": "Broken One",
+      "deck": "high",
+      "summary": "Defeat and despair, and the long, slow work of being mended."
+    },
+    {
+      "id": "darklord",
+      "name": "Darklord",
+      "deck": "high",
+      "summary": "One ruler of terrible power, alone at the top of everything he owns."
+    },
+    {
+      "id": "donjon",
+      "name": "Donjon",
+      "deck": "high",
+      "summary": "The cell, of stone or of the mind, and whoever is shut inside it."
+    },
+    {
+      "id": "executioner",
+      "name": "Executioner",
+      "deck": "high",
+      "summary": "Judgment and its sentence; death delivered as a duty."
+    },
+    {
+      "id": "ghost",
+      "name": "Ghost",
+      "deck": "high",
+      "summary": "The past that will not rest; something dead that still wants."
+    },
+    {
+      "id": "horseman",
+      "name": "Horseman",
+      "deck": "high",
+      "summary": "Death itself, riding unhurried. It arrives for everyone, eventually."
+    },
+    {
+      "id": "innocent",
+      "name": "Innocent",
+      "deck": "high",
+      "summary": "The gentle one who has not yet learned what the world does to gentleness."
+    },
+    {
+      "id": "marionette",
+      "name": "Marionette",
+      "deck": "high",
+      "summary": "A thing worked by strings: the puppet, the spy, the servant someone made."
+    },
+    {
+      "id": "mists",
+      "name": "Mists",
+      "deck": "high",
+      "summary": "The unknown. What lies past the edge of the cards' sight."
+    },
+    {
+      "id": "raven",
+      "name": "Raven",
+      "deck": "high",
+      "summary": "Knowledge from a hidden source; help that arrives on an unexpected wing."
+    },
+    {
+      "id": "seer",
+      "name": "Seer",
+      "deck": "high",
+      "summary": "Insight and inspiration; the one who sees through to what is true."
+    },
+    {
+      "id": "tempter",
+      "name": "Tempter",
+      "deck": "high",
+      "summary": "The offer too sweet to refuse and too costly to accept."
+    },
+    {
+      "id": "swords_1",
+      "name": "Avenger",
+      "deck": "common",
+      "suit": "swords",
+      "value": 1,
+      "summary": "Swords, one. Justice that has started to enjoy itself: a debt paid back with interest."
+    },
+    {
+      "id": "swords_2",
+      "name": "Paladin",
+      "deck": "common",
+      "suit": "swords",
+      "value": 2,
+      "summary": "Swords, two. A champion of the light who keeps faith even when faith stops keeping him."
+    },
+    {
+      "id": "swords_3",
+      "name": "Soldier",
+      "deck": "common",
+      "suit": "swords",
+      "value": 3,
+      "summary": "Swords, three. The courage of the ranks: doing what you are told, and paying for it."
+    },
+    {
+      "id": "swords_4",
+      "name": "Mercenary",
+      "deck": "common",
+      "suit": "swords",
+      "value": 4,
+      "summary": "Swords, four. A blade for hire, loyal for exactly as long as the coin lasts."
+    },
+    {
+      "id": "swords_5",
+      "name": "Myrmidon",
+      "deck": "common",
+      "suit": "swords",
+      "value": 5,
+      "summary": "Swords, five. A warrior sworn to a cause so large it hides everything else from view."
+    },
+    {
+      "id": "swords_6",
+      "name": "Berserker",
+      "deck": "common",
+      "suit": "swords",
+      "value": 6,
+      "summary": "Swords, six. Fury that has forgotten its reasons; strength that cannot stop."
+    },
+    {
+      "id": "swords_7",
+      "name": "Hooded One",
+      "deck": "common",
+      "suit": "swords",
+      "value": 7,
+      "summary": "Swords, seven. The covered face: secrets, suspicion, the stranger nobody looks at twice."
+    },
+    {
+      "id": "swords_8",
+      "name": "Dictator",
+      "deck": "common",
+      "suit": "swords",
+      "value": 8,
+      "summary": "Swords, eight. Rule by fear; a throne that rests on the people kneeling under it."
+    },
+    {
+      "id": "swords_9",
+      "name": "Torturer",
+      "deck": "common",
+      "suit": "swords",
+      "value": 9,
+      "summary": "Swords, nine. Cruelty practised as a craft, suffering made to last."
+    },
+    {
+      "id": "swords_master",
+      "name": "Warrior",
+      "deck": "common",
+      "suit": "swords",
+      "value": 10,
+      "summary": "The master of Swords. The perfect fighter: strength, and no questions asked of it."
+    },
+    {
+      "id": "stars_1",
+      "name": "Transmuter",
+      "deck": "common",
+      "suit": "stars",
+      "value": 1,
+      "summary": "Stars, one. Change for its own sake; one thing made into another, for better or worse."
+    },
+    {
+      "id": "stars_2",
+      "name": "Diviner",
+      "deck": "common",
+      "suit": "stars",
+      "value": 2,
+      "summary": "Stars, two. The seer: knowledge of what has not happened yet, and the weight of carrying it."
+    },
+    {
+      "id": "stars_3",
+      "name": "Enchanter",
+      "deck": "common",
+      "suit": "stars",
+      "value": 3,
+      "summary": "Stars, three. Charm and compulsion; a will bent so gently it never feels the bending."
+    },
+    {
+      "id": "stars_4",
+      "name": "Abjurer",
+      "deck": "common",
+      "suit": "stars",
+      "value": 4,
+      "summary": "Stars, four. The ward and the wall, which keep danger out and also keep things in."
+    },
+    {
+      "id": "stars_5",
+      "name": "Elementalist",
+      "deck": "common",
+      "suit": "stars",
+      "value": 5,
+      "summary": "Stars, five. Fire, stone, water and storm, answering to a voice that may not deserve them."
+    },
+    {
+      "id": "stars_6",
+      "name": "Evoker",
+      "deck": "common",
+      "suit": "stars",
+      "value": 6,
+      "summary": "Stars, six. Power called up to strike; the scholar made into a weapon."
+    },
+    {
+      "id": "stars_7",
+      "name": "Illusionist",
+      "deck": "common",
+      "suit": "stars",
+      "value": 7,
+      "summary": "Stars, seven. Nothing is what it seems: the mask, the trick, the kind lie."
+    },
+    {
+      "id": "stars_8",
+      "name": "Necromancer",
+      "deck": "common",
+      "suit": "stars",
+      "value": 8,
+      "summary": "Stars, eight. Mastery over death, which is never quite mastery, and always has a price."
+    },
+    {
+      "id": "stars_9",
+      "name": "Conjurer",
+      "deck": "common",
+      "suit": "stars",
+      "value": 9,
+      "summary": "Stars, nine. What is called up from elsewhere, and what comes through behind it uninvited."
+    },
+    {
+      "id": "stars_master",
+      "name": "Wizard",
+      "deck": "common",
+      "suit": "stars",
+      "value": 10,
+      "summary": "The master of Stars. Learning and long study, and the pride that tends to walk beside them."
+    },
+    {
+      "id": "coins_1",
+      "name": "Swashbuckler",
+      "deck": "common",
+      "suit": "coins",
+      "value": 1,
+      "summary": "Coins, one. Dash and daring; the robber who bows to the purse he cuts."
+    },
+    {
+      "id": "coins_2",
+      "name": "Philanthropist",
+      "deck": "common",
+      "suit": "coins",
+      "value": 2,
+      "summary": "Coins, two. Charity, true or performed; the giver, and what the gift buys."
+    },
+    {
+      "id": "coins_3",
+      "name": "Trader",
+      "deck": "common",
+      "suit": "coins",
+      "value": 3,
+      "summary": "Coins, three. The fair exchange and the crooked one; every bargain hides a second price."
+    },
+    {
+      "id": "coins_4",
+      "name": "Merchant",
+      "deck": "common",
+      "suit": "coins",
+      "value": 4,
+      "summary": "Coins, four. The shop and the scale; the patient pursuit of profit."
+    },
+    {
+      "id": "coins_5",
+      "name": "Guild Member",
+      "deck": "common",
+      "suit": "coins",
+      "value": 5,
+      "summary": "Coins, five. Belonging bought with dues: the comfort of a fellowship, and its bars."
+    },
+    {
+      "id": "coins_6",
+      "name": "Beggar",
+      "deck": "common",
+      "suit": "coins",
+      "value": 6,
+      "summary": "Coins, six. Want and need; the open hand, and the pride it costs to hold it out."
+    },
+    {
+      "id": "coins_7",
+      "name": "Thief",
+      "deck": "common",
+      "suit": "coins",
+      "value": 7,
+      "summary": "Coins, seven. What is taken in the dark, and what was never truly anyone's."
+    },
+    {
+      "id": "coins_8",
+      "name": "Tax Collector",
+      "deck": "common",
+      "suit": "coins",
+      "value": 8,
+      "summary": "Coins, eight. The share that power claims; corruption that keeps neat accounts."
+    },
+    {
+      "id": "coins_9",
+      "name": "Miser",
+      "deck": "common",
+      "suit": "coins",
+      "value": 9,
+      "summary": "Coins, nine. Hoarding past all use; wealth that has come to own its owner."
+    },
+    {
+      "id": "coins_master",
+      "name": "Rogue",
+      "deck": "common",
+      "suit": "coins",
+      "value": 10,
+      "summary": "The master of Coins. Cunning and ambition; the one who always knows the way out."
+    },
+    {
+      "id": "glyphs_1",
+      "name": "Monk",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 1,
+      "summary": "Glyphs, one. Discipline and stillness; the self held quiet like water in a cup."
+    },
+    {
+      "id": "glyphs_2",
+      "name": "Missionary",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 2,
+      "summary": "Glyphs, two. Faith carried into strange country, persuading or presuming."
+    },
+    {
+      "id": "glyphs_3",
+      "name": "Healer",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 3,
+      "summary": "Glyphs, three. The hand that binds wounds, of the body and of the spirit."
+    },
+    {
+      "id": "glyphs_4",
+      "name": "Shepherd",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 4,
+      "summary": "Glyphs, four. The keeper of a flock; protection that also leads."
+    },
+    {
+      "id": "glyphs_5",
+      "name": "Druid",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 5,
+      "summary": "Glyphs, five. Root and season, the old order of the wild: merciless, and fair."
+    },
+    {
+      "id": "glyphs_6",
+      "name": "Anarchist",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 6,
+      "summary": "Glyphs, six. Rules broken on principle; disorder held as a creed."
+    },
+    {
+      "id": "glyphs_7",
+      "name": "Charlatan",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 7,
+      "summary": "Glyphs, seven. Holy robes worn for profit; the liar at the altar."
+    },
+    {
+      "id": "glyphs_8",
+      "name": "Bishop",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 8,
+      "summary": "Glyphs, eight. Doctrine and rank; faith grown into an institution."
+    },
+    {
+      "id": "glyphs_9",
+      "name": "Traitor",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 9,
+      "summary": "Glyphs, nine. Betrayal by the trusted; the knife that comes from beside you."
+    },
+    {
+      "id": "glyphs_master",
+      "name": "Priest",
+      "deck": "common",
+      "suit": "glyphs",
+      "value": 10,
+      "summary": "The master of Glyphs. Devotion and spiritual leadership; the bridge between the mortal and the divine."
+    }
+  ]
+}

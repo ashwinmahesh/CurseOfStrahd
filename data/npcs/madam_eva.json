@@ -1,0 +1,19 @@
+{
+  "id": "madam_eva",
+  "name": "Madam Eva",
+  "title": "Seer of the Tser Pool Vistani",
+  "summary": "An ancient Vistana seer who reads the Tarokka in the great tent at Tser Pool. She was expecting you, and she says you are late.",
+  "portrait": "madam_eva",
+  "sprite": "madam_eva",
+  "attitude": "indifferent",
+  "voice": "docs/voice/madam_eva.md",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "seer",
+    "tarokka",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "she/her"
+}

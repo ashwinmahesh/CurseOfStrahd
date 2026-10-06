@@ -1,0 +1,20 @@
+{
+  "id": "father_lucian",
+  "name": "Father Lucian",
+  "title": "Lucian Petrovich, priest of St. Andral's",
+  "summary": "The priest of St. Andral's Church, a careful, kind man whose church has kept the dead out of Vallaki for generations, thanks to the saint's bones beneath the altar. The bones are gone.",
+  "portrait": "father_lucian",
+  "sprite": "father_lucian",
+  "attitude": "indifferent",
+  "voice": "docs/voice/father_lucian.md",
+  "monster": "priest_acolyte",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "cleric",
+    "morninglord",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

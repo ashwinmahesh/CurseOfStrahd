@@ -1,0 +1,19 @@
+{
+  "id": "grigor",
+  "name": "Grigor",
+  "title": "Wolf Hunter of the Svalich Woods",
+  "summary": "A grizzled Barovian hunter who leads his nephews through the Svalich Woods after the wolves that took his brother. He shoots first at strangers on the road after dusk.",
+  "portrait": "commoner",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "voice": "docs/voice/road_folk.md",
+  "monster": "warrior_veteran",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "hunter",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

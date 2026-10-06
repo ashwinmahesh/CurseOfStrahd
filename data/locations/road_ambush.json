@@ -1,0 +1,158 @@
+{
+  "id": "road_ambush",
+  "name": "The Old Svalich Road",
+  "region": "svalich_road",
+  "summary": "An open stretch of the Old Svalich Road between ditches and stone field walls: where the road's random fights and meetings play out.",
+  "map": {
+    "rows": [
+      "################################",
+      "#..#...........................#",
+      "#...............#............#.#",
+      "#....##.............===.......##",
+      "###...........................##",
+      "##.....................~~......#",
+      "#...........===................#",
+      "#.~~~.~~~~.~~~~.~~~~.~~~~.~~~~.#",
+      "................................",
+      "................................",
+      "#.~~~.~~~~.~~~~.~~~~.~~~~.~~~~.#",
+      "#..............................#",
+      "#...~~.........................#",
+      "##.............~.........##...##",
+      "#.#.....===..................#.#",
+      "#................#.............#",
+      "#..........................#...#",
+      "################################"
+    ],
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "open_road",
+      "name": "The open road",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          17
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      15,
+      9
+    ]
+  },
+  "exits": [
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        8
+      ],
+      "to": "travel",
+      "label": "On along the road, west"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        31,
+        8
+      ],
+      "to": "travel",
+      "label": "On along the road, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "broken_cart",
+      "cell": [
+        13,
+        6
+      ],
+      "kind": "examine",
+      "label": "A broken cart",
+      "model": "cart_broken"
+    },
+    {
+      "id": "field_wall",
+      "cell": [
+        21,
+        3
+      ],
+      "kind": "decor",
+      "label": "A tumbled field wall",
+      "model": "wall_low"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "road_dead_procession",
+      "trigger": "dialogue",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            21,
+            8
+          ],
+          "name": "Mourner"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            22,
+            9
+          ],
+          "name": "Mourner"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            24,
+            8
+          ],
+          "name": "Pallbearer"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            24,
+            9
+          ],
+          "name": "Pallbearer"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            8
+          ],
+          "name": "Mourner"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            9
+          ],
+          "name": "Mourner"
+        }
+      ],
+      "surprise": "",
+      "flag": "dead_procession_destroyed",
+      "text": "The lanterns drop into the mud, still burning. The mourners come on without them."
+    }
+  ],
+  "narration": {
+    "enter": "enter:road_ambush"
+  },
+  "rest": "risky"
+}

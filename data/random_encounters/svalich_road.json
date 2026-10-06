@@ -1,0 +1,309 @@
+{
+  "id": "svalich_road",
+  "map": "road_ambush",
+  "chance_day": 0.15,
+  "chance_night": 0.4,
+  "summary": "The Old Svalich Road between the Gates, the village, the crossroads and Tser Pool: open ground, ditches and field walls. Wolves by day, the dead and worse by night; now and then a meeting.",
+  "entries": [
+    {
+      "id": "wolves_shadowing",
+      "weight": 3,
+      "when": "day",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            25,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            2
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            3,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            14
+          ]
+        }
+      ],
+      "text": "The wolves that have been pacing you through the fields all morning stop pretending to be shy."
+    },
+    {
+      "id": "funeral",
+      "weight": 2,
+      "when": "day and not flag.funeral_met",
+      "once": true,
+      "dialogue": "svalich_road/events:funeral"
+    },
+    {
+      "id": "raven",
+      "weight": 2,
+      "when": "day and not flag.ravens_met",
+      "once": true,
+      "dialogue": "svalich_road/events:ravens"
+    },
+    {
+      "id": "lost_pack",
+      "weight": 1,
+      "when": "day and not flag.lost_bundle_found",
+      "once": true,
+      "dialogue": "svalich_road/events:lost_bundle"
+    },
+    {
+      "id": "strahd_rides",
+      "weight": 1,
+      "when": "not flag.strahd_road_encounter",
+      "once": true,
+      "dialogue": "svalich_road/events:strahd_rides"
+    },
+    {
+      "id": "wolf_pack_night",
+      "weight": 3,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            25,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            2
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            8,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            3,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            14
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            9,
+            2
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
+            15
+          ]
+        }
+      ],
+      "text": "Eyes in the dark on both sides of the road, low to the ground, and more of them every time you look."
+    },
+    {
+      "id": "dead_on_the_road",
+      "weight": 2,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            8
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            28,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            3,
+            8
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            4,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            22,
+            13
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            7,
+            4
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            24,
+            4
+          ]
+        }
+      ],
+      "text": "Shapes in the road ahead and behind, walking the way the dead walk: without hurry, because they never need to."
+    },
+    {
+      "id": "bats_and_dead",
+      "weight": 2,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            8,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            24,
+            11
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            18,
+            13
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            8
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            3,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            22,
+            4
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            6,
+            14
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            28,
+            15
+          ]
+        }
+      ],
+      "text": "The sky over the road comes apart into wings. Under it, from the ditches, the dead sit up."
+    },
+    {
+      "id": "dead_procession",
+      "weight": 1,
+      "when": "night and not flag.dead_procession_met",
+      "once": true,
+      "dialogue": "svalich_road/events:dead_procession"
+    },
+    {
+      "id": "werewolf_night",
+      "weight": 1,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            26,
+            4
+          ],
+          "name": "Werewolf"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            2,
+            5
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            14
+          ]
+        }
+      ],
+      "text": "A howl ends in a word. Something tall comes out of the field on two legs, still wearing the shreds of a coat."
+    }
+  ]
+}

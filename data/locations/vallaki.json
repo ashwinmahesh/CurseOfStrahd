@@ -1,0 +1,2045 @@
+{
+  "id": "vallaki",
+  "name": "Vallaki",
+  "region": "vallaki",
+  "summary": "A walled town on the shore of Lake Zarovich, kept cheerful by order of its Baron: a sharpened palisade, a church whose saint has gone missing, an inn of ravens, and a square where a great wicker sun waits to be burned.",
+  "text": "A palisade of sharpened logs rings the town. The Old Svalich Road comes in at the east gate and leaves by the west, past a Vistani camp outside the walls. The burgomaster's mansion, Wachterhaus and St. Andral's Church face the square from the north; the Blue Water Inn, the coffin maker and the lockup stand to the south.",
+  "map": {
+    "rows": [
+      "##################################################",
+      "#................................................#",
+      "#.................##############.....########....#",
+      "#..##########.....##############.....########.==.#",
+      "#..##########.....##############.....########....#",
+      "#..##########.....##############.....########.==.#",
+      "#..##########.....##############.....########....#",
+      "#..##########.....##############.....########..=.#",
+      "#..##########.....##############.....########....#",
+      "#.............................................~~.#",
+      "#.======.=====..========..========.=====..=======#",
+      "#................................................#",
+      "#....................11111111....................#",
+      "#..########.###....................#####..######.#",
+      "#..########.###....................#####..######.#",
+      "#..########.###.........=..........#####..######.#",
+      "#..########........................#####..######.#",
+      "#..########.......==..........==...#####..######.#",
+      "#................................................#",
+      "#................................................#",
+      "#................................................#",
+      "............~....................~................",
+      "#............~~...................~..............#",
+      "#....~......................................~....#",
+      "#................................................#",
+      "#................................................#",
+      "#..########........###########...................#",
+      "#..########........###########.####...########...#",
+      "#..########........###########.####...########...#",
+      "#..########.####...###########.####...########...#",
+      "#..########.####...###########.####...########...#",
+      "#..########.####...###########.####...########...#",
+      "#...........####...###########...................#",
+      "#.==..........................................==.#",
+      "#................................................#",
+      "##################################################"
+    ],
+    "theme": "vallaki",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "wachter_lane",
+      "name": "Wachter lane",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          14,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "mansion_grounds",
+      "name": "Before the mansion",
+      "cells": [
+        [
+          15,
+          1
+        ],
+        [
+          34,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "st_andrals_yard",
+      "name": "St. Andral's churchyard",
+      "cells": [
+        [
+          35,
+          1
+        ],
+        [
+          48,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "market_row",
+      "name": "Market row",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          15,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "town_square",
+      "name": "Town square",
+      "cells": [
+        [
+          16,
+          12
+        ],
+        [
+          33,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "east_row",
+      "name": "East row",
+      "cells": [
+        [
+          34,
+          12
+        ],
+        [
+          48,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "west_gate",
+      "name": "West gate",
+      "cells": [
+        [
+          0,
+          20
+        ],
+        [
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "main_street",
+      "name": "Main street",
+      "cells": [
+        [
+          7,
+          20
+        ],
+        [
+          39,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "east_gate",
+      "name": "East gate",
+      "cells": [
+        [
+          40,
+          20
+        ],
+        [
+          49,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "lower_town",
+      "name": "Lower town",
+      "cells": [
+        [
+          1,
+          25
+        ],
+        [
+          16,
+          34
+        ]
+      ]
+    },
+    {
+      "id": "inn_street",
+      "name": "Before the Blue Water Inn",
+      "cells": [
+        [
+          17,
+          25
+        ],
+        [
+          34,
+          34
+        ]
+      ]
+    },
+    {
+      "id": "stockade",
+      "name": "Stockade and lockup",
+      "cells": [
+        [
+          35,
+          25
+        ],
+        [
+          48,
+          34
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      24,
+      21
+    ],
+    "from_road": [
+      47,
+      21
+    ],
+    "from_camp": [
+      1,
+      21
+    ],
+    "from_inn": [
+      24,
+      25
+    ],
+    "from_mansion": [
+      24,
+      9
+    ],
+    "from_church": [
+      40,
+      9
+    ],
+    "from_wachter_house": [
+      8,
+      9
+    ],
+    "from_coffin_maker": [
+      7,
+      25
+    ],
+    "from_blinsky": [
+      7,
+      18
+    ]
+  },
+  "exits": [
+    {
+      "id": "east_gate_road",
+      "cell": [
+        49,
+        21
+      ],
+      "to": "travel",
+      "label": "East gate: the Old Svalich Road"
+    },
+    {
+      "id": "west_gate_camp",
+      "cell": [
+        0,
+        21
+      ],
+      "to": "vallaki_vistani_camp",
+      "spawn": "from_town",
+      "label": "West gate: the Vistani camp"
+    },
+    {
+      "id": "mansion_door",
+      "cell": [
+        24,
+        8
+      ],
+      "to": "vallaki_burgomaster_mansion",
+      "spawn": "default",
+      "label": "The burgomaster's mansion"
+    },
+    {
+      "id": "church_door",
+      "cell": [
+        40,
+        8
+      ],
+      "to": "vallaki_st_andrals",
+      "spawn": "default",
+      "label": "St. Andral's Church"
+    },
+    {
+      "id": "wachter_door",
+      "cell": [
+        8,
+        8
+      ],
+      "to": "vallaki_wachter_house",
+      "spawn": "default",
+      "label": "Wachterhaus"
+    },
+    {
+      "id": "blinsky_door",
+      "cell": [
+        7,
+        17
+      ],
+      "to": "vallaki_blinsky_toys",
+      "spawn": "default",
+      "label": "Blinsky Toys",
+      "when": "not night",
+      "locked_text": "Shut for the night. In the window, a wooden marionette with no face hangs very still, which is somehow worse than if it moved."
+    },
+    {
+      "id": "coffin_door",
+      "cell": [
+        7,
+        26
+      ],
+      "to": "vallaki_coffin_maker",
+      "spawn": "default",
+      "label": "The coffin maker's",
+      "when": "not night",
+      "locked_text": "Barred, and more than barred: you hear a second bolt slide home as you touch the latch, and then someone breathing very carefully on the other side."
+    },
+    {
+      "id": "inn_door",
+      "cell": [
+        24,
+        26
+      ],
+      "to": "vallaki_blue_water_inn",
+      "spawn": "default",
+      "label": "The Blue Water Inn"
+    }
+  ],
+  "props": [
+    {
+      "id": "festival_poster",
+      "cell": [
+        49,
+        20
+      ],
+      "kind": "book",
+      "label": "Festival notice",
+      "model": "notice_board",
+      "codex": "vallaki_festival_notice",
+      "text": "BY ORDER OF THE BARON VARGAS VALLAKOVICH, BURGOMASTER: The FESTIVAL OF THE BLAZING SUN will be held in the town square at noon. Every citizen will attend. Every citizen will be glad. A great sun of wicker will be lit to remind the sky what it is for. Frowning, muttering and remarks about the weather will be noted by the watch. ALL WILL BE WELL."
+    },
+    {
+      "id": "baron_decree",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "book",
+      "label": "Decree on the fence",
+      "model": "notice_board",
+      "codex": "vallaki_happiness_decree",
+      "when": "not flag.festival_over",
+      "text": "DECREE OF THE BURGOMASTER, the ninth this month: Malcontents found spreading gloom shall spend one day in the stocks, or two if they spread it there. Lamps out at the second bell. The gates close at dusk. Gossip about the castle is gloom. Gossip about the weather is gloom. Gossip about the Baron is treason."
+    },
+    {
+      "id": "decree_baron_after",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "book",
+      "label": "Decree on the fence",
+      "model": "notice_board",
+      "codex": "vallaki_decree_triumph",
+      "when": "flag.vallaki_backed == \"baron\"",
+      "text": "DECREE OF THE BURGOMASTER: The traitor Fiona Wachter has been taken in the act and set in the stocks for the town's instruction. Her house is forfeit to the festival fund. The next festival will be held on the seventh day, and it will be the best yet. ALL IS WELL, as was foretold."
+    },
+    {
+      "id": "decree_wachter_after",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "book",
+      "label": "Proclamation on the fence",
+      "model": "notice_board",
+      "codex": "vallaki_wachter_proclamation",
+      "when": "flag.vallaki_backed == \"wachter\"",
+      "text": "PROCLAMATION OF THE BURGOMISTRESS, LADY FIONA WACHTER: There will be no more festivals. Citizens may frown as they please. The curfew stands. The town gives thanks to its rightful lord for its deliverance, and will show him every courtesy when he calls."
+    },
+    {
+      "id": "council_notice",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "book",
+      "label": "Council notice",
+      "model": "notice_board",
+      "codex": "vallaki_council_notice",
+      "when": "flag.vallaki_backed == \"neither\"",
+      "text": "NOTICE: Until the town chooses otherwise, Vallaki is kept by a council of its householders, with Father Lucian Petrovich and Urwin Martikov to speak for it. The stocks are firewood. The curfew stands, because the night has not changed its mind. Bring grievances to the church steps, sober."
+    },
+    {
+      "id": "wicker_sun",
+      "cell": [
+        24,
+        15
+      ],
+      "kind": "examine",
+      "label": "The wicker sun",
+      "model": "wicker_sun",
+      "dialogue": "vallaki/festival:wicker_sun",
+      "burning": "flag.festival_climax and not flag.festival_sun_soaked"
+    },
+    {
+      "id": "town_stocks",
+      "cell": [
+        18,
+        17
+      ],
+      "kind": "examine",
+      "label": "The stocks",
+      "model": "stocks",
+      "when": "flag.vallaki_backed != \"neither\""
+    },
+    {
+      "id": "broken_stocks",
+      "cell": [
+        18,
+        17
+      ],
+      "kind": "examine",
+      "label": "Broken stocks",
+      "model": "stocks_broken",
+      "when": "flag.vallaki_backed == \"neither\""
+    },
+    {
+      "id": "festival_dais",
+      "cell": [
+        21,
+        12
+      ],
+      "kind": "examine",
+      "label": "The festival dais",
+      "model": "dais"
+    },
+    {
+      "id": "lake_gate",
+      "cell": [
+        34,
+        0
+      ],
+      "kind": "examine",
+      "label": "The Lake Gate",
+      "model": "gate"
+    },
+    {
+      "id": "st_andrals_facade",
+      "cell": [
+        38,
+        8
+      ],
+      "kind": "examine",
+      "label": "St. Andral's Church",
+      "model": "church_front"
+    },
+    {
+      "id": "st_andrals_graves",
+      "cell": [
+        46,
+        5
+      ],
+      "kind": "examine",
+      "label": "Churchyard graves",
+      "model": "gravestone"
+    },
+    {
+      "id": "open_grave",
+      "cell": [
+        46,
+        9
+      ],
+      "kind": "examine",
+      "label": "A fresh grave",
+      "model": "grave"
+    },
+    {
+      "id": "mansion_facade",
+      "cell": [
+        21,
+        8
+      ],
+      "kind": "examine",
+      "label": "The burgomaster's mansion",
+      "model": "manor_front"
+    },
+    {
+      "id": "wachterhaus_facade",
+      "cell": [
+        5,
+        8
+      ],
+      "kind": "examine",
+      "label": "Wachterhaus",
+      "model": "manor_front"
+    },
+    {
+      "id": "blinsky_window",
+      "cell": [
+        4,
+        17
+      ],
+      "kind": "examine",
+      "label": "Toyshop window",
+      "model": "shop_window"
+    },
+    {
+      "id": "coffin_sign",
+      "cell": [
+        4,
+        26
+      ],
+      "kind": "examine",
+      "label": "Coffin maker's sign",
+      "model": "sign"
+    },
+    {
+      "id": "inn_sign",
+      "cell": [
+        22,
+        26
+      ],
+      "kind": "examine",
+      "label": "The Blue Water Inn",
+      "model": "sign"
+    },
+    {
+      "id": "lockup",
+      "cell": [
+        41,
+        27
+      ],
+      "kind": "examine",
+      "label": "The lockup",
+      "model": "barred_door"
+    },
+    {
+      "id": "milivoj_hovel",
+      "cell": [
+        13,
+        29
+      ],
+      "kind": "examine",
+      "label": "A leaning hovel",
+      "model": "shutters"
+    },
+    {
+      "id": "palisade",
+      "cell": [
+        49,
+        30
+      ],
+      "kind": "examine",
+      "label": "The palisade",
+      "model": "palisade"
+    },
+    {
+      "id": "arasek_stall",
+      "cell": [
+        31,
+        17
+      ],
+      "kind": "examine",
+      "label": "Arasek's stall",
+      "model": "market_stall"
+    },
+    {
+      "id": "watch_fire",
+      "cell": [
+        46,
+        33
+      ],
+      "kind": "examine",
+      "label": "Watch fire",
+      "model": "brazier"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        16,
+        12
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        33,
+        12
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        16,
+        19
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        33,
+        19
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        48,
+        20
+      ],
+      "kind": "torch",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        48,
+        22
+      ],
+      "kind": "torch",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        1,
+        20
+      ],
+      "kind": "torch",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        40,
+        8
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        22,
+        26
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        26,
+        26
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        28,
+        8
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        46,
+        33
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        24,
+        12
+      ],
+      "dialogue": "vallaki/festival:speech",
+      "when": "flag.festival_begun and not flag.festival_climax",
+      "approach": 10
+    },
+    {
+      "npc": "lydia_petrovna",
+      "cell": [
+        26,
+        12
+      ],
+      "dialogue": "vallaki/festival:crowd_lydia",
+      "when": "flag.festival_begun and not flag.festival_climax"
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        22,
+        12
+      ],
+      "dialogue": "vallaki/festival:crowd_izek",
+      "when": "flag.festival_begun and not flag.festival_climax and not flag.izek_dead and not flag.izek_told_truth"
+    },
+    {
+      "npc": "lady_wachter",
+      "cell": [
+        17,
+        14
+      ],
+      "dialogue": "vallaki/festival:crowd_wachter",
+      "when": "flag.festival_begun and not flag.festival_climax"
+    },
+    {
+      "npc": "father_lucian",
+      "cell": [
+        31,
+        14
+      ],
+      "dialogue": "vallaki/festival:crowd_lucian",
+      "when": "flag.festival_begun and not flag.festival_climax"
+    },
+    {
+      "npc": "urwin_martikov",
+      "cell": [
+        32,
+        15
+      ],
+      "dialogue": "vallaki/festival:crowd_urwin",
+      "when": "flag.festival_begun and not flag.festival_climax"
+    },
+    {
+      "npc": "vallaki_herald",
+      "cell": [
+        20,
+        13
+      ],
+      "dialogue": "vallaki/festival:herald"
+    },
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        24,
+        12
+      ],
+      "dialogue": "vallaki/aftermath:baron",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"baron\"",
+      "approach": 12
+    },
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        22,
+        14
+      ],
+      "dialogue": "vallaki/aftermath:wachter",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"wachter\""
+    },
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        21,
+        13
+      ],
+      "dialogue": "vallaki/aftermath:town",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"town\""
+    },
+    {
+      "npc": "lady_wachter",
+      "cell": [
+        24,
+        12
+      ],
+      "dialogue": "vallaki/aftermath:wachter",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"wachter\"",
+      "approach": 12
+    },
+    {
+      "npc": "lady_wachter",
+      "cell": [
+        18,
+        14
+      ],
+      "dialogue": "vallaki/aftermath:baron",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"baron\""
+    },
+    {
+      "npc": "lady_wachter",
+      "cell": [
+        18,
+        14
+      ],
+      "dialogue": "vallaki/aftermath:town",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"town\""
+    },
+    {
+      "npc": "father_lucian",
+      "cell": [
+        24,
+        13
+      ],
+      "dialogue": "vallaki/aftermath:town",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"town\"",
+      "approach": 12
+    },
+    {
+      "npc": "urwin_martikov",
+      "cell": [
+        26,
+        13
+      ],
+      "dialogue": "vallaki/aftermath:town",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"town\""
+    },
+    {
+      "npc": "lydia_petrovna",
+      "cell": [
+        26,
+        12
+      ],
+      "dialogue": "vallaki/aftermath:lydia",
+      "when": "flag.festival_climax and not flag.festival_over"
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        22,
+        12
+      ],
+      "dialogue": "vallaki/aftermath:baron",
+      "when": "flag.festival_climax and not flag.festival_over and flag.vallaki_pledge == \"baron\" and not flag.izek_dead and not flag.izek_told_truth"
+    },
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        24,
+        12
+      ],
+      "dialogue": "vallaki/baron:holding_court",
+      "when": "flag.vallaki_backed == \"baron\" and day"
+    },
+    {
+      "npc": "baron_vargas",
+      "cell": [
+        18,
+        18
+      ],
+      "dialogue": "vallaki/baron:stocks",
+      "when": "flag.baron_fate == \"stocks\""
+    },
+    {
+      "npc": "lady_wachter",
+      "cell": [
+        19,
+        18
+      ],
+      "dialogue": "vallaki/lady_wachter:stocks",
+      "when": "flag.wachter_fate == \"stocks\""
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        22,
+        12
+      ],
+      "dialogue": "vallaki/izek:after",
+      "when": "flag.vallaki_backed == \"baron\" and day and not flag.izek_dead and not flag.izek_told_truth"
+    },
+    {
+      "npc": "urwin_martikov",
+      "cell": [
+        24,
+        13
+      ],
+      "dialogue": "vallaki/martikovs:council",
+      "when": "flag.vallaki_backed == \"neither\" and day"
+    },
+    {
+      "npc": "vallaki_guard",
+      "cell": [
+        46,
+        20
+      ],
+      "dialogue": "vallaki/gate:start",
+      "when": "not flag.vallaki_arrived",
+      "approach": 5
+    },
+    {
+      "npc": "vallaki_guard",
+      "cell": [
+        46,
+        20
+      ],
+      "dialogue": "vallaki/gate:guard"
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        20,
+        19
+      ],
+      "dialogue": "vallaki/izek:sees_ireena",
+      "when": "day and guest:ireena and not flag.izek_saw_ireena and not flag.festival_begun and not flag.izek_dead and not flag.izek_told_truth",
+      "approach": 6
+    },
+    {
+      "npc": "izek",
+      "cell": [
+        20,
+        19
+      ],
+      "dialogue": "vallaki/izek:start",
+      "when": "day and not flag.festival_begun and not flag.izek_dead and not flag.izek_told_truth"
+    },
+    {
+      "npc": "milivoj",
+      "cell": [
+        45,
+        9
+      ],
+      "dialogue": "vallaki/milivoj:start",
+      "when": "day and (not flag.festival_begun or flag.festival_over)"
+    },
+    {
+      "npc": "gunther_arasek",
+      "cell": [
+        30,
+        18
+      ],
+      "dialogue": "vallaki/arasek:start",
+      "when": "day and (not flag.festival_begun or flag.festival_over)"
+    },
+    {
+      "npc": "vallaki_jailer",
+      "cell": [
+        42,
+        26
+      ],
+      "dialogue": "vallaki/gate:jailer"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "festival_coup",
+      "trigger": "dialogue",
+      "when": "not flag.wachter_cult_broken and level >= 5",
+      "text": "Knives come out of sleeves all over the square. Lady Wachter's people were never here to watch the sun.",
+      "monsters": [
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Nikolai Wachter"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            15
+          ],
+          "name": "Karl Wachter"
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            17,
+            18
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            16,
+            19
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            18,
+            19
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            19,
+            19
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            28,
+            19
+          ],
+          "name": "Wachter's captain"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            17,
+            12
+          ],
+          "name": "Karl's sword-master"
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_coup_crushed",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_crushed"
+      }
+    },
+    {
+      "id": "festival_coup",
+      "trigger": "dialogue",
+      "when": "not flag.wachter_cult_broken and level >= 4",
+      "text": "Knives come out of sleeves all over the square. Lady Wachter's people were never here to watch the sun.",
+      "monsters": [
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Nikolai Wachter"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            15
+          ],
+          "name": "Karl Wachter"
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            17,
+            18
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            16,
+            19
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            18,
+            19
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            19,
+            19
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            17,
+            16
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            16,
+            17
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            28,
+            19
+          ],
+          "name": "Wachter's captain"
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_coup_crushed",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_crushed"
+      }
+    },
+    {
+      "id": "festival_coup",
+      "trigger": "dialogue",
+      "when": "flag.wachter_cult_broken and level >= 5",
+      "text": "Her sons are gone, but Lady Wachter's money is not: hired swords shove through the crowd toward the dais.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            33,
+            15
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            28,
+            19
+          ],
+          "name": "Wachter's captain"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Hired knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            30,
+            19
+          ],
+          "name": "Hired knife"
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_coup_crushed",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_crushed"
+      }
+    },
+    {
+      "id": "festival_coup",
+      "trigger": "dialogue",
+      "when": "flag.wachter_cult_broken and level >= 4",
+      "text": "Her sons are gone, but Lady Wachter's money is not: hired swords shove through the crowd toward the dais.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            28,
+            19
+          ],
+          "name": "Wachter's captain"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Hired knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            30,
+            19
+          ],
+          "name": "Hired knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            19
+          ],
+          "name": "Hired knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            31,
+            19
+          ],
+          "name": "Hired knife"
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_coup_crushed",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_crushed"
+      }
+    },
+    {
+      "id": "festival_coup",
+      "trigger": "dialogue",
+      "when": "not flag.wachter_cult_broken",
+      "text": "Knives come out of sleeves all over the square. Lady Wachter's people were never here to watch the sun.",
+      "monsters": [
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Nikolai Wachter"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            15
+          ],
+          "name": "Karl Wachter"
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            17,
+            18
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            16,
+            19
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            18,
+            19
+          ]
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            28,
+            19
+          ],
+          "name": "Wachter's captain",
+          "hp": 40
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_coup_crushed",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_crushed"
+      }
+    },
+    {
+      "id": "festival_coup",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "Her sons are gone, but Lady Wachter's money is not: hired swords shove through the crowd toward the dais.",
+      "monsters": [
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            28,
+            19
+          ],
+          "name": "Wachter's captain",
+          "hp": 40
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Hired knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            30,
+            19
+          ],
+          "name": "Hired knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            19
+          ],
+          "name": "Hired knife"
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_coup_crushed",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_crushed"
+      }
+    },
+    {
+      "id": "festival_loyalists",
+      "trigger": "dialogue",
+      "when": "not flag.izek_dead and not flag.izek_told_truth and level >= 5",
+      "text": "Izek vaults off the dais with his strange arm already smoking. The Baron's watch closes ranks behind him.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 95
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            19,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            34,
+            13
+          ],
+          "name": "Captain of the watch"
+        }
+      ],
+      "surprise": "",
+      "flag": "baron_overthrown",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_won"
+      }
+    },
+    {
+      "id": "festival_loyalists",
+      "trigger": "dialogue",
+      "when": "not flag.izek_dead and not flag.izek_told_truth and level >= 4",
+      "text": "Izek vaults off the dais with his strange arm already smoking. The Baron's watch closes ranks behind him.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 85
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            19,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "baron_overthrown",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_won"
+      }
+    },
+    {
+      "id": "festival_loyalists",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "The Baron's watch closes ranks around the dais, spears levelled at the crowd, and at you.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Captain of the watch"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            19,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "baron_overthrown",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_won"
+      }
+    },
+    {
+      "id": "festival_loyalists",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "The Baron's watch closes ranks around the dais, spears levelled at the crowd, and at you.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Captain of the watch"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            19,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "baron_overthrown",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_won"
+      }
+    },
+    {
+      "id": "festival_loyalists",
+      "trigger": "dialogue",
+      "when": "not flag.izek_dead and not flag.izek_told_truth",
+      "text": "The Baron's watch closes ranks around the dais, spears levelled at the crowd, and at you.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 60
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            19,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "baron_overthrown",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_won"
+      }
+    },
+    {
+      "id": "festival_loyalists",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The Baron's watch closes ranks around the dais, spears levelled at the crowd, and at you.",
+      "monsters": [
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Captain of the watch",
+          "hp": 40
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            19,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "baron_overthrown",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "coup_won"
+      }
+    },
+    {
+      "id": "festival_izek_rampage",
+      "trigger": "dialogue",
+      "when": "not flag.izek_dead and not flag.izek_told_truth and level >= 5",
+      "text": "Izek's arm bursts into flame to the elbow. Most of the watch backs away from the priest; the ones who don't come with Izek.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 95
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Captain of the watch"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_stopped"
+    },
+    {
+      "id": "festival_izek_rampage",
+      "trigger": "dialogue",
+      "when": "not flag.izek_dead and not flag.izek_told_truth and level >= 4",
+      "text": "Izek's arm bursts into flame to the elbow. Most of the watch backs away from the priest; the ones who don't come with Izek.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 85
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_stopped"
+    },
+    {
+      "id": "festival_izek_rampage",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "The Baron's sergeants shove into the crowd with clubs. The rest of the watch looks at the priest, and stays where it is.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            11
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Captain of the watch"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_stopped"
+    },
+    {
+      "id": "festival_izek_rampage",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "The Baron's sergeants shove into the crowd with clubs. The rest of the watch looks at the priest, and stays where it is.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            11
+          ],
+          "name": "Sergeant of the watch"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_stopped"
+    },
+    {
+      "id": "festival_izek_rampage",
+      "trigger": "dialogue",
+      "when": "not flag.izek_dead and not flag.izek_told_truth",
+      "text": "Izek's arm bursts into flame to the elbow. Most of the watch backs away from the priest; the ones who don't come with Izek.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 60
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_stopped"
+    },
+    {
+      "id": "festival_izek_rampage",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "The Baron's sergeants shove into the crowd with clubs. The rest of the watch looks at the priest, and stays where it is.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "Sergeant of the watch",
+          "hp": 40
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "Town guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_stopped"
+    },
+    {
+      "id": "izek_duel",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "Izek steps down off the dais, flexing the arm that isn't his. A few of the watch step down with him.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 110
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "Izek's sergeant"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Izek's sergeant"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_dead",
+      "quest": {
+        "id": "izek_obsession",
+        "stage": "izek_slain"
+      }
+    },
+    {
+      "id": "izek_duel",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "Izek steps down off the dais, flexing the arm that isn't his. A few of the watch step down with him.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 95
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "Izek's sergeant"
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_dead",
+      "quest": {
+        "id": "izek_obsession",
+        "stage": "izek_slain"
+      }
+    },
+    {
+      "id": "izek_duel",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "Izek steps down off the dais, flexing the arm that isn't his. A few of the watch step down with him.",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Izek Strazni",
+          "hp": 70
+        }
+      ],
+      "surprise": "",
+      "flag": "izek_dead",
+      "quest": {
+        "id": "izek_obsession",
+        "stage": "izek_slain"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:vallaki"
+  },
+  "rest": "risky"
+}

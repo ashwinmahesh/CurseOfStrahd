@@ -1,5 +1,5 @@
-# The road west toward the crossroads, Tser Pool and Vallaki: the departure scene. Phase 4 adds the exit to the travel map;
-# until then this sets village_departed and the escort_ireena stage that Phase 4 reads.
+# The road west toward the crossroads, Tser Pool and Vallaki: the departure scene. It sets village_departed, which opens
+# the village's west exit to the travel map (Phase 4), and the escort_ireena stage that Phase 4 reads.
 
 ~ start
 if flag.village_departed
@@ -35,6 +35,10 @@ endif
 
 ~ depart
 set village_departed
+join ireena
+if flag.ismark_joins_escort
+join ismark
+endif
 quest escort_ireena departed
 Narrator: You walk out of the village of Barovia with the burgomaster's daughter between you. Behind you, a shutter opens a crack, and closes again.
 -> END

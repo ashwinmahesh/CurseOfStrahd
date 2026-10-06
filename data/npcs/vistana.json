@@ -1,0 +1,18 @@
+{
+  "id": "vistana",
+  "name": "Vistana",
+  "title": "Of Arrigal's Camp",
+  "summary": "A Vistani woman tending the fire in the camp outside the walls, who saw more last night than she has told Luvash.",
+  "portrait": "vistana",
+  "sprite": "vistana",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vistana.md",
+  "monster": "scout",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

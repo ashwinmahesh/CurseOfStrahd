@@ -1,0 +1,187 @@
+# Lady Fiona Wachter (docs/voice/lady_wachter.md).
+# start: tea at Wachterhaus before the festival (and after it, if she slipped away). stocks: the Baron won.
+# after_rule: she won, and receives in the Baron's own hall.
+
+~ start
+if flag.festival_over
+-> after_free
+endif
+if flag.wachter_cult_broken
+-> cold
+endif
+if not flag.lady_wachter_met
+-> first
+endif
+if flag.wachter_betrayed
+Lady Wachter: You've been to Vargas. Or to the priest. It doesn't matter which; the tea tastes the same either way. Sit, if you like. I don't hold grudges. I collect them.
+endif
+if flag.wachter_desk_robbed
+Lady Wachter: Someone has been through my desk. Forty-five gold and a bottle of scent. I mention it only so you know that I know.
+endif
+Lady Wachter: Back for more tea? I'll ring for a fresh pot. Sit.
+-> menu
+
+~ first
+set lady_wachter_met
+if not quest.wachter_plot
+quest wachter_plot rumored
+endif
+Narrator: Lady Wachter receives you in a parlour set with a ring of chairs, though only she is in it. She pours tea for each of you without asking how you take it, and gets every cup right.
+Lady Wachter: The strangers the whole town is pretending not to talk about. Sit. The chairs belong to my book club; they won't mind.
+if flag.strahd_first_impression == "courteous"
+Lady Wachter [smile]: I hear you were civil to our lord, at your burgomaster's graveside. Good manners are so rare in this valley. I knew we'd get on.
+elif flag.strahd_first_impression == "defiant"
+Lady Wachter: I hear you told our lord no, at a funeral, to his face. How brave. I do hope you've grown out of it.
+elif flag.strahd_first_impression == "violent"
+Lady Wachter: I hear you drew steel on our lord. How exciting for you. How very brief.
+endif
+if guest:ireena
+Narrator: Her eyes rest on Ireena a moment too long, the way a jeweller's rest on a stone.
+Lady Wachter: And Kolyan's girl. You have a face people remember, my dear.
+Ireena: So I keep hearing.
+endif
+-> menu
+
+~ menu
+* What does your book club read? -> book_club
+* What do you make of the Baron? -> baron
+* [Insight DC 14] What does she actually want? -> read_ok | read_fail
+* [if not flag.wachter_offer_heard] You didn't invite us here for the tea. -> offer
+* [if flag.wachter_offer_heard and flag.vallaki_pledge != "wachter"] About your offer. We're with you. -> pledge
+* [if flag.vallaki_pledge == "wachter"] What do you need from us before the festival? -> orders
+* [if flag.wachter_evidence] We've read your letter from the castle. -> letter
+* [Investigation DC 13] (Ask about the locked door upstairs, and the scratching.) -> stella_ok | stella_fail
+* Goodbye. -> bye
+
+~ book_club
+Lady Wachter: Oh, the classics. History, mostly. The history of this valley, and who it has always belonged to. We're very well read on that subject.
+interject tag:bookish: A reading circle that meets in a cellar. In my experience the books in cellars are the interesting ones.
+Lady Wachter: You have experience. How delightful.
+-> menu
+
+~ baron
+Lady Wachter: Vargas? Vargas is a frightened man who has discovered that if you make everyone else frightened, nobody notices you are. He thinks a wicker sun keeps the night out. It doesn't. Nothing does. One simply has to come to terms with the night.
+-> menu
+
+~ read_ok
+Narrator: There is nothing frightened in her at all, which is rare in Barovia. What's there instead is patience, and faith, and a quiet appetite for the Baron's chair that she isn't troubling to hide.
+-> menu
+
+~ read_fail
+Narrator: She smiles over her cup, and you learn exactly as much as she has decided to let you, which is nothing.
+-> menu
+
+~ offer
+set wachter_offer_heard
+quest wachter_plot offer
+Lady Wachter: No, I didn't. Very well, plainly: at the festival, the Baron's sun will fail. It has rained for a week, and suns are made of straw. When it fails, Vargas will lose his temper in front of the whole town, the way he always does.
+Lady Wachter: And when he does, I will step up and offer the town something better. The watch will have to choose. I'd like them to see you standing behind me when they do.
+* What would you give the town? -> her_vallaki
+* You'd rule it for Strahd. -> for_strahd
+* We'll stand with you. -> pledge
+* We'll think about it. -> menu
+
+~ her_vallaki
+Lady Wachter: No more festivals. No more stocks for a sour face. A town that stops pretending its lord isn't there, and stops annoying him. A vassal who pays her rent sleeps soundly, my dears. Ask Vargas how he sleeps.
+-> menu
+
+~ for_strahd
+Lady Wachter: For him? With him. It's his valley; it always has been. I'd simply stop pretending otherwise. Do you know what he does to towns that pretend? Look at your village. Look at its graveyard.
+interject class:cleric: There's a word for this in every temple I know, my lady.
+Lady Wachter: There's a word for most things in temples. Very few of them keep the wolves off.
+-> menu
+
+~ pledge
+if flag.vallaki_pledge == "baron"
+set baron_betrayed
+endif
+set vallaki_pledge = "wachter"
+quest wachter_plot joined
+quest festival_of_the_blazing_sun wachter_side
+attitude lady_wachter friendly
+Lady Wachter [smile]: Wonderful. Then a small task first. The night before the festival, it would be a great shame if that wicker sun got wet. A very great deal of water. The watchman by it will be asleep after midnight. I've seen to it.
+Lady Wachter: And on the day, stand where the watch can see you. When I speak, don't let Izek reach me. That's all. The town will do the rest; it has been waiting years to.
+interject tag:loyal: We gave our word. I hope you're worth it.
+-> menu
+
+~ orders
+if not flag.festival_sun_soaked
+Lady Wachter: The sun, my dears. Water. After midnight, when the square is empty.
+endif
+if not flag.izek_dead and not flag.izek_told_truth
+Lady Wachter: And don't kill Izek before the festival, however tempting. Today it would look like murder. On the day it will look like justice.
+endif
+Lady Wachter: Then go to the square at noon and tell that dreadful herald you're ready.
+-> menu
+
+~ letter
+if flag.vallaki_pledge == "wachter"
+Lady Wachter: And? I'm not ashamed of my correspondents. I'm only sorry you read it before I showed you. I'd have liked to see your faces.
+else
+Lady Wachter: So you've been in my cellar. How bold. Do what you like with it. Vargas reads with his lips moving, and the priest won't believe evil of anyone until it bites him.
+endif
+-> menu
+
+~ stella_ok
+Narrator: For a heartbeat the tea stops halfway to her mouth.
+Lady Wachter: My daughter, Stella. She was a clever, wilful girl, and she made a promise to someone she shouldn't have, and he took it very literally. Now she believes she's a cat. She's quite happy. Happier than most of us. Leave her be.
+-> menu
+
+~ stella_fail
+Lady Wachter: Mice. Old houses have mice. Old families too. More tea?
+-> menu
+
+~ bye
+Lady Wachter: Do come again. Bring an appetite and an open mind; I can supply everything else.
+-> END
+
+~ cold
+Narrator: The parlour is cold. The ring of chairs has been turned to face the wall, and Lady Wachter sits alone in black, with no tea.
+Lady Wachter: You killed my sons in my own cellar, and now you come to my parlour. I'd offer you a cup, but I don't think you'd drink it, and you'd be right.
+Lady Wachter: Go and tell Vargas, if you haven't. Go and tell the priest. And when you watch that wicker sun tomorrow, remember: the night is longer than any fire anyone has ever lit.
+-> END
+
+# ---------------------------------------------------------------- After the festival
+
+~ after_free
+Lady Wachter: You again. Come to see how the losers live? Very comfortably, as it happens. Enjoy your council. It will talk you all to death long before he gets round to it.
+-> END
+
+~ stocks
+Narrator: Lady Wachter sits in the Baron's stocks with her back straight and her hair still pinned. People walk wide around her, and she watches each of them go as if writing down their names.
+Lady Wachter: Come to gloat? Please do. There's so little else to look at.
+* Was it worth it? -> stocks_worth
+* [Insight DC 12] What is she waiting for? -> stocks_insight
+* Goodbye. -> END
+
+~ stocks_worth
+Lady Wachter: Ask me again in a year, when Vargas is still holding festivals and his lord has stopped finding them amusing.
+-> END
+
+~ stocks_insight
+Narrator: She is not afraid, and she is not resigned. She is waiting for nightfall, and for a visitor, with the calm of someone who has never once been let down by him.
+-> END
+
+~ after_rule
+Narrator: Lady Wachter sits in the Baron's great hall, in the Baron's chair, with her own tea service on his table. The festival portraits are stacked face to the wall.
+Lady Wachter [smile]: My friends. Sit. You've done this town a great service, whatever the priest says from his pulpit.
+* What happens to Vallaki now? -> rule_now
+* [if guest:ireena] And Ireena? -> rule_ireena
+* [Insight DC 13] What did she promise the castle? -> rule_insight
+* Goodbye, my lady. -> END
+
+~ rule_now
+Lady Wachter: Quiet. Curfew. Courtesy. When a black carriage stops at the gate, the gate opens. When a guest of the castle passes, the town bows. In return, the wolves keep to the woods and nobody vanishes without a reason.
+interject tag:blunt: Without a reason he gives you, you mean.
+Lady Wachter: It's more than Vargas ever got.
+-> after_rule
+
+~ rule_ireena
+Lady Wachter: Kolyan's girl is welcome to stay, of course. More than welcome. I'd see her very well looked after, and so would my lord.
+Ireena [angry]: I'd sooner sleep in the lake.
+Lady Wachter: People have, my dear. Ask the fishermen.
+-> after_rule
+
+~ rule_insight
+Narrator: Everything, sooner or later. Tonight, the town. Tomorrow, whatever he asks for next. She knows it, and she has decided it is a fair price, because she has decided she will never be the one who pays it.
+-> after_rule

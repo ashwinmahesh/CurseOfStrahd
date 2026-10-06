@@ -1,0 +1,19 @@
+{
+  "id": "vallaki_herald",
+  "name": "Festival Herald",
+  "title": "Crier of the Baron's Festivals",
+  "summary": "A watchman with a good voice and a bad cough, posted by the wicker sun to announce the Festival of the Blazing Sun and to note who is not looking forward to it.",
+  "portrait": "vallaki_guard",
+  "sprite": "vallaki_guard",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vallaki_guard.md",
+  "monster": "bandit",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "guard",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

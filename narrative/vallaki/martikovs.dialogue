@@ -1,0 +1,153 @@
+# Urwin and Danika Martikov of the Blue Water Inn (docs/voice/urwin_martikov.md, docs/voice/danika_martikov.md).
+# urwin: behind the bar (shop). danika: in the kitchen. council: Urwin speaking for the town, if the town won.
+
+~ urwin
+if flag.vallaki_backed == "wachter"
+Urwin: We'll still give you a bed. Danika says it's what you do. We won't sell you anything. I say that's what you do.
+-> END
+endif
+if not flag.keepers_of_the_feather_met and not flag.raven_harmed and (flag.vallaki_backed == "neither" or (flag.festival_over and flag.bones_returned) or (flag.raven_fed and flag.bones_returned))
+-> keepers
+endif
+if not flag.martikovs_met
+set martikovs_met
+Narrator: The man behind the bar has black hair, black eyes and the stillness of somebody who has been listening to the room since before you came into it.
+if flag.raven_harmed
+Narrator: He looks at you for a long moment before he speaks, the way you'd look at someone you have already heard about, and not kindly.
+Urwin: Bed's upstairs. Meal's on the stove. Leave the birds on the roof alone.
+else
+Urwin: Bed's upstairs, meal's on the stove. Questions are free. I might not answer them.
+endif
+else
+Urwin: Back. Good.
+endif
+-> urwin_menu
+
+~ urwin_menu
+* Let's see what you're selling. -> trade
+* What's the talk in town? -> rumors
+* [if guest:ireena and not flag.bones_returned] Can Ireena stay here for now? -> ireena_room
+* [if flag.vallaki_pledge != "town" and not flag.festival_begun] Whose side are you on, the Baron's or Lady Wachter's? -> sides
+* [Insight DC 15] There's something he's not saying. -> insight_ok | insight_fail
+* Goodbye. -> END
+
+~ trade
+Urwin: Bread, candles, oil, rope. One potion; a traveller paid his bill with it and then didn't need it. Prices are fair. Fairer than Bildrath's, anyway.
+shop
+-> urwin_menu
+
+~ rumors
+if not flag.bones_returned
+Urwin: Lucian's stripped his altar. Something's gone from the church that shouldn't have. Milivoj the gravedigger is spending more on bread than he earns.
+endif
+if not flag.wachter_cult_broken and not flag.festival_over
+Urwin: Lady Wachter's cellar lamps burn till dawn. Her book club. Nobody's ever seen a book go in.
+endif
+if not flag.arabelle_rescued and not flag.arabelle_lost
+Urwin: The Vistani headman outside the walls has lost his girl. His brother doesn't seem to mind much. That's worth thinking about.
+endif
+Urwin: And the coffin maker's had a delivery he won't talk about. Big crates. In the night.
+-> urwin_menu
+
+~ ireena_room
+leave ireena
+set ireena_sanctuary = "inn"
+quest sanctuary_for_ireena at_inn
+Urwin: The room over ours. Nothing comes in through our windows that we don't let in.
+Ireena: That's a strange thing for an innkeeper to promise.
+Urwin: It's a strange inn.
+if guest:ismark
+* Ismark, stay with your sister. -> ismark_stays
+* Ismark, we need you with us. -> ismark_goes
+endif
+-> urwin_menu
+
+~ ismark_stays
+leave ismark
+set ismark_guards_ireena
+Ismark: Fine. I'll sit in the taproom and drink Urwin's wine and glare at the door. It's a sacrifice, but I'm prepared to make it.
+-> urwin_menu
+
+~ ismark_goes
+Ismark: Right. Urwin, if anything so much as looks at her...
+Urwin: It won't get the chance.
+-> urwin_menu
+
+~ sides
+Urwin: Mine. The town's. If you mean the Baron or the widow: neither. Vargas puts people in the stocks for frowning. Fiona would put them in the ground for him, and smile while she did it.
+* Then we'll stand with the town too. -> pledge_town
+* Fair enough. -> urwin_menu
+
+~ pledge_town
+if flag.vallaki_pledge == "baron"
+set baron_betrayed
+elif flag.vallaki_pledge == "wachter"
+set wachter_betrayed
+endif
+set vallaki_pledge = "town"
+quest festival_of_the_blazing_sun town_side
+attitude urwin_martikov friendly
+Urwin: Then talk to Lucian. He's better with words. When it comes to the festival, there'll be more of us in the crowd than you'll think. Keep your eyes on the rooftops.
+-> urwin_menu
+
+~ insight_ok
+Narrator: He watches the windows more than the door. Each time a bird lands on the sill, he glances at it the way a man glances at a friend, and once you'd swear it nodded back.
+-> urwin_menu
+
+~ insight_fail
+Narrator: He polishes a cup that doesn't need polishing and gives you nothing. He's done this before, to better questioners than you.
+-> urwin_menu
+
+~ keepers
+set keepers_of_the_feather_met
+set wizard_of_wines_hook
+Narrator: Urwin closes the shutters, one after another, and when he turns round there are ravens on every beam of the taproom: a dozen, two dozen, silent, all watching you.
+if flag.raven_fed
+Urwin: A friend of ours walked beside you on the road and you fed him. Then you stood by this town. That makes you friends of ours.
+else
+Urwin: You stood between this town and the people who'd sell it. That makes you friends of ours.
+endif
+Urwin: We're the Keepers of the Feather. We watch. We carry word. Some nights we fly.
+Urwin: My father keeps a vineyard south of here: the Wizard of Wines. The wine's stopped coming, and so has word from him. When you're on that road, go to him. Tell him Urwin sent you. The ravens will know you.
+interject tag:curious: Did one of them just wink at me?
+Urwin: Probably. Don't encourage him.
+-> END
+
+~ council
+Urwin: Council business. Grain, lamp oil, who mends the palisade. Not a festival in sight. I've never been so happy to be bored.
+if flag.wachter_fate == "free"
+Urwin: Fiona's still in her house, smiling at us through the window. One day she'll make a mistake, and we'll be watching when she does.
+endif
+-> END
+
+~ danika
+if flag.vallaki_backed == "wachter"
+Danika [angry]: You did this. I know you did; the whole town watched you do it. You'll get a bed, because I won't turn anyone into the night. Don't expect breakfast.
+-> END
+endif
+if not flag.danika_met
+set danika_met
+Narrator: A woman with flour to the elbows looks up from a cauldron, takes in your boots and your weapons, and decides you can stay.
+Danika: Guests. Wipe your feet. Brom! Bray! Get away from that window. Sorry. Two boys and an inn. You'd think one would cancel out the other.
+endif
+* What's good to eat? -> eat
+* [if not flag.wizard_of_wines_hook] The wine at the bar is thin. -> wine
+* [if guest:ireena] Will Ireena be safe here? -> ireena_safe
+* Goodbye. -> END
+
+~ eat
+Danika: Stew. It's always stew. What's in it depends what Urwin found. Don't ask him, and don't ask the stew.
+-> danika
+
+~ wine
+set wizard_of_wines_hook
+Danika: Thin? It's the last cask. The wine comes from Urwin's father's vineyard, the Wizard of Wines, south of the lake road. Every month, a cart. Three months now, no cart, and no word.
+if flag.wine_shortage_heard
+interject tag:curious: The tavern in the village of Barovia is out too. The barkeep said the deliveries had stopped.
+Danika: Then it's not just us. Then something's wrong at the vineyard. I'll tell Urwin. He'll want to know where you heard it.
+endif
+-> danika
+
+~ ireena_safe
+Danika: Safe as anyone in this valley. Safer than most. Our windows have very good locks, and better neighbours.
+-> danika

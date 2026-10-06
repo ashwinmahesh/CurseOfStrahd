@@ -147,7 +147,7 @@ def semantic_checks(data):
     skills = set(json.loads((SCHEMAS / "common.schema.json").read_text())["$defs"]["skill"]["enum"])
 
     def need(kind, table, ident, where, level=0):
-        if ident in table:
+        if ident in table or (kind == "item" and ident in data.get("magic_items", {})):
             return
         if kind == "spell" and level > PHASE_MAX_LEVEL:
             pending.append(f"{where}: spell '{ident}' (level {level} content, added in a later phase)")
@@ -298,6 +298,8 @@ def campaign_checks(data, errors, pending):
                     if slot in ("tome", "symbol", "sword"):
                         place_ok(o["place"], o["region"], w)
                     elif slot == "ally":
+                        if o["npc"] == "":
+                            continue  # a card that names no ally (the Darklord)
                         if o["npc"] not in npcs:
                             (pending if o["region"] in LATER_REGIONS else errors).append(f"{w}: npc '{o['npc']}'" + (" (a later phase)" if o["region"] in LATER_REGIONS else " unknown"))
                     else:
@@ -310,9 +312,13 @@ def campaign_checks(data, errors, pending):
         for e in t["entries"]:
             if not e.get("monsters") and not e.get("dialogue"):
                 errors.append(f"{w}: an entry needs monsters or a dialogue")
+            rows = locations.get(t["map"], {}).get("map", {}).get("rows", [])
             for m in e.get("monsters", []):
                 if m["monster"] not in monsters:
                     errors.append(f"{w}: unknown monster '{m['monster']}'")
+                x, z = m["cell"]
+                if rows and not (0 <= z < len(rows) and 0 <= x < len(rows[z]) and rows[z][x] in ".~1234"):
+                    errors.append(f"{w}: {m['monster']} at {m['cell']} isn't on open floor of {t['map']}")
     for mid, tm in data.get("travel", {}).items():
         w = f"travel/{mid}"
         ids = {p["id"] for p in tm["places"]}

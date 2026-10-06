@@ -1,0 +1,162 @@
+# Izek Strazni, the Baron's enforcer (docs/voice/izek.md).
+# sees_ireena: the first time he sees Ireena, in the square. start: by day in the square. at_home: by night in his
+# room in the mansion, where a fight can start. after: the Baron won and Izek still stands at his shoulder.
+
+~ sees_ireena
+set izek_saw_ireena
+set izek_met
+quest izek_obsession noticed
+Narrator: A big man in a watch captain's coat stops dead in the middle of the square. His right arm is wrong: scaled red-black to the shoulder, with claws where the nails should be. He is staring at Ireena as if she were a ghost he'd been expecting for years.
+Izek: You.
+Ireena: Me. Do I know you?
+Izek: Where did you come from? Who are you?
+* Her business is her own. -> back_off
+* [Intimidation DC 14] (Step between them.) Walk on, watchman. -> scare_ok | scare_fail
+* Her name is Ireena. -> name
+
+~ back_off
+Izek: Everything in this town is the Baron's business. And the Baron's business is mine.
+Narrator: He doesn't move until Ireena turns away. Then he watches her go, and goes on watching the place where she was.
+-> END
+
+~ scare_ok
+Narrator: For a moment the scaled hand flexes, and you hear the claws click. Then he looks at your weapons, and at the crowd watching, and steps back one pace.
+Izek: Not here. Not in front of the town.
+-> END
+
+~ scare_fail
+Izek: You think you frighten me? Something took my arm when I was nine and gave me this one. Nothing's frightened me since.
+Narrator: He looks past you, at Ireena, the whole time he's speaking.
+-> END
+
+~ name
+Izek: Ireena.
+Narrator: He says it as if tasting it.
+Izek: I've seen you. Every night since I was nine years old. I didn't know your name. Now I do.
+Ireena [afraid]: Ismark warned me there'd be men like you. I thought he meant the castle.
+-> END
+
+~ start
+if not flag.izek_met
+set izek_met
+Narrator: The Baron's enforcer stands in the square with his arms folded, the scaled one under the ordinary one, watching the town the way a dog watches sheep.
+Izek: Strangers. The Baron says be polite to strangers. I'm being polite.
+else
+Izek: You again.
+endif
+-> menu
+
+~ menu
+* What happened to your arm? -> arm
+* [Insight DC 13] What does he want, besides obedience? -> read_ok | read_fail
+* [if flag.izek_dolls_seen] We've heard about your dolls. -> dolls
+* [if flag.izek_story_heard and flag.izek_dolls_seen and (guest:ireena or flag.ireena_met) and not flag.izek_sister_truth] [Insight DC 12] (Put the pieces together.) -> deduce_ok | deduce_fail
+* [if flag.izek_sister_truth and not flag.izek_told_truth] Izek, we know who the red-haired woman is. -> truth
+* Goodbye. -> END
+
+~ arm
+set izek_story_heard
+Izek: Wolves. When I was nine. My little sister and me, in the woods past the lake, gathering sticks. They came out of the trees and took her, and took my arm with her.
+Izek: I woke up with this one. Nobody knows where it came from. The Baron doesn't ask. That's why I work for him.
+interject class:cleric: And your sister?
+Izek: Never found. They found my arm. Not her.
+-> menu
+
+~ read_ok
+Narrator: Under the menace there is something almost like grief, worn down to a point. Whatever he wants, he has wanted it every day of his life, and nothing he's done for the Baron has come close to it.
+-> menu
+
+~ read_fail
+Narrator: He looks back at you with the flat patience of a man who hurts people for a living. Whatever he wants, it isn't to talk to you.
+-> menu
+
+~ dolls
+Izek [angry]: Blinsky talks too much. One day I'll take the rest of his teeth for it.
+Izek: She's real. I dream her every night. Her face, her hair. When I find her, I'll keep her safe. Nobody will ever take her into the trees again.
+if guest:ireena
+Narrator: He says it to you, but he's looking at Ireena, and she's looking at the ground.
+endif
+-> menu
+
+~ deduce_ok
+set izek_sister_truth
+quest izek_obsession truth_guessed
+Narrator: It fits like a key in a lock. A little sister lost in the woods by the lake, about the age Ireena was when Kolyan Indirovich found her wandering, with no memory of where she came from. The red hair.
+Narrator: Izek hasn't been dreaming of a woman all these years. He's been remembering a child.
+interject tag:curious: Oh. Oh, no.
+-> menu
+
+~ deduce_fail
+Narrator: There's something here, a pattern in the woods and the wolves and the red hair, but it slips away before you can hold it.
+-> menu
+
+~ truth
+Narrator: You tell him: the woods, the wolves, the little sister who was never found. The girl the burgomaster of Barovia took in, wandering, with no memory of where she came from. The red hair. The year.
+* [Persuasion DC 14] Make him hear it. -> truth_ok | truth_fail
+* [if guest:ireena] Let Ireena tell him herself. -> truth_ireena
+
+~ truth_ireena
+Ireena: I don't remember anything before Kolyan's house. Only trees, and being cold, and a boy shouting a name. I always thought the name was mine.
+-> truth_ok
+
+~ truth_ok
+set izek_told_truth
+quest izek_obsession truth_told
+Izek: No.
+Narrator: He looks at you, and then at nothing, for a very long time. The scaled hand opens and closes. When he speaks again his voice has gone quiet, the way a struck bell goes quiet.
+Izek: My sister. My sister had red hair.
+Izek: I won't touch her. I won't let anyone touch her. And I won't break any more heads for that fat fool in the sash. I'm done.
+if guest:ireena
+Ireena [sad]: I'm sorry. I don't remember you. I wish I did.
+Izek: I remember enough for both of us.
+endif
+-> END
+
+~ truth_fail
+Izek [angry]: Liar. You saw the dolls and you made up a story to go with them. Get out of my sight before I forget the Baron likes you.
+-> END
+
+~ at_home
+Narrator: Izek sits on his cot in the dark with a doll in his ordinary hand, turning it so the candlelight moves across its painted face. He doesn't get up.
+Izek: You're in my room.
+* We know about the dolls. And about her. -> home_dolls
+* [if flag.izek_sister_truth and not flag.izek_told_truth] Izek, we know who the red-haired woman is. -> truth
+* [Intimidation DC 16] Stay away from Ireena, or you won't see another festival. -> home_threat_ok | home_threat_fail
+* (Draw steel.) This ends tonight. -> fight
+* We'll go. -> END
+
+~ home_dolls
+set izek_dolls_seen
+Izek: Then you know I'm not mad. She's real. I'll find her and keep her, and she'll never be cold in the woods again.
+if guest:ireena or flag.ireena_sanctuary == "inn" or flag.ireena_sanctuary == "st_andrals"
+Izek: She's here. In Vallaki. I've seen her. Tell me why I shouldn't go and get her now.
+endif
+-> at_home_menu
+
+~ at_home_menu
+* [if flag.izek_sister_truth and not flag.izek_told_truth] Because she's your sister. -> truth
+* [Intimidation DC 16] Because we'll kill you if you try. -> home_threat_ok | home_threat_fail
+* (Draw steel.) This ends tonight. -> fight
+* We'll go. -> END
+
+~ home_threat_ok
+Narrator: The doll goes very still in his hand. He's been in enough fights to count yours before they start, and he doesn't like the total.
+Izek: Get out of my room.
+-> END
+
+~ home_threat_fail
+Izek [angry]: Kill me? In the Baron's house? Go on, then. Try.
+-> fight
+
+~ fight
+Izek: Good. I've wanted to since the gate.
+combat izek_confrontation
+
+~ after
+if flag.izek_spurned
+Izek: He said no. In front of everyone. I'll wait. I'm good at waiting.
+interject tag:blunt: He's going to be a problem again.
+else
+Izek: The Baron's happy. That makes one of us.
+endif
+-> END

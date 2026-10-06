@@ -1,0 +1,249 @@
+{
+  "flags": [
+    {
+      "id": "crossroads_gallows_seen",
+      "type": "bool",
+      "summary": "The party has seen the hanged Vistana (Nicu) on the gallows at the Ivlis crossroads. Starts the_hanged_vistana."
+    },
+    {
+      "id": "nicu_body_examined",
+      "type": "bool",
+      "summary": "The party has made its one attempt to examine the hanged man (Medicine)."
+    },
+    {
+      "id": "nicu_token_taken",
+      "type": "bool",
+      "summary": "The party took Nicu's silver horse's-head earring from the body, to bring to his people."
+    },
+    {
+      "id": "nicu_cut_down",
+      "type": "bool",
+      "summary": "The party cut Nicu down from the gallows (or gathered his remains) and buried him by the road; he will not rise."
+    },
+    {
+      "id": "nicu_rites_said",
+      "type": "bool",
+      "summary": "Rites were said over Nicu's grave (a cleric, or a Religion check)."
+    },
+    {
+      "id": "crossroads_dead_cleared",
+      "type": "bool",
+      "summary": "Nicu and the old hanged dead of the gallows field rose at night and were destroyed (encounter crossroads_hanged_dead)."
+    },
+    {
+      "id": "ireena_crossroads",
+      "type": "bool",
+      "summary": "Ireena (as a guest) has remarked on the crossroads signpost; plays once."
+    },
+    {
+      "id": "tser_pool_arrived",
+      "type": "bool",
+      "summary": "Stanimir has welcomed the party to the Tser Pool camp."
+    },
+    {
+      "id": "stanimir_wine_shared",
+      "type": "bool",
+      "summary": "The party shared Stanimir's plum wine."
+    },
+    {
+      "id": "stanimir_tale_heard",
+      "type": "bool",
+      "summary": "Stanimir told the party the story of the prince, his brother and the bride (Strahd, Sergei, Tatyana)."
+    },
+    {
+      "id": "stanimir_read",
+      "type": "bool",
+      "summary": "The party has made its one Insight attempt on whom the Vistani answer to."
+    },
+    {
+      "id": "stanimir_misdirects",
+      "type": "bool",
+      "summary": "Grateful for news of Nicu, Stanimir will tell the castle the party went east. Later regions may soften Strahd's spies' reports."
+    },
+    {
+      "id": "vistani_robbed",
+      "type": "bool",
+      "summary": "The party opened Stanimir's strongbox at Tser Pool (container flag)."
+    },
+    {
+      "id": "vistani_repaid",
+      "type": "bool",
+      "summary": "The party gave back the forty gold taken from Stanimir's strongbox."
+    },
+    {
+      "id": "stanimir_deceived",
+      "type": "bool",
+      "summary": "The party lied its way out of the strongbox theft; Stanimir blames his own people. Madam Eva knows."
+    },
+    {
+      "id": "vistani_turned_hostile",
+      "type": "bool",
+      "summary": "The party drew steel on Madam Eva and chose to fight the camp; the Vistani wait outside her tent (encounter tser_pool_ambush)."
+    },
+    {
+      "id": "tser_pool_brawl_won",
+      "type": "bool",
+      "summary": "The party fought the Tser Pool Vistani and won; Stanimir and Luminita are gone, the camp is empty. Later regions: Vistani across Barovia hear of it."
+    },
+    {
+      "id": "luminita_met",
+      "type": "bool",
+      "summary": "The party has spoken with Luminita in the horse pen."
+    },
+    {
+      "id": "luminita_confessed",
+      "type": "bool",
+      "summary": "Luminita admitted the mare Nicu sold in Vallaki was one she found loose with a Vallaki brand."
+    },
+    {
+      "id": "nicu_kin_told",
+      "type": "bool",
+      "summary": "The party told Luminita or Stanimir what became of Nicu (quest the_hanged_vistana told). The Tser Pool Vistani are grateful; Madam Eva reads for free."
+    },
+    {
+      "id": "eva_met",
+      "type": "bool",
+      "summary": "The party has met Madam Eva in her tent."
+    },
+    {
+      "id": "eva_recognized_ireena",
+      "type": "bool",
+      "summary": "Madam Eva greeted Ireena as someone who has 'come round again' (Tatyana's soul). Later regions may read it."
+    },
+    {
+      "id": "eva_haggle_failed",
+      "type": "bool",
+      "summary": "Madam Eva refused to read for free; the Persuasion option is gone."
+    },
+    {
+      "id": "eva_threatened",
+      "type": "bool",
+      "summary": "The party threatened Madam Eva in her tent (Intimidation)."
+    },
+    {
+      "id": "eva_reading_paid",
+      "type": "string",
+      "summary": "How the Tarokka reading was paid: coin, truth, free (Persuasion), kin (news of Nicu) or forced (threat, theft or the brawl). Later regions (Vallaki's Vistani) may read it."
+    },
+    {
+      "id": "eva_truth_teller",
+      "type": "string",
+      "summary": "Who paid Madam Eva with a secret: ilse_varga, hedda_ironvow, silvain_aster, tamsin_tealeaf, or other. The party heard it."
+    },
+    {
+      "id": "eva_reading_done",
+      "type": "bool",
+      "summary": "Madam Eva has read the Tarokka for the party; the five quests are foretold."
+    },
+    {
+      "id": "tser_treasure_given",
+      "type": "bool",
+      "summary": "The Diviner was drawn for a treasure, and Madam Eva handed it over from her chest (the item itself waits on an engine need)."
+    },
+    {
+      "id": "eva_question",
+      "type": "string",
+      "summary": "The party's one question after the reading: ireena, escape, weakness, kestrel, locket, dawn, aurel, why or none. Later regions may pay it off."
+    },
+    {
+      "id": "ireena_falls_memory",
+      "type": "bool",
+      "summary": "At Tser Falls, Ireena remembered a fall that wasn't hers (Tatyana). Later regions (Krezk, the castle) may read it."
+    },
+    {
+      "id": "falls_werewolf_slain",
+      "type": "bool",
+      "summary": "The party killed the werewolf waiting at the lip of Tser Falls at night (encounter falls_werewolf)."
+    },
+    {
+      "id": "strahd_road_encounter",
+      "type": "string",
+      "summary": "How the party met Strahd riding on the road: defiant, courteous, shield, violent or silent. Later Strahd scenes may read it."
+    },
+    {
+      "id": "funeral_met",
+      "type": "bool",
+      "summary": "The party met Bogdan's funeral cart on the road (event, once)."
+    },
+    {
+      "id": "anca_examined",
+      "type": "bool",
+      "summary": "The party looked at Bogdan's mother in her coffin (a Medicine check or a cleric's blessing)."
+    },
+    {
+      "id": "anca_fate",
+      "type": "string",
+      "summary": "The bitten old woman in the coffin: staked, warned (rushed to the church), unwarned (the party saw the marks and said nothing) or unknown. Phase 5 may raise her in the village churchyard."
+    },
+    {
+      "id": "dead_procession_met",
+      "type": "bool",
+      "summary": "The party met the procession of the dead on the road at night (event, once)."
+    },
+    {
+      "id": "dead_procession_turned",
+      "type": "bool",
+      "summary": "A cleric turned the dead procession back to its graves."
+    },
+    {
+      "id": "dead_procession_destroyed",
+      "type": "bool",
+      "summary": "The party destroyed the dead procession (encounter road_dead_procession)."
+    },
+    {
+      "id": "ravens_met",
+      "type": "bool",
+      "summary": "A raven walked beside the party on the road (event, once)."
+    },
+    {
+      "id": "raven_studied",
+      "type": "bool",
+      "summary": "The party has made its one Nature check on the raven."
+    },
+    {
+      "id": "raven_fed",
+      "type": "bool",
+      "summary": "The party fed the raven; the Keepers of the Feather (Wizard of Wines, Phase 5) know them as friends."
+    },
+    {
+      "id": "raven_harmed",
+      "type": "bool",
+      "summary": "The party struck the raven down; the Keepers of the Feather (Phase 5) remember."
+    },
+    {
+      "id": "hunters_met",
+      "type": "bool",
+      "summary": "The party met Grigor's wolf hunters in the Svalich Woods (event, once)."
+    },
+    {
+      "id": "hunters_read",
+      "type": "bool",
+      "summary": "The party has made its one Insight check on the hunters."
+    },
+    {
+      "id": "hunters_befriended",
+      "type": "bool",
+      "summary": "Grigor's hunters took the party for friends and shared news of the windmill and the werewolves."
+    },
+    {
+      "id": "hunters_fought",
+      "type": "bool",
+      "summary": "The party fought Grigor's hunters on the road (encounter road_hunters)."
+    },
+    {
+      "id": "werewolf_rumor",
+      "type": "bool",
+      "summary": "The party has heard of, or found the marks of, werewolves in the hills above Lake Zarovich (Phase 5 Werewolf Den)."
+    },
+    {
+      "id": "lost_bundle_found",
+      "type": "bool",
+      "summary": "The party found the lost peddler's pack on the road (event, once)."
+    },
+    {
+      "id": "lost_bundle_tracked",
+      "type": "bool",
+      "summary": "The party has made its one Survival check on the peddler's drag marks."
+    }
+  ]
+}

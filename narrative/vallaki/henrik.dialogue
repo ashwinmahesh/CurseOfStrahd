@@ -1,0 +1,67 @@
+# Henrik van der Voort, coffin maker (docs/voice/henrik.md). Strahd's spawn sleep in his storeroom.
+
+~ start
+if flag.coffin_spawn_destroyed or flag.church_siege_survived
+-> freed
+endif
+if flag.henrik_confessed
+Henrik [afraid]: Please. Please keep your voice down. They can hear through wood. They hear everything through wood.
+-> END
+endif
+Narrator: The coffin maker jumps when the door opens, then pretends he didn't. He's a thin man sweating in a cold room, and he keeps his back to the storeroom door the whole time you're talking.
+Henrik [afraid]: We're closed. We're open. What do you need? A coffin? I have coffins. Many sizes. Mostly the small ones, this year.
+-> menu
+
+~ menu
+* Business is good, then. -> business
+* What's in your storeroom? -> storeroom
+* [if flag.milivoj_confessed] Milivoj sold you the bones of St. Andral. -> accuse
+* [Insight DC 11] He's terrified of that door. -> read_ok | read_fail
+* Goodbye. -> END
+
+~ business
+Henrik: Business is always good. That's the trouble with my trade, in this valley. Nobody ever has to be talked into it.
+-> menu
+
+~ storeroom
+Henrik [afraid]: Wood. Nails. Shavings. Nothing. Nothing at all. Don't go in there. It's a mess. I'm ashamed of the mess.
+-> menu
+
+~ read_ok
+Narrator: Every time the floor creaks, his eyes go to the storeroom door. There are fresh scratches on the inside of the frame, at about the height of a hand. Something has been coming and going through that door at night, and Henrik has been letting it.
+-> pressure
+
+~ read_fail
+Narrator: He sweats and stammers and fusses with a coffin lid. He's frightened of something. He might be frightened of you.
+-> menu
+
+~ accuse
+Henrik [afraid]: Milivoj said that? He... I... yes. Yes. Twenty gold. I'll give it back. I'll give it all back. Please don't make me say why.
+-> pressure
+
+~ pressure
+* [Persuasion DC 12] Whatever made you do it, we can deal with it. Tell us. -> confess | confess_hard
+* [Intimidation DC 12] Tell us, or we open that door with you in front of it. -> confess | confess_hard
+* We'll see for ourselves. -> END
+
+~ confess_hard
+Narrator: He shakes his head so hard his spectacles fly off. Then he looks at the storeroom door, and back at you, and his voice comes out in a whisper anyway.
+-> confess
+
+~ confess
+set henrik_confessed
+quest bones_of_st_andral henrik_confessed
+Henrik [afraid]: They came in crates. A black carriage brought them, no driver I could see. Big crates. Heavy. And then a voice, in my head, at night, telling me what to do. Buy the saint. Keep him in the storeroom. With them.
+Henrik: They sleep in the day. At night they go out. They're waiting for the church to be just a church. Then they'll go in, and they'll take whoever is sheltering there, and they'll bring them up the mountain.
+interject class:wizard: Vampire spawn. Sleeping by day in boxes, like the books say. For once I'd have preferred the books to be wrong.
+interject tag:blunt: Daylight, then. We go in while they sleep.
+Henrik: The bones are in the small crate, by the back wall. I wrapped him in an altar cloth. It seemed right. Please don't tell them I told you.
+-> END
+
+~ freed
+Henrik: They're gone? Really gone? I slept last night. In a bed. Like a person.
+if flag.bones_recovered
+Henrik: And you took the saint back out of my storeroom. Good. I couldn't look at that crate. It was the only thing in there that made me feel better, and I couldn't look at it.
+endif
+Henrik: If you ever need a coffin, you'll have one for nothing. That's not a threat. I realise it sounds like one. It's the only gift I know how to give.
+-> END

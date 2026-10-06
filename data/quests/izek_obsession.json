@@ -1,0 +1,51 @@
+{
+  "id": "izek_obsession",
+  "name": "The Doll Collector",
+  "summary": "Izek Strazni, the Baron's enforcer, has dreamed of a red-haired woman all his life, and has had her face carved over and over.",
+  "giver": "izek",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "noticed",
+      "journal": "Izek Strazni, the Baron's enforcer, looked at Ireena as if he had seen her face before, many times.",
+      "objectives": [
+        "Find out why Izek knows Ireena's face"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "dolls_found",
+      "journal": "Izek pays Blinsky the toymaker to carve doll after doll of one red-haired woman, and keeps them in a chest at the foot of his bed. They all have Ireena's face.",
+      "objectives": [
+        "Learn what Izek wants with her"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "truth_guessed",
+      "journal": "Izek lost a little sister in the woods when he was a boy, the night the wolves took his arm. Ireena was found wandering at about that age, with no memory of where she came from. They are brother and sister.",
+      "objectives": [
+        "Decide whether to tell Izek"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "truth_told",
+      "journal": "We told Izek who Ireena is. The Baron's fist went quiet as a struck bell. He will not lay a hand on her now, nor, it seems, on anyone else for the Baron.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "izek_slain",
+      "journal": "Izek Strazni is dead. Whatever he dreamed of died with him.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "spurned",
+      "journal": "The Baron refused Izek his reward. Izek obeyed, for now, and still watches Ireena whenever she crosses the square.",
+      "objectives": [],
+      "ends": ""
+    }
+  ]
+}

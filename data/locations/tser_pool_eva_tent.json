@@ -1,0 +1,144 @@
+{
+  "id": "tser_pool_eva_tent",
+  "name": "Madam Eva's Tent",
+  "region": "svalich_road",
+  "summary": "A tent of patched and painted canvas, hung with charms and thick with incense, where an old woman reads the Tarokka at a low table by candlelight.",
+  "map": {
+    "rows": [
+      "#############",
+      "#=........==#",
+      "#...........#",
+      "#....===....#",
+      "#...........#",
+      "#...........#",
+      "#=.........=#",
+      "#...........#",
+      "#...........#",
+      "#############"
+    ],
+    "theme": "tavern",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "eva_tent_inner",
+      "name": "Madam Eva's tent",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          11,
+          8
+        ]
+      ],
+      "light": "dim"
+    }
+  ],
+  "spawns": {
+    "default": [
+      6,
+      7
+    ]
+  },
+  "exits": [
+    {
+      "id": "tent_flap",
+      "cell": [
+        6,
+        9
+      ],
+      "to": "tser_pool",
+      "spawn": "from_tent",
+      "label": "Out to the camp"
+    }
+  ],
+  "props": [
+    {
+      "id": "tarokka_table",
+      "cell": [
+        6,
+        3
+      ],
+      "kind": "examine",
+      "label": "The reading table",
+      "model": "table_round"
+    },
+    {
+      "id": "eva_chest",
+      "cell": [
+        10,
+        1
+      ],
+      "kind": "examine",
+      "label": "An iron-bound chest",
+      "model": "chest"
+    },
+    {
+      "id": "tent_charms",
+      "cell": [
+        1,
+        4
+      ],
+      "kind": "examine",
+      "label": "Hanging charms",
+      "model": "charms"
+    },
+    {
+      "id": "tent_brazier",
+      "cell": [
+        2,
+        1
+      ],
+      "kind": "decor",
+      "label": "A brazier",
+      "model": "brazier"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        4,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        8,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "madam_eva",
+      "cell": [
+        6,
+        2
+      ],
+      "dialogue": "svalich_road/madam_eva:start",
+      "facing": "south"
+    }
+  ],
+  "narration": {
+    "enter": "enter:tser_pool_eva_tent"
+  },
+  "rest": "no",
+  "rest_text": "Madam Eva does not keep a guest bed, and you would not sleep well in it if she did. The camp outside is safer."
+}

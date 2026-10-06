@@ -1,0 +1,14 @@
+{
+  "id": "st_andrals_bones",
+  "name": "Bones of St. Andral",
+  "source": {
+    "book": "CoS",
+    "note": "The relic of Vallaki's church; numbers are ours."
+  },
+  "category": "quest",
+  "weight_lb": 6,
+  "cost_gp": 0,
+  "quest_locked": true,
+  "summary": "A saint's bones wrapped in an altar cloth, light as kindling and oddly warm.",
+  "text": "While these lie in the crypt of St. Andral's Church in Vallaki, the church is holy ground the dead cannot enter. Father Lucian needs them back where they belong."
+}

@@ -1,0 +1,225 @@
+{
+  "id": "tser_falls",
+  "name": "Tser Falls",
+  "region": "svalich_road",
+  "summary": "Where the River Ivlis throws itself off a cliff in a long white fall. A shelf of rock juts over the drop; Barovians leave tokens there for the drowned and the fallen.",
+  "text": "A footpath climbs north through the pines to the lip of a gorge. The river goes over the edge in one long white rope of water, and the roar fills everything.",
+  "map": {
+    "rows": [
+      "##################################",
+      "##################################",
+      "##########               #########",
+      "##########               #########",
+      "##                              ##",
+      "##                              ##",
+      "#####.....~~~~1111111~~~~....#####",
+      "#####.........1111111........#####",
+      "#####..##...=..........=..##.#####",
+      "#####.....~~...............#.#####",
+      "######................#......#####",
+      "#####......#............~~...#####",
+      "#####.......#......~.........#####",
+      "############...~.......#....######",
+      "############.#.......#.#....######",
+      "######....##...........#....######",
+      "######....##...........#....######",
+      "######....##...........###########",
+      "############........#..###########",
+      "############..#........###########",
+      "############...........###########",
+      "################...###############"
+    ],
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "falls_ledge",
+      "name": "The lip of the falls",
+      "cells": [
+        [
+          5,
+          6
+        ],
+        [
+          28,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "falls_path",
+      "name": "The path to the falls",
+      "cells": [
+        [
+          12,
+          10
+        ],
+        [
+          22,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "falls_west_glade",
+      "name": "The cairn glade",
+      "cells": [
+        [
+          5,
+          10
+        ],
+        [
+          11,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "falls_east_glade",
+      "name": "The east glade",
+      "cells": [
+        [
+          23,
+          10
+        ],
+        [
+          28,
+          16
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      17,
+      19
+    ]
+  },
+  "exits": [
+    {
+      "id": "path_south",
+      "cell": [
+        17,
+        21
+      ],
+      "to": "travel",
+      "label": "The path back down to the road"
+    }
+  ],
+  "props": [
+    {
+      "id": "tser_falls_overlook",
+      "cell": [
+        17,
+        6
+      ],
+      "kind": "examine",
+      "label": "The overlook",
+      "model": "ledge",
+      "dialogue": "svalich_road/tser_falls:overlook"
+    },
+    {
+      "id": "falls_tokens",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "examine",
+      "label": "A stone heaped with tokens",
+      "model": "cairn"
+    },
+    {
+      "id": "falls_cairn",
+      "cell": [
+        7,
+        16
+      ],
+      "kind": "examine",
+      "label": "A cairn of names",
+      "model": "cairn"
+    },
+    {
+      "id": "falls_marker",
+      "cell": [
+        23,
+        8
+      ],
+      "kind": "examine",
+      "label": "A weathered marker stone",
+      "model": "milestone"
+    }
+  ],
+  "containers": [
+    {
+      "id": "falls_lost_pack",
+      "cell": [
+        26,
+        15
+      ],
+      "label": "A rain-soaked pack",
+      "model": "sack",
+      "items": [
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "torch",
+          "qty": 2
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "gold": 6
+    }
+  ],
+  "encounters": [
+    {
+      "id": "falls_werewolf",
+      "trigger": "enter_area:falls_ledge",
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            6,
+            7
+          ],
+          "name": "Werewolf"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            9
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            27,
+            11
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            7,
+            11
+          ]
+        }
+      ],
+      "surprise": "party",
+      "flag": "falls_werewolf_slain",
+      "text": "Something has been sitting at the edge of the trees, listening to the water with you. It stands up on two legs."
+    }
+  ],
+  "narration": {
+    "enter": "enter:tser_falls"
+  },
+  "rest": "risky"
+}

@@ -295,6 +295,17 @@
       "to": "into_the_mists_road",
       "spawn": "from_village",
       "label": "The Old Svalich Road, east"
+    },
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        12
+      ],
+      "to": "travel",
+      "label": "The Old Svalich Road, west",
+      "when": "flag.village_departed",
+      "locked_text": "Two leaning posts mark where the village ends and the road west begins. Stop at them before you go."
     }
   ],
   "doors": [

@@ -1,0 +1,66 @@
+# Gadof Blinsky, toymaker (docs/voice/blinsky.md). Sells toys and tools; carved Izek's dolls.
+
+~ start
+if not flag.blinsky_met
+set blinsky_met
+Narrator: A tall, mournful man in a patched jester's cap rises from behind the counter. On his shoulder sits a small monkey in a waistcoat, who looks at you with the same expression.
+Blinsky [sad]: Customers. Real ones. Welcome to Blinsky Toys, where every toy is a small sadness, beautifully made. Do not sit on the horse. The horse bites.
+else
+Blinsky [sad]: You came back. Nobody comes back. Piccolo, put the kettle on. No, the other kettle. The one without the frog in it.
+endif
+if guest:ireena and not flag.izek_dolls_seen
+-> doll_lady
+endif
+-> menu
+
+~ doll_lady
+set izek_dolls_seen
+quest izek_obsession dolls_found
+Narrator: Blinsky looks at Ireena, and his long face goes slack. He takes off his cap, and puts it back on, and takes it off again.
+Blinsky [afraid]: The doll lady. You are the doll lady. I have carved your face eleven times. Green dress, grey cloak, once smiling, he was very particular about the smiling.
+Ireena: Who was particular?
+Blinsky: Izek. Izek Strazni. He describes you from his dreams, and I carve, and he pays. Once I asked who you were. He held me against that wall with the arm. So I carve and I do not ask.
+Ireena [afraid]: He dreams about me. A man I've never met dreams about me, and pays for dolls.
+interject tag:blunt: That's two men in this valley now. I'm starting to dislike the pattern.
+-> menu
+
+~ menu
+* Show us your wares. -> wares
+* Who buys toys in Barovia? -> customers
+* [if flag.izek_dolls_seen] Tell us about Izek's dolls. -> dolls
+* [Performance DC 12] Try to make him laugh. -> laugh_ok | laugh_fail
+* Goodbye. -> bye
+
+~ wares
+Blinsky: Everything is for sale. Dice for gamblers. Whistles for lost children. Marbles, very good for slipping on. A little drum, for marching to your doom in time.
+shop
+Blinsky: Thank you. It will not help, but thank you.
+-> menu
+
+~ customers
+Blinsky: The Baron, for his festivals: puppets of the Baron, mostly. The children, sometimes; they cry and are carried out. And one man, who only buys dolls.
+if not flag.izek_dolls_seen
+Blinsky [afraid]: I should not have said that. Forget I said that. There is no man who buys dolls. Buy a whistle.
+endif
+-> menu
+
+~ dolls
+set izek_dolls_seen
+quest izek_obsession dolls_found
+Blinsky: Eleven dolls. One lady, red hair, always the same face. He tells me her face from his dreams, every line of it. He has dreamed it since he was a boy, he says, since the night the wolves took his arm in the woods.
+Blinsky: He keeps them in a chest at the foot of his bed in the Baron's house. He talks to them, the maids say. I do not want to know what he says.
+-> menu
+
+~ laugh_ok
+Narrator: It takes a while, and a good deal of effort, and a hat. But somewhere around the third verse, Blinsky's mouth twitches, and Piccolo falls off his shoulder with shock.
+Blinsky [smile]: That was nearly funny. Here. A whistle. For when the toys come for you. I joke. Mostly.
+give signal_whistle
+-> menu
+
+~ laugh_fail
+Blinsky [sad]: That was very brave. It was not funny, but it was brave. Most things here are one or the other.
+-> menu
+
+~ bye
+Blinsky: Goodbye. Come back. Or don't. The toys will be here either way. They are very patient.
+-> END

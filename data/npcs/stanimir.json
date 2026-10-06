@@ -1,0 +1,70 @@
+{
+  "id": "stanimir",
+  "name": "Stanimir",
+  "title": "Elder of the Tser Pool Camp",
+  "summary": "A big, grey-bearded Vistana with a fiddle, a laugh and a cask of plum wine, who keeps the fire and the peace at Tser Pool. Uncle to Nicu and Luminita. He knows who the camp answers to.",
+  "portrait": "stanimir",
+  "sprite": "stanimir",
+  "attitude": "indifferent",
+  "voice": "docs/voice/stanimir.md",
+  "monster": "bandit_captain",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "merchant",
+    "storyteller",
+    "strahd_spy",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him",
+  "shop": {
+    "sells": [
+      {
+        "id": "ration",
+        "qty": -1
+      },
+      {
+        "id": "torch",
+        "qty": -1
+      },
+      {
+        "id": "oil",
+        "qty": 10
+      },
+      {
+        "id": "rope",
+        "qty": 3
+      },
+      {
+        "id": "waterskin",
+        "qty": 4
+      },
+      {
+        "id": "blanket",
+        "qty": 4
+      },
+      {
+        "id": "tinderbox",
+        "qty": 2
+      },
+      {
+        "id": "healers_kit",
+        "qty": 2
+      },
+      {
+        "id": "potion_of_healing",
+        "qty": 2,
+        "price": 75
+      }
+    ],
+    "buys": [
+      "weapon",
+      "armor",
+      "gear",
+      "treasure"
+    ],
+    "markup": 3.0,
+    "sell_rate": 0.4
+  }
+}

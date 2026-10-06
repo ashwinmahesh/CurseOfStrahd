@@ -36,7 +36,7 @@ func cell_center(cell: Vector2i, size_cells: int = 1) -> Vector3:
 
 
 const INTERIORS := ["manor", "tavern", "shop", "townhouse", "church", "attic", "inn", "house", "tent"]
-const WILD := ["svalich_road", "forest", "road", "camp", "tser_pool", "riverside", "wilderness"]
+const WILD := ["svalich_road", "forest", "road", "camp", "tser_pool", "riverside", "wilderness"]   ## (camp: wagons too)
 const TOWNS := ["village", "vallaki", "town"]
 const PROPS_JSON := "res://art/sprites/props/manifest.json"
 static var _props: Dictionary = {}
@@ -110,6 +110,8 @@ func _build() -> void:
 		mud = Look.cel_checker("bog_deep", "peat", "ink")
 	elif theme in TOWNS:
 		stone = Look.cel_checker("stone", "slate", "stone_deep")
+	if theme == "camp":
+		_find_wagons()
 	if theme != "shrine_yard":
 		_load_textures()
 		if _floor_tex != null:
@@ -121,6 +123,9 @@ func _build() -> void:
 		for x in grid.width:
 			var c := Vector2i(x, z)
 			var f := grid.flags(c)
+			if (f & CombatGrid.WATER) != 0:
+				_water(c)
+				continue
 			if (f & CombatGrid.VOID) != 0:
 				continue
 			var h := floor_y(c)
@@ -143,7 +148,65 @@ func _build() -> void:
 		_lanterns()
 
 
+## Tall billboards (trees) that fade when they stand between the camera and the party.
+var occluders: Array[Sprite3D] = []
+var _wagon_cells := {}      ## camp: '#' blocks inside the map are wagons, cell -> the block's center
+var _wagon_drawn := {}
+
+
+## In a camp, small blocks of '#' away from the map's edge are the Vistani's wagons.
+func _find_wagons() -> void:
+	var seen := {}
+	for z in grid.depth:
+		for x in grid.width:
+			var start := Vector2i(x, z)
+			if seen.has(start) or not grid.has_flag(start, CombatGrid.WALL) or _on_border(start):
+				continue
+			var block: Array[Vector2i] = []
+			var open: Array[Vector2i] = [start]
+			seen[start] = true
+			while not open.is_empty():
+				var c: Vector2i = open.pop_back()
+				block.append(c)
+				for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+					var n := c + d
+					if not seen.has(n) and grid.in_bounds(n) and grid.has_flag(n, CombatGrid.WALL) and not _on_border(n):
+						seen[n] = true
+						open.append(n)
+			if block.size() > 24:
+				continue
+			var sum := Vector2.ZERO
+			for c in block:
+				sum += Vector2(c)
+			var center := sum / float(block.size())
+			for c in block:
+				_wagon_cells[c] = center
+
+
+func _on_border(c: Vector2i) -> bool:
+	return c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
+
+
+## A Vistani wagon: a low painted body on each of its squares, and the wagon's picture once, at its middle.
+func _wagon(c: Vector2i) -> void:
+	_box("WagonBed", Vector3(1, 0.9, 1), Vector3(c.x + 0.5, 0.45, c.y + 0.5), Look.cel("walnut"))
+	var center := _wagon_cells[c] as Vector2
+	var key := "%.1f,%.1f" % [center.x, center.y]
+	if not _wagon_drawn.has(key):
+		_wagon_drawn[key] = true
+		prop_sprite("wagon", Vector3(center.x + 0.5, 0.9, center.y + 0.5), 1.3)
+
+
+## Deep water: a dark surface a little below the floor.
+func _water(c: Vector2i) -> void:
+	var m := Look.cel_checker("night", "night_deep", "night_deep")
+	_box("Water", Vector3(1, 0.1, 1), Vector3(c.x + 0.5, -0.18, c.y + 0.5), m)
+
+
 func _wall(c: Vector2i) -> void:
+	if theme == "camp" and _wagon_cells.has(c):
+		_wagon(c)
+		return
 	if theme in WILD:
 		_tree(c)
 		return
@@ -157,6 +220,9 @@ func _wall(c: Vector2i) -> void:
 		return
 	if theme in TOWNS:
 		var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
+		if border and theme == "village":
+			_tree(c)   # the village thins into forest at the map's edge
+			return
 		if border and _outer_tex != null:
 			# A town's palisade.
 			var ph := 2.2
@@ -208,8 +274,10 @@ func prop_sprite(id: String, at: Vector3, scale_: float = 1.0) -> Sprite3D:
 ## A Barovian pine (or a dead tree): a billboard where the art exists, else a dark trunk and a cone of needles.
 func _tree(c: Vector2i) -> void:
 	var kind := "dead_tree" if _rng.randf() < 0.22 else "pine"
-	if prop_sprite(kind, Vector3(c.x + 0.5 + _rng.randf_range(-0.12, 0.12), 0.0, c.y + 0.5 + _rng.randf_range(-0.12, 0.12)),
-			_rng.randf_range(0.5, 0.7)) != null:
+	var tree := prop_sprite(kind, Vector3(c.x + 0.5 + _rng.randf_range(-0.12, 0.12), 0.0, c.y + 0.5 + _rng.randf_range(-0.12, 0.12)),
+			_rng.randf_range(0.5, 0.7))
+	if tree != null:
+		occluders.append(tree)
 		_box("Ground", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), _floor_tex if _floor_tex != null else Look.cel("bog_deep"))
 		return
 	var trunk := MeshInstance3D.new()
@@ -327,3 +395,17 @@ func _box(n: String, size: Vector3, pos: Vector3, mat: Material) -> MeshInstance
 	mi.material_override = mat
 	add_child(mi)
 	return mi
+
+
+## Fades the trees standing between the camera and `focus` (the party's leader), and brings back the rest.
+func fade_occluders(camera_pos: Vector3, focus: Vector3, delta: float) -> void:
+	var to_cam := Vector2(camera_pos.x - focus.x, camera_pos.z - focus.z).normalized()
+	for t in occluders:
+		var rel := Vector2(t.position.x - focus.x, t.position.z - focus.z)
+		var between := rel.length() < 4.0 and rel.normalized().dot(to_cam) > 0.35
+		var target := 0.28 if between else 1.0
+		var a := move_toward(t.modulate.a, target, delta * 4.0)
+		if not is_equal_approx(a, t.modulate.a):
+			t.modulate.a = a
+			t.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD if a >= 0.999 else SpriteBase3D.ALPHA_CUT_DISABLED
+			t.transparent = a < 0.999

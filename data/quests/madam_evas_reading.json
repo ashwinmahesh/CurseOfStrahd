@@ -1,0 +1,31 @@
+{
+  "id": "madam_evas_reading",
+  "name": "The Seer at Tser Pool",
+  "summary": "The Vistani say an old seer at Tser Pool reads the Tarokka for strangers, and that she has been expecting us.",
+  "giver": "stanimir",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "invited",
+      "journal": "At the Vistani camp by Tser Pool, Stanimir told us Madam Eva has been expecting us in the great tent. She reads the Tarokka for strangers, at a price.",
+      "objectives": [
+        "Visit Madam Eva in her tent"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "refused",
+      "journal": "We told Madam Eva we would not hear her reading. She shrugged and said the cards are patient. She will be in her tent if we change our minds.",
+      "objectives": [
+        "Return to Madam Eva's tent when you are ready"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "read",
+      "journal": "Madam Eva read the Tarokka for us: where three lost treasures lie, who will stand with us, and where the devil will be waiting. Each card has its own place in this journal.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

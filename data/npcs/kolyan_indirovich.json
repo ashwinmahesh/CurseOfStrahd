@@ -1,0 +1,24 @@
+{
+  "id": "kolyan_indirovich",
+  "name": "Kolyan Indirovich",
+  "title": "The Late Burgomaster of Barovia",
+  "summary": "Ireena and Ismark's father, burgomaster of the village of Barovia for twenty years, dead of a failed heart at his own front door. The Tarokka can name him as the party's ally, if he can be given back his life.",
+  "portrait": "noble",
+  "sprite": "noble",
+  "attitude": "friendly",
+  "monster": "noble",
+  "guest": true,
+  "tags": [
+    "barovian",
+    "noble",
+    "dead",
+    "tarokka_ally",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him",
+  "guest_build": {
+    "monster": "noble",
+    "note": "Placeholder until a later phase writes his return from the dead and gives him a fitting stat block."
+  }
+}
