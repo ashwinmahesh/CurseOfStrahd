@@ -173,6 +173,9 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Ability checks in conversation (any skill or ability, the speaking character's bonus, Advantage sources) | story/dialogue_runner.gd | tested | test_story |
 | Milestone levelling | story/story_state.gd, level_up_screen.gd | tested | test_story, test_party_screens |
 | Saves outside combat and at the start of each round; effects and Concentration saved | core/save_system.gd, combat/encounter_snapshot.gd | tested | test_exploration, test_story |
+| Casting outside combat: healing and helpful spells, slots, lasting effects and Concentration | story/field_casting.gd (through SpellCaster) | tested | test_party_screens |
+| Frightened: can't willingly move closer to a visible source | encounter.gd reachable_for | tested (strict reading, deviations) | test_combat_encounter |
+| Flying creatures move at their Fly Speed | combatant.gd speed | implemented (no altitude, deviations) | test_phase3_exit |
 | Heroic Inspiration on saves and checks | — | not started | [Phase 4] |
 | Light, Darkvision and obscurement affecting checks and attacks | — | spell and ability audit | — |
 
