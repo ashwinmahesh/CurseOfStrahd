@@ -19,6 +19,19 @@ static func capture(e: Encounter) -> Dictionary:
 			cd["monster"] = str(m.data.get("id", ""))
 			cd["name"] = m.name
 			cd["state"] = m.state_to_dict()
+			# Summoned creatures' stat blocks are built when they're cast (Summon Fey), so they travel with the save.
+			if Compendium.shared().monster_data(str(m.data.get("id", ""))).is_empty():
+				cd["monster_data"] = m.data.duplicate(true)
+		# Feature and monster state kept on the combatant (Portent's dice, a werewolf's form, Recharge, a severed part).
+		var metas := {}
+		for k: StringName in c.get_meta_list():
+			var v: Variant = c.get_meta(k)
+			if v is int or v is float or v is String or v is bool or v is Array or v is Dictionary:
+				metas[str(k)] = v
+		cd["meta"] = metas
+		cd["size_cells"] = c.size_cells
+		cd["controller"] = str(c.controller)
+		cd["has_acted"] = c.has_acted
 		cbs.append(cd)
 	var order: Array = []
 	for c in e.order:
@@ -45,7 +58,8 @@ static func capture(e: Encounter) -> Dictionary:
 	for en in e.log.last(40):
 		log.append(en.duplicate(true))
 	return {"version": 1, "rows": rows, "combatants": cbs, "order": order, "round": e.round_no, "marks": e.marks.duplicate(true),
-		"grapples": e.grapples.duplicate(), "studied": e.studied.duplicate(), "title": e.title, "log": log}
+		"grapples": e.grapples.duplicate(), "studied": e.studied.duplicate(), "title": e.title, "log": log,
+		"spells": e.spells.to_dict(), "light": e.ambient_light, "sunlit": e.sunlit}
 
 
 ## Rebuilds the fight; `party` supplies the party's Character objects (from the loaded story) by id when present.
@@ -67,7 +81,8 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 				creature.state_from_dict((cd["character"] as Dictionary)["state"] as Dictionary)
 			saved[cid] = (cd["character"] as Dictionary)["state"]
 		else:
-			var m := Monster.from_data(Compendium.shared().monster_data(str(cd["monster"])))
+			var mdata := cd["monster_data"] as Dictionary if cd.has("monster_data") else Compendium.shared().monster_data(str(cd["monster"]))
+			var m := Monster.from_data(mdata)
 			m.name = str(cd["name"])
 			m.state_from_dict(cd["state"] as Dictionary)
 			creature = m
@@ -84,6 +99,12 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 		c.reaction_available = bool(cd.get("reaction_available", true))
 		c.hidden = bool(cd.get("hidden", false))
 		c.stealth_total = int(cd.get("stealth_total", 0))
+		var metas := cd.get("meta", {}) as Dictionary
+		for k: String in metas:
+			c.set_meta(k, metas[k])
+		c.size_cells = int(cd.get("size_cells", c.size_cells))
+		c.controller = StringName(str(cd.get("controller", str(c.controller))))
+		c.has_acted = bool(cd.get("has_acted", false))
 		loaded.append(creature)
 	Creature.relink_concentration(loaded, saved)
 	e.order.clear()
@@ -98,6 +119,9 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 	for en: Variant in d.get("log", []):
 		var entry := en as Dictionary
 		e.log.entries.append(entry.duplicate(true))
+	e.ambient_light = str(d.get("light", "bright"))
+	e.sunlit = bool(d.get("sunlit", false))
+	e.spells.from_dict(d.get("spells", {}) as Dictionary)
 	e.state = Encounter.State.ACTIVE
 	e.round_no = int(d["round"])
 	e.log.round_no = e.round_no

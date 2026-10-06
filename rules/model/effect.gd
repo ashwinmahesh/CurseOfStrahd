@@ -190,7 +190,8 @@ func to_dict() -> Dictionary:
 		"conditions": conds, "ends": int(ends), "rounds_left": rounds_left, "minutes_left": minutes_left,
 		"turn_owner_id": turn_owner_id, "stack_key": stack_key, "ends_on_damage": ends_on_damage,
 		"ends_when_incapacitated": ends_when_incapacitated, "repeat_save": repeat_save.duplicate(true),
-		"skip_turn_ends": skip_turn_ends,
+		"skip_turn_ends": skip_turn_ends, "consume_on": consume_on.duplicate(), "consume_when_attacked": consume_when_attacked,
+		"ends_on": ends_on.duplicate(), "escape": escape.duplicate(), "spell_level": spell_level, "data": data.duplicate(true),
 		"concentration": {"caster": conc.caster().id if conc != null and conc.caster() != null else "", "source": conc.source_id if conc != null else ""}}
 
 
@@ -212,6 +213,14 @@ static func from_dict(d: Dictionary) -> Effect:
 	e.ends_when_incapacitated = bool(d.get("ends_when_incapacitated", false))
 	e.repeat_save = (d.get("repeat_save", {}) as Dictionary).duplicate(true)
 	e.skip_turn_ends = int(d.get("skip_turn_ends", 0))
+	for k: Variant in d.get("consume_on", []):
+		e.consume_on.append(str(k))
+	e.consume_when_attacked = bool(d.get("consume_when_attacked", false))
+	for k2: Variant in d.get("ends_on", []):
+		e.ends_on.append(str(k2))
+	e.escape = (d.get("escape", {}) as Dictionary).duplicate()
+	e.spell_level = int(d.get("spell_level", 0))
+	e.data = (d.get("data", {}) as Dictionary).duplicate(true)
 	return e
 
 

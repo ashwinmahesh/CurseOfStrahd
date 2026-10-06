@@ -1081,7 +1081,7 @@ func state_to_dict() -> Dictionary:
 	var fx: Array = []
 	for e in effects:
 		fx.append(e.to_dict())
-	return {"hp": hp, "temp_hp": temp_hp, "exhaustion": exhaustion, "death_successes": death_successes,
+	return {"hp": hp, "temp_hp": temp_hp, "ward_hp": ward_hp, "exhaustion": exhaustion, "death_successes": death_successes,
 		"death_failures": death_failures, "stable": stable, "dead": dead, "conditions": conds,
 		"resources_used": res, "effects": fx,
 		"concentration": {"source": concentration.source_id, "name": concentration.name} if concentration != null else {}}
@@ -1090,6 +1090,7 @@ func state_to_dict() -> Dictionary:
 func state_from_dict(d: Dictionary) -> void:
 	hp = int(d.get("hp", hp))
 	temp_hp = int(d.get("temp_hp", 0))
+	ward_hp = int(d.get("ward_hp", 0))
 	exhaustion = int(d.get("exhaustion", 0))
 	death_successes = int(d.get("death_successes", 0))
 	death_failures = int(d.get("death_failures", 0))

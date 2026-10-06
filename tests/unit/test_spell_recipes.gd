@@ -449,3 +449,18 @@ func test_a_readied_spell_goes_off_when_an_enemy_comes_in_range() -> void:
 	e.move(w, Vector2i(20, 3))
 	assert_false(s.reaction_available, "released with the Reaction")
 	assert_true(s.creature.concentration == null)
+
+
+func test_a_saved_fight_keeps_lingering_spells_and_summons() -> void:
+	var e := _setup(["spirit_guardians", "summon_undead"], 4)
+	var c := _caster(e)
+	TestCombat.punching_bag(e, Vector2i(9, 3))
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "spirit_guardians", 3).ok)
+	var d := EncounterSnapshot.capture(e)
+	var json := JSON.stringify(d)
+	var back := JSON.parse_string(json) as Dictionary
+	var e2 := EncounterSnapshot.restore(back, DiceRoller.new(4))
+	assert_eq(e2.spells.zones.live().size(), 1, "Spirit Guardians is still on the field")
+	var c2 := e2.get_c(c.id)
+	assert_true(c2.creature.concentration != null and c2.creature.concentration.source_id == "spirit_guardians")

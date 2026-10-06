@@ -1535,6 +1535,7 @@ func _resize(t: Combatant, step: int, fxo: Effect) -> void:
 	t.creature.size = new_size
 	t.size_cells = cells
 	e.events.append({"type": "resize", "id": t.id})
+	fxo.data["on_end"] = {"kind": "resize", "target": t.id, "size": str(old)}
 	var weak: WeakRef = weakref(t)
 	fxo.on_end = func() -> void:
 		var tt := weak.get_ref() as Combatant
@@ -1548,6 +1549,7 @@ func _resize(t: Combatant, step: int, fxo: Effect) -> void:
 
 ## Haste ending: the target is Incapacitated with Speed 0 until the end of its next turn.
 func _haste_lethargy(t: Combatant, fxo: Effect) -> void:
+	fxo.data["on_end"] = {"kind": "lethargy", "target": t.id}
 	var weak: WeakRef = weakref(t)
 	fxo.on_end = func() -> void:
 		var tt := weak.get_ref() as Combatant
@@ -1687,6 +1689,7 @@ func _delayed_damage(ctx: Dictionary, t: Combatant, params: Dictionary) -> void:
 	fx.skip_turn_ends = e.own_turn_skip(t)
 	fx.modifiers.append(Modifier.of("flag", {"value": "lingering_damage"}, str(s["name"]), &"spell"))
 	var part := {"dice": str(params.get("dice", "2d4")), "type": str(params.get("type", "acid")), "upcast": str(params.get("upcast", ""))}
+	fx.data["on_end"] = {"kind": "delayed_damage", "target": t.id, "caster": c.id, "spell": str(s["id"]), "slot": int(ctx["slot"]), "part": part}
 	var ctx_copy := ctx.duplicate()
 	var weak_t: WeakRef = weakref(t)
 	fx.on_end = func() -> void:
@@ -2439,6 +2442,7 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		marker.modifiers.append(Modifier.of("flag", {"value": "summoned"}, str(s["name"]), &"spell"))
 		conc.attach(m, marker)
 		var sid := sc.id
+		marker.data["on_end"] = {"kind": "dismiss", "target": sid}
 		marker.on_end = func() -> void: _dismiss(sid)
 	if e.state == Encounter.State.ACTIVE:
 		e.insert_after(c, sc)
@@ -2467,6 +2471,94 @@ func _free_cell_near(cell: Vector2i) -> Vector2i:
 				if e.grid.in_bounds(c2) and not e.grid.is_solid(c2) and e.occupant_at(c2) == null:
 					return c2
 	return cell
+
+
+## After a fight is loaded from a save: effects that do something when they end get their hook back (Haste's
+## lethargy, Melf's Acid Arrow's later damage, Enlarge/Reduce, a summoned creature vanishing).
+func rehook_effects() -> void:
+	var e := enc()
+	for c in e.combatants:
+		for fx: Effect in c.creature.effects:
+			var oe := fx.data.get("on_end", {}) as Dictionary
+			match str(oe.get("kind", "")):
+				"lethargy":
+					var tl := e.get_c(str(oe["target"]))
+					if tl != null:
+						_haste_lethargy(tl, fx)
+				"dismiss":
+					var sid := str(oe["target"])
+					fx.on_end = func() -> void: _dismiss(sid)
+				"resize":
+					var tr := e.get_c(str(oe["target"]))
+					var old := StringName(str(oe["size"]))
+					if tr != null:
+						var weak: WeakRef = weakref(tr)
+						fx.on_end = func() -> void:
+							var tt := weak.get_ref() as Combatant
+							if tt != null:
+								tt.creature.size = old
+								tt.size_cells = CombatGrid.size_cells_for(old)
+				"delayed_damage":
+					var td := e.get_c(str(oe["target"]))
+					var caster := e.get_c(str(oe["caster"]))
+					if td != null and caster != null:
+						var ctx := {"c": caster, "s": _comp().spell_data(str(oe["spell"])), "slot": int(oe["slot"]), "nums": {}, "opts": {}}
+						var part := oe["part"] as Dictionary
+						var weak_t: WeakRef = weakref(td)
+						fx.on_end = func() -> void:
+							var tt2 := weak_t.get_ref() as Combatant
+							if tt2 == null or not tt2.is_alive():
+								return
+							var rolled := roll_damage_parts(ctx, [part], false, tt2)
+							e.deal_damage(e.get_c(caster.id), tt2, [{"amount": int(rolled["total"]), "type": str(rolled["type"]), "spell": true}], false, str(ctx["s"].get("name", "")), [str(rolled["text"])])
+
+
+## The spell state a save keeps: lingering areas and objects, sustained actions, summons.
+func to_dict() -> Dictionary:
+	var objs: Array = []
+	for o in zones.live():
+		var conc := o.concentration
+		objs.append({"kind": int(o.kind), "spell": o.spell_id, "name": o.name, "caster": o.caster_id, "cell": [o.cell.x, o.cell.y],
+			"cells": o.cells.map(func(x: Vector2i) -> Array: return [x.x, x.y]), "follows": o.follows_caster, "slot": o.slot,
+			"dc": o.save_dc, "rules": o.rules.duplicate(true), "spared": o.spared.duplicate(), "rounds": o.rounds_left,
+			"conc": conc.source_id if conc != null else ""})
+	var sus: Array = []
+	for a in sustained:
+		var d := a.duplicate(true)
+		var cc := (a["conc"] as WeakRef).get_ref() as Concentration if a["conc"] != null else null
+		d["conc"] = cc.source_id if cc != null else ""
+		sus.append(d)
+	return {"objects": objs, "sustained": sus, "summoned": summoned.duplicate(true)}
+
+
+func from_dict(d: Dictionary) -> void:
+	var e := enc()
+	for od: Variant in d.get("objects", []):
+		var x := od as Dictionary
+		var o := FieldObject.new(int(x["kind"]) as FieldObject.Kind, str(x["spell"]), str(x["name"]))
+		o.caster_id = str(x["caster"])
+		o.cell = Vector2i(int((x["cell"] as Array)[0]), int((x["cell"] as Array)[1]))
+		for cl: Variant in x.get("cells", []):
+			o.cells.append(Vector2i(int((cl as Array)[0]), int((cl as Array)[1])))
+		o.follows_caster = bool(x.get("follows", false))
+		o.slot = int(x.get("slot", 0))
+		o.save_dc = int(x.get("dc", 10))
+		o.rules = (x.get("rules", {}) as Dictionary).duplicate(true)
+		for sp: Variant in x.get("spared", []):
+			o.spared.append(str(sp))
+		o.rounds_left = int(x.get("rounds", -1))
+		var caster := e.get_c(o.caster_id)
+		if str(x.get("conc", "")) != "" and caster != null and caster.creature.concentration != null:
+			o.keep_with(caster.creature.concentration)
+		zones.objects.append(o)
+	for ad: Variant in d.get("sustained", []):
+		var a := (ad as Dictionary).duplicate(true)
+		var caster2 := e.get_c(str(a["caster_id"]))
+		a["conc"] = weakref(caster2.creature.concentration) if str(a.get("conc", "")) != "" and caster2 != null and caster2.creature.concentration != null else null
+		sustained.append(a)
+	summoned = (d.get("summoned", {}) as Dictionary).duplicate(true)
+	rehook_effects()
+	zones.refresh_auras()
 
 
 # --- Turn hooks -----------------------------------------------------------------------------------
