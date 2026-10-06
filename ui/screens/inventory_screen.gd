@@ -263,8 +263,8 @@ func _draw_card() -> void:
 	_card.add_child(head)
 	var facts := HBoxContainer.new()
 	facts.add_theme_constant_override("separation", 6)
-	for f: Array in [["Kind", str(data.get("category", "")).capitalize()], ["Weight", "%s lb" % str(data.get("weight_lb", 0))],
-			["Value", "%s gp" % str(data.get("cost_gp", 0))]]:
+	for f: Array in [["Kind", str(shown.get("category", "")).capitalize()], ["Weight", "%s lb" % str(shown.get("weight_lb", 0))],
+			["Value", "%s gp" % str(shown.get("cost_gp", 0))]]:
 		var box := VBoxContainer.new()
 		box.add_theme_constant_override("separation", -2)
 		box.add_child(UiParts.caption(str(f[0]), 10))
