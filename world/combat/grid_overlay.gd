@@ -6,7 +6,7 @@ extends Node3D
 ## targeted; a controller's cursor is a pale ring. Drawn just above the floor, one instance per mark per layer.
 
 const LAYERS := {
-	"path": {"colour": "wick", "alpha": 0.8, "lift": 0.02, "size": 0.16, "shape": "dot"},
+	"path": {"colour": "wick", "alpha": 0.85, "lift": 0.02, "size": 0.2, "shape": "dot"},
 	"goal": {"colour": "wick", "alpha": 0.85, "lift": 0.022, "size": 0.78, "shape": "ring"},
 	"danger": {"colour": "crimson", "alpha": 0.9, "lift": 0.023, "size": 0.78, "shape": "ring"},
 	"cursor": {"colour": "ivory", "alpha": 0.55, "lift": 0.021, "size": 0.78, "shape": "ring"},
@@ -87,7 +87,9 @@ func show_trail(key: String, cells: Array) -> void:
 	var spots: Array[Vector3] = []
 	for i in range(1, cells.size()):
 		var here := _spot(cells[i] as Vector2i)
-		spots.append((_spot(cells[i - 1] as Vector2i) + here) / 2.0)
+		var mid := (_spot(cells[i - 1] as Vector2i) + here) / 2.0
+		mid.y = maxf(here.y, _spot(cells[i - 1] as Vector2i).y)   # on the edge of a step up, not in the air
+		spots.append(mid)
 		if i < cells.size() - 1:
 			spots.append(here)
 	_place(key, spots)
