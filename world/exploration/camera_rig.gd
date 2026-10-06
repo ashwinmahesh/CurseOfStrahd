@@ -10,6 +10,8 @@ const ZOOM_MAX := 22.0
 var follow: Node3D
 var camera: Camera3D
 var distance := 13.0
+var zoom_min := ZOOM_MIN
+var zoom_max := ZOOM_MAX
 var _yaw_steps := 0
 var _yaw := 0.0
 
@@ -49,9 +51,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_WHEEL_UP:
-			distance = clampf(distance - 1.0, ZOOM_MIN, ZOOM_MAX)
+			distance = clampf(distance - 1.0, zoom_min, zoom_max)
 		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			distance = clampf(distance + 1.0, ZOOM_MIN, ZOOM_MAX)
+			distance = clampf(distance + 1.0, zoom_min, zoom_max)
 	if event.is_action_pressed(&"camera_rotate_left"):
 		rotate_step(-1)
 	elif event.is_action_pressed(&"camera_rotate_right"):

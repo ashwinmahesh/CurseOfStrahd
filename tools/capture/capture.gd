@@ -1,7 +1,8 @@
 extends Node
 ## Loads a scene in a real window, waits, and saves screenshots (rendering needs a window).
 ## Args after --: --scene=res://... --out=/abs/path/prefix --frames=N
-## If the scene has debug_move_leader(), a second shot is taken after walking the leader.
+## If the scene has debug_move_leader(), a second shot is taken after walking the leader. A scene with
+## capture_shots(tool, out) runs its own sequence instead (tool.wait_frames(n), tool._shot(path)).
 
 func _ready() -> void:
 	var args := {}
@@ -12,10 +13,18 @@ func _ready() -> void:
 	var out := str(args.get("out", "user://capture"))
 	var frames := int(args.get("frames", "90"))
 	DirAccess.make_dir_recursive_absolute(out.get_base_dir())
+	# macOS stops drawing a window that's covered by others, which freezes the shots: keep this one on top.
+	get_window().always_on_top = true
+	DisplayServer.window_move_to_foreground()
 	var scene := (load(scene_path) as PackedScene).instantiate()
 	add_child(scene)
 	for i in frames:
 		await get_tree().process_frame
+	if scene.has_method("capture_shots"):
+		# The scene drives its own sequence of shots (the combat arena: start, targeting, reactions, the end).
+		await scene.call("capture_shots", self, out)
+		get_tree().quit()
+		return
 	_shot(out + "_1.png")
 	var focus := str(args.get("focus", ""))
 	if focus != "":
@@ -41,6 +50,11 @@ func _ready() -> void:
 				await get_tree().process_frame
 			_shot(out + "_3.png")
 	get_tree().quit()
+
+
+func wait_frames(n: int) -> void:
+	for i in n:
+		await get_tree().process_frame
 
 
 func _shot(path: String) -> void:

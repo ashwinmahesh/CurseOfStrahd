@@ -6,10 +6,14 @@ BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
 G       := $(GODOT) --path .
 LOGCHK  := tools/logcheck.sh
 
-.PHONY: run import test lint validate ci palette capture standin sprite wireframes
+.PHONY: run arena import test lint validate ci palette capture standin sprite portrait wireframes
 
 run:
 	$(G)
+
+## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
+arena:
+	$(G) res://scenes/combat/arena.tscn
 
 import:
 	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
@@ -40,7 +44,11 @@ standin:
 
 ## Turnaround sheet (3 or 5 views) -> cutout rig -> 8-direction walk: make sprite TURNAROUND=<png> ID=<id>
 sprite:
-	$(BLENDER) -b --python blender/render_walk.py -- --turnaround $(abspath $(TURNAROUND)) --id $(ID) $(if $(SIDE),--side-faces $(SIDE),)
+	$(BLENDER) -b --python blender/render_walk.py -- --turnaround $(abspath $(TURNAROUND)) --id $(ID) $(if $(SIDE),--side-faces $(SIDE),) $(if $(STATIC),--static,)
+
+## Portrait (square crop, 512 px, palette-snapped): make portrait SRC=<png> ID=<id>
+portrait:
+	$(BLENDER) -b --python blender/portrait.py -- --in $(abspath $(SRC)) --id $(ID)
 
 ## UI flow wireframes (docs/ui/wireframes/*.svg) from tools/ui/wireframes.py.
 wireframes:
