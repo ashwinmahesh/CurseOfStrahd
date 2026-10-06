@@ -38,16 +38,19 @@ Constitution increase) and how current Hit Points rise.
 
 - **New features** from `new_features()` as cards with full text.
 - **Choices** from `level_choices()`: every new choice and every choice whose count grew (a new cantrip, more
-  prepared spells, two spellbook spells, the fourth Weapon Mastery). Same widgets as character creation, picked by
-  `kind`.
+  prepared spells, two spellbook spells, the fourth Weapon Mastery), plus the spell lists the class may swap from
+  this level (a Bard's spells and cantrips every Bard level). Same widgets as character creation, picked by `kind`.
 - **Subclass browser** at the subclass level: the four subclasses side by side with features through level 20
   and what changes on the sheet right now.
 - **Feat browser** for Ability Score Improvement levels: filters (category, ability, "only ones I qualify for", off
   by default so the reasons stay visible), each unavailable feat with its reason ("Requires the Spellcasting
   feature", "Requires Wisdom or Charisma 13"), and the feat's own choices inline (ASI: +2 to one or +1 to two, with
   current → new scores and the knock-on numbers).
-- **Spells**: Wizards add two spells to the spellbook (levels they can cast) and update prepared spells; Clerics
-  see the new prepared count; cantrip swaps where the class allows.
+- **Spells** (2024): the class gaining the level may replace one prepared spell (Bard, Sorcerer, Warlock, Eldritch
+  Knight, Arcane Trickster) and one cantrip (every caster but the Wizard): unpick it, then pick the new one, with a
+  line under the box saying so. Clerics, Druids, Paladins, Rangers and Wizards only add new spells here (their
+  earlier ones are locked, "change after a Long Rest"); Wizards add two spells to the spellbook. Weapon Mastery
+  likewise only adds kinds at a level up.
 - A counter shows the choices left; Next is allowed, Confirm isn't until all are made.
 
 ### 4. Summary (`lu_04_summary`)

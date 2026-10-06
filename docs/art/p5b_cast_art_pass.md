@@ -1,20 +1,30 @@
-# P5b cast art pass: the Phase 5 regions' named NPCs (planned, blocked by Gemini's daily quota)
+# P5b cast art pass: the Phase 5 regions' named NPCs
 
-Date: 2026-10-06 · Status: **no images made yet.** The first two calls (Ezmerelda's and Sir Godfrey's turnarounds)
-came back `429 ... generate_requests_per_model_per_day, limit: 1000, model: gemini-3.1-flash-image`: the shared key's
-daily request quota was already spent (art/generation_log.jsonl logs 766 images on 2026-10-06; refusals and errors also
-count but aren't logged). Google resets per-day quotas at midnight Pacific time (03:00 EDT). Nothing was registered in
-art/manifest.json or art/anim/animations.json, because nothing exists to register. The method is P5's
-(docs/art/p5_cast_art_pass.md): 5-view turnaround → `make sprite` → manifest entry with `sprite_flags` → animations.json
-entry → `make anims ONLY=<id> GENERATE=1`; base portrait from the turnaround (`--ref`), mood from the base portrait,
-`make portrait ... BG=ash_violet`.
+Date: 2026-10-06 · Status: **done.** All 38 sheets have a turnaround, an 8-direction walk sheet and an attack sheet;
+every base portrait and mood in the table below exists, plus the shared `vestige_amber` portrait, and
+`tools/art/check_npc_art.py` reports no NPC without art. Heights are in `CombatToken.HEIGHTS`. The pass ran on the
+backup Gemini key after the shared key's daily quota (owner-approved, per process; never stored), within the day's
+share of calls. Method as P5 (docs/art/p5_cast_art_pass.md): 5-view turnaround → `make sprite` → manifest entry with
+`sprite_flags` → animations.json entry → `make anims ONLY=<id> GENERATE=1`; base portrait from the turnaround
+(`--ref`), mood from the base portrait, `make portrait ... BG=ash_violet`.
+
+Review notes:
+- **Redrawn after review:** Sir Godfrey (moonlight, flat grey skin and steel armour, no inner frame), Mordenkainen
+  restored (chest-up, not a statue bust), Offalia, Mirela and the two Tsolenka ghosts (they came back as cut-out busts).
+- **Bella Sunbane's portrait** is from the OpenAI fallback (`gpt-image-2.5-flare`, owner-approved): Gemini refused it
+  as PROHIBITED_CONTENT on every wording, with and without the reference. It's drawn from text alone, so the face
+  doesn't match her sprite exactly, and she has no `smile` variant yet (her lines show the base portrait).
+- **Strip warnings left in** (the renderer's check flagged them; the sheets play fine at game size): Ezmerelda's and
+  Mordenkainen's side strike reaches the strip's edge (the rapier tip, the spark), and a few first frames are wider than
+  the turnaround view (Anna, Dmitri, Ruxandra, Ilka, Bella). The Tsolenka watchman's back strip was redrawn once
+  (its figures had merged).
 
 Done without Gemini: `tools/art/check_npc_art.py` now asks for a walk sheet only from NPCs that can stand on a map (they
 name a `sprite`, a location's `npcs` places them, or they can join as a guest). The 16 `vestige_*` NPCs have none of
 these, so they need only the shared `vestige_amber` portrait and print as "portrait only"; their data needs no change
 (the schema doesn't require `sprite`, and their sarcophagi are `coffin` props).
 
-## The plan: 38 sheets, 79 portraits, about 330 calls
+## The cast: 38 sheets, 79 portraits
 
 Moods are the tag each one's dialogue uses most (counted over narrative/**/*.dialogue); "none" means no tags, so the
 mood fits the voice bible. Heights are suggestions for `CombatToken.HEIGHTS` (world/, the lead's file).

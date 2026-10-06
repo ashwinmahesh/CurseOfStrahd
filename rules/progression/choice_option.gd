@@ -11,6 +11,8 @@ var legal: bool = true
 var reason: String = ""
 ## Soft warning: "You're already proficient in Athletics (Background: Soldier)".
 var warning: String = ""
+## A pick that has to stay for now (a swap chance's limit is used up); `reason` says why.
+var locked: bool = false
 var tags: Array[String] = []
 var data: Dictionary = {}
 
@@ -29,10 +31,17 @@ func block(why: String) -> ChoiceOption:
 	return self
 
 
+func lock(why: String) -> ChoiceOption:
+	locked = true
+	reason = why
+	return self
+
+
 func warn(why: String) -> ChoiceOption:
 	warning = why
 	return self
 
 
 func to_dict() -> Dictionary:
-	return {"id": id, "label": label, "summary": summary, "legal": legal, "reason": reason, "warning": warning}
+	return {"id": id, "label": label, "summary": summary, "legal": legal, "reason": reason, "warning": warning,
+		"locked": locked}

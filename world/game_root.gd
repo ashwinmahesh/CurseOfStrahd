@@ -88,7 +88,9 @@ func enter_location(location_id: String, spawn: String) -> void:
 			text.append(str(d["text"]) if bool(d["narrator"]) else "%s: %s" % [str(d["name"]).get_slice(" ", 0), d["text"]])
 			faces[str(d.get("portrait", ""))] = true
 		# One voice shows its face (the Narrator's included); a back-and-forth shows none.
-		hud.narrate("\n".join(text), str(faces.keys()[0]) if faces.size() == 1 else ""))
+		hud.narrate("\n".join(text), str(faces.keys()[0]) if faces.size() == 1 else "")
+		# Each line in its speaker's voice, one after another (ADR 0013); the box stays up until they're done.
+		hud.hold_narration(VoiceOver.say_all(lines)))
 	view.exit_requested.connect(func(to: String, sp: String) -> void: enter_location.call_deferred(to, sp))
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)

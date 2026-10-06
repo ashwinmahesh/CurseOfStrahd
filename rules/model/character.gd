@@ -187,6 +187,8 @@ const MAX_ATTUNED := 3
 ## Item ids this character is attuned to (a creature can't attune to two copies of one item).
 var attuned: Array[String] = []
 var _item_mods_key := ""
+## Inside an Antimagic Field: magic items act as mundane ones (set by the combat engine, not saved).
+var magic_suppressed := false
 var _item_mods: Array[Modifier] = []
 
 
@@ -197,6 +199,8 @@ func item_active(e: Dictionary) -> bool:
 	if int(e.get("qty", 0)) <= 0:
 		return false
 	var data := compendium.item_data(str(e["id"]))
+	if magic_suppressed and MagicItems.is_magic(data):
+		return false
 	if MagicItems.needs_attunement(data) and not str(e["id"]) in attuned:
 		return false
 	var slot := str(e.get("slot", ""))
@@ -217,7 +221,7 @@ func item_modifiers() -> Array[Modifier]:
 	for e in inventory:
 		if int(e.get("qty", 0)) > 0:
 			key += "%s:%s;" % [e["id"], e.get("slot", "")]
-	key += "|" + ",".join(attuned)
+	key += "|" + ",".join(attuned) + ("|suppressed" if magic_suppressed else "")
 	if key == _item_mods_key:
 		return _item_mods
 	_item_mods_key = key
@@ -228,6 +232,8 @@ func item_modifiers() -> Array[Modifier]:
 			continue
 		var iid := str(e["id"])
 		var data := compendium.item_data(iid)
+		if magic_suppressed and MagicItems.is_magic(data):
+			continue
 		var mods := (data.get("modifiers", []) as Array).duplicate()
 		# Properties this one item rolled (an artifact's), always "while attuned".
 		for prop: Variant in e.get("artifact_properties", []):
@@ -779,6 +785,7 @@ func _register_choice(def: Dictionary, key: String, src: Dictionary, label: Stri
 	c.class_id = str(src.get("class_id", ""))
 	c.level = int(src.get("character_level", character_level()))
 	c.replaceable = str(def.get("replaceable", ""))
+	c.replace_max = int(def.get("replace_max", -1))
 	c.per_ability = int(def.get("per_ability", 1))
 	c.max_score = int(def.get("max", 20))
 	for v: Variant in def.get("from", []):
@@ -968,8 +975,10 @@ func _build_spellcasting() -> void:
 			entry["pact_level"] = int(level_v) if level_v != null else 0
 		var cantrip_count := cantrips_max - fixed_cantrips.size()
 		if cantrip_count > 0:
+			# 2024: every class swaps one cantrip at a time (a level up, or a Wizard's Long Rest).
 			entry["cantrips"] = _register_choice({"kind": "cantrip", "count": cantrip_count,
-				"filter": {"list": list, "level": 0}, "replaceable": str(sc.get("swap_cantrip", "level_up"))},
+				"filter": {"list": list, "level": 0}, "replaceable": str(sc.get("swap_cantrip", "level_up")),
+				"replace_max": 1},
 				"%s.cantrips" % cid, src, "%s cantrips" % name_).duplicate()
 		var book := sc.get("spellbook", {}) as Dictionary
 		if not book.is_empty():
@@ -986,8 +995,12 @@ func _build_spellcasting() -> void:
 				filter["lists"] = lists
 			if not book.is_empty():
 				filter["from_choice"] = "%s.spellbook" % cid
+			# One spell per level up (Bard, Sorcerer, Warlock); after a Long Rest any number, or `swap_prepared_max`
+			# (Paladin and Ranger replace one).
+			var swap := str(sc.get("swap_prepared", "long_rest"))
 			entry["prepared"] = _register_choice({"kind": "spell", "count": prepared_max, "filter": filter,
-				"replaceable": str(sc.get("swap_prepared", "long_rest"))}, "%s.prepared" % cid, src, "Prepared spells").duplicate()
+				"replaceable": swap, "replace_max": int(sc.get("swap_prepared_max", 1 if swap == "level_up" else -1))},
+				"%s.prepared" % cid, src, "Prepared spells").duplicate()
 		# Domain spells and similar: always prepared, not counted against the limit.
 		if subclasses.has(cid):
 			var sub2 := compendium.subclass_data(str(subclasses[cid]))

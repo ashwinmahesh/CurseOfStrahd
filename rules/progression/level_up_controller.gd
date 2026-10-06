@@ -153,13 +153,15 @@ func pending_choices() -> Array[Choice]:
 	var after := preview()
 	var out: Array[Choice] = []
 	for c in after.choice_defs:
+		_open_swap(c)
 		ChoiceOptions.populate(c, after)
 		if not c.is_complete():
 			out.append(c)
 	return out
 
 
-## All choices touched by this level (complete or not), for the level-up screen.
+## All choices touched by this level (complete or not), for the level-up screen: also the spell lists the class may
+## swap from (a Bard's spell and cantrip every Bard level, even when the count stays).
 func level_choices() -> Array[Choice]:
 	var before := {}
 	for c in character.choice_defs:
@@ -167,10 +169,22 @@ func level_choices() -> Array[Choice]:
 	var after := preview()
 	var out: Array[Choice] = []
 	for c in after.choice_defs:
-		if not before.has(c.key) or int(before[c.key]) != c.count or not c.is_complete():
+		_open_swap(c)
+		if not before.has(c.key) or int(before[c.key]) != c.count or not c.is_complete() or c.swap_max > 0:
 			ChoiceOptions.populate(c, after)
 			out.append(c)
 	return out
+
+
+## 2024: gaining a level lets that class replace one spell and one cantrip on its lists (`replaceable` level_up, Bard,
+## Sorcerer, Warlock, Eldritch Knight, Arcane Trickster; every caster's cantrips but a Wizard's); every other earlier
+## pick on a class list stays, so a Cleric or Wizard only adds new spells here and reworks the list after a Long Rest.
+## Weapon Mastery is the same: a new level adds kinds, and the earlier ones change after a Long Rest.
+func _open_swap(c: Choice) -> void:
+	var spell_list := c.class_id != "" and c.key in ["%s.prepared" % c.class_id, "%s.cantrips" % c.class_id]
+	if not spell_list and c.kind != "weapon_mastery":
+		return
+	ChoiceOptions.open_swap(c, character.picks_for(c.key), "level_up" if c.class_id == chosen_class else "")
 
 
 func choose(key: String, picks: Array) -> Array[String]:
@@ -181,6 +195,8 @@ func choose(key: String, picks: Array) -> Array[String]:
 	_refresh()
 	for c in preview().choice_defs:
 		if c.key == key:
+			_open_swap(c)
+			ChoiceOptions.populate(c, preview())
 			return ChoiceOptions.errors(c, preview())
 	return ["Unknown choice: %s" % key]
 
@@ -192,6 +208,7 @@ func errors() -> Array[String]:
 		return out
 	var after := preview()
 	for c in after.choice_defs:
+		_open_swap(c)
 		ChoiceOptions.populate(c, after)
 		out.append_array(ChoiceOptions.errors(c, after))
 	return out

@@ -5,11 +5,18 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | arena | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
+make run | arena | smoke [SCENE=… FRAMES=n] | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines, ADR 0013)
+
+## Godot windows (the owner works on this Mac)
+- Never open a Godot window that can take focus or cover the owner's work. Checks without pixels run headless
+  (`make test`, `make smoke` to boot the game or a scene); screenshots only through `make capture`, which draws off
+  screen.
+- `make run` and `make arena` are for the owner to play: run them only when asked.
+- Any other windowed Godot command: `env __CFBundleIdentifier=org.godotengine.godot <godot> … < /dev/null`.
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.
@@ -59,7 +66,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - Spoken lines: ElevenLabs (eleven_v4, owner decision 2026-10-06) via `make voice` only; model, format and each
   speaker's voice pinned in audio/voice/casting.json. Key: ELEVENLABS_API_KEY, sent as a header. A clip is
   audio/voice/<speaker>/<sha1(text)[:16]>.mp3, so editing a line leaves it silent until `make voice` runs again;
-  `VoiceOver.say` plays it. Lines with {name}, party lines, options and books are never voiced.
+  `VoiceOver.say` plays it (party lines in the speaker's voice: `VoiceOver.beat_voice`). Lines with {name},
+  options and books are never voiced.
 
 ## Done means
 `make ci` green with a clean log, plus a capture for anything visual. Never weaken tests to pass.
