@@ -1,0 +1,62 @@
+# The Heart of Sorrow at the top of the high tower (prop spires_heart_of_sorrow, castle_ravenloft_spires_heart).
+# Striking it brings the tower's guardians up the stair (heart_guardians). With them down, the next blow shatters it
+# (heart_of_sorrow_shattered: Strahd loses the heart's ward in his final battle, docs/regions/castle_ravenloft_spires.md
+# §6), and Strahd comes up as mist to see who did it (heart_strahd_test, which withdraws).
+
+~ heart
+if not flag.heart_of_sorrow_seen
+set heart_of_sorrow_seen
+if not (quest.the_heart_of_sorrow >= found)
+quest the_heart_of_sorrow found
+endif
+Narrator: The heart hangs on chains that vanish into the dark of the roof: red crystal, taller than a man, cut into a thousand faces. It beats. Slowly, once to every three of yours.
+Narrator: With each beat a dark drop gathers at its point and falls onto the dais.
+else
+Narrator: The heart beats on, slow and patient. The drops keep falling.
+endif
+if flag.heart_of_sorrow_known
+Narrator: You know whose wounds it drinks. Somewhere below you, a man is being spared every one of them.
+endif
+if flag.heart_guardians_beaten
+Narrator: The tower's guardians lie in pieces on the floor. Nothing stands between you and the glass now.
+endif
+-> menu
+
+~ menu
+* [if not flag.heart_of_sorrow_known] [Arcana DC 15] Study the magic in it. -> study | study_fail
+* [if not flag.heart_of_sorrow_known] [Cleric] Lay a hand on the glass and listen. -> listen
+* Strike it. -> strike
+* Leave it beating. -> END
+
+~ study
+set heart_of_sorrow_known
+Narrator: The magic is old and simple and very strong: a binding, one end tied to the glass and the other to someone who isn't here. Whatever is done to him, the glass takes first.
+-> menu
+
+~ study_fail
+Narrator: The magic is too old and too tangled to read. All you can tell is that it matters very much to someone.
+-> menu
+
+~ listen
+set heart_of_sorrow_known
+Narrator: Under your palm the glass is warm. You feel the beat, and under the beat, faintly, someone else's pain, caught and held.
+interject class:cleric: It's carrying his wounds for him. Every one. A reliquary that keeps the hurt instead of the saint.
+-> menu
+
+~ strike
+if flag.heart_guardians_beaten
+-> shatter
+endif
+Narrator: Your blow rings off the crystal like a bell. A crack runs across one face, and the whole tower shudders under your feet.
+combat heart_guardians
+
+~ shatter
+time +10
+Narrator: It takes time. The crystal is hard, and it mends a little between blows. But the cracks spread, and at last, with a sound like a church window breaking, the heart comes apart.
+Narrator: Red light pours out of it and is gone. The pieces that hit the floor are only glass.
+Narrator: Far below, deep in the castle, something draws a long breath, and the whole tower seems to listen.
+set heart_of_sorrow_shattered
+quest the_heart_of_sorrow shattered
+interject name:silvain_aster: Whatever it was holding for him, it isn't holding it any more.
+interject tag:blunt: Good. Now he bleeds.
+-> END

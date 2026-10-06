@@ -296,11 +296,10 @@
           "id": "fighting_style",
           "name": "Fighting Style",
           "summary": "Gain a Fighting Style feat, or Druidic Warrior (two Druid cantrips cast with Wisdom).",
-          "text": "You gain a Fighting Style feat of your choice (Archery is a good pick); whenever you gain a Ranger level you can swap it for another. Instead of a feat you can take Druidic Warrior: you learn two Druid cantrips (Guidance and Starry Wisp are suggested), which count as Ranger spells with Wisdom as your spellcasting ability; whenever you gain a Ranger level you can replace one of them with another Druid cantrip.",
+          "text": "You gain a Fighting Style feat of your choice (Archery is a good pick). Instead of a feat you can take Druidic Warrior: you learn two Druid cantrips (Guidance and Starry Wisp are suggested), which count as Ranger spells with Wisdom as your spellcasting ability; whenever you gain a Ranger level you can replace one of them with another Druid cantrip.",
           "choice": {
             "kind": "fighting_style",
             "count": 1,
-            "replaceable": "level_up",
             "options": [
               {
                 "id": "druidic_warrior",
@@ -311,6 +310,7 @@
                   "kind": "cantrip",
                   "count": 2,
                   "replaceable": "level_up",
+                  "replace_max": 1,
                   "filter": {
                     "list": "druid",
                     "level": 0

@@ -1,0 +1,191 @@
+{
+  "id": "rahadin",
+  "name": "Rahadin",
+  "source": {
+    "book": "CoS",
+    "edition": "2014",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. His innate spells (remembered as Misty Step and Phantasmal Killer, 3/day each, Wisdom, DC 15) especially need the book. Deathly Choir runs as an aura at the start of his turn that only hurts his enemies (in the book it is a Bonus Action he may use each turn, on everyone who hears the screams). The Multiattack's two-dart option is left out: out of reach he throws one dart. Mask of the Wild is text only. With the brute profile the AI doesn't cast his spells."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "elf"
+  ],
+  "alignment": "lawful evil",
+  "ac": 18,
+  "ac_note": "Studded leather",
+  "initiative": 6,
+  "hp": {
+    "average": 135,
+    "dice": "18d8+54"
+  },
+  "speed": {
+    "walk": 35
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 22,
+    "con": 17,
+    "int": 15,
+    "wis": 16,
+    "cha": 18
+  },
+  "saves": {
+    "con": 7,
+    "wis": 7
+  },
+  "skills": {
+    "deception": 8,
+    "insight": 7,
+    "intimidation": 12,
+    "perception": 11,
+    "stealth": 14
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 21,
+  "languages": [
+    "Common",
+    "Elvish",
+    "Goblin"
+  ],
+  "cr": 10,
+  "xp": 5900,
+  "proficiency_bonus": 4,
+  "gear": [
+    "studded_leather_armor",
+    "scimitar",
+    "dart"
+  ],
+  "traits": [
+    {
+      "id": "deathly_choir",
+      "name": "Deathly Choir",
+      "action": "passive",
+      "summary": "Foes within 10 ft hear his victims scream: DC 16 Wis save or 3d10 Psychic.",
+      "text": "Anyone within 10 feet of Rahadin who isn't shielded by Mind Blank hears, inside their head, the screams of the many he has killed. As a Bonus Action he can make each creature hearing them attempt a DC 16 Wisdom saving throw; on a failure it takes 16 (3d10) Psychic damage. The engine does this at the start of his turn, to his enemies only.",
+      "aura": {
+        "radius": 10,
+        "trigger": "own_turn_start",
+        "save": {
+          "ability": "wis",
+          "dc": 16
+        },
+        "damage": {
+          "dice": "3d10",
+          "type": "psychic"
+        },
+        "affects": "enemies"
+      },
+      "implemented": "engine"
+    },
+    {
+      "id": "fey_ancestry",
+      "name": "Fey Ancestry",
+      "action": "passive",
+      "summary": "Advantage on saving throws against being Charmed; magic can't put him to sleep.",
+      "text": "Rahadin has Advantage on saving throws against the Charmed condition, and magic can't put him to sleep.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:charmed"
+        },
+        {
+          "stat": "flag",
+          "value": "trance"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "mask_of_the_wild",
+      "name": "Mask of the Wild",
+      "action": "passive",
+      "summary": "Can try to hide when only lightly obscured by foliage, rain, snow, mist and the like.",
+      "text": "Rahadin can attempt to hide even when he is only lightly obscured by foliage, heavy rain, falling snow, mist or similar natural cover.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "scimitar",
+          "count": 3
+        }
+      ],
+      "summary": "Three Scimitar attacks (or two Poisonous Darts).",
+      "text": "Rahadin makes three Scimitar attacks, or throws two Poisonous Darts. The engine runs the three swings; at range he throws one dart."
+    },
+    {
+      "id": "scimitar",
+      "name": "Scimitar",
+      "kind": "melee",
+      "attack": {
+        "bonus": 10,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "1d6+6",
+          "type": "slashing"
+        }
+      ],
+      "summary": "A quick, precise cut.",
+      "weapon": true
+    },
+    {
+      "id": "poisonous_dart",
+      "name": "Poisonous Dart",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 10,
+        "range": [
+          20,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "1d4+6",
+          "type": "piercing"
+        },
+        {
+          "average": 5,
+          "dice": "2d4",
+          "type": "poison"
+        }
+      ],
+      "summary": "Throws a poisoned dart up to 60 ft.",
+      "weapon": true
+    },
+    {
+      "id": "spellcasting",
+      "name": "Innate Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Wis, DC 15, no components: Misty Step and Phantasmal Killer, 3 times a day each.",
+      "text": "Rahadin casts spells using Wisdom (spell save DC 15), needing no components. 3/day each: Misty Step, Phantasmal Killer."
+    }
+  ],
+  "spellcasting": {
+    "ability": "wis",
+    "dc": 15,
+    "per_day": {
+      "3": [
+        "misty_step",
+        "phantasmal_killer"
+      ]
+    }
+  },
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "brute",
+  "summary": "Strahd's dusk elf chamberlain: three lightning scimitar cuts a turn, poisoned darts, and the screams of his victims around him."
+}

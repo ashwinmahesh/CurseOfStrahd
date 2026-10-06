@@ -28,15 +28,20 @@ const PROFILES := {
 	"spellcaster": {"oa_fear": 1.5, "finish": 1.0, "nearest": false, "flee_bloodied": false, "caster": true},
 	## Priests: heal and bless allies, then fight.
 	"support": {"oa_fear": 1.0, "finish": 1.0, "nearest": false, "flee_bloodied": false, "support": true},
+	## Strahd (ADR 0014): BossBrain plays his shapes, Charm and Children of the Night, and picks his targets.
+	"strahd": {"oa_fear": 0.8, "finish": 1.5, "nearest": false, "flee_bloodied": false},
 }
 
 var _enc: WeakRef
 ## The last plan made, for tests and the debug overlay: {kind, target, cell, option, score, why}.
 var last_plan: Dictionary = {}
+## Legendary and lair choices, and the strahd profile (combat/ai/boss_brain.gd).
+var boss: BossBrain
 
 
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
+	boss = BossBrain.new(encounter)
 
 
 func enc() -> Encounter:
@@ -103,6 +108,10 @@ func play_turn(c: Combatant) -> CombatResult:
 			return _flee(c, caster, true)
 	if not c.can_act():
 		return CombatResult.new()
+	if str(c.ai_profile) == "strahd":
+		var bt: Variant = boss.play_turn(c)
+		if bt != null:
+			return bt as CombatResult
 	var prof := profile(c)
 	var ma := e.monster_actions
 	# Bonus Actions that come first: Shape-Shift into fighting form, Divine Aid for a fallen ally, Fey Step.
@@ -114,6 +123,7 @@ func play_turn(c: Combatant) -> CombatResult:
 			if aid.is_paused():
 				return aid
 		ma.bonus_action(c, "fey_step")
+		ma.bonus_action(c, "vow")
 		var control := ma.bonus_action(c, "control")
 		if control.is_paused():
 			return control
@@ -123,6 +133,14 @@ func play_turn(c: Combatant) -> CombatResult:
 			var sr := ma.cast(c, str(spell_plan["spell"]), spell_plan["targets"] as Array, spell_plan.get("point", Vector2.INF) as Vector2)
 			if sr.ok or sr.is_paused():
 				return e.then(sr, func() -> CombatResult: return _after_main(c))
+		var spell_act := _recharge_spell_plan(c)
+		if not spell_act.is_empty():
+			last_plan = spell_act
+			var act0 := spell_act["action"] as Dictionary
+			ma.spend(c, act0)
+			var sr0 := ma.cast(c, str(spell_act["spell"]), [], spell_act["point"] as Vector2)
+			if sr0.ok or sr0.is_paused():
+				return e.then(sr0, func() -> CombatResult: return _after_main(c))
 		var save_plan := _save_action_plan(c)
 		if not save_plan.is_empty():
 			last_plan = save_plan
@@ -171,6 +189,7 @@ func _after_main(c: Combatant) -> CombatResult:
 		e.monster_actions.bonus_action(c, "swoop")
 		e.monster_actions.bonus_action(c, "consume_life")
 		e.monster_actions.bonus_action(c, "trample")
+		e.monster_actions.bonus_action(c, "bonus_save")
 		var rampage := e.monster_actions.bonus_action(c, "rampage")
 		if rampage.is_paused():
 			return rampage
@@ -220,6 +239,27 @@ func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 				melee_near = true
 		if weak != null and not melee_near:
 			return {"kind": "cast", "spell": "magic_missile", "targets": [weak], "why": "Magic Missile at %s" % weak.name()}
+	return {}
+
+
+## An action that casts a spell on a Recharge (a vine blight's Entangling Plants), aimed at the nearest pair of foes
+## when two stand close enough to share the area.
+func _recharge_spell_plan(c: Combatant) -> Dictionary:
+	var e := enc()
+	if not c.action_available:
+		return {}
+	for a: Variant in MonsterActions.data_of(c).get("actions", []):
+		var act := a as Dictionary
+		if not act.has("cast") or not act.has("recharge") or e.monster_actions.why_not(c, act) != "":
+			continue
+		var spell_id := str((act["cast"] as Array)[0])
+		var s := Compendium.shared().spell_data(spell_id)
+		var reach := int((s.get("range", {}) as Dictionary).get("feet", 60))
+		var foes := e.hostiles_of(c).filter(func(h: Combatant) -> bool: return not h.is_down() and e.distance(c, h) <= reach)
+		for f: Combatant in foes:
+			var near := foes.filter(func(g: Combatant) -> bool: return e.distance(f, g) <= 15)
+			if near.size() >= 2 or foes.size() == 1:
+				return {"kind": "cast", "action": act, "spell": spell_id, "point": e.center_of(f), "why": "%s at %s" % [act.get("name", ""), f.name()]}
 	return {}
 
 
@@ -450,6 +490,7 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	# Concentrating casters are worth breaking.
 	if t.creature.concentration != null:
 		score += 1.0
+	score += boss.target_bonus(c, t)
 	# Opportunity Attacks along the way.
 	if cell != c.cell and float(prof["oa_fear"]) > 0.0:
 		score -= float(prof["oa_fear"]) * _oa_risk(c, CombatGrid.path_to(reach, cell), threats)
@@ -517,9 +558,9 @@ func _approach_plan(c: Combatant, visible: Array[Combatant], prof: Dictionary) -
 func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var e := enc()
 	var target := plan["target"] as Combatant
-	if bool(plan.get("dash", false)) and c.action_available and c.speed() > 0:
-		e.dash(c)
-	var reach := e.reachable_for(c)
+	# Dash only when the best square needs it: no wasted action when nothing gets closer (a shut door between them).
+	var dash_ok := bool(plan.get("dash", false)) and c.action_available and c.speed() > 0
+	var reach := e.reachable_for(c, c.movement_left + (c.speed() if dash_ok else 0))
 	# Walking distance to the target (around walls), not the straight line: a creature on the far side of a wall
 	# heads for the door rather than pressing its face to the stones.
 	var walk := e.grid.reachable(target.cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
@@ -548,6 +589,8 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 			best_cost = cost
 	if best_cell == c.cell:
 		return CombatResult.new()
+	if dash_ok and best_cost > c.movement_left:
+		e.dash(c)
 	return e.move(c, best_cell)
 
 
@@ -641,7 +684,7 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 					break
 		if tt == null:
 			continue
-		var avg := m.average_damage(cid2)
+		var avg := m.average_damage(cid2) + boss.action_bonus(c, act2)
 		if avg > best_avg:
 			best_avg = avg
 			best_id = cid2

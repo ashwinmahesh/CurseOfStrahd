@@ -269,11 +269,10 @@
           "id": "fighting_style",
           "name": "Fighting Style",
           "summary": "Gain a Fighting Style feat, or Blessed Warrior (two Cleric cantrips cast with Charisma).",
-          "text": "You gain a Fighting Style feat of your choice (Defense is a good pick); whenever you gain a Paladin level you can swap it for another. Instead of a feat you can take Blessed Warrior: you learn two Cleric cantrips (Guidance and Sacred Flame are suggested), which count as Paladin spells with Charisma as your spellcasting ability; whenever you gain a Paladin level you can replace one of them with another Cleric cantrip.",
+          "text": "You gain a Fighting Style feat of your choice (Defense is a good pick). Instead of a feat you can take Blessed Warrior: you learn two Cleric cantrips (Guidance and Sacred Flame are suggested), which count as Paladin spells with Charisma as your spellcasting ability; whenever you gain a Paladin level you can replace one of them with another Cleric cantrip.",
           "choice": {
             "kind": "fighting_style",
             "count": 1,
-            "replaceable": "level_up",
             "options": [
               {
                 "id": "blessed_warrior",
@@ -284,6 +283,7 @@
                   "kind": "cantrip",
                   "count": 2,
                   "replaceable": "level_up",
+                  "replace_max": 1,
                   "filter": {
                     "list": "cleric",
                     "level": 0

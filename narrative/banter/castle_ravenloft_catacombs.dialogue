@@ -1,0 +1,52 @@
+# Party banter in the catacombs part of Castle Ravenloft (docs/regions/castle_ravenloft_catacombs.md). Each node
+# opens with an `if` gate (the castle's banter plays anywhere in the region, so each says where it belongs).
+
+~ banter_rows
+if at:castle_ravenloft_catacombs and not flag.strahd_in_coffin
+interject name:tamsin_tealeaf: Every one of these rooms has exactly one door. I've counted. I'm going to keep counting.
+interject name:ilse_varga: And every one has a tenant. Keep moving, Tealeaf.
+endif
+-> END
+
+~ banter_wand
+if at:castle_ravenloft_catacombs and item:arcane_focus_wand
+interject name:silvain_aster: Ash wood, badly balanced, a chip out of the grip. It is a terrible wand. Somebody loved him enough to bury him with it.
+interject tag:cheerful: And he loved us enough to leave it lying about. Everybody wins.
+endif
+-> END
+
+~ banter_names
+if at:castle_ravenloft_catacombs and not flag.strahd_destroyed
+interject name:hedda_ironvow: All these names. Cooks, grooms, stewards. He buried his servants under his house like a man keeping receipts.
+interject tag:blunt: Or a man who doesn't let anybody leave.
+endif
+-> END
+
+~ banter_sergei
+if flag.cat_ireena_at_tomb and guest:ireena and at:castle_ravenloft_catacombs_tombs
+interject guest:ireena: I'm fine. I'll tell you when I'm not. Right now I'd like to go and kill someone.
+interject tag:loyal: Then we'll go together.
+endif
+-> END
+
+~ banter_parents
+if at:castle_ravenloft_catacombs_tombs and not flag.strahd_in_coffin
+interject name:silvain_aster: A king and a queen and their sons, carved on the wall. One face cut away. I wonder whether he did that himself or had someone do it for him.
+interject name:hedda_ironvow: Himself. That sort always does it himself.
+endif
+-> END
+
+~ banter_coffin
+if flag.strahd_in_coffin and not flag.strahd_destroyed
+interject name:hedda_ironvow: He's down there in the dark with no breath to hold. Morninglord, keep him lying still a little longer.
+interject name:ilse_varga: Then we go down. Now. Nobody stops to loot anything.
+interject name:tamsin_tealeaf: Nobody was going to. Much.
+endif
+-> END
+
+~ banter_guardians
+if flag.cat_guardians_stilled and at:castle_ravenloft_catacombs_tombs
+interject tag:veteran: Six statues, and three of them were empty armour that walked. I'll be checking every statue in this castle twice now.
+interject class:wizard: The other three were simply statues. I checked. Twice.
+endif
+-> END

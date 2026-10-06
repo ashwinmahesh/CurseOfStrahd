@@ -34,6 +34,26 @@
         "Look for Gertruda"
       ],
       "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "In a yellow guest room in Castle Ravenloft we found Gertruda, the daughter of Mad Mary of the village of Barovia, dressed in borrowed gowns and waiting for the count. She wants to go home, and she's coming with us.",
+      "objectives": [
+        "Bring Gertruda home to her mother's house in the village of Barovia"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Gertruda is home. Mary unlocked all three locks and is keeping them that way.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "lost",
+      "journal": "We gave Gertruda back to the count's chamberlain at the top of the grand stairs. She went up alone.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

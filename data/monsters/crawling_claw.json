@@ -1,0 +1,83 @@
+{
+  "id": "crawling_claw",
+  "name": "Crawling Claw",
+  "source": {
+    "book": "MM2025",
+    "edition": "2014",
+    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual crawling claw. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight. Turn Immunity is text only."
+  },
+  "size": "tiny",
+  "type": "undead",
+  "alignment": "neutral evil",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 2,
+    "dice": "1d4"
+  },
+  "speed": {
+    "walk": 20,
+    "climb": 20
+  },
+  "abilities": {
+    "str": 13,
+    "dex": 14,
+    "con": 11,
+    "int": 5,
+    "wis": 10,
+    "cha": 4
+  },
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "poisoned"
+  ],
+  "senses": {
+    "blindsight": 30
+  },
+  "passive_perception": 10,
+  "languages": [
+    "understands Common but can't speak"
+  ],
+  "cr": 0,
+  "xp": 10,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "turn_immunity",
+      "name": "Turn Immunity",
+      "action": "passive",
+      "summary": "Effects that turn Undead don't affect it.",
+      "text": "The claw is immune to effects that turn Undead.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 3,
+          "dice": "1d4+1",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Grabs, scratches or strangles (Bludgeoning or Slashing, its choice).",
+      "text": "Hit: 3 (1d4 + 1) Bludgeoning or Slashing damage, as the claw likes. The engine always deals Bludgeoning."
+    }
+  ],
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "mindless",
+  "summary": "A severed hand that scuttles up walls and goes for the throat; harmless alone, nasty in numbers."
+}

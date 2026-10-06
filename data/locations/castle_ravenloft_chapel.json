@@ -1,0 +1,297 @@
+{
+  "id": "castle_ravenloft_chapel",
+  "name": "Castle Ravenloft, the Chapel",
+  "region": "castle_ravenloft",
+  "summary": "The castle's chapel: broken pews in the dark, a window that lets in no morning, and an altar under a thick grey quilt of dust. One of the Tarokka's places, and a room where Strahd may wait for the end.",
+  "text": "Pews in rows, some split, some fallen. A tall window of coloured glass, black now. A saint whose face has been cut away. An altar so deep in dust it looks soft.",
+  "map": {
+    "rows": [
+      "####################",
+      "#.....11111111.....#",
+      "#...~.11111111.....#",
+      "#.....11111111..~..#",
+      "#..................#",
+      "##................##",
+      "#.======....======.#",
+      "#..................#",
+      "#.======....======.#",
+      "#..................#",
+      "#.======....======.#",
+      "#..................#",
+      "#.======....======.#",
+      "##................##",
+      "#..~...............#",
+      "#..................#",
+      "#########.##########",
+      "######........######",
+      "######........######",
+      "######........######",
+      "######........######",
+      "#########..#########"
+    ],
+    "theme": "church",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "crg_chapel_chancel",
+      "name": "The chancel",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          18,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "crg_chapel_nave",
+      "name": "The nave",
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          18,
+          15
+        ]
+      ]
+    },
+    {
+      "id": "crg_chapel_porch",
+      "name": "The chapel porch",
+      "cells": [
+        [
+          6,
+          16
+        ],
+        [
+          13,
+          21
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      9,
+      19
+    ],
+    "from_main_floor": [
+      9,
+      19
+    ]
+  },
+  "exits": [
+    {
+      "id": "chapel_out",
+      "cell": [
+        9,
+        21
+      ],
+      "to": "castle_ravenloft_main_floor",
+      "spawn": "from_chapel",
+      "label": "Back to the chapel passage"
+    },
+    {
+      "id": "chapel_out_east",
+      "cell": [
+        10,
+        21
+      ],
+      "to": "castle_ravenloft_main_floor",
+      "spawn": "from_chapel",
+      "label": "Back to the chapel passage"
+    }
+  ],
+  "doors": [
+    {
+      "id": "crg_chapel_doors",
+      "cell": [
+        9,
+        16
+      ],
+      "label": "the chapel doors"
+    }
+  ],
+  "props": [
+    {
+      "id": "crg_chapel_window",
+      "cell": [
+        9,
+        0
+      ],
+      "kind": "examine",
+      "label": "The black window",
+      "model": "window_stained"
+    },
+    {
+      "id": "crg_chapel_window_2",
+      "cell": [
+        15,
+        0
+      ],
+      "kind": "decor",
+      "label": "A coloured window",
+      "model": "window_stained"
+    },
+    {
+      "id": "crg_chapel_window_3",
+      "cell": [
+        3,
+        0
+      ],
+      "kind": "decor",
+      "label": "A coloured window",
+      "model": "window_stained"
+    },
+    {
+      "id": "crg_chapel_saint",
+      "cell": [
+        16,
+        1
+      ],
+      "kind": "examine",
+      "label": "A saint without a face",
+      "model": "statue_saint"
+    },
+    {
+      "id": "crg_chapel_pews",
+      "cell": [
+        9,
+        7
+      ],
+      "kind": "examine",
+      "label": "The pews",
+      "model": "pew"
+    },
+    {
+      "id": "crg_chapel_candles",
+      "cell": [
+        12,
+        2
+      ],
+      "kind": "decor",
+      "label": "Candle stands",
+      "model": "candelabra"
+    },
+    {
+      "id": "crg_chapel_lectern",
+      "cell": [
+        7,
+        4
+      ],
+      "kind": "examine",
+      "label": "A lectern",
+      "model": "lectern"
+    },
+    {
+      "id": "crg_chapel_sunburst",
+      "cell": [
+        19,
+        8
+      ],
+      "kind": "decor",
+      "label": "A tarnished sunburst",
+      "model": "sunburst"
+    }
+  ],
+  "containers": [
+    {
+      "id": "crg_chapel_altar",
+      "cell": [
+        9,
+        2
+      ],
+      "label": "The altar, under its dust",
+      "model": "altar_church",
+      "items": [
+        {
+          "id": "candle",
+          "qty": 4
+        },
+        {
+          "id": "holy_water",
+          "qty": 2
+        },
+        {
+          "id": "holy_symbol_reliquary",
+          "qty": 1
+        }
+      ],
+      "gold": 0,
+      "flag": "crg_altar_opened"
+    },
+    {
+      "id": "crg_poor_box",
+      "cell": [
+        12,
+        18
+      ],
+      "label": "The poor box",
+      "model": "strongbox",
+      "items": [],
+      "gold": 7
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        9,
+        1
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ],
+  "encounters": [
+    {
+      "id": "crg_chapel_final_battle",
+      "trigger": "enter_area:crg_chapel_nave",
+      "final_battle": "castle_ravenloft_chapel",
+      "lair": true,
+      "text": "Someone is kneeling at the altar. He finishes whatever he was saying, rises, and turns. In the front pews, two figures who were praying stand up with him.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            9,
+            3
+          ],
+          "name": "Strahd von Zarovich"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            5
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "A thrall in the pews"
+        }
+      ]
+    }
+  ],
+  "treasure_spots": {
+    "castle_ravenloft_chapel": {
+      "container": "crg_chapel_altar"
+    }
+  },
+  "narration": {
+    "enter": "enter:castle_ravenloft_chapel"
+  },
+  "rest": "risky"
+}

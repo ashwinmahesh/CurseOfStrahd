@@ -1,0 +1,70 @@
+{
+  "region": "castle_ravenloft_gates",
+  "flags": [
+    {
+      "id": "castle_dinner",
+      "type": "string",
+      "summary": "How the dinner with Strahd in the dining hall ended (castle_ravenloft/gates_dinner): dined (he thanked his guests and left them the house for the night) or affront (the party drew on him at his table; crg_dinner_affront). Unset if there was no dinner. Endings and epilogues may read it."
+    },
+    {
+      "id": "crg_dinner_stared",
+      "type": "bool",
+      "summary": "A failed Insight at dinner: Strahd caught the party studying him and says so when he leaves."
+    },
+    {
+      "id": "crg_dinner_want_seen",
+      "type": "bool",
+      "summary": "Insight at dinner saw what Strahd wants from the party: not to be bored. He answers it when he leaves."
+    },
+    {
+      "id": "crg_dinner_wine_known",
+      "type": "bool",
+      "summary": "Medicine at dinner: the wine is only wine, very old. Banter remembers it."
+    },
+    {
+      "id": "crg_dinner_grace_said",
+      "type": "bool",
+      "summary": "A cleric said grace at Strahd's table (guard: once)."
+    },
+    {
+      "id": "crg_dinner_fight_over",
+      "type": "bool",
+      "summary": "The fight at dinner (crg_dinner_affront) is won: Strahd left, the bats are dead. The dining hall's Narrator line and banter read it."
+    },
+    {
+      "id": "crg_ever_hearth_out",
+      "type": "bool",
+      "summary": "The hearth at the end of the hall of faces, which burns on nothing, is out (gates_hearth). Its fire stops, the secret door beside it will move, and unless it went out quietly the hall's guardians wake (crg_faces_wake)."
+    },
+    {
+      "id": "crg_hearth_quiet",
+      "type": "bool",
+      "summary": "The hearth went out quietly (holy water or Arcana), so crg_faces_wake never starts."
+    },
+    {
+      "id": "crg_hearth_arcana_failed",
+      "type": "bool",
+      "summary": "A failed Arcana check knotted the hearth's spell tighter: that way to put the fire out is closed."
+    },
+    {
+      "id": "crg_hoard_opened",
+      "type": "bool",
+      "summary": "The party opened the strongbox in the hidden room behind the hearth (container crg_hearth_hoard; the Tarokka place castle_ravenloft_hidden_hearth)."
+    },
+    {
+      "id": "crg_altar_opened",
+      "type": "bool",
+      "summary": "The party searched the chapel's dusty altar (container crg_chapel_altar; the Tarokka place castle_ravenloft_chapel)."
+    },
+    {
+      "id": "crg_gargoyles_broken",
+      "type": "bool",
+      "summary": "The gargoyles that came down into the front courtyard on a night visit by uninvited guests are destroyed (crg_courtyard_gargoyles)."
+    },
+    {
+      "id": "crg_turret_guard_broken",
+      "type": "bool",
+      "summary": "The animated armour guarding the east turret post is destroyed (crg_turret_guard)."
+    }
+  ]
+}

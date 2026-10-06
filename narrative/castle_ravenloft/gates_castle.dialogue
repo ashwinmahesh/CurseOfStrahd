@@ -1,0 +1,16 @@
+# Things at the castle's front that answer when used (docs/regions/castle_ravenloft_gates.md).
+# carriage: the black carriage (in the carriage house, or in the courtyard after it brought the party by invitation).
+
+~ carriage
+if flag.strahd_invitation == "accepted"
+Narrator: The black carriage that brought you stands where it stopped, its horses still as statues. The door has no handle on the outside.
+else
+Narrator: A black carriage stands in the carriage house, polished and ready, with nobody to drive it. The horses in the traces do not blink.
+endif
+interject class:rogue: No driver, and the horses aren't breathing. I'm not touching it.
+* Look in through the window. -> window
+* Leave it. -> END
+
+~ window
+Narrator: Red velvet seats, a folded blanket, and on the seat a card with a single letter on it, in a fine hand: S.
+-> END

@@ -1,0 +1,28 @@
+# Ending: Ireena given up (strahd_parley is ireena; data/endings/ireena_given_up.json, ADR 0014). With her there the
+# party steps aside; without her, they tell him where she is.
+
+~ start
+if guest:ireena
+-> handed_over
+endif
+-> told
+
+~ handed_over
+Narrator: You step aside. Ireena looks at you once, and then she stops looking at you at all.
+Ireena: I am not a coin to be paid over. But I see you have already spent me.
+Strahd: Come, my dear. This house has waited a very long time to hear your step.
+Narrator: She crosses the hall to him. He offers his arm, she takes it, and the doors close behind them without a sound.
+-> after
+
+~ told
+Narrator: You tell him where she is. He smiles like a man who already knew, and only wanted to hear you say it.
+Strahd: Then I will send my carriage for her tonight. Go home, if you can still remember where that is.
+-> after
+
+~ after
+if guest:ismark
+Ismark: You gave her to him. After everything. Get out of my sight, and out of my village.
+endif
+Narrator: That night every window in the castle is lit, and music drifts down into the valley. Nobody in Barovia sleeps.
+Narrator: The mist does not lift. You have bought your lives, and you will spend them here, under a lord who wants nothing more from you.
+-> END

@@ -1,0 +1,20 @@
+{
+  "id": "anastrasya_karelova",
+  "name": "Anastrasya Karelova",
+  "title": "Bride of Strahd",
+  "summary": "The youngest of the count's brides, a girl from Krezk who once slept in the yellow guest room in borrowed gowns. She looks toward home through a bricked-up window and wants only to stop.",
+  "portrait": "anastrasya_karelova",
+  "sprite": "anastrasya_karelova",
+  "attitude": "indifferent",
+  "voice": "docs/voice/anastrasya_karelova.md",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "vampire",
+    "bride_of_strahd",
+    "castle_ravenloft",
+    "krezk"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "she/her"
+}

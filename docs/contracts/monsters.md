@@ -41,4 +41,5 @@ through SpellCaster with the stat block's numbers (MonsterActions.cast).
 
 `pack_hunter`, `brute`, `mindless`, `cowardly`, `skirmisher` (strikes, then Disengages or flies away), `swarm`,
 `spellcaster` (Phantasmal Killer, Magic Missile from range, Etherealness to escape when badly hurt), `support`
-(Divine Aid's Healing Word for a fallen ally).
+(Divine Aid's Healing Word for a fallen ally), `strahd` (docs/contracts/combat.md "Bosses": legendary and lair
+actions, `regenerates`, `forms`, `misty_escape`, `legendary_resistance`, `ward` and the action `summon` block).

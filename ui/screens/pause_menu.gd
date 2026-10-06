@@ -19,7 +19,12 @@ const RESPEC_Y := 263.0
 const FIRST_BUTTON_Y := 301.0
 const BUTTON_PITCH := 46.0
 
+const TITLE_SCENE := "res://scenes/main_menu.tscn"
+const GAME_SCENE := "res://scenes/game.tscn"
+
 var game_over := false
+## Tests swap in their own scene change (the test runner is the current scene).
+var scene_changer: Callable
 var root: Node
 var st: StoryState
 var _frame: Control
@@ -227,7 +232,7 @@ func _show_menu() -> void:
 	save.tooltip_text = why if not can else "Saves in a new slot."
 	var load := _button(3, "Load a Save", _show_saves)
 	load.disabled = SaveSystem.list_slots().is_empty()
-	_button(4, "Quit to Title", func() -> void: get_tree().change_scene_to_file("res://scenes/main_menu.tscn"))
+	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))
 	_note = _text("", 10.0, _c("arch_gold_light"))
 	_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_note.position = _u(0, FIRST_BUTTON_Y + BUTTON_PITCH * 4.0 + 22.0)
@@ -261,7 +266,7 @@ func _show_saves() -> void:
 	_list()
 	if not game_over:
 		_button(3, "Back", _show_menu)
-	_button(4, "Quit to Title", func() -> void: get_tree().change_scene_to_file("res://scenes/main_menu.tscn"))
+	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))
 	_buttons[0].grab_focus.call_deferred()
 
 
@@ -491,7 +496,17 @@ func _save(slot: String) -> void:
 
 func _load(slot: String) -> void:
 	if SaveSystem.load_slot(slot) == OK:
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		leave_to(GAME_SCENE)
+
+
+## Leaves for another scene. The menu pauses the tree when it opens in a fight, and a paused tree stays paused across
+## a scene change, which left the title screen deaf to every click (owner bug, 2026-10-06): so unpause first.
+func leave_to(path: String) -> void:
+	get_tree().paused = false
+	if scene_changer.is_valid():
+		scene_changer.call(path)
+	else:
+		get_tree().change_scene_to_file(path)
 
 
 func _unhandled_input(event: InputEvent) -> void:

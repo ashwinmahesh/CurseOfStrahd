@@ -51,6 +51,9 @@ Constitution increase) and how current Hit Points rise.
   line under the box saying so. Clerics, Druids, Paladins, Rangers and Wizards only add new spells here (their
   earlier ones are locked, "change after a Long Rest"); Wizards add two spells to the spellbook. Weapon Mastery
   likewise only adds kinds at a level up.
+- **Other swaps** (2024), offered every level of the class: one Eldritch Invocation (one another invocation needs is
+  locked, "Thirsting Blade needs it"), one Maneuver, one Metamagic option, a Blessed or Druidic Warrior cantrip, and
+  a Fighter's Fighting Style (picking a new one replaces it; a Paladin's or Ranger's feat stays).
 - A counter shows the choices left; Next is allowed, Confirm isn't until all are made.
 
 ### 4. Summary (`lu_04_summary`)

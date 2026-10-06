@@ -14,7 +14,8 @@ func _party(without: String = "") -> StoryState:
 
 
 func _hero() -> Character:
-	var b := CharacterBuilder.new(null, {"appearance": HeroLook.default_appearance("male", "fighter")})
+	# A custom hero (build.appearance.custom, the character creator's mark) who even took Ilse's name.
+	var b := CharacterBuilder.new(null, {"appearance": {"custom": true, "art": "hero_02", "voice": "hero_male"}})
 	b.set_class("fighter")
 	b.set_background("soldier")
 	b.set_species("human")

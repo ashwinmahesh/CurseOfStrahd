@@ -1,0 +1,930 @@
+{
+  "id": "castle_ravenloft_court_weeping",
+  "name": "Castle Ravenloft, the Rooms of Weeping",
+  "region": "castle_ravenloft",
+  "summary": "The castle's third floor, where the count lives: his bedroom and bath, the gallery where his portrait watches, the lounge where his three brides wait, the guest room where a village girl is kept, and Rahadin's bare room.",
+  "text": "A long corridor lined with closed doors. Somewhere along it, always just out of sight, someone is crying very quietly.",
+  "map": {
+    "rows": [
+      "########################################",
+      "#............#......#..................#",
+      "#............#......#..................#",
+      "#............#......#..................#",
+      "#........=...#......#..................#",
+      "#............#......#..................#",
+      "#............#......#..................#",
+      "#............#......#..................#",
+      "######.##########.######.##########.####",
+      "#......................................#",
+      "#......................................#",
+      "#......................................#",
+      "#######.###########.###########.########",
+      "#..............#........#..............#",
+      "#..............#........#..............#",
+      "#..............#........#....=.........#",
+      "#.....==.......#........#..............#",
+      "#..............#........#..............#",
+      "##.####.####.###........#..............#",
+      "#....#....#....#........#..............#",
+      "#....#....#....#........#..............#",
+      "#....#....#....#........#..............#",
+      "########################################"
+    ],
+    "theme": "manor",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "court_strahds_bedchamber",
+      "name": "The count's bedroom",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          12,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "court_strahds_bath",
+      "name": "The bath",
+      "cells": [
+        [
+          14,
+          1
+        ],
+        [
+          19,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "court_portrait_gallery",
+      "name": "The portrait gallery",
+      "cells": [
+        [
+          21,
+          1
+        ],
+        [
+          38,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "court_weeping_hall",
+      "name": "The hall of weeping",
+      "cells": [
+        [
+          1,
+          9
+        ],
+        [
+          33,
+          11
+        ]
+      ],
+      "floor": "interior/carpet"
+    },
+    {
+      "id": "court_weeping_landing",
+      "name": "The upper landing",
+      "cells": [
+        [
+          34,
+          9
+        ],
+        [
+          38,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "court_lounge",
+      "name": "The lounge",
+      "cells": [
+        [
+          1,
+          13
+        ],
+        [
+          14,
+          17
+        ]
+      ],
+      "floor": "interior/carpet",
+      "light": "dim"
+    },
+    {
+      "id": "court_ludmilla_room",
+      "name": "Ludmilla's room",
+      "cells": [
+        [
+          1,
+          19
+        ],
+        [
+          4,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "court_anastrasya_room",
+      "name": "Anastrasya's room",
+      "cells": [
+        [
+          6,
+          19
+        ],
+        [
+          9,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "court_volenta_room",
+      "name": "Volenta's room",
+      "cells": [
+        [
+          11,
+          19
+        ],
+        [
+          14,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "court_guest_room",
+      "name": "The guest bedroom",
+      "cells": [
+        [
+          16,
+          13
+        ],
+        [
+          23,
+          21
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "court_rahadin_chamber",
+      "name": "Rahadin's room",
+      "cells": [
+        [
+          25,
+          13
+        ],
+        [
+          38,
+          21
+        ]
+      ],
+      "floor": "dungeon/stone_floor"
+    }
+  ],
+  "spawns": {
+    "default": [
+      36,
+      10
+    ],
+    "from_court": [
+      36,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "court_weeping_stairs_down",
+      "cell": [
+        38,
+        10
+      ],
+      "to": "castle_ravenloft_court",
+      "spawn": "from_weeping",
+      "label": "Stairs down to the Court of the Count"
+    }
+  ],
+  "doors": [
+    {
+      "id": "court_bedchamber_door",
+      "cell": [
+        6,
+        8
+      ],
+      "label": "the count's bedroom door",
+      "locked": true,
+      "lock_dc": 16
+    },
+    {
+      "id": "court_bath_door",
+      "cell": [
+        17,
+        8
+      ],
+      "label": "the bath door"
+    },
+    {
+      "id": "court_gallery_door_w",
+      "cell": [
+        24,
+        8
+      ],
+      "label": "the gallery door"
+    },
+    {
+      "id": "court_gallery_door_e",
+      "cell": [
+        35,
+        8
+      ],
+      "label": "the gallery door"
+    },
+    {
+      "id": "court_lounge_doors",
+      "cell": [
+        7,
+        12
+      ],
+      "label": "the lounge doors"
+    },
+    {
+      "id": "court_guest_door",
+      "cell": [
+        19,
+        12
+      ],
+      "label": "the guest room door"
+    },
+    {
+      "id": "court_rahadin_door",
+      "cell": [
+        31,
+        12
+      ],
+      "label": "Rahadin's door"
+    },
+    {
+      "id": "court_ludmilla_door",
+      "cell": [
+        2,
+        18
+      ],
+      "label": "Ludmilla's door"
+    },
+    {
+      "id": "court_anastrasya_door",
+      "cell": [
+        7,
+        18
+      ],
+      "label": "Anastrasya's door"
+    },
+    {
+      "id": "court_volenta_door",
+      "cell": [
+        12,
+        18
+      ],
+      "label": "Volenta's door"
+    }
+  ],
+  "props": [
+    {
+      "id": "court_strahd_bed",
+      "cell": [
+        6,
+        2
+      ],
+      "kind": "examine",
+      "label": "A great curtained bed",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_strahd_mirror",
+      "cell": [
+        3,
+        0
+      ],
+      "kind": "examine",
+      "label": "A tall mirror",
+      "model": "mirror"
+    },
+    {
+      "id": "court_bedside_portrait",
+      "cell": [
+        8,
+        0
+      ],
+      "kind": "examine",
+      "label": "A small portrait",
+      "model": "painting"
+    },
+    {
+      "id": "court_bedchamber_hearth",
+      "cell": [
+        11,
+        0
+      ],
+      "kind": "decor",
+      "label": "A cold fireplace",
+      "model": "fireplace"
+    },
+    {
+      "id": "court_bath_tub",
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "examine",
+      "label": "A copper bath",
+      "model": "bathtub"
+    },
+    {
+      "id": "court_strahd_portrait",
+      "cell": [
+        30,
+        0
+      ],
+      "kind": "examine",
+      "label": "A portrait of the count",
+      "model": "painting",
+      "when": "not flag.court_gallery_cleared"
+    },
+    {
+      "id": "court_gallery_portraits_w",
+      "cell": [
+        24,
+        0
+      ],
+      "kind": "decor",
+      "label": "Old portraits",
+      "model": "painting_row"
+    },
+    {
+      "id": "court_gallery_portraits_e",
+      "cell": [
+        36,
+        0
+      ],
+      "kind": "decor",
+      "label": "Old portraits",
+      "model": "painting_row"
+    },
+    {
+      "id": "court_gallery_armour_w",
+      "cell": [
+        26,
+        6
+      ],
+      "kind": "decor",
+      "label": "Armour on a stand",
+      "model": "armor_stand",
+      "when": "not flag.court_gallery_cleared"
+    },
+    {
+      "id": "court_gallery_armour_e",
+      "cell": [
+        34,
+        6
+      ],
+      "kind": "decor",
+      "label": "Armour on a stand",
+      "model": "armor_stand",
+      "when": "not flag.court_gallery_cleared"
+    },
+    {
+      "id": "court_weeping_candles_w",
+      "cell": [
+        12,
+        9
+      ],
+      "kind": "decor",
+      "label": "Candelabrum",
+      "model": "candelabra"
+    },
+    {
+      "id": "court_weeping_candles_e",
+      "cell": [
+        28,
+        11
+      ],
+      "kind": "decor",
+      "label": "Candelabrum",
+      "model": "candelabra"
+    },
+    {
+      "id": "court_lounge_harpsichord",
+      "cell": [
+        2,
+        14
+      ],
+      "kind": "examine",
+      "label": "A harpsichord",
+      "model": "harpsichord"
+    },
+    {
+      "id": "court_lounge_cards",
+      "cell": [
+        11,
+        16
+      ],
+      "kind": "examine",
+      "label": "A card table",
+      "model": "table_chairs"
+    },
+    {
+      "id": "court_ludmilla_coffin",
+      "cell": [
+        2,
+        21
+      ],
+      "kind": "examine",
+      "label": "Ludmilla's coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "court_anastrasya_coffin",
+      "cell": [
+        7,
+        21
+      ],
+      "kind": "examine",
+      "label": "Anastrasya's coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "court_volenta_coffin",
+      "cell": [
+        12,
+        21
+      ],
+      "kind": "examine",
+      "label": "Volenta's coffin",
+      "model": "coffin"
+    },
+    {
+      "id": "court_guest_bed",
+      "cell": [
+        20,
+        14
+      ],
+      "kind": "decor",
+      "label": "A curtained bed",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "court_guest_dressing_table",
+      "cell": [
+        23,
+        19
+      ],
+      "kind": "examine",
+      "label": "A dressing table",
+      "model": "dressing_table"
+    },
+    {
+      "id": "court_guest_window",
+      "cell": [
+        20,
+        22
+      ],
+      "kind": "examine",
+      "label": "The guest room window",
+      "model": "window_tall"
+    },
+    {
+      "id": "court_rahadin_bed",
+      "cell": [
+        26,
+        14
+      ],
+      "kind": "decor",
+      "label": "A narrow cot",
+      "model": "bed_small"
+    },
+    {
+      "id": "court_rahadin_names",
+      "cell": [
+        35,
+        19
+      ],
+      "kind": "book",
+      "label": "A ledger of names",
+      "model": "ledger",
+      "codex": "rahadin_names",
+      "text": "Name after name in a neat hand, columns of them, page after page, each with a date and nothing else. The first dates are older than the castle. The newest is last week."
+    }
+  ],
+  "containers": [
+    {
+      "id": "court_strahd_wardrobe",
+      "cell": [
+        1,
+        5
+      ],
+      "label": "A black wardrobe",
+      "model": "wardrobe",
+      "items": [
+        {
+          "id": "fine_clothes",
+          "qty": 2
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "court_strahd_jewel_box",
+      "cell": [
+        11,
+        6
+      ],
+      "label": "A jewel box",
+      "model": "jewel_box",
+      "items": [],
+      "gold": 300,
+      "lock_dc": 17
+    },
+    {
+      "id": "court_bath_cabinet",
+      "cell": [
+        19,
+        6
+      ],
+      "label": "A small cabinet",
+      "model": "cabinet_small",
+      "items": [
+        {
+          "id": "perfume",
+          "qty": 2
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "court_gallery_cabinet",
+      "cell": [
+        38,
+        3
+      ],
+      "label": "A glass cabinet",
+      "model": "cabinet_glass",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "court_guest_wardrobe",
+      "cell": [
+        16,
+        17
+      ],
+      "label": "A wardrobe of gowns",
+      "model": "wardrobe",
+      "items": [
+        {
+          "id": "fine_clothes",
+          "qty": 3
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "court_ludmilla_shelf",
+      "cell": [
+        4,
+        19
+      ],
+      "label": "Ludmilla's books",
+      "model": "book_shelf",
+      "items": [
+        {
+          "id": "book",
+          "qty": 2
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "court_anastrasya_trunk",
+      "cell": [
+        9,
+        20
+      ],
+      "label": "A plain trunk",
+      "model": "trunk",
+      "items": [
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gold": 3
+    },
+    {
+      "id": "court_volenta_trunk",
+      "cell": [
+        14,
+        20
+      ],
+      "label": "A painted chest",
+      "model": "chest_painted",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "playing_card_set",
+          "qty": 1
+        }
+      ],
+      "gold": 45
+    },
+    {
+      "id": "court_rahadin_rack",
+      "cell": [
+        38,
+        15
+      ],
+      "label": "A sword rack",
+      "model": "shelves",
+      "items": [
+        {
+          "id": "scimitar",
+          "qty": 2
+        },
+        {
+          "id": "dagger",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "court_rahadin_footlocker",
+      "cell": [
+        26,
+        20
+      ],
+      "label": "A footlocker",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "gold": 150,
+      "lock_dc": 17
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        8,
+        15
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        21,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        12,
+        9
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "volenta_popofsky",
+      "cell": [
+        9,
+        14
+      ],
+      "dialogue": "castle_ravenloft/court_brides:first",
+      "when": "not flag.court_brides_met and not flag.court_brides_fought",
+      "facing": "north",
+      "approach": 5
+    },
+    {
+      "npc": "volenta_popofsky",
+      "cell": [
+        9,
+        14
+      ],
+      "dialogue": "castle_ravenloft/court_brides:volenta",
+      "when": "not flag.court_brides_fought",
+      "facing": "north"
+    },
+    {
+      "npc": "ludmilla_vilisevic",
+      "cell": [
+        4,
+        14
+      ],
+      "dialogue": "castle_ravenloft/court_brides:ludmilla",
+      "when": "not flag.court_brides_fought",
+      "facing": "east"
+    },
+    {
+      "npc": "anastrasya_karelova",
+      "cell": [
+        7,
+        20
+      ],
+      "dialogue": "castle_ravenloft/court_brides:anastrasya_after",
+      "when": "flag.court_brides_fought and flag.court_anastrasya_story and not flag.anastrasya_at_rest",
+      "facing": "north",
+      "approach": 3
+    },
+    {
+      "npc": "anastrasya_karelova",
+      "cell": [
+        13,
+        15
+      ],
+      "dialogue": "castle_ravenloft/court_brides:anastrasya",
+      "when": "not flag.court_brides_fought",
+      "facing": "west"
+    },
+    {
+      "npc": "gertruda",
+      "cell": [
+        19,
+        17
+      ],
+      "dialogue": "castle_ravenloft/court_gertruda:returned",
+      "when": "flag.gertruda_given_back",
+      "facing": "north"
+    },
+    {
+      "npc": "gertruda",
+      "cell": [
+        19,
+        17
+      ],
+      "dialogue": "castle_ravenloft/court_gertruda:start",
+      "when": "not flag.gertruda_rescued",
+      "facing": "north"
+    },
+    {
+      "npc": "rahadin",
+      "cell": [
+        32,
+        17
+      ],
+      "dialogue": "castle_ravenloft/court_rahadin:chamber",
+      "when": "not flag.rahadin_defeated and not guest:gertruda",
+      "facing": "north"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "court_portrait_watch",
+      "trigger": "enter_area:court_portrait_gallery",
+      "text": "The painted count turns his head to follow you down the gallery. The armour on either side of him lifts its gauntlets.",
+      "monsters": [
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            30,
+            1
+          ],
+          "name": "The count's portrait"
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            26,
+            5
+          ],
+          "name": "Gallery armour"
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            34,
+            5
+          ],
+          "name": "Gallery armour"
+        }
+      ],
+      "surprise": "",
+      "flag": "court_gallery_cleared"
+    },
+    {
+      "id": "court_brides_fight",
+      "trigger": "dialogue",
+      "when": "flag.court_anastrasya_story",
+      "text": "Ludmilla closes her book. Volenta claps her hands. Anastrasya turns her face to the wall and does not move.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            15
+          ],
+          "name": "Ludmilla Vilisevic"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            15
+          ],
+          "name": "Volenta Popofsky"
+        }
+      ],
+      "surprise": "",
+      "flag": "court_brides_fought"
+    },
+    {
+      "id": "court_brides_fight",
+      "trigger": "dialogue",
+      "text": "Ludmilla closes her book. Volenta claps her hands. Anastrasya rises last, and slowest, and she is crying.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            15
+          ],
+          "name": "Ludmilla Vilisevic"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            15
+          ],
+          "name": "Volenta Popofsky"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            15
+          ],
+          "name": "Anastrasya Karelova"
+        }
+      ],
+      "surprise": "",
+      "flag": "court_brides_fought"
+    },
+    {
+      "id": "court_rahadin_chamber_fight",
+      "trigger": "dialogue",
+      "text": "Rahadin rises from his cot as if he has been expecting this, and the screaming rises with him.",
+      "monsters": [
+        {
+          "monster": "rahadin",
+          "cell": [
+            32,
+            17
+          ],
+          "name": "Rahadin"
+        }
+      ],
+      "surprise": "",
+      "flag": "rahadin_defeated"
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_court_weeping"
+  },
+  "rest": "no",
+  "rest_text": "Someone weeps behind the walls all night, never louder and never closer. Nobody sleeps on this floor."
+}

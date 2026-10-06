@@ -1,0 +1,1543 @@
+{
+  "id": "castle_ravenloft_larders_dungeon",
+  "name": "Castle Ravenloft, the Dungeon",
+  "region": "castle_ravenloft",
+  "summary": "Under the larders: a vaulted hall, the jailers' post, two rows of cells and their prisoners, the torture chamber, a workroom where bones are made into furniture, the green furnace and its machinery, and the hall of bones, where the lord of the castle entertains.",
+  "text": "Cold stone, dripping vaults and the sound of chains settling. Far off, a furnace breathes.",
+  "map": {
+    "rows": [
+      "########################################",
+      "#....#...............#.....#.....=.....#",
+      "#....#...#...#...#...#.....#...........#",
+      "#......................=...............#",
+      "#....#...#...#...#...#.....#...........#",
+      "#....#...............#.....#...........#",
+      "####################..######...........#",
+      "####################..######...........#",
+      "####...#...#...#...#..#...##...........#",
+      "####...#...#...#...#..#...####.#########",
+      "####...#...#...#...#..#...####........##",
+      "#####.###.###.###.##..##.############.##",
+      "#......................................#",
+      "#........................#.............#",
+      "#..##.###.###.###.########.............#",
+      "#..#...#...#...#...#######.............#",
+      "#..#...#...#...#...#######.............#",
+      "#..#...#...#...#...#######.............#",
+      "#..#######################....=======.=#",
+      "##.#######################.............#",
+      "#..............#.........#.............#",
+      "#..............#.........#.............#",
+      "#....=...=........===....#.............#",
+      "#..............#.......................#",
+      "#..............#.........#.............#",
+      "#..............#.........#.............#",
+      "########################################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "larders_dungeon_stair",
+      "name": "Foot of the jailers' stair",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "larders_dungeon_hall",
+      "name": "The dungeon hall",
+      "cells": [
+        [
+          6,
+          1
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "larders_jailers_post",
+      "name": "The jailers' guardroom",
+      "cells": [
+        [
+          22,
+          1
+        ],
+        [
+          26,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "larders_furnace_room",
+      "name": "The furnace room",
+      "cells": [
+        [
+          28,
+          1
+        ],
+        [
+          38,
+          8
+        ]
+      ],
+      "light": "dim",
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced"
+    },
+    {
+      "id": "larders_stokers_crawl",
+      "name": "The stoker's crawl",
+      "cells": [
+        [
+          30,
+          10
+        ],
+        [
+          37,
+          10
+        ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "dungeon/earth_braced"
+    },
+    {
+      "id": "larders_cell_stair",
+      "name": "The way down to the cells",
+      "cells": [
+        [
+          20,
+          6
+        ],
+        [
+          21,
+          11
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
+    },
+    {
+      "id": "larders_north_cells",
+      "name": "The north cells",
+      "cells": [
+        [
+          4,
+          8
+        ],
+        [
+          18,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "larders_cell_passage",
+      "name": "The passage between the cells",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          24,
+          13
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
+    },
+    {
+      "id": "larders_south_cells",
+      "name": "The south cells",
+      "cells": [
+        [
+          4,
+          15
+        ],
+        [
+          18,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "larders_lift_foot",
+      "name": "The bottom of the lift shaft",
+      "cells": [
+        [
+          23,
+          8
+        ],
+        [
+          25,
+          10
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
+    },
+    {
+      "id": "larders_drain_passage",
+      "name": "The drain passage",
+      "cells": [
+        [
+          1,
+          14
+        ],
+        [
+          2,
+          18
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
+    },
+    {
+      "id": "larders_torture_chamber",
+      "name": "The torture chamber",
+      "cells": [
+        [
+          1,
+          20
+        ],
+        [
+          14,
+          25
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
+    },
+    {
+      "id": "larders_bonewright",
+      "name": "The bonewright's workroom",
+      "cells": [
+        [
+          16,
+          20
+        ],
+        [
+          24,
+          25
+        ]
+      ],
+      "floor": "interior/workshop_boards",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "larders_hall_of_bones",
+      "name": "The hall of bones",
+      "cells": [
+        [
+          26,
+          12
+        ],
+        [
+          38,
+          25
+        ]
+      ],
+      "light": "dim",
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    }
+  ],
+  "spawns": {
+    "default": [
+      2,
+      3
+    ],
+    "from_larders": [
+      2,
+      3
+    ],
+    "from_lift": [
+      24,
+      9
+    ]
+  },
+  "exits": [
+    {
+      "id": "larders_dungeon_up",
+      "cell": [
+        2,
+        1
+      ],
+      "to": "castle_ravenloft_larders",
+      "spawn": "from_dungeon",
+      "label": "Stairs up to the larders"
+    },
+    {
+      "id": "larders_lift_up",
+      "cell": [
+        24,
+        8
+      ],
+      "to": "castle_ravenloft_larders",
+      "spawn": "from_lift",
+      "label": "The lift cage, up to the larders"
+    }
+  ],
+  "doors": [
+    {
+      "id": "larders_dungeon_hall_door",
+      "cell": [
+        5,
+        3
+      ],
+      "label": "a heavy door"
+    },
+    {
+      "id": "larders_jailers_post_door",
+      "cell": [
+        21,
+        3
+      ],
+      "label": "the jailers' door"
+    },
+    {
+      "id": "larders_furnace_door",
+      "cell": [
+        27,
+        3
+      ],
+      "label": "a door warm to the touch"
+    },
+    {
+      "id": "larders_cell_n1",
+      "cell": [
+        5,
+        11
+      ],
+      "label": "an iron cell gate"
+    },
+    {
+      "id": "larders_cell_n2",
+      "cell": [
+        9,
+        11
+      ],
+      "label": "an iron cell gate"
+    },
+    {
+      "id": "larders_cell_n3",
+      "cell": [
+        13,
+        11
+      ],
+      "label": "an iron cell gate"
+    },
+    {
+      "id": "larders_cell_s1",
+      "cell": [
+        5,
+        14
+      ],
+      "label": "an iron cell gate"
+    },
+    {
+      "id": "larders_cell_s2",
+      "cell": [
+        9,
+        14
+      ],
+      "label": "an iron cell gate"
+    },
+    {
+      "id": "larders_cell_s3",
+      "cell": [
+        13,
+        14
+      ],
+      "label": "an iron cell gate"
+    },
+    {
+      "id": "larders_cell_s4",
+      "cell": [
+        17,
+        14
+      ],
+      "label": "an iron cell gate"
+    },
+    {
+      "id": "larders_lift_door",
+      "cell": [
+        24,
+        11
+      ],
+      "label": "an iron-bound door"
+    },
+    {
+      "id": "larders_torture_door",
+      "cell": [
+        2,
+        19
+      ],
+      "label": "a door stained dark along the bottom"
+    },
+    {
+      "id": "larders_bonewright_door",
+      "cell": [
+        15,
+        22
+      ],
+      "label": "a door with a bone for a handle"
+    },
+    {
+      "id": "larders_bones_back_door",
+      "cell": [
+        25,
+        23
+      ],
+      "label": "a narrow door"
+    },
+    {
+      "id": "larders_bones_door",
+      "cell": [
+        25,
+        12
+      ],
+      "label": "a tall door of black wood"
+    },
+    {
+      "id": "larders_crawl_furnace",
+      "cell": [
+        30,
+        9
+      ],
+      "label": "a loose iron plate low in the wall",
+      "secret_dc": 15
+    },
+    {
+      "id": "larders_crawl_throne",
+      "cell": [
+        37,
+        11
+      ],
+      "label": "a seam in the bone-panelled wall",
+      "secret_dc": 15
+    }
+  ],
+  "props": [
+    {
+      "id": "larders_guest_slate",
+      "cell": [
+        10,
+        0
+      ],
+      "kind": "examine",
+      "label": "names chalked on a slate",
+      "model": "notes_wall"
+    },
+    {
+      "id": "larders_cold_brazier",
+      "cell": [
+        15,
+        3
+      ],
+      "kind": "decor",
+      "label": "a cold iron brazier",
+      "model": "brazier"
+    },
+    {
+      "id": "larders_hall_chains",
+      "cell": [
+        6,
+        6
+      ],
+      "kind": "decor",
+      "label": "chains on the wall",
+      "model": "wall_chains"
+    },
+    {
+      "id": "larders_key_board",
+      "cell": [
+        24,
+        0
+      ],
+      "kind": "examine",
+      "label": "a board of iron keys",
+      "model": "tally_board",
+      "flag": "larders_keys_taken"
+    },
+    {
+      "id": "larders_jailers_table",
+      "cell": [
+        23,
+        3
+      ],
+      "kind": "decor",
+      "label": "a jailers' table",
+      "model": "table_chairs"
+    },
+    {
+      "id": "larders_furnace_mouth",
+      "cell": [
+        33,
+        0
+      ],
+      "kind": "examine",
+      "label": "the furnace",
+      "model": "oven_brick"
+    },
+    {
+      "id": "larders_green_fire",
+      "cell": [
+        33,
+        1
+      ],
+      "kind": "examine",
+      "label": "the green fire",
+      "model": "brazier_green",
+      "burning": "not flag.larders_furnace_quenched"
+    },
+    {
+      "id": "larders_sluice_wheel",
+      "cell": [
+        38,
+        4
+      ],
+      "kind": "examine",
+      "label": "the sluice wheel",
+      "model": "winch",
+      "dialogue": "castle_ravenloft/larders_machinery:sluice"
+    },
+    {
+      "id": "larders_furnace_gears",
+      "cell": [
+        28,
+        6
+      ],
+      "kind": "examine",
+      "label": "great gears turning by themselves",
+      "model": "gear_brake"
+    },
+    {
+      "id": "larders_furnace_chains",
+      "cell": [
+        30,
+        0
+      ],
+      "kind": "decor",
+      "label": "chains running up into the dark",
+      "model": "winch"
+    },
+    {
+      "id": "larders_stoker_bones",
+      "cell": [
+        35,
+        10
+      ],
+      "kind": "examine",
+      "label": "a stoker's bones",
+      "model": "bones"
+    },
+    {
+      "id": "larders_nadia_straw",
+      "cell": [
+        4,
+        8
+      ],
+      "kind": "decor",
+      "label": "straw",
+      "model": "straw"
+    },
+    {
+      "id": "larders_doru_chains",
+      "cell": [
+        10,
+        7
+      ],
+      "kind": "decor",
+      "label": "silvered chains",
+      "model": "wall_chains"
+    },
+    {
+      "id": "larders_tally_skeleton",
+      "cell": [
+        13,
+        7
+      ],
+      "kind": "examine",
+      "label": "a skeleton in shackles",
+      "model": "skeleton_shackles"
+    },
+    {
+      "id": "larders_open_cell_straw",
+      "cell": [
+        16,
+        8
+      ],
+      "kind": "decor",
+      "label": "fresh straw",
+      "model": "straw"
+    },
+    {
+      "id": "larders_scratched_sun",
+      "cell": [
+        5,
+        18
+      ],
+      "kind": "examine",
+      "label": "a sun scratched into the wall",
+      "model": "sunburst"
+    },
+    {
+      "id": "larders_empty_cell_straw",
+      "cell": [
+        9,
+        16
+      ],
+      "kind": "decor",
+      "label": "old straw",
+      "model": "straw"
+    },
+    {
+      "id": "larders_loose_stone",
+      "cell": [
+        14,
+        17
+      ],
+      "kind": "search",
+      "label": "a loose stone",
+      "model": "rubble",
+      "search_dc": 14,
+      "item": "potion_of_healing"
+    },
+    {
+      "id": "larders_cell_s3_bones",
+      "cell": [
+        12,
+        15
+      ],
+      "kind": "decor",
+      "label": "bones in the straw",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "larders_lift_cage_foot",
+      "cell": [
+        23,
+        8
+      ],
+      "kind": "decor",
+      "label": "the lift cage",
+      "model": "cage_hanging"
+    },
+    {
+      "id": "larders_rack",
+      "cell": [
+        5,
+        22
+      ],
+      "kind": "examine",
+      "label": "the rack",
+      "model": "surgery_table"
+    },
+    {
+      "id": "larders_stocks",
+      "cell": [
+        9,
+        22
+      ],
+      "kind": "decor",
+      "label": "the stocks",
+      "model": "stocks"
+    },
+    {
+      "id": "larders_iron_case",
+      "cell": [
+        13,
+        21
+      ],
+      "kind": "examine",
+      "label": "a tall iron case under a sheet",
+      "model": "cage_covered"
+    },
+    {
+      "id": "larders_torture_chains",
+      "cell": [
+        6,
+        19
+      ],
+      "kind": "decor",
+      "label": "chains on the wall",
+      "model": "wall_chains"
+    },
+    {
+      "id": "larders_drain",
+      "cell": [
+        8,
+        24
+      ],
+      "kind": "examine",
+      "label": "a drain in the floor",
+      "model": "puddle"
+    },
+    {
+      "id": "larders_torture_stain",
+      "cell": [
+        4,
+        24
+      ],
+      "kind": "decor",
+      "label": "an old stain",
+      "model": "bloodstain"
+    },
+    {
+      "id": "larders_bone_bench_1",
+      "cell": [
+        18,
+        22
+      ],
+      "kind": "decor",
+      "label": "a bench covered in bones and tools",
+      "model": "workbench"
+    },
+    {
+      "id": "larders_bone_bench_2",
+      "cell": [
+        19,
+        22
+      ],
+      "kind": "examine",
+      "label": "a bench covered in bones and tools",
+      "model": "workbench"
+    },
+    {
+      "id": "larders_bone_bench_3",
+      "cell": [
+        20,
+        22
+      ],
+      "kind": "decor",
+      "label": "a bench covered in bones and tools",
+      "model": "workbench"
+    },
+    {
+      "id": "larders_bone_pile",
+      "cell": [
+        23,
+        21
+      ],
+      "kind": "decor",
+      "label": "bones sorted by size",
+      "model": "bones"
+    },
+    {
+      "id": "larders_bone_pile_b",
+      "cell": [
+        17,
+        25
+      ],
+      "kind": "decor",
+      "label": "bones sorted by size",
+      "model": "bones"
+    },
+    {
+      "id": "larders_half_chair",
+      "cell": [
+        22,
+        24
+      ],
+      "kind": "examine",
+      "label": "a chair of bones, half made",
+      "model": "chair_high"
+    },
+    {
+      "id": "larders_bonewright_tools",
+      "cell": [
+        16,
+        19
+      ],
+      "kind": "decor",
+      "label": "tools on hooks",
+      "model": "shelves_wall"
+    },
+    {
+      "id": "larders_bone_table_1",
+      "cell": [
+        30,
+        18
+      ],
+      "kind": "examine",
+      "label": "the table of bones",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_bone_table_2",
+      "cell": [
+        31,
+        18
+      ],
+      "kind": "decor",
+      "label": "the table of bones",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_bone_table_3",
+      "cell": [
+        32,
+        18
+      ],
+      "kind": "decor",
+      "label": "the table of bones",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_bone_table_4",
+      "cell": [
+        34,
+        18
+      ],
+      "kind": "decor",
+      "label": "the table of bones",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_bone_table_5",
+      "cell": [
+        35,
+        18
+      ],
+      "kind": "decor",
+      "label": "the table of bones",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_bone_lamp",
+      "cell": [
+        33,
+        18
+      ],
+      "kind": "examine",
+      "label": "a lamp of skulls over the table",
+      "model": "candelabra"
+    },
+    {
+      "id": "larders_bone_chair_1",
+      "cell": [
+        31,
+        19
+      ],
+      "kind": "decor",
+      "label": "a chair of bones",
+      "model": "chair_high"
+    },
+    {
+      "id": "larders_bone_chair_2",
+      "cell": [
+        35,
+        17
+      ],
+      "kind": "decor",
+      "label": "a chair of bones",
+      "model": "chair_high"
+    },
+    {
+      "id": "larders_bone_chair_3",
+      "cell": [
+        31,
+        17
+      ],
+      "kind": "decor",
+      "label": "a chair of bones",
+      "model": "chair_high"
+    },
+    {
+      "id": "larders_bone_chair_4",
+      "cell": [
+        33,
+        19
+      ],
+      "kind": "decor",
+      "label": "a chair of bones",
+      "model": "chair_high"
+    },
+    {
+      "id": "larders_bone_chair_5",
+      "cell": [
+        35,
+        19
+      ],
+      "kind": "decor",
+      "label": "a chair of bones",
+      "model": "chair_high"
+    },
+    {
+      "id": "larders_bone_throne",
+      "cell": [
+        38,
+        18
+      ],
+      "kind": "examine",
+      "label": "a throne of bones",
+      "model": "chair_high"
+    },
+    {
+      "id": "larders_ossuary_niches_1",
+      "cell": [
+        25,
+        16
+      ],
+      "kind": "examine",
+      "label": "niches stacked with skulls",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "larders_ossuary_niches_2",
+      "cell": [
+        25,
+        20
+      ],
+      "kind": "decor",
+      "label": "niches stacked with skulls",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "larders_ossuary_niches_3",
+      "cell": [
+        39,
+        14
+      ],
+      "kind": "decor",
+      "label": "niches stacked with skulls",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "larders_ossuary_niches_4",
+      "cell": [
+        39,
+        22
+      ],
+      "kind": "decor",
+      "label": "niches stacked with skulls",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "larders_ossuary_niches_5",
+      "cell": [
+        29,
+        26
+      ],
+      "kind": "decor",
+      "label": "niches stacked with skulls",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "larders_ossuary_niches_6",
+      "cell": [
+        34,
+        26
+      ],
+      "kind": "decor",
+      "label": "niches stacked with skulls",
+      "model": "wall_alcoves"
+    },
+    {
+      "id": "larders_bone_heap",
+      "cell": [
+        27,
+        24
+      ],
+      "kind": "decor",
+      "label": "a heap of bones",
+      "model": "bones"
+    },
+    {
+      "id": "larders_bone_heap_b",
+      "cell": [
+        38,
+        24
+      ],
+      "kind": "decor",
+      "label": "a heap of bones",
+      "model": "bones"
+    },
+    {
+      "id": "larders_bone_floor",
+      "cell": [
+        28,
+        14
+      ],
+      "kind": "decor",
+      "label": "bones underfoot",
+      "model": "bone_scatter"
+    }
+  ],
+  "containers": [
+    {
+      "id": "larders_jailers_chest",
+      "cell": [
+        26,
+        5
+      ],
+      "label": "the jailers' chest",
+      "model": "chest_iron",
+      "items": [
+        {
+          "id": "manacles",
+          "qty": 2
+        },
+        {
+          "id": "hooded_lantern",
+          "qty": 1
+        },
+        {
+          "id": "holy_symbol_amulet",
+          "qty": 1
+        }
+      ],
+      "gold": 26
+    },
+    {
+      "id": "larders_lure_satchel",
+      "cell": [
+        17,
+        8
+      ],
+      "label": "a satchel on the straw",
+      "model": "satchel",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "gold": 12
+    },
+    {
+      "id": "larders_torture_chest",
+      "cell": [
+        14,
+        25
+      ],
+      "label": "a chest of instruments",
+      "model": "chest",
+      "items": [
+        {
+          "id": "thieves_tools",
+          "qty": 1
+        },
+        {
+          "id": "manacles",
+          "qty": 2
+        }
+      ],
+      "gold": 18
+    },
+    {
+      "id": "larders_stoker_pouch",
+      "cell": [
+        36,
+        10
+      ],
+      "label": "a stoker's pouch",
+      "model": "satchel",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        }
+      ],
+      "gold": 15
+    },
+    {
+      "id": "larders_bone_table",
+      "cell": [
+        36,
+        18
+      ],
+      "label": "a drawer at the head of the table of bones",
+      "model": "table_set",
+      "gold": 60
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        33,
+        2
+      ],
+      "kind": "fire",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        24,
+        2
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        33,
+        17
+      ],
+      "kind": "magic",
+      "bright_ft": 10,
+      "dim_ft": 30
+    }
+  ],
+  "traps": [
+    {
+      "id": "larders_bone_lamp_trap",
+      "label": "the lamp over the table",
+      "cells": [
+        [
+          30,
+          17
+        ],
+        [
+          31,
+          17
+        ],
+        [
+          32,
+          17
+        ],
+        [
+          33,
+          17
+        ],
+        [
+          34,
+          17
+        ],
+        [
+          35,
+          17
+        ],
+        [
+          36,
+          17
+        ],
+        [
+          30,
+          19
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          32,
+          19
+        ],
+        [
+          33,
+          19
+        ],
+        [
+          34,
+          19
+        ],
+        [
+          35,
+          19
+        ],
+        [
+          36,
+          19
+        ]
+      ],
+      "detect_dc": 14,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d10",
+      "damage_type": "fire",
+      "when": "not flag.larders_furnace_quenched",
+      "text": "The skull lamp tips on its chain and pours green fire across the chairs."
+    },
+    {
+      "id": "larders_open_cell_pit",
+      "label": "a false floor",
+      "cells": [
+        [
+          16,
+          9
+        ],
+        [
+          17,
+          9
+        ],
+        [
+          18,
+          9
+        ],
+        [
+          16,
+          10
+        ],
+        [
+          17,
+          10
+        ],
+        [
+          18,
+          10
+        ]
+      ],
+      "detect_dc": 15,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "dex",
+        "dc": 14
+      },
+      "damage": "4d6",
+      "damage_type": "bludgeoning",
+      "text": "The straw drops away under you into a shaft, and the shaft has a bottom."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "nadia_boteanu",
+      "cell": [
+        5,
+        9
+      ],
+      "dialogue": "castle_ravenloft/larders_cells:nadia",
+      "when": "not flag.larders_nadia_fate or flag.larders_nadia_fate == \"waits\"",
+      "facing": "south",
+      "approach": 3
+    },
+    {
+      "npc": "doru",
+      "cell": [
+        9,
+        9
+      ],
+      "dialogue": "castle_ravenloft/larders_cells:doru",
+      "when": "flag.doru_freed and not flag.larders_doru_destroyed and flag.larders_doru_fate != \"rest\" and flag.larders_doru_fate != \"freed\"",
+      "facing": "south",
+      "approach": 3
+    },
+    {
+      "npc": "brother_anatol",
+      "cell": [
+        5,
+        16
+      ],
+      "dialogue": "castle_ravenloft/larders_cells:anatol",
+      "when": "not flag.larders_anatol_destroyed and flag.larders_anatol_fate != \"freed\"",
+      "facing": "north",
+      "approach": 3
+    }
+  ],
+  "encounters": [
+    {
+      "id": "larders_jailers",
+      "trigger": "enter_area:larders_jailers_post",
+      "when": "not flag.larders_jailers_beaten",
+      "text": "Three suits of armour stand at the jailers' table as if waiting for a fourth hand. They are empty, and they draw.",
+      "surprise": "",
+      "flag": "larders_jailers_beaten",
+      "monsters": [
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            22,
+            2
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            25,
+            2
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            24,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "larders_furnace",
+      "trigger": "enter_area:larders_furnace_room",
+      "when": "not flag.larders_furnace_beaten",
+      "text": "Two burning skulls rise from the coal heaps, and the fire in the furnace stands up on legs of its own.",
+      "surprise": "",
+      "flag": "larders_furnace_beaten",
+      "monsters": [
+        {
+          "monster": "flameskull",
+          "cell": [
+            30,
+            5
+          ]
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            36,
+            6
+          ]
+        },
+        {
+          "monster": "fire_elemental",
+          "cell": [
+            33,
+            3
+          ],
+          "name": "The Bound Fire"
+        }
+      ]
+    },
+    {
+      "id": "larders_questioner",
+      "trigger": "enter_area:larders_torture_chamber",
+      "when": "not flag.larders_questioner_beaten",
+      "text": "A grey figure at the rack looks up, pleased. Hands scuttle out of every corner, and the drain begins to rise.",
+      "surprise": "",
+      "flag": "larders_questioner_beaten",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            6,
+            21
+          ],
+          "name": "The Questioner"
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            7,
+            24
+          ]
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            10,
+            24
+          ]
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            3,
+            21
+          ]
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            4,
+            23
+          ]
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            11,
+            21
+          ]
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            12,
+            24
+          ]
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            10,
+            23
+          ]
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            2,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "larders_false_brother",
+      "trigger": "dialogue",
+      "flag": "larders_anatol_destroyed",
+      "text": "His hand closes on the nearest throat, and two more shapes drop from the vault above the passage.",
+      "surprise": "party",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            16
+          ],
+          "name": "Brother Anatol"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "larders_false_brother_unmasked",
+      "trigger": "dialogue",
+      "flag": "larders_anatol_destroyed",
+      "text": "He laughs, and two more shapes unfold from the vault above the passage.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            16
+          ],
+          "name": "Brother Anatol"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "larders_doru_hunger",
+      "trigger": "dialogue",
+      "flag": "larders_doru_destroyed",
+      "text": "The chain falls. For a breath he is only grateful. Then the hunger reaches you first.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            9
+          ],
+          "name": "Doru"
+        }
+      ]
+    },
+    {
+      "id": "larders_donjon",
+      "trigger": "enter_area:larders_hall_of_bones",
+      "final_battle": "castle_ravenloft_hall_of_bones",
+      "lair": true,
+      "text": "At the head of the table of bones, your host rises. Along both sides, the chairs stand up with him.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            37,
+            18
+          ]
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            31,
+            17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            33,
+            19
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            35,
+            17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            31,
+            19
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            35,
+            19
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            32,
+            17
+          ],
+          "name": "Guest of Bone"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_larders_dungeon"
+  },
+  "rest": "no",
+  "rest_text": "Something in the cells is always awake down here, and it listens for breathing that slows.",
+  "treasure_spots": {
+    "castle_ravenloft_hall_of_bones": {
+      "container": "larders_bone_table"
+    }
+  }
+}

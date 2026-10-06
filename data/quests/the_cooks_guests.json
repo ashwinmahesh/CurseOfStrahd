@@ -1,0 +1,54 @@
+{
+  "id": "the_cooks_guests",
+  "name": "The Cook's Guests",
+  "summary": "Below Castle Ravenloft's kitchen, the cook keeps his Master's guests fresh in the cells.",
+  "giver": "cyrus_belview",
+  "region": "castle_ravenloft",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Cyrus Belview, the castle's cook, makes soup for his Master's guests in the cells below. He says they must be kept fresh for the table.",
+      "objectives": [
+        "Find the guests in the dungeon"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "Nadia Boteanu, a lamplighter from Vallaki, is chained by the ankle in a cell under the castle. She got into a carriage with no driver.",
+      "objectives": [
+        "Get her chain off",
+        "Find her a way out of the castle"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "freed",
+      "journal": "Nadia's chain is off. Now she needs a way out of a castle where every corridor belongs to him.",
+      "objectives": [
+        "Find her a way out of the castle"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "hidden",
+      "journal": "Nadia is hiding in her cell with the gate shut, waiting for us to finish with the lord of the castle.",
+      "objectives": [
+        "Come back for Nadia"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "escaped",
+      "journal": "Nadia went down the cliff path at first light in the cook's scrap barrel. The crows were disappointed. She'll be lighting Vallaki's lamps again by winter.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "caught",
+      "journal": "We sent Nadia up the stair alone. Her shawl was waiting on the bottom step, folded neatly.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

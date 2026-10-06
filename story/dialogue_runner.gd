@@ -9,7 +9,7 @@ extends RefCounted
 ##        {kind: "options", options: [{text, label, check: {skill, dc, bonus, chance, who}, enabled}]}
 ##        {kind: "check", who, portrait, skill, dc, total, success, detail, said}
 ##        {kind: "notice", text}
-##        {kind: "end", combat: encounter id or ""}
+##        {kind: "end", combat: encounter id or "", end_game: the conversation ended the campaign (`end_game`)}
 
 ## The Narrator's portrait (art/portraits/narrator.png), on their lines here and in the exploration box.
 const NARRATOR_PORTRAIT := "narrator"
@@ -24,6 +24,8 @@ var node: String = ""
 var pc: int = 0
 var finished: bool = false
 var combat: String = ""
+## The conversation reached `end_game` (ADR 0014): the campaign's ending is recorded (Endings) and the game shows it.
+var ended_game: bool = false
 ## The party member speaking for the party (the leader unless an option's tag picks someone).
 var speaker: Character = null
 var _options: Array[Dictionary] = []
@@ -53,6 +55,7 @@ func start(ref: String) -> bool:
 	_picking = false
 	finished = false
 	combat = ""
+	ended_game = false
 	return _goto(ref)
 
 
@@ -102,7 +105,7 @@ func next() -> Dictionary:
 			push_warning("Dialogue: runaway loop in %s:%s" % [file.key, node])
 			finished = true
 		if finished:
-			return {"kind": "end", "combat": combat}
+			return {"kind": "end", "combat": combat, "end_game": ended_game}
 		var list := _stmts()
 		if pc >= list.size():
 			finished = true
@@ -256,9 +259,15 @@ func next() -> Dictionary:
 					var text := narrator.line(str(s["key"]), st, speaker)
 					if text != "":
 						return _line_beat("Narrator", "", text)
+			"end_game":
+				# The campaign ends here (ADR 0014): the ending that holds now is recorded; the game plays it when the
+				# conversation closes.
+				Endings.request(st)
+				ended_game = true
+				finished = true
 			_:
 				pc += 1
-	return {"kind": "end", "combat": combat}
+	return {"kind": "end", "combat": combat, "end_game": ended_game}
 
 
 func _living() -> Array[Character]:

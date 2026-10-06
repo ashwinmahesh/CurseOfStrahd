@@ -4,7 +4,8 @@ extends RefCounted
 ## `species:elf`, `background:acolyte`, `tag:pious`, `name:ilse_varga`, `item:holy_symbol_amulet`,
 ## `quest.q == stage`, `quest.q >= stage` (by stage order), `attitude.npc == friendly`, `visited:loc`, `night`,
 ## `day`, `hour >= 20`, `gold >= 25` (the party's purse), `level >= 3` (the lowest character level in the party),
-## `tarokka.drawn`, `tarokka.sword == swords_3`, `tarokka.ally.npc == ezmerelda` (ADR 0010), `guest:ireena`,
+## `tarokka.drawn`, `tarokka.sword == swords_3`, `tarokka.ally.npc == ezmerelda` (ADR 0010), `tarokka.enemy.roam`,
+## `final_room:<room>` (the room Strahd waits in: the enemy card's, or the roam pick for `mists`, ADR 0014), `guest:ireena`,
 ## `treasure_at:<place>` (a treasure the reading put there, not yet found) and `gift:<dark gift>` (ADR 0011),
 ## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
@@ -18,6 +19,21 @@ var _i := 0
 
 func _init(state: StoryState) -> void:
 	st = state
+
+
+## What a final battle (ADR 0014) needs besides its own `when`: Strahd waits in `room`, the reading's quest has been
+## given, and he isn't destroyed.
+static func final_battle_condition(room: String) -> String:
+	return "final_room:%s and quest.strahds_lair >= foretold and not flag.strahd_destroyed" % room
+
+
+## A location encounter's full condition: its `when`, and for a `final_battle` the final battle's own.
+static func encounter_when(spec: Dictionary) -> String:
+	var when := str(spec.get("when", "")).strip_edges()
+	var room := str(spec.get("final_battle", ""))
+	if room == "":
+		return when
+	return final_battle_condition(room) if when == "" else "(%s) and %s" % [when, final_battle_condition(room)]
 
 
 static func check(expr: String, state: StoryState, who: Character = null) -> bool:
@@ -137,6 +153,8 @@ func _term() -> bool:
 		if op == "":
 			return value != ""
 		return (value == str(_literal(rhs))) == (op == "==")
+	if t.begins_with("final_room:"):
+		return Tarokka.final_room(st) == t.substr(11) and t.substr(11) != ""
 	if t.begins_with("guest:"):
 		return t.substr(6) in st.guest_ids
 	if t.begins_with("treasure_at:"):

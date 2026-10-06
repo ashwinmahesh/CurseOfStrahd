@@ -3456,6 +3456,12 @@ func _repeat_save(c: Combatant, fx: Effect, adv: Array[String]) -> void:
 		e.events.append({"type": "condition", "id": c.id})
 	else:
 		e.log.add("info", "%s is still affected by %s" % [c.name(), fx.name], c.id, [test.describe()])
+		# An arcanaloth's Soul Tome: three failed saves bind the prisoner for good.
+		if fx.repeat_save.has("bind_after"):
+			fx.data["fails"] = int(fx.data.get("fails", 0)) + 1
+			if int(fx.data["fails"]) >= int(fx.repeat_save["bind_after"]):
+				fx.repeat_save = {}
+				e.log.add("condition", "%s is bound fast (%s)" % [c.name(), fx.name], c.id)
 		var fd := fx.repeat_save.get("fail_damage", {}) as Dictionary
 		if not fd.is_empty():
 			var rolled := e._roll_damage_dice(str(fd["dice"]), false, 0, fx.name)

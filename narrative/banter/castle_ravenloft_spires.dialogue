@@ -1,0 +1,70 @@
+# Party banter in Castle Ravenloft's high tower and spires. Each node opens with an `if` gate: the node is eligible
+# only while its condition holds. Party members speak only through interjections.
+
+~ banter_well
+if at:castle_ravenloft_spires and not flag.heart_of_sorrow_known
+interject name:tamsin_tealeaf: No rail. Five hundred feet of stair and not one rail. Whoever built this hated guests.
+interject name:hedda_ironvow: Whoever built this has guests for dinner, lass. Stay on the wall side.
+endif
+-> END
+
+~ banter_heart_known
+if flag.heart_of_sorrow_known and not flag.heart_of_sorrow_shattered
+interject name:silvain_aster: A phylactery of pain. Not his soul, only his wounds. It's almost elegant.
+interject name:ilse_varga: It's a shield. You break the shield before you fight the man behind it.
+endif
+-> END
+
+~ banter_heart_broken
+if flag.heart_of_sorrow_shattered and not flag.strahd_heart_tested
+interject tag:blunt: He'll have felt that. Wherever he is, he felt that.
+interject name:hedda_ironvow: Aye. Let him feel something, for once.
+endif
+-> END
+
+~ banter_after_test
+if flag.strahd_heart_tested
+interject name:ilse_varga: He came up the well himself. Not his wolves, not his brides. Himself. We hurt him.
+interject name:tamsin_tealeaf: We broke his favourite ornament. It's not the same thing. It might be better.
+endif
+-> END
+
+~ banter_pidlwick
+if guest:pidlwick_ii and not flag.pidlwick_truth_known
+interject tag:cheerful: I like him. He's the only thing in this castle that's pleased to see us.
+interject name:silvain_aster: He's also the only thing in this castle that ticks. Count your blessings in that order.
+endif
+-> END
+
+~ banter_pidlwick_truth
+if guest:pidlwick_ii and flag.pidlwick_truth_known
+interject name:ilse_varga: Pidlwick. Behind me on the stairs. Always behind.
+interject name:hedda_ironvow: Leave him be, sergeant. He keeps his promises. I've been watching.
+endif
+-> END
+
+~ banter_escher
+if flag.escher_met and not flag.escher_fight_won
+interject name:tamsin_tealeaf: Locked in a room full of beautiful coats for a hundred years. I don't know whether to pity him or rob him.
+interject tag:blunt: Both. In that order.
+endif
+-> END
+
+~ banter_escher_bargain
+if flag.escher_bargain
+interject name:hedda_ironvow: We promised that creature his door. I'll keep it, mind. I just want it said that I noticed.
+endif
+-> END
+
+~ banter_ravens
+if flag.roost_swarm_cleared
+interject name:silvain_aster: The ravens in this valley have long memories and longer friendships. We may hear about that roost again.
+endif
+-> END
+
+~ banter_roofs
+if at:castle_ravenloft_spires_roofs
+interject species:dwarf: Stone under my feet I trust. Stone with sky on both sides of it, less so.
+interject name:tamsin_tealeaf: Don't look down. I looked down. Don't do what I did.
+endif
+-> END

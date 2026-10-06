@@ -1,0 +1,75 @@
+# Party banter in the Court of the Count and the Rooms of Weeping (docs/regions/castle_ravenloft_court.md). Each node
+# opens with an `if` gate; party members speak only through interjections.
+
+~ banter_court_rahadin
+if flag.rahadin_met and not flag.rahadin_defeated
+interject class:cleric: Every voice around that man is someone he killed. He's carrying a graveyard about with him.
+interject tag:blunt: And he still bothered to tell us when supper is.
+interject class:wizard: That's what frightens me about him. Not the screaming. The manners.
+endif
+-> END
+
+~ banter_court_portraits
+if visited:court_study and visited:court_kings_hall
+interject name:tamsin_tealeaf: She's everywhere in this house. Over the fire, in the hall, by the bed. The woman in my locket.
+interject name:hedda_ironvow: Then perhaps it's not your locket, lad. Perhaps it never was.
+interject name:tamsin_tealeaf: That is not a comforting thing to say in a vampire's castle, Hedda.
+endif
+-> END
+
+~ banter_court_skull
+if flag.argynvost_skull_found and flag.argynvost_skull_known
+interject name:silvain_aster: That's Argynvost. On a wall. Between a bear and a stag, as if he were game.
+interject name:ilse_varga: The knights on the ridge are waiting for it. Four hundred years they've waited.
+interject name:silvain_aster: Then it can wait until we've dealt with the man who hung it there. But not a day longer.
+endif
+-> END
+
+~ banter_court_skull_plain
+if flag.argynvost_skull_found and not flag.argynvost_skull_known
+interject class:wizard: A silver dragon's skull. Silvers are rare, and they're not hunted for sport. Somebody wanted one dead very badly.
+interject tag:blunt: Somebody wanted everybody dead very badly. This whole house is a trophy room.
+endif
+-> END
+
+~ banter_court_brides
+if flag.court_brides_met and not flag.court_brides_fought
+interject class:cleric: Three women he made into that. I keep thinking about who they were before.
+interject name:ilse_varga: The quiet one still is, a bit. Did you see her at the window?
+endif
+-> END
+
+~ banter_court_gertruda
+if guest:gertruda
+interject tag:cheerful: We're carrying a sixteen-year-old out of a vampire's castle. My mother would be so proud. Then so angry.
+interject guest:gertruda: My mother is going to be angry too. I don't mind. I want her to be.
+endif
+-> END
+
+~ banter_court_given_back
+if flag.gertruda_given_back
+interject name:hedda_ironvow: We left that girl up there.
+interject tag:blunt: We did. I'd like it if nobody talked about it for a while.
+endif
+-> END
+
+~ banter_court_lief
+if flag.lief_freed
+interject name:tamsin_tealeaf: Forty-one years chained to a desk, and the first thing he did when he was free was tidy it.
+interject name:silvain_aster: Some cages are a shape you grow into.
+endif
+-> END
+
+~ banter_court_anastrasya
+if flag.anastrasya_at_rest
+interject name:hedda_ironvow: The girl from Krezk. When we're done here, someone should tell her mother. If she has one living.
+interject name:ilse_varga: I'll do it. I've done it before.
+endif
+-> END
+
+~ banter_court_vault
+if flag.court_treasury_found
+interject name:tamsin_tealeaf: A whole vault of gold and he never spends it. That's not a hoard. That's a sulk.
+interject class:wizard: Dragons hoard because they can't help it. I suspect he hoards because he can't think of anything else to want.
+endif
+-> END

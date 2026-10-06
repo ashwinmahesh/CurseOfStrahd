@@ -225,6 +225,8 @@ func _long_rest(rule: String) -> void:
 		_narrate("dream:" + region)
 		_long_done = true
 		_prepared_before = PrepareScreen.snapshot(st)
+		if root.has_method("strahd_after_rest"):
+			root.call_deferred("strahd_after_rest", 8 * 60)   # Strahd may come in the night (ADR 0014)
 	_draw()
 	root.call("_refresh")
 
