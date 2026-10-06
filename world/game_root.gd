@@ -130,17 +130,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	if loot != null:
 		return
 	if event is InputEventMouseMotion:
-		var pick := GridPick.cell_under(view.rig.camera, view.grid, (event as InputEventMouseMotion).position)
+		var pick := view.pick_cell(view.rig.camera, (event as InputEventMouseMotion).position)
 		_hover = pick
 		var thing := view.thing_at(pick) if pick.x >= 0 else {}
 		hud.hint(str(thing.get("label", "")), (event as InputEventMouseMotion).position)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-		var cell := GridPick.cell_under(view.rig.camera, view.grid, (event as InputEventMouseButton).position)
+		var cell := view.pick_cell(view.rig.camera, (event as InputEventMouseButton).position)
 		if cell.x >= 0:
 			view.click(cell)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
 		var at := (event as InputEventMouseButton).position
-		open_world_menu(GridPick.cell_under(view.rig.camera, view.grid, at), at)
+		open_world_menu(view.pick_cell(view.rig.camera, at), at)
 	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo:
 		match (event as InputEventKey).physical_keycode:
 			KEY_C:

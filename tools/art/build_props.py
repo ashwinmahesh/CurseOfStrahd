@@ -31,6 +31,9 @@ def source(name):
 
 
 def prompt(rec, sheet):
+    if sheet["view"] == "pair":
+        # Two objects, each from the front and from behind (front pieces and their `_back` views).
+        return rec["pair_prompt"].format(rec["props"][sheet["items"][0]]["subject"], rec["props"][sheet["items"][2]]["subject"])
     subjects = sheet.get("subjects") or [rec["props"][i]["subject"] for i in sheet["items"]]
     view = rec["views"][sheet["view"]]
     if len(subjects) == 1:
@@ -90,7 +93,7 @@ def main():
         items = []
         for slot, pid in enumerate(s["items"]):
             r = rec["props"][pid]
-            item = {"id": pid, "slot": slot, "mount": r.get("mount", s["view"])}
+            item = {"id": pid, "slot": slot, "mount": r.get("mount", "stand" if s["view"] == "pair" else s["view"])}
             for k in ("height", "width", "saturate", "max"):
                 if k in r:
                     item[k] = r[k]
@@ -102,6 +105,13 @@ def main():
         out = subprocess.run([BLENDER, "-b", "--python", str(ROOT / "blender" / "prop_sheets.py"), "--", "--jobs", f.name],
                              capture_output=True, text=True)
         Path(f.name).unlink()
+        # A front piece names its view from behind (SetDressing turns props to the camera with them).
+        manifest_path = ROOT / "art" / "sprites" / "props" / "manifest.json"
+        data = json.loads(manifest_path.read_text())
+        for pid, r in rec["props"].items():
+            if "back_of" in r and pid in data["props"] and r["back_of"] in data["props"]:
+                data["props"][r["back_of"]]["back"] = pid
+        manifest_path.write_text(json.dumps(data, indent=2) + "\n")
         lines = [l for l in out.stdout.splitlines() if l.startswith("prop")]
         print("\n".join(lines))
         if out.returncode != 0 or any(l.startswith("props failed") for l in lines):
