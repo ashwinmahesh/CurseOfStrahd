@@ -159,7 +159,8 @@ def semantic_checks(data):
             at = max(lv, f.get("at_level", 0))
             for m in f.get("modifiers", []):
                 if m.get("stat") == "spell" and not str(m.get("value", "")).startswith("@"):
-                    need("spell", spells, m["value"], f"{where} {f['id']}", max(at, m.get("at_level", 0)))
+                    need("spell", spells, m["value"], f"{where} {f['id']}",
+                         max(at, m.get("at_level", 0), m.get("at_class_level", 0)))
             for c in [f.get("choice")] + list(f.get("choices", [])):
                 if not c:
                     continue

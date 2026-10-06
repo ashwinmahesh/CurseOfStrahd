@@ -218,7 +218,8 @@ func changes() -> Array[Dictionary]:
 		_row(rows, str(Creature.ABILITY_NAMES[ab]), a.ability_score(ab), b.ability_score(ab))
 	for ab: StringName in Abilities.ALL:
 		_row(rows, "%s save" % Creature.ABILITY_NAMES[ab], a.save_bonus(ab).signed(), b.save_bonus(ab).signed())
-	_row(rows, "Spell slots", _slots_text(a.spell_slots()), _slots_text(b.spell_slots()))
+	_row(rows, "Spell slots", _slots_text(a.spellcasting_slots()), _slots_text(b.spellcasting_slots()))
+	_row(rows, "Pact Magic slots", _pact_text(a.pact_magic()), _pact_text(b.pact_magic()))
 	for e in b.spellcasting:
 		var cid := str(e["class_id"])
 		var before_dc := a.spell_save_dc(cid).total() if not a.spellcasting_entry(cid).is_empty() else 0
@@ -245,6 +246,12 @@ static func _slots_text(slots: Array[int]) -> String:
 		if slots[i] > 0:
 			parts.append("L%d×%d" % [i + 1, slots[i]])
 	return ", ".join(parts) if not parts.is_empty() else "none"
+
+
+static func _pact_text(pact: Dictionary) -> String:
+	if int(pact["count"]) <= 0:
+		return "none"
+	return "%d × level %d" % [int(pact["count"]), int(pact["level"])]
 
 
 static func _dice_text(dice: Dictionary) -> String:

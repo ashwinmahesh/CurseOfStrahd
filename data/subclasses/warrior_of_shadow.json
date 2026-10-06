@@ -1,0 +1,73 @@
+{
+  "id": "warrior_of_shadow",
+  "name": "Warrior of Shadow",
+  "class": "monk",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A monk who wields darkness, steps from shadow to shadow and strikes unseen.",
+  "role_tags": [
+    "stealth",
+    "skirmisher"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "shadow_arts",
+        "name": "Shadow Arts",
+        "summary": "Spend 1 Focus to cast Darkness (and see through it); gain Darkvision 60 feet; know Minor Illusion.",
+        "text": "Darkness: you can spend 1 Focus Point to cast the Darkness spell without spell components. You can see within its area, and while it lasts you can move the area to a space within 60 feet of you at the start of each of your turns. Darkvision: you gain Darkvision out to 60 feet, or 60 feet farther if you already have it. Shadowy Figments: you know the Minor Illusion cantrip, with Wisdom as your spellcasting ability for it.",
+        "modifiers": [
+          {
+            "stat": "darkvision",
+            "value": 60
+          },
+          {
+            "stat": "spell",
+            "value": "minor_illusion",
+            "ability": "wis",
+            "always_prepared": true
+          },
+          {
+            "stat": "spell",
+            "value": "darkness",
+            "ability": "wis",
+            "always_prepared": true
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "shadow_step",
+        "name": "Shadow Step",
+        "summary": "Bonus Action: teleport up to 60 feet from Dim Light or Darkness to another such space, with Advantage on your next melee attack this turn.",
+        "text": "While you are entirely within Dim Light or Darkness, you can take a Bonus Action to teleport up to 60 feet to an unoccupied space you can see that is also in Dim Light or Darkness. You then have Advantage on the next melee attack you make before the end of the turn.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "improved_shadow_step",
+        "name": "Improved Shadow Step",
+        "summary": "Shadow Step can start and end anywhere for 1 Focus Point, and you can make an Unarmed Strike right after.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "cloak_of_shadows",
+        "name": "Cloak of Shadows",
+        "summary": "Magic action, 3 Focus: for 1 minute be Invisible in Dim Light or Darkness, pass through creatures, and use Flurry of Blows for free.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

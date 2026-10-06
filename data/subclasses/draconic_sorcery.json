@@ -1,0 +1,127 @@
+{
+  "id": "draconic_sorcery",
+  "name": "Draconic Sorcery",
+  "class": "sorcerer",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "Dragon blood in your veins: scales harden your skin, your Hit Points grow and you master one element.",
+  "role_tags": [
+    "damage",
+    "durable"
+  ],
+  "always_prepared": {
+    "3": [
+      "alter_self",
+      "chromatic_orb",
+      "command",
+      "dragons_breath"
+    ],
+    "5": [
+      "fear",
+      "fly"
+    ],
+    "7": [
+      "arcane_eye",
+      "charm_monster"
+    ],
+    "9": [
+      "legend_lore",
+      "summon_dragon"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "draconic_resilience",
+        "name": "Draconic Resilience",
+        "summary": "+1 Hit Point maximum per Sorcerer level, and without armor AC = 10 + Dexterity + Charisma.",
+        "text": "The magic in your body shows in draconic traits. Your Hit Point maximum increases by 3, and by 1 more whenever you gain another Sorcerer level. Parts of you are also covered by dragon-like scales: while you aren't wearing armor, your base Armor Class equals 10 plus your Dexterity and Charisma modifiers.",
+        "modifiers": [
+          {
+            "stat": "hp_max",
+            "value": "class_level"
+          },
+          {
+            "stat": "ac_formula",
+            "base": 10,
+            "abilities": [
+              "dex",
+              "cha"
+            ],
+            "when": {
+              "armor": "none"
+            }
+          }
+        ],
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "draconic_spells",
+        "name": "Draconic Spells",
+        "summary": "Alter Self, Chromatic Orb, Command and Dragon's Breath always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Sorcerer level shown, you always have these spells prepared; they don't count against your Prepared Spells: Alter Self, Chromatic Orb, Command and Dragon's Breath (3); Fear and Fly (5); Arcane Eye and Charm Monster (7); Legend Lore and Summon Dragon (9).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "elemental_affinity",
+        "name": "Elemental Affinity",
+        "summary": "Choose Acid, Cold, Fire, Lightning or Poison: Resistance to it, and add Charisma to one damage roll of spells of that type.",
+        "text": "Your draconic magic has an affinity with a damage type of your choice: Acid, Cold, Fire, Lightning or Poison. You have Resistance to that type, and when you cast a spell that deals damage of that type you can add your Charisma modifier to one damage roll of the spell. The bonus applies to spells with a fixed damage type; spells whose type you pick when casting don't get it yet.",
+        "choice": {
+          "id": "element",
+          "kind": "damage_type",
+          "count": 1,
+          "from": [
+            "acid",
+            "cold",
+            "fire",
+            "lightning",
+            "poison"
+          ]
+        },
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "@element"
+          },
+          {
+            "stat": "spell_damage",
+            "value": "mod:cha",
+            "when": {
+              "damage_type": "@element"
+            }
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "dragon_wings",
+        "name": "Dragon Wings",
+        "summary": "Bonus Action: sprout wings for a 60-foot Fly Speed for 1 hour; once per Long Rest or 3 Sorcery Points.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "dragon_companion",
+        "name": "Dragon Companion",
+        "summary": "Cast Summon Dragon without Material components, once per Long Rest without a slot, and without Concentration.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

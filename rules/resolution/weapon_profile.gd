@@ -64,6 +64,14 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	p.ability = &"dex" if is_ranged_weapon else &"str"
 	if "finesse" in p.properties and dex_mod > str_mod:
 		p.ability = &"dex"
+	# Martial Arts (Monk): Dexterity and the Martial Arts die for Monk weapons, unarmored and without a Shield.
+	var martial := ch.martial_arts_die() if ch != null else ""
+	if martial != "" and Gear.is_monk_weapon(item):
+		if dex_mod > c.ability_mod(p.ability):
+			p.ability = &"dex"
+		if Gear.average(martial) > Gear.average(p.damage_dice):
+			p.damage_dice = martial
+			p.notes.append("Martial Arts die")
 	# Tags for `when` filters. A thrown melee weapon makes a ranged attack but isn't a Ranged weapon (Archery).
 	if p.melee:
 		p.tags.append("melee")
@@ -120,6 +128,7 @@ func with_ability(ab: StringName, c: Creature) -> WeaponProfile:
 
 
 ## Unarmed Strike: Strength modifier + Proficiency Bonus to hit, 1 + Strength modifier Bludgeoning damage.
+## Martial Arts (Monk) uses its die and the better of Strength and Dexterity while unarmored without a Shield.
 static func unarmed(c: Creature) -> WeaponProfile:
 	var p := WeaponProfile.new()
 	p.item_id = "unarmed_strike"
@@ -138,6 +147,14 @@ static func unarmed(c: Creature) -> WeaponProfile:
 		p.damage_dice = "1d8" if hands_free else "1d6"
 	p.tags.assign(["melee", "unarmed"])
 	p.proficient = true
+	var ch := c as Character
+	var martial := ch.martial_arts_die() if ch != null else ""
+	if martial != "":
+		if Gear.average(martial) > Gear.average(p.damage_dice):
+			p.damage_dice = martial
+		if c.ability_mod(&"dex") > c.ability_mod(&"str"):
+			p.ability = &"dex"
+		p.notes.append("Martial Arts")
 	p._apply_overrides(c)
 	p._compute(c)
 	return p

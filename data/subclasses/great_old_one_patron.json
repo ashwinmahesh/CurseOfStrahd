@@ -1,0 +1,107 @@
+{
+  "id": "great_old_one_patron",
+  "name": "Great Old One Patron",
+  "class": "warlock",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A pact with an unknowable entity of the Far Realm: telepathy, psychic magic and a mind shielded from intrusion.",
+  "role_tags": [
+    "control",
+    "psychic"
+  ],
+  "always_prepared": {
+    "3": [
+      "detect_thoughts",
+      "dissonant_whispers",
+      "phantasmal_force",
+      "tashas_hideous_laughter"
+    ],
+    "5": [
+      "clairvoyance",
+      "hunger_of_hadar"
+    ],
+    "7": [
+      "confusion",
+      "summon_aberration"
+    ],
+    "9": [
+      "modify_memory",
+      "telekinesis"
+    ],
+    "10": [
+      "hex"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "great_old_one_spells",
+        "name": "Great Old One Spells",
+        "summary": "Detect Thoughts, Dissonant Whispers, Phantasmal Force and Tasha's Hideous Laughter always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Warlock level shown, you always have these spells prepared; they don't count against your Prepared Spells: Detect Thoughts, Dissonant Whispers, Phantasmal Force and Tasha's Hideous Laughter (3); Clairvoyance and Hunger of Hadar (5); Confusion and Summon Aberration (7); Modify Memory and Telekinesis (9).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "awakened_mind",
+        "name": "Awakened Mind",
+        "summary": "Bonus Action: open a telepathic link with a creature within 30 feet for Warlock-level minutes.",
+        "text": "You can form a telepathic connection between your mind and another's. As a Bonus Action choose one creature you can see within 30 feet of you; you and it can speak telepathically while within a number of miles of each other equal to your Charisma modifier (minimum one mile). The link lasts a number of minutes equal to your Warlock level and ends early if you use this feature on another creature.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "psychic_spells",
+        "name": "Psychic Spells",
+        "summary": "Your damaging Warlock spells can deal Psychic damage, and your Enchantment and Illusion spells need no Verbal or Somatic components.",
+        "text": "When you cast a Warlock spell that deals damage, you can change its damage type to Psychic. When you cast a Warlock spell that is an Enchantment or Illusion, you can do so without Verbal or Somatic components.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "clairvoyant_combatant",
+        "name": "Clairvoyant Combatant",
+        "summary": "When you link minds with Awakened Mind, force a Wisdom save; on a failure you have Advantage against it and it has Disadvantage against you.",
+        "text": "When you form a telepathic bond with a creature using Awakened Mind, you can force it to make a Wisdom saving throw against your spell save DC. On a failure, it has Disadvantage on attack rolls against you and you have Advantage on attack rolls against it for as long as the bond lasts. Once you use this, you can't again until you finish a Short or Long Rest, unless you expend a Pact Magic slot to use it again.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "eldritch_hex",
+        "name": "Eldritch Hex",
+        "summary": "Hex is always prepared, and its target has Disadvantage on saves of the ability you chose.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "thought_shield",
+        "name": "Thought Shield",
+        "summary": "Your thoughts can't be read, you resist Psychic damage, and a creature that deals Psychic damage to you takes the same amount.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "create_thrall",
+        "name": "Create Thrall",
+        "summary": "Summon Aberration needs no Concentration, its aberration gains Temporary Hit Points, and its first hit each turn on your Hex target adds Hex's damage.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

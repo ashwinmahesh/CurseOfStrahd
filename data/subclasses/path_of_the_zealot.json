@@ -1,0 +1,103 @@
+{
+  "id": "path_of_the_zealot",
+  "name": "Path of the Zealot",
+  "class": "barbarian",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A warrior fuelled by a god's fury: radiant or necrotic strikes, healing from divine reserves and wrath that refuses to die.",
+  "role_tags": [
+    "damage",
+    "durable"
+  ],
+  "table": {
+    "warrior_of_the_gods": {
+      "name": "Warrior of the Gods",
+      "values": [
+        0,
+        0,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "warrior_of_the_gods",
+      "name": "Warrior of the Gods dice",
+      "recharge": "long",
+      "table": "warrior_of_the_gods",
+      "from_level": 3
+    }
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "divine_fury",
+        "name": "Divine Fury",
+        "summary": "While raging, the first creature you hit each turn takes an extra 1d6 + half your Barbarian level Necrotic or Radiant damage.",
+        "text": "On each of your turns while your Rage is active, the first creature you hit with a weapon or an Unarmed Strike takes extra damage equal to 1d6 plus half your Barbarian level (round down). You choose Necrotic or Radiant each time.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "warrior_of_the_gods",
+        "name": "Warrior of the Gods",
+        "summary": "A pool of d12s (four at level 3) you spend as a Bonus Action to heal yourself; it refills on a Long Rest.",
+        "text": "A divine entity helps you keep fighting. You have a pool of d12s for healing yourself: four at level 3, five at 6, six at 12 and seven at 17. As a Bonus Action you can expend any number of them, roll them and regain that many Hit Points. The pool refills when you finish a Long Rest.",
+        "action": "bonus_action",
+        "uses_resource": "warrior_of_the_gods",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "fanatical_focus",
+        "name": "Fanatical Focus",
+        "summary": "Once per Rage, reroll a failed saving throw with a bonus equal to your Rage Damage bonus.",
+        "text": "Once per active Rage, if you fail a saving throw you can reroll it with a bonus equal to your Rage Damage bonus, and you must use the new roll.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "zealous_presence",
+        "name": "Zealous Presence",
+        "summary": "Bonus Action: up to ten allies gain Advantage on attacks and saves until your next turn; once per Long Rest or spend a Rage use.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "rage_of_the_gods",
+        "name": "Rage of the Gods",
+        "summary": "Once per Long Rest take a divine form for 1 minute: fly, resist Necrotic, Psychic and Radiant, and keep allies from dying.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

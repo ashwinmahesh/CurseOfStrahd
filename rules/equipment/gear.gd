@@ -37,7 +37,7 @@ static func is_martial(item: Dictionary) -> bool:
 	return weapon_kind(item).begins_with("martial")
 
 
-## Does a list of weapon proficiencies ("simple", "martial", "martial_finesse_or_light", weapon ids) cover
+## Does a list of weapon proficiencies ("simple", "martial", "martial_finesse_or_light", "martial_light", weapon ids) cover
 ## this weapon?
 static func weapon_proficient(profs: Array, item: Dictionary) -> bool:
 	if not is_weapon(item):
@@ -54,7 +54,17 @@ static func weapon_proficient(profs: Array, item: Dictionary) -> bool:
 		var props := weapon_props(item)
 		if "martial_finesse_or_light" in profs and ("finesse" in props or "light" in props):
 			return true
+		if "martial_light" in profs and "light" in props:
+			return true
 	return false
+
+
+## Monk weapons (2024): Simple Melee weapons and Martial Melee weapons with the Light property.
+static func is_monk_weapon(item: Dictionary) -> bool:
+	var kind := weapon_kind(item)
+	if kind == "simple_melee":
+		return true
+	return kind == "martial_melee" and "light" in weapon_props(item)
 
 
 ## Average of a dice expression, for picking the best weapon to hold.

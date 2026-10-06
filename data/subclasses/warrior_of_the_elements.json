@@ -1,0 +1,75 @@
+{
+  "id": "warrior_of_the_elements",
+  "name": "Warrior of the Elements",
+  "class": "monk",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A monk who bends the elements: strikes that reach farther and burn, freeze or shock, and bursts of raw elemental force.",
+  "role_tags": [
+    "striker",
+    "damage"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "elemental_attunement",
+        "name": "Elemental Attunement",
+        "summary": "Spend 1 Focus for 10 minutes of elemental strikes: +10 feet of reach, Acid, Cold, Fire, Lightning or Thunder damage, and a push or pull.",
+        "text": "At the start of your turn you can spend 1 Focus Point to fill yourself with elemental energy for 10 minutes, or until you have the Incapacitated condition. While it lasts your Unarmed Strikes reach 10 feet farther; when you hit with one, you can make its damage Acid, Cold, Fire, Lightning or Thunder, and you can force the target to make a Strength saving throw or be pushed or pulled up to 10 feet (your choice).",
+        "uses_resource": "focus_points",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "manipulate_elements",
+        "name": "Manipulate Elements",
+        "summary": "You know the Elementalism cantrip, with Wisdom as your spellcasting ability.",
+        "text": "You know the Elementalism spell. Wisdom is your spellcasting ability for it.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "elementalism",
+            "ability": "wis",
+            "always_prepared": true
+          }
+        ],
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "elemental_burst",
+        "name": "Elemental Burst",
+        "summary": "Magic action, 2 Focus: a 20-foot sphere within 120 feet deals three Martial Arts dice of an element (Dex save halves).",
+        "text": "As a Magic action you can spend 2 Focus Points to make elemental energy burst in a 20-foot-radius sphere centered on a point within 120 feet of you. Choose Acid, Cold, Fire, Lightning or Thunder: each creature in the sphere makes a Dexterity saving throw, taking damage of that type equal to three rolls of your Martial Arts die on a failure, or half as much on a success.",
+        "action": "action",
+        "uses_resource": "focus_points",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "stride_of_the_elements",
+        "name": "Stride of the Elements",
+        "summary": "While Elemental Attunement is active you have a Fly Speed and a Swim Speed equal to your Speed.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "elemental_epitome",
+        "name": "Elemental Epitome",
+        "summary": "While attuned: Resistance to a chosen element, Step of the Wind damages creatures you pass, and your strikes deal extra elemental damage.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

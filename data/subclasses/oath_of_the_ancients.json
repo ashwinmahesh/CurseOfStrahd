@@ -1,0 +1,103 @@
+{
+  "id": "oath_of_the_ancients",
+  "name": "Oath of the Ancients",
+  "class": "paladin",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A paladin sworn to protect the light and life of the world, wielding nature's wrath and an aura that wards off harmful magic.",
+  "role_tags": [
+    "control",
+    "defense"
+  ],
+  "always_prepared": {
+    "3": [
+      "ensnaring_strike",
+      "speak_with_animals"
+    ],
+    "5": [
+      "misty_step",
+      "moonbeam"
+    ],
+    "9": [
+      "plant_growth",
+      "protection_from_energy"
+    ],
+    "13": [
+      "ice_storm",
+      "stoneskin"
+    ],
+    "17": [
+      "commune_with_nature",
+      "tree_stride"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "oath_of_the_ancients_spells",
+        "name": "Oath of the Ancients Spells",
+        "summary": "Ensnaring Strike and Speak with Animals always prepared; more at levels 5, 9, 13 and 17.",
+        "text": "When you reach a Paladin level shown, you always have these spells prepared; they don't count against your Prepared Spells: Ensnaring Strike and Speak with Animals (3); Misty Step and Moonbeam (5); Plant Growth and Protection from Energy (9); Ice Storm and Stoneskin (13); Commune with Nature and Tree Stride (17).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "natures_wrath",
+        "name": "Nature's Wrath",
+        "summary": "Channel Divinity, Magic action: creatures of your choice within 15 feet make a Strength save or are Restrained by spectral vines for 1 minute.",
+        "text": "As a Magic action you can expend a use of Channel Divinity to conjure spectral vines around nearby creatures. Each creature of your choice that you can see within 15 feet of you makes a Strength saving throw or has the Restrained condition for 1 minute. A Restrained creature repeats the save at the end of each of its turns, ending the effect on itself on a success.",
+        "action": "action",
+        "uses_resource": "paladin_channel_divinity",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "aura_of_warding",
+        "name": "Aura of Warding",
+        "summary": "You and allies in your Aura of Protection resist Necrotic, Psychic and Radiant damage.",
+        "text": "Ancient magic lies so heavily on you that it forms a ward: you and your allies within your Aura of Protection have Resistance to Necrotic, Psychic and Radiant damage. Your own Resistance is applied; allies' needs positions in a fight.",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "necrotic"
+          },
+          {
+            "stat": "resistance",
+            "value": "psychic"
+          },
+          {
+            "stat": "resistance",
+            "value": "radiant"
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "undying_sentinel",
+        "name": "Undying Sentinel",
+        "summary": "Once per Long Rest drop to 1 Hit Point instead of 0 and regain three times your Paladin level; you don't age magically.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 20,
+      "feature": {
+        "id": "elder_champion",
+        "name": "Elder Champion",
+        "summary": "Bonus Action, once per Long Rest: for 1 minute regain 10 Hit Points each turn, cast Paladin spells as a Bonus Action, and nearby enemies have Disadvantage on saves against your spells.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    }
+  ]
+}

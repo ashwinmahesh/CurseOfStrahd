@@ -1,0 +1,93 @@
+{
+  "id": "circle_of_the_stars",
+  "name": "Circle of the Stars",
+  "class": "druid",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A druid who reads the constellations, casting Guiding Bolt freely and taking a starry form of archer, chalice or dragon.",
+  "role_tags": [
+    "damage",
+    "healer",
+    "support"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "star_map",
+        "name": "Star Map",
+        "summary": "Guidance and Guiding Bolt always prepared; cast Guiding Bolt without a slot Wisdom-modifier times per Long Rest.",
+        "text": "You have created a star chart that can serve as your Spellcasting Focus. While holding it you always have Guidance and Guiding Bolt prepared, and you can cast Guiding Bolt without a spell slot a number of times equal to your Wisdom modifier (minimum once), regaining the uses on a Long Rest.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "guidance",
+            "always_prepared": true
+          },
+          {
+            "stat": "spell",
+            "value": "guiding_bolt",
+            "always_prepared": true,
+            "uses": {
+              "count": "mod:wis",
+              "min": 1,
+              "recharge": "long"
+            }
+          }
+        ],
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "starry_form",
+        "name": "Starry Form",
+        "summary": "Bonus Action, spend Wild Shape: become a starry Archer, Chalice or Dragon for 10 minutes instead of a Beast.",
+        "text": "As a Bonus Action you can expend a use of Wild Shape to take on a starry form for 10 minutes instead of a Beast's. Your body shines, shedding Bright Light in a 10-foot radius and Dim Light for 10 feet beyond, and you choose a constellation. Archer: when you take the form, and as a Bonus Action on later turns, you can make a ranged spell attack against a creature within 60 feet, dealing 1d8 plus your Wisdom modifier Radiant damage on a hit. Chalice: whenever you cast a spell with a slot that restores Hit Points, you or another creature within 30 feet regains 1d8 plus your Wisdom modifier Hit Points. Dragon: when you make an Intelligence or Wisdom check, or a Constitution save to keep Concentration, a d20 roll of 9 or lower counts as a 10.",
+        "action": "bonus_action",
+        "uses_resource": "wild_shape",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "cosmic_omen",
+        "name": "Cosmic Omen",
+        "summary": "After a Long Rest roll for Weal or Woe; as a Reaction add or subtract 1d6 from a creature's D20 Test, Wisdom-modifier times per Long Rest.",
+        "text": "Whenever you finish a Long Rest, roll a die: on an even number you have Weal until your next Long Rest, on an odd number Woe. Weal: when a creature you can see within 30 feet of you is about to make a D20 Test, you can take a Reaction to roll 1d6 and add it to the total. Woe: you can instead roll 1d6 and subtract it. You can do this a number of times equal to your Wisdom modifier (minimum once), regaining the uses on a Long Rest.",
+        "action": "reaction",
+        "resource": {
+          "id": "cosmic_omen",
+          "name": "Cosmic Omen",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "cosmic_omen",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "twinkling_constellations",
+        "name": "Twinkling Constellations",
+        "summary": "Archer and Chalice dice become 2d8, Dragon form grants a 20-foot Fly Speed, and you can switch constellation each turn.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "full_of_stars",
+        "name": "Full of Stars",
+        "summary": "In your starry form you have Resistance to Bludgeoning, Piercing and Slashing damage.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

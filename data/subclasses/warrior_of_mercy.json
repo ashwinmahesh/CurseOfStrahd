@@ -1,0 +1,94 @@
+{
+  "id": "warrior_of_mercy",
+  "name": "Warrior of Mercy",
+  "class": "monk",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A masked healer and executioner whose touch can mend wounds or inflict them.",
+  "role_tags": [
+    "healer",
+    "striker"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "hand_of_harm",
+        "name": "Hand of Harm",
+        "summary": "Once per turn when an Unarmed Strike hits, spend 1 Focus to add a Martial Arts die + Wisdom Necrotic damage.",
+        "text": "Once per turn when you hit a creature with an Unarmed Strike and deal damage, you can spend 1 Focus Point to deal extra Necrotic damage equal to one roll of your Martial Arts die plus your Wisdom modifier.",
+        "uses_resource": "focus_points",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "hand_of_healing",
+        "name": "Hand of Healing",
+        "summary": "Magic action, 1 Focus: a creature you touch regains a Martial Arts die + Wisdom Hit Points; it can replace a Flurry of Blows strike.",
+        "text": "As a Magic action you can spend 1 Focus Point to touch a creature and restore Hit Points equal to a roll of your Martial Arts die plus your Wisdom modifier. When you use Flurry of Blows, you can replace one of its Unarmed Strikes with this healing without spending a Focus Point for it.",
+        "action": "action",
+        "uses_resource": "focus_points",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "implements_of_mercy",
+        "name": "Implements of Mercy",
+        "summary": "Proficiency in Insight and Medicine and with the Herbalism Kit.",
+        "text": "You gain proficiency in the Insight and Medicine skills and with the Herbalism Kit.",
+        "modifiers": [
+          {
+            "stat": "proficiency",
+            "kind": "skill",
+            "value": "insight"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "skill",
+            "value": "medicine"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "tool",
+            "value": "herbalism_kit"
+          }
+        ],
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "physicians_touch",
+        "name": "Physician's Touch",
+        "summary": "Hand of Harm can also poison; Hand of Healing can also end Blinded, Deafened, Paralyzed, Poisoned or Stunned.",
+        "text": "Hand of Harm: when you use it on a creature, you can also give it the Poisoned condition until the end of your next turn. Hand of Healing: when you use it, you can also end one of these conditions on the creature: Blinded, Deafened, Paralyzed, Poisoned or Stunned.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "flurry_of_healing_and_harm",
+        "name": "Flurry of Healing and Harm",
+        "summary": "Replace each Flurry of Blows strike with Hand of Healing for free; add Hand of Harm to Flurry hits without Focus, Wisdom-modifier times per Long Rest.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "hand_of_ultimate_mercy",
+        "name": "Hand of Ultimate Mercy",
+        "summary": "Once per Long Rest, spend 5 Focus Points to return a creature that died within the past 24 hours to life.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

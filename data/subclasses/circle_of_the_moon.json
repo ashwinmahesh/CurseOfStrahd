@@ -1,0 +1,87 @@
+{
+  "id": "circle_of_the_moon",
+  "name": "Circle of the Moon",
+  "class": "druid",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A shapeshifter whose Wild Shape forms are tougher and stronger, able to cast spells and step through moonlight.",
+  "role_tags": [
+    "front line",
+    "durable"
+  ],
+  "always_prepared": {
+    "3": [
+      "cure_wounds",
+      "moonbeam",
+      "starry_wisp"
+    ],
+    "5": [
+      "conjure_animals"
+    ],
+    "7": [
+      "fount_of_moonlight"
+    ],
+    "9": [
+      "mass_cure_wounds"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "circle_forms",
+        "name": "Circle Forms",
+        "summary": "Wild Shape forms up to CR equal to a third of your Druid level; in a form your AC is at least 13 + Wisdom and you gain more Temporary Hit Points.",
+        "text": "Your Wild Shape can take Beast forms with a Challenge Rating up to your Druid level divided by 3 (round down), when that is higher than the Beast Shapes limit. While in a form your Armor Class equals 13 plus your Wisdom modifier if that is higher than the Beast's, and the Temporary Hit Points you gain from Wild Shape equal three times your Druid level.",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "circle_forms"
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "circle_of_the_moon_spells",
+        "name": "Circle of the Moon Spells",
+        "summary": "Cure Wounds, Moonbeam and Starry Wisp always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Druid level shown, you always have these spells prepared; they don't count against your Prepared Spells: Cure Wounds, Moonbeam and Starry Wisp (3); Conjure Animals (5); Fount of Moonlight (7); Mass Cure Wounds (9). You can cast these spells while in a Wild Shape form.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "improved_circle_forms",
+        "name": "Improved Circle Forms",
+        "summary": "In Wild Shape your attacks can deal Radiant damage, and you add your Wisdom modifier to Constitution saves.",
+        "text": "While in a Wild Shape form you gain these benefits. Lunar Radiance: each of your attacks can deal its normal damage type or Radiant damage, your choice. Increased Toughness: you can add your Wisdom modifier to your Constitution saving throws.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "moonlight_step",
+        "name": "Moonlight Step",
+        "summary": "Bonus Action: teleport 30 feet and gain Advantage on your next attack; Wis-modifier uses per Long Rest or spend a level 2+ slot.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "lunar_form",
+        "name": "Lunar Form",
+        "summary": "In Wild Shape, once per turn deal an extra 2d10 Radiant on a hit; Moonlight Step can bring a willing creature along.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

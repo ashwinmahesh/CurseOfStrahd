@@ -39,6 +39,18 @@ func test_cleric_multiclass_options_at_level_5() -> void:
 	assert_false((by_id["wizard"] as ChoiceOption).legal, "Intelligence 10 can't multiclass into Wizard")
 	assert_true((by_id["wizard"] as ChoiceOption).reason.contains("Intelligence 13 (you have 10)"), (by_id["wizard"] as ChoiceOption).reason)
 	assert_true((by_id["cleric"] as ChoiceOption).legal)
+	# The Phase 4 classes: Strength 14, Dexterity 8, Wisdom 18 and Charisma 13 decide them.
+	for cid: String in ["barbarian", "bard", "druid", "paladin", "sorcerer", "warlock"]:
+		assert_true((by_id[cid] as ChoiceOption).legal, "%s: %s" % [cid, (by_id[cid] as ChoiceOption).reason])
+	assert_eq((by_id["monk"] as ChoiceOption).reason, "Monk needs Dexterity 13 (you have 8)")
+	assert_eq((by_id["ranger"] as ChoiceOption).reason, "Ranger needs Dexterity 13 (you have 8)")
+	# Taking Paladin: armor and Martial weapons she lacks, no new saves, and its half-caster slots join hers.
+	assert_true(up.choose_class("paladin"))
+	var after := up.preview()
+	assert_eq(after.class_summary(), "Cleric (Life Domain) 5 / Paladin 1")
+	assert_true(after.has_proficiency("weapons", "martial"), "multiclass Paladin: Martial weapons")
+	assert_eq(after.save_proficiency(&"str"), "", "no Paladin saving throws")
+	assert_eq(after.spell_slots(), [4, 3, 3, 0, 0, 0, 0, 0, 0] as Array[int], "Cleric 5 + Paladin 1 halved, rounded up = caster level 6")
 
 
 func test_party_builds_without_errors_or_unexpected_warnings() -> void:

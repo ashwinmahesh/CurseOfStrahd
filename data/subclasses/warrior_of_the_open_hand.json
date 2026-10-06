@@ -1,0 +1,63 @@
+{
+  "id": "warrior_of_the_open_hand",
+  "name": "Warrior of the Open Hand",
+  "class": "monk",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "The master of unarmed combat whose Flurry of Blows knocks foes down, drives them back or leaves them unable to react.",
+  "role_tags": [
+    "striker",
+    "control"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "open_hand_technique",
+        "name": "Open Hand Technique",
+        "summary": "Each Flurry of Blows hit can Addle (no Reactions), Push (Str save or 15 feet) or Topple (Dex save or Prone).",
+        "text": "Whenever you hit a creature with an attack granted by Flurry of Blows, you can impose one of these effects. Addle: it can't take Reactions until the start of its next turn. Push: it makes a Strength saving throw or is pushed up to 15 feet away from you. Topple: it makes a Dexterity saving throw or has the Prone condition.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "wholeness_of_body",
+        "name": "Wholeness of Body",
+        "summary": "Bonus Action: regain a Martial Arts die + Wisdom Hit Points; Wisdom-modifier uses per Long Rest.",
+        "text": "As a Bonus Action you can roll your Martial Arts die and regain Hit Points equal to the roll plus your Wisdom modifier (minimum 1 Hit Point). You can do this a number of times equal to your Wisdom modifier (minimum once), regaining the uses on a Long Rest.",
+        "action": "bonus_action",
+        "resource": {
+          "id": "wholeness_of_body",
+          "name": "Wholeness of Body",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "wholeness_of_body",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "fleet_step",
+        "name": "Fleet Step",
+        "summary": "After any Bonus Action other than Step of the Wind, you can use Step of the Wind right away.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "quivering_palm",
+        "name": "Quivering Palm",
+        "summary": "Spend 4 Focus Points to set lethal vibrations in a creature you hit; trigger them later for 10d12 Force damage (Con save halves).",
+        "implemented": "text"
+      }
+    }
+  ]
+}

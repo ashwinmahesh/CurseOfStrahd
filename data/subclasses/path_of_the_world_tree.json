@@ -1,0 +1,55 @@
+{
+  "id": "path_of_the_world_tree",
+  "name": "Path of the World Tree",
+  "class": "barbarian",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A barbarian rooted in the cosmic tree, sharing its vitality with allies and dragging foes through its branches.",
+  "role_tags": [
+    "support",
+    "control"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "vitality_of_the_tree",
+        "name": "Vitality of the Tree",
+        "summary": "When you rage, gain Temporary Hit Points equal to your Barbarian level; each turn while raging, give an ally nearby d6s of Temporary Hit Points.",
+        "text": "Vitality Surge: when you enter your Rage, you gain Temporary Hit Points equal to your Barbarian level. Life-Giving Force: at the start of each of your turns while raging, you can choose another creature within 10 feet of you; it gains Temporary Hit Points equal to a roll of d6s numbering your Rage Damage bonus. Those Temporary Hit Points vanish when your Rage ends.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "branches_of_the_tree",
+        "name": "Branches of the Tree",
+        "summary": "Reaction while raging: a creature within 30 feet makes a Strength save or is teleported next to you and its Speed drops to 0.",
+        "text": "While your Rage is active, when a creature you can see starts its turn within 30 feet of you, you can take a Reaction to summon spectral branches around it. It makes a Strength saving throw (DC 8 + your Strength modifier + Proficiency Bonus); on a failure it is teleported to an unoccupied space you can see within 5 feet of you, or the nearest one, and its Speed becomes 0 until the end of that turn.",
+        "action": "reaction",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "battering_roots",
+        "name": "Battering Roots",
+        "summary": "Your reach with Heavy or Versatile melee weapons grows by 10 feet, and their hits can add Push or Topple.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "travel_along_the_tree",
+        "name": "Travel along the Tree",
+        "summary": "When you rage and as a Bonus Action while raging, teleport up to 60 feet; once per Rage, teleport 150 feet with willing companions.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

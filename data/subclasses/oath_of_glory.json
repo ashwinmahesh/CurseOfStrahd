@@ -1,0 +1,107 @@
+{
+  "id": "oath_of_glory",
+  "name": "Oath of Glory",
+  "class": "paladin",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A paladin striving to be a living legend, inspiring allies after every smite and outdoing others in feats of athleticism.",
+  "role_tags": [
+    "support",
+    "mobile"
+  ],
+  "always_prepared": {
+    "3": [
+      "guiding_bolt",
+      "heroism"
+    ],
+    "5": [
+      "enhance_ability",
+      "magic_weapon"
+    ],
+    "9": [
+      "haste",
+      "protection_from_energy"
+    ],
+    "13": [
+      "compulsion",
+      "freedom_of_movement"
+    ],
+    "17": [
+      "legend_lore",
+      "yolandes_regal_presence"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "oath_of_glory_spells",
+        "name": "Oath of Glory Spells",
+        "summary": "Guiding Bolt and Heroism always prepared; more at levels 5, 9, 13 and 17.",
+        "text": "When you reach a Paladin level shown, you always have these spells prepared; they don't count against your Prepared Spells: Guiding Bolt and Heroism (3); Enhance Ability and Magic Weapon (5); Haste and Protection from Energy (9); Compulsion and Freedom of Movement (13); Legend Lore and Yolande's Regal Presence (17).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "inspiring_smite",
+        "name": "Inspiring Smite",
+        "summary": "Right after casting Divine Smite, spend Channel Divinity to share 2d8 + Paladin level Temporary Hit Points among creatures within 30 feet.",
+        "text": "Immediately after you cast Divine Smite, you can expend a use of Channel Divinity and hand out Temporary Hit Points to creatures of your choice within 30 feet of you, which can include you. The total equals 2d8 plus your Paladin level, divided among them as you like.",
+        "uses_resource": "paladin_channel_divinity",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "peerless_athlete",
+        "name": "Peerless Athlete",
+        "summary": "Bonus Action, Channel Divinity: for 1 hour, Advantage on Athletics and Acrobatics checks and longer jumps.",
+        "text": "As a Bonus Action you can expend a use of Channel Divinity to boost your athleticism for 1 hour: you have Advantage on Strength (Athletics) and Dexterity (Acrobatics) checks, and the distance of your Long and High Jumps increases by 10 feet (the extra distance still costs movement).",
+        "action": "bonus_action",
+        "uses_resource": "paladin_channel_divinity",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "aura_of_alacrity",
+        "name": "Aura of Alacrity",
+        "summary": "Your Speed increases by 10 feet; allies who start their turn in your aura or enter it gain 10 feet too.",
+        "text": "Your Speed increases by 10 feet. In addition, whenever an ally enters your Aura of Protection for the first time on a turn or starts its turn there, its Speed increases by 10 feet until the end of its next turn. Your own bonus is applied; allies' needs positions in a fight.",
+        "modifiers": [
+          {
+            "stat": "speed",
+            "value": 10
+          }
+        ],
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "glorious_defense",
+        "name": "Glorious Defense",
+        "summary": "Reaction: add your Charisma modifier to a creature's AC against an attack, then attack the attacker if it misses; Charisma-modifier uses per Long Rest.",
+        "action": "reaction",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 20,
+      "feature": {
+        "id": "living_legend",
+        "name": "Living Legend",
+        "summary": "Bonus Action, once per Long Rest: for 10 minutes, Advantage on Charisma checks, turn a miss into a hit once per turn, and reroll failed saves.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    }
+  ]
+}

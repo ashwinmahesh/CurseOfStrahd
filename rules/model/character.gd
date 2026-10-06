@@ -36,10 +36,17 @@ var class_order: Array[String] = []
 var subclasses: Dictionary = {}
 var lineage: String = ""
 var maneuvers: Array[String] = []
-## One entry per Spellcasting feature: {class_id, name, ability, list, progression, cantrips_max,
-## prepared_max, spellbook_max, cantrips, prepared, spellbook, always, bonus, ritual}
+## Eldritch Invocations and Metamagic options picked, by id.
+var invocations: Array[String] = []
+var metamagic: Array[String] = []
+## Beast forms a Druid knows for Wild Shape (monster ids).
+var wild_shape_forms: Array[String] = []
+## One entry per Spellcasting or Pact Magic feature: {class_id, name, ability, list, progression, cantrips_max,
+## prepared_max, spellbook_max, cantrips, prepared, spellbook, always, bonus, ritual, feature}; Pact Magic entries
+## also carry pact_slots and pact_level.
 var spellcasting: Array[Dictionary] = []
-## Spells from species and feats: {id, ability, uses, recharge, always_prepared, at_level, source}
+## Spells from species, feats and class features: {id, class_id, ability, uses, recharge, always_prepared,
+## at_level, source}
 var granted_spells: Array[Dictionary] = []
 var _modifiers: Array[Modifier] = []
 var _increases: Array[Dictionary] = []
@@ -52,6 +59,8 @@ var currency: Dictionary = {"cp": 0, "sp": 0, "ep": 0, "gp": 0, "pp": 0}
 ## die size (as String) -> spent count
 var hit_dice_spent: Dictionary = {}
 var slots_used: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+## Pact Magic slots spent (Warlock); they come back on a Short or Long Rest.
+var pact_slots_used: int = 0
 var heroic_inspiration: bool = false
 
 
@@ -144,6 +153,9 @@ func refresh() -> void:
 	feats_taken.clear()
 	weapon_masteries.clear()
 	maneuvers.clear()
+	invocations.clear()
+	metamagic.clear()
+	wild_shape_forms.clear()
 	spellcasting.clear()
 	granted_spells.clear()
 	class_levels.clear()
@@ -281,6 +293,9 @@ func _class_proficiencies(cls: Dictionary, first: bool, src: Dictionary) -> void
 		var picks := _register_choice(sc, "%s.1.skills" % cls["id"], src, "Skill Proficiencies")
 		for p in picks:
 			_prof("skills", p, label)
+		# Tools chosen rather than fixed (Bard: three Musical Instruments; Monk: an Artisan's Tool or instrument).
+		if cls.has("tool_choices"):
+			_register_choice(cls["tool_choices"] as Dictionary, "%s.1.tools" % cls["id"], src, "Tool Proficiencies")
 	else:
 		var mc := (cls.get("multiclass", {}) as Dictionary).get("proficiencies", {}) as Dictionary
 		for a: Variant in mc.get("armor", []):
@@ -295,6 +310,10 @@ func _class_proficiencies(cls: Dictionary, first: bool, src: Dictionary) -> void
 			var picks2 := _register_choice(sc2, "%s.1.skills" % cls["id"], src, "Skill Proficiency")
 			for p in picks2:
 				_prof("skills", p, label)
+		if int(mc.get("tool_choices", 0)) > 0 and cls.has("tool_choices"):
+			var tc := (cls["tool_choices"] as Dictionary).duplicate(true)
+			tc["count"] = int(mc["tool_choices"])
+			_register_choice(tc, "%s.1.tools" % cls["id"], src, "Tool Proficiency")
 
 
 ## Walks one feature: records it, registers its choices (and applies their picks), turns its modifiers into
@@ -337,6 +356,13 @@ func _add_modifier(md: Dictionary, feature_name: String, src: Dictionary, scope:
 		d["ability"] = a[0] if not a.is_empty() else ""
 	elif str(d.get("ability", "")) == "choice":
 		d["ability"] = str(scope.get("choice", ""))
+	# `when` filters can name a pick too (Agonizing Blast: {"spell_id": "@cantrip"}).
+	if d.has("when"):
+		var when := d["when"] as Dictionary
+		for wk: String in when.keys():
+			if when[wk] is String and str(when[wk]).begins_with("@"):
+				var r := _resolve_ref(str(when[wk]), scope)
+				when[wk] = str(r[0]) if not r.is_empty() else ""
 	for v: Variant in values:
 		var one := d.duplicate(true)
 		one["value"] = v
@@ -436,7 +462,22 @@ func _apply_picks(c: Choice, src: Dictionary, scope: Dictionary) -> void:
 			"language":
 				_prof("languages", p, label)
 			"fighting_style", "feat":
-				_walk_feat(p, "%s/%s" % [c.key, p], src)
+				# Paladin's Blessed Warrior and Ranger's Druidic Warrior sit beside the Fighting Style feats.
+				if _has_inline_option(c, p):
+					_walk_inline_option(c, p, src, scope)
+				else:
+					_walk_feat(p, "%s/%s" % [c.key, p], src)
+			"invocation":
+				if not p in invocations:
+					invocations.append(p)
+				_walk_inline_option(c, p, src, scope)
+			"metamagic":
+				if not p in metamagic:
+					metamagic.append(p)
+				_walk_inline_option(c, p, src, scope)
+			"beast_form":
+				if not p in wild_shape_forms:
+					wild_shape_forms.append(p)
 			"weapon_mastery":
 				if not p in weapon_masteries:
 					weapon_masteries.append(p)
@@ -469,13 +510,44 @@ func _walk_inline_option(c: Choice, pick: String, src: Dictionary, scope: Dictio
 			_walk_feature(o, "%s/%s" % [c.key, pick], src, scope)
 
 
-## Choices whose count follows a class table column (Weapon Mastery 3 -> 4 -> 5 -> 6).
+func _has_inline_option(c: Choice, pick: String) -> bool:
+	for o in c.inline_options:
+		if str(o.get("id", "")) == pick:
+			return true
+	return false
+
+
+## Choices whose count follows a class table column (Weapon Mastery 3 -> 4 -> 5 -> 6). Wild Shape's known forms
+## are also capped by the Beasts the game's bestiary has (deviations.md), so the choice never dead-ends.
 func _fix_dynamic_counts() -> void:
 	for c in choice_defs:
 		if c.filter.has("_count_column") and c.class_id != "":
 			var v: Variant = class_column(c.class_id, str(c.filter["_count_column"]))
 			if v != null:
 				c.count = int(v)
+		if c.kind == "beast_form":
+			c.count = mini(c.count, beast_forms_for(c).size())
+
+
+## Beast stat blocks a Wild Shape choice may pick: Beasts up to the class table's maximum CR (Circle Forms
+## raises it to a third of the Druid level), without a Fly Speed until the table allows one.
+func beast_forms_for(c: Choice) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var max_cr := 0.0
+	var cr_v: Variant = class_column(c.class_id, str(c.filter.get("cr_column", "")))
+	if cr_v != null:
+		max_cr = float(cr_v)
+	if has_flag("circle_forms"):
+		max_cr = maxf(max_cr, floorf(class_level_of(c.class_id) / 3.0))
+	var fly_v: Variant = class_column(c.class_id, str(c.filter.get("fly_column", "")))
+	var fly_ok := fly_v != null and bool(fly_v)
+	for m in compendium.all("monsters"):
+		if str(m.get("type", "")) != "beast" or float(m.get("cr", 99)) > max_cr:
+			continue
+		if not fly_ok and int((m.get("speed", {}) as Dictionary).get("fly", 0)) > 0:
+			continue
+		out.append(m)
+	return out
 
 
 ## A class (or its subclass) table value at the character's current level in that class.
@@ -524,7 +596,14 @@ func _build_spellcasting() -> void:
 			"progression": str(sc.get("progression", "full")), "cantrips_max": cantrips_max,
 			"prepared_max": prepared_max, "spellbook_max": 0, "ritual": str(sc.get("ritual", "prepared")),
 			"cantrips": [], "prepared": [], "spellbook": [], "always": [], "bonus": [],
-			"fixed_cantrips": fixed_cantrips}
+			"fixed_cantrips": fixed_cantrips, "pact_slots": 0, "pact_level": 0}
+		# The class feature the entry belongs to: Spellcasting, or Pact Magic (Warlock), whose slots are kept apart.
+		entry["feature"] = "pact_magic" if str(entry["progression"]) == "pact" else "spellcasting"
+		if str(entry["progression"]) == "pact":
+			var count_v: Variant = class_column(cid, str(sc.get("pact_slots_column", "pact_slots")))
+			var level_v: Variant = class_column(cid, str(sc.get("pact_level_column", "slot_level")))
+			entry["pact_slots"] = int(count_v) if count_v != null else 0
+			entry["pact_level"] = int(level_v) if level_v != null else 0
 		var cantrip_count := cantrips_max - fixed_cantrips.size()
 		if cantrip_count > 0:
 			entry["cantrips"] = _register_choice({"kind": "cantrip", "count": cantrip_count,
@@ -554,6 +633,9 @@ func _build_spellcasting() -> void:
 	for c in choice_defs:
 		if c.class_id == "" or not c.kind in ["cantrip", "spell", "spellbook"]:
 			continue
+		# A choice that only points at a spell you already know (Agonizing Blast's cantrip) grants nothing.
+		if bool(c.filter.get("known_only", false)):
+			continue
 		if c.key.begins_with("%s." % c.class_id) and (c.key.ends_with(".cantrips") or c.key.ends_with(".prepared") or c.key.ends_with(".spellbook")) and c.key.count(".") == 1:
 			continue
 		for e in spellcasting:
@@ -565,17 +647,37 @@ func _build_spellcasting() -> void:
 						(e["bonus"] as Array).append({"id": p, "source": c.label})
 
 
+## Spells from modifiers. Class and subclass features keep their class (so the spell uses that class's save DC
+## and attack bonus) and default to its spellcasting ability. Free uses are a number, a formula ("mod:wis",
+## with `min`) or a class table column (`count_column`: Favored Enemy).
 func _collect_granted_spells() -> void:
+	var ctx := formula_context()
 	for m in _modifiers:
 		if m.stat != &"spell":
 			continue
 		var spell_id := m.text("value")
 		if spell_id == "":
 			continue
+		if m.class_id != "" and class_level_of(m.class_id) < m.number("at_class_level", 0):
+			continue
+		var ability := m.text("ability")
+		if ability == "" and m.class_id != "":
+			ability = str((compendium.class_data(m.class_id).get("spellcasting", {}) as Dictionary).get("ability", ""))
 		var uses := m.data.get("uses", {}) as Dictionary
-		var n_uses: Variant = uses.get("count", 0)
-		granted_spells.append({"id": spell_id, "ability": m.text("ability"),
-			"uses": Formula.evaluate(n_uses, {"pb": proficiency_bonus(), "level": character_level()}) if n_uses is String else int(n_uses),
+		var count := 0
+		if uses.has("count_column") and m.class_id != "":
+			var v: Variant = class_column(m.class_id, str(uses["count_column"]))
+			count = int(v) if v != null else 0
+		elif uses.has("count"):
+			var c := ctx.duplicate()
+			c["class_level"] = class_level_of(m.class_id)
+			c["pb"] = proficiency_bonus()
+			c["level"] = character_level()
+			var n_uses: Variant = uses["count"]
+			count = Formula.evaluate(n_uses, c) if n_uses is String else int(n_uses)
+			if uses.has("min"):
+				count = maxi(count, int(uses["min"]))
+		granted_spells.append({"id": spell_id, "class_id": m.class_id, "ability": ability, "uses": count,
 			"recharge": str(uses.get("recharge", "")), "always_prepared": bool(m.data.get("always_prepared", true)),
 			"at_level": m.at_level(), "source": m.source_name})
 
@@ -587,19 +689,54 @@ func spellcasting_entry(class_id: String) -> Dictionary:
 	return {}
 
 
+## Every slot this character can cast with, by spell level: the Spellcasting slots (Multiclass Spellcaster table)
+## plus the Pact Magic slots at their slot level. Casting code reads this, slots_left() and expend_slot(), so a
+## Warlock's spells work like anyone's; spellcasting_slots() and pact_magic() keep the two pools apart.
 func spell_slots() -> Array[int]:
+	var out := spellcasting_slots()
+	var pact := pact_magic()
+	var pl := int(pact["level"])
+	if pl > 0:
+		out[pl - 1] += int(pact["count"])
+	return out
+
+
+## Slots from Spellcasting features only (Pact Magic is never added to the multiclass caster level).
+func spellcasting_slots() -> Array[int]:
 	var casters: Array[Dictionary] = []
 	for e in spellcasting:
 		casters.append({"progression": str(e["progression"]), "level": class_level_of(str(e["class_id"]))})
 	return Spellcasting.slots_for(casters)
 
 
+## Pact Magic (Warlock table): {count, level, used, left}. All the slots share one level and come back on a
+## Short or Long Rest.
+func pact_magic() -> Dictionary:
+	var count := 0
+	var level := 0
+	for e in spellcasting:
+		if str(e["progression"]) == "pact":
+			count += int(e.get("pact_slots", 0))
+			level = maxi(level, int(e.get("pact_level", 0)))
+	var used := mini(pact_slots_used, count)
+	return {"count": count, "level": level, "used": used, "left": count - used}
+
+
 func slots_left(level: int) -> int:
-	return spell_slots()[level - 1] - slots_used[level - 1]
+	var left := spellcasting_slots()[level - 1] - slots_used[level - 1]
+	var pact := pact_magic()
+	if int(pact["level"]) == level:
+		left += int(pact["left"])
+	return left
 
 
+## Spends a slot of that level: a Pact Magic slot first (they return on a Short Rest), else a Spellcasting slot.
 func expend_slot(level: int) -> bool:
-	if slots_left(level) <= 0:
+	var pact := pact_magic()
+	if int(pact["level"]) == level and int(pact["left"]) > 0:
+		pact_slots_used = int(pact["used"]) + 1
+		return true
+	if spellcasting_slots()[level - 1] - slots_used[level - 1] <= 0:
 		return false
 	slots_used[level - 1] += 1
 	return true
@@ -651,7 +788,11 @@ func known_spells() -> Array[Dictionary]:
 			out.append({"id": str(b["id"]), "class_id": cid, "ability": ab, "kind": "bonus", "source": str(b["source"])})
 	for g in granted_spells:
 		if int(g["at_level"]) <= character_level():
-			out.append({"id": str(g["id"]), "class_id": "", "ability": str(g["ability"]), "kind": "granted",
+			# Only a class that casts can lend its DC; a Barbarian's ritual-only spells keep their own ability.
+			var gcid := str(g.get("class_id", ""))
+			if spellcasting_entry(gcid).is_empty():
+				gcid = ""
+			out.append({"id": str(g["id"]), "class_id": gcid, "ability": str(g["ability"]), "kind": "granted",
 				"source": str(g["source"]), "uses": int(g["uses"]), "recharge": str(g["recharge"])})
 	return out
 
@@ -690,7 +831,8 @@ func spell_preview(spell_id: String, slot_level: int = 0) -> Dictionary:
 		var bonus := Breakdown.new("%s damage bonus" % s["name"])
 		if bool(first.get("add_mod", false)):
 			bonus.add("%s modifier" % ABILITY_SHORT[ab], mod)
-		var situation := {"spell": true, "school": str(s.get("school", "")), "spell_class": class_id}
+		var situation := {"spell": true, "school": str(s.get("school", "")), "spell_class": class_id, "spell_id": spell_id,
+			"damage_type": str(first.get("type", ""))}
 		if level == 0:
 			for m in modifiers_for(&"cantrip_damage"):
 				if m.applies_when(situation):
@@ -919,12 +1061,19 @@ func spend_hit_die(dice: DiceRoller, die: int) -> int:
 	return heal(healed, "Hit Point Die")
 
 
+## Short Rest: resources (Creature) and every Pact Magic slot come back. Hit Point Dice are spent separately.
+func finish_short_rest() -> void:
+	super.finish_short_rest()
+	pact_slots_used = 0
+
+
 func finish_long_rest() -> void:
 	super.finish_long_rest()
 	if dead:
 		return
 	hit_dice_spent.clear()
 	slots_used = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+	pact_slots_used = 0
 	if has_flag("resourceful"):
 		heroic_inspiration = true
 
@@ -1037,6 +1186,20 @@ func auto_equip() -> void:
 		equip(shield_id, "off_hand")
 
 
+## Martial Arts (a feature with the `martial_arts` flag): the class table's die for Unarmed Strikes and Monk weapons
+## while wearing no armor and no Shield, else "".
+func martial_arts_die() -> String:
+	for m in modifiers_for(&"flag"):
+		if m.text("value") != "martial_arts" or m.class_id == "":
+			continue
+		var situation := armor_situation()
+		if str(situation["armor"]) != "none" or bool(situation["shield"]):
+			return ""
+		var v: Variant = class_column(m.class_id, "martial_arts")
+		return str(v) if v != null else ""
+	return ""
+
+
 func armor_situation() -> Dictionary:
 	var armor := equipped("armor")
 	var off := equipped("off_hand")
@@ -1142,7 +1305,8 @@ func attacks() -> Array[WeaponProfile]:
 func to_dict() -> Dictionary:
 	return {"build": build.duplicate(true), "state": state_to_dict(), "inventory": inventory.duplicate(true),
 		"currency": currency.duplicate(), "hit_dice_spent": hit_dice_spent.duplicate(),
-		"slots_used": slots_used.duplicate(), "heroic_inspiration": heroic_inspiration, "id": id}
+		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
+		"heroic_inspiration": heroic_inspiration, "id": id}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -1157,5 +1321,6 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 	var used := d.get("slots_used", []) as Array
 	for i in mini(9, used.size()):
 		c.slots_used[i] = int(used[i])
+	c.pact_slots_used = int(d.get("pact_slots_used", 0))
 	c.heroic_inspiration = bool(d.get("heroic_inspiration", false))
 	return c

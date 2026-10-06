@@ -81,7 +81,8 @@ func has_when() -> bool:
 ## Checks the `when` filter against what the caller knows. A filter key the caller can't answer counts as
 ## not met, so a ranged-only bonus never leaks into a generic number.
 ##   situation: {armor: "none|light|medium|heavy", shield: bool, weapon_tags: Array, spell: bool,
-##               school: String, bloodied: bool}
+##               school: String, spell_id: String, bloodied: bool}
+## `armor` may also ask for "any" (some armor) or "not_heavy" (none, light or medium).
 func applies_when(situation: Dictionary) -> bool:
 	if not has_when():
 		return true
@@ -95,6 +96,9 @@ func applies_when(situation: Dictionary) -> bool:
 				var worn := str(situation["armor"])
 				if str(want) == "any":
 					if worn == "none":
+						return false
+				elif str(want) == "not_heavy":
+					if worn == "heavy":
 						return false
 				elif worn != str(want):
 					return false

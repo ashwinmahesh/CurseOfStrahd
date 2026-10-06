@@ -1,0 +1,97 @@
+{
+  "id": "clockwork_sorcery",
+  "name": "Clockwork Sorcery",
+  "class": "sorcerer",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "Magic of cosmic order from Mechanus: you even out the odds and ward allies with spectral cogwork.",
+  "role_tags": [
+    "support",
+    "defense"
+  ],
+  "always_prepared": {
+    "3": [
+      "aid",
+      "alarm",
+      "lesser_restoration",
+      "protection_from_evil_and_good"
+    ],
+    "5": [
+      "dispel_magic",
+      "protection_from_energy"
+    ],
+    "7": [
+      "freedom_of_movement",
+      "summon_construct"
+    ],
+    "9": [
+      "greater_restoration",
+      "wall_of_force"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "clockwork_spells",
+        "name": "Clockwork Spells",
+        "summary": "Aid, Alarm, Lesser Restoration and Protection from Evil and Good always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Sorcerer level shown, you always have these spells prepared; they don't count against your Prepared Spells: Aid, Alarm, Lesser Restoration and Protection from Evil and Good (3); Dispel Magic and Protection from Energy (5); Freedom of Movement and Summon Construct (7); Greater Restoration and Wall of Force (9).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "restore_balance",
+        "name": "Restore Balance",
+        "summary": "Reaction: cancel Advantage or Disadvantage on a D20 Test within 60 feet; Charisma-modifier uses per Long Rest.",
+        "text": "When a creature you can see within 60 feet of you is about to roll a D20 Test with Advantage or Disadvantage, you can take a Reaction to keep the roll from being affected by either. You can do this a number of times equal to your Charisma modifier (minimum once), regaining the uses on a Long Rest.",
+        "action": "reaction",
+        "resource": {
+          "id": "restore_balance",
+          "name": "Restore Balance",
+          "max": "mod:cha",
+          "min": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "restore_balance",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "bastion_of_law",
+        "name": "Bastion of Law",
+        "summary": "Magic action: spend 1 to 5 Sorcery Points to give a creature a ward of that many d8s that soak damage.",
+        "text": "As a Magic action you can spend 1 to 5 Sorcery Points to create a ward of order around yourself or another creature you can see within 30 feet. The ward is a number of d8s equal to the points spent. When the warded creature takes damage, it can expend any number of those dice, roll them and reduce the damage by the total. The ward lasts until you finish a Long Rest or use this feature again.",
+        "action": "action",
+        "uses_resource": "sorcery_points",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "trance_of_order",
+        "name": "Trance of Order",
+        "summary": "Bonus Action, once per Long Rest or 5 Sorcery Points: for 1 minute, attacks against you can't have Advantage and your d20 rolls of 9 or lower count as 10.",
+        "action": "bonus_action",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "clockwork_cavalcade",
+        "name": "Clockwork Cavalcade",
+        "summary": "Magic action, once per Long Rest: a 30-foot cube heals up to 100 Hit Points, repairs objects and ends spells of level 6 or lower.",
+        "action": "action",
+        "implemented": "text"
+      }
+    }
+  ]
+}

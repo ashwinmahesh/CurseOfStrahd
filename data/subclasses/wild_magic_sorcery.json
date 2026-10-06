@@ -1,0 +1,73 @@
+{
+  "id": "wild_magic_sorcery",
+  "name": "Wild Magic Sorcery",
+  "class": "sorcerer",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "Raw chaos magic that surges unpredictably, bending luck your way, or not.",
+  "role_tags": [
+    "chaotic",
+    "damage"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "wild_magic_surge",
+        "name": "Wild Magic Surge",
+        "summary": "Once per turn after casting a Sorcerer spell with a slot, roll a d20; on a 20, roll on the Wild Magic Surge table.",
+        "text": "Once per turn, right after you cast a Sorcerer spell with a spell slot, you can roll a d20. On a 20, roll on the Wild Magic Surge table to create a random magical effect. If that effect is a spell, it is too wild to be affected by your Metamagic.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "tides_of_chaos",
+        "name": "Tides of Chaos",
+        "summary": "Give yourself Advantage on one D20 Test; it comes back after a Long Rest or a Wild Magic Surge.",
+        "text": "You can manipulate chaos itself to give yourself Advantage on one D20 Test before you roll the d20. Once you do, you must cast a Sorcerer spell with a spell slot or finish a Long Rest before you can use it again. If you cast a Sorcerer spell with a slot before your next Long Rest, you automatically roll on the Wild Magic Surge table and regain this use.",
+        "resource": {
+          "id": "tides_of_chaos",
+          "name": "Tides of Chaos",
+          "max": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "tides_of_chaos",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "bend_luck",
+        "name": "Bend Luck",
+        "summary": "Reaction: spend 1 Sorcery Point to add or subtract 1d4 from another creature's d20 roll.",
+        "text": "Immediately after another creature you can see rolls the d20 for a D20 Test, you can take a Reaction and spend 1 Sorcery Point to roll 1d4 and apply the number as a bonus or penalty (your choice) to the d20 roll.",
+        "action": "reaction",
+        "uses_resource": "sorcery_points",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "controlled_chaos",
+        "name": "Controlled Chaos",
+        "summary": "Roll twice on the Wild Magic Surge table and use either result.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "tamed_surge",
+        "name": "Tamed Surge",
+        "summary": "Once per Long Rest, right after casting a Sorcerer spell with a slot, create any effect from the Wild Magic Surge table.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

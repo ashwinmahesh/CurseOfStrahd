@@ -88,7 +88,8 @@ func test_level_up_with_a_milestone() -> void:
 
 
 func test_creation_for_every_class() -> void:
-	for cid: String in ["fighter", "rogue", "cleric", "wizard"]:
+	for cid: String in ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue",
+			"sorcerer", "warlock", "wizard"]:
 		var cs := CreationScreen.new()
 		add_child(cs)
 		var empty: Array[Dictionary] = []

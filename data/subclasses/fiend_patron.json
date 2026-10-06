@@ -1,0 +1,92 @@
+{
+  "id": "fiend_patron",
+  "name": "Fiend Patron",
+  "class": "warlock",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "summary": "A pact with a fiend of the Lower Planes: fire, vitality from every fallen enemy, and dark luck.",
+  "role_tags": [
+    "damage",
+    "durable"
+  ],
+  "always_prepared": {
+    "3": [
+      "burning_hands",
+      "command",
+      "scorching_ray",
+      "suggestion"
+    ],
+    "5": [
+      "fireball",
+      "stinking_cloud"
+    ],
+    "7": [
+      "fire_shield",
+      "wall_of_fire"
+    ],
+    "9": [
+      "geas",
+      "insect_plague"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "fiend_spells",
+        "name": "Fiend Spells",
+        "summary": "Burning Hands, Command, Scorching Ray and Suggestion always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Warlock level shown, you always have these spells prepared; they don't count against your Prepared Spells: Burning Hands, Command, Scorching Ray and Suggestion (3); Fireball and Stinking Cloud (5); Fire Shield and Wall of Fire (7); Geas and Insect Plague (9).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "dark_ones_blessing",
+        "name": "Dark One's Blessing",
+        "summary": "When you or someone near you drops an enemy to 0 Hit Points, you gain Charisma + Warlock level Temporary Hit Points.",
+        "text": "When you reduce an enemy to 0 Hit Points, you gain Temporary Hit Points equal to your Charisma modifier plus your Warlock level (minimum 1). You also gain this benefit if someone else reduces an enemy within 10 feet of you to 0 Hit Points.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "dark_ones_own_luck",
+        "name": "Dark One's Own Luck",
+        "summary": "Add 1d10 to an ability check or saving throw after seeing the roll; Charisma-modifier uses per Long Rest.",
+        "text": "When you make an ability check or a saving throw, you can add 1d10 to the roll after seeing it but before any of its effects occur. You can do this a number of times equal to your Charisma modifier (minimum once), no more than once per roll; you regain the uses on a Long Rest.",
+        "resource": {
+          "id": "dark_ones_own_luck",
+          "name": "Dark One's Own Luck",
+          "max": "mod:cha",
+          "min": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "dark_ones_own_luck",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "fiendish_resilience",
+        "name": "Fiendish Resilience",
+        "summary": "After a Short or Long Rest, choose a damage type other than Force to have Resistance to.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "hurl_through_hell",
+        "name": "Hurl Through Hell",
+        "summary": "Once per Long Rest (or with a Pact Magic slot), send a creature you hit through the Lower Planes for 8d10 Psychic damage.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

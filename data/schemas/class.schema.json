@@ -40,12 +40,13 @@
     "primary_abilities": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/ability"}, "description": "More than one = any of them (Fighter: Strength or Dexterity)."},
     "saving_throws": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "common.schema.json#/$defs/ability"}},
     "skill_choices": {"$ref": "common.schema.json#/$defs/choice"},
+    "tool_choices": {"$ref": "common.schema.json#/$defs/choice", "description": "Tool proficiencies chosen at level 1 (Bard: three Musical Instruments)."},
     "proficiencies": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "armor": {"type": "array", "items": {"type": "string", "enum": ["light", "medium", "heavy", "shields"]}},
-        "weapons": {"type": "array", "items": {"type": "string", "description": "simple, martial, martial_finesse_or_light, or a weapon id"}},
+        "weapons": {"type": "array", "items": {"type": "string", "description": "simple, martial, martial_finesse_or_light, martial_light, or a weapon id"}},
         "tools": {"type": "array", "items": {"type": "string"}}
       }
     },
@@ -55,7 +56,7 @@
       "properties": {
         "all_of": {"type": "object", "additionalProperties": {"type": "integer"}},
         "any_of": {"type": "object", "additionalProperties": {"type": "integer"}},
-        "proficiencies": {"type": "object", "description": "What a character gains when this is not their first class.", "properties": {"armor": {"type": "array"}, "weapons": {"type": "array"}, "tools": {"type": "array"}, "skills": {"type": "integer"}}}
+        "proficiencies": {"type": "object", "description": "What a character gains when this is not their first class.", "properties": {"armor": {"type": "array"}, "weapons": {"type": "array"}, "tools": {"type": "array"}, "skills": {"type": "integer"}, "tool_choices": {"type": "integer", "description": "How many picks from the class's tool_choices."}}}
       }
     },
     "starting_equipment": {"type": "array", "minItems": 2, "items": {"$ref": "common.schema.json#/$defs/equipment_option"}},
@@ -70,6 +71,8 @@
         "focus": {"type": "string", "enum": ["arcane", "druidic", "holy"]},
         "from_level": {"type": "integer"},
         "cantrips_column": {"type": "string"},
+        "pact_slots_column": {"type": "string", "description": "Pact Magic: table column with the number of slots."},
+        "pact_level_column": {"type": "string", "description": "Pact Magic: table column with the slot level."},
         "prepared_column": {"type": "string"},
         "spellbook": {"type": "object", "properties": {"start": {"type": "integer"}, "per_level": {"type": "integer"}}, "description": "Wizard: spells in the book at level 1 and added each level."},
         "ritual": {"type": "string", "enum": ["prepared", "spellbook", "none"]},
