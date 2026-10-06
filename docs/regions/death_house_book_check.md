@@ -10,9 +10,8 @@ docs/rules/data_sources.md. Floors and walls marked *(suggested)* are not in the
 
 Who does what: the Death House thread (branch `death-house`) owns the rooms, connections, encounters, NPCs, loot and
 text in data/locations and narrative/. The World assets thread owns prop art, the catalogue, and floor and wall
-textures. "Prop id" below is the id in data/locations; where the art doesn't exist yet the prop is placed with the
-nearest existing art and listed under "Art wanted", so the catalogue's `ids` can point it at new art without a data
-change.
+textures. "Prop id" below is the id in data/locations; the catalogue's `ids` point those ids at the book's art
+(see "Art" below).
 
 ## Why portraits went missing
 
@@ -25,7 +24,9 @@ A wall piece hangs on the first open side of its wall square, in the order south
 | `upper_hall_portraits` (upper) | (9, 11) | Upper Hall | the Secret Study, behind the bookcase |
 
 Fixed in data: every wall piece in the house now sits on a wall square whose first open side is its own room (mostly
-north walls, which also face the opening camera). The check is a script in `tools/data/check_wall_pieces.py`.
+north walls, which also face the opening camera). `tools/data/check_wall_pieces.py` lists wall pieces between two rooms with the room they hang into, and
+fails on two pieces on one wall face or two things on one square; tests/integration/test_death_house_book.gd checks
+the portraits by building the floors.
 
 ## Ground floor (`death_house_ground`), book areas 1 to 5
 
@@ -101,50 +102,33 @@ through the ghouls.
 | 37 Portcullis | `dh_flooded_passage` + `dh_winch_room` | 2 ft of black water | stone | Rusted portcullis; a wheel to raise it. | Same; the rat swarms are gone (not in the book). |
 | 38 Ritual Chamber | `dh_ritual_antechamber` + `dh_ritual_chamber` | 2 ft of murky water; dry ledges along the walls; an octagonal dais | smooth masonry, stone pillars | Altar carved with grasping ghouls, bloodstained; rusty chains and shackles hanging over it; hooded figures chanting "one must die"; Lorghoth. | Same. |
 
-## Art wanted (World assets)
+## Art (World assets, merged 2026-10-06)
 
-Placed now with stand-in art; point `ids.<prop id>` at the new piece when it exists.
+World assets drew the book's pieces and points the catalogue's `ids` at them: `den_stag_head` (stag_head),
+`den_stuffed_wolf_a/b/c` (stuffed_wolf), `hall_hearth` (fireplace_sword), `hall_carvings` (carved_paneling),
+`kitchen_stove` (oven_brick), `dining_hearth` (fireplace_valley), `hall_family_portrait` (family_portrait, with the
+baby), `upper_armor_west/east` (armor_wolf_helm), `library_hearth` (fireplace_windmill), `study_skeleton`
+(skeleton_leather), `conservatory_hearth` (fireplace_dancers), `master_portrait` (portrait_couple), `bath_barrel`
+(barrel_spigot), `nursery_crib` (crib_shroud), `nursemaid_mirror` and the mirror door (mirror_full),
+`third_storage_shelves` (linen shelves), `shrine_statue` (statue_strahd), `prison_skeleton` (skeleton_shackles).
+Placed by model: `conservatory_harp` (harp), `master_tiger_rug` (tiger_rug), `shrine_shackles` (skeleton_shackles),
+`initiate_pallet_a/b/c` (straw_pallet). Still waiting on Gemini's daily quota: the doll in the yellow dress
+(`spare_doll` uses the plain doll).
 
-| Prop id(s) | Wanted piece | Mount | Stand-in now |
-|---|---|---|---|
-| `den_stag_head` | Stag's head on a plaque | wall | `trophy_wolf` |
-| `den_stuffed_wolf_a/b/c` | Stuffed grey wolf on a low plinth (three poses if possible) | stand | `rug_wolf` |
-| `hall_hearth` | Marble fireplace, longsword mounted above the mantel | wall | `fireplace` |
-| `hall_carvings` | Carved paneling: vines, flowers, nymphs, satyrs (serpents and skulls hidden in it) | wall | invisible spot |
-| `kitchen_stove` | Domed stone oven (`oven_brick` on your branch fits) | wall | `stove` |
-| `dining_hearth` | Marble fireplace, framed alpine valley painting above | wall | `fireplace` |
-| `hall_family_portrait` | The family portrait as the book has it: Gustav holding a swaddled baby, Elisabeth looking at it with scorn, Rose and Thorn (Thorn with a stuffed wolf) | wall | `painting` (no baby yet) |
-| `upper_armor_west/east` | Chain armor with a wolf-head visored helm, holding a spear | stand | `statue_knight` |
-| `library_hearth` | Fireplace, painting of a windmill on a rocky crag above | wall | `fireplace` |
-| `study_skeleton` | Skeleton in leather armor slumped against a chest, darts in its ribs | stand | `bones` |
-| `conservatory_hearth` | Fireplace with alabaster dancer figurines on the mantel | wall | `fireplace` |
-| (conservatory) | Standing harp; stained-glass hangings of singers (`window_stained` on your branch) | stand / wall | not placed yet |
-| `master_portrait` | Dusty portrait of Gustav and Elisabeth | wall | `painting` |
-| (master suite) | Rotting tiger-skin rug | floor | not placed yet |
-| `bath_barrel` | Barrel under a dry spigot pipe | stand | `barrel` |
-| `clawfoot_tub` | Wooden tub on clawed iron feet | stand | `bathtub` |
-| `nursery_crib` | Crib draped in a black shroud | stand | `crib` |
-| `nursemaid_mirror` | Full-length mirror, carved frame | wall | `mirror` |
-| `third_storage_shelves` | Shelves of folded sheets, blankets and soap | stand | `shelves` |
-| `spare_doll` | Doll in a yellow lace dress | stand | `doll` |
-| `shrine_statue` | Painted wooden statue of a gaunt pale man in a black cloak, one hand on a wolf's head, holding a smoky crystal orb | stand | `statue_knight` |
-| `shrine_shackles`, `prison_skeleton` | Skeletons hanging in rusty wall shackles | wall | `robe_pegs` / `bones` |
-| `initiate_pallets` | Straw pallets | floor | `straw` |
-| `reliquary_niches` | Wall alcoves holding odd trinkets | wall | `shelves_wall` |
-| doors `nursemaid_mirror_door` | A door rule for "mirror" so the secret door looks like the mirror once found | door | default leaf |
+Creature sprites (build thread / animations thread): **swarm of insects** (crypt 23) and **mimic** (door to 33; stat
+block `data/monsters/mimic.json`) show placeholders until their art lands.
 
-Creature sprites (build thread / animations thread, through the coordinator): **swarm of insects** (crypt 23) and
-**mimic** (door to 33; new stat block `data/monsters/mimic.json`).
+Follow-up for World assets: an exit's piece is drawn even while its `when` is false, so the attic nook shows its
+stair before the secret stair is found.
 
 ## Floors and walls per room
 
-The area schema has no floor or wall field yet (`areas` items are `additionalProperties: false`). Suggestion: an
-optional `floor` and `walls` on each area naming a texture from the catalogue's `floors`, read by the board when it
-lays that rectangle. The picks per room are the Floor and Walls columns above; book-given ones are the main hall's
-carved paneling, the den's oak paneling, the dining room's deer paneling and red drapes, the library's velvet drapes,
-the conservatory's stained glass and drapes, the master suite's burgundy drapes, the balcony's carved oak, the
-dungeon's packed earth and timber bracing, and the ritual chamber's black water and masonry. The bathroom wants a
-tiled or stone floor and damp plaster to read as a bathroom.
+Each area now names its `floor` and `walls` (texture surfaces in art/textures/manifest.json), from the Floor and
+Walls columns above: marble and carved paneling in the main hall, oak paneling in the den, flagstones and brick in the
+kitchen, parquet and carved deer paneling in the dining room, carpet and wainscot in the library and master suite,
+green wallpaper in the conservatory, cracked tile and damp plaster in the bathroom, nursery wallpaper in the nursery
+and the children's room, bare attic boards, packed earth and timber bracing below the house, and stone flags and
+masonry in the ritual chamber.
 
 ## Not changed (kept as game additions)
 
