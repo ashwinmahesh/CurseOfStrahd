@@ -1,0 +1,571 @@
+{
+  "id": "abbey_of_st_markovia_shrine",
+  "name": "The Church of St. Markovia",
+  "region": "abbey_of_st_markovia",
+  "summary": "The abbey's church: a nave of plain pews, an altar on its step under a great gilded sunburst, the Abbot's bare cell on one side and the sacristy on the other. Where the Abbot works, prays and means to wake his bride.",
+  "map": {
+    "rows": [
+      "##########################",
+      "#.=..#.....1==1.....#...=#",
+      "#....#.=...1111.....#....#",
+      "#........................#",
+      "#....#..............#....#",
+      "######..............######",
+      "#........................#",
+      "#..=======......=======..#",
+      "#........................#",
+      "#..=======......=======..#",
+      "#........................#",
+      "#..=======......=======..#",
+      "#........................#",
+      "#..=======......=======..#",
+      "#........................#",
+      "############..############",
+      "############..############"
+    ],
+    "theme": "church",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "church_nave",
+      "name": "The nave",
+      "cells": [
+        [
+          1,
+          6
+        ],
+        [
+          24,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "church_chancel",
+      "name": "The chancel",
+      "cells": [
+        [
+          6,
+          1
+        ],
+        [
+          19,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "abbot_cell",
+      "name": "The Abbot's cell",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "sacristy",
+      "name": "The sacristy",
+      "cells": [
+        [
+          21,
+          1
+        ],
+        [
+          24,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "church_porch",
+      "name": "The porch",
+      "cells": [
+        [
+          12,
+          15
+        ],
+        [
+          13,
+          16
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      12,
+      14
+    ]
+  },
+  "exits": [
+    {
+      "id": "church_out",
+      "cell": [
+        12,
+        16
+      ],
+      "to": "abbey_of_st_markovia",
+      "spawn": "from_chapel",
+      "label": "Out to the courtyard"
+    },
+    {
+      "id": "church_out_east",
+      "cell": [
+        13,
+        16
+      ],
+      "to": "abbey_of_st_markovia",
+      "spawn": "from_chapel",
+      "label": "Out to the courtyard"
+    }
+  ],
+  "doors": [
+    {
+      "id": "abbot_cell_door",
+      "cell": [
+        5,
+        3
+      ],
+      "label": "The Abbot's door"
+    },
+    {
+      "id": "sacristy_door",
+      "cell": [
+        20,
+        3
+      ],
+      "label": "Sacristy door"
+    }
+  ],
+  "props": [
+    {
+      "id": "chapel_sunburst",
+      "cell": [
+        12,
+        0
+      ],
+      "kind": "examine",
+      "label": "The great sunburst",
+      "model": "crest",
+      "dialogue": "abbey_of_st_markovia/shrine:sunburst"
+    },
+    {
+      "id": "markovia_altar",
+      "cell": [
+        12,
+        1
+      ],
+      "kind": "examine",
+      "label": "The altar",
+      "model": "altar"
+    },
+    {
+      "id": "abbey_organ",
+      "cell": [
+        7,
+        2
+      ],
+      "kind": "examine",
+      "label": "A small pipe organ",
+      "model": "harpsichord"
+    },
+    {
+      "id": "church_pews",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "decor",
+      "label": "Pews",
+      "model": "pew"
+    },
+    {
+      "id": "abbot_cot",
+      "cell": [
+        2,
+        1
+      ],
+      "kind": "examine",
+      "label": "A plank cot",
+      "model": "bed_small"
+    },
+    {
+      "id": "abbot_ledger",
+      "cell": [
+        3,
+        4
+      ],
+      "kind": "book",
+      "label": "A ledger of improvements",
+      "model": "ledger",
+      "codex": "abbot_ledger",
+      "text": "A long ledger in a beautiful, even hand, every entry dated. 'Yevgeni B., a hound's patience, for his temper; took well.' 'Old Marta B., wings, for her lightness of spirit; did not take. Wards.' 'Little Ilsa B., an owl's eyes, for the dark; took.' The last pages are a different list: 'Left hand, from the grave of a seamstress. Throat, from a singer. Eyes, two, from sisters, to be matched.' At the bottom: 'Something white.'"
+    },
+    {
+      "id": "markovia_plaque",
+      "cell": [
+        9,
+        5
+      ],
+      "kind": "examine",
+      "label": "A memorial plaque",
+      "model": "relief"
+    }
+  ],
+  "containers": [
+    {
+      "id": "sacristy_chest",
+      "cell": [
+        24,
+        1
+      ],
+      "label": "Vestment chest",
+      "items": [
+        {
+          "id": "holy_water",
+          "qty": 2
+        },
+        {
+          "id": "candle",
+          "qty": 6
+        },
+        {
+          "id": "robe",
+          "qty": 1
+        }
+      ],
+      "gold": 22,
+      "model": "chest"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        11,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        14,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        12,
+        0
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        2,
+        3
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "abbot",
+      "cell": [
+        15,
+        2
+      ],
+      "dialogue": "abbey_of_st_markovia/unveiling:kneeling",
+      "when": "flag.bride_defeated and not flag.abbot_fate",
+      "approach": 8
+    },
+    {
+      "npc": "clovin_belview",
+      "cell": [
+        11,
+        12
+      ],
+      "dialogue": "abbey_of_st_markovia/unveiling:after_wrath",
+      "when": "flag.abbot_struck_down and not flag.abbot_fate",
+      "approach": 8
+    },
+    {
+      "npc": "abbot",
+      "cell": [
+        12,
+        3
+      ],
+      "dialogue": "abbey_of_st_markovia/abbot:start",
+      "when": "not flag.bride_defeated and not flag.abbot_struck_down and (not flag.abbot_fate or flag.abbot_fate == \"wedding\" or flag.abbot_fate == \"broken\")",
+      "approach": 5
+    },
+    {
+      "npc": "vasilka",
+      "cell": [
+        14,
+        4
+      ],
+      "dialogue": "abbey_of_st_markovia/vasilka:abandoned",
+      "when": "flag.vasilka_fate == \"abandoned\""
+    }
+  ],
+  "encounters": [
+    {
+      "id": "bride_defends",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "Vasilka comes down off the bier like a dancer finishing a bow, and the Belviews come after her with cleavers and pruning hooks, humming.",
+      "monsters": [
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            16,
+            3
+          ],
+          "name": "Vasilka"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            7,
+            10
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            18,
+            10
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            2,
+            6
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            23,
+            6
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            2,
+            14
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            23,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "bride_defeated"
+    },
+    {
+      "id": "bride_defends",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Vasilka comes down off the bier like a dancer finishing a bow, and the Belviews come after her with cleavers and pruning hooks, humming.",
+      "monsters": [
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            16,
+            3
+          ],
+          "name": "Vasilka"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            7,
+            10
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            2,
+            6
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            23,
+            6
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            2,
+            14
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            23,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "bride_defeated"
+    },
+    {
+      "id": "bride_defends",
+      "trigger": "dialogue",
+      "text": "Vasilka comes down off the bier like a dancer finishing a bow, and the Belviews come after her with cleavers and pruning hooks, humming.",
+      "monsters": [
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            16,
+            3
+          ],
+          "name": "Vasilka",
+          "hp": 80
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            2,
+            6
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            23,
+            6
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            2,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "bride_defeated"
+    },
+    {
+      "id": "abbot_wrath",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "The candles go white. He doesn't draw a weapon. He opens his hands, and there is suddenly a mace of light in one of them, and wings behind him that fill the chancel.",
+      "monsters": [
+        {
+          "monster": "deva",
+          "cell": [
+            12,
+            3
+          ],
+          "name": "The Abbot",
+          "hp": 120
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            7,
+            4
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            17,
+            4
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "abbot_struck_down"
+    },
+    {
+      "id": "abbot_wrath",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "The candles go white. He doesn't draw a weapon. He opens his hands, and there is suddenly a mace of light in one of them, and wings behind him that fill the chancel.",
+      "monsters": [
+        {
+          "monster": "deva",
+          "cell": [
+            12,
+            3
+          ],
+          "name": "The Abbot",
+          "hp": 100
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            7,
+            4
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "abbot_struck_down"
+    },
+    {
+      "id": "abbot_wrath",
+      "trigger": "dialogue",
+      "text": "The candles go white. He doesn't draw a weapon. He opens his hands, and there is suddenly a mace of light in one of them, and wings behind him that fill the chancel.",
+      "monsters": [
+        {
+          "monster": "deva",
+          "cell": [
+            12,
+            3
+          ],
+          "name": "The Abbot",
+          "hp": 85
+        }
+      ],
+      "surprise": "",
+      "flag": "abbot_struck_down"
+    }
+  ],
+  "narration": {
+    "enter": "enter:abbey_of_st_markovia_shrine"
+  },
+  "rest": "no",
+  "rest_text": "Not here. Not under that sunburst, with him lighting candles in the dark at the end of the nave.",
+  "treasure_spots": {
+    "abbey_of_st_markovia_shrine": {
+      "dialogue": "abbey_of_st_markovia/shrine:sunburst"
+    }
+  }
+}

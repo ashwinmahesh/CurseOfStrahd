@@ -1,0 +1,152 @@
+# The Pool of the White Sun and its shrine, at the north end of Krezk (docs/regions/krezk.md §4.3).
+# the_pool: the pool's edge (the prop). It is the Tarokka treasure spot for krezk_pool_of_the_white_sun ("Wade in."),
+# the place to fill flasks for Ilya, and, when Ireena travels with the party, where she sees Sergei in the water and
+# remembers Tatyana. Her fate stays open for Phase 6: the scene only sets flags. shrine: the White Sun's pavilion.
+
+~ the_pool
+if guest:ireena and not flag.ireena_pool_vision
+-> ireena_vision
+endif
+Narrator: The pool is perfectly round and perfectly still, and the snow along its rim has melted back a hand's breadth all the way round. In the water, the sky is a little brighter than the sky above it.
+if treasure_at:krezk_pool_of_the_white_sun
+Narrator: Near the middle, under the water, something catches a light that isn't there to be caught.
+endif
+-> pool_menu
+
+~ pool_menu
+* Wade in. -> wade
+* [if not flag.white_sun_water] Fill flasks from the pool. -> fill
+* [if not flag.pool_offerings_taken] Look at the coins on the bottom. -> offerings
+* [if flag.ireena_pool_vision and guest:ireena] (Look at Ireena.) -> ireena_after
+* Leave the water be. -> END
+
+~ wade
+Narrator: The cold takes your breath, and then, strangely, gives it back. By the time the water reaches your knees it feels like a summer pond at noon, though the snow is still falling on your shoulders.
+if treasure_at:krezk_pool_of_the_white_sun
+Narrator: In the middle, where the reflected sun lingers longest, your fingers close on something in the silt that has no business being warm.
+if tarokka.tome.place == krezk_pool_of_the_white_sun
+quest find_the_tome found
+endif
+if tarokka.symbol.place == krezk_pool_of_the_white_sun
+quest find_the_holy_symbol found
+endif
+if tarokka.sword.place == krezk_pool_of_the_white_sun
+quest find_the_sunsword found
+endif
+tarokka give krezk_pool_of_the_white_sun
+interject class:cleric: Madam Eva said wade in. I'll never doubt that woman again. I'll want to, but I won't.
+else
+Narrator: Silt, cold stones, a child's lost button. Nothing the pool wants to give you, today. Your feet are warm all the way back to the shrine, which is gift enough.
+endif
+-> pool_menu
+
+~ fill
+set white_sun_water
+give holy_water 2
+Narrator: The water goes into the flasks bright and stays bright, faintly, like the last of a sunset in a window.
+if flag.ilya_heard and not flag.ilya_fate
+interject tag:devout: If it can do that to a flask, it might do something for a fevered boy.
+endif
+-> pool_menu
+
+~ offerings
+Narrator: Coppers, mostly, and a few silver pieces gone black, and a wooden horse with three legs. Krezk's wishes, thrown in one at a time for longer than anyone has been counting.
+* (Steal the wishes. Scoop up the coins; the pool won't miss them.) -> take_offerings
+* Leave them. -> pool_menu
+
+~ take_offerings
+set pool_offerings_taken
+gold +9
+Narrator: Nine gold, give or take, dripping. When you look back at the water, the sky in it is exactly as grey as the sky above it now.
+interject class:cleric: I'm going to pretend I didn't see that, and then I'm going to pray about it anyway.
+-> END
+
+~ ireena_vision
+set ireena_pool_vision
+quest the_pool_of_the_white_sun seen
+Narrator: Ireena stops at the edge. She doesn't kneel; her knees simply give, and she's on the stones with her hands flat on them, looking down.
+Narrator: In the water, beside her reflection, there is a second one: a young man in an old-fashioned coat with a sunburst at his breast. You look up. There's nobody beside her. You look down. He's still there.
+if flag.eva_question == "ireena"
+interject tag:loyal: Still water. Madam Eva told us to keep her away from still water.
+elif flag.ireena_falls_memory
+interject tag:curious: At the falls she remembered a wall and a gorge. This is the same look. The same distance in it.
+endif
+Sergei von Zarovich: Tatyana.
+Ireena [afraid]: That's not my name.
+Sergei von Zarovich: No. Not this time. But you came to the water. You always did, in the mornings, before the bells.
+Narrator: Ireena's face changes. Not fear. Something worse, and softer: recognition, coming up through her like a drowned thing finding the surface.
+Ireena [sad]: I remember you. I remember a chapel full of white flowers, and being happy for one whole morning. And then the wall. And your brother at the top of the stair.
+if flag.tamsin_locket_recognized
+interject name:tamsin_tealeaf: The locket. It's her. It's always been her. And that's him, the one she was meant to marry.
+elif flag.stanimir_tale_heard
+interject tag:curious: Stanimir's story. The bride and the brother. He's the brother who died.
+endif
+Sergei von Zarovich: The water is the only door I have. I cannot come out. You could come in. When you are ready. Not before. It will wait. I will.
+* Go to him, if you want to, Ireena. We'll understand. -> ireena_promise
+* Stay with us, Ireena. You're not her. Not only her. -> ireena_stays
+* [Insight DC 14] (Watch her face. What does she really want?) -> ireena_read | ireena_unread
+
+~ ireena_read
+Narrator: She wants to step into the water so badly her hands shake on the stones. And under that, stubborn as a root, she wants to see what she'd have been if nobody had ever loved her this much. Both. She wants both.
+-> ireena_choice
+
+~ ireena_unread
+Narrator: Her face is turned to the water, and the water gives you back nothing but the two of them.
+-> ireena_choice
+
+~ ireena_choice
+* Go to him, if you want to, Ireena. We'll understand. -> ireena_promise
+* Stay with us, Ireena. You're not her. Not only her. -> ireena_stays
+
+~ ireena_promise
+set ireena_pool_choice = "promised"
+quest the_pool_of_the_white_sun promised
+Narrator: Ireena leans out over the water until her breath clouds its surface. Then she stops.
+Ireena: If I go now, he waits. A hundred years, two hundred, for the next one of me, in some village, with my face. Some girl who doesn't know what's coming to her window.
+Ireena: No. When he's dead, I'll come back. I swear it on my father. Wait for me a little longer, Sergei. You're good at it.
+Sergei von Zarovich: I am. I have had practice.
+-> ireena_fade
+
+~ ireena_stays
+set ireena_pool_choice = "stayed"
+quest the_pool_of_the_white_sun stayed
+if flag.ireena_falls_memory
+Narrator: She says her own name under her breath, the way she did at the falls. Ireena. Then again, louder.
+endif
+Ireena: Ireena. I'm Ireena Kolyana. Kolyan found me in the woods and taught me to hold a sword, and I'd like to find out what I do next.
+Ireena [sad]: I'm sorry. I loved you. She loved you. I can't be her and still be anyone at all.
+Sergei von Zarovich: Then be someone. That is all I ever wanted for her.
+-> ireena_fade
+
+~ ireena_fade
+Narrator: The second reflection is gone. Only hers is left, and the sky, which is brighter than it should be, for a moment, before it remembers the clouds.
+Narrator: Ireena wipes her face with the heel of her hand and stands up, and is herself again, mostly.
+Ireena: Don't. Whatever you're about to say. Later. By a fire.
+-> END
+
+~ ireena_after
+if flag.ireena_pool_choice == "promised"
+Ireena: He's still down there. I can feel it, like a door left open somewhere in the house. When this is over, I'm coming back here. Don't let me forget I said it.
+else
+Ireena: It's only water now. I keep checking. I'd hoped it would hurt less, choosing. It doesn't hurt less. It hurts properly, which is different.
+endif
+-> pool_menu
+
+~ shrine
+Narrator: A round pavilion of white stone on six thin pillars, open to the weather. Under its roof stands a statue of a robed figure holding up a sunburst in both hands, worn so smooth by touching that the face is gone.
+if flag.white_sun_prayed
+Narrator: The candle you lit is still burning, though there's no wind-shield on it and the snow comes in sideways.
+-> END
+endif
+* Light a candle and pray. -> pray
+* Leave it. -> END
+
+~ pray
+set white_sun_prayed
+Narrator: You light a stub from the box at the statue's feet and say what you have to say, or say nothing. The flame stands perfectly straight in a wind that bends the pines on the wall.
+if class:cleric
+interject class:cleric: Someone's listening here. Not loudly. But listening.
+elif tag:devout
+interject tag:devout: That's the first prayer in this valley that didn't feel like shouting down a well.
+endif
+-> END

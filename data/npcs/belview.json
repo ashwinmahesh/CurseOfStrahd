@@ -1,0 +1,19 @@
+{
+  "id": "belview",
+  "name": "Belview",
+  "title": "One of the Belview Family",
+  "summary": "One of the abbey's Belviews: a Krezk family the Abbot cured of a sickness generations ago and has been 'improving' ever since with the parts of animals. They mimic voices, throw nothing, and fear Krezk's stones.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "they/them"
+}

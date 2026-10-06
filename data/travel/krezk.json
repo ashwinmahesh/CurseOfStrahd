@@ -1,0 +1,48 @@
+{
+  "id": "krezk",
+  "name": "Krezk and the Abbey of St. Markovia",
+  "places": [
+    {
+      "id": "krezk",
+      "name": "Krezk",
+      "location": "krezk",
+      "spawn": "from_road",
+      "pos": [
+        0.075,
+        0.51
+      ],
+      "region": "krezk",
+      "summary": "The walled village at the western end of the valley, where the road stops. Its gate opens only for a reason."
+    },
+    {
+      "id": "abbey_of_st_markovia",
+      "name": "The Abbey of St. Markovia",
+      "location": "abbey_of_st_markovia",
+      "spawn": "from_road",
+      "pos": [
+        0.07,
+        0.36
+      ],
+      "region": "abbey_of_st_markovia",
+      "when": "visited:krezk or tarokka.ally.npc == ezmerelda or tarokka.tome.region == abbey_of_st_markovia or tarokka.symbol.region == abbey_of_st_markovia or tarokka.sword.region == abbey_of_st_markovia",
+      "summary": "A stone abbey on the mountainside above Krezk, built by a saint for the sick and the motherless, kept now by the Abbot."
+    }
+  ],
+  "roads": [
+    {
+      "id": "vallaki_to_krezk",
+      "from": "vallaki",
+      "to": "krezk",
+      "hours": 5,
+      "table": "krezk_road",
+      "name": "Old Svalich Road, west to Krezk"
+    },
+    {
+      "id": "krezk_to_abbey",
+      "from": "krezk",
+      "to": "abbey_of_st_markovia",
+      "hours": 1,
+      "name": "The switchback track"
+    }
+  ]
+}

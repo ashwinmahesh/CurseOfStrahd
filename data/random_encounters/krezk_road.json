@@ -1,0 +1,236 @@
+{
+  "id": "krezk_road",
+  "map": "road_ambush",
+  "chance_day": 0.2,
+  "chance_night": 0.45,
+  "summary": "The Old Svalich Road west of Vallaki, climbing through pine and rock to Krezk at the end of the valley. Wolves, blights and the druids who tend them by day; werewolves and the dead by night.",
+  "entries": [
+    {
+      "id": "krezk_road_wolves",
+      "weight": 3,
+      "when": "day",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            11
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            10,
+            5
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            14
+          ]
+        }
+      ],
+      "text": "Grey shapes keep pace with you along the ridge above the road, and then, all at once, they don't."
+    },
+    {
+      "id": "krezk_road_blights",
+      "weight": 2,
+      "when": "day",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            26,
+            5
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            5,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            24,
+            2
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            12,
+            15
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            16,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            16,
+            11
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            24,
+            11
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            6,
+            5
+          ]
+        }
+      ],
+      "text": "The undergrowth at the roadside stands up and walks. Behind it, two figures in bark-dyed robes are chanting, and the trees are listening."
+    },
+    {
+      "id": "krezk_road_cart",
+      "weight": 2,
+      "when": "day and not flag.clovin_met_on_road",
+      "once": true,
+      "dialogue": "krezk/road:belview_cart"
+    },
+    {
+      "id": "krezk_road_waystone",
+      "weight": 1,
+      "once": true,
+      "dialogue": "krezk/road:waystone"
+    },
+    {
+      "id": "krezk_road_werewolves",
+      "weight": 3,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            5
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            5,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            16,
+            11
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            22,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            6
+          ]
+        }
+      ],
+      "text": "Two figures on the road ahead, walking upright. Then one of them drops to all fours, and the other one laughs with far too many teeth."
+    },
+    {
+      "id": "krezk_road_dead",
+      "weight": 2,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            25,
+            12
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            4,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            5,
+            13
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            24,
+            6
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            16,
+            16
+          ]
+        }
+      ],
+      "text": "Pilgrims, by their coats: people who set out for the abbey's healing a long time ago, and are still walking."
+    }
+  ]
+}

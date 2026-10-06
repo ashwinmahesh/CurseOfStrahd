@@ -1,0 +1,81 @@
+# Ireena Kolyana (and Ismark) in Krezk (docs/voice/ireena.md, docs/voice/ismark.md; their NPC files belong to the
+# Village of Barovia). stay_offer: Dmitri has offered her refuge behind the wall. at_krezk / ismark_at_krezk: when
+# she stays at the Krezkovs' house and the party comes back. Nothing here decides her fate; it only moves her.
+
+~ stay_offer
+if not guest:ireena
+-> END
+endif
+if flag.ireena_pool_choice == "promised"
+Ireena: Stay in Krezk? Beside the pool. Beside him. I'd sit by that water every morning and every morning I'd want to walk in.
+Ireena: No. Not yet. I made a promise, and I can only keep it if the devil's dead. That means I go where you go.
+-> END
+endif
+Ireena: A wall that's never let him in. A burgomaster who remembers my father. I came all this way for something like that.
+if guest:ismark
+interject guest:ismark: It's a good wall. I've been looking at it. I've been looking at walls a great deal lately.
+endif
+* Stay, Ireena. You'll be safer here than on the road with us. -> stays
+* It's your choice. We'd be glad to keep you with us. -> goes_on
+
+~ stays
+set ireena_in_krezk
+leave ireena
+Ireena: Then I'll stay. For now. Don't get yourselves killed while I'm safe; I'd never forgive you, and I'd say so at every one of your funerals.
+* [if guest:ismark] Ismark, will you stay with her? -> ismark_stays
+* [if guest:ismark] Ismark, we could use your sword. -> ismark_goes
+-> END
+
+~ ismark_stays
+set ismark_in_krezk
+leave ismark
+Ismark: Of course I'll stay. There's a wall. I'll stand next to it. It's the one thing in Barovia I'm reliably good at.
+-> END
+
+~ ismark_goes
+Ismark: She has a wall and a burgomaster with an axe. You have me. I'll come. Ireena, if anything happens, scream; I'll hear it from the castle.
+Ireena: You won't.
+Ismark: I'll pretend I did, and come back anyway.
+-> END
+
+~ goes_on
+Ireena: Then I'll go on. Walls never kept him out of my father's house. I'd rather be moving.
+-> END
+
+~ at_krezk
+if flag.abbot_fate == "repentant" or flag.abbot_fate == "slain"
+Ireena: The thing on the mountain is gone, Anna says. She cried. I didn't know whether to. I've decided not to decide.
+elif flag.abbot_told_strahd
+Ireena [afraid]: Bats over the wall every night now. They don't come in. They just circle. He knows where I am.
+elif flag.ilya_fate == "healed"
+Ireena [smile]: The boy's well. He follows me round asking if I've seen the sun. I tell him yes. It isn't quite a lie.
+else
+Ireena: Anna's teaching me to make cheese. I'm terrible at it. Dmitri says it builds character. I have character. I'd like a sword drill.
+endif
+if flag.ireena_pool_vision
+Ireena: I go down to the pool in the mornings. I don't look in. I just sit with my back to it, so it knows I'm there.
+endif
+* Come with us again, Ireena. -> rejoin
+* Stay safe. -> END
+
+~ rejoin
+set ireena_in_krezk = false
+join ireena
+Ireena: Good. I've made forty cheeses. That's enough cheese for a lifetime, and I'm not sure how long mine is.
+if flag.ismark_in_krezk
+set ismark_in_krezk = false
+join ismark
+Ismark: Where she goes. You know the rest. Don't make me say it in front of the goats.
+endif
+-> END
+
+~ ismark_at_krezk
+Ismark: I've been put on the wall. They gave me a spear. It's a terrible spear. I'm having the time of my life.
+* Come with us again, Ismark. -> ismark_rejoin
+* Keep the wall. -> END
+
+~ ismark_rejoin
+set ismark_in_krezk = false
+join ismark
+Ismark: About time. The goats were starting to look up to me.
+-> END

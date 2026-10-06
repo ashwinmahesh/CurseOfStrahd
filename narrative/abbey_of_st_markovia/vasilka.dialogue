@@ -1,0 +1,48 @@
+# Vasilka, the Abbot's stitched bride (docs/voice/vasilka.md). on_the_table: unwoken, in the surgery at the end of the
+# wards. never_woke: after the Abbot died before the rite. abandoned: left standing in the chapel in her dress.
+
+~ on_the_table
+Narrator: At the end of the old surgery, on a long table under a clean linen sheet, lies a young woman. The sheet is turned down to her collarbone, neatly, the way you'd tuck in a child.
+Narrator: She is very beautiful. She does not breathe. Every so often, slowly, the fingers of her right hand close, as if around another hand, and then open again.
+* [if not flag.vasilka_examined] [Medicine DC 12] (Look at her more closely.) -> examine_ok | examine_fail
+* [if flag.vasilka_examined] (Look at her again.) -> again
+* (Leave her.) -> END
+
+~ examine_ok
+set vasilka_examined
+Narrator: The seams are finer than any surgeon's: wrists, throat, hairline. The left hand is older than the right; the eyes under the lids don't match. There is more than one woman here, and none of them is anyone any more.
+interject class:cleric: These were Krezk's dead. Somebody's daughters. They were buried, with prayers said over them.
+-> END
+
+~ examine_fail
+set vasilka_examined
+Narrator: Pale skin, a careful hand with a needle somewhere in her past. She could be sleeping. You'd prefer she was sleeping.
+-> END
+
+~ again
+if flag.abbot_dress_asked
+Narrator: Somebody has laid out a pair of white slippers at the foot of the table, side by side, ready.
+else
+Narrator: Her hand closes. Opens. Closes.
+endif
+-> END
+
+~ never_woke
+Narrator: She lies under her linen as she always has. Nobody comes to turn the sheet down now, and dust has begun, very gently, to settle on her eyelashes.
+* Cover her face. -> cover
+* (Leave her.) -> END
+
+~ cover
+Narrator: You draw the sheet up over her face. It is the first thing in this house that has felt like a funeral.
+-> END
+
+~ abandoned
+Vasilka: Good evening. Is it time yet? Nobody has said. I am waiting very well. The Abbot said I was good at waiting.
+* Lie down, Vasilka. Rest. -> rest
+* (Leave her waiting.) -> END
+
+~ rest
+set vasilka_fate = "laid_to_rest"
+Vasilka: Rest. Yes. I was very good at that, before.
+Narrator: She lies down on the altar step and smooths her dress and closes her eyes, and does not open them again.
+-> END

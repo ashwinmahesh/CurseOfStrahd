@@ -1,0 +1,525 @@
+{
+  "id": "krezk",
+  "name": "Krezk",
+  "region": "krezk",
+  "summary": "The last village on the road west: a few dozen stone cottages on a mountain shelf behind a wall three men high, a gate that opens only for a reason, and the Pool of the White Sun at its northern end. The Abbey of St. Markovia looks down on it from the mountainside.",
+  "text": "Outside: the end of the road, the shut gate and its watchman, and a switchback track climbing toward the abbey. Inside: the burgomaster's house, the well and the square, goat pens, cottages, and the lane north to the shrine of the White Sun.",
+  "map": {
+    "rows": [
+      "################.###############     ..     ",
+      "#..............................#     ..     ",
+      "#..########..........####.####.#     ..     ",
+      "#..########..........####.####.#     ..     ",
+      "#..########..........####.####.#     ..     ",
+      "#..########...............####.#     ..     ",
+      "#..########....................#    ...     ",
+      "#....................####......#    ..      ",
+      "#....................####.####.#    ..      ",
+      "#....................####.####.#    ..      ",
+      "#..#####..................####.#    ..      ",
+      "#..#####.......................#   ...      ",
+      "#..#####.......................#   ..       ",
+      "#.............==...............#   ..       ",
+      "#..............................#   ..       ",
+      "#.=========....................#   ..       ",
+      "#.=.......=.......=............#   ..       ",
+      "#.=.~~....=..................=.#  =..       ",
+      "#.=.....~......................#............",
+      "#.=............................#........~...",
+      "#.=...~~..=.................................",
+      "#.=.......=....................#....~~......",
+      "#.=========....................#............",
+      "#............................=.#            ",
+      "#..#####....####..####..#####..#            ",
+      "#..#####....####..####..#####..#            ",
+      "#..#####....####..####..#####..#            ",
+      "#..#####....####..####..#####..#            ",
+      "#..............................#            ",
+      "################################            "
+    ],
+    "theme": "village",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "krezk_road",
+      "name": "The end of the road",
+      "cells": [
+        [
+          32,
+          18
+        ],
+        [
+          43,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "abbey_track",
+      "name": "The abbey track",
+      "cells": [
+        [
+          34,
+          0
+        ],
+        [
+          39,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "krezk_gate_inside",
+      "name": "Inside the gate",
+      "cells": [
+        [
+          25,
+          17
+        ],
+        [
+          30,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "krezk_square",
+      "name": "The well square",
+      "cells": [
+        [
+          11,
+          11
+        ],
+        [
+          24,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "burgomaster_yard",
+      "name": "The burgomaster's yard",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          10,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "pool_lane",
+      "name": "The lane to the pool",
+      "cells": [
+        [
+          11,
+          1
+        ],
+        [
+          20,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "krezk_east_lanes",
+      "name": "The east lanes",
+      "cells": [
+        [
+          21,
+          1
+        ],
+        [
+          30,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "krezk_pens",
+      "name": "The goat pens",
+      "cells": [
+        [
+          1,
+          10
+        ],
+        [
+          10,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "krezk_south_row",
+      "name": "The south row",
+      "cells": [
+        [
+          1,
+          23
+        ],
+        [
+          30,
+          28
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      41,
+      20
+    ],
+    "from_road": [
+      41,
+      20
+    ],
+    "from_abbey": [
+      37,
+      4
+    ],
+    "from_krezkov_house": [
+      7,
+      7
+    ],
+    "from_pool": [
+      16,
+      1
+    ]
+  },
+  "exits": [
+    {
+      "id": "road_east",
+      "cell": [
+        43,
+        20
+      ],
+      "to": "travel",
+      "label": "The road east, back toward Vallaki"
+    },
+    {
+      "id": "abbey_track_up",
+      "cell": [
+        37,
+        0
+      ],
+      "to": "abbey_of_st_markovia",
+      "spawn": "from_krezk",
+      "label": "The switchback track up to the abbey"
+    },
+    {
+      "id": "krezkov_door",
+      "cell": [
+        7,
+        6
+      ],
+      "to": "krezk_burgomaster_house",
+      "spawn": "default",
+      "label": "The burgomaster's house"
+    },
+    {
+      "id": "pool_lane_north",
+      "cell": [
+        16,
+        0
+      ],
+      "to": "krezk_pool_of_the_white_sun",
+      "spawn": "default",
+      "label": "North, to the Pool of the White Sun"
+    }
+  ],
+  "doors": [
+    {
+      "id": "krezk_gate",
+      "cell": [
+        31,
+        20
+      ],
+      "label": "The gate of Krezk",
+      "when": "flag.krezk_gate_open"
+    }
+  ],
+  "props": [
+    {
+      "id": "krezk_wall",
+      "cell": [
+        31,
+        17
+      ],
+      "kind": "examine",
+      "label": "The wall of Krezk",
+      "model": "palisade"
+    },
+    {
+      "id": "abbey_cairn",
+      "cell": [
+        34,
+        17
+      ],
+      "kind": "examine",
+      "label": "A cairn by the track",
+      "model": "cairn"
+    },
+    {
+      "id": "krezk_well",
+      "cell": [
+        18,
+        16
+      ],
+      "kind": "examine",
+      "label": "The well",
+      "model": "well"
+    },
+    {
+      "id": "krezk_trough",
+      "cell": [
+        14,
+        13
+      ],
+      "kind": "examine",
+      "label": "A frozen trough",
+      "model": "barrel"
+    },
+    {
+      "id": "goat_pens",
+      "cell": [
+        2,
+        18
+      ],
+      "kind": "examine",
+      "label": "The goat pens",
+      "model": "fence"
+    },
+    {
+      "id": "krezk_watch_fire",
+      "cell": [
+        29,
+        17
+      ],
+      "kind": "examine",
+      "label": "The watch fire",
+      "model": "brazier"
+    },
+    {
+      "id": "krezk_woodpile",
+      "cell": [
+        29,
+        23
+      ],
+      "kind": "decor",
+      "label": "Woodpile",
+      "model": "log"
+    },
+    {
+      "id": "krezkov_facade",
+      "cell": [
+        7,
+        5
+      ],
+      "kind": "examine",
+      "label": "The burgomaster's house",
+      "model": "manor_front"
+    },
+    {
+      "id": "abbey_on_the_mountain",
+      "cell": [
+        37,
+        7
+      ],
+      "kind": "examine",
+      "label": "The abbey above",
+      "model": "ledge"
+    }
+  ],
+  "containers": [
+    {
+      "id": "krezk_woodshed_crate",
+      "cell": [
+        28,
+        23
+      ],
+      "label": "A crate by the woodpile",
+      "items": [
+        {
+          "id": "torch",
+          "qty": 3
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        }
+      ],
+      "gold": 0,
+      "model": "crate"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        29,
+        17
+      ],
+      "kind": "fire",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        30,
+        21
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        8,
+        7
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        22,
+        5
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "krezk_guard",
+      "cell": [
+        33,
+        18
+      ],
+      "dialogue": "krezk/gate:start",
+      "when": "not flag.krezk_gate_open",
+      "approach": 4,
+      "facing": "east"
+    },
+    {
+      "npc": "krezk_guard",
+      "cell": [
+        33,
+        18
+      ],
+      "dialogue": "krezk/gate:guard",
+      "when": "flag.krezk_gate_open"
+    },
+    {
+      "npc": "ilya_krezkov",
+      "cell": [
+        19,
+        17
+      ],
+      "dialogue": "krezk/anna:ilya_well",
+      "when": "flag.ilya_fate == \"healed\" and day"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "gate_wolves",
+      "trigger": "enter_area:krezk_road",
+      "when": "night and not flag.krezk_gate_open and level >= 7",
+      "text": "Shapes come up the road out of the dark on both sides, low and patient. Behind you the gate stays shut. On the wall, someone is counting them out loud.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            32,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            43,
+            18
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            43,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            32,
+            18
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            39,
+            22
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            37,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "krezk_wolves_driven_off"
+    },
+    {
+      "id": "gate_wolves",
+      "trigger": "enter_area:krezk_road",
+      "when": "night and not flag.krezk_gate_open",
+      "text": "Shapes come up the road out of the dark on both sides, low and patient. Behind you the gate stays shut. On the wall, someone is counting them out loud.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            32,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            43,
+            18
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            43,
+            22
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            39,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "krezk_wolves_driven_off"
+    }
+  ],
+  "narration": {
+    "enter": "enter:krezk"
+  },
+  "rest": "risky"
+}
