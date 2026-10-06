@@ -1,0 +1,89 @@
+# The dragon's mausoleum: the Phantom Warden in the doorway (docs/voice/phantom_warden.md) and the bones, where the
+# party kindles the dragon's fire for the beacon (quest the_dark_beacon kindled).
+
+~ warden
+Narrator: A soldier stands in the inner doorway: a man-at-arms made of grey light and old mail, his spear held crosswise across the arch. Through him you can see the long dark of the vault.
+Phantom Warden: None pass to the dragon's rest but the Order. Name your oath, or turn back.
+-> warden_menu
+
+~ warden_menu
+* [if flag.order_oath_learned] (Speak the Order's oath.) -> warden_oath
+* [if flag.godfrey_remembers or guest:sir_godfrey_gwilym] Sir Godfrey Gwilym of the Order vouches for us. -> warden_vouched
+* [if not flag.warden_challenge_failed] [History DC 15] (Answer the challenge as a knight of the Order would have.) -> warden_history | warden_wrong
+* [if not flag.warden_challenge_failed] [Religion DC 14] We've come to tend his rest, not to rob it. -> warden_religion | warden_wrong
+* Stand aside, or we go through you. -> warden_force
+* We'll come back. -> END
+
+~ warden_oath
+Narrator: You say it: the watch, the sleeper and the stranger, the fallen, the gift, the light. The spear doesn't move until the last word. Then it lifts.
+Phantom Warden: Those are the words. Pass, brothers.
+-> warden_pass
+
+~ warden_vouched
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: Stand easy, Piet. They're with me.
+else
+Narrator: You give Sir Godfrey's name. The warden is silent so long you think he hasn't heard.
+endif
+Phantom Warden: Godfrey. He was always letting strays in. Pass.
+-> warden_pass
+
+~ warden_history
+Narrator: {name} answers the way the old orders answered a challenge at the gate: a name, a house, the watch kept and who kept it.
+Phantom Warden: The old form. Nobody has used the old form since... Pass.
+-> warden_pass
+
+~ warden_religion
+Phantom Warden: To tend it. ...Nobody has tended it since the squires died. Pass, and mind your feet by the bier.
+-> warden_pass
+
+~ warden_wrong
+set warden_challenge_failed
+Phantom Warden: Not the words. I opened a gate once, to a voice that sounded right. I'll not do it twice.
+-> warden_menu
+
+~ warden_pass
+set mausoleum_opened
+Narrator: He steps back into the wall and is gone, and the doorway is only a doorway.
+-> END
+
+~ warden_force
+Phantom Warden: I opened the gate once. I'll not open this one.
+combat bone_watch
+
+~ bones
+if flag.dragon_fire_kindled
+Narrator: The frost on the ribs glows faintly where you took the light, like a coal remembering it was once a fire.
+-> END
+endif
+Narrator: The dragon lies along the bier with his wings folded like a cloak, every bone in its place, except at the end of the long neck, where there is nothing at all. Frost furs the ribs and doesn't melt.
+if flag.bone_watch_defeated and not flag.mausoleum_opened
+Narrator: The vault is quiet now. Somewhere in the stone, very faintly, a sentry is still saying the challenge to nobody.
+endif
+* [if flag.argynvost_echo_met] Kindle a light from the frost on his bones, as he asked. -> kindle
+* [if not flag.argynvost_echo_met] [Arcana DC 15] There's something still burning in these bones. -> arcana_ok | arcana_fail
+* [class:cleric] (Say a prayer for the dead.) -> prayer
+* Leave him be. -> END
+
+~ arcana_ok
+Narrator: {name} feels it before understanding it: deep in the bones a cold fire is banked, the way a hearth is banked overnight. A light held to it would catch.
+* Kindle a light from it. -> kindle
+* Leave him be. -> END
+
+~ arcana_fail
+Narrator: Old bones, very large, very cold. If there's anything else here, it isn't speaking to you yet.
+-> END
+
+~ prayer
+Narrator: {name} kneels at the foot of the bier and says the old words for the dead. The frost on the nearest rib brightens, very slightly, as if someone had leaned toward a window to listen.
+interject tag:devout: He's still here. Not much of him. Enough to say thank you.
+-> END
+
+~ kindle
+set dragon_fire_kindled
+quest the_dark_beacon kindled
+Narrator: {name} holds a torch to the frost on the ribs. For a moment, nothing. Then the flame turns silver from the wick up and stops giving any heat at all. It casts no shadow. It burns as if it has been waiting.
+interject class:wizard: Cold fire. Technically impossible. I'll want notes. I'll want so many notes.
+interject tag:devout: It feels like dawn in my hands. I haven't felt that since the mists.
+Narrator: Far off in the house behind you, a chair scrapes back from a long table.
+-> END

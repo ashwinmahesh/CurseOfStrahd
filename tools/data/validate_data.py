@@ -269,9 +269,11 @@ def campaign_checks(data, errors, pending):
     """The Tarokka, travel maps, random encounter tables, shops and guests (ADR 0010)."""
     locations, npcs, monsters, items = data["locations"], data["npcs"], data["monsters"], data["items"]
 
+    spot_places = {pl for loc in locations.values() for pl in loc.get("treasure_spots", {})}
+
     def place_ok(ref, region, where, kind="place"):
         loc = ref.split(":")[0]
-        if loc in locations:
+        if loc in locations or ref in spot_places:
             return
         if region in LATER_REGIONS or any(loc.startswith(r) for r in LATER_REGIONS):
             pending.append(f"{where}: {kind} '{ref}' (region {region}, a later phase)")

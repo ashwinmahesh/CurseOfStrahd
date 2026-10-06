@@ -1,0 +1,99 @@
+# Party banter at Argynvostholt and on the knights' road. Each node opens with an `if` gate: the node is eligible only
+# while its condition holds. Party members speak only through interjections; a line plays if a matching member is
+# present.
+
+~ banter_patrol
+if flag.order_patrol_met and not visited:argynvostholt
+interject tag:blunt: Dead men keeping a road. Polite dead men. That's new.
+interject class:wizard: Revenants, almost certainly. They don't rest until their vengeance is done. One wonders on whom.
+endif
+-> END
+
+~ banter_ridge
+if visited:argynvostholt and not flag.vladimir_met
+interject name:tamsin_tealeaf: A dragon's house. A whole dragon's house. Dragons keep hoards, everyone knows that. I'm only saying, everyone knows that.
+interject name:silvain_aster: Silver dragons are famously generous and famously uninterested in gold. The literature is very clear.
+interject name:tamsin_tealeaf: The literature's never met me.
+endif
+-> END
+
+~ banter_forty
+if flag.vladimir_met and not flag.order_fate
+interject name:ilse_varga: Forty knights at that table. Forty in Kestrel Company. He kept all of his. I'd have done the same, if I'd known how.
+interject name:hedda_ironvow: Mm. And would they have thanked you for it, sergeant?
+interject name:ilse_varga: No. That's what bothers me.
+endif
+-> END
+
+~ banter_godfrey
+if flag.godfrey_met and not flag.godfrey_remembers and not guest:sir_godfrey_gwilym
+interject tag:cheerful: I like Sir Godfrey. He's the only dead person in Barovia who's apologised to me.
+interject tag:blunt: He's forgetting himself. Literally. Somebody should help with that before there's nothing left to help.
+endif
+-> END
+
+~ banter_skull
+if flag.argynvost_skull_known and not flag.argynvost_beacon_lit
+interject name:tamsin_tealeaf: So the plan, eventually, is to break into a vampire's castle and steal a dragon's head back off his wall.
+interject name:silvain_aster: Retrieve. Return. Repatriate.
+interject name:tamsin_tealeaf: Call it what you like. I know what it is, and I've never been so proud.
+endif
+-> END
+
+~ banter_flame
+if flag.dragon_fire_kindled and not flag.argynvost_beacon_lit
+interject name:silvain_aster: It isn't consuming the torch. It isn't consuming anything. It's not a fire at all. It's the memory of a fire, holding its shape.
+interject name:hedda_ironvow: Then carry it carefully. Memories are what this valley eats.
+endif
+-> END
+
+~ banter_lit
+if flag.argynvost_beacon_lit
+interject name:hedda_ironvow: You can see it from everywhere, likely. Somewhere a farmer opened a shutter tonight to look at it. I'd stake my beard on it.
+interject tag:blunt: And from the castle.
+interject name:hedda_ironvow: Especially from the castle. Good.
+endif
+-> END
+
+~ banter_march
+if flag.order_fate == "ride"
+interject tag:veteran: Dead knights for allies. They don't eat, they don't sleep, they don't desert. Every quartermaster's dream.
+interject tag:curious: Do they get paid?
+interject tag:veteran: In the only coin they want. Him.
+endif
+-> END
+
+~ banter_pact
+if flag.vladimir_pact and not flag.vladimir_pact_broken
+interject name:hedda_ironvow: We swore to leave him alive. In a valley full of graves he filled. I said the words, and I want it written down somewhere that I hated saying them.
+interject name:ilse_varga: Noted. And the coin was good, and the roads are quiet. Both things are true.
+endif
+-> END
+
+~ banter_pact_broken
+if flag.vladimir_pact_broken
+interject name:ilse_varga: We broke an oath to a dead man. I've never broken an oath before.
+interject name:hedda_ironvow: You broke a bad oath to keep a better one. The stone in that chapel is older than his table.
+endif
+-> END
+
+~ banter_godfrey_guest
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: I've written all your names on the inside of my gauntlet. In case. You don't mind?
+interject tag:cheerful: Put me down as the handsome one.
+interject guest:sir_godfrey_gwilym: I'll put you down as the one who asked.
+endif
+-> END
+
+~ banter_hunt
+if flag.knights_hunt_seen
+interject tag:blunt: They put down one of his messengers on the road and didn't even ask us first. I like them better every day.
+endif
+-> END
+
+~ banter_beacon_road
+if flag.beacon_light_seen
+interject tag:curious: Every time we crest a hill, there it is. Like somebody left a lamp in the window for us.
+interject class:cleric: Somebody did, a long time ago. We only lit it.
+endif
+-> END

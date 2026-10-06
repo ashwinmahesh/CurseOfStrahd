@@ -1,0 +1,36 @@
+{
+  "id": "argynvostholt",
+  "name": "Argynvostholt",
+  "places": [
+    {
+      "id": "argynvostholt",
+      "name": "Argynvostholt",
+      "location": "argynvostholt",
+      "spawn": "from_road",
+      "pos": [
+        0.455,
+        0.23
+      ],
+      "region": "argynvostholt",
+      "summary": "A burned mansion on a ridge above the woods, with a dark tower at one corner: the house of a dead silver dragon, still kept by his dead knights."
+    }
+  ],
+  "roads": [
+    {
+      "id": "vallaki_to_argynvostholt",
+      "from": "vallaki",
+      "to": "argynvostholt",
+      "hours": 5,
+      "table": "argynvostholt_road",
+      "name": "The knights' road, north from Vallaki through the pines"
+    },
+    {
+      "id": "tser_pool_to_argynvostholt",
+      "from": "tser_pool",
+      "to": "argynvostholt",
+      "hours": 4.5,
+      "table": "argynvostholt_road",
+      "name": "The knights' road, up the ridge from the Svalich Woods"
+    }
+  ]
+}

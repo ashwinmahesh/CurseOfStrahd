@@ -1,0 +1,249 @@
+# Vladimir Horngaard, commander of the dead Order, in the great hall (docs/voice/vladimir_horngaard.md).
+# start: the winged chair. yield: after a lost trial of arms (approach). terms → pact: the grudge ending. muster: the
+# ride ending. keeping: the Tarokka treasure spot argynvostholt_vladimir. climax_end: the region's one milestone;
+# every ending (the pact, the muster, the lighting in beacon.dialogue) comes through it, then through keeping.
+
+~ start
+if not flag.vladimir_met
+-> first
+endif
+if flag.order_fate == "ride" and flag.vladimir_fate == "abandoned"
+Vladimir: They follow Godfrey now. Take them. Somebody must keep the hall, and it was always going to be me.
+elif flag.order_fate == "ride"
+Vladimir: The Order marches when you march. Do not keep us waiting. We have done enough of that.
+elif flag.order_fate == "grudge"
+Vladimir: You remember your oath. Good. He lives, he suffers, and we watch. That is all the Order asks of anyone.
+elif flag.vladimir_yielded
+Vladimir: The Order's law stands. I yielded. I will not pretend I enjoyed it.
+else
+Vladimir: You again. State your business. The living spend so much breath.
+endif
+-> menu
+
+~ first
+set vladimir_met
+quest the_order_of_the_silver_dragon commander
+Narrator: Dead knights sit along both sides of a long table under rotted banners, armoured and unmoving, as if a feast was called four centuries ago and nobody has been dismissed.
+Narrator: At the head, in a chair carved with a dragon's folded wings, sits the only one who turns his head.
+Vladimir: Living. In this hall. You will forgive me if I do not rise. I have been rising for four hundred years, and I find it overrated.
+Vladimir: I am Vladimir Horngaard, commander of the Order of the Silver Dragon. State your names and your business. Godfrey will enter you in the book of guests.
+Narrator: Nobody moves to fetch a book. You suspect nobody has for a very long time.
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: I'm with them, Vladimir. Put me down as absent.
+Vladimir: Absent. There has not been an absence in four hundred years. I shall need a new column.
+endif
+if guest:ireena
+Vladimir: The red-haired one. I know the look the castle wears when it thinks of you; I have watched it from this ridge. He wants you forever. We know something about forever.
+interject guest:ireena: Then you know it's a cage.
+Vladimir: It is a cage. The only question is who holds the key.
+endif
+-> menu
+
+~ menu
+* Tell us about the Order. -> order
+* We're going to end Strahd. Ride with us. -> refuse
+* [if not flag.order_fate] Why keep the beacon dark? -> beacon
+* [if treasure_at:argynvostholt_vladimir and not flag.order_fate] You're keeping something that could hurt Strahd. -> treasure
+* [if not flag.order_fate and (flag.godfrey_remembers or flag.vladimir_last_words_known)] Call the muster, Commander. Let the Order hear us. -> muster
+* [if flag.vladimir_yielded and not flag.order_fate] By the Order's law, we command now. The Order rides with us. -> yield_ride
+* [if not flag.order_fate] What would the Order want from us? Name your terms. -> terms
+* [if not flag.order_fate and not flag.vladimir_duel_won] We'll settle this by the Order's own law. A trial of arms. -> duel_offer
+* Goodbye, Commander. -> bye
+
+~ order
+Vladimir: The Lord Argynvost founded us to keep the watch over this valley. We kept it. When the army came over the mountains we held the passes, then the road, then this house. We held the house one night.
+Vladimir: Every knight of the Order died at his post. Every knight of the Order is still at his post. That is the whole history. Godfrey tells it with more pears.
+* And the dragon? -> dragon
+* Thank you, Commander. -> menu
+
+~ dragon
+set argynvost_skull_known
+Vladimir: He fell in the courtyard, in his own shape, with forty of us around him. They took his head to the castle to hang on a wall where guests can admire it. I am told he is much admired.
+interject name:ilse_varga: Forty. My company was forty.
+Vladimir: Then you know how a hall sounds with forty empty chairs. Mine are not empty. I have seen to that.
+-> menu
+
+~ refuse
+Vladimir: End him. Everyone who climbs this ridge wants to end him. You will not manage it, and if you could, the Order would not let you.
+Vladimir: Death is a door. He would walk through it, out of this valley and away from us. We want him here. In the room. Forever. Death is a mercy, and the Order is not merciful.
+if flag.strahd_met
+Vladimir: You have met him. Then you saw it: he is bored. Imagine an eternity of that, in a valley that hates him, watched by men he cannot kill. That is my gift to him.
+endif
+interject tag:devout: That isn't justice. That's a feud you've married.
+Vladimir: Four hundred years. A long marriage. We have not quarrelled once.
+-> menu
+
+~ beacon
+Vladimir: Because it is his light, and if it burns it will call us after him. The Order would go out like a row of candles.
+Vladimir: And he would sit in his castle with nobody left in the world who hates him properly. I will not give him that.
+* [if not flag.vladimir_guilt_seen] [Insight DC 13] That isn't the whole reason. -> beacon_insight | beacon_insight_fail
+* Then we'll leave it be. For now. -> menu
+
+~ beacon_insight
+set vladimir_guilt_seen
+Narrator: He says "his light" the way a man touches a bad tooth with his tongue. Whatever keeps that beacon dark, it isn't strategy. It's something he did, or didn't do, a long time ago.
+-> menu
+
+~ beacon_insight_fail
+Narrator: His face is a dead man's face. Whatever it's hiding, it has had four hundred years of practice.
+-> menu
+
+~ treasure
+Vladimir: Yes. It came to this house long ago in the hands of a hunter who meant to end him with it. The hands died at our door. I have kept it since, so that nobody would.
+interject class:rogue: Kept it where, exactly? Purely professional interest.
+Vladimir: Where a thief would have to go through me. Purely professional advice.
+Vladimir: You may have it on the Order's terms, or by the Order's law. Not otherwise.
+* What terms? -> terms
+* Your law, then. A trial of arms. -> duel_offer
+* We'll think on it. -> menu
+
+# ---------------------------------------------------------------- The grudge (the pact)
+
+~ terms
+Vladimir: Swear the Order's second oath with us. When you reach him, you will break him and not end him. Take his castle, his servants, his sleep, his bride. Leave him alive in the ruin of it, forever.
+Vladimir: Swear it, and what I keep is yours, and the Order's war chest besides, and no dead thing on the knights' road will trouble you. And we will be there at the end, to see the oath kept.
+* We swear it. -> pact
+* No. When we reach him, he dies. -> terms_no
+* We'll think on it. -> menu
+
+~ terms_no
+Vladimir: Then you will fail, or you will succeed and let him go free. I do not know which I would hate more. Good night.
+-> menu
+
+~ pact
+set vladimir_pact
+set order_fate = "grudge"
+set vladimir_fate = "pact"
+quest the_order_of_the_silver_dragon grudge
+quest the_dark_beacon waiting
+Narrator: Vladimir stands. Down the long table the dead knights stand with him, and the sound of their armour is like a house settling. He lays his sword flat on the table, and one by one, so do they.
+Vladimir: Say it after me. He lives. He suffers. We watch.
+Narrator: You say it. The knights say it with you, in a voice like a door that has not been opened for a very long time.
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: I'll stand with you. I won't say it. I said it once already.
+elif flag.godfrey_remembers
+Sir Godfrey Gwilym [sad]: I'll stand, Vladimir. I won't say it.
+else
+Sir Godfrey Gwilym [sad]: ...We watch.
+endif
+interject tag:devout: Stone remembers what's sworn over it. I'd hoped to forget this one.
+gold +150
+give holy_water 2
+Vladimir: The Order's war chest, what there is of it, and the chaplain's water. Spend it getting to his door.
+-> climax_end
+
+# ---------------------------------------------------------------- The ride (the muster)
+
+~ muster
+Vladimir: You wish to speak to the Order. Very well. They will not listen. They have listened to nothing but me for four hundred years, and they have been content.
+Narrator: He strikes the table once with a gauntlet. All down its length, dead heads lift and turn toward you, slowly, like flowers that have forgotten the sun.
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: Brothers. Hear them out. I did, and I remember things I'd lost.
+elif flag.godfrey_remembers
+Sir Godfrey Gwilym: Brothers. Hear them out. I did, and I remember things I'd lost.
+endif
+* [if flag.vladimir_last_words_known] Tell the knights what the dragon asked of Vladimir as he died. -> muster_words
+* [if flag.godfrey_remembers] [Persuasion DC 14] Sir Godfrey remembers the oath. Let him say it to them. -> muster_oath | muster_oath_split
+* [if not flag.muster_refused] [Persuasion DC 18] Your hate keeps him company. Your knights deserve better than to be his audience. -> muster_moved | muster_refused
+* We'll settle it by the Order's law. A trial of arms for its command. -> duel_offer
+* We've said enough. -> menu
+
+~ muster_words
+Narrator: You tell them. At the head of the table, Vladimir has gone completely still.
+Vladimir: He said it. "Let them go home. Do not keep them for me." I held his head and heard him, and then I stood up and swore you all to this instead.
+Vladimir: I could not go where he went and tell him I had lost his house. So I kept you here, so that none of us would have to.
+Narrator: Nobody moves for a long moment. Then a knight halfway down the table, whose name nobody has said for centuries, stands up. Then another.
+Vladimir: Not for hate, then. For the valley, as he would have had it. One last march, and then home. I will lead it, if the Order will still have me.
+set vladimir_fate = "rides"
+-> ride
+
+~ muster_oath
+Narrator: Godfrey says the oath. He stumbles once and finds the word. When he reaches "be the light", half the table is saying it with him.
+Vladimir: Be the light. I had forgotten it said that. I had forgotten a great deal, it seems, and called it discipline.
+Vladimir: Very well. The Order rides. I will lead it, since somebody must keep Godfrey from forgetting which end of the sword to hold.
+set vladimir_fate = "rides"
+-> ride
+
+~ muster_oath_split
+Narrator: Godfrey says the oath. Half the table says it with him. Vladimir does not.
+Vladimir: Words on a stone. Go, then, all of you who want to. Follow Godfrey to the castle and die a second time. I will keep the hall.
+Narrator: They get up one after another and go to stand behind Godfrey, until the commander sits alone at the head of an empty table.
+set vladimir_fate = "abandoned"
+-> ride
+
+~ muster_moved
+Vladimir: Audience. ...Yes. That is what we are. Four hundred years in the front row, and he has never once looked up at us.
+Vladimir: The Order rides, then. Not to watch him. To finish it.
+set vladimir_fate = "rides"
+-> ride
+
+~ muster_refused
+set muster_refused
+Vladimir: Fine words. The young lord had fine words too, the night a voice at the gate asked for it to be opened. The Order does not ride.
+-> menu
+
+~ ride
+set order_fate = "ride"
+quest the_order_of_the_silver_dragon ride
+quest the_dark_beacon waiting
+Narrator: Swords come off the table and go back into scabbards that have not felt them in centuries. Somewhere in the house a door bangs open, and the cold that comes through it smells of horses that aren't there.
+interject name:ilse_varga: Forty knights. We count off at the castle gate, and I want every one of them answered for.
+-> climax_end
+
+# ---------------------------------------------------------------- The trial of arms
+
+~ duel_offer
+Vladimir: The Order's law: the stronger arm commands. Your company against me, and I will not complain of the odds. I have had four hundred years of practice, and you have had breakfast.
+if level >= 8
+Vladimir: One of mine will stand as my second, so that it is a contest and not a lesson.
+endif
+interject class:wizard: He regenerates. Fire or radiance stops it, or so every treatise insists.
+* We accept. -> duel_start
+* Not today. -> menu
+
+~ duel_start
+combat vladimir_duel
+
+~ yield
+set vladimir_yielded
+Narrator: Vladimir is down on one knee among the scattered chairs. The wounds you gave him are already closing, slowly, with a sound like ice forming on a pond. He does not get up.
+Vladimir: Yielded. The Order's law is the Order's law, and I wrote most of it. The stronger arm commands. Command, then.
+* [if not flag.order_fate] Then the Order rides with us to the castle. -> yield_ride
+* [if treasure_at:argynvostholt_vladimir] We only want what you're keeping. -> keeping
+* Keep your knights for now. Think about what the dragon would want. -> yield_leave
+
+~ yield_ride
+Vladimir: Then it rides. Godfrey will lead it; he was always the one they liked. I will keep the hall, as the beaten keep things.
+set vladimir_fate = "yielded"
+-> ride
+
+~ yield_leave
+Vladimir: What he would want. You sound like Godfrey. Go, before I start to find it persuasive.
+-> END
+
+# ---------------------------------------------------------------- The milestone and the keeping
+
+~ climax_end
+if not flag.argynvostholt_milestone_reached
+set argynvostholt_milestone_reached
+xp milestone
+Narrator: Whatever this house was waiting for, it has had its answer. You feel the weight of it settle on you, and it is not a bad weight.
+endif
+-> keeping
+
+~ keeping
+if treasure_at:argynvostholt_vladimir
+if flag.order_fate == "rest"
+Narrator: Where the commander last stood, laid across a pair of empty gauntlets as carefully as an offering, is the thing he kept so that nobody would end the lord of the castle with it.
+elif flag.order_fate == "grudge"
+Vladimir: Take it. Use it to break him. If you use it to end him, the Order will know, and the Order will come.
+else
+Vladimir: Take it. I kept it so that nobody would end him. It seems I was keeping it for you.
+endif
+tarokka give argynvostholt_vladimir
+endif
+-> END
+
+~ bye
+Vladimir: Go, then. The gate is where you left it. It usually is.
+-> END
