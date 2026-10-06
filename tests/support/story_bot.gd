@@ -270,12 +270,25 @@ func use(cell: Vector2i) -> bool:
 	return false
 
 
+## Talks to `npc_id`. Someone else's conversation on the way (another NPC speaking as the party walks past) doesn't
+## count: the bot goes again until this NPC's own conversation has played.
 func talk(npc_id: String) -> bool:
-	var v := view()
-	for shown: Dictionary in v.get("_npc_shown"):
-		if str((shown["spec"] as Dictionary)["npc"]) == npc_id:
-			return await use(shown["cell"] as Vector2i)
-	note("%s isn't here" % npc_id)
+	for attempt in 4:
+		var v := view()
+		var target: Dictionary = {}
+		for shown: Dictionary in v.get("_npc_shown"):
+			if str((shown["spec"] as Dictionary)["npc"]) == npc_id:
+				target = shown
+		if target.is_empty():
+			note("%s isn't here" % npc_id)
+			return false
+		var ref := str((target["spec"] as Dictionary).get("dialogue", ""))
+		var before := conversations.size()
+		if not await use(target["cell"] as Vector2i):
+			return false
+		if ref == "" or conversations.slice(before).has(ref):
+			return true
+	note("never got to talk to %s" % npc_id)
 	return false
 
 

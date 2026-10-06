@@ -30,6 +30,7 @@ var _guard: int = 0
 var _picking := false       ## waiting for the player to choose a party member (`sacrifice`, `respec`)
 var _pick_purpose := "sacrifice"
 var _gift := ""                ## the dark gift on offer (`dark_gift`)
+var _last_option_key := ""     ## the spent-option key of the last social check (see choose)
 var _last_check: Dictionary = {}        ## {who, test, skill, said} of the last check rolled
 var _check_jumps: Array[String] = []    ## [ok, fail] targets of the last check
 var _queued: Array[Dictionary] = []   ## beats a statement produced beyond its first (a Tarokka card, then the verse)
@@ -316,9 +317,27 @@ func choose(i: int) -> Dictionary:
 		var beat := _roll(speaker, str(check["skill"]), int(check["dc"]), str(opt["text"]))
 		_check_jumps = [str(opt["ok"]), str(opt["fail"])]
 		_pending_jump = str(opt["ok"]) if bool(beat["success"]) or str(opt["fail"]) == "" else str(opt["fail"])
+		# Owner rule (2026-10-06): a failed Persuasion, Intimidation, Deception, Performance or Insight attempt is spent;
+		# the option doesn't come back (they won't fall for it twice, and a read face doesn't change).
+		_last_option_key = _spent_key(str(opt["text"])) if _social(str(check["skill"])) else ""
+		if _last_option_key != "" and not bool(beat["success"]):
+			st.flags[_last_option_key] = true
 		return beat
 	_pending_jump = str(opt["ok"])
 	return next()
+
+
+## Skills whose failed attempt can't be repeated (owner, 2026-10-06): talking someone round, and reading them.
+const SOCIAL_SKILLS: Array[String] = ["persuasion", "intimidation", "deception", "performance", "insight"]
+
+
+static func _social(skill: String) -> bool:
+	return skill.to_lower().replace(" ", "_") in SOCIAL_SKILLS
+
+
+## Where a failed social attempt is remembered: an internal flag per conversation node and option (saved).
+func _spent_key(option_text: String) -> String:
+	return "_failed/%s:%s:%s" % [file.key if file != null else "", node, option_text]
 
 
 func _collect_options() -> void:
@@ -330,6 +349,9 @@ func _collect_options() -> void:
 		if t == "option":
 			pc += 1
 			if not StoryConditions.check(str(s["cond"]), st):
+				continue
+			var spent_check := s["check"] as Dictionary
+			if not spent_check.is_empty() and _social(str(spent_check["skill"])) and st.flags.has(_spent_key(str(s["text"]))):
 				continue
 			var who: Character = null
 			if str(s["selector"]) != "":
@@ -541,6 +563,8 @@ func use_aid(id: String) -> Dictionary:
 		return next()
 	var test := CheckAids.apply(id, _last_check["who"] as Character, _last_check["test"] as D20Test, dice)
 	st.last_check = test.success
+	if test.success and _last_option_key != "":
+		st.flags.erase(_last_option_key)
 	if _check_jumps.size() == 2:
 		_pending_jump = str(_check_jumps[0]) if test.success or str(_check_jumps[1]) == "" else str(_check_jumps[1])
 	return _check_beat()

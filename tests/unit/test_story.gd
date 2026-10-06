@@ -365,3 +365,36 @@ func test_respec_rebuilds_a_member_who_keeps_their_belongings() -> void:
 	st.options["respec"] = false
 	r.start("test/respec:eva")
 	assert_eq(str(r.next()["kind"]), "end", "the owner can switch respec off")
+
+
+## Owner rule (2026-10-06): a failed Persuasion, Intimidation, Deception or Insight attempt is gone for good; other
+## checks and successful attempts aren't.
+func test_a_failed_social_check_cant_be_tried_again() -> void:
+	var st := StoryState.new()
+	st.party.append(TestChars.pregen("ilse_varga", 1))
+	var f := DialogueFile.parse("""
+~ menu
+* [Persuasion DC 40] Please? -> menu | menu
+* [Perception DC 40] Look closer. -> menu | menu
+* [Insight DC 40] Is she lying? -> menu | menu
+* Goodbye. -> END
+""", "test/spent")
+	assert_true(f.errors.is_empty(), str(f.errors))
+	DialogueFile.register(f)
+	var r := DialogueRunner.new(st, DiceRoller.new(3))
+	r.start("test/spent:menu")
+	var opts := r.next()["options"] as Array
+	assert_eq(opts.size(), 4)
+	var check := r.choose(0)
+	assert_false(bool(check["success"]), "DC 40 fails")
+	var again := r.next()["options"] as Array
+	assert_eq(again.size(), 3, "the failed plea is gone")
+	assert_false(again.any(func(o: Variant) -> bool: return str((o as Dictionary)["text"]) == "Please?"))
+	r.choose(0)
+	assert_eq((r.next()["options"] as Array).size(), 3, "a failed Perception check can be tried again")
+	r.choose(1)
+	assert_eq((r.next()["options"] as Array).size(), 2, "a failed Insight check is gone too")
+	var copy := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	var r2 := DialogueRunner.new(copy, DiceRoller.new(3))
+	r2.start("test/spent:menu")
+	assert_eq((r2.next()["options"] as Array).size(), 2, "still gone after a save and a new conversation")
