@@ -23,6 +23,139 @@
       "status": "placeholder",
       "source": "art/generated/standin/villager_turnaround.png",
       "notes": "Primitive stand-in from blender/make_standin_turnaround.py, for pipeline tests"
+    },
+    {
+      "id": "ilse_varga",
+      "kind": "character",
+      "status": "rigged",
+      "source": "art/generated/characters/ilse_varga_turnaround.png",
+      "sprites": "art/sprites/ilse_varga/walk.tres",
+      "portrait": "art/portraits/ilse_varga.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Human fighter (party). Tabard snaps to rust/brown under the palette. Needs art QA before final."
+    },
+    {
+      "id": "tamsin_tealeaf",
+      "kind": "character",
+      "status": "rigged",
+      "source": "art/generated/characters/tamsin_tealeaf_turnaround.png",
+      "sprites": "art/sprites/tamsin_tealeaf/walk.tres",
+      "portrait": "art/portraits/tamsin_tealeaf.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Halfling rogue (party). Drawn alone, so he fills the cell like a human: use about half a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "hedda_ironvow",
+      "kind": "character",
+      "status": "rigged",
+      "source": "art/generated/characters/hedda_ironvow_turnaround.png",
+      "sprites": "art/sprites/hedda_ironvow/walk.tres",
+      "portrait": "art/portraits/hedda_ironvow.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Dwarf cleric (party). Sheet had touching shield/mace silhouettes; split by the new connected-component pass in blender/lib/cutout.py. Use a smaller height_units than humans. Needs art QA before final."
+    },
+    {
+      "id": "silvain_aster",
+      "kind": "character",
+      "status": "rigged",
+      "source": "art/generated/characters/silvain_aster_turnaround.png",
+      "sprites": "art/sprites/silvain_aster/walk.tres",
+      "portrait": "art/portraits/silvain_aster.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. High elf wizard (party). Staff below the hips is kept rigid by the new prop pass (cutout.split_props); robe hem still swings with the legs. Needs art QA before final."
+    },
+    {
+      "id": "zombie",
+      "kind": "character",
+      "status": "rigged",
+      "source": "art/generated/characters/zombie_turnaround.png",
+      "sprites": "art/sprites/zombie/walk.tres",
+      "portrait": "art/portraits/zombie.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 192 px cells. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian villager zombie (enemy). Hunched pose survives the rig. Needs art QA before final."
+    },
+    {
+      "id": "wolf",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/wolf_turnaround.png",
+      "sprites": "art/sprites/wolf/walk.tres",
+      "portrait": "art/portraits/wolf.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 192 px cells, same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Grey wolf: the grey fur snaps to pale bone/pewter under the palette. Needs art QA before final."
+    },
+    {
+      "id": "dire_wolf",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/dire_wolf_turnaround.png",
+      "sprites": "art/sprites/dire_wolf/walk.tres",
+      "portrait": "art/portraits/dire_wolf.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 192 px cells, same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Large dire wolf, second generation (first came out maroon, not black). Use a bigger height_units than the wolf. Needs art QA before final."
+    },
+    {
+      "id": "ilse_varga_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ilse_varga_portrait.png",
+      "sprites": "art/portraits/ilse_varga.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: grim, steady. One expression only so far."
+    },
+    {
+      "id": "tamsin_tealeaf_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/tamsin_tealeaf_portrait.png",
+      "sprites": "art/portraits/tamsin_tealeaf.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: cheeky grin (third generation: first had a visible candle and banded halo, second a textured background). One expression only so far."
+    },
+    {
+      "id": "hedda_ironvow_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/hedda_ironvow_portrait.png",
+      "sprites": "art/portraits/hedda_ironvow.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: stern but kindly. One expression only so far."
+    },
+    {
+      "id": "silvain_aster_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/silvain_aster_portrait.png",
+      "sprites": "art/portraits/silvain_aster.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: aloof, thoughtful (red rim light on the blue robes). One expression only so far."
+    },
+    {
+      "id": "wolf_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/wolf_portrait.png",
+      "sprites": "art/portraits/wolf.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: snarling. One expression only so far."
+    },
+    {
+      "id": "dire_wolf_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/dire_wolf_portrait.png",
+      "sprites": "art/portraits/dire_wolf.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: snarling (third generation: first had a brown/orange chest, second a grey background with a drawn border). One expression only so far."
+    },
+    {
+      "id": "zombie_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/zombie_portrait.png",
+      "sprites": "art/portraits/zombie.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: vacant, hungry. One expression only so far."
     }
   ],
   "image_provider": "gemini"

@@ -2,7 +2,7 @@
 (plan §7 steps 4-6).
 
 blender -b --python blender/render_walk.py -- --turnaround <png> --id <asset_id>
-        [--side-faces left] [--cell 192] [--frames 8]
+        [--side-faces left] [--cell 192] [--frames 8] [--static]
 
 The sheet shows views left to right: either 5 (front, front three-quarter, side, back three-quarter,
 back — best, gives true diagonals) or 3 (front, side, back; diagonals reuse front/back turned 25
@@ -11,6 +11,12 @@ degrees). Background is removed if opaque; colours are snapped to the Strahd pal
 Rig (v1): each view is cut into head, torso and legs by body proportion, and every part becomes a
 textured plane pivoting at its joint (neck, hips). West-facing directions mirror the east ones.
 Writes art/sprites/<id>/walk.png (rows = directions, cols = frames) and walk.tres.
+
+--static (quadrupeds and other bodies the humanoid rig can't walk): each view is one still plane,
+one frame per direction (the game adds a bob). Same cell, directions and animation names
+(walk_<dir>, idle_<dir>), so DirectionalSprite loads it unchanged. Long bodies are scaled down to
+fit the cell's width as well; the printed "height fill" is the tallest view's height as a fraction
+of the band DirectionalSprite maps to height_units (1.0 for walk sheets).
 """
 import argparse
 import math
@@ -51,6 +57,7 @@ def args():
     p.add_argument("--side-faces", default="right", choices=["left", "right"])
     p.add_argument("--cell", type=int, default=192)
     p.add_argument("--frames", type=int, default=8)
+    p.add_argument("--static", action="store_true", help="one still frame per direction, no rig")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -98,7 +105,11 @@ def build_view(name, fig, ppu):
     parts["head"] = make_plane(f"{name}_head", head, ppu, (cx, head.shape[0]),
                                (0.0, (t1 - h1) / ppu), -0.01, parts["torso"])
     l0, l1 = rows(fig, LEGS)
-    legs = fig[l0:l1]
+    legs, props = cutout.split_props(fig[l0:l1])
+    if props is not None:
+        # A staff or blade tip below the hips stays with the body instead of swinging with a leg.
+        parts["props"] = make_plane(f"{name}_props", props, ppu, (cx, 0), (0.0, (t1 - l0) / ppu), 0.005,
+                                    parts["torso"])
     if name == "side":
         back = legs.copy()
         back[..., :3] *= 0.62  # far leg in shadow
@@ -115,6 +126,15 @@ def build_view(name, fig, ppu):
         parts[key]["rest"] = tuple(parts[key].location)
     parts["head"]["rest"] = tuple(parts["head"].location)
     return parts
+
+
+def build_static_view(name, fig, ppu):
+    """--static: the whole view as one plane, feet on the ground, centred on its bounding box."""
+    root = bpy.data.objects.new(name, None)
+    bpy.context.scene.collection.objects.link(root)
+    h, w = fig.shape[:2]
+    make_plane(f"{name}_whole", fig, ppu, (w / 2.0, h), (0.0, 0.0), 0.0, root)
+    return {"root": root}
 
 
 def pose(parts, view, frame, frames, height):
@@ -160,10 +180,19 @@ def main():
                 figures[i] = figures[i][:, ::-1].copy()
     height_px = max(f.shape[0] for f in figures)
     ppu = height_px / FIGURE_HEIGHT
+    frames_per_dir = a.frames
+    if a.static:
+        # A wolf in profile is longer than it is tall: every view keeps one scale, so the widest
+        # view must fit the cell too (6% margin).
+        width_px = max(f.shape[1] for f in figures)
+        ppu = max(ppu, width_px / (FIGURE_HEIGHT * 1.12 * 0.94))
+        frames_per_dir = 1
+    height_fill = height_px / ppu / FIGURE_HEIGHT
 
     scene = cutout.reset_scene(a.cell, a.cell)
     cutout.ortho_camera(scene, (0, -10, FIGURE_HEIGHT * 0.52), (math.radians(90), 0, 0), FIGURE_HEIGHT * 1.12)
-    views = {name: build_view(name, fig, ppu) for name, fig in zip(names, figures)}
+    build = build_static_view if a.static else build_view
+    views = {name: build(name, fig, ppu) for name, fig in zip(names, figures)}
 
     tmp = out_dir / "_frames"
     frames = []
@@ -176,21 +205,23 @@ def main():
         root = views[view]["root"]
         root.scale = (-1.0 if mirrored else 1.0, 1.0, 1.0)
         root.rotation_euler = (0, 0, math.radians(turn))
-        for f in range(a.frames):
-            pose(views[view], view, f, a.frames, FIGURE_HEIGHT)
+        for f in range(frames_per_dir):
+            if not a.static:
+                pose(views[view], view, f, frames_per_dir, FIGURE_HEIGHT)
             path = tmp / f"{d}_{f}.png"
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
             frames.append(cutout.load_rgba(path))
-    walk = cutout.pack_grid(frames, a.frames)
+    walk = cutout.pack_grid(frames, frames_per_dir)
     walk = cutout.quantize(cutout.binarize_alpha(walk))
     cutout.save_rgba(walk, out_dir / "walk.png")
     cutout.write_sprite_frames(out_dir / "walk.tres", f"res://art/sprites/{a.id}/walk.png",
-                               (a.cell, a.cell), DIRECTIONS, a.frames)
+                               (a.cell, a.cell), DIRECTIONS, frames_per_dir)
     for f in tmp.glob("*.png"):
         f.unlink()
     tmp.rmdir()
-    print(f"walk sheet: {out_dir / 'walk.png'} ({len(names)} views, {len(DIRECTIONS)} directions x {a.frames} frames)")
+    print(f"walk sheet: {out_dir / 'walk.png'} ({len(names)} views, {len(DIRECTIONS)} directions x "
+          f"{frames_per_dir} frames{', static' if a.static else ''}, height fill {height_fill:.2f})")
 
 
 main()

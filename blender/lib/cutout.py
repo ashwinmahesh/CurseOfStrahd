@@ -66,6 +66,14 @@ def remove_background(arr, tolerance=0.12):
         if (grown == mask).all():
             break
         mask = grown
+    # Background enclosed by the figure (between a wolf's legs and tail, inside a bent arm) isn't
+    # reached from the border: clear enclosed background-coloured patches too, unless they are tiny
+    # (eye glints, highlights).
+    min_hole = max(400, int(0.0004 * mask.size))
+    for comp in label_components(similar & ~mask):
+        if sum(x1 - x0 for _, x0, x1 in comp) >= min_hole:
+            for y, x0, x1 in comp:
+                mask[y, x0:x1] = True
     # Anti-aliased edges leave a light halo: drop edge pixels still close to the background colour.
     near = np.linalg.norm(rgb - bg, axis=2) < tolerance * 3
     for _ in range(2):
@@ -128,6 +136,12 @@ def find_figures(arr, count=3, min_gap=6):
             merged[-1][1] = r[1]
         else:
             merged.append(r)
+    if len(merged) != count:
+        # Overlapping columns (a wolf's snout above the next wolf's tail) needn't mean touching:
+        # separate the figures as 2-D connected shapes first.
+        crops = figures_by_components(arr, count)
+        if crops is not None:
+            return crops
     # Figures that touch (a boot overlapping the next figure) form one wide run. While we have one
     # fewer than asked for and a run is clearly wider than the rest, split it at its thinnest column.
     coverage = (arr[..., 3] > 0.5).sum(axis=0)
@@ -140,13 +154,179 @@ def find_figures(arr, count=3, min_gap=6):
             lo, hi = x0 + (x1 - x0) // 5, x1 - (x1 - x0) // 5
             cut = lo + int(np.argmin(coverage[lo:hi]))
             merged[i:i + 1] = [[x0, cut], [cut, x1]]
+    if len(merged) < count:
+        merged = split_merged_runs(merged, coverage, count)
     merged = sorted(sorted(merged, key=lambda r: r[1] - r[0], reverse=True)[:count])
     crops = []
-    for x0, x1 in merged:
+    for i, (x0, x1) in enumerate(merged):
         sub = arr[:, x0:x1]
+        # A run that was cut out of a touching pair shares its edge column with its neighbour.
+        left_cut = i > 0 and merged[i - 1][1] == x0
+        right_cut = i + 1 < len(merged) and merged[i + 1][0] == x1
+        if left_cut or right_cut:
+            sub = drop_cut_fragments(sub, left_cut, right_cut)
         rows = np.nonzero(sub[..., 3].max(axis=1) > 0.5)[0]
         crops.append(sub[rows[0]:rows[-1] + 1].copy())
     return crops
+
+
+def label_components(mask):
+    """4-connected components of a boolean mask (row runs + union-find; no scipy in Blender).
+    Returns a list of components, each a list of (row, x0, x1) runs with x1 exclusive."""
+    runs, parent = [], []
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    prev = []
+    for y in range(mask.shape[0]):
+        d = np.diff(np.concatenate(([0], mask[y].astype(np.int8), [0])))
+        cur = []
+        for x0, x1 in zip(np.nonzero(d == 1)[0], np.nonzero(d == -1)[0]):
+            idx = len(runs)
+            runs.append((y, int(x0), int(x1)))
+            parent.append(idx)
+            cur.append(idx)
+            for p in prev:
+                if runs[p][1] < x1 and x0 < runs[p][2]:
+                    ra, rb = find(idx), find(p)
+                    if ra != rb:
+                        parent[ra] = rb
+        prev = cur
+    groups = {}
+    for i in range(len(runs)):
+        groups.setdefault(find(i), []).append(runs[i])
+    return list(groups.values())
+
+
+def figures_by_components(arr, count):
+    """The `count` largest connected shapes, left to right, each cropped to its own pixels (bits of
+    a neighbour inside its box are cleared). Small detached pieces (a crystal, a strand of hair)
+    join the nearest figure. Returns None if the shapes don't look like `count` separate figures."""
+    comps = label_components(arr[..., 3] > 0.5)
+    sizes = [sum(r[2] - r[1] for r in c) for c in comps]
+    order = np.argsort(sizes)[::-1]
+    if len(comps) < count or sizes[order[count - 1]] < 0.2 * sizes[order[0]]:
+        return None
+    figs = [[comps[i]] for i in order[:count]]
+    boxes = [(min(r[1] for r in c), max(r[2] for r in c)) for c in (f[0] for f in figs)]
+    reach = 0.02 * arr.shape[1]
+    for i in order[count:]:
+        c = comps[i]
+        cx = 0.5 * (min(r[1] for r in c) + max(r[2] for r in c))
+        dist = [max(b[0] - cx, cx - b[1], 0.0) for b in boxes]
+        j = int(np.argmin(dist))
+        if dist[j] <= reach:
+            figs[j].append(c)
+    crops = []
+    for parts in figs:
+        mask = np.zeros(arr.shape[:2], dtype=bool)
+        for c in parts:
+            for y, x0, x1 in c:
+                mask[y, x0:x1] = True
+        ys, xs = np.nonzero(mask)
+        y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+        crop = arr[y0:y1, x0:x1].copy()
+        crop[~mask[y0:y1, x0:x1]] = 0.0
+        crops.append((x0 + x1, crop))
+    return [c for _, c in sorted(crops, key=lambda t: t[0])]
+
+
+def split_merged_runs(runs, coverage, count):
+    """Several touching figures (a shield against the next figure's mace) form one wide run. The
+    sheet is laid out in `count` roughly even slots, so a run spanning k slots is cut into k pieces at
+    the emptiest column near each of its k-1 inner boundaries."""
+    runs = [list(r) for r in runs]
+    slot = (runs[-1][1] - runs[0][0]) / float(count)
+    while len(runs) < count:
+        ratios = [(r[1] - r[0]) / slot for r in runs]
+        i = int(np.argmax(ratios))
+        if ratios[i] < 1.4:
+            break
+        x0, x1 = runs[i]
+        k = min(max(2, int(round(ratios[i]))), count - len(runs) + 1)
+        part = (x1 - x0) / float(k)
+        edges = [x0]
+        for j in range(1, k):
+            lo = int(x0 + part * (j - 0.3))
+            hi = int(x0 + part * (j + 0.3))
+            lo, hi = max(lo, edges[-1] + 1), min(hi, x1 - 1)
+            edges.append(lo + int(np.argmin(coverage[lo:hi])))
+        edges.append(x1)
+        runs[i:i + 1] = [[edges[j], edges[j + 1]] for j in range(k)]
+    return runs
+
+
+def _grow(seed, allowed):
+    """4-connected flood fill of `seed` inside `allowed` (boolean masks)."""
+    mask = seed & allowed
+    while True:
+        grown = mask.copy()
+        grown[1:] |= mask[:-1]
+        grown[:-1] |= mask[1:]
+        grown[:, 1:] |= mask[:, :-1]
+        grown[:, :-1] |= mask[:, 1:]
+        grown &= allowed
+        if (grown == mask).all():
+            return mask
+        mask = grown
+
+
+def drop_cut_fragments(sub, left_cut, right_cut):
+    """After splitting touching figures, bits of the neighbour (a mace head, a shield rim) hang on
+    at the cut edge. Removes opaque pieces that touch a cut edge but aren't connected to the figure
+    (the component through the crop's fullest column)."""
+    opaque = sub[..., 3] > 0.5
+    seed = np.zeros_like(opaque)
+    seed[:, int(np.argmax(opaque.sum(axis=0)))] = True
+    body = _grow(seed, opaque)
+    edge = np.zeros_like(opaque)
+    if left_cut:
+        edge[:, 0] = True
+    if right_cut:
+        edge[:, -1] = True
+    stray = _grow(edge, opaque & ~body)
+    out = sub.copy()
+    out[stray] = 0.0
+    return out
+
+
+def column_runs(mask_cols):
+    """[start, end) runs of True in a 1-D boolean array."""
+    runs, start = [], None
+    for x, on in enumerate(np.append(mask_cols, False)):
+        if on and start is None:
+            start = x
+        elif not on and start is not None:
+            runs.append((start, x))
+            start = None
+    return runs
+
+
+def split_props(crop, max_frac=0.15, max_of_main=0.25):
+    """Separates thin things in a leg crop that don't touch the legs (a staff held at the side, a
+    sword tip) so they can ride with the torso instead of swinging with a leg. A prop is a column
+    run narrower than `max_frac` of the crop and `max_of_main` of the main mass (so a second leg
+    standing apart is never one). Returns (legs, props or None); both keep the crop's size."""
+    runs = column_runs(crop[..., 3].max(axis=0) > 0.5)
+    if len(runs) < 2:
+        return crop, None
+    weights = [crop[:, a:b, 3].sum() for a, b in runs]
+    main = int(np.argmax(weights))
+    w = crop.shape[1]
+    main_w = runs[main][1] - runs[main][0]
+    prop_runs = [r for i, r in enumerate(runs)
+                 if i != main and (r[1] - r[0]) < max_frac * w and (r[1] - r[0]) < max_of_main * main_w]
+    if not prop_runs:
+        return crop, None
+    legs, props = crop.copy(), np.zeros_like(crop)
+    for a, b in prop_runs:
+        props[:, a:b] = crop[:, a:b]
+        legs[:, a:b] = 0.0
+    return legs, props
 
 
 def pack_grid(frames, cols):
