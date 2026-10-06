@@ -1,0 +1,35 @@
+{
+  "id": "oil_of_sharpness",
+  "name": "Oil of Sharpness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 20000.0,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "icon": "oil_flask",
+  "stackable": true,
+  "powers": [
+    {
+      "id": "apply",
+      "name": "Apply",
+      "cost": "action",
+      "consume": true,
+      "field": true,
+      "combat": false,
+      "custom": "oil_of_sharpness",
+      "params": {
+        "bonus": 3,
+        "minutes": 60
+      }
+    }
+  ],
+  "summary": "1 minute to apply: a Slashing or Piercing weapon (or 5 pieces of such ammunition) becomes +3 for 1 hour.",
+  "text": "This clear, gelatinous oil sparkles with tiny, ultrathin silver shards. The oil can coat one Melee weapon or up to 5 pieces of ammunition that deal Slashing or Piercing damage. Applying it takes 1 minute. For 1 hour, the coated item has a +3 bonus to attack rolls and damage rolls."
+}

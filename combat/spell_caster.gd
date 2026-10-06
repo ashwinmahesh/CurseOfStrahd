@@ -121,7 +121,7 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	if c.creature.has_flag("cant_cast"):
 		return "Can't cast spells in this form"
 	var armor := ch.equipped("armor")
-	if not armor.is_empty() and not ch.has_armor_training(str((armor["armor"] as Dictionary)["kind"])):
+	if not armor.is_empty() and not ch.trained_for(armor):
 		return "Wearing armor without training"
 	var level := int(s.get("level", 0))
 	if level > 0 and not bool(entry["free"]):

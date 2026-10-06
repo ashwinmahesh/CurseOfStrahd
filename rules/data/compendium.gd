@@ -12,6 +12,8 @@ static var _shared: Compendium = null
 var root: String = ""
 ## folder -> {id: Dictionary}
 var tables: Dictionary = {}
+## Magic items built on a base weapon or armor, by id (filled on first use).
+var _variants: Dictionary = {}
 
 
 ## The game's compendium, loaded from res://data on first use.
@@ -46,6 +48,29 @@ func load_all(root_path: String) -> void:
 				else:
 					push_error("Compendium: %s/%s is not a JSON object" % [folder, f])
 		tables[folder] = table
+	_register_item_recipes()
+
+
+## Magic items' own powers that work like spells (a Wand of Paralysis's ray, a Necklace of Fireballs' bead) are
+## spell recipes inside the item (`recipes`); they're looked up as spells by "<item id>__<recipe>" (ADR 0011).
+func _register_item_recipes() -> void:
+	var recipes := {}
+	var all_items: Array = table("magic_items").values()
+	all_items.append_array(table("items").values())
+	for item: Variant in all_items:
+		var d := item as Dictionary
+		var rs := MagicItems.recipes_of(d)
+		for key: String in rs:
+			var r := (rs[key] as Dictionary).duplicate(true)
+			r["id"] = "%s__%s" % [d["id"], key]
+			if not r.has("name"):
+				r["name"] = str(d.get("name", ""))
+			if not r.has("level"):
+				r["level"] = 0
+			r["item"] = str(d["id"])
+			recipes[str(r["id"])] = r
+	tables["item_spells"] = recipes
+	_variants.clear()
 
 
 func table(folder: String) -> Dictionary:
@@ -89,14 +114,40 @@ func feat_data(id: String) -> Dictionary:
 	return get_entry("feats", id)
 
 
+## A spell, or an item power written as a spell recipe (`<item id>__<recipe>`).
 func spell_data(id: String) -> Dictionary:
-	return get_entry("spells", id)
+	var d := get_entry("spells", id)
+	return d if not d.is_empty() else get_entry("item_spells", id)
 
 
-## An item: mundane gear (data/items) or a magic item (data/magic_items).
+## An item: mundane gear (data/items), a magic item (data/magic_items), or a magic item built on a base weapon or
+## armor ("weapon_plus_1__longsword", MagicItems.combine).
 func item_data(id: String) -> Dictionary:
 	var d := get_entry("items", id)
-	return d if not d.is_empty() else get_entry("magic_items", id)
+	if not d.is_empty():
+		return d
+	d = get_entry("magic_items", id)
+	if not d.is_empty() or not id.contains(MagicItems.SEP):
+		return d
+	return variant(id)
+
+
+## "<template>__<base>" built on first use; {} if the base can't carry the template.
+func variant(id: String) -> Dictionary:
+	if _variants.has(id):
+		return _variants[id] as Dictionary
+	var t := get_entry("magic_items", id.get_slice(MagicItems.SEP, 0))
+	var b := get_entry("items", id.get_slice(MagicItems.SEP, 1))
+	var out := {}
+	if not t.is_empty() and not b.is_empty() and MagicItems.template_fits(t, b):
+		out = MagicItems.combine(t, b, id)
+	_variants[id] = out
+	return out
+
+
+## Every mundane item a template can sit on.
+func template_bases(template_id: String) -> Array[String]:
+	return MagicItems.bases_for(get_entry("magic_items", template_id), all("items"))
 
 
 func monster_data(id: String) -> Dictionary:
@@ -146,5 +197,5 @@ func items_where(category: String) -> Array[Dictionary]:
 func display_name(folder: String, id: String) -> String:
 	var e := get_entry(folder, id)
 	if e.is_empty() and folder == "items":
-		e = get_entry("magic_items", id)
+		e = item_data(id)
 	return str(e.get("name", id.capitalize()))

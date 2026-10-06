@@ -1,0 +1,47 @@
+{
+  "id": "potion_of_animal_friendship",
+  "name": "Potion of Animal Friendship",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_brown",
+  "stackable": true,
+  "effects": [],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "powers": [
+    {
+      "id": "drink",
+      "name": "Drink",
+      "cost": "bonus",
+      "consume": true,
+      "field": true,
+      "custom": "drink_grant",
+      "grants": {
+        "hours": 1,
+        "powers": [
+          {
+            "id": "animal_friendship",
+            "name": "Animal Friendship",
+            "spell": "animal_friendship",
+            "dc": 13,
+            "cost": "magic"
+          }
+        ]
+      }
+    }
+  ],
+  "summary": "For 1 hour, cast Animal Friendship (save DC 13) at will.",
+  "text": "When you drink this potion, you can cast the Animal Friendship spell (save DC 13) at will for 1 hour. Agitating the muddy liquid brings little bits into view: a fish scale, a hummingbird tongue, a cat claw, a squirrel hair."
+}

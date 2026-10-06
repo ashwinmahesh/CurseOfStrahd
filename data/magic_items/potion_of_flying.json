@@ -1,0 +1,42 @@
+{
+  "id": "potion_of_flying",
+  "name": "Potion of Flying",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 20000.0,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_clear",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "kind": "fly",
+            "value": "walk"
+          },
+          {
+            "stat": "flag",
+            "value": "hover"
+          }
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "summary": "For 1 hour: a Fly Speed equal to your Speed, and you can hover.",
+  "text": "When you drink this potion, you gain a Fly Speed equal to your Speed for 1 hour and can hover. If you're in the air when the potion wears off, you fall unless you have some other means of staying aloft. The clear liquid floats at the top of its container and has cloudy white impurities drifting in it."
+}

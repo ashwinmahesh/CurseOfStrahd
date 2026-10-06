@@ -671,6 +671,12 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null:
 		items.append({"separator": "Ready"})
 		items.append({"id": "ready", "label": "Ready %s: release it when an enemy comes in range" % action["label"], "enabled": usable, "why": why})
+	if str(action["kind"]) == "item_spell" and shown != null:
+		var ilevels := catalog.level_choices(shown, action)
+		if not ilevels.is_empty():
+			items.append({"separator": "Casting level (more charges)"})
+			for l in ilevels:
+				items.append({"id": "cast:%d" % l, "label": "Use at level %d" % l, "enabled": usable, "why": why})
 	if str(action["kind"]) == "spell" and shown != null:
 		var levels := catalog.slot_choices(shown, str(action["spell_id"]))
 		if not levels.is_empty():

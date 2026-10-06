@@ -191,7 +191,7 @@ func _draw_card() -> void:
 		_card.add_child(UiKit.label("%s armor: AC %d%s%s" % [str(arm["kind"]).capitalize(), int(arm.get("base_ac", 10)),
 			"" if int(arm.get("dex_cap", 99)) == 0 else " + Dex" + (" (max %d)" % int(arm["dex_cap"]) if int(arm.get("dex_cap", 99)) < 10 else ""),
 			", Stealth Disadvantage" if bool(arm.get("stealth_disadvantage", false)) else ""], 15, "vellum", 500))
-		if not ch.has_armor_training(str(arm["kind"])):
+		if not ch.trained_for(data):
 			_card.add_child(UiKit.label("~ No training: Disadvantage on Strength and Dexterity rolls, and no spellcasting", 14, "gilt", 500))
 		if int(arm.get("strength", 0)) > ch.ability_score(&"str"):
 			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "gilt", 500))

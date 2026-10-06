@@ -1,0 +1,37 @@
+{
+  "id": "potion_of_invisibility",
+  "name": "Potion of Invisibility",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 20000.0,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_clear",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "invisible",
+        "ends_on": [
+          "attack_roll",
+          "deal_damage",
+          "cast_spell"
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "summary": "Invisible for 1 hour, or until you attack, deal damage or cast a spell.",
+  "text": "This potion's container looks empty but feels as though it holds liquid. When you drink it, you have the Invisible condition for 1 hour. The effect ends early if you make an attack roll, deal damage, or cast a spell."
+}

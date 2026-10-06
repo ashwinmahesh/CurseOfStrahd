@@ -1,0 +1,35 @@
+{
+  "id": "potion_of_vitality",
+  "name": "Potion of Vitality",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 20000.0,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_red",
+  "stackable": true,
+  "effects": [],
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "powers": [
+    {
+      "id": "drink",
+      "name": "Drink",
+      "cost": "bonus",
+      "consume": true,
+      "field": true,
+      "custom": "potion_of_vitality"
+    }
+  ],
+  "summary": "Ends Exhaustion and the Poisoned condition; for 24 hours, Hit Point Dice you spend heal their maximum.",
+  "text": "When you drink this potion, it removes any Exhaustion levels you have and ends the Poisoned condition on you. For the next 24 hours, you regain the maximum number of Hit Points for any Hit Point Die you spend. The crimson liquid regularly pulses with dull light, calling to mind a heartbeat."
+}

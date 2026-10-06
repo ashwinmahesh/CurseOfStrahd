@@ -147,17 +147,37 @@ func intrinsic_modifiers() -> Array[Modifier]:
 	return out
 
 
-# --- Magic items and attunement (2024 DMG/PHB: at most three attuned items) --------------------------
+# --- Magic items and attunement (2024 DMG "Magic Items", ADR 0011) ----------------------------------
 
 const MAX_ATTUNED := 3
-## Item ids this character is attuned to.
+## Item ids this character is attuned to (a creature can't attune to two copies of one item).
 var attuned: Array[String] = []
 var _item_mods_key := ""
 var _item_mods: Array[Modifier] = []
 
 
-## The modifiers of magic items that work for this character right now: equipped (or carried, for items that work
-## from the pack like a Cloak worn in the armor slot's stead) and, if they require it, attuned.
+## Whether an inventory entry's item is working for its bearer right now: attuned if it needs it, and worn, held or
+## equipped where it has to be (a weapon or armor equipped, a cloak worn, a wand held). Items that work from the
+## pack (a Stone of Good Luck "on your person") only need carrying.
+func item_active(e: Dictionary) -> bool:
+	if int(e.get("qty", 0)) <= 0:
+		return false
+	var data := compendium.item_data(str(e["id"]))
+	if MagicItems.needs_attunement(data) and not str(e["id"]) in attuned:
+		return false
+	var slot := str(e.get("slot", ""))
+	if Gear.is_weapon(data) or Gear.is_armor(data) or Gear.is_shield(data):
+		return slot != ""
+	if MagicItems.worn_slot(data) != "":
+		return slot == MagicItems.worn_slot(data)
+	if MagicItems.is_held(data):
+		return slot in ["main_hand", "off_hand"]
+	return true
+
+
+## The modifiers of magic items that work for this character right now (item_active). A weapon's own bonuses
+## (`"when": {"item": "@self"}`) apply to attacks with that weapon whenever it's attuned (if it needs it), since
+## a carried weapon is drawn as part of an attack (deviations.md, weapon juggling); `@self` becomes the item's id.
 func item_modifiers() -> Array[Modifier]:
 	var key := ""
 	for e in inventory:
@@ -168,32 +188,48 @@ func item_modifiers() -> Array[Modifier]:
 		return _item_mods
 	_item_mods_key = key
 	_item_mods.clear()
+	var seen := {}
 	for e in inventory:
 		if int(e.get("qty", 0)) <= 0:
 			continue
-		var data := compendium.item_data(str(e["id"]))
+		var iid := str(e["id"])
+		var data := compendium.item_data(iid)
 		var mods := data.get("modifiers", []) as Array
 		if mods.is_empty():
 			continue
-		var magic := data.get("magic", {}) as Dictionary
-		var needs: Variant = magic.get("attunement", false)
-		var needs_attune := (needs is bool and bool(needs)) or (needs is String and str(needs) != "")
-		if needs_attune and not str(e["id"]) in attuned:
-			continue
-		var wearable := Gear.is_weapon(data) or Gear.is_armor(data) or Gear.is_shield(data)
-		if wearable and str(e.get("slot", "")) == "":
-			continue
+		var attuned_ok := not MagicItems.needs_attunement(data) or iid in attuned
+		var active := item_active(e)
 		for md: Variant in mods:
-			_item_mods.append(Modifier.make(md as Dictionary, str(data.get("name", e["id"])), &"item", str(e["id"]), ""))
+			var d := md as Dictionary
+			var when := d.get("when", {}) as Dictionary
+			var scoped := str(when.get("item", "")) == "@self" or str(when.get("ammo", "")) == "@self"
+			if not (active or (scoped and attuned_ok)):
+				continue
+			# Two of the same item don't stack (one Ring of Protection counts once).
+			var dedupe := "%s|%s" % [iid, JSON.stringify(d)]
+			if seen.has(dedupe):
+				continue
+			seen[dedupe] = true
+			if scoped:
+				d = d.duplicate(true)
+				var w := (d["when"] as Dictionary)
+				for k: String in ["item", "ammo"]:
+					if str(w.get(k, "")) == "@self":
+						w[k] = iid
+			_item_mods.append(Modifier.make(d, str(data.get("name", iid)), &"item", iid, ""))
 	return _item_mods
 
 
+## Forget cached item modifiers (after equipping or a change to an item's state).
+func items_changed() -> void:
+	_item_mods_key = ""
+
+
 ## "" if this character can attune to `item_id` now, else why not (not carried, doesn't need it, already three,
-## a requirement like "by a cleric" unmet).
+## a requirement like "by a Cleric" unmet).
 func attune_blocker(item_id: String) -> String:
 	var data := compendium.item_data(item_id)
-	var needs: Variant = (data.get("magic", {}) as Dictionary).get("attunement", false)
-	if not ((needs is bool and bool(needs)) or (needs is String and str(needs) != "")):
+	if not MagicItems.needs_attunement(data):
 		return "Doesn't need attunement"
 	if item_id in attuned:
 		return "Already attuned"
@@ -205,19 +241,7 @@ func attune_blocker(item_id: String) -> String:
 		return "Not carried"
 	if attuned.size() >= MAX_ATTUNED:
 		return "Already attuned to three items"
-	if needs is String:
-		var req := str(needs).to_lower()
-		for cls: String in ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", "wizard"]:
-			if req.contains(cls) and class_level_of(cls) <= 0 and not _any_class_in(req):
-				return "Requires attunement %s" % needs
-	return ""
-
-
-func _any_class_in(req: String) -> bool:
-	for cls: String in ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", "wizard"]:
-		if req.contains(cls) and class_level_of(cls) > 0:
-			return true
-	return false
+	return MagicItems.requirement_blocker(data, self)
 
 
 func attune(item_id: String) -> bool:
@@ -225,11 +249,110 @@ func attune(item_id: String) -> bool:
 		return false
 	attuned.append(item_id)
 	_item_mods_key = ""
+	refresh_item_resources()
 	return true
 
 
-func end_attunement(item_id: String) -> void:
+## "" if attunement to `item_id` can end now; a cursed item holds on until the curse is lifted (Remove Curse).
+func end_attunement_blocker(item_id: String) -> String:
+	if not item_id in attuned:
+		return "Not attuned"
+	var e := entry_of(item_id)
+	if MagicItems.is_cursed(compendium.item_data(item_id)) and not bool(e.get("curse_lifted", false)):
+		return "Cursed: you can't end the attunement until the curse is lifted (Remove Curse)"
+	return ""
+
+
+func end_attunement(item_id: String) -> bool:
+	if end_attunement_blocker(item_id) != "":
+		return false
 	attuned.erase(item_id)
+	_item_mods_key = ""
+	refresh_item_resources()
+	return true
+
+
+## The first carried inventory entry for `item_id` ({} if none).
+func entry_of(item_id: String) -> Dictionary:
+	for e in inventory:
+		if str(e["id"]) == item_id and int(e.get("qty", 0)) > 0:
+			return e
+	return {}
+
+
+## Charges left on a carried item (its first entry).
+func charges_left(item_id: String) -> int:
+	return int(entry_of(item_id).get("charges", 0))
+
+
+## Spends `n` charges of a carried item. False if it hasn't that many.
+func spend_charges(item_id: String, n: int) -> bool:
+	var e := entry_of(item_id)
+	if e.is_empty() or int(e.get("charges", 0)) < n:
+		return false
+	e["charges"] = int(e["charges"]) - n
+	return true
+
+
+## Uses of a limited power (`uses: {count, per}`) spent since it last came back, by "<item>:<power>".
+func power_uses_spent(item_id: String, power_id: String) -> int:
+	return int((entry_of(item_id).get("uses", {}) as Dictionary).get(power_id, 0))
+
+
+func spend_power_use(item_id: String, power_id: String) -> void:
+	var e := entry_of(item_id)
+	if e.is_empty():
+		return
+	if not e.has("uses"):
+		e["uses"] = {}
+	var u := e["uses"] as Dictionary
+	u[power_id] = int(u.get(power_id, 0)) + 1
+
+
+## Dawn (2024: most items regain charges and daily uses "daily at dawn"). Charges come back by the item's `regain`
+## dice up to its maximum; powers used "per dawn" come back. Returns log lines.
+func on_dawn(dice: DiceRoller) -> Array[String]:
+	var lines: Array[String] = []
+	for e in inventory:
+		var data := compendium.item_data(str(e["id"]))
+		if data.is_empty():
+			continue
+		var spec := MagicItems.charges(data)
+		if not spec.is_empty() and str(spec.get("when", "dawn")) == "dawn" and spec.has("regain"):
+			var cap := MagicItems.max_charges(data, e)
+			var have := int(e.get("charges", 0))
+			if have < cap:
+				var regain: Variant = spec["regain"]
+				var n := cap - have if str(regain) == "all" else int(dice.roll_expr(str(regain), "%s regains charges" % data.get("name", ""))["total"])
+				e["charges"] = mini(cap, have + n)
+				lines.append("%s's %s regains %d charges (%d of %d)" % [name, data.get("name", ""), int(e["charges"]) - have, int(e["charges"]), cap])
+		_reset_uses(e, data, ["dawn"])
+	return lines
+
+
+## Long and Short Rests bring back powers used "per long rest" or "per short rest".
+func _reset_item_uses(per: Array[String]) -> void:
+	for e in inventory:
+		var data := compendium.item_data(str(e["id"]))
+		var spec := MagicItems.charges(data)
+		if not spec.is_empty() and str(spec.get("when", "dawn")) in per:
+			e["charges"] = MagicItems.max_charges(data, e)
+		_reset_uses(e, data, per)
+
+
+func _reset_uses(e: Dictionary, data: Dictionary, per: Array) -> void:
+	if not e.has("uses"):
+		return
+	var u := e["uses"] as Dictionary
+	for p: Variant in data.get("powers", []):
+		var pw := p as Dictionary
+		var pu := pw.get("uses", {}) as Dictionary
+		if str(pu.get("per", "dawn")) in per:
+			u.erase(str(pw.get("id", "")))
+
+
+## Resources some attuned items grant (none yet beyond charges); kept as a hook for refresh().
+func refresh_item_resources() -> void:
 	_item_mods_key = ""
 
 
@@ -1084,6 +1207,14 @@ func weapon_proficient(item: Dictionary) -> bool:
 	return Gear.weapon_proficient(proficiency_list("weapons"), item)
 
 
+## Whether the character is trained to wear this armor or Shield: its kind's training, or armor that needs none
+## (Elven Chain: `armor_rules.no_training`).
+func trained_for(armor_item: Dictionary) -> bool:
+	if bool((armor_item.get("armor_rules", {}) as Dictionary).get("no_training", false)):
+		return true
+	return has_armor_training(str((armor_item.get("armor", {}) as Dictionary).get("kind", "")))
+
+
 # --- Hit Points ----------------------------------------------------------------------------------
 
 func max_hp_breakdown() -> Breakdown:
@@ -1148,7 +1279,12 @@ func spend_hit_die(dice: DiceRoller, die: int) -> int:
 		return 0
 	hit_dice_spent[key] = int(entry["spent"]) + 1
 	var roll := dice.roll_one(die, "Hit Point Die (%s)" % name)
+	# Potion of Vitality, Periapt of Wound Closure: the die heals its maximum (or twice what it rolls).
+	if has_flag("max_hit_dice"):
+		roll = die
 	var healed := maxi(1, roll + ability_mod(&"con"))
+	if has_flag("double_hit_dice"):
+		healed *= 2
 	return heal(healed, "Hit Point Die")
 
 
@@ -1156,6 +1292,7 @@ func spend_hit_die(dice: DiceRoller, die: int) -> int:
 func finish_short_rest() -> void:
 	super.finish_short_rest()
 	pact_slots_used = 0
+	_reset_item_uses(["short"])
 
 
 func finish_long_rest() -> void:
@@ -1165,6 +1302,7 @@ func finish_long_rest() -> void:
 	hit_dice_spent.clear()
 	slots_used = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 	pact_slots_used = 0
+	_reset_item_uses(["short", "long"])
 	if has_flag("resourceful"):
 		heroic_inspiration = true
 
@@ -1196,7 +1334,9 @@ func _take_option(options: Array, pick: String) -> void:
 		currency["gp"] = int(currency["gp"]) + int(opt.get("gp", 0))
 
 
-func add_item(item_id: String, qty: int = 1) -> void:
+## Adds `qty` of an item. `state` carries an item's own state when it moves (charges, uses, a lifted curse, what a
+## Bag of Holding holds); a new magic item with charges starts with its full count (MagicItems.starting_charges).
+func add_item(item_id: String, qty: int = 1, state: Dictionary = {}) -> void:
 	var data := compendium.item_data(item_id)
 	if bool(data.get("stackable", false)):
 		for entry in inventory:
@@ -1206,7 +1346,42 @@ func add_item(item_id: String, qty: int = 1) -> void:
 		inventory.append({"id": item_id, "qty": qty, "slot": ""})
 	else:
 		for i in qty:
-			inventory.append({"id": item_id, "qty": 1, "slot": ""})
+			var entry := {"id": item_id, "qty": 1, "slot": ""}
+			for k: String in state:
+				if not k in ["id", "qty", "slot"]:
+					entry[k] = (state[k] as Variant) if not (state[k] is Dictionary or state[k] is Array) else state[k].duplicate(true)
+			if MagicItems.has_charges(data) and not entry.has("charges"):
+				entry["charges"] = MagicItems.starting_charges(data, null)
+				if str(MagicItems.charges(data).get("max", "")).contains("d"):
+					entry["max_charges"] = int(entry["charges"])
+			inventory.append(entry)
+	_item_mods_key = ""
+
+
+## An inventory entry's own state worth keeping when the item changes hands (everything but id, qty and slot).
+static func entry_state(entry: Dictionary) -> Dictionary:
+	var out := {}
+	for k: String in entry:
+		if not k in ["id", "qty", "slot"]:
+			out[k] = entry[k]
+	return out.duplicate(true)
+
+
+## Removes one `item_id` from the pack and returns its entry state (for giving it to someone else); {} if not carried.
+func remove_one(item_id: String) -> Dictionary:
+	for e: Dictionary in inventory.duplicate():
+		if str(e["id"]) == item_id and int(e["qty"]) > 0:
+			var state := entry_state(e)
+			if str(e.get("slot", "")) != "" and int(e["qty"]) <= 1:
+				e["slot"] = ""
+			e["qty"] = int(e["qty"]) - 1
+			if int(e["qty"]) <= 0:
+				inventory.erase(e)
+			if item_id in attuned and entry_of(item_id).is_empty():
+				attuned.erase(item_id)
+			_item_mods_key = ""
+			return state
+	return {}
 
 
 func equipped(slot: String) -> Dictionary:
@@ -1216,21 +1391,53 @@ func equipped(slot: String) -> Dictionary:
 	return {}
 
 
-func equip(item_id: String, slot: String) -> bool:
+## Every item in a slot (rings: two; Ioun Stones: any number).
+func equipped_all(slot: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
 	for entry in inventory:
 		if str(entry["slot"]) == slot:
-			entry["slot"] = ""
+			out.append(compendium.item_data(str(entry["id"])))
+	return out
+
+
+## Puts `item_id` in `slot`. Slots hold one item (rings two, Ioun Stones any number); the oldest one in a full slot
+## comes off.
+func equip(item_id: String, slot: String) -> bool:
+	var cap := int(MagicItems.SLOT_CAPACITY.get(slot, 1))
+	var holding: Array[Dictionary] = []
+	for entry in inventory:
+		if str(entry["slot"]) == slot:
+			holding.append(entry)
 	for entry in inventory:
 		if str(entry["id"]) == item_id and str(entry["slot"]) == "":
+			if holding.size() >= cap:
+				holding[0]["slot"] = ""
 			entry["slot"] = slot
+			_item_mods_key = ""
 			return true
 	return false
+
+
+## Wears a worn magic item in its slot (a cloak on the shoulders, a ring on a finger).
+func wear(item_id: String) -> bool:
+	var slot := MagicItems.worn_slot(compendium.item_data(item_id))
+	return slot != "" and equip(item_id, slot)
 
 
 func unequip(slot: String) -> void:
 	for entry in inventory:
 		if str(entry["slot"]) == slot:
 			entry["slot"] = ""
+	_item_mods_key = ""
+
+
+## Takes off one particular item wherever it's worn or held.
+func unequip_item(item_id: String) -> void:
+	for entry in inventory:
+		if str(entry["id"]) == item_id and str(entry["slot"]) != "":
+			entry["slot"] = ""
+			_item_mods_key = ""
+			return
 
 
 ## Picks armor the character is trained in (best AC), a Shield if trained and one-handed fighting suits, and
@@ -1246,7 +1453,7 @@ func auto_equip() -> void:
 		var item := compendium.item_data(str(entry["id"]))
 		if Gear.is_armor(item):
 			var a := item["armor"] as Dictionary
-			if not has_armor_training(str(a["kind"])):
+			if not trained_for(item):
 				continue
 			var cap: Variant = a.get("dex_cap", null)
 			if cap != null and int(cap) == 2 and has_flag("dexterous_wearer") and ability_score(&"dex") >= 16:
@@ -1255,7 +1462,7 @@ func auto_equip() -> void:
 			if ac > best_ac:
 				best_ac = ac
 				best_armor = str(item["id"])
-		elif Gear.is_shield(item) and has_armor_training("shield"):
+		elif Gear.is_shield(item) and trained_for(item):
 			shield_id = str(item["id"])
 	if best_armor != "" and best_ac > 10 + dex:
 		equip(best_armor, "armor")
@@ -1335,7 +1542,7 @@ func armor_class() -> Breakdown:
 			best = c
 	var off := equipped("off_hand")
 	if Gear.is_shield(off):
-		if has_armor_training("shield"):
+		if trained_for(off):
 			best.add(str(off["name"]), int((off["armor"] as Dictionary)["base_ac"]))
 		else:
 			best.note("%s gives no AC without Shield training" % off["name"])
@@ -1349,7 +1556,7 @@ func gear_d20_sources(keys: Array[String]) -> Dictionary:
 	var armor := equipped("armor")
 	if not armor.is_empty():
 		var a := armor["armor"] as Dictionary
-		if not has_armor_training(str(a["kind"])):
+		if not trained_for(armor):
 			for k in keys:
 				if k in ["save:str", "save:dex", "check:str", "check:dex", "attack", "initiative"]:
 					dis.append("%s without training" % armor["name"])
@@ -1385,6 +1592,15 @@ func attacks() -> Array[WeaponProfile]:
 			continue
 		seen[str(item["id"])] = true
 		out.append(WeaponProfile.build(self, item, false, true))
+		# Magic ammunition: one profile per kind carried, with the ammunition's own bonuses.
+		var kind := str((item["weapon"] as Dictionary).get("ammunition", ""))
+		if kind != "":
+			var shot := {}
+			for a in inventory:
+				var ad := compendium.item_data(str(a["id"]))
+				if int(a["qty"]) > 0 and MagicItems.is_magic(ad) and Gear.ammo_matches(ad, kind) and not shot.has(str(ad["id"])):
+					shot[str(ad["id"])] = true
+					out.append(WeaponProfile.build(self, item, false, true, ad))
 		if "thrown" in Gear.weapon_props(item) and not Gear.is_ranged_weapon(item):
 			out.append(WeaponProfile.build(self, item, true, false))
 	out.append(WeaponProfile.unarmed(self))

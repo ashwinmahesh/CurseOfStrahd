@@ -38,6 +38,8 @@ var monster_actions: MonsterActions
 var ai: AiBrain
 var shapes: ShapeChange
 var class_features: ClassFeatures
+## Magic items: the Items tab, item powers and the hooks below (combat/combat_items.gd, ADR 0011).
+var items: CombatItems
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.
 var _savage_turn: Dictionary = {}
@@ -64,6 +66,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	ai = AiBrain.new(self)
 	shapes = ShapeChange.new(self)
 	class_features = ClassFeatures.new(self)
+	items = CombatItems.new(self)
 
 
 # --- Setup ----------------------------------------------------------------------------------------
@@ -96,6 +99,7 @@ func current() -> Combatant:
 ## Rolls Initiative (2024: a Dexterity check; surprised creatures roll with Disadvantage; identical monsters share
 ## one roll) and starts round 1. Ties: higher Dexterity first, then the party.
 func start(surprised_ids: Array = []) -> void:
+	surprised_ids = items.surprise_filter(surprised_ids)
 	var group_rolls := {}
 	for c in combatants:
 		c.surprised = c.id in surprised_ids
@@ -110,7 +114,7 @@ func start(surprised_ids: Array = []) -> void:
 		if c.surprised:
 			dis.append("Surprised")
 		var bonus := c.creature.initiative_bonus()
-		var t := c.creature.roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, 0, c.creature.initiative_keys(), [], dis,
+		var t := c.creature.roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, 0, c.creature.initiative_keys(), items.initiative_advantage(c), dis,
 			"Initiative (%s)" % c.name())
 		# Ambush (Battle Master): a Superiority Die on Initiative.
 		if features.knows_maneuver(c, "ambush") and (c.creature as Character).resource_left("superiority_dice") > 0:
@@ -469,6 +473,7 @@ func _begin_turn() -> void:
 	feature_actions.turn_start(c)
 	class_features.turn_start(c)
 	monster_actions.turn_start(c)
+	items.turn_start(c)
 	if c.creature.has_flag("dazed"):
 		c.bonus_available = false
 		log.add("info", "%s is Dazed: it can move or act this turn, not both" % c.name(), c.id)
@@ -501,6 +506,7 @@ func end_turn() -> CombatResult:
 	feature_actions.turn_end(c)
 	class_features.turn_end(c)
 	monster_actions.turn_end(c)
+	items.turn_end(c)
 	spells.turn_end(c)
 	spells.zones.prune()
 	_check_over()
@@ -955,8 +961,12 @@ func stabilize(c: Combatant, target: Combatant, use_kit: bool) -> CombatResult:
 	return CombatResult.new()
 
 
-## Drinking a potion or eating a Goodberry (2024: a Bonus Action), or giving it to a creature within 5 ft.
+## Drinking a potion or eating a Goodberry (2024: a Bonus Action), or giving it to a creature within 5 ft. Potions are
+## item powers now (CombatItems); Goodberries and other heal-only consumables keep this path.
 func use_item(c: Combatant, item_id: String, target: Combatant) -> CombatResult:
+	var item := Compendium.shared().item_data(item_id)
+	if str(item.get("category", "")) == "potion" and not items.find_power(c, item_id, "drink").is_empty():
+		return items.use(c, item_id, "drink", [target if target != null else c])
 	var why := _bonus_check(c)
 	if why != "":
 		return CombatResult.fail(why)
@@ -964,7 +974,6 @@ func use_item(c: Combatant, item_id: String, target: Combatant) -> CombatResult:
 		return CombatResult.fail("None left")
 	if target == null or distance(c, target) > 5:
 		return CombatResult.fail("Must be within 5 ft")
-	var item := Compendium.shared().item_data(item_id)
 	c.bonus_available = false
 	_spend_item(c, item_id)
 	for fx: Variant in item.get("effects", []):
@@ -1501,7 +1510,7 @@ func attack_options(c: Combatant) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	if c.creature is Character:
 		for p in (c.creature as Character).attacks():
-			out.append({"id": ("thrown:" if p.thrown else "weapon:") + p.item_id, "label": p.name,
+			out.append({"id": ("thrown:" if p.thrown else "weapon:") + p.item_id + ("@" + p.ammo_id if p.ammo_id != "" else ""), "label": p.name,
 				"kind": "thrown" if p.thrown else ("unarmed" if p.item_id == "unarmed_strike" else "weapon"),
 				"profile": p, "melee": p.melee, "range": [p.normal_range, p.long_range], "reach": p.reach})
 		if CombatFeatures.has_feature(c, "psychic_blades"):
@@ -1690,7 +1699,7 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and not bool(option["melee"]):
 		var w := (c.creature as Character).compendium.item_data(p.item_id)
 		var ammo := str((w.get("weapon", {}) as Dictionary).get("ammunition", ""))
-		if ammo != "" and not _has_ammo(c, ammo):
+		if ammo != "" and not _has_ammo(c, ammo, p.ammo_id):
 			return "No ammunition"
 	return ""
 
@@ -1701,7 +1710,7 @@ func has_ammo_for(c: Combatant, option: Dictionary) -> bool:
 		return true
 	var w := (c.creature as Character).compendium.item_data((option["profile"] as WeaponProfile).item_id)
 	var ammo := str((w.get("weapon", {}) as Dictionary).get("ammunition", ""))
-	return ammo == "" or _has_ammo(c, ammo)
+	return ammo == "" or _has_ammo(c, ammo, (option["profile"] as WeaponProfile).ammo_id)
 
 
 ## How many of an item a character carries.
@@ -1722,9 +1731,9 @@ func _spend_item(c: Combatant, item_id: String) -> void:
 			return
 
 
-func _has_ammo(c: Combatant, ammo: String) -> bool:
-	var ids := {"arrow": "arrow", "bolt": "crossbow_bolt", "bullet": "sling_bullet", "needle": "blowgun_needle"}
-	var want := str(ids.get(ammo, ammo))
+## Whether `c` carries ammunition of `ammo`'s kind (`specific`: that magic ammunition, "" = ordinary).
+func _has_ammo(c: Combatant, ammo: String, specific: String = "") -> bool:
+	var want := specific if specific != "" else str(Gear.AMMO_IDS.get(ammo, ammo))
 	for e in (c.creature as Character).inventory:
 		if str(e["id"]) == want and int(e["qty"]) > 0:
 			return true
@@ -1931,7 +1940,9 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 		(sit["disadvantage"] as Array[String]).append("Agile Movement")
 	var st := {"c": c, "target": target, "option": option, "opts": opts, "sit": sit, "r": r,
 		"ac": target.creature.ac_value() + int(sit["cover_bonus"])}
-	return reactions.offer(reactions.before_roll(st), func() -> CombatResult: return _roll_attack(st), r)
+	var before := reactions.before_roll(st)
+	before.append_array(items.before_roll(st))
+	return reactions.offer(before, func() -> CombatResult: return _roll_attack(st), r)
 
 
 func _roll_attack(st: Dictionary) -> CombatResult:
@@ -1991,6 +2002,7 @@ func _attack_outcome(st: Dictionary) -> CombatResult:
 	if t.success and not critical and distance(c, target) <= 5 and target.creature.has_flag("auto_crit_within_5ft"):
 		critical = true
 		details.append("Automatic Critical Hit: the target can't defend itself within 5 ft")
+	critical = items.crit_allowed(c, target, critical, details)
 	var success := t.success
 	if success and mirror_image_takes(target, c, t.total):
 		success = false
@@ -2021,6 +2033,7 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 	r.lines.append(log.add("miss", "%s misses %s (%d vs AC %d)" % [c.name(), target.name(), t.total, int(st["ac"])], c.id, st["details"] as Array))
 	_on_miss(c, target, option, r)
 	features.after_miss(c, target, option, r)
+	items.after_miss(c, target, option, r)
 	return reactions.offer(reactions.after_miss_target(st), func() -> CombatResult:
 		if st.has("riposte"):
 			var rp := st["riposte"] as Dictionary
@@ -2057,6 +2070,7 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	for extra: Variant in opts.get("extra_dice", []):
 		dice_list.append(extra as Dictionary)
 	dice_list.append_array(features.hit_damage_dice(c, target, option, st))
+	dice_list.append_array(items.hit_damage_dice(c, target, option, st))
 	# Lightning Arrow: the bolt's damage instead of the weapon's.
 	var replaced := bool(st.get("replace_weapon_damage", false))
 	if replaced:
@@ -2128,6 +2142,7 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 	if bool(option["melee"]):
 		retaliate(c, target)
 	features.after_hit(c, target, option, dr, st, r)
+	items.after_hit(c, target, option, dr, st, r)
 	_queue_sentinels(c, target)
 	return run_reaction_queue(r)
 
@@ -2200,6 +2215,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	parts = _reduce_by_dice(target, parts, details)
 	parts = _bastion(target, parts, details)
 	feature_actions.adjust_incoming(source, target, parts)
+	items.adjust_incoming(source, target, parts, label)
 	# Mage Slayer: creatures it damages have Disadvantage on the Concentration save.
 	var slayer: Effect = null
 	if source != null and features.has_feat(source, "mage_slayer") and target.creature.concentration != null:
@@ -2293,6 +2309,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	if source != null and source != target and dr.final > 0:
 		spells.end_sanctuary(source, "dealt damage")
 	spells.on_damaged(source, target, dr.final, parts)
+	items.on_damaged(source, target, dr.final, parts)
 	if dr.final > 0:
 		spells.specials.duel_check_damage(source, target)
 	if dr.final > 0 and target.is_alive():
@@ -2573,9 +2590,9 @@ func _spend_ammo(c: Combatant, p: WeaponProfile) -> void:
 	var ammo := str((w.get("weapon", {}) as Dictionary).get("ammunition", ""))
 	if ammo == "":
 		return
-	var ids := {"arrow": "arrow", "bolt": "crossbow_bolt", "bullet": "sling_bullet", "needle": "blowgun_needle"}
+	var want := p.ammo_id if p.ammo_id != "" else str(Gear.AMMO_IDS.get(ammo, ammo))
 	for e in ch.inventory:
-		if str(e["id"]) == str(ids.get(ammo, ammo)) and int(e["qty"]) > 0:
+		if str(e["id"]) == want and int(e["qty"]) > 0:
 			e["qty"] = int(e["qty"]) - 1
 			return
 

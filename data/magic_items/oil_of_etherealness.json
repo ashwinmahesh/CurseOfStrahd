@@ -1,0 +1,36 @@
+{
+  "id": "oil_of_etherealness",
+  "name": "Oil of Etherealness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 2000.0,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "oil_flask",
+  "stackable": true,
+  "powers": [
+    {
+      "id": "apply",
+      "name": "Apply",
+      "cost": "action",
+      "consume": true,
+      "field": true,
+      "combat": false,
+      "custom": "drink_field_spell",
+      "params": {
+        "spell": "etherealness",
+        "minutes": 60,
+        "apply_minutes": 10
+      }
+    }
+  ],
+  "summary": "10 minutes to apply: the Etherealness spell for 1 hour on a Medium or smaller creature.",
+  "text": "Beads of this cloudy gray oil form on the outside of its container and quickly evaporate. The oil can cover a Medium or smaller creature, along with the equipment it's wearing and carrying (one more vial for each size larger). Applying the oil takes 10 minutes. The affected creature then gains the effect of the Etherealness spell for 1 hour."
+}

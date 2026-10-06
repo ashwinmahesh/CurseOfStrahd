@@ -1,0 +1,39 @@
+{
+  "id": "potion_of_giant_strength_stone",
+  "name": "Potion of Giant Strength (Stone Giant)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 2000.0,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_gold",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "ability_min",
+            "ability": "str",
+            "value": 23
+          }
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "variant_of": "potion_of_giant_strength",
+  "summary": "Your Strength becomes 23 for 1 hour (no effect if it's already higher).",
+  "text": "When you drink this potion, your Strength score changes to 23 for 1 hour. It has no effect on you if your Strength is already 23 or higher. A sliver of stone giant fingernail floats in the clear liquid."
+}

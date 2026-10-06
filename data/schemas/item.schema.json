@@ -2,65 +2,737 @@
   "$id": "item.schema.json",
   "title": "Item (mundane gear, weapons, armor, magic items)",
   "type": "object",
-  "required": ["id", "name", "source", "category", "weight_lb", "cost_gp"],
+  "required": [
+    "id",
+    "name",
+    "source",
+    "category",
+    "weight_lb",
+    "cost_gp"
+  ],
   "additionalProperties": false,
   "properties": {
-    "id": {"$ref": "common.schema.json#/$defs/id"},
-    "name": {"type": "string"},
-    "source": {"$ref": "common.schema.json#/$defs/source"},
-    "category": {"type": "string", "enum": ["weapon", "armor", "shield", "gear", "tool", "consumable", "ammunition", "focus", "pack", "clothing", "container", "light", "treasure", "quest", "wondrous", "ring", "rod", "staff", "wand", "potion", "scroll"]},
-    "weight_lb": {"type": "number", "minimum": 0},
-    "cost_gp": {"type": "number", "minimum": 0, "description": "Price in gp (1 sp = 0.1, 1 cp = 0.01)."},
-    "stackable": {"type": "boolean"},
-    "bundle": {"type": "integer", "minimum": 1, "description": "How many come for the listed cost and weight (20 arrows, 10 sheets of parchment)."},
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "common.schema.json#/$defs/source"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "weapon",
+        "armor",
+        "shield",
+        "gear",
+        "tool",
+        "consumable",
+        "ammunition",
+        "focus",
+        "pack",
+        "clothing",
+        "container",
+        "light",
+        "treasure",
+        "quest",
+        "wondrous",
+        "ring",
+        "rod",
+        "staff",
+        "wand",
+        "potion",
+        "scroll"
+      ]
+    },
+    "weight_lb": {
+      "type": "number",
+      "minimum": 0
+    },
+    "cost_gp": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Price in gp (1 sp = 0.1, 1 cp = 0.01)."
+    },
+    "stackable": {
+      "type": "boolean"
+    },
+    "bundle": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "How many come for the listed cost and weight (20 arrows, 10 sheets of parchment)."
+    },
     "weapon": {
       "type": "object",
-      "required": ["kind", "damage", "damage_type", "mastery"],
+      "required": [
+        "kind",
+        "damage",
+        "damage_type",
+        "mastery"
+      ],
       "additionalProperties": false,
       "properties": {
-        "kind": {"type": "string", "enum": ["simple_melee", "simple_ranged", "martial_melee", "martial_ranged"]},
-        "damage": {"$ref": "common.schema.json#/$defs/dice"},
-        "damage_type": {"$ref": "common.schema.json#/$defs/damage_type"},
-        "properties": {"type": "array", "items": {"type": "string", "enum": ["ammunition", "finesse", "heavy", "light", "loading", "range", "reach", "thrown", "two_handed", "versatile"]}},
-        "versatile": {"$ref": "common.schema.json#/$defs/dice"},
-        "range": {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2, "description": "Normal and long range in feet (Range or Thrown property)."},
-        "ammunition": {"type": "string", "enum": ["arrow", "bolt", "bullet", "needle"]},
-        "mastery": {"type": "string", "enum": ["cleave", "graze", "nick", "push", "sap", "slow", "topple", "vex"]}
+        "kind": {
+          "type": "string",
+          "enum": [
+            "simple_melee",
+            "simple_ranged",
+            "martial_melee",
+            "martial_ranged"
+          ]
+        },
+        "damage": {
+          "$ref": "common.schema.json#/$defs/dice"
+        },
+        "damage_type": {
+          "$ref": "common.schema.json#/$defs/damage_type"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ammunition",
+              "finesse",
+              "heavy",
+              "light",
+              "loading",
+              "range",
+              "reach",
+              "thrown",
+              "two_handed",
+              "versatile"
+            ]
+          }
+        },
+        "versatile": {
+          "$ref": "common.schema.json#/$defs/dice"
+        },
+        "range": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Normal and long range in feet (Range or Thrown property)."
+        },
+        "ammunition": {
+          "type": "string",
+          "enum": [
+            "arrow",
+            "bolt",
+            "bullet",
+            "needle"
+          ]
+        },
+        "mastery": {
+          "type": "string",
+          "enum": [
+            "cleave",
+            "graze",
+            "nick",
+            "push",
+            "sap",
+            "slow",
+            "topple",
+            "vex"
+          ]
+        }
       }
     },
     "armor": {
       "type": "object",
-      "required": ["kind", "base_ac"],
+      "required": [
+        "kind",
+        "base_ac"
+      ],
       "additionalProperties": false,
       "properties": {
-        "kind": {"type": "string", "enum": ["light", "medium", "heavy", "shield"]},
-        "base_ac": {"type": "integer", "description": "Armor: base AC. Shield: the bonus (2)."},
-        "dex_cap": {"type": ["integer", "null"], "description": "null = full Dex modifier (light), 2 = medium, 0 = heavy (no Dex)."},
-        "strength": {"type": "integer", "description": "Strength score needed to avoid the 10 ft speed penalty."},
-        "stealth_disadvantage": {"type": "boolean"},
-        "don_minutes": {"type": "integer"},
-        "doff_minutes": {"type": "integer"}
+        "kind": {
+          "type": "string",
+          "enum": [
+            "light",
+            "medium",
+            "heavy",
+            "shield"
+          ]
+        },
+        "base_ac": {
+          "type": "integer",
+          "description": "Armor: base AC. Shield: the bonus (2)."
+        },
+        "dex_cap": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "null = full Dex modifier (light), 2 = medium, 0 = heavy (no Dex)."
+        },
+        "strength": {
+          "type": "integer",
+          "description": "Strength score needed to avoid the 10 ft speed penalty."
+        },
+        "stealth_disadvantage": {
+          "type": "boolean"
+        },
+        "don_minutes": {
+          "type": "integer"
+        },
+        "doff_minutes": {
+          "type": "integer"
+        }
       }
     },
     "tool": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "kind": {"type": "string", "enum": ["artisan", "gaming_set", "musical_instrument", "other"]},
-        "ability": {"$ref": "common.schema.json#/$defs/ability"},
-        "utilize": {"type": "string", "description": "What the Utilize action with it does and its DC, in our own words."},
-        "craft": {"type": "array", "items": {"type": "string"}}
+        "kind": {
+          "type": "string",
+          "enum": [
+            "artisan",
+            "gaming_set",
+            "musical_instrument",
+            "other"
+          ]
+        },
+        "ability": {
+          "$ref": "common.schema.json#/$defs/ability"
+        },
+        "utilize": {
+          "type": "string",
+          "description": "What the Utilize action with it does and its DC, in our own words."
+        },
+        "craft": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
-    "focus": {"type": "string", "enum": ["arcane", "druidic", "holy"]},
-    "contents": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/item_qty"}, "description": "For packs: what is inside."},
-    "capacity": {"type": "string"},
-    "light": {"type": "object", "properties": {"bright": {"type": "integer"}, "dim": {"type": "integer"}, "hours": {"type": "number"}}},
-    "magic": {"type": "object", "properties": {"rarity": {"type": "string", "enum": ["common", "uncommon", "rare", "very_rare", "legendary", "artifact"]}, "attunement": {"type": ["boolean", "string"]}, "charges": {"type": "object"}, "cursed": {"type": "boolean"}, "sentient": {"type": "boolean"}}},
-    "quest_locked": {"type": "boolean"},
-    "summary": {"type": "string"},
-    "text": {"type": "string"},
-    "effects": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/effect_ref"}},
-    "modifiers": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/modifier"}}
+    "focus": {
+      "type": "string",
+      "enum": [
+        "arcane",
+        "druidic",
+        "holy"
+      ]
+    },
+    "contents": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/item_qty"
+      },
+      "description": "For packs: what is inside."
+    },
+    "capacity": {
+      "type": "string"
+    },
+    "light": {
+      "type": "object",
+      "properties": {
+        "bright": {
+          "type": "integer"
+        },
+        "dim": {
+          "type": "integer"
+        },
+        "hours": {
+          "type": "number"
+        }
+      }
+    },
+    "magic": {
+      "type": "object",
+      "description": "Magic item block (ADR 0011, docs/contracts/magic_items.md).",
+      "properties": {
+        "rarity": {
+          "type": "string",
+          "enum": [
+            "common",
+            "uncommon",
+            "rare",
+            "very_rare",
+            "legendary",
+            "artifact"
+          ]
+        },
+        "attunement": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "true, or the requirement in words (\"by a Wizard\", \"by a Spellcaster\")."
+        },
+        "charges": {
+          "type": "object",
+          "properties": {
+            "max": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "$ref": "common.schema.json#/$defs/dice"
+                }
+              ]
+            },
+            "start": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "$ref": "common.schema.json#/$defs/dice"
+                }
+              ]
+            },
+            "regain": {
+              "type": "string",
+              "description": "Dice regained (\"1d6+1\"), or \"all\"."
+            },
+            "when": {
+              "type": "string",
+              "enum": [
+                "dawn",
+                "long",
+                "short",
+                "dusk",
+                "never"
+              ]
+            },
+            "last": {
+              "type": "object",
+              "description": "Expending the last charge: roll `die`; on `on` or lower the item is `result` (destroyed | nonmagical).",
+              "properties": {
+                "die": {
+                  "type": "integer"
+                },
+                "on": {
+                  "type": "integer"
+                },
+                "result": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "cursed": {
+          "type": "boolean"
+        },
+        "curse": {
+          "type": "string",
+          "description": "What the curse does, in our words (shown once it's known)."
+        },
+        "sentient": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "quest_locked": {
+      "type": "boolean"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "effects": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/effect_ref"
+      }
+    },
+    "modifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/modifier"
+      }
+    },
+    "icon": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "theme": {
+      "type": "string",
+      "enum": [
+        "arcana",
+        "armaments",
+        "implements",
+        "relics"
+      ],
+      "description": "2024 DMG random magic item table the item is rolled on."
+    },
+    "treasure": {
+      "type": "object",
+      "description": "Treasure placement: random false keeps it off the random tables (artifacts, story items); weight makes it likelier.",
+      "properties": {
+        "random": {
+          "type": "boolean"
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "variant_of": {
+      "$ref": "common.schema.json#/$defs/id",
+      "description": "The item this is one kind of (ring_of_resistance for its fire version): one entry on the random tables."
+    },
+    "worn": {
+      "type": "string",
+      "enum": [
+        "head",
+        "eyes",
+        "neck",
+        "cloak",
+        "robe",
+        "wrists",
+        "hands",
+        "belt",
+        "feet",
+        "ring",
+        "ioun"
+      ],
+      "description": "Where it's worn to work (one per slot; two rings; any number of Ioun Stones)."
+    },
+    "held": {
+      "type": "boolean",
+      "description": "Works only while held in a hand (wands, rods and staffs by default)."
+    },
+    "consumable": {
+      "type": "boolean",
+      "description": "Used up when its power is used (potions and scrolls by default)."
+    },
+    "duration": {
+      "type": "object",
+      "description": "How long a potion's effects last once drunk (spell duration format)."
+    },
+    "template": {
+      "type": "object",
+      "description": "An item built on any mundane weapon, armor, shield or ammunition that fits (\"Weapon, +1\"): MagicItems.combine.",
+      "properties": {
+        "on": {
+          "type": "string",
+          "enum": [
+            "weapon",
+            "armor",
+            "shield",
+            "ammunition",
+            "weapon_or_ammunition"
+          ]
+        },
+        "kinds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          }
+        },
+        "damage_types": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/damage_type"
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "The finished name, {base} for the base item's (\"+1 {base}\")."
+        },
+        "default": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "weapon_patch": {
+          "type": "object"
+        },
+        "armor_patch": {
+          "type": "object"
+        },
+        "weight_mult": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "on",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "powers": {
+      "type": "array",
+      "description": "What the item can be used for (docs/contracts/magic_items.md).",
+      "items": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "sub": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "string",
+            "enum": [
+              "magic",
+              "action",
+              "utilize",
+              "bonus",
+              "reaction",
+              "attack",
+              "free"
+            ]
+          },
+          "charges": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "upcast_charges": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "max_level": {
+            "type": "integer"
+          },
+          "uses": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              },
+              "per": {
+                "type": "string",
+                "enum": [
+                  "dawn",
+                  "long",
+                  "short",
+                  "never"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "spell": {
+            "type": "string"
+          },
+          "recipe": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9
+          },
+          "dc": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "wielder"
+                ]
+              }
+            ]
+          },
+          "attack": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "wielder"
+                ]
+              }
+            ]
+          },
+          "consume": {
+            "type": "boolean"
+          },
+          "toggle": {
+            "type": "boolean"
+          },
+          "off_cost": {
+            "type": "string"
+          },
+          "modifiers": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/modifier"
+            }
+          },
+          "minutes": {
+            "type": "integer"
+          },
+          "hours": {
+            "type": "integer"
+          },
+          "rounds": {
+            "type": "integer"
+          },
+          "custom": {
+            "type": "string"
+          },
+          "field": {
+            "type": "boolean"
+          },
+          "combat": {
+            "type": "boolean"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "requires": {
+            "type": "string",
+            "enum": [
+              "anyone",
+              "worn_or_held",
+              "attuned"
+            ]
+          },
+          "targeting": {
+            "type": "string"
+          },
+          "range": {
+            "type": "integer"
+          },
+          "choice": {
+            "type": "object"
+          },
+          "log": {
+            "type": "string"
+          },
+          "scroll": {
+            "type": "boolean"
+          },
+          "params": {
+            "type": "object"
+          },
+          "grants": {
+            "type": "object",
+            "description": "Powers the user (or whoever drinks it) gains for a while: {powers: [...], hours|minutes}.",
+            "properties": {
+              "powers": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "hours": {
+                "type": "integer"
+              },
+              "minutes": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": false
+          },
+          "ends_effect": {
+            "type": "boolean",
+            "description": "A granted power whose last use ends the effect that granted it."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "recipes": {
+      "type": "object",
+      "description": "Item powers written as spell recipes (docs/contracts/spells.md keys), cast as \"<item>__<key>\"."
+    },
+    "weapon_rules": {
+      "type": "object",
+      "description": "What a magic weapon or ammunition does on a hit: extra dice, saves, returning, specials.",
+      "properties": {
+        "extra": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "on_hit": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "returns": {
+          "type": "boolean"
+        },
+        "special": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "unarmed_rules": {
+      "type": "object",
+      "description": "weapon_rules for Unarmed Strikes made while the item is worn."
+    },
+    "armor_rules": {
+      "type": "object",
+      "description": "What magic armor or a shield does beyond modifiers: no_crits, no_training, ac_vs_ranged, specials."
+    },
+    "scroll_spell": {
+      "type": "string",
+      "description": "The spell a Spell Scroll holds."
+    },
+    "base_item": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "sentience": {
+      "type": "object",
+      "description": "A sentient item's mind: scores, senses, alignment, purpose (2024 DMG)."
+    },
+    "quest": {
+      "type": "boolean"
+    },
+    "appears_as": {
+      "$ref": "common.schema.json#/$defs/id",
+      "description": "What the item passes for until it's used or identified (Potion of Poison looks like a Potion of Healing)."
+    }
   }
 }

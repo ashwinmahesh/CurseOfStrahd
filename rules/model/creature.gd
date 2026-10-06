@@ -991,7 +991,7 @@ func speed(kind: String = "walk") -> Breakdown:
 	var base := int(base_speed.get(kind, 0))
 	var ctx := formula_context()
 	for m in modifiers_for(&"speed_set"):
-		var v := mod_value(m, ctx)
+		var v := _speed_set_value(m, ctx, kind)
 		if v > 0 and m.text("kind", "walk") == kind and v > base:
 			base = v
 	if base <= 0:
@@ -1009,7 +1009,7 @@ func speed(kind: String = "walk") -> Breakdown:
 		var now := b.sum()
 		b.add(m.source_name, now * pct / 100 - now)
 	for m in modifiers_for(&"speed_set"):
-		if mod_value(m, ctx) == 0 and m.text("kind", "walk") == kind:
+		if m.text("kind", "walk") == kind and _speed_set_value(m, ctx, kind) == 0:
 			b.set_override(0, m.source_name)
 	if b.sum() < 0:
 		b.set_floor(0, "minimum 0")
@@ -1017,6 +1017,13 @@ func speed(kind: String = "walk") -> Breakdown:
 
 
 ## Character adds the heavy-armor Strength penalty here.
+## A speed_set value: a number, or "walk" for a speed equal to the creature's walking Speed (Potion of Flying).
+func _speed_set_value(m: Modifier, ctx: Dictionary, kind: String) -> int:
+	if m.text("value") == "walk":
+		return int(base_speed.get("walk", 0)) if kind == "walk" else speed("walk").total()
+	return mod_value(m, ctx)
+
+
 func _speed_adjustments(_b: Breakdown) -> void:
 	pass
 

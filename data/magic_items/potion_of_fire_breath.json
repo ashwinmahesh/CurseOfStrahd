@@ -1,0 +1,82 @@
+{
+  "id": "potion_of_fire_breath",
+  "name": "Potion of Fire Breath",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_orange",
+  "stackable": true,
+  "effects": [],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "recipes": {
+    "breath": {
+      "name": "Fire Breath",
+      "level": 0,
+      "school": "evocation",
+      "targets": {
+        "kind": "enemy",
+        "count": 1
+      },
+      "range": {
+        "kind": "feet",
+        "feet": 30
+      },
+      "save": "dex",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "4d6",
+          "type": "fire"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "drink",
+      "name": "Drink",
+      "cost": "bonus",
+      "consume": true,
+      "field": true,
+      "custom": "drink_grant",
+      "grants": {
+        "hours": 1,
+        "powers": [
+          {
+            "id": "breath",
+            "name": "Fire Breath",
+            "recipe": "breath",
+            "dc": 13,
+            "cost": "bonus",
+            "uses": {
+              "count": 3,
+              "per": "never"
+            },
+            "ends_effect": true
+          }
+        ]
+      }
+    }
+  ],
+  "summary": "For 1 hour, a Bonus Action breath of fire at a creature within 30 ft (Dex DC 13, 4d6 Fire, half on a success), three times.",
+  "text": "After drinking this potion, you can take a Bonus Action to exhale fire at a target within 30 feet of you. The target makes a DC 13 Dexterity saving throw, taking 4d6 Fire damage on a failed save or half as much on a success. The effect ends after you exhale the fire three times or when 1 hour has passed. The orange liquid flickers, and smoke fills the top of the container and wafts out whenever it's opened."
+}

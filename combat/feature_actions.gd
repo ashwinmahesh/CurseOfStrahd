@@ -835,6 +835,7 @@ func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	if c == null:
 		return
 	e.class_features.after_d20(c, t)
+	e.items.after_d20(c, t, keys)
 	if not cr is Character:
 		return
 	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.
