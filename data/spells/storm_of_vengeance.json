@@ -52,6 +52,13 @@
       }
     }
   ],
+  "zone": {
+    "triggers": [],
+    "resolve_on_cast": true,
+    "storm_round": 1,
+    "uses_spell_damage": false,
+    "colour": "night"
+  },
   "tags": [
     "damage",
     "control"

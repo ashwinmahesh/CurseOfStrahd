@@ -58,7 +58,7 @@
         "name": "Improved Shadow Step",
         "summary": "Shadow Step can start and end anywhere for 1 Focus Point, and you can make an Unarmed Strike right after.",
         "text": "When you use Shadow Step, you can spend 1 Focus Point to ignore its need to start and end in Dim Light or Darkness. As part of the same Bonus Action, you can make an Unarmed Strike right after you teleport.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

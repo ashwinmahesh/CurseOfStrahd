@@ -29,6 +29,15 @@
   "targets": {
     "kind": "self"
   },
+  "sustain": [
+    {
+      "do": "volley",
+      "cost": "bonus_action",
+      "label": "Swift Quiver: two shots",
+      "sub": "2 attacks",
+      "help": "A Bonus Action: two attacks with your bow or crossbow, with conjured ammunition."
+    }
+  ],
   "tags": [
     "damage",
     "buff"

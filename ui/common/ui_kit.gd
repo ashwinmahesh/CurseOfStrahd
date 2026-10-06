@@ -62,7 +62,9 @@ static func style(bg: String = "ui_black", border: String = "gilt_dark", width: 
 	s.bg_color = Color(Look.color(bg), alpha)
 	s.border_color = Look.color(border)
 	s.set_border_width_all(width)
-	s.set_corner_radius_all(2)
+	# Bevelled corners on every panel, never plain squares (owner, 2026-10-06).
+	s.set_corner_radius_all(6)
+	s.corner_detail = 1
 	s.set_content_margin_all(10)
 	return s
 
@@ -130,20 +132,29 @@ static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = 
 	crest.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	crest.grow_vertical = Control.GROW_DIRECTION_BOTH
 	root.add_child(crest)
-	var plaque := PanelContainer.new()
-	var ps := style("ui_oxblood", "gilt", 2, 1.0)
-	ps.content_margin_left = 30
-	ps.content_margin_right = 30
-	ps.content_margin_top = 2
-	ps.content_margin_bottom = 4
-	ps.shadow_color = Color(Look.color("void"), 0.7)
-	ps.shadow_size = 6
-	plaque.add_theme_stylebox_override("panel", ps)
-	plaque.add_child(t)
-	_centre(plaque, Vector2(0, -size.y / 2.0), Vector2(0, -size.y / 2.0))
-	plaque.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	plaque.grow_vertical = Control.GROW_DIRECTION_BOTH
-	root.add_child(plaque)
+	# The title sits in a pointed gothic arch astride the top border (the owner's Crimson concept), a crest at its apex.
+	var cap_w := tw + 120.0
+	# It rises at most 24 px over the border, so a frame near the top of the screen still shows the whole arch.
+	var cap := UiParts.drawn(Vector2(cap_w, 58), func(c: Control) -> void:
+		var pts := UiParts.arch_points(Rect2(Vector2.ZERO, c.size), 24.0)
+		UiParts.gradient_fill(c, pts, Look.color("ui_wine"), Look.color("ui_oxblood"))
+		UiParts.closed_line(c, pts, Look.color("gilt"), 2.0)
+		var inner := UiParts.arch_points(Rect2(Vector2(6, 6), c.size - Vector2(12, 11)), 20.0)
+		UiParts.closed_line(c, inner, Color(Look.color("gilt"), 0.55), 1.0)
+		UiParts.diamond(c, Vector2(c.size.x / 2.0, 0), 6.0, Look.color("void"), true)
+		UiParts.diamond(c, Vector2(c.size.x / 2.0, 0), 4.5, Look.color("gilt_light"), true))
+	_centre(cap, Vector2(-cap_w / 2.0, -size.y / 2.0 - 24.0), Vector2(cap_w / 2.0, -size.y / 2.0 + 34.0))
+	root.add_child(cap)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_centre(t, Vector2(-cap_w / 2.0, -size.y / 2.0 - 10.0), Vector2(cap_w / 2.0, -size.y / 2.0 + 34.0))
+	root.add_child(t)
+	# A flourish on the bottom border, between the corner ironwork.
+	var foot := UiParts.drawn(Vector2(240, 16), func(c: Control) -> void:
+		c.draw_rect(Rect2(Vector2(36, 4), Vector2(c.size.x - 72, 8)), Look.color("ui_black"))
+		UiParts.footer_wave(c, c.size / 2.0, 100.0))
+	_centre(foot, Vector2(-120, size.y / 2.0 - 8.0), Vector2(120, size.y / 2.0 + 8.0))
+	root.add_child(foot)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 10)
 	p.add_child(box)
@@ -211,9 +222,12 @@ static func button_style(state: String) -> StyleBoxFlat:
 		_:
 			s = style("ui_oxblood", "gilt_dark", 2)
 	s.border_width_bottom += 1
+	# Elongated hexagons (the owner's Crimson concept): the corners cut so the ends come to points.
+	s.set_corner_radius_all(15)
+	s.corner_detail = 1
 	s.set_content_margin_all(8)
-	s.content_margin_left = 14
-	s.content_margin_right = 14
+	s.content_margin_left = 20
+	s.content_margin_right = 20
 	return s
 
 
@@ -265,6 +279,11 @@ static func install_theme() -> void:
 	var tab_hover := style("ui_oxblood", "gilt_dark", 0, 1.0)
 	tab_hover.border_width_top = 2
 	tab_hover.set_content_margin_all(8)
+	for ts: StyleBoxFlat in [tab_on, tab_off, tab_hover]:
+		ts.corner_radius_bottom_left = 0
+		ts.corner_radius_bottom_right = 0
+		ts.corner_radius_top_left = 9
+		ts.corner_radius_top_right = 9
 	for type: String in ["TabContainer", "TabBar"]:
 		t.set_stylebox("tab_selected", type, tab_on)
 		t.set_stylebox("tab_unselected", type, tab_off)
@@ -303,11 +322,15 @@ static func install_theme() -> void:
 	t.set_stylebox("selected_focus", "ItemList", style("ui_wine", "gilt", 1, 1.0))
 	t.set_color("font_color", "ItemList", Look.color("vellum"))
 	t.set_color("font_selected_color", "ItemList", Look.color("gilt_light"))
-	var groove := style("ui_black", "gilt_dark", 1, 1.0)
-	groove.set_content_margin_all(3)
+	# Sliders: a dark rounded track, the gilt fill and a lozenge grabber.
+	var groove := StyleBoxFlat.new()
+	groove.bg_color = Look.color("void")
+	groove.set_corner_radius_all(3)
+	groove.set_content_margin_all(2)
 	var filled := StyleBoxFlat.new()
-	filled.bg_color = Look.color("blood")
-	filled.set_content_margin_all(3)
+	filled.bg_color = Look.color("gilt")
+	filled.set_corner_radius_all(3)
+	filled.set_content_margin_all(2)
 	t.set_stylebox("slider", "HSlider", groove)
 	t.set_stylebox("grabber_area", "HSlider", filled)
 	t.set_stylebox("grabber_area_highlight", "HSlider", filled)

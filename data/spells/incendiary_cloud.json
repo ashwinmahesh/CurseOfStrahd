@@ -50,20 +50,9 @@
       "end_turn",
       "moved_into"
     ],
-    "obscured": "heavy"
+    "obscured": "heavy",
+    "drift_away": 10
   },
-  "sustain": [
-    {
-      "do": "move_object",
-      "cost": "free",
-      "move": 10,
-      "once_per_turn": true,
-      "not_this_turn": true,
-      "label": "Drift Incendiary Cloud",
-      "sub": "10 ft",
-      "help": "Each of your turns the cloud drifts 10 ft away from you; creatures it moves onto make the save."
-    }
-  ],
   "tags": [
     "damage",
     "control"

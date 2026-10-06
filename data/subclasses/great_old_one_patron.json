@@ -83,7 +83,7 @@
         "name": "Eldritch Hex",
         "summary": "Hex is always prepared, and its target has Disadvantage on saves of the ability you chose.",
         "text": "You always have Hex prepared. When you cast it and choose an ability, the target also has Disadvantage on saving throws with that ability for the spell's duration.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -99,7 +99,7 @@
             "value": "psychic"
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

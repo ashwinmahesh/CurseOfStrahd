@@ -71,6 +71,17 @@
       }
     }
   ],
+  "sustain": [
+    {
+      "do": "repeat",
+      "cost": "magic",
+      "not_this_turn": true,
+      "range": 60,
+      "label": "Telekinesis: move it again",
+      "sub": "Str save",
+      "help": "A Magic action: seize a creature within 60 ft again (Strength save)."
+    }
+  ],
   "tags": [
     "control",
     "utility"

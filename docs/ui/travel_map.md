@@ -51,6 +51,15 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   `"via": [[0.2, 0.53]]` takes the Krezk road along the south shore of Lake Zarovich; the roads from Vallaki to the
   werewolf den and Mount Baratok go round the lake's east shore the same way. The map draws a smooth curve
   through them; without `via` a road is a gently bowed line.
+- Which places show (owner decision 2026-10-06, "next stop"; `Travel.known`): places the party has been, places one
+  open road from there, and places it has heard of (their `when` holds). A place with no `when` is common knowledge
+  only once the party is one road from it; a place with a `when` waits for it, however close. At the gates that's
+  the gates and the village; from the village, the crossroads; and so on. The story bot travels the same way, hop
+  by hop toward a place it can't see yet.
+- Mist covers the rest of the art (shaders/ui/map_fog.gdshader): only the land around known places and along known
+  roads is clear, plus Castle Ravenloft, which is seen from everywhere in the valley. A place's optional `reveal`
+  (a fraction of the art's width, default 0.065) sets how much land clears around it; Lake Zarovich, Berez and
+  Mount Baratok clear more. The clearings' edges drift like mist.
 - Roads are drawn as dashes with a slight bow; the chosen route is solid red with each leg's hours on a tag.
   The party's place has a pulsing crimson mark; the destination's name sits on a crimson plaque. At night the sheet
   gets a moonlit wash.

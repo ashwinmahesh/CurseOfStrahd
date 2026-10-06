@@ -136,6 +136,15 @@ func on_moved(c: Combatant, from: Vector2i) -> void:
 	for o: FieldObject in objects.duplicate():
 		if o.expired() or not o.covers(c) or not _affects(o, c):
 			continue
+		# Prismatic Wall: stepping into it runs every layer.
+		if bool(o.rule("prismatic", false)):
+			var was_in := false
+			for cell in CombatGrid.footprint(from, c.size_cells):
+				if cell in o.cells:
+					was_in = true
+			if not was_in:
+				spells().specials.high.prismatic_layers(o, c)
+			continue
 		# Spike Growth: every 5 feet travelled into or within the area hurts.
 		if o.has_trigger("per_square"):
 			_affect(o, c, "per_square", CombatResult.new(), {})
@@ -238,8 +247,21 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 	if not t.is_alive():
 		return
 	var turn_key := "%d:%d" % [e.round_no, e.turn_index]
+	# Nothing reaches into an Antimagic Field.
+	if spells().specials.high.in_antimagic(t) and o.spell_id != "antimagic_field":
+		return
 	var ctx := spells().context_for_object(o)
 	if ctx.is_empty():
+		return
+	# Conjure Celestial: the light heals the caster's side instead of burning it.
+	if o.rules.has("heal_allies") and ctx.has("c") and ((ctx["c"] as Combatant) == t or (ctx["c"] as Combatant).allied_with(t)):
+		if str(o.hit_on_turn.get(t.id, "")) == turn_key:
+			return
+		o.hit_on_turn[t.id] = turn_key
+		var hp := spells().roll_damage_parts(ctx, [o.rules["heal_allies"]], false, t)
+		var got := t.creature.heal(int(hp["total"]), o.name)
+		e.log.add("heal", "%s regains %d Hit Points (%s)" % [t.name(), got, o.name], t.id, [str(hp["text"])])
+		e.events.append({"type": "heal", "id": t.id, "amount": got})
 		return
 	var label := "%s (%s)" % [o.name, _trigger_words(trigger)]
 	# Hunger of Hadar's cold at the start of a turn: damage with no save, apart from the end-of-turn acid.
@@ -249,6 +271,11 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 		return
 	if trigger != "per_square" and bool(o.rule("once_per_turn", true)) and str(o.hit_on_turn.get(t.id, "")) == turn_key:
 		return
+	# Conjure Elemental: while it holds someone, it doesn't grab anyone else.
+	if bool(o.rule("hold_one", false)):
+		for h in e.living():
+			if h.creature.effects.any(func(fx: Effect) -> bool: return fx.source_id == o.spell_id and fx.caster_id == o.caster_id and not fx.conditions.is_empty()):
+				return
 	var has_save := o.rules.has("save")
 	var has_damage := not (o.rule("damage", []) as Array).is_empty()
 	var effects := o.rule("effects", []) as Array
@@ -271,7 +298,23 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 		var test := t.creature.roll_save(e.dice, ab, o.save_dc, [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], o.name, t.name()], gas)
 		failed = not test.success
 		details.append(test.describe())
-	if has_damage:
+	var dparts := o.rule("damage", []) as Array
+	if has_damage and dparts.size() > 1:
+		# Several damage types (Jallarzi's Storm of Radiance): each part rolled and halved on its own.
+		var parts: Array = []
+		for p: Variant in dparts:
+			var pr := spells().roll_damage_parts(ctx, [p], false, t)
+			var amt := int(pr["total"])
+			if not failed:
+				amt = amt / 2 if bool(o.rule("half", false)) else 0
+			if failed or amt > 0:
+				parts.append({"amount": amt, "type": str(pr["type"]), "spell": true})
+			details.append(str(pr["text"]))
+		if parts.any(func(x: Dictionary) -> bool: return int(x["amount"]) > 0):
+			e.deal_damage(e.get_c(o.caster_id), t, parts, false, label, details)
+		else:
+			r.lines.append(e.log.add("info", "%s avoids %s" % [t.name(), label], t.id, details))
+	elif has_damage:
 		var rolled: Dictionary = shared.get("rolled", {}) as Dictionary
 		if rolled.is_empty():
 			rolled = spells().roll_damage_parts(ctx, o.rule("damage", []) as Array, false, t)
@@ -280,6 +323,8 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 		var amount := int(rolled["total"])
 		if not failed:
 			amount = amount / 2 if bool(o.rule("half", false)) else 0
+			if t.creature.has_flag("circle_of_power"):
+				amount = 0
 		details.append(str(rolled["text"]))
 		if amount > 0:
 			var dr := e.deal_damage(e.get_c(o.caster_id), t, [{"amount": amount, "type": str(rolled["type"]), "spell": true}], false, label, details)
@@ -375,6 +420,7 @@ func refresh_auras() -> void:
 			if not fx.modifiers.is_empty() or not fx.conditions.is_empty():
 				t.creature.add_effect(fx)
 	e.class_features.refresh_auras()
+	spells().specials.high.refresh_antimagic()
 
 
 # --- Terrain and sight ------------------------------------------------------------------------------

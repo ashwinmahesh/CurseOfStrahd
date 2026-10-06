@@ -232,6 +232,281 @@
         ],
         "source": "art/generated/textures/interior_wainscot_wall.png",
         "note": "Wraps in x only: map V from 0 at the top of the wall to 1 at the floor, one tile per wall height."
+      },
+      "tile_floor": {
+        "file": "art/textures/interior/tile_floor.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone_deep",
+          "vellum",
+          "void",
+          "ivory",
+          "stone",
+          "parchment",
+          "silver",
+          "slate"
+        ],
+        "source": "art/generated/textures/interior_tile_floor.png"
+      },
+      "tile_wall": {
+        "file": "art/textures/interior/tile_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "parchment",
+          "void",
+          "silver",
+          "pewter",
+          "ash_violet",
+          "slate",
+          "blood",
+          "bone"
+        ],
+        "source": "art/generated/textures/interior_tile_wall.png"
+      },
+      "kitchen_flags": {
+        "file": "art/textures/interior/kitchen_flags.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "slate",
+          "bone_dark",
+          "void",
+          "stone_deep",
+          "ink",
+          "peat"
+        ],
+        "source": "art/generated/textures/interior_kitchen_flags.png"
+      },
+      "kitchen_wall": {
+        "file": "art/textures/interior/kitchen_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "parchment",
+          "umber",
+          "rust",
+          "void",
+          "bone",
+          "bone_dark",
+          "pewter",
+          "peat"
+        ],
+        "source": "art/generated/textures/interior_kitchen_wall.png"
+      },
+      "parquet": {
+        "file": "art/textures/interior/parquet.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 1.5,
+        "palette": [
+          "stone",
+          "slate",
+          "void",
+          "stone_deep",
+          "bone_dark",
+          "ash_violet",
+          "ink",
+          "grave"
+        ],
+        "source": "art/generated/textures/interior_parquet.png"
+      },
+      "wood_panel": {
+        "file": "art/textures/interior/wood_panel.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "void",
+          "stone_deep",
+          "slate",
+          "ink",
+          "ash_violet",
+          "bog_deep",
+          "bone_dark"
+        ],
+        "source": "art/generated/textures/interior_wood_panel.png"
+      },
+      "carpet": {
+        "file": "art/textures/interior/carpet.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "blood",
+          "void",
+          "parchment",
+          "ash_violet",
+          "tan",
+          "moon_blue",
+          "stone",
+          "bone"
+        ],
+        "source": "art/generated/textures/interior_carpet.png",
+        "saturate": 1.25
+      },
+      "wallpaper_nursery": {
+        "file": "art/textures/interior/wallpaper_nursery.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "pewter",
+          "moonlight",
+          "void",
+          "stone",
+          "slate",
+          "stone_deep",
+          "ink",
+          "moon_blue"
+        ],
+        "source": "art/generated/textures/interior_wallpaper_nursery.png",
+        "saturate": 1.2
+      },
+      "wallpaper_green": {
+        "file": "art/textures/interior/wallpaper_green.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "bog",
+          "void",
+          "bog_deep",
+          "leather",
+          "walnut",
+          "stone_deep",
+          "peat",
+          "umber"
+        ],
+        "source": "art/generated/textures/interior_wallpaper_green.png",
+        "saturate": 1.2
+      },
+      "marble_floor": {
+        "file": "art/textures/interior/marble_floor.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "slate",
+          "silver",
+          "stone",
+          "ivory",
+          "vellum",
+          "void",
+          "pewter",
+          "stone_deep"
+        ],
+        "source": "art/generated/textures/interior_marble_floor.png"
+      },
+      "whitewash": {
+        "file": "art/textures/interior/whitewash.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "vellum",
+          "silver",
+          "parchment",
+          "stone",
+          "slate",
+          "pewter",
+          "void",
+          "bone"
+        ],
+        "source": "art/generated/textures/interior_whitewash.png"
+      },
+      "workshop_boards": {
+        "file": "art/textures/interior/workshop_boards.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 1.5,
+        "palette": [
+          "umber",
+          "bone",
+          "peat",
+          "void",
+          "bone_dark",
+          "stone",
+          "slate",
+          "skin_shadow"
+        ],
+        "source": "art/generated/textures/interior_workshop_boards.png"
+      },
+      "carved_panel": {
+        "file": "art/textures/interior/carved_panel.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "void",
+          "stone_deep",
+          "slate",
+          "ink",
+          "ash_violet",
+          "moon_blue",
+          "peat"
+        ],
+        "source": "art/generated/textures/interior_carved_panel.png"
+      },
+      "damp_plaster": {
+        "file": "art/textures/interior/damp_plaster.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "pewter",
+          "mist_blue",
+          "stone",
+          "slate",
+          "bone",
+          "void",
+          "moon_blue",
+          "stone_deep"
+        ],
+        "source": "art/generated/textures/interior_damp_plaster.png"
+      },
+      "attic_boards": {
+        "file": "art/textures/interior/attic_boards.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "slate",
+          "stone",
+          "void",
+          "ash_violet",
+          "moon_blue",
+          "stone_deep",
+          "ink",
+          "grave"
+        ],
+        "source": "art/generated/textures/interior_attic_boards.png"
+      },
+      "terracotta": {
+        "file": "art/textures/interior/terracotta.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "skin_shadow",
+          "umber",
+          "rust",
+          "ash_violet",
+          "void",
+          "stone",
+          "bone_dark",
+          "stone_deep"
+        ],
+        "source": "art/generated/textures/interior_terracotta.png",
+        "saturate": 1.1
       }
     },
     "church": {
@@ -369,6 +644,40 @@
         ],
         "source": "art/generated/textures/dungeon_damp_brick.png",
         "saturate": 1.2
+      },
+      "earth_braced": {
+        "file": "art/textures/dungeon/earth_braced.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "void",
+          "ash_violet",
+          "parchment",
+          "stone",
+          "bone",
+          "slate",
+          "pewter",
+          "crimson"
+        ],
+        "source": "art/generated/textures/dungeon_earth_braced.png"
+      },
+      "packed_earth": {
+        "file": "art/textures/dungeon/packed_earth.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "void",
+          "ash_violet",
+          "parchment",
+          "bone_dark",
+          "stone_deep",
+          "slate",
+          "ink"
+        ],
+        "source": "art/generated/textures/dungeon_packed_earth.png"
       }
     },
     "wild": {
@@ -387,6 +696,152 @@
           "bruise_deep"
         ],
         "source": "art/generated/textures/wild_water.png"
+      }
+    },
+    "cave": {
+      "rock_floor": {
+        "file": "art/textures/cave/rock_floor.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "slate",
+          "stone_deep",
+          "void",
+          "bone_dark",
+          "umber",
+          "peat",
+          "bone"
+        ],
+        "source": "art/generated/textures/cave_rock_floor.png"
+      },
+      "rock_wall": {
+        "file": "art/textures/cave/rock_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "stone_deep",
+          "bone_dark",
+          "void",
+          "peat",
+          "umber",
+          "ink",
+          "bone"
+        ],
+        "source": "art/generated/textures/cave_rock_wall.png"
+      }
+    },
+    "amber": {
+      "black_stone": {
+        "file": "art/textures/amber/black_stone.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "slate",
+          "stone_deep",
+          "stone",
+          "ash_violet",
+          "void",
+          "moonlight",
+          "frost",
+          "ink"
+        ],
+        "source": "art/generated/textures/amber_black_stone.png",
+        "saturate": 1.2
+      },
+      "amber_wall": {
+        "file": "art/textures/amber/amber_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "stone_deep",
+          "ash_violet",
+          "void",
+          "slate",
+          "moonlight",
+          "ink",
+          "tan"
+        ],
+        "source": "art/generated/textures/amber_amber_wall.png",
+        "saturate": 1.2
+      }
+    },
+    "mountain": {
+      "snow": {
+        "file": "art/textures/mountain/snow.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "frost",
+          "pewter",
+          "moonlight",
+          "void",
+          "slate",
+          "silver",
+          "stone",
+          "ivory"
+        ],
+        "source": "art/generated/textures/mountain_snow.png"
+      },
+      "cliff": {
+        "file": "art/textures/mountain/cliff.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "slate",
+          "stone",
+          "void",
+          "silver",
+          "pewter",
+          "frost",
+          "stone_deep",
+          "ink"
+        ],
+        "source": "art/generated/textures/mountain_cliff.png"
+      },
+      "scree": {
+        "file": "art/textures/mountain/scree.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "slate",
+          "stone",
+          "void",
+          "pewter",
+          "mist_blue",
+          "stone_deep",
+          "ink",
+          "parchment"
+        ],
+        "source": "art/generated/textures/mountain_scree.png"
+      }
+    },
+    "marsh": {
+      "marsh_mud": {
+        "file": "art/textures/marsh/marsh_mud.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "stone",
+          "bone_dark",
+          "void",
+          "slate",
+          "stone_deep",
+          "umber",
+          "mist_blue",
+          "peat"
+        ],
+        "source": "art/generated/textures/marsh_marsh_mud.png"
       }
     }
   }

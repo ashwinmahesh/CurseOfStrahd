@@ -34,7 +34,8 @@
     "flat": 70
   },
   "upcast": {
-    "text": "The creature regains 10 more Hit Points for each slot level above 6."
+    "text": "The creature regains 10 more Hit Points for each slot level above 6.",
+    "heal_flat": 10
   },
   "effects": [
     {

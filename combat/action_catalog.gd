@@ -368,10 +368,11 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["choices"] = ff
 			a["choice_label"] = "Familiar"
 			a["opts"] = {"choice": "imp"}
-		# Polymorph: the Beast form (it must not out-rank the target; "Best fit" picks for you).
-		if str(s["id"]) == "polymorph":
+		# Polymorph and the higher shape spells: the form (it must not out-rank its limit; "Best fit" picks for you).
+		if str(s["id"]) in ["polymorph", "true_polymorph", "shapechange", "animal_shapes"]:
 			var forms: Array = [{"value": "", "label": "Best fit"}]
-			for f in ShapeChange.beast_forms(30.0):
+			var pool: Array[Dictionary] = ShapeChange.beast_forms(30.0) if str(s["id"]) == "polymorph" else (HighMagic.forms(4.0, ["beast"]) if str(s["id"]) == "animal_shapes" else HighMagic.forms(30.0))
+			for f in pool:
 				forms.append({"value": str(f["id"]), "label": "%s (CR %s)" % [f.get("name", ""), str(f.get("cr", 0))]})
 			a["choices"] = forms
 			a["choice_label"] = "Beast form"

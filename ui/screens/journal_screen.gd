@@ -103,4 +103,8 @@ static func _codex_entry(id: String) -> Dictionary:
 			if str(prop.get("codex", prop["id"])) == id and str(prop["kind"]) == "book":
 				var text := str(prop.get("text", ""))
 				return {"title": str(prop.get("label", id)), "text": text if text != "" else "(Read in %s.)" % loc.get("name", "")}
+	# A book carried and read (the Tome of Strahd): the item's own codex entry.
+	var item := Compendium.shared().item_data(id)
+	if item.has("codex"):
+		return (item["codex"] as Dictionary).duplicate()
 	return {"title": id.replace("_", " ").capitalize(), "text": ""}

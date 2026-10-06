@@ -60,7 +60,7 @@
         "name": "Stride of the Elements",
         "summary": "While Elemental Attunement is active you have a Fly Speed and a Swim Speed equal to your Speed.",
         "text": "While your Elemental Attunement is active, you also have a Fly Speed and a Swim Speed equal to your Speed.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

@@ -48,7 +48,7 @@
       "action": "passive",
       "summary": "His melee weapon hits roll one extra damage die; the Battleaxe numbers already include it.",
       "text": "When Izek hits with a melee weapon, the attack deals one more of the weapon's damage dice. The Battleaxe damage below already counts that die.",
-      "implemented": "data"
+      "implemented": "engine"
     }
   ],
   "actions": [

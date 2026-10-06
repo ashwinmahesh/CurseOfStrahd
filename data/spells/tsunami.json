@@ -43,6 +43,15 @@
       "type": "bludgeoning"
     }
   ],
+  "zone": {
+    "triggers": [
+      "cast"
+    ],
+    "tsunami": 6,
+    "half": true,
+    "save": "str",
+    "colour": "mist_blue"
+  },
   "tags": [
     "damage",
     "control"

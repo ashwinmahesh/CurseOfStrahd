@@ -432,7 +432,7 @@
           "name": "Brutal Strike",
           "summary": "Trade Reckless Attack's Advantage on one Strength attack for +1d10 damage and a Forceful Blow or Hamstring Blow.",
           "text": "When you use Reckless Attack, you can give up the Advantage on one Strength-based attack roll you make this turn, as long as that roll doesn't have Disadvantage. If it hits, the target takes an extra 1d10 damage of the weapon's (or Unarmed Strike's) type and you pick one effect. Forceful Blow: the target is pushed 15 feet straight away from you, and you can then move up to half your Speed straight toward it without provoking Opportunity Attacks. Hamstring Blow: the target's Speed drops by 15 feet until the start of your next turn; a creature suffers only one Hamstring Blow at a time, the latest.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -455,7 +455,7 @@
           "name": "Relentless Rage",
           "summary": "Dropping to 0 Hit Points while raging: succeed on a Constitution save (DC 10, rising by 5 each time) to stay up with twice your Barbarian level in Hit Points.",
           "text": "If you drop to 0 Hit Points while your Rage is active and aren't killed outright, you can make a DC 10 Constitution saving throw. On a success your Hit Points become twice your Barbarian level instead. Each later use raises the DC by 5; it goes back to 10 when you finish a Short or Long Rest.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -489,7 +489,7 @@
           "id": "improved_brutal_strike",
           "name": "Improved Brutal Strike",
           "summary": "New Brutal Strike effects: Staggering Blow (Disadvantage on its next save) and Sundering Blow (+5 to an ally's next attack against it).",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -545,7 +545,7 @@
           "id": "improved_brutal_strike",
           "name": "Improved Brutal Strike",
           "summary": "Brutal Strike deals 2d10 extra damage, and you can apply two of its effects at once.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

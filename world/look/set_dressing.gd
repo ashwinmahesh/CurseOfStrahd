@@ -125,7 +125,7 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				_take_square(board, root, cell)
 			elif board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT):
 				_take_square(board, root, cell)   # its own art replaces the board's furniture or brambles there
-			var piece := stand_piece(board, root, art, cell, scale_, null, front)
+			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false)))
 			if bool(look.get("fade", false)) and piece is Sprite3D:
 				_fade_with_trees(board, piece as Sprite3D)
 	return root
@@ -375,7 +375,7 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## the opening camera); anything else looks the same from every side (a barrel, a tree) and is a plain billboard.
 ## Added to `parent`; returns the piece.
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
-		at_override: Variant = null, front_override: String = "") -> Node3D:
+		at_override: Variant = null, front_override: String = "", big: bool = false) -> Node3D:
 	scale_ *= float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
 	var at: Vector3 = board.cell_center(cell) if at_override == null else at_override as Vector3
 	var wall := wall_side(board, cell)
@@ -384,6 +384,13 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 		return _against_wall(board, parent, art, front, cell, wall, scale_)
 	var info := manifest()[art] as Dictionary
 	var back := str(info.get("back", ""))
+	if not big and at_override == null:
+		# Owner report (2026-10-06): pieces overlapped walls and each other. A piece is no wider than its square,
+		# unless all eight squares around it are open floor with nothing standing there.
+		var w := maxf(_width(art), _width(back) if back != "" and has_art(back) else 0.0) * scale_
+		var room := room_at(board, cell)
+		if w > room:
+			scale_ *= room / w
 	var piece: Sprite3D
 	if back != "" and has_art(back):
 		var binfo := manifest()[back] as Dictionary
@@ -396,6 +403,42 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 	piece.position = at
 	parent.add_child(piece)
 	return piece
+
+
+## How wide a standing piece is drawn (its catalog size included; the wider of its front and back).
+static func footprint(art: String) -> float:
+	var back := str((manifest().get(art, {}) as Dictionary).get("back", ""))
+	var w := maxf(_width(art), _width(back) if back != "" else 0.0)
+	return w * float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
+
+
+static func _width(art: String) -> float:
+	var info := manifest().get(art, {}) as Dictionary
+	return float(info.get("world_width", float(info.get("width_px", 100)) * float(info.get("pixel_size", 0.01))))
+
+
+## How wide a standing piece on `cell` may be: its square, or nearly two if every square around it is open floor
+## that nothing else stands on (board.occupied: the location's things, SetDressing.reserve).
+static func room_at(board: ArenaBoard, cell: Vector2i) -> float:
+	for dx: int in [-1, 0, 1]:
+		for dy: int in [-1, 0, 1]:
+			if dx == 0 and dy == 0:
+				continue
+			var n := cell + Vector2i(dx, dy)
+			if not board.grid.in_bounds(n) or board.grid.has_flag(n, CombatGrid.WALL) or board.grid.has_flag(n, CombatGrid.LOW) \
+					or board.grid.has_flag(n, CombatGrid.VOID) or board.occupied.has(n):
+				return 1.0
+	return 1.8
+
+
+## Marks the squares a location's things stand on, before any of them are built, so pieces size themselves to the
+## room they really have (room_at).
+static func reserve(board: ArenaBoard, loc: Dictionary) -> void:
+	for key: String in ["props", "containers", "doors", "exits", "npcs"]:
+		for t: Variant in loc.get(key, []):
+			var c := (t as Dictionary).get("cell", []) as Array
+			if c.size() == 2:
+				board.occupied[Vector2i(int(c[0]), int(c[1]))] = key
 
 
 ## The front view of furniture that stands against a wall (catalog "fronts"), or "".
@@ -423,7 +466,15 @@ static func _against_wall(board: ArenaBoard, parent: Node3D, art: String, front:
 	var info := manifest()[front] as Dictionary
 	var w := float(info.get("world_width", 1.0)) * scale_
 	var h := float(info.get("world_height", 1.0)) * scale_
-	var fit := minf(1.0, 1.25 / w)   # about a square wide (a little over, as furniture is), never shrunk more
+	# About a square wide (a little over, as furniture is), but just one square when the next square along the wall
+	# has something of its own.
+	var along := Vector2i(wall.y, wall.x)
+	var crowded := false
+	for side: Vector2i in [along, -along]:
+		var n := cell + side
+		crowded = crowded or board.occupied.has(n) or board.grid.has_flag(n, CombatGrid.LOW) or board.door_cells.has(n)
+	var fit := minf(1.0, (0.98 if crowded else 1.25) / w)
+	board.used_faces["%d,%d,%d,%d" % [cell.x + wall.x, cell.y + wall.y, -wall.x, -wall.y]] = true   # no portrait behind it
 	var root := Node3D.new()
 	root.name = "AgainstWall_" + art
 	var n := Vector3(-wall.x, 0, -wall.y)   # into the room
@@ -468,10 +519,11 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	var wall := cell
 	var normal := Vector2i.ZERO
 	if _wall_at(board, cell):
-		for d in FACES:
-			if _open_at(board, cell + d):
-				normal = d
-				break
+		# The side facing the piece's own room first (an area containing its square), then the usual order.
+		for own: bool in [true, false]:
+			for d in FACES:
+				if normal == Vector2i.ZERO and _open_at(board, cell + d) and (not own or _same_area(board, cell, cell + d)):
+					normal = d
 	else:
 		for d in FACES:
 			if _wall_at(board, cell - d):
@@ -480,6 +532,16 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 				break
 	if normal == Vector2i.ZERO:
 		return false
+	# One piece per wall face: a second one moves to another open face of the same wall square if it has one.
+	var key := "%d,%d,%d,%d" % [wall.x, wall.y, normal.x, normal.y]
+	if board.used_faces.has(key) and _wall_at(board, cell):
+		for d in FACES:
+			var k2 := "%d,%d,%d,%d" % [wall.x, wall.y, d.x, d.y]
+			if _open_at(board, cell + d) and not board.used_faces.has(k2):
+				normal = d
+				key = k2
+				break
+	board.used_faces[key] = true
 	var info := manifest()[art] as Dictionary
 	var sp := _sprite(art)
 	sp.billboard = BaseMaterial3D.BILLBOARD_DISABLED
@@ -510,6 +572,13 @@ static func _take_square(board: ArenaBoard, root: Node3D, cell: Vector2i) -> voi
 	root.tree_exiting.connect(func() -> void:
 		if is_instance_valid(board):
 			board.restore_cell(cell))
+
+
+static func _same_area(board: ArenaBoard, a: Vector2i, b: Vector2i) -> bool:
+	for r in board.areas:
+		if r.has_point(a) and r.has_point(b):
+			return true
+	return false
 
 
 static func _wall_at(board: ArenaBoard, c: Vector2i) -> bool:

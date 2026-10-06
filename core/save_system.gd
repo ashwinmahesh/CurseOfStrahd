@@ -3,6 +3,9 @@ extends Node
 ## (plan §10 Phase 3); the mode check lives here so every caller gets it.
 
 var save_dir := "user://saves/"
+## The game's own save slot: the one it was last loaded from or saved to. Quicksave (F5) writes here; a new game
+## starts with none, and its first quicksave makes one.
+var current_slot := ""
 
 
 func can_save() -> bool:
@@ -22,8 +25,15 @@ func save(slot: String) -> Error:
 		return FileAccess.get_open_error()
 	f.store_string(JSON.stringify(GameState.to_dict(), "\t"))
 	f.close()
+	current_slot = slot
 	EventBus.game_saved.emit(slot)
 	return OK
+
+
+## Quicksave (F5, the pause menu): over the game's current slot, or a new slot the first time.
+func quick_save() -> Error:
+	var slot := current_slot if current_slot != "" else "save_%s" % Time.get_datetime_string_from_system().replace(":", "-")
+	return save(slot)
 
 
 ## The fight's round-start save (plan §10 Phase 3): allowed in combat, written only by the game at the start of
@@ -49,6 +59,9 @@ func load_slot(slot: String) -> Error:
 	if int(dict.get("version", 0)) > GameState.SAVE_VERSION:
 		return ERR_FILE_UNRECOGNIZED
 	GameState.from_dict(dict)
+	# The fight's round-start save isn't the game's slot; a quicksave after it still goes to the game's own.
+	if slot != "round_start":
+		current_slot = slot
 	EventBus.game_loaded.emit(slot)
 	return OK
 

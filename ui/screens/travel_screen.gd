@@ -2,8 +2,10 @@ class_name TravelScreen
 extends CanvasLayer
 ## The map of Barovia (plan §5.2, ADR 0010): an illustrated gothic map of the whole valley, painted as the land itself
 ## (art/ui/map/barovia.png, docs/ui/travel_map.md) with the places the party knows and the roads between them drawn on
-## top, so names stay sharp at any zoom. Pick a place to see the way there (roads, hours, when you'd arrive, day or night) and set out.
-## The wheel zooms and dragging pans. Opened from a way out of town (`setting_out`), or just to look (M).
+## top, so names stay sharp at any zoom. Mist covers everything the party hasn't learned of: only the land around
+## known places and along known roads is clear (Travel.known: been there, one road away, or heard of). Pick a place to
+## see the way there (roads, hours, when you'd arrive, day or night) and set out. The wheel zooms and dragging pans.
+## Opened from a way out of town (`setting_out`), or just to look (M).
 
 signal travel_chosen(place_id: String)
 signal closed
@@ -14,6 +16,15 @@ const MAP_SIZE := Vector2(1152, 768)
 const ZOOM_MAX := 2.4
 ## The most the map zooms in on what the party knows when it opens.
 const ZOOM_OPEN_MAX := 1.6
+const FOG_SHADER := preload("res://shaders/ui/map_fog.gdshader")
+## How much land is clear around a known place (a fraction of the art's width; a place's `reveal` overrides it) and
+## along a known road.
+const REVEAL := 0.065
+const REVEAL_ROAD := 0.028
+## Castle Ravenloft on its pillar of rock is seen from everywhere in the valley: [x, y, radius] as fractions.
+const ALWAYS_SEEN: Array[Array] = [[0.695, 0.73, 0.085]]
+## The fog mask over the whole art, in pixels (3:2 like the art).
+const MASK := Vector2i(288, 192)
 
 var st: StoryState
 var here := ""
@@ -22,6 +33,11 @@ var zoom := 1.0
 ## Where the art's top-left corner sits in the panel (zero or less: the art always covers the panel).
 var pan := Vector2.ZERO
 var _map: Control
+## Above the art and its fog: roads, marks and names.
+var _ink: Control
+var _fog: ColorRect
+## The fog mask (1 = clear) as bytes, MASK.x by MASK.y.
+var _reveal := PackedByteArray()
 var _info: VBoxContainer
 var _target := ""
 var _hover := ""
@@ -57,12 +73,29 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	_map.custom_minimum_size = MAP_SIZE
 	_map.clip_contents = true
 	_map.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_map.draw.connect(_draw_map)
+	_map.draw.connect(_draw_art)
 	_map.gui_input.connect(_on_map_input)
 	_map.mouse_exited.connect(func() -> void:
 		_hover = ""
-		_map.queue_redraw())
+		_redraw())
 	holder.add_child(_map)
+	_fog = ColorRect.new()
+	_fog.name = "Fog"
+	_fog.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_fog.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var fm := ShaderMaterial.new()
+	fm.shader = FOG_SHADER
+	fm.set_shader_parameter("panel_size", MAP_SIZE)
+	fm.set_shader_parameter("mist", Color(Look.color("silver"), 0.98))
+	fm.set_shader_parameter("mist_dark", Color(Look.color("slate"), 0.98))
+	_fog.material = fm
+	_map.add_child(_fog)
+	_ink = Control.new()
+	_ink.name = "Ink"
+	_ink.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_ink.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_ink.draw.connect(_draw_map)
+	_map.add_child(_ink)
 	var corners := Control.new()
 	corners.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	holder.add_child(corners)
@@ -72,7 +105,9 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	_info.add_theme_constant_override("separation", 8)
 	row.add_child(_info)
 	_frame_known()
+	_build_reveal()
 	_show_info()
+	_redraw()
 
 
 ## The only travel place in the region of `location_id` (inside a village's tavern: the village), or "".
@@ -129,7 +164,7 @@ func zoom_at(at: Vector2, factor: float) -> void:
 	zoom = z
 	pan = at - frac * MAP_SIZE * zoom
 	_clamp()
-	_map.queue_redraw()
+	_redraw()
 
 
 func _place_at(at: Vector2) -> String:
@@ -176,10 +211,66 @@ func road_points(road: Dictionary, a: Vector2, b: Vector2) -> PackedVector2Array
 
 # --- Drawing ---------------------------------------------------------------------------------------
 
-func _draw_map() -> void:
+func _draw_art() -> void:
 	_map.draw_texture_rect(MAP_ART, Rect2(pan, MAP_SIZE * zoom), false)
 	if st.is_night():
 		_map.draw_rect(Rect2(Vector2.ZERO, MAP_SIZE), Color(Look.color("night_deep"), 0.18))
+
+
+func _redraw() -> void:
+	if _map == null:
+		return
+	_map.queue_redraw()
+	_ink.queue_redraw()
+	var fm := _fog.material as ShaderMaterial
+	fm.set_shader_parameter("pan", pan)
+	fm.set_shader_parameter("art_size", MAP_SIZE * zoom)
+	fm.set_shader_parameter("time_s", _time)
+
+
+## The fog mask: clear around every known place (and Castle Ravenloft) and along every known road, soft at the edges.
+func _build_reveal() -> void:
+	_reveal = PackedByteArray()
+	_reveal.resize(MASK.x * MASK.y)
+	var spots: Array[Vector3] = []
+	for a in ALWAYS_SEEN:
+		spots.append(Vector3(float(a[0]), float(a[1]), float(a[2])))
+	for p in Travel.known(st):
+		var pos := p["pos"] as Array
+		spots.append(Vector3(float(pos[0]), float(pos[1]), float(p.get("reveal", REVEAL))))
+	var by_id := {}
+	for p in Travel.known(st):
+		by_id[str(p["id"])] = p
+	for road in Travel.roads(st):
+		var a := _pos(by_id[str(road["from"])] as Dictionary)
+		var b := _pos(by_id[str(road["to"])] as Dictionary)
+		var pts := road_points(road, a, b)
+		for i in range(0, pts.size(), 2):
+			var f := (pts[i] - pan) / (MAP_SIZE * zoom)
+			spots.append(Vector3(f.x, f.y, REVEAL_ROAD))
+	for s in spots:
+		var c := Vector2(s.x * MASK.x, s.y * MASK.y)
+		var r := s.z * MASK.x
+		for y in range(maxi(0, floori(c.y - r)), mini(MASK.y, ceili(c.y + r) + 1)):
+			for x in range(maxi(0, floori(c.x - r)), mini(MASK.x, ceili(c.x + r) + 1)):
+				var d := Vector2(x + 0.5, y + 0.5).distance_to(c)
+				if d >= r:
+					continue
+				var v := int(255.0 * (1.0 - smoothstep(r * 0.35, r, d)))
+				if v > _reveal[y * MASK.x + x]:
+					_reveal[y * MASK.x + x] = v
+	var img := Image.create_from_data(MASK.x, MASK.y, false, Image.FORMAT_L8, _reveal)
+	(_fog.material as ShaderMaterial).set_shader_parameter("reveal", ImageTexture.create_from_image(img))
+
+
+## How clear the map is at a point (fractions of the art): 0 under fog, 1 in sight.
+func clear_at(frac: Vector2) -> float:
+	var x := clampi(int(frac.x * MASK.x), 0, MASK.x - 1)
+	var y := clampi(int(frac.y * MASK.y), 0, MASK.y - 1)
+	return _reveal[y * MASK.x + x] / 255.0
+
+
+func _draw_map() -> void:
 	var places := {}
 	for p in Travel.known(st):
 		places[str(p["id"])] = p
@@ -194,8 +285,8 @@ func _draw_map() -> void:
 		var pts := road_points(road, _pos(places[str(road["from"])] as Dictionary), _pos(places[str(road["to"])] as Dictionary))
 		var on_route := route_roads.has(id)
 		if on_route:
-			_map.draw_polyline(pts, Color(Look.color("void"), 0.8), 10.0, true)
-			_map.draw_polyline(pts, Look.color("vampire_red"), 4.5, true)
+			_ink.draw_polyline(pts, Color(Look.color("void"), 0.8), 10.0, true)
+			_ink.draw_polyline(pts, Look.color("vampire_red"), 4.5, true)
 		else:
 			_dashed(pts, Color(Look.color("void"), 0.55), 6.0, 11.0, 7.0)
 			_dashed(pts, Look.color("bone"), 3.0, 11.0, 7.0)
@@ -222,17 +313,17 @@ func _mark(at: Vector2, id: String) -> void:
 	var ink := Look.color("void")
 	if id == _at:
 		var pulse := 0.5 + 0.5 * sin(_time * 3.0)
-		_map.draw_circle(at, 15.0 + 5.0 * pulse, Color(Look.color("vampire_red"), 0.45 * (1.0 - pulse)), false, 3.0, true)
-		_map.draw_circle(at, 11.0 + grow, ink, true, -1.0, true)
-		_map.draw_circle(at, 9.0 + grow, Look.color("crimson"), true, -1.0, true)
-		_map.draw_circle(at, 9.0 + grow, Look.color("gilt_light"), false, 2.0, true)
-		_map.draw_circle(at, 3.0, Look.color("gilt_light"), true, -1.0, true)
+		_ink.draw_circle(at, 15.0 + 5.0 * pulse, Color(Look.color("vampire_red"), 0.45 * (1.0 - pulse)), false, 3.0, true)
+		_ink.draw_circle(at, 11.0 + grow, ink, true, -1.0, true)
+		_ink.draw_circle(at, 9.0 + grow, Look.color("crimson"), true, -1.0, true)
+		_ink.draw_circle(at, 9.0 + grow, Look.color("gilt_light"), false, 2.0, true)
+		_ink.draw_circle(at, 3.0, Look.color("gilt_light"), true, -1.0, true)
 		return
 	if id == _target:
-		_map.draw_circle(at, 15.0 + grow, Look.color("gilt_light"), false, 3.0, true)
-	_map.draw_circle(at, 9.0 + grow, ink, true, -1.0, true)
-	_map.draw_circle(at, 7.0 + grow, Look.color("ui_wine") if id == _target else Look.color("bone"), true, -1.0, true)
-	_map.draw_circle(at, 3.0 + grow * 0.5, ink, true, -1.0, true)
+		_ink.draw_circle(at, 15.0 + grow, Look.color("gilt_light"), false, 3.0, true)
+	_ink.draw_circle(at, 9.0 + grow, ink, true, -1.0, true)
+	_ink.draw_circle(at, 7.0 + grow, Look.color("ui_wine") if id == _target else Look.color("bone"), true, -1.0, true)
+	_ink.draw_circle(at, 3.0 + grow * 0.5, ink, true, -1.0, true)
 
 
 ## A place's name in pale vellum with a dark outline, like the rest of the UI, put below, above, right or left of its
@@ -269,14 +360,14 @@ func _place_name(font: Font, at: Vector2, text: String, id: String, taken: Array
 	var base := box.position + Vector2(0, asc)
 	if id == _target and id != _at:
 		var plaque := box.grow_individual(10, 3, 10, 3)
-		_map.draw_rect(plaque, Color(Look.color("void"), 0.5), true)
-		_map.draw_rect(plaque.grow(-1.0), Look.color("ui_oxblood"), true)
-		_map.draw_rect(plaque.grow(-1.0), Look.color("gilt"), false, 1.5)
-		_map.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Look.color("gilt_light"))
+		_ink.draw_rect(plaque, Color(Look.color("void"), 0.5), true)
+		_ink.draw_rect(plaque.grow(-1.0), Look.color("ui_oxblood"), true)
+		_ink.draw_rect(plaque.grow(-1.0), Look.color("gilt"), false, 1.5)
+		_ink.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Look.color("gilt_light"))
 		return
 	var colour := Look.color("gilt_light") if id == _at else (Look.color("rose") if id == _hover else Look.color("vellum"))
-	_map.draw_string_outline(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, 7, Color(Look.color("void"), 0.9))
-	_map.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, colour)
+	_ink.draw_string_outline(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, 7, Color(Look.color("void"), 0.9))
+	_ink.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, colour)
 
 
 ## A road's hours on a small black tag with a gilt (or, on the route, crimson) edge. Returns where it went.
@@ -284,9 +375,9 @@ func _tag(at: Vector2, text: String, on_route: bool) -> Rect2:
 	var font := ThemeDB.fallback_font
 	var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13)
 	var r := Rect2(at - sz / 2.0 - Vector2(6, 2), sz + Vector2(12, 4))
-	_map.draw_rect(r, Color(Look.color("ui_black"), 0.9), true)
-	_map.draw_rect(r, Look.color("vampire_red") if on_route else Look.color("gilt_dark"), false, 1.5 if on_route else 1.0)
-	_map.draw_string(font, r.position + Vector2(6, 2 + font.get_ascent(13)), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
+	_ink.draw_rect(r, Color(Look.color("ui_black"), 0.9), true)
+	_ink.draw_rect(r, Look.color("vampire_red") if on_route else Look.color("gilt_dark"), false, 1.5 if on_route else 1.0)
+	_ink.draw_string(font, r.position + Vector2(6, 2 + font.get_ascent(13)), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
 		Look.color("gilt_light") if on_route else Look.color("vellum"))
 	return r
 
@@ -303,7 +394,7 @@ func _dashed(pts: PackedVector2Array, colour: Color, width: float, dash: float, 
 		while t < seg:
 			var step := minf(left, seg - t)
 			if on:
-				_map.draw_line(a.lerp(b, t / seg), a.lerp(b, (t + step) / seg), colour, width, true)
+				_ink.draw_line(a.lerp(b, t / seg), a.lerp(b, (t + step) / seg), colour, width, true)
 			t += step
 			left -= step
 			if left <= 0.0:
@@ -342,7 +433,7 @@ func _on_map_input(ev: InputEvent) -> void:
 		if h != _hover:
 			_hover = h
 		_map.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if h != "" else (Control.CURSOR_DRAG if _dragged else Control.CURSOR_ARROW)
-		_map.queue_redraw()
+		_redraw()
 
 
 func select(place_id: String) -> void:
@@ -352,14 +443,13 @@ func select(place_id: String) -> void:
 	if not pl.is_empty() and not Rect2(Vector2(60, 60), MAP_SIZE - Vector2(120, 120)).has_point(_pos(pl)):
 		pan += MAP_SIZE / 2.0 - _pos(pl)
 		_clamp()
-	_map.queue_redraw()
+	_redraw()
 	_show_info()
 
 
 func _process(delta: float) -> void:
 	_time += delta
-	if _map != null:
-		_map.queue_redraw()
+	_redraw()
 
 
 # --- The side panel --------------------------------------------------------------------------------
