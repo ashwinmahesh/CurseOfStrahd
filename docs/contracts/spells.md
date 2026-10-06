@@ -84,3 +84,24 @@ Dancing Lights, Mage Hand), `dash` (Expeditious Retreat), `heal_one` (Aura of Vi
 Shield (when hit or targeted by Magic Missile), Hellish Rebuke (after being damaged), Counterspell (data only:
 monsters' spells resolve at once). Any one-action spell can be readied (hotbar right-click → Ready): it's cast and
 its slot spent, held with Concentration, and released at the first enemy to come within range.
+
+## Recipe keys added for the Phase 4 spells
+
+- Smites: `on_hit_spell`, `on_hit_melee_only` (default true), `on_hit_ranged_only`, `on_miss_too`, `replaces_weapon_damage`,
+  `damage_bonus_vs`; a smite with `save` rolls it on the hit, with `secondary` bursts around the target
+  (`exclude_target`), otherwise its effects land on "hit".
+- Effect params: `target: caster_vs` (a mark the caster carries, `vs: target`), `turn_damage` {dice, type, when},
+  `turn_temp_hp` ("mod" or a number), `ends_without_temp_hp`, `repeat_save: manual` (only code repeats it).
+- Saves: `save_advantage_min_size`, `fighting_auto_success`, `auto_fail_types`.
+- Areas: `area.shape: wall` (a straight wall along the cast direction), `area.origin_size` (an Emanation around something
+  placed at the point).
+- Zones: `per_square` trigger (Spike Growth), `start_damage` (no save, start of turn), `charges` / `charges_per_slot`,
+  `damage_cap`, `revive_downed`, `caster_near`, `caster_effects`, `side_ft` (Wall of Fire), `storm_radius`, `terrain_cost`,
+  `deflects_missiles`, `resolve_on_cast`, `caster_turn_ends`, `rounds`.
+- Objects: `kind` hound and vine, `reach` (how far it strikes), `rules.bite`.
+- Sustained actions: `disengage`, `compel`, `once_per_turn`, `at_point` with `within_object`.
+- Summons: SummonBlocks builds Find Steed, Summon Beast, Giant Insect, Summon Aberration, Summon Construct and Summon
+  Elemental from the slot level and the cast-time choice.
+- Code handlers (combat/spell_specials.gd): Polymorph (combat/shape_change.gd), Banishment, Otiluke's Resilient Sphere,
+  Dimension Door, Heat Metal, Confusion, Compelled Duel, Compulsion, Dominate Beast, Dissonant Whispers, Eldritch Blast's
+  beams, Sorcerous Burst.

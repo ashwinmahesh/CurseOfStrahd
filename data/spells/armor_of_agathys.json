@@ -35,6 +35,23 @@
     "temp_hp": 5,
     "text": "The Cold damage dealt to attackers also rises by 5 for each slot level above 1."
   },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "ends_without_temp_hp": true,
+        "modifiers": [
+          {
+            "stat": "retaliate",
+            "value": "5*slot_level",
+            "type": "cold",
+            "within": 5
+          }
+        ]
+      }
+    }
+  ],
   "tags": [
     "defense"
   ],

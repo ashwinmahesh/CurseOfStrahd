@@ -249,7 +249,7 @@
           "text": "An event in your past left an indelible mark on you. As a Bonus Action you can unleash that magic for 1 minute: the spell save DC of your Sorcerer spells increases by 1, and you have Advantage on the attack rolls of Sorcerer spells you cast. You can do this twice, regaining both uses on a Long Rest.",
           "action": "bonus_action",
           "uses_resource": "innate_sorcery",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -262,7 +262,7 @@
           "summary": "Sorcery Points equal to your Sorcerer level; turn them into spell slots or slots into points.",
           "text": "You have Sorcery Points equal to your Sorcerer level, as the Sorcery Points column shows, and regain all of them on a Long Rest. As a Bonus Action you can create a spell slot by spending points (2 for a level 1 slot, 3 for level 2, 5 for level 3, 6 for level 4, 7 for level 5; no higher than level 5). You can also expend a spell slot (no action required) to gain points equal to its level. Slots you create vanish when you finish a Long Rest.",
           "uses_resource": "sorcery_points",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "metamagic",
@@ -280,74 +280,74 @@
                 "name": "Careful Spell (1 point)",
                 "summary": "Chosen creatures automatically succeed on the spell's save and take no damage where a success means half.",
                 "text": "When you cast a spell that forces other creatures to make a saving throw, you can protect some of them: choose a number of them up to your Charisma modifier (minimum one). They automatically succeed on the save, and they take no damage if they would normally take half damage on a success.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "distant_spell",
                 "name": "Distant Spell (1 point)",
                 "summary": "Double the range of a spell with a range of 5 feet or more, or give a Touch spell a 30-foot range.",
                 "text": "When you cast a spell with a range of at least 5 feet, you can double its range. When you cast a spell with a range of Touch, you can make its range 30 feet instead.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "empowered_spell",
                 "name": "Empowered Spell (1 point)",
                 "summary": "Reroll up to your Charisma modifier in damage dice and use the new rolls; works with another option.",
                 "text": "When you roll damage for a spell, you can reroll a number of the damage dice up to your Charisma modifier (minimum one) and must use the new rolls. You can use this even if you've already used a different Metamagic option on the spell.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "extended_spell",
                 "name": "Extended Spell (1 point)",
                 "summary": "Double a spell's duration of 1 minute or more (up to 24 hours) and gain Advantage on its Concentration saves.",
                 "text": "When you cast a spell with a duration of 1 minute or longer, you can double its duration to a maximum of 24 hours. If it requires Concentration, you have Advantage on saving throws you make to keep it.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "heightened_spell",
                 "name": "Heightened Spell (2 points)",
                 "summary": "One target has Disadvantage on its saves against the spell.",
                 "text": "When you cast a spell that forces a creature to make a saving throw, you can give one target of the spell Disadvantage on its saves against it.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "quickened_spell",
                 "name": "Quickened Spell (2 points)",
                 "summary": "Cast a spell that takes an action as a Bonus Action (not if you've cast a level 1+ spell this turn).",
                 "text": "When you cast a spell that has a casting time of an action, you can change the casting time to a Bonus Action for this casting. You can't do so if you've already cast a level 1+ spell on the current turn, nor can you cast a level 1+ spell on this turn after doing so.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "seeking_spell",
                 "name": "Seeking Spell (1 point)",
                 "summary": "If the spell's attack roll misses, reroll it; works with another option.",
                 "text": "If you make an attack roll for a spell and miss, you can reroll the d20 and must use the new roll. You can use this even if you've already used a different Metamagic option on the spell.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "subtle_spell",
                 "name": "Subtle Spell (1 point)",
                 "summary": "Cast without Verbal, Somatic or Material components, except costly or consumed ones.",
                 "text": "When you cast a spell, you can cast it without any Verbal, Somatic or Material components, except Material components that are consumed by the spell or have a cost specified in it.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "transmuted_spell",
                 "name": "Transmuted Spell (1 point)",
                 "summary": "Swap a spell's Acid, Cold, Fire, Lightning, Poison or Thunder damage for another type from that list.",
                 "text": "When you cast a spell that deals Acid, Cold, Fire, Lightning, Poison or Thunder damage, you can change that damage type to another of the listed types.",
-                "implemented": "text"
+                "implemented": "engine"
               },
               {
                 "id": "twinned_spell",
                 "name": "Twinned Spell (1 point)",
                 "summary": "Raise the effective level of a spell that can target one more creature per higher slot level by 1.",
                 "text": "When you cast a spell, such as Charm Person, that can target an additional creature when cast with a higher-level slot, you can increase the spell's effective level by 1.",
-                "implemented": "text"
+                "implemented": "engine"
               }
             ]
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -422,7 +422,7 @@
           "name": "Sorcery Incarnate",
           "summary": "With no Innate Sorcery uses left, spend 2 Sorcery Points to activate it; while it's active you can use two Metamagic options on a spell.",
           "text": "If you have no uses of Innate Sorcery left, you can use it anyway by spending 2 Sorcery Points when you take the Bonus Action to activate it. While your Innate Sorcery is active, you can use up to two of your Metamagic options on each spell you cast.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

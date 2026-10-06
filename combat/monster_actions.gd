@@ -83,7 +83,7 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 			continue
 		if rd.has("max_size") and Creature.SIZES.find(t.creature.size) > Creature.SIZES.find(StringName(str(rd["max_size"]))):
 			continue
-		if bool(rd.get("immune_on_success", false)) and t.has_meta("immune_%s_%s" % [src.id, act_name]):
+		if bool(rd.get("immune_on_success", false)) and t.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [src.id, act_name])):
 			continue
 		if rd.has("save"):
 			var sv := rd["save"] as Dictionary
@@ -96,7 +96,7 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 			if test.success:
 				e.log.add("info", "%s resists %s" % [t.name(), act_name], t.id, [test.describe()])
 				if bool(rd.get("immune_on_success", false)):
-					t.set_meta("immune_%s_%s" % [src.id, act_name], true)
+					t.set_meta(ClassFeatures.meta_key("immune_%s_%s" % [src.id, act_name]), true)
 				continue
 		match str(rd["do"]):
 			"condition":
@@ -134,9 +134,16 @@ func apply_riders(src: Combatant, t: Combatant, riders: Array, by_type: Dictiona
 ## turn, a minute, or until something ends it.
 func _timed_condition(src: Combatant, t: Combatant, cond: String, until: String, label: String, mods: Array) -> void:
 	var e := enc()
-	var fx := Effect.new("%s (%s)" % [cond.capitalize(), label], &"monster", "%s:%s" % [src.id, label])
+	var fx := Effect.new("%s (%s)" % [cond.capitalize(), label] if cond != "" else label, &"monster", "%s:%s" % [src.id, label])
 	fx.caster_id = src.id
-	fx.conditions.append(StringName(cond))
+	if cond != "":
+		fx.conditions.append(StringName(cond))
+	# "Until the end of your next turn" for a summon's rider means its summoner's turn (Fell Glare).
+	if until == "summoner_turn_end":
+		var owner := e.get_c(str(src.get_meta("summoner", src.id)))
+		if owner != null:
+			src = owner
+		until = "source_turn_end"
 	for md: Variant in mods:
 		fx.modifiers.append(Modifier.make((md as Dictionary).duplicate(true), label, &"monster"))
 	match until:
@@ -160,7 +167,7 @@ func _timed_condition(src: Combatant, t: Combatant, cond: String, until: String,
 		_:
 			fx.ends = Effect.Ends.NEVER
 	if t.creature.add_effect(fx):
-		e.log.add("condition", "%s is %s (%s)" % [t.name(), cond.capitalize(), label], t.id)
+		e.log.add("condition", ("%s is %s (%s)" % [t.name(), cond.capitalize(), label]) if cond != "" else "%s is hindered (%s)" % [t.name(), label], t.id)
 		if cond in ["incapacitated", "paralyzed", "stunned", "unconscious"]:
 			e.features.end_turning_from(t)
 
@@ -217,6 +224,10 @@ func release_engulf(t: Combatant) -> void:
 ## Hit Point maximum reduction (Life Drain, the Spawn's Bite): lasts until a Long Rest; 0 means death.
 func drain_max_hp(t: Combatant, amount: int, label: String) -> void:
 	var e := enc()
+	# Aura of Life: Hit Point maximums can't be reduced inside it.
+	if t.creature.has_flag("no_max_hp_reduction"):
+		e.log.add("info", "%s's Hit Point maximum holds (%s)" % [t.name(), label], t.id)
+		return
 	var fx := Effect.new("%s (drained)" % label, &"monster", "drain_max_hp")
 	fx.stack_key = "drain_max_hp:%d" % fx.id
 	fx.ends = Effect.Ends.LONG_REST
@@ -377,15 +388,24 @@ func turn_start(c: Combatant) -> void:
 			var aura := (tr as Dictionary).get("aura", {}) as Dictionary
 			if aura.is_empty() or str(aura.get("trigger", "start_turn")) != "start_turn":
 				continue
-			if str(aura.get("affects", "others")) == "enemies" and not o.hostile_to(c):
+			_aura_on(o, c, tr as Dictionary)
+	# Auras that act at the start of their owner's turn (the Aberrant Spirit's Whispering Aura).
+	if c.can_act():
+		for tr2: Variant in traits(c):
+			var aura2 := (tr2 as Dictionary).get("aura", {}) as Dictionary
+			if aura2.is_empty() or str(aura2.get("trigger", "")) != "own_turn_start":
 				continue
-			if e.distance(o, c) > int(aura.get("radius", 5)):
-				continue
-			var label := str((tr as Dictionary).get("name", "Aura"))
-			if c.has_meta("immune_%s_%s" % [o.id, label]):
-				continue
-			apply_riders(o, c, [{"do": "condition", "condition": str(aura["condition"]), "save": aura["save"], "until": str(aura.get("until", "target_turn_start")),
-				"immune_on_success": bool(aura.get("immune_on_success", false))}], {}, label)
+			for o2 in e.living():
+				if o2 != c and not o2.is_down():
+					_aura_on(c, o2, tr2 as Dictionary)
+	# Regeneration (the Slaad spirit): Hit Points back at the start of its turn while it has at least 1.
+	for tr3: Variant in traits(c):
+		var regen := int((tr3 as Dictionary).get("regenerate", 0))
+		if regen > 0 and c.creature.hp >= 1 and not c.creature.has_flag("cant_regain_hp"):
+			var healed := c.creature.heal(regen, str((tr3 as Dictionary).get("name", "Regeneration")))
+			if healed > 0:
+				e.log.add("heal", "%s regenerates %d Hit Points" % [c.name(), healed], c.id)
+				e.events.append({"type": "heal", "id": c.id, "amount": healed})
 	if c.has_meta("engulfed_by"):
 		var by := e.get_c(str(c.get_meta("engulfed_by")))
 		if by == null or by.is_down() or not e.grapples.has(c.id):
@@ -397,6 +417,33 @@ func turn_start(c: Combatant) -> void:
 				e.deal_damage(by, c, [{"amount": int(rolled["total"]), "type": str(dmg["type"])}], false, "Engulf", [str(rolled["text"])])
 	if sunlight(c) == "hypersensitivity" and e.in_sunlight(c):
 		e.deal_damage(null, c, [{"amount": 20, "type": "radiant"}], false, "Sunlight", ["Sunlight Hypersensitivity"])
+
+
+## One aura from `o` reaching `c`: a save, then a timed condition or hindrance (Stench, Festering Aura, Stony Lethargy)
+## or damage (Whispering Aura).
+func _aura_on(o: Combatant, c: Combatant, tr: Dictionary) -> void:
+	var e := enc()
+	var aura := tr.get("aura", {}) as Dictionary
+	if str(aura.get("affects", "others")) == "enemies" and not o.hostile_to(c):
+		return
+	if e.distance(o, c) > int(aura.get("radius", 5)):
+		return
+	var label := str(tr.get("name", "Aura"))
+	if c.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [o.id, label])):
+		return
+	if aura.has("damage"):
+		var sv := aura["save"] as Dictionary
+		var ab := StringName(str(sv["ability"]))
+		var test := c.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], label, c.name()])
+		if test.success:
+			e.log.add("info", "%s resists %s" % [c.name(), label], c.id, [test.describe()])
+			return
+		var dmg := aura["damage"] as Dictionary
+		var rolled := e._roll_damage_dice(str(dmg["dice"]), false, 0, label)
+		e.deal_damage(o, c, [{"amount": int(rolled["total"]), "type": str(dmg["type"])}], false, label, [test.describe(), str(rolled["text"])])
+		return
+	apply_riders(o, c, [{"do": "condition", "condition": str(aura.get("condition", "")), "save": aura["save"], "until": str(aura.get("until", "target_turn_start")),
+		"immune_on_success": bool(aura.get("immune_on_success", false)), "modifiers": aura.get("modifiers", [])}], {}, label)
 
 
 ## End of `c`'s turn: Incorporeal Movement inside an object (a wall square) costs 1d10 Force.
@@ -614,6 +661,13 @@ func _fey_step(c: Combatant, act: Dictionary) -> CombatResult:
 	c.bonus_available = false
 	var r := CombatResult.new()
 	e.spells._teleport(c, cell, r)
+	_fey_step_rider(c, act, r)
+	return r
+
+
+## What Fey Step does after the teleport, by the spirit's mood.
+func _fey_step_rider(c: Combatant, act: Dictionary, r: CombatResult) -> void:
+	var e := enc()
 	match str(act.get("mood", "")):
 		"fuming":
 			e.add_mark({"kind": "advantage_next_attack", "attacker": c.id, "source": "Fey Step (Fuming)", "expires_owner": c.id, "expires_phase": "end", "consume": true})
@@ -629,7 +683,6 @@ func _fey_step(c: Combatant, act: Dictionary) -> CombatResult:
 			o2.rules = {"darkness": true, "obscured": "heavy", "triggers": []}
 			o2.rounds_left = 1
 			e.spells.zones.add(o2, r)
-	return r
 
 
 ## Parry (bandit captain, noble, veteran): +AC against one melee hit while holding a weapon. Offered like Shield.

@@ -48,7 +48,8 @@
   "zone": {
     "triggers": [
       "cast"
-    ]
+    ],
+    "deflects_missiles": true
   },
   "tags": [
     "damage",

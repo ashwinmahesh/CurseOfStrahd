@@ -55,6 +55,17 @@ static func caster_with(e: Encounter, spell_ids: Array, cell: Vector2i, level: i
 	return e.add(ch, &"party", cell)
 
 
+## A level 7 wizard (a level 4 slot: the class data reaches level 7) that also knows `spell_ids`, for level 4 spells.
+static func high_caster(e: Encounter, spell_ids: Array, cell: Vector2i) -> Combatant:
+	var ch := TestChars.custom("wizard", "human", 7)
+	var entry := ch.spellcasting[0] as Dictionary
+	var prepared := entry["prepared"] as Array
+	for s: Variant in spell_ids:
+		if not str(s) in prepared:
+			prepared.append(str(s))
+	return e.add(ch, &"party", cell)
+
+
 ## A feeble foe for spell tests: every save and AC as low as they go, plenty of Hit Points.
 static func punching_bag(e: Encounter, cell: Vector2i, hp: int = 80, kind: String = "humanoid") -> Combatant:
 	var m := TestChars.dummy(hp, false, {"type": kind, "ac": 1,

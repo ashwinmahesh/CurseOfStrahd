@@ -30,6 +30,19 @@
     "count": 1,
     "description": "a creature you touch"
   },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "death_ward"
+          }
+        ]
+      }
+    }
+  ],
   "tags": [
     "defense"
   ],

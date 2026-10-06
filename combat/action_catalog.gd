@@ -306,6 +306,8 @@ func _sustained(c: Combatant, out: Array[Dictionary]) -> void:
 				targeting = "direction"
 			"move_object":
 				targeting = "point"
+			"move_mark":
+				targeting = "enemy"
 			"heal_one":
 				targeting = "ally"
 		var cost := "bonus" if str(a["cost"]) == "bonus_action" else "action"
@@ -340,6 +342,13 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		a["count"] = int(t.get("count", 1))
 		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"]
 		a["concentration"] = bool((data.get("duration", {}) as Dictionary).get("concentration", false))
+		if c.creature is Character:
+			var mm: Array = []
+			for m: String in SpellCaster.metamagic_known(c.creature as Character):
+				if e.spells._metamagic_check(c, data, [m]) == "":
+					mm.append({"id": m, "label": "%s Spell (%d SP)" % [m.capitalize(), int(SpellCaster.METAMAGIC_COST[m])]})
+			if not mm.is_empty():
+				a["metamagic"] = mm
 		var choice := data.get("choice", {}) as Dictionary
 		if not choice.is_empty() and str(s["id"]) != "command":
 			var opts_list: Array = []
@@ -349,6 +358,14 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["choice_label"] = str(choice.get("label", "Choose"))
 			a["opts"] = {"choice": str((opts_list[0] as Dictionary)["value"])}
 			a["sub"] = str(a["sub"]) + " · " + str((opts_list[0] as Dictionary)["label"])
+		# Polymorph: the Beast form (it must not out-rank the target; "Best fit" picks for you).
+		if str(s["id"]) == "polymorph":
+			var forms: Array = [{"value": "", "label": "Best fit"}]
+			for f in ShapeChange.beast_forms(30.0):
+				forms.append({"value": str(f["id"]), "label": "%s (CR %s)" % [f.get("name", ""), str(f.get("cr", 0))]})
+			a["choices"] = forms
+			a["choice_label"] = "Beast form"
+			a["opts"] = {"choice": ""}
 		if str(s["id"]) == "command":
 			# One slot per word the engine knows (Approach and Drop: deviations.md).
 			for word: String in SpellCaster.COMMAND_WORDS:
@@ -367,6 +384,8 @@ func _spell_targeting(data: Dictionary) -> String:
 			return "none" if str((data["area"] as Dictionary).get("shape", "")) == "emanation" else "direction"
 		return "point"
 	var t := data.get("targets", {}) as Dictionary
+	if str(data.get("id", "")) in ["misty_step", "dimension_door"]:
+		return "place"
 	if str(t.get("kind", "creature")) == "self":
 		return "none"
 	if str(t.get("kind", "")) == "enemy":
@@ -376,12 +395,12 @@ func _spell_targeting(data: Dictionary) -> String:
 	if str(data.get("id", "")) == "spare_the_dying":
 		return "dying"
 	var tags := data.get("tags", []) as Array
-	if data.has("object") or str(data.get("id", "")) in ["misty_step", "summon_fey", "summon_undead"]:
+	if data.has("object") or str(data.get("id", "")) in ["misty_step", "dimension_door"] or str(data.get("id", "")) in SpellCaster.SUMMON_SPELLS:
 		return "place"
 	if str(data.get("id", "")) == "revivify":
 		return "dead"
 	if str(t.get("count", "")) == "any" or int(t.get("count", 1)) > 1 or int((data.get("upcast", {}) as Dictionary).get("targets", 0)) > 0 \
-			or str(data.get("id", "")) in ["magic_missile", "scorching_ray"]:
+			or str(data.get("id", "")) in ["magic_missile", "scorching_ray", "eldritch_blast"]:
 		return "multi"
 	if "healing" in tags or "buff" in tags or "defense" in tags or "restoration" in tags:
 		return "ally"

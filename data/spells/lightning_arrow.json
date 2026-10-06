@@ -35,6 +35,30 @@
     "damage": "1d8",
     "text": "Both the 4d8 and the 2d8 increase."
   },
+  "on_hit_spell": true,
+  "on_hit_melee_only": false,
+  "on_hit_ranged_only": true,
+  "on_miss_too": true,
+  "replaces_weapon_damage": true,
+  "damage": [
+    {
+      "dice": "4d8",
+      "type": "lightning"
+    }
+  ],
+  "miss": "half",
+  "secondary": {
+    "radius": 10,
+    "save": "dex",
+    "save_success": "half",
+    "damage": [
+      {
+        "dice": "2d8",
+        "type": "lightning"
+      }
+    ],
+    "exclude_target": true
+  },
   "tags": [
     "damage"
   ],

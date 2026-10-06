@@ -41,9 +41,14 @@
         {
           "stat": "resistance",
           "value": "necrotic"
+        },
+        {
+          "stat": "flag",
+          "value": "no_max_hp_reduction"
         }
       ]
-    }
+    },
+    "revive_downed": 1
   },
   "tags": [
     "defense",

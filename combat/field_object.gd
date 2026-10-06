@@ -6,7 +6,7 @@ extends RefCounted
 ## that keeps it, and the spell's `zone` rules (what it does to creatures, terrain, sight, sound). SpellZones runs
 ## the rules; the scene draws it from `kind` and `cells`.
 
-enum Kind { ZONE, WEAPON, SPHERE, LIGHTS, HAND, ILLUSION }
+enum Kind { ZONE, WEAPON, SPHERE, LIGHTS, HAND, ILLUSION, HOUND, VINE }
 
 static var _next_id: int = 1
 
@@ -66,6 +66,9 @@ func expired() -> bool:
 
 
 func covers(c: Combatant) -> bool:
+	# An aura for "you and your allies" (Aura of Life, Crusader's Mantle) includes the caster's own space.
+	if follows_caster and c.id == caster_id and str(rules.get("affects", "")) == "allies":
+		return true
 	for cell_ in c.footprint():
 		if cell_ in cells:
 			return true
@@ -81,4 +84,4 @@ func has_trigger(trigger: String) -> bool:
 
 
 static func kind_name(k: Kind) -> String:
-	return ["zone", "weapon", "sphere", "lights", "hand", "illusion"][k]
+	return ["zone", "weapon", "sphere", "lights", "hand", "illusion", "hound", "vine"][k]

@@ -55,7 +55,7 @@
         "name": "Divine Fury",
         "summary": "While raging, the first creature you hit each turn takes an extra 1d6 + half your Barbarian level Necrotic or Radiant damage.",
         "text": "On each of your turns while your Rage is active, the first creature you hit with a weapon or an Unarmed Strike takes extra damage equal to 1d6 plus half your Barbarian level (round down). You choose Necrotic or Radiant each time.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -67,7 +67,7 @@
         "text": "A divine entity helps you keep fighting. You have a pool of d12s for healing yourself: four at level 3, five at 6, six at 12 and seven at 17. As a Bonus Action you can expend any number of them, roll them and regain that many Hit Points. The pool refills when you finish a Long Rest.",
         "action": "bonus_action",
         "uses_resource": "warrior_of_the_gods",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -77,7 +77,7 @@
         "name": "Fanatical Focus",
         "summary": "Once per Rage, reroll a failed saving throw with a bonus equal to your Rage Damage bonus.",
         "text": "Once per active Rage, if you fail a saving throw you can reroll it with a bonus equal to your Rage Damage bonus, and you must use the new roll.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

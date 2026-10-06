@@ -151,6 +151,10 @@
         },
         "height": {
           "type": "integer"
+        },
+        "origin_size": {
+          "type": "integer",
+          "description": "Squares across of what an Emanation at a point spreads from (Conjure Animals' Large pack: 2)."
         }
       }
     },
@@ -490,6 +494,10 @@
           "items": {
             "$ref": "common.schema.json#/$defs/effect_ref"
           }
+        },
+        "exclude_target": {
+          "type": "boolean",
+          "description": "The burst spares the creature it centres on (Lightning Arrow)."
         }
       }
     },
@@ -509,7 +517,8 @@
               "start_turn",
               "end_turn",
               "near_start_turn",
-              "near_end_turn"
+              "near_end_turn",
+              "per_square"
             ]
           }
         },
@@ -598,6 +607,64 @@
             }
           },
           "additionalProperties": false
+        },
+        "resolve_on_cast": {
+          "type": "boolean",
+          "description": "The spell also resolves as usual when cast (Ice Storm), then leaves the area."
+        },
+        "caster_turn_ends": {
+          "type": "integer",
+          "description": "The area ends after this many ends of the caster's turns (2: until the end of your next turn)."
+        },
+        "start_damage": {
+          "$ref": "#/properties/damage",
+          "description": "Damage with no save at the start of a turn in it (Hunger of Hadar's cold)."
+        },
+        "charges": {
+          "type": "integer",
+          "description": "Strikes before it's spent (Cordon of Arrows' ammunition)."
+        },
+        "charges_per_slot": {
+          "type": "integer"
+        },
+        "damage_cap": {
+          "type": "integer",
+          "description": "It ends once it has dealt this much damage (Guardian of Faith: 60)."
+        },
+        "revive_downed": {
+          "type": "integer",
+          "description": "An ally at 0 Hit Points starting its turn inside regains this many (Aura of Life)."
+        },
+        "caster_near": {
+          "type": "object",
+          "description": "Modifiers the caster has while within `radius` ft of its core (Conjure Animals)."
+        },
+        "caster_effects": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/effect_ref"
+          },
+          "description": "Effects on the caster when the area appears."
+        },
+        "side_ft": {
+          "type": "integer",
+          "description": "Wall of Fire: depth of the burning side."
+        },
+        "storm_radius": {
+          "type": "integer",
+          "description": "Call Lightning: radius of the storm cloud bolts can fall under."
+        },
+        "terrain_cost": {
+          "type": "integer",
+          "description": "Feet of movement per foot moved (Plant Growth: 4)."
+        },
+        "deflects_missiles": {
+          "type": "boolean",
+          "description": "Wind Wall: ordinary ranged weapon attacks across it miss."
+        },
+        "rounds": {
+          "type": "integer",
+          "description": "How long it lasts in rounds, when the spell's duration doesn't say."
         }
       }
     },
@@ -615,7 +682,9 @@
             "weapon",
             "sphere",
             "lights",
-            "hand"
+            "hand",
+            "hound",
+            "vine"
           ]
         },
         "range": {
@@ -630,6 +699,10 @@
         "rules": {
           "type": "object",
           "description": "Zone-style rules around the object (Flaming Sphere: save at the end of a turn within 5 ft)."
+        },
+        "reach": {
+          "type": "integer",
+          "description": "How far from the object it can strike (Grasping Vine 30)."
         }
       }
     },
@@ -654,7 +727,10 @@
               "dash",
               "heal_one",
               "aim",
-              "maintain"
+              "maintain",
+              "move_mark",
+              "disengage",
+              "compel"
             ]
           },
           "cost": {
@@ -725,6 +801,17 @@
           },
           "auto": {
             "type": "string"
+          },
+          "once_per_turn": {
+            "type": "boolean"
+          },
+          "at_point": {
+            "type": "boolean",
+            "description": "The area lands on a chosen point (Call Lightning), not from the caster."
+          },
+          "within_object": {
+            "type": "integer",
+            "description": "The point must be within this many feet of the spell's area (Call Lightning's storm)."
           }
         }
       }
@@ -759,6 +846,56 @@
       "type": "string",
       "minLength": 1,
       "description": "The complete rule in our own words: every number and condition a player needs, never copied text."
+    },
+    "on_hit_spell": {
+      "type": "boolean",
+      "description": "Cast as a Bonus Action right after hitting with a weapon or an Unarmed Strike (smites): its damage joins the hit's (doubled on a Critical Hit) and its effects land on the target."
+    },
+    "on_hit_melee_only": {
+      "type": "boolean",
+      "description": "The smite needs a melee hit."
+    },
+    "damage_bonus_vs": {
+      "type": "object",
+      "description": "Extra dice against creature types (Divine Smite: +1d8 against Fiends and Undead).",
+      "properties": {
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dice": {
+          "type": "string"
+        }
+      }
+    },
+    "on_hit_ranged_only": {
+      "type": "boolean",
+      "description": "Only after a hit with a Ranged weapon (Hail of Thorns, Lightning Arrow)."
+    },
+    "on_miss_too": {
+      "type": "boolean",
+      "description": "Also cast after a miss (Lightning Arrow: half damage)."
+    },
+    "replaces_weapon_damage": {
+      "type": "boolean",
+      "description": "The spell's damage replaces the weapon's (Lightning Arrow)."
+    },
+    "save_advantage_min_size": {
+      "type": "string",
+      "description": "Creatures of this size or larger save with Advantage (Ensnaring Strike: large)."
+    },
+    "fighting_auto_success": {
+      "type": "boolean",
+      "description": "A creature you or your companions are fighting succeeds on the save automatically (Enthrall)."
+    },
+    "auto_fail_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Creature types that fail the save automatically (Blight: plant)."
     }
   }
 }

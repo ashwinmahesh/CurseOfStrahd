@@ -18,6 +18,18 @@ static func for_spell(spell_id: String, slot: int, option: String, nums: Diction
 			return undead_spirit(slot, option if option != "" else "skeletal", atk, dc)
 		"find_familiar":
 			return owl()
+		"find_steed":
+			return otherworldly_steed(slot, option if option != "" else "celestial", atk, dc)
+		"summon_beast":
+			return bestial_spirit(slot, option if option != "" else "land", atk)
+		"giant_insect":
+			return giant_insect(slot, option if option != "" else "spider", atk, dc)
+		"summon_aberration":
+			return aberrant_spirit(slot, option if option != "" else "slaad", atk, dc)
+		"summon_construct":
+			return construct_spirit(slot, option if option != "" else "stone", atk, dc)
+		"summon_elemental":
+			return elemental_spirit(slot, option if option != "" else "fire", atk)
 		"animate_dead":
 			var z := Compendium.shared().monster_data(option if option != "" else "zombie")
 			if z.is_empty():
@@ -104,6 +116,225 @@ static func undead_spirit(slot: int, form: String, atk: int, dc: int) -> Diction
 		"immunities": ["necrotic", "poison"], "condition_immunities": ["exhaustion", "frightened", "paralyzed", "poisoned"],
 		"cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 3, "summon": true, "traits": traits, "actions": actions,
 		"ai_profile": "brute", "summary": "A restless dead spirit bound to the caster's will.", "text": "Summon Undead.",
+	}
+
+
+## Otherworldly Steed (Find Steed; Large, the chosen type): AC 10 + level, HP 5 + 10 × level, Speed 60 (Fly 60 from
+## level 4), Otherworldly Slam 1d8 + level of the type's damage, and one Bonus Action a Long Rest by type: Fell Glare
+## (Fiend: Wis save or Frightened until the end of the caster's next turn), Fey Step (Fey: teleport 60 ft), Healing
+## Touch (Celestial: 2d8 + level to a creature within 5 ft).
+static func otherworldly_steed(slot: int, kind: String, atk: int, dc: int) -> Dictionary:
+	var lvl := maxi(2, slot)
+	var dtype := {"celestial": "radiant", "fey": "psychic", "fiend": "necrotic"}.get(kind, "radiant") as String
+	var speed := {"walk": 60}
+	if lvl >= 4:
+		speed["fly"] = 60
+	var bonus: Array = []
+	match kind:
+		"fiend":
+			bonus.append({"id": "fell_glare", "name": "Fell Glare", "do": "save", "uses": {"count": 1, "per": "long"},
+				"save": {"ability": "wis", "dc": dc}, "targets": {"range": 60}, "on_fail": [{"do": "condition", "condition": "frightened", "until": "summoner_turn_end"}],
+				"summary": "A creature within 60 ft makes a Wisdom save or is Frightened until the end of your next turn."})
+		"fey":
+			bonus.append({"id": "fey_step", "name": "Fey Step", "do": "teleport", "teleport": 60, "uses": {"count": 1, "per": "long"},
+				"summary": "Teleports, with its rider, to a space within 60 ft."})
+		_:
+			bonus.append({"id": "healing_touch", "name": "Healing Touch", "do": "heal", "heal": "2d8+%d" % lvl, "range": 5, "uses": {"count": 1, "per": "long"},
+				"summary": "A creature within 5 ft regains 2d8 + %d Hit Points." % lvl})
+	return {
+		"id": "otherworldly_steed", "name": "Otherworldly Steed (%s)" % kind.capitalize(), "size": "large", "type": kind,
+		"ac": 10 + lvl, "hp": {"average": 5 + 10 * lvl, "dice": str(5 + 10 * lvl)}, "speed": speed,
+		"abilities": {"str": 18, "dex": 12, "con": 14, "int": 6, "wis": 12, "cha": 8}, "passive_perception": 11,
+		"cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 1, "summon": true, "steed": true,
+		"traits": [{"id": "life_bond", "name": "Life Bond", "action": "passive", "summary": "Regains what its rider regains from a spell of level 1+ while within 5 ft."}],
+		"actions": [{"id": "otherworldly_slam", "name": "Otherworldly Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 5},
+			"damage": [{"dice": "1d8+%d" % lvl, "type": dtype}], "summary": "Melee spell attack."}],
+		"bonus_actions": bonus, "ai_profile": "brute", "summary": "A loyal spirit steed.", "text": "Find Steed.",
+	}
+
+
+## Bestial Spirit (Summon Beast; Small Beast): AC 11 + level, HP 20 (Air) or 30 + 5 per level above 2; Air flies 60
+## with Flyby, Land climbs 30, Water swims 30; Land and Water have Pack Tactics. Rend 1d8 + 4 + level Piercing,
+## attacks equal to half the level.
+static func bestial_spirit(slot: int, env: String, atk: int) -> Dictionary:
+	var lvl := maxi(2, slot)
+	var speed := {"walk": 30}
+	var traits: Array = []
+	match env:
+		"air":
+			speed["fly"] = 60
+			traits.append({"id": "flyby", "name": "Flyby", "action": "passive", "modifiers": [{"stat": "flag", "value": "flyby"}],
+				"summary": "Doesn't provoke Opportunity Attacks when it flies out of reach."})
+		"water":
+			speed["swim"] = 30
+		_:
+			speed["climb"] = 30
+	if env != "air":
+		traits.append({"id": "pack_tactics", "name": "Pack Tactics", "action": "passive", "modifiers": [{"stat": "flag", "value": "pack_tactics"}],
+			"summary": "Advantage on an attack roll if an ally is within 5 ft of the target."})
+	return {
+		"id": "bestial_spirit", "name": "Bestial Spirit (%s)" % env.capitalize(), "size": "small", "type": "beast",
+		"ac": 11 + lvl, "hp": {"average": (20 if env == "air" else 30) + 5 * (lvl - 2), "dice": str((20 if env == "air" else 30) + 5 * (lvl - 2))},
+		"speed": speed, "abilities": {"str": 18, "dex": 11, "con": 16, "int": 4, "wis": 14, "cha": 5}, "senses": {"darkvision": 60},
+		"cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 0, "summon": true, "traits": traits,
+		"actions": [
+			{"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": "rend", "count": _attacks(lvl)}], "summary": "Rend attacks equal to half the spell's level."},
+			{"id": "rend", "name": "Rend", "kind": "melee", "attack": {"bonus": atk, "reach": 5}, "damage": [{"dice": "1d8+%d" % (4 + lvl), "type": "piercing"}], "summary": "Melee spell attack."},
+		],
+		"ai_profile": "brute", "summary": "A spirit beast bound to the caster's will.", "text": "Summon Beast.",
+	}
+
+
+## Giant Insect (Large Beast): AC 11 + level, HP 30 + 10 per level above 4, Speed 40, Climb 40 (Wasp Fly 40), Spider
+## Climb. Poison Jab (reach 10 ft) 1d6 + 3 + level Piercing + 1d4 Poison, attacks equal to half the level; the
+## spider's Web Bolt (60 ft) 1d10 + 3 + level Bludgeoning and Speed 0 until the start of its next turn; the
+## centipede's Venomous Spew (Bonus Action): a creature within 10 ft makes a Con save or is Poisoned.
+static func giant_insect(slot: int, kind: String, atk: int, dc: int) -> Dictionary:
+	var lvl := maxi(4, slot)
+	var speed := {"walk": 40, "climb": 40}
+	if kind == "wasp":
+		speed["fly"] = 40
+	var actions: Array = [
+		{"id": "poison_jab", "name": "Poison Jab", "kind": "melee", "attack": {"bonus": atk, "reach": 10},
+			"damage": [{"dice": "1d6+%d" % (3 + lvl), "type": "piercing"}, {"dice": "1d4", "type": "poison"}], "summary": "Melee spell attack."},
+	]
+	var multi: Array = [{"action": "poison_jab", "count": _attacks(lvl)}]
+	if kind == "spider":
+		actions.append({"id": "web_bolt", "name": "Web Bolt", "kind": "ranged", "attack": {"bonus": atk, "range": [60]},
+			"damage": [{"dice": "1d10+%d" % (3 + lvl), "type": "bludgeoning"}],
+			"on_hit": [{"do": "condition", "condition": "", "until": "source_turn_start", "modifiers": [{"stat": "speed_set", "value": 0}]}],
+			"summary": "Ranged spell attack; the target's Speed is 0 until the start of the insect's next turn."})
+		multi = [{"action": "poison_jab", "count": _attacks(lvl), "or": ["web_bolt"]}]
+	actions.push_front({"id": "multiattack", "name": "Multiattack", "multiattack": multi, "summary": "Attacks equal to half the spell's level."})
+	var bonus: Array = []
+	if kind == "centipede":
+		bonus.append({"id": "venomous_spew", "name": "Venomous Spew", "do": "save", "save": {"ability": "con", "dc": dc}, "targets": {"range": 10},
+			"on_fail": [{"do": "condition", "condition": "poisoned", "until": "source_turn_start"}],
+			"summary": "A creature within 10 ft makes a Constitution save or is Poisoned until the start of the insect's next turn."})
+	return {
+		"id": "giant_insect", "name": "Giant %s" % kind.capitalize(), "size": "large", "type": "beast",
+		"ac": 11 + lvl, "hp": {"average": 30 + 10 * (lvl - 4), "dice": str(30 + 10 * (lvl - 4))}, "speed": speed,
+		"abilities": {"str": 17, "dex": 13, "con": 15, "int": 4, "wis": 14, "cha": 3}, "senses": {"darkvision": 60},
+		"cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 1, "summon": true,
+		"traits": [{"id": "spider_climb", "name": "Spider Climb", "action": "passive", "modifiers": [{"stat": "flag", "value": "spider_climb"}],
+			"summary": "Climbs difficult surfaces, ceilings included, without a check."}],
+		"actions": actions, "bonus_actions": bonus, "ai_profile": "brute", "summary": "A summoned giant insect.", "text": "Giant Insect.",
+	}
+
+
+## Aberrant Spirit (Medium Aberration): AC 11 + level, HP 40 + 10 per level above 4, immune to Psychic. Beholderkin:
+## Fly 30 and Eye Ray (150 ft) 1d8 + 3 + level Psychic. Mind Flayer: Psychic Slam 1d8 + 3 + level Psychic and a
+## Whispering Aura (Wis save or 2d6 Psychic to chosen creatures within 5 ft at the start of its turn). Slaad: Claw
+## 1d10 + 3 + level Slashing (no healing until the start of its next turn) and Regeneration 5.
+static func aberrant_spirit(slot: int, kind: String, atk: int, dc: int) -> Dictionary:
+	var lvl := maxi(4, slot)
+	var speed := {"walk": 30}
+	var traits: Array = []
+	var attack_id := ""
+	var actions: Array = []
+	match kind:
+		"beholderkin":
+			speed["fly"] = 30
+			attack_id = "eye_ray"
+			actions.append({"id": "eye_ray", "name": "Eye Ray", "kind": "ranged", "attack": {"bonus": atk, "range": [150]},
+				"damage": [{"dice": "1d8+%d" % (3 + lvl), "type": "psychic"}], "summary": "Ranged spell attack."})
+		"mind_flayer":
+			attack_id = "psychic_slam"
+			actions.append({"id": "psychic_slam", "name": "Psychic Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 5},
+				"damage": [{"dice": "1d8+%d" % (3 + lvl), "type": "psychic"}], "summary": "Melee spell attack."})
+			traits.append({"id": "whispering_aura", "name": "Whispering Aura", "action": "passive", "aura": {"radius": 5, "trigger": "own_turn_start",
+				"save": {"ability": "wis", "dc": dc}, "damage": {"dice": "2d6", "type": "psychic"}, "affects": "enemies"},
+				"summary": "At the start of its turn, enemies within 5 ft make a Wisdom save or take 2d6 Psychic damage."})
+		_:
+			attack_id = "claw"
+			actions.append({"id": "claw", "name": "Claw", "kind": "melee", "attack": {"bonus": atk, "reach": 5},
+				"damage": [{"dice": "1d10+%d" % (3 + lvl), "type": "slashing"}],
+				"on_hit": [{"do": "condition", "condition": "", "until": "source_turn_start", "modifiers": [{"stat": "flag", "value": "cant_regain_hp"}]}],
+				"summary": "Melee spell attack; the target can't regain Hit Points until the start of the spirit's next turn."})
+			traits.append({"id": "regeneration", "name": "Regeneration", "action": "passive", "regenerate": 5,
+				"summary": "Regains 5 Hit Points at the start of its turn if it has at least 1."})
+	actions.push_front({"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": attack_id, "count": _attacks(lvl)}],
+		"summary": "Attacks equal to half the spell's level."})
+	return {
+		"id": "aberrant_spirit", "name": "Aberrant Spirit (%s)" % kind.capitalize().replace("_", " "), "size": "medium", "type": "aberration",
+		"ac": 11 + lvl, "hp": {"average": 40 + 10 * (lvl - 4), "dice": str(40 + 10 * (lvl - 4))}, "speed": speed,
+		"abilities": {"str": 16, "dex": 10, "con": 15, "int": 16, "wis": 10, "cha": 6}, "senses": {"darkvision": 60},
+		"immunities": ["psychic"], "cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 0, "summon": true, "traits": traits,
+		"actions": actions, "ai_profile": "brute", "summary": "A spirit from the Far Realm bound to the caster's will.", "text": "Summon Aberration.",
+	}
+
+
+## Construct Spirit (Medium Construct): AC 13 + level, HP 40 + 15 per level above 4, resists Poison, can't be Charmed,
+## Exhausted, Frightened, Paralyzed or Poisoned. Slam 1d8 + 4 + level Bludgeoning. Clay: Berserk Lashing (a Reaction
+## Slam at a random creature within 5 ft when it takes damage). Metal: Heated Body (1d10 Fire to a creature that hits
+## it in melee). Stone: Stony Lethargy (a creature starting its turn within 10 ft makes a Wis save or has half Speed
+## and no Opportunity Attacks until the start of its next turn).
+static func construct_spirit(slot: int, kind: String, atk: int, dc: int) -> Dictionary:
+	var lvl := maxi(4, slot)
+	var traits: Array = []
+	match kind:
+		"clay":
+			traits.append({"id": "berserk_lashing", "name": "Berserk Lashing", "action": "passive",
+				"summary": "Reaction when it takes damage: a Slam against a random creature within 5 ft."})
+		"metal":
+			traits.append({"id": "heated_body", "name": "Heated Body", "action": "passive",
+				"modifiers": [{"stat": "retaliate", "dice": "1d10", "type": "fire", "within": 5}],
+				"summary": "A creature that hits it with a melee attack takes 1d10 Fire damage."})
+		_:
+			traits.append({"id": "stony_lethargy", "name": "Stony Lethargy", "action": "passive", "aura": {"radius": 10, "trigger": "start_turn",
+				"save": {"ability": "wis", "dc": dc}, "condition": "", "until": "target_turn_start", "affects": "enemies",
+				"modifiers": [{"stat": "speed_percent", "value": 50}, {"stat": "flag", "value": "no_opportunity_attacks"}]},
+				"summary": "A creature starting its turn within 10 ft makes a Wisdom save or has half Speed and no Opportunity Attacks."})
+	return {
+		"id": "construct_spirit", "name": "Construct Spirit (%s)" % kind.capitalize(), "size": "medium", "type": "construct",
+		"ac": 13 + lvl, "hp": {"average": 40 + 15 * (lvl - 4), "dice": str(40 + 15 * (lvl - 4))}, "speed": {"walk": 30},
+		"abilities": {"str": 18, "dex": 10, "con": 18, "int": 14, "wis": 11, "cha": 5}, "senses": {"darkvision": 60},
+		"resistances": ["poison"], "condition_immunities": ["charmed", "exhaustion", "frightened", "paralyzed", "poisoned"],
+		"cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 0, "summon": true, "traits": traits,
+		"actions": [
+			{"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": "slam", "count": _attacks(lvl)}], "summary": "Slam attacks equal to half the spell's level."},
+			{"id": "slam", "name": "Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 5}, "damage": [{"dice": "1d8+%d" % (4 + lvl), "type": "bludgeoning"}], "summary": "Melee spell attack."},
+		],
+		"ai_profile": "brute", "summary": "A golem-like spirit bound to the caster's will.", "text": "Summon Construct.",
+	}
+
+
+## Elemental Spirit (Medium Elemental): AC 11 + level, HP 50 + 10 per level above 4, Speed 40 (Earth Burrow 40, Air Fly
+## 40, Water Swim 40), immune to Poison (Fire also to Fire) and to Exhaustion, Paralyzed, Petrified and Poisoned;
+## resists Acid (Water), Lightning and Thunder (Air), Piercing and Slashing (Earth). Slam 1d10 + 4 + level of the
+## element's type.
+static func elemental_spirit(slot: int, kind: String, atk: int) -> Dictionary:
+	var lvl := maxi(4, slot)
+	var speed := {"walk": 40}
+	var res: Array = []
+	var imm: Array = ["poison"]
+	var dtype := "fire"
+	match kind:
+		"air":
+			speed["fly"] = 40
+			res = ["lightning", "thunder"]
+			dtype = "lightning"
+		"earth":
+			speed["burrow"] = 40
+			res = ["piercing", "slashing"]
+			dtype = "bludgeoning"
+		"water":
+			speed["swim"] = 40
+			res = ["acid"]
+			dtype = "cold"
+		_:
+			imm.append("fire")
+	return {
+		"id": "elemental_spirit", "name": "Elemental Spirit (%s)" % kind.capitalize(), "size": "medium", "type": "elemental",
+		"ac": 11 + lvl, "hp": {"average": 50 + 10 * (lvl - 4), "dice": str(50 + 10 * (lvl - 4))}, "speed": speed,
+		"abilities": {"str": 18, "dex": 15, "con": 17, "int": 4, "wis": 10, "cha": 16}, "senses": {"darkvision": 60},
+		"resistances": res, "immunities": imm, "condition_immunities": ["exhaustion", "paralyzed", "petrified", "poisoned"],
+		"cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 2, "summon": true,
+		"actions": [
+			{"id": "multiattack", "name": "Multiattack", "multiattack": [{"action": "slam", "count": _attacks(lvl)}], "summary": "Slam attacks equal to half the spell's level."},
+			{"id": "slam", "name": "Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 5}, "damage": [{"dice": "1d10+%d" % (4 + lvl), "type": dtype}], "summary": "Melee spell attack."},
+		],
+		"ai_profile": "brute", "summary": "A spirit of the elements bound to the caster's will.", "text": "Summon Elemental.",
 	}
 
 

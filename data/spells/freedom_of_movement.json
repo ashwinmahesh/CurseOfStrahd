@@ -36,6 +36,27 @@
   "upcast": {
     "targets": 1
   },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "freedom_of_movement"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "paralyzed"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "restrained"
+          }
+        ]
+      }
+    }
+  ],
   "tags": [
     "buff",
     "defense",

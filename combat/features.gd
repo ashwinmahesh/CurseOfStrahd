@@ -461,6 +461,19 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 	if has_feature(c, "rend_mind"):
 		var rw := "" if ch.resource_left("rend_mind") > 0 or ch.resource_left("psionic_energy") >= 3 else "No uses left"
 		out.append({"id": "rend_mind", "label": "Rend Mind", "sub": "Sneak Attack with a blade: Wis save or Stunned", "why": rw})
+	# Smite spells (Divine Smite, Searing Smite...): cast as a Bonus Action right after a hit.
+	for sp in enc().spells.castable(c):
+		var sd := Compendium.shared().spell_data(str(sp["id"]))
+		if not bool(sd.get("on_hit_spell", false)):
+			continue
+		var sw := ""
+		if not c.bonus_available:
+			sw = "Bonus Action already used"
+		elif c.cast_slot_spell_this_turn and int(sd.get("level", 0)) > 0 and not bool(sp["free"]):
+			sw = "Already cast a spell with a slot this turn"
+		elif int(sd.get("level", 0)) > 0 and not bool(sp["free"]) and enc().spells._lowest_slot(ch, int(sd.get("level", 1))) == 0:
+			sw = "No spell slots left"
+		out.append({"id": "smite:" + str(sp["id"]), "label": str(sd["name"]), "sub": "on your next hit", "why": sw})
 	if has_feature(c, "overchannel"):
 		var uses := int(c.get_meta("overchannel_uses", 0))
 		out.append({"id": "overchannel", "label": "Overchannel", "sub": "max damage on the next level 1-5 spell%s" % ("" if uses == 0 else " · costs Necrotic damage"), "why": ""})
@@ -471,6 +484,7 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 		var mastery := (o["profile"] as WeaponProfile).mastery
 		if mastery in ["push", "topple"] and not out.any(func(x: Dictionary) -> bool: return str(x["id"]) == "skip:" + mastery):
 			out.append({"id": "skip:" + mastery, "label": "Hold back %s" % mastery.capitalize(), "sub": "don't use the mastery this turn", "why": ""})
+	out.append_array(enc().class_features.rider_options(c))
 	return out
 
 
@@ -537,6 +551,7 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 	var e := enc()
 	var p := option["profile"] as WeaponProfile
 	var melee := bool(option["melee"])
+	out.append_array(e.class_features.hit_dice(c, target, option, st))
 	if not c.creature is Character:
 		return out
 	var ch := c.creature as Character
@@ -584,10 +599,106 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 		out.append({"dice": str(ch.class_level_of("rogue")), "type": str(p.damage_type), "label": "Assassinate"})
 	if has_feat(c, "charger") and melee and c.moved and e.current() == c and _once(c, "charger"):
 		out.append({"dice": "1d8", "type": str(p.damage_type), "label": "Charge"})
+	# An armed smite spell: cast now (a Bonus Action and a slot); its dice join the hit's.
+	var sctx := cast_armed_smite(c, melee, false)
+	if not sctx.is_empty():
+		st["smite_ctx"] = sctx
+		var sd := sctx["s"] as Dictionary
+		# Lightning Arrow: the bolt replaces the attack's own damage.
+		if bool(sd.get("replaces_weapon_damage", false)):
+			st["replace_weapon_damage"] = true
+		out.append_array(smite_dice(sctx, target))
 	if c.has_meta("poisoned_weapon") and _once(c, "poison_dose"):
 		c.remove_meta("poisoned_weapon")
 		st["poison_dose"] = true
 	return out
+
+
+## Casts the smite spell `c` armed, if this hit (or miss, for spells with `on_miss_too`) qualifies: a melee or
+## ranged weapon as the spell needs, a Bonus Action and a slot left, no other slot spell this turn. Returns its
+## casting context, or {}.
+func cast_armed_smite(c: Combatant, melee: bool, missed: bool) -> Dictionary:
+	var e := enc()
+	if not c.creature is Character:
+		return {}
+	var ch := c.creature as Character
+	for a: String in c.armed.duplicate():
+		if not a.begins_with("smite:"):
+			continue
+		var sid := a.substr(6)
+		var sd := Compendium.shared().spell_data(sid)
+		if bool(sd.get("on_hit_melee_only", true)) and not melee:
+			continue
+		if bool(sd.get("on_hit_ranged_only", false)) and melee:
+			continue
+		if missed and not bool(sd.get("on_miss_too", false)):
+			continue
+		if not c.bonus_available:
+			return {}
+		var lvl := int(sd.get("level", 1))
+		var free := false
+		for k in e.spells.castable(c):
+			if str(k["id"]) == sid and bool(k["free"]):
+				free = true
+		var slot := lvl if free else e.spells._lowest_slot(ch, lvl)
+		if slot == 0 or (c.cast_slot_spell_this_turn and not free):
+			return {}
+		c.armed.erase(a)
+		c.bonus_available = false
+		if free:
+			ch.spend_resource("spell:%s" % sid)
+		else:
+			ch.expend_slot(slot)
+			c.cast_slot_spell_this_turn = true
+		var conc: Concentration = null
+		if bool((sd.get("duration", {}) as Dictionary).get("concentration", false)):
+			conc = c.creature.begin_concentration(sid, str(sd["name"]))
+		e.spells.trigger_ends(c, "cast_spell")
+		e.log.add("spell", "%s casts %s on the %s (level %d)" % [c.name(), sd["name"], "miss" if missed else "hit", slot], c.id)
+		return {"c": c, "s": sd, "slot": slot, "nums": e.spells.numbers(c, e.spells._entry_any(c, sid)), "conc": conc, "opts": {},
+			"choice": SpellCaster.choice_of(sd, {})}
+	return {}
+
+
+## The extra dice a smite spell adds to the hit: its damage with the slot's extra dice, plus Divine Smite's die
+## against Fiends and Undead.
+func smite_dice(sctx: Dictionary, target: Combatant) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var sd := sctx["s"] as Dictionary
+	var slot := int(sctx["slot"])
+	var lvl := int(sd.get("level", 1))
+	for part: Variant in sd.get("damage", []):
+		var pd := part as Dictionary
+		var base := DiceRoller.parse_expr(str(pd.get("dice", "0")))
+		var n := int(base["count"])
+		var up := str((sd.get("upcast", {}) as Dictionary).get("damage", ""))
+		if up != "" and slot > lvl:
+			n += int(DiceRoller.parse_expr(up)["count"]) * (slot - lvl)
+		out.append({"dice": "%dd%d" % [n, int(base["sides"])], "type": str(pd.get("type", enc().spells._damage_type(sctx, pd))), "label": str(sd["name"])})
+	var vs := sd.get("damage_bonus_vs", {}) as Dictionary
+	if not vs.is_empty() and str(target.creature.creature_type) in (vs.get("types", []) as Array):
+		out.append({"dice": str(vs.get("dice", "1d8")), "type": str((sd.get("damage", [{}]) as Array)[0].get("type", "radiant")), "label": "%s (%s)" % [sd["name"], target.creature.creature_type]})
+	return out
+
+
+## What a smite spell does after its hit (or miss) lands: a burst around the target (Hail of Thorns, Lightning
+## Arrow), a saving throw against its effects (Thunderous, Wrathful, Staggering Smite, Ensnaring Strike), or effects
+## that simply land (Searing, Shining, Blinding Smite).
+func smite_follow_up(sctx: Dictionary, target: Combatant, alive: bool, r: CombatResult) -> void:
+	var e := enc()
+	var sd := sctx["s"] as Dictionary
+	if sd.has("secondary"):
+		e.spells._secondary(sctx, target, r)
+	elif alive and sd.has("save"):
+		var sub := sctx.duplicate()
+		var s2 := sd.duplicate()
+		s2.erase("damage")
+		sub["s"] = s2
+		var one: Array[Combatant] = [target]
+		e.spells._save_spell(sub, one, r)
+	elif alive:
+		e.spells.apply_effect_entries(sctx, target, sd.get("effects", []) as Array, "hit", r)
+	e.spells._finish_concentration(sctx)
 
 
 ## Flat damage bonuses: Great Weapon Master's Heavy Weapon Mastery (+PB on a Heavy weapon hit in the Attack
@@ -598,6 +709,7 @@ func flat_damage_bonus(c: Combatant, _target: Combatant, option: Dictionary, st:
 	if has_feat(c, "great_weapon_master") and "heavy" in p.properties and c.took_attack_action and not bool((st["opts"] as Dictionary).get("reaction", false)):
 		bonus += c.creature.proficiency_bonus()
 		notes.append("Great Weapon Master +%d" % c.creature.proficiency_bonus())
+	bonus += enc().class_features.flat_bonus(c, _target, option, notes)
 	return bonus
 
 
@@ -614,8 +726,23 @@ func damage_reroll_rule(c: Combatant, p: WeaponProfile, entry: Dictionary) -> Di
 
 
 ## After a miss: Studied Attacks (Fighter 13).
-func after_miss(c: Combatant, target: Combatant, _option: Dictionary, _r: CombatResult) -> void:
+func after_miss(c: Combatant, target: Combatant, option: Dictionary, r: CombatResult) -> void:
 	var e := enc()
+	# Lightning Arrow on a miss: half the bolt's damage to the target, then the burst.
+	if str(option.get("kind", "")) in ["weapon", "thrown"] and not bool(option.get("melee", true)):
+		var sctx := cast_armed_smite(c, false, true)
+		if not sctx.is_empty():
+			var total := 0
+			var texts: Array[String] = []
+			var ty := "lightning"
+			for d in smite_dice(sctx, target):
+				var rolled := e._roll_damage_dice(str(d["dice"]), false, 0, str(d["label"]))
+				total += int(rolled["total"])
+				texts.append("%s %s: %s" % [d["label"], d["dice"], rolled["text"]])
+				ty = str(d["type"])
+			texts.append("Half damage on a miss")
+			e.deal_damage(c, target, [{"amount": total / 2, "type": ty, "spell": true}], false, str((sctx["s"] as Dictionary)["name"]), texts)
+			smite_follow_up(sctx, target, target.is_alive(), r)
 	if has_feature(c, "studied_attacks"):
 		e.add_mark({"kind": "advantage_against", "target": target.id, "attacker": c.id, "source": "Studied Attacks",
 			"expires_owner": c.id, "expires_phase": "end", "skip": e.own_turn_skip(c), "consume": true})
@@ -632,6 +759,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 	var opts := st["opts"] as Dictionary
 	var alive := target.is_alive() and not target.is_down()
 	var size_ok := Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large")
+	e.class_features.after_hit(c, target, option, st, r)
 	# Battle Master maneuvers.
 	if st.has("maneuver"):
 		var id := str(st["maneuver"])
@@ -746,6 +874,9 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 			fx12.turn_owner_id = target.id
 			fx12.repeat_save = {"ability": "wis", "dc": rdc, "when": "end"}
 			target.creature.add_effect(fx12)
+	# A smite spell's effects (Searing Smite's burning, Thunderous Smite's push, Hail of Thorns' burst...).
+	if st.has("smite_ctx"):
+		smite_follow_up(st["smite_ctx"] as Dictionary, target, alive, r)
 	# Giant Ancestry riders.
 	match str(st.get("giant", "")):
 		"frosts_chill":

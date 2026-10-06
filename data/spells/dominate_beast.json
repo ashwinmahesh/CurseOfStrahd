@@ -44,9 +44,9 @@
   },
   "effects": [
     {
-      "effect": "condition",
+      "effect": "custom",
       "params": {
-        "condition": "charmed"
+        "id": "dominate"
       }
     }
   ],

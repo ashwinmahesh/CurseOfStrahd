@@ -48,6 +48,12 @@
           {
             "stat": "resistance",
             "value": "cold"
+          },
+          {
+            "stat": "retaliate",
+            "dice": "2d8",
+            "type": "fire",
+            "within": 5
           }
         ]
       }
@@ -61,6 +67,12 @@
           {
             "stat": "resistance",
             "value": "fire"
+          },
+          {
+            "stat": "retaliate",
+            "dice": "2d8",
+            "type": "cold",
+            "within": 5
           }
         ]
       }

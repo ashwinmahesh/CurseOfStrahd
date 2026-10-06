@@ -38,17 +38,17 @@
               "id": "colossus_slayer",
               "name": "Colossus Slayer",
               "summary": "Once per turn, +1d8 damage against a creature missing any Hit Points.",
-              "implemented": "text"
+              "implemented": "engine"
             },
             {
               "id": "horde_breaker",
               "name": "Horde Breaker",
               "summary": "Once per turn, attack a second creature within 5 feet of your target.",
-              "implemented": "text"
+              "implemented": "engine"
             }
           ]
         },
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -67,17 +67,17 @@
               "id": "escape_the_horde",
               "name": "Escape the Horde",
               "summary": "Opportunity Attacks against you have Disadvantage.",
-              "implemented": "text"
+              "implemented": "engine"
             },
             {
               "id": "multiattack_defense",
               "name": "Multiattack Defense",
               "summary": "After a creature hits you, its other attacks against you this turn have Disadvantage.",
-              "implemented": "text"
+              "implemented": "engine"
             }
           ]
         },
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

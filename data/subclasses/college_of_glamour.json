@@ -28,7 +28,7 @@
         "name": "Beguiling Magic",
         "summary": "Charm Person and Mirror Image always prepared; after casting an Enchantment or Illusion spell with a slot, Charm or Frighten a creature within 60 feet.",
         "text": "You always have Charm Person and Mirror Image prepared. Immediately after you cast an Enchantment or Illusion spell using a spell slot, you can have one creature you can see within 60 feet make a Wisdom saving throw against your spell save DC; on a failure it is Charmed or Frightened by you (your choice) for 1 minute, repeating the save at the end of each of its turns. Once used, you need a Long Rest or a use of Bardic Inspiration to do it again.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -40,7 +40,7 @@
         "text": "As a Bonus Action you expend a use of Bardic Inspiration and roll the die. Choose other creatures within 60 feet of you, up to your Charisma modifier (minimum one); each gains Temporary Hit Points equal to twice the roll and can use its Reaction to move up to its Speed without provoking Opportunity Attacks.",
         "action": "bonus_action",
         "uses_resource": "bardic_inspiration",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -51,7 +51,7 @@
         "summary": "Command is always prepared; Bonus Action: cast it without a slot and keep casting it each turn for 1 minute.",
         "text": "You always have Command prepared. As a Bonus Action you can cast Command without a spell slot and take on an unearthly appearance for 1 minute (Concentration). While it lasts you can cast Command as a Bonus Action on each of your turns without a slot, and creatures Charmed by you automatically fail their saves against it. Once used, you need a Long Rest or a level 3+ spell slot to use it again.",
         "action": "bonus_action",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

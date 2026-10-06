@@ -39,6 +39,14 @@
   "upcast": {
     "damage": "1d6"
   },
+  "effects": [
+    {
+      "effect": "custom",
+      "params": {
+        "id": "flee_reaction"
+      }
+    }
+  ],
   "tags": [
     "damage",
     "control"

@@ -19,7 +19,7 @@
         "name": "Combat Inspiration",
         "summary": "A creature holding your Bardic Inspiration die can add it to a weapon's damage, or to its AC as a Reaction against an attack.",
         "text": "A creature that has one of your Bardic Inspiration dice can use it in two more ways. Defense: when an attack roll hits it, it can take a Reaction to roll the die and add the number to its AC against that attack, possibly causing a miss. Offense: right after it hits a target with an attack, it can roll the die and add the number to the attack's damage.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -62,7 +62,7 @@
             "value": 2
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

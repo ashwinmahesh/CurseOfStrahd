@@ -234,7 +234,7 @@
           "text": "You have a pool of healing power holding five times your Paladin level in Hit Points; it refills when you finish a Long Rest. As a Bonus Action you touch a creature (you included) and restore any number of Hit Points from the pool. Instead of healing, you can spend 5 Hit Points' worth from the pool to remove the Poisoned condition from the creature.",
           "action": "bonus_action",
           "uses_resource": "lay_on_hands",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "spellcasting",
@@ -257,7 +257,7 @@
             },
             "replaceable": "long_rest"
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -292,7 +292,7 @@
               }
             ]
           },
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "paladins_smite",
@@ -324,7 +324,7 @@
           "text": "You can channel divine energy twice; one use comes back on a Short Rest and all of them on a Long Rest (a third use at Paladin level 11). Saves against these effects use your spell save DC. Divine Sense: as a Bonus Action, for 10 minutes you sense the location and kind of every Celestial, Fiend and Undead within 60 feet of you, and any place or object within 60 feet that has been consecrated or desecrated.",
           "action": "bonus_action",
           "uses_resource": "paladin_channel_divinity",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "paladin_subclass",
@@ -376,7 +376,7 @@
               "value": 2
             }
           ],
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "faithful_steed",
@@ -414,7 +414,7 @@
               "min": 1
             }
           ],
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -472,7 +472,7 @@
           "id": "aura_of_courage",
           "name": "Aura of Courage",
           "summary": "You and allies in your aura are immune to Frightened.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -483,7 +483,7 @@
           "id": "radiant_strikes",
           "name": "Radiant Strikes",
           "summary": "Melee weapon and Unarmed Strike hits deal an extra 1d8 Radiant damage.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -570,7 +570,7 @@
           "id": "aura_expansion",
           "name": "Aura Expansion",
           "summary": "Your Aura of Protection reaches 30 feet.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

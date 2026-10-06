@@ -68,6 +68,14 @@
       "help": "A Magic action: move the beam up to 60 ft; creatures it moves onto make the save."
     }
   ],
+  "effects": [
+    {
+      "effect": "custom",
+      "params": {
+        "id": "revert_shape"
+      }
+    }
+  ],
   "tags": [
     "damage",
     "light"

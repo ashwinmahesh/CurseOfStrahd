@@ -32,6 +32,32 @@
   },
   "save": "dex",
   "save_success": "none",
+  "object": {
+    "kind": "hound",
+    "range": 30,
+    "rules": {
+      "bite": true,
+      "save": "dex",
+      "damage": [
+        {
+          "dice": "4d8",
+          "type": "force"
+        }
+      ],
+      "reach": 5,
+      "triggers": []
+    }
+  },
+  "sustain": [
+    {
+      "do": "move_object",
+      "cost": "magic",
+      "move": 30,
+      "label": "Move the hound",
+      "sub": "30 ft",
+      "help": "A Magic action: move the hound up to 30 ft."
+    }
+  ],
   "tags": [
     "defense",
     "detection",

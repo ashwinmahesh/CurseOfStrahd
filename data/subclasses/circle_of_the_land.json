@@ -204,7 +204,7 @@
         "text": "As a Magic action you can expend a use of Wild Shape and choose a point within 60 feet of you. Life-giving flowers and thorns fill a 10-foot-radius sphere there: each creature of your choice in it makes a Constitution saving throw against your spell save DC, taking 2d6 Necrotic damage on a failure or half as much on a success, and one creature of your choice in the area regains 2d6 Hit Points. Both grow to 3d6 at Druid level 10 and 4d6 at 14.",
         "action": "action",
         "uses_resource": "wild_shape",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

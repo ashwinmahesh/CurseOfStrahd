@@ -35,6 +35,24 @@
   "upcast": {
     "damage": "1d8"
   },
+  "on_hit_spell": true,
+  "damage": [
+    {
+      "dice": "3d8",
+      "type": "radiant"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "on": "hit",
+        "condition": "blinded",
+        "repeat_save": "end_of_turn",
+        "repeat_ability": "con"
+      }
+    }
+  ],
   "tags": [
     "damage",
     "debuff"

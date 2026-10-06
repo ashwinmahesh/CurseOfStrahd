@@ -20,7 +20,8 @@
   },
   "area": {
     "shape": "emanation",
-    "size": 10
+    "size": 10,
+    "origin_size": 2
   },
   "components": {
     "v": true,
@@ -52,8 +53,29 @@
       "end_turn",
       "moved_into"
     ],
-    "affects": "enemies"
+    "affects": "enemies",
+    "caster_near": {
+      "radius": 5,
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save:str"
+        }
+      ]
+    }
   },
+  "sustain": [
+    {
+      "do": "move_object",
+      "cost": "free",
+      "move": 30,
+      "once_per_turn": true,
+      "not_this_turn": false,
+      "label": "Move the pack",
+      "sub": "30 ft",
+      "help": "While you move on your turn, the spectral pack can move up to 30 ft too; creatures it comes within 10 ft of make the save."
+    }
+  ],
   "tags": [
     "damage",
     "summon"

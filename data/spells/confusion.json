@@ -43,6 +43,24 @@
     "area": 5,
     "text": "The Sphere's radius increases by 5 feet for each slot level above 4."
   },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "repeat_save": "end_of_turn",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "confused"
+          },
+          {
+            "stat": "flag",
+            "value": "no_reactions"
+          }
+        ]
+      }
+    }
+  ],
   "tags": [
     "control"
   ],

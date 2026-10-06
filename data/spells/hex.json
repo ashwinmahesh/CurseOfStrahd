@@ -50,6 +50,21 @@
     {
       "effect": "modifiers",
       "params": {
+        "target": "caster_vs",
+        "modifiers": [
+          {
+            "stat": "extra_damage",
+            "dice": "1d6",
+            "type": "necrotic",
+            "on": "attack",
+            "vs": "target"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
         "modifiers": [
           {
             "stat": "disadvantage",
@@ -57,6 +72,16 @@
           }
         ]
       }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "move_mark",
+      "cost": "bonus_action",
+      "range": 90,
+      "label": "Move Hex",
+      "sub": "to a new creature",
+      "help": "A Bonus Action once the hexed creature drops to 0 Hit Points: curse a new creature within 90 ft."
     }
   ],
   "tags": [

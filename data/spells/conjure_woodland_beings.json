@@ -53,6 +53,16 @@
     ],
     "spare_allies": true
   },
+  "sustain": [
+    {
+      "do": "disengage",
+      "cost": "bonus_action",
+      "not_this_turn": false,
+      "label": "Disengage (nature spirits)",
+      "sub": "Bonus Action",
+      "help": "While the spirits surround you, you can take the Disengage action as a Bonus Action."
+    }
+  ],
   "tags": [
     "damage"
   ],

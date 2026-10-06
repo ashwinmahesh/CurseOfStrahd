@@ -37,7 +37,7 @@
             "always_prepared": true
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -48,7 +48,7 @@
         "summary": "Bonus Action: teleport up to 60 feet from Dim Light or Darkness to another such space, with Advantage on your next melee attack this turn.",
         "text": "While you are entirely within Dim Light or Darkness, you can take a Bonus Action to teleport up to 60 feet to an unoccupied space you can see that is also in Dim Light or Darkness. You then have Advantage on the next melee attack you make before the end of the turn.",
         "action": "bonus_action",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

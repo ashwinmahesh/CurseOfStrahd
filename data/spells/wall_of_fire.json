@@ -55,7 +55,9 @@
       "cast",
       "enter",
       "end_turn"
-    ]
+    ],
+    "side_ft": 10,
+    "obscured": "heavy"
   },
   "tags": [
     "damage",

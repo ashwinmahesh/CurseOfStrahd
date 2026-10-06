@@ -19,7 +19,7 @@
         "name": "Frenzy",
         "summary": "While raging, the first Strength hit each turn after Reckless Attack deals extra d6s equal to your Rage Damage bonus.",
         "text": "If you use Reckless Attack while your Rage is active, the first target you hit on that turn with an attack that uses Strength takes extra damage of the attack's type: roll a number of d6s equal to your Rage Damage bonus and add them.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -29,7 +29,7 @@
         "name": "Mindless Rage",
         "summary": "While raging you are immune to Charmed and Frightened; entering a Rage ends them.",
         "text": "You have Immunity to the Charmed and Frightened conditions while your Rage is active. If you are Charmed or Frightened when you enter your Rage, that condition ends on you.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

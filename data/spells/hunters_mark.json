@@ -33,6 +33,33 @@
   "upcast": {
     "text": "Concentration can last up to 8 hours with a level 3-4 slot and 24 hours with a level 5+ slot."
   },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "caster_vs",
+        "modifiers": [
+          {
+            "stat": "extra_damage",
+            "dice": "1d6",
+            "type": "force",
+            "on": "attack",
+            "vs": "target"
+          }
+        ]
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "move_mark",
+      "cost": "bonus_action",
+      "range": 90,
+      "label": "Move Hunter's Mark",
+      "sub": "to a new creature",
+      "help": "A Bonus Action once the marked creature drops to 0 Hit Points: mark a new creature you can see within 90 ft."
+    }
+  ],
   "tags": [
     "damage",
     "detection"

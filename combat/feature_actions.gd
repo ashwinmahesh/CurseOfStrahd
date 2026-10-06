@@ -69,8 +69,14 @@ func list(c: Combatant) -> Array[Dictionary]:
 	if c.free_move_ft > 0:
 		out.append(_entry("free_move", "Move (no Opportunity Attacks)", "%d ft" % c.free_move_ft, "free", e._turn_check(c), "point",
 			"Movement from Tactical Shift, Cunning Strike or a maneuver: it doesn't provoke Opportunity Attacks.", c.free_move_ft))
+	if c.creature is Monster and c.is_player_controlled():
+		_creature_actions(c, out, aw, bw)
+	# A druid in Wild Shape can leave the form as a Bonus Action.
+	if e.shapes.is_shaped(c) and e.shapes.original(c) is Character and c.is_player_controlled():
+		out.append(_entry("cf:revert_shape", "Leave Wild Shape", "true form", "bonus", bw, "none", "Bonus Action: return to your true form."))
 	if ch == null:
 		return out
+	e.class_features.list(c, out, aw, bw)
 	# Battle Master: Bonus Action maneuvers and Commander's Strike.
 	var die := f().superiority_die(c)
 	if die > 0:
@@ -217,6 +223,71 @@ func list(c: Combatant) -> Array[Dictionary]:
 
 # --- Using them ---------------------------------------------------------------------------------
 
+## A summoned creature the player controls: its stat block's save actions and Bonus Actions (Fey Step, Fell Glare,
+## Healing Touch, Venomous Spew).
+func _creature_actions(c: Combatant, out: Array[Dictionary], aw: String, bw: String) -> void:
+	var ma := enc().monster_actions
+	var data := MonsterActions.data_of(c)
+	for group: String in ["actions", "bonus_actions"]:
+		for raw: Variant in data.get(group, []):
+			var act := raw as Dictionary
+			var cost := "bonus" if group == "bonus_actions" else "action"
+			var why := _first(bw if cost == "bonus" else aw, ma.why_not(c, act))
+			var kind := str(act.get("do", act.get("kind", "")))
+			if act.has("teleport"):
+				kind = "teleport"
+			var tg := act.get("targets", {}) as Dictionary
+			match kind:
+				"save":
+					out.append(_entry("creature:" + str(act["id"]), str(act["name"]), "%s DC %d" % [str((act["save"] as Dictionary)["ability"]).capitalize(), int((act["save"] as Dictionary)["dc"])],
+						cost, why, "enemy", str(act.get("summary", "")), int(tg.get("range", 5))))
+				"teleport":
+					out.append(_entry("creature:" + str(act["id"]), str(act["name"]), "teleport %d ft" % int(act["teleport"]), cost, why, "point",
+						str(act.get("summary", "")), int(act["teleport"])))
+				"heal":
+					out.append(_entry("creature:" + str(act["id"]), str(act["name"]), str(act.get("heal", "")), cost, why, "ally",
+						str(act.get("summary", "")), int(act.get("range", 5))))
+
+
+func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2i) -> CombatResult:
+	var e := enc()
+	var ma := e.monster_actions
+	var act := {}
+	var cost := "action"
+	for group: String in ["actions", "bonus_actions"]:
+		for raw: Variant in MonsterActions.data_of(c).get(group, []):
+			if str((raw as Dictionary).get("id", "")) == act_id:
+				act = raw as Dictionary
+				cost = "bonus" if group == "bonus_actions" else "action"
+	if act.is_empty():
+		return CombatResult.fail("Not available")
+	var r := CombatResult.new()
+	if act.has("teleport"):
+		r = _teleport(c, cell, int(act["teleport"]))
+		if not r.ok:
+			return r
+		# Fey Step's mood rider (Summon Fey).
+		if act.has("mood"):
+			ma._fey_step_rider(c, act, r)
+	elif act.has("save"):
+		if t == null:
+			return CombatResult.fail("Choose a target")
+		ma.save_action(c, act, t, r)
+	elif act.has("heal"):
+		if t == null:
+			t = c
+		var rolled := e._roll_damage_dice(str(act["heal"]), false, 0, str(act["name"]))
+		var healed := t.creature.heal(int(rolled["total"]), str(act["name"]))
+		e.log.add("heal", "%s: %s regains %d Hit Points" % [act["name"], t.name(), healed], c.id, [str(rolled["text"])])
+		e.events.append({"type": "heal", "id": t.id, "amount": healed})
+	ma.spend(c, act)
+	if cost == "bonus":
+		c.bonus_available = false
+	else:
+		e.spend_action(c)
+	return r
+
+
 func perform(c: Combatant, id: String, t: Combatant, point: Vector2) -> CombatResult:
 	var e := enc()
 	var entry := {}
@@ -237,6 +308,10 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2) -> CombatRe
 	match head:
 		"free_move":
 			return e.free_move(c, cell)
+		"creature":
+			return _perform_creature(c, id.substr(9), t, cell)
+		"cf":
+			return e.class_features.perform(c, id.substr(3), t, cell, point)
 		"fast_hands_kit":
 			var keep := c.action_available
 			c.action_available = true
@@ -728,6 +803,9 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 	var out := {}
 	if c == null:
 		return out
+	if "tides_of_chaos" in c.armed:
+		c.armed.erase("tides_of_chaos")
+		out["advantage"] = ["Tides of Chaos"]
 	if "lucky" in c.armed and cr is Character and (cr as Character).resource_left("luck_points") > 0:
 		c.armed.erase("lucky")
 		(cr as Character).spend_resource("luck_points")
@@ -751,11 +829,28 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 ## for each (default: use it), since a save can't pause the fight.
 func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	var e := enc()
-	if e == null or not cr is Character:
+	if e == null:
 		return
 	var c := e.get_c(cr.id)
 	if c == null:
 		return
+	e.class_features.after_d20(c, t)
+	if not cr is Character:
+		return
+	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.
+	if not t.success and t.target > 0 and t.kind == D20Test.Kind.SAVING_THROW:
+		e.class_features.after_failed_save(c, t, keys)
+	if not t.success and t.target > 0:
+		for fx: Effect in cr.effects.duplicate():
+			for m in fx.modifiers:
+				if m.stat == &"inspiration_die" and str(c.reaction_rules.get("inspiration", "auto")) != "never":
+					var v := e.dice.roll_expr(m.text("dice", "1d6"), m.source_name)
+					t.add_bonus(int(v["total"]), m.source_name)
+					cr.remove_effect(fx)
+					e.log.add("info", "%s adds %s (%d)" % [c.name(), m.source_name, int(v["total"])], c.id)
+					break
+			if t.success:
+				break
 	var ch := cr as Character
 	var rule := func(kind: String) -> bool: return str(c.reaction_rules.get(kind, "auto")) != "never"
 	if t.kind == D20Test.Kind.ABILITY_CHECK:

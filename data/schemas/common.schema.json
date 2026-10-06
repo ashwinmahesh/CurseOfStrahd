@@ -215,7 +215,9 @@
             "damage_penalty_die",
             "weapon_override",
             "speed_percent",
-            "size_step"
+            "size_step",
+            "inspiration_die",
+            "retaliate"
           ]
         },
         "value": {

@@ -68,6 +68,8 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `weapon_override` | items, die, ability, damage_type | reshapes a weapon or Unarmed Strike (Shillelagh, Alter Self) |
 | `speed_percent` | value | Speed × value / 100 (Haste 200, Slow 50) |
 | `size_step` | value | one size up or down while it lasts (Enlarge/Reduce, Large Form) |
+| `inspiration_die` | die, on | a die the creature may add to one failed roll (Bardic Inspiration) |
+| `retaliate` | value or dice, type, within | a creature that hits this one with a melee attack from within `within` ft takes the damage (Armor of Agathys `5*slot_level` Cold, Fire Shield 2d8) |
 
 ### `when` filters
 `armor`: `any` (wearing any armor), `none`, `light`, `medium`, `heavy`. `shield`: true/false.

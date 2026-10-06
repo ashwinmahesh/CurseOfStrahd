@@ -62,7 +62,7 @@
         "text": "You have a pool of d6s equal to 1 plus your Warlock level, refilled on a Long Rest. As a Bonus Action you can heal yourself or one creature you can see within 60 feet by expending dice from the pool, at most a number equal to your Charisma modifier (minimum one) at a time; roll them and the creature regains that many Hit Points.",
         "action": "bonus_action",
         "uses_resource": "healing_light",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -78,7 +78,7 @@
             "value": "radiant"
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

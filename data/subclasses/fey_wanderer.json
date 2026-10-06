@@ -36,7 +36,7 @@
         "name": "Dreadful Strikes",
         "summary": "Once per turn per creature, a weapon hit deals an extra 1d4 Psychic damage (1d6 at level 11).",
         "text": "You can augment your weapon strikes with mind-scarring magic from the Feywild. When you hit a creature with a weapon, you can deal an extra 1d4 Psychic damage to it; a creature can take this extra damage only once per turn. The die becomes a d6 at Ranger level 11.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -92,7 +92,7 @@
             ]
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

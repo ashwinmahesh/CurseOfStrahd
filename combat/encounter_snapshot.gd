@@ -20,7 +20,7 @@ static func capture(e: Encounter) -> Dictionary:
 			cd["name"] = m.name
 			cd["state"] = m.state_to_dict()
 			# Summoned creatures' stat blocks are built when they're cast (Summon Fey), so they travel with the save.
-			if Compendium.shared().monster_data(str(m.data.get("id", ""))).is_empty():
+			if Compendium.shared().monster_data(str(m.data.get("id", ""))).is_empty() or m.data.has("shape_of"):
 				cd["monster_data"] = m.data.duplicate(true)
 		# Feature and monster state kept on the combatant (Portent's dice, a werewolf's form, Recharge, a severed part).
 		var metas := {}
@@ -59,7 +59,7 @@ static func capture(e: Encounter) -> Dictionary:
 		log.append(en.duplicate(true))
 	return {"version": 1, "rows": rows, "combatants": cbs, "order": order, "round": e.round_no, "marks": e.marks.duplicate(true),
 		"grapples": e.grapples.duplicate(), "studied": e.studied.duplicate(), "title": e.title, "log": log,
-		"spells": e.spells.to_dict(), "light": e.ambient_light, "sunlit": e.sunlit}
+		"spells": e.spells.to_dict(), "shapes": e.shapes.to_dict(), "light": e.ambient_light, "sunlit": e.sunlit}
 
 
 ## Rebuilds the fight; `party` supplies the party's Character objects (from the loaded story) by id when present.
@@ -106,6 +106,7 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 		c.controller = StringName(str(cd.get("controller", str(c.controller))))
 		c.has_acted = bool(cd.get("has_acted", false))
 		loaded.append(creature)
+	e.shapes.from_dict(d.get("shapes", {}) as Dictionary, by_id)
 	Creature.relink_concentration(loaded, saved)
 	e.order.clear()
 	for id: Variant in d["order"]:
