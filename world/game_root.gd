@@ -15,6 +15,7 @@ var dialogue: DialogueUI = null
 var loot: LootWindow = null
 var _hover := Vector2i(-1, -1)
 var _move_repeat := 0.0
+var _dialogue_ref := ""
 
 
 func _ready() -> void:
@@ -35,7 +36,15 @@ func _ready() -> void:
 	hud.sheet_requested.connect(func(i: int) -> void: open_screen("sheet", i))
 	hud.command.connect(_command)
 	var where := st.location if st.location != "" else FIRST_LOCATION
-	enter_location(where, "" if st.location == where else "default")
+	var spawn := "" if st.location == where else "default"
+	# Captures (tools/capture) may start anywhere: --location=<id> [--spawn=<name>].
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--location="):
+			where = a.get_slice("=", 1)
+			spawn = "default"
+		elif a.begins_with("--spawn="):
+			spawn = a.get_slice("=", 1)
+	enter_location(where, spawn)
 	# A round-start save puts the party back into its fight.
 	var snap := GameState.combat_snapshot
 	if not snap.is_empty() and str(snap.get("location", "")) == where:
@@ -198,6 +207,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	if ref == "" or dialogue != null:
 		return
 	ModeController.force(ModeController.Mode.DIALOGUE)
+	_dialogue_ref = ref
 	dialogue = DialogueUI.new()
 	add_child(dialogue)
 	dialogue.ended.connect(_dialogue_ended)
@@ -213,6 +223,7 @@ func _dialogue_ended(combat: String) -> void:
 	view.refresh_npcs()
 	_refresh()
 	if combat != "":
+		view.hide_npcs_of(_dialogue_ref)
 		view.start_encounter(combat)
 	else:
 		view.check_flag_encounters()
@@ -271,6 +282,16 @@ func close_screen() -> void:
 	_refresh()
 
 
+## Plays a Narrator trigger here (rests, dreams). Returns the line, or "".
+func narrate_key(key: String) -> String:
+	if view == null:
+		return ""
+	var text := narrator.line(key, st, st.leader_character())
+	if text != "":
+		hud.narrate(text)
+	return text
+
+
 ## Rebuilds the current location (after a rest or level up changes what's shown).
 func rebuild() -> void:
 	enter_location(st.location, "")
@@ -286,3 +307,35 @@ func _quick_load() -> void:
 		get_tree().reload_current_scene()
 	else:
 		hud.toast("No quick save yet.")
+
+
+# --- Captures -------------------------------------------------------------------------------------
+
+## The capture tool's sequence (make capture SCENE=res://scenes/game.tscn): exploring, a conversation at its first
+## choice, then each party screen.
+func capture_shots(tool: Node, out: String) -> void:
+	await tool.call("wait_frames", 20)
+	tool.call("_shot", out + "_1_explore.png")
+	var shown := view.get("_npc_shown") as Array
+	if not shown.is_empty():
+		var spec := (shown[0] as Dictionary)["spec"] as Dictionary
+		start_dialogue(str(spec.get("dialogue", "")), str(spec["npc"]))
+		for i in 30:
+			if dialogue == null or not dialogue.options_shown.is_empty():
+				break
+			dialogue.call("_advance")
+			await tool.call("wait_frames", 2)
+		await tool.call("wait_frames", 10)
+		tool.call("_shot", out + "_2_dialogue.png")
+		if dialogue != null:
+			dialogue.queue_free()
+			dialogue = null
+	var n := 3
+	for kind: String in ["sheet", "inventory", "journal", "party", "rest"]:
+		open_screen(kind, 2 if kind == "sheet" else 0)
+		if kind == "sheet":
+			((screen as CharacterSheetScreen).get("_frame") as Node).find_children("*", "TabContainer", true, false)[0].set("current_tab", 3)
+		await tool.call("wait_frames", 10)
+		tool.call("_shot", out + "_%d_%s.png" % [n, kind])
+		n += 1
+	close_screen()

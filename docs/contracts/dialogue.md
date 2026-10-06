@@ -40,6 +40,8 @@ take item_id [qty]                 Removes items.
 gold +25 / gold -10                Party money in gp.
 attitude npc_id friendly           Sets an NPC's attitude (hostile, indifferent, friendly; 2024 Influence).
 xp milestone                       Milestone advancement: every party member may level up (plan §5.6).
+sacrifice                          The player picks a living party member, who dies for good and leaves the
+                                   party (StoryState.fallen keeps their name). Skipped if only one is alive.
 check Skill DC n -> ok | fail      A check with no choice (e.g. a passive moment). Uses the best party member.
 interject <selector>: Text         A party member matching the selector says Text, if one is present (the first
                                    match in marching order): class:rogue, species:elf, background:criminal,

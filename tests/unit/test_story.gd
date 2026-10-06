@@ -280,3 +280,35 @@ gold -500
 	assert_eq(st.gold, 10.0)
 	assert_false(StoryConditions.check("level >= 2", st))
 	assert_true(StoryConditions.check("gold > 5 and level == 1", st))
+
+
+func test_narrator_merges_a_trigger_written_in_two_regions() -> void:
+	var n := Narrator.new(5)
+	n.add_file(DialogueFile.parse("~ test:merge\n| [flag.inside] The house listens while you rest.\n", "narrator/a"))
+	n.add_file(DialogueFile.parse("~ test:merge\n| You rest a while.\n", "narrator/b"))
+	var st := _party()
+	assert_eq(n.line("test:merge", st), "You rest a while.")
+	st.set_flag("inside", true)
+	assert_eq(n.line("test:merge", st), "The house listens while you rest.", "the conditioned variant wins where it holds")
+
+
+func test_sacrifice_takes_the_chosen_member_for_good() -> void:
+	var f := DialogueFile.parse("~ altar\nNarrator: One must die.\nsacrifice\nset gave_one\n-> END\n", "test/altar")
+	assert_true(f.errors.is_empty(), str(f.errors))
+	DialogueFile.register(f)
+	var st := _party()
+	var r := DialogueRunner.new(st, DiceRoller.new(1))
+	r.start("test/altar:altar")
+	assert_eq(str(r.next()["kind"]), "line")
+	var b := r.next()
+	assert_eq(str(b["kind"]), "pick_member")
+	assert_eq((b["members"] as Array).size(), 2)
+	assert_eq(str(r.next()["kind"]), "pick_member", "it waits for the choice")
+	b = r.pick_member(1)
+	assert_true(str(b["text"]).contains("Silvain"))
+	assert_eq(st.party.size(), 1)
+	assert_eq(str(st.fallen[0]["name"]), "Silvain Aster")
+	assert_eq(str(r.next()["kind"]), "end")
+	assert_true(bool(st.get_flag("gave_one")))
+	var copy := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	assert_eq(copy.fallen.size(), 1)

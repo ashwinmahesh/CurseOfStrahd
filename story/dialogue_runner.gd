@@ -27,6 +27,7 @@ var speaker: Character = null
 var _options: Array[Dictionary] = []
 var _pending_jump: String = ""
 var _guard: int = 0
+var _picking := false       ## waiting for the player to choose a party member (the `sacrifice` statement)
 
 
 func _init(state: StoryState, dice_: DiceRoller, narrator_: Narrator = null) -> void:
@@ -74,6 +75,8 @@ func _stmts() -> Array[Dictionary]:
 func next() -> Dictionary:
 	if not _options.is_empty():
 		return _options_beat()
+	if _picking:
+		return _pick_beat()
 	if _pending_jump != "":
 		var j := _pending_jump
 		_pending_jump = ""
@@ -159,6 +162,11 @@ func next() -> Dictionary:
 			"combat":
 				combat = str(s["encounter"])
 				finished = true
+			"sacrifice":
+				pc += 1
+				if _living().size() >= 2:
+					_picking = true
+					return _pick_beat()
 			"narrate":
 				pc += 1
 				if narrator != null:
@@ -168,6 +176,33 @@ func next() -> Dictionary:
 			_:
 				pc += 1
 	return {"kind": "end", "combat": combat}
+
+
+func _living() -> Array[Character]:
+	var out: Array[Character] = []
+	for ch in st.party:
+		if not ch.dead:
+			out.append(ch)
+	return out
+
+
+func _pick_beat() -> Dictionary:
+	var names: Array[String] = []
+	for ch in _living():
+		names.append(ch.name)
+	return {"kind": "pick_member", "text": "Choose who it will be. They will not come back.", "members": names}
+
+
+## Answers a `sacrifice` beat: the `i`th living party member dies for good and leaves the party.
+func pick_member(i: int) -> Dictionary:
+	var living := _living()
+	if not _picking or i < 0 or i >= living.size():
+		return next()
+	_picking = false
+	var ch := living[i]
+	st.lose_member(ch, "gave their life on the altar beneath Death House")
+	speaker = st.leader_character()
+	return {"kind": "notice", "text": "%s is gone." % ch.name}
 
 
 ## Picks option `i` of the current menu. Returns the check beat for skill-check options, otherwise the next beat.

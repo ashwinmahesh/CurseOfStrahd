@@ -32,6 +32,11 @@ func _draw() -> void:
 	for i in st.party.size():
 		cols.add_child(_column(st.party[i], i))
 	_frame.add_child(cols)
+	if not st.fallen.is_empty():
+		var lost: Array[String] = []
+		for f in st.fallen:
+			lost.append("%s, who %s (day %d)" % [f["name"], f["how"], int(f["day"])])
+		_frame.add_child(UiKit.label("Remembered: " + "; ".join(lost), 15, "ash_violet", 1400))
 	var lower := HBoxContainer.new()
 	lower.add_theme_constant_override("separation", 30)
 	_frame.add_child(lower)

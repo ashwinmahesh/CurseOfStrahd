@@ -338,9 +338,31 @@ func _path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 			for c: Variant in trap["cells"]:
 				avoid[_cell(c)] = true
 	avoid.erase(to)
+	# Closed doors that would open at a touch are part of the way: the party opens them as it reaches them.
+	var doors := _openable_doors()
+	for c: Vector2i in doors:
+		grid.set_flag(c, CombatGrid.WALL, false)
 	var reach := grid.reachable(from, 1, 2000, func(c: Vector2i) -> bool: return avoid.has(c),
 		func(_c: Vector2i) -> bool: return false, func(_c: Vector2i) -> bool: return false)
+	for c: Vector2i in doors:
+		grid.set_flag(c, CombatGrid.WALL, true)
 	return CombatGrid.path_to(reach, to)
+
+
+## Closed, unlocked, known doors whose conditions hold: {cell: door spec}.
+func _openable_doors() -> Dictionary:
+	var out := {}
+	for d: Variant in loc.get("doors", []):
+		var door := d as Dictionary
+		var id := str(door["id"])
+		if _door_state(id) == DOOR_OPEN or _locked(door):
+			continue
+		if int(door.get("secret_dc", 0)) > 0 and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false)):
+			continue
+		if not StoryConditions.check(str(door.get("when", "")), st):
+			continue
+		out[_cell(door["cell"])] = door
+	return out
 
 
 ## One square in a direction (WASD).
@@ -361,6 +383,14 @@ func _process(delta: float) -> void:
 		return
 	_step_t = SNEAK_STEP_TIME if sneaking else STEP_TIME
 	var next: Vector2i = _queue.pop_front()
+	if grid.has_flag(next, CombatGrid.WALL):
+		var door := _openable_doors().get(next, {}) as Dictionary
+		if not door.is_empty():
+			_use_door(door)
+		if grid.has_flag(next, CombatGrid.WALL) or in_combat:
+			_queue.clear()
+			_on_arrive = Callable()
+			return
 	_advance_party(next)
 	if _check_cell_events():
 		_queue.clear()
@@ -465,6 +495,19 @@ func _check_areas() -> bool:
 		elif not inside:
 			_areas_in.erase(id)
 	return false
+
+
+## When a conversation ends in a fight, the people in it step aside: the encounter places its own monsters (a
+## talking wolf pack, the Dursts as ghouls). Their entries' `when` decides whether they come back afterwards.
+func hide_npcs_of(dialogue_ref: String) -> void:
+	var file_key := dialogue_ref.substr(0, dialogue_ref.rfind(":"))
+	for shown in _npc_shown:
+		var ref := str((shown["spec"] as Dictionary).get("dialogue", ""))
+		if ref.substr(0, ref.rfind(":")) != file_key:
+			continue
+		(shown["token"] as Node3D).visible = false
+		if not bool(shown["low_before"]):
+			grid.set_flag(shown["cell"] as Vector2i, CombatGrid.LOW, false)
 
 
 ## An NPC entry with `approach: n` speaks first, once, when the leader comes within n squares and can see them.
@@ -799,6 +842,7 @@ func search() -> void:
 	check_rolled.emit(t.describe())
 	st.advance_minutes(1)
 	var found: Array[String] = []
+	var found_ids: Array[String] = []
 	var c := leader().cell
 	var states := st.loc_state(loc_id)
 	for tr: Variant in loc.get("traps", []):
@@ -819,6 +863,7 @@ func search() -> void:
 			(states["found"] as Dictionary)[str(prop["id"])] = true
 			prop_nodes[str(prop["id"])] = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), "bone")
 			found.append(str(prop.get("label", "something")))
+			found_ids.append(str(prop["id"]))
 	for d: Variant in loc.get("doors", []):
 		var door := d as Dictionary
 		if int(door.get("secret_dc", 0)) <= 0 or bool((states["found"] as Dictionary).get(str(door["id"]), false)):
@@ -831,7 +876,13 @@ func search() -> void:
 	if found.is_empty():
 		_say("check:perception:failure", who, "Nothing you can find.")
 	else:
-		_say("check:perception:success", who, "")
+		# A found thing's own line (search:<prop> or check:perception:<prop>:success) before the generic one.
+		var said := false
+		for id in found_ids:
+			if not said:
+				said = _say("search:" + id, who) or _say("check:perception:%s:success" % id, who)
+		if not said:
+			_say("check:perception:success", who, "")
 		toast.emit("Found: " + ", ".join(found))
 
 
@@ -1042,7 +1093,8 @@ func _combat_grid() -> CombatGrid:
 		var door := d as Dictionary
 		g.set_flag(_cell(door["cell"]), CombatGrid.WALL, _door_state(str(door["id"])) != DOOR_OPEN)
 	for npc: String in npc_tokens:
-		g.set_flag((npc_tokens[npc] as CombatToken).combatant.cell, CombatGrid.LOW, true)
+		if (npc_tokens[npc] as CombatToken).visible:
+			g.set_flag((npc_tokens[npc] as CombatToken).combatant.cell, CombatGrid.LOW, true)
 	return g
 
 

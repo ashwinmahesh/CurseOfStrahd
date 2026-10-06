@@ -142,6 +142,8 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 				return {"t": "attitude", "npc": parts[1], "value": parts[2]}
 		"xp":
 			return {"t": "xp"}
+		"sacrifice":
+			return {"t": "sacrifice"}
 		"combat":
 			if parts.size() == 2:
 				return {"t": "combat", "encounter": parts[1]}

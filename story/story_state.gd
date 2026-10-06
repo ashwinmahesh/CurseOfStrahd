@@ -25,6 +25,8 @@ var positions: Array[Vector2i] = []        ## grid cells of party members in the
 var location_states: Dictionary = {}      ## location id -> {doors: {id: "open"|"unlocked"}, looted: {}, traps: {id: state}, encounters: {}, props: {}}
 ## The result of the last check a dialogue or the world made (for `check.last`).
 var last_check: bool = false
+## Party members lost for good: [{name, id, how, day}] (the roll of honour in the party screen).
+var fallen: Array[Dictionary] = []
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
@@ -200,6 +202,22 @@ func loc_state(location_id: String) -> Dictionary:
 	return location_states[location_id] as Dictionary
 
 
+## Takes `ch` out of the party for good (a sacrifice, a death nobody undoes) and remembers them.
+func lose_member(ch: Character, how: String) -> void:
+	var i := party.find(ch)
+	if i < 0:
+		return
+	ch.hp = 0
+	ch.dead = true
+	if ch.concentration != null:
+		ch.concentration.end("died")
+	party.remove_at(i)
+	if positions.size() > i:
+		positions.remove_at(i)
+	leader = clampi(leader, 0, maxi(0, party.size() - 1))
+	fallen.append({"name": ch.name, "id": ch.id, "how": how, "day": day})
+
+
 # --- Saving ---------------------------------------------------------------------------------------
 
 func to_dict() -> Dictionary:
@@ -213,7 +231,7 @@ func to_dict() -> Dictionary:
 		"quests": quests.duplicate(true), "attitudes": attitudes.duplicate(true), "visited": visited.duplicate(true),
 		"codex": codex.duplicate(), "narrator": narrator.duplicate(true), "milestones": milestones, "start_level": start_level,
 		"day": day, "minute_of_day": minute_of_day, "location": location, "positions": pos,
-		"location_states": location_states.duplicate(true), "last_check": last_check}
+		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true)}
 
 
 static func from_dict(d: Dictionary) -> StoryState:
@@ -248,4 +266,6 @@ static func from_dict(d: Dictionary) -> StoryState:
 		st.positions.append(Vector2i(int(a[0]), int(a[1])))
 	st.location_states = (d.get("location_states", {}) as Dictionary).duplicate(true)
 	st.last_check = bool(d.get("last_check", false))
+	for f: Variant in d.get("fallen", []):
+		st.fallen.append((f as Dictionary).duplicate())
 	return st

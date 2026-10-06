@@ -27,7 +27,8 @@ func add_file(f: DialogueFile) -> void:
 	if f == null:
 		return
 	for key: String in f.order:
-		var list: Array[Dictionary] = []
+		# A trigger written in several region files gathers all their variants (each region conditions its own).
+		var list: Array[Dictionary] = _variants.get(key, [] as Array[Dictionary]) as Array[Dictionary]
 		for s: Dictionary in f.nodes[key]:
 			match str(s["t"]):
 				"variant":
@@ -36,7 +37,7 @@ func add_file(f: DialogueFile) -> void:
 					if str(s["speaker"]).to_lower() == "narrator":
 						list.append({"cond": "", "text": str(s["text"])})
 				"cooldown":
-					_cooldown[key] = int(s["n"])
+					_cooldown[key] = maxi(int(_cooldown.get(key, 0)), int(s["n"]))
 				"once":
 					_once[key] = true
 		_variants[key] = list

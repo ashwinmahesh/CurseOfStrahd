@@ -76,6 +76,7 @@ func _finish_short() -> void:
 			ch.finish_short_rest()
 	st.advance_minutes(60)
 	_log.text = "An hour passes. Short-rest features are back."
+	_narrate("rest:short")
 	_draw()
 
 
@@ -95,5 +96,16 @@ func _long_rest(rule: String) -> void:
 			if not ch.dead:
 				ch.finish_long_rest()
 		_log.text = "Eight hours pass. Everyone wakes rested, if not refreshed."
+		_narrate("rest:long")
+		var region := str(Compendium.shared().get_entry("locations", st.location).get("region", ""))
+		_narrate("dream:" + region)
 	_draw()
 	root.call("_refresh")
+
+
+func _narrate(key: String) -> void:
+	if root == null or not root.has_method("narrate_key"):
+		return
+	var text := str(root.call("narrate_key", key))
+	if text != "":
+		_log.text += "\n" + text

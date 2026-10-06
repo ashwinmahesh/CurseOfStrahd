@@ -18,6 +18,8 @@ var _waiting_continue := false
 var _option_buttons: Array[Button] = []
 var _focus := 0
 var _history: Array[String] = []
+## The options on screen now (the runner's option dictionaries), for the controller focus and for tests.
+var options_shown: Array = []
 
 
 func _init() -> void:
@@ -118,6 +120,14 @@ func _show(beat: Dictionary) -> void:
 			_waiting_continue = true
 		"options":
 			_show_options(beat["options"] as Array)
+		"pick_member":
+			_portrait.texture = null
+			_name.text = ""
+			_text.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("vampire_red").to_html(false), _esc(str(beat["text"]))]
+			var picks: Array = []
+			for n: Variant in beat["members"]:
+				picks.append({"text": str(n), "label": "", "check": {}, "enabled": true, "member": true})
+			_show_options(picks)
 	_hint.visible = _waiting_continue
 
 
@@ -136,6 +146,7 @@ func _line(beat: Dictionary) -> void:
 
 func _show_options(options: Array) -> void:
 	_option_buttons.clear()
+	options_shown = options
 	var i := 0
 	for o: Variant in options:
 		var opt := o as Dictionary
@@ -166,11 +177,13 @@ func _show_options(options: Array) -> void:
 
 
 func _choose(i: int) -> void:
+	var member := i < options_shown.size() and bool((options_shown[i] as Dictionary).get("member", false))
 	_clear_options()
-	_show(runner.choose(i))
+	_show(runner.pick_member(i) if member else runner.choose(i))
 
 
 func _clear_options() -> void:
+	options_shown = []
 	for c in _options.get_children():
 		c.queue_free()
 	_option_buttons.clear()

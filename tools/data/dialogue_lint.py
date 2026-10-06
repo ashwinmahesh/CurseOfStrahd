@@ -35,6 +35,7 @@ RE_IF = re.compile(r"^(if|elif)\s+(.+)$")
 RE_VARIANT = re.compile(r"^\|\s*(?:\[([^\]]+)\]\s*)?(.+)$")
 RE_COOLDOWN = re.compile(r"^(cooldown\s+\d+|once)$")
 RE_XP = re.compile(r"^xp\s+milestone$")
+RE_SACRIFICE = re.compile(r"^sacrifice$")
 RE_FLAG_REF = re.compile(rf"\bflag\.({ID})")
 CLASS_TAGS = {"fighter", "rogue", "cleric", "wizard", "barbarian", "bard", "druid", "monk", "paladin", "ranger",
               "sorcerer", "warlock"}
@@ -153,7 +154,7 @@ def parse_file(path):
         if m:
             out["items"].append((m.group(2), where))
             continue
-        if RE_GOLD.match(line) or RE_XP.match(line):
+        if RE_GOLD.match(line) or RE_XP.match(line) or RE_SACRIFICE.match(line):
             continue
         m = RE_ATT.match(line)
         if m:

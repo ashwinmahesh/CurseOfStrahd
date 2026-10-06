@@ -5,7 +5,7 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | arena | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node]
+make run | arena | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1] | portrait SRC=<png> ID=<id> | standin | wireframes
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 
