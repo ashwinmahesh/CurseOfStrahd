@@ -376,7 +376,7 @@
               "value": 2
             }
           ],
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "faithful_steed",

@@ -122,6 +122,7 @@ func start(surprised_ids: Array = []) -> void:
 			group_rolls[group] = t.total
 			c.initiative_group = group
 		log.add("roll", "%s rolls Initiative: %d" % [c.name(), t.total], c.id, [t.describe(), bonus.describe()])
+	class_features.initiative_rolled()
 	order = combatants.duplicate()
 	order.sort_custom(func(a: Combatant, b: Combatant) -> bool:
 		if a.initiative != b.initiative:

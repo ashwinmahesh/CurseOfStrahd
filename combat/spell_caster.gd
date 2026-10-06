@@ -1403,6 +1403,9 @@ func _careful(ctx: Dictionary, t: Combatant) -> bool:
 	return true
 
 
+## The Metamagic choices' ids in the class data ("careful_spell"...), read as the option names below.
+const METAMAGIC_IDS := ["careful_spell", "distant_spell", "empowered_spell", "extended_spell", "heightened_spell", "quickened_spell",
+	"seeking_spell", "subtle_spell", "transmuted_spell", "twinned_spell"]
 ## Metamagic (Sorcerer): costs in Sorcery Points, one option per spell except Empowered and Seeking.
 const METAMAGIC_COST := {"careful": 1, "distant": 1, "empowered": 1, "extended": 1, "heightened": 2, "quickened": 2,
 	"seeking": 1, "subtle": 1, "transmuted": 1, "twinned": 1}

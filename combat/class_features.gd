@@ -1377,6 +1377,21 @@ func _in_aura(p: Combatant, t: Combatant) -> bool:
 
 # --- Turns --------------------------------------------------------------------------------------------
 
+## Initiative was just rolled: Tandem Footwork (College of Dance 6) spends Bardic Inspiration to add the die to the
+## bard's and nearby allies' Initiative.
+func initiative_rolled() -> void:
+	var e := enc()
+	for b in e.combatants:
+		if not has(b, "tandem_footwork") or _ch(b).resource_left("bardic_inspiration") <= 0 or str(b.reaction_rules.get("tandem_footwork", "auto")) == "never":
+			continue
+		_ch(b).spend_resource("bardic_inspiration")
+		var roll := e.dice.roll_one(bardic_die(b), "Tandem Footwork")
+		for a in e.combatants:
+			if a == b or (a.allied_with(b) and e.distance(a, b) <= 30):
+				a.initiative += roll
+		e.log.add("info", "%s leads the dance: +%d Initiative to nearby allies (Tandem Footwork)" % [b.name(), roll], b.id)
+
+
 ## When a fight starts: the always-on benefits are in place before anyone acts.
 func prepare(c: Combatant) -> void:
 	var ch := _ch(c)
@@ -1386,6 +1401,21 @@ func prepare(c: Combatant) -> void:
 
 func turn_start(c: Combatant) -> void:
 	var e := enc()
+	# Branches of the Tree (World Tree 6): a creature starting its turn within 30 ft of a raging barbarian makes a
+	# Strength save or is pulled beside it with Speed 0 for the turn.
+	for b in e.hostiles_of(c):
+		if raging(b) and has(b, "branches_of_the_tree") and e.spells.can_react(b) and e.distance(b, c) <= 30 and e.distance(b, c) > 5 \
+				and e.can_see(b, c) and str(b.reaction_rules.get("branches_of_the_tree", "auto")) != "never":
+			b.reaction_available = false
+			var dc := 8 + b.creature.proficiency_bonus() + b.creature.ability_mod(&"str")
+			if not _save(c, &"str", dc, "Branches of the Tree"):
+				var spot := e.spells._free_cell_near(b.cell, c.size_cells)
+				if e.grid.distance_ft(b.cell, b.size_cells, spot, c.size_cells) <= 5:
+					e.spells._teleport(c, spot, CombatResult.new())
+				var root := _timed(b, "Rooted (Branches of the Tree)", "branches_of_the_tree", Effect.Ends.END_OF_TURN, c).with_modifier("speed_set", {"value": 0})
+				c.creature.add_effect(root)
+				c.movement_left = 0
+			break
 	# Primal companion: a fresh order each round.
 	if c.creature is Monster and c.has_meta("commanded"):
 		c.remove_meta("commanded")
@@ -1448,6 +1478,8 @@ func _standing_effects(c: Combatant, ch: Character) -> void:
 		fx2.modifiers.append(Modifier.of("darkvision", {"value": maxi(60, c.creature.darkvision() + 60)}, "Umbral Sight", &"feature"))
 	if knows_invocation(c, "devils_sight"):
 		fx2.modifiers.append(Modifier.of("flag", {"value": "devils_sight"}, "Devil's Sight", &"feature"))
+	if has(c, "extra_attack") and ch.subclasses.get("bard", "") == "college_of_valor":
+		fx2.modifiers.append(Modifier.of("attacks_per_action", {"value": 2}, "Extra Attack", &"feature"))
 	if has(c, "beguiling_twist"):
 		fx2.modifiers.append(Modifier.of("advantage", {"on": "save_vs:charmed"}, "Beguiling Twist", &"feature"))
 		fx2.modifiers.append(Modifier.of("advantage", {"on": "save_vs:frightened"}, "Beguiling Twist", &"feature"))
@@ -1456,6 +1488,20 @@ func _standing_effects(c: Combatant, ch: Character) -> void:
 
 
 func turn_end(c: Combatant) -> void:
+	# Inspiring Movement (College of Dance 6): an enemy ends its turn beside the bard: a Bardic Inspiration lets the
+	# bard slip away half its Speed without provoking.
+	var e := enc()
+	for b in e.hostiles_of(c):
+		if has(b, "inspiring_movement") and e.distance(b, c) <= 5 and e.spells.can_react(b) and _ch(b).resource_left("bardic_inspiration") > 0 \
+				and str(b.reaction_rules.get("inspiring_movement", "auto")) != "never":
+			b.reaction_available = false
+			_ch(b).spend_resource("bardic_inspiration")
+			var was := b.disengaged
+			b.disengaged = true
+			e.log.add("reaction", "%s dances away (Inspiring Movement)" % b.name(), b.id)
+			e.flee(b, c, b.speed() / 2, CombatResult.new())
+			b.disengaged = was
+			break
 	if raging(c) and not has(c, "persistent_rage") and str(c.get_meta("rage_kept", "")) != _turn_key():
 		end_rage(c, "no attack, forced save or Bonus Action to keep it")
 	if has(c, "self_restoration"):

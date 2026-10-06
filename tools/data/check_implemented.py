@@ -20,7 +20,7 @@ NOT_BUILT = {"fast_wrestler", "lore_knowledge", "keen_observer", "war_caster_som
 
 
 ## Containers whose parts are built (Combat Superiority: the dice and the maneuvers).
-BUILT = {"combat_superiority"}
+BUILT = {"combat_superiority", "monks_focus", "defensive_tactics"}
 
 
 def read_by_code(f, owner=""):

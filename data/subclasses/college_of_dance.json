@@ -45,7 +45,7 @@
         "text": "When an enemy you can see ends its turn within 5 feet of you, you can take a Reaction and expend a use of Bardic Inspiration to move up to half your Speed. One ally within 30 feet of you can then use its Reaction to move up to half its Speed. None of this movement provokes Opportunity Attacks.",
         "action": "reaction",
         "uses_resource": "bardic_inspiration",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -56,7 +56,7 @@
         "summary": "When you roll Initiative, spend Bardic Inspiration to add the die to your roll and to nearby allies' rolls.",
         "text": "When you roll Initiative and aren't Incapacitated, you can expend a use of Bardic Inspiration, roll the die, and add the number to your Initiative and to the Initiative of each ally within 30 feet of you who can see or hear you.",
         "uses_resource": "bardic_inspiration",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

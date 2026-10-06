@@ -252,7 +252,7 @@
           "summary": "Focus Points (2, all back on a Short Rest) fuel Flurry of Blows, Patient Defense and Step of the Wind.",
           "text": "Your discipline gives you Focus Points, as many as the Focus Points column shows; you regain all of them when you finish a Short or Long Rest. Saves against your Focus features use DC 8 + your Wisdom modifier + Proficiency Bonus. You can spend the points on Flurry of Blows, Patient Defense and Step of the Wind, and on later Monk features.",
           "uses_resource": "focus_points",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "flurry_of_blows",
@@ -413,7 +413,7 @@
               "value": 2
             }
           ],
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "stunning_strike",
