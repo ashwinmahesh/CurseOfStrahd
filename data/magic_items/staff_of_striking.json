@@ -73,5 +73,5 @@
     }
   ],
   "summary": "+3 quarterstaff; on a hit, spend up to 3 charges for an extra 1d6 Force each.",
-  "text": "This staff can be wielded as a magic Quarterstaff that grants a +3 bonus to attack rolls and damage rolls made with it. The staff has 10 charges. When you hit with a melee attack using it, you can expend up to 3 of its charges. For each charge you expend, the target takes an extra 1d6 Force damage. The staff regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff becomes a nonmagical Quarterstaff."
+  "text": "A magic Quarterstaff with +3 to attack and damage rolls and 10 charges. When you land a melee hit with it, you can spend as many as 3 charges, adding 1d6 Force damage per charge spent. It regains 1d6 + 4 charges every dawn. If the last charge is spent, roll 1d20; on a 1, it becomes an ordinary nonmagical Quarterstaff."
 }

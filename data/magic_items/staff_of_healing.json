@@ -61,5 +61,5 @@
     }
   ],
   "summary": "10 charges: Cure Wounds (1 per level, up to 4), Lesser Restoration (2), Mass Cure Wounds (5).",
-  "text": "This staff has 10 charges. While holding it, you can cast one of the following spells from it, using your spellcasting ability modifier: Cure Wounds (1 charge per spell level, up to level 4), Lesser Restoration (2 charges) or Mass Cure Wounds (5 charges). The staff regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff vanishes in a flash of light, lost forever."
+  "text": "Holding this staff, you can spend its charges (10 in all) to cast spells using your spellcasting ability modifier: Lesser Restoration for 2 charges, Mass Cure Wounds for 5, or Cure Wounds for 1 charge per spell level (level 4 at most). It regains 1d6 + 4 charges at dawn each day. If the final charge is used, roll 1d20; a result of 1 makes the staff vanish in a burst of light, gone for good."
 }

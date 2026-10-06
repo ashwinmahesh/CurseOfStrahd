@@ -32,5 +32,5 @@
   ],
   "worn": "neck",
   "summary": "5 charges: cast Detect Thoughts (save DC 13).",
-  "text": "This medallion has 5 charges. While wearing it, you can expend 1 charge to cast Detect Thoughts (save DC 13) from it. The medallion regains 1d4 expended charges daily at dawn."
+  "text": "While wearing the medallion, spend 1 of its 5 charges to cast Detect Thoughts from it, with a save DC of 13. Each dawn it gets back 1d4 used charges."
 }

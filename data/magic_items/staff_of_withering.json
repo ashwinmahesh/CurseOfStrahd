@@ -57,5 +57,5 @@
     }
   ],
   "summary": "3 charges: a hit can deal an extra 2d10 Necrotic and weaken the target's Strength and Constitution for an hour.",
-  "text": "This staff has 3 charges and regains 1d3 expended charges daily at dawn. The staff can be wielded as a magic Quarterstaff. On a hit, it deals damage as a normal Quarterstaff, and you can expend 1 charge to deal an extra 2d10 Necrotic damage to the target and force it to make a DC 15 Constitution saving throw. On a failed save, the target has Disadvantage for 1 hour on any ability check or saving throw that uses Strength or Constitution."
+  "text": "Swing it as a magic Quarterstaff that deals ordinary Quarterstaff damage. When it hits, you may spend 1 of its 3 charges to add 2d10 Necrotic damage; the target then rolls a Constitution saving throw against DC 15, and on a failure it has Disadvantage on Strength and Constitution ability checks and saving throws for 1 hour. The staff recovers 1d3 spent charges each dawn."
 }

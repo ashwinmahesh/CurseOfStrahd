@@ -31,5 +31,5 @@
     }
   ],
   "summary": "A spellbook that, once a day, lets you cast a spell from it without a slot.",
-  "text": "This thick leather-bound volume has a desiccated tongue pinned to the front cover. Five of these tomes exist, and it's unknown which one is the original. While you are holding the tome, you can use it as a spellbook and a Spellcasting Focus for your Wizard spells. Moreover, while holding the book, you can take a Bonus Action to cast a spell you have written in this tome without expending a spell slot or using any verbal or somatic components. Once used, this property of the book can't be used again until the next dawn."
+  "text": "A heavy leather-bound book with a dried-out tongue fixed to its front cover; there are five copies, and nobody knows which came first. While you hold it, it serves as your spellbook and as your Spellcasting Focus when casting Wizard spells. Once per dawn, as a Bonus Action, you can cast a spell written in it without spending a spell slot and without verbal or somatic components."
 }

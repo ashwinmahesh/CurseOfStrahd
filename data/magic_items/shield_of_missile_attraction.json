@@ -12,7 +12,7 @@
     "rarity": "rare",
     "attunement": true,
     "cursed": true,
-    "curse": "Whenever a ranged weapon attack is made against a target within 10 ft of you, you become its target instead."
+    "curse": "Ranged weapon attacks aimed at anyone within 10 feet of you are redirected at you instead."
   },
   "theme": "armaments",
   "template": {
@@ -24,7 +24,7 @@
     "attract_missiles": 10
   },
   "summary": "Resistance to damage from ranged weapon attacks. Cursed: ranged weapon attacks at creatures near you hit you instead.",
-  "text": "While holding this Shield, you have Resistance to damage from attacks made with Ranged weapons. Curse. This Shield is cursed. Attuning to it curses you until you're targeted by a Remove Curse spell or similar magic. Removing the Shield fails to end the curse on you. Whenever an attack with a Ranged weapon is made against a target within 10 feet of you, the curse causes you to become the target instead.",
+  "text": "Holding this Shield gives you Resistance to damage from Ranged weapon attacks. Curse: the Shield is cursed, and attuning to it curses you. Taking the Shield off doesn't end the curse; only Remove Curse, or comparable magic, targeting you lifts it. While cursed, you become the target of any attack made with a Ranged weapon against a creature within 10 feet of you.",
   "icon": "shield",
   "icon_fallback": true
 }

@@ -22,7 +22,7 @@
     "crits_objects": true
   },
   "summary": "Hits against objects are Critical Hits.",
-  "text": "This weapon or piece of ammunition is made of adamantine, one of the hardest substances in existence. Whenever it hits an object, the hit is a Critical Hit.",
+  "text": "Forged from adamantine, about the hardest material there is, this weapon or ammunition scores a Critical Hit every time it strikes an object.",
   "icon": "warhammer",
   "icon_fallback": true
 }

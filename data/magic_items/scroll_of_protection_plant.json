@@ -31,5 +31,5 @@
     }
   ],
   "summary": "For 5 minutes, Plants can't come within 5 ft of you or reach you (DC 15 Cha save breaks through).",
-  "text": "Using a Magic action to read the scroll encloses you in an invisible barrier that extends from you to form a 5-foot-radius, 10-foot-high cylinder. For 5 minutes, this barrier prevents plants from entering or affecting anything within the cylinder. The cylinder moves with you and remains centered on you. However, if you move in such a way that a plant would be inside the cylinder, the effect ends. A creature can attempt to overcome the barrier by taking an action to make a DC 15 Charisma check. On a success, the creature ceases to be affected by the barrier."
+  "text": "Reading the scroll takes a Magic action and surrounds you with an invisible cylinder 5 feet in radius and 10 feet tall, which stays centered on you as you move. For 5 minutes, Plants can't enter it or affect anything inside it. If your movement brings a Plant inside the cylinder, the protection collapses. Any creature may spend an action on a Charisma check (DC 15) to break through; if it succeeds, the barrier stops affecting it."
 }

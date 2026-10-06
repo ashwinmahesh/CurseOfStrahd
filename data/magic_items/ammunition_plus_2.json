@@ -40,7 +40,7 @@
     "weight": 1
   },
   "summary": "+2 to attack and damage rolls with this ammunition; it loses its magic once it hits.",
-  "text": "You have a +2 bonus to attack rolls and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+  "text": "Attack and damage rolls with this magic ammunition get +2. The magic is spent the moment it strikes a target, leaving an ordinary piece of ammunition.",
   "icon": "arrow",
   "icon_fallback": true
 }

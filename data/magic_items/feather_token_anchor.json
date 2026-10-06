@@ -32,5 +32,5 @@
     }
   ],
   "summary": "Touch it to a boat or ship: the vessel can't be moved for 24 hours.",
-  "text": "This object looks like a feather. Different types of feather tokens exist, each with a different single-use effect. This one is a anchor token. Touch it to a boat or ship: the vessel can't be moved for 24 hours."
+  "text": "A single-use token shaped like a feather. As a Magic action, press it against a boat or ship: for the next 24 hours nothing can move the vessel. Pressing the token to the vessel again ends this early, and the token vanishes once the effect is over."
 }

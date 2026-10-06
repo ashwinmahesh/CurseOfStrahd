@@ -36,7 +36,7 @@
   ],
   "variant_of": "weapon_plus",
   "summary": "+2 to attack and damage rolls made with this magic weapon.",
-  "text": "You have a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+  "text": "This magic weapon adds +2 to both your attack rolls and your damage rolls with it.",
   "icon": "longsword",
   "icon_fallback": true
 }

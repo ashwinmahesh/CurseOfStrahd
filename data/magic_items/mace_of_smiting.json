@@ -41,8 +41,8 @@
       "smiting"
     ]
   },
-  "summary": "+1 mace (+3 against Constructs); a 20 deals an extra 2d6 (4d6 against Constructs) and can shatter a Construct.",
-  "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. The bonus increases to +3 when you use the weapon to attack a Construct. When you roll a 20 on an attack roll made with this weapon, the target takes an extra 7 Bludgeoning damage, or an extra 14 Bludgeoning damage if it's a Construct. If a Construct has 25 Hit Points or fewer after taking this damage, it is destroyed.",
+  "summary": "+1 mace (+3 against Constructs); a 20 deals an extra 7 Bludgeoning (14 against a Construct) and can shatter a Construct.",
+  "text": "This magic mace grants +1 to attack and damage rolls, rising to +3 against Constructs. Rolling a 20 on an attack with it adds 7 Bludgeoning damage, or 14 if the target is a Construct, and a Construct reduced to 25 Hit Points or fewer by that hit is destroyed.",
   "icon": "mace",
   "icon_fallback": true
 }

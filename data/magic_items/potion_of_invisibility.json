@@ -33,5 +33,5 @@
     "amount": 1
   },
   "summary": "Invisible for 1 hour, or until you attack, deal damage or cast a spell.",
-  "text": "This potion's container looks empty but feels as though it holds liquid. When you drink it, you have the Invisible condition for 1 hour. The effect ends early if you make an attack roll, deal damage, or cast a spell."
+  "text": "The bottle seems empty, yet you can feel liquid sloshing inside. Drinking it, you gain the Invisible condition for up to 1 hour; it ends early the moment you cast a spell, make an attack roll or deal damage."
 }

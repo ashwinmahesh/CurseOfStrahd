@@ -29,7 +29,7 @@
     "no_crits": true
   },
   "summary": "Any Critical Hit against you becomes a normal hit.",
-  "text": "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any Critical Hit against you becomes a normal hit.",
+  "text": "Adamantine plating toughens this armor until it is close to unbreakable. While you have it on, a Critical Hit that lands on you counts as an ordinary hit instead.",
   "icon": "chain_mail",
   "icon_fallback": true
 }

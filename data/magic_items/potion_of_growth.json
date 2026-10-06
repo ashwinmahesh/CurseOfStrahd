@@ -47,5 +47,5 @@
     "dice": "1d4"
   },
   "summary": "The Enlarge part of Enlarge/Reduce for 1d4 hours (no Concentration).",
-  "text": "When you drink this potion, you gain the \"enlarge\" effect of the Enlarge/Reduce spell for 1d4 hours (no Concentration needed): you grow one size, have Advantage on Strength checks and saves, and your weapons deal an extra 1d4 damage. The red in the liquid keeps expanding from a tiny bead to color the whole potion, then shrinks back."
+  "text": "For 1d4 hours after drinking, you gain the enlarge half of the Enlarge/Reduce spell with no Concentration needed: you grow by one size category, make Strength checks and Strength saving throws with Advantage, and your weapon hits deal 1d4 extra damage. A bead of red in the potion swells until it tints the whole liquid, then shrinks back again."
 }

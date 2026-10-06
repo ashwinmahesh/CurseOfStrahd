@@ -21,5 +21,5 @@
   },
   "worn": "hands",
   "summary": "A Reaction cuts the damage of a ranged weapon hit by 1d10 + Dex; cut to 0 and you catch the missile.",
-  "text": "These gloves seem to almost meld into your hands when you don them. When a ranged weapon attack hits you while you're wearing them, you can take a Reaction to reduce the damage by 1d10 plus your Dexterity modifier, provided that you have a free hand. If you reduce the damage to 0, you can catch the missile if it is small enough for you to hold in that hand."
+  "text": "These gloves seem to fuse with your hands once you pull them on. When you're struck by a ranged weapon attack while wearing them and have a free hand, you can use your Reaction to lower the damage by 1d10 + your Dexterity modifier. Should the damage drop to 0, you can snatch the missile out of the air, as long as it fits in that hand."
 }

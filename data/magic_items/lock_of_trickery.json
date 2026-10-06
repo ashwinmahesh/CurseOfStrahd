@@ -15,5 +15,5 @@
   "theme": "implements",
   "icon": "lock",
   "summary": "A lock that is harder to pick and easy to open for its owner.",
-  "text": "This lock appears to be an ordinary lock and comes with a key. Picking it takes four successful checks. (No other effect in the game.)"
+  "text": "Though it looks like any ordinary lock and arrives with its key, picking it requires four successful checks. (It has no further use in the game.)"
 }

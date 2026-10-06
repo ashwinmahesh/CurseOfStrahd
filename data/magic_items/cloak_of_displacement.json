@@ -21,5 +21,5 @@
   },
   "worn": "cloak",
   "summary": "Attack rolls against you have Disadvantage, until something damages you (it returns at the start of your turn).",
-  "text": "While you wear this cloak, it magically projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have Disadvantage on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while you have the Incapacitated or Restrained condition or while your Speed is 0."
+  "text": "The cloak casts an illusion that shows you standing slightly away from where you really are, so every attack roll against you has Disadvantage. Taking damage switches this off until your next turn begins. The effect is also suppressed while you are Incapacitated or Restrained or have a Speed of 0."
 }

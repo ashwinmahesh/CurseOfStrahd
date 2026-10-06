@@ -22,7 +22,7 @@
     }
   },
   "summary": "You can take it off as an action.",
-  "text": "You can doff this armor as a Utilize action instead of the usual time.",
+  "text": "Taking off this armor needs only a Utilize action rather than the normal doffing time.",
   "icon": "leather_armor",
   "icon_fallback": true
 }

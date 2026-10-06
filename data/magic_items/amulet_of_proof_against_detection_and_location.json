@@ -22,5 +22,5 @@
   ],
   "worn": "neck",
   "summary": "Divination magic can't find you, target you or see you through a scrying sensor.",
-  "text": "While wearing this amulet, you are hidden from Divination spells. You can't be targeted by such spells or perceived through magical scrying sensors unless you allow it."
+  "text": "Divination spells can't find you while you wear this amulet: they can't target you, and magical scrying sensors can't perceive you, unless you choose to let them."
 }

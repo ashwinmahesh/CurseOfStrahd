@@ -32,5 +32,5 @@
   ],
   "worn": "head",
   "summary": "3 charges: cast Teleport.",
-  "text": "This helm has 3 charges. While wearing it, you can expend 1 charge to cast Teleport from it. The helm regains 1d3 expended charges daily at dawn. (The Mists of Barovia hold travellers in the valley: Teleport works only within it.)"
+  "text": "Spend 1 of this helm's 3 charges while wearing it to cast Teleport from it. Each dawn it recovers 1d3 expended charges. (Barovia's Mists keep travellers inside the valley, so Teleport only works within it.)"
 }

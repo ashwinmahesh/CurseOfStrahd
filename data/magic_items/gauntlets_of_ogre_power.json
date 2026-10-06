@@ -23,5 +23,5 @@
   ],
   "worn": "hands",
   "summary": "Your Strength is 19 while you wear them.",
-  "text": "Your Strength score is 19 while you wear these gauntlets. They have no effect on you if your Strength is already 19 or higher without them."
+  "text": "Wearing these gauntlets sets your Strength score to 19. If your Strength is 19 or more without them, they do nothing for you."
 }

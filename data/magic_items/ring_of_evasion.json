@@ -31,5 +31,5 @@
     }
   ],
   "summary": "3 charges: when you fail a Dexterity save, a Reaction turns it into a success.",
-  "text": "This ring has 3 charges, and it regains 1d3 expended charges daily at dawn. When you fail a Dexterity saving throw while wearing the ring, you can take a Reaction to expend 1 of its charges to succeed on that saving throw instead."
+  "text": "The ring holds 3 charges and regains 1d3 of them each dawn. Whenever a Dexterity saving throw of yours fails while you wear it, you can use your Reaction and spend 1 charge to turn the failure into a success."
 }

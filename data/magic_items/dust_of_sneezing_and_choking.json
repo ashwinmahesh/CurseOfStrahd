@@ -12,7 +12,7 @@
     "rarity": "uncommon",
     "attunement": false,
     "cursed": true,
-    "curse": "Throwing it chokes you and everyone within 30 ft."
+    "curse": "You choke too, as does every breather within 30 feet."
   },
   "consumable": true,
   "theme": "implements",
@@ -80,5 +80,5 @@
     }
   ],
   "summary": "Looks like Dust of Disappearance; thrown, it makes you and everyone within 30 ft choke (Con DC 15).",
-  "text": "Found in a small container, this powder resembles very fine sand. It appears to be Dust of Disappearance, and Identify reveals it to be such. There is enough of it for one use. When you take a Utilize action to throw a handful of the dust into the air, you and each creature that needs to breathe within 30 feet of you must succeed on a DC 15 Constitution saving throw or become unable to breathe while sneezing uncontrollably. A creature affected in this way has the Incapacitated condition and is suffocating. As long as it is conscious, a creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. The Lesser Restoration spell can also end the effect on a creature."
+  "text": "A single dose of fine, sandlike powder kept in a little container. It passes for Dust of Disappearance, and even the Identify spell names it as such. Fling a handful skyward with a Utilize action and the trap springs: you and every creature within 30 feet of you that breathes must pass a Constitution saving throw (DC 15). On a failure, fits of sneezing stop the creature's breath, giving it the Incapacitated condition and leaving it suffocating. While it stays conscious, an affected creature retries the save at the close of each of its turns and shakes off the effect when it succeeds. Casting Lesser Restoration on a creature also frees it."
 }

@@ -59,7 +59,7 @@
     }
   ],
   "summary": "+3 sword; on your turn you can shift some or all of its bonus to your AC until your next turn.",
-  "text": "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your Armor Class. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it.",
+  "text": "This magic sword grants +3 to attack and damage rolls. Each turn, on your first attack with it, you can move any part of that bonus, up to all of it, onto your Armor Class. The split holds until your next turn starts, and you only get the AC portion while you're holding the sword.",
   "icon": "longsword",
   "icon_fallback": true
 }

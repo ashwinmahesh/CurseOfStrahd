@@ -44,5 +44,5 @@
     }
   ],
   "summary": "5 charges: Heal (1) or Resurrection (5).",
-  "text": "The rod has 5 charges. While you hold it, you can cast one of the following spells from it: Heal (1 charge) or Resurrection (5 charges). The rod regains 1 expended charge daily at dawn. If you expend the last charge, roll 1d20. On a 1, the rod disappears in a flash of light, lost forever."
+  "text": "Holding the rod, you can spend its charges to cast Resurrection for 5 charges or Heal for 1. It holds 5 charges and recovers 1 each dawn. Using up the final charge means rolling 1d20: a result of 1 makes the rod vanish forever in a burst of light."
 }

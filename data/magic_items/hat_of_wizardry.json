@@ -29,5 +29,5 @@
   ],
   "worn": "head",
   "summary": "Once a day, try to cast a Wizard cantrip you don't know.",
-  "text": "This antiquated, cone-shaped hat is adorned with gold crescent moons and stars. While you are wearing it, you gain the following benefits: you can use the hat as a Spellcasting Focus for your Wizard spells; and you can try to cast a cantrip that you don't know. The cantrip must be on the Wizard spell list, and it must have a casting time of an action. Make a DC 10 Intelligence (Arcana) check. If you succeed, you cast the spell. If you fail, so does the spell, and the action used to cast the spell is wasted. In either case, you can't use this property again until you finish a Long Rest."
+  "text": "Decorated with golden crescent moons and stars, this old-fashioned conical hat offers two benefits while worn. First, your Wizard spells can use it as a Spellcasting Focus. Second, you can attempt a cantrip you don't know, as long as it's a Wizard cantrip that takes an action to cast: roll an Intelligence (Arcana) check against DC 10. On a success you cast it; on a failure the spell fizzles and the action is wasted. Either way, this property won't work again before you finish a Long Rest."
 }

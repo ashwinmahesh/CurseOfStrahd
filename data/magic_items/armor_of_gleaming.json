@@ -23,7 +23,7 @@
     "default": "chain_mail"
   },
   "summary": "It never gets dirty.",
-  "text": "This armor never gets dirty. (No other effect in the game.)",
+  "text": "Dirt and grime never cling to this armor. (No other game effect.)",
   "icon": "chain_mail",
   "icon_fallback": true
 }

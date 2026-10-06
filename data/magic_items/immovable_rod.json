@@ -28,5 +28,5 @@
     }
   ],
   "summary": "Press its button and it stays fixed in place, holding up to 8,000 lb.",
-  "text": "This iron rod has a button on one end. You can take a Utilize action to press the button, which causes the rod to become magically fixed in place. Until you or another creature takes a Utilize action to push the button again, the rod doesn't move, even if it is defying gravity. The rod can hold up to 8,000 pounds of weight; more weight causes the rod to deactivate and fall. A creature can take a Utilize action to make a DC 30 Strength (Athletics) check, moving the fixed rod up to 10 feet on a success."
+  "text": "Pressing the button on the end of this iron rod (a Utilize action) locks it magically in place, hanging in midair if need be, and it stays put until someone presses the button again with another Utilize action. It supports as much as 8,000 pounds; load it beyond that and it switches off and drops. A creature can shift a locked rod by up to 10 feet with a Utilize action and a successful Strength (Athletics) check against DC 30."
 }

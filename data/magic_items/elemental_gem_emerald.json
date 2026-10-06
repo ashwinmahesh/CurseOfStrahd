@@ -34,5 +34,5 @@
     }
   ],
   "summary": "Break it to summon an Water Elemental that obeys you for an hour.",
-  "text": "This gem contains a mote of elemental energy. When you take a Magic action to break the gem, an Water Elemental is summoned as if you had cast Conjure Elemental, and the gem's magic is lost. The elemental appears in an unoccupied space as close to the broken gem as possible, is friendly to you and your allies, and obeys your commands for 1 hour or until it drops to 0 Hit Points."
+  "text": "Shattering this gem with a Magic action releases the elemental mote trapped inside, calling forth a Water Elemental just as the Conjure Elemental spell would; the gem is then spent. The elemental takes the unoccupied space nearest the shards, treats you and your allies as friends, and follows your orders until it hits 0 Hit Points or 1 hour passes."
 }

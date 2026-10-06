@@ -12,7 +12,7 @@
     "rarity": "very_rare",
     "attunement": true,
     "cursed": true,
-    "curse": "You can't doff the armor until the curse is lifted, and you have Disadvantage on attack rolls against demons and on saving throws against their spells and special abilities."
+    "curse": "Until the curse is broken, the armor can't be removed, and against demons your attack rolls have Disadvantage, as do your saves versus their spells and special abilities."
   },
   "theme": "armaments",
   "template": {
@@ -60,7 +60,7 @@
     }
   ],
   "summary": "+1 AC, you understand Abyssal, clawed gauntlets make your Unarmed Strikes +1 and 1d8 Slashing. Cursed.",
-  "text": "While wearing this armor, you gain a +1 bonus to Armor Class, and you know Abyssal. The armor's clawed gauntlets turn your Unarmed Strikes into magic weapon attacks that deal Slashing damage, with a +1 bonus to attack and damage rolls and a damage die of 1d8. Curse. Once you don this cursed armor, you can't doff it unless you're targeted by Remove Curse or similar magic. While wearing it, you have Disadvantage on attack rolls against demons and on saving throws against their spells and special abilities.",
+  "text": "This armor grants +1 to Armor Class and the knowledge of the Abyssal language. Its clawed gauntlets make your Unarmed Strikes count as magic weapon attacks dealing Slashing damage, using a 1d8 damage die with +1 to attack and damage rolls. Curse. Once you put it on, you can't take it off unless Remove Curse or similar magic targets you. Against demons, your attack rolls have Disadvantage while you wear it, and so do your saves against a demon's spells and special abilities.",
   "icon": "plate_armor",
   "icon_fallback": true
 }

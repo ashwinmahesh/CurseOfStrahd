@@ -25,5 +25,5 @@
   ],
   "worn": "neck",
   "summary": "Cast Plane Shift with a DC 15 Arcana check; a failure scatters you and those near you somewhere random.",
-  "text": "While wearing this amulet, you can take a Magic action to name a location that you are familiar with on another plane of existence. Then make a DC 15 Intelligence (Arcana) check. On a successful check, you cast Plane Shift. On a failure, you and each creature and object within 15 feet of you travel to a random destination: a random location on the plane you named, or a random plane of existence. (The Mists of Barovia let nobody leave.)"
+  "text": "Take a Magic action, name a place you know on another plane of existence, and attempt an Intelligence (Arcana) check against DC 15. Succeed and you cast Plane Shift. Fail and you, plus everyone and everything within 15 feet of you, are flung somewhere random: either a random spot on the named plane or a random plane altogether. (Inside the Mists of Barovia, no one can leave.)"
 }

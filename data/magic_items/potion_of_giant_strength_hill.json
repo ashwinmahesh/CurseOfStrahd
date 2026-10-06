@@ -35,5 +35,5 @@
   },
   "variant_of": "potion_of_giant_strength",
   "summary": "Your Strength becomes 21 for 1 hour (no effect if it's already higher).",
-  "text": "When you drink this potion, your Strength score changes to 21 for 1 hour. It has no effect on you if your Strength is already 21 or higher. A sliver of hill giant fingernail floats in the clear liquid."
+  "text": "The clear liquid holds a floating sliver of hill giant fingernail. Drink it and your Strength score becomes 21 for 1 hour; a creature whose Strength is 21 or more gains nothing from it."
 }

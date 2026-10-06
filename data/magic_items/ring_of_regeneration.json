@@ -22,5 +22,5 @@
     }
   ],
   "summary": "Regain 1d6 Hit Points every 10 minutes (if you have at least 1); lost body parts grow back.",
-  "text": "While wearing this ring, you regain 1d6 Hit Points every 10 minutes if you have at least 1 Hit Point. If you lose a body part, the ring causes the missing part to regrow and return to full functionality after 1d6 + 1 days if you have at least 1 Hit Point the whole time."
+  "text": "While you are at 1 Hit Point or higher, the ring restores 1d6 Hit Points to you each 10 minutes. It can also regrow a lost body part, which becomes fully functional after 1d6 + 1 days, provided you never drop below 1 Hit Point in that time."
 }

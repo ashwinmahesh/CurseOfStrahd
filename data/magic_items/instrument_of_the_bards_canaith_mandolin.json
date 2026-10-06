@@ -88,5 +88,5 @@
     }
   ],
   "summary": "Each once a day: Fly, Invisibility, Levitate, Protection from Evil and Good, Cure Wounds, Dispel Magic, Protection From Energy.",
-  "text": "An Instrument of the Bards is superior to an ordinary instrument in every way. While playing it, a Bard can use it to cast each of these spells once, regaining the use at dawn: Fly, Invisibility, Levitate and Protection from Evil and Good, plus this instrument's own: Cure Wounds (level 3), Dispel Magic, Protection From Energy. When you use the instrument to cast a spell that causes targets to have the Charmed condition on a failed save, the targets have Disadvantage on the saving throw. A creature that tries to play it without being attuned must succeed on a DC 15 Wisdom saving throw or take 2d4 Psychic damage."
+  "text": "Finer than any ordinary instrument, this one lets a Bard who is playing it cast Protection from Evil and Good, Fly, Levitate and Invisibility, along with its own Dispel Magic, Protection From Energy and Cure Wounds (level 3). Each spell can be cast this way once, and every use returns at dawn. When a spell cast through it would inflict the Charmed condition on a target that fails its save, that target makes the save with Disadvantage. Anyone who plays it without being attuned takes 2d4 Psychic damage unless it succeeds on a Wisdom saving throw against DC 15."
 }

@@ -30,5 +30,5 @@
   ],
   "worn": "head",
   "summary": "Once a day, cast Scorching Ray (+5 to hit).",
-  "text": "While wearing this circlet, you can cast Scorching Ray with it (+5 to hit). The circlet can't be used this way again until the next dawn."
+  "text": "Once per dawn, the wearer can cast Scorching Ray from this circlet, attacking at +5."
 }

@@ -24,5 +24,5 @@
   ],
   "worn": "belt",
   "summary": "Your Strength is 21 while you wear it.",
-  "text": "While wearing this belt, your Strength score changes to 21. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+  "text": "Wearing this belt sets your Strength score to 21. If your Strength is already 21 or more without it, the belt does nothing for you."
 }

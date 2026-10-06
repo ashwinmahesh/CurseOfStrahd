@@ -43,5 +43,5 @@
     }
   ],
   "summary": "7 charges: Command (flee or grovel, 1) or Fear (2), save DC 15.",
-  "text": "This wand has 7 charges for the following properties. It regains 1d6 + 1 expended charges daily at dawn. If you expend the wand's last charge, roll 1d20. On a 1, the wand crumbles into ashes and is destroyed. Command. While holding the wand, you can expend 1 charge to cast Command (save DC 15) from it, choosing only \"flee\" or \"grovel\". Cone of Fear. While holding the wand, you can expend 2 charges to cast Fear (save DC 15) from it."
+  "text": "The wand holds 7 charges, recovers 1d6 + 1 of them each dawn, and turns to ash and is destroyed if you roll a 1 on 1d20 after spending its final charge. While you hold it, you have two options. Command (1 charge): cast Command with a save DC of 15, giving only \"flee\" or \"grovel\" as the order. Cone of Fear (2 charges): cast Fear with a save DC of 15."
 }

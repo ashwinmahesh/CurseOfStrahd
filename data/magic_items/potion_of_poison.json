@@ -32,5 +32,5 @@
     }
   ],
   "summary": "Looks like a healing potion; drinking it deals 4d6 Poison damage and may poison you for 1 hour (Con DC 13).",
-  "text": "This concoction looks, smells and tastes like a Potion of Healing or another beneficial potion. However, it is actually poison masked by illusion magic; Identify reveals its true nature. If you drink it, you take 4d6 Poison damage and must succeed on a DC 13 Constitution saving throw or have the Poisoned condition for 1 hour."
+  "text": "Disguised by illusion magic, this brew mimics a Potion of Healing, or some other helpful potion, in look, smell and taste, though Identify exposes what it really is. Anyone who drinks it takes 4d6 Poison damage, then makes a Constitution saving throw against DC 13; a failed save inflicts the Poisoned condition, lasting 1 hour."
 }

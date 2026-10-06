@@ -45,5 +45,5 @@
     }
   ],
   "summary": "3 charges: Animal Friendship, Fear (Beasts only) or Speak with Animals (save DC 13).",
-  "text": "This ring has 3 charges, and it regains 1d3 expended charges daily at dawn. While wearing the ring, you can expend 1 of its charges to cast one of the following spells (save DC 13) from it: Animal Friendship, Fear (affecting only Beasts that have an Intelligence of 3 or lower), or Speak with Animals."
+  "text": "Spend 1 of the ring's 3 charges to cast Animal Friendship, Speak with Animals, or Fear (which affects only Beasts whose Intelligence is 3 or lower), each with a save DC of 13. Spent charges come back at a rate of 1d3 each dawn."
 }

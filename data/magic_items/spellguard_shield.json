@@ -33,7 +33,7 @@
     }
   ],
   "summary": "Advantage on saves against spells and magical effects; spell attacks against you have Disadvantage.",
-  "text": "While holding this Shield, you have Advantage on saving throws against spells and other magical effects, and spell attack rolls have Disadvantage against you.",
+  "text": "Spell attack rolls against you have Disadvantage while you hold this Shield, and your saving throws versus spells and any other magical effects have Advantage.",
   "icon": "shield",
   "icon_fallback": true
 }

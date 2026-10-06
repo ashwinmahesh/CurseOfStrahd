@@ -12,7 +12,7 @@
     "rarity": "rare",
     "attunement": true,
     "cursed": true,
-    "curse": "You won't part with the axe, you have Disadvantage with other weapons while foes are near, and when a hostile creature damages you, a DC 15 Wisdom save or you go berserk."
+    "curse": "You keep the axe within reach always, other weapons attack at Disadvantage while a foe is near, and taking damage from a hostile creature can send you berserk (DC 15 Wisdom save)."
   },
   "theme": "armaments",
   "template": {
@@ -52,7 +52,7 @@
     ]
   },
   "summary": "+1 axe; +1 Hit Point maximum per level. Cursed: when a foe hurts you, a DC 15 Wisdom save or you go berserk.",
-  "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your Hit Point maximum increases by 1 for each level you have attained. Curse. This weapon is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the axe, keeping it within reach at all times. You also have Disadvantage on attack rolls with weapons other than this one, unless no foe is within 60 feet of you that you can see or hear. Whenever a hostile creature damages you while the axe is in your possession, you must succeed on a DC 15 Wisdom saving throw or go berserk. While berserk, you must use your action each round to attack the creature nearest to you with the axe. If you can make extra attacks as part of the Attack action, you use those extra attacks, moving to attack the next nearest creature after you fell your current target. If you have multiple possible targets, you attack one at random. You are berserk until you start your turn with no creatures within 60 feet of you that you can see or hear.",
+  "text": "Attack and damage rolls with this magic axe gain +1, and while you're attuned to it, your Hit Point maximum goes up by 1 per level you have. Curse: the axe is cursed, and attuning to it passes the curse to you. While cursed, you refuse to be parted from the axe and always keep it within reach, and attack rolls you make with any other weapon have Disadvantage unless no foe you can see or hear is within 60 feet. Each time you take damage from a hostile creature while the axe is yours, make a Wisdom saving throw against DC 15; on a failure you go berserk. In that state you spend your action every round attacking the nearest creature with the axe. If the Attack action gives you extra attacks, you use them, moving on to the next-nearest creature once your current target falls. When several targets qualify, pick one at random. The rage lasts until you begin a turn with no creature you can see or hear within 60 feet.",
   "icon": "greataxe",
   "icon_fallback": true
 }

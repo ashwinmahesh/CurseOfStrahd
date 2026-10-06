@@ -25,7 +25,7 @@
     "always_recovered": true
   },
   "summary": "It can't be broken; you always get it back after a fight.",
-  "text": "This arrow can't be broken, except when it is within an antimagic field. In the game, it is always recovered after a fight.",
+  "text": "Only within an antimagic field can this arrow be broken. You always recover it after a fight in the game.",
   "icon": "arrow",
   "icon_fallback": true
 }

@@ -53,5 +53,5 @@
   ],
   "worn": "neck",
   "summary": "+1 to your Sorcerer spell attacks and save DC; once a day, 5 Sorcery Points back after a Short Rest.",
-  "text": "To attune to this vial, you must put a few drops of your blood into it. The vial can't be opened while your attunement to it lasts. While the vial is on your person, you gain a +1 bonus to spell attack rolls and to the saving throw DCs of your Sorcerer spells. In addition, when you roll any Hit Point Dice to recover Hit Points while you are carrying the vial, you can regain 5 Sorcery Points. This property of the vial can't be used again until the next dawn."
+  "text": "Attuning requires dripping a little of your blood into the vial, which then can't be opened for as long as you stay attuned. While you carry it, your Sorcerer spells gain +1 to their spell attack rolls and their saving throw DCs. Also, once per dawn, when you roll Hit Point Dice to regain Hit Points with the vial on you, you can recover 5 Sorcery Points."
 }

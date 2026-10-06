@@ -26,5 +26,5 @@
   ],
   "worn": "neck",
   "summary": "You stabilize at the start of your turn when dying, and Hit Point Dice you spend heal twice as much.",
-  "text": "While you wear this pendant, you stabilize whenever you are dying at the start of your turn. In addition, whenever you roll a Hit Point Die to regain Hit Points, double the number of Hit Points it restores."
+  "text": "If you start your turn dying while wearing this pendant, you automatically stabilize. Also, each Hit Point Die you roll to regain Hit Points restores twice the usual amount."
 }

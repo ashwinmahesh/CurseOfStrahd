@@ -23,5 +23,5 @@
   ],
   "worn": "neck",
   "summary": "Your Constitution is 19 while you wear it (no effect if it's already higher).",
-  "text": "Your Constitution score is 19 while you wear this amulet. It has no effect on you if your Constitution score is already 19 or higher without it."
+  "text": "Wearing this amulet sets your Constitution score to 19. If your Constitution is 19 or more without it, the amulet does nothing for you."
 }

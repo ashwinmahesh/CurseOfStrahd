@@ -43,5 +43,5 @@
   ],
   "worn": "cloak",
   "summary": "Advantage on Stealth; in dim light or darkness you can fly at 40 ft, and once a day turn into a bat.",
-  "text": "While wearing this cloak, you have Advantage on Dexterity (Stealth) checks. In an area of Dim Light or darkness, you can grip the edges of the cloak and use it to gain a Fly Speed of 40 feet. If you ever fail to grip the cloak's edges while flying in this way, or if you are no longer in Dim Light or darkness, you lose this Fly Speed. While wearing the cloak in an area of Dim Light or darkness, you can cast Polymorph on yourself, transforming into a Bat. While in that form, you retain your Intelligence, Wisdom and Charisma scores. The cloak can't be used this way again until the next dawn."
+  "text": "Your Dexterity (Stealth) checks have Advantage while you wear it. Where there is only Dim Light or darkness, spreading the cloak's edges like wings makes your Fly Speed 40 feet; letting go of the edges or leaving the Dim Light or darkness takes that flight away. Once per dawn, in those same shadowy conditions, the cloak can also cast Polymorph on you to turn you into a Bat, and you keep your own Intelligence, Wisdom and Charisma scores in that form."
 }

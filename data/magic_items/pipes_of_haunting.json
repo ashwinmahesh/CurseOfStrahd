@@ -64,5 +64,5 @@
     }
   ],
   "summary": "3 charges: an eerie tune frightens creatures within 30 ft (Wis DC 15) for a minute.",
-  "text": "You must be proficient with wind instruments to use these pipes. They have 3 charges. You can take a Magic action to play them and expend 1 charge to create an eerie, spellbinding tune. Each creature of your choice within 30 feet of you must succeed on a DC 15 Wisdom saving throw or have the Frightened condition for 1 minute. A creature that fails the save can repeat it at the end of each of its turns, ending the effect on itself on a success. The pipes regain 1d3 expended charges daily at dawn."
+  "text": "Only a creature proficient with wind instruments can use these pipes, which hold 3 charges and regain 1d3 of them each dawn. As a Magic action, spend 1 charge to play a haunting, mesmerising melody: every creature you choose within 30 feet makes a Wisdom saving throw against DC 15, and on a failure it has the Frightened condition, which lasts 1 minute. A frightened creature gets a new save whenever one of its turns ends, freeing itself on a success."
 }

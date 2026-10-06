@@ -24,7 +24,7 @@
     ]
   },
   "summary": "You can't be surprised, and you and your allies within 30 ft have Advantage on Initiative.",
-  "text": "This magic weapon warns you of danger. While the weapon is on your person, you have Advantage on Initiative rolls. In addition, you and any of your companions within 30 feet of you can't be surprised, except when incapacitated by something other than nonmagical sleep. The weapon magically awakens you and your companions within range if any of you are sleeping naturally when combat begins.",
+  "text": "This magic weapon alerts you to danger. Carrying it gives you Advantage on Initiative rolls, and neither you nor any companion within 30 feet of you can be surprised unless incapacitated by something besides ordinary nonmagical sleep. If combat starts while any of you in range are naturally asleep, the weapon wakes you all magically.",
   "icon": "longsword",
   "icon_fallback": true
 }

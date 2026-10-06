@@ -23,5 +23,5 @@
   ],
   "worn": "head",
   "summary": "Your Intelligence is 19 while you wear it.",
-  "text": "Your Intelligence score is 19 while you wear this headband. It has no effect on you if your Intelligence is already 19 or higher without it."
+  "text": "Wearing this headband sets your Intelligence score to 19. If your Intelligence is 19 or higher without it, the headband does nothing for you."
 }

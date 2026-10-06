@@ -40,6 +40,7 @@ def main():
               "2024 book: the Sword of Answering, the All-Purpose Tool (Artificer only) and the Tasha's tattoos and shards.",
               "Artifacts' random properties use a condensed table (rules/equipment/magic_items.gd). The stat blocks for",
               "creatures the items summon (data/monsters, notes saying so) were entered from the 2025 Monster Manual the same way.",
+              "Every item's `text`, `summary` and power text is written in our own words; only the game terms are the book's.",
               ""]
     (ROOT / "docs/rules/data_sources.md").write_text("\n".join(lines))
     print("\n".join(lines[6:6 + len(FOLDERS) + 1]))

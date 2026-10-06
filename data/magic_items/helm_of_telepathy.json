@@ -38,5 +38,5 @@
   ],
   "worn": "head",
   "summary": "Detect Thoughts at will, telepathy, and a daily Suggestion (save DC 13).",
-  "text": "While wearing this helm, you have the following benefits: you can cast Detect Thoughts (save DC 13) from the helm at will; while you maintain Concentration on the spell, you can take a Bonus Action to send a telepathic message to a creature you are focused on, and it can reply; and while focusing on a creature with Detect Thoughts, you can cast Suggestion (save DC 13) from the helm on that creature. Once used, the Suggestion property can't be used again until the next dawn."
+  "text": "Wearing this helm grants three benefits. Detect Thoughts (save DC 13) can be cast from it at will. As long as you hold Concentration on that spell, you can speak telepathically to the creature you're focusing on as a Bonus Action, and it can answer. Also, while Detect Thoughts is focused on a creature, you can also target that creature with Suggestion (save DC 13) cast from the helm; the Suggestion benefit then recharges at the next dawn."
 }

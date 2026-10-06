@@ -35,5 +35,5 @@
     }
   ],
   "summary": "7 charges: Polymorph (save DC 15).",
-  "text": "This wand has 7 charges. While holding it, you can expend 1 charge to cast Polymorph (save DC 15) from it. The wand regains 1d6 + 1 expended charges daily at dawn. If you expend the wand's last charge, roll 1d20. On a 1, the wand crumbles into ashes and is destroyed."
+  "text": "With the wand in hand, 1 charge lets you cast Polymorph from it, with a save DC of 15. It holds 7 charges and recovers 1d6 + 1 each dawn; when you use the last, roll 1d20, and on a 1 it crumbles to ash and is destroyed."
 }

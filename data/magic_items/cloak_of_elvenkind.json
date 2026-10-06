@@ -26,5 +26,5 @@
   ],
   "worn": "cloak",
   "summary": "With the hood up: Advantage on Stealth checks, and Perception checks to see you have Disadvantage.",
-  "text": "While you wear this cloak with its hood up, Wisdom (Perception) checks made to perceive you have Disadvantage, and you have Advantage on Dexterity (Stealth) checks. Pulling the hood up or down requires no action."
+  "text": "With the hood raised, your Dexterity (Stealth) checks have Advantage, and anyone trying to spot you with a Wisdom (Perception) check rolls with Disadvantage. Raising or lowering the hood takes no action."
 }

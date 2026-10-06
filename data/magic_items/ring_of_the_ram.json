@@ -76,5 +76,5 @@
     }
   ],
   "summary": "3 charges: a spectral ram's head (+7 to hit) for 2d10 Force per charge that knocks the target back.",
-  "text": "This ring has 3 charges, and it regains 1d3 expended charges daily at dawn. While wearing the ring, you can take a Magic action to expend 1 to 3 of its charges to make a ranged spell attack against one creature you can see within 60 feet of yourself. The ring produces a spectral ram's head and makes its attack roll with a +7 bonus. On a hit, for each charge you spend, the target takes 2d10 Force damage and is pushed 5 feet away from you. Alternatively, you can expend 1 to 3 of the ring's charges as a Magic action to try to break an object you can see within 60 feet of yourself that isn't being worn or carried. The ring makes a Strength check with a +5 bonus for each charge you spend."
+  "text": "The ring holds 3 charges and regains 1d3 of them each dawn. Ram: as a Magic action, spend 1 to 3 charges and a ghostly ram's head makes a ranged spell attack, at +7 to hit, against a creature within 60 feet that you can see. For each charge spent, a hit deals 2d10 Force damage and pushes the target 5 feet away from you. Smash: as a Magic action, spend 1 to 3 charges to try to break an unattended object within 60 feet that you can see; the ring rolls a Strength check, adding +5 for each charge spent."
 }

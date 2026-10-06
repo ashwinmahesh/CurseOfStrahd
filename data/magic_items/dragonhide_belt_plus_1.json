@@ -43,5 +43,5 @@
   ],
   "worn": "belt",
   "summary": "+1 to the save DC of your Monk features; once a day, regain 1d4 Focus Points.",
-  "text": "This finely stitched belt is made from dragonhide. While wearing it, you gain a +1 bonus to the saving throw DCs of your Monk features that use Focus Points. In addition, you can take a Magic action to regain a number of expended Focus Points equal to a roll of 1d4. You can't use this action again until the next dawn."
+  "text": "Stitched finely from dragonhide, this belt adds +1 to the saving throw DC of any Monk feature you have that spends Focus Points. Once per dawn, you can also take a Magic action to roll 1d4 and regain that many expended Focus Points."
 }

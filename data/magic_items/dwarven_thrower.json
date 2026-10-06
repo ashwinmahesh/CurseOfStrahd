@@ -65,7 +65,7 @@
     ]
   },
   "summary": "+3 warhammer that can be thrown (20/60 ft) and flies back; an extra 1d8 when thrown (2d8 against Giants).",
-  "text": "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. It has the Thrown property with a normal range of 20 feet and a long range of 60 feet. When you hit with a ranged attack using this weapon, it deals an extra 1d8 damage or, if the target is a Giant, 2d8 damage. Immediately after the attack, the weapon flies back to your hand.",
+  "text": "This magic weapon grants +3 to attack and damage rolls and has the Thrown property (normal range 20 feet, long range 60 feet). A ranged attack with it that hits adds 1d8 damage (2d8 against a Giant), and as soon as the attack resolves, the weapon flies straight back into your hand.",
   "icon": "warhammer",
   "icon_fallback": true
 }

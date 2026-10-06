@@ -36,5 +36,5 @@
     }
   ],
   "summary": "Once a day, summon a djinni that serves you for up to an hour.",
-  "text": "While wearing this ring, you can take a Magic action to summon a particular Djinni from the Elemental Plane of Air. The djinni appears in an unoccupied space you choose within 120 feet of you. It remains as long as you maintain Concentration (as if concentrating on a spell), to a maximum of 1 hour, or until it drops to 0 Hit Points. While summoned, the djinni is friendly to you and your allies and obeys your commands. If you fail to command it, the djinni defends itself against attackers but takes no other actions. After the djinni departs, it can't be summoned again for 24 hours, and the ring becomes nonmagical if the djinni dies."
+  "text": "As a Magic action, you call a specific Djinni out of the Elemental Plane of Air into an unoccupied space of your choice within 120 feet. It stays while you concentrate, as you would on a spell, for up to 1 hour, or until it is reduced to 0 Hit Points. It obeys your commands and is friendly toward you and your allies; given no orders, it does nothing except defend itself against attackers. Once it leaves, you must wait 24 hours before summoning it again, and if the djinni dies, the ring loses its magic."
 }

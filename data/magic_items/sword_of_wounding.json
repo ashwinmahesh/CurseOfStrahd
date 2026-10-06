@@ -31,7 +31,7 @@
     ]
   },
   "summary": "Once a turn, a hit wounds: 1d4 Necrotic per wound at the start of each of its turns until a DC 15 Con save ends them.",
-  "text": "Hit Points lost to this weapon's damage can be regained only through a Short or Long Rest, rather than by regeneration, magic or any other means. Once per turn, when you hit a creature with an attack using this magic weapon, you can wound the target. At the start of each of the wounded creature's turns, it takes 1d4 Necrotic damage for each time you've wounded it, and it can then make a DC 15 Constitution saving throw, ending the effect of all such wounds on itself on a success. Alternatively, the wounded creature, or a creature within 5 feet of it, can take an action to make a DC 15 Wisdom (Medicine) check, ending the effect of such wounds on it on a success.",
+  "text": "Damage from this magic weapon can't be undone by magic, regeneration or anything else; those Hit Points come back only with a Short or Long Rest. Once per turn, you can wound a creature you strike with it. As each of its turns begins, a wounded creature takes 1d4 Necrotic damage per wound, then rolls a Constitution saving throw against DC 15; success closes every such wound on it. Instead, the creature itself or someone no more than 5 feet away from it can spend an action on a Wisdom (Medicine) check against DC 15, which ends the wounds on a success.",
   "icon": "longsword",
   "icon_fallback": true
 }

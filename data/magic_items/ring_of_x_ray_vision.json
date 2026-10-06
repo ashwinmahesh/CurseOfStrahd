@@ -26,5 +26,5 @@
     }
   ],
   "summary": "See through walls within 30 ft for a minute; using it twice before a Long Rest risks Exhaustion.",
-  "text": "While wearing this ring, you can take a Magic action to gain X-ray vision with a range of 30 feet for 1 minute. To you, solid objects within that radius appear transparent and don't prevent light from passing through them. The vision can penetrate 1 foot of stone, 1 inch of common metal or up to 3 feet of wood or dirt. Thicker substances block the vision, as does a thin sheet of lead. Whenever you use the ring again before taking a Long Rest, you must succeed on a DC 15 Constitution saving throw or gain 1 Exhaustion level."
+  "text": "A Magic action grants you X-ray vision out to 30 feet for 1 minute. Within that radius, solid objects look transparent to you and let light through. The sight passes through as much as 1 inch of common metal, 1 foot of stone or 3 feet of dirt or wood; anything thicker stops it, and so does even a thin sheet of lead. Each further use before you finish a Long Rest requires a Constitution saving throw (DC 15), and on a failure you gain 1 Exhaustion level."
 }

@@ -15,5 +15,5 @@
   "theme": "implements",
   "icon": "gem",
   "summary": "Fixed to a weapon, it lets the weapon serve as your Spellcasting Focus.",
-  "text": "Etched with eldritch runes, this 1-inch-diameter ruby allows you to use a Simple or Martial weapon as a Spellcasting Focus for your spells. For this property to work, you must attach the ruby to the weapon by pressing the ruby against it for at least 10 minutes. (In the game, material components and focuses are assumed to be at hand.)"
+  "text": "Press this rune-etched ruby, 1 inch across, against a Simple or Martial weapon for at least 10 minutes to bind it there; afterward that weapon can serve as your Spellcasting Focus when you cast spells. (The game already treats material components and focuses as always available.)"
 }

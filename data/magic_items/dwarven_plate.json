@@ -30,7 +30,7 @@
     "forced_move_reduction": 10
   },
   "summary": "+2 AC; when something moves you against your will along the ground, you can cut the distance by up to 10 ft.",
-  "text": "While wearing this armor, you gain a +2 bonus to Armor Class. In addition, if an effect moves you against your will along the ground, you can take a Reaction to reduce the distance you are moved by up to 10 feet.",
+  "text": "This armor gives you +2 to Armor Class. If some effect shoves or drags you across the ground against your will, you can use your Reaction to shorten that movement by as much as 10 feet.",
   "icon": "plate_armor",
   "icon_fallback": true
 }

@@ -78,5 +78,5 @@
     }
   ],
   "summary": "For 1 hour, a Bonus Action breath of fire at a creature within 30 ft (Dex DC 13, 4d6 Fire, half on a success), three times.",
-  "text": "After drinking this potion, you can take a Bonus Action to exhale fire at a target within 30 feet of you. The target makes a DC 13 Dexterity saving throw, taking 4d6 Fire damage on a failed save or half as much on a success. The effect ends after you exhale the fire three times or when 1 hour has passed. The orange liquid flickers, and smoke fills the top of the container and wafts out whenever it's opened."
+  "text": "Flickering orange liquid fills the bottle, and smoke gathers in its neck and escapes whenever it is unstoppered. After drinking it, you can breathe fire as a Bonus Action at one target up to 30 feet away, which makes a Dexterity saving throw against DC 13 and takes 4d6 Fire damage on a failure or half that on a success. You get three breaths, and the effect ends early if 1 hour passes first."
 }

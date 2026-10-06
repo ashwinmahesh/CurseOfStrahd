@@ -75,5 +75,5 @@
     }
   ],
   "summary": "+1 sword, +1 to saving throws while you carry it, a daily reroll, and 0-3 wishes.",
-  "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. While the weapon is on your person, you also gain a +1 bonus to saving throws. Luck. If the weapon is on your person, you can call on its luck to reroll one attack roll, ability check or saving throw you dislike; you must use the second roll. This property can't be used again until the next dawn. Wish. The weapon has 1d4 - 1 charges. While holding it, you can expend 1 charge to cast Wish from it. This property can't be used again until the next dawn. The weapon loses this property if it has no charges."
+  "text": "Attack and damage rolls with this magic sword get a +1 bonus, and simply carrying it adds +1 to your saving throws. Luck: While it's on your person, you can reroll an ability check, attack roll or saving throw you're unhappy with, but you must keep the new result; this resets at the next dawn. Wish: The sword starts with 1d4 - 1 charges. Holding it, you can cast Wish from it by spending 1 charge, at most once before the next dawn; once the charges are gone, so is this property."
 }

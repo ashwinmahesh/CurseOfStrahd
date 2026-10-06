@@ -26,7 +26,7 @@
   ],
   "variant_of": "shield_plus",
   "summary": "+1 to Armor Class while you wield it, beyond the Shield's normal bonus.",
-  "text": "While holding this Shield, you have a bonus to Armor Class determined by the Shield's rarity, in addition to the Shield's normal bonus to AC: +1.",
+  "text": "On top of the AC a Shield normally gives, this one adds a further +1 to your Armor Class while you hold it.",
   "icon": "shield",
   "icon_fallback": true
 }

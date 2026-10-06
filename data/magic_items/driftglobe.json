@@ -35,5 +35,5 @@
     }
   ],
   "summary": "Cast Light or (once a day) Daylight on it; it floats along after you.",
-  "text": "This small sphere of thick glass weighs 1 pound. If you are within 60 feet of it, you can speak its command word and cause it to emanate the Light or Daylight spell. Once used, the Daylight effect can't be used again until the next dawn. You can speak another command word as a Magic action to make the illuminated globe rise into the air and float no more than 5 feet off the ground. The globe hovers in this way until you or another creature grasps it. If you move more than 60 feet from the hovering globe, it follows you until it is within 60 feet of you."
+  "text": "A small, heavy glass sphere weighing 1 pound. From within 60 feet, you can say its command word to make it give off the effect of the Light spell or the Daylight spell; the Daylight option then recharges at the next dawn. A second command word, spoken as a Magic action, sends the lit globe up to float no higher than 5 feet above the ground, where it stays until someone grabs it. Should you get farther than 60 feet from the floating globe, it follows until it's within 60 feet of you again."
 }

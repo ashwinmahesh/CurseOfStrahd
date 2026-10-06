@@ -86,7 +86,7 @@
     }
   ],
   "summary": "3 charges: a wave of terror makes creatures within 30 ft save (Wis DC 15) or flee in fear for 1 minute.",
-  "text": "This magic weapon has 3 charges and regains 1d3 expended charges daily at dawn. While holding it, you can take a Magic action and expend 1 charge to release a wave of terror from it. Each creature of your choice within 30 feet of you must succeed on a DC 15 Wisdom saving throw or have the Frightened condition for 1 minute. While Frightened in this way, a creature must spend its turns trying to move as far away from you as it can, and it can't take Reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If it has nowhere it can move, the creature can take the Dodge action. At the end of each of its turns, a creature can repeat the saving throw, ending the effect on itself on a success.",
+  "text": "Terror Wave (1 charge): As a Magic action while holding the mace, you send out a pulse of dread. Any creatures you choose within 30 feet make a Wisdom saving throw against DC 15 or are Frightened for 1 minute. A creature Frightened this way can't take Reactions and must use its turns to get as far from you as possible; its only action options are Dash or trying to break free of something stopping its movement, or Dodge if there is nowhere to go. Each time one of its turns ends, it repeats the save, shaking off the effect on a success. The mace holds 3 charges and recovers 1d3 of them each dawn.",
   "icon": "mace",
   "icon_fallback": true
 }

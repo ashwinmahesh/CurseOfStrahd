@@ -37,7 +37,7 @@
     }
   ],
   "summary": "3 charges: cast Dominate Beast (DC 15) on a Beast with a Swim Speed.",
-  "text": "This trident is a magic weapon. It has 3 charges. While you carry it, you can expend 1 charge to cast Dominate Beast (save DC 15) from it on a Beast that has a Swim Speed. The trident regains 1d3 expended charges daily at dawn.",
+  "text": "A magic trident holding 3 charges. As long as you carry it, 1 charge lets you cast Dominate Beast from it with a save DC of 15, targeting only a Beast with a Swim Speed. Each dawn it recovers 1d3 spent charges.",
   "icon": "trident",
   "icon_fallback": true
 }

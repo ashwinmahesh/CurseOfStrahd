@@ -48,7 +48,7 @@
     }
   ],
   "summary": "+2 scimitar; a Bonus Action makes one attack with it.",
-  "text": "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon. In addition, you can make one attack with it as a Bonus Action on each of your turns.",
+  "text": "This magic scimitar adds +2 to its attack and damage rolls, and on each of your turns you can use a Bonus Action to attack once with it.",
   "icon": "scimitar",
   "icon_fallback": true
 }

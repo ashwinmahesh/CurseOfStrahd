@@ -51,5 +51,5 @@
     ]
   },
   "summary": "+3, ignores Resistance to Slashing; a 20 cuts off a creature's head (or deals an extra 30 Slashing to one that can't lose it).",
-  "text": "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. In addition, the weapon ignores Resistance to Slashing damage. When you attack a creature that has at least one head with this weapon and roll a 20 on the attack roll, you cut off one of the creature's heads. The creature dies if it can't survive without the lost head. A creature is immune to this effect if it has Immunity to Slashing damage, if it doesn't have or need a head, if it has Legendary Actions, or if the DM decides that the creature is too big for its head to be cut off with this weapon. Such a creature instead takes an extra 30 Slashing damage from the hit."
+  "text": "This magic weapon grants +3 to attack and damage rolls and disregards Resistance to Slashing damage. Roll a 20 to hit a creature with at least one head and you sever one of its heads; it dies if it can't live without it. Some creatures are immune to the beheading: those with Immunity to Slashing damage, those with no head or no need for one, those with Legendary Actions, and any the DM judges too large to behead with this blade. Such a creature instead suffers 30 extra Slashing damage from the hit."
 }

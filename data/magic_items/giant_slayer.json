@@ -57,7 +57,7 @@
     ]
   },
   "summary": "+1 weapon; an extra 2d6 against Giants, which also make a DC 15 Strength save or fall Prone.",
-  "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Giant with it, the Giant takes an extra 2d6 damage of the weapon's type and must succeed on a DC 15 Strength saving throw or have the Prone condition.",
+  "text": "This magic weapon adds +1 to attack and damage rolls. Against a Giant, a hit deals 2d6 more damage (the weapon's own type), and the Giant must pass a Strength saving throw (DC 15) or gain the Prone condition.",
   "icon": "greataxe",
   "icon_fallback": true
 }

@@ -62,5 +62,5 @@
     }
   ],
   "summary": "Resistance to Fire; 10 charges: Burning Hands (1), Fireball (3), Wall of Fire (4) at your DC.",
-  "text": "You have Resistance to Fire damage while you hold this staff. The staff has 10 charges. While holding it, you can expend some of its charges to cast one of the following spells from it, using your spell save DC: Burning Hands (1 charge), Fireball (3 charges) or Wall of Fire (4 charges). The staff regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff blackens, crumbles into cinders and is destroyed."
+  "text": "Holding this staff grants Resistance to Fire damage. Its 10 charges power spells cast with your spell save DC: Wall of Fire (4 charges), Fireball (3 charges) or Burning Hands (1 charge). It recovers 1d6 + 4 charges each dawn. Spending its final charge calls for a 1d20 roll, and a 1 means the staff chars black, falls apart into cinders and is destroyed."
 }

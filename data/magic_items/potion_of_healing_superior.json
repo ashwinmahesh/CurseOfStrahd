@@ -27,5 +27,5 @@
     "kind": "instantaneous"
   },
   "summary": "Bonus Action to drink or give to a creature within 5 ft: regain 8d4 + 8 Hit Points.",
-  "text": "A magic item. As a Bonus Action, you drink it or give it to a creature within 5 feet of you. Whoever drinks the red liquid regains 8d4 + 8 Hit Points."
+  "text": "The red liquid restores 8d4 + 8 Hit Points to whoever drinks it. Drinking it yourself, or feeding it to someone else within 5 feet, takes a Bonus Action."
 }

@@ -69,5 +69,5 @@
     }
   ],
   "summary": "Resistance to Cold; 10 charges: Cone of Cold (5), Fog Cloud (1), Ice Storm (4), Wall of Ice (4) at your DC.",
-  "text": "You have Resistance to Cold damage while you hold this staff. The staff has 10 charges. While holding it, you can expend some of its charges to cast one of the following spells from it, using your spell save DC: Cone of Cold (5 charges), Fog Cloud (1 charge), Ice Storm (4 charges) or Wall of Ice (4 charges). The staff regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff turns to water and is destroyed."
+  "text": "Holding this staff grants Resistance to Cold damage. Spend its 10 charges to cast Cone of Cold (5 charges), Wall of Ice or Ice Storm (4 charges each), or Fog Cloud (1 charge), using your spell save DC. Each dawn it gets back 1d6 + 4 charges. Spending the last charge prompts a 1d20 roll; on a 1, the staff melts into water and is destroyed."
 }

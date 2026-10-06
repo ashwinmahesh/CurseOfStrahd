@@ -36,5 +36,5 @@
   ],
   "worn": "cloak",
   "summary": "Pull up the hood to be Invisible, up to an hour a day.",
-  "text": "While wearing this cloak, you can take a Magic action to pull its hood over your head and have the Invisible condition. While Invisible this way, anything you are wearing or carrying is invisible with you. You can take off the hood as a Bonus Action. The cloak can be used for 1 hour in all, in 1-minute increments, and regains the time at dawn."
+  "text": "Pulling the hood over your head is a Magic action that gives you the Invisible condition, and everything you wear or carry vanishes along with you. Removing the hood takes a Bonus Action. The cloak holds 1 hour of invisibility in total, spent in 1-minute increments, and all of it returns at dawn."
 }

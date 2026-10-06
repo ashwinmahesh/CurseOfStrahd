@@ -28,5 +28,5 @@
     }
   ],
   "summary": "Its light shows Invisible creatures and objects within 30 ft.",
-  "text": "While lit, this hooded lantern burns for 6 hours on 1 pint of oil, shedding Bright Light in a 30-foot radius and Dim Light for an additional 30 feet. Invisible creatures and objects are visible as long as they are in the lantern's Bright Light. You can take a Magic action to lower the hood, reducing the light to Dim Light in a 5-foot radius."
+  "text": "Anything Invisible, creature or object, becomes visible while it is inside this hooded lantern's Bright Light. Lit, it burns for 6 hours per 1 pint of oil and gives off Bright Light out to 30 feet and Dim Light for 30 feet past that. Lowering the hood, a Magic action, shrinks the glow to Dim Light within 5 feet."
 }

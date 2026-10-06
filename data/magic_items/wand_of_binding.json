@@ -50,5 +50,5 @@
     }
   ],
   "summary": "7 charges: Hold Monster (5) or Hold Person (2) at DC 17; a charge gives Advantage against being held.",
-  "text": "This wand has 7 charges for the following properties. It regains 1d6 + 1 expended charges daily at dawn. If you expend the wand's last charge, roll 1d20. On a 1, the wand crumbles into ashes and is destroyed. Spells. While holding the wand, you can cast one of the following spells (save DC 17) from it: Hold Monster (5 charges) or Hold Person (2 charges). Assisted Escape. While holding the wand, you can take a Reaction to expend 1 charge and give yourself Advantage on a saving throw you make to avoid being Paralyzed or Restrained, or you can expend 1 charge and give yourself Advantage on any check you make to escape a grapple."
+  "text": "Holds 7 charges and recovers 1d6 + 1 of them each dawn. When you spend the last one, roll 1d20, and a 1 turns the wand to ash, destroying it. Spells: while you hold it, cast Hold Person (2 charges) or Hold Monster (5 charges) from it, save DC 17. Assisted Escape: while holding it, you can spend 1 charge as a Reaction to gain Advantage on a saving throw against becoming Paralyzed or Restrained, or spend 1 charge to gain Advantage on a check to escape a grapple."
 }

@@ -32,7 +32,7 @@
     "dark_only": true
   },
   "summary": "In darkness, the unsheathed blade sheds moonlight (bright 15 ft, dim 15 ft more).",
-  "text": "In darkness, the unsheathed blade of this sword sheds moonlight, creating Bright Light in a 15-foot radius and Dim Light for an additional 15 feet.",
+  "text": "Drawn in the dark, this sword's blade glows with moonlight: Bright Light out to 15 feet and Dim Light 15 feet beyond that.",
   "icon": "longsword",
   "icon_fallback": true
 }

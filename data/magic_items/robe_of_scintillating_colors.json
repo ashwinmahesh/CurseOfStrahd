@@ -31,5 +31,5 @@
   ],
   "worn": "robe",
   "summary": "3 charges: a dazzling display makes attacks against you harder and can Stun those who look (Wis DC 15).",
-  "text": "This robe has 3 charges, and it regains 1d3 expended charges daily at dawn. While you wear it, you can take a Magic action and expend 1 charge to cause the garment to display a shifting pattern of dazzling hues until the end of your next turn. During this time, the robe sheds Bright Light in a 30-foot radius and Dim Light for an additional 30 feet, and creatures that can see you have Disadvantage on attack rolls against you. Any creature in the Bright Light that can see you when the robe's power is activated must succeed on a DC 15 Wisdom saving throw or have the Stunned condition until the effect ends."
+  "text": "The robe holds 3 charges and regains 1d3 each dawn. As a Magic action while wearing it, you can spend 1 charge to make the cloth ripple with dazzling, ever-changing colors until your next turn ends. For that time it lights the area within 30 feet with Bright Light and the next 30 feet with Dim Light, and anyone who can see you attacks you with Disadvantage. When the effect starts, every creature that can see you from within the Bright Light makes a Wisdom saving throw against DC 15; on a failure, it has the Stunned condition for as long as the colors last."
 }

@@ -36,5 +36,5 @@
     }
   ],
   "summary": "Ride it through the air: a Fly Speed of 50 ft; it can also fly alone to a place you name.",
-  "text": "This wooden broom functions like a mundane broom until you stand astride it and speak its command word. It then hovers beneath you and can be ridden in the air. It has a Fly Speed of 50 feet. It can carry up to 400 pounds, but its Fly Speed becomes 30 feet while carrying over 200 pounds. The broom stops hovering when you land. You can send the broom to travel alone to a destination within 1 mile of you if you speak the command word, name the location and are familiar with that place. The broom comes back to you when you speak another command word, provided that the broom is still within 1 mile of you."
+  "text": "Until you straddle it and say its command word, this is just an ordinary wooden broom. Once activated, it floats under you and carries you through the air; its Fly Speed is 50 feet. It bears up to 400 pounds, though any load over 200 pounds slows it to a Fly Speed of 30 feet. Landing ends the hover. You can also dispatch the broom on its own: say the command word and name a place you know within 1 mile, and it flies there. A second command word calls it back, as long as it hasn't strayed beyond 1 mile from you."
 }

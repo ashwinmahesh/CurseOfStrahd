@@ -39,5 +39,5 @@
   ],
   "worn": "feet",
   "summary": "Your Speed is at least 30 ft and isn't lowered by armor or weight; you jump three times as far.",
-  "text": "While you wear these boots, your Speed becomes 30 feet unless your Speed is higher, and your Speed isn't reduced by you carrying weight in excess of your carrying capacity or wearing Heavy armor. In addition, you can cast Jump from the boots at will, targeting only yourself."
+  "text": "These boots raise your Speed to 30 feet if it's lower, and neither loads beyond your carrying capacity nor Heavy armor slow you down. You can also cast Jump from them at will, but only on yourself."
 }

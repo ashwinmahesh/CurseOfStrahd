@@ -37,5 +37,5 @@
     }
   ],
   "summary": "7 charges: for a minute, sense the direction of the nearest hostile creature within 60 ft, hidden or invisible.",
-  "text": "This wand has 7 charges. While holding it, you can take a Magic action and expend 1 charge to speak its command word. For the next minute, you know the direction of the nearest creature hostile to you within 60 feet, but not its distance from you. The wand can sense the presence of hostile creatures that are invisible, ethereal, disguised or hidden, as well as those in plain sight. The effect ends if you stop holding the wand. The wand regains 1d6 + 1 expended charges daily at dawn. If you expend the wand's last charge, roll 1d20. On a 1, the wand crumbles into ashes and is destroyed."
+  "text": "Holding the wand, take a Magic action, spend 1 of its 7 charges and speak its command word. For 1 minute you sense which way the closest hostile creature within 60 feet lies, though not how far off it is. It picks up hostile creatures that are hidden, invisible, ethereal or disguised as easily as those in plain view. Letting go of the wand ends the effect. Each dawn it recovers 1d6 + 1 charges; when you spend the final charge, roll 1d20, and on a 1 it crumbles to ash and is destroyed."
 }

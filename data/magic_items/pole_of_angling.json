@@ -15,5 +15,5 @@
   "theme": "implements",
   "icon": "pole",
   "summary": "A 10-ft pole that becomes a fishing pole.",
-  "text": "While holding this 10-foot pole, you can speak a command word and transform it into a fishing pole with a hook, a line and a reel. Speaking another command word changes the fishing pole back into a normal 10-foot pole. (No other effect in the game.)"
+  "text": "Speak one command word while holding this 10-foot pole and it becomes a fishing pole complete with hook, line and reel; a second command word restores the plain 10-foot pole. (It does nothing else in the game.)"
 }

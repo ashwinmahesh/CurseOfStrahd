@@ -18,7 +18,7 @@
     "name": "Shield of Expression"
   },
   "summary": "A face on the front changes its expression at your whim.",
-  "text": "The front of this Shield is shaped in the likeness of a face. While bearing the Shield, you can take a Bonus Action to alter the face's expression. (No other effect in the game.)",
+  "text": "Its front is sculpted into a face, and while you bear the Shield you can change that face's expression as a Bonus Action. (Cosmetic only; no further game effect.)",
   "icon": "shield",
   "icon_fallback": true
 }

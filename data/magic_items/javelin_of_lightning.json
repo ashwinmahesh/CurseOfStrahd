@@ -36,7 +36,7 @@
     }
   ],
   "summary": "Once a day, throw it as a bolt of lightning: a 120-ft line (Dex DC 13, 4d6 Lightning) and 4d6 extra to the target.",
-  "text": "This javelin is a magic weapon. When you hurl it and speak its command word, it transforms into a bolt of lightning, forming a line 5 feet wide that extends out from you to a target within 120 feet. Each creature in the line excluding you and the target makes a DC 13 Dexterity saving throw, taking 4d6 Lightning damage on a failed save and half as much damage on a successful one. The lightning bolt turns back into a javelin when it reaches the target. Make a ranged weapon attack against the target. On a hit, the target takes damage from the javelin plus 4d6 Lightning damage. The javelin's property can't be used again until the next dawn. In the meantime, the javelin can still be used as a magic weapon.",
+  "text": "Say the command word as you throw this magic javelin and it becomes a streak of lightning, a 5-foot-wide line running from you to a target up to 120 feet away. Creatures along the line, apart from you and your target, make a Dexterity saving throw against DC 13; each takes 4d6 Lightning damage if it fails, or half as much if it succeeds. On reaching the target the bolt is a javelin again; make a ranged weapon attack, and a hit deals the javelin's normal damage plus 4d6 Lightning damage. After that the lightning is spent until the next dawn, though the javelin still works as a magic weapon.",
   "icon": "javelin",
   "icon_fallback": true
 }

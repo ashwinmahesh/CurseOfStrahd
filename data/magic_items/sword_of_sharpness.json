@@ -48,7 +48,7 @@
     }
   ],
   "summary": "On a 20, an extra 4d6 Slashing, and another 20 lops off a limb. Objects it hits take maximum damage.",
-  "text": "When you attack an object with this magic sword and hit, maximize your weapon damage dice against the target. When you attack a creature with this weapon and roll a 20 on the attack roll, that target takes an extra 4d6 Slashing damage. Then roll another d20. If you roll a 20, you lop off one of the target's limbs, with the effect of such loss determined by the DM. If the creature has no limb to sever, you lop off a portion of its body instead. In addition, you can take a Magic action to make the sword shed Bright Light in a 10-foot radius and Dim Light for an additional 10 feet. Taking the action again, or sheathing the sword, extinguishes the light.",
+  "text": "Against objects, every hit with this magic sword deals the maximum on its weapon damage dice. Against a creature, an attack roll of 20 adds 4d6 Slashing damage; then roll a d20 again, and on another 20 the blow severs one of the target's limbs (or a chunk of its body if it has none), with the DM ruling on the consequences. As a Magic action you can also make the blade shine, casting Bright Light out to 10 feet and Dim Light for 10 feet more; repeating the action or sheathing the sword puts the light out.",
   "icon": "longsword",
   "icon_fallback": true
 }
