@@ -341,6 +341,9 @@ static func taken_by_type(t: Combatant, parts: Array) -> Dictionary:
 ## Spells the monster can cast now: [{id, level, per_day_left}] from its `spellcasting` block (at will, N/day).
 func spells_now(c: Combatant) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
+	# No spellcasting inside an Antimagic Field (or with Befuddlement, Feeblemind...).
+	if c.creature.has_flag("cant_cast") or enc().spells.specials.high.in_antimagic(c):
+		return out
 	var sc := data_of(c).get("spellcasting", {}) as Dictionary
 	for sid: Variant in sc.get("at_will", []):
 		out.append({"id": str(sid), "left": 99})
@@ -707,3 +710,21 @@ func parry_offer(st: Dictionary, miss: Callable) -> Array:
 				st["ac"] = int(st["ac"]) + bonus
 				return miss.call() as CombatResult})
 	return out
+
+
+## Death Throes (a demon Fiendish Spirit): it explodes as it dies; creatures nearby make a Dexterity save.
+func death_burst(c: Combatant) -> void:
+	var e := enc()
+	for tr: Variant in traits(c):
+		var b := (tr as Dictionary).get("death_burst", {}) as Dictionary
+		if b.is_empty():
+			continue
+		var dmg := b["damage"] as Dictionary
+		var rolled := e._roll_damage_dice(str(dmg["dice"]), false, 0, str((tr as Dictionary).get("name", "Death Throes")))
+		e.log.add("spell", "%s bursts apart in flame" % c.name(), c.id)
+		for o in e.living():
+			if o == c or e.distance(c, o) > int(b.get("radius", 10)):
+				continue
+			var sv := o.creature.roll_save(e.dice, &"dex", int((b["save"] as Dictionary)["dc"]), [], [], "Dexterity save vs Death Throes (%s)" % o.name())
+			var amt := int(rolled["total"]) / 2 if sv.success else int(rolled["total"])
+			e.deal_damage(c, o, [{"amount": amt, "type": str(dmg["type"])}], false, "Death Throes", [sv.describe(), str(rolled["text"])])

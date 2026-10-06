@@ -35,6 +35,23 @@
     "kind": "area",
     "description": "a wall up to 90 feet long and 30 feet high, or a globe up to 30 feet across"
   },
+  "choice": {
+    "kind": "option",
+    "label": "Shape",
+    "from": [
+      "wall",
+      "globe"
+    ]
+  },
+  "zone": {
+    "triggers": [],
+    "prismatic": true,
+    "light": {
+      "bright": 100,
+      "dim": 100
+    },
+    "colour": "orchid"
+  },
   "tags": [
     "defense",
     "damage"

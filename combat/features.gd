@@ -136,11 +136,13 @@ func steady_aim(c: Combatant) -> CombatResult:
 	if c.moved:
 		return CombatResult.fail("Steady Aim needs you not to have moved this turn")
 	c.bonus_available = false
-	c.movement_left = 0
-	var fx := Effect.new("Steady Aim", &"feature", "steady_aim").with_modifier("speed_set", {"value": 0})
-	fx.ends = Effect.Ends.END_OF_TURN
-	fx.turn_owner_id = c.id
-	c.creature.add_effect(fx)
+	# Roving Aim (Assassin 9, in Infiltration Expertise): Steady Aim no longer stops you.
+	if not has_feature(c, "infiltration_expertise"):
+		c.movement_left = 0
+		var fx := Effect.new("Steady Aim", &"feature", "steady_aim").with_modifier("speed_set", {"value": 0})
+		fx.ends = Effect.Ends.END_OF_TURN
+		fx.turn_owner_id = c.id
+		c.creature.add_effect(fx)
 	e.add_mark({"kind": "advantage_next_attack", "attacker": c.id, "source": "Steady Aim",
 		"expires_owner": c.id, "expires_phase": "end", "consume": true})
 	e.log.add("info", "%s takes Steady Aim: Advantage on the next attack, Speed 0" % c.name(), c.id)
@@ -689,6 +691,12 @@ func smite_dice(sctx: Dictionary, target: Combatant) -> Array[Dictionary]:
 func smite_follow_up(sctx: Dictionary, target: Combatant, alive: bool, r: CombatResult) -> void:
 	var e := enc()
 	var sd := sctx["s"] as Dictionary
+	# Banishing Smite: a target left at 50 Hit Points or fewer makes a Charisma save or is banished.
+	if sd.has("banish_at_hp"):
+		if alive and target.creature.hp <= int(sd["banish_at_hp"]):
+			e.spells.specials.banish(sctx, target, r)
+		e.spells._finish_concentration(sctx)
+		return
 	if sd.has("secondary"):
 		e.spells._secondary(sctx, target, r)
 	elif alive and sd.has("save"):

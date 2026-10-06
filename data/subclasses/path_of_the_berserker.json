@@ -40,7 +40,7 @@
         "summary": "Reaction: when a creature within 5 feet damages you, make one melee attack against it.",
         "text": "When a creature within 5 feet of you deals damage to you, you can take a Reaction to make one melee attack against it with a weapon or an Unarmed Strike.",
         "action": "reaction",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

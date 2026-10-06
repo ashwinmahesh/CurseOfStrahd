@@ -54,10 +54,15 @@
       "end_turn",
       "moved_into"
     ],
-    "affects": "enemies",
+    "affects": "all",
     "light": {
       "bright": 10,
       "dim": 0
+    },
+    "heal_allies": {
+      "dice": "4d12",
+      "add_mod": true,
+      "type": "radiant"
     }
   },
   "sustain": [

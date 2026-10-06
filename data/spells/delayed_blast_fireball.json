@@ -47,6 +47,16 @@
     "damage": "1d6",
     "text": "The starting damage increases by 1d6 for each slot level above 7."
   },
+  "sustain": [
+    {
+      "do": "end_spell",
+      "cost": "free",
+      "not_this_turn": false,
+      "label": "Burst the bead",
+      "sub": "end the spell now",
+      "help": "Let your Concentration go: the bead bursts with the damage it holds."
+    }
+  ],
   "tags": [
     "damage"
   ],

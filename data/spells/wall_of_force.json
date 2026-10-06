@@ -37,6 +37,14 @@
     "kind": "area",
     "description": "a dome or globe up to 10 feet in radius, or ten connected 10-foot panels"
   },
+  "choice": {
+    "kind": "option",
+    "label": "Shape",
+    "from": [
+      "wall",
+      "dome"
+    ]
+  },
   "tags": [
     "defense",
     "control"

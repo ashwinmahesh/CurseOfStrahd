@@ -35,6 +35,15 @@
   "upcast": {
     "text": "Slam damage increases per slot level above 5 (1d4 for Medium or smaller, 1d6 for Large, 1d12 for Huge)."
   },
+  "choice": {
+    "kind": "option",
+    "label": "Objects",
+    "from": [
+      "small",
+      "large",
+      "huge"
+    ]
+  },
   "tags": [
     "summon",
     "damage"

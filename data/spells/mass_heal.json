@@ -26,7 +26,8 @@
   },
   "targets": {
     "kind": "ally",
-    "description": "any number of creatures you can see"
+    "description": "any number of creatures you can see",
+    "count": 99
   },
   "tags": [
     "healing",

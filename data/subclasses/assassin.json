@@ -57,7 +57,7 @@
         "name": "Infiltration Expertise",
         "summary": "Mimic voices and handwriting; Steady Aim no longer drops your Speed to 0.",
         "text": "Masterful Mimicry: after at least an hour studying a person, you can copy their speech, their handwriting or both without fault. Roving Aim: using Steady Aim no longer reduces your Speed to 0.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
