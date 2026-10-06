@@ -2127,15 +2127,23 @@ func _delayed_damage(ctx: Dictionary, t: Combatant, params: Dictionary) -> void:
 	fx.modifiers.append(Modifier.of("flag", {"value": "lingering_damage"}, str(s["name"]), &"spell"))
 	var part := {"dice": str(params.get("dice", "2d4")), "type": str(params.get("type", "acid")), "upcast": str(params.get("upcast", ""))}
 	fx.data["on_end"] = {"kind": "delayed_damage", "target": t.id, "caster": c.id, "spell": str(s["id"]), "slot": int(ctx["slot"]), "part": part}
-	var ctx_copy := ctx.duplicate()
+	# Only what the later roll needs, and the creatures by id: a copy of the whole context could hold the target
+	# (a queued push) and keep it alive through this very effect.
+	var caster_id := c.id
+	var slot := int(ctx["slot"])
+	var spell_id := str(s["id"])
 	var weak_t: WeakRef = weakref(t)
 	fx.on_end = func() -> void:
 		var tt := weak_t.get_ref() as Combatant
 		var ee := enc()
 		if tt == null or ee == null or not tt.is_alive() or ee.state != Encounter.State.ACTIVE:
 			return
-		var rolled := roll_damage_parts(ctx_copy, [part], false, tt)
-		ee.deal_damage(ee.get_c(c.id), tt, [{"amount": int(rolled["total"]), "type": str(rolled["type"]), "spell": true}], false,
+		var cc := ee.get_c(caster_id)
+		if cc == null:
+			return
+		var later := {"c": cc, "s": _comp().spell_data(spell_id), "slot": slot, "nums": {}, "opts": {}}
+		var rolled := roll_damage_parts(later, [part], false, tt)
+		ee.deal_damage(cc, tt, [{"amount": int(rolled["total"]), "type": str(rolled["type"]), "spell": true}], false,
 			str(s["name"]), [str(rolled["text"])])
 	t.creature.add_effect(fx)
 
@@ -3093,7 +3101,11 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		marker.on_end = func() -> void: _dismiss(sid)
 	if e.state == Encounter.State.ACTIVE:
 		e.insert_after(c, sc)
-	if conc == null and str(s["id"]) == "summon_fey":
+	# A summon cast without Concentration (Fey Reinforcements, Spirits of Ill Omen) lasts its duration in rounds.
+	var sd := s.get("duration", {}) as Dictionary
+	if conc == null and not bool(ctx.get("precast", false)) and str(sd.get("kind", "")) in ["rounds", "minutes"]:
+		sc.set_meta("vanish_round", e.round_no + _duration_rounds(sd))
+	elif conc == null and str(s["id"]) == "summon_fey":
 		sc.set_meta("vanish_round", e.round_no + 10)
 	e.events.append({"type": "summon_creature", "id": sc.id, "cell": cell, "caster": c.id})
 	r.lines.append(e.log.add("spell", "%s appears beside %s" % [m.name, c.name()], c.id))

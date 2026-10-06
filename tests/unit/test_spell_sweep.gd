@@ -147,6 +147,13 @@ func test_every_combat_spell_changes_something() -> void:
 			continue
 		if id in NO_EFFECT_ON_FOES:
 			continue
+		# SWEEP_LEVELS=7,8,9 narrows the sweep while chasing a problem.
+		var id_only := OS.get_environment("SWEEP_IDS")
+		if id_only != "" and not id in id_only.split(","):
+			continue
+		var lv_only := OS.get_environment("SWEEP_LEVELS")
+		if lv_only != "" and not str(int(s.get("level", 0))) in lv_only.split(","):
+			continue
 		var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 		if unit in ["reaction", "minute", "hour"]:
 			continue
