@@ -1,0 +1,40 @@
+{
+  "id": "broom_of_flying",
+  "name": "Broom of Flying",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "broom",
+  "powers": [
+    {
+      "id": "ride",
+      "name": "Ride",
+      "cost": "bonus",
+      "toggle": true,
+      "off_cost": "bonus",
+      "modifiers": [
+        {
+          "stat": "speed_set",
+          "kind": "fly",
+          "value": 50
+        },
+        {
+          "stat": "flag",
+          "value": "broom_rider"
+        }
+      ],
+      "text": "Sit astride it: a Fly Speed of 50 ft (30 ft if you carry more than 200 lb)."
+    }
+  ],
+  "summary": "Ride it through the air: a Fly Speed of 50 ft; it can also fly alone to a place you name.",
+  "text": "This wooden broom functions like a mundane broom until you stand astride it and speak its command word. It then hovers beneath you and can be ridden in the air. It has a Fly Speed of 50 feet. It can carry up to 400 pounds, but its Fly Speed becomes 30 feet while carrying over 200 pounds. The broom stops hovering when you land. You can send the broom to travel alone to a destination within 1 mile of you if you speak the command word, name the location and are familiar with that place. The broom comes back to you when you speak another command word, provided that the broom is still within 1 mile of you."
+}

@@ -1,0 +1,39 @@
+{
+  "id": "iron_flask",
+  "name": "Iron Flask",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "flask",
+  "powers": [
+    {
+      "id": "capture",
+      "name": "Capture",
+      "cost": "magic",
+      "custom": "iron_flask_capture",
+      "targeting": "enemy",
+      "range": 60,
+      "text": "Magic action: a creature within 60 ft that isn't native to this plane makes a DC 17 Wisdom save or is trapped in the flask."
+    },
+    {
+      "id": "release",
+      "name": "Release",
+      "cost": "magic",
+      "custom": "iron_flask_release",
+      "targeting": "place",
+      "range": 30,
+      "text": "Magic action: release the creature held inside; it obeys you for 1 hour."
+    }
+  ],
+  "summary": "Trap a creature from another plane inside it (Wis DC 17), and later release it to serve you for an hour.",
+  "text": "This iron bottle has a brass stopper. You can take a Magic action to speak the flask's command word, targeting a creature that you can see within 60 feet of you. If the target is native to a plane of existence other than the one you're on, the target must succeed on a DC 17 Wisdom saving throw or be trapped in the flask. If the target has been trapped by the flask before, it has Advantage on the save. Once trapped, a creature remains in the flask until released. The flask can hold only one creature at a time. You can take a Magic action to remove the flask's stopper and release the creature the flask contains. The creature is friendly to you and your companions for 1 hour and obeys your commands for that duration. If you give no commands or give it a command that is likely to result in its death, it defends itself but otherwise takes no actions. At the end of the duration, the creature acts in accordance with its normal disposition and alignment."
+}

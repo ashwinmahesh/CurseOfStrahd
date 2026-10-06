@@ -1,0 +1,56 @@
+{
+  "id": "rhythm_makers_drum_plus_2",
+  "name": "Rhythm-Maker's Drum, +2",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Bard"
+  },
+  "theme": "arcana",
+  "icon": "drum",
+  "variant_of": "rhythm_makers_drum",
+  "modifiers": [
+    {
+      "stat": "spell_attack",
+      "value": 2,
+      "when": {
+        "spell_class": "bard"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 2,
+      "when": {
+        "spell_class": "bard"
+      }
+    }
+  ],
+  "powers": [
+    {
+      "id": "inspire",
+      "name": "Regain Bardic Inspiration",
+      "cost": "magic",
+      "custom": "restore_resource",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true,
+      "params": {
+        "resources": [
+          "bardic_inspiration"
+        ],
+        "amount": 1
+      },
+      "text": "Magic action (once per dawn): regain one expended use of Bardic Inspiration."
+    }
+  ],
+  "summary": "+2 to your Bard spell attacks and save DC; once a day, regain a use of Bardic Inspiration.",
+  "text": "While holding this drum, you gain a +2 bonus to spell attack rolls and to the saving throw DCs of your Bard spells. As a Magic action, you can play the drum to regain one expended use of your Bardic Inspiration feature. This property of the drum can't be used again until the next dawn."
+}

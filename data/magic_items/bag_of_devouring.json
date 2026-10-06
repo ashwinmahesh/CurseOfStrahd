@@ -1,0 +1,27 @@
+{
+  "id": "bag_of_devouring",
+  "name": "Bag of Devouring",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0.5,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false,
+    "cursed": true,
+    "curse": "Food and other once-living things put in it are devoured; reaching in risks being pulled inside."
+  },
+  "theme": "implements",
+  "icon": "bag",
+  "appears_as": "bag_of_holding",
+  "container": {
+    "capacity_lb": 500,
+    "weightless": true,
+    "devours": true
+  },
+  "summary": "Looks like a Bag of Holding, but it's the mouth of an extradimensional creature that eats what's put in.",
+  "text": "This bag superficially resembles a Bag of Holding but is a feeding orifice for a gigantic extradimensional creature. Turning the bag inside out closes the orifice. The extradimensional creature attached to the bag can sense whatever is placed inside the bag. Animal or vegetable matter placed wholly in the bag is devoured and lost forever. When part of a living creature is placed in the bag, as happens when someone reaches inside it, there is a 50 percent chance that the creature is pulled inside the bag. A creature inside the bag can take an action to try to escape, doing so with a successful DC 15 Strength (Athletics) check. Another creature can take an action to reach into the bag to pull a creature out, doing so with a successful DC 20 Strength (Athletics) check (provided the puller isn't pulled inside the bag first). Any creature that starts its turn inside the bag is devoured, its body destroyed. Inanimate objects can be stored in the bag, which can hold a cubic foot of such material. However, once each day, the bag swallows any objects inside it and spits them out into another plane of existence."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "mantle_of_spell_resistance",
+  "name": "Mantle of Spell Resistance",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "save_vs:spell"
+    }
+  ],
+  "worn": "cloak",
+  "summary": "Advantage on saving throws against spells.",
+  "text": "You have Advantage on saving throws against spells while you wear this cloak."
+}

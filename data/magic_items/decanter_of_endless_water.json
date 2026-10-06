@@ -1,0 +1,79 @@
+{
+  "id": "decanter_of_endless_water",
+  "name": "Decanter of Endless Water",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 2,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "decanter",
+  "recipes": {
+    "geyser": {
+      "name": "Geyser",
+      "level": 0,
+      "school": "conjuration",
+      "range": {
+        "kind": "feet",
+        "feet": 30
+      },
+      "targets": {
+        "kind": "enemy",
+        "count": 1
+      },
+      "save": "str",
+      "damage": [
+        {
+          "dice": "1d4",
+          "type": "bludgeoning"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "prone",
+            "plain": true
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "geyser",
+      "name": "Geyser",
+      "recipe": "geyser",
+      "dc": 13,
+      "cost": "magic",
+      "text": "Magic action: a geyser blasts a creature within 30 ft: a DC 13 Strength save or 1d4 Bludgeoning and knocked Prone."
+    },
+    {
+      "id": "stream",
+      "name": "Stream or Fountain",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "pours out fresh or salt water"
+      },
+      "field": true,
+      "text": "It pours out fresh or salt water. (No other effect in the game.)",
+      "combat": false
+    }
+  ],
+  "summary": "Pours endless water: a stream, a fountain, or a geyser that knocks a creature down (Str DC 13).",
+  "text": "This stoppered flask sloshes when shaken, as if it contains water. The decanter weighs 2 pounds. You can take a Magic action to remove the stopper and issue one of three command words, whereupon an amount of fresh water or salt water (your choice) pours out of the flask. The water stops pouring out at the start of your next turn. Stream: 1 gallon. Fountain: 5 gallons. Geyser: 30 gallons that gush forth in a Line 30 feet long and 1 foot wide. As a Bonus Action while holding the decanter, you can aim the geyser at a creature you can see within 30 feet of yourself. The target must succeed on a DC 13 Strength saving throw or take 1d4 Bludgeoning damage and have the Prone condition. Instead of a creature, you can target an object that isn't being worn or carried and that weighs no more than 200 pounds. The object is either knocked over or pushed up to 15 feet away from you."
+}

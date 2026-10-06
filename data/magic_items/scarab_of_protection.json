@@ -1,0 +1,46 @@
+{
+  "id": "scarab_of_protection",
+  "name": "Scarab of Protection",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true,
+    "charges": {
+      "max": 12,
+      "when": "never",
+      "last": {
+        "die": 1,
+        "on": 1,
+        "result": "destroyed",
+        "text": "crumbles into powder"
+      }
+    }
+  },
+  "theme": "relics",
+  "icon": "scarab",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "save_vs:spell"
+    }
+  ],
+  "powers": [
+    {
+      "id": "ward",
+      "name": "Turn aside death magic",
+      "cost": "reaction",
+      "charges": 1,
+      "hidden": true,
+      "text": "When you fail a save against a Necromancy spell or a harmful effect from an Undead, a Reaction and a charge turn it into a success (used automatically)."
+    }
+  ],
+  "worn": "neck",
+  "summary": "Advantage on saves against spells; 12 charges to turn failed saves against necromancy and undead into successes.",
+  "text": "If you hold this beetle-shaped medallion in your hand for 1 round, an inscription appears on its surface revealing its magical nature. It provides two benefits while it is on your person: you have Advantage on saving throws against spells; and the scarab has 12 charges. If you fail a saving throw against a Necromancy spell or a harmful effect originating from an Undead creature, you can take a Reaction to expend 1 charge and turn the failed save into a successful one. The scarab crumbles into powder and is destroyed when its last charge is expended."
+}

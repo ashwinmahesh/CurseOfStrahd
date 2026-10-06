@@ -1,0 +1,41 @@
+{
+  "id": "boots_of_speed",
+  "name": "Boots of Speed",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "boots",
+  "powers": [
+    {
+      "id": "click",
+      "name": "Click the heels",
+      "cost": "bonus",
+      "toggle": true,
+      "off_cost": "bonus",
+      "budget_rounds": 100,
+      "modifiers": [
+        {
+          "stat": "speed_percent",
+          "value": 200
+        },
+        {
+          "stat": "flag",
+          "value": "oa_disadvantage"
+        }
+      ],
+      "text": "Bonus Action: double your Speed, and Opportunity Attacks against you have Disadvantage. 10 minutes of use per Long Rest."
+    }
+  ],
+  "worn": "feet",
+  "summary": "Click your heels (Bonus Action): doubled Speed and Opportunity Attacks against you have Disadvantage, 10 minutes a day.",
+  "text": "While you wear these boots, you can take a Bonus Action to click the boots' heels together. If you do, the boots double your Speed, and any creature that makes an Opportunity Attack against you has Disadvantage on the attack roll. If you click your heels together again, you end the effect. When you've used the boots' property for a total of 10 minutes, the magic ceases to function until you finish a Long Rest."
+}

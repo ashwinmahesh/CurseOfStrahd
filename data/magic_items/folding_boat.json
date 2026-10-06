@@ -1,0 +1,33 @@
+{
+  "id": "folding_boat",
+  "name": "Folding Boat",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 4,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "box",
+  "powers": [
+    {
+      "id": "unfold",
+      "name": "Unfold",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "unfolds into a rowboat or a keelboat"
+      },
+      "field": true,
+      "text": "It unfolds into a rowboat or a keelboat. (No other effect in the game.)",
+      "combat": false
+    }
+  ],
+  "summary": "A small box that unfolds into a rowboat or a keelboat.",
+  "text": "This object appears as a wooden box that measures 12 inches long, 6 inches wide and 6 inches deep. It weighs 4 pounds and floats. It can be opened to store items inside. This item also has three command words, each requiring a Magic action to use: one causes the box to unfold into a Rowboat, another into a Keelboat, and the third folds it back up as long as no creatures are aboard. (In the game, it carries the party over Barovia's lakes and rivers.)"
+}

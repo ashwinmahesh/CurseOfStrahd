@@ -1,0 +1,41 @@
+{
+  "id": "horn_of_valhalla_iron",
+  "name": "Horn of Valhalla (Iron)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 2,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "relics",
+  "icon": "horn",
+  "variant_of": "horn_of_valhalla",
+  "powers": [
+    {
+      "id": "blow",
+      "name": "Blow",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "params": {
+        "monster": "berserker",
+        "count": 5,
+        "hours": 1,
+        "requires_prof": "martial"
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Magic action (once every 7 days): 5 warrior spirits (Berserkers) appear and fight for you for 1 hour. If you lack proficiency with all Martial weapons, the berserkers attack you.",
+      "uses": {
+        "count": 1,
+        "per": "dawns:7"
+      }
+    }
+  ],
+  "summary": "Once a week, summons 5 Berserker spirits that fight for you for an hour. If you lack proficiency with all Martial weapons, the berserkers attack you.",
+  "text": "You can take a Magic action to blow this horn. In response, warrior spirits from the plane of Ysgard appear in unoccupied spaces within 60 feet of you. Each spirit uses the Berserker stat block and returns to Ysgard after 1 hour or when it drops to 0 Hit Points. The spirits look like living, breathing warriors, and they have Immunity to the Charmed and Frightened conditions. Once you use the horn, it can't be used again until 7 days have passed. This iron horn summons 5 spirits. If you lack proficiency with all Martial weapons, the berserkers attack you."
+}

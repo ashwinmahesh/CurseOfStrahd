@@ -1,0 +1,39 @@
+{
+  "id": "mirror_of_life_trapping",
+  "name": "Mirror of Life Trapping",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 50,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "mirror",
+  "powers": [
+    {
+      "id": "trap",
+      "name": "Trap a creature",
+      "cost": "magic",
+      "custom": "mirror_trap",
+      "targeting": "enemy",
+      "range": 30,
+      "text": "Magic action: a creature within 30 ft that sees its reflection makes a DC 15 Cha save or is drawn into one of the mirror's 12 cells."
+    },
+    {
+      "id": "release",
+      "name": "Release a creature",
+      "cost": "magic",
+      "custom": "iron_flask_release",
+      "targeting": "place",
+      "range": 30,
+      "text": "Magic action: free one trapped creature."
+    }
+  ],
+  "summary": "A creature that sees its reflection may be pulled into one of the mirror's twelve cells (Cha DC 15).",
+  "text": "When this 4-foot-tall rectangular mirror is viewed indirectly, its surface shows faint images of creatures. The mirror weighs 50 pounds, and it has AC 11, 10 Hit Points and Vulnerability to Bludgeoning damage. It shatters and is destroyed when reduced to 0 Hit Points. If the mirror is hanging on a vertical surface and you are within 5 feet of it, you can take a Magic action to speak its command word and activate it. It remains activated until you take a Magic action to speak the command word again. Any creature other than you that sees its reflection in the activated mirror while within 30 feet of it must succeed on a DC 15 Charisma saving throw or be trapped, along with anything it is wearing or carrying, in one of the mirror's twelve extradimensional cells. This saving throw is made with Advantage if the creature knows the mirror's nature, and Constructs succeed on the saving throw automatically. If the mirror is shattered, all creatures it contains are freed."
+}

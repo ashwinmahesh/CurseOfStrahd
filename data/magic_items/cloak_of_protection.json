@@ -1,0 +1,31 @@
+{
+  "id": "cloak_of_protection",
+  "name": "Cloak of Protection",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 1
+    },
+    {
+      "stat": "save",
+      "ability": "all",
+      "value": 1
+    }
+  ],
+  "worn": "cloak",
+  "summary": "+1 to Armor Class and saving throws.",
+  "text": "You gain a +1 bonus to Armor Class and saving throws while you wear this cloak."
+}

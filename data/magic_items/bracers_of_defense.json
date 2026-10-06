@@ -1,0 +1,30 @@
+{
+  "id": "bracers_of_defense",
+  "name": "Bracers of Defense",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "bracers",
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 2,
+      "when": {
+        "armor": "none",
+        "shield": false
+      }
+    }
+  ],
+  "worn": "wrists",
+  "summary": "+2 AC while you wear no armor and use no Shield.",
+  "text": "While wearing these bracers, you gain a +2 bonus to Armor Class if you are wearing no armor and using no Shield."
+}

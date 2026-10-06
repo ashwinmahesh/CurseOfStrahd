@@ -1,0 +1,32 @@
+{
+  "id": "perfume_of_bewitching",
+  "name": "Perfume of Bewitching",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 50.0,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "perfume",
+  "stackable": true,
+  "powers": [
+    {
+      "id": "dab",
+      "name": "Dab it on",
+      "cost": "action",
+      "custom": "perfume",
+      "consume": true,
+      "field": true,
+      "text": "For 1 hour, you have Advantage on Charisma checks made to influence Humanoids of CR 1 or lower."
+    }
+  ],
+  "summary": "For an hour, Advantage on Charisma checks to sway ordinary folk.",
+  "text": "This tiny vial contains magic perfume, enough for one use. You can take an action to apply the perfume to yourself, and its effect lasts 1 hour. For the duration, you have Advantage on all Charisma checks directed at Humanoids of Challenge Rating 1 or lower. Those subjected to the perfume's effect are not aware that they've been influenced by magic."
+}

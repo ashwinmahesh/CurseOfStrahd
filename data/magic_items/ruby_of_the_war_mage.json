@@ -1,0 +1,19 @@
+{
+  "id": "ruby_of_the_war_mage",
+  "name": "Ruby of the War Mage",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": "by a Spellcaster"
+  },
+  "theme": "implements",
+  "icon": "gem",
+  "summary": "Fixed to a weapon, it lets the weapon serve as your Spellcasting Focus.",
+  "text": "Etched with eldritch runes, this 1-inch-diameter ruby allows you to use a Simple or Martial weapon as a Spellcasting Focus for your spells. For this property to work, you must attach the ruby to the weapon by pressing the ruby against it for at least 10 minutes. (In the game, material components and focuses are assumed to be at hand.)"
+}

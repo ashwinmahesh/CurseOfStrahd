@@ -1,0 +1,53 @@
+{
+  "id": "robe_of_stars",
+  "name": "Robe of Stars",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true,
+    "charges": {
+      "max": 6,
+      "start": 6,
+      "regain": "1d6",
+      "when": "dusk"
+    }
+  },
+  "theme": "implements",
+  "icon": "robe",
+  "modifiers": [
+    {
+      "stat": "save",
+      "ability": "all",
+      "value": 1
+    }
+  ],
+  "powers": [
+    {
+      "id": "star",
+      "name": "Throw a star (Magic Missile, level 5)",
+      "spell": "magic_missile",
+      "charges": 1,
+      "level": 5,
+      "text": "Pull off a star: cast Magic Missile as a level 5 spell."
+    },
+    {
+      "id": "astral",
+      "name": "Enter the Astral Plane",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "flickers toward the Astral Plane, but Barovia's mists hold fast"
+      },
+      "text": "Magic action: you and what you wear go to the Astral Plane (the Mists of Barovia hold you fast)."
+    }
+  ],
+  "worn": "robe",
+  "summary": "+1 to saving throws; six stars to throw as level 5 Magic Missiles (they return at dusk).",
+  "text": "This black or dark-blue robe is embroidered with small white or silver stars. You gain a +1 bonus to saving throws while you wear it. Six stars, located on the robe's upper front portion, are particularly large. While wearing this robe, you can take a Magic action to pull off one of the stars and use it to cast the level 5 version of Magic Missile. Daily at dusk, 1d6 removed stars reappear on the robe. While you wear the robe, you can take a Magic action to enter the Astral Plane along with everything you are wearing and carrying. You remain there until you take a Magic action to return to the plane you were on."
+}

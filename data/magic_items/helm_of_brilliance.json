@@ -1,0 +1,79 @@
+{
+  "id": "helm_of_brilliance",
+  "name": "Helm of Brilliance",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true,
+    "charges": {
+      "max": 100,
+      "start": 100,
+      "when": "never"
+    }
+  },
+  "theme": "arcana",
+  "icon": "helm",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "helm_of_brilliance"
+    }
+  ],
+  "powers": [
+    {
+      "id": "daylight",
+      "name": "Daylight",
+      "spell": "daylight",
+      "dc": 18,
+      "gem": "opal",
+      "text": "Spend an opal: cast Daylight."
+    },
+    {
+      "id": "fireball",
+      "name": "Fireball",
+      "spell": "fireball",
+      "dc": 18,
+      "gem": "fire_opal",
+      "text": "Spend a fire opal: cast Fireball (save DC 18)."
+    },
+    {
+      "id": "prismatic_spray",
+      "name": "Prismatic Spray",
+      "spell": "prismatic_spray",
+      "dc": 18,
+      "gem": "diamond",
+      "text": "Spend a diamond: cast Prismatic Spray (save DC 18)."
+    },
+    {
+      "id": "wall_of_fire",
+      "name": "Wall Of Fire",
+      "spell": "wall_of_fire",
+      "dc": 18,
+      "gem": "ruby",
+      "text": "Spend a ruby: cast Wall of Fire (save DC 18)."
+    },
+    {
+      "id": "flame_weapon",
+      "name": "Flaming weapon",
+      "cost": "bonus",
+      "toggle": true,
+      "off_cost": "bonus",
+      "needs_gem": "ruby",
+      "text": "Bonus Action (while it has rubies): a weapon you hold bursts into flame, an extra 1d6 Fire on hits."
+    }
+  ],
+  "weapon_rules": {
+    "special": [
+      "helm_of_brilliance"
+    ]
+  },
+  "worn": "head",
+  "summary": "Set with gems that each hold a spell (Daylight, Fireball, Prismatic Spray, Wall of Fire); Resistance to Fire and a flaming weapon while it has rubies.",
+  "text": "This dazzling helm is set with 1d10 diamonds, 2d10 rubies, 3d10 fire opals and 4d10 opals. Any gem pried from the helm crumbles to dust. When all the gems are removed or destroyed, the helm loses its magic. You gain the following benefits while wearing it: you can spend a gem to cast one of the following spells (save DC 18): Daylight (opal), Fireball (fire opal), Prismatic Spray (diamond) or Wall of Fire (ruby). The gem is destroyed when the spell is cast and disappears from the helm. As long as it has at least one diamond, the helm emits Dim Light in a 30-foot radius when at least one Undead is within that area. Any Undead that starts its turn in that area takes 1d6 Radiant damage. As long as the helm has at least one ruby, you have Resistance to Fire damage. As long as the helm has at least one fire opal, you can take a Magic action to cause one weapon you are holding to burst into flames, dealing an extra 1d6 Fire damage on a hit until you take a Bonus Action to end it. Roll a d20 if you are wearing the helm and take Fire damage as a result of failing a saving throw against a spell. On a roll of 1, the helm emits beams of light from its remaining gems: each creature within 60 feet of you other than you must succeed on a DC 17 Dexterity saving throw or be struck by a beam, taking Radiant damage equal to the number of gems in the helm. The helm and its gems are then destroyed."
+}

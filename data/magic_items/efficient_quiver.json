@@ -1,0 +1,28 @@
+{
+  "id": "efficient_quiver",
+  "name": "Efficient Quiver",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 2,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "quiver",
+  "container": {
+    "capacity_lb": 75,
+    "weightless": true,
+    "extradimensional": true,
+    "only": [
+      "ammunition",
+      "weapon"
+    ]
+  },
+  "summary": "Holds 60 arrows, 18 javelins and 6 bows or staffs, and always weighs 2 lb.",
+  "text": "Each of the quiver's three compartments connects to an extradimensional space that allows the quiver to hold numerous items while never weighing more than 2 pounds. The shortest compartment can hold up to sixty arrows, bolts or similar objects. The midsize compartment holds up to eighteen javelins or similar objects. The longest compartment holds up to six long objects, such as bows, quarterstaffs or spears. You can draw any item the quiver contains as if doing so from a regular quiver or scabbard."
+}

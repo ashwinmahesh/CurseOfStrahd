@@ -1,0 +1,35 @@
+{
+  "id": "robe_of_scintillating_colors",
+  "name": "Robe of Scintillating Colors",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "robe",
+  "powers": [
+    {
+      "id": "dazzle",
+      "name": "Dazzle",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "scintillating_colors",
+      "text": "Magic action, 1 charge: until the end of your next turn, attacks against you have Disadvantage, and creatures that can see you within 30 ft make a DC 15 Wis save or are Stunned."
+    }
+  ],
+  "worn": "robe",
+  "summary": "3 charges: a dazzling display makes attacks against you harder and can Stun those who look (Wis DC 15).",
+  "text": "This robe has 3 charges, and it regains 1d3 expended charges daily at dawn. While you wear it, you can take a Magic action and expend 1 charge to cause the garment to display a shifting pattern of dazzling hues until the end of your next turn. During this time, the robe sheds Bright Light in a 30-foot radius and Dim Light for an additional 30 feet, and creatures that can see you have Disadvantage on attack rolls against you. Any creature in the Bright Light that can see you when the robe's power is activated must succeed on a DC 15 Wisdom saving throw or have the Stunned condition until the effect ends."
+}

@@ -1,0 +1,88 @@
+{
+  "id": "bead_of_force",
+  "name": "Bead of Force",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 2000.0,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "bead",
+  "stackable": true,
+  "recipes": {
+    "burst": {
+      "name": "Bead of Force",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "feet",
+        "feet": 60
+      },
+      "area": {
+        "shape": "sphere",
+        "size": 10
+      },
+      "save": "dex",
+      "damage": [
+        {
+          "dice": "5d4",
+          "type": "force"
+        }
+      ],
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "damage",
+        "control"
+      ],
+      "effects": [
+        {
+          "effect": "modifiers",
+          "params": {
+            "on": "fail",
+            "modifiers": [
+              {
+                "stat": "flag",
+                "value": "sphered"
+              },
+              {
+                "stat": "speed_set",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "effect": "push",
+          "params": {
+            "on": "success",
+            "feet": 10
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "throw",
+      "name": "Throw",
+      "cost": "magic",
+      "recipe": "burst",
+      "dc": 15,
+      "consume": true,
+      "text": "Magic action: throw it up to 60 ft. It bursts: creatures within 10 ft make a DC 15 Dex save or take 5d4 Force and are trapped in a sphere of force for 1 minute."
+    }
+  ],
+  "summary": "Thrown, it bursts (Dex DC 15, 5d4 Force) and traps those who fail in a sphere of force for a minute.",
+  "text": "This small black sphere measures 3/4 of an inch in diameter and weighs an ounce. Typically, 1d4 + 4 Beads of Force are found together. You can take a Magic action to throw the bead up to 60 feet. The bead explodes in a 10-foot-radius Sphere on impact and is destroyed. Each creature in the Sphere must succeed on a DC 15 Dexterity saving throw or take 5d4 Force damage. A sphere of transparent force then encloses the area for 1 minute. Any creature that failed the save and is completely within the area is trapped inside this sphere. Creatures that succeeded on the save, or are partially within the area, are pushed away from the center of the sphere until they are no longer inside it. Only breathable air can pass through the sphere's wall. No attack or other effect can pass through."
+}

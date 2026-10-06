@@ -1,0 +1,30 @@
+{
+  "id": "goggles_of_night",
+  "name": "Goggles of Night",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "goggles",
+  "modifiers": [
+    {
+      "stat": "darkvision",
+      "value": 60
+    },
+    {
+      "stat": "flag",
+      "value": "goggles_of_night"
+    }
+  ],
+  "worn": "eyes",
+  "summary": "Darkvision 60 ft (or 60 ft more if you already have it).",
+  "text": "While wearing these dark lenses, you have Darkvision out to 60 feet. If you already have Darkvision, wearing the goggles increases its range by 60 feet."
+}

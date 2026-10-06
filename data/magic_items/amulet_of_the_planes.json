@@ -1,0 +1,29 @@
+{
+  "id": "amulet_of_the_planes",
+  "name": "Amulet of the Planes",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "powers": [
+    {
+      "id": "plane_shift",
+      "name": "Shift Planes",
+      "cost": "magic",
+      "custom": "amulet_of_the_planes",
+      "text": "Magic action: name a plane and make a DC 15 Intelligence (Arcana) check; a success casts Plane Shift, a failure sends you and everyone within 15 ft somewhere random."
+    }
+  ],
+  "worn": "neck",
+  "summary": "Cast Plane Shift with a DC 15 Arcana check; a failure scatters you and those near you somewhere random.",
+  "text": "While wearing this amulet, you can take a Magic action to name a location that you are familiar with on another plane of existence. Then make a DC 15 Intelligence (Arcana) check. On a successful check, you cast Plane Shift. On a failure, you and each creature and object within 15 feet of you travel to a random destination: a random location on the plane you named, or a random plane of existence. (The Mists of Barovia let nobody leave.)"
+}

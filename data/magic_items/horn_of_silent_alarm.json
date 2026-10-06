@@ -1,0 +1,38 @@
+{
+  "id": "horn_of_silent_alarm",
+  "name": "Horn of Silent Alarm",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 2,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false,
+    "charges": {
+      "max": 4,
+      "regain": "1d4",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "horn",
+  "powers": [
+    {
+      "id": "blow",
+      "name": "Blow",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "sounds a blast only one chosen creature within 600 ft can hear"
+      },
+      "field": true,
+      "text": "It sounds a blast only one chosen creature within 600 ft can hear. (No other effect in the game.)",
+      "charges": 1
+    }
+  ],
+  "summary": "4 charges: a blast only one creature you choose can hear.",
+  "text": "This horn has 4 charges. When you take a Magic action to blow it, one creature of your choice can hear the horn's blare, provided the creature is within 600 feet of the horn and not Deafened. No other creature hears sound coming from the horn. The horn regains 1d4 expended charges daily at dawn."
+}

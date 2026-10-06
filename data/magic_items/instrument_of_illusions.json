@@ -1,0 +1,32 @@
+{
+  "id": "instrument_of_illusions",
+  "name": "Instrument of Illusions",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "instrument",
+  "powers": [
+    {
+      "id": "play",
+      "name": "Play",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "fills the air around you with harmless illusory images"
+      },
+      "field": true,
+      "text": "It fills the air around you with harmless illusory images. (No other effect in the game.)"
+    }
+  ],
+  "summary": "Playing it fills the air around you with harmless illusions.",
+  "text": "While you are playing this musical instrument, you can create harmless, illusory visual effects within a 5-foot-radius Sphere centered on the instrument. (No other effect in the game.)"
+}

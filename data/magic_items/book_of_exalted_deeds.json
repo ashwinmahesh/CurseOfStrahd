@@ -1,0 +1,47 @@
+{
+  "id": "book_of_exalted_deeds",
+  "name": "Book of Exalted Deeds",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": "by a creature of good alignment"
+  },
+  "theme": "relics",
+  "icon": "book",
+  "treasure": {
+    "random": false
+  },
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 2,
+      "major_beneficial": 1,
+      "minor_detrimental": 2
+    }
+  },
+  "powers": [
+    {
+      "id": "study",
+      "name": "Study it (80 hours)",
+      "cost": "action",
+      "custom": "exalted_deeds",
+      "field": true,
+      "combat": false,
+      "text": "Spend 80 hours over 10 days reading it: +2 Wisdom (to 24) and a halo of light; you're never again quite the same."
+    }
+  ],
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "exalted_halo",
+      "attuned_only": true
+    }
+  ],
+  "summary": "The definitive treatise on good: study it for +2 Wisdom (to 24) and a radiant halo; evil creatures who touch it burn.",
+  "text": "The definitive treatise on all that is good in the multiverse, the fabled Book of Exalted Deeds figures prominently in many religions. A creature attuned to it must spend 80 hours reading and studying it to digest its contents and reap its benefits; that creature's Wisdom score then increases by 2, to a maximum of 24, and it can't benefit from the book again. The creature also gains a halo that sheds Bright Light in a 10-foot radius and Dim Light for an additional 10 feet, and it has Advantage on Charisma (Persuasion) checks against good creatures. A non-good creature that touches the book takes 5d6 Radiant damage. The book has two minor beneficial properties and one major beneficial property. (The game doesn't track alignment: anyone in the party may study it.)"
+}

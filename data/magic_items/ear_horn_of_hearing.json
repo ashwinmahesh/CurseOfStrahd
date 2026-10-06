@@ -1,0 +1,26 @@
+{
+  "id": "ear_horn_of_hearing",
+  "name": "Ear Horn of Hearing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "horn",
+  "held": true,
+  "modifiers": [
+    {
+      "stat": "condition_immunity",
+      "value": "deafened"
+    }
+  ],
+  "summary": "Held to your ear, it lets you hear even when deafened.",
+  "text": "While held up to your ear, this horn suppresses the effects of the Deafened condition on you, allowing you to hear normally."
+}

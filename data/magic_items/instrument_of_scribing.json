@@ -1,0 +1,38 @@
+{
+  "id": "instrument_of_scribing",
+  "name": "Instrument of Scribing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false,
+    "charges": {
+      "max": 3,
+      "regain": "all",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "instrument",
+  "powers": [
+    {
+      "id": "play",
+      "name": "Play",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "writes a short message on an object"
+      },
+      "field": true,
+      "text": "It writes a short message on an object. (No other effect in the game.)",
+      "charges": 1
+    }
+  ],
+  "summary": "3 charges: write a magical message on an object by playing.",
+  "text": "This musical instrument has 3 charges. While you are playing it, you can take a Magic action to expend 1 charge and write a magical message on a nonmagical object or surface you can see within 30 feet of you. (No other effect in the game.)"
+}

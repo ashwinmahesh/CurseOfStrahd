@@ -1,0 +1,28 @@
+{
+  "id": "talisman_of_the_sphere",
+  "name": "Talisman of the Sphere",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "amulet",
+  "treasure": {
+    "random": false
+  },
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "talisman_of_the_sphere"
+    }
+  ],
+  "summary": "Doubles your Proficiency Bonus on Arcana checks to control a Sphere of Annihilation, with Advantage.",
+  "text": "While holding or wearing this talisman, you double your Proficiency Bonus on Intelligence (Arcana) checks you make to control a Sphere of Annihilation, and you have Advantage on such checks. In addition, when you start your turn in control of a Sphere of Annihilation, you can take a Magic action to levitate it 10 feet plus a number of additional feet equal to 10 times your Intelligence modifier."
+}

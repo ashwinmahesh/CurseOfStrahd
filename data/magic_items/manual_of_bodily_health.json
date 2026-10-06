@@ -1,0 +1,33 @@
+{
+  "id": "manual_of_bodily_health",
+  "name": "Manual of Bodily Health",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "relics",
+  "icon": "book",
+  "powers": [
+    {
+      "id": "study",
+      "name": "Study it (48 hours)",
+      "cost": "action",
+      "custom": "manual_study",
+      "field": true,
+      "combat": false,
+      "params": {
+        "ability": "con"
+      },
+      "text": "Spend 48 hours over 6 days studying it: your Constitution score and its maximum increase by 2. The book's magic is then gone for a century."
+    }
+  ],
+  "summary": "Study it for 48 hours over 6 days: +2 Constitution, and your maximum rises by 2.",
+  "text": "This book contains health and diet tips and its words are charged with magic. If you spend 48 hours over a period of 6 days or fewer studying the book's contents and practicing its guidelines, your Constitution score increases by 2, as does your maximum for that score. The book then loses its magic, but regains it in a century."
+}

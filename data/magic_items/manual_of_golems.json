@@ -1,0 +1,36 @@
+{
+  "id": "manual_of_golems",
+  "name": "Manual of Golems",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "book",
+  "treasure": {
+    "random": true
+  },
+  "powers": [
+    {
+      "id": "study",
+      "name": "Study it",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "describes how to build a golem from clay, flesh, iron or stone"
+      },
+      "field": true,
+      "text": "It describes how to build a golem from clay, flesh, iron or stone. (No other effect in the game.)",
+      "combat": false
+    }
+  ],
+  "summary": "Instructions (and the magic) to build a golem, given weeks and a great deal of gold.",
+  "text": "This tome contains information and incantations necessary to make a particular type of golem. To decipher and use the manual, you must be a spellcaster with at least two level 5 spell slots. A creature that can't use the manual and attempts to read it takes 6d6 Psychic damage. To create a golem, you must spend the time shown on the table, working without interruption with the manual at hand and resting no more than 8 hours per day, and you must pay the specified cost to purchase supplies (clay: 30 days, 65,000 GP; flesh: 60 days, 50,000 GP; iron: 120 days, 100,000 GP; stone: 90 days, 80,000 GP). Once you finish creating the golem, the book is consumed by eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. (Barovia leaves no time for such work in the game.)"
+}

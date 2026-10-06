@@ -1,0 +1,35 @@
+{
+  "id": "bead_of_refreshment",
+  "name": "Bead of Refreshment",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 50.0,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "bead",
+  "stackable": true,
+  "powers": [
+    {
+      "id": "drop",
+      "name": "Drop in water",
+      "cost": "utilize",
+      "custom": "flavour",
+      "params": {
+        "text": "turns a pint of water fresh and drinkable"
+      },
+      "field": true,
+      "text": "It turns a pint of water fresh and drinkable. (No other effect in the game.)",
+      "consume": true
+    }
+  ],
+  "summary": "Turns up to a pint of liquid into fresh water.",
+  "text": "This spongy, flavorless, gelatinous bead dissolves in liquid, transforming up to a pint of the liquid into fresh, cold drinking water. The bead has no effect on magical liquids or harmful substances such as poison."
+}

@@ -1,0 +1,42 @@
+{
+  "id": "deck_of_many_things",
+  "name": "Deck of Many Things",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "relics",
+  "icon": "cards",
+  "treasure": {
+    "random": false
+  },
+  "powers": [
+    {
+      "id": "draw",
+      "name": "Draw cards",
+      "cost": "action",
+      "custom": "deck_of_many_things",
+      "field": true,
+      "combat": false,
+      "choice": {
+        "label": "Cards to draw",
+        "from": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "text": "Declare how many cards you'll draw (1 to 4), then draw them one at a time; each card's magic takes hold at once."
+    }
+  ],
+  "summary": "Draw from the deck and each card's fate falls on you, for great good or great ill.",
+  "text": "Usually found in a box or pouch, this deck contains a number of cards made of ivory or vellum. Most (75 percent) of these decks have only 13 cards, but some have 22. Before you draw a card, you must declare how many cards you intend to draw and then draw them randomly. Any cards drawn in excess of this number have no effect. Otherwise, as soon as you draw a card from the deck, its magic takes effect. You must draw each card no more than 1 hour after the previous draw. If you fail to draw the chosen number, the remaining number of cards fly from the deck on their own and take effect all at once. Once a card is drawn, it fades from existence. Unless the card is the Fool or the Jester, the card reappears in the deck, making it possible to draw the same card twice. The cards include the Balance, Comet, Donjon, Euryale, Fates, Flames, Fool, Gem, Idiot, Jester, Key, Knight, Moon, Rogue, Ruin, Skull, Star, Sun, Talons, Throne, Vizier and the Void."
+}

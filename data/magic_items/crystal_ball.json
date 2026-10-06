@@ -1,0 +1,31 @@
+{
+  "id": "crystal_ball",
+  "name": "Crystal Ball",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "crystal_ball",
+  "variant_of": "crystal_ball",
+  "powers": [
+    {
+      "id": "scrying",
+      "name": "Scrying",
+      "spell": "scrying",
+      "dc": 17,
+      "combat": false,
+      "field": true,
+      "text": "Cast Scrying (save DC 17)."
+    }
+  ],
+  "summary": "Cast Scrying (save DC 17) through it.",
+  "text": "This crystal globe is about 6 inches in diameter. While touching it, you can cast Scrying (save DC 17) with it."
+}

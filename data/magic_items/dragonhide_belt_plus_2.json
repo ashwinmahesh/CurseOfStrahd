@@ -1,0 +1,47 @@
+{
+  "id": "dragonhide_belt_plus_2",
+  "name": "Dragonhide Belt, +2",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Monk"
+  },
+  "theme": "implements",
+  "icon": "belt",
+  "variant_of": "dragonhide_belt",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "focus_dc_plus:2"
+    }
+  ],
+  "powers": [
+    {
+      "id": "focus",
+      "name": "Regain Focus",
+      "cost": "magic",
+      "custom": "restore_resource",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true,
+      "params": {
+        "resources": [
+          "focus_points"
+        ],
+        "dice": "1d6"
+      },
+      "text": "Magic action (once per dawn): regain 1d6 Focus Points."
+    }
+  ],
+  "worn": "belt",
+  "summary": "+2 to the save DC of your Monk features; once a day, regain 1d6 Focus Points.",
+  "text": "This finely stitched belt is made from dragonhide. While wearing it, you gain a +2 bonus to the saving throw DCs of your Monk features that use Focus Points. In addition, you can take a Magic action to regain a number of expended Focus Points equal to a roll of 1d6. You can't use this action again until the next dawn."
+}

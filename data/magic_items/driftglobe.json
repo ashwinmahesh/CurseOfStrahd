@@ -1,0 +1,39 @@
+{
+  "id": "driftglobe",
+  "name": "Driftglobe",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "orb",
+  "powers": [
+    {
+      "id": "light",
+      "name": "Light",
+      "spell": "light",
+      "text": "Cast Light on the globe.",
+      "field": true
+    },
+    {
+      "id": "daylight",
+      "name": "Daylight",
+      "spell": "daylight",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once per dawn, cast Daylight on the globe.",
+      "field": true
+    }
+  ],
+  "summary": "Cast Light or (once a day) Daylight on it; it floats along after you.",
+  "text": "This small sphere of thick glass weighs 1 pound. If you are within 60 feet of it, you can speak its command word and cause it to emanate the Light or Daylight spell. Once used, the Daylight effect can't be used again until the next dawn. You can speak another command word as a Magic action to make the illuminated globe rise into the air and float no more than 5 feet off the ground. The globe hovers in this way until you or another creature grasps it. If you move more than 60 feet from the hovering globe, it follows you until it is within 60 feet of you."
+}

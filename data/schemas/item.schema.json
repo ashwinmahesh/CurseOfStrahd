@@ -432,7 +432,8 @@
             "armor",
             "shield",
             "ammunition",
-            "weapon_or_ammunition"
+            "weapon_or_ammunition",
+            "spell"
           ]
         },
         "kinds": {
@@ -540,12 +541,8 @@
               },
               "per": {
                 "type": "string",
-                "enum": [
-                  "dawn",
-                  "long",
-                  "short",
-                  "never"
-                ]
+                "pattern": "^(dawn|long|short|never|dawns:[0-9]+)$",
+                "description": "When uses come back: dawn, long, short, never, or dawns:N (N days after it's used)."
               }
             },
             "additionalProperties": false
@@ -679,6 +676,33 @@
           "needs_charges": {
             "type": "integer",
             "description": "Charges the item must have for the power to be armed (they're spent when it fires)."
+          },
+          "budget_rounds": {
+            "type": "integer",
+            "description": "A toggle that can stay on this many rounds in all (10 per minute) before it rests until the next Long Rest or dawn."
+          },
+          "conditions_on": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/condition"
+            },
+            "description": "Conditions a toggle gives while it's on."
+          },
+          "gem": {
+            "type": "string",
+            "description": "Helm of Brilliance: the gem the power spends (diamond, ruby, fire_opal, opal)."
+          },
+          "needs_gem": {
+            "type": "string",
+            "description": "The gem the item must still hold for the power to work."
+          },
+          "after": {
+            "type": "string",
+            "description": "Bespoke code run after the power is used (Horn of Blasting's chance to explode)."
+          },
+          "bead": {
+            "type": "string",
+            "description": "Necklace of Prayer Beads: the bead type the power needs on the necklace."
           }
         },
         "additionalProperties": false
@@ -748,6 +772,51 @@
         "$ref": "common.schema.json#/$defs/id"
       },
       "description": "Items (ids, templates or variant groups) that must be worn and working before you can attune to this one."
+    },
+    "container": {
+      "type": "object",
+      "description": "An item that holds others (Bag of Holding): capacity_lb, weightless (contents don't add weight), extradimensional, only (categories), devours.",
+      "properties": {
+        "capacity_lb": {
+          "type": "number"
+        },
+        "weightless": {
+          "type": "boolean"
+        },
+        "extradimensional": {
+          "type": "boolean"
+        },
+        "only": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "devours": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "travel": {
+      "type": "object",
+      "description": "How the item changes journeys on the travel map: speed_mult (2 = half the hours).",
+      "properties": {
+        "speed_mult": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "description": "Artifact random properties to roll when one is created: {properties: {minor_beneficial: n, ...}}.",
+      "properties": {
+        "properties": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

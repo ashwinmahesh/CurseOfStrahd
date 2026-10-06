@@ -1,0 +1,28 @@
+{
+  "id": "ioun_stone_mastery",
+  "name": "Ioun Stone (Mastery)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ioun_stone",
+  "variant_of": "ioun_stone",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "proficiency_plus_1"
+    }
+  ],
+  "powers": [],
+  "worn": "ioun",
+  "summary": "+1 Proficiency Bonus.",
+  "text": "An Ioun Stone is named after Ioun, a god of knowledge and prophecy revered on some worlds. While attuned to it, you can toss the stone into the air as a Magic action; it then orbits your head at a distance of 1d3 feet and confers its benefit on you. You can seize the orbiting stone as an action to take it back. This mastery stone: +1 Proficiency Bonus."
+}

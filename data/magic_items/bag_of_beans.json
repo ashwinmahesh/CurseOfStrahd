@@ -1,0 +1,36 @@
+{
+  "id": "bag_of_beans",
+  "name": "Bag of Beans",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0.5,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false,
+    "charges": {
+      "max": "3d4",
+      "start": "3d4",
+      "when": "never"
+    }
+  },
+  "theme": "implements",
+  "icon": "bag",
+  "powers": [
+    {
+      "id": "plant",
+      "name": "Plant a bean",
+      "cost": "action",
+      "charges": 1,
+      "custom": "bag_of_beans",
+      "field": true,
+      "combat": false,
+      "text": "Plant a bean in soil and water it: something happens a minute later (roll on the Bag of Beans table)."
+    }
+  ],
+  "summary": "3d4 magic beans; plant one and see what grows (anything from a fountain of berries to a hostile monster).",
+  "text": "Inside this heavy cloth bag are 3d4 dry beans. The bag weighs 1/2 pound plus 1/4 pound for each bean it contains. If you dump the bag's contents out on the ground, they explode in a 10-foot radius, extending from the beans. Each creature in the area, including you, makes a DC 15 Dexterity saving throw, taking 5d4 Fire damage on a failed save, or half as much damage on a successful one. The fire ignites flammable objects in the area that aren't being worn or carried. If you remove a bean from the bag, plant it in dirt or sand, and then water it, the bean produces an effect 1 minute later from the ground where it was planted. Roll on the Bag of Beans table to determine the effect."
+}

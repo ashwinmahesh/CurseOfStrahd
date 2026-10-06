@@ -1,0 +1,20 @@
+{
+  "id": "clothes_of_mending",
+  "name": "Clothes of Mending",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "clothes",
+  "worn": "robe",
+  "summary": "These clothes mend themselves overnight.",
+  "text": "This elegant outfit of traveler's clothes magically mends itself to counteract daily wear and tear. Pieces of the outfit that are destroyed can't be repaired in this way. (No other effect in the game.)"
+}

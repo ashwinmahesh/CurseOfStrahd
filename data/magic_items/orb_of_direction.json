@@ -1,0 +1,32 @@
+{
+  "id": "orb_of_direction",
+  "name": "Orb of Direction",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "orb",
+  "powers": [
+    {
+      "id": "north",
+      "name": "Find north",
+      "cost": "utilize",
+      "custom": "flavour",
+      "params": {
+        "text": "shows you which way is north"
+      },
+      "field": true,
+      "text": "It shows you which way is north. (No other effect in the game.)"
+    }
+  ],
+  "summary": "It always knows which way is north.",
+  "text": "While holding this orb, you can take a Utilize action to determine which way is magnetic north. (No other effect in the game.)"
+}

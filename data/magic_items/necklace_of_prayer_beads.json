@@ -1,0 +1,107 @@
+{
+  "id": "necklace_of_prayer_beads",
+  "name": "Necklace of Prayer Beads",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Cleric, Druid, or Paladin"
+  },
+  "theme": "relics",
+  "icon": "necklace",
+  "powers": [
+    {
+      "id": "blessing",
+      "name": "Bead of Blessing",
+      "spell": "bless",
+      "bead": "blessing",
+      "cost": "bonus",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "curing",
+      "name": "Bead of Curing",
+      "spell": "cure_wounds",
+      "level": 2,
+      "bead": "curing",
+      "cost": "bonus",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true
+    },
+    {
+      "id": "curing_restore",
+      "name": "Bead of Curing (Lesser Restoration)",
+      "spell": "lesser_restoration",
+      "bead": "curing",
+      "cost": "bonus",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true
+    },
+    {
+      "id": "favor",
+      "name": "Bead of Favor",
+      "spell": "greater_restoration",
+      "bead": "favor",
+      "cost": "bonus",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true
+    },
+    {
+      "id": "smiting",
+      "name": "Bead of Smiting",
+      "spell": "shining_smite",
+      "bead": "smiting",
+      "cost": "bonus",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "summons",
+      "name": "Bead of Summons",
+      "spell": "planar_ally",
+      "bead": "summons",
+      "cost": "bonus",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "combat": false,
+      "field": true
+    },
+    {
+      "id": "wind_walking",
+      "name": "Bead of Wind Walking",
+      "spell": "wind_walk",
+      "bead": "wind_walking",
+      "cost": "bonus",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "combat": false,
+      "field": true
+    }
+  ],
+  "worn": "neck",
+  "summary": "1d4 + 2 magic beads, each casting a spell once a day as a Bonus Action (Bless, Cure Wounds, Greater Restoration...).",
+  "text": "This necklace has 1d4 + 2 magic beads made from aquamarine, black pearl or topaz. It also has many nonmagical beads made from stones such as amber, bloodstone, citrine, coral, jade, pearl or quartz. If a magic bead is removed from the necklace, that bead loses its magic. Six types of magic beads exist; each bead's type is determined randomly. A necklace can have more than one bead of the same type. To use one, you must be wearing the necklace. Each bead contains a spell that you can cast from it as a Bonus Action (using your spell save DC if a save is necessary). Once a magic bead's spell is cast, that bead can't be used again until the next dawn. Blessing: Bless. Curing: Cure Wounds (level 2 version) or Lesser Restoration. Favor: Greater Restoration. Smiting: Shining Smite. Summons: Planar Ally. Wind Walking: Wind Walk."
+}

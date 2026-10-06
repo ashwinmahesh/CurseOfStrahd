@@ -1,0 +1,30 @@
+{
+  "id": "brooch_of_shielding",
+  "name": "Brooch of Shielding",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "brooch",
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "force"
+    },
+    {
+      "stat": "flag",
+      "value": "immune_magic_missile"
+    }
+  ],
+  "worn": "neck",
+  "summary": "Resistance to Force damage, and Magic Missile can't hurt you.",
+  "text": "While wearing this brooch, you have Resistance to Force damage, and you have Immunity to damage from the Magic Missile spell."
+}

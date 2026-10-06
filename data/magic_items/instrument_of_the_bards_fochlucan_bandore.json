@@ -1,0 +1,100 @@
+{
+  "id": "instrument_of_the_bards_fochlucan_bandore",
+  "name": "Instrument of the Bards (Fochlucan Bandore)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": "by a Bard"
+  },
+  "theme": "arcana",
+  "icon": "instrument",
+  "variant_of": "instrument_of_the_bards",
+  "powers": [
+    {
+      "id": "fly",
+      "name": "Fly",
+      "spell": "fly",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "invisibility",
+      "name": "Invisibility",
+      "spell": "invisibility",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "levitate",
+      "name": "Levitate",
+      "spell": "levitate",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "protection_from_evil_and_good",
+      "name": "Protection From Evil And Good",
+      "spell": "protection_from_evil_and_good",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "entangle",
+      "name": "Entangle",
+      "spell": "entangle",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "faerie_fire",
+      "name": "Faerie Fire",
+      "spell": "faerie_fire",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "shillelagh",
+      "name": "Shillelagh",
+      "spell": "shillelagh",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "speak_with_animals",
+      "name": "Speak With Animals",
+      "spell": "speak_with_animals",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "bards_instrument"
+    }
+  ],
+  "summary": "Each once a day: Fly, Invisibility, Levitate, Protection from Evil and Good, Entangle, Faerie Fire, Shillelagh, Speak With Animals.",
+  "text": "An Instrument of the Bards is superior to an ordinary instrument in every way. While playing it, a Bard can use it to cast each of these spells once, regaining the use at dawn: Fly, Invisibility, Levitate and Protection from Evil and Good, plus this instrument's own: Entangle, Faerie Fire, Shillelagh, Speak With Animals. When you use the instrument to cast a spell that causes targets to have the Charmed condition on a failed save, the targets have Disadvantage on the saving throw. A creature that tries to play it without being attuned must succeed on a DC 15 Wisdom saving throw or take 2d4 Psychic damage."
+}

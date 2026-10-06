@@ -1,0 +1,32 @@
+{
+  "id": "lantern_of_revealing",
+  "name": "Lantern of Revealing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 2,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "lantern",
+  "held": true,
+  "light": {
+    "bright": 30,
+    "dim": 30,
+    "when": "drawn",
+    "hours": 6
+  },
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "lantern_of_revealing"
+    }
+  ],
+  "summary": "Its light shows Invisible creatures and objects within 30 ft.",
+  "text": "While lit, this hooded lantern burns for 6 hours on 1 pint of oil, shedding Bright Light in a 30-foot radius and Dim Light for an additional 30 feet. Invisible creatures and objects are visible as long as they are in the lantern's Bright Light. You can take a Magic action to lower the hood, reducing the light to Dim Light in a 5-foot radius."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "handy_haversack",
+  "name": "Heward's Handy Haversack",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "backpack",
+  "container": {
+    "capacity_lb": 120,
+    "weightless": true,
+    "extradimensional": true
+  },
+  "summary": "A backpack holding 120 lb in three extradimensional pouches; it always weighs 5 lb, and things come out at once.",
+  "text": "This backpack has a central pouch and two side pouches, each of which is an extradimensional space. Each side pouch can hold up to 20 pounds of material, not exceeding a volume of 2 cubic feet. The large central pouch can hold up to 8 cubic feet or 80 pounds of material. The backpack always weighs 5 pounds, regardless of its contents. Placing an object in the haversack follows the normal rules for interacting with objects. Retrieving an item from the haversack requires you to take a Bonus Action. When you reach into the haversack for a specific item, the item is always magically on top. If the haversack is overloaded, pierced or torn, it ruptures and is destroyed. If it's turned inside out, its contents spill out unharmed, but it must be put right before it can be used again. Placing the haversack inside an extradimensional space created by a Bag of Holding, Portable Hole or similar item instantly destroys both items and opens a gate to the Astral Plane."
+}

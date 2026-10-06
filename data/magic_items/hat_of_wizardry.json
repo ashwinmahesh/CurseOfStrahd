@@ -1,0 +1,33 @@
+{
+  "id": "hat_of_wizardry",
+  "name": "Hat of Wizardry",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": "by a Wizard"
+  },
+  "theme": "implements",
+  "icon": "hat",
+  "powers": [
+    {
+      "id": "cantrip",
+      "name": "Try a cantrip",
+      "cost": "magic",
+      "custom": "hat_of_wizardry",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once per dawn: cast a Wizard cantrip you don't know. Roll a d20 first: on a 1 the spell fails."
+    }
+  ],
+  "worn": "head",
+  "summary": "Once a day, try to cast a Wizard cantrip you don't know.",
+  "text": "This antiquated, cone-shaped hat is adorned with gold crescent moons and stars. While you are wearing it, you gain the following benefits: you can use the hat as a Spellcasting Focus for your Wizard spells; and you can try to cast a cantrip that you don't know. The cantrip must be on the Wizard spell list, and it must have a casting time of an action. Make a DC 10 Intelligence (Arcana) check. If you succeed, you cast the spell. If you fail, so does the spell, and the action used to cast the spell is wasted. In either case, you can't use this property again until you finish a Long Rest."
+}

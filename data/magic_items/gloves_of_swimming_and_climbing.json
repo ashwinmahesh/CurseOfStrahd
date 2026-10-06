@@ -1,0 +1,37 @@
+{
+  "id": "gloves_of_swimming_and_climbing",
+  "name": "Gloves of Swimming and Climbing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "gloves",
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "kind": "climb",
+      "value": "walk"
+    },
+    {
+      "stat": "speed_set",
+      "kind": "swim",
+      "value": "walk"
+    },
+    {
+      "stat": "check",
+      "skill": "athletics",
+      "value": 5
+    }
+  ],
+  "worn": "hands",
+  "summary": "A Climb and Swim Speed equal to your Speed, and +5 to Athletics checks to climb or swim.",
+  "text": "While wearing these gloves, you have a Climb Speed and a Swim Speed equal to your Speed, and you gain a +5 bonus to Strength (Athletics) checks made to climb or swim."
+}

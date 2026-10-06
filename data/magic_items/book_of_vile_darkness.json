@@ -1,0 +1,41 @@
+{
+  "id": "book_of_vile_darkness",
+  "name": "Book of Vile Darkness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "book",
+  "treasure": {
+    "random": false
+  },
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 1,
+      "major_beneficial": 1,
+      "minor_detrimental": 1,
+      "major_detrimental": 1
+    }
+  },
+  "powers": [
+    {
+      "id": "study",
+      "name": "Study it (80 hours)",
+      "cost": "action",
+      "custom": "vile_darkness",
+      "field": true,
+      "combat": false,
+      "text": "Spend 80 hours reading it: a score rises by 2 (to 24) and another falls by 2; you'll never be rid of its taint."
+    }
+  ],
+  "summary": "The ultimate treatise on evil: study it to raise one ability by 2 at the cost of another, and gain a dark taint.",
+  "text": "The contents of this foul manuscript of ineffable wickedness are the meat and drink of those in evil's thrall. A creature that attunes to the book must spend 80 hours reading and studying it. Afterward, one of its ability scores increases by 2, to a maximum of 24, and another ability score of its choice decreases by 2. The book has one minor beneficial property, one major beneficial property, one minor detrimental property and one major detrimental property, rolled when it is found. A creature that isn't evil that attunes to the book takes 6d6 Psychic damage when it does so and gains one level of Exhaustion each time it finishes a Long Rest while attuned."
+}

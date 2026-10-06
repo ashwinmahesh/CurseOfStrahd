@@ -1,0 +1,24 @@
+{
+  "id": "candle_of_the_deep",
+  "name": "Candle of the Deep",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "candle",
+  "light": {
+    "bright": 5,
+    "dim": 5,
+    "hours": 1
+  },
+  "summary": "Its flame keeps burning underwater.",
+  "text": "The flame of this candle is not extinguished when immersed in water. It gives off light and heat like a normal candle."
+}

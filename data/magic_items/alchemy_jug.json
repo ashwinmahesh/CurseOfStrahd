@@ -1,0 +1,48 @@
+{
+  "id": "alchemy_jug",
+  "name": "Alchemy Jug",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 12,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "jug",
+  "powers": [
+    {
+      "id": "pour",
+      "name": "Pour a liquid",
+      "cost": "magic",
+      "custom": "alchemy_jug",
+      "field": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "choice": {
+        "label": "Liquid",
+        "from": [
+          "acid",
+          "basic_poison",
+          "beer",
+          "honey",
+          "mayonnaise",
+          "oil",
+          "vinegar",
+          "fresh_water",
+          "salt_water",
+          "wine"
+        ]
+      },
+      "text": "Magic action (once per dawn): the jug fills with a liquid you choose (acid, poison and oil become vials and flasks you can use)."
+    }
+  ],
+  "summary": "Once a day, it pours out the liquid you name: acid, poison, oil, water, wine and more.",
+  "text": "This ceramic jug appears to be able to hold a gallon of liquid and weighs 12 pounds whether full or empty. Sloshing sounds can be heard from within the jug when it is shaken, even if the jug is empty. You can take a Magic action and name one liquid from the table below to cause the jug to produce the chosen liquid: acid (8 ounces), basic poison (1/2 ounce), beer (4 gallons), honey (1 gallon), mayonnaise (2 gallons), oil (1 quart), vinegar (2 gallons), fresh water (8 gallons), salt water (12 gallons) or wine (1 gallon). Afterward, the jug can't be used this way again until the next dawn. The liquid can be poured out of the jug at a rate of up to 2 gallons per minute."
+}

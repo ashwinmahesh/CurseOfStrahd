@@ -1,0 +1,48 @@
+{
+  "id": "ioun_stone_reserve",
+  "name": "Ioun Stone (Reserve)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ioun_stone",
+  "variant_of": "ioun_stone",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "ioun_reserve"
+    }
+  ],
+  "powers": [
+    {
+      "id": "cast",
+      "name": "Cast a stored spell",
+      "cost": "magic",
+      "custom": "ring_spell_storing",
+      "text": "Cast a spell stored in the stone."
+    },
+    {
+      "id": "store",
+      "name": "Store a spell",
+      "cost": "action",
+      "custom": "ring_store",
+      "combat": false,
+      "field": true,
+      "params": {
+        "capacity": 3
+      },
+      "text": "Outside a fight, a spellcaster casts a spell of level 1 to 3 into it (up to 3 levels)."
+    }
+  ],
+  "worn": "ioun",
+  "summary": "Stores up to 3 levels of spells cast into it, for you to cast.",
+  "text": "An Ioun Stone is named after Ioun, a god of knowledge and prophecy revered on some worlds. While attuned to it, you can toss the stone into the air as a Magic action; it then orbits your head at a distance of 1d3 feet and confers its benefit on you. You can seize the orbiting stone as an action to take it back. This reserve stone: Stores up to 3 levels of spells cast into it, for you to cast."
+}

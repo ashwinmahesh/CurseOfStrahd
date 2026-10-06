@@ -1,0 +1,43 @@
+{
+  "id": "boots_of_striding_and_springing",
+  "name": "Boots of Striding and Springing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "boots",
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "value": 30
+    },
+    {
+      "stat": "flag",
+      "value": "speed_not_reduced"
+    },
+    {
+      "stat": "flag",
+      "value": "jump_tripled"
+    }
+  ],
+  "powers": [
+    {
+      "id": "jump",
+      "name": "Jump",
+      "spell": "jump",
+      "cost": "bonus",
+      "text": "Cast Jump on yourself at will."
+    }
+  ],
+  "worn": "feet",
+  "summary": "Your Speed is at least 30 ft and isn't lowered by armor or weight; you jump three times as far.",
+  "text": "While you wear these boots, your Speed becomes 30 feet unless your Speed is higher, and your Speed isn't reduced by you carrying weight in excess of your carrying capacity or wearing Heavy armor. In addition, you can cast Jump from the boots at will, targeting only yourself."
+}

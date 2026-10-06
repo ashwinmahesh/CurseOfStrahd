@@ -1,0 +1,22 @@
+{
+  "id": "horseshoes_of_a_zephyr",
+  "name": "Horseshoes of a Zephyr",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 4,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "horseshoes",
+  "travel": {
+    "speed_mult": 1.5
+  },
+  "summary": "Shod on a mount, it glides above the ground, leaves no tracks and never tires.",
+  "text": "These iron horseshoes come in a set of four. As long as all four shoes are affixed to the hooves of a horse or similar creature, they allow the creature to move normally while floating 4 inches above a surface. This effect means the creature can cross or stand above nonsolid or unstable surfaces, such as water or lava. The creature leaves no tracks and ignores Difficult Terrain. In addition, the creature can travel for up to 12 hours a day without suffering Exhaustion from extended travel. (In the game, they quicken the party's journeys by a third.)"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "gauntlets_of_ogre_power",
+  "name": "Gauntlets of Ogre Power",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "gauntlets",
+  "modifiers": [
+    {
+      "stat": "ability_min",
+      "ability": "str",
+      "value": 19
+    }
+  ],
+  "worn": "hands",
+  "summary": "Your Strength is 19 while you wear them.",
+  "text": "Your Strength score is 19 while you wear these gauntlets. They have no effect on you if your Strength is already 19 or higher without them."
+}

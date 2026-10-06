@@ -1,0 +1,110 @@
+{
+  "id": "axe_of_the_dwarvish_lords",
+  "name": "Axe of the Dwarvish Lords",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "axe_of_the_dwarvish_lords",
+  "treasure": {
+    "random": false
+  },
+  "template": {
+    "on": "weapon",
+    "items": [
+      "battleaxe"
+    ],
+    "name": "Axe of the Dwarvish Lords"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "ability",
+      "ability": "con",
+      "value": 2,
+      "max": 20,
+      "attuned_only": true
+    },
+    {
+      "stat": "darkvision",
+      "value": 60,
+      "attuned_only": true
+    },
+    {
+      "stat": "proficiency",
+      "kind": "tool",
+      "value": "smiths_tools",
+      "attuned_only": true
+    },
+    {
+      "stat": "proficiency",
+      "kind": "language",
+      "value": "dwarvish",
+      "attuned_only": true
+    }
+  ],
+  "weapon_rules": {
+    "returns": true
+  },
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 2,
+      "major_beneficial": 1,
+      "minor_detrimental": 2
+    }
+  },
+  "powers": [
+    {
+      "id": "elemental",
+      "name": "Summon an Earth Elemental",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "params": {
+        "monster": "earth_elemental",
+        "hours": 1,
+        "concentration": true
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Once per dawn, call an Earth Elemental that serves you (Concentration, up to 1 hour)."
+    },
+    {
+      "id": "stone_shape",
+      "name": "Stone Shape",
+      "spell": "stone_shape",
+      "field": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once per dawn, cast Stone Shape."
+    }
+  ],
+  "summary": "+3 axe of the dwarven kings: +2 Constitution, Darkvision, Dwarvish, an earth elemental at call; it returns when thrown.",
+  "text": "Seeking to rouse the spirits of his people, a dwarven prince forged this axe of unequaled craftsmanship. You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. The axe functions as a Belt of Dwarvenkind, Dwarven Thrower and Sword of Sharpness in the hands of its attuned bearer: your Constitution increases by 2 (to 20), you have Darkvision 60 feet, you know Dwarvish and Smith's Tools, and it returns to your hand when thrown. You can call an Earth Elemental to serve you once per dawn and cast Stone Shape once per dawn. The axe also has two minor beneficial properties, one major beneficial property and two minor detrimental properties, rolled when it is found. Any non-dwarf who attunes to it grows greedy for gold, and the axe's curse makes them distrust their companions."
+}

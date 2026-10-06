@@ -1,0 +1,30 @@
+{
+  "id": "cloak_of_elvenkind",
+  "name": "Cloak of Elvenkind",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "check:stealth"
+    },
+    {
+      "stat": "flag",
+      "value": "hard_to_perceive"
+    }
+  ],
+  "worn": "cloak",
+  "summary": "With the hood up: Advantage on Stealth checks, and Perception checks to see you have Disadvantage.",
+  "text": "While you wear this cloak with its hood up, Wisdom (Perception) checks made to perceive you have Disadvantage, and you have Advantage on Dexterity (Stealth) checks. Pulling the hood up or down requires no action."
+}

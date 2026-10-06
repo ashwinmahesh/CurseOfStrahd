@@ -1,0 +1,20 @@
+{
+  "id": "boots_of_false_tracks",
+  "name": "Boots of False Tracks",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "boots",
+  "worn": "feet",
+  "summary": "Your tracks look like another kind of creature's.",
+  "text": "Only humanoids can wear these boots. While wearing the boots, you can choose to have them leave tracks like those of another kind of humanoid of your size. (No other effect in the game.)"
+}

@@ -1,0 +1,71 @@
+{
+  "id": "dust_of_disappearance",
+  "name": "Dust of Disappearance",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "dust",
+  "stackable": true,
+  "recipes": {
+    "puff": {
+      "name": "Dust of Disappearance",
+      "level": 0,
+      "school": "illusion",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 10
+      },
+      "area_targets": "allies",
+      "targets": {
+        "kind": "area"
+      },
+      "duration": {
+        "kind": "minutes",
+        "amount": 1,
+        "dice": "2d4"
+      },
+      "components": {},
+      "tags": [
+        "buff"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "invisible",
+            "ends_on": [
+              "attack_roll",
+              "cast_spell"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "throw",
+      "name": "Throw into the air",
+      "cost": "utilize",
+      "recipe": "puff",
+      "consume": true,
+      "field": true,
+      "text": "Utilize action: you and each creature within 10 ft are Invisible for 2d4 minutes (it ends for a creature that attacks or casts a spell)."
+    }
+  ],
+  "summary": "Thrown in the air, it makes you and everyone within 10 ft Invisible for 2d4 minutes.",
+  "text": "Found in a small packet, this powder resembles very fine sand. There is enough of it for one use. When you take a Utilize action to throw the dust into the air, you and each creature and object within 10 feet of you have the Invisible condition for 2d4 minutes. The duration is the same for all subjects, and the dust is consumed when its magic takes effect. Immediately after an affected creature makes an attack roll, deals damage or casts a spell, the Invisible condition ends for that creature."
+}

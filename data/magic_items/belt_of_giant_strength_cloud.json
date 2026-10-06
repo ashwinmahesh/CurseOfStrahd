@@ -1,0 +1,28 @@
+{
+  "id": "belt_of_giant_strength_cloud",
+  "name": "Belt of Giant Strength (Cloud Giant)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "belt",
+  "variant_of": "belt_of_giant_strength",
+  "modifiers": [
+    {
+      "stat": "ability_min",
+      "ability": "str",
+      "value": 27
+    }
+  ],
+  "worn": "belt",
+  "summary": "Your Strength is 27 while you wear it.",
+  "text": "While wearing this belt, your Strength score changes to 27. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+}

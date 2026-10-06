@@ -1,0 +1,30 @@
+{
+  "id": "robe_of_useful_items",
+  "name": "Robe of Useful Items",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "robe",
+  "powers": [
+    {
+      "id": "patch",
+      "name": "Detach a patch",
+      "cost": "magic",
+      "custom": "useful_items",
+      "field": true,
+      "text": "Magic action: pull off one of the robe's cloth patches; it becomes the item it shows."
+    }
+  ],
+  "worn": "robe",
+  "summary": "Covered in cloth patches you can pull off to get the items they show (a dagger, a ladder, potions, a rowboat...).",
+  "text": "This robe has cloth patches of various shapes and colors covering it. While wearing the robe, you can take a Magic action to detach one of the patches, causing it to become the object or creature it represents. Once the last patch is removed, the robe becomes an ordinary garment. The robe has two of each of the following patches: Dagger, Bullseye Lantern (filled and lit), Steel Mirror, 10-foot Pole, Hempen Rope (50 feet, coiled) and Sack. In addition, the robe has 4d4 other patches rolled at random: a bag of 100 GP, a silver coffer worth 500 GP, an iron door, ten gems worth 100 GP each, a wooden ladder, a riding horse, a pit, four Potions of Healing, a rowboat, a Spell Scroll of level 1 to 3, two Mastiffs, a window, or a portable ram."
+}

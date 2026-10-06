@@ -1,0 +1,20 @@
+{
+  "id": "ersatz_eye",
+  "name": "Ersatz Eye",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "eye",
+  "worn": "eyes",
+  "summary": "An artificial eye that replaces a lost one and sees as well.",
+  "text": "This artificial eye replaces a real one that was lost or removed. While the eye is embedded in your eye socket, it can't be removed by anyone other than you, and you can see through the tiny orb as though it were a normal eye. (No other effect in the game.)"
+}

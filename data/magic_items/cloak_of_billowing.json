@@ -1,0 +1,33 @@
+{
+  "id": "cloak_of_billowing",
+  "name": "Cloak of Billowing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "powers": [
+    {
+      "id": "billow",
+      "name": "Billow",
+      "cost": "bonus",
+      "custom": "flavour",
+      "params": {
+        "text": "billows dramatically"
+      },
+      "field": true,
+      "text": "It billows dramatically. (No other effect in the game.)"
+    }
+  ],
+  "worn": "cloak",
+  "summary": "It billows dramatically on command.",
+  "text": "While wearing this cloak, you can take a Bonus Action to make it billow dramatically for 1 minute. (No other effect in the game.)"
+}

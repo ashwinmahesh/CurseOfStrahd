@@ -1,0 +1,29 @@
+{
+  "id": "helm_of_comprehending_languages",
+  "name": "Helm of Comprehending Languages",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "helm",
+  "powers": [
+    {
+      "id": "comprehend_languages",
+      "name": "Comprehend Languages",
+      "spell": "comprehend_languages",
+      "field": true,
+      "text": "Cast Comprehend Languages at will."
+    }
+  ],
+  "worn": "head",
+  "summary": "Cast Comprehend Languages at will.",
+  "text": "While wearing this helm, you can cast Comprehend Languages from it at will."
+}

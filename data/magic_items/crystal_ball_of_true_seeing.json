@@ -1,0 +1,31 @@
+{
+  "id": "crystal_ball_of_true_seeing",
+  "name": "Crystal Ball of True Seeing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "crystal_ball",
+  "variant_of": "crystal_ball",
+  "powers": [
+    {
+      "id": "scrying",
+      "name": "Scrying",
+      "spell": "scrying",
+      "dc": 17,
+      "combat": false,
+      "field": true,
+      "text": "Cast Scrying (save DC 17)."
+    }
+  ],
+  "summary": "Cast Scrying (save DC 17) through it. Plus more.",
+  "text": "This crystal globe is about 6 inches in diameter. While touching it, you can cast Scrying (save DC 17) with it. While scrying with it, you have Truesight with a radius of 120 feet centered on the sensor."
+}

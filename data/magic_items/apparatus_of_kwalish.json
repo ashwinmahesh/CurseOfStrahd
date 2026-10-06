@@ -1,0 +1,36 @@
+{
+  "id": "apparatus_of_kwalish",
+  "name": "Apparatus of Kwalish",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 500,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "apparatus",
+  "treasure": {
+    "random": false
+  },
+  "powers": [
+    {
+      "id": "operate",
+      "name": "Operate",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "clanks to life as a lobster-shaped submersible"
+      },
+      "field": true,
+      "text": "It clanks to life as a lobster-shaped submersible. (No other effect in the game.)",
+      "combat": false
+    }
+  ],
+  "summary": "A sealed iron barrel that becomes a lobster-shaped submersible vehicle.",
+  "text": "This item first appears to be a Large sealed iron barrel weighing 500 pounds. The barrel has a hidden catch, which can be found with a successful DC 20 Intelligence (Investigation) check. Releasing the catch unlocks a hatch at one end of the barrel, allowing two Medium or smaller creatures to crawl inside. Ten levers are set in a row at the far end, each in a neutral position, able to move up or down. When certain levers are used, the apparatus transforms to resemble a giant lobster with claws, legs, and a tail. In the game, it is a vehicle for travel underwater; Barovia's lakes are too small to need it."
+}

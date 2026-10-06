@@ -1,0 +1,76 @@
+{
+  "id": "dust_of_dryness",
+  "name": "Dust of Dryness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "dust",
+  "stackable": true,
+  "recipes": {
+    "pinch": {
+      "name": "Dust of Dryness",
+      "level": 0,
+      "school": "transmutation",
+      "range": {
+        "kind": "feet",
+        "feet": 20
+      },
+      "targets": {
+        "kind": "enemy",
+        "count": 1,
+        "creature_type": "elemental"
+      },
+      "save": "con",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "10d6",
+          "type": "necrotic"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "pinch",
+      "name": "Throw a pinch at a water elemental",
+      "cost": "utilize",
+      "recipe": "pinch",
+      "dc": 13,
+      "consume": true,
+      "text": "Utilize action: a creature made mostly of water within 20 ft makes a DC 13 Con save, taking 10d6 Necrotic (half on a success)."
+    },
+    {
+      "id": "dry",
+      "name": "Dry up water",
+      "cost": "utilize",
+      "custom": "flavour",
+      "params": {
+        "text": "turns a cube of water into a pellet"
+      },
+      "field": true,
+      "text": "It turns a cube of water into a pellet. (No other effect in the game.)",
+      "combat": false,
+      "consume": true
+    }
+  ],
+  "summary": "A pinch dries up a 15-ft cube of water into a pellet, or ravages a creature made of water (10d6 Necrotic).",
+  "text": "This small packet contains 1d6 + 4 pinches of dust. You can take a Utilize action to sprinkle a pinch of it over water. The dust turns a cube of water 15 feet on a side into one marble-sized pellet, which floats or rests near where the dust was sprinkled. The pellet's weight is negligible. Someone can take a Utilize action to smash the pellet against a hard surface, causing the pellet to shatter and release the water the dust absorbed. Doing so ends that pellet's magic. An Elemental composed mostly of water that is exposed to a pinch of the dust makes a DC 13 Constitution saving throw, taking 10d6 Necrotic damage on a failed save or half as much damage on a successful one."
+}

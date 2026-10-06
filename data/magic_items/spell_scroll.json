@@ -1,0 +1,24 @@
+{
+  "id": "spell_scroll",
+  "name": "Spell Scroll",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "scroll",
+  "weight_lb": 0,
+  "cost_gp": 50.0,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "scroll",
+  "stackable": true,
+  "template": {
+    "on": "spell",
+    "name": "Spell Scroll ({base})"
+  },
+  "summary": "A spell written on a scroll: read it to cast it, if the spell is on your class's list.",
+  "text": "A Spell Scroll bears the words of a single spell, written in a mystical cipher. If the spell is on your spell list, you can read the scroll and cast its spell without Material components. Otherwise, the scroll is unintelligible. Casting the spell by reading the scroll requires the spell's normal casting time. Once the spell is cast, the scroll crumbles to dust. If the casting is interrupted, the scroll isn't lost. If the spell is on your spell list but of a higher level than you can normally cast, you make an ability check using your spellcasting ability to determine whether you cast the spell successfully. The DC equals 10 plus the spell's level. On a failed check, the spell disappears from the scroll with no other effect. The level of the spell on the scroll determines the spell's saving throw DC and attack bonus, as well as the scroll's rarity: cantrip and level 1, common (DC 13, +5); level 2, uncommon (DC 13, +5); level 3, uncommon (DC 15, +7); level 4, rare (DC 15, +7); level 5, rare (DC 17, +9); level 6, very rare (DC 17, +9); level 7, very rare (DC 18, +10); level 8, very rare (DC 18, +10); level 9, legendary (DC 19, +11). A Wizard spell on a Spell Scroll can be copied into a spellbook."
+}

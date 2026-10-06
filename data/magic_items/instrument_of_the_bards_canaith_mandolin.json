@@ -1,0 +1,92 @@
+{
+  "id": "instrument_of_the_bards_canaith_mandolin",
+  "name": "Instrument of the Bards (Canaith Mandolin)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Bard"
+  },
+  "theme": "arcana",
+  "icon": "instrument",
+  "variant_of": "instrument_of_the_bards",
+  "powers": [
+    {
+      "id": "fly",
+      "name": "Fly",
+      "spell": "fly",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "invisibility",
+      "name": "Invisibility",
+      "spell": "invisibility",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "levitate",
+      "name": "Levitate",
+      "spell": "levitate",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "protection_from_evil_and_good",
+      "name": "Protection From Evil And Good",
+      "spell": "protection_from_evil_and_good",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "cure_wounds",
+      "name": "Cure Wounds",
+      "spell": "cure_wounds",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "level": 3
+    },
+    {
+      "id": "dispel_magic",
+      "name": "Dispel Magic",
+      "spell": "dispel_magic",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "protection_from_energy",
+      "name": "Protection From Energy",
+      "spell": "protection_from_energy",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "bards_instrument"
+    }
+  ],
+  "summary": "Each once a day: Fly, Invisibility, Levitate, Protection from Evil and Good, Cure Wounds, Dispel Magic, Protection From Energy.",
+  "text": "An Instrument of the Bards is superior to an ordinary instrument in every way. While playing it, a Bard can use it to cast each of these spells once, regaining the use at dawn: Fly, Invisibility, Levitate and Protection from Evil and Good, plus this instrument's own: Cure Wounds (level 3), Dispel Magic, Protection From Energy. When you use the instrument to cast a spell that causes targets to have the Charmed condition on a failed save, the targets have Disadvantage on the saving throw. A creature that tries to play it without being attuned must succeed on a DC 15 Wisdom saving throw or take 2d4 Psychic damage."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "boots_of_elvenkind",
+  "name": "Boots of Elvenkind",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "boots",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "check:stealth"
+    }
+  ],
+  "worn": "feet",
+  "summary": "Your steps make no sound: Advantage on Dexterity (Stealth) checks.",
+  "text": "While you wear these boots, your steps make no sound, regardless of the surface you are moving across. You also have Advantage on Dexterity (Stealth) checks."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "universal_solvent",
+  "name": "Universal Solvent",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 100000.0,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "flask",
+  "powers": [
+    {
+      "id": "pour",
+      "name": "Pour",
+      "cost": "utilize",
+      "custom": "flavour",
+      "params": {
+        "text": "dissolves any adhesive it touches, even Sovereign Glue"
+      },
+      "field": true,
+      "text": "It dissolves any adhesive it touches, even Sovereign Glue. (No other effect in the game.)",
+      "combat": false,
+      "consume": true
+    }
+  ],
+  "summary": "Dissolves any adhesive, even Sovereign Glue.",
+  "text": "This tube holds milky liquid with a strong alcohol smell. You can take a Utilize action to pour the contents of the tube onto a surface within reach. The liquid instantly dissolves up to 1 square foot of adhesive it touches, including Sovereign Glue."
+}

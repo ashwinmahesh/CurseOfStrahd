@@ -1,0 +1,50 @@
+{
+  "id": "bag_of_tricks_gray",
+  "name": "Bag of Tricks (Gray)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0.5,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "bag",
+  "variant_of": "bag_of_tricks",
+  "powers": [
+    {
+      "id": "pull",
+      "name": "Pull out a creature",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "summon_random",
+      "params": {
+        "table": [
+          "weasel",
+          "giant_rat",
+          "badger",
+          "boar",
+          "panther",
+          "giant_badger",
+          "dire_wolf",
+          "giant_elk"
+        ],
+        "until": "dawn"
+      },
+      "targeting": "place",
+      "range": 20,
+      "text": "Magic action, 1 charge: throw a fuzzy ball up to 20 ft; it becomes a random Beast that fights for you until dawn."
+    }
+  ],
+  "summary": "3 charges: pull out a fuzzy ball that becomes a random Beast friendly to you (weasel, giant rat, badger, and others).",
+  "text": "This bag made from gray cloth appears empty. Reaching inside the bag, however, reveals the presence of a small, fuzzy object. The bag has 3 charges and regains 1d3 expended charges daily at dawn. While holding the bag, you can take a Magic action to expend 1 of its charges, pull the fuzzy object from the bag, and throw it up to 20 feet. When the object lands, it transforms into a creature determined by rolling on the bag's table: weasel, giant rat, badger, boar, panther, giant badger, dire wolf, giant elk. The creature is friendly to you and your allies, and it acts immediately after you on your turn. You can take a Bonus Action to command how the creature moves and what action it takes on its next turn, or give it general orders. In the absence of such orders, the creature acts in a fashion appropriate to its nature. The creature vanishes at the next dawn or when it is reduced to 0 Hit Points."
+}

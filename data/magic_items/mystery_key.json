@@ -1,0 +1,30 @@
+{
+  "id": "mystery_key",
+  "name": "Mystery Key",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "key",
+  "powers": [
+    {
+      "id": "try",
+      "name": "Try it in a lock",
+      "cost": "utilize",
+      "custom": "mystery_key",
+      "field": true,
+      "combat": false,
+      "text": "A 5 percent chance it opens any lock; if it does, the key disappears."
+    }
+  ],
+  "summary": "It has a 5 percent chance of opening any lock, then it vanishes.",
+  "text": "A question mark is worked into the head of this key. The key has a 5 percent chance of unlocking any lock into which it's inserted. Once it unlocks something, the key disappears."
+}
