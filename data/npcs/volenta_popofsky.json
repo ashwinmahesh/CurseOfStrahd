@@ -1,0 +1,19 @@
+{
+  "id": "volenta_popofsky",
+  "name": "Volenta Popofsky",
+  "title": "Bride of Strahd",
+  "summary": "The third of the count's brides: small, bright-eyed and delighted by fear. She sings under village windows for him and plays games she always wins.",
+  "portrait": "volenta_popofsky",
+  "sprite": "volenta_popofsky",
+  "attitude": "hostile",
+  "voice": "docs/voice/volenta_popofsky.md",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "vampire",
+    "bride_of_strahd",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "she/her"
+}

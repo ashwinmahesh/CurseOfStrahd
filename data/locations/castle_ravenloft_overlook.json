@@ -1,0 +1,189 @@
+{
+  "id": "castle_ravenloft_overlook",
+  "name": "Castle Ravenloft, the Overlook",
+  "region": "castle_ravenloft",
+  "summary": "A long stone balcony on the castle's flank, with a low parapet and then nothing for a thousand feet. The whole valley lies below it. Strahd comes here to look at what he owns.",
+  "text": "A terrace of worn flagstones along the keep's wall. Past the parapet, the cliff falls away into mist, and the valley spreads out under it: the forest, the river, the lights of the village.",
+  "map": {
+    "rows": [
+      "##########################",
+      "#.......#.......#........#",
+      "#........................#",
+      ".........................#",
+      ".........................#",
+      "#........................#",
+      "#........................#",
+      " ======================== ",
+      "                          ",
+      "                          ",
+      "                          ",
+      "                          ",
+      "                          "
+    ],
+    "theme": "shrine_yard",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "crg_overlook_landing",
+      "name": "The end of the walk",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "floor": "church/stone_flags"
+    },
+    {
+      "id": "crg_overlook",
+      "name": "The overlook",
+      "cells": [
+        [
+          6,
+          1
+        ],
+        [
+          24,
+          7
+        ]
+      ],
+      "floor": "church/stone_flags"
+    }
+  ],
+  "spawns": {
+    "default": [
+      1,
+      3
+    ],
+    "from_gates": [
+      1,
+      3
+    ]
+  },
+  "exits": [
+    {
+      "id": "walk_back",
+      "cell": [
+        0,
+        3
+      ],
+      "to": "castle_ravenloft_gates",
+      "spawn": "from_overlook",
+      "label": "Back along the wall to the courtyard"
+    },
+    {
+      "id": "walk_back_south",
+      "cell": [
+        0,
+        4
+      ],
+      "to": "castle_ravenloft_gates",
+      "spawn": "from_overlook",
+      "label": "Back along the wall to the courtyard"
+    }
+  ],
+  "props": [
+    {
+      "id": "crg_overlook_view",
+      "cell": [
+        14,
+        7
+      ],
+      "kind": "examine",
+      "label": "The view from the parapet",
+      "model": "bridge"
+    },
+    {
+      "id": "crg_overlook_rail",
+      "cell": [
+        6,
+        7
+      ],
+      "kind": "decor",
+      "label": "The parapet",
+      "model": "bridge"
+    },
+    {
+      "id": "crg_overlook_bench",
+      "cell": [
+        11,
+        1
+      ],
+      "kind": "examine",
+      "label": "A stone bench",
+      "model": "stone_bench"
+    },
+    {
+      "id": "crg_overlook_statue",
+      "cell": [
+        20,
+        1
+      ],
+      "kind": "decor",
+      "label": "A weathered statue",
+      "model": "statue_knight"
+    },
+    {
+      "id": "crg_overlook_window",
+      "cell": [
+        4,
+        0
+      ],
+      "kind": "decor",
+      "label": "A shuttered window",
+      "model": "window_shuttered"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "crg_overlook_final_battle",
+      "trigger": "enter_area:crg_overlook",
+      "final_battle": "castle_ravenloft_overlook",
+      "lair": true,
+      "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            20,
+            5
+          ],
+          "name": "Strahd von Zarovich"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            14,
+            2
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            21,
+            2
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            5
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_overlook"
+  },
+  "rest": "no",
+  "rest_text": "Nobody sleeps on a ledge over a thousand feet of nothing, under his windows."
+}

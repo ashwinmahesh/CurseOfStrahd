@@ -1,0 +1,65 @@
+{
+  "region": "strahd",
+  "flags": [
+    {
+      "id": "strahd_watcher_seen",
+      "type": "bool",
+      "summary": "The party saw Strahd watching from a ridge on the road (strahd/visits:watcher). Every later visit waits for it (data/strahd/visits.json)."
+    },
+    {
+      "id": "strahd_letter_read",
+      "type": "bool",
+      "summary": "A Vistani rider delivered Strahd's first letter (strahd/letters:first)."
+    },
+    {
+      "id": "strahd_letter_kept",
+      "type": "bool",
+      "summary": "The party kept Strahd's first letter instead of burning it; his invitation notices."
+    },
+    {
+      "id": "strahd_night_visit",
+      "type": "string",
+      "summary": "How the night visit at a rest ended (strahd/visits:night): woke (the others were woken), shield (someone stood before Ireena), warded (a holy symbol), attacked. Unset if it hasn't happened."
+    },
+    {
+      "id": "strahd_seen_trapped",
+      "type": "bool",
+      "summary": "Insight at the night visit caught Strahd looking at the mountains like a prisoner; the parley offers a line about it."
+    },
+    {
+      "id": "strahd_test",
+      "type": "string",
+      "summary": "The test of strength on a night road (strahd/visits:test): fought (the visit's fight, which he leaves) or talked (Persuasion sent him off without one)."
+    },
+    {
+      "id": "strahd_withdrew",
+      "type": "bool",
+      "summary": "Strahd has left a fight with the party at least once: the withdraw flag of the visit fights (ADR 0014 `withdraw`), and set again by their after-fight lines. The parley reads it."
+    },
+    {
+      "id": "strahd_window",
+      "type": "string",
+      "summary": "How the party met Strahd's move against Ireena where she sheltered (strahd/ireena): symbol, faith, ward, woke, fight (the visit's fight), taken (she went to him), church (he called from the gate of St. Andral's and holy ground held)."
+    },
+    {
+      "id": "strahd_window_pull",
+      "type": "int",
+      "summary": "Missteps at Ireena's window (a failed prayer or plea): at 2 she goes with him."
+    },
+    {
+      "id": "ireena_held_by_strahd",
+      "type": "bool",
+      "summary": "Ireena went to Strahd from her window (strahd/ireena:taken) and is in Castle Ravenloft. The parley offers her; the castle parts and the endings may read it. Ireena's place flags (ireena_sanctuary = taken, or ireena_in_krezk = false) are set with it."
+    },
+    {
+      "id": "strahd_invitation",
+      "type": "string",
+      "summary": "The dinner invitation and the black carriage (strahd/letters:invitation): accepted (the party rode to the castle's front door; the gates part's dinner reads it) or declined (the carriage comes back, up to three times)."
+    },
+    {
+      "id": "strahd_parley",
+      "type": "string",
+      "summary": "The answer to Strahd's price before the final battle (strahd/final:parley, ADR 0014): fight (the battle starts), yield (Strahd triumphant) or ireena (she is given to him). The engine and the endings read it."
+    }
+  ]
+}

@@ -55,6 +55,15 @@ var cleave_queue: Array[Dictionary] = []
 ## Shown when the fight starts.
 var title: String = ""
 var intro: String = ""
+## Where the fight is (ADR 0014): its location (a Misty Escape's resting place), whether its boss takes lair actions on
+## initiative count 20, and whether it's outdoors (Children of the Night call wolves there).
+var location_id: String = ""
+## Places inside that location (its Tarokka treasure places, the final battle's room): a resting place can be one.
+var places: Array[String] = []
+var lair: bool = false
+var outdoors: bool = false
+## Legendary and lair actions, Regeneration, shapes, Misty Escape, withdrawing (combat/legendary.gd).
+var legendary: Legendary
 
 
 func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
@@ -70,6 +79,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	class_features = ClassFeatures.new(self)
 	ravenloft = RavenloftFeatures.new(self)
 	items = CombatItems.new(self)
+	legendary = Legendary.new(self)
 
 
 # --- Setup ----------------------------------------------------------------------------------------
@@ -168,8 +178,9 @@ func start(surprised_ids: Array = []) -> void:
 	log.round_no = 1
 	log.add("turn", "Round 1", "")
 	events.append({"type": "round", "round": 1})
+	legendary.combat_started()
 	turn_index = 0
-	_begin_turn()
+	_lair_then_begin()
 
 
 # --- Queries --------------------------------------------------------------------------------------
@@ -300,6 +311,24 @@ func in_sunlight(c: Combatant) -> bool:
 		return true
 	for cell in c.footprint():
 		if bool(spells.zones.spell_light(cell)["sunlight"]) and not spells.zones.magical_darkness(cell):
+			return true
+	return false
+
+
+## Whether this fight is at `place`: its location, or a place inside it.
+func at_place(place: String) -> bool:
+	return place != "" and (place == location_id or place in places)
+
+
+## Whether a creature stands in running water (a deep-water square it isn't flying over, or the `in_running_water`
+## flag): a vampire's Regeneration, shape changes and Misty Escape fail there.
+func in_running_water(c: Combatant) -> bool:
+	if c.creature.has_flag("in_running_water"):
+		return true
+	if move_mode(c) & CombatGrid.MOVE_FLY:
+		return false
+	for cell in c.footprint():
+		if grid.has_flag(cell, CombatGrid.WATER):
 			return true
 	return false
 
@@ -486,6 +515,10 @@ func _begin_turn() -> void:
 		c.haste_action = true
 	log.add("turn", "%s's turn" % c.name(), c.id)
 	events.append({"type": "turn", "id": c.id, "round": round_no})
+	# Legendary actions come back; Regeneration (before anything else starts this turn); a foe whose time is up leaves.
+	legendary.turn_start(c)
+	if not c.is_alive():
+		return
 	spells.turn_start(c)
 	feature_actions.turn_start(c)
 	class_features.turn_start(c)
@@ -531,6 +564,19 @@ func end_turn() -> CombatResult:
 	_check_over()
 	if state != State.ACTIVE:
 		return CombatResult.new()
+	# Legendary actions at the end of another creature's turn (not while time is stopped).
+	var stopped := c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0
+	var lr := legendary.after_turn(c) if not stopped else CombatResult.new()
+	if pending != null:
+		return then(lr, func() -> CombatResult: return _next_turn(c))
+	return _next_turn(c)
+
+
+## After `c`'s turn (and any legendary actions): the next creature, a new round, the lair's turn.
+func _next_turn(c: Combatant) -> CombatResult:
+	_check_over()
+	if state != State.ACTIVE:
+		return CombatResult.new()
 	# Time Stop: the caster's next turn comes straight away.
 	if c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0 and c.is_alive() and c.can_act():
 		c.set_meta("time_stop", int(c.get_meta("time_stop")) - 1)
@@ -538,19 +584,45 @@ func end_turn() -> CombatResult:
 		_begin_turn()
 		return CombatResult.new()
 	c.remove_meta("time_stop")
+	_advance_index()
+	if state != State.ACTIVE:
+		return CombatResult.new()
+	_lair_then_begin()
+	return CombatResult.new()
+
+
+## Moves `turn_index` to the next living creature, starting a new round past the end of the order (a lair that hasn't
+## acted yet this round acts first; called creatures arrive as the new round begins).
+func _advance_index() -> void:
 	for i in order.size():
 		turn_index += 1
 		if turn_index >= order.size():
+			legendary.round_ending()
+			if state != State.ACTIVE:
+				return
 			turn_index = 0
 			round_no += 1
 			_drop_reflex_turns()
 			log.round_no = round_no
 			log.add("turn", "Round %d" % round_no, "")
 			events.append({"type": "round", "round": round_no})
+			legendary.round_started()
 		if current().is_alive():
 			break
+
+
+## The lair acts on initiative count 20 (losing ties) before the first creature below 20; then the turn begins.
+func _lair_then_begin() -> void:
+	if legendary.lair_due():
+		legendary.lair_turn()
+		_check_over()
+		if state != State.ACTIVE:
+			return
+		if not current().is_alive():
+			_advance_index()
+			if state != State.ACTIVE:
+				return
 	_begin_turn()
-	return CombatResult.new()
 
 
 ## After round 1, Thief's Reflexes' extra turns leave the order.
@@ -1757,6 +1829,11 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 	var charm := charm_blocks(c, target)
 	if charm != "":
 		return charm
+	# A stat-block attack only some targets qualify for (a vampire's Bite: grappled, incapacitated or restrained).
+	if c.creature is Monster and option.has("action_id"):
+		var needs := ((c.creature as Monster).action(str(option["action_id"])).get("targets", {}) as Dictionary).get("requires", []) as Array
+		if not needs.is_empty() and not needs.any(func(n: Variant) -> bool: return Legendary.meets(c, target, str(n))):
+			return "%s must be %s" % [target.name(), " or ".join(needs.filter(func(n: Variant) -> bool: return str(n) != "willing").map(func(n: Variant) -> String: return str(n).capitalize()))]
 	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and item_count(c, p.item_id) <= 0:
 		return "No %s left" % p.name.replace(" (thrown)", "")
 	if c.creature is Character and option["kind"] in ["thrown", "weapon"] and not bool(option["melee"]):
@@ -2359,6 +2436,8 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 			if bool(fxa.data.get("ends_without_temp_hp", false)):
 				target.creature.remove_effect(fxa)
 				log.add("info", "%s ends: no Temporary Hit Points left" % fxa.name, target.id)
+	# Bosses (ADR 0014): Regeneration stopped by Radiant, a foe withdrawing at its threshold, Misty Escape at 0.
+	var departed := legendary.after_damage(target, parts, dr, was_up)
 	var text := dr.describe(target.name())
 	if log_it:
 		var headline := text
@@ -2378,7 +2457,9 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 			var mt := mount_of(target)
 			target.remove_meta("mounted_on")
 			mt.remove_meta("ridden_by")
-	if target.creature.dead and was_up:
+	if departed:
+		pass
+	elif target.creature.dead and was_up:
 		monster_actions.death_burst(target)
 		target.set_meta("died_round", round_no)
 		log.add("death", "%s dies" % target.name(), target.id)

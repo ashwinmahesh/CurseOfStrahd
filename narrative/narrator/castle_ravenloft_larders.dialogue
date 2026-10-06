@@ -1,0 +1,286 @@
+# Narrator: Castle Ravenloft, the Larders of Ill Omen and the dungeon (docs/voice/narrator.md).
+# Second person, present tense, one or two sentences. Props that open conversations (the bricked rack, the winch,
+# the sluice wheel, the shawl) have no examine: line here.
+
+# ---------------------------------------------------------------- The two maps
+
+~ enter:castle_ravenloft_larders
+| The servants' stair lets you down into low vaults that smell of smoke and onions, and of something under the onions.
+| [flag.larders_cyrus_slain] The larders are cold now. Nobody has lit the kitchen fire, and the smell under the onions has the place to itself.
+| [flag.larders_nadia_fate == "sent_alone"] Something pale lies folded on the bottom step of the stair.
+cooldown 20
+
+~ enter:castle_ravenloft_larders_dungeon
+| The jailers' stair ends in cold stone and dripping vaults. Somewhere ahead, something large breathes in and out, slow as a sleeper.
+| [flag.larders_furnace_quenched] The dungeon is darker than it was and very quiet. The breathing has stopped.
+cooldown 20
+
+# ---------------------------------------------------------------- The larders
+
+~ enter:larders_servants_stair
+| A narrow stair worn into a dip by centuries of trays. Grey livery hangs on pegs, waiting for servants who aren't coming.
+once
+
+~ enter:larders_servants_hall
+| A long table is laid for twenty, plates and cups and folded napkins, all under the same soft fur of dust.
+once
+
+~ enter:larders_kitchen
+| Heat, at last: a fire in a great oven, a cauldron muttering on its hook, and the smell of good bread over the smell of everything else.
+| [flag.larders_cyrus_slain] The oven is cold. The cauldron has a skin on it. The bread on the table is going green.
+cooldown 15
+
+~ enter:larders_pantry
+| Hooks along the ceiling, and meat on the hooks. Most of it is mutton.
+once
+
+~ enter:larders_cooks_room
+| A straw bed under a patched quilt, a painted box tucked beneath it, and a little shelf of pretty stones, buttons and broken spoons.
+once
+
+~ enter:larders_guards_run
+| A long vaulted passage with torch brackets every few yards. Some of the torches are still burning, which means someone still lights them.
+once
+
+~ enter:larders_wine_cellar
+| Racks of casks run off into the dark, and bottles are racked to the ceiling behind them. The air is cold and smells of old grapes and older stone.
+| [flag.winery_wine_flows] Near the door stand new casks with a raven branded on each, still smelling of the Martikovs' yard.
+| [flag.larders_niche_opened] At the back of the cellar, a dark gap in the brickwork where a wine merchant sits among his bottles.
+cooldown 20
+
+~ enter:larders_guardroom
+| Pallets along the walls, a card table, an armour stand with nothing on it. Somebody is still lying on some of the pallets.
+| [flag.larders_watch_beaten] The guardroom is only a room now. The pallets are only straw.
+cooldown 20
+
+~ enter:larders_winch_room
+| A square shaft drops away into the dark beside a great iron winch. A cage hangs in the shaft on a chain, turning a little in a draught you can't feel.
+once
+
+~ enter:larders_jailers_stair
+| Two stairs go down from here. One stops at the dungeon. The other keeps going, worn into a trough, toward the crypts and the cold.
+once
+
+# ---------------------------------------------------------------- The dungeon
+
+~ enter:larders_dungeon_hall
+| A vaulted hall on thick pillars. Chains hang from rings in the walls at the height of a man's wrists.
+once
+
+~ enter:larders_jailers_post
+| A jailers' room with a table, a key board and a chest. The armour at the table has its back to you, and it isn't sitting.
+| [flag.larders_jailers_beaten] The jailers' room is quiet. Three empty suits of armour lie where they fell.
+cooldown 20
+
+~ enter:larders_furnace_room
+| Heat hits you like a hand. A furnace burns green against the far wall, and great gears turn around it by themselves, feeding chains up into the dark.
+| [flag.larders_furnace_quenched] The furnace room is black and wet and steaming. The gears stand still.
+cooldown 20
+
+~ enter:larders_stokers_crawl
+| A crawlway hot as an oven, where a stoker once fed the furnace from behind. He is still here.
+once
+
+~ enter:larders_cell_stair
+| The passage drops in shallow steps toward the cells. You hear one voice crying and another one praying, and the praying is very steady.
+once
+
+~ enter:larders_cell_passage
+| Iron gates on both sides, two rows of them. Behind some, nothing. Behind others, something breathing.
+cooldown 30
+
+~ enter:larders_north_cells
+| Straw, a bucket, a ring in the wall. Every cell is furnished the same, and so is every prisoner.
+once
+
+~ enter:larders_south_cells
+| The cells on this side are colder, as if something in them takes the warmth.
+once
+
+~ enter:larders_lift_foot
+| The bottom of the lift shaft: a floor of cracked stone, and old stains under the cage where it has come down too fast.
+once
+
+~ enter:larders_drain_passage
+| The floor of this passage slopes toward a channel, and the channel runs one way only.
+once
+
+~ enter:larders_torture_chamber
+| A rack, the stocks, a tall shape under a sheet, and a drain in the middle of the floor, which is the worst thing in the room.
+| [flag.larders_questioner_beaten] The instruments are quiet. The drain is only a drain again, for now.
+cooldown 20
+
+~ enter:larders_bonewright
+| A workroom: benches, saws, glue pots, and bones sorted into heaps by size, like timber in a carpenter's yard.
+once
+
+~ enter:larders_hall_of_bones
+| A long hall walled with skulls. Down the middle runs a table of bones with chairs of bones beside it, and over it a lamp of skulls burns green.
+| [flag.larders_furnace_quenched] A long hall walled with skulls, and a table of bones under a dark lamp. In the dark, the chairs look more like the people they used to be.
+| [flag.larders_hall_told] It is exactly as Nadia said. She counted the chairs right.
+cooldown 20
+
+# ---------------------------------------------------------------- Things to look at
+
+~ examine:larders_bell_board
+| A board of servants' bells, one for every room upstairs, each with a painted label. As you watch, the bell marked Dining Hall twitches once.
+cooldown 10
+
+~ examine:larders_staff_table_3
+| Each place has a name card in faded ink. Some names are crossed out and others written in, over and over, on the same cards.
+cooldown 10
+
+~ examine:larders_oven
+| A brick oven big enough to stand in. You decide not to think about why that was the first thing you noticed.
+cooldown 10
+
+~ examine:larders_dumbwaiter
+| A dumbwaiter shaft with its rope, leading straight up to the dining hall. It smells of gravy and old wax.
+cooldown 10
+
+~ examine:larders_worktable_2
+| A worktable scored by a thousand cleavers. One of the knives laid out on it is very small and very sharp, for fine work.
+cooldown 10
+
+~ examine:larders_cauldron
+| Soup: barley, onions, carrots, and something that might have been mutton once. It smells better than anything in Barovia has a right to.
+| [flag.larders_cyrus_slain] The soup has gone cold with a skin on top. Nobody will stir it again.
+cooldown 10
+
+~ examine:larders_hanging_meat
+| You look at the meat on the hooks carefully, for longer than you want to. It's mutton. This time.
+cooldown 10
+
+~ examine:larders_cooks_bed
+| A quilt pieced from a dozen old livery coats. Under the pillow, a wooden spoon carved into a crude little Belview, tusk and ear and hoof.
+once
+
+~ examine:larders_cask_rack_1
+| Casks stamped with vintages older than Vallaki's walls. Some have been tapped; most never will be.
+cooldown 10
+
+~ examine:larders_wall_racks
+| Bottles racked from floor to vault, furred grey with dust. One rack at the back holds bricks instead of bottles.
+cooldown 10
+
+~ examine:larders_martikov_casks
+| Fresh casks branded with a raven. The Martikovs' wine reaches even this cellar again.
+cooldown 10
+
+~ examine:larders_watch_cards
+| A hand of cards lies face down at each place. You turn one over: the winning hand, never played.
+once
+
+~ examine:larders_lift_cage
+| An iron cage on a chain, big enough for four people standing very close. The floor of it is stained dark at the edges.
+cooldown 10
+
+~ examine:larders_long_stair_mark
+| The long stair goes down and down, past the dungeon, toward the crypts. The air coming up it is colder than the cellar.
+cooldown 10
+
+~ examine:larders_guest_slate
+| Names chalked on a slate, a guest list. Most have been wiped away with a thumb. Near the bottom, newer: Nadia, lamplighter. And: the brother.
+cooldown 10
+
+~ examine:larders_key_board
+| A board of hooks, and on one a ring of heavy iron keys for every shackle in the cells. You take it.
+| [flag.larders_keys_taken] The hooks are empty. You already have the keys.
+cooldown 5
+
+~ examine:larders_furnace_mouth
+| A brick furnace mouth, its iron door glowing. There is no coal in it and no wood. The fire is simply there.
+| [flag.larders_furnace_quenched] A black, dripping firebox, still ticking as it cools.
+cooldown 10
+
+~ examine:larders_green_fire
+| Green fire with no fuel under it and no smoke over it. It gives heat like any fire. It gives light like nothing natural.
+| [flag.larders_furnace_quenched] Wet ash, with no warmth left in it.
+cooldown 10
+
+~ examine:larders_furnace_gears
+| Gears as tall as a man turn by themselves, driving chains up into the castle. Some go toward the lamps. You can't tell where the rest go.
+| [flag.larders_furnace_quenched] The gears have stopped dead, mid-turn.
+cooldown 10
+
+~ examine:larders_stoker_bones
+| A stoker's bones, curled up as if asleep, a shovel still across his knees. He found the cool spot and never left it.
+once
+
+~ examine:larders_tally_skeleton
+| A skeleton in shackles, and on the wall beside it a tally scratched in groups of five. The tally stops partway through a group.
+once
+
+~ examine:larders_scratched_sun
+| A sun scratched into the stone with something sharp. The rays are perfect. Whoever drew it had all the time in the world.
+cooldown 10
+
+~ examine:larders_rack
+| A rack, its rollers polished by use. The straps are new.
+cooldown 10
+
+~ examine:larders_iron_case
+| A tall iron case under a sheet. You lift the corner. You put the corner down again.
+once
+
+~ examine:larders_drain
+| A drain in the middle of the floor. Far down, something shifts and settles, thick and black.
+| [flag.larders_questioner_beaten] A drain in the middle of the floor. It is quiet for now.
+cooldown 10
+
+~ examine:larders_bone_bench_2
+| Thigh bones planed into chair legs, ribs bent into a backrest, knuckles waiting to be drilled for pegs. Fine work, and nobody's ever thanked him for it.
+once
+
+~ examine:larders_half_chair
+| A chair of bones, half made. A label hangs from one arm: a name, and under it, in the same hand, "rebel".
+once
+
+~ examine:larders_bone_table_1
+| A table built from the bones of people who once stood against him: soldiers, rebels, hunters. He likes to have them at dinner still.
+cooldown 10
+
+~ examine:larders_bone_lamp
+| A lamp of skulls hangs low over the table, burning green, swaying though nothing touches it. Its chain runs up into the dark toward the furnace's noise.
+| [flag.larders_furnace_quenched] The lamp of skulls hangs dark and dripping over the table.
+cooldown 10
+
+~ examine:larders_bone_throne
+| A throne of bones at the head of the table, taller than the rest. The skulls on its back face outward, toward the guests.
+cooldown 10
+
+~ examine:larders_ossuary_niches_1
+| Niches cut in the wall, stacked to the vault with skulls. Someone has chalked dates under some of them.
+cooldown 10
+
+# ---------------------------------------------------------------- Searching, traps, doors
+
+~ search:larders_loose_stone
+| A stone in the cell wall moves under your fingers. Behind it, a prisoner's hoard: one stoppered healing draught, saved for a day that never came.
+once
+
+~ trap:larders_bone_lamp_trap:found
+| [class:rogue] {name} looks up at the swaying lamp, and at the scorch marks on the chair seats, and stops where they are.
+| The chair seats are scorched in a ring under the green lamp. Something up there pours.
+once
+
+~ trap:larders_bone_lamp_trap:triggered
+| The skull lamp tips on its chain and pours green fire across the chairs, and across you.
+once
+
+~ trap:larders_open_cell_pit:found
+| [class:rogue] {name} pokes the straw with a boot. It sags. There's no floor under it, only a lid.
+| The straw in the open cell lies too flat and too fresh, and the satchel on it was put there to be seen.
+once
+
+~ trap:larders_open_cell_pit:triggered
+| The straw drops away into a shaft, and the shaft has a bottom.
+once
+
+~ open:larders_cellar_door
+| Cold air rolls up the steps from the cellar, smelling of grapes and stone.
+once
+
+~ open:larders_bones_door
+| The tall black door swings open without a sound, the way a good servant opens a door for a guest.
+once

@@ -139,3 +139,70 @@ region that reaches `join <npc>` when `tarokka.ally.npc == <npc>`. The darklord 
 
 Dialogue: `dark_gift <id>` asks which party member accepts (or none); the gift is saved in that character's build and
 can't be undone. Condition: `gift:<id>` (anyone in the party carries it).
+
+## Endings (Phase 6, ADR 0014)
+
+`data/endings/<id>.json` (schema: ending.schema.json):
+
+```json
+{"id": "ireena_given_up", "title": "The Bride of Ravenloft", "summary": "One line for the title card and the save.",
+ "priority": 15, "when": "flag.strahd_parley == ireena and not flag.strahd_destroyed",
+ "narration": "endings/ireena_given_up:start", "tone": "blood", "music": "ending",
+ "epilogue_from": "strahd_triumphant",
+ "epilogue": [{"topic": "ireena", "title": "Ireena Kolyana", "portrait": "ireena", "when": "", "text": "Our words."}]}
+```
+
+- **When the game ends**: the dialogue statement `end_game`; a conversation that leaves `strahd_parley` at `yield` or
+  `ireena` (the parley, with or without `end_game`); a wipe in an encounter with `final_battle`; any won fight that
+  leaves `strahd_destroyed` set. A scene that destroys Strahd without a fight ends with `end_game`.
+- **Which ending**: the highest `priority` whose `when` holds then. It is recorded once in the flag `campaign_ending`
+  (story/endings.gd `Endings.request`) and never changes.
+- **The ending screen** (ui/screens/ending_screen.gd): the title card (`title`, `summary`), the `narration` node played
+  line by line (Narrator, NPC and `interject` lines only; it never offers a choice), then the slides, then The End:
+  the game's save slot is written marked `"finished": {ending, title}` (SaveSystem.save_finished) and Return to the
+  title goes to the main menu. Finished saves list after unfinished ones (Continue skips them) with "The End: <title>"
+  as their place; loading one plays its ending again.
+- **Slides**: this ending's `epilogue`, then those of `epilogue_from` (and its own `epilogue_from`). Each `topic` is
+  shown once: the first slide of it whose `when` holds, so an ending's own slide replaces the inherited one and a
+  topic's variants go most specific first. A topic with no slide that holds is left out. `{name}` is the bearer of
+  the Second Thirst (`gift_of_the_hollow`), else the leader; `"portrait": "{name}"` is that character's portrait. The
+  party members lost on the way close the slides.
+- `tone` lights the screen (`dawn`, `night`, `blood`); `music` is the art/audio.json mood it plays (default `ending`).
+
+| Ending | Priority | When | Epilogue |
+|---|---|---|---|
+| `new_darklord` The Second Thirst | 40 | `flag.strahd_destroyed and gift:gift_of_the_hollow` | own, then `strahd_triumphant` |
+| `ireena_at_peace` At Sergei's Side | 30 | `flag.strahd_destroyed and flag.ireena_pool_choice == promised` | own, then `strahd_destroyed` |
+| `strahd_destroyed` Dawn over Barovia | 20 | `flag.strahd_destroyed` | the dawn set |
+| `ireena_given_up` The Bride of Ravenloft | 15 | `flag.strahd_parley == ireena and not flag.strahd_destroyed` | own, then `strahd_triumphant` |
+| `strahd_triumphant` The Mists Remain | 10 | `not flag.strahd_destroyed` (a wipe in the final battle, or `yield`) | the dark set |
+
+Slide topics read: `vallaki_backed`, `abbot_fate`, `ilya_fate`/`ilya_heard`, `order_fate`, `winery_wine_flows`,
+`martikovs_reconciled`, `keepers_allied`/`ilinca_vouched`, `amber_temple_sealed`, `dark_gifts_taken`,
+`kasimir_bargain`, `kasimir_at_peace`, `patrina_fate`, `van_richten_reunited`, `rictavio_unmasked`,
+`van_richten_met_at_tower`, `ezmerelda_met`, `mordenkainen_restored`/`mordenkainen_met`, `wolf_pack_leader`,
+`lysaga_dead`/`lysaga_fate`, `bonegrinder_fate`, `death_house_children_at_rest`/`death_house_sacrificed`/
+`death_house_refused`, `ireena_pool_choice`, `ireena_in_krezk`, `guest:ireena`, `visited:vallaki`, `visited:krezk`,
+`strahd_parley`.
+
+## Castle Ravenloft and the final battle (Phase 6, ADR 0014)
+
+- The castle is region `castle_ravenloft` in five parts (docs/regions/castle_ravenloft.md): each part's entry map has
+  `from_<part>` spawns and exits to the others. Its 15 Tarokka places are ordinary treasure spots.
+- **Final battles:** each enemy room in outcomes.json (except `castle_ravenloft`, the roaming `mists` card) has exactly
+  one location encounter with `"final_battle": "<room id>"` and `"lair": true`, with Strahd in it. The engine adds to its
+  `when` that the reading's room (or the roam pick) is that room, `strahds_lair` is at `foretold` or later and Strahd
+  isn't destroyed; it plays `strahd/final:parley` first and fights only if `strahd_parley` is `fight` or unset. The
+  condition `final_room:<room id>` is true for the room he waits in.
+- **Withdrawing foes:** a location or visit encounter may carry `"withdraw": {"who", "at_hp_below", "after_rounds",
+  "flag"}`; the foe leaves (no loot, no death) and the flag is set.
+- **Strahd's coffin:** 0 Hit Points outside his tomb is Misty Escape: `strahd_in_coffin` is set and he leaves. The
+  catacombs' coffin scene sets `strahd_destroyed`, moves `strahds_lair` to `destroyed` and ends the game.
+
+## Strahd's visits (Phase 6, ADR 0014; data/strahd/visits.json, schema: strahd_visits.schema.json)
+
+Each visit: `id`, `summary`, `trigger` (`on`: travel, arrive, rest, ...), `when` (a condition), `once` or
+`cooldown_hours` and `max`, `dialogue` (`file:node`), and `then`: steps with a `when` and an `encounter` (inline,
+usually with `withdraw`), a `go` (`location:spawn`) or a `dialogue`. `story/strahd_presence.gd` runs them; the design is
+docs/regions/strahd_presence.md. `make validate` checks every dialogue node, monster, withdrawing foe, `go` target and
+the flags the visits read and set.

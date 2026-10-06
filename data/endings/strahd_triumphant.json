@@ -1,0 +1,240 @@
+{
+  "id": "strahd_triumphant",
+  "title": "The Mists Remain",
+  "summary": "Strahd von Zarovich still rules his valley, and the mists close behind you for good.",
+  "priority": 10,
+  "when": "not flag.strahd_destroyed",
+  "narration": "endings/strahd_triumphant:start",
+  "tone": "night",
+  "music": "ending",
+  "epilogue": [
+    {
+      "topic": "land",
+      "title": "Barovia",
+      "when": "",
+      "text": "The mists close around Barovia like a fist. Somewhere beyond them, other travellers are already on the road."
+    },
+    {
+      "topic": "party",
+      "title": "The Count's Guests",
+      "portrait": "strahd",
+      "when": "flag.strahd_parley == yield",
+      "text": "You live out your days in the valley as the count's guests. Every year his invitations to dinner grow harder to refuse."
+    },
+    {
+      "topic": "party",
+      "title": "The Fallen Heroes",
+      "portrait": "vampire_spawn",
+      "when": "",
+      "text": "Those of you who fell in the castle walk its halls still. They answer to a new name, and they do not remember the sun."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "guest:ireena",
+      "text": "Ireena becomes the lady of the castle after all. On clear nights the villagers see her at a high window, and they look away."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "flag.ireena_in_krezk",
+      "text": "Krezk's wall keeps Ireena safe for one more winter. Then the black carriage stops at the gate one night, and the gate opens."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "",
+      "text": "Ireena hides, and runs, and hides again. The valley is very small, and the one hunting her is very patient."
+    },
+    {
+      "topic": "ismark",
+      "title": "Ismark",
+      "portrait": "ismark",
+      "when": "",
+      "text": "Ismark keeps his father's chair and his father's fear of the castle. He does what a burgomaster can, which in Barovia is not much."
+    },
+    {
+      "topic": "death_house",
+      "title": "The House on the Corner",
+      "portrait": "rose",
+      "when": "flag.death_house_children_at_rest",
+      "text": "At least the old house at the village's edge is quiet. Rose and Thorn sleep, whatever else becomes of Barovia."
+    },
+    {
+      "topic": "death_house",
+      "title": "The House on the Corner",
+      "when": "flag.death_house_refused",
+      "text": "The old house at the village's edge has learned to wait. Its door still swings open for strangers on foggy nights."
+    },
+    {
+      "topic": "vallaki",
+      "title": "Vallaki",
+      "portrait": "baron_vargas",
+      "when": "flag.vallaki_backed == baron",
+      "text": "Vallaki holds a festival every week, and every week the castle's shadow is exactly as long."
+    },
+    {
+      "topic": "vallaki",
+      "title": "Vallaki",
+      "portrait": "lady_wachter",
+      "when": "flag.vallaki_backed == wachter",
+      "text": "Lady Wachter rules Vallaki in the castle's name. Her neighbours learn to smile when she passes, and to say nothing at all."
+    },
+    {
+      "topic": "vallaki",
+      "title": "Vallaki",
+      "portrait": "father_lucian",
+      "when": "flag.vallaki_backed == neither",
+      "text": "Vallaki's council meets by candlelight and bars the gates at dusk. It is the best anyone can do in that castle's shadow."
+    },
+    {
+      "topic": "vallaki",
+      "title": "Vallaki",
+      "when": "visited:vallaki",
+      "text": "Vallaki keeps its palisade and its nervous festivals, and tells itself it is safe."
+    },
+    {
+      "topic": "wine",
+      "title": "The Wizard of Wines",
+      "portrait": "davian_martikov",
+      "when": "flag.winery_wine_flows",
+      "text": "Wine still flows from the Martikov vineyard, and the castle takes its share. The family's ravens watch, and remember, and wait."
+    },
+    {
+      "topic": "wine",
+      "title": "The Keepers of the Feather",
+      "portrait": "urwin_martikov",
+      "when": "flag.keepers_allied or flag.ilinca_vouched",
+      "text": "The Keepers of the Feather keep their secret and their watch. They have waited a long time already; they can wait longer."
+    },
+    {
+      "topic": "krezk",
+      "title": "Krezk",
+      "portrait": "vasilka",
+      "when": "flag.abbot_fate == wedding",
+      "text": "The Abbot's bride stands among the castle's servants now, still waiting to be loved."
+    },
+    {
+      "topic": "krezk",
+      "title": "Krezk",
+      "portrait": "dmitri_krezkov",
+      "when": "visited:krezk",
+      "text": "Krezk keeps its wall high and its gate barred. Its people pray to the White Sun and try not to look up at the castle."
+    },
+    {
+      "topic": "ilya",
+      "title": "Ilya Krezkov",
+      "portrait": "ilya_krezkov",
+      "when": "flag.ilya_fate == healed or flag.ilya_fate == frail",
+      "text": "Ilya Krezkov lives, which in Krezk counts as a miracle. His mother keeps him indoors after dark, always."
+    },
+    {
+      "topic": "order",
+      "title": "Argynvostholt",
+      "portrait": "argynvost",
+      "when": "flag.order_fate == rest",
+      "text": "The beacon of Argynvostholt still burns on its hill, the one light in Barovia the castle cannot put out."
+    },
+    {
+      "topic": "order",
+      "title": "Argynvostholt",
+      "portrait": "order_knight",
+      "when": "flag.order_fate == ride",
+      "text": "The knights who rode on the castle did not ride back. Their armour stands in its halls now, polished, like trophies."
+    },
+    {
+      "topic": "order",
+      "title": "Argynvostholt",
+      "portrait": "vladimir_horngaard",
+      "when": "flag.order_fate == grudge",
+      "text": "Vladimir's knights keep their grudge and their watch on the castle road. Their hate has outlived everything else about them."
+    },
+    {
+      "topic": "amber",
+      "title": "The Amber Temple",
+      "portrait": "exethanter",
+      "when": "flag.amber_temple_sealed",
+      "text": "The Amber Temple stays sealed. Whatever else the castle wants, it will not find a second bargain there."
+    },
+    {
+      "topic": "dark_gifts",
+      "title": "The Gifts You Took",
+      "portrait": "vestige_amber",
+      "when": "flag.dark_gifts_taken >= 1",
+      "text": "The gifts you took from the amber are patient. In Barovia, they have all the time in the world."
+    },
+    {
+      "topic": "kasimir",
+      "title": "Kasimir Velikov",
+      "portrait": "kasimir_velikov",
+      "when": "flag.kasimir_bargain == made",
+      "text": "Kasimir bought his sister's life with his years, and Patrina walked up to the castle anyway. He spends his last year at its gate."
+    },
+    {
+      "topic": "kasimir",
+      "title": "Kasimir Velikov",
+      "portrait": "kasimir_velikov",
+      "when": "flag.kasimir_at_peace",
+      "text": "Kasimir made his peace with his sister's ghost. With the mists still closed, it is the only peace he finds."
+    },
+    {
+      "topic": "van_richten",
+      "title": "Rudolph van Richten",
+      "portrait": "rictavio",
+      "when": "flag.van_richten_reunited",
+      "text": "Van Richten and Ezmerelda keep hunting in the valley, together now. They are very good at it, and it is not enough."
+    },
+    {
+      "topic": "van_richten",
+      "title": "Rudolph van Richten",
+      "portrait": "rictavio",
+      "when": "flag.rictavio_unmasked or flag.van_richten_met_at_tower",
+      "text": "Van Richten goes back to his tower on the lake and his long list of the dead. Your names are not on it yet."
+    },
+    {
+      "topic": "ezmerelda",
+      "title": "Ezmerelda d'Avenir",
+      "portrait": "ezmerelda",
+      "when": "flag.ezmerelda_met and not flag.van_richten_reunited",
+      "text": "Ezmerelda keeps hunting alone, one wagon against a whole valley. The Vistani say she is either very brave or very stubborn."
+    },
+    {
+      "topic": "mordenkainen",
+      "title": "Mordenkainen",
+      "portrait": "mordenkainen",
+      "when": "flag.mordenkainen_restored",
+      "text": "Mordenkainen leaves his mountain to study the mists from inside. He says he will find the door. He has said that before."
+    },
+    {
+      "topic": "pack",
+      "title": "The Werewolves",
+      "portrait": "emil_toranescu",
+      "when": "flag.wolf_pack_leader == emil",
+      "text": "Emil's pack refuses the castle's call, and the hills are a little safer for it. Every full moon, the castle asks again."
+    },
+    {
+      "topic": "pack",
+      "title": "The Werewolves",
+      "portrait": "kiril_stoyanovich",
+      "when": "flag.wolf_pack_leader == kiril",
+      "text": "Kiril's pack hunts for the castle, and hunts well. The roads are emptier every year."
+    },
+    {
+      "topic": "berez",
+      "title": "Berez",
+      "portrait": "baba_lysaga",
+      "when": "flag.lysaga_fate == bargained or flag.lysaga_fate == broken",
+      "text": "Baba Lysaga still squats in the ruins of Berez, waiting for a word of thanks from the child she raised. It never comes."
+    },
+    {
+      "topic": "bonegrinder",
+      "title": "Old Bonegrinder",
+      "portrait": "morgantha",
+      "when": "flag.bonegrinder_fate == bargain or flag.bonegrinder_fate == abandoned or flag.bonegrinder_fate == bella",
+      "text": "The mill on the hill keeps baking. In a valley with no way out, business is always good."
+    }
+  ]
+}

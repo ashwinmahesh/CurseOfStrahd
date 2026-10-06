@@ -1,0 +1,227 @@
+{
+  "id": "visits",
+  "summary": "Strahd's presence across the campaign (ADR 0014): he watches from a ridge, writes, comes to a camp at night, tests the party on the road and leaves, comes for Ireena where she shelters, and sends his black carriage with a dinner invitation. Read by story/strahd_presence.gd; design in docs/regions/strahd_presence.md.",
+  "gap_hours": 12,
+  "quiet_regions": [
+    "castle_ravenloft",
+    "death_house",
+    "into_the_mists"
+  ],
+  "quiet_at": [
+    "vallaki_st_andrals",
+    "village_church",
+    "krezk_pool_of_the_white_sun",
+    "abbey_of_st_markovia_shrine",
+    "tser_pool_eva_tent"
+  ],
+  "visits": [
+    {
+      "id": "watcher",
+      "summary": "On the first journey after the burial, a rider in black watches the party from a ridge above the road and is gone in a lift of bats.",
+      "trigger": {
+        "on": [
+          "travel"
+        ]
+      },
+      "when": "flag.burgomaster_buried or flag.strahd_met",
+      "once": true,
+      "dialogue": "strahd/visits:watcher"
+    },
+    {
+      "id": "first_letter",
+      "summary": "From the third day on, a Vistani rider hands over Strahd's first letter: a host's welcome that knows too much.",
+      "trigger": {
+        "on": [
+          "arrive"
+        ],
+        "outdoors": true,
+        "days": 2
+      },
+      "when": "flag.strahd_watcher_seen",
+      "once": true,
+      "dialogue": "strahd/letters:first"
+    },
+    {
+      "id": "night_visit",
+      "summary": "From the fourth day on, at a Long Rest through the night, the one on watch wakes to find him standing beyond the firelight.",
+      "trigger": {
+        "on": [
+          "rest"
+        ],
+        "night": true,
+        "days": 3
+      },
+      "when": "flag.strahd_watcher_seen",
+      "once": true,
+      "dialogue": "strahd/visits:night"
+    },
+    {
+      "id": "test_of_strength",
+      "summary": "On a night road, once the party is level 7, he steps out of the fog with wolves to see what they can do, and leaves after a few rounds or when hurt.",
+      "trigger": {
+        "on": [
+          "travel"
+        ],
+        "night": true
+      },
+      "when": "flag.strahd_watcher_seen and level >= 7",
+      "once": true,
+      "dialogue": "strahd/visits:test",
+      "then": [
+        {
+          "when": "flag.strahd_test == \"fought\"",
+          "encounter": {
+            "id": "strahd_test_of_strength",
+            "text": "Strahd lets the wolves go first, and watches how you meet them.",
+            "monsters": [
+              {
+                "monster": "strahd_von_zarovich"
+              },
+              {
+                "monster": "dire_wolf"
+              },
+              {
+                "monster": "dire_wolf"
+              }
+            ],
+            "withdraw": {
+              "who": "strahd_von_zarovich",
+              "at_hp_below": 100,
+              "after_rounds": 3,
+              "flag": "strahd_withdrew"
+            },
+            "after": "strahd/visits:test_after"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ireena_at_the_inn",
+      "summary": "Ireena left at the Blue Water Inn: on a night in Vallaki from the fourth day on, he is at her window and she is going to him.",
+      "trigger": {
+        "on": [
+          "arrive",
+          "rest"
+        ],
+        "at": [
+          "vallaki",
+          "vallaki_blue_water_inn"
+        ],
+        "night": true,
+        "days": 3
+      },
+      "when": "flag.strahd_watcher_seen and flag.ireena_sanctuary == \"inn\" and not guest:ireena",
+      "once": true,
+      "urgent": true,
+      "dialogue": "strahd/ireena:inn",
+      "then": [
+        {
+          "when": "flag.strahd_window == \"fight\"",
+          "encounter": {
+            "id": "strahd_at_the_window",
+            "text": "Strahd steps down from the sill as if onto a stair, and the bats come in behind him.",
+            "monsters": [
+              {
+                "monster": "strahd_von_zarovich"
+              },
+              {
+                "monster": "swarm_of_bats"
+              }
+            ],
+            "withdraw": {
+              "who": "strahd_von_zarovich",
+              "at_hp_below": 120,
+              "after_rounds": 2,
+              "flag": "strahd_withdrew"
+            },
+            "after": "strahd/ireena:after_fight"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ireena_in_krezk",
+      "summary": "Ireena left with the Krezkovs: on a night in Krezk from the fourth day on, the wall has not kept him out of her window.",
+      "trigger": {
+        "on": [
+          "arrive",
+          "rest"
+        ],
+        "at": [
+          "krezk",
+          "krezk_burgomaster_house"
+        ],
+        "night": true,
+        "days": 3
+      },
+      "when": "flag.strahd_watcher_seen and flag.ireena_in_krezk and not guest:ireena",
+      "once": true,
+      "urgent": true,
+      "dialogue": "strahd/ireena:krezk",
+      "then": [
+        {
+          "when": "flag.strahd_window == \"fight\"",
+          "encounter": {
+            "id": "strahd_at_the_window",
+            "text": "Strahd steps down from the sill as if onto a stair, and the bats come in behind him.",
+            "monsters": [
+              {
+                "monster": "strahd_von_zarovich"
+              },
+              {
+                "monster": "swarm_of_bats"
+              }
+            ],
+            "withdraw": {
+              "who": "strahd_von_zarovich",
+              "at_hp_below": 120,
+              "after_rounds": 2,
+              "flag": "strahd_withdrew"
+            },
+            "after": "strahd/ireena:after_fight"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ireena_at_the_church",
+      "summary": "Ireena in sanctuary at St. Andral's: on a night in Vallaki the bell tolls by itself and he calls her from the churchyard gate. Holy ground holds.",
+      "trigger": {
+        "on": [
+          "arrive",
+          "rest"
+        ],
+        "at": [
+          "vallaki",
+          "vallaki_st_andrals"
+        ],
+        "night": true,
+        "days": 3
+      },
+      "when": "flag.strahd_watcher_seen and flag.ireena_sanctuary == \"st_andrals\" and not guest:ireena",
+      "once": true,
+      "dialogue": "strahd/ireena:church"
+    },
+    {
+      "id": "invitation",
+      "summary": "Once the party is level 9, his driverless black carriage waits on the road with a dinner invitation. Getting in takes the party to the castle's front door; refused, it comes back (up to three times).",
+      "trigger": {
+        "on": [
+          "arrive"
+        ],
+        "outdoors": true
+      },
+      "when": "flag.strahd_watcher_seen and level >= 9 and flag.strahd_invitation != \"accepted\"",
+      "cooldown_hours": 48,
+      "max": 3,
+      "urgent": true,
+      "dialogue": "strahd/letters:invitation",
+      "then": [
+        {
+          "when": "flag.strahd_invitation == \"accepted\"",
+          "go": "castle_ravenloft_gates:default"
+        }
+      ]
+    }
+  ]
+}

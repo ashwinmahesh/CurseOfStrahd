@@ -25,6 +25,8 @@ FOLDERS = {
     "encounters": "encounter", "locations": "location", "npcs": "npc", "quests": "quest",
     "tarokka": {"cards": "tarokka_cards", "outcomes": "tarokka_outcomes"}, "travel": "travel",
     "random_encounters": "random_table", "dark_gifts": "dark_gift",
+    "endings": "ending",
+    "strahd": {"visits": "strahd_visits"},
 }
 
 TYPES = {
@@ -266,7 +268,7 @@ def semantic_checks(data):
 
 
 # Regions later phases build (plan §6). References into them are pending, not errors.
-LATER_REGIONS = {"castle_ravenloft", "ravenloft"}  # regions 5-10 are built (Phase 5); the castle is Phase 6
+LATER_REGIONS: set = set()  # every region is built (the castle in Phase 6, ADR 0014)
 
 
 def campaign_checks(data, errors, pending):
@@ -274,10 +276,12 @@ def campaign_checks(data, errors, pending):
     locations, npcs, monsters, items = data["locations"], data["npcs"], data["monsters"], data["items"]
 
     spot_places = {pl for loc in locations.values() for pl in loc.get("treasure_spots", {})}
+    final_rooms = {en["final_battle"] for loc in locations.values() for en in loc.get("encounters", [])
+                   if en.get("final_battle")} | {"castle_ravenloft"}  # mists: he roams the enemy rooms
 
     def place_ok(ref, region, where, kind="place"):
         loc = ref.split(":")[0]
-        if loc in locations or ref in spot_places:
+        if loc in locations or ref in spot_places or (kind == "room" and ref in final_rooms):
             return
         if region in LATER_REGIONS or any(loc.startswith(r) for r in LATER_REGIONS):
             pending.append(f"{where}: {kind} '{ref}' (region {region}, a later phase)")
@@ -398,7 +402,7 @@ def treasure_checks(data, parsed, errors, pending):
             if gid not in data.get("dark_gifts", {}):
                 errors.append(f"narrative/{where}: unknown dark gift '{gid}'")
     for place, region in sorted(places.items()):
-        if region == "castle_ravenloft" or place in spot_of:
+        if place in spot_of:
             continue
         msg = f"data/tarokka/outcomes.json: place '{place}' (region {region}) has no treasure spot in any location"
         (pending if region in LATER_REGIONS else errors).append(msg)
@@ -410,7 +414,7 @@ def treasure_checks(data, parsed, errors, pending):
                 joins.add(t.split()[1])
     for cid, o in out.get("ally", {}).items():
         npc = o.get("npc", "")
-        if npc == "" or o["region"] == "castle_ravenloft":
+        if npc == "":
             continue
         n = data["npcs"].get(npc)
         later = o["region"] in LATER_REGIONS
@@ -420,6 +424,74 @@ def treasure_checks(data, parsed, errors, pending):
             (pending if later else errors).append(f"npcs/{npc}: the {cid} card's ally needs guest: true and a guest_build (or monster)")
         if npc not in joins:
             (pending if later else errors).append(f"data/tarokka/outcomes.json ally.{cid}: no conversation says `join {npc}`")
+
+
+def castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs):
+    """Final battles, endings and Strahd's visits (ADR 0014)."""
+    out = data.get("tarokka", {}).get("outcomes", {})
+    rooms = {o["room"] for o in out.get("enemy", {}).values()} - {"castle_ravenloft"}
+    finals = {}
+    for lid, loc in data["locations"].items():
+        for en in loc.get("encounters", []):
+            room = en.get("final_battle")
+            w = f"locations/{lid}: encounter {en['id']}"
+            if en.get("withdraw"):
+                if en["withdraw"].get("flag"):
+                    flags_set.setdefault(en["withdraw"]["flag"], []).append(f"locations/{lid}")
+                if en["withdraw"].get("who") not in {m["monster"] for m in en["monsters"]}:
+                    errors.append(f"{w}: withdraw names '{en['withdraw'].get('who')}', who isn't in the fight")
+            if not room:
+                continue
+            finals.setdefault(room, []).append(w)
+            if room not in rooms:
+                errors.append(f"{w}: final_battle '{room}' isn't an enemy room in data/tarokka/outcomes.json")
+            if not en.get("lair"):
+                errors.append(f"{w}: a final battle needs lair: true")
+            if "strahd_von_zarovich" not in {m["monster"] for m in en["monsters"]}:
+                errors.append(f"{w}: a final battle needs Strahd (strahd_von_zarovich)")
+    for room in sorted(rooms):
+        n = len(finals.get(room, []))
+        if n != 1:
+            errors.append(f"data/tarokka/outcomes.json: enemy room '{room}' has {n} final battle encounters (needs exactly 1)"
+                          + (f": {', '.join(finals[room])}" if n else ""))
+
+    endings = data.get("endings", {})
+    if len(endings) < 3:
+        errors.append(f"data/endings: {len(endings)} endings (the Phase 6 exit needs at least 3)")
+    for eid, e in endings.items():
+        w = f"endings/{eid}"
+        cond(e.get("when", ""), w)
+        dialogue_refs.append((e["narration"], w))
+        for i, sl in enumerate(e.get("epilogue", [])):
+            cond(sl.get("when", ""), f"{w} epilogue {i}")
+
+    locations, monsters = data["locations"], data["monsters"]
+    for v in data.get("strahd", {}).get("visits", {}).get("visits", []):
+        w = f"strahd/visits.json {v['id']}"
+        cond(v.get("when", ""), w)
+        if v.get("dialogue"):
+            dialogue_refs.append((v["dialogue"], w))
+        for step in v.get("then", []):
+            cond(step.get("when", ""), w)
+            enc = step.get("encounter")
+            if enc:
+                ids = {m["monster"] for m in enc.get("monsters", [])}
+                for mid in ids - set(monsters):
+                    errors.append(f"{w}: unknown monster '{mid}'")
+                wd = enc.get("withdraw")
+                if wd:
+                    if wd.get("who") not in ids:
+                        errors.append(f"{w}: withdraw names '{wd.get('who')}', who isn't in the fight")
+                    if wd.get("flag"):
+                        flags_set.setdefault(wd["flag"], []).append(w)
+            if step.get("go"):
+                lid, _, spawn = step["go"].partition(":")
+                if lid not in locations:
+                    errors.append(f"{w}: go to unknown location '{lid}'")
+                elif spawn and spawn not in locations[lid].get("spawns", {}):
+                    errors.append(f"{w}: {lid} has no spawn '{spawn}'")
+            if step.get("dialogue"):
+                dialogue_refs.append((step["dialogue"], w))
 
 
 def story_checks(data, errors, need):
@@ -588,6 +660,7 @@ def story_checks(data, errors, need):
         for fid, wh in p["flags_set"].items():
             flags_set.setdefault(fid, []).extend(wh)
     treasure_checks(data, parsed, errors, pending_list)
+    castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs)
     for ref, w in dialogue_refs:
         fkey, _, node = ref.rpartition(":")
         if fkey not in parsed:

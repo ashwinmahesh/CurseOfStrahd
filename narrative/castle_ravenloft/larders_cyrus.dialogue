@@ -1,0 +1,212 @@
+# Cyrus Belview, the castle's cook (docs/voice/cyrus_belview.md), in the kitchen of the Larders of Ill Omen.
+# start: he speaks first when the party comes near (approach 5). help: getting Nadia out; no menu depends on one
+# spent check (family news, gold, Persuasion, Intimidation, and Nadia can always hide or run instead).
+
+~ start
+if flag.larders_cyrus_hostile
+-> cowering
+endif
+if not flag.larders_cyrus_met
+-> first
+endif
+if flag.larders_nadia_fate == "escaped" and not flag.larders_cyrus_cask_told
+-> barrel_gone
+endif
+if flag.larders_cyrus_box_opened and not flag.larders_cyrus_box_noticed
+-> box
+endif
+if flag.larders_nadia_fate == "sent_alone"
+Cyrus Belview [sad]: The crying girl went up the stairs. The Master was very pleased. Cyrus is not pleased. Cyrus doesn't know why.
+else
+Cyrus Belview: Back again! Wipe your feet. No, don't. Nobody wipes their feet down here. Why start now?
+endif
+-> menu
+
+~ first
+set larders_cyrus_met
+set larders_guests_heard
+quest the_cooks_guests heard
+Narrator: A big stooped man stirs a cauldron with a paddle. He has a boar's tusk on one side of his mouth, one long hare's ear, and a goat's hoof that clicks on the flagstones.
+Cyrus Belview [smile]: Guests! Nobody told Cyrus there were guests up here. Sit, sit. Not that stool. That stool bites.
+Cyrus Belview: Cyrus Belview, cook to the Master. Thirty years at this fire. Or three hundred. The fire never says.
+interject tag:curious: What's in the pot?
+Cyrus Belview: Soup, for the guests downstairs. The guests in the cells. They must be kept fresh for the Master's table.
+-> menu
+
+~ menu
+* Who are you, Cyrus? -> who
+* [if (flag.belview_family_met or flag.clovin_met) and not flag.larders_cyrus_family_news] We've met your family, at the abbey above Krezk. -> family
+* [if flag.abbot_fate and flag.larders_cyrus_family_news and not flag.larders_father_told] We have news of the Abbot. -> father
+* [if flag.larders_guests_heard] Who are the guests downstairs? -> guests
+* [if not flag.larders_niche_told] What's kept in the wine cellar? -> cellar
+* [if not flag.larders_lamp_told] Where does your Master eat? -> table
+* [if flag.larders_nadia_met and not flag.larders_cyrus_helps and (not flag.larders_nadia_fate or flag.larders_nadia_fate == "waits")] The girl in the cells. Help us get her out. -> help
+* [if flag.larders_cyrus_helps and not flag.larders_nadia_fate] Tell us the plan for the girl again. -> plan
+* Do you know what your Master is? -> master
+* (Draw steel on him.) -> attack
+* We'll leave you to your cooking. -> bye
+
+~ who
+Cyrus Belview: Cyrus was a Belview, up at the abbey. Father made Cyrus. Father makes all of us, a little at a time.
+Cyrus Belview: Then Father sent Cyrus here, a present for the Master's wedding. There wasn't a wedding in the end. Cyrus stayed anyway. Somebody has to cook.
+interject species:dwarf: A present. Like a cheese.
+Cyrus Belview [smile]: Like a very good cheese.
+-> menu
+
+~ family
+set larders_cyrus_family_news
+attitude cyrus_belview friendly
+Cyrus Belview [smile]: The Belviews! Is Clovin still carrying everything? He carries everything. Does he still drink?
+* He drinks. -> family_drinks
+* He sends his love. -> family_love
+
+~ family_drinks
+Cyrus Belview: Good. Good! Tell him Cyrus has a whole cellar. Tell him Cyrus is the lucky one.
+-> family_gift
+
+~ family_love
+Cyrus Belview [sad]: He never sent love in his life. You are a kind liar. Cyrus likes kind liars.
+-> family_gift
+
+~ family_gift
+Narrator: He ladles soup into a crock, seals it with wax, and presses it on you along with a loaf. It smells, against all the odds, delicious.
+give ration 3
+-> menu
+
+~ father
+set larders_father_told
+if flag.abbot_fate == "wedding"
+Cyrus Belview [smile]: A bride came up the mountain? Father's bride? Then Father is happy, and Cyrus will bake a cake. A tall one.
+elif flag.abbot_fate == "repentant"
+Cyrus Belview [afraid]: Father walked somewhere to be judged? Father doesn't walk. Father doesn't get judged. Father does the judging.
+Cyrus Belview: If he is sorry now, maybe he is sorry about Cyrus too. That would be nice. Cyrus would like that.
+elif flag.abbot_fate == "broken"
+Cyrus Belview [sad]: Father sits and says nothing? Father always says something. Usually about improvements.
+else
+Cyrus Belview [sad]: Father is dead. Then nobody will improve the Belviews any more.
+Cyrus Belview: Cyrus doesn't know if that is good news. Cyrus will think about it while the bread rises.
+endif
+-> menu
+
+~ guests
+Cyrus Belview: The girl with the lamp-soot hands. She cries. Cyrus gives her extra bread, so she won't be ripe for the table yet.
+Cyrus Belview: The holy brother in the other row. He never eats Cyrus's soup. Not once. The Master says leave his door alone.
+set larders_anatol_warned
+if flag.doru_freed
+Cyrus Belview: And the priest's boy, who came home with nothing. Cyrus is not to feed him at all. The Master is cross with him.
+endif
+interject tag:blunt: Ripe for the table.
+Cyrus Belview: Everything is for the table, in the end. That's what a kitchen is.
+-> menu
+
+~ cellar
+set larders_niche_told
+Cyrus Belview: Wine, mostly. And the wine man. He sold the Master vinegar in good bottles.
+Cyrus Belview [smile]: The Master laughed and laughed. Then Cyrus laid the bricks. Last rack at the very back. Cyrus is good with bricks.
+if flag.winery_wine_flows
+Cyrus Belview: The new wine comes up on a cart again now, with ravens on the casks. Good wine. Nobody bricks up a Martikov.
+endif
+-> menu
+
+~ table
+set larders_lamp_told
+Cyrus Belview: Down below, past the guests. The Master keeps a table for special company. It is all made of his old enemies. Very sturdy.
+Cyrus Belview: When the lamp over it burns green, never sit. The lamp drinks from the furnace. Turn the furnace's water wheel and the lamp goes to sleep.
+interject class:wizard: A furnace that feeds a lamp. Someone built a machine down there.
+Cyrus Belview: Somebody built everything. Then they went in the soup.
+-> menu
+
+~ master
+Cyrus Belview: The Master is very old, and very tired, and very particular about gravy.
+if flag.strahd_met
+Cyrus Belview: You've met him? Then you know. He looks at you as if you were already on a plate. It's a compliment.
+endif
+Cyrus Belview [sad]: He's never once thanked Cyrus for a meal. But he's never once sent one back.
+-> menu
+
+~ help
+Cyrus Belview [afraid]: Out? Guests don't go out. Guests go down. To the table.
+Cyrus Belview: She does cry a great deal, though. It gets in the bread.
+-> help_menu
+
+~ help_menu
+* [if flag.larders_cyrus_family_news] Clovin would help her. You know he would. -> help_family
+* [if not flag.larders_cyrus_wary and gold >= 30] (Hold out 30 gold.) Shiny, isn't it? -> help_paid
+* [if flag.larders_cyrus_wary and gold >= 80] (Hold out 80 gold.) Is this enough to forget her? -> help_paid_dear
+* [Persuasion DC 14] Nobody upstairs counts the guests. One fewer won't spoil anything. -> help_persuaded | help_wary
+* [Intimidation DC 13] Help her, or you'll be in your own pot. -> help_scared | help_alarm
+* Never mind. -> menu
+
+~ help_family
+Cyrus Belview [sad]: Clovin would. Clovin carries everything, even things he shouldn't.
+-> help_yes
+
+~ help_paid
+gold -30
+Cyrus Belview [smile]: Shiny. Cyrus collects shiny. Very well.
+-> help_yes
+
+~ help_paid_dear
+gold -80
+Cyrus Belview: Cyrus has forgotten her already. Who? Exactly.
+-> help_yes
+
+~ help_persuaded
+Cyrus Belview: One fewer. Nobody counts. That's true, nobody counts. The Master never counts the spoons either.
+-> help_yes
+
+~ help_wary
+set larders_cyrus_wary
+Narrator: His ear goes flat against his head, and he looks at you the way a cook looks at a fishmonger's thumb on the scale.
+Cyrus Belview: Words are cheap. Cyrus knows cheap. It will cost more than words now.
+-> help_menu
+
+~ help_scared
+Cyrus Belview [afraid]: Not the pot! Cyrus will help. Cyrus always helps. Please put that down.
+-> help_yes
+
+~ help_alarm
+set larders_cyrus_hostile
+attitude cyrus_belview hostile
+Narrator: He backs into the dresser, opens his mouth, and screams for the watch in a voice like a kettle left on the fire.
+if not flag.larders_watch_beaten
+combat larders_watch_alarm
+endif
+Narrator: Nobody comes. The watch is already dead, properly this time. He keeps screaming anyway.
+-> END
+
+~ help_yes
+set larders_cyrus_helps
+attitude cyrus_belview friendly
+-> plan
+
+~ plan
+Cyrus Belview: At first light Cyrus takes the scraps down the cliff path for the crows, in the big barrel. A girl fits in a barrel. Cyrus has checked.
+Cyrus Belview: Bring her to the kitchen with her chain off. She goes down with the scraps. At the bottom, the road. After that, legs.
+-> menu
+
+~ attack
+Cyrus Belview [afraid]: No! Not in the kitchen! Never in the kitchen!
+combat larders_cyrus_fight
+
+~ bye
+Cyrus Belview: Mind the stairs down. They eat people. Only sometimes.
+-> END
+
+~ barrel_gone
+set larders_cyrus_cask_told
+Cyrus Belview: The scrap barrel went down the cliff path this morning. Very heavy. Cyrus didn't look inside. Cyrus never looks inside.
+Cyrus Belview [smile]: The crows were very disappointed.
+-> menu
+
+~ box
+set larders_cyrus_box_noticed
+Cyrus Belview [sad]: Someone has been in Cyrus's box. The buttons were counted. Cyrus counts them every night.
+interject name:tamsin_tealeaf: ...They're very nice buttons.
+Cyrus Belview: They are. That's why Cyrus counts them.
+-> menu
+
+~ cowering
+Cyrus Belview [afraid]: Go away. Go away! Cyrus told the Master nothing. Nothing!
+* Leave him to it. -> END
+* (Draw steel on him.) -> attack

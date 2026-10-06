@@ -1,0 +1,233 @@
+# Narrator: Castle Ravenloft, the catacombs part (K84 to K88; docs/regions/castle_ravenloft_catacombs.md).
+# Second person, present tense, one or two sentences (docs/voice/narrator.md). The coffin, Sergei's sarcophagus and
+# the basin open conversations instead of examine: lines.
+
+# ---------------------------------------------------------------- The maps
+
+~ enter:castle_ravenloft_catacombs
+| The stair lets you out into cold so still that your breath hangs where you leave it. Aisles of iron gates run away into the dark, each with a name over it.
+| [flag.strahd_in_coffin] A thin grey mist lies along the floor of the aisles, all of it drifting one way: toward the middle, and down.
+| [night] Somewhere along the rows an iron gate creaks open, and does not creak shut again.
+cooldown 30
+
+~ enter:castle_ravenloft_catacombs_tombs
+| Below the crypts the stone changes: paler, older, cut with care. Somebody loved the people buried down here.
+| [flag.strahd_in_coffin] The candles in the old tombs are all leaning the same way, toward the stair, as if listening for something under them.
+cooldown 30
+
+~ enter:castle_ravenloft_catacombs_strahd
+| The black stair goes down a long way, and the cold at the bottom is a different cold, older, with a smell of turned earth in it.
+| [flag.strahd_in_coffin] At the bottom of the stair the mist has gathered and gone, and the air tastes of iron. Something here is lying very still.
+| [day and not flag.strahd_in_coffin] At the bottom of the stair the silence has a shape, the way a house is quiet when someone in it is asleep.
+cooldown 20
+
+~ strahd:fled_to_coffin
+| His body comes apart into grey mist that pours away across the floor, through the cracks, and down. A vampire beaten goes home to its coffin. His lies under the castle, at the bottom of everything.
+| The mist that was Strahd slides away like water finding a drain. Wherever his coffin is, deep under the castle, he is going there now, and he will lie helpless in it for a while.
+cooldown 0
+
+~ rest:long:castle_ravenloft_catacombs
+| You sleep in shifts with your backs to a crypt wall. Twice in the night a gate along the row opens and shuts, and nobody goes to see why.
+cooldown 0
+
+# ---------------------------------------------------------------- The catacombs
+
+~ enter:cat_upper_gallery
+| A long gallery runs the width of the crypts, its ceiling carved with mourners whose faces have worn away to smooth stone.
+once
+
+~ enter:cat_lower_gallery
+| The lower gallery is older than the rest. At its west end a narrower stair goes down again, into stone the colour of bone.
+once
+
+~ enter:cat_mad_dog_crypt
+| Torn banners hang on the walls of a soldier's crypt, and a great sarcophagus sits under them like a general at a war table.
+| [flag.cat_mad_dog_blade_known] Now that you know where the blade sleeps in the floor, the whole crypt looks like a trap with a grave in it.
+once
+
+~ enter:cat_jester_crypt
+| A small crypt for a small man. The plaster on its walls was painted with juggling balls once, in colours now the shade of old bruises.
+once
+
+~ enter:cat_conjurer_crypt
+| The walls of this crypt are scratched with sigils from floor to ceiling, as if someone wanted to be very sure about something.
+once
+
+~ enter:cat_stewards_crypt
+| Rows of plain crypts for the people who ran the house: stewards, cooks, a master of horse. Their names are cut as neatly as their masters' were.
+once
+
+~ enter:cat_hidden_ossuary
+| Behind the wall, bones are stacked to the ceiling in careful patterns, skulls in rows, long bones in bundles. Somebody had a great deal of time and nobody to stop them.
+once
+
+~ enter:cat_hall_of_names
+| A round hall where the aisles meet. Names are cut into every inch of the walls, hundreds of them, and in its west side a stair of black stone goes down.
+| [flag.strahd_in_coffin] The mist on the floor runs to the black stair and pours down it, slow as honey.
+cooldown 20
+
+~ enter:cat_beucephalus_crypt
+| This crypt has no gate, only a wide arch, and the floor is scored with hoofmarks cut into the stone. It smells of smoke and a stable.
+cooldown 20
+
+~ enter:cat_gargoyle_tomb
+| A tall crypt with a stone slab at its heart, and on the slab a big man carved in armour. Winged things of stone crouch at its corners, facing out.
+| [flag.cat_gargoyles_slain] Broken stone lies around the slab in wings and claws. The champion sleeps on without his watchers.
+cooldown 20
+
+~ enter:cat_sleepers_crypt
+| Open coffins stand in a row along the wall, and the earth in them is fresh.
+| [flag.cat_sleepers_slain] The coffins are only boxes of earth now. You close their lids anyway.
+cooldown 20
+
+# ---------------------------------------------------------------- The old tombs
+
+~ enter:cat_tombs_vestibule
+| A small square room at the foot of the stair, with three doors: a pale one carved with a sunburst, and two of bronze.
+once
+
+~ enter:castle_ravenloft_sergeis_tomb
+| A white tomb, cleaner than anything else under the castle. Candles burn here that nobody you can see has lit.
+| [flag.cat_sergei_rites_said] The candles burn straighter than they did. The room feels less like a grave and more like a chapel.
+cooldown 20
+
+~ enter:cat_guardians_hall
+| A long hall lined with stone knights on plinths, swords grounded, visors down, facing each other across the aisle.
+| [flag.cat_guardians_stilled] Three of the plinths are empty now, and their knights lie in the aisle in pieces that were never stone.
+cooldown 20
+
+~ enter:castle_ravenloft_tomb_of_barov_and_ravenovia
+| A broad vault, and in the middle of it a dais with two sarcophagi side by side: a king and a queen, carved holding hands across the gap between them.
+cooldown 20
+
+# ---------------------------------------------------------------- Strahd's tomb
+
+~ enter:cat_black_stair
+| The last steps of the black stair are worn into hollows. Not by many feet. By one pair, over a very long time.
+once
+
+~ enter:castle_ravenloft_strahds_tomb
+| A square vault, green fire in iron braziers, and on a stepped dais in the middle a plain wooden coffin on trestles. It is the humblest thing in the whole castle.
+| [flag.cat_keepers_defeated] The tomb is quiet now. The braziers burn green and cold, and the coffin waits on its dais.
+cooldown 10
+
+# ---------------------------------------------------------------- Things to look at
+
+~ examine:cat_mourners_frieze
+| Stone mourners walk in a line along the wall, heads bowed, every face worn smooth. One near the end has been recarved: it is weeping.
+once
+
+~ examine:cat_mad_dog_banners
+| The banners of an army nobody alive remembers, torn by battle and then by moths. Under them the name: the general his own men called the Mad Dog.
+once
+
+~ examine:cat_jester_crypt_lid
+| A sarcophagus barely long enough for a child, for the jester of the house. Someone has left a small brass winding key on the lid.
+| [class:rogue] {name} picks up the winding key, turns it over, and puts it back exactly where it was. Some things you leave.
+once
+
+~ examine:cat_conjurer_bier
+| A thin man in a conjurer's robes lies on a draped bier, one hand curled around a plain wooden wand. It comes away from his fingers without a fight, warm as if he had just put it down.
+once
+
+~ examine:cat_conjurer_sigils
+| The sigils run round the walls in one unbroken line, and every one of them points at the iron reliquary in the corner.
+| [class:wizard] {name} follows the sigils round the room: a lock spell, written by a nervous man, keyed to something he could hold in one hand.
+once
+
+~ examine:cat_steward_crypt_c
+| The master of horse. His crypt is the only one with a fresh flower on it, black, and still soft.
+once
+
+~ examine:cat_ossuary_bones
+| Skulls in rows, long bones in bundles, all laid with a mason's patience. Nobody visits. Nobody was ever meant to.
+once
+
+~ examine:cat_names_wall
+| The names of everyone who ever served the house, cut small, hundreds of them. The newest are near the floor, and some of them are only a few years old.
+once
+
+~ examine:cat_hall_statue
+| The lord of the house in marble, seated, a wolf at his feet. The sculptor made him kinder than he is, and the stone has not forgiven either of them.
+once
+
+~ examine:cat_beucephalus_manger
+| A stone manger heaped with bones. Horse bones, mostly. Not all of them.
+once
+
+~ examine:cat_champion_plaque
+| A bronze plaque, green with age: the old king's champion, who never lost a fight. It lists the men he killed. It takes up the whole plaque.
+once
+
+~ examine:cat_vestibule_arch
+| Words are cut over the stair: the house keeps its dead. Someone has added, below it, in a smaller hand: and its dead keep the house.
+once
+
+~ examine:cat_barov_sarcophagus
+| King Barov, carved in armour, a crown on his breast and his eyes on the ceiling. His stone hand reaches across to the queen's and does not quite reach.
+once
+
+~ examine:cat_royal_relief
+| A family carved on the wall: a king, a queen and their sons. The eldest son's face has been chiselled away. The youngest has a sunburst at his throat.
+once
+
+~ examine:cat_tomb_epitaph
+| Over the foot of the stair, two words cut deep and plain: HE RESTS. Nothing about peace.
+once
+
+~ examine:cat_tomb_statue
+| A young man in armour, carved from black stone, with a sword in his hand and a face full of plans. It is the only likeness under the castle that shows him smiling.
+once
+
+~ examine:cat_tomb_altar
+| A block of grey stone, stained dark down every side, with a shallow groove cut round the top to carry something away.
+once
+
+# ---------------------------------------------------------------- Opening things
+
+~ open:cat_mad_dog_sarcophagus
+| The lid grinds aside on a general laid out in rusted armour, his teeth bared even now.
+| [treasure_at:castle_ravenloft_crypt_of_the_mad_dog] The lid grinds aside on a general in rusted armour. Something under him catches the light: you have to lift him to reach it.
+cooldown 0
+
+~ open:cat_conjurer_reliquary
+| The lid lifts with a sigh of old air, and every sigil on the walls goes dark at once.
+| [treasure_at:castle_ravenloft_crypt_of_the_wizard] The lid lifts with a sigh of old air. Something inside was never his.
+cooldown 0
+
+~ open:cat_champion_slab
+| The carved lid slides back off a giant in old mail, a greatsword laid down his length.
+| [treasure_at:castle_ravenloft_gargoyle_tomb] The carved lid slides back. On the champion's chest, under his crossed hands, lies something his watchers were never set to guard.
+cooldown 0
+
+~ open:cat_ravenovia_sarcophagus
+| The queen lies in faded silk with her hands folded, and the air that comes out smells faintly of roses.
+| [treasure_at:castle_ravenloft_tomb_of_barov_and_ravenovia] The queen lies in faded silk, and in her folded hands she holds something out to you, as if she had been waiting for her son's enemies.
+cooldown 0
+
+~ open:cat_tomb_chest
+| The chest at the coffin's foot holds coin and candles, the plain provisions of someone who expects to stay.
+| [treasure_at:castle_ravenloft_strahds_tomb] The chest at the coffin's foot holds coin and candles, and something wrapped in black velvet that he kept close.
+cooldown 0
+
+~ open:cat_hidden_ossuary_chest
+| Under the bones, an iron-bound chest that whoever stacked them wanted to keep. Nobody came back for it.
+once
+
+# ---------------------------------------------------------------- Traps
+
+~ trap:cat_mad_dog_blade:found
+| A hairline seam runs round one flagstone, and the wall beside it has a long, low slot cut in it at knee height.
+cooldown 0
+
+~ trap:cat_mad_dog_blade:triggered
+| The flagstone sinks, and a blade swings out of the wall at knee height with a sound like a breath drawn in.
+cooldown 0
+
+~ trap:cat_conjurer_glyph:found
+| One sigil is cut into the threshold instead of the wall, and its lines are a little too fresh.
+cooldown 0
+
+~ trap:cat_conjurer_glyph:triggered
+| The sigil under your boot wakes with a crack, and blue light jumps up your legs.
+cooldown 0

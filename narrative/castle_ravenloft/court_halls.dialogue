@@ -1,0 +1,23 @@
+# Things in the Court of the Count that open a conversation (docs/regions/castle_ravenloft_court.md).
+# lady_portrait: the alcove in the King's Hall; behind the portrait, the stair down to the vault (court_vault_passage).
+
+~ lady_portrait
+if flag.court_treasury_found
+Narrator: The portrait stands a little open on its hinge. Behind it, narrow steps go down into the dark.
+-> END
+endif
+Narrator: A young woman with red-gold hair, painted life-sized, looks out of a deep alcove as if someone had just said her name. The frame is very fine, and very clean.
+interject name:tamsin_tealeaf: That's her. The woman in my locket. The same face.
+* [if flag.court_treasury_known or flag.court_ledger_read] Swing her aside: push the left side of the frame. -> open
+* [Investigation DC 16] (Look closely at the frame.) -> open | stuck
+* [Perception DC 18] (Feel round the frame for a draught.) -> open | stuck
+* Leave her be. -> END
+
+~ open
+set court_treasury_found
+Narrator: The frame gives under your hand and the whole portrait swings out like a door. Behind it a stair no wider than a coffin goes down into the dark, and up it comes the cold smell of metal.
+-> END
+
+~ stuck
+Narrator: A fine frame, a painted woman, a wall. If there is more to it, it is not giving itself up today.
+-> END
