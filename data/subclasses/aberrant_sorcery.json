@@ -62,7 +62,7 @@
         "summary": "Cast your level 1+ Psionic Spells with Sorcery Points equal to their level, with no Verbal or Somatic components.",
         "text": "When you cast a level 1+ spell from your Psionic Spells feature, you can spend Sorcery Points equal to the spell's level instead of a spell slot. Cast that way it needs no Verbal or Somatic components, nor Material ones unless they are consumed by the spell or have a listed cost.",
         "uses_resource": "sorcery_points",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

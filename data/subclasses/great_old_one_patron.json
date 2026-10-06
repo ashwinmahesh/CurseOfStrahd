@@ -53,7 +53,7 @@
         "summary": "Bonus Action: open a telepathic link with a creature within 30 feet for Warlock-level minutes.",
         "text": "You can form a telepathic connection between your mind and another's. As a Bonus Action choose one creature you can see within 30 feet of you; you and it can speak telepathically while within a number of miles of each other equal to your Charisma modifier (minimum one mile). The link lasts a number of minutes equal to your Warlock level and ends early if you use this feature on another creature.",
         "action": "bonus_action",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -63,7 +63,7 @@
         "name": "Psychic Spells",
         "summary": "Your damaging Warlock spells can deal Psychic damage, and your Enchantment and Illusion spells need no Verbal or Somatic components.",
         "text": "When you cast a Warlock spell that deals damage, you can change its damage type to Psychic. When you cast a Warlock spell that is an Enchantment or Illusion, you can do so without Verbal or Somatic components.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -73,7 +73,7 @@
         "name": "Clairvoyant Combatant",
         "summary": "When you link minds with Awakened Mind, force a Wisdom save; on a failure you have Advantage against it and it has Disadvantage against you.",
         "text": "When you form a telepathic bond with a creature using Awakened Mind, you can force it to make a Wisdom saving throw against your spell save DC. On a failure, it has Disadvantage on attack rolls against you and you have Advantage on attack rolls against it for as long as the bond lasts. Once you use this, you can't again until you finish a Short or Long Rest, unless you expend a Pact Magic slot to use it again.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

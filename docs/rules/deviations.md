@@ -50,11 +50,12 @@ started" in coverage.md, not a deviation.
 | Conjure Animals | The caster's free move of the pack is a separate free action once per turn; Advantage on Strength saves within 5 ft of the pack is applied | The pack moving "when you move" needs a combined move | — |
 | Conjure Minor Elementals | The extra damage type is picked for you each attack: whichever the target doesn't resist | Saves a prompt per attack | — |
 | Call Lightning | No stormy weather bonus | The game has no weather yet | With weather |
-| Wall of Fire, Wind Wall | Straight walls only (no ring); Wind Wall blocks ranged weapon attacks across it rather than rolling them to miss | Shapes need a drawing tool; an attack that must miss isn't worth taking | — |
+| Wall of Fire | A straight wall along the cast direction or a ring 20 ft across (burning on its inside); a straight wall burns on the side its direction points left of | Free-form wall shapes need a drawing tool | With the targeting polish |
 | Dissonant Whispers, Confusion, Compulsion | The fleeing or compelled creature takes the farthest square along its path, provoking Opportunity Attacks as it goes | "Safest path" is the DM's call | — |
 | Heat Metal | What's heated is picked for you: a held metal weapon first, else worn metal armor | Saves a choice of object | — |
 | Wild Magic Surge | A condensed 8-result table of the surge's combat effects | The full table is mostly out-of-combat whimsy | With the full table |
 | Reactions that happen during a save or at the start of another creature's turn (Countercharm, Bend Luck, Cosmic Omen, Restore Balance, Dark One's Own Luck, Branches of the Tree, Inspiring Movement, Tandem Footwork, Fanatical Focus) | Used automatically when they'd help, unless the creature's rule for it is "never" | Same reason as the other mid-roll choices | When saves can pause like attacks do |
-| Psionic Sorcery, Psychic Spells, Clairvoyant Combatant, Pact of the Chain's special familiars, Gift of the Protectors, Gaze of Two Minds | Not in combat yet | Each needs its own system (Sorcery Points as slots, damage-type options, telepathic links, familiar forms) | Later in Phase 4 |
-| Cosmic Omen | Always Weal (adds to an ally's roll) | The Weal/Woe roll at dawn isn't tracked | — |
+| Pact of the Chain familiars | The eight special forms use 2025 Monster Manual numbers as we know them, not yet checked against the book; a familiar only attacks when its warlock gives up an attack (or with Investment of the Chain Master's command) | The forms are built in code from the warlock's casting; checking needs the owner's book | Check against the MM |
+| Cosmic Omen | The omen (Weal or Woe) is drawn when a fight starts rather than at the last Long Rest | Rests don't keep a dawn roll yet | — |
+| Gaze of Two Minds | The link lets you cast from the ally's space; perceiving through its senses isn't modelled | Sight sharing has no use on a grid where the player sees everything | — |
 

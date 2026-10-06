@@ -347,6 +347,8 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			for m: String in SpellCaster.metamagic_known(c.creature as Character):
 				if e.spells._metamagic_check(c, data, [m]) == "":
 					mm.append({"id": m, "label": "%s Spell (%d SP)" % [m.capitalize(), int(SpellCaster.METAMAGIC_COST[m])]})
+			for opt: String in e.spells.class_cast_options(c, data):
+				mm.append({"id": opt, "label": "Psychic Spells: Psychic damage" if opt == "psychic_spells" else "Psionic Sorcery (%d SP, no slot)" % int(data.get("level", 0))})
 			if not mm.is_empty():
 				a["metamagic"] = mm
 		var choice := data.get("choice", {}) as Dictionary
@@ -358,6 +360,14 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["choice_label"] = str(choice.get("label", "Choose"))
 			a["opts"] = {"choice": str((opts_list[0] as Dictionary)["value"])}
 			a["sub"] = str(a["sub"]) + " · " + str((opts_list[0] as Dictionary)["label"])
+		# Pact of the Chain: the familiar's form.
+		if str(s["id"]) == "find_familiar" and ClassFeatures.knows_invocation(c, "pact_of_the_chain"):
+			var ff: Array = []
+			for f: String in SummonBlocks.CHAIN_FORMS:
+				ff.append({"value": f, "label": f.replace("_", " ").capitalize()})
+			a["choices"] = ff
+			a["choice_label"] = "Familiar"
+			a["opts"] = {"choice": "imp"}
 		# Polymorph: the Beast form (it must not out-rank the target; "Best fit" picks for you).
 		if str(s["id"]) == "polymorph":
 			var forms: Array = [{"value": "", "label": "Best fit"}]

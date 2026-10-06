@@ -17,7 +17,7 @@ static func for_spell(spell_id: String, slot: int, option: String, nums: Diction
 		"summon_undead":
 			return undead_spirit(slot, option if option != "" else "skeletal", atk, dc)
 		"find_familiar":
-			return owl()
+			return chain_form(option, dc) if option in CHAIN_FORMS else owl()
 		"find_steed":
 			return otherworldly_steed(slot, option if option != "" else "celestial", atk, dc)
 		"summon_beast":
@@ -336,6 +336,76 @@ static func elemental_spirit(slot: int, kind: String, atk: int) -> Dictionary:
 		],
 		"ai_profile": "brute", "summary": "A spirit of the elements bound to the caster's will.", "text": "Summon Elemental.",
 	}
+
+
+## Pact of the Chain's special familiar forms (2024 PHB): Imp, Pseudodragon, Quasit, Skeleton, Slaad Tadpole, Sphinx
+## of Wonder, Sprite, Venomous Snake. Their numbers follow the 2025 Monster Manual as best we have them (not yet
+## checked against the book: deviations.md); the familiar's save DCs use the warlock's.
+const CHAIN_FORMS := ["imp", "pseudodragon", "quasit", "skeleton", "slaad_tadpole", "sphinx_of_wonder", "sprite", "venomous_snake"]
+
+
+static func chain_form(form: String, dc: int) -> Dictionary:
+	var base := {"cr": 0, "xp": 0, "proficiency_bonus": 2, "initiative": 2, "summon": true, "familiar": true, "chain": true,
+		"ai_profile": "skirmisher", "text": "Pact of the Chain familiar."}
+	var d := {}
+	match form:
+		"imp":
+			d = {"id": "imp_familiar", "name": "Imp (familiar)", "size": "tiny", "type": "fiend", "ac": 13, "hp": {"average": 21, "dice": "21"},
+				"speed": {"walk": 20, "fly": 40}, "abilities": {"str": 6, "dex": 17, "con": 13, "int": 11, "wis": 12, "cha": 14},
+				"resistances": ["cold"], "immunities": ["fire", "poison"], "condition_immunities": ["poisoned"], "senses": {"darkvision": 120},
+				"traits": [{"id": "magic_resistance", "name": "Magic Resistance", "action": "passive", "modifiers": [{"stat": "advantage", "on": "save_vs:spell"}], "summary": "Advantage on saves against spells."}],
+				"actions": [{"id": "sting", "name": "Sting", "kind": "melee", "attack": {"bonus": 5, "reach": 5},
+					"damage": [{"dice": "1d6+3", "type": "piercing"}, {"dice": "2d6", "type": "poison"}], "summary": "Piercing and Poison damage."}],
+				"summary": "A devilish imp familiar."}
+		"pseudodragon":
+			d = {"id": "pseudodragon_familiar", "name": "Pseudodragon (familiar)", "size": "tiny", "type": "dragon", "ac": 14, "hp": {"average": 10, "dice": "10"},
+				"speed": {"walk": 15, "fly": 60}, "abilities": {"str": 6, "dex": 15, "con": 13, "int": 10, "wis": 12, "cha": 10}, "senses": {"blindsight": 10, "darkvision": 60},
+				"traits": [{"id": "magic_resistance", "name": "Magic Resistance", "action": "passive", "modifiers": [{"stat": "advantage", "on": "save_vs:spell"}], "summary": "Advantage on saves against spells."}],
+				"actions": [{"id": "sting", "name": "Sting", "kind": "melee", "attack": {"bonus": 4, "reach": 5}, "damage": [{"dice": "1d4+2", "type": "piercing"}],
+					"on_hit": [{"do": "condition", "condition": "poisoned", "save": {"ability": "con", "dc": dc}, "until": "minute"}], "summary": "Piercing damage; a Con save or Poisoned."}],
+				"summary": "A tiny dragon familiar."}
+		"quasit":
+			d = {"id": "quasit_familiar", "name": "Quasit (familiar)", "size": "tiny", "type": "fiend", "ac": 13, "hp": {"average": 25, "dice": "25"},
+				"speed": {"walk": 40}, "abilities": {"str": 5, "dex": 17, "con": 10, "int": 7, "wis": 10, "cha": 10},
+				"resistances": ["cold", "fire", "lightning"], "immunities": ["poison"], "condition_immunities": ["poisoned"], "senses": {"darkvision": 120},
+				"traits": [{"id": "magic_resistance", "name": "Magic Resistance", "action": "passive", "modifiers": [{"stat": "advantage", "on": "save_vs:spell"}], "summary": "Advantage on saves against spells."}],
+				"actions": [{"id": "rend", "name": "Rend", "kind": "melee", "attack": {"bonus": 5, "reach": 5}, "damage": [{"dice": "1d4+3", "type": "slashing"}],
+					"on_hit": [{"do": "condition", "condition": "poisoned", "save": {"ability": "con", "dc": dc}, "until": "minute"}], "summary": "Slashing damage; a Con save or Poisoned."}],
+				"summary": "A demonic quasit familiar."}
+		"skeleton":
+			d = {"id": "skeleton_familiar", "name": "Skeleton (familiar)", "size": "medium", "type": "undead", "ac": 14, "hp": {"average": 13, "dice": "13"},
+				"speed": {"walk": 30}, "abilities": {"str": 10, "dex": 16, "con": 15, "int": 6, "wis": 8, "cha": 5},
+				"vulnerabilities": ["bludgeoning"], "immunities": ["poison"], "condition_immunities": ["exhaustion", "poisoned"], "senses": {"darkvision": 60},
+				"actions": [{"id": "shortsword", "name": "Shortsword", "kind": "melee", "attack": {"bonus": 5, "reach": 5}, "damage": [{"dice": "1d6+3", "type": "piercing"}], "summary": "Piercing damage."},
+					{"id": "shortbow", "name": "Shortbow", "kind": "ranged", "attack": {"bonus": 5, "range": [80, 320]}, "damage": [{"dice": "1d6+3", "type": "piercing"}], "summary": "Piercing damage."}],
+				"summary": "A skeleton familiar."}
+		"slaad_tadpole":
+			d = {"id": "slaad_tadpole_familiar", "name": "Slaad Tadpole (familiar)", "size": "tiny", "type": "aberration", "ac": 12, "hp": {"average": 7, "dice": "7"},
+				"speed": {"walk": 30, "burrow": 10}, "abilities": {"str": 7, "dex": 15, "con": 10, "int": 3, "wis": 5, "cha": 3},
+				"resistances": ["acid", "cold", "fire", "lightning", "thunder"], "senses": {"darkvision": 60},
+				"actions": [{"id": "bite", "name": "Bite", "kind": "melee", "attack": {"bonus": 4, "reach": 5}, "damage": [{"dice": "1d6+2", "type": "piercing"}], "summary": "Piercing damage."}],
+				"summary": "A slaad tadpole familiar."}
+		"sphinx_of_wonder":
+			d = {"id": "sphinx_familiar", "name": "Sphinx of Wonder (familiar)", "size": "tiny", "type": "celestial", "ac": 13, "hp": {"average": 24, "dice": "24"},
+				"speed": {"walk": 20, "fly": 40}, "abilities": {"str": 6, "dex": 17, "con": 13, "int": 15, "wis": 12, "cha": 11},
+				"resistances": ["necrotic", "psychic", "radiant"], "senses": {"darkvision": 60},
+				"traits": [{"id": "magic_resistance", "name": "Magic Resistance", "action": "passive", "modifiers": [{"stat": "advantage", "on": "save_vs:spell"}], "summary": "Advantage on saves against spells."}],
+				"actions": [{"id": "rend", "name": "Rend", "kind": "melee", "attack": {"bonus": 5, "reach": 5}, "damage": [{"dice": "1d4+3", "type": "slashing"}, {"dice": "2d6", "type": "radiant"}], "summary": "Slashing and Radiant damage."}],
+				"summary": "A sphinx of wonder familiar."}
+		"sprite":
+			d = {"id": "sprite_familiar", "name": "Sprite (familiar)", "size": "tiny", "type": "fey", "ac": 15, "hp": {"average": 10, "dice": "10"},
+				"speed": {"walk": 10, "fly": 40}, "abilities": {"str": 3, "dex": 18, "con": 10, "int": 14, "wis": 13, "cha": 11},
+				"actions": [{"id": "needle_sword", "name": "Needle Sword", "kind": "melee", "attack": {"bonus": 6, "reach": 5}, "damage": [{"dice": "1d4+4", "type": "piercing"}], "summary": "Piercing damage."},
+					{"id": "enchanting_bow", "name": "Enchanting Bow", "kind": "ranged", "attack": {"bonus": 6, "range": [40, 160]}, "damage": [{"dice": "1", "type": "piercing"}],
+						"on_hit": [{"do": "condition", "condition": "charmed", "until": "source_turn_start"}], "summary": "1 Piercing; the target is Charmed until the sprite's next turn."}],
+				"summary": "A sprite familiar."}
+		_:
+			d = {"id": "venomous_snake_familiar", "name": "Venomous Snake (familiar)", "size": "tiny", "type": "beast", "ac": 12, "hp": {"average": 6, "dice": "6"},
+				"speed": {"walk": 30, "swim": 30}, "abilities": {"str": 2, "dex": 15, "con": 11, "int": 1, "wis": 10, "cha": 3}, "senses": {"blindsight": 10},
+				"actions": [{"id": "bite", "name": "Bite", "kind": "melee", "attack": {"bonus": 4, "reach": 5}, "damage": [{"dice": "1d4+2", "type": "piercing"}, {"dice": "1d8", "type": "poison"}], "summary": "Piercing and Poison damage."}],
+				"summary": "A venomous snake familiar."}
+	d.merge(base)
+	return d
 
 
 ## The familiar's default form (an owl). 2024: a familiar can't attack but can take other actions.

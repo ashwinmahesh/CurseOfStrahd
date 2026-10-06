@@ -1463,6 +1463,8 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 	var beast_why := class_features.companion_why(c)
 	if beast_why != "":
 		return CombatResult.fail(beast_why)
+	if c.creature is Monster and bool((c.creature as Monster).data.get("familiar", false)) and not bool(opts.get("chain", false)):
+		return CombatResult.fail("A familiar doesn't attack on its own (Pact of the Chain: its warlock gives up an attack for it)")
 	var lp := option["profile"] as WeaponProfile
 	if "loading" in lp.properties and not features.has_feat(c, "crossbow_expert") and c.attacks_left > 0 \
 			and str(c.get_meta("loading_fired", "")) == "%d:%d" % [round_no, turn_index]:
@@ -1538,8 +1540,6 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "Can't attack yourself"
 	if spells.specials.sphere_blocks(c, target):
 		return "A sphere of force is in the way"
-	if not bool(option["melee"]) and str(option.get("kind", "")) in ["weapon", "thrown", "monster"] and spells.zones.deflects_between(c, target):
-		return "A Wind Wall would deflect the shot"
 	var dist := distance(c, target)
 	var p := option["profile"] as WeaponProfile
 	if bool(option["melee"]):
@@ -1787,6 +1787,13 @@ func hit_chance(c: Combatant, target: Combatant, option: Dictionary) -> Dictiona
 ## Fortitude, mastery properties and on-hit effects, then reactions to the damage (Hellish Rebuke) and Riposte.
 func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: Dictionary) -> CombatResult:
 	var r := CombatResult.new()
+	# Wind Wall: ordinary missiles shot across it are deflected upward and miss.
+	if not bool(option["melee"]) and str(option.get("kind", "")) in ["weapon", "thrown", "monster"] and spells.zones.deflects_between(c, target):
+		if c.creature is Character and str(option.get("kind", "")) == "weapon":
+			_spend_ammo(c, option["profile"] as WeaponProfile)
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+		r.lines.append(log.add("miss", "The Wind Wall deflects %s's shot at %s" % [c.name(), target.name()], c.id))
+		return r
 	var sit := attack_situation(c, target, option)
 	_consume_marks(c, target)
 	spells.specials.duel_check_attack(c, target)
@@ -2099,6 +2106,11 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 				log.add("info", "%s keeps standing: Undead Fortitude" % target.name(), target.id, [save.describe()])
 	# A shape (Polymorph, Wild Shape) that runs out: the real creature comes back with what's left.
 	shapes.after_damage(target)
+	# Gift of the Protectors: a party member drops to 1 instead of 0 once per Long Rest.
+	if was_up and dr.dropped_to_zero and not target.creature.dead and class_features.gift_of_the_protectors(target):
+		target.creature.hp = 1
+		target.creature.remove_condition(&"unconscious", "0 Hit Points")
+		dr.dropped_to_zero = false
 	# Death Ward: the first drop to 0 Hit Points (or death outright from damage) leaves it at 1 instead.
 	if was_up and (dr.dropped_to_zero or target.creature.dead) and target.creature.has_flag("death_ward"):
 		for fxw: Effect in target.creature.effects.duplicate():

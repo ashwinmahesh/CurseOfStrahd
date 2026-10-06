@@ -445,7 +445,13 @@ func test_wind_wall_turns_aside_arrows() -> void:
 	TestCombat.start_with(e, c)
 	assert_true(e.spells.cast(c, "wind_wall", 3, [], Vector2(5.5, 4.5), Vector2.DOWN).ok)
 	var opt := _ranged(e, c)
-	assert_true(e.attack_legal(c, t, e.option_by_id(c, opt)).contains("Wind Wall"))
+	c.action_available = true
+	c.magic_action_used = false
+	TestCombat.next_d20(e, 19)
+	var r := e.attack(c, t, opt)
+	assert_true(r.ok, r.reason)
+	assert_false(r.hit, "the shot is deflected")
+	assert_eq(t.creature.hp, 200)
 
 
 func test_call_lightning_strikes_now_and_again_later() -> void:
@@ -619,3 +625,16 @@ func test_eldritch_blast_fires_more_beams_with_level() -> void:
 	assert_true(e.spells.cast(c, "eldritch_blast", 0, [a, b]).ok)
 	var shots := e.drain_events().filter(func(x: Dictionary) -> bool: return str(x["type"]) == "attack" and str(x["attacker"]) == c.id)
 	assert_eq(shots.size(), 2, "two beams at level 7")
+
+
+func test_wall_of_fire_can_be_a_ring_that_burns_inside() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["wall_of_fire"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 4), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "wall_of_fire", 4, [], Vector2(6.5, 4.5), Vector2.ZERO, {"choice": "ring"}).ok)
+	var wall := e.spells.zones.object_of(c.id, "wall_of_fire")
+	assert_false(Vector2i(6, 4) in wall.cells, "the centre is open")
+	e.end_turn()
+	e.end_turn()
+	assert_true(t.creature.hp < 300, "ending a turn inside the ring burns")
