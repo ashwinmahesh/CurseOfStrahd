@@ -6,7 +6,7 @@ BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
 G       := $(GODOT) --path .
 LOGCHK  := tools/logcheck.sh
 
-.PHONY: run arena import test lint validate ci palette capture standin sprite sprites portrait wireframes textures prop ui_art
+.PHONY: run arena import test lint validate ci palette capture standin sprite sprites portrait wireframes textures prop ui_art icons
 
 run:
 	$(G)
@@ -67,6 +67,11 @@ prop:
 ## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
 ui_art:
 	$(BLENDER) -b --python blender/ui_art.py
+
+## Spell and item icons (game-icons.net silhouettes framed in the menu colours; keys in art/icons.json): make icons
+icons:
+	$(G) --headless --script res://tools/art/build_icons.gd 2>&1 | $(LOGCHK)
+	$(MAKE) import
 
 ## UI flow wireframes (docs/ui/wireframes/*.svg) from tools/ui/wireframes.py.
 wireframes:

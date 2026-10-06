@@ -16,3 +16,5 @@ __pycache__/
 # So do the environment textures and billboard props (tools/art/set_import.py, docs/art/textures.md).
 !art/textures/**/*.png.import
 !art/sprites/props/*.png.import
+# Spell and item icons keep mipmaps so lists can draw them small (make icons).
+!art/icons/**/*.png.import
