@@ -486,6 +486,14 @@
     "rules": [
       [
         [
+          "great doors",
+          "keep doors",
+          "castle doors"
+        ],
+        "manor_door"
+      ],
+      [
+        [
           "stairs down",
           "stair down",
           "down to",
@@ -611,6 +619,40 @@
     "krezk": 2.6
   },
   "rooms": [
+    [
+      [
+        "audience hall",
+        "throne",
+        "king's hall"
+      ],
+      {
+        "floor": "interior/marble_floor",
+        "wall": "interior/wood_panel"
+      }
+    ],
+    [
+      [
+        "hall of faces",
+        "great entry",
+        "guests' hall",
+        "portrait gallery",
+        "hall of weeping"
+      ],
+      {
+        "floor": "interior/marble_floor",
+        "wall": "church/stone_wall"
+      }
+    ],
+    [
+      [
+        "treasury",
+        "hoard"
+      ],
+      {
+        "floor": "dungeon/stone_floor",
+        "wall": "dungeon/stone_wall"
+      }
+    ],
     [
       [
         "bath"
@@ -831,6 +873,34 @@
     },
     "mount_baratok_hut": {
       "wall": "interior/wood_panel"
+    },
+    "castle_ravenloft_main_floor": {
+      "floor": "church/stone_flags",
+      "wall": "church/stone_wall"
+    },
+    "castle_ravenloft_court": {
+      "floor": "church/stone_flags",
+      "wall": "church/stone_wall"
+    },
+    "castle_ravenloft_court_weeping": {
+      "floor": "church/stone_flags",
+      "wall": "church/stone_wall"
+    },
+    "castle_ravenloft_court_treasury": {
+      "floor": "church/stone_flags",
+      "wall": "church/stone_wall"
+    },
+    "castle_ravenloft_spires_rooms": {
+      "floor": "church/stone_flags",
+      "wall": "church/stone_wall"
+    },
+    "castle_ravenloft_gates": {
+      "floor": "village/cobbles",
+      "rock_walls": "mountain/cliff"
+    },
+    "castle_ravenloft_overlook": {
+      "floor": "church/stone_flags",
+      "rock_walls": "mountain/cliff"
     }
   },
   "feet": {
