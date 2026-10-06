@@ -131,6 +131,7 @@ def main():
             return refs_cache[asset_id]
 
         def job(asset_id, view):
+            refs_for(asset_id)
             return (asset_id, a.kind, view, prompt(a.kind, reg[asset_id], view), Path(tmp) / asset_id / f"{view}.png")
 
         jobs = []
