@@ -36,8 +36,8 @@ func _ch() -> Character:
 
 
 func _draw() -> void:
-	while _frame.get_child_count() > 1:
-		var c := _frame.get_child(1)
+	while _frame.get_child_count() > 0:
+		var c := _frame.get_child(0)
 		_frame.remove_child(c)
 		c.queue_free()
 	var ch := _ch()

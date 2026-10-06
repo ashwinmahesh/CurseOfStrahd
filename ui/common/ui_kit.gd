@@ -19,6 +19,10 @@ static func display_font() -> Font:
 	if _display_font == null:
 		var f := SystemFont.new()
 		f.font_names = PackedStringArray(["Luminari", "Trattatello", "Apple Chancery", "Palatino", "Georgia"])
+		# Symbols the book hand lacks (arrows, marks) come from the default font, then the system symbol fonts.
+		var symbols := SystemFont.new()
+		symbols.font_names = PackedStringArray(["Apple Symbols", "Menlo", "Arial Unicode MS", "DejaVu Sans"])
+		f.fallbacks = [ThemeDB.fallback_font, symbols]
 		_display_font = f
 	return _display_font
 
@@ -109,9 +113,13 @@ static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = 
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	root.add_child(dim)
 	var p := panel("ui_black", "gilt_dark")
-	(p.get_theme_stylebox("panel") as StyleBoxFlat).set_content_margin_all(24)
+	var ps0 := p.get_theme_stylebox("panel") as StyleBoxFlat
+	ps0.content_margin_left = 36
+	ps0.content_margin_right = 36
+	ps0.content_margin_top = 40
+	ps0.content_margin_bottom = 28
 	_centre(p, Vector2(-size.x / 2.0, -size.y / 2.0), Vector2(size.x / 2.0, size.y / 2.0))
-	trim(p, 128.0)
+	trim(p, 104.0)
 	root.add_child(p)
 	# The title sits on a crimson plaque astride the top border, with gilt scrollwork spreading out behind it.
 	var t := title(title_text)
@@ -139,15 +147,11 @@ static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = 
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 10)
 	p.add_child(box)
-	var head := HBoxContainer.new()
+	# The way out is noted just under the bottom border, clear of the corners.
 	var esc := label("Esc: close", 13, "parchment")
-	esc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	esc.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	head.add_child(esc)
-	var clear_of_corner := Control.new()
-	clear_of_corner.custom_minimum_size = Vector2(70, 0)
-	head.add_child(clear_of_corner)
-	box.add_child(head)
+	esc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_centre(esc, Vector2(-100, size.y / 2.0 + 4.0), Vector2(100, size.y / 2.0 + 24.0))
+	root.add_child(esc)
 	return box
 
 
