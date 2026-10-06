@@ -18,7 +18,16 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"victor_vallakovich": 1.15, "lydia_petrovna": 1.18, "vallaki_guard": 1.45, "vistana": 1.22, "milivoj": 1.3, "henrik": 1.22,
 	"gunther_arasek": 1.3, "luvash": 1.38, "arabelle": 0.75, "bluto": 1.22, "kasimir_velikov": 1.32, "stanimir": 1.38,
 	"alenka": 1.25, "mirabel": 1.22, "sorvia": 1.15, "arik": 1.25, "doru": 1.22, "gustav_durst": 1.3, "elisabeth_durst": 1.25,
-	"durst_nursemaid": 1.2, "lorghoth": 1.9, "cult_shades": 1.3}
+	"durst_nursemaid": 1.2, "lorghoth": 1.9, "cult_shades": 1.3,
+	"ezmerelda": 1.25, "sir_godfrey_gwilym": 1.42, "vladimir_horngaard": 1.4, "davian_martikov": 1.24,
+	"emil_toranescu": 1.38, "mordenkainen": 1.25, "baba_lysaga": 0.95, "exethanter": 1.28, "vosk": 1.24,
+	"abbot": 1.3, "vasilka": 1.22, "kiril_stoyanovich": 1.45, "zuleika_toranescu": 1.25, "ilinca_vrana": 1.1,
+	"bella_sunbane": 1.2, "offalia_wormwiggle": 1.15, "ruxandra": 1.1, "adrian_martikov": 1.3,
+	"stefania_martikov": 1.2, "kostin": 1.25, "dmitri_krezkov": 1.32, "anna_krezkova": 1.1, "ilya_krezkov": 0.8,
+	"kasha_varo": 0.95, "krezk_guard": 1.3, "clovin_belview": 1.1, "belview": 1.15, "mirela": 0.85,
+	"ilka_sarnov": 0.82, "toma_sarnov": 0.65, "order_knight": 1.32, "phantom_warden": 1.3, "tsolenka_sergeant": 1.3,
+	"tsolenka_watchman": 1.28, "patrina_velikovna": 1.25, "amber_sentinel": 2.3, "argynvost_echo": 1.7,
+	"sergei_von_zarovich": 1.3}
 
 var combatant: Combatant
 var art_override := ""
