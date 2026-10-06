@@ -196,6 +196,31 @@ func _draw_card() -> void:
 		if int(arm.get("strength", 0)) > ch.ability_score(&"str"):
 			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "candle", 500))
 	_card.add_child(UiKit.label(str(data.get("text", data.get("summary", ""))), 14, "vellum", 500))
+	# Magic items: rarity and attunement (three items at most; attuning takes a Short Rest).
+	var magic := data.get("magic", {}) as Dictionary
+	if not magic.is_empty():
+		var needs: Variant = magic.get("attunement", false)
+		var req := ""
+		if needs is String:
+			req = " (requires attunement %s)" % needs
+		elif needs is bool and bool(needs):
+			req = " (requires attunement)"
+		_card.add_child(UiKit.label("%s magic item%s" % [str(magic.get("rarity", "")).replace("_", " ").capitalize(), req], 14, "lilac", 500))
+		if req != "":
+			if selected in ch.attuned:
+				_card.add_child(UiKit.button("End attunement", func() -> void:
+					ch.end_attunement(selected)
+					_draw(), 14))
+			else:
+				var why := ch.attune_blocker(selected)
+				var att := UiKit.button("Attune (a Short Rest: 1 hour)", func() -> void:
+					if ch.attune(selected):
+						st.advance_minutes(60)
+					_draw(), 14)
+				att.disabled = why != ""
+				att.tooltip_text = why
+				_card.add_child(att)
+			_card.add_child(UiKit.label("Attuned: %d of %d" % [ch.attuned.size(), Character.MAX_ATTUNED], 13, "parchment"))
 	# Actions
 	var acts := HBoxContainer.new()
 	acts.add_theme_constant_override("separation", 6)
