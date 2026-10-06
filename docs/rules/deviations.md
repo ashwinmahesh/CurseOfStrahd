@@ -44,5 +44,18 @@ started" in coverage.md, not a deviation.
 | Alert's Initiative swap | Not offered | Needs a start-of-combat choice screen | With the initiative UI |
 | Wild Shape known forms | The number of known forms is capped by the Beast stat blocks the game has that fit the Druid's CR and Fly Speed limits (two at Druid 2-7 today) | The choice can't dead-end while the bestiary is small; the count grows by itself as Beasts are added | When the bestiary has enough Beasts |
 | Repeatable Eldritch Invocations | Agonizing Blast, Eldritch Spear, Repelling Blast and Lessons of the First Ones can each be taken once | A choice pick is unique per option; taking one twice needs a second sub-choice | If a player asks for it |
-| Spells cast "at will" from invocations (Armor of Shadows, Mask of Many Faces ...) | The spell is known and listed; casting it without a slot arrives with the combat side of the new classes | Class features in combat follow the spell and ability audit | P4 combat for the new classes |
 | Iron Mind (Gloom Stalker) | The player picks Wisdom, Intelligence or Charisma saves; the rule says Wisdom unless already proficient | The option text says so; enforcing it needs a "lacks proficiency" check on options | — |
+| Polymorph and Wild Shape forms | The creature becomes the Beast's stat block with its own Hit Points kept (Wild Shape also keeps Int, Wis, Cha and Proficiency Bonus); its gear, class features and spells wait until it changes back | A full merge of character and stat block is a large system; these are the parts a fight uses | — |
+| Find Steed | The steed fights beside its rider as its own creature; mounted combat (riding, controlled mounts) isn't modelled | No mounting on the grid yet | With mounts |
+| Banishment | The banished creature leaves the grid; a native of another plane banished for 10 rounds doesn't return | Same as the rule, counted in rounds | — |
+| Conjure Animals | The caster's free move of the pack is a separate free action once per turn; Advantage on Strength saves within 5 ft of the pack is applied | The pack moving "when you move" needs a combined move | — |
+| Conjure Minor Elementals | The extra damage type is picked for you each attack: whichever the target doesn't resist | Saves a prompt per attack | — |
+| Call Lightning | No stormy weather bonus | The game has no weather yet | With weather |
+| Wall of Fire, Wind Wall | Straight walls only (no ring); Wind Wall blocks ranged weapon attacks across it rather than rolling them to miss | Shapes need a drawing tool; an attack that must miss isn't worth taking | — |
+| Dissonant Whispers, Confusion, Compulsion | The fleeing or compelled creature takes the farthest square along its path, provoking Opportunity Attacks as it goes | "Safest path" is the DM's call | — |
+| Heat Metal | What's heated is picked for you: a held metal weapon first, else worn metal armor | Saves a choice of object | — |
+| Wild Magic Surge | A condensed 8-result table of the surge's combat effects | The full table is mostly out-of-combat whimsy | With the full table |
+| Reactions that happen during a save or at the start of another creature's turn (Countercharm, Bend Luck, Cosmic Omen, Restore Balance, Dark One's Own Luck, Branches of the Tree, Inspiring Movement, Tandem Footwork, Fanatical Focus) | Used automatically when they'd help, unless the creature's rule for it is "never" | Same reason as the other mid-roll choices | When saves can pause like attacks do |
+| Psionic Sorcery, Psychic Spells, Clairvoyant Combatant, Pact of the Chain's special familiars, Gift of the Protectors, Gaze of Two Minds | Not in combat yet | Each needs its own system (Sorcery Points as slots, damage-type options, telepathic links, familiar forms) | Later in Phase 4 |
+| Cosmic Omen | Always Weal (adds to an ally's roll) | The Weal/Woe roll at dawn isn't tracked | — |
+
