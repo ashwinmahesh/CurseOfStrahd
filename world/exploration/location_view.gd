@@ -204,6 +204,7 @@ func _build_doors() -> void:
 		var piece := SetDressing.exit_piece(board, ex as Dictionary)
 		if piece != null:
 			exit_nodes[str((ex as Dictionary)["id"])] = piece
+	refresh_exits()
 	for d: Variant in loc.get("doors", []):
 		var door := d as Dictionary
 		var cell := _cell(door["cell"])
@@ -216,6 +217,16 @@ func _build_doors() -> void:
 			node = _box(Vector3(0.9, 1.7, 0.9), board.cell_center(cell) + Vector3(0, 0.85, 0), "walnut" if not secret else "slate")
 		node.visible = not open
 		door_nodes[id] = node
+
+
+## Stairs (and other pieces that are the way itself) show only while their exit's `when` holds, so a secret stair
+## isn't drawn before anyone finds it. Checked a few times a second, since many things can open a way.
+func refresh_exits() -> void:
+	for ex: Variant in loc.get("exits", []):
+		var e := ex as Dictionary
+		var node := exit_nodes.get(str(e["id"]), null) as Node3D
+		if node != null and is_instance_valid(node) and bool(node.get_meta("only_when_open", false)):
+			node.visible = StoryConditions.check(str(e.get("when", "")), st)
 
 
 func _build_props() -> void:
@@ -583,7 +594,14 @@ func step(dir: Vector2i) -> void:
 	_queue = [to]
 
 
+var _exit_check := 0.0
+
+
 func _process(delta: float) -> void:
+	_exit_check -= delta
+	if _exit_check <= 0.0:
+		_exit_check = 0.25
+		refresh_exits()
 	if board != null and rig != null and rig.camera != null and not members.is_empty() and (not board.occluders.is_empty() or not board.buildings.is_empty()):
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
@@ -1587,14 +1605,7 @@ func start_encounter(encounter_id: String) -> bool:
 	if sneaking and who == "":
 		surprised.append_array(_stealth_surprise(e))
 	(st.loc_state(loc_id)["encounters"] as Dictionary)[encounter_id] = "started"
-	for m: Combatant in members + guest_members:
-		(tokens[m.id] as Node3D).visible = false
-	var ctokens := {}
-	for c in e.combatants:
-		var t := _combat_token(c)
-		t.position = board.cell_center(c.cell, c.size_cells)
-		add_child(t)
-		ctokens[c.id] = t
+	var ctokens := _fight_tokens(e)
 	combat_view = CombatView.new()
 	combat_view.input_locked = input_locked
 	combat_view.narrator = narrator
@@ -1633,14 +1644,7 @@ func resume_encounter(snapshot: Dictionary) -> bool:
 	in_combat = true
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, dice, st.party)
-	for m: Combatant in members + guest_members:
-		(tokens[m.id] as Node3D).visible = false
-	var ctokens := {}
-	for c in e.combatants:
-		var t := _combat_token(c)
-		t.position = board.cell_center(c.cell, c.size_cells)
-		add_child(t)
-		ctokens[c.id] = t
+	var ctokens := _fight_tokens(e)
 	combat_view = CombatView.new()
 	combat_view.input_locked = input_locked
 	combat_view.narrator = narrator
@@ -1649,6 +1653,65 @@ func resume_encounter(snapshot: Dictionary) -> bool:
 	var none: Array[String] = []
 	_run_combat(encounter_id, spec, e, ctokens, none)
 	return true
+
+
+## The fight's tokens (combatant id -> CombatToken), made so the switch into combat doesn't jump (owner 2026-10-06):
+## the party and guests keep the figures they walked in with, mid-step, facing and lantern and all, and turn to the
+## nearest foe as their step lands; the foes fade in where they stand, facing the party.
+func _fight_tokens(e: Encounter) -> Dictionary:
+	var ctokens := {}
+	var ours: Array[CombatToken] = []
+	var party_mid := Vector3.ZERO
+	for c in e.combatants:
+		for m: Combatant in members + guest_members:
+			var tok := tokens[m.id] as CombatToken
+			if m.creature == c.creature and not ours.has(tok):
+				tok.combatant = c
+				tok.refresh()
+				var spot := board.cell_center(c.cell, c.size_cells)
+				if tok.position.distance_to(spot) > 1.0:
+					tok.position = spot   # a fight resumed from a save: they stand where the round began
+				ctokens[c.id] = tok
+				ours.append(tok)
+				party_mid += spot
+	for m: Combatant in members + guest_members:
+		if not ours.has(tokens[m.id] as CombatToken):
+			(tokens[m.id] as Node3D).visible = false
+	party_mid /= maxf(1.0, float(ours.size()))
+	var foes: Array[CombatToken] = []
+	for c in e.combatants:
+		if ctokens.has(c.id):
+			continue
+		var t := _combat_token(c)
+		t.position = board.cell_center(c.cell, c.size_cells)
+		var look := party_mid - t.position
+		t.face(Vector2(look.x, look.z), false)
+		add_child(t)
+		ctokens[c.id] = t
+		foes.append(t)
+	foes.sort_custom(func(a: CombatToken, b: CombatToken) -> bool: return a.position.distance_to(party_mid) < b.position.distance_to(party_mid))
+	for i in foes.size():
+		foes[i].emerge(0.1 + 0.5 * i / maxf(1.0, foes.size() - 1.0), 0.6)
+	var turn := create_tween()
+	turn.tween_interval(STEP_TIME + 0.05)
+	turn.tween_callback(func() -> void: _face_nearest_foe(ours, foes))
+	return ctokens
+
+
+## Each of `ours` stops walking and turns to the nearest of `foes`.
+func _face_nearest_foe(ours: Array[CombatToken], foes: Array[CombatToken]) -> void:
+	for tok in ours:
+		if not is_instance_valid(tok):
+			continue
+		var best := Vector3.ZERO
+		var best_d := INF
+		for f in foes:
+			if is_instance_valid(f) and f.combatant.is_alive() and tok.combatant.hostile_to(f.combatant):
+				var d := tok.position.distance_to(f.position)
+				if d < best_d:
+					best_d = d
+					best = f.position - tok.position
+		tok.face(Vector2(best.x, best.z), false)
 
 
 ## A fight's token: guests wear their NPC sprite rather than their stat block's.
@@ -1717,16 +1780,21 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 		elif c.creature.dead:
 			var stain := _box(Vector3(0.6, 0.02, 0.4), board.cell_center(c.cell, c.size_cells) + Vector3(0, 0.015, 0), "blood_deep")
 			stain.name = "Remains"
-	for id: String in ctokens:
-		(ctokens[id] as Node).queue_free()
-	if combat_view != null:
-		combat_view.queue_free()
-		combat_view = null
+	# The party's own figures go back to exploring where they stand; whoever else is still up fades away.
+	var ours := {}
 	for m: Combatant in members + guest_members:
-		var tok := tokens[m.id] as CombatToken
-		tok.position = board.cell_center(m.cell)
-		tok.visible = true
-		tok.refresh()
+		ours[tokens[m.id]] = true
+	for id: String in ctokens:
+		var tok := ctokens[id] as CombatToken
+		if ours.has(tok):
+			continue
+		if tok.visible and tok.combatant.is_alive():
+			tok.fade_away(0.5)
+		else:
+			tok.queue_free()
+	if combat_view != null:
+		combat_view.close_softly()
+		combat_view = null
 	in_combat = false
 	GameState.combat_snapshot = {}
 	ModeController.force(ModeController.Mode.EXPLORATION)
@@ -1737,6 +1805,15 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 		if m.creature.hp > 0:
 			m.creature.remove_condition(&"grappled")
 			m.creature.remove_condition(&"prone")
+	for m: Combatant in members + guest_members:
+		var tok := tokens[m.id] as CombatToken
+		tok.combatant = m
+		tok.set_active(false)
+		tok.set_highlight(false)
+		tok.scale = Vector3.ONE
+		tok.visible = true
+		tok.refresh()
+		create_tween().tween_property(tok, "position", board.cell_center(m.cell), 0.25)
 	if outcome == "victory":
 		(st.loc_state(loc_id)["encounters"] as Dictionary)[encounter_id] = true
 		if spec.has("flag"):

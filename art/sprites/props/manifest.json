@@ -4133,6 +4133,60 @@
       "mount": "stand",
       "source": "art/generated/props/sheet_pair_statue_strahd_barrel_spigot.png",
       "slot": 3
+    },
+    "doll_yellow": {
+      "file": "art/sprites/props/doll_yellow.png",
+      "width_px": 100,
+      "height_px": 160,
+      "world_height": 0.6,
+      "world_width": 0.37,
+      "pixel_size": 0.003896,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_pair_doll_yellow_chair_high.png",
+      "saturate": 1.2,
+      "slot": 0,
+      "back": "doll_yellow_back"
+    },
+    "doll_yellow_back": {
+      "file": "art/sprites/props/doll_yellow_back.png",
+      "width_px": 96,
+      "height_px": 160,
+      "world_height": 0.6,
+      "world_width": 0.347,
+      "pixel_size": 0.003896,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_pair_doll_yellow_chair_high.png",
+      "saturate": 1.2,
+      "slot": 1
+    },
+    "chair_high": {
+      "file": "art/sprites/props/chair_high.png",
+      "width_px": 196,
+      "height_px": 312,
+      "world_height": 1.2,
+      "world_width": 0.747,
+      "pixel_size": 0.003909,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_pair_doll_yellow_chair_high.png",
+      "saturate": 1.1,
+      "slot": 2,
+      "back": "chair_high_back"
+    },
+    "chair_high_back": {
+      "file": "art/sprites/props/chair_high_back.png",
+      "width_px": 196,
+      "height_px": 312,
+      "world_height": 1.2,
+      "world_width": 0.739,
+      "pixel_size": 0.003909,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_pair_doll_yellow_chair_high.png",
+      "saturate": 1.1,
+      "slot": 3
     }
   }
 }
