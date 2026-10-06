@@ -662,6 +662,10 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 			var ch0 := choices[i] as Dictionary
 			_menu.add_item("%s: %s" % [action["label"], ch0["label"]], 200 + i)
 			_menu.set_item_disabled(_menu.get_item_index(200 + i), not (bool(action["legal"]) and mine))
+	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null:
+		_menu.add_separator("Ready")
+		_menu.add_item("Ready %s: release it when an enemy comes in range" % action["label"], 300)
+		_menu.set_item_disabled(_menu.get_item_index(300), not (bool(action["legal"]) and mine))
 	if str(action["kind"]) == "spell" and shown != null:
 		var levels := catalog.slot_choices(shown, str(action["spell_id"]))
 		if not levels.is_empty():
@@ -684,6 +688,11 @@ func _on_menu(id: int) -> void:
 		show_details(str(d["title"]), d["lines"] as Array)
 	elif id == 1:
 		action_chosen.emit(action)
+	elif id == 300:
+		var ready := action.duplicate(true)
+		ready["kind"] = "ready_spell"
+		ready["targeting"] = "none"
+		action_chosen.emit(ready)
 	elif id >= 200:
 		var picked := action.duplicate(true)
 		var ch0 := (action["choices"] as Array)[id - 200] as Dictionary

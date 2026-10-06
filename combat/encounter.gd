@@ -367,6 +367,11 @@ func _begin_turn() -> void:
 		o.cast_slot_spell_this_turn = false
 		o.creature.on_turn_start(c.id)
 	_expire_marks(c.id, "start")
+	if c.readied.has("conc"):
+		var held := c.readied["conc"] as Concentration
+		if held != null and not held.ended:
+			held.end("the readied spell wasn't released")
+			log.add("info", "%s lets the readied spell go" % c.name(), c.id)
 	c.reset_turn()
 	if c.creature.has_flag("hasted"):
 		c.haste_action = true
@@ -553,6 +558,8 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		var step := grid.step_cost(c.cell, to, c.size_cells, _has_fn(occ["blocked"] as Dictionary), _has_fn(occ["slowed"] as Dictionary), move_mode(c))
 		if c.creature.has_condition(&"prone"):
 			step *= 2
+		if c.has_meta("jumping"):
+			step = 0
 		if step < 0 or step > c.movement_left:
 			break
 		var from := c.cell
@@ -604,13 +611,17 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 func _readied_triggers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[Combatant]:
 	var out: Array[Combatant] = []
 	for p in hostiles_of(mover):
-		if p.readied.is_empty() or not spells.can_react(p) or not can_see(p, mover):
+		if p.readied.is_empty() or not p.reaction_available or not p.can_act() or p.creature.has_flag("no_reactions") or not can_see(p, mover):
 			continue
-		var option := option_by_id(p, str(p.readied.get("option", "")))
-		if option.is_empty():
-			continue
-		var prof := option["profile"] as WeaponProfile
-		var reach := prof.reach if bool(option["melee"]) else prof.normal_range
+		var reach := 0
+		if p.readied.has("spell"):
+			reach = spells.range_ft(Compendium.shared().spell_data(str(p.readied["spell"])), p)
+		else:
+			var option := option_by_id(p, str(p.readied.get("option", "")))
+			if option.is_empty():
+				continue
+			var prof := option["profile"] as WeaponProfile
+			reach = prof.reach if bool(option["melee"]) else prof.normal_range
 		var before := grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells)
 		var after := grid.distance_ft(p.cell, p.size_cells, to, mover.size_cells)
 		if after <= reach and before > reach:
@@ -619,6 +630,10 @@ func _readied_triggers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[
 
 
 func _readied_attack(p: Combatant, target: Combatant) -> CombatResult:
+	if p.readied.has("spell"):
+		var held := p.readied.duplicate()
+		p.readied = {}
+		return spells.release_readied(p, held, target)
 	var option := option_by_id(p, str(p.readied.get("option", "")))
 	p.readied = {}
 	if option.is_empty() or attack_legal(p, target, option) != "":
@@ -640,6 +655,40 @@ func ready_attack(c: Combatant, option_id: String) -> CombatResult:
 	spend_action(c)
 	c.readied = {"option": option_id}
 	log.add("info", "%s readies an attack (%s) for the first enemy to come within reach" % [c.name(), option["label"]], c.id)
+	return CombatResult.new()
+
+
+## Ready (2024) with a spell: cast it now (the slot is spent), hold its energy with Concentration, and release it
+## with your Reaction when an enemy comes within the spell's range before the start of your next turn. If
+## Concentration breaks first, the spell is lost.
+func ready_spell(c: Combatant, spell_id: String, slot: int) -> CombatResult:
+	var why := _action_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	var entry := {}
+	for x in spells.castable(c):
+		if str(x["id"]) == spell_id:
+			entry = x
+	if entry.is_empty():
+		return CombatResult.fail("Unknown spell")
+	var s := Compendium.shared().spell_data(spell_id)
+	if str((s.get("casting_time", {}) as Dictionary).get("unit", "")) != "action":
+		return CombatResult.fail("Only a spell with a casting time of an action can be readied")
+	if not bool(entry["legal"]) and str(entry["reason"]) != "Action already used":
+		return CombatResult.fail(str(entry["reason"]))
+	var ch := c.creature as Character
+	var level := int(s.get("level", 0))
+	if level > 0:
+		slot = maxi(slot, level)
+		if ch.slots_left(slot) <= 0:
+			return CombatResult.fail("No level %d slots left" % slot)
+		ch.expend_slot(slot)
+		c.cast_slot_spell_this_turn = true
+	spend_action(c)
+	c.magic_action_used = true
+	var conc := c.creature.begin_concentration("readied:" + spell_id, "a readied %s" % s["name"])
+	c.readied = {"spell": spell_id, "slot": slot, "conc": conc}
+	log.add("spell", "%s readies %s for the first enemy to come within %d ft" % [c.name(), s["name"], spells.range_ft(s, c)], c.id)
 	return CombatResult.new()
 
 
@@ -830,6 +879,45 @@ func stand_up(c: Combatant) -> CombatResult:
 	log.add("move", "%s stands up (%d ft)" % [c.name(), cost], c.id)
 	events.append({"type": "condition", "id": c.id})
 	return CombatResult.new()
+
+
+## Jump (the spell): once on each of its turns, a leap of up to 30 ft for 10 ft of movement, over creatures and
+## Difficult Terrain (not through walls). Leaving an enemy's reach still provokes Opportunity Attacks.
+func jump(c: Combatant, dest: Vector2i) -> CombatResult:
+	var why := _turn_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if not c.creature.has_flag("jump"):
+		return CombatResult.fail("No Jump")
+	if int(c.get_meta("jumped_round", -1)) == round_no:
+		return CombatResult.fail("Already jumped this turn")
+	if c.movement_left < 10:
+		return CombatResult.fail("Needs 10 ft of movement")
+	if grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells) > 30:
+		return CombatResult.fail("At most 30 ft")
+	for cell in CombatGrid.footprint(dest, c.size_cells):
+		if grid.is_solid(cell) or (occupant_at(cell) != null and occupant_at(cell) != c):
+			return CombatResult.fail("Can't land there")
+	var path: Array[Vector2i] = [c.cell]
+	var from := center_of(c)
+	var to := Vector2(dest.x + c.size_cells / 2.0, dest.y + c.size_cells / 2.0)
+	var steps := maxi(absi(dest.x - c.cell.x), absi(dest.y - c.cell.y))
+	for i in range(1, steps + 1):
+		var p := from.lerp(to, float(i) / steps)
+		var cell := Vector2i(floori(p.x - c.size_cells / 2.0 + 0.5), floori(p.y - c.size_cells / 2.0 + 0.5))
+		if grid.has_flag(cell, CombatGrid.WALL):
+			return CombatResult.fail("A wall is in the way")
+		if cell != path[path.size() - 1]:
+			path.append(cell)
+	if path[path.size() - 1] != dest:
+		path.append(dest)
+	c.movement_left -= 10
+	c.set_meta("jumped_round", round_no)
+	c.set_meta("jumping", true)
+	log.add("move", "%s leaps %d ft (Jump)" % [c.name(), grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells)], c.id)
+	var r := _walk(c, path, 1, CombatResult.new(), {})
+	c.remove_meta("jumping")
+	return r
 
 
 func drop_prone(c: Combatant) -> CombatResult:
@@ -1168,6 +1256,11 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "No clear line: Total Cover"
 	if target.creature.has_flag("ethereal"):
 		return "%s is on the Ethereal Plane" % target.name()
+	if c.creature.has_flag("cant_attack"):
+		return "%s can't attack in this form" % c.name()
+	if bool(option["melee"]) and c.creature.has_flag("levitating") != target.creature.has_flag("levitating") \
+			and (option["profile"] as WeaponProfile).reach < 20:
+		return "Out of reach: one of you is floating 20 ft up (Levitate)"
 	var charm := charm_blocks(c, target)
 	if charm != "":
 		return charm

@@ -225,6 +225,42 @@ func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant) -> 
 	return r
 
 
+## Releases a readied spell at `target` (the creature that triggered it) with the Reaction: its slot was spent when
+## it was readied. Areas are centred on (or aimed at) the target.
+func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> CombatResult:
+	var e := enc()
+	var conc := held.get("conc") as Concentration
+	if conc != null and conc.ended:
+		return CombatResult.new()
+	var spell_id := str(held["spell"])
+	var s := _comp().spell_data(spell_id)
+	c.reaction_available = false
+	if conc != null:
+		conc.ended = true
+		if c.creature.concentration == conc:
+			c.creature.concentration = null
+	var new_conc: Concentration = null
+	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
+		new_conc = c.creature.begin_concentration(spell_id, str(s["name"]))
+	var entry := _entry_any(c, spell_id)
+	var point := e.center_of(target)
+	var dir := (point - e.center_of(c)).normalized()
+	var cells: Array[Vector2i] = []
+	if s.has("area"):
+		cells = area_for(c, s, point, dir, int(held["slot"]))
+	e.log.add("reaction", "%s releases the readied %s at %s" % [c.name(), s["name"], target.name()], c.id)
+	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells, "targets": [target.id]})
+	var ctx := {"c": c, "s": s, "slot": int(held["slot"]), "nums": numbers(c, entry), "conc": new_conc, "opts": {},
+		"point": point, "cells": cells, "choice": choice_of(s, {}), "direction": dir, "cell": target.cell}
+	var r := CombatResult.new()
+	var tgt: Array[Combatant] = [target]
+	_resolve(ctx, tgt, cells, r)
+	_finish_concentration(ctx)
+	zones.prune()
+	e._check_over()
+	return r
+
+
 ## A spell cast before the fight (Mage Armor, Find Familiar, Animate Dead): its lowest slot is spent and its effect
 ## applied, with Concentration if it needs it.
 func precast(c: Combatant, spell_id: String) -> bool:
@@ -1757,8 +1793,32 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 	o.keep_with(ctx["conc"] as Concentration)
 	if ctx["conc"] == null:
 		o.rounds_left = int(d.get("amount", 1)) * (10 if str(d.get("kind", "")) == "minutes" else (600 if str(d.get("kind", "")) == "hours" else 1))
+	_light_vs_darkness(o, int(ctx["slot"]))
 	zones.add(o, r)
 	r.lines.append(enc().log.add("spell", "%s fills %d squares" % [s["name"], cells.size()], c.id))
+
+
+## Darkness dispels light from spells of level 2 or lower that it overlaps; Daylight dispels Darkness of level 3
+## or lower.
+func _light_vs_darkness(o: FieldObject, slot: int) -> void:
+	if bool(o.rule("darkness", false)):
+		for other in zones.live():
+			if other.rules.has("light") and int(_comp().spell_data(other.spell_id).get("level", 0)) <= 2:
+				for cell in o.cells:
+					if str(zones.spell_light(cell)["level"]) != "":
+						other.ended = true
+						enc().log.add("info", "%s snuffs out %s" % [o.name, other.name], o.caster_id)
+						break
+	var up_to := int(o.rule("dispels_darkness", 0))
+	if up_to > 0:
+		for other in zones.live():
+			if bool(other.rule("darkness", false)) and other.slot <= maxi(up_to, slot):
+				for cell in other.cells:
+					if cell in o.cells or o.cells.is_empty():
+						other.ended = true
+						enc().log.add("info", "%s dispels %s" % [o.name, other.name], o.caster_id)
+						break
+	zones.prune()
 
 
 ## Spiritual Weapon, Flaming Sphere, Dancing Lights, Mage Hand: an object on a square, kept by Concentration (or

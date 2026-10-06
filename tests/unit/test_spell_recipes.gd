@@ -429,3 +429,23 @@ func test_resistance_reduces_the_chosen_damage_type_once_per_turn() -> void:
 	var hp2 := ally.creature.hp
 	e.deal_damage(null, ally, [{"amount": 10, "type": "fire"}], false, "test")
 	assert_eq(ally.creature.hp, hp2 - 10, "once per turn")
+
+
+func test_a_readied_spell_goes_off_when_an_enemy_comes_in_range() -> void:
+	var rows: Array[String] = []
+	for z in 6:
+		rows.append(".".repeat(32))
+	var e := TestCombat.encounter(rows, 3)
+	var s := TestCombat.hero(e, "silvain_aster", Vector2i(1, 3))
+	s.reaction_rules["readied_attack"] = "auto"
+	var w := TestCombat.foe(e, "wolf", Vector2i(28, 3))
+	w.creature.hp = 100
+	TestCombat.start_with(e, s)
+	var r := e.ready_spell(s, "fire_bolt", 0)
+	assert_true(r.ok, r.reason)
+	assert_true(s.creature.concentration != null, "held with Concentration")
+	e.end_turn()
+	w.movement_left = 60
+	e.move(w, Vector2i(20, 3))
+	assert_false(s.reaction_available, "released with the Reaction")
+	assert_true(s.creature.concentration == null)
