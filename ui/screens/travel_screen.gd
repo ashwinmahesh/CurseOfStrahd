@@ -1,6 +1,6 @@
 class_name TravelScreen
 extends CanvasLayer
-## The map of Barovia (plan §5.2, ADR 0010): an illustrated gothic map of the whole valley on dark vellum
+## The map of Barovia (plan §5.2, ADR 0010): an illustrated gothic map of the whole valley, painted as the land itself
 ## (art/ui/map/barovia.png, docs/ui/travel_map.md) with the places the party knows and the roads between them drawn on
 ## top, so names stay sharp at any zoom. Pick a place to see the way there (roads, hours, when you'd arrive, day or night) and set out.
 ## The wheel zooms and dragging pans. Opened from a way out of town (`setting_out`), or just to look (M).
