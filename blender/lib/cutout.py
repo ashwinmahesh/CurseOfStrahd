@@ -109,15 +109,32 @@ NEUTRAL_PIXEL = 0.06
 NEUTRAL_PALETTE = 0.075
 
 
-def quantize(arr, palette=None, chunk=200_000, keep_neutrals=True):
+def _box_sum(mask, r):
+    """Count of True pixels in the (2r+1)^2 window around each pixel (integral image)."""
+    h, w = mask.shape
+    c = np.pad(mask.astype(np.int32), ((r + 1, r), (r + 1, r))).cumsum(0).cumsum(1)
+    k = 2 * r + 1
+    return c[k:k + h, k:k + w] - c[:h, k:k + w] - c[k:k + h, :w] + c[:h, :w]
+
+
+def quantize(arr, palette=None, chunk=200_000, keep_neutrals=True, neutral_area=0.0):
     """Snaps every visible pixel to the nearest palette colour (redmean distance, same as the shader).
-    keep_neutrals: grey pixels stay on the grey ramp instead of drifting to bone/tan."""
+    keep_neutrals: grey pixels stay on the grey ramp instead of drifting to bone/tan.
+    neutral_area > 0 applies that only where at least that share of the pixel's 7x7 neighbourhood is grey too (wolf
+    fur, mail, a grey coat): a thin warm-grey line on skin or cloth (a jaw line, a fold) then snaps to the warm
+    browns around it instead of turning into a cool grey blotch. Walk sheets use 0.5."""
     if palette is None:
         palette = load_palette()
     out = arr.copy()
     flat = out.reshape(-1, 4)
     idx = np.nonzero(flat[:, 3] > 0)[0]
     pal_chroma = palette.max(axis=1) - palette.min(axis=1)
+    area = None
+    if keep_neutrals and neutral_area > 0:
+        rgb = arr[..., :3]
+        opaque = arr[..., 3] > 0
+        grey = ((rgb.max(axis=2) - rgb.min(axis=2)) < NEUTRAL_PIXEL) & (rgb.max(axis=2) < 0.86) & opaque
+        area = (_box_sum(grey, 3) >= neutral_area * np.maximum(_box_sum(opaque, 3), 1)).ravel()
     for start in range(0, len(idx), chunk):
         sel = idx[start:start + chunk]
         c = flat[sel, :3][:, None, :]
@@ -128,6 +145,8 @@ def quantize(arr, palette=None, chunk=200_000, keep_neutrals=True):
         if keep_neutrals and (pal_chroma < NEUTRAL_PALETTE).any():
             px = flat[sel, :3]
             neutral = ((px.max(axis=1) - px.min(axis=1)) < NEUTRAL_PIXEL) & (px.max(axis=1) < 0.86)
+            if area is not None:
+                neutral &= area[sel]
             dist = dist + np.where(neutral[:, None] & (pal_chroma[None, :] >= NEUTRAL_PALETTE), 10.0, 0.0)
         flat[sel, :3] = palette[np.argmin(dist, axis=1)]
     return out
@@ -146,10 +165,26 @@ def saturate(arr, k):
     return out
 
 
-def despeckle(arr, max_same=1, wrap=False):
+def _key_rgb(key):
+    """Packed 0xRRGGBB keys -> float RGB 0..1 (last axis)."""
+    return np.stack([(key >> 16) & 255, (key >> 8) & 255, key & 255], axis=-1).astype(np.float32) / 255.0
+
+
+def _redmean(a, b):
+    """Redmean colour distance between float RGB arrays (the quantizer's metric, square-rooted)."""
+    r = (a[..., 0] + b[..., 0]) * 0.5
+    d = a - b
+    return np.sqrt((2 + r) * d[..., 0] ** 2 + 4 * d[..., 1] ** 2 + (3 - r) * d[..., 2] ** 2)
+
+
+def despeckle(arr, max_same=1, wrap=False, near=0.0, ring=False):
     """Cleans the salt-and-pepper left when a noisy (JPEG) source is snapped to the palette: an opaque pixel
     with at most `max_same` of its 8 neighbours in its own colour takes its neighbours' most common colour.
-    wrap=True treats the image as a tile (textures). Run after quantize; colours stay in the palette."""
+    wrap=True treats the image as a tile (textures). Run after quantize; colours stay in the palette.
+    near > 0 counts a neighbour within that redmean distance as the pixel's own colour, so a line drawn in two or
+    three dark shades (void, ink, grave) is not mistaken for specks. ring=True also requires nothing alike in the
+    5x5 ring around the pixel: a thin line sampled down to a dotted line (a jaw line, an eyelid) keeps its dots, and
+    only truly lone specks go. Walk sheets use near=0.3, ring=True."""
     out = arr.copy()
     h, w = arr.shape[:2]
     rgb8 = np.round(arr[..., :3] * 255).astype(np.int64)
@@ -162,8 +197,28 @@ def despeckle(arr, max_same=1, wrap=False):
         pad = np.pad(key, 1, constant_values=-1)
         nb = np.stack([pad[1 + dy:1 + dy + h, 1 + dx:1 + dx + w]
                        for dy in (-1, 0, 1) for dx in (-1, 0, 1) if dy or dx])
-    same = (nb == key[None]).sum(axis=0)
+    if near > 0:
+        own = _key_rgb(np.maximum(key, 0))
+        same = np.zeros(key.shape, dtype=np.int32)
+        for n in nb:
+            same += ((n >= 0) & ((n == key) | (_redmean(_key_rgb(np.maximum(n, 0)), own) <= near))).astype(np.int32)
+    else:
+        same = (nb == key[None]).sum(axis=0)
     fix = (key >= 0) & (same <= max_same)
+    if ring and not wrap and fix.any():
+        ys, xs = np.nonzero(fix)
+        k = key[ys, xs]
+        own = _key_rgb(k)
+        pad2 = np.pad(key, 2, constant_values=-1)
+        extra = np.zeros(len(ys), dtype=np.int32)
+        for dy in range(-2, 3):
+            for dx in range(-2, 3):
+                if max(abs(dy), abs(dx)) < 2:
+                    continue
+                n = pad2[ys + 2 + dy, xs + 2 + dx]
+                alike = (n == k) if near <= 0 else ((n == k) | (_redmean(_key_rgb(np.maximum(n, 0)), own) <= near))
+                extra += ((n >= 0) & alike).astype(np.int32)
+        fix[ys, xs] = same[ys, xs] + extra <= max_same
     if not fix.any():
         return out
     ys, xs = np.nonzero(fix)
@@ -176,6 +231,104 @@ def despeckle(arr, max_same=1, wrap=False):
     out[ys, xs, 0] = ((best >> 16) & 255) / 255.0
     out[ys, xs, 1] = ((best >> 8) & 255) / 255.0
     out[ys, xs, 2] = (best & 255) / 255.0
+    return out
+
+
+def smooth_colours(arr, radius=3, sigma=0.06, passes=2):
+    """Edge-preserving (bilateral) smoothing of the opaque pixels of a source image, before it is cut and snapped.
+    Gemini's JPEG noise and faint painted texture leave a flat area sitting between two palette shades, and the
+    snap then turns it into salt-and-pepper (owner feedback 2026-10-06: sprites read noisy). Each pixel is averaged
+    with neighbours within `radius` whose colour is within about `sigma` of its own, so flat areas even out while
+    ink lines and colour edges (far more than `sigma` apart) stay where they are. Transparent pixels are ignored."""
+    out = arr.copy()
+    h, w = arr.shape[:2]
+    sig_s2 = 2.0 * max(radius / 1.5, 0.5) ** 2
+    sig_r2 = 2.0 * sigma ** 2
+    offsets = [(dy, dx) for dy in range(-radius, radius + 1) for dx in range(-radius, radius + 1)
+               if dy * dy + dx * dx <= radius * radius]
+    for _ in range(passes):
+        rgb = out[..., :3]
+        opaque = out[..., 3] > 0.5
+        pr = np.pad(rgb, ((radius, radius), (radius, radius), (0, 0)), mode="edge")
+        pa = np.pad(opaque, radius, constant_values=False)
+        acc = np.zeros_like(rgb)
+        wsum = np.zeros((h, w), dtype=np.float32)
+        for dy, dx in offsets:
+            n = pr[radius + dy:radius + dy + h, radius + dx:radius + dx + w]
+            na = pa[radius + dy:radius + dy + h, radius + dx:radius + dx + w]
+            wgt = np.exp(-(dy * dy + dx * dx) / sig_s2 - ((n - rgb) ** 2).sum(axis=2) / sig_r2) * na
+            acc += n * wgt[..., None]
+            wsum += wgt
+        out[..., :3] = np.where(opaque[..., None], acc / np.maximum(wsum, 1e-6)[..., None], rgb)
+    return out
+
+
+def merge_islands(arr, max_size=6, max_contrast=0.45):
+    """The majority step after despeckle: a same-coloured patch of at most `max_size` pixels (8-connected) takes the
+    most common near shade around it (redmean distance <= `max_contrast`, e.g. two greys, blood and rust, two skin
+    tones next to each other on the ramp, void and ink in an outline). Clears the 2-to-6-pixel clumps despeckle leaves
+    in flat areas, and evens a line drawn in two dark shades into one, without blurring: lines longer than `max_size`
+    are never touched, and a patch with no near shade around it (ink pupils on skin, a highlight, an earring) keeps
+    its pixels. Colours stay in the palette; alpha is unchanged."""
+    out = arr.copy()
+    h, w = arr.shape[:2]
+    n = h * w
+    rgb8 = np.round(arr[..., :3] * 255).astype(np.int64)
+    key = (rgb8[..., 0] << 16) | (rgb8[..., 1] << 8) | rgb8[..., 2]
+    key = np.where(arr[..., 3] > 0, key, -1)
+    opaque = key >= 0
+    offsets = [(dy, dx) for dy in (-1, 0, 1) for dx in (-1, 0, 1) if dy or dx]
+
+    def shifted(a, dy, dx, fill):
+        p = np.pad(a, 1, constant_values=fill)
+        return p[1 + dy:1 + dy + h, 1 + dx:1 + dx + w]
+
+    same = [(shifted(key, dy, dx, -2) == key) & opaque for dy, dx in offsets]
+    # Label propagation: after max_size - 1 rounds every patch of max_size pixels or fewer carries one label (its
+    # smallest pixel index); a bigger patch still has a seam between labels, which marks all its labels "open".
+    big = np.int64(n)
+    lab = np.where(opaque, np.arange(n, dtype=np.int64).reshape(h, w), big)
+    for _ in range(max_size - 1):
+        new = lab.copy()
+        for (dy, dx), s in zip(offsets, same):
+            np.minimum(new, np.where(s, shifted(lab, dy, dx, big), big), out=new)
+        if (new == lab).all():
+            break
+        lab = new
+    is_open = np.zeros(n + 1, dtype=bool)
+    for (dy, dx), s in zip(offsets, same):
+        is_open[lab[s & (shifted(lab, dy, dx, big) != lab)]] = True
+    sizes = np.bincount(lab[opaque], minlength=n + 1)
+    small = opaque & (sizes[lab] <= max_size) & ~is_open[lab]
+    if not small.any():
+        return out
+    # The colour around each patch: its pixels' opaque neighbours of another colour, counted per patch.
+    pairs = []
+    for dy, dx in offsets:
+        nk = shifted(key, dy, dx, -1)
+        sel = small & (nk >= 0) & (nk != key)
+        pairs.append(lab[sel] * (1 << 24) + nk[sel])
+    pairs = np.concatenate(pairs)
+    if len(pairs) == 0:
+        return out
+    uniq, counts = np.unique(pairs, return_counts=True)
+    plab, pcol = uniq >> 24, uniq & ((1 << 24) - 1)
+    # Only near shades are candidates; the most common of them wins.
+    near = _redmean(_key_rgb(key.ravel()[plab]), _key_rgb(pcol)) <= max_contrast
+    plab, pcol, counts = plab[near], pcol[near], counts[near]
+    if len(plab) == 0:
+        return out
+    order = np.lexsort((counts, plab))
+    last = np.append(plab[order][1:] != plab[order][:-1], True)
+    best_lab, best_col = plab[order][last], pcol[order][last]
+    target = np.full(n + 1, -1, dtype=np.int64)
+    target[best_lab] = best_col
+    t = np.where(small, target[lab], -1)
+    ys, xs = np.nonzero(t >= 0)
+    col = t[ys, xs]
+    out[ys, xs, 0] = ((col >> 16) & 255) / 255.0
+    out[ys, xs, 1] = ((col >> 8) & 255) / 255.0
+    out[ys, xs, 2] = (col & 255) / 255.0
     return out
 
 

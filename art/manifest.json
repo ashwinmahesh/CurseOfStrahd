@@ -15,7 +15,8 @@
       "source": "art/generated/characters/villager_turnaround.png",
       "sprites": "art/sprites/villager/walk.tres",
       "model": "gemini-3.1-flash-image",
-      "notes": "Phase 0 pipeline proof: 5-view turnaround -> cutout rig (blender/render_walk.py) -> 8 directions x 8-frame walk. Needs art QA before final."
+      "notes": "Phase 0 pipeline proof: 5-view turnaround -> cutout rig (blender/render_walk.py) -> 8 directions x 8-frame walk. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "villager_standin",
@@ -32,7 +33,7 @@
       "sprites": "art/sprites/ilse_varga/walk.tres",
       "portrait": "art/portraits/ilse_varga.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "Human fighter (party). Regenerated (P4-09, 2026-10-06) for the owner's Build Log 04 note (her face read masculine): the old sheet sent as the reference with a clearly feminine face, a braid and the same kit. make sprite SAT=1.3 so the tabard stays red instead of rust. 8 directions x 8-frame walk, 384 px cells. Same height_units as before. Needs art QA before final.",
+      "notes": "Human fighter (party). Regenerated (P4-09, 2026-10-06) for the owner's Build Log 04 note (her face read masculine): the old sheet sent as the reference with a clearly feminine face, a braid and the same kit. make sprite SAT=1.3 so the tabard stays red instead of rust. 8 directions x 8-frame walk, 384 px cells. Same height_units as before. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "prompt": "Character turnaround sheet of Ilse Varga, a human woman fighter in her late thirties, a veteran mercenary sergeant, who must clearly read as a woman: a feminine face with high cheekbones, fuller lips, a softer jaw and a thin pale scar across her left cheek, ash-blonde hair pulled back into one thick braid hanging down her back with a few loose strands at her temples, and a strong but female figure; she wears a short-sleeved chainmail shirt under a rust-red tabard with a leather belt and pouches, a diagonal sword strap across her chest, leather bracers, slate-grey trousers and tall brown boots, a greatsword sheathed across her back. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. The reference image is her old sheet: keep the same clothes, colours and greatsword, but redraw her face, hair and figure as described so she is unmistakably a woman.",
       "reference": [
         "art/generated/characters/ilse_varga_turnaround.png"
@@ -41,6 +42,9 @@
         "art/portraits/ilse_varga_smile.png",
         "art/portraits/ilse_varga_angry.png",
         "art/portraits/ilse_varga_weary.png"
+      ],
+      "sprite_flags": [
+        "SAT=1.3"
       ]
     },
     {
@@ -51,12 +55,13 @@
       "sprites": "art/sprites/tamsin_tealeaf/walk.tres",
       "portrait": "art/portraits/tamsin_tealeaf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Halfling rogue (party). Drawn alone, so he fills the cell like a human: use about half a human's height_units. Needs art QA before final.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Halfling rogue (party). Drawn alone, so he fills the cell like a human: use about half a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "expressions": [
         "art/portraits/tamsin_tealeaf_afraid.png",
         "art/portraits/tamsin_tealeaf_sly.png",
         "art/portraits/tamsin_tealeaf_sad.png"
-      ]
+      ],
+      "sprite_flags": []
     },
     {
       "id": "hedda_ironvow",
@@ -66,12 +71,13 @@
       "sprites": "art/sprites/hedda_ironvow/walk.tres",
       "portrait": "art/portraits/hedda_ironvow.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Dwarf cleric (party). Sheet had touching shield/mace silhouettes; split by the new connected-component pass in blender/lib/cutout.py. Use a smaller height_units than humans. Needs art QA before final.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Dwarf cleric (party). Sheet had touching shield/mace silhouettes; split by the new connected-component pass in blender/lib/cutout.py. Use a smaller height_units than humans. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "expressions": [
         "art/portraits/hedda_ironvow_smile.png",
         "art/portraits/hedda_ironvow_angry.png",
         "art/portraits/hedda_ironvow_sad.png"
-      ]
+      ],
+      "sprite_flags": []
     },
     {
       "id": "silvain_aster",
@@ -81,12 +87,13 @@
       "sprites": "art/sprites/silvain_aster/walk.tres",
       "portrait": "art/portraits/silvain_aster.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. High elf wizard (party). Staff below the hips is kept rigid by the new prop pass (cutout.split_props); robe hem still swings with the legs. Needs art QA before final.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. High elf wizard (party). Staff below the hips is kept rigid by the new prop pass (cutout.split_props); robe hem still swings with the legs. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "expressions": [
         "art/portraits/silvain_aster_smile.png",
         "art/portraits/silvain_aster_afraid.png",
         "art/portraits/silvain_aster_angry.png"
-      ]
+      ],
+      "sprite_flags": []
     },
     {
       "id": "zombie",
@@ -96,7 +103,8 @@
       "sprites": "art/sprites/zombie/walk.tres",
       "portrait": "art/portraits/zombie.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian villager zombie (enemy). Hunched pose survives the rig. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian villager zombie (enemy). Hunched pose survives the rig. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "wolf",
@@ -106,7 +114,10 @@
       "sprites": "art/sprites/wolf/walk.tres",
       "portrait": "art/portraits/wolf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Grey wolf. Re-rendered (P4-09, 2026-10-06) for the owner's Build Log 04 note (it came out beige): cutout.quantize now keeps neutral greys on the palette's grey ramp (pewter/slate) instead of letting redmean pick bone, and despeckles. Needs art QA before final."
+      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Grey wolf. Re-rendered (P4-09, 2026-10-06) for the owner's Build Log 04 note (it came out beige): cutout.quantize now keeps neutral greys on the palette's grey ramp (pewter/slate) instead of letting redmean pick bone, and despeckles. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "STATIC=1"
+      ]
     },
     {
       "id": "dire_wolf",
@@ -116,7 +127,10 @@
       "sprites": "art/sprites/dire_wolf/walk.tres",
       "portrait": "art/portraits/dire_wolf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Large dire wolf, second generation (first came out maroon, not black). Use a bigger height_units than the wolf. Needs art QA before final."
+      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Large dire wolf, second generation (first came out maroon, not black). Use a bigger height_units than the wolf. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "STATIC=1"
+      ]
     },
     {
       "id": "ilse_varga_portrait",
@@ -198,7 +212,8 @@
       "portrait": "art/portraits/ismark.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Ismark Kolyanovich, a tall, broad-shouldered young human nobleman in his mid-twenties with short dark-brown hair, a short dark beard and tired, shadowed eyes, wearing worn, once-fine clothes: a faded wine-red doublet with tarnished brass buttons over a bone-coloured shirt, dark brown breeches, scuffed tall leather boots and a short dark grey cloak, a longsword in a plain scabbard hanging at his left hip. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ismark Kolyanovich (named NPC). The wine-red doublet snaps to rust under the palette (like Ilse's tabard); the longsword at his hip swings with the near leg in front views. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ismark Kolyanovich (named NPC). The wine-red doublet snaps to rust under the palette (like Ilse's tabard); the longsword at his hip swings with the near leg in front views. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "ismark_portrait",
@@ -248,12 +263,13 @@
       "portrait": "art/portraits/ireena.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Ireena Kolyana, a young human noblewoman in her early twenties with long wavy auburn hair, a pale, resolute face, wearing a simple dusky-blue noble dress with a laced bodice and long sleeves, a dark plum cloak hanging from her shoulders, and a cream scarf wrapped high around her neck, plain brown boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ireena Kolyana (named NPC). Dusky-blue dress, plum cloak and a cream scarf worn high on the neck (it hides the bite marks). Needs art QA before final.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ireena Kolyana (named NPC). Dusky-blue dress, plum cloak and a cream scarf worn high on the neck (it hides the bite marks). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "expressions": [
         "art/portraits/ireena_smile.png",
         "art/portraits/ireena_afraid.png",
         "art/portraits/ireena_angry.png"
-      ]
+      ],
+      "sprite_flags": []
     },
     {
       "id": "ireena_portrait",
@@ -303,7 +319,8 @@
       "portrait": "art/portraits/rose.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Rose, a ghost girl about ten years old, slight and child-sized (not chibi), with long hair in old-fashioned ringlets tied with a ribbon, wearing an old-fashioned high-collared dress with a pinafore and buttoned ankle boots; she is a ghost, so her whole body, hair and clothes are drawn in pale spectral moonlit-blue and lilac tones (no pure white areas, no warm colours), with sad dark hollow eyes, fully opaque flat colours. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Rose, ghost girl of Death House. Her pale moonlit-blue/lilac snaps to frost, silver and pewter: reads spectral but is fully opaque, so any translucency has to come from the game (modulate alpha). Drawn alone, she fills the cell like an adult: use about 0.7 of a human's height_units. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Rose, ghost girl of Death House. Her pale moonlit-blue/lilac snaps to frost, silver and pewter: reads spectral but is fully opaque, so any translucency has to come from the game (modulate alpha). Drawn alone, she fills the cell like an adult: use about 0.7 of a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "rose_portrait",
@@ -340,7 +357,8 @@
       "portrait": "art/portraits/thorn.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Thorn, a ghost boy about seven years old, small and child-sized (not chibi), with short tousled hair, wearing an old-fashioned short jacket with a round collar, knee breeches, long socks and buckled shoes; he is a ghost, so his whole body, hair and clothes are drawn in pale spectral moonlit-blue and lilac tones (no pure white areas, no warm colours), with frightened dark hollow eyes, fully opaque flat colours. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Thorn, ghost boy of Death House. Same ghost palette as Rose (frost/silver/pewter, opaque). Drawn alone, he fills the cell like an adult: use about 0.6 of a human's height_units. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Thorn, ghost boy of Death House. Same ghost palette as Rose (frost/silver/pewter, opaque). Drawn alone, he fills the cell like an adult: use about 0.6 of a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "thorn_portrait",
@@ -378,11 +396,12 @@
       "portrait": "art/portraits/donavich.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Father Donavich, a haggard, gaunt old human priest with thinning grey hair, sunken bloodshot eyes and grey stubble, wearing a threadbare, patched charcoal-black cassock with a frayed hem, a wooden sunburst holy symbol on a cord around his neck, and worn sandals. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Father Donavich (named NPC). Cassock hem swings with the legs. Needs art QA before final.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Father Donavich (named NPC). Cassock hem swings with the legs. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
       "expressions": [
         "art/portraits/donavich_afraid.png",
         "art/portraits/donavich_sad.png"
-      ]
+      ],
+      "sprite_flags": []
     },
     {
       "id": "donavich_portrait",
@@ -406,7 +425,8 @@
       "portrait": "art/portraits/bildrath.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Bildrath Cantemir, a burly, heavyset middle-aged human shopkeeper with a thick neck, a balding head with a dark fringe of hair and a bushy moustache, a sour, miserly scowl, wearing a stained brown leather apron over a tan shirt with rolled-up sleeves, dark trousers, a ring of keys and a fat coin purse on his belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Bildrath Cantemir (named NPC), burly shopkeeper with keys and a coin purse. The back three-quarter view is closer to a back-side profile. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Bildrath Cantemir (named NPC), burly shopkeeper with keys and a coin purse. The back three-quarter view is closer to a back-side profile. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "bildrath_portrait",
@@ -430,7 +450,8 @@
       "portrait": "art/portraits/parriwimple.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Parriwimple, a very tall, lanky but strong young human man, a gentle giant about seven feet tall with long limbs, a simple, kind, slightly vacant smile and shaggy straw-coloured hair, wearing a too-small patched tan shirt with rolled sleeves, brown suspenders, dark brown trousers and big worn boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Parriwimple (named NPC), Bildrath's very tall nephew. Drawn alone at normal cell height: use about 1.25x a human's height_units so he towers over the party. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Parriwimple (named NPC), Bildrath's very tall nephew. Drawn alone at normal cell height: use about 1.25x a human's height_units so he towers over the party. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "parriwimple_portrait",
@@ -454,7 +475,8 @@
       "portrait": "art/portraits/mad_mary.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Mad Mary, a disheveled, distraught middle-aged human woman with wild, tangled greying dark hair and red-rimmed staring eyes, wearing a long, stained, yellowed parchment-coloured nightgown and a moth-eaten dark purple knitted shawl around her shoulders, barefoot. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Mad Mary (named NPC): nightgown and shawl, barefoot. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Mad Mary (named NPC): nightgown and shawl, barefoot. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "mad_mary_portrait",
@@ -478,7 +500,8 @@
       "portrait": "art/portraits/morgantha.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Morgantha, a stooped, kindly-looking old human woman with a grandmotherly smile that does not reach her cold, glinting eyes, grey hair in a bun under a dark headscarf, wearing a patched dark green peasant dress with a stained apron, a small wicker basket of meat pies covered with a red checked cloth held in her right hand at her side. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Morgantha (named NPC, night hag in disguise) with a basket of meat pies at her side. Her green dress snaps to dark umber. The back three-quarter view (NE/NW) shows a second basket, a generator slip: art review. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Morgantha (named NPC, night hag in disguise) with a basket of meat pies at her side. Her green dress snaps to dark umber. The back three-quarter view (NE/NW) shows a second basket, a generator slip: art review. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "morgantha_portrait",
@@ -502,7 +525,8 @@
       "portrait": "art/portraits/strahd.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Strahd von Zarovich, a tall, gaunt, elegant vampire nobleman with slicked-back black hair, a sharp widow's peak, a long pale face and red eyes, wearing an aristocratic black high-collared doublet with silver buttons, black trousers, tall black riding boots and a long black cape with a blood-red lining and a high stiff collar. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Strahd von Zarovich. From behind he is almost all black cape (the red lining shows front and back). Tall: use a slightly larger height_units than the party's humans. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Strahd von Zarovich. From behind he is almost all black cape (the red lining shows front and back). Tall: use a slightly larger height_units than the party's humans. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "strahd_portrait",
@@ -539,7 +563,8 @@
       "portrait": "art/portraits/ghoul.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a ghoul, a hunched, emaciated undead humanoid with hairless, sickly pale bone-grey skin tinged green stretched over its bones, long black claws, a long purple tongue, jagged teeth and wild pale eyes, wearing only a tattered dark loincloth and rags. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ghoul (enemy): hairless, bone-grey, long purple tongue, loincloth. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ghoul (enemy): hairless, bone-grey, long purple tongue, loincloth. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "ghoul_portrait",
@@ -563,7 +588,8 @@
       "portrait": "art/portraits/ghast.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a ghast, a larger and more rotten ghoul: a hunched undead humanoid with mottled bile-green and bruise-purple rotting skin, long black claws, jagged teeth and glowing red eyes, wearing the torn, filthy remains of a once-fine dark purple coat. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ghast (enemy): drawn as the ghoul's bigger, rottener cousin (green/purple rot, red eyes, torn dark coat) so the two read apart. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ghast (enemy): drawn as the ghoul's bigger, rottener cousin (green/purple rot, red eyes, torn dark coat) so the two read apart. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "ghast_portrait",
@@ -587,7 +613,10 @@
       "portrait": "art/portraits/specter.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a specter, a floating ghost of a dead person with no legs: a tattered hooded shroud whose lower half tapers into a single ragged wisp a little above the ground, long thin reaching hands and a gaunt skull-like face with hollow glowing eyes. The specter is pale and cold: its shroud, hands and face are all pale frost-blue and moonlit-blue with lilac shadows (no red, no crimson, no dark robes, no pure white areas), fully opaque flat colours. Exactly five full views of the same ghost in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating upright in a neutral pose, arms at the sides, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Specter (enemy). Rendered STATIC although the brief grouped it with the walkers: it has no legs (the shroud tapers into a wisp), so the game's bob reads better than a leg cycle. Second generation: the first came out in crimson robes, too close to the cultist. Needs art QA before final."
+      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Specter (enemy). Rendered STATIC although the brief grouped it with the walkers: it has no legs (the shroud tapers into a wisp), so the game's bob reads better than a leg cycle. Second generation: the first came out in crimson robes, too close to the cultist. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "STATIC=1"
+      ]
     },
     {
       "id": "specter_portrait",
@@ -611,7 +640,8 @@
       "portrait": "art/portraits/shadow.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a shadow, a gaunt humanoid figure made entirely of living darkness: a solid deep violet-black body with slightly lighter purple inner shading so its shape reads, long thin limbs, clawed fingers and two pale glowing lilac eyes, its edges slightly ragged like smoke but clean-shaped. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Shadow (enemy): a humanoid of living darkness. Almost all void/ink after quantization (only the eyes and a faint purple inner line read): deliberately hard to see, but check it against dark ground at night (art review). Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Shadow (enemy): a humanoid of living darkness. Almost all void/ink after quantization (only the eyes and a faint purple inner line read): deliberately hard to see, but check it against dark ground at night (art review). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "shadow_portrait",
@@ -635,7 +665,8 @@
       "portrait": "art/portraits/cultist.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a Barovian cultist, a gaunt human in a long dark crimson hooded robe with the hood up, his pale face half in shadow, a rope belt with a curved ritual dagger in a sheath, and dark boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian cultist (enemy): crimson hooded robe, ritual dagger; the robe hem swings with the legs. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian cultist (enemy): crimson hooded robe, ritual dagger; the robe hem swings with the legs. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "cultist_portrait",
@@ -659,7 +690,8 @@
       "portrait": "art/portraits/animated_armor.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of an animated suit of armor: an empty, dented, tarnished steel-grey full plate armor with a closed great helm (a dark empty eye slit with two faint red points), tarnished brass trim and a torn dark red tabard, standing on its own with no person inside. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Animated armor (enemy): empty tarnished plate with red points in the visor and a torn red tabard. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Animated armor (enemy): empty tarnished plate with red points in the visor and a torn red tabard. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "animated_armor_portrait",
@@ -683,7 +715,10 @@
       "portrait": "art/portraits/animated_flying_sword.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of an animated flying longsword: a single steel longsword floating on its own, point down and upright, with a dark leather-wrapped grip, a crossguard and a round pommel, no one holding it. Exactly five full views of the same sword in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Hovering upright, point down, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Flying sword (enemy). The blade is tinted dark red (bloodied) rather than clean steel. Drawn as tall as a person: use about 0.5 of a human's height_units. Needs art QA before final."
+      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Flying sword (enemy). The blade is tinted dark red (bloodied) rather than clean steel. Drawn as tall as a person: use about 0.5 of a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "STATIC=1"
+      ]
     },
     {
       "id": "animated_flying_sword_portrait",
@@ -707,7 +742,10 @@
       "portrait": "art/portraits/broom_of_animated_attack.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of an animated broom: an old twig broom with a gnarled wooden handle, standing upright on its bristles by itself, its bristle head bent forward menacingly like a body, bound with rusty wire, no one holding it. Exactly five full views of the same broom in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing upright on its bristles, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Broom of animated attack (enemy): twig broom with its bristle head bent forward like a body. Use about 0.7 of a human's height_units. Needs art QA before final."
+      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Broom of animated attack (enemy): twig broom with its bristle head bent forward like a body. Use about 0.7 of a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "STATIC=1"
+      ]
     },
     {
       "id": "broom_of_animated_attack_portrait",
@@ -731,7 +769,10 @@
       "portrait": "art/portraits/grick.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a grick, a monster like a giant worm: a thick, rubbery olive-grey snake-like body coiled on the ground with its front third rearing up, its head a sharp dark beak surrounded by four barbed tentacles spread open like a flower, no eyes. Exactly five full views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Coiled on the ground with its front rearing up, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Grick (enemy): reared worm body with a beak and four barbed tentacles. The olive-grey body snaps to tan/bone under the palette. Needs art QA before final."
+      "notes": "5-view turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Grick (enemy): reared worm body with a beak and four barbed tentacles. The olive-grey body snaps to tan/bone under the palette. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "STATIC=1"
+      ]
     },
     {
       "id": "grick_portrait",
@@ -755,7 +796,10 @@
       "portrait": "art/portraits/shambling_mound.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a shambling mound, a huge hulking heap of rotting vegetation in a hunched, vaguely humanoid shape with two thick trailing arm-masses: tangled bog-green vines, dark moss, peat-brown mud and roots, with a few old bones and dead leaves caught in it, no visible face. Exactly five full views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing hunched in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Shambling mound (enemy, Large): use about 2x a human's height_units (2x2 footprint). Needs art QA before final."
+      "notes": "5-view turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Shambling mound (enemy, Large): use about 2x a human's height_units (2x2 footprint). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "STATIC=1"
+      ]
     },
     {
       "id": "shambling_mound_portrait",
@@ -779,7 +823,10 @@
       "portrait": "art/portraits/swarm_of_rats.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a swarm of rats: about a dozen scrawny grey-brown rats with red eyes and long pink tails crowded together into one low, dome-shaped writhing heap on the ground, about twice as wide as it is tall, all the rats touching. Exactly three views of the same swarm in one single row, left to right: front (rats facing the viewer), side profile (rats facing right), back (seen from behind). A low heap on the ground, same scale, evenly spaced with wide clear gaps so no view touches another, nothing above or below the row, on a plain flat white background, no ground shadow.",
-      "notes": "3-view (front, side, back) turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 0.72. Swarm of rats (enemy): a low heap of rats. Third generation: the first stacked the rats into a tower, the second drew six views in two rows. blender/render_walk.py now detects 3-view sheets (it used to cut the wide side view in two); diagonals reuse front/back turned 25 degrees. Use a small height_units (about half a human's). Needs art QA before final."
+      "notes": "3-view (front, side, back) turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 0.72. Swarm of rats (enemy): a low heap of rats. Third generation: the first stacked the rats into a tower, the second drew six views in two rows. blender/render_walk.py now detects 3-view sheets (it used to cut the wide side view in two); diagonals reuse front/back turned 25 degrees. Use a small height_units (about half a human's). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "STATIC=1"
+      ]
     },
     {
       "id": "swarm_of_rats_portrait",
@@ -803,7 +850,8 @@
       "portrait": "art/portraits/vampire_spawn.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Doru, a young human man turned vampire spawn: gaunt and feral, with deathly pale grey skin, wild unkempt dark hair, red eyes, bared fangs and long dirty claw-like fingernails, in a hunched predatory posture, wearing a torn, filthy bone-coloured linen shirt and ragged dark trousers, barefoot. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Doru, vampire spawn (enemy): gaunt, feral, hunched, red eyes and fangs. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Doru, vampire spawn (enemy): gaunt, feral, hunched, red eyes and fangs. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "vampire_spawn_portrait",
@@ -827,7 +875,8 @@
       "portrait": "art/portraits/strahd_zombie.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a Strahd zombie, a rotting undead castle guard of Castle Ravenloft with grey-green rotting skin and missing chunks of flesh, a stiff, upright soldierly posture, wearing a dented old-fashioned steel breastplate over a faded blood-red tabard, a tarnished open-faced helmet and torn dark trousers. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Strahd zombie (enemy): Ravenloft guard in a dented breastplate, helmet and a crested blood-red tabard, stiffer than the villager zombie. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Strahd zombie (enemy): Ravenloft guard in a dented breastplate, helmet and a crested blood-red tabard, stiffer than the villager zombie. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "strahd_zombie_portrait",
@@ -851,7 +900,8 @@
       "portrait": "art/portraits/commoner.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a Barovian commoner, a gaunt, weary peasant woman in a patched brown wool dress, a grey shawl, a stained apron and a dark headscarf, worn shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian commoner (generic NPC/enemy stat block): a gaunt peasant woman, so she can alternate with the Phase 0 villager man (art/sprites/villager). Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian commoner (generic NPC/enemy stat block): a gaunt peasant woman, so she can alternate with the Phase 0 villager man (art/sprites/villager). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "commoner_portrait",
@@ -875,7 +925,8 @@
       "portrait": "art/portraits/noble.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a Barovian noble, a haughty, pale middle-aged human nobleman with a pointed dark beard, wearing a rich but faded dark-purple velvet doublet with a white ruffled collar, a short black cape, a gold chain across his chest, dark breeches, tall black boots and a slim rapier at his hip. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian noble (generic NPC stat block): ruff, velvet doublet, short cape, gold chain; the rapier below the hips is kept rigid by the prop pass. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian noble (generic NPC stat block): ruff, velvet doublet, short cape, gold chain; the rapier below the hips is kept rigid by the prop pass. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "noble_portrait",
@@ -903,7 +954,10 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Madam Eva, an ancient Vistani fortune-teller: a tiny, stooped old woman with a deeply lined brown face, a hooked nose, sharp glittering dark eyes and long silver-white hair spilling from under a dark plum headscarf hung with small gold coins, big gold hoop earrings, layered wine-red and deep purple shawls over a long dark skirt, many gold bangles on her thin wrists, and soft worn slippers. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Madam Eva (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.85 of a human's height_units (tiny, stooped). Needs art QA before final."
+      "notes": "Madam Eva (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.85 of a human's height_units (tiny, stooped). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "SAT=1.3"
+      ]
     },
     {
       "id": "madam_eva_portrait",
@@ -957,7 +1011,8 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Baron Vargas Vallakovich, the pompous burgomaster of Vallaki: a portly middle-aged human man with a round, ruddy face, small eyes, a waxed curling moustache and thinning slicked-back dark hair, wearing a fine crimson velvet coat with gold buttons over a cream waistcoat, a heavy gold chain of office across his chest, a burgundy sash, dark breeches and polished black boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Baron Vargas Vallakovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+      "notes": "Baron Vargas Vallakovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "baron_vargas_portrait",
@@ -1011,7 +1066,10 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Izek Strazni, the brutish enforcer of Vallaki's burgomaster: a tall, hulking human man in his thirties with a hard, scowling face, short dark hair and heavy stubble; his right arm, from the shoulder down, is a monstrous fiendish arm, bigger than the other, with dark red scaly skin and black claws; he wears a long dark-brown leather coat with the right sleeve torn away, a dark grey shirt, a wide belt, dark trousers and heavy boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Izek Strazni (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's height_units (hulking). Needs art QA before final."
+      "notes": "Izek Strazni (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's height_units (hulking). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "SAT=1.3"
+      ]
     },
     {
       "id": "izek_portrait",
@@ -1065,7 +1123,8 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Lady Fiona Wachter, a stern aristocratic human widow in her fifties: a cold, handsome face with sharp cheekbones and thin lips, grey-streaked black hair in a severe tight bun, wearing a high-collared, long-sleeved mourning gown of black and deep plum with a white lace collar, a silver brooch at her throat and a black shawl over her shoulders. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Lady Fiona Wachter (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+      "notes": "Lady Fiona Wachter (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "lady_wachter_portrait",
@@ -1119,7 +1178,8 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Father Lucian Petrovich, a kind, careworn human priest in his forties: a thin, gentle face, short greying brown hair and a neat short beard, wearing a long dark-grey cassock with a candle-orange stole embroidered with a sunburst, a small brass sunburst holy symbol on a chain, and plain leather shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Father Lucian Petrovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+      "notes": "Father Lucian Petrovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "father_lucian_portrait",
@@ -1173,7 +1233,8 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Rictavio, a flamboyant travelling carnival ringmaster who looks like a lean, middle-aged half-elf with slightly pointed ears, keen eyes, a sly smile and a neatly trimmed silver goatee, wearing a garish long crimson ringmaster's tailcoat with gold trim and brass buttons over a mustard-yellow waistcoat, a wide-brimmed dark hat with a long red feather, dark green breeches and tall black boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Rictavio (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's (the hat and feather are part of the figure). Needs art QA before final."
+      "notes": "Rictavio (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's (the hat and feather are part of the figure). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "rictavio_portrait",
@@ -1226,7 +1287,10 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Gadof Blinsky, Vallaki's eccentric toymaker: a lanky middle-aged human man with a long nose, a wide manic grin, tired sad eyes and shaggy dark hair under a floppy faded red-and-mustard two-pointed jester's cap with little bells, wearing a patched motley coat of faded red, mustard and green squares, a leather toymaker's apron with tools in the pockets, striped stockings and worn pointed shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Gadof Blinsky (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.05 of a human's (jester's cap). Needs art QA before final."
+      "notes": "Gadof Blinsky (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.05 of a human's (jester's cap). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "SAT=1.3"
+      ]
     },
     {
       "id": "blinsky_portrait",
@@ -1267,7 +1331,8 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Urwin Martikov, the calm, broad-shouldered innkeeper of the Blue Water Inn: a human man in his forties with black hair greying at the temples, a neat short black beard and watchful dark eyes, wearing a dark-blue waistcoat over a bone-coloured shirt with rolled sleeves, a long grey-brown innkeeper's apron, dark trousers, sturdy boots and a small silver raven pin on his waistcoat. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Urwin Martikov (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+      "notes": "Urwin Martikov (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "urwin_martikov_portrait",
@@ -1320,7 +1385,8 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Danika Martikov, the sharp, protective co-owner of the Blue Water Inn: a human woman in her forties with dark auburn hair tied back under a cream kerchief and a strong, alert face, wearing a dusky-blue working dress with rolled sleeves, a bone-coloured apron, a dark shawl knotted at her chest and sturdy boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Danika Martikov (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's. Needs art QA before final."
+      "notes": "Danika Martikov (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "danika_martikov_portrait",
@@ -1361,7 +1427,8 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Arrigal, a dangerous Vistani leader: a lean, handsome human man in his forties with a cold stare, long black hair tied back, a thin black moustache and a gold hoop earring, wearing a black open-necked shirt under a dark wine-red embroidered vest, a crimson sash at his waist with a curved dagger tucked into it, a long dark travelling coat, dark trousers and tall black boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Arrigal (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+      "notes": "Arrigal (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "arrigal_portrait",
@@ -1415,7 +1482,8 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Victor Vallakovich, the burgomaster's sullen teenage son: a thin, pale human boy of about sixteen with messy dark hair, dark-circled eyes and a scowl, wearing a too-large, rumpled dark-blue scholar's robe over a white shirt with a loose cravat and ink stains on the cuffs, dark breeches, black slippers and a small leather-bound spellbook hanging from his belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
-      "notes": "Victor Vallakovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's (a teenager). Needs art QA before final."
+      "notes": "Victor Vallakovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's (a teenager). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "victor_vallakovich_portrait",
@@ -1468,7 +1536,10 @@
       ],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Lady Lydia Petrovna, the burgomaster's relentlessly cheerful wife: a plump, rosy-cheeked human woman in her forties with fair hair in elaborate pinned curls and a bright fixed smile, wearing an over-decorated festival gown in rose-red and cream with puffed sleeves, ribbons and a lace collar, a string of pearls and little dark shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "Lady Lydia Petrovna (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's (the hair counts). Needs art QA before final."
+      "notes": "Lady Lydia Petrovna (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's (the hair counts). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "SAT=1.3"
+      ]
     },
     {
       "id": "lydia_petrovna_portrait",
@@ -1506,7 +1577,10 @@
       "expressions": [],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a Vallaki town guard: a weary, stocky human man with a stubbled face under an iron kettle helmet, wearing a padded brown gambeson under a faded crimson tabard, a leather belt with a short sword, dark trousers and boots, holding a tall spear upright in his right hand with its butt on the ground. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "a Vallaki town guard (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.15 of a human's: the spear tip sets the figure height. Needs art QA before final."
+      "notes": "a Vallaki town guard (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.15 of a human's: the spear tip sets the figure height. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": [
+        "SAT=1.3"
+      ]
     },
     {
       "id": "vallaki_guard_portrait",
@@ -1531,7 +1605,8 @@
       "expressions": [],
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of a Vistana, a young Vistani woman traveller: long black curly hair under a red headscarf, gold hoop earrings and coin necklaces, a dark embroidered bodice over a cream blouse, bright layered skirts in crimson, purple and mustard, a fringed dark shawl, a knife tucked in her sash and soft brown boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
-      "notes": "a Vistana (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's. Needs art QA before final."
+      "notes": "a Vistana (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's. Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "sprite_flags": []
     },
     {
       "id": "vistana_portrait",
@@ -1951,6 +2026,338 @@
       ],
       "model": "gemini-3.1-flash-image",
       "notes": "Tileable 512 px texture set (P4-09, 2026-10-06): stone_floor, stone_wall, damp_brick. Prompts and settings in tools/art/texture_recipes.json, built by make textures (blender/make_texture.py: min-cut seamless, area downscale, light flattening, palette subset, despeckle). How to apply: docs/art/textures.md and art/textures/manifest.json."
+    },
+    {
+      "id": "milivoj",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/milivoj_turnaround.png",
+      "sprites": "art/sprites/milivoj/walk.tres",
+      "portrait": "art/portraits/milivoj.png",
+      "expressions": [
+        "art/portraits/milivoj_angry.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Milivoj, the young gravedigger of St. Andral's church in Vallaki: a big, broad-shouldered, sullen human youth of about seventeen with a heavy jaw, a scowl, shaggy dark brown hair and a dirt-smudged face, wearing a worn sheepskin vest with the fleece showing at the edges over a coarse grey-brown linen shirt with rolled sleeves, patched dark brown trousers, a rope belt and muddy boots, holding a long-handled gravedigger's spade upright at his side, blade down by his foot. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Milivoj, the teenage gravedigger of St. Andral's (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.05 of a human's (a big youth). Holds his spade at his side; the blade below the hips stays rigid (prop pass). Needs art QA before final.",
+      "sprite_flags": []
+    },
+    {
+      "id": "milivoj_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/milivoj_portrait.png",
+      "sprites": "art/portraits/milivoj.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Milivoj, the young gravedigger of St. Andral's, a big, broad-shouldered human youth of about seventeen with a heavy jaw, shaggy dark brown hair and a dirt-smudged face, in a worn sheepskin vest over a coarse grey-brown linen shirt, three-quarter view, sullen, guarded, scowling expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture.",
+      "reference": [
+        "art/generated/characters/milivoj_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sullen, guarded, scowling."
+    },
+    {
+      "id": "milivoj_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/milivoj_angry_portrait.png",
+      "sprites": "art/portraits/milivoj_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Milivoj, the same character as in the reference image, now with an angry expression: bristling anger, brows drawn hard down, jaw clenched, nostrils flared. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/milivoj_portrait.png"
+      ],
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (bristling anger, brows drawn hard down, jaw clenched, nostrils flared)."
+    },
+    {
+      "id": "henrik",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/henrik_turnaround.png",
+      "sprites": "art/sprites/henrik/walk.tres",
+      "portrait": "art/portraits/henrik.png",
+      "expressions": [
+        "art/portraits/henrik_afraid.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Henrik van der Voort, Vallaki's frightened coffin maker: a thin, stooped, middle-aged human man with a long, pale, sweaty face, anxious wide eyes, thinning mousy hair plastered to his forehead and a wispy moustache, wearing a sawdust-flecked dark brown leather work apron over a rumpled off-white shirt with rolled sleeves and a dull brown waistcoat, three small wooden holy symbols on cords around his neck, dark grey trousers and worn buckled shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Henrik van der Voort, Vallaki's coffin maker (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. His grey trousers keep two flat grey tones. Needs art QA before final.",
+      "sprite_flags": []
+    },
+    {
+      "id": "henrik_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/henrik_portrait.png",
+      "sprites": "art/portraits/henrik.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Henrik van der Voort, Vallaki's coffin maker, a thin, stooped, middle-aged human man with a long, pale, sweaty face, thinning mousy hair plastered to his forehead and a wispy moustache, in a dark brown leather work apron over a rumpled off-white shirt, small wooden holy symbols on cords around his neck, three-quarter view, uneasy, tight-lipped, darting-eyed expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture.",
+      "reference": [
+        "art/generated/characters/henrik_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: uneasy, tight-lipped, darting-eyed."
+    },
+    {
+      "id": "henrik_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/henrik_afraid_portrait.png",
+      "sprites": "art/portraits/henrik_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Henrik van der Voort, the same character as in the reference image, now with an afraid expression: wide-eyed terror, sweat on his brow, mouth trembling open. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/henrik_portrait.png"
+      ],
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: afraid (wide-eyed terror, sweat on his brow, mouth trembling open)."
+    },
+    {
+      "id": "gunther_arasek",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/gunther_arasek_turnaround.png",
+      "sprites": "art/sprites/gunther_arasek/walk.tres",
+      "portrait": "art/portraits/gunther_arasek.png",
+      "expressions": [
+        "art/portraits/gunther_arasek_smile.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Gunther Arasek, a Vallaki stockyard trader: a broad, burly, middle-aged human man with a ruddy weathered face, a short thick dark-blond beard, close-cropped hair and a blunt, honest look, wearing a heavy brown leather apron over a dark green wool tunic with rolled sleeves on thick forearms, a coil of rope over one shoulder, a ring of iron keys and a small ledger on his belt, dark trousers and sturdy boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Gunther Arasek of the Arasek Stockyard (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.05 of a human's (burly). His dark green tunic snaps to charcoal grey (stone/slate) in sprite and portraits; SAT=1.3 only added green specks and 1.7 turned his skin red, so it stays at the default. Needs art QA before final.",
+      "sprite_flags": []
+    },
+    {
+      "id": "gunther_arasek_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/gunther_arasek_portrait.png",
+      "sprites": "art/portraits/gunther_arasek.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Gunther Arasek, a Vallaki stockyard trader, a broad, burly, middle-aged human man with a ruddy weathered face, a short thick dark-blond beard and close-cropped hair, in a heavy brown leather apron over a dark green wool tunic, a coil of rope over one shoulder, three-quarter view, blunt, steady, appraising expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture.",
+      "reference": [
+        "art/generated/characters/gunther_arasek_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: blunt, steady, appraising."
+    },
+    {
+      "id": "gunther_arasek_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/gunther_arasek_smile_portrait.png",
+      "sprites": "art/portraits/gunther_arasek_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Gunther Arasek, the same character as in the reference image, now with a smile expression: a broad, honest, gap-toothed grin. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/gunther_arasek_portrait.png"
+      ],
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a broad, honest, gap-toothed grin)."
+    },
+    {
+      "id": "luvash",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/luvash_turnaround.png",
+      "sprites": "art/sprites/luvash/walk.tres",
+      "portrait": "art/portraits/luvash.png",
+      "expressions": [
+        "art/portraits/luvash_sad.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Luvash, headman of a Vistani camp: a huge, barrel-chested Vistani man in his forties with a broad, grief-worn face, red-rimmed eyes, a thick black beard and unkempt long black curly hair, gold hoop earrings, wearing a loose white shirt open at the neck and stained with wine, a dark purple embroidered vest, a wide red sash at his waist, baggy dark trousers tucked into tall black boots, holding a wine bottle in each hand at his sides. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Luvash, headman of the lakeside Vistani camp (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's (huge). A wine bottle in each hand. Needs art QA before final.",
+      "sprite_flags": []
+    },
+    {
+      "id": "luvash_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/luvash_portrait.png",
+      "sprites": "art/portraits/luvash.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Luvash, a Vistani headman, a huge, barrel-chested man in his forties with a broad, grief-worn face, red-rimmed eyes, a thick black beard and unkempt long black curly hair, gold hoop earrings, in a wine-stained white shirt open at the neck under a dark purple embroidered vest, three-quarter view, bleary, gruff, grief-worn expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture. The shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out). Soft, neutral candlelight on the face: natural Vistani skin tone, not orange or yellow.",
+      "reference": [
+        "art/generated/characters/luvash_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: bleary, gruff, grief-worn. Second generation: the first came out as a floating cameo bust with an orange-lit face; the prompt now asks for the shoulders to run off the bottom edge and a natural skin tone."
+    },
+    {
+      "id": "luvash_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/luvash_sad_portrait.png",
+      "sprites": "art/portraits/luvash_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Luvash, the same character as in the reference image, now with a sad expression: weeping openly, tears running into his beard, brows knotted, mouth twisted with grief. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/luvash_portrait.png"
+      ],
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sad (weeping openly, tears running into his beard, brows knotted, mouth twisted with grief). Made from the second base portrait."
+    },
+    {
+      "id": "arabelle",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/arabelle_turnaround.png",
+      "sprites": "art/sprites/arabelle/walk.tres",
+      "portrait": "art/portraits/arabelle.png",
+      "expressions": [
+        "art/portraits/arabelle_sly.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Arabelle, a solemn seven-year-old Vistani girl: small and slight with child proportions (about five heads tall, not chibi), long straight black hair hanging loose, large dark serious eyes and a grave, unsmiling face, wearing a simple cream blouse, a small dark red embroidered vest, a layered ankle-length skirt in deep purple and mustard with a row of little gold coins at the hem, a thin red ribbon headband, and bare feet. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Arabelle, Luvash's seven-year-old daughter (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.6 of a human's (a seven-year-old drawn alone fills the cell like an adult, like Thorn). make sprite SAT=1.3 keeps her overskirt purple and her underskirt mustard (they snap to grey and tan without it). Needs art QA before final.",
+      "sprite_flags": [
+        "SAT=1.3"
+      ]
+    },
+    {
+      "id": "arabelle_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/arabelle_portrait.png",
+      "sprites": "art/portraits/arabelle.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Arabelle, a solemn seven-year-old Vistani girl with long straight black hair, a thin red ribbon headband, large dark serious eyes and a child's round face, in a cream blouse under a small dark red embroidered vest, three-quarter view, solemn, unblinking, grave, unsmiling expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture.",
+      "reference": [
+        "art/generated/characters/arabelle_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py SAT=1.3 (as the sprite): palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: solemn, unblinking, grave, unsmiling."
+    },
+    {
+      "id": "arabelle_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/arabelle_sly_portrait.png",
+      "sprites": "art/portraits/arabelle_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Arabelle, the same character as in the reference image, now with a sly expression: a faint, knowing half-smile, as if she already knows how this ends. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/arabelle_portrait.png"
+      ],
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py SAT=1.3 (as the sprite): palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sly (a faint, knowing half-smile, as if she already knows how this ends)."
+    },
+    {
+      "id": "bluto",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/bluto_turnaround.png",
+      "sprites": "art/sprites/bluto/walk.tres",
+      "portrait": "art/portraits/bluto.png",
+      "expressions": [
+        "art/portraits/bluto_afraid.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Bluto Krogarov, a starving, half-mad fisherman of Lake Zarovich: a gaunt, hollow-cheeked human man in his forties with wild greasy dark hair under a battered knit cap, a scraggly beard, bloodshot staring eyes and a red drinker's nose, wearing a ragged, patched brown oilskin coat over a stained grey wool sweater, rolled-up dark trousers and tall muddy wading boots, a tattered fishing net slung over one shoulder and an empty bottle in one hand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Bluto Krogarov, the fisherman of Lake Zarovich (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Fishing net over one shoulder and an empty bottle in one hand. Needs art QA before final.",
+      "sprite_flags": []
+    },
+    {
+      "id": "bluto_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/bluto_portrait.png",
+      "sprites": "art/portraits/bluto.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Bluto Krogarov, a starving fisherman, a gaunt, hollow-cheeked human man in his forties with wild greasy dark hair under a battered dark knit cap, a scraggly beard, bloodshot eyes and a red drinker's nose, in a ragged brown oilskin coat over a stained grey wool sweater, a tattered fishing net over one shoulder, three-quarter view, haggard, hollow-eyed, bleary expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture. The shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/bluto_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: haggard, hollow-eyed, bleary. Second generation: the first came out as a floating cameo bust; the prompt now asks for the shoulders to run off the bottom edge."
+    },
+    {
+      "id": "bluto_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/bluto_afraid_portrait.png",
+      "sprites": "art/portraits/bluto_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Bluto Krogarov, the same character as in the reference image, now with an afraid expression: wild-eyed panic, eyes bulging, mouth open in a desperate shout. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/bluto_portrait.png"
+      ],
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: afraid (wild-eyed panic, eyes bulging, mouth open in a desperate shout). Made from the second base portrait."
+    },
+    {
+      "id": "kasimir_velikov",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/kasimir_velikov_turnaround.png",
+      "sprites": "art/sprites/kasimir_velikov/walk.tres",
+      "portrait": "art/portraits/kasimir_velikov.png",
+      "expressions": [
+        "art/portraits/kasimir_velikov_sad.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Kasimir Velikov, a dusk elf living with the Vistani: a tall, slender elf man with ash-grey dark skin, long straight white hair, long pointed ears and a gaunt, grave, sorrowful face with pale silver eyes, wearing Vistani dress: a loose cream shirt under a dark wine-red embroidered vest, a wide deep purple sash, a long dark grey travelling coat, dark trousers and soft black boots, a small gold ring in one ear. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Kasimir Velikov, dusk elf of the lakeside camp (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.05 of a human's (tall elf). His ash-grey skin snaps to the slate/pewter greys; white hair, cream sleeves, wine vest and purple sash read. Needs art QA before final.",
+      "sprite_flags": []
+    },
+    {
+      "id": "kasimir_velikov_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/kasimir_velikov_portrait.png",
+      "sprites": "art/portraits/kasimir_velikov.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Kasimir Velikov, a dusk elf, a slender elf man with ash-grey dark skin, long straight white hair, long pointed ears, a small gold ring in one ear and pale silver eyes, in a loose cream shirt under a dark wine-red embroidered Vistani vest and a long dark grey coat, three-quarter view, grave, calm, quietly sorrowful expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Keep his ash-grey dusk-elf skin exactly as in the reference (no warm or orange cast); no border or frame around the picture.",
+      "reference": [
+        "art/generated/characters/kasimir_velikov_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: grave, calm, quietly sorrowful."
+    },
+    {
+      "id": "kasimir_velikov_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/kasimir_velikov_sad_portrait.png",
+      "sprites": "art/portraits/kasimir_velikov_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Kasimir Velikov, the same character as in the reference image, now with a sad expression: deep grief, eyes lowered and wet, brow knotted, mouth pressed thin. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/kasimir_velikov_portrait.png"
+      ],
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sad (deep grief, eyes lowered and wet, brow knotted, mouth pressed thin)."
+    },
+    {
+      "id": "stanimir",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/stanimir_turnaround.png",
+      "sprites": "art/sprites/stanimir/walk.tres",
+      "portrait": "art/portraits/stanimir.png",
+      "expressions": [
+        "art/portraits/stanimir_angry.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Stanimir, elder of a Vistani camp: a huge, broad, jovial Vistani man in his sixties with a big bushy grey beard, thick grey eyebrows, laughing eyes, a large nose and grey hair under a dark red headscarf, gold hoop earrings, wearing a loose cream shirt with billowing sleeves under a dark green embroidered vest, a wide red sash, baggy dark trousers tucked into tall brown boots, holding a fiddle and bow in one hand at his side. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Stanimir, elder of the Tser Pool Vistani camp (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's (huge). make sprite SAT=1.3 keeps the sash and headscarf red and the vest green. Generator slip: the fiddle is missing from the side view (E/W) and the bow shows only in the front three-quarter view. Needs art QA before final.",
+      "sprite_flags": [
+        "SAT=1.3"
+      ]
+    },
+    {
+      "id": "stanimir_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/stanimir_portrait.png",
+      "sprites": "art/portraits/stanimir.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Stanimir, elder of a Vistani camp, a huge, broad Vistani man in his sixties with a big bushy grey beard, thick grey eyebrows, a large nose and grey hair under a dark red headscarf, gold hoop earrings, in a loose cream shirt under a dark green embroidered vest, three-quarter view, warm, easy, twinkling-eyed, slightly smiling expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture.",
+      "reference": [
+        "art/generated/characters/stanimir_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py SAT=1.3 (as the sprite): palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: warm, easy, twinkling-eyed, slightly smiling."
+    },
+    {
+      "id": "stanimir_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/stanimir_angry_portrait.png",
+      "sprites": "art/portraits/stanimir_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Stanimir, the same character as in the reference image, now with an angry expression: cold fury, the smile gone, brows down, eyes hard and narrowed. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/stanimir_portrait.png"
+      ],
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py SAT=1.3 (as the sprite): palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (cold fury, the smile gone, brows down, eyes hard and narrowed)."
     }
   ],
   "image_provider": "gemini"

@@ -16,8 +16,10 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
   greys on the grey ramp (so a grey wolf stays grey) and despeckles; `SAT=1.3` is an opt-in chroma boost for
   muted reds that would otherwise snap to brown.
 - Sprites are clean pixel art with no salt-and-pepper (owner feedback 2026-10-06): the cutter smooths the turnaround
-  with an edge-preserving filter before cutting it, and after the snap merges same-coloured clumps of up to 6 pixels
-  into the near shade around them (docs/art/p4_cast_art_pass.md). `make sprites` re-renders every sheet with it.
+  with an edge-preserving filter before cutting it; after the snap it removes only truly lone specks (thin lines that
+  sample down to dots keep them) and merges same-coloured clumps of up to 6 pixels into the near shade around them.
+  On walk sheets the grey-ramp rule applies only inside mostly grey areas, so thin warm lines on skin stay warm
+  (docs/art/p4_cast_art_pass.md). `make sprites` re-renders every sheet with it.
 - Character sprites are the exception (owner, 2026-10-06: they read blurry and grainy through the pass): their
   sheets are rendered at 384 px cells, mipmapped, and drawn after the pass at full screen resolution. They keep the
   palette because the pipeline already quantized them.

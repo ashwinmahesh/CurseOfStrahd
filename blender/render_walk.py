@@ -2,12 +2,18 @@
 (plan §7 steps 4-6).
 
 blender -b --python blender/render_walk.py -- --turnaround <png> --id <asset_id>
-        [--side-faces left] [--cell 384] [--frames 8] [--static] [--views 3|5] [--saturate K]
+        [--side-faces left] [--cell 384] [--frames 8] [--static] [--views 3|5] [--saturate K] [--no-clean]
 
 The sheet shows views left to right: either 5 (front, front three-quarter, side, back three-quarter,
 back — best, gives true diagonals) or 3 (front, side, back; diagonals reuse front/back turned 25
 degrees; detected when the sheet holds three similar-width figures, or pass --views). Background is
 removed if opaque; colours are snapped to the Strahd palette.
+
+Clean pixel art (owner feedback 2026-10-06: no salt-and-pepper speckle in flat areas): the cut-out sheet is smoothed
+with an edge-preserving filter before rendering (cutout.smooth_colours); after the palette snap, pixels unlike all but
+one neighbour are despeckled (a neighbour in a near shade counts as alike, so thin outlines drawn in two dark shades
+survive) and small same-coloured clumps merge into the near shade around them (cutout.merge_islands). --no-clean
+renders the P4-09 way (plain despeckle only) for comparison.
 
 Rig (v1): each view is cut into head, torso and legs by body proportion, and every part becomes a
 textured plane pivoting at its joint (neck, hips). West-facing directions mirror the east ones.
@@ -63,6 +69,7 @@ def args():
     p.add_argument("--static", action="store_true", help="one still frame per direction, no rig")
     p.add_argument("--views", type=int, choices=[3, 5], help="views on the sheet (default: detect)")
     p.add_argument("--saturate", type=float, default=1.0, help="chroma boost before quantizing (cutout.saturate)")
+    p.add_argument("--no-clean", action="store_true", help="skip the smoothing and island merge (comparison only)")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -185,6 +192,8 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     sheet = cutout.load_rgba(a.turnaround)
     sheet = cutout.binarize_alpha(cutout.remove_background(sheet))
+    if not a.no_clean:
+        sheet = cutout.smooth_colours(sheet)
     figures = cutout.find_figures(sheet, a.views or view_count(sheet))
     if len(figures) == 5:
         names, dir_view = VIEWS5, DIR_VIEW5
@@ -233,7 +242,12 @@ def main():
             bpy.ops.render.render(write_still=True)
             frames.append(cutout.load_rgba(path))
     walk = cutout.pack_grid(frames, frames_per_dir)
-    walk = cutout.despeckle(cutout.quantize(cutout.saturate(cutout.binarize_alpha(walk), a.saturate)))
+    walk = cutout.saturate(cutout.binarize_alpha(walk), a.saturate)
+    walk = cutout.quantize(walk, neutral_area=0.0 if a.no_clean else 0.5)
+    if a.no_clean:
+        walk = cutout.despeckle(walk)
+    else:
+        walk = cutout.merge_islands(cutout.despeckle(walk, near=0.3, ring=True))
     cutout.save_rgba(walk, out_dir / "walk.png")
     cutout.write_sprite_frames(out_dir / "walk.tres", f"res://art/sprites/{a.id}/walk.png",
                                (a.cell, a.cell), DIRECTIONS, frames_per_dir)
