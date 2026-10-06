@@ -1,6 +1,6 @@
 # Style bible (draft 1, Phase 0)
 
-Owner sign-off: **pending**. Reference images: Build Log 02 style test (Gemini 3.1 Flash column).
+Owner sign-off: approved 2026-10-06. Reference images: Build Log 02 style test (Gemini 3.1 Flash column).
 
 ## The look in one line
 Gothic horror told as a 1990s Saturday-morning cartoon: bold ink, flat cel shading, big readable
