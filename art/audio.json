@@ -1,19 +1,203 @@
 {
-  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md. A mood or effect with no file is silent. levels: volume offsets in dB.",
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB.",
   "themes": {
-    "svalich_road": "wilds", "forest": "wilds", "road": "wilds", "wilderness": "wilds", "riverside": "wilds",
-    "camp": "camp", "tser_pool": "camp", "tent": "camp",
-    "village": "village", "vallaki": "town", "town": "town", "shop": "town", "townhouse": "town", "house": "town",
-    "tavern": "tavern", "inn": "tavern",
-    "manor": "haunted", "attic": "haunted", "dungeon": "haunted",
-    "church": "church", "shrine_yard": "church"
+    "svalich_road": "wilds",
+    "forest": "wilds",
+    "road": "wilds",
+    "wilderness": "wilds",
+    "riverside": "wilds",
+    "camp": "camp",
+    "tser_pool": "camp",
+    "tent": "camp",
+    "village": "village",
+    "vallaki": "town",
+    "town": "town",
+    "shop": "town",
+    "townhouse": "town",
+    "house": "town",
+    "tavern": "tavern",
+    "inn": "tavern",
+    "manor": "haunted",
+    "attic": "haunted",
+    "dungeon": "haunted",
+    "church": "church",
+    "shrine_yard": "church"
   },
   "places": {
-    "tser_pool": "camp", "tser_falls": "wilds", "tser_pool_eva_tent": "tarokka",
-    "burgomaster_mansion": "village", "mad_marys_house": "village", "bildraths_mercantile": "village",
+    "tser_pool": "camp",
+    "tser_falls": "wilds",
+    "tser_pool_eva_tent": "tarokka",
+    "burgomaster_mansion": "village",
+    "mad_marys_house": "village",
+    "bildraths_mercantile": "village",
     "vallaki_burgomaster_mansion": "town"
   },
-  "levels": {},
-  "music": {},
-  "sfx": {}
+  "levels": {
+    "title": -2.0,
+    "church": -6.0,
+    "wilds": -2.0,
+    "combat": -4.0,
+    "click": -12.0,
+    "page": -6.0,
+    "swing": -8.0,
+    "wind": -14.0,
+    "wolf": -12.0,
+    "thunder": -10.0,
+    "crow": -14.0,
+    "rest": -4.0,
+    "coins": -4.0
+  },
+  "music": {
+    "title": [
+      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
+    ],
+    "church": [
+      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
+    ],
+    "wilds": [
+      "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3"
+    ],
+    "village": [
+      "res://art/sourced/kevin_macleod/Oppressive Gloom.mp3"
+    ],
+    "town": [
+      "res://art/sourced/kevin_macleod/Folk Round.mp3"
+    ],
+    "tavern": [
+      "res://art/sourced/kevin_macleod/Folk Round.mp3"
+    ],
+    "camp": [
+      "res://art/sourced/wikimedia_commons/USAFB_Czardas.ogg",
+      "res://art/sourced/kevin_macleod/Duet Musette.mp3"
+    ],
+    "tarokka": [
+      "res://art/sourced/kevin_macleod/Duet Musette.mp3"
+    ],
+    "haunted": [
+      "res://art/sourced/kevin_macleod/Darkest Child.mp3"
+    ],
+    "combat": [
+      "res://art/sourced/kevin_macleod/Darkling.mp3"
+    ],
+    "boss": [
+      "res://art/sourced/kevin_macleod/Unholy Knight.mp3"
+    ]
+  },
+  "sfx": {
+    "click": [
+      "res://art/sourced/kenney_interface_sounds/Audio/click_001.ogg",
+      "res://art/sourced/kenney_interface_sounds/Audio/click_002.ogg",
+      "res://art/sourced/kenney_interface_sounds/Audio/click_003.ogg"
+    ],
+    "page": [
+      "res://art/sourced/kenney_rpg_audio/Audio/bookFlip1.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/bookFlip2.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/bookFlip3.ogg"
+    ],
+    "door": [
+      "res://art/sourced/kenney_rpg_audio/Audio/doorOpen_1.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/doorOpen_2.ogg"
+    ],
+    "unlock": [
+      "res://art/sourced/kenney_rpg_audio/Audio/metalLatch.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/lock_01.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/lock_02.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/lock_03.ogg"
+    ],
+    "coins": [
+      "res://art/sourced/kenney_rpg_audio/Audio/handleCoins.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/handleCoins2.ogg"
+    ],
+    "card": [
+      "res://art/sourced/kenney_rpg_audio/Audio/bookPlace1.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/bookPlace2.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/bookPlace3.ogg"
+    ],
+    "rest": [
+      "res://art/sourced/oga_fire_antumdeluge/fire-1_0.ogg"
+    ],
+    "level_up": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_4.ogg"
+    ],
+    "hit": [
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.1.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.2.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.3.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.4.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.5.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.6.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.7.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.8.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.9.ogg",
+      "res://art/sourced/oga_swords_starninjas/sword - StarNinjas/sword.10.ogg"
+    ],
+    "crit": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactMetal_heavy_003.ogg"
+    ],
+    "swing": [
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-1.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-2.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-3.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-4.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-5.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-6.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-7.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-8.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-9.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-10.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-11.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-12.wav",
+      "res://art/sourced/oga_swishes_artisticdude/swishes/swish-13.wav"
+    ],
+    "spell": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_1_0.ogg",
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_3.ogg",
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_6_0.ogg",
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_7_0.ogg",
+      "res://art/sourced/oga_80_cc0_rpg_sfx/spell_01.ogg"
+    ],
+    "heal": [
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_2.ogg",
+      "res://art/sourced/oga_magic_spell_sfx_jaggedstone/magical_5.ogg"
+    ],
+    "victory": [
+      "res://art/sourced/oga_fanfares_spring/VICTORY_0.ogg"
+    ],
+    "defeat": [
+      "res://art/sourced/oga_fanfares_spring/LOSE_0.ogg"
+    ],
+    "wind": [
+      "res://art/sourced/wikimedia_commons/Howling_wind.ogg"
+    ],
+    "wolf": [
+      "res://art/sourced/wikimedia_commons/Wolf_howls.ogg"
+    ],
+    "thunder": [
+      "res://art/sourced/wikimedia_commons/Rain_and_thunder_(1).ogg"
+    ],
+    "crow": [
+      "res://art/sourced/oga_crow_caw/crow_caw.wav"
+    ]
+  },
+  "ambient": {
+    "wilds": [
+      "crow",
+      "wolf",
+      "wind"
+    ],
+    "village": [
+      "crow",
+      "wind"
+    ],
+    "camp": [
+      "crow"
+    ],
+    "haunted": [
+      "thunder",
+      "wind"
+    ]
+  }
 }

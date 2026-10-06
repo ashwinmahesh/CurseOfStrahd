@@ -16,11 +16,16 @@ var _decks: Array[AudioStreamPlayer] = []
 var _deck := 0
 var _sfx: Array[AudioStreamPlayer] = []
 var _streams: Dictionary = {}
-var _rng := RandomNumberGenerator.new()  # cosmetic: which of several takes plays
+var _rng := RandomNumberGenerator.new()  # cosmetic: which of several takes plays, when ambience sounds
+var _ambience: Timer
+## No sound device (headless tests and tools): moods and choices still work, nothing plays, so no playback is left
+## for an audio thread that never runs to release.
+var _silent := false
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_silent = AudioServer.get_driver_name() == "Dummy"
 	for bus: String in ["Music", "SFX"]:
 		if AudioServer.get_bus_index(bus) < 0:
 			AudioServer.add_bus()
@@ -38,6 +43,10 @@ func _ready() -> void:
 		_sfx.append(s)
 	if FileAccess.file_exists(MANIFEST):
 		_data = JSON.parse_string(FileAccess.get_file_as_string(MANIFEST)) as Dictionary
+	_ambience = Timer.new()
+	_ambience.one_shot = true
+	_ambience.timeout.connect(_ambient)
+	add_child(_ambience)
 	var cfg := ConfigFile.new()
 	if cfg.load(SETTINGS) == OK:
 		music_volume = float(cfg.get_value("audio", "music", music_volume))
@@ -79,9 +88,10 @@ func mood_for(location_id: String, theme: String) -> String:
 
 ## Crossfades to a mood's music; the same mood keeps playing where it is.
 func play_music(next_mood: String) -> void:
-	if next_mood == mood:
+	if next_mood == mood or not is_inside_tree():
 		return
 	mood = next_mood
+	_ambience.start(_rng.randf_range(12.0, 30.0))
 	var choices := files("music", next_mood)
 	var old := _decks[_deck]
 	_deck = 1 - _deck
@@ -89,7 +99,7 @@ func play_music(next_mood: String) -> void:
 	var tw := create_tween().set_parallel(true)
 	tw.tween_property(old, "volume_db", -80.0, FADE)
 	tw.chain().tween_callback(old.stop)
-	if choices.is_empty():
+	if choices.is_empty() or _silent:
 		return
 	var stream := _stream(choices[_rng.randi_range(0, choices.size() - 1)], true)
 	if stream == null:
@@ -101,6 +111,14 @@ func play_music(next_mood: String) -> void:
 	tw2.tween_property(new, "volume_db", float((_data.get("levels", {}) as Dictionary).get(next_mood, 0.0)), FADE)
 
 
+## Now and then a crow, a far-off wolf or the wind over the music (art/audio.json "ambient" per mood).
+func _ambient() -> void:
+	var list := (_data.get("ambient", {}) as Dictionary).get(mood, []) as Array
+	if not list.is_empty():
+		sfx(str(list[_rng.randi_range(0, list.size() - 1)]), 0.08)
+	_ambience.start(_rng.randf_range(25.0, 60.0))
+
+
 func stop_music() -> void:
 	play_music("")
 
@@ -108,7 +126,7 @@ func stop_music() -> void:
 ## A one-shot effect (a click, a door, a sword hit); several takes of one effect are picked at random.
 func sfx(id: String, pitch_jitter: float = 0.06) -> void:
 	var choices := files("sfx", id)
-	if choices.is_empty():
+	if choices.is_empty() or not is_inside_tree() or _silent:
 		return
 	var stream := _stream(choices[_rng.randi_range(0, choices.size() - 1)], false)
 	if stream == null:
@@ -150,3 +168,15 @@ func _stream(path: String, looped: bool) -> AudioStream:
 			(s as AudioStreamWAV).loop_mode = AudioStreamWAV.LOOP_FORWARD
 	_streams[path] = s
 	return s
+
+
+## Players still sounding at quit would hold their streams past shutdown.
+func _exit_tree() -> void:
+	_ambience.stop()
+	for p in _decks:
+		p.stop()
+		p.stream = null
+	for p in _sfx:
+		p.stop()
+		p.stream = null
+	_streams.clear()
