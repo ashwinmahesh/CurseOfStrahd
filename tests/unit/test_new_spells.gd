@@ -322,3 +322,74 @@ func test_giant_spider_webs_its_target_in_place() -> void:
 	TestCombat.next_d20(e, 19)
 	assert_true(e.attack(sp, t, "monster:web_bolt").hit)
 	assert_eq(t.speed(), 0, "Speed 0 until the start of the insect's next turn")
+
+
+# --- Shapes, banishment, spheres, teleports ------------------------------------------------------------
+
+func test_polymorph_turns_a_foe_into_a_beast_until_its_beast_hit_points_run_out() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["polymorph"], Vector2i(2, 3))
+	var t := TestCombat.foe(e, "scout", Vector2i(5, 3))
+	var real := t.creature
+	var hp := real.hp
+	TestCombat.start_with(e, c)
+	TestCombat.next_d20(e, 1)
+	assert_true(e.spells.cast(c, "polymorph", 4, [t], Vector2.INF, Vector2.ZERO, {"choice": "bat"}).ok)
+	if real.has_flag("shapechanger"):
+		assert_eq(t.creature, real, "a shapechanger is unaffected")
+		return
+	assert_true(e.shapes.is_shaped(t))
+	assert_eq(t.creature.creature_type, &"beast")
+	assert_eq(t.creature.hp, hp, "keeps its own Hit Points")
+	assert_true(t.creature.temp_hp > 0, "the Beast's Hit Points as Temporary Hit Points")
+	e.deal_damage(c, t, [{"amount": t.creature.temp_hp + 2, "type": "force"}], false, "test")
+	assert_false(e.shapes.is_shaped(t), "back once the Temporary Hit Points are gone")
+	assert_eq(t.creature, real)
+	assert_eq(real.hp, hp - 2, "the rest of the damage carries over")
+
+
+func test_polymorph_ends_with_concentration() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["polymorph"], Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "polymorph", 4, [a]).ok)
+	assert_true(e.shapes.is_shaped(a), "an ally doesn't resist")
+	assert_true(a.creature is Monster)
+	c.creature.concentration.end("test")
+	assert_false(e.shapes.is_shaped(a))
+	assert_true(a.creature is Character)
+
+
+func test_banishment_removes_a_foe_until_the_spell_ends() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["banishment"], Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(5, 3), 100)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "banishment", 4, [t]).ok)
+	assert_true(t.creature.has_condition(&"incapacitated"))
+	assert_true(e.distance(c, t) > 1000, "off the grid")
+	c.creature.concentration.end("test")
+	assert_eq(t.cell, Vector2i(5, 3), "back where it was")
+
+
+func test_resilient_sphere_stops_damage_both_ways() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["otilukes_resilient_sphere"], Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(5, 3), 100)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "otilukes_resilient_sphere", 4, [t]).ok)
+	e.deal_damage(c, t, [{"amount": 20, "type": "fire"}], false, "test")
+	assert_eq(t.creature.hp, 100)
+	assert_true(e.attack_legal(c, t, e.attack_options(c)[0]) != "")
+
+
+func test_dimension_door_takes_an_ally_along() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["dimension_door"], Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
+	TestCombat.start_with(e, c)
+	var dd := e.spells.cast(c, "dimension_door", 4, [], Vector2(10.5, 6.5), Vector2.ZERO, {"with": a.id})
+	assert_true(dd.ok, dd.reason)
+	assert_eq(c.cell, Vector2i(10, 6))
+	assert_true(e.distance(c, a) <= 5, "the ally arrives beside")

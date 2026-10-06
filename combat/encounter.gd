@@ -36,6 +36,7 @@ var reactions: Reactions
 var feature_actions: FeatureActions
 var monster_actions: MonsterActions
 var ai: AiBrain
+var shapes: ShapeChange
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.
 var _savage_turn: Dictionary = {}
@@ -60,6 +61,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	feature_actions = FeatureActions.new(self)
 	monster_actions = MonsterActions.new(self)
 	ai = AiBrain.new(self)
+	shapes = ShapeChange.new(self)
 
 
 # --- Setup ----------------------------------------------------------------------------------------
@@ -1460,6 +1462,8 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "No target"
 	if target == c:
 		return "Can't attack yourself"
+	if spells.specials.sphere_blocks(c, target):
+		return "A sphere of force is in the way"
 	var dist := distance(c, target)
 	var p := option["profile"] as WeaponProfile
 	if bool(option["melee"]):
@@ -1964,6 +1968,10 @@ func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: Strin
 func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: bool, label: String,
 		details: Array = [], log_it: bool = true) -> DamageResult:
 	target = monster_actions.redirect_shared(target)
+	# Otiluke's Resilient Sphere: nothing passes through the globe either way.
+	if source != null and spells.specials.sphere_blocks(source, target):
+		log.add("info", "The sphere of force around %s turns the damage aside" % (target.name() if target.creature.has_flag("sphered") else source.name()), target.id)
+		return DamageResult.new()
 	parts = monster_actions.absorb(target, parts)
 	var was_up := not target.is_down()
 	if source != null and target.creature.has_flag("cursed_necrotic:%s" % source.id):
@@ -2002,6 +2010,8 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 				target.creature.dead = false
 				target.creature.hp = 1
 				log.add("info", "%s keeps standing: Undead Fortitude" % target.name(), target.id, [save.describe()])
+	# A shape (Polymorph, Wild Shape) that runs out: the real creature comes back with what's left.
+	shapes.after_damage(target)
 	# Death Ward: the first drop to 0 Hit Points (or death outright from damage) leaves it at 1 instead.
 	if was_up and (dr.dropped_to_zero or target.creature.dead) and target.creature.has_flag("death_ward"):
 		for fxw: Effect in target.creature.effects.duplicate():

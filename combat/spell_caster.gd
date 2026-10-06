@@ -26,6 +26,7 @@ const COMBAT_EFFECTS := ["modifiers", "condition", "temp_hp", "heal", "damage", 
 
 var _enc: WeakRef
 var zones: SpellZones
+var specials: SpellSpecials
 ## Actions a spell keeps granting while it lasts: {id, spell_id, label, sub, owner_id, caster_id, cost, do, slot,
 ## target_id, conc: WeakRef, uses_left, opts}. `do`: attack, damage, area, move_object, dash, heal_one, maintain.
 var sustained: Array[Dictionary] = []
@@ -41,6 +42,7 @@ const SUMMON_SPELLS := ["summon_fey", "summon_undead", "find_steed", "summon_bea
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
 	zones = SpellZones.new(encounter)
+	specials = SpellSpecials.new(encounter)
 
 
 func enc() -> Encounter:
@@ -155,7 +157,7 @@ static func _out_of_combat_word(s: Dictionary) -> String:
 
 ## True if the spell does something the combat engine can resolve.
 func has_combat_rules(s: Dictionary) -> bool:
-	if str(s.get("id", "")) in SPECIAL or str(s.get("id", "")) in SUMMON_SPELLS:
+	if str(s.get("id", "")) in SPECIAL or str(s.get("id", "")) in SUMMON_SPELLS or str(s.get("id", "")) in SpellSpecials.HANDLED:
 		return true
 	for k: String in ["attack", "heal", "damage", "temp_hp", "zone", "object", "sustain"]:
 		if s.has(k):
@@ -753,6 +755,9 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		if only != "" and str(t.creature.creature_type) != only:
 			out["why"] = "%s only affects %ss" % [s["name"], only.capitalize()]
 			return out
+		if t != c and specials.sphere_blocks(c, t):
+			out["why"] = "A sphere of force stands between you and %s" % t.name()
+			return out
 		if (s.has("attack") or s.has("damage")) and t != c:
 			var sb := sanctuary_blocks(c, t)
 			if sb != "":
@@ -791,6 +796,8 @@ func _finish_concentration(ctx: Dictionary) -> void:
 func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
 	var s := ctx["s"] as Dictionary
 	var c := ctx["c"] as Combatant
+	if specials.resolve(ctx, tgt, cells, r):
+		return
 	match str(s["id"]):
 		"magic_missile":
 			_magic_missile(ctx, tgt, r)
@@ -2674,6 +2681,15 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 	r.lines.append(e.log.add("spell", "%s appears beside %s" % [m.name, c.name()], c.id))
 
 
+func _revert_shape(creature_id: String, why: String) -> void:
+	var e := enc()
+	if e == null:
+		return
+	var c := e.get_c(creature_id)
+	if c != null:
+		e.shapes.revert(c, why)
+
+
 func _dismiss(creature_id: String) -> void:
 	var e := enc()
 	if e == null:
@@ -2720,6 +2736,13 @@ func rehook_effects() -> void:
 				"dismiss":
 					var sid := str(oe["target"])
 					fx.on_end = func() -> void: _dismiss(sid)
+				"unbanish":
+					var ubid := str(oe["target"])
+					var ub_round := int(oe.get("round", 0))
+					fx.on_end = func() -> void: specials.unbanish(ubid, ub_round)
+				"revert_shape":
+					var shid := str(oe["target"])
+					fx.on_end = func() -> void: _revert_shape(shid, str(oe.get("why", "the spell ended")))
 				"resize":
 					var tr := e.get_c(str(oe["target"]))
 					var old := StringName(str(oe["size"]))

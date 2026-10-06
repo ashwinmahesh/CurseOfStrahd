@@ -358,6 +358,14 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["choice_label"] = str(choice.get("label", "Choose"))
 			a["opts"] = {"choice": str((opts_list[0] as Dictionary)["value"])}
 			a["sub"] = str(a["sub"]) + " · " + str((opts_list[0] as Dictionary)["label"])
+		# Polymorph: the Beast form (it must not out-rank the target; "Best fit" picks for you).
+		if str(s["id"]) == "polymorph":
+			var forms: Array = [{"value": "", "label": "Best fit"}]
+			for f in ShapeChange.beast_forms(30.0):
+				forms.append({"value": str(f["id"]), "label": "%s (CR %s)" % [f.get("name", ""), str(f.get("cr", 0))]})
+			a["choices"] = forms
+			a["choice_label"] = "Beast form"
+			a["opts"] = {"choice": ""}
 		if str(s["id"]) == "command":
 			# One slot per word the engine knows (Approach and Drop: deviations.md).
 			for word: String in SpellCaster.COMMAND_WORDS:
