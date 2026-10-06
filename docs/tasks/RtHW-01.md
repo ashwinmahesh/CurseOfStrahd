@@ -9,7 +9,7 @@ depends_on: []
 Owner decision 2026-10-06: merge what's built and leave the rest as a todo until the book's text is available (the
 owner's D&D Beyond copy or screenshots of the pages; no pirated PDFs).
 
-Built and merged on branch `ravenloft-horrors`: Dhampir, Hexblood, Lupin and Reborn; Sharp Eye and Survivor; the nine
+Built and merged into main (2a595b3c, branch `ravenloft-horrors`): Dhampir, Hexblood, Lupin and Reborn; Sharp Eye and Survivor; the nine
 Ravenloft Dark Gifts (feat category `dark_gift`, any origin feat can be one); College of Spirits, Grave Domain, Hollow
 Warden, Phantom, Shadow Sorcery and Undead Patron with their combat behaviour (combat/ravenloft_features.gd). All of it
 was entered from the 2025 Unearthed Arcana (Horror Subclasses), reviews of the book and Van Richten's Guide to
@@ -24,7 +24,8 @@ Still to do:
    Update the matching rows in docs/rules/deviations.md as each one is confirmed.
 2. **Backgrounds**: Haunted One, Investigator, Mist Wanderer and Spirit Medium (abilities, feat or Dark Gift, skills,
    tool, equipment), in data/backgrounds.
-3. **Magic items**: Ebonbane and Harkon's Bite in the DMG magic item format (data/magic_items, an `icon` key from
-   art/icons.json, placement through the magic items' treasure tables).
+3. **Magic items**: Ebonbane and Harkon's Bite in the DMG magic item format, which is on main since c3e4f899
+   (data/magic_items, docs/contracts/magic_items.md; an `icon` key in art/icons.json; placement through the coordinator
+   to the magic items' treasure tables).
 4. **Reanimator** (Artificer): needs the Artificer class from Eberron: Forge of the Artificer, which the game doesn't
    have. Owner to decide whether to add the class.
