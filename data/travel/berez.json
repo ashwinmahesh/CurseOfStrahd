@@ -79,6 +79,14 @@
       "hours": 4,
       "table": "baratok_slopes",
       "name": "The high ridges"
+    },
+    {
+      "id": "van_richtens_tower_to_mount_baratok",
+      "from": "van_richtens_tower",
+      "to": "mount_baratok",
+      "hours": 2,
+      "table": "baratok_slopes",
+      "name": "The path up from the tower's lake"
     }
   ]
 }

@@ -1,0 +1,122 @@
+# After the fight in the den. emil_wins: Zuleika, when Kiril died and Emil stood with the party. no_emil: Mirela,
+# when Kiril is dead and Emil is too (the party turned on both, or broke Kiril's truce for the children).
+# zuleika_after: Zuleika on later visits to Emil's den. THE CLIMAX: the region's one milestone is given here (or
+# in kiril.dialogue's kiril_resolve, whichever ends the pack question first).
+
+~ emil_wins
+set pack_resolved
+set pack_aftermath_done
+set wolf_pack_leader = "emil"
+quest wolves_in_the_hills emil_leads
+Narrator: Kiril lies on the floor of his own den, and as he cools he forgets how to be a wolf: the fur goes, the snout goes, and what is left is a big, ordinary dead man.
+Narrator: Zuleika comes out of the dark at a run, and stops just short of Emil, and then doesn't.
+Zuleika: You stupid, stubborn old dog.
+Emil: I know. I told you not to.
+Emil: It's done. By the old law the pack is mine again. Kiril's favourites are dead or running down the Krezk road with their tails tucked. The rest are listening.
+Emil: Hear me, then. We hunt deer. We keep to the high hills. We don't come when the castle whistles. And the children go home.
+if not flag.den_children_freed
+set den_children_freed
+quest the_stolen_children freed
+endif
+Zuleika: I'll take them down the stream path to the Krezk road at first light. And the eldest has a bite on her arm she thinks nobody saw. I saw.
+Zuleika: Wolfsbane and the right words, three nights running. By the moon it'll be a scar and a story. Nothing worse.
+set mirela_cured
+if not flag.wolf_den_milestone_reached
+set wolf_den_milestone_reached
+xp milestone
+endif
+if guest:ezmerelda
+Ezmerelda: A pack that leaves children alone. I'll believe it when I've watched it for a year.
+Emil: Watch, then, huntress. From a respectful distance.
+endif
+if tarokka.ally.npc == emil_toranescu
+-> emil_ally
+endif
+-> emil_stays
+
+~ emil_ally
+Emil: The Vistani grandmother's cards. She told me once I'd die in chains, and she was nearly right. Now they say I'm to walk with you to the old man's door.
+Zuleika: Then go. I held this den with you in silver. I can hold it with you out for a walk.
+Emil: She means she never needed me.
+Zuleika: I mean bring yourself back in one piece. Or most of the pieces.
+quest find_the_ally found
+interject name:tamsin_tealeaf: We have a werewolf. An actual werewolf. On our side. I'd like that written down somewhere official.
+interject class:cleric: Mind the bite, and we'll get along.
+Emil: I always mind the bite. That was the whole argument.
+-> END
+
+~ emil_stays
+Emil: You've given me back my pack. I can't follow you to the castle; they'd be at each other's throats in a week without me, and at Zuleika's in two.
+Emil: But if it ever comes to the end with the old man on the hill, and you need teeth at his gates, send word up this hill.
+leave emil_toranescu
+Zuleika: Here. My own brewing: the same thing that keeps the pack sleepy when I want them sleepy. Don't ask what's in it. Drink it when you're bleeding.
+give potion_of_healing 2
+-> END
+
+~ no_emil
+set pack_resolved
+set pack_aftermath_done
+set wolf_pack_leader = "none"
+quest wolves_in_the_hills pack_broken
+if tarokka.ally.npc == emil_toranescu
+quest find_the_ally lost
+endif
+if not flag.den_children_freed
+set den_children_freed
+quest the_stolen_children freed
+endif
+if flag.den_broken
+set emil_dead
+Narrator: When it is over, the den is very quiet. Kiril, Emil, Zuleika and the last of the pack lie where they fell, and in death every one of them is only a man or a woman, and older than you thought.
+else
+Narrator: Kiril is dead. The wolves that are left go out of the cave mouth in a grey stream and don't stop running. Somewhere down the hill one of them howls, and none of the others answer.
+endif
+Narrator: The pole gate at the back of the den creaks open. A girl of about ten comes out first, holding a much smaller girl's hand, and three more children behind her in a line.
+Mirela: Is it over? Are they all...?
+* It's over. You're going home. -> home
+* [Medicine DC 13] You're holding your arm strangely. Let me see it. -> bite_ok | bite_fail
+
+~ home
+Mirela: Krezk is down the stream path, then west on the road. We can find it. We're not little. Except Ana. Ana's little.
+interject name:ilse_varga: You're not walking it alone. Fall in. Single file. Nobody falls behind.
+Narrator: You walk them down to the road and as far as the first milestone, where Mirela takes over, counting heads every twenty paces like a sergeant on a march.
+if not flag.wolf_den_milestone_reached
+set wolf_den_milestone_reached
+xp milestone
+endif
+-> END
+
+~ bite_ok
+set mirela_bite_seen
+Narrator: Under the torn sleeve, a bite: half healed, ringed in angry red, the marks of long teeth. She glares at you as if you'd made it yourself.
+Mirela: Don't tell the little ones. Is it going to make me one of them?
+* [Cleric] (Take her arm and pray over it.) -> bite_prayer
+* We'll find you a priest in Krezk. -> bite_later
+
+~ bite_fail
+Narrator: She snatches her arm away and tucks it into her coat, and looks at you the way she looked at the wolves.
+-> home
+
+~ bite_prayer
+set mirela_cured
+Narrator: The prayer is short and plain, and for once in this valley something seems to be listening. The red ring around the bite fades, slowly, like a blush.
+interject name:hedda_ironvow: Dawn comes, little one. Even here. Even to arms.
+Mirela: It doesn't itch any more. It always itched.
+-> home
+
+~ bite_later
+Mirela: The priest in Krezk is old and his hands shake. But he's kind. I'll make him do it right.
+-> home
+
+# ---------------------------------------------------------------- Later visits to Emil's den
+
+~ zuleika_after
+if guest:emil_toranescu
+Zuleika: You've still got him, then. Feed him properly. He sulks when he's hungry, and he bites when he sulks.
+else
+Zuleika: The pack's mending fences. Literally; I have them mending the pen into a woodshed. Wolves hate mending things. It's very good for them.
+endif
+if flag.den_children_freed
+Zuleika: The children got home. All five. The eldest scolded the Krezk gate guard for keeping them waiting.
+endif
+-> END

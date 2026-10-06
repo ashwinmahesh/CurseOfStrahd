@@ -1,0 +1,251 @@
+# Ezmerelda d'Avenir camped by Van Richten's Tower on Lake Baratok (docs/voice/ezmerelda.md; her Tarokka join is the
+# abbey's). She is here when the cards did not name her. Her trust (ezmerelda_trust) rises with the letter, the
+# truth about Rudolph, the den; it falls if the party robs her wagon, lies badly or leaves Kiril on top.
+
+~ start
+if guest:rictavio and not flag.van_richten_reunited
+-> reunion_guest
+endif
+if flag.van_richten_reunited
+-> reunited
+endif
+if flag.ezmerelda_wagon_robbed and not flag.ezmerelda_robbery_noticed
+-> robbed
+endif
+if not flag.ezmerelda_met_at_tower
+-> first_meeting
+endif
+Ezmerelda: Back again. Has the tower spoken to you yet? It won't speak to me.
+-> menu
+
+~ first_meeting
+set ezmerelda_met_at_tower
+set ezmerelda_met
+if not quest.the_hunters_tower
+quest the_hunters_tower heard
+endif
+Narrator: By a painted wagon, a woman in a long dark coat sits fixing silver heads to crossbow bolts. Below her right knee, a brace of oak and steel; her left hand is bandaged, and she smells faintly of burnt hair.
+Narrator: She doesn't look up. She lifts a small loaded crossbow off her knee instead and points it at you.
+Ezmerelda: Stop there. Say something a vampire wouldn't say.
+* Your fire's lovely. Nice and bright. -> hello_fire
+* Is that silver? We'll have some, if you're selling. -> hello_silver
+
+~ hello_fire
+Ezmerelda [smile]: A vampire would have said something about my eyes. Fine. Sit down before you fall in the lake.
+-> menu
+
+~ hello_silver
+Ezmerelda: Nobody with fangs has ever asked to buy silver. Not twice, anyway. Sit.
+-> menu
+
+~ menu
+* Who are you? -> who
+* What's wrong with the tower? -> tower
+* What happened to your hand? -> hand
+* [if flag.ezmerelda_trap_found] You trapped your own wagon. -> trap_talk
+* [if (flag.van_richten_identity_known or flag.rictavio_unmasked) and not flag.van_richten_reunited and not flag.ezmerelda_told_rictavio and not flag.ezmerelda_secret_kept and not flag.ezmerelda_lied] We know where Van Richten is. -> where
+* [if flag.van_richten_letter_found and not flag.ezmerelda_given_letter] We found a letter in the tower, with your name on it. -> letter
+* [if not flag.pack_resolved] What do you know about the wolves in these hills? -> wolves
+* [if flag.pack_resolved and not flag.ezmerelda_heard_den] The pack in the hills is settled. -> den_news
+* [if flag.ezmerelda_trust >= 2 and not guest:ezmerelda] Hunt with us. -> join
+* Goodbye. -> bye
+
+~ who
+Ezmerelda: Ezmerelda d'Avenir. Vistani, when the wagons will have me. I hunt the things that hunt people. Right now I'm hunting one stubborn old man who taught me how, and who has locked me out of his house.
+interject background:sage: d'Avenir. Van Richten's student. There's a chapter on you in the second monograph. Well, a footnote. A long footnote.
+Ezmerelda: He'll have got my good side wrong.
+-> menu
+
+~ tower
+set khazan_known
+if not flag.ezmerelda_asked_in
+set ezmerelda_asked_in
+if not quest.the_hunters_tower or quest.the_hunters_tower == heard
+quest the_hunters_tower asked
+endif
+endif
+Ezmerelda: It's Rudolph's. Rudolph van Richten. An archmage built it centuries ago, and the old lock still opens to that wizard's name. I found the name under the moss in an hour: KHAZAN.
+Ezmerelda: Then Rudolph's own ward threw me twenty feet into the lake. He wove my name into it. Mine. Nobody else's. Months of work, to keep out one person.
+interject tag:bookish: A ward keyed to a single person? That's extraordinary craft.
+Ezmerelda: He was always thorough about the wrong things.
+Ezmerelda: It won't know you. Go in for me. Find out where he's gone, and bring me anything with his handwriting on it.
+if treasure_at:van_richtens_tower
+Ezmerelda: And there's a strongbox in his lantern room he never let me near. He called what was in it "the thing the cards keep moving". Eva would know what that means. So, I suspect, do you.
+endif
+* We'll go in. -> tower_yes
+* What's in it for us? -> tower_price
+
+~ tower_yes
+Ezmerelda: Good. Say the name, mind your feet, and don't touch anything that hums. He likes things that hum.
+-> menu
+
+~ tower_price
+Ezmerelda: Whatever he's left lying about that isn't his notes. He'll be appalled. That's a reward in itself.
+-> menu
+
+~ hand
+Ezmerelda: The ward. It knows my name; it also knows my temper. We had words. It won.
+-> menu
+
+~ trap_talk
+Ezmerelda: Of course I trapped it. There's a werewolf pack two hours up the ridge, and a castle that reads over everyone's shoulder. You found it. Good eyes. Most people find it with their faces.
+-> menu
+
+# ---------------------------------------------------------------- Where is Rudolph?
+
+~ where
+Narrator: She puts the crossbow down, which she hasn't done since you arrived.
+Ezmerelda: Where?
+* He's at the Blue Water Inn in Vallaki, calling himself Rictavio. -> tell
+* [if flag.rictavio_secret_kept] We promised him we'd keep his secret. -> keep
+* He's alive. He doesn't want to be found. That's all we'll say. -> keep
+* [Deception DC 15] We were wrong. We don't know where he is. -> lie_ok | lie_fail
+
+~ tell
+set ezmerelda_told_rictavio
+set ezmerelda_trust += 1
+if quest.the_hunters_tower != reunited and not flag.rictavio_gone
+quest the_hunters_tower told
+endif
+Ezmerelda: Rictavio. Rudolph is calling himself Rictavio. In a taproom.
+if flag.rictavio_secret_kept
+interject tag:loyal: We gave him our word. That's broken now.
+Ezmerelda: Then I'll tell him I wrung it out of you. He'll believe it. He knows me.
+endif
+if flag.rictavio_gone
+Ezmerelda: Wait. If he'd left Vallaki, where would he go to lick his wounds? Where would he go that I couldn't follow?
+Narrator: She turns, slowly, and looks out across the water at the tower with the one lit window.
+Ezmerelda: He's in there. He came home. He's been in there the whole time, listening to me shout.
+-> trust_check
+endif
+Ezmerelda: Feathers? Tell me there are feathers. No, don't. I'll see for myself. I'm leaving tonight.
+set ezmerelda_left_tower
+-> trust_check
+
+~ keep
+set ezmerelda_secret_kept
+if quest.the_hunters_tower != reunited
+quest the_hunters_tower kept
+endif
+Ezmerelda [angry]: He made you promise. Of course he did. He's very good at making people promise things that keep them away from him.
+Ezmerelda: ...Fine. Keep his secret. You're the first people in this valley who've kept anything. I'll keep looking. I'm good at looking.
+-> menu
+
+~ lie_ok
+set ezmerelda_lied
+Narrator: She looks at you for a long moment, and decides to believe you. It costs her something.
+Ezmerelda: Then I'll keep waiting. I'm good at waiting. No, I'm not. I'm terrible at it.
+-> menu
+
+~ lie_fail
+set ezmerelda_lied
+set ezmerelda_trust -= 1
+Ezmerelda: You're a terrible liar. He made you promise, didn't he. He always makes people promise.
+-> menu
+
+~ letter
+set ezmerelda_given_letter
+set ezmerelda_trust += 1
+Narrator: She breaks the seal with her thumb and reads it twice, and then folds it very small and puts it inside her coat, against her chest.
+Ezmerelda: "If you are reading this, I am dead, or you are more stubborn than I hoped." I am more stubborn. I am always more stubborn. He knows that. He wrote it anyway.
+-> trust_check
+
+# ---------------------------------------------------------------- The wolves
+
+~ wolves
+set den_way_known
+if not quest.wolves_in_the_hills
+quest wolves_in_the_hills heard
+endif
+Ezmerelda: A pack dens two hours east along the ridge, in a cave above Lake Zarovich. One of them took my leg below the knee, years ago, when I was young and quick and stupid. Big, black, and laughing while it did it.
+Ezmerelda: I've been taking them back two at a time ever since. Lately they've been carrying children up there, from the farms under Krezk. I'd go in after them, if Rudolph would let me into his armoury.
+interject class:fighter: Two at a time is how you lose. All at once is how you win.
+Ezmerelda: Says someone who still has both feet.
+-> menu
+
+~ den_news
+set ezmerelda_heard_den
+if flag.wolf_pack_leader == "kiril"
+set ezmerelda_trust -= 1
+Ezmerelda [angry]: Kiril. Big, black, laughs with his mouth open? You left that one on top? With the children?
+if flag.den_children_freed
+Ezmerelda: You got the children out, at least. I'll give you that. I'll give you that and nothing else.
+endif
+-> menu
+endif
+Ezmerelda: Kiril. Big, black, laughs with his mouth open?
+Narrator: You tell her. She listens without moving, and when you're done she lets out a long breath, as if she has been holding it for twelve years.
+Ezmerelda: That's the one who took my leg. Thank you. I wanted to do it myself. I find I don't mind that much, now.
+set ezmerelda_trust += 1
+if flag.den_children_freed
+set ezmerelda_trust += 1
+Ezmerelda: And the children are going home. Good. That's a better day than this valley usually allows.
+endif
+if flag.wolf_pack_leader == "emil"
+Ezmerelda: A pack that leaves people alone. I'll believe it when I've watched it for a year.
+endif
+-> trust_check
+
+# ---------------------------------------------------------------- Trust, gifts, the hunt
+
+~ trust_check
+if flag.ezmerelda_trust >= 2 and not flag.ezmerelda_gift_given
+set ezmerelda_gift_given
+Ezmerelda: Here. You've earned better than thanks. Silver-headed bolts, holy water and my last good potion. Don't waste them on anything that doesn't deserve them.
+give holy_water 2
+give potion_of_healing 1
+give crossbow_bolt 10
+endif
+if flag.ezmerelda_left_tower
+Ezmerelda: Now go away. I have a wagon to hitch and an old man to shout at.
+-> END
+endif
+-> menu
+
+~ join
+if tarokka.ally.npc == ezmerelda
+Ezmerelda: Eva's cards, I suppose. They've been dealing me into other people's games since I was six. Fine.
+else
+Ezmerelda: I hunt alone. Usually. But you've done more for me in a week than the whole valley has in a year. All right. Until it's done.
+endif
+join ezmerelda
+Ezmerelda: I go first through doors, I take the silver, and nobody calls me "girl".
+-> END
+
+~ robbed
+set ezmerelda_robbery_noticed
+set ezmerelda_trust -= 2
+set ezmerelda_met_at_tower
+set ezmerelda_met
+Ezmerelda [angry]: Somebody has been in my wagon. Don't. Don't say anything. I know who's been up and down this shore this week, and it's a very short list.
+Ezmerelda: Keep what you took. You'll need it. And then stay out of my way.
+-> menu
+
+~ bye
+Ezmerelda: Go carefully. If anything in these hills hums, growls or compliments you, shoot it.
+-> END
+
+# ---------------------------------------------------------------- Rudolph arrives with the party
+
+~ reunion_guest
+set ezmerelda_met_at_tower
+set ezmerelda_met
+Narrator: The woman by the wagon looks up from her bolts, sees who is walking behind you, and goes completely still.
+Ezmerelda: Rudolph. You're wearing feathers.
+Rictavio: It's a costume. It's a very good costume.
+Ezmerelda: It's a terrible costume. You look like a chicken that's been to a wedding. You keyed your ward to me.
+Rictavio: Everyone I have ever taught is in the ground, Ezmerelda. You are the last. I would like you to stay the last.
+Ezmerelda: Then you should have stayed alive near me, so you could keep an eye on me. That was always the deal.
+Narrator: Neither of them says anything for a while. Then she hits him on the arm, hard, and he lets her.
+-> reunited_set
+
+~ reunited_set
+set van_richten_reunited
+set ezmerelda_trust += 2
+set khazan_known
+quest the_hunters_tower reunited
+-> trust_check
+
+~ reunited
+Ezmerelda: He's making tea. He's terrible at tea. Don't tell him; he thinks it's the only thing he's good at besides killing.
+-> menu

@@ -1,0 +1,72 @@
+# Narrator: Lake Zarovich, the fishers' landing and the hill trail (docs/voice/narrator.md).
+# Book props (the fishers' notice) have no examine: line here, so their own text is shown.
+
+~ enter:lake_zarovich
+| The lake lies flat and black all the way to the far shore, where the wolf hills climb into cloud. On the landing the drying racks stand empty, and only one hut has smoke at its chimney.
+| [night] The lake has swallowed the stars and is pretending it hasn't. Out on the water, something small and pale is floating, and then it isn't.
+| [flag.bluto_fate == "saved"] There's smoke from Bluto's chimney and a smell of frying, the first cheerful smell this shore has produced in a year.
+| [flag.bluto_fate == "drowned"] Bluto's shack is dark, his boat still tied at the jetty's foot. The lake is calm in the way a full stomach is calm.
+| [flag.bluto_fate == "left"] The racks by Bluto's shack are heavy with fish nobody has salted, and the gulls have found them, and so has the smell.
+cooldown 30
+
+~ enter:lz_jetty
+| The jetty planks are slick and soft underfoot, and half of them give a little more than planks should. At the end, the water is very deep and very still.
+once
+
+~ enter:lz_shore
+| Reeds as tall as a man rattle against each other at the water's edge, though there is no wind.
+once
+
+~ enter:lz_landing
+| Shingle, rope ends, the black rings of old cookfires. A whole village of fishers lived off this beach once. You can tell from how much of it they left behind.
+once
+
+~ enter:lz_bluto_hut
+| A shack of grey boards with a sail for a door and a lamp in the window. The kind of place where one man has been very lonely for a very long time.
+once
+
+~ enter:lz_old_huts
+| Empty huts with their doors open, as if their owners only stepped out. One has a notice nailed to it, in careful letters, for whoever comes next.
+once
+
+~ enter:lz_path
+| The lake path runs back east along the shore toward Vallaki's palisade and the bright wagons outside its west gate.
+once
+
+~ examine:lz_bluto_shack
+| Bluto's shack: one room, one cot, one pot, one patched net hung up to dry over the door. Everything a man needs, if he has given up needing anything else.
+
+~ examine:lz_empty_hut_west
+| An empty hut, its hearth cold for a year. A child's chalk drawing of a big fish is still on the wall, smiling.
+
+~ examine:lz_empty_hut_south
+| The roof has fallen in, and a young pine is growing up through the floor. The lake path's wildlife has moved in and doesn't care for visitors.
+
+~ examine:lz_nets
+| Drying racks, bare. A single net still hangs from one, rotten through, with the dried husk of a single small fish caught in its meshes like a pressed flower.
+| [flag.bluto_fate == "left" or flag.bluto_fate == "vistani" or flag.bluto_fate == "killed"] The racks are hung with fish now, rows and rows of them, silver going grey. Nobody is going to eat them.
+
+~ examine:lz_fishers_shrine
+| A little shrine on a post, a fish carved on its roof, fish bones in its bowl. Somebody painted TO THE LAKE, WHO FEEDS US on the post, and somebody else has scratched out FEEDS.
+
+~ examine:lz_flat_rock
+| From the rock you can see the whole lake: the far north shore where the pines come down to drink, and the hills above, and a rock face high up with a dark mouth in it.
+| [night] From the rock, the far shore is a black line and the hills are a blacker one. Up there, very small, a fire is burning in the mouth of a cave.
+
+~ examine:lz_ribbon
+| A ribbon of Vistani silk, red and gold, knotted round the jetty's last post. It's damp, but it hasn't been here long. Someone tied it where the water is deepest.
+
+~ search:lz_reed_satchel
+| Wedged in the reeds, a waterlogged satchel: some fisher's knife, wrapped in oilcloth by someone who meant to come back for it.
+
+~ rest:long:lake_zarovich
+| You sleep on the shingle with your backs to an empty hut. All night the lake laps at the jetty, patient and steady, like something counting.
+| [flag.bluto_fate == "saved"] Bluto keeps the fire going all night and talks about fish, quietly, to nobody. It's the most restful thing you've heard in Barovia.
+
+~ enter:lake_zarovich_trail
+| The trail climbs through pines and tumbled boulders. Through the trees, far below, the lake glints like a dropped knife.
+| [night] The trail is a pale scratch between black pines. Every so often, from the hills above, something howls, and something else answers.
+cooldown 20
+
+~ examine:lzt_claw_pine
+| Five deep gouges in the bark, higher than a tall man can reach, still weeping sap. Fresh. Something stood up tall here to sharpen its claws, and wanted you to see.

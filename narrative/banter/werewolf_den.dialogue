@@ -1,0 +1,53 @@
+# Party banter in the werewolves' hills and den. Each node opens with an `if` gate.
+
+~ banter_wolfsbane
+if visited:werewolf_den and not flag.pack_resolved
+interject class:druid: Wolfsbane by the door of a wolf den. Somebody's dosing the meat.
+interject tag:curious: Who poisons their own family?
+interject class:druid: Someone who wants them sleepy, not dead. That's a different thing, and I'd like to meet her.
+endif
+-> END
+
+~ banter_two_wolves
+if flag.emil_freed and not flag.pack_resolved
+interject tag:veteran: Two wolves, one den. One wants an army for the castle. One wants to be left alone in the hills. I know which I'd rather have at my back.
+interject class:cleric: I know which I'd rather have nowhere near a child. They're the same answer, which is a mercy.
+endif
+-> END
+
+~ banter_emil_won
+if flag.wolf_pack_leader == "emil"
+interject tag:blunt: We put a werewolf in charge of a werewolf pack. On purpose.
+interject tag:loyal: We put the one who said no in charge. That's the part that matters.
+endif
+-> END
+
+~ banter_kiril_won
+if flag.wolf_pack_leader == "kiril"
+interject tag:devout: We walked out of there and left him on top. I'll be praying about that for a long while.
+if flag.den_children_left
+interject class:fighter: Eleven days to the moon. I counted. I'll keep counting.
+endif
+endif
+-> END
+
+~ banter_no_pack
+if flag.wolf_pack_leader == "none"
+interject tag:veteran: Kiril, Emil, the den-mother, all of them. Clean work. I don't feel clean.
+interject class:cleric: Five children walked home. Keep hold of that. Keep hold of that with both hands.
+endif
+-> END
+
+~ banter_mirela
+if flag.den_children_freed and flag.mirela_bite_seen and not flag.mirela_cured
+interject class:cleric: That bite on the girl's arm. Somebody in Krezk had better know what it means before the moon does.
+interject tag:blunt: Then we tell them. Loudly. Twice.
+endif
+-> END
+
+~ banter_emil_betrayed
+if flag.emil_betrayed
+interject tag:loyal: He said he misjudged us. He was being kind. He judged us exactly right; we just hadn't decided yet.
+interject tag:blunt: Then decide better next time. There's always a next time in this valley.
+endif
+-> END

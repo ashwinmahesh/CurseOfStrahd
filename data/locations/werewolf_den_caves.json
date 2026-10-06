@@ -1,0 +1,1129 @@
+{
+  "id": "werewolf_den_caves",
+  "name": "The Werewolf Den",
+  "region": "werewolf_den",
+  "summary": "Caves under the hill where Kiril Stoyanovich's pack sleeps: a great cave round a fire pit, the pack leader's lair, a shrine to Mother Night, the alcove where the old leader Emil hangs in silver chains, and a pen of stolen children.",
+  "text": "Warm, close and dark. Straw and furs, gnawed bones, the smell of animals that are sometimes people, and somewhere deeper in, small voices whispering.",
+  "map": {
+    "rows": [
+      "########################################",
+      "########################################",
+      "##.......#####............####........##",
+      "##.==....#####............####........##",
+      "##.......#####............####........##",
+      "##.......#####............####........##",
+      "##.......#####............####........##",
+      "#####.#############..#############..####",
+      "#####.....#########..#############..####",
+      "#########......................##......#",
+      "##....###.==...............=...##......#",
+      "##....###......................##......#",
+      "##.....................................#",
+      "##.................==..................#",
+      "##.....................................#",
+      "##....###....~.................##......#",
+      "##....###......................##......#",
+      "#########...=...............==.##......#",
+      "#########......................#########",
+      "##################....##################",
+      "##################....##################",
+      "##################....##################",
+      "###############..........###############",
+      "###############..........###############",
+      "###############.~........###############",
+      "###############..........###############",
+      "###############........~.###############",
+      "###############..........###############",
+      "###################..###################",
+      "########################################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "den_mouth_cave",
+      "name": "The mouth cave",
+      "cells": [
+        [
+          15,
+          22
+        ],
+        [
+          24,
+          28
+        ]
+      ]
+    },
+    {
+      "id": "den_passage",
+      "name": "The passage",
+      "cells": [
+        [
+          18,
+          19
+        ],
+        [
+          21,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "den_great_cave",
+      "name": "The great cave",
+      "cells": [
+        [
+          9,
+          9
+        ],
+        [
+          30,
+          18
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "den_emil_alcove",
+      "name": "The chained alcove",
+      "cells": [
+        [
+          2,
+          10
+        ],
+        [
+          8,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "den_children_pen",
+      "name": "The pen",
+      "cells": [
+        [
+          2,
+          2
+        ],
+        [
+          8,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "den_kiril_lair",
+      "name": "Kiril's lair",
+      "cells": [
+        [
+          14,
+          2
+        ],
+        [
+          25,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "den_shrine",
+      "name": "The shrine of Mother Night",
+      "cells": [
+        [
+          31,
+          9
+        ],
+        [
+          38,
+          17
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "den_zuleika_nook",
+      "name": "Zuleika's nook",
+      "cells": [
+        [
+          30,
+          2
+        ],
+        [
+          37,
+          8
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      19,
+      27
+    ],
+    "from_mouth": [
+      19,
+      27
+    ]
+  },
+  "exits": [
+    {
+      "id": "den_caves_out",
+      "cell": [
+        19,
+        29
+      ],
+      "to": "werewolf_den",
+      "spawn": "from_caves",
+      "label": "Up to the hillside"
+    },
+    {
+      "id": "den_caves_out_2",
+      "cell": [
+        20,
+        29
+      ],
+      "to": "werewolf_den",
+      "spawn": "from_caves",
+      "label": "Up to the hillside"
+    }
+  ],
+  "doors": [
+    {
+      "id": "den_pen_gate",
+      "cell": [
+        5,
+        7
+      ],
+      "label": "A gate of lashed poles"
+    }
+  ],
+  "props": [
+    {
+      "id": "den_mother_night",
+      "cell": [
+        37,
+        13
+      ],
+      "kind": "examine",
+      "label": "The shrine of Mother Night",
+      "model": "altar_stone",
+      "dialogue": "werewolf_den/shrine:statue"
+    },
+    {
+      "id": "den_silver_chains",
+      "cell": [
+        1,
+        13
+      ],
+      "kind": "examine",
+      "label": "Silver chains",
+      "model": "rope"
+    },
+    {
+      "id": "den_pen_tally",
+      "cell": [
+        1,
+        4
+      ],
+      "kind": "examine",
+      "label": "Scratches on the wall",
+      "model": "claw_marks"
+    },
+    {
+      "id": "den_kiril_trophies",
+      "cell": [
+        19,
+        1
+      ],
+      "kind": "examine",
+      "label": "Kiril's trophies",
+      "model": "trophy_wolf"
+    },
+    {
+      "id": "den_kiril_rug",
+      "cell": [
+        20,
+        4
+      ],
+      "kind": "decor",
+      "label": "A wolf-skin rug",
+      "model": "rug_wolf"
+    },
+    {
+      "id": "den_key_peg",
+      "cell": [
+        13,
+        3
+      ],
+      "kind": "examine",
+      "label": "A peg of keys",
+      "model": "robe_pegs",
+      "when": "not flag.emil_freed and not flag.emil_key_found",
+      "flag": "emil_key_found"
+    },
+    {
+      "id": "den_fire_pit",
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "examine",
+      "label": "The fire pit",
+      "model": "campfire"
+    },
+    {
+      "id": "den_zuleika_herbs",
+      "cell": [
+        36,
+        3
+      ],
+      "kind": "examine",
+      "label": "Bundles of drying herbs",
+      "model": "charms"
+    },
+    {
+      "id": "den_bone_heap",
+      "cell": [
+        12,
+        16
+      ],
+      "kind": "examine",
+      "label": "Gnawed bones",
+      "model": "bones"
+    }
+  ],
+  "containers": [
+    {
+      "id": "mother_night_offerings",
+      "cell": [
+        36,
+        11
+      ],
+      "label": "Offerings at the shrine",
+      "model": "bones",
+      "gold": 35,
+      "items": [
+        {
+          "id": "candle",
+          "qty": 3
+        }
+      ]
+    },
+    {
+      "id": "kiril_hoard",
+      "cell": [
+        24,
+        3
+      ],
+      "label": "Kiril's hoard",
+      "model": "chest_iron",
+      "lock_dc": 15,
+      "gold": 140,
+      "flag": "kiril_hoard_opened",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        },
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        },
+        {
+          "id": "dice_set",
+          "qty": 1
+        }
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "fire",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        19,
+        25
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        35,
+        13
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        33,
+        4
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "zuleika_toranescu",
+      "cell": [
+        16,
+        12
+      ],
+      "dialogue": "werewolf_den/aftermath:emil_wins",
+      "approach": 12,
+      "when": "flag.kiril_defeated and guest:emil_toranescu and not flag.pack_aftermath_done"
+    },
+    {
+      "npc": "zuleika_toranescu",
+      "cell": [
+        17,
+        11
+      ],
+      "dialogue": "werewolf_den/aftermath:zuleika_after",
+      "when": "flag.wolf_pack_leader == \"emil\""
+    },
+    {
+      "npc": "zuleika_toranescu",
+      "cell": [
+        35,
+        12
+      ],
+      "dialogue": "werewolf_den/zuleika:inside",
+      "when": "(flag.zuleika_vouched or flag.den_guards_cleared or flag.emil_freed) and not flag.pack_challenge_begun and not flag.pack_resolved"
+    },
+    {
+      "npc": "emil_toranescu",
+      "cell": [
+        2,
+        13
+      ],
+      "dialogue": "werewolf_den/emil:start",
+      "when": "not flag.emil_freed and not flag.emil_dead"
+    },
+    {
+      "npc": "emil_toranescu",
+      "cell": [
+        18,
+        11
+      ],
+      "dialogue": "werewolf_den/emil:leader",
+      "when": "flag.wolf_pack_leader == \"emil\" and not guest:emil_toranescu"
+    },
+    {
+      "npc": "kiril_stoyanovich",
+      "cell": [
+        19,
+        20
+      ],
+      "dialogue": "werewolf_den/kiril:challenge",
+      "approach": 10,
+      "when": "flag.emil_freed and not flag.pack_challenge_begun and not flag.pack_resolved"
+    },
+    {
+      "npc": "kiril_stoyanovich",
+      "cell": [
+        20,
+        11
+      ],
+      "dialogue": "werewolf_den/kiril:after",
+      "when": "flag.wolf_pack_leader == \"kiril\" and not flag.truce_broken"
+    },
+    {
+      "npc": "mirela",
+      "cell": [
+        12,
+        12
+      ],
+      "dialogue": "werewolf_den/aftermath:no_emil",
+      "approach": 12,
+      "when": "(flag.kiril_defeated or flag.den_broken) and not guest:emil_toranescu and not flag.pack_aftermath_done"
+    },
+    {
+      "npc": "mirela",
+      "cell": [
+        5,
+        4
+      ],
+      "dialogue": "werewolf_den/children:start",
+      "when": "not flag.den_children_freed"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "den_guards",
+      "trigger": "enter_area:den_mouth_cave",
+      "when": "not flag.zuleika_vouched and not flag.den_guards_cleared and not flag.emil_freed and not flag.pack_resolved and level >= 8",
+      "text": "Shapes uncurl from the straw along the walls, and the cave is suddenly full of yellow eyes. Nobody told them you were coming. They are taking it personally.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            16,
+            22
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            22
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            20
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            20,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            24
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            24
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "den_guards_cleared"
+    },
+    {
+      "id": "den_guards",
+      "trigger": "enter_area:den_mouth_cave",
+      "when": "not flag.zuleika_vouched and not flag.den_guards_cleared and not flag.emil_freed and not flag.pack_resolved and level >= 7",
+      "text": "Shapes uncurl from the straw along the walls, and the cave is suddenly full of yellow eyes. Nobody told them you were coming. They are taking it personally.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            16,
+            22
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            22
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            24
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            24
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "den_guards_cleared"
+    },
+    {
+      "id": "den_guards",
+      "trigger": "enter_area:den_mouth_cave",
+      "when": "not flag.zuleika_vouched and not flag.den_guards_cleared and not flag.emil_freed and not flag.pack_resolved",
+      "text": "Shapes uncurl from the straw along the walls, and the cave is suddenly full of yellow eyes. Nobody told them you were coming. They are taking it personally.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            16,
+            22
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            22
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            24
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "den_guards_cleared"
+    },
+    {
+      "id": "pack_challenge",
+      "trigger": "dialogue",
+      "when": "flag.den_guards_cleared and level >= 8",
+      "text": "Kiril throws back his head and laughs, and the laugh turns into a howl halfway through, and his loyal wolves come pouring up the passage behind him.",
+      "monsters": [
+        {
+          "monster": "kiril_stoyanovich",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            17,
+            23
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            25
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "kiril_defeated",
+      "loot": {
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion_of_healing",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "pack_challenge",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "Kiril throws back his head and laughs, and the laugh turns into a howl halfway through, and his loyal wolves come pouring up the passage behind him.",
+      "monsters": [
+        {
+          "monster": "kiril_stoyanovich",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            17,
+            23
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            23
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            25
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "kiril_defeated",
+      "loot": {
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion_of_healing",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "pack_challenge",
+      "trigger": "dialogue",
+      "when": "flag.den_guards_cleared and level >= 7",
+      "text": "Kiril throws back his head and laughs, and the laugh turns into a howl halfway through, and his loyal wolves come pouring up the passage behind him.",
+      "monsters": [
+        {
+          "monster": "kiril_stoyanovich",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            25
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "kiril_defeated",
+      "loot": {
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion_of_healing",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "pack_challenge",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "Kiril throws back his head and laughs, and the laugh turns into a howl halfway through, and his loyal wolves come pouring up the passage behind him.",
+      "monsters": [
+        {
+          "monster": "kiril_stoyanovich",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            17,
+            23
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            25
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "kiril_defeated",
+      "loot": {
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion_of_healing",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "pack_challenge",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "Kiril throws back his head and laughs, and the laugh turns into a howl halfway through, and his loyal wolves come pouring up the passage behind him.",
+      "monsters": [
+        {
+          "monster": "kiril_stoyanovich",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            25
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "kiril_defeated",
+      "loot": {
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion_of_healing",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "den_reckoning",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "For one moment Kiril and Emil look at each other across the cave, and agree on something for the first time in a month.",
+      "monsters": [
+        {
+          "monster": "kiril_stoyanovich",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "emil_toranescu",
+          "cell": [
+            9,
+            17
+          ],
+          "name": "Emil Toranescu",
+          "hp": 45
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            30,
+            17
+          ],
+          "name": "Zuleika",
+          "hp": 60
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            20,
+            24
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            25
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "den_broken",
+      "loot": {
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion_of_healing",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "den_reckoning",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "For one moment Kiril and Emil look at each other across the cave, and agree on something for the first time in a month.",
+      "monsters": [
+        {
+          "monster": "kiril_stoyanovich",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "emil_toranescu",
+          "cell": [
+            9,
+            17
+          ],
+          "name": "Emil Toranescu",
+          "hp": 45
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            30,
+            17
+          ],
+          "name": "Zuleika",
+          "hp": 60
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            21,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            25
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            22
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "den_broken",
+      "loot": {
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion_of_healing",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "den_reckoning",
+      "trigger": "dialogue",
+      "when": "",
+      "text": "For one moment Kiril and Emil look at each other across the cave, and agree on something for the first time in a month.",
+      "monsters": [
+        {
+          "monster": "kiril_stoyanovich",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "emil_toranescu",
+          "cell": [
+            9,
+            17
+          ],
+          "name": "Emil Toranescu",
+          "hp": 45
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            30,
+            17
+          ],
+          "name": "Zuleika",
+          "hp": 60
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            25
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "den_broken",
+      "loot": {
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion_of_healing",
+            "qty": 1
+          }
+        ]
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:werewolf_den_caves"
+  },
+  "rest": "no",
+  "rest_text": "Not here. Every shadow in this cave has teeth, and some of them are pretending to sleep.",
+  "treasure_spots": {
+    "werewolf_den_shrine": {
+      "container": "mother_night_offerings"
+    }
+  }
+}

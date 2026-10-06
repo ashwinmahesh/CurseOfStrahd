@@ -1,0 +1,29 @@
+{
+  "id": "the_stolen_children",
+  "name": "The Children in the Pen",
+  "summary": "Five children taken from the farms below Krezk, kept in a pen in the werewolves' den until their first moon.",
+  "giver": "mirela",
+  "region": "werewolf_den",
+  "stages": [
+    {
+      "id": "found",
+      "journal": "In a pen at the back of the den we found five children from the farms below Krezk: Mirela, Ana, Petru and the twins Ilie and Ioana. Kiril means to turn the ones who survive their first moon into wolves. The moon is eleven days away.",
+      "objectives": [
+        "Get the children out of the den alive"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "freed",
+      "journal": "The children are out of the pen and on their way home to Krezk.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "left",
+      "journal": "We left the children in Kiril's pen. The moon is coming.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

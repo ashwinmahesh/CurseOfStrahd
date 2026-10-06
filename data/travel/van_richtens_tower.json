@@ -1,0 +1,97 @@
+{
+  "id": "van_richtens_tower",
+  "name": "Lake Zarovich, the wolf hills and Lake Baratok",
+  "places": [
+    {
+      "id": "lake_zarovich",
+      "name": "Lake Zarovich",
+      "location": "lake_zarovich",
+      "spawn": "from_road",
+      "pos": [
+        0.22,
+        0.39
+      ],
+      "region": "lake_zarovich",
+      "when": "visited:vallaki",
+      "summary": "The great black lake north-west of Vallaki. On its south-west shore, the fishers' landing: empty huts, a rotten jetty, and Bluto's rowboat."
+    },
+    {
+      "id": "werewolf_den",
+      "name": "The Werewolf Den",
+      "location": "werewolf_den",
+      "spawn": "from_trail",
+      "pos": [
+        0.285,
+        0.22
+      ],
+      "region": "werewolf_den",
+      "when": "flag.werewolf_rumor or flag.den_way_known or tarokka.tome.region == werewolf_den or tarokka.symbol.region == werewolf_den or tarokka.sword.region == werewolf_den or tarokka.ally.npc == emil_toranescu",
+      "summary": "A cave under a rock face in the hills above Lake Zarovich's north shore, where a pack of werewolves sleeps by day and worships Mother Night."
+    },
+    {
+      "id": "van_richtens_tower",
+      "name": "Van Richten's Tower",
+      "location": "van_richtens_tower",
+      "spawn": "from_path",
+      "pos": [
+        0.14,
+        0.27
+      ],
+      "region": "van_richtens_tower",
+      "when": "flag.tower_rumor or flag.khazan_known or tarokka.tome.region == van_richtens_tower or tarokka.symbol.region == van_richtens_tower or tarokka.sword.region == van_richtens_tower",
+      "summary": "A dead archmage's black tower on an island in Lake Baratok, a cold tarn under Mount Baratok. Rudolph van Richten keeps it now; a Vistani wagon is parked on the shore."
+    }
+  ],
+  "roads": [
+    {
+      "id": "vallaki_to_lake_zarovich",
+      "from": "vallaki",
+      "to": "lake_zarovich",
+      "hours": 1,
+      "table": "zarovich_shore",
+      "name": "The lake path, past the Vistani camp"
+    },
+    {
+      "id": "lake_zarovich_to_den_by_boat",
+      "from": "lake_zarovich",
+      "to": "werewolf_den",
+      "hours": 2,
+      "table": "zarovich_hills",
+      "name": "By boat to the north shore, then the wolf trail",
+      "when": "flag.lake_boat_ready"
+    },
+    {
+      "id": "vallaki_to_den",
+      "from": "vallaki",
+      "to": "werewolf_den",
+      "hours": 5,
+      "table": "zarovich_hills",
+      "name": "The north track round the lake and up into the hills"
+    },
+    {
+      "id": "lake_zarovich_to_tower_by_boat",
+      "from": "lake_zarovich",
+      "to": "van_richtens_tower",
+      "hours": 3,
+      "table": "zarovich_hills",
+      "name": "By boat to the west shore, then the climb to Lake Baratok",
+      "when": "flag.lake_boat_ready"
+    },
+    {
+      "id": "den_to_tower",
+      "from": "werewolf_den",
+      "to": "van_richtens_tower",
+      "hours": 2.5,
+      "table": "zarovich_hills",
+      "name": "The ridge path to Lake Baratok"
+    },
+    {
+      "id": "tower_to_krezk",
+      "from": "van_richtens_tower",
+      "to": "krezk",
+      "hours": 4,
+      "table": "zarovich_hills",
+      "name": "The Baratok track, down to Krezk"
+    }
+  ]
+}

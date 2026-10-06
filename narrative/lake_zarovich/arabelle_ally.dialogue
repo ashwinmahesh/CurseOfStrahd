@@ -1,0 +1,50 @@
+# Arabelle as the Tarokka's ally (the Tempter: "somewhere on Lake Zarovich, in danger"). Her rescue from Bluto is
+# Vallaki's (vistani_camp.dialogue); this is the join. Once Bluto's business at the landing is settled, she is
+# found drifting off the end of the jetty in a boat that has slipped its rope, waiting for the party.
+
+~ start
+Narrator: Off the end of the jetty, a little boat has slipped its rope and is turning slowly in the mist, a few yards out. In it, sitting very straight with her hands folded in her lap, is Arabelle.
+Arabelle: There you are. The rope came undone. I knew it would. I sat in the boat anyway, so you'd know where to find me.
+if flag.bluto_fate == "saved"
+Arabelle: You stopped the fish-man. I didn't see that. I like being surprised. It hardly ever happens.
+elif flag.bluto_fate == "drowned"
+Arabelle [sad]: The fish-man went in. I said he would. I didn't want to be right.
+endif
+interject tag:blunt: That boat is drifting toward deep water, and she's telling us about fish.
+* [Athletics DC 12] Wade out and haul the boat in. -> haul_ok | haul_fail
+* Throw her a line. -> line
+
+~ haul_ok
+Narrator: The water comes up to your chest and the cold drives the breath out of you, but you get a hand on the bow and walk the boat back to the jetty like a reluctant horse.
+-> aboard
+
+~ haul_fail
+Narrator: The bottom drops away under you and you go in over your head. You come up spluttering, with the bow rope somehow in your fist, and tow her in while she watches with polite interest.
+-> aboard
+
+~ line
+Narrator: She catches the rope first time, as though she'd practised, and holds on while you pull. The boat bumps against the jetty.
+-> aboard
+
+~ aboard
+Arabelle: Papa knows I'm here. He cried. Then he said I was to make you promise to bring me back. So you have to promise.
+if flag.arabelle_ribbon_found
+Arabelle: You found my ribbon on the post. I tied it there before. Before before.
+endif
+Arabelle: The cards said I go with you. I saw it before they did. I see the castle, and a staircase, and somebody laughing who shouldn't be.
+* We promise. Come with us. -> join
+* Arabelle, go home to your father. -> home
+
+~ join
+join arabelle
+quest find_the_ally found
+Arabelle: Good. Somebody has to tell you which way not to go.
+interject tag:cheerful: Hello again. You're much drier than last time.
+Arabelle: I'll be wet again later. Not today.
+interject class:cleric: We'll keep her behind us, always. Always.
+-> END
+
+~ home
+set arabelle_sent_home
+Arabelle: All right. I'll be at the camp. You'll come and get me there, when you're ready. Papa will cry again. He likes crying more than he says.
+-> END
