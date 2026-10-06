@@ -49,13 +49,13 @@
       "id": "still_reading",
       "journal": "Inside the Tome of Strahd, in its author's hand, a note written last winter: 'My reader Mirescu asks again to be allowed to sleep. Denied. He has not finished the chapter.' Aurel is alive in the castle, in the room with the light that never goes out, reading still.",
       "objectives": [
-        "Find Aurel in the east tower of Castle Ravenloft"
+        "Find Aurel behind the lit window in Castle Ravenloft"
       ],
       "ends": ""
     },
     {
       "id": "the_last_page",
-      "journal": "Silvain found Aurel in the east tower library and closed the book for him. However the chapter ended, Aurel did not finish it alone. Silvain has his pen back. They intend to argue about who owes whom for a very long time.",
+      "journal": "Silvain found Aurel by the fire in the devil's study, behind the window that never goes dark, and closed the book for him. However the chapter ended, Aurel did not finish it alone. Silvain finally gave him back his good pen. They intend to argue about who owed whom for a very long time.",
       "objectives": [],
       "ends": "success"
     }

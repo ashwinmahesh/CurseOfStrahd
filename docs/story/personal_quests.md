@@ -72,7 +72,7 @@ Barovia where somebody carries it.
 ## Silvain Aster: Aurel's Last Chapter (`aurels_last_chapter`)
 
 Aurel Mirescu went after the Tome of Strahd and wrote home once: "He knows I am reading." Madam Eva: "He is reading
-still." Strahd keeps him in the east tower as an audience.
+still." Strahd keeps him in the castle as an audience.
 
 | Stage | Where | How |
 |---|---|---|
@@ -88,24 +88,29 @@ still." Strahd keeps him in the east tower as an audience.
 Each is a trigger, a place and a payoff; every one needs its companion present (`name:`), and each quest's final
 stage already exists in its quest file.
 
-1. **Kestrel Company's table.** Trigger: Ilse present and `quest.kestrel_company >= the_deserter`. Place: the great
-   dining hall, set for forty with the company's coats on the chairs; Captain Aldous Merrow (vampire spawn) at the
-   head, the rest of the turned company in the walls and cellars. Payoff: Ilse calls the roll (`flag.kestrel_roll_kept`:
+1. **Kestrel Company's table.** Trigger: Ilse present and `quest.kestrel_company >= the_deserter`. Place: the dining
+   hall on castle_ravenloft_main_floor, set for forty with the company's coats on the chairs; Captain Aldous Merrow
+   (vampire spawn) at the head when the party arrives uninvited or after Strahd's dinner (during the dinner he stands
+   at Strahd's shoulder and the roll call waits until Strahd leaves); the rest of the turned company in the walls and
+   the larder cellars. Payoff: Ilse calls the roll (`flag.kestrel_roll_kept`:
    she reads it from the captain's own book); Merrow answers for it (fight, or a Persuasion 18 roll call that makes
    him stand and be counted). If `flag.kestrel_jory_forgiven`, Jory's drum beats the company's call at the gate when
    the party arrives. `quest kestrel_company count_off`.
-2. **Tatyana's portrait.** Trigger: Tamsin present. Place: wherever the castle hangs Tatyana's portrait (the locket's
-   twin). Payoff by `flag.locket_fate`: "kept", Strahd asks for it ("You carried her home. Now give her to me."), and
+2. **Tatyana's portrait.** Trigger: Tamsin present. Place: the portrait over the fireplace in the court study (K37,
+   castle_ravenloft_court), the locket's twin. Payoff by `flag.locket_fate`: "kept", Strahd asks for it ("You carried her home. Now give her to me."), and
    Tamsin gives it (`quest the_locket given_to_strahd`, failure) or throws it into the fire (`quest the_locket
    burned`, success); "pool", Strahd notices it's gone ("You gave it to my brother. How very like him to accept.");
    "ireena", if Ireena is with you she shows Strahd she has it, and remembers more. (Those two already ended at the
    pool; the castle beat is a payoff, not a stage.)
 3. **Dawn in the devil's chapel.** Trigger: Hedda present carrying the Holy Symbol of Ravenkind
-   (`quest.cold_prayers >= warmth`). Place: the castle's chapel. Payoff: she prays at the defiled altar and, for the
+   (`quest.cold_prayers >= warmth`). Place: the altar of castle_ravenloft_chapel, outside the artifact card's final
+   battle there or after it. Payoff: she prays at the defiled altar and, for the
    length of the prayer, real dawn light comes through the windows; `quest cold_prayers dawn`.
-4. **The east tower.** Trigger: Silvain present, `quest.aurels_last_chapter >= still_reading` (or simply reaching the
-   tower: Aurel's note named its lit window). Place: the east tower library, the lamp that never goes out. Aurel,
-   alive but kept awake and charmed, reads the Tome aloud to an empty chair. Payoff: wake him (Arcana or Persuasion
+4. **The lit window.** Trigger: Silvain present, `quest.aurels_last_chapter >= still_reading` (or simply reaching the
+   room). Place: the court study (K37, castle_ravenloft_court; build thread's pick 2026-10-06, as the castle has no
+   east tower library): its window is the one Aurel's note saw lit every night "high in the east tower", and Silvain
+   says so ("Not a library. A study. He miscounted the floors; he always did."). Aurel, alive but kept awake and
+   charmed, sits by the fire reading the Tome aloud to Strahd's empty chair. Payoff: wake him (Arcana or Persuasion
    15, or the Tome itself closed in his hands) and get him out, or, if the castle has turned him, Silvain's mercy;
    `quest aurels_last_chapter the_last_page`.
 
