@@ -822,6 +822,12 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 	if c.has_meta("portent_next"):
 		out["natural"] = int(c.get_meta("portent_next"))
 		c.remove_meta("portent_next")
+	# Magic items that help before the roll (Wand of Binding's Assisted Escape).
+	var item_adv := e.items.before_d20(c, kind, keys)
+	if not item_adv.is_empty():
+		var adv := (out.get("advantage", []) as Array).duplicate()
+		adv.append_array(item_adv)
+		out["advantage"] = adv
 	if kind == D20Test.Kind.ABILITY_CHECK and "initiative" in keys.map(func(k: String) -> String: return k.get_slice(":", 0)):
 		pass
 	var rh := e.ravenloft.before_d20(c, kind, keys)
@@ -843,6 +849,7 @@ func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 		return
 	e.class_features.after_d20(c, t)
 	e.ravenloft.after_d20(c, t, keys)
+	e.items.after_d20(c, t, keys)
 	if not cr is Character:
 		return
 	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.

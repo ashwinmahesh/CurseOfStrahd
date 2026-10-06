@@ -1,0 +1,35 @@
+{
+  "id": "philter_of_love",
+  "name": "Philter of Love",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_pink",
+  "stackable": true,
+  "effects": [],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "powers": [
+    {
+      "id": "drink",
+      "name": "Drink",
+      "cost": "bonus",
+      "consume": true,
+      "field": true,
+      "custom": "philter_of_love"
+    }
+  ],
+  "summary": "Charmed for 1 hour by the next creature you see within 10 minutes of drinking it.",
+  "text": "This fizzy, rose-colored drink hides a single heart-shaped bubble that is easy to overlook. After drinking it, the first creature you see within the next 10 minutes becomes your one true love: for 1 hour you have the Charmed condition, seeing that creature through adoring eyes."
+}

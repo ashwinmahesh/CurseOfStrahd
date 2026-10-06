@@ -1,0 +1,29 @@
+{
+  "id": "wind_fan",
+  "name": "Wind Fan",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "fan",
+  "powers": [
+    {
+      "id": "gust_of_wind",
+      "name": "Gust Of Wind",
+      "spell": "gust_of_wind",
+      "dc": 13,
+      "after": "wind_fan_tear",
+      "text": "Cast Gust of Wind (save DC 13). Each use after the first before dawn has a 20% chance to tear it."
+    }
+  ],
+  "summary": "Cast Gust of Wind (save DC 13); each extra use in a day risks tearing it.",
+  "text": "Holding the fan lets you cast Gust of Wind from it with a save DC of 13. Every further use before the next dawn carries a cumulative 20 percent chance that it fails, and a fan that fails rips apart into worthless, nonmagical shreds."
+}

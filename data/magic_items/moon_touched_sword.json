@@ -1,0 +1,38 @@
+{
+  "id": "moon_touched_sword",
+  "name": "Moon-Touched Sword",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "name": "Moon-Touched {base}",
+    "default": "longsword"
+  },
+  "light": {
+    "bright": 15,
+    "dim": 15,
+    "when": "drawn",
+    "dark_only": true
+  },
+  "summary": "In darkness, the unsheathed blade sheds moonlight (bright 15 ft, dim 15 ft more).",
+  "text": "Drawn in the dark, this sword's blade glows with moonlight: Bright Light out to 15 feet and Dim Light 15 feet beyond that.",
+  "icon": "longsword",
+  "icon_fallback": true
+}

@@ -1,0 +1,30 @@
+{
+  "id": "efreeti_bottle",
+  "name": "Efreeti Bottle",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "bottle",
+  "powers": [
+    {
+      "id": "open",
+      "name": "Open the bottle",
+      "cost": "magic",
+      "custom": "efreeti_bottle",
+      "targeting": "place",
+      "range": 30,
+      "text": "Magic action: unstopper it. An efreeti appears: it may attack you (10%), serve you for an hour (80%), or grant three wishes (10%)."
+    }
+  ],
+  "summary": "Unstoppered, an efreeti bursts out: it attacks you, serves you for an hour, or grants three wishes.",
+  "text": "Pulling the stopper from this 1-pound painted brass bottle takes a Magic action and releases a billow of dense smoke. When your turn ends, the smoke vanishes in a burst of harmless flame and an Efreeti materializes in an unoccupied space no more than 30 feet from you. On the first opening, the DM rolls 1d100 for the outcome. 01-10: the efreeti turns on you, fights for 5 rounds, then vanishes, and the bottle's magic is gone. 11-90: the efreeti obeys your orders for 1 hour, then is drawn back inside and sealed by a fresh stopper that can't be pulled for 24 hours; the following two openings produce this same result, but a fourth opening lets the efreeti escape for good and leaves the bottle nonmagical. 91-100: the efreeti casts Wish three times on your behalf, departing after the third wish or once 1 hour passes, and the bottle's magic is gone."
+}

@@ -1,0 +1,54 @@
+{
+  "id": "scimitar_of_speed",
+  "name": "Scimitar of Speed",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "scimitar"
+    ],
+    "name": "Scimitar of Speed"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "powers": [
+    {
+      "id": "quick",
+      "name": "Quick Strike",
+      "cost": "bonus",
+      "custom": "bonus_weapon_attack",
+      "targeting": "enemy",
+      "range": 5,
+      "text": "Bonus Action: one attack with the scimitar."
+    }
+  ],
+  "summary": "+2 scimitar; a Bonus Action makes one attack with it.",
+  "text": "This magic scimitar adds +2 to its attack and damage rolls, and on each of your turns you can use a Bonus Action to attack once with it.",
+  "icon": "scimitar",
+  "icon_fallback": true
+}

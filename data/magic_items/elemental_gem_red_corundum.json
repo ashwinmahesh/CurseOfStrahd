@@ -1,0 +1,38 @@
+{
+  "id": "elemental_gem_red_corundum",
+  "name": "Elemental Gem (Red Corundum)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "gem",
+  "variant_of": "elemental_gem",
+  "powers": [
+    {
+      "id": "break",
+      "name": "Break the gem",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "params": {
+        "monster": "fire_elemental",
+        "count": 1,
+        "hours": 1
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Magic action: break it and an Fire Elemental appears, friendly to you, for 1 hour.",
+      "consume": true
+    }
+  ],
+  "summary": "Break it to summon an Fire Elemental that obeys you for an hour.",
+  "text": "Shattering this gem with a Magic action releases the elemental mote trapped inside, calling forth a Fire Elemental just as the Conjure Elemental spell would; the gem is then spent. The elemental takes the unoccupied space nearest the shards, treats you and your allies as friends, and follows your orders until it hits 0 Hit Points or 1 hour passes."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "gloves_of_missile_snaring",
+  "name": "Gloves of Missile Snaring",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "gloves",
+  "weapon_rules": {
+    "special": [
+      "missile_snaring"
+    ]
+  },
+  "worn": "hands",
+  "summary": "A Reaction cuts the damage of a ranged weapon hit by 1d10 + Dex; cut to 0 and you catch the missile.",
+  "text": "These gloves seem to fuse with your hands once you pull them on. When you're struck by a ranged weapon attack while wearing them and have a free hand, you can use your Reaction to lower the damage by 1d10 + your Dexterity modifier. Should the damage drop to 0, you can snatch the missile out of the air, as long as it fits in that hand."
+}

@@ -1,0 +1,47 @@
+{
+  "id": "wand_of_fear",
+  "name": "Wand of Fear",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wand",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true,
+    "charges": {
+      "max": 7,
+      "regain": "1d6+1",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "crumbles into ashes"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "wand",
+  "powers": [
+    {
+      "id": "command",
+      "name": "Command",
+      "spell": "command",
+      "charges": 1,
+      "dc": 15,
+      "text": "1 charge: Command (save DC 15), \"flee\" or \"grovel\" only."
+    },
+    {
+      "id": "fear",
+      "name": "Fear",
+      "spell": "fear",
+      "charges": 2,
+      "dc": 15
+    }
+  ],
+  "summary": "7 charges: Command (flee or grovel, 1) or Fear (2), save DC 15.",
+  "text": "The wand holds 7 charges, recovers 1d6 + 1 of them each dawn, and turns to ash and is destroyed if you roll a 1 on 1d20 after spending its final charge. While you hold it, you have two options. Command (1 charge): cast Command with a save DC of 15, giving only \"flee\" or \"grovel\" as the order. Cone of Fear (2 charges): cast Fear with a save DC of 15."
+}

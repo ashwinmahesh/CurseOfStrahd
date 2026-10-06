@@ -1,0 +1,36 @@
+{
+  "id": "feather_token_bird",
+  "name": "Feather Token (Bird)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 2000.0,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "feather",
+  "variant_of": "feather_token",
+  "powers": [
+    {
+      "id": "use",
+      "name": "Use",
+      "cost": "magic",
+      "consume": true,
+      "custom": "feather_token",
+      "params": {
+        "kind": "bird"
+      },
+      "text": "Toss it 5 ft into the air: it becomes a Roc that carries you and the party far (a journey takes half the time today).",
+      "combat": false,
+      "field": true
+    }
+  ],
+  "summary": "Toss it 5 ft into the air: it becomes a Roc that carries you and the party far (a journey takes half the time today).",
+  "text": "A feather-shaped token good for one use. Toss it 5 feet into the air as a Magic action and it vanishes, replaced by a huge, many-coloured bird with the statistics of a Roc. The bird follows simple commands but never attacks. It flies at 16 miles per hour with up to 500 pounds on its back (or 1,000 pounds at half that speed), stopping to rest 1 hour after every 3 hours aloft, for at most 144 miles a day. It disappears after covering its day's distance or dropping to 0 Hit Points, and you can dismiss it with a Magic action. In the game, it carries the party so that day's journey takes half the time."
+}

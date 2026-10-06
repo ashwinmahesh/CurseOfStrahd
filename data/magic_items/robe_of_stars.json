@@ -1,0 +1,53 @@
+{
+  "id": "robe_of_stars",
+  "name": "Robe of Stars",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true,
+    "charges": {
+      "max": 6,
+      "start": 6,
+      "regain": "1d6",
+      "when": "dusk"
+    }
+  },
+  "theme": "implements",
+  "icon": "robe",
+  "modifiers": [
+    {
+      "stat": "save",
+      "ability": "all",
+      "value": 1
+    }
+  ],
+  "powers": [
+    {
+      "id": "star",
+      "name": "Throw a star (Magic Missile, level 5)",
+      "spell": "magic_missile",
+      "charges": 1,
+      "level": 5,
+      "text": "Pull off a star: cast Magic Missile as a level 5 spell."
+    },
+    {
+      "id": "astral",
+      "name": "Enter the Astral Plane",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "flickers toward the Astral Plane, but Barovia's mists hold fast"
+      },
+      "text": "Magic action: you and what you wear go to the Astral Plane (the Mists of Barovia hold you fast)."
+    }
+  ],
+  "worn": "robe",
+  "summary": "+1 to saving throws; six stars to throw as level 5 Magic Missiles (they return at dusk).",
+  "text": "A black or deep-blue robe stitched with tiny white or silver stars; wearing it adds +1 to your saving throws. Six oversized stars sit across the upper front. As a Magic action you can tear one free and use it to cast Magic Missile at level 5. Each dusk, 1d6 of the torn-off stars grow back. Another Magic action carries you, with all you wear and carry, into the Astral Plane, where you stay until you spend a Magic action to go back to the plane you left."
+}

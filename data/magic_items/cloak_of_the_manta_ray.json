@@ -1,0 +1,31 @@
+{
+  "id": "cloak_of_the_manta_ray",
+  "name": "Cloak of the Manta Ray",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "water_breathing"
+    },
+    {
+      "stat": "speed_set",
+      "kind": "swim",
+      "value": 60
+    }
+  ],
+  "worn": "cloak",
+  "summary": "With the hood up you breathe underwater and swim at 60 ft.",
+  "text": "Raise the hood and you can breathe water, and your Swim Speed becomes 60 feet."
+}

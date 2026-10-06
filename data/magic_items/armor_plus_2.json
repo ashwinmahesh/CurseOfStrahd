@@ -1,0 +1,32 @@
+{
+  "id": "armor_plus_2",
+  "name": "Armor, +2",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "name": "+2 {base}",
+    "default": "chain_mail"
+  },
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 2
+    }
+  ],
+  "variant_of": "armor_plus",
+  "summary": "+2 to Armor Class while you wear it.",
+  "text": "This armor adds +2 to the Armor Class of whoever wears it.",
+  "icon": "chain_mail",
+  "icon_fallback": true
+}

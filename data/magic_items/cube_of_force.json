@@ -1,0 +1,44 @@
+{
+  "id": "cube_of_force",
+  "name": "Cube of Force",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true,
+    "charges": {
+      "max": 10,
+      "regain": "1d6",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "cube",
+  "powers": [
+    {
+      "id": "barrier",
+      "name": "Press a face",
+      "cost": "magic",
+      "custom": "cube_of_force",
+      "choice": {
+        "label": "Face",
+        "from": [
+          "1_gas",
+          "2_objects",
+          "3_creatures",
+          "4_spells",
+          "5_everything",
+          "6_off"
+        ]
+      },
+      "text": "Magic action: press a face (1 to 5 charges) to raise a 15-ft cube of force around you that keeps out gas, objects, living things, spells, or everything; face 6 ends it."
+    }
+  ],
+  "summary": "Raise a cube of force around yourself that keeps out gases, objects, creatures, spells, or all of them.",
+  "text": "A cube roughly an inch on each side, with a different symbol on each face that can be pushed. It holds 10 charges and recovers 1d6 of them each dawn. Pressing a face is a Magic action that costs charges according to the face; if the cube lacks enough, nothing happens. Otherwise an invisible wall of force forms a cube 15 feet on each side, centered on you and moving with you. It lasts 1 minute, or until you press the sixth face (a Magic action), or until the charges run out. Face 1 (1 charge): blocks gases, wind and fog. Face 2 (2 charges): blocks nonliving matter, though you may let walls, floors and ceilings pass. Face 3 (3 charges): blocks living matter. Face 4 (4 charges): blocks spell effects. Face 5 (5 charges): blocks everything, though you may let walls, floors and ceilings pass. Face 6 (0 charges): shuts the barrier off. Some spells that target the barrier, and some effects of spells or magic items that touch it, drain charges from the cube."
+}

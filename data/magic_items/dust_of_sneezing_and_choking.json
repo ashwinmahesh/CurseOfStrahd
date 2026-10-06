@@ -1,0 +1,84 @@
+{
+  "id": "dust_of_sneezing_and_choking",
+  "name": "Dust of Sneezing and Choking",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false,
+    "cursed": true,
+    "curse": "You choke too, as does every breather within 30 feet."
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "dust",
+  "stackable": true,
+  "appears_as": "dust_of_disappearance",
+  "recipes": {
+    "cloud": {
+      "name": "Dust of Sneezing and Choking",
+      "level": 0,
+      "school": "conjuration",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 30
+      },
+      "area_targets": "all",
+      "save": "con",
+      "targets": {
+        "kind": "area"
+      },
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "include_self": true,
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "incapacitated",
+            "repeat_save": "end_of_turn"
+          }
+        },
+        {
+          "effect": "modifiers",
+          "params": {
+            "repeat_save": "end_of_turn",
+            "modifiers": [
+              {
+                "stat": "flag",
+                "value": "suffocating"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "throw",
+      "name": "Throw into the air",
+      "cost": "utilize",
+      "recipe": "cloud",
+      "dc": 15,
+      "consume": true,
+      "text": "Utilize action: you and everyone within 30 ft make a DC 15 Con save or start choking: Incapacitated and suffocating, saving again each turn."
+    }
+  ],
+  "summary": "Looks like Dust of Disappearance; thrown, it makes you and everyone within 30 ft choke (Con DC 15).",
+  "text": "A single dose of fine, sandlike powder kept in a little container. It passes for Dust of Disappearance, and even the Identify spell names it as such. Fling a handful skyward with a Utilize action and the trap springs: you and every creature within 30 feet of you that breathes must pass a Constitution saving throw (DC 15). On a failure, fits of sneezing stop the creature's breath, giving it the Incapacitated condition and leaving it suffocating. While it stays conscious, an affected creature retries the save at the close of each of its turns and shakes off the effect when it succeeds. Casting Lesser Restoration on a creature also frees it."
+}

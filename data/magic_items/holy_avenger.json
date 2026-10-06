@@ -1,0 +1,63 @@
+{
+  "id": "holy_avenger",
+  "name": "Holy Avenger",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a Paladin"
+  },
+  "theme": "armaments",
+  "icon": "holy_avenger",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "name": "Holy Avenger",
+    "default": "longsword"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs": [
+          "fiend",
+          "undead"
+        ],
+        "dice": "2d10",
+        "type": "radiant"
+      }
+    ],
+    "aura": {
+      "radius": 10,
+      "radius_paladin_10": 30
+    }
+  },
+  "summary": "+3 sword; an extra 2d10 Radiant against Fiends and Undead; you and allies near you have Advantage on saves against spells.",
+  "text": "This magic weapon adds +3 to attack and damage rolls, and a Fiend or Undead it hits suffers an additional 2d10 Radiant damage. As long as you hold it drawn, it projects a 10-foot Emanation aura from you, within which you and every creature friendly to you have Advantage when saving against spells or other magical effects. With 17 or more Paladin levels, the aura grows to a 30-foot Emanation."
+}

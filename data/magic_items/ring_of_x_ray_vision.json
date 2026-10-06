@@ -1,0 +1,30 @@
+{
+  "id": "ring_of_x_ray_vision",
+  "name": "Ring of X-ray Vision",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "powers": [
+    {
+      "id": "xray",
+      "name": "X-ray Vision",
+      "cost": "magic",
+      "custom": "x_ray_vision",
+      "field": true,
+      "text": "Magic action: for 1 minute, see through solid matter within 30 ft. Using it again before a Long Rest: a DC 15 Con save or gain Exhaustion."
+    }
+  ],
+  "summary": "See through walls within 30 ft for a minute; using it twice before a Long Rest risks Exhaustion.",
+  "text": "A Magic action grants you X-ray vision out to 30 feet for 1 minute. Within that radius, solid objects look transparent to you and let light through. The sight passes through as much as 1 inch of common metal, 1 foot of stone or 3 feet of dirt or wood; anything thicker stops it, and so does even a thin sheet of lead. Each further use before you finish a Long Rest requires a Constitution saving throw (DC 15), and on a failure you gain 1 Exhaustion level."
+}

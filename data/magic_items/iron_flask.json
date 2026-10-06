@@ -1,0 +1,39 @@
+{
+  "id": "iron_flask",
+  "name": "Iron Flask",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "flask",
+  "powers": [
+    {
+      "id": "capture",
+      "name": "Capture",
+      "cost": "magic",
+      "custom": "iron_flask_capture",
+      "targeting": "enemy",
+      "range": 60,
+      "text": "Magic action: a creature within 60 ft that isn't native to this plane makes a DC 17 Wisdom save or is trapped in the flask."
+    },
+    {
+      "id": "release",
+      "name": "Release",
+      "cost": "magic",
+      "custom": "iron_flask_release",
+      "targeting": "place",
+      "range": 30,
+      "text": "Magic action: release the creature held inside; it obeys you for 1 hour."
+    }
+  ],
+  "summary": "Trap a creature from another plane inside it (Wis DC 17), and later release it to serve you for an hour.",
+  "text": "A brass-stoppered iron bottle. Speak its command word as a Magic action while aiming at a creature within 60 feet that you can see. A target native to some plane of existence besides the one you're currently on is drawn inside unless it succeeds on a Wisdom saving throw against DC 17, which it makes with Advantage if this flask has held it before. A captive stays inside until let out, and the flask has room for a single creature at once. Unstoppering it is a Magic action that frees the occupant, which then treats you and your companions as friends for 1 hour and follows your orders during that time. Given no orders, or an order likely to get it killed, it only defends itself and does nothing else. Once the hour ends, it behaves as its usual disposition and alignment dictate."
+}

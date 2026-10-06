@@ -1,0 +1,44 @@
+{
+  "id": "carpet_of_flying_5x7",
+  "name": "Carpet of Flying (5 by 7 ft)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 30,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "carpet",
+  "variant_of": "carpet_of_flying",
+  "powers": [
+    {
+      "id": "fly",
+      "name": "Fly",
+      "cost": "magic",
+      "toggle": true,
+      "off_cost": "free",
+      "modifiers": [
+        {
+          "stat": "speed_set",
+          "kind": "fly",
+          "value": 40
+        },
+        {
+          "stat": "flag",
+          "value": "flying_carpet"
+        }
+      ],
+      "text": "The carpet carries you through the air at 40 ft (half that if it carries more than its load)."
+    }
+  ],
+  "travel": {
+    "speed_mult": 2
+  },
+  "summary": "A flying carpet: Fly Speed 40 ft; journeys take half the time.",
+  "text": "Speaking the command word (a Magic action) makes this carpet rise and fly wherever you tell it, so long as you stay within 30 feet of it. Carpets of flying come in four sizes; this one measures 5 by 7 feet and has a Fly Speed of 40 feet. It can bear double its normal load, but loading it past that normal capacity halves its Fly Speed. In the game, while one of you has it, the party's overland travel takes half as long."
+}

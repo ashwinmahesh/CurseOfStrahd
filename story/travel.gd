@@ -98,7 +98,8 @@ static func route(from: String, to: String, st: StoryState) -> Array[Dictionary]
 	while at != from:
 		var p := prev[at] as Dictionary
 		var road := p["road"] as Dictionary
-		out.push_front({"road": road, "from": str(p["from"]), "to": at, "hours": float(road["hours"])})
+		# Magic that speeds journeys (a Carpet of Flying, Horseshoes of Speed, a Feather Token's roc): fewer hours.
+		out.push_front({"road": road, "from": str(p["from"]), "to": at, "hours": float(road["hours"]) / FieldItems.travel_mult(st)})
 		at = str(p["from"])
 	return out
 

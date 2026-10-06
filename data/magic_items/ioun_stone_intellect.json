@@ -1,0 +1,30 @@
+{
+  "id": "ioun_stone_intellect",
+  "name": "Ioun Stone (Intellect)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ioun_stone",
+  "variant_of": "ioun_stone",
+  "modifiers": [
+    {
+      "stat": "ability",
+      "ability": "int",
+      "value": 2,
+      "max": 20
+    }
+  ],
+  "powers": [],
+  "worn": "ioun",
+  "summary": "+2 Intelligence (to 20).",
+  "text": "Once you are attuned, toss this stone upward as a Magic action and it circles your head 1d3 feet away, granting its benefit while it orbits; snatching it back out of the air takes an action. The stones bear the name of Ioun, a deity of knowledge and prophecy worshipped on some worlds. Benefit: +2 Intelligence, to a maximum of 20."
+}

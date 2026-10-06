@@ -1,0 +1,30 @@
+{
+  "id": "shield_of_missile_attraction",
+  "name": "Shield of Missile Attraction",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "shield",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true,
+    "cursed": true,
+    "curse": "Ranged weapon attacks aimed at anyone within 10 feet of you are redirected at you instead."
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "shield",
+    "name": "Shield of Missile Attraction"
+  },
+  "armor_rules": {
+    "resist_ranged_weapons": true,
+    "attract_missiles": 10
+  },
+  "summary": "Resistance to damage from ranged weapon attacks. Cursed: ranged weapon attacks at creatures near you hit you instead.",
+  "text": "Holding this Shield gives you Resistance to damage from Ranged weapon attacks. Curse: the Shield is cursed, and attuning to it curses you. Taking the Shield off doesn't end the curse; only Remove Curse, or comparable magic, targeting you lifts it. While cursed, you become the target of any attack made with a Ranged weapon against a creature within 10 feet of you.",
+  "icon": "shield",
+  "icon_fallback": true
+}

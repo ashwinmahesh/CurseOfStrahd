@@ -1,0 +1,39 @@
+{
+  "id": "sovereign_glue",
+  "name": "Sovereign Glue",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false,
+    "charges": {
+      "max": 7,
+      "start": "1d6+1",
+      "when": "never"
+    }
+  },
+  "theme": "implements",
+  "icon": "jar",
+  "powers": [
+    {
+      "id": "glue",
+      "name": "Glue two things",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "bonds two objects together for good"
+      },
+      "field": true,
+      "text": "It bonds two objects together for good. (No other effect in the game.)",
+      "charges": 1,
+      "combat": false
+    }
+  ],
+  "summary": "An adhesive that bonds any two objects together permanently.",
+  "text": "A thick, milky-white adhesive that permanently bonds any two objects. It can only be kept in a jar or flask whose inside has been coated with Oil of Slipperiness; a container found holds 1d6 + 1 ounces. Each ounce covers a 1-foot square. It sets in 1 minute, after which the bond can be broken only by Universal Solvent, Oil of Etherealness, or a Wish spell."
+}

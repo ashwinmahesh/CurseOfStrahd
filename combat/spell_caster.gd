@@ -121,7 +121,7 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	if c.creature.has_flag("cant_cast"):
 		return "Can't cast spells in this form"
 	var armor := ch.equipped("armor")
-	if not armor.is_empty() and not ch.has_armor_training(str((armor["armor"] as Dictionary)["kind"])):
+	if not armor.is_empty() and not ch.trained_for(armor):
 		return "Wearing armor without training"
 	var level := int(s.get("level", 0))
 	if level > 0 and not bool(entry["free"]):
@@ -431,6 +431,8 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 	mode = str((s.get("area_targets_by_choice", {}) as Dictionary).get(choice, mode))
 	var out: Array[Combatant] = []
 	for v in creatures_in(cells):
+		if enc().items.spell_blocked(c, v) != "":
+			continue
 		match mode:
 			"others":
 				if v == c:
@@ -507,6 +509,11 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	var ch := c.creature as Character
 	var level := int(s.get("level", 0))
 	var use_free := bool(entry["free"]) and (bool(opts.get("free", false)) or slot <= level or "psionic_sorcery" in meta)
+	# Tome of the Stilled Tongue: the next Wizard spell needs no slot.
+	if level > 0 and c.has_meta("free_wizard_spell") and "wizard" in (s.get("classes", []) as Array):
+		c.remove_meta("free_wizard_spell")
+		use_free = true
+		ch.set_resource("spell:%s" % spell_id, str(s["name"]), 1, "long", "Tome of the Stilled Tongue")
 	# Divine Intervention: the next Cleric spell of level 5 or lower needs no slot.
 	if level > 0 and c.has_meta("free_cleric_spell") and "cleric" in (s.get("classes", []) as Array) and level <= int(c.get_meta("free_cleric_spell")):
 		c.remove_meta("free_cleric_spell")
@@ -849,6 +856,11 @@ func _finish_concentration(ctx: Dictionary) -> void:
 func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
 	var s := ctx["s"] as Dictionary
 	var c := ctx["c"] as Combatant
+	# Rod of Absorption, Staff of the Magi: a spell aimed at one creature alone can be soaked up.
+	if enc().items.absorbs_spell(ctx, tgt, cells, r):
+		return
+	# Cube of Force (spells face), Scroll of Protection: creatures the spell can't reach.
+	tgt.assign(tgt.filter(func(t: Combatant) -> bool: return enc().items.spell_blocked(c, t) == ""))
 	if specials.resolve(ctx, tgt, cells, r):
 		return
 	match str(s["id"]):
@@ -1093,6 +1105,9 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	(option["profile"] as WeaponProfile).normal_range = range_ft(s, c)
 	var sit := e.attack_situation(c, t, option)
 	if str(s["id"]) == "sacred_flame":
+		sit["cover_bonus"] = 0
+	# Wand of the War Mage: spell attacks ignore Half Cover.
+	if c.creature.has_flag("spell_attacks_ignore_half_cover") and int(sit.get("cover", 0)) == CombatGrid.Cover.HALF:
 		sit["cover_bonus"] = 0
 	e._consume_marks(c, t)
 	specials.duel_check_attack(c, t)
@@ -1357,6 +1372,9 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			details.append(test.describe() + bonus_text)
 		else:
 			details.append("%s doesn't resist" % t.name())
+		# Ring of Spell Turning: a saved-against spell of level 7 or lower has no effect (and may go back at its caster).
+		if success and e.items.turns_spell(c, t, ctx, victims, r):
+			continue
 		if has_damage and not multi.is_empty():
 			var parts: Array = []
 			for pr in multi:
@@ -1587,6 +1605,8 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 		total = int(pmax["count"]) * int(pmax["sides"]) + int(pmax["modifier"])
 	total = e.ravenloft.spell_healing(ctx, t, dice, total)
 	var amount := total + bonus.total() + int((s.get("heal", {}) as Dictionary).get("flat", 0))
+	# Moon Sickle: healing spells cast while holding it heal 1d4 more.
+	amount += e.items.healing_bonus(c, ctx)
 	var healed := t.creature.heal(amount, str(s["name"]))
 	# Blessed Healer (Life Domain 6): healing another creature with a slot heals you 2 + the slot level.
 	if t != c and int(ctx["slot"]) > 0 and CombatFeatures.has_feature(c, "blessed_healer") and not ctx.has("blessed"):
@@ -1847,6 +1867,8 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 		if caster_type in (m.data.get("types", []) as Array):
 			for blocked: Variant in m.data.get("conditions", []):
 				fxo.conditions.erase(StringName(str(blocked)))
+	# Ring of Free Action: magic can't paralyze or restrain the wearer, or reduce its speed.
+	enc().items.filter_magic_effect(t, fxo)
 	if fxo.modifiers.is_empty() and fxo.conditions.is_empty():
 		return
 	for m in fxo.modifiers:

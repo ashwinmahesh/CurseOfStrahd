@@ -302,6 +302,7 @@ func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> 
 		return out
 	e.class_features.against_damage(st, total, cut, out)
 	e.ravenloft.against_damage(st, total, cut, out)
+	e.items.against_damage(st, total, cut, out)
 	if target.creature.has_flag("uncanny_dodge") and _react_ok(target) and e.can_see(target, c):
 		out.append({"kind": "uncanny_dodge", "reactor": target, "trigger": c.id, "title": "Reaction: Uncanny Dodge?",
 			"text": "%s hits %s for %d damage. Uncanny Dodge halves it (%d)." % [c.name(), target.name(), total.call(), int(total.call()) / 2],

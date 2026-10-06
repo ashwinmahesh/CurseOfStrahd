@@ -1,0 +1,24 @@
+{
+  "id": "portable_hole",
+  "name": "Portable Hole",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "hole",
+  "container": {
+    "capacity_lb": 2000,
+    "weightless": true,
+    "extradimensional": true
+  },
+  "summary": "A cloth circle that unfolds into a 10-ft-deep extradimensional hole; folded, it weighs nothing.",
+  "text": "Folded, this silky black cloth is the size of a handkerchief; opened out, it is a circle 6 feet across. As a Magic action you can lay it flat on a solid surface or press it against one, opening a 10-foot-deep extradimensional hole. Because that cylindrical space lies on another plane, it can never serve as a passage through anything. Creatures inside an open hole can simply climb out. Another Magic action, gripping the cloth's edges and folding it up, closes the hole; whatever is inside stays in the extradimensional space, and the cloth weighs next to nothing regardless of its contents. A creature trapped in a folded hole can take an action to attempt a Strength (Athletics) check against DC 10, emerging within 5 feet of the cloth on a success. A breathing creature in a closed hole has 10 minutes of air before it starts to suffocate. Putting a Portable Hole inside the space of a Bag of Holding, a Handy Haversack or a similar extradimensional item destroys both at once and rips a gateway into the Astral Plane."
+}

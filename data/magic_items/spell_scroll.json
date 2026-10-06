@@ -1,0 +1,24 @@
+{
+  "id": "spell_scroll",
+  "name": "Spell Scroll",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "scroll",
+  "weight_lb": 0,
+  "cost_gp": 50.0,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "scroll",
+  "stackable": true,
+  "template": {
+    "on": "spell",
+    "name": "Spell Scroll ({base})"
+  },
+  "summary": "A spell written on a scroll: read it to cast it, if the spell is on your class's list.",
+  "text": "Each Spell Scroll holds one spell recorded in a mystic cipher. When the spell belongs to your spell list, reading the scroll lets you cast it without Material components; if not, the writing makes no sense to you. Casting from the scroll takes the spell's usual casting time, and afterward the scroll crumbles to dust; an interrupted casting leaves the scroll intact. A spell from your list that is above the level you can normally cast requires an ability check with your spellcasting ability against DC 10 + the spell's level; a failed check erases the spell from the scroll and nothing else happens. The spell's level sets the scroll's rarity, save DC and attack bonus. Common: cantrip or level 1 (DC 13, +5). Uncommon: level 2 (DC 13, +5), level 3 (DC 15, +7). Rare: level 4 (DC 15, +7), level 5 (DC 17, +9). Very rare: level 6 (DC 17, +9), level 7 (DC 18, +10), level 8 (DC 18, +10). Legendary: level 9 (DC 19, +11). You can copy a Wizard spell from a Spell Scroll into a spellbook."
+}

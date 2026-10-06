@@ -1,0 +1,59 @@
+{
+  "id": "giant_badger",
+  "name": "Giant Badger",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "medium",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 13,
+  "initiative": 0,
+  "hp": {
+    "average": 13,
+    "dice": "2d8+4"
+  },
+  "speed": {
+    "walk": 30,
+    "burrow": 10
+  },
+  "abilities": {
+    "str": 13,
+    "dex": 10,
+    "con": 15,
+    "int": 2,
+    "wis": 12,
+    "cha": 5
+  },
+  "senses": {
+    "darkvision": 30
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "2d4+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite: +3 to hit, 2d4+1 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A badger the size of a big dog."
+}

@@ -1,0 +1,59 @@
+{
+  "id": "weasel",
+  "name": "Weasel",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "tiny",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 13,
+  "initiative": 3,
+  "hp": {
+    "average": 1,
+    "dice": "1d4-1"
+  },
+  "speed": {
+    "walk": 30,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 3,
+    "dex": 16,
+    "con": 8,
+    "int": 2,
+    "wis": 12,
+    "cha": 3
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 0,
+  "xp": 10,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 1,
+          "dice": "1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite: +5 to hit, 1 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A quick little biter."
+}

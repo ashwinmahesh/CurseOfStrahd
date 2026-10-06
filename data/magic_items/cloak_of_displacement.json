@@ -1,0 +1,25 @@
+{
+  "id": "cloak_of_displacement",
+  "name": "Cloak of Displacement",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "weapon_rules": {
+    "special": [
+      "displacement"
+    ]
+  },
+  "worn": "cloak",
+  "summary": "Attack rolls against you have Disadvantage, until something damages you (it returns at the start of your turn).",
+  "text": "The cloak casts an illusion that shows you standing slightly away from where you really are, so every attack roll against you has Disadvantage. Taking damage switches this off until your next turn begins. The effect is also suppressed while you are Incapacitated or Restrained or have a Speed of 0."
+}

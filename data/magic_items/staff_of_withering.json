@@ -1,0 +1,61 @@
+{
+  "id": "staff_of_withering",
+  "name": "Staff of Withering",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Cleric, Druid, or Warlock",
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Withering"
+  },
+  "weapon_rules": {
+    "extra": [
+      {
+        "while": "wither",
+        "dice": "2d10",
+        "type": "necrotic",
+        "spend_charge": 1
+      }
+    ],
+    "on_hit": [
+      {
+        "while": "wither",
+        "save": "con",
+        "dc": 15,
+        "debuff": "withering",
+        "ends_toggle": "wither"
+      }
+    ]
+  },
+  "powers": [
+    {
+      "id": "wither",
+      "name": "Withering",
+      "cost": "free",
+      "toggle": true,
+      "off_cost": "free",
+      "text": "Arm it: your next hit with the staff spends 1 charge for an extra 2d10 Necrotic, and the target makes a DC 15 Con save or has Disadvantage on Strength and Constitution checks and saves for 1 hour.",
+      "needs_charges": 1
+    }
+  ],
+  "summary": "3 charges: a hit can deal an extra 2d10 Necrotic and weaken the target's Strength and Constitution for an hour.",
+  "text": "Swing it as a magic Quarterstaff that deals ordinary Quarterstaff damage. When it hits, you may spend 1 of its 3 charges to add 2d10 Necrotic damage; the target then rolls a Constitution saving throw against DC 15, and on a failure it has Disadvantage on Strength and Constitution ability checks and saving throws for 1 hour. The staff recovers 1d3 spent charges each dawn."
+}

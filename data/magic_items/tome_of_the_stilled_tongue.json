@@ -1,0 +1,35 @@
+{
+  "id": "tome_of_the_stilled_tongue",
+  "name": "Tome of the Stilled Tongue",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a Wizard"
+  },
+  "theme": "arcana",
+  "icon": "book",
+  "treasure": {
+    "random": false
+  },
+  "powers": [
+    {
+      "id": "free_spell",
+      "name": "Cast a spell from the tome",
+      "cost": "free",
+      "custom": "stilled_tongue",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once per dawn, cast a Wizard spell written in the tome without spending a slot (your next one uses no slot)."
+    }
+  ],
+  "summary": "A spellbook that, once a day, lets you cast a spell from it without a slot.",
+  "text": "A heavy leather-bound book with a dried-out tongue fixed to its front cover; there are five copies, and nobody knows which came first. While you hold it, it serves as your spellbook and as your Spellcasting Focus when casting Wizard spells. Once per dawn, as a Bonus Action, you can cast a spell written in it without spending a spell slot and without verbal or somatic components."
+}

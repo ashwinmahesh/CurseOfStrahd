@@ -389,6 +389,11 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 
 
 func _spell_targeting(data: Dictionary) -> String:
+	return spell_targeting(data)
+
+
+## How the hotbar targets a spell: none, direction, point, place, enemy, ally, dying, dead, multi or creature.
+static func spell_targeting(data: Dictionary) -> String:
 	if data.has("area"):
 		if str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
 			return "none" if str((data["area"] as Dictionary).get("shape", "")) == "emanation" else "direction"
@@ -420,7 +425,9 @@ func _spell_targeting(data: Dictionary) -> String:
 
 
 func _items(c: Combatant, out: Array[Dictionary]) -> void:
-	# Potions and Goodberries: a Bonus Action to drink or eat one, or give it to a creature within 5 ft.
+	# Potions, scrolls, oils and every magic item power (combat/combat_items.gd).
+	out.append_array(e.items.list(c))
+	# Goodberries and other heal-only consumables that aren't potions: a Bonus Action to eat one or give it away.
 	if c.creature is Character:
 		var seen := {}
 		for entry in (c.creature as Character).inventory:
@@ -428,6 +435,8 @@ func _items(c: Combatant, out: Array[Dictionary]) -> void:
 			if seen.has(iid) or int(entry["qty"]) <= 0:
 				continue
 			var item := Compendium.shared().item_data(iid)
+			if str(item.get("category", "")) == "potion":
+				continue
 			var heal := {}
 			for fx: Variant in item.get("effects", []):
 				if str((fx as Dictionary).get("effect", "")) == "heal":
@@ -439,7 +448,7 @@ func _items(c: Combatant, out: Array[Dictionary]) -> void:
 			var it := _entry("item:" + iid, ITEMS, str(item.get("name", iid)), "%d left · heal %s" % [e.item_count(c, iid), amount], "bonus",
 				e._bonus_check(c), "ally", str(item.get("summary", "")))
 			it["range"] = 5
-			it["kind"] = "item"
+			it["kind"] = "consumable"
 			out.append(it)
 	if e.has_kit(c):
 		var kit := _entry("healers_kit", ITEMS, "Healer's Kit", "stabilize, no check", "action", e._action_check(c), "dying")
@@ -512,6 +521,8 @@ func details(c: Combatant, action: Dictionary) -> Dictionary:
 		return _weapon_details(c, action)
 	if kind == "spell":
 		return _spell_details(c, action)
+	if kind in ["item", "item_spell"]:
+		return _item_details(c, action)
 	var lines: Array[String] = []
 	var id := str(action["id"])
 	var feature := _feature_for(c, id)
@@ -531,6 +542,30 @@ func details(c: Combatant, action: Dictionary) -> Dictionary:
 		lines.append("Now: %s" % action["sub"])
 	if not bool(action["legal"]):
 		lines.append("Can't use it now: %s" % action["reason"])
+	return {"title": str(action["label"]), "lines": lines}
+
+
+## A magic item power: what it costs, what it does, the item's charges and its own text.
+func _item_details(c: Combatant, action: Dictionary) -> Dictionary:
+	var lines: Array[String] = []
+	var data := Compendium.shared().item_data(str(action.get("item_id", "")))
+	lines.append("Costs: %s" % _cost_text(str(action["cost"])))
+	lines.append("From: %s" % data.get("name", ""))
+	if str(action.get("help", "")) != "":
+		lines.append(str(action["help"]))
+	if str(action["sub"]) != "":
+		lines.append("Now: %s" % action["sub"])
+	if action.has("dc"):
+		lines.append("Save DC %d · Attack %+d" % [int(action["dc"]), int(action.get("attack_bonus", 0))])
+	if str(data.get("text", "")) != "":
+		lines.append(str(data["text"]))
+	if not bool(action["legal"]):
+		lines.append("Can't use it now: %s" % action["reason"])
+	if str(action.get("kind", "")) == "item_spell":
+		var sd := _spell_details(c, action)
+		for l: Variant in sd["lines"]:
+			if not str(l).begins_with("Costs"):
+				lines.append(str(l))
 	return {"title": str(action["label"]), "lines": lines}
 
 
@@ -755,6 +790,10 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 			return e.escape_effect(c, int(id.get_slice(":", 1)))
 		"haste":
 			return e.haste_action_use(c, id.get_slice(":", 1), t, id.substr(("haste:attack:").length()) if id.begins_with("haste:attack:") else "")
+		"item", "item_spell":
+			return e.items.perform(c, action, targets, point, dir, slot, opts)
+		"consumable":
+			return e.use_item(c, id.substr(5), t if t != null else c)
 	match id:
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")
@@ -812,8 +851,6 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 			return e.wake(c, t)
 		"jump":
 			return e.jump(c, Vector2i(floori(point.x), floori(point.y)))
-		"item":
-			return e.use_item(c, id.substr(5), t if t != null else c)
 	return CombatResult.fail(str(action.get("reason", "Not available")))
 
 
@@ -950,7 +987,7 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 	var level := int(data.get("level", 0))
 	var use_slot := level if slot <= 0 else maxi(slot, level)
 	var ch := c.creature as Character
-	var preview := ch.spell_preview(str(action["spell_id"]), use_slot)
+	var preview := cast_preview(c, action, use_slot)
 	var dc := 0
 	if preview.has("save_dc"):
 		dc = (preview["save_dc"] as Breakdown).total()
@@ -988,6 +1025,29 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 static func _avg(expr: String) -> float:
 	var p := DiceRoller.parse_expr(expr)
 	return int(p["count"]) * (int(p["sides"]) + 1) / 2.0 + int(p["modifier"])
+
+
+## Levels a hotbar spell entry can be cast at: spell slots, or an item's charge levels (a Wand of Fireballs).
+func level_choices(c: Combatant, action: Dictionary) -> Array[int]:
+	if str(action.get("kind", "")) == "item_spell":
+		var out: Array[int] = []
+		for l: Variant in action.get("levels", []):
+			out.append(int(l))
+		return out
+	return slot_choices(c, str(action.get("spell_id", "")))
+
+
+## Character.spell_preview for a hotbar entry, with an item's own DC and attack bonus in place of the caster's.
+func cast_preview(c: Combatant, action: Dictionary, slot: int) -> Dictionary:
+	var prev := (c.creature as Character).spell_preview(str(action["spell_id"]), slot)
+	if action.has("dc"):
+		var data := Compendium.shared().spell_data(str(action["spell_id"]))
+		if data.has("save"):
+			prev["save"] = str(data["save"])
+			prev["save_dc"] = Breakdown.new("Spell save DC").add(str(action.get("label", "Item")), int(action["dc"]))
+		if data.has("attack"):
+			prev["attack"] = Breakdown.new("Spell attack").add(str(action.get("label", "Item")), int(action.get("attack_bonus", int(action["dc"]) - 8)))
+	return prev
 
 
 ## Slot levels `c` could cast `spell_id` with (the lowest first), for the upcast pips.

@@ -22,6 +22,8 @@ var mastery: String = ""
 var properties: Array = []
 ## For `when` filters: melee/ranged, finesse, thrown, two_handed, one_handed_alone, light, unarmed.
 var tags: Array[String] = []
+## The magic ammunition this profile shoots ("" = ordinary ammunition): its own bonuses apply (`when.ammo`).
+var ammo_id: String = ""
 var normal_range: int = 0
 var long_range: int = 0
 var reach: int = 5
@@ -29,11 +31,15 @@ var two_hands: bool = false
 var notes: Array[String] = []
 
 
-static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_main_hand: bool = true) -> WeaponProfile:
+static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_main_hand: bool = true,
+		ammo: Dictionary = {}) -> WeaponProfile:
 	var p := WeaponProfile.new()
 	var w := item.get("weapon", {}) as Dictionary
 	p.item_id = str(item.get("id", ""))
 	p.name = str(item.get("name", p.item_id)) + (" (thrown)" if as_thrown else "")
+	if not ammo.is_empty():
+		p.ammo_id = str(ammo.get("id", ""))
+		p.name += " (%s)" % ammo.get("name", p.ammo_id)
 	p.properties = (w.get("properties", []) as Array).duplicate()
 	p.melee = not str(w.get("kind", "")).ends_with("ranged") and not as_thrown
 	p.thrown = as_thrown
@@ -90,7 +96,7 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	if p.melee and not p.two_hands and not other_weapon:
 		p.tags.append("one_handed_alone")
 	p.proficient = ch.weapon_proficient(item) if ch != null else true
-	if ch != null and p.item_id in ch.weapon_masteries:
+	if ch != null and str(item.get("base_item", p.item_id)) in ch.weapon_masteries:
 		p.mastery = str(w.get("mastery", ""))
 	p._apply_overrides(c)
 	p._compute(c)
@@ -118,7 +124,7 @@ func _apply_overrides(c: Creature) -> void:
 func with_ability(ab: StringName, c: Creature) -> WeaponProfile:
 	var p := WeaponProfile.new()
 	for prop: String in ["item_id", "name", "melee", "thrown", "proficient", "damage_dice", "damage_type", "mastery",
-			"properties", "normal_range", "long_range", "reach", "two_hands"]:
+			"properties", "normal_range", "long_range", "reach", "two_hands", "ammo_id"]:
 		p.set(prop, get(prop))
 	p.tags = tags.duplicate()
 	p.ability = ab
@@ -163,6 +169,9 @@ static func unarmed(c: Creature) -> WeaponProfile:
 func _compute(c: Creature) -> void:
 	var situation := c.armor_situation()
 	situation["weapon_tags"] = tags
+	situation["item"] = item_id
+	if ammo_id != "":
+		situation["ammo"] = ammo_id
 	var ctx := c.formula_context()
 	var mod := c.ability_mod(ability)
 	attack = Breakdown.new("%s attack" % name)
@@ -182,6 +191,8 @@ func _compute(c: Creature) -> void:
 		if m.applies_when(situation):
 			damage_bonus.add_nonzero(m.source_name, c.mod_value(m, ctx))
 	for m in c.modifiers_for(&"crit_range"):
+		if not m.applies_when(situation):
+			continue
 		var v := c.mod_value(m, ctx)
 		if v < crit_range:
 			crit_range = v

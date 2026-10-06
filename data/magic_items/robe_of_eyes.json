@@ -1,0 +1,42 @@
+{
+  "id": "robe_of_eyes",
+  "name": "Robe of Eyes",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "robe",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "check:perception"
+    },
+    {
+      "stat": "darkvision",
+      "value": 120
+    },
+    {
+      "stat": "flag",
+      "value": "sees_invisible"
+    },
+    {
+      "stat": "flag",
+      "value": "all_around_vision"
+    },
+    {
+      "stat": "flag",
+      "value": "robe_of_eyes"
+    }
+  ],
+  "worn": "robe",
+  "summary": "Advantage on sight-based Perception, Darkvision 120 ft, and you see Invisible and Ethereal things within 120 ft.",
+  "text": "Eye-like patterns cover this robe. Wearing it, you can see in every direction, and your Wisdom (Perception) checks that depend on sight are made with Advantage. You also gain Darkvision to 120 feet, and within 120 feet you can see into the Ethereal Plane and spot anything that has the Invisible condition. The robe's eyes can never be shut or turned away; you may shut or look away with your own eyes, but you never count as doing so while wearing it. If Light is cast on the robe, or Daylight is cast within 5 feet of it, you suffer the Blinded condition, which lasts 1 minute."
+}
