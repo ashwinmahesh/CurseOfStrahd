@@ -8,3 +8,7 @@ func go_to(path: String) -> Error:
 		GameState.current_scene = path
 		EventBus.scene_changed.emit(path)
 	return err
+
+
+func _ready() -> void:
+	UiKit.install_theme()

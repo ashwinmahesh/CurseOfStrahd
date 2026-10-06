@@ -20,9 +20,11 @@ var _toast_time := 0.0
 var _roll: Label
 var _roll_time := 0.0
 
-const BUTTONS := [["Character", "C", "sheet"], ["Inventory", "I", "inventory"], ["Journal", "J", "journal"],
-	["Party", "P", "party"], ["Map", "M", "map"], ["Rest", "R", "rest"], ["Search", "F", "search"], ["Sneak", "V", "sneak"],
-	["Split", "G", "split"], ["Menu", "Esc", "menu"]]
+## [label, key, command, icon (art/ui/icons)]
+const BUTTONS := [["Character", "C", "sheet", "character"], ["Inventory", "I", "inventory", "inventory"],
+	["Journal", "J", "journal", "journal"], ["Party", "P", "party", "party"], ["Map", "M", "map", "map"],
+	["Rest", "R", "rest", "rest"], ["Search", "F", "search", "search"], ["Sneak", "V", "sneak", "sneak"],
+	["Split", "G", "split", "split"], ["Menu", "Esc", "menu", "menu"]]
 
 
 func _init() -> void:
@@ -42,7 +44,8 @@ func build(state: StoryState) -> void:
 	top.offset_left = -360
 	top.offset_right = -14
 	top.offset_top = 12
-	_where = _label("", 20, "gilt_light")
+	_where = _label("", 24, "gilt_light")
+	_where.add_theme_font_override("font", UiKit.display_font())
 	_where.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	top.add_child(_where)
 	_mode = _label("", 15, "parchment")
@@ -52,10 +55,10 @@ func build(state: StoryState) -> void:
 	var narr_panel := PanelContainer.new()
 	var s := StyleBoxFlat.new()
 	s.bg_color = Color(Look.color("ui_black"), 0.85)
-	s.border_color = Look.color("gilt")
+	s.border_color = Look.color("gilt_dark")
 	s.set_border_width_all(2)
-	s.set_corner_radius_all(4)
-	s.set_content_margin_all(12)
+	s.set_corner_radius_all(2)
+	s.set_content_margin_all(18)
 	narr_panel.add_theme_stylebox_override("panel", s)
 	narr_panel.anchor_left = 0.5
 	narr_panel.anchor_right = 0.5
@@ -74,6 +77,7 @@ func build(state: StoryState) -> void:
 	_narr.add_theme_font_size_override("normal_font_size", 19)
 	narr_panel.add_child(_narr)
 	narr_panel.name = "NarratorBox"
+	UiKit.trim(narr_panel, 56.0)
 	narr_panel.visible = false
 	add_child(narr_panel)
 	_hint = _label("", 16, "gilt_light")
@@ -107,12 +111,14 @@ func build(state: StoryState) -> void:
 	bar.alignment = BoxContainer.ALIGNMENT_CENTER
 	bar.add_theme_constant_override("separation", 6)
 	for b: Array in BUTTONS:
-		var btn := Button.new()
-		btn.text = "%s (%s)" % [b[0], b[1]]
-		btn.focus_mode = Control.FOCUS_NONE
-		btn.add_theme_font_size_override("font_size", 14)
 		var cmd := str(b[2])
-		btn.pressed.connect(func() -> void: command.emit(cmd))
+		var btn := UiKit.button("", func() -> void: command.emit(cmd), 14, str(b[3]))
+		btn.tooltip_text = "%s (%s)" % [b[0], b[1]]
+		btn.name = str(b[0])
+		btn.focus_mode = Control.FOCUS_NONE
+		btn.add_theme_constant_override("icon_max_width", 30)
+		btn.custom_minimum_size = Vector2(52, 48)
+		btn.expand_icon = false
 		bar.add_child(btn)
 	add_child(bar)
 	refresh()

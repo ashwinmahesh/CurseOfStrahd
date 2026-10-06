@@ -6,7 +6,7 @@ BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
 G       := $(GODOT) --path .
 LOGCHK  := tools/logcheck.sh
 
-.PHONY: run arena import test lint validate ci palette capture standin sprite portrait wireframes textures prop
+.PHONY: run arena import test lint validate ci palette capture standin sprite sprites portrait wireframes textures prop ui_art
 
 run:
 	$(G)
@@ -47,6 +47,11 @@ standin:
 sprite:
 	$(BLENDER) -b --python blender/render_walk.py -- --turnaround $(abspath $(TURNAROUND)) --id $(ID) $(if $(SIDE),--side-faces $(SIDE),) $(if $(STATIC),--static,) $(if $(SAT),--saturate $(SAT),)
 
+## Re-render every character walk sheet from its turnaround with the current cutter and its recorded flags
+## (art/manifest.json sprite_flags): make sprites [ONLY="id ..."]
+sprites:
+	python3 tools/art/rerender_sprites.py $(if $(ONLY),--only $(ONLY),)
+
 ## Portrait (square crop, 512 px, palette-snapped, flat background): make portrait SRC=<png> ID=<id> [BG=<palette name>] [SAT=1.3]
 portrait:
 	$(BLENDER) -b --python blender/portrait.py -- --in $(abspath $(SRC)) --id $(ID) $(if $(BG),--bg $(BG),) $(if $(SAT),--saturate $(SAT),)
@@ -58,6 +63,10 @@ textures:
 ## Billboard prop (single view on white -> cut out, palette-snapped): make prop SRC=<png> ID=<id> HEIGHT=<world units>
 prop:
 	$(BLENDER) -b --python blender/prop_sprite.py -- --in $(abspath $(SRC)) --id $(ID) --height $(HEIGHT) $(if $(SAT),--saturate $(SAT),)
+
+## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
+ui_art:
+	$(BLENDER) -b --python blender/ui_art.py
 
 ## UI flow wireframes (docs/ui/wireframes/*.svg) from tools/ui/wireframes.py.
 wireframes:

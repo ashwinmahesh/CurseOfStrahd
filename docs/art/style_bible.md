@@ -15,6 +15,9 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
   Sprites are also quantized in the pipeline so they hold up when the pass is off. The pipeline's quantizer keeps neutral
   greys on the grey ramp (so a grey wolf stays grey) and despeckles; `SAT=1.3` is an opt-in chroma boost for
   muted reds that would otherwise snap to brown.
+- Sprites are clean pixel art with no salt-and-pepper (owner feedback 2026-10-06): the cutter smooths the turnaround
+  with an edge-preserving filter before cutting it, and after the snap merges same-coloured clumps of up to 6 pixels
+  into the near shade around them (docs/art/p4_cast_art_pass.md). `make sprites` re-renders every sheet with it.
 - Character sprites are the exception (owner, 2026-10-06: they read blurry and grainy through the pass): their
   sheets are rendered at 384 px cells, mipmapped, and drawn after the pass at full screen resolution. They keep the
   palette because the pipeline already quantized them.
@@ -50,7 +53,17 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
 - Barovia is always overcast: heavy cloud, mist at ground level, red sunset bands only at dusk.
 
 ## UI
-- Iron, parchment and candlelight frames; a highly legible body font. UI is drawn after the palette pass.
+- Deep crimson and black with aged gold trim (owner's pick after Phase 3, replacing purple and orange). The UI-only
+  colours (`ui_black`, `ui_oxblood`, `ui_wine`, `gilt_dark`, `gilt`, `gilt_light`) live in `art/palette/ui_palette.json`,
+  never in the world's palette strip. UI is drawn after the palette pass.
+- Gothic trim: a wrought-iron corner flourish (mirrored to all four corners), a gilt scrollwork divider and 16 icons,
+  drawn by Gemini as black silhouettes and turned into white shapes with alpha (`make ui_art`, `blender/ui_art.py`), so
+  the game tints them with palette colours. Screens get the corners, an inner gilt rule and a title plaque on the top
+  border; buttons are crimson-black with gilt edges and gilt icons.
+- Type: titles, headers and buttons use a medieval book hand the system already has (Luminari on macOS, with
+  fallbacks); body text stays in the plain, highly legible default font. No font files are downloaded or shipped.
+- Every stock control (tabs, scroll bars, tooltips, text fields, check boxes, pop-ups) falls back to the same look
+  (`UiKit.install_theme`).
 
 ## Banned
 Photorealism, soft airbrushed gradients, lens blur or bloom-heavy glow, modern clothing or objects,

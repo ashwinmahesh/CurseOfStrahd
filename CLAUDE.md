@@ -6,7 +6,7 @@ Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverag
 
 ## Commands (add new ones to the Makefile)
 make run | arena | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
-make sprite TURNAROUND=<png> ID=<id> [STATIC=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | standin | wireframes
+make sprite TURNAROUND=<png> ID=<id> [STATIC=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | ui_art | standin | wireframes
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 
 ## Code
@@ -33,7 +33,8 @@ Data `text` and `summary` are our own words, never copied. Set `source.checked_a
 number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribution: docs/assets/LICENSES.md.
 
 ## Art
-- Colours only from art/palette/palette.json (via Look) — run `make palette` after editing the list.
+- Colours only from art/palette/palette.json, plus art/palette/ui_palette.json for menus (via Look) — run
+  `make palette` after editing the lists. Menu ornaments and icons: `make ui_art`.
 - Images: Gemini (gemini-3.1-flash-image, owner decision 2026-10-06) via tools/art/generate.sh only;
   provider and model pinned in art/manifest.json. Key: GEMINI_API_KEY, sent as a header. Gemini gives opaque
   images, so ask for a plain flat white background; the pipeline removes it. OpenAI is a fallback

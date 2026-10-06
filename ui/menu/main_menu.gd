@@ -10,17 +10,35 @@ func _ready() -> void:
 	InputActions.ensure()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	var bg := ColorRect.new()
-	bg.color = Look.color("night_deep")
+	bg.color = Look.color("void")
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
+	# Key art (Gemini, art/ui/title_backdrop.png), darkened toward the left where the menu sits.
+	var art := TextureRect.new()
+	art.texture = load("res://art/ui/title_backdrop.png") as Texture2D
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	art.set_anchors_preset(Control.PRESET_FULL_RECT)
+	add_child(art)
+	var shade := TextureRect.new()
+	var grad := Gradient.new()
+	grad.set_color(0, Color(Look.color("void"), 0.92))
+	grad.set_color(1, Color(Look.color("void"), 0.0))
+	grad.set_offset(1, 0.62)
+	var gt := GradientTexture2D.new()
+	gt.gradient = grad
+	gt.fill_to = Vector2(1, 0)
+	shade.texture = gt
+	shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	shade.stretch_mode = TextureRect.STRETCH_SCALE
+	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	add_child(shade)
 	_box = VBoxContainer.new()
-	_box.anchor_left = 0.5
-	_box.anchor_right = 0.5
 	_box.anchor_top = 0.5
 	_box.anchor_bottom = 0.5
-	_box.offset_left = -330
-	_box.offset_right = 330
-	_box.offset_top = -330
+	_box.offset_left = 110
+	_box.offset_right = 110 + 560
+	_box.offset_top = -340
 	_box.add_theme_constant_override("separation", 12)
 	add_child(_box)
 	_title()
@@ -29,22 +47,33 @@ func _ready() -> void:
 func _title() -> void:
 	for c in _box.get_children():
 		c.queue_free()
-	var t := UiKit.label("Curse of Strahd", 54, "vampire_red")
+	var t := UiKit.label("Curse of Strahd", 72, "vampire_red")
+	t.add_theme_font_override("font", UiKit.display_font())
+	t.add_theme_constant_override("outline_size", 10)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_box.add_child(t)
-	var sub := UiKit.label("The mists are rising.", 20, "parchment")
+	_box.add_child(UiKit.divider(460.0))
+	var sub := UiKit.label("The mists are rising.", 22, "parchment")
+	sub.add_theme_font_override("font", UiKit.display_font())
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_box.add_child(sub)
+	_box.add_child(_gap(14))
 	var slots := SaveSystem.list_slots()
-	var cont := UiKit.button("Continue", func() -> void: _load(str(slots[0]["slot"])), 22)
+	var cont := UiKit.button("Continue", func() -> void: _load(str(slots[0]["slot"])), 24)
 	cont.disabled = slots.is_empty()
 	_box.add_child(cont)
-	_box.add_child(UiKit.button("New game", _new_game, 22))
-	var load := UiKit.button("Load", _show_loads, 22)
+	_box.add_child(UiKit.button("New game", _new_game, 24))
+	var load := UiKit.button("Load", _show_loads, 24)
 	load.disabled = slots.is_empty()
 	_box.add_child(load)
 	_box.add_child(UiKit.button("Combat arena (Phase 2)", func() -> void: get_tree().change_scene_to_file("res://scenes/combat/arena.tscn"), 18))
 	_box.add_child(UiKit.button("Quit", func() -> void: get_tree().quit(), 18))
+
+
+func _gap(h: float) -> Control:
+	var c := Control.new()
+	c.custom_minimum_size = Vector2(0, h)
+	return c
 
 
 func _new_game() -> void:

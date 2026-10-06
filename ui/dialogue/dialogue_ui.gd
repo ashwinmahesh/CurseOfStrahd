@@ -42,10 +42,13 @@ func _ready() -> void:
 	var s := StyleBoxFlat.new()
 	s.bg_color = Color(Look.color("ui_black"), 0.95)
 	s.border_color = Look.color("gilt_dark")
-	s.set_border_width_all(3)
-	s.set_corner_radius_all(4)
-	s.set_content_margin_all(16)
+	s.set_border_width_all(2)
+	s.set_corner_radius_all(2)
+	s.set_content_margin_all(24)
+	s.shadow_color = Color(Look.color("void"), 0.6)
+	s.shadow_size = 10
 	_panel.add_theme_stylebox_override("panel", s)
+	UiKit.trim(_panel, 84.0)
 	_panel.anchor_left = 0.5
 	_panel.anchor_right = 0.5
 	_panel.anchor_top = 1.0
@@ -64,7 +67,8 @@ func _ready() -> void:
 	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	left.add_child(_portrait)
-	_name = _label("", 22, "gilt_light")
+	_name = _label("", 24, "gilt_light")
+	_name.add_theme_font_override("font", UiKit.display_font())
 	left.add_child(_name)
 	row.add_child(left)
 	var right := VBoxContainer.new()
@@ -192,6 +196,7 @@ func _show(beat: Dictionary) -> void:
 				var b := Button.new()
 				b.text = str(a["label"])
 				b.add_theme_font_size_override("font_size", 16)
+				UiKit.button_look(b)
 				b.add_theme_color_override("font_color", Look.color("bile"))
 				var id := str(a["id"])
 				b.pressed.connect(func() -> void:
@@ -247,14 +252,14 @@ func _show_options(options: Array) -> void:
 		if not check.is_empty():
 			extra = "  (%s %+d, %d%%)" % [str(check["who"]).get_slice(" ", 0), int(check["bonus"]), roundi(float(check["chance"]) * 100.0)]
 		b.text = "%d. %s%s%s" % [i + 1, (label + " ") if label != "" else "", opt["text"], extra]
-		b.flat = true
+		_option_look(b)
 		b.add_theme_color_override("font_color", Look.color("gilt_light") if label != "" else Look.color("vellum"))
 		b.add_theme_color_override("font_hover_color", Look.color("gilt_light"))
 		var idx := i
 		if not bool(opt.get("enabled", true)):
 			b.disabled = true
 			b.tooltip_text = str(opt.get("reason", ""))
-			b.add_theme_color_override("font_disabled_color", Look.color("ui_wine"))
+			b.add_theme_color_override("font_disabled_color", Look.color("bone"))
 		b.pressed.connect(func() -> void: _choose(idx))
 		_options.add_child(b)
 		_option_buttons.append(b)
@@ -262,6 +267,23 @@ func _show_options(options: Array) -> void:
 	_focus = 0
 	if not _option_buttons.is_empty():
 		_option_buttons[0].grab_focus()
+
+
+## Options read as lines of text; the one under the mouse or keyboard gets a crimson band with a gilt edge.
+func _option_look(b: Button) -> void:
+	var plain := StyleBoxEmpty.new()
+	plain.content_margin_left = 14
+	plain.content_margin_top = 4
+	plain.content_margin_bottom = 4
+	var lit := UiKit.style("ui_oxblood", "gilt", 0, 0.95)
+	lit.border_width_left = 3
+	lit.content_margin_left = 14
+	lit.content_margin_top = 4
+	lit.content_margin_bottom = 4
+	for state: String in ["normal", "disabled"]:
+		b.add_theme_stylebox_override(state, plain)
+	for state: String in ["hover", "focus", "pressed"]:
+		b.add_theme_stylebox_override(state, lit)
 
 
 func _choose(i: int) -> void:

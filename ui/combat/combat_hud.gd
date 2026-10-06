@@ -299,11 +299,15 @@ func _build_hotbar() -> void:
 	_end_turn.text = "End\nTurn"
 	_end_turn.custom_minimum_size = Vector2(108, 108)
 	_end_turn.add_theme_font_size_override("font_size", 20)
-	_end_turn.add_theme_stylebox_override("normal", _round_style("gilt"))
-	_end_turn.add_theme_stylebox_override("hover", _round_style("gilt_light"))
-	_end_turn.add_theme_stylebox_override("pressed", _round_style("gilt_dark"))
-	_end_turn.add_theme_stylebox_override("disabled", _round_style("ui_wine"))
-	_end_turn.add_theme_color_override("font_color", Look.color("void"))
+	_end_turn.add_theme_stylebox_override("normal", _round_style("blood"))
+	_end_turn.add_theme_stylebox_override("hover", _round_style("crimson", "gilt_light"))
+	_end_turn.add_theme_stylebox_override("pressed", _round_style("blood_deep", "gilt_light"))
+	_end_turn.add_theme_stylebox_override("disabled", _round_style("ui_oxblood", "gilt_dark"))
+	_end_turn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	_end_turn.add_theme_font_override("font", UiKit.display_font())
+	_end_turn.add_theme_color_override("font_color", Look.color("gilt_light"))
+	_end_turn.add_theme_color_override("font_hover_color", Look.color("ivory"))
+	_end_turn.add_theme_color_override("font_disabled_color", Look.color("gilt_dark"))
 	_end_turn.pressed.connect(func() -> void: end_turn_pressed.emit())
 	_end_turn.anchor_left = 0.5
 	_end_turn.anchor_right = 0.5
@@ -323,7 +327,7 @@ func _build_hotbar() -> void:
 
 
 func _build_tooltip() -> void:
-	_tooltip = _panel("vellum", "ui_black")
+	_tooltip = _panel("gilt", "ui_black", false)
 	_tooltip.visible = false
 	_tooltip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tooltip_box = VBoxContainer.new()
@@ -990,22 +994,27 @@ func _style(bg: String, border: String, width: int) -> StyleBoxFlat:
 	return s
 
 
-func _round_style(bg: String) -> StyleBoxFlat:
+## End Turn is a crimson seal ringed in gilt.
+func _round_style(bg: String, ring: String = "gilt") -> StyleBoxFlat:
 	var s := StyleBoxFlat.new()
 	s.bg_color = Look.color(bg)
-	s.border_color = Look.color("void")
-	s.set_border_width_all(3)
+	s.border_color = Look.color(ring)
+	s.set_border_width_all(4)
 	s.set_corner_radius_all(54)
+	s.shadow_color = Color(Look.color("void"), 0.7)
+	s.shadow_size = 6
 	return s
 
 
-func _panel(border: String = "gilt_dark", bg: String = "ui_black") -> PanelContainer:
+func _panel(border: String = "gilt_dark", bg: String = "ui_black", ornate: bool = true) -> PanelContainer:
 	var p := PanelContainer.new()
 	var s := StyleBoxFlat.new()
 	s.bg_color = Color(Look.color(bg), 0.9)
 	s.border_color = Look.color(border)
 	s.set_border_width_all(2)
-	s.set_corner_radius_all(4)
-	s.set_content_margin_all(10)
+	s.set_corner_radius_all(2)
+	s.set_content_margin_all(14 if ornate else 10)
 	p.add_theme_stylebox_override("panel", s)
+	if ornate:
+		UiKit.trim(p, 40.0)
 	return p
