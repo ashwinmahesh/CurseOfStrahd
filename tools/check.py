@@ -127,7 +127,7 @@ def kind(path: str) -> str:
         return "data"
     if ext in CODE_EXT or (ext == ".json" and path.startswith(("art/", "audio/", "tests/", "tools/"))):
         return "code"
-    if path.startswith("tools/") and ext == ".py":
+    if path.startswith("tools/") and ext in ("", ".py", ".m"):
         return "tool"
     return "everything"
 
