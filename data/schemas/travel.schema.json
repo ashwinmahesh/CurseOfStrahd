@@ -99,6 +99,20 @@
           },
           "when": {
             "type": "string"
+          },
+          "via": {
+            "description": "Points the road bends through on the travel map, as fractions of the art like a place's pos (docs/ui/travel_map.md).",
+            "type": "array",
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
           }
         }
       }

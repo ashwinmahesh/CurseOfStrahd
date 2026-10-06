@@ -237,7 +237,11 @@ func _draw_way_out(e: Dictionary) -> void:
 		_arrow(tip, toward, 18.0, colour)
 		return
 	_content.draw_circle(at, 9.0, Color(colour, 0.25), true, -1.0, true)
-	_arrow(at + dir * 7.0, dir, 13.0, colour)
+	if dir == Vector2.ZERO:
+		_content.draw_circle(at, 5.0, Look.color("ink"), true, -1.0, true)
+		_content.draw_circle(at, 3.5, colour, true, -1.0, true)
+	else:
+		_arrow(at + dir * 7.0, dir, 13.0, colour)
 
 
 func _arrow(tip: Vector2, dir: Vector2, length: float, colour: Color) -> void:
