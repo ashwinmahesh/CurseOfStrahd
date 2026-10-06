@@ -1,0 +1,76 @@
+{
+  "id": "haunted_one",
+  "name": "Haunted One",
+  "source": {
+    "book": "RtHW",
+    "checked_against": "RtHW"
+  },
+  "summary": "Something terrible happened to you, once or many times over, and no blade or spell has ever lifted its weight. You carry on anyway.",
+  "ability_scores": [
+    "con",
+    "wis",
+    "cha"
+  ],
+  "feat": "survivor",
+  "skills": [
+    "arcana",
+    "survival"
+  ],
+  "tool": {
+    "id": "dice_set",
+    "choice": "gaming_set"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dice_set",
+          "qty": 1,
+          "choice": "gaming_set"
+        },
+        {
+          "id": "crowbar",
+          "qty": 1
+        },
+        {
+          "id": "holy_water",
+          "qty": 1
+        },
+        {
+          "id": "mirror",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        },
+        {
+          "id": "signal_whistle",
+          "qty": 1
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        },
+        {
+          "id": "torch",
+          "qty": 5
+        },
+        {
+          "id": "waterskin",
+          "qty": 1
+        }
+      ],
+      "gp": 14
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "name": "Lupin",
   "source": {
     "book": "RtHW",
-    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+    "checked_against": "RtHW"
   },
   "summary": "Towering hybrids caught halfway between folk and wolf, with killer claws and a howl that saps the nerve of anyone near.",
   "creature_type": "humanoid",
@@ -31,8 +31,8 @@
     {
       "id": "feral_pounce",
       "name": "Feral Pounce",
-      "summary": "Your Unarmed Strikes can deal Slashing damage, and once per turn a hit can both deal damage and Shove.",
-      "text": "Your Unarmed Strikes can deal Slashing damage instead of Bludgeoning. Once per turn, when you hit a creature with an Unarmed Strike, you can use both the Damage and the Shove options instead of choosing one.",
+      "summary": "Slashing Unarmed Strikes; once per turn an Attack-action Unarmed Strike hit both damages and Shoves.",
+      "text": "Your Unarmed Strikes deal Slashing damage, not Bludgeoning. Once per turn, when an Unarmed Strike you make with the Attack action on your own turn hits, you get both its Damage and its Shove option.",
       "action": "passive",
       "modifiers": [
         {
@@ -48,8 +48,8 @@
     {
       "id": "howl",
       "name": "Howl",
-      "summary": "Bonus Action: creatures within 15 feet make a Wisdom save (DC 8 + Con + PB) or have Disadvantage on attack rolls and saves until your next turn. PB uses per Long Rest.",
-      "text": "As a Bonus Action you let loose an unearthly howl. Each creature of your choice within 15 feet of you that can hear you makes a Wisdom saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failure it has Disadvantage on attack rolls and saving throws until the start of your next turn. You can howl a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "summary": "Bonus Action: creatures you choose within 15 feet make a Wisdom save (DC 8 + Con + PB) or have Disadvantage on attack rolls and saves until your next turn. PB uses per Long Rest.",
+      "text": "Bonus Action: you howl. Each creature you choose within 15 feet makes a Wisdom save against DC 8 + your Constitution modifier + your Proficiency Bonus; on a failure its attack rolls and saving throws have Disadvantage until your next turn starts. Uses: your Proficiency Bonus per Long Rest.",
       "action": "bonus_action",
       "resource": {
         "id": "howl",

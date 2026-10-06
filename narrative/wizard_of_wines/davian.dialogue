@@ -91,6 +91,7 @@ Davian: Fewer than yesterday, if you start now.
 * [if flag.elvir_story_heard and not flag.martikovs_reconciled and not flag.davian_insight_tried] [Insight DC 14] It isn't Adrian you're angry with. -> insight_ok | insight_fail
 * [if tarokka.ally.npc == davian_martikov and not guest:davian_martikov] Madam Eva's cards named you. -> ally
 * [if not flag.winery_reclaimed] What's waiting for us in the winery? -> intel
+* [name:hedda_ironvow] [if quest.cold_prayers and flag.keepers_of_the_feather_met and not flag.hedda_keepers_told] Ask about a silver raven with a sunburst in its claws. -> companions/prayers:davian
 * Tell us about the winery. -> lore
 * Goodbye. -> bye
 

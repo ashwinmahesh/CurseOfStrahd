@@ -3,8 +3,9 @@
   "name": "Needle Blight",
   "source": {
     "book": "MM2025",
-    "edition": "2014",
-    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual block (the one Curse of Strahd uses); the 2024 changes are not entered yet. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight."
+    "checked_against": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Needle Blight, read on D&D Beyond (owner's account)."
   },
   "size": "medium",
   "type": "plant",
@@ -12,8 +13,8 @@
   "ac": 12,
   "initiative": 1,
   "hp": {
-    "average": 11,
-    "dice": "2d8+2"
+    "average": 16,
+    "dice": "3d8+3"
   },
   "speed": {
     "walk": 30
@@ -27,7 +28,6 @@
     "cha": 3
   },
   "condition_immunities": [
-    "blinded",
     "deafened"
   ],
   "senses": {
@@ -42,8 +42,8 @@
   "proficiency_bonus": 2,
   "actions": [
     {
-      "id": "claws",
-      "name": "Claws",
+      "id": "claw",
+      "name": "Claw",
       "kind": "melee",
       "attack": {
         "bonus": 3,
@@ -53,10 +53,10 @@
         {
           "average": 6,
           "dice": "2d4+1",
-          "type": "piercing"
+          "type": "slashing"
         }
       ],
-      "summary": "Rakes with needle-tipped claws."
+      "summary": "Needle-tipped claws."
     },
     {
       "id": "needles",
@@ -71,12 +71,12 @@
       },
       "damage": [
         {
-          "average": 8,
-          "dice": "2d6+1",
+          "average": 6,
+          "dice": "2d4+1",
           "type": "piercing"
         }
       ],
-      "summary": "Sprays a volley of needles up to 60 ft."
+      "summary": "A spray of needles up to 60 ft."
     }
   ],
   "regions": [

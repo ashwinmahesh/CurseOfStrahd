@@ -224,7 +224,7 @@ share an id; the first whose `when` holds is the fight. Guests (Kasimir, Ireena)
 | `library_wardens` | library | open `restricted_case` | 4 flameskulls (4400) | 3 flameskulls (3300) | same |
 | `exethanter_wrath` | library | dialogue (attack him) | Exethanter + 2 flameskulls (8100, Moderate at 9) | same | same |
 | `vault_guardian` | vaults | `flag:honey_door_forced` | amber golem + wraith (7700, Low+) | amber golem (5900) | same |
-| `vosk_unmasked` (climax) | vaults | dialogue | arcanaloth + 2 flameskulls (10600, Moderate+) | arcanaloth + flameskull (9500, Moderate+ at 9, High at 8) | arcanaloth at 85 HP; named or weakened: 80 HP alone |
+| `vosk_unmasked` (climax) | vaults | dialogue | arcanaloth at 104 HP + 2 flameskulls (10600, Moderate+) | arcanaloth at 104 HP + flameskull (9500, Moderate+ at 9, High at 8; Vosk kept at the old 104 HP since the 2025 arcanaloth's 175, 2026-10-06) | arcanaloth at 85 HP; named or weakened: 80 HP alone |
 
 Random (data/random_encounters/amber_temple_road.json, map `amber_temple_road`, 25% day / 45% night): a whiteout
 (Survival 15, else hours lost), the frozen expedition (once: loot or rites), five gargoyles off the cliffs (2250), the

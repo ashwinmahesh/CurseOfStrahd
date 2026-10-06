@@ -1,0 +1,54 @@
+{
+  "id": "investigator",
+  "name": "Investigator",
+  "source": {
+    "book": "RtHW",
+    "checked_against": "RtHW"
+  },
+  "summary": "You can't leave a mystery alone. Petty crime or eldritch plot, you dig until what others hide comes to light.",
+  "ability_scores": [
+    "int",
+    "wis",
+    "cha"
+  ],
+  "feat": "sharp_eye",
+  "skills": [
+    "insight",
+    "investigation"
+  ],
+  "tool": {
+    "id": "disguise_kit"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "disguise_kit",
+          "qty": 1
+        },
+        {
+          "id": "manacles",
+          "qty": 1
+        },
+        {
+          "id": "shovel",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        },
+        {
+          "id": "vial",
+          "qty": 3
+        }
+      ],
+      "gp": 16
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

@@ -3,17 +3,17 @@
   "name": "Sharp Eye",
   "source": {
     "book": "RtHW",
-    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+    "checked_against": "RtHW"
   },
   "category": "origin",
   "repeatable": false,
-  "summary": "Advantage on the checks of your Search and Study actions, a number of times per Long Rest equal to your Proficiency Bonus.",
+  "summary": "Advantage on a Search or Study action's check, Proficiency Bonus times per Long Rest; a failed check keeps the use.",
   "benefits": [
     {
       "id": "keen_scrutiny",
       "name": "Keen Scrutiny",
-      "summary": "PB times per Long Rest, give yourself Advantage on a Search or Study action's check.",
-      "text": "When you take the Search or Study action, you can give yourself Advantage on the ability check you make as part of it. You can do this a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "summary": "PB times per Long Rest, Advantage on a Search or Study action's check; a failure doesn't spend the use.",
+      "text": "Taking the Search or Study action, you can roll its ability check with Advantage. Uses: your Proficiency Bonus per Long Rest, and a check that still fails gives the use back.",
       "action": "special",
       "resource": {
         "id": "sharp_eye",

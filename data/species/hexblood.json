@@ -3,7 +3,7 @@
   "name": "Hexblood",
   "source": {
     "book": "RtHW",
-    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+    "checked_against": "RtHW"
   },
   "summary": "Folk bound to hags by magic or bargain, who carry witch-craft in their blood and can watch through tokens of themselves.",
   "creature_type": "fey",
@@ -37,7 +37,7 @@
       "id": "eerie_token",
       "name": "Eerie Token",
       "summary": "Bonus Action, once per Long Rest: make a token of yourself; send it 25-word telepathic messages or see and hear through it from up to 10 miles.",
-      "text": "As a Bonus Action you can harmlessly remove a lock of hair, a nail or a tooth and imbue it, making a token that lasts until you finish a Long Rest. While the token and you are on the same plane within 10 miles of each other: Distant Message: as a Magic action you send a telepathic message of up to 25 words to the creature holding or carrying the token. Remote Viewing: as a Magic action you see and hear through the token for 1 minute (you are Blinded and Deafened to your own surroundings meanwhile). Once you make a token, you can't again until you finish a Long Rest, and the old one loses its magic when you do.",
+      "text": "Bonus Action, once per Long Rest: you shed a lock of hair, a nail or the like and make it a token, which lasts until your next Long Rest unless destroyed. Within 10 miles of it you can: send a telepathic message of up to 25 words to whoever holds or carries it (a Magic action); or, as a Magic action, look and listen from the token's spot for 1 minute (ending early if you're Incapacitated or choose to), after which the token harmlessly falls apart.",
       "action": "bonus_action",
       "resource": {
         "id": "eerie_token",

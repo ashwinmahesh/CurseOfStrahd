@@ -14,9 +14,10 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 ## Godot windows (the owner works on this Mac)
 - Never open a Godot window that can take focus or cover the owner's work. Checks without pixels run headless
   (`make test`, `make smoke` to boot the game or a scene); screenshots only through `make capture`, which draws off
-  screen.
+  screen. Batch screenshots into few runs.
+- Any other Godot run that opens a window goes through `tools/godot` (same arguments as Godot), never the Godot.app
+  path: it loads tools/macos/nofocus.m so Godot can't activate itself (owner decision 2026-10-06).
 - `make run` and `make arena` are for the owner to play: run them only when asked.
-- Any other windowed Godot command: `env __CFBundleIdentifier=org.godotengine.godot <godot> … < /dev/null`.
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.
@@ -73,7 +74,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - `make check` while working: it runs only what covers the files changed since main (tools/check.py, `DRY=1` shows
   the plan). Docs alone run nothing; art and audio files only re-import; data and dialogue run the validators and
   the tests that name the changed ids; scripts and scenes run lint and the tests that use them.
-- `make check` green is enough to hand over docs, art, audio, data, dialogue, captures, tools, and ui/ or world/
-  scripts. Changes to rules/, combat/, story/, core/ or tests/support need `make ci` green with a clean log.
+- `make check` green is enough to hand over docs, art, audio, data, dialogue, captures, tools, Makefile targets
+  outside `make ci` (it dry-runs them), and ui/ or world/ scripts. Changes to rules/, combat/, story/, core/,
+  tests/support or the ci targets need `make ci` green with a clean log.
   The build thread runs `make ci` before every merge to main either way.
 - A capture for anything visual. Never weaken tests to pass. Never mark an owner sign-off as passed.

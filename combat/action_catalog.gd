@@ -881,6 +881,9 @@ func _weapon_cell(_c: Combatant, t: Combatant, from: Vector2i) -> Vector2i:
 func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 	if t == null:
 		return "No creature there"
+	# An attack (a weapon, an Unarmed Strike, an attack-roll spell like Fire Bolt) never targets its own user.
+	if t == c and _is_attack(c, action):
+		return "Can't attack yourself"
 	var rng := int(action.get("range", 0))
 	match str(action["targeting"]):
 		"enemy":
@@ -923,6 +926,18 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 	if t != c and int(e.cover(c, t)["cover"]) == CombatGrid.Cover.TOTAL:
 		return "No line of sight"
 	return ""
+
+
+## Whether `action` makes an attack roll against its target.
+func _is_attack(c: Combatant, action: Dictionary) -> bool:
+	match str(action["kind"]):
+		"attack", "offhand":
+			return true
+		"haste":
+			return str(action.get("option_id", "")) != ""
+		"spell", "sustain", "item_spell":
+			return Compendium.shared().spell_data(str(action.get("spell_id", ""))).has("attack")
+	return str(action.get("option_id", "")) != "" and not e.option_by_id(c, str(action["option_id"])).is_empty()
 
 
 # --- Previews -------------------------------------------------------------------------------------
