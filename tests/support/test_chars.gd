@@ -78,3 +78,40 @@ static func auto_pick(get_pending: Callable, choose: Callable) -> Array[String]:
 			stuck.append("%s (%d of %d)" % [c.key, picks.size(), c.count])
 		choose.call(c.key, picks)
 	return stuck
+
+
+## A character built and levelled to `level` in one class, with chosen picks for any choice whose key ends with a
+## key of `picks` ("fighter_subclass": ["battle_master"], "combat_superiority": ["trip_attack", ...]); the rest is
+## filled with the first legal options.
+static func custom(class_id: String, species: String, level: int, picks: Dictionary = {}, background: String = "soldier") -> Character:
+	var b := CharacterBuilder.new()
+	b.set_class(class_id)
+	b.set_background(background)
+	b.set_species(species)
+	b.set_name("Test %s" % class_id.capitalize())
+	b.apply_recommended_scores()
+	_apply_picks(b.pending_choices, b.choose, picks)
+	auto_pick(b.pending_choices, b.choose)
+	var ch := b.build_character()
+	assert(ch != null, "custom %s %s: %s" % [class_id, species, b.errors()])
+	while ch.character_level() < level:
+		var up := LevelUpController.new(ch)
+		up.choose_class(class_id)
+		up.take_fixed_hit_points()
+		_apply_picks(up.pending_choices, up.choose, picks)
+		auto_pick(up.pending_choices, up.choose)
+		assert(up.confirm(), str(up.errors()))
+	ch.finish_long_rest()
+	return ch
+
+
+static func _apply_picks(get_pending: Callable, choose: Callable, picks: Dictionary) -> void:
+	for guard in 6:
+		var did := false
+		for c in get_pending.call() as Array[Choice]:
+			for k: String in picks:
+				if c.key.ends_with(k) and c.picks.is_empty():
+					choose.call(c.key, picks[k])
+					did = true
+		if not did:
+			return
