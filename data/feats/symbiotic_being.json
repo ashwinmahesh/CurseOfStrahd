@@ -1,0 +1,55 @@
+{
+  "id": "symbiotic_being",
+  "name": "Symbiotic Being",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. Something lives in you: a skill, a language and Hit Point Dice to shore up failed saves; on a natural 1 it may take the reins.",
+  "benefits": [
+    {
+      "id": "symbiote_knowledge",
+      "name": "Symbiote's Knowledge",
+      "summary": "Proficiency in one skill and one extra language.",
+      "text": "You gain proficiency in one skill of your choice and learn one language of your choice.",
+      "action": "passive",
+      "choices": [
+        {
+          "id": "skill",
+          "kind": "skill",
+          "count": 1
+        },
+        {
+          "id": "language",
+          "kind": "language",
+          "count": 1
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "symbiote_vigor",
+      "name": "Symbiote's Vigor",
+      "summary": "When you fail a save, spend a Hit Point Die and add its roll (PB times per Long Rest).",
+      "text": "When you fail a saving throw, you can spend one of your Hit Point Dice, roll it and add the number rolled to the save, possibly turning it into a success. You can do this a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "action": "special",
+      "resource": {
+        "id": "symbiote_vigor",
+        "name": "Symbiote's Vigor",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "engine"
+    }
+  ],
+  "drawback": {
+    "id": "symbiotic_being_drawback",
+    "name": "Drawback",
+    "summary": "On a natural 1: Wisdom save (DC 13 + PB) or Charmed by the symbiote for 1d12 hours, which steers you; taking damage lets you repeat the save.",
+    "text": "Whenever you roll a 1 on the d20 of a D20 Test, you make a Wisdom saving throw (DC 13 plus your Proficiency Bonus); on a failure the symbiote seizes you: you have the Charmed condition for 1d12 hours and it directs what you do (in a fight you only Dodge, keeping its host alive). Whenever you take damage you can repeat the save, ending the effect on a success.",
+    "action": "special",
+    "implemented": "engine"
+  }
+}

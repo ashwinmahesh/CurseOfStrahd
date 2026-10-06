@@ -201,6 +201,20 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Travel (hours on the road), random encounters (day and night chances), day and night | story/travel.gd, game_root.gd travel | tested | test_travel |
 | Guests fighting under the player's control | location_view.gd guest_members, combat side guest | tested | test_exploration |
 
+## Ravenloft: The Horrors Within (RtHW; combat/ravenloft_features.gd)
+
+| Rule | Code | Status | Test |
+|---|---|---|---|
+| Species: Dhampir (Spider Climb, Trace of Undeath, Vampiric Bite), Hexblood (Fey; Hex Magic; Eerie Token as text), Lupin (Feral Pounce, Howl, Werewolf Instincts), Reborn (Strange Endurance, Escaped Death, Everlasting, Knowledge from a Past Life) | data/species, ravenloft_features.gd | tested: every species builds; Vampiric Bite, Howl, Feral Pounce, Past Life | test_ravenloft |
+| Origin feats Sharp Eye and Survivor; nine Ravenloft Dark Gifts in place of any origin feat (a background's feat can be swapped) | data/feats, character.gd, choice_options.gd, ravenloft_features.gd | tested: the swap, Survivor's reroll, Sharp Eye and Watchers on a Search, a natural 1 waking a gift, Touch of Death, Mist Walker's rest | test_ravenloft |
+| Backgrounds (Haunted One, Investigator, Mist Wanderer, Spirit Medium), Ebonbane, Harkon's Bite | — | not started: waiting for the book's text | — |
+| College of Spirits: Channeler, Spirits from Beyond (all twelve rows), Empowered Channeling (Power from Beyond, Spiritual Manifestation), Mystical Connection | ravenloft_features.gd, spell_caster.gd hooks | implemented; tested: Spirits from Beyond | test_ravenloft |
+| Grave Domain: Circle of Mortality (Pull of Death, Return to Life), Path to the Grave, Sentinel at Death's Door, Divine Reaper (Keeper of Souls; Enhanced Necromancy not started) | ravenloft_features.gd, features.gd divine_spark | implemented; tested: Path to the Grave, Sentinel at Death's Door | test_ravenloft |
+| Hollow Warden: Wrath of the Wild (Ancient Armor, Unnerving Aura, retribution), Hungering Might, Rot and Violence, Ancient Endurance | ravenloft_features.gd | implemented (numbers unconfirmed, deviations.md); tested: Wrath of the Wild | test_ravenloft |
+| Phantom: Wails from the Grave, Whispers of the Dead (rest screen), Tokens of the Departed, Voice of Death, Ghost Walk, Death's Friend | ravenloft_features.gd, prepare_screen.gd | implemented; tested: Wails from the Grave | test_ravenloft |
+| Shadow Sorcery: Eyes of the Dark, Spirits of Ill Omen, Shadow Walk, Umbral Form | ravenloft_features.gd, encounter.gd can_see, spell_caster.gd cast | implemented; tested: Eyes of the Dark, Spirits of Ill Omen | test_ravenloft |
+| Undead Patron: Form of Dread, Grave Touched, Necrotic Husk (Unholy Resuscitation), Superior Dread | ravenloft_features.gd | implemented; tested: Form of Dread, Frightful Avatar, Unholy Resuscitation | test_ravenloft |
+
 ## Not started (later phases)
 
 Influence and NPC attitudes as a rule (attitudes exist in the story; haggling is written into dialogue for now);

@@ -1,0 +1,113 @@
+{
+  "id": "undead_patron",
+  "name": "Undead Patron",
+  "class": "warlock",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from the 2025 Unearthed Arcana (Horror Subclasses) and published reviews of Ravenloft: The Horrors Within; compare every number with the book before setting checked_against."
+  },
+  "summary": "A pact with a lich, vampire or other deathless power that lends its dread form and its mastery over the boundary of death.",
+  "role_tags": [
+    "striker",
+    "control"
+  ],
+  "always_prepared": {
+    "3": [
+      "blindness_deafness",
+      "false_life",
+      "phantasmal_force",
+      "ray_of_sickness"
+    ],
+    "5": [
+      "speak_with_dead",
+      "vampiric_touch"
+    ],
+    "7": [
+      "death_ward",
+      "phantasmal_killer"
+    ],
+    "9": [
+      "antilife_shell",
+      "cloudkill"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "form_of_dread",
+        "name": "Form of Dread",
+        "summary": "Bonus Action: transform for 1 minute (1d10 + Warlock level Temporary Hit Points, immune to Frightened, a hit can frighten once per turn). Charisma-modifier uses per Long Rest.",
+        "text": "As a Bonus Action you become an avatar of your patron's dread for 1 minute, until you are Incapacitated, or until you end it (no action). You can do this a number of times equal to your Charisma modifier (minimum once), regaining all uses on a Long Rest. Facsimile of Life: you gain Temporary Hit Points equal to 1d10 plus your Warlock level. Frightful Avatar: you have Immunity to the Frightened condition, and once per turn when you hit a creature with an attack roll you can force it to make a Wisdom saving throw against your spell save DC or have the Frightened condition until the end of your next turn.",
+        "action": "bonus_action",
+        "resource": {
+          "id": "form_of_dread",
+          "name": "Form of Dread",
+          "max": "mod:cha",
+          "min": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "form_of_dread",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "undead_spells",
+        "name": "Undead Spells",
+        "summary": "Blindness/Deafness, False Life, Phantasmal Force and Ray of Sickness always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Warlock level shown, you always have these spells prepared: Blindness/Deafness, False Life, Phantasmal Force, Ray of Sickness (3); Speak with Dead, Vampiric Touch (5); Death Ward, Phantasmal Killer (7); Antilife Shell, Cloudkill (9).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "grave_touched",
+        "name": "Grave Touched",
+        "summary": "Your Necrotic damage ignores Resistance; in Form of Dread, once per turn a damaging spell can deal Necrotic instead; no need to eat, drink, breathe or sleep.",
+        "text": "Arcane Necrosis: Necrotic damage you deal with spells and attack rolls ignores Resistance to Necrotic damage, and once per turn while in your Form of Dread you can change a damaging spell's damage type to Necrotic. Undead Endurance: you don't gain Exhaustion from dehydration, malnutrition or suffocation, you don't need to sleep, and magic can't put you to sleep.",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "trance"
+          }
+        ],
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "necrotic_husk",
+        "name": "Necrotic Husk",
+        "summary": "Resistance to Necrotic (Immunity in Form of Dread); once per Short Rest, dropping to 0 erupts in a 30-foot Necrotic blast and leaves you at 10 × Charisma modifier Hit Points.",
+        "text": "Necrotic Resilience: you have Resistance to Necrotic damage, and Immunity to it while in your Form of Dread. Unholy Resuscitation: if you drop to 0 Hit Points and don't die outright, your body can erupt: each creature of your choice within 30 feet makes a Constitution saving throw against your spell save DC, taking 2d10 plus your Warlock level Necrotic damage on a failure or half on a success. Your Hit Points then become 10 times your Charisma modifier (minimum 10) and you gain 1 Exhaustion level. Once used, not again until you finish a Short or Long Rest.",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "necrotic"
+          }
+        ],
+        "resource": {
+          "id": "unholy_resuscitation",
+          "name": "Unholy Resuscitation",
+          "max": 1,
+          "recharge": "short"
+        },
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "superior_dread",
+        "name": "Superior Dread",
+        "summary": "In Form of Dread: fly at your Speed and hover, no components for Conjuration and Necromancy Warlock spells, and regain Charisma-modifier Hit Points when you deal Necrotic damage.",
+        "text": "While in your Form of Dread: Flight: a Fly Speed equal to your Speed, and you can hover. Profane Casting: your Warlock spells of the Conjuration and Necromancy schools need no Verbal, Somatic or Material components, except Material components that are consumed or have a cost. Vitality Siphon: once per turn when you deal Necrotic damage to a creature, you regain Hit Points equal to your Charisma modifier (minimum 1).",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "id": "hollow_warden",
+  "name": "Hollow Warden",
+  "class": "ranger",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from reviews of Ravenloft: The Horrors Within, which reworked the 2025 Unearthed Arcana version; the published numbers for Wrath of the Wild (AC bonus, aura save) are not confirmed. Compare every number with the book before setting checked_against."
+  },
+  "summary": "Rangers who draw on ancient, hungry terrors of the wild places and become monstrous guardians themselves.",
+  "role_tags": [
+    "defender",
+    "striker"
+  ],
+  "always_prepared": {
+    "3": [
+      "wrathful_smite"
+    ],
+    "5": [
+      "alter_self"
+    ],
+    "9": [
+      "phantom_steed"
+    ],
+    "13": [
+      "dominate_beast"
+    ],
+    "17": [
+      "steel_wind_strike"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "hollow_warden_spells",
+        "name": "Hollow Warden Spells",
+        "summary": "Wrathful Smite always prepared; more at levels 5, 9, 13 and 17.",
+        "text": "When you reach a Ranger level shown, you always have these spells prepared: Wrathful Smite (3); Alter Self (5); Phantom Steed (9); Dominate Beast (13); Steel Wind Strike (17).",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "wrath_of_the_wild",
+        "name": "Wrath of the Wild",
+        "summary": "Bonus Action, a Favored Enemy use: transform for 1 minute: +AC, a 10-foot aura that frightens foes, and an Opportunity Attack when a foe hurts you or an ally beside you.",
+        "text": "As a Bonus Action you can expend one use of your Favored Enemy feature to transform for 1 minute (you can end it early, no action required). Rotten bark, bristles or bloody antlers break out on you. While transformed: Ancient Armor: you gain a bonus to AC equal to your Wisdom modifier (minimum +1). Unnerving Aura: when an enemy starts its turn within 10 feet of you, it makes a Wisdom saving throw against your spell save DC or has the Frightened condition until the start of its next turn. Retribution: when a creature within your reach damages you or an ally within 5 feet of you, you can take a Reaction to make an Opportunity Attack against it.",
+        "action": "bonus_action",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "hungering_might",
+        "name": "Hungering Might",
+        "summary": "+Wisdom modifier to Constitution saves; while transformed and Bloodied, a hit heals 1d10 + Wisdom modifier once per turn.",
+        "text": "You gain a bonus to Constitution saving throws equal to your Wisdom modifier (minimum +1). In addition, once per turn when you hit a creature with an attack roll while transformed by Wrath of the Wild and Bloodied, you regain 1d10 plus your Wisdom modifier Hit Points.",
+        "modifiers": [
+          {
+            "stat": "save",
+            "ability": "con",
+            "value": "mod:wis",
+            "min": 1
+          }
+        ],
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "rot_and_violence",
+        "name": "Rot and Violence",
+        "summary": "While transformed, creatures your aura frightens can't regain Hit Points or take Reactions, and your weapon hits can add Sap or Slow to their own mastery.",
+        "text": "While transformed by Wrath of the Wild: a creature Frightened by your Unnerving Aura can't regain Hit Points or take Reactions; and when you hit a creature with a weapon attack, you can apply the Sap or Slow mastery property in addition to the weapon's own mastery property.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "ancient_endurance",
+        "name": "Ancient Endurance",
+        "summary": "Immune to Exhaustion; +Wisdom modifier damage against Frightened creatures; once per Long Rest (or a level 4+ slot) dropping to 0 while transformed leaves you at 30 Hit Points.",
+        "text": "Timeless: you have Immunity to the Exhaustion condition. Dread Hunter: while transformed, your attacks deal extra damage equal to your Wisdom modifier to Frightened creatures. Persistent Hunt: if you drop to 0 Hit Points while transformed and don't die outright, your Hit Points become 30 instead; once you do this you can't again until you finish a Long Rest, unless you expend a spell slot of level 4 or higher (no action) to do so.",
+        "modifiers": [
+          {
+            "stat": "condition_immunity",
+            "value": "exhaustion"
+          }
+        ],
+        "resource": {
+          "id": "persistent_hunt",
+          "name": "Persistent Hunt",
+          "max": 1,
+          "recharge": "long"
+        },
+        "implemented": "engine"
+      }
+    }
+  ]
+}

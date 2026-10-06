@@ -38,6 +38,8 @@ var guests: Array[Creature] = []
 var shops: Dictionary = {}
 ## A journey interrupted by something on the road: {to: place id, at: place id the party had reached}.
 var travel_resume: Dictionary = {}
+## Miles travelled since the party's last Long Rest (Mist Walker, a Ravenloft Dark Gift).
+var miles_since_long_rest: float = 0.0
 ## Playthrough options the owner can switch (plan §5.6): respec at Madam Eva.
 var options: Dictionary = {"respec": true}
 ## Exploring spells still running: spell id -> {until: total minute, caster} (Light, Detect Magic, Speak with Dead).
@@ -421,7 +423,7 @@ func to_dict() -> Dictionary:
 		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
 		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
 		"travel_resume": travel_resume.duplicate(), "active_spells": active_spells.duplicate(true),
-		"options": options.duplicate()}
+		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest}
 
 
 static func from_dict(d: Dictionary) -> StoryState:
@@ -456,6 +458,7 @@ static func from_dict(d: Dictionary) -> StoryState:
 		st.positions.append(Vector2i(int(a[0]), int(a[1])))
 	st.location_states = (d.get("location_states", {}) as Dictionary).duplicate(true)
 	st.last_check = bool(d.get("last_check", false))
+	st.miles_since_long_rest = float(d.get("miles_since_long_rest", 0.0))
 	for f: Variant in d.get("fallen", []):
 		st.fallen.append((f as Dictionary).duplicate())
 	st.playthrough_seed = int(d.get("seed", 0))

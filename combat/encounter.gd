@@ -38,6 +38,8 @@ var monster_actions: MonsterActions
 var ai: AiBrain
 var shapes: ShapeChange
 var class_features: ClassFeatures
+## Ravenloft: The Horrors Within options (combat/ravenloft_features.gd).
+var ravenloft: RavenloftFeatures
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.
 var _savage_turn: Dictionary = {}
@@ -64,6 +66,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	ai = AiBrain.new(self)
 	shapes = ShapeChange.new(self)
 	class_features = ClassFeatures.new(self)
+	ravenloft = RavenloftFeatures.new(self)
 
 
 # --- Setup ----------------------------------------------------------------------------------------
@@ -123,6 +126,7 @@ func start(surprised_ids: Array = []) -> void:
 			c.initiative_group = group
 		log.add("roll", "%s rolls Initiative: %d" % [c.name(), t.total], c.id, [t.describe(), bonus.describe()])
 	class_features.initiative_rolled()
+	ravenloft.initiative_rolled()
 	order = combatants.duplicate()
 	order.sort_custom(func(a: Combatant, b: Combatant) -> bool:
 		if a.initiative != b.initiative:
@@ -256,7 +260,7 @@ func can_see(a: Combatant, b: Combatant) -> bool:
 		if not sees_invisible:
 			return false
 	# Devil's Sight (invocation): normal sight in Darkness, magical or not, within 120 ft.
-	var devil := a.creature.has_flag("devils_sight") and dist <= 120
+	var devil := (a.creature.has_flag("devils_sight") and dist <= 120) or ravenloft.sees_through_darkness(a)
 	if spells.zones.line_obscured(a.cell, a.size_cells, b.cell, b.size_cells, devil) and not by_sense:
 		return false
 	# Umbral Sight (Gloom Stalker): unseen in Darkness by creatures that rely on Darkvision.
@@ -468,6 +472,7 @@ func _begin_turn() -> void:
 	spells.turn_start(c)
 	feature_actions.turn_start(c)
 	class_features.turn_start(c)
+	ravenloft.turn_start(c)
 	monster_actions.turn_start(c)
 	if c.creature.has_flag("dazed"):
 		c.bonus_available = false
@@ -500,6 +505,7 @@ func end_turn() -> CombatResult:
 	c.armed.clear()
 	feature_actions.turn_end(c)
 	class_features.turn_end(c)
+	ravenloft.turn_end(c)
 	monster_actions.turn_end(c)
 	spells.turn_end(c)
 	spells.zones.prune()
@@ -1348,8 +1354,8 @@ func _action_check(c: Combatant) -> String:
 		return "%s can't act (%s)" % [c.name(), "down" if c.creature.hp <= 0 else "Incapacitated"]
 	if not c.action_available:
 		return "Action already used"
-	if c.creature.has_flag("slowed") and not c.bonus_available and not c.surged:
-		return "Slowed: an action or a Bonus Action, not both"
+	if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.bonus_available and not c.surged:
+		return "An action or a Bonus Action this turn, not both"
 	return ""
 
 
@@ -1391,8 +1397,8 @@ func _bonus_check(c: Combatant) -> String:
 		return "%s can't act" % c.name()
 	if not c.bonus_available:
 		return "Bonus Action already used"
-	if c.creature.has_flag("slowed") and not c.action_available:
-		return "Slowed: an action or a Bonus Action, not both"
+	if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.action_available:
+		return "An action or a Bonus Action this turn, not both"
 	return ""
 
 
@@ -1509,6 +1515,7 @@ func attack_options(c: Combatant) -> Array[Dictionary]:
 				var pb := _psychic_blade(c, thrown, c.light_attack_weapon == "psychic_blade")
 				out.append({"id": ("blade:thrown" if thrown else "blade:melee"), "label": pb.name, "kind": "blade",
 					"profile": pb, "melee": not thrown, "range": [pb.normal_range, pb.long_range], "reach": pb.reach})
+		out.append_array(ravenloft.attack_options(c))
 	elif c.creature is Monster:
 		var m := c.creature as Monster
 		for a: Variant in m.data.get("actions", []):
@@ -2277,11 +2284,12 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		target.set_meta("died_round", round_no)
 		log.add("death", "%s dies" % target.name(), target.id)
 		events.append({"type": "death", "id": target.id})
+		ravenloft.on_death(source, target)
 		if target.has_meta("vanishes"):
 			events.append({"type": "vanish", "id": target.id})
 	elif dr.dropped_to_zero and not target.creature.dead and monster_actions.lycanthrope(target):
 		pass
-	elif dr.dropped_to_zero and not target.creature.dead and feature_actions.on_zero(target):
+	elif dr.dropped_to_zero and not target.creature.dead and (feature_actions.on_zero(target) or ravenloft.on_zero(target, dr.final)):
 		events.append({"type": "heal", "id": target.id, "amount": 1})
 	elif dr.dropped_to_zero and not target.creature.dead:
 		log.add("death", "%s falls unconscious" % target.name(), target.id)
@@ -2354,6 +2362,7 @@ func _reduce_by_dice(target: Combatant, parts: Array, details: Array) -> Array:
 ## Reactions to being damaged (Hellish Rebuke, Storm's Thunder) wait until the attack or spell that caused them has
 ## finished.
 func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
+	ravenloft.queue_damage_reactions(source, target)
 	# Berserk Lashing (Clay Construct Spirit): a Slam at a random creature within 5 ft whenever it takes damage.
 	if target.creature is Monster and monster_actions.has_trait(target, "berserk_lashing") and spells.can_react(target) and target.creature.hp > 0:
 		reaction_queue.append({"kind": "berserk_lashing", "reactor": target.id, "trigger": source.id})
@@ -2385,6 +2394,8 @@ func _queue_sentinels(attacker: Combatant, target: Combatant) -> void:
 
 
 func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
+	if str(q["kind"]).begins_with("rh_"):
+		return ravenloft.queued_ok(q, reactor)
 	match str(q["kind"]):
 		"hellish_rebuke":
 			return spells.can_cast_reaction(reactor, "hellish_rebuke")
@@ -2402,6 +2413,8 @@ func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 
 
 func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> CombatResult:
+	if str(q["kind"]).begins_with("rh_"):
+		return ravenloft.fire_queued(q, reactor, trigger)
 	match str(q["kind"]):
 		"hellish_rebuke":
 			return spells.cast_reaction_spell(reactor, "hellish_rebuke", trigger)
@@ -2477,7 +2490,7 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 			if pending != null:
 				return then(sub, func() -> CombatResult: return run_reaction_queue(r))
 			continue
-		var words := _QUEUED_TEXT[kind] as Array
+		var words := ravenloft.queued_text(kind) if kind.begins_with("rh_") else _QUEUED_TEXT[kind] as Array
 		var req := ReactionRequest.new(kind, reactor.id, trigger.id)
 		req.title = str(words[0])
 		req.text = str(words[1]) % [trigger.name(), reactor.name()]
@@ -2744,7 +2757,7 @@ func search(c: Combatant) -> CombatResult:
 	if why != "":
 		return CombatResult.fail(why)
 	spend_action(c)
-	var t := c.creature.roll_check(dice, &"perception", 0)
+	var t := c.creature.roll_check(dice, &"perception", 0, [], [], "", ["search"])
 	var found: Array[String] = []
 	for h in hostiles_of(c):
 		if h.hidden and t.total >= h.stealth_total:
@@ -2766,7 +2779,7 @@ func study(c: Combatant, target: Combatant) -> CombatResult:
 	var m := target.creature as Monster
 	var skill := _knowledge_skill(str(m.data.get("type", "")))
 	var dc := 10 + floori(m.cr)
-	var t := c.creature.roll_check(dice, skill, dc)
+	var t := c.creature.roll_check(dice, skill, dc, [], [], "", ["study"])
 	if t.success:
 		studied[str(m.data.get("id", ""))] = true
 		var info: Array[String] = []

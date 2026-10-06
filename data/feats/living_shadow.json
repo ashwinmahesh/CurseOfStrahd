@@ -1,0 +1,60 @@
+{
+  "id": "living_shadow",
+  "name": "Living Shadow",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. Your shadow works a Mage Hand and lengthens your reach; a natural 1 lets it take you over for a moment.",
+  "benefits": [
+    {
+      "id": "shadow_hand",
+      "name": "Shadow Hand",
+      "summary": "You know Mage Hand; the hand is your shadow.",
+      "text": "You know the Mage Hand cantrip; the hand is your own shadow stretching out. Intelligence, Wisdom or Charisma is your spellcasting ability for it (choose when you take the gift).",
+      "action": "passive",
+      "choice": {
+        "id": "ability",
+        "kind": "spellcasting_ability",
+        "count": 1,
+        "from": [
+          "int",
+          "wis",
+          "cha"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "mage_hand",
+          "ability": "@ability"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "shadow_reach",
+      "name": "Shadow Reach",
+      "summary": "When you make a melee attack, your shadow can extend its reach by 10 feet (PB times per Long Rest).",
+      "text": "When you make a melee attack on your turn, your shadow can carry it: the attack's reach increases by 10 feet. You can do this a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "action": "special",
+      "resource": {
+        "id": "shadow_reach",
+        "name": "Shadow Reach",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "engine"
+    }
+  ],
+  "drawback": {
+    "id": "living_shadow_drawback",
+    "name": "Drawback",
+    "summary": "On a natural 1: Wisdom save (DC 13 + PB) or your shadow takes over until the start of your next turn (Incapacitated; it moves you, attacks or drops you Prone at random).",
+    "text": "Whenever you roll a 1 on the d20 of a D20 Test, you make a Wisdom saving throw (DC 13 plus your Proficiency Bonus); on a failure your shadow rebels: you have the Incapacitated condition until the start of your next turn, and on your next turn it drags your body at random (roll a d6: 1-2 it walks you up to your Speed in a random direction, 3-4 it makes you attack the nearest creature, 5-6 it throws you Prone).",
+    "action": "special",
+    "implemented": "engine"
+  }
+}

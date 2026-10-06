@@ -1209,7 +1209,12 @@ func search() -> void:
 	if busy or in_combat:
 		return
 	var who := leader().creature as Character
-	var t := who.roll_check(dice, &"perception", 0, [], [], "%s searches" % who.name)
+	# Sharp Eye (Ravenloft: The Horrors Within): Advantage on a Search, Proficiency Bonus times per Long Rest.
+	var adv: Array[String] = []
+	if who.feats_taken.any(func(f: Dictionary) -> bool: return str(f["id"]) == "sharp_eye") and who.resource_left("sharp_eye") > 0:
+		who.spend_resource("sharp_eye")
+		adv.append("Sharp Eye")
+	var t := who.roll_check(dice, &"perception", 0, adv, [], "%s searches" % who.name, ["search"])
 	check_rolled.emit(t.describe())
 	st.advance_minutes(1)
 	var found: Array[String] = []

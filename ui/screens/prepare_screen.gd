@@ -7,6 +7,8 @@ extends CanvasLayer
 var root: Node
 var st: StoryState
 var _box: VBoxContainer
+## Which rest just ended: "long_rest" or "short_rest" (see preparable()).
+var rest_kind := "long_rest"
 
 
 func _init() -> void:
@@ -26,11 +28,20 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	_draw()
 
 
-## The prepared-spell choices this party can change now: [{ch, choice}].
-static func preparable(state: StoryState) -> Array[Dictionary]:
+## The choices this party can change after a rest: [{ch, choice}]. After a Long Rest, prepared spells and choices
+## a Long Rest lets you swap (Weapon Mastery, Echoing Soul's Expertise); after either rest, those a Short Rest lets you
+## swap (Whispers of the Dead). `rest` is "long_rest" or "short_rest".
+static func preparable(state: StoryState, rest: String = "long_rest") -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for ch in state.party:
 		if ch.dead:
+			continue
+		for rc in ch.choice_defs:
+			if rc.key.ends_with(".prepared") or rc.kind in ["spell", "cantrip", "spellbook"]:
+				continue
+			if rc.replaceable == "short_rest" or (rc.replaceable == "long_rest" and rest == "long_rest"):
+				out.append({"ch": ch, "choice": rc})
+		if rest != "long_rest":
 			continue
 		for e in ch.spellcasting:
 			var cid := str(e["class_id"])
@@ -46,14 +57,15 @@ static func preparable(state: StoryState) -> Array[Dictionary]:
 func _draw() -> void:
 	for c in _box.get_children():
 		c.queue_free()
-	var list := PrepareScreen.preparable(st)
+	var list := PrepareScreen.preparable(st, rest_kind)
 	if list.is_empty():
 		_box.add_child(UiKit.label("Nobody in the party prepares spells after a rest.", 15, "parchment"))
 	for entry in list:
 		var ch := entry["ch"] as Character
 		var c := entry["choice"] as Choice
 		ChoiceOptions.populate(c, ch)
-		_box.add_child(UiKit.header("%s · %s" % [ch.name, Compendium.shared().display_name("classes", c.class_id)]))
+		var what := Compendium.shared().display_name("classes", c.class_id) if c.key.ends_with(".prepared") else c.label
+		_box.add_child(UiKit.header("%s · %s" % [ch.name, what]))
 		var w := ChoiceWidget.create(c)
 		w.picks_changed.connect(func(key: String, picks: Array) -> void:
 			if not ch.build.has("choices"):

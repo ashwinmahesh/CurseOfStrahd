@@ -359,7 +359,13 @@ func _walk_background() -> void:
 	elif tool.has("id"):
 		_prof("tools", str(tool["id"]), src["label"])
 	if bg.has("feat"):
-		_walk_feat(str(bg["feat"]), "background.feat", src, bg.get("feat_params", {}) as Dictionary)
+		# Any origin feat can be swapped for a Ravenloft Dark Gift (Ravenloft: The Horrors Within); the background's
+		# own feat stays picked until the player changes it, so older builds need no new pick.
+		var own := str(bg["feat"])
+		var fp := _register_choice({"kind": "feat", "count": 1, "from": [own], "filter": {"category": "dark_gift"},
+			"default": own, "walk": false}, "background.feat_choice", src, "Origin Feat or Ravenloft Dark Gift")
+		var pick := fp[0] if not fp.is_empty() else own
+		_walk_feat(pick, "background.feat", src, bg.get("feat_params", {}) as Dictionary if pick == own else {})
 
 
 func _walk_languages() -> void:
@@ -529,6 +535,9 @@ func _walk_feat(feat_id: String, key: String, parent: Dictionary, params: Dictio
 	for b: Variant in feat.get("benefits", []):
 		var benefit := b as Dictionary
 		_walk_feature(benefit, "%s.%s" % [key, benefit.get("id", "benefit")], src, scope)
+	if feat.has("drawback"):
+		var drawback := feat["drawback"] as Dictionary
+		_walk_feature(drawback, "%s.%s" % [key, drawback.get("id", "drawback")], src, scope)
 
 
 func _add_increases(picks: Array[String], cap: int, label: String) -> void:
@@ -564,8 +573,12 @@ func _register_choice(def: Dictionary, key: String, src: Dictionary, label: Stri
 	for o: Variant in def.get("options", []):
 		c.inline_options.append(o as Dictionary)
 	c.picks = picks_for(key)
+	# A choice with a default counts as made until the player changes it (the background's own origin feat).
+	if c.picks.is_empty() and def.has("default"):
+		c.picks = [str(def["default"])]
 	choice_defs.append(c)
-	_apply_picks(c, src, scope)
+	if bool(def.get("walk", true)):
+		_apply_picks(c, src, scope)
 	return c.picks
 
 
@@ -1183,6 +1196,16 @@ func spend_hit_die(dice: DiceRoller, die: int) -> int:
 	var roll := dice.roll_one(die, "Hit Point Die (%s)" % name)
 	var healed := maxi(1, roll + ability_mod(&"con"))
 	return heal(healed, "Hit Point Die")
+
+
+## Mist Walker's drawback (a Ravenloft Dark Gift): until the character has travelled 10 miles since its last Long
+## Rest, a Short Rest calls for a Constitution save (DC 13 + PB); on a failure the rest gives nothing. True if the
+## Mists deny this rest.
+func mists_deny_short_rest(dice: DiceRoller, miles_since_long_rest: float) -> bool:
+	if miles_since_long_rest >= 10.0 or not feats_taken.any(func(f: Dictionary) -> bool: return str(f["id"]) == "mist_walker"):
+		return false
+	var sv := roll_save(dice, &"con", 13 + proficiency_bonus(), [], [], "Constitution save vs the Mists (%s)" % name)
+	return not sv.success
 
 
 ## Short Rest: resources (Creature) and every Pact Magic slot come back. Hit Point Dice are spent separately.
