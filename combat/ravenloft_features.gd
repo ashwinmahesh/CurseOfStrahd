@@ -17,7 +17,7 @@ var _in_drawback: bool = false
 ## Natural-1 drawbacks of the Ravenloft Dark Gifts: feat id -> [save ability, label].
 const NAT1_GIFTS := {
 	"aberrant_anatomy": [&"con", "Aberrant Anatomy"],
-	"echoing_soul": [&"wis", "Echoing Soul"],
+	"echoing_soul": [&"con", "Echoing Soul"],
 	"gathered_whispers": [&"wis", "Gathered Whispers"],
 	"living_shadow": [&"wis", "Living Shadow"],
 	"symbiotic_being": [&"wis", "Symbiotic Being"],
@@ -587,7 +587,9 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, st: Dictiona
 		_wails(c, target)
 	if str(option.get("id", "")) == "bite:vampiric":
 		_bite(c, target, int(r.damage))
-	if has(c, "feral_pounce") and p.item_id == "unarmed_strike" and alive and cf()._once(c, "feral_pounce") and _allowed(c, "feral_pounce"):
+	var attack_action := e.current() == c and c.took_attack_action and not bool((st["opts"] as Dictionary).get("reaction", false))
+	if has(c, "feral_pounce") and p.item_id == "unarmed_strike" and alive and attack_action and cf()._once(c, "feral_pounce") \
+			and _allowed(c, "feral_pounce"):
 		_pounce(c, target)
 	if _active(c, "form_of_dread") and alive and cf()._once(c, "frightful_avatar") and _allowed(c, "frightful_avatar"):
 		if not _save(target, &"wis", _spell_dc(c, "warlock"), "Frightful Avatar", "frightened"):
@@ -823,6 +825,7 @@ func before_d20(c: Combatant, _kind: D20Test.Kind, keys: Array[String]) -> Dicti
 		out["advantage"] = ["Life Essence"]
 	if feat(c, "sharp_eye") and ("search" in keys or "study" in keys) and ch.resource_left("sharp_eye") > 0 and _allowed(c, "sharp_eye"):
 		ch.spend_resource("sharp_eye")
+		c.set_meta("sharp_eye_used", true)
 		out["advantage"] = (out.get("advantage", []) as Array) + ["Sharp Eye"]
 	return out
 
@@ -834,6 +837,11 @@ func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
 	var ch := _ch(c)
 	if ch == null or t.auto_failed:
 		return
+	# Sharp Eye: a failed check gives the use back.
+	if c.has_meta("sharp_eye_used"):
+		c.remove_meta("sharp_eye_used")
+		if not t.success and t.target > 0:
+			ch.restore_resource("sharp_eye")
 	# Survivor: an Initiative d20 of 9 or lower is rolled again.
 	if feat(c, "survivor") and "initiative" in keys and t.kept <= 9 and _allowed(c, "survivor"):
 		t.set_natural(e.dice.d20("Survivor"), "Survivor")
@@ -850,7 +858,7 @@ func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
 						and t.total + c.creature.proficiency_bonus() >= t.target and _allowed(c, "survivor_resolve"):
 					ch.spend_resource("survivor_resolve")
 					c.reaction_available = false
-					t.add_bonus(c.creature.proficiency_bonus(), "Steeled Nerves")
+					t.add_bonus(c.creature.proficiency_bonus(), "Steel Yourself")
 				if not t.success and has(c, "symbiote_vigor") and ch.resource_left("symbiote_vigor") > 0 and _allowed(c, "symbiote_vigor"):
 					var die := _largest_free_hit_die(ch)
 					if die > 0 and t.total + die >= t.target:
@@ -904,7 +912,7 @@ func _drawbacks(c: Combatant) -> void:
 			"living_shadow":
 				_condition(c, _until_start(_effect(c, "Living Shadow", "living_shadow").with_condition(&"incapacitated"), c),
 					"%s's shadow takes over" % c.name())
-				_shadow_rebels(c)
+				c.set_meta("shadow_will", true)
 			"symbiotic_being":
 				var hours := e.dice.roll_one(12, "Symbiotic Being")
 				var fx := _effect(c, "Charmed by the symbiote", "symbiotic_being").with_condition(&"charmed") \
@@ -921,27 +929,41 @@ func _drawbacks(c: Combatant) -> void:
 				_condition(c, fx2, "The watchers' gaze presses on %s: Disadvantage on D20 Tests" % c.name())
 
 
-## Living Shadow's drawback: the shadow drags its owner at random (1-2 walk, 3-4 attack the nearest creature, 5-6
-## Prone).
-func _shadow_rebels(c: Combatant) -> void:
+## Living Shadow's Ominous Will: the turn after a failed save, a d8 on the Shadow's Will table runs it. 1: no action
+## or Bonus Action, all movement spent walking one way (a d4: north, east, south, west); 2-6: no movement or Bonus
+## Action, one melee attack (the Attack action) on a random creature in reach, or nothing; 7-8: Prone, turn over.
+func _shadow_will(c: Combatant) -> void:
 	var e := enc()
-	var roll := e.dice.roll_one(6, "Living Shadow")
-	if roll <= 2:
-		var dir := Vector2.from_angle(e.dice.roll_one(8, "Living Shadow direction") * PI / 4.0)
-		e.march(c, dir, c.creature.speed().total(), CombatResult.new())
-		_log("info", "%s's shadow drags them away" % c.name(), c)
-	elif roll <= 4:
-		var near: Combatant = null
+	var roll := e.dice.roll_one(8, "Shadow's Will")
+	c.bonus_available = false
+	if roll == 1:
+		var dirs: Array[Vector2] = [Vector2(0, -1), Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0)]
+		var dir := dirs[e.dice.roll_one(4, "Shadow's Will direction") - 1]
+		c.action_available = false
+		_log("info", "%s's shadow walks them away" % c.name(), c)
+		e.march(c, dir, c.movement_left, CombatResult.new())
+		c.movement_left = 0
+	elif roll <= 6:
+		c.movement_left = 0
+		var near: Array[Combatant] = []
 		for o in e.living():
-			if o != c and not o.is_down() and (near == null or e.distance(c, o) < e.distance(c, near)):
-				near = o
-		var opt := e.best_melee_option(c, near) if near != null else {}
-		if near != null and not opt.is_empty() and e.distance(c, near) <= c.reach_ft() and e.pending == null:
-			_log("info", "%s's shadow lashes out at %s" % [c.name(), near.name()], c)
-			e._resolve_attack(c, near, opt, {"reaction": true})
+			if o != c and not o.is_down() and e.distance(c, o) <= c.reach_ft():
+				near.append(o)
+		var opt := e.best_melee_option(c, null)
+		if near.is_empty() or opt.is_empty():
+			c.action_available = false
+			_log("info", "%s's shadow finds no one to strike" % c.name(), c)
+			return
+		var victim := near[e.dice.roll_one(near.size(), "Shadow's Will target") - 1]
+		_log("info", "%s's shadow lashes out at %s" % [c.name(), victim.name()], c)
+		e.attack(c, victim, str(opt["id"]))
+		c.attacks_left = 0
+		c.action_available = false
 	else:
 		c.creature.add_condition(&"prone", "Living Shadow")
-		_log("condition", "%s's shadow throws them Prone" % c.name(), c)
+		c.action_available = false
+		c.movement_left = 0
+		_log("condition", "%s's shadow throws them Prone; their turn is over" % c.name(), c)
 
 
 # --- Hooks: turns ------------------------------------------------------------------------------------------------
@@ -972,6 +994,10 @@ func turn_start(c: Combatant) -> void:
 			fx.with_modifier("flag", {"value": "cant_regain_hp"}).with_modifier("flag", {"value": "no_reactions"})
 		_condition(c, fx, "%s is unnerved by %s's aura: Frightened" % [c.name(), w.name()])
 		break
+	if c.has_meta("shadow_will"):
+		c.remove_meta("shadow_will")
+		if c.can_act():
+			_shadow_will(c)
 	if c.creature.has_flag("symbiote_control") and c.can_act():
 		e.dodge(c)
 		c.movement_left = 0
@@ -1137,7 +1163,7 @@ func _howl(c: Combatant) -> void:
 	var dc := _howl_dc(c)
 	_log("info", "%s howls" % c.name(), c)
 	for o in e.hostiles_of(c):
-		if not o.is_alive() or o.is_down() or e.distance(c, o) > 15 or o.creature.has_condition(&"deafened"):
+		if not o.is_alive() or o.is_down() or e.distance(c, o) > 15:
 			continue
 		if _save(o, &"wis", dc, "Howl"):
 			continue
