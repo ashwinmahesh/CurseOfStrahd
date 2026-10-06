@@ -19,8 +19,13 @@ Rig (v1): each view is cut into head, torso and legs by body proportion, and eve
 textured plane pivoting at its joint (neck, hips). West-facing directions mirror the east ones.
 Writes art/sprites/<id>/walk.png (rows = directions, cols = frames) and walk.tres.
 
---static (quadrupeds and other bodies the humanoid rig can't walk): each view is one still plane,
-one frame per direction (the game adds a bob). Same cell, directions and animation names
+--body (bodies the humanoid rig can't walk; docs/art/animation.md): 8 frames per direction like the rig, the same
+scale rule as --static. quadruped: the profile and three-quarter views play two drawn strides from
+art/generated/anim/<id>/walk_<view>.png (tools/art/anim_keyframes.py --kind walk), head-on views lift their leg halves
+like the rig. float (hovers: bob and lean), hop (a broom: squash, leap, land), slither (stretch and squash along the
+body), lumber (a heavy rocking gait), swarm (a scurrying jitter): one plane per view, moved and squashed per frame.
+
+--static: each view is one still plane, one frame per direction. Same cell, directions and animation names
 (walk_<dir>, idle_<dir>), so DirectionalSprite loads it unchanged. Long bodies are scaled down to
 fit the cell's width as well; the printed "height fill" is the tallest view's height as a fraction
 of the band DirectionalSprite maps to height_units (1.0 for walk sheets).
@@ -36,6 +41,7 @@ import bpy
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
+import anim  # noqa: E402
 import cutout  # noqa: E402
 
 DIRECTIONS = ["s", "se", "e", "ne", "n", "nw", "w", "sw"]
@@ -57,6 +63,11 @@ FIGURE_HEIGHT = 1.8  # world units in Blender; only ratios matter for the render
 HEAD = (0.0, 0.25)
 TORSO = (0.17, 0.62)
 LEGS = (0.56, 1.0)
+# A four-legged body seen head-on: legs below this fraction of its height.
+QUAD_LEGS = 0.62
+BODIES = ("humanoid", "quadruped", "float", "hop", "slither", "lumber", "swarm")
+# How much of a forward lean shows per view (none head-on, where it would read as tipping sideways).
+LEAN = {"front": 0.0, "front34": 0.5, "side": 1.0, "back34": 0.5, "back": 0.0}
 
 
 def args():
@@ -67,6 +78,7 @@ def args():
     p.add_argument("--cell", type=int, default=384)
     p.add_argument("--frames", type=int, default=8)
     p.add_argument("--static", action="store_true", help="one still frame per direction, no rig")
+    p.add_argument("--body", default="humanoid", choices=BODIES, help="how a non-humanoid body walks")
     p.add_argument("--views", type=int, choices=[3, 5], help="views on the sheet (default: detect)")
     p.add_argument("--saturate", type=float, default=1.0, help="chroma boost before quantizing (cutout.saturate)")
     p.add_argument("--no-clean", action="store_true", help="skip the smoothing and island merge (comparison only)")
@@ -145,31 +157,159 @@ def build_static_view(name, fig, ppu):
     root = bpy.data.objects.new(name, None)
     bpy.context.scene.collection.objects.link(root)
     h, w = fig.shape[:2]
-    make_plane(f"{name}_whole", fig, ppu, (w / 2.0, h), (0.0, 0.0), 0.0, root)
-    return {"root": root}
+    whole = make_plane(f"{name}_whole", fig, ppu, (w / 2.0, h), (0.0, 0.0), 0.0, root)
+    return {"root": root, "whole": whole}
 
 
 def pose(parts, view, frame, frames, height):
-    """Walk cycle: legs swing (side) or lift (front/back), the body bobs at the passing pose."""
+    """Walk cycle: legs swing (side) or lift and bend (head-on), the body dips on each stride and sways over the
+    planted foot, so the cycle reads at sprite size from every side. Frame 0 is the rest pose (the idle frame)."""
     phase = 2.0 * math.pi * frame / frames
     s = math.sin(phase)
-    bob = 0.018 * height * math.cos(2.0 * phase)
+    bob = 0.0125 * height * (math.cos(2.0 * phase) - 1.0)
     tx, ty, tz = parts["torso"]["rest"]
-    parts["torso"].location = (tx, ty, tz + bob)
+    head_on = view in ("front", "back")
+    three_q = view in ("front34", "back34")
+    # Weight shifts over the planted leg: leg_a (image left) lifts while s > 0, so lean right.
+    sway = 0.014 * height * s if (head_on or three_q) else 0.0
+    parts["torso"].location = (tx + sway, ty, tz + bob)
+    parts["torso"].rotation_euler = (0, math.radians(2.5 if head_on else 2.0) * s, 0)
     hx, hy, hz = parts["head"]["rest"]
     parts["head"].location = (hx, hy, hz)
-    parts["head"].rotation_euler = (0, math.radians(2.5) * s, 0)
+    parts["head"].rotation_euler = (0, math.radians(-3.0) * s, 0)
+    if "props" in parts:
+        parts["props"].rotation_euler = (0, 0, 0)
     for key, sign in (("leg_a", 1.0), ("leg_b", -1.0)):
         lx, ly, lz = parts[key]["rest"]
+        up = max(0.0, s * sign)
         if view == "side":
-            parts[key].rotation_euler = (0, math.radians(26.0) * s * sign, 0)
+            parts[key].rotation_euler = (0, math.radians(30.0) * s * sign, 0)
             parts[key].location = (lx, ly, lz + bob * 0.5)
+            parts[key].scale = (1.0, 1.0, 1.0 - 0.06 * up)
+        elif three_q:
+            parts[key].rotation_euler = (0, math.radians(14.0) * s * sign, 0)
+            parts[key].location = (lx + sway * 0.6, ly, lz + up * 0.04 * height + bob * 0.3)
+            parts[key].scale = (1.0, 1.0, 1.0 - 0.1 * up)
         else:
-            lift = max(0.0, s * sign) * 0.05 * height
             parts[key].rotation_euler = (0, 0, 0)
-            parts[key].location = (lx, ly, lz + lift + bob * 0.3)
-            parts[key].scale = (1.0, 1.0, 1.0 - 0.08 * max(0.0, s * sign))
+            parts[key].location = (lx + sway * 0.4, ly, lz + up * 0.07 * height + bob * 0.3)
+            parts[key].scale = (1.0, 1.0, 1.0 - 0.13 * up)
+
+
+def build_quadruped_view(name, fig, ppu):
+    """A four-legged body head-on (or a profile without drawn strides): the body above QUAD_LEGS, and the leg band
+    cut into a left and a right half that lift in turn, like the humanoid rig's legs."""
+    root = bpy.data.objects.new(name, None)
+    bpy.context.scene.collection.objects.link(root)
+    h, w = fig.shape[:2]
+    cx = w / 2.0
+    to_world = lambda x_px, y_px: ((x_px - cx) / ppu, (h - y_px) / ppu)
+    cut = int(h * QUAD_LEGS)
+    parts = {"root": root}
+    body = fig[:cut]
+    parts["torso"] = make_plane(f"{name}_body", body, ppu, (cx, cut), to_world(cx, cut), 0.0, root)
+    legs = fig[cut:]
+    half = int(cx)
+    left, right = legs[:, :half].copy(), legs[:, half:].copy()
+    parts["leg_a"] = make_plane(f"{name}_leg_l", left, ppu, (half, 0), to_world(half, cut), 0.01, root)
+    parts["leg_b"] = make_plane(f"{name}_leg_r", right, ppu, (0, 0), to_world(half, cut), 0.012, root)
+    for key in ("torso", "leg_a", "leg_b"):
+        parts[key]["rest"] = tuple(parts[key].location)
+    return parts
+
+
+def quadruped_rig_pose(parts, view, frame, frames, height):
+    phase = 2.0 * math.pi * frame / frames
+    s = math.sin(phase)
+    bob = 0.01 * height * (math.cos(2.0 * phase) - 1.0)
+    tx, ty, tz = parts["torso"]["rest"]
+    parts["torso"].location = (tx, ty, tz + bob)
     parts["torso"].rotation_euler = (0, math.radians(1.5) * s, 0)
+    for key, sign in (("leg_a", 1.0), ("leg_b", -1.0)):
+        lx, ly, lz = parts[key]["rest"]
+        up = max(0.0, s * sign)
+        parts[key].location = (lx, ly, lz + up * 0.06 * height + bob * 0.4)
+        parts[key].scale = (1.0, 1.0, 1.0 - 0.15 * up)
+
+
+def build_stride_view(name, fig, ppu, asset_id):
+    """A four-legged profile or three-quarter view walking on drawn strides: the turnaround view itself as the
+    passing pose (so the idle frame is the sheet's), and the strip's two strides, scaled by the strip's redraw of
+    the view and tinted to match it, the body's mass kept in place. None when the view has no usable strip."""
+    path = anim.strip_path(asset_id, "walk", name)
+    if not path.exists():
+        return None
+    kfs, problems = anim.load_strip(path)
+    if kfs is None:
+        print(f"WARNING {asset_id}: walk strip {name} unusable ({'; '.join(problems)}); using the rig")
+        return None
+    for w in problems:
+        print(f"WARNING {asset_id}: walk strip {name}: {w}")
+    k, more = anim.strip_scale(fig.shape[0], fig.shape[1], kfs[0])
+    for w in more:
+        print(f"WARNING {asset_id}: walk strip {name}: {w}")
+    for kf, crop in zip(kfs, anim.match_colours([kf.crop for kf in kfs], kfs[0].crop, fig)):
+        kf.crop = crop
+    idle = anim.Keyframe(fig)
+    centre_x = (idle.mass - idle.w / 2.0) / ppu
+    root = bpy.data.objects.new(name, None)
+    bpy.context.scene.collection.objects.link(root)
+    parts = {"root": root, "strides": True}
+    parts["pass"] = make_plane(f"{name}_pass", idle.crop, ppu, (idle.mass, idle.h), (centre_x, 0.0), 0.0, root)
+    for key, kf in zip(("a", "b"), kfs[1:]):
+        parts[key] = make_plane(f"{name}_{key}", kf.crop, ppu / k, (kf.mass, kf.h), (centre_x, 0.0), 0.0, root)
+    return parts
+
+
+# Drawn-stride trot, twice per cycle: passing (the rest pose, so frame 0 is the idle frame), stretched, passing,
+# gathered. The passing pose rides a little higher.
+STRIDES = ("pass", "a", "pass", "b")
+STRIDE_LIFT = {"a": 0.0, "pass": 0.015, "b": 0.008}
+
+
+def stride_pose(parts, frame, frames, height):
+    key = STRIDES[frame * len(STRIDES) * 2 // frames % len(STRIDES)]
+    for k in ("pass", "a", "b"):
+        parts[k].hide_render = k != key
+    p = parts[key]
+    lift = STRIDE_LIFT[key] if frame else 0.0
+    p.location = (p.location[0], p.location[1], lift * height)
+
+
+def body_pose(parts, view, frame, frames, height, body):
+    """One plane per view (build_static_view) moved per frame for bodies without legs to swing. Frame 0 is the
+    rest pose (the idle frame)."""
+    plane = parts["whole"]
+    phase = 2.0 * math.pi * frame / frames
+    s, c = math.sin(phase), math.cos(phase)
+    lean = LEAN[view]
+    x, z, rot, sx, sy = 0.0, 0.0, 0.0, 1.0, 1.0
+    if body == "float":
+        z = 0.03 * height * (1.0 - c)
+        rot = 3.0 * lean * (1.0 - c) + 2.0 * s
+        sx, sy = 1.0 - 0.015 * s, 1.0 + 0.015 * s
+    elif body == "hop":
+        # Two hops per cycle, four frames each: rest, leap (stretched), top, landing (squashed).
+        z_, sx, sy, air = ((0.0, 1.0, 1.0, 0.0), (0.07, 0.96, 1.06, 0.7), (0.1, 0.98, 1.04, 1.0),
+                           (0.0, 1.08, 0.9, 0.0))[frame % 4]
+        z = z_ * height
+        rot = 8.0 * lean * air
+    elif body == "slither":
+        sx, sy = 1.0 + 0.06 * s, 1.0 - 0.05 * s
+        x = 0.02 * height * s * lean
+        rot = 2.5 * s * lean
+    elif body == "lumber":
+        rot = 4.0 * s
+        z = 0.02 * height * abs(s)
+        sx, sy = 1.0 + 0.03 * abs(s), 1.0 - 0.03 * abs(s)
+    elif body == "swarm":
+        jitter = (0.0, 1.0, -0.5, 0.8, -1.0, 0.4, -0.7, 0.9)[frame % 8]
+        x = 0.015 * height * jitter
+        sx, sy = 1.0 + 0.05 * math.sin(2 * phase), 1.0 - 0.06 * math.sin(2 * phase)
+        z = 0.01 * height * abs(math.sin(2 * phase))
+    plane.location = (x, plane.location[1], z)
+    plane.rotation_euler = (0, math.radians(rot), 0)
+    plane.scale = (sx, 1.0, sy)
 
 
 def view_count(sheet):
@@ -209,18 +349,29 @@ def main():
     height_px = max(f.shape[0] for f in figures)
     ppu = height_px / FIGURE_HEIGHT
     frames_per_dir = a.frames
-    if a.static:
+    if a.static or a.body != "humanoid":
         # A wolf in profile is longer than it is tall: every view keeps one scale, so the widest
         # view must fit the cell too (6% margin).
         width_px = max(f.shape[1] for f in figures)
         ppu = max(ppu, width_px / (FIGURE_HEIGHT * 1.12 * 0.94))
-        frames_per_dir = 1
+        frames_per_dir = 1 if a.static else a.frames
     height_fill = height_px / ppu / FIGURE_HEIGHT
 
-    scene = cutout.reset_scene(a.cell, a.cell)
-    cutout.ortho_camera(scene, (0, -10, FIGURE_HEIGHT * 0.52), (math.radians(90), 0, 0), FIGURE_HEIGHT * 1.12)
-    build = build_static_view if a.static else build_view
-    views = {name: build(name, fig, ppu) for name, fig in zip(names, figures)}
+    # A trotting wolf at full stretch is longer than the square cell: four-legged sheets get wider cells (the
+    # height, and so the size in game, is the same).
+    cell_w = int(round(a.cell * 1.5)) if a.body == "quadruped" and not a.static else a.cell
+    scene = cutout.reset_scene(cell_w, a.cell)
+    cam = cutout.ortho_camera(scene, (0, -10, FIGURE_HEIGHT * 0.52), (math.radians(90), 0, 0), FIGURE_HEIGHT * 1.12)
+    cam.data.sensor_fit = "VERTICAL"
+    views = {}
+    for name, fig in zip(names, figures):
+        if a.static or a.body in ("float", "hop", "slither", "lumber", "swarm"):
+            views[name] = build_static_view(name, fig, ppu)
+        elif a.body == "quadruped":
+            strides = build_stride_view(name, fig, ppu, a.id) if name not in ("front", "back") else None
+            views[name] = strides or build_quadruped_view(name, fig, ppu)
+        else:
+            views[name] = build_view(name, fig, ppu)
 
     # Frames go outside the project so an open Godot editor doesn't import them (and leave .import files).
     tmp = Path(tempfile.mkdtemp(prefix=f"walk_{a.id}_"))
@@ -235,8 +386,17 @@ def main():
         root.scale = (-1.0 if mirrored else 1.0, 1.0, 1.0)
         root.rotation_euler = (0, 0, math.radians(turn))
         for f in range(frames_per_dir):
-            if not a.static:
-                pose(views[view], view, f, frames_per_dir, FIGURE_HEIGHT)
+            parts = views[view]
+            if a.static:
+                pass
+            elif a.body == "humanoid":
+                pose(parts, view, f, frames_per_dir, FIGURE_HEIGHT)
+            elif "strides" in parts:
+                stride_pose(parts, f, frames_per_dir, FIGURE_HEIGHT)
+            elif a.body == "quadruped":
+                quadruped_rig_pose(parts, view, f, frames_per_dir, FIGURE_HEIGHT)
+            else:
+                body_pose(parts, view, f, frames_per_dir, FIGURE_HEIGHT, a.body)
             path = tmp / f"{d}_{f}.png"
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
@@ -250,10 +410,11 @@ def main():
         walk = cutout.merge_islands(cutout.despeckle(walk, near=0.3, ring=True))
     cutout.save_rgba(walk, out_dir / "walk.png")
     cutout.write_sprite_frames(out_dir / "walk.tres", f"res://art/sprites/{a.id}/walk.png",
-                               (a.cell, a.cell), DIRECTIONS, frames_per_dir)
+                               (cell_w, a.cell), DIRECTIONS, frames_per_dir)
     shutil.rmtree(tmp, ignore_errors=True)
     print(f"walk sheet: {out_dir / 'walk.png'} ({len(names)} views, {len(DIRECTIONS)} directions x "
-          f"{frames_per_dir} frames{', static' if a.static else ''}, height fill {height_fill:.2f})")
+          f"{frames_per_dir} frames{', static' if a.static else ''}, body {a.body}, height fill {height_fill:.2f})")
 
 
-main()
+if __name__ == "__main__":
+    main()

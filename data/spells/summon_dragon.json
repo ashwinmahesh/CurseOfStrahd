@@ -1,0 +1,43 @@
+{
+  "id": "summon_dragon",
+  "name": "Summon Dragon",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "conjuration",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "an object bearing a dragon's image worth 500+ GP",
+    "m_cost_gp": 500
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space you can see within range"
+  },
+  "upcast": {
+    "text": "Use the slot level in the stat block: higher slots give the spirit more Hit Points, AC and attacks."
+  },
+  "tags": [
+    "summon"
+  ],
+  "summary": "Call a Draconic spirit that bites, claws and breathes on your foes.",
+  "text": "It uses the Draconic Spirit stat block, shares your Initiative and takes its turn right after yours, obeying your commands. Its stats grow with the slot level."
+}

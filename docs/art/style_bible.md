@@ -40,6 +40,8 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
   back three-quarter, back. Arms at the sides, same height, clear gaps, plain flat white background
   (Gemini can't do transparency; the pipeline removes the background).
 - `make sprite TURNAROUND=<png> ID=<id>` cuts it into a cutout rig and renders 8 directions × 8 walk frames.
+- Every character also has an attack in 8 directions, drawn as wind-up and strike keyframes per view and rendered by
+  `make anims`; four-legged and legless bodies get their own walk cycles. See docs/art/animation.md.
 - In game a sprite is about 1.5 world units tall (a Medium creature).
 
 ## Portraits
@@ -79,4 +81,4 @@ text or watermarks in images, pure black, neon colours outside the palette, chib
 
 ## Art QA before "final"
 Silhouette reads at in-game size, palette compliance after quantization, all 8 directions consistent,
-no background remnants, walk loop has no pops.
+no background remnants, walk loop has no pops, the attack's wind-up and strike read clearly in every direction.

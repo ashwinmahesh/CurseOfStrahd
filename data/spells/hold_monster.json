@@ -1,0 +1,61 @@
+{
+  "id": "hold_monster",
+  "name": "Hold Monster",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a straight piece of iron"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see within range"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "paralyzed"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "paralyzed",
+        "repeat_save": "end_of_turn"
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "debuff"
+  ],
+  "summary": "A creature makes a Wis save or is Paralyzed; it repeats the save at the end of each of its turns.",
+  "text": "A success on a repeated save ends the spell on that creature. You can target one more creature for each slot level above 5."
+}

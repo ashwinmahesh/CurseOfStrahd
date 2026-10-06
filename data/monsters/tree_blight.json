@@ -1,0 +1,143 @@
+{
+  "id": "tree_blight",
+  "name": "Tree Blight",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. The number of attacks in its Multiattack especially needs the book. A root's hit deals no damage of its own here (0) and grabs; the crushing damage each turn, cutting a root, and the Bite (a Bonus Action against a creature it holds) are text only. Wintersplinter on Yester Hill can use this block under its own name."
+  },
+  "size": "huge",
+  "type": "plant",
+  "alignment": "neutral evil",
+  "ac": 15,
+  "initiative": 0,
+  "hp": {
+    "average": 149,
+    "dice": "13d12+65"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 23,
+    "dex": 10,
+    "con": 20,
+    "int": 6,
+    "wis": 10,
+    "cha": 3
+  },
+  "condition_immunities": [
+    "blinded",
+    "deafened"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "understands Common and Druidic but can't speak"
+  ],
+  "cr": 7,
+  "xp": 2900,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "false_appearance",
+      "name": "False Appearance",
+      "action": "passive",
+      "summary": "Indistinguishable from a dead tree while it stays still.",
+      "implemented": "text"
+    },
+    {
+      "id": "siege_monster",
+      "name": "Siege Monster",
+      "action": "passive",
+      "summary": "Deals double damage to objects and structures.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "branch",
+          "count": 2
+        },
+        {
+          "action": "grasping_root",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Branch attacks and two Grasping Root attacks."
+    },
+    {
+      "id": "branch",
+      "name": "Branch",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 15
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "3d6+6",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "A sweeping branch with 15 ft reach."
+    },
+    {
+      "id": "grasping_root",
+      "name": "Grasping Root",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 15
+      },
+      "damage": [
+        {
+          "average": 0,
+          "dice": "0",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Seizes a creature it isn't already holding (escape DC 15); the held creature is crushed each turn.",
+      "text": "The held creature takes 9 (1d6 + 6) Bludgeoning damage at the start of each of its turns. A root has AC 15; 6 or more Slashing damage in one hit cuts it and ends that grapple without hurting the blight.",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 15,
+          "limit": 2
+        }
+      ]
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 19,
+          "dice": "3d8+6",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bonus Action: bites a creature it holds with a root.",
+      "text": "Text only for the engine."
+    }
+  ],
+  "regions": [
+    "yester_hill"
+  ],
+  "ai_profile": "brute",
+  "summary": "A dead-looking tree that walks: long branches batter, roots grab and crush, and its maw bites anyone it holds."
+}

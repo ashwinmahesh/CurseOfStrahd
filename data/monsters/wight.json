@@ -1,0 +1,185 @@
+{
+  "id": "wight",
+  "name": "Wight",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Wight. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Hit Points and Life Drain (a save here; its damage). Raising slain Humanoids as zombies is text only."
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "neutral evil",
+  "ac": 14,
+  "initiative": 2,
+  "hp": {
+    "average": 82,
+    "dice": "11d8+33"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 15,
+    "dex": 14,
+    "con": 16,
+    "int": 10,
+    "wis": 13,
+    "cha": 15
+  },
+  "skills": {
+    "perception": 3,
+    "stealth": 4
+  },
+  "resistances": [
+    "necrotic"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 13,
+  "languages": [
+    "Common plus one other language"
+  ],
+  "cr": 3,
+  "xp": 700,
+  "proficiency_bonus": 2,
+  "gear": [
+    "longbow",
+    "longsword",
+    "studded_leather_armor"
+  ],
+  "traits": [
+    {
+      "id": "sunlight_sensitivity",
+      "name": "Sunlight Sensitivity",
+      "action": "passive",
+      "summary": "Disadvantage on ability checks and attack rolls while in sunlight.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "sunlight_sensitivity"
+        }
+      ],
+      "sunlight": "sensitivity",
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "necrotic_sword",
+          "count": 1,
+          "or": [
+            "necrotic_bow",
+            "life_drain"
+          ]
+        },
+        {
+          "action": "necrotic_sword",
+          "count": 1,
+          "or": [
+            "necrotic_bow"
+          ]
+        }
+      ],
+      "summary": "Two attacks with Necrotic Sword or Necrotic Bow in any mix; one can be Life Drain instead."
+    },
+    {
+      "id": "necrotic_sword",
+      "name": "Necrotic Sword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d8+2",
+          "type": "slashing"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A sword cut chilled with necrotic energy.",
+      "weapon": true
+    },
+    {
+      "id": "necrotic_bow",
+      "name": "Necrotic Bow",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          150,
+          600
+        ]
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d8+2",
+          "type": "piercing"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "An arrow chilled with necrotic energy.",
+      "weapon": true
+    },
+    {
+      "id": "life_drain",
+      "name": "Life Drain",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 13,
+        "success": "none"
+      },
+      "area": {
+        "targets": 1,
+        "range": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d8+2",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "DC 13 Con save by a creature within 5 ft or Necrotic damage that also lowers its Hit Point maximum.",
+      "text": "A Humanoid killed this way rises 24 hours later as a Zombie under the wight's control.",
+      "targets": {
+        "range": 5,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "drain_max_hp",
+          "type": "necrotic"
+        }
+      ]
+    }
+  ],
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "brute",
+  "summary": "An undead warrior with sword and bow that drains the life of anyone it holds close; hates sunlight."
+}

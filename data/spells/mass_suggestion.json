@@ -1,0 +1,61 @@
+{
+  "id": "mass_suggestion",
+  "name": "Mass Suggestion",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "m": "a snake's tongue"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 12,
+    "description": "up to twelve creatures you can see that can hear and understand you"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "upcast": {
+    "text": "Lasts 10 days with a level 7 slot, 30 days with level 8 and 366 days with level 9."
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed",
+        "ends_on": [
+          "damaged_by_caster_side"
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "social"
+  ],
+  "summary": "Up to twelve creatures that can hear and understand you make a Wis save or follow a short suggestion.",
+  "text": "A Charmed target pursues the suggestion (25 words or fewer, nothing obviously harmful) for the duration, until it's done, or until you or your allies damage it."
+}

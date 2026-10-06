@@ -1,0 +1,130 @@
+{
+  "id": "wraith",
+  "name": "Wraith",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Wraith. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the resistance list and whether Life Drain's Hit Point loss allows a save. Create Specter is text only."
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "neutral evil",
+  "ac": 13,
+  "initiative": 3,
+  "hp": {
+    "average": 67,
+    "dice": "9d8+27"
+  },
+  "speed": {
+    "walk": 5,
+    "fly": 60,
+    "hover": true
+  },
+  "abilities": {
+    "str": 6,
+    "dex": 16,
+    "con": 16,
+    "int": 12,
+    "wis": 14,
+    "cha": 15
+  },
+  "resistances": [
+    "acid",
+    "bludgeoning",
+    "cold",
+    "fire",
+    "lightning",
+    "piercing",
+    "slashing",
+    "thunder"
+  ],
+  "immunities": [
+    "necrotic",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common plus two other languages"
+  ],
+  "cr": 5,
+  "xp": 1800,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "incorporeal_movement",
+      "name": "Incorporeal Movement",
+      "action": "passive",
+      "summary": "Moves through creatures and objects as Difficult Terrain; 5 (1d10) Force if it ends a turn inside one.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "incorporeal_movement"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "sunlight_sensitivity",
+      "name": "Sunlight Sensitivity",
+      "action": "passive",
+      "summary": "Disadvantage on ability checks and attack rolls while in sunlight.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "sunlight_sensitivity"
+        }
+      ],
+      "sunlight": "sensitivity",
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "life_drain",
+      "name": "Life Drain",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 21,
+          "dice": "4d8+3",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "Necrotic touch that also lowers the target's Hit Point maximum by the damage taken.",
+      "on_hit": [
+        {
+          "do": "drain_max_hp",
+          "type": "necrotic"
+        }
+      ]
+    },
+    {
+      "id": "create_specter",
+      "name": "Create Specter",
+      "kind": "special",
+      "summary": "Raises a Humanoid that died violently within 10 ft in the last minute as a Specter it controls (seven at most).",
+      "text": "Text only for the engine."
+    }
+  ],
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A shadow of hatred that passes through walls, drains life with a touch and raises its victims as specters."
+}

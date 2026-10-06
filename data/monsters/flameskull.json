@@ -1,0 +1,156 @@
+{
+  "id": "flameskull",
+  "name": "Flameskull",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual flameskull; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Rejuvenation and Illumination are text only; spell slots are listed per spell."
+  },
+  "size": "tiny",
+  "type": "undead",
+  "alignment": "neutral evil",
+  "ac": 13,
+  "initiative": 3,
+  "hp": {
+    "average": 40,
+    "dice": "9d4+18"
+  },
+  "speed": {
+    "walk": 0,
+    "fly": 40,
+    "hover": true
+  },
+  "abilities": {
+    "str": 1,
+    "dex": 17,
+    "con": 14,
+    "int": 16,
+    "wis": 10,
+    "cha": 11
+  },
+  "skills": {
+    "arcana": 5,
+    "perception": 2
+  },
+  "resistances": [
+    "lightning",
+    "necrotic",
+    "piercing"
+  ],
+  "immunities": [
+    "cold",
+    "fire",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "frightened",
+    "paralyzed",
+    "poisoned",
+    "prone"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common"
+  ],
+  "cr": 4,
+  "xp": 1100,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "illumination",
+      "name": "Illumination",
+      "action": "passive",
+      "summary": "Sheds light; it can switch between dim light and bright light with an action.",
+      "implemented": "text"
+    },
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "rejuvenation",
+      "name": "Rejuvenation",
+      "action": "passive",
+      "summary": "Destroyed, it re-forms after an hour with all its Hit Points, unless holy water, Dispel Magic or Remove Curse is used on its remains.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "fire_ray",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Fire Ray attacks."
+    },
+    {
+      "id": "fire_ray",
+      "name": "Fire Ray",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 5,
+        "range": [
+          30
+        ]
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Shoots a ray of fire up to 30 ft."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Int, DC 13, +5: Mage Hand at will; Magic Missile, Shield, Blur, Flaming Sphere and one Fireball.",
+      "text": "A 5th-level spellcaster using Intelligence (spell save DC 13, +5 to hit). Cantrip: Mage Hand. 1st level (3 slots): Magic Missile, Shield. 2nd level (2 slots): Blur, Flaming Sphere. 3rd level (1 slot): Fireball."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 13,
+    "attack": 5,
+    "at_will": [
+      "mage_hand"
+    ],
+    "per_day": {
+      "3": [
+        "magic_missile",
+        "shield"
+      ],
+      "2": [
+        "blur",
+        "flaming_sphere"
+      ],
+      "1": [
+        "fireball"
+      ]
+    }
+  },
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "A flying, burning skull: twin fire rays, Magic Missile and a Fireball, and it re-forms unless its remains are blessed."
+}

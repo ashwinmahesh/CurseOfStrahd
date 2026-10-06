@@ -1,0 +1,48 @@
+{
+  "id": "wall_of_stone",
+  "name": "Wall of Stone",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "evocation",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "wall",
+    "size": 100,
+    "width": 1,
+    "height": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a cube of granite"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "ten connected 10-foot panels on a solid surface"
+  },
+  "tags": [
+    "defense",
+    "control"
+  ],
+  "summary": "Raise a wall of solid stone; it becomes permanent if you hold Concentration the whole time.",
+  "text": "It is made of ten 10-by-10-foot panels 6 inches thick (or ten 10-by-20 panels 3 inches thick); each panel has AC 15 and 30 Hit Points per inch of thickness. A creature in its path is pushed aside, with a Dex save to choose the side."
+}

@@ -1,0 +1,43 @@
+{
+  "id": "raise_dead",
+  "name": "Raise Dead",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "necromancy",
+  "classes": [
+    "bard",
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "hour",
+    "amount": 1
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a diamond worth 500+ GP, which the spell consumes",
+    "m_cost_gp": 500,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a dead creature you touch"
+  },
+  "tags": [
+    "restoration",
+    "healing"
+  ],
+  "summary": "Bring back a creature dead for no more than 10 days, if its soul is willing.",
+  "text": "It returns with 1 Hit Point; poisons and nonmagical diseases are cured, but missing body parts aren't restored and Undead can't be raised. It takes a -4 penalty to D20 Tests that shrinks by 1 with each Long Rest."
+}

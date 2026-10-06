@@ -370,6 +370,24 @@
         "source": "art/generated/textures/dungeon_damp_brick.png",
         "saturate": 1.2
       }
+    },
+    "wild": {
+      "water": {
+        "file": "art/textures/wild/water.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 3.0,
+        "palette": [
+          "void",
+          "ink",
+          "night_deep",
+          "night",
+          "moon_blue",
+          "mist_blue",
+          "bruise_deep"
+        ],
+        "source": "art/generated/textures/wild_water.png"
+      }
     }
   }
 }

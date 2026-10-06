@@ -77,7 +77,8 @@
     }
   ],
   "regions": [
-    "svalich_road"
+    "svalich_road",
+    "werewolf_den"
   ],
   "ai_profile": "pack_hunter",
   "summary": "Circles with its pack to gain Advantage, bites to knock prey Prone, then the pack piles on."

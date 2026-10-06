@@ -1,0 +1,123 @@
+{
+  "id": "amber_golem",
+  "name": "Amber Golem",
+  "source": {
+    "book": "custom",
+    "note": "An amber guardian for the Amber Temple on the 2014 Monster Manual stone golem's numbers. Entered from knowledge, not yet checked against the book. Its immunity to nonmagical, non-adamantine weapons is left out, as the 2024 golems drop it. Slow and Immutable Form are text only (the engine's save actions can't apply a hindrance without a condition, or repeat the save, yet)."
+  },
+  "size": "large",
+  "type": "construct",
+  "alignment": "unaligned",
+  "ac": 17,
+  "initiative": -1,
+  "hp": {
+    "average": 178,
+    "dice": "17d10+85"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 22,
+    "dex": 9,
+    "con": 20,
+    "int": 3,
+    "wis": 11,
+    "cha": 1
+  },
+  "immunities": [
+    "poison",
+    "psychic"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 10,
+  "languages": [
+    "understands its creator's languages but can't speak"
+  ],
+  "cr": 10,
+  "xp": 5900,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "immutable_form",
+      "name": "Immutable Form",
+      "action": "passive",
+      "summary": "Effects that would change its shape don't work on it.",
+      "implemented": "text"
+    },
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "magic_weapons",
+      "name": "Magic Weapons",
+      "action": "passive",
+      "summary": "Its weapon attacks count as magical.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "slam",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Slam attacks."
+    },
+    {
+      "id": "slam",
+      "name": "Slam",
+      "kind": "melee",
+      "attack": {
+        "bonus": 10,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 19,
+          "dice": "3d8+6",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "A crushing amber fist."
+    },
+    {
+      "id": "slow",
+      "name": "Slow",
+      "kind": "special",
+      "summary": "Recharge 5-6. Creatures within 10 ft that see it: DC 17 Wis save or slowed for 1 minute (half Speed, no Reactions, one attack, an action or a Bonus Action).",
+      "text": "An affected creature repeats the save at the end of each of its turns. Text only for the engine.",
+      "recharge": "5-6"
+    }
+  ],
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "brute",
+  "summary": "A towering construct of polished amber: two crushing fists and a pulse of magic that slows everyone near."
+}

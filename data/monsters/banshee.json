@@ -1,0 +1,134 @@
+{
+  "id": "banshee",
+  "name": "Banshee",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual banshee; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical weapons is entered as plain Bludgeoning, Piercing and Slashing resistance, as the 2024 books do for such creatures. Horrifying Visage and Wail are text only (the engine has no area save actions or drop-to-0 effect yet)."
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "chaotic evil",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 58,
+    "dice": "13d8"
+  },
+  "speed": {
+    "walk": 0,
+    "fly": 40,
+    "hover": true
+  },
+  "abilities": {
+    "str": 1,
+    "dex": 14,
+    "con": 10,
+    "int": 12,
+    "wis": 11,
+    "cha": 17
+  },
+  "saves": {
+    "wis": 2,
+    "cha": 5
+  },
+  "resistances": [
+    "acid",
+    "bludgeoning",
+    "cold",
+    "fire",
+    "lightning",
+    "piercing",
+    "slashing",
+    "thunder"
+  ],
+  "immunities": [
+    "necrotic",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "Common",
+    "Elvish"
+  ],
+  "cr": 4,
+  "xp": 1100,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "detect_life",
+      "name": "Detect Life",
+      "action": "passive",
+      "summary": "Senses living creatures within 5 miles that aren't Constructs or Undead, but not exactly where.",
+      "implemented": "text"
+    },
+    {
+      "id": "incorporeal_movement",
+      "name": "Incorporeal Movement",
+      "action": "passive",
+      "summary": "Moves through creatures and objects as Difficult Terrain; 5 (1d10) Force if it ends a turn inside one.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "incorporeal_movement"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "corrupting_touch",
+      "name": "Corrupting Touch",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "3d6+2",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A withering touch."
+    },
+    {
+      "id": "horrifying_visage",
+      "name": "Horrifying Visage",
+      "kind": "special",
+      "summary": "Non-Undead within 60 ft that see it: DC 13 Wis save or Frightened for 1 minute; failing by 5 or more also ages the target.",
+      "text": "The target repeats the save at the end of each of its turns; a success gives a day's immunity. Text only for the engine."
+    },
+    {
+      "id": "wail",
+      "name": "Wail",
+      "kind": "special",
+      "summary": "Once a day, in darkness: creatures within 30 ft make a DC 13 Con save or drop to 0 Hit Points; success means 10 (3d6) Psychic.",
+      "text": "Constructs and Undead are unaffected. Text only for the engine.",
+      "uses": {
+        "count": 1,
+        "per": "day"
+      }
+    }
+  ],
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A wailing spirit: a withering touch, a face that terrifies, and a cry that can kill outright."
+}

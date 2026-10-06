@@ -1,0 +1,75 @@
+{
+  "id": "wall_of_thorns",
+  "name": "Wall of Thorns",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "conjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "wall",
+    "size": 60,
+    "width": 5,
+    "height": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a handful of thorns"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a straight wall up to 60 feet long or a ring up to 20 feet across"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "7d8",
+      "type": "piercing"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8",
+    "text": "Both the Piercing and the Slashing damage rise by 1d8 per slot level above 6."
+  },
+  "zone": {
+    "triggers": [
+      "enter",
+      "end_turn"
+    ],
+    "resolve_on_cast": true,
+    "damage": [
+      {
+        "dice": "7d8",
+        "type": "slashing"
+      }
+    ],
+    "terrain": "difficult",
+    "terrain_cost": 4,
+    "obscured": "heavy"
+  },
+  "tags": [
+    "damage",
+    "control",
+    "defense"
+  ],
+  "summary": "A wall of thick brush: Dex save, 7d8 Piercing when it appears and 7d8 Slashing to those who push into it; half on a success.",
+  "text": "The wall is up to 60 ft long, 10 ft high and 5 ft thick (or a ring up to 20 ft across), and blocks sight. Each foot moved through it costs 4 feet, and a creature saves when it first enters it on a turn or ends a turn there."
+}

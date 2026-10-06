@@ -1,0 +1,52 @@
+{
+  "id": "otilukes_freezing_sphere",
+  "name": "Otiluke's Freezing Sphere",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 300
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a miniature crystal sphere"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "10d6",
+      "type": "cold"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "A frigid globe bursts in a 60-foot radius: Con save, 10d6 Cold, half on a success.",
+  "text": "Water it hits freezes solid for a minute. Instead of throwing it, you can keep the globe to hurl later or hand it to someone; it bursts if dropped or thrown up to 40 ft."
+}
