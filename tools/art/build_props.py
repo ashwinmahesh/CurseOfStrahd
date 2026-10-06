@@ -53,12 +53,13 @@ def generate(rec, name, sheet, stop):
         if r.returncode == 0:
             print(f"generated: sheet_{name}", flush=True)
             return ""
-        err = (r.stderr or r.stdout).strip().splitlines()[-1] if (r.stderr or r.stdout).strip() else "failed"
-        if "(402)" in err:
+        err = (r.stderr or r.stdout).strip() or "failed"
+        if "(402)" in err or "exceeded your current quota" in err:
+            # Out of credits, or the project's daily image cap: stop cleanly, nothing will work until it resets.
             stop.append(True)
             return err
         if any(code in err for code in ("(429)", "(500)", "(502)", "(503)", "(504)", "No image returned", "timed out")):
-            print(f"retrying sheet_{name} in {delay:.0f}s: {err[:160]}", flush=True)
+            print(f"retrying sheet_{name} in {delay:.0f}s: {err.splitlines()[-1][:160]}", flush=True)
             time.sleep(delay)
             delay *= 2
             continue

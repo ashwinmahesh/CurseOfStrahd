@@ -107,6 +107,106 @@
         "tile_world_units": 1.2,
         "axis": "x",
         "note": "Wraps in x only: map V from 0 at the top of the wall to 1 at the floor, one tile per wall height."
+      },
+      "tile_floor": {
+        "subject": "a floor of square black and cream marble tiles laid in a checkerboard, worn and cracked, with dark grout lines, about six tiles across",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "tile_wall": {
+        "subject": "a bathroom wall of small glazed pale green-grey ceramic tiles with dark grout, some cracked and stained",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "kitchen_flags": {
+        "subject": "a kitchen floor of large worn grey-brown stone flagstones, uneven, stained, with dark joints",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "kitchen_wall": {
+        "subject": "a kitchen wall of rough sooty whitewashed plaster with patches of exposed red-brown brick",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "parquet": {
+        "subject": "a dark polished oak parquet floor laid in a herringbone pattern, scuffed",
+        "view": "floor",
+        "tile_world_units": 1.5,
+        "axis": "both"
+      },
+      "wood_panel": {
+        "subject": "a wall of dark oak panelling: tall rectangular carved panels with moulded frames",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "carpet": {
+        "subject": "a deep crimson carpet with a faded gold and black gothic pattern of medallions and borders",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.25
+      },
+      "wallpaper_nursery": {
+        "subject": "faded pale blue wallpaper printed with small birds and vines, peeling and stained",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.2
+      },
+      "wallpaper_green": {
+        "subject": "dark green damask wallpaper with a gold fleur pattern, faded and stained",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.2
+      },
+      "marble_floor": {
+        "subject": "a grand hall floor of grey and white marble slabs in a diamond pattern, polished but cracked",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "whitewash": {
+        "subject": "a whitewashed stone wall, cold and bare, with stains and chipped patches showing grey stone",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "workshop_boards": {
+        "subject": "rough wide wooden floorboards scattered with sawdust, wood shavings and nails",
+        "view": "floor",
+        "tile_world_units": 1.5,
+        "axis": "both"
+      },
+      "carved_panel": {
+        "subject": "dark oak wall paneling carved with vines, leaves and woodland scenes, in tall panels",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "damp_plaster": {
+        "subject": "damp-stained grey plaster wall with mould blooms and water streaks",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "attic_boards": {
+        "subject": "a wall of bare rough vertical wooden boards between dark rafter posts, cobwebs in the corners",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "terracotta": {
+        "subject": "a floor of worn square terracotta tiles in red-brown with dark grout",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.1
       }
     },
     "church": {
@@ -199,6 +299,18 @@
           "bog",
           "moss"
         ]
+      },
+      "packed_earth": {
+        "subject": "packed dark earth floor of a cellar: trampled dirt, small stones and old straw",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "earth_braced": {
+        "subject": "a rough cellar wall of stone and red clay held up by dark timber posts and cross beams",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
       }
     },
     "wild": {
@@ -216,6 +328,64 @@
           "mist_blue",
           "bruise_deep"
         ]
+      }
+    },
+    "cave": {
+      "rock_floor": {
+        "subject": "the uneven rocky floor of a cave: dark grey-brown rock, gravel, small stones and damp patches",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "rock_wall": {
+        "subject": "a rough natural cave wall of dark craggy grey-brown rock with cracks and ledges",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      }
+    },
+    "amber": {
+      "black_stone": {
+        "subject": "a temple floor of black polished stone slabs veined with faintly glowing gold-orange amber, with frost in the joints",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.2
+      },
+      "amber_wall": {
+        "subject": "a temple wall of huge black stone blocks veined with faintly glowing gold-orange amber, rimed with frost",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.2
+      }
+    },
+    "mountain": {
+      "snow": {
+        "subject": "deep snow on the ground with wind-blown ripples, a few rocks and frozen grass poking through, cold blue-white",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "cliff": {
+        "subject": "a sheer cliff face of grey granite with cracks, ledges and a little snow on the ledges",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "scree": {
+        "subject": "loose grey mountain scree and gravel with tufts of dead grass",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      }
+    },
+    "marsh": {
+      "marsh_mud": {
+        "subject": "dark wet marsh mud with shallow puddles, rotting reeds and floating weed, murky green-brown",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
       }
     }
   }
