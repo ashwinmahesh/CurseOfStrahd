@@ -21,7 +21,7 @@ var _roll: Label
 var _roll_time := 0.0
 
 const BUTTONS := [["Character", "C", "sheet"], ["Inventory", "I", "inventory"], ["Journal", "J", "journal"],
-	["Party", "P", "party"], ["Rest", "R", "rest"], ["Search", "F", "search"], ["Sneak", "V", "sneak"],
+	["Party", "P", "party"], ["Map", "M", "map"], ["Rest", "R", "rest"], ["Search", "F", "search"], ["Sneak", "V", "sneak"],
 	["Split", "G", "split"], ["Menu", "Esc", "menu"]]
 
 

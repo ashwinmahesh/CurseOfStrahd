@@ -260,6 +260,8 @@ func _command(name_: String) -> void:
 			hud.toast("Only %s moves" % st.party[0].name if view.solo else "The party moves together")
 		"search":
 			view.search()
+		"map":
+			open_travel(false)
 		_:
 			open_screen(name_, 0)
 	_refresh()
