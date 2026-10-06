@@ -36,8 +36,8 @@
   "tags": [
     "healing"
   ],
-  "summary": "30-foot Emanation: on casting and at the start of each of your turns, one creature in it regains 2d6 HP.",
-  "text": "Healing energy surrounds you in a 30-foot Emanation until the spell ends. When you cast the spell, and again at the start of each of your turns while it lasts, you can pick one creature in the aura (yourself included) to regain 2d6 Hit Points. The healing needs no action.",
+  "summary": "30-foot Emanation: as a Bonus Action, one creature in it regains 2d6 HP.",
+  "text": "Healing energy surrounds you in a 30-foot Emanation until the spell ends. Until then, you can take a Bonus Action to have one creature in the aura (yourself included) regain 2d6 Hit Points.",
   "zone": {
     "triggers": [],
     "affects": "allies"
