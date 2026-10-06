@@ -59,7 +59,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - Spoken lines: ElevenLabs (eleven_v4, owner decision 2026-10-06) via `make voice` only; model, format and each
   speaker's voice pinned in audio/voice/casting.json. Key: ELEVENLABS_API_KEY, sent as a header. A clip is
   audio/voice/<speaker>/<sha1(text)[:16]>.mp3, so editing a line leaves it silent until `make voice` runs again;
-  `VoiceOver.say` plays it. Lines with {name}, party lines, options and books are never voiced.
+  `VoiceOver.say` plays it (party lines in the speaker's voice: `VoiceOver.beat_voice`). Lines with {name},
+  options and books are never voiced.
 
 ## Done means
 `make ci` green with a clean log, plus a capture for anything visual. Never weaken tests to pass.

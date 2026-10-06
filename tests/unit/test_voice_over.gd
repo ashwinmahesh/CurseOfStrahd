@@ -27,8 +27,8 @@ func test_every_clip_belongs_to_a_known_speaker_and_loads() -> void:
 	if dir == null:
 		return
 	for speaker in dir.get_directories():
-		assert_true(speaker == VoiceOver.NARRATOR or not Compendium.shared().get_entry("npcs", speaker).is_empty(),
-			"%s is the Narrator or an npc" % speaker)
+		assert_true(speaker == VoiceOver.NARRATOR or speaker in VoiceOver.HEROES or speaker in VoiceOver.HERO_VOICES
+			or not Compendium.shared().get_entry("npcs", speaker).is_empty(), "%s is the Narrator, a hero or an npc" % speaker)
 		var clips := Array(DirAccess.open(VoiceOver.DIR + speaker).get_files()).filter(func(f: String) -> bool:
 			return f.ends_with(".mp3"))
 		# A few per speaker: loading thousands of clips would slow the suite for no extra safety.
@@ -53,3 +53,28 @@ func test_every_recorded_line_finds_its_clip() -> void:
 			said = true
 			assert_true(VoiceOver.say(speaker, text) > 0.5, "say() returns the clip's length")
 			VoiceOver.stop()
+
+
+func test_party_members_speak_in_their_own_voices() -> void:
+	for id: String in VoiceOver.HEROES:
+		assert_eq(VoiceOver.voice_for(TestChars.pregen(id)), id)
+	# A custom character speaks in the hero voice the player picked; with none picked, not at all.
+	var custom := TestChars.pregen("ilse_varga")
+	custom.id = "custom_1"
+	custom.name = "Mara Vey"
+	custom.build["appearance"] = {"custom": true, "voice": "hero_male"}
+	assert_eq(VoiceOver.voice_for(custom), "hero_male")
+	custom.build["appearance"] = {"custom": true}
+	assert_eq(VoiceOver.voice_for(custom), "")
+	assert_eq(VoiceOver.voice_for(null), "")
+
+
+func test_a_party_line_beat_finds_its_speakers_voice() -> void:
+	var saved: Array[Character] = GameState.story.party.duplicate()
+	var hedda := TestChars.pregen("hedda_ironvow")
+	var party: Array[Character] = [hedda]
+	GameState.story.party = party
+	assert_eq(VoiceOver.beat_voice({"speaker_id": hedda.id, "party": true, "text": "Dawn comes."}), "hedda_ironvow")
+	assert_eq(VoiceOver.beat_voice({"speaker_id": "ismark", "party": false, "text": "Welcome to Barovia."}), "ismark")
+	assert_eq(VoiceOver.beat_voice({"speaker_id": "nobody", "party": true, "text": "Hm."}), "")
+	GameState.story.party = saved

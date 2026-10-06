@@ -52,7 +52,8 @@ static func _lines(ref: String, st: StoryState) -> Array[Dictionary]:
 		var b := r.next()
 		match str(b["kind"]):
 			"line":
-				out.append({"name": str(b["name"]), "text": str(b["text"]), "narrator": bool(b["narrator"]), "portrait": str(b["portrait"])})
+				out.append({"name": str(b["name"]), "text": str(b["text"]), "narrator": bool(b["narrator"]), "portrait": str(b["portrait"]),
+					"speaker_id": str(b["speaker_id"]), "party": bool(b["party"])})
 			"end":
 				break
 			"options", "check":
