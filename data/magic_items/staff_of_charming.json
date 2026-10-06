@@ -1,0 +1,78 @@
+{
+  "id": "staff_of_charming",
+  "name": "Staff of Charming",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Bard, Cleric, Druid, Sorcerer, Warlock, or Wizard",
+    "charges": {
+      "max": 10,
+      "regain": "1d8+2",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "nonmagical",
+        "text": "loses its magic"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Charming"
+  },
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "staff_of_charming"
+    }
+  ],
+  "powers": [
+    {
+      "id": "charm_person",
+      "name": "Charm Person",
+      "spell": "charm_person",
+      "charges": 1,
+      "dc": "wielder"
+    },
+    {
+      "id": "command",
+      "name": "Command",
+      "spell": "command",
+      "charges": 1,
+      "dc": "wielder"
+    },
+    {
+      "id": "comprehend_languages",
+      "name": "Comprehend Languages",
+      "spell": "comprehend_languages",
+      "charges": 1,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "resist",
+      "name": "Shrug off an enchantment",
+      "cost": "free",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "hidden": true,
+      "text": "When you fail a save against an enchantment spell that targets only you, succeed instead (once per dawn; used automatically)."
+    }
+  ],
+  "summary": "10 charges: Charm Person, Command, Comprehend Languages; it shrugs off enchantments aimed at you.",
+  "text": "While holding this staff, you can expend 1 of its 10 charges to cast Charm Person, Command or Comprehend Languages from it using your spell save DC. The staff can also be used as a magic Quarterstaff. If you are holding the staff and fail a saving throw against an enchantment spell that targets only you, you can turn your failed save into a successful one. You can't use this property again until the next dawn. If you succeed on a save against an enchantment spell that targets only you, with or without the staff's intervention, you can take a Reaction to expend 1 charge from the staff and turn the spell back on its caster as if you had cast the spell. The staff regains 1d8 + 2 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff becomes a nonmagical Quarterstaff."
+}

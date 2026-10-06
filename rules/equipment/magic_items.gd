@@ -213,8 +213,15 @@ static func _patch(block: Dictionary, patch: Dictionary) -> void:
 ## "" if `ch` meets the item's "by a ..." requirement, else the requirement. Classes, "spellcaster" and species are
 ## checked; alignment isn't tracked in the game, so alignment requirements always pass (deviations.md).
 static func requirement_blocker(item: Dictionary, ch: Character) -> String:
+	# Items that need others worn first (Hammer of Thunderbolts: a Belt of Giant Strength and Gauntlets of Ogre Power).
+	var needs := item.get("attune_requires", []) as Array
+	if not needs.is_empty() and not ch._wearing_all(needs):
+		return "Wear %s first" % " and ".join(needs.map(func(x: Variant) -> String: return str(x).replace("_", " ").capitalize()))
 	var req := attunement_text(item).to_lower()
 	if req == "":
+		return ""
+	# Dwarven Thrower: "by a Dwarf or a creature attuned to a Belt of Dwarvenkind".
+	if req.contains("belt of dwarvenkind") and "belt_of_dwarvenkind" in ch.attuned:
 		return ""
 	var named_class := false
 	for cls in CLASSES:

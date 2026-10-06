@@ -839,6 +839,9 @@ func _finish_concentration(ctx: Dictionary) -> void:
 func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
 	var s := ctx["s"] as Dictionary
 	var c := ctx["c"] as Combatant
+	# Rod of Absorption, Staff of the Magi: a spell aimed at one creature alone can be soaked up.
+	if enc().items.absorbs_spell(ctx, tgt, cells, r):
+		return
 	if specials.resolve(ctx, tgt, cells, r):
 		return
 	match str(s["id"]):
@@ -1346,6 +1349,9 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			details.append(test.describe() + bonus_text)
 		else:
 			details.append("%s doesn't resist" % t.name())
+		# Ring of Spell Turning: a saved-against spell of level 7 or lower has no effect (and may go back at its caster).
+		if success and e.items.turns_spell(c, t, ctx, victims, r):
+			continue
 		if has_damage and not multi.is_empty():
 			var parts: Array = []
 			for pr in multi:
@@ -1835,6 +1841,8 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 		if caster_type in (m.data.get("types", []) as Array):
 			for blocked: Variant in m.data.get("conditions", []):
 				fxo.conditions.erase(StringName(str(blocked)))
+	# Ring of Free Action: magic can't paralyze or restrain the wearer, or reduce its speed.
+	enc().items.filter_magic_effect(t, fxo)
 	if fxo.modifiers.is_empty() and fxo.conditions.is_empty():
 		return
 	for m in fxo.modifiers:

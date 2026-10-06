@@ -1,0 +1,28 @@
+{
+  "id": "weapon_of_warning",
+  "name": "Weapon of Warning",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "name": "{base} of Warning",
+    "default": "longsword"
+  },
+  "weapon_rules": {
+    "special": [
+      "warning"
+    ]
+  },
+  "summary": "You can't be surprised, and you and your allies within 30 ft have Advantage on Initiative.",
+  "text": "This magic weapon warns you of danger. While the weapon is on your person, you have Advantage on Initiative rolls. In addition, you and any of your companions within 30 feet of you can't be surprised, except when incapacitated by something other than nonmagical sleep. The weapon magically awakens you and your companions within range if any of you are sleeping naturally when combat begins."
+}

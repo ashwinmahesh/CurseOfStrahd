@@ -671,6 +671,14 @@
           "ends_effect": {
             "type": "boolean",
             "description": "A granted power whose last use ends the effect that granted it."
+          },
+          "custom_light": {
+            "type": "object",
+            "description": "A toggle that sheds light while on: {bright, dim} in feet."
+          },
+          "needs_charges": {
+            "type": "integer",
+            "description": "Charges the item must have for the power to be armed (they're spent when it fires)."
           }
         },
         "additionalProperties": false
@@ -733,6 +741,13 @@
     "appears_as": {
       "$ref": "common.schema.json#/$defs/id",
       "description": "What the item passes for until it's used or identified (Potion of Poison looks like a Potion of Healing)."
+    },
+    "attune_requires": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/id"
+      },
+      "description": "Items (ids, templates or variant groups) that must be worn and working before you can attune to this one."
     }
   }
 }

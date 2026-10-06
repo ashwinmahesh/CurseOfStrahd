@@ -1,0 +1,30 @@
+{
+  "id": "armor_plus_3",
+  "name": "Armor, +3",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "name": "+3 {base}",
+    "default": "chain_mail"
+  },
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 3
+    }
+  ],
+  "variant_of": "armor_plus",
+  "summary": "+3 to Armor Class while you wear it.",
+  "text": "You have a +3 bonus to Armor Class while wearing this armor."
+}

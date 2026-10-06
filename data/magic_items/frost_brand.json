@@ -1,0 +1,58 @@
+{
+  "id": "frost_brand",
+  "name": "Frost Brand",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "icon": "frost_brand",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "name": "Frost Brand {base}",
+    "default": "longsword"
+  },
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "fire"
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "dice": "1d6",
+        "type": "cold"
+      }
+    ]
+  },
+  "powers": [
+    {
+      "id": "quench",
+      "name": "Quench Flames",
+      "cost": "magic",
+      "uses": {
+        "count": 1,
+        "per": "short"
+      },
+      "custom": "quench_flames",
+      "text": "Magic action: put out every nonmagical flame within 30 ft (once an hour)."
+    }
+  ],
+  "summary": "An extra 1d6 Cold on every hit, Resistance to Fire while you hold it, and it can snuff out flames.",
+  "text": "When you hit with an attack using this magic weapon, the target takes an extra 1d6 Cold damage. In addition, while you hold the weapon, you have Resistance to Fire damage. In freezing temperatures, the weapon sheds Bright Light in a 10-foot radius and Dim Light for an additional 10 feet. When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of yourself. Once used, this property can't be used again for 1 hour."
+}

@@ -1,0 +1,38 @@
+{
+  "id": "plate_armor_of_etherealness",
+  "name": "Plate Armor of Etherealness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "items": [
+      "plate_armor"
+    ],
+    "name": "Plate Armor of Etherealness"
+  },
+  "powers": [
+    {
+      "id": "etherealness",
+      "name": "Etherealness",
+      "spell": "etherealness",
+      "cost": "magic",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Magic action: cast Etherealness (once per dawn); it lasts 10 minutes."
+    }
+  ],
+  "summary": "Once a day, a Magic action casts Etherealness from it (10 minutes).",
+  "text": "While you're wearing this armor, you can take a Magic action to cast Etherealness from it. The spell lasts for 10 minutes, until you remove the armor, or until you take a Magic action to end it. This property can't be used again until the next dawn."
+}

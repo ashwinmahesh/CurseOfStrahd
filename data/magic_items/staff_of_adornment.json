@@ -1,0 +1,40 @@
+{
+  "id": "staff_of_adornment",
+  "name": "Staff of Adornment",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Adornment"
+  },
+  "powers": [
+    {
+      "id": "use",
+      "name": "Adornment",
+      "cost": "magic",
+      "charges": 0,
+      "custom": "flavour",
+      "params": {
+        "text": "makes a tiny object float above its tip"
+      },
+      "field": true,
+      "text": "It makes a tiny object float above its tip. (No other effect in the game.)"
+    }
+  ],
+  "summary": "It makes a tiny object float above its tip.",
+  "text": "This staff makes a tiny object float above its tip when you take a Magic action. It can be wielded as a Quarterstaff. (No other effect in the game.)"
+}

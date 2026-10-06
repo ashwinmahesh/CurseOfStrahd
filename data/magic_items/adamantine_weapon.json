@@ -1,0 +1,26 @@
+{
+  "id": "adamantine_weapon",
+  "name": "Adamantine Weapon",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon_or_ammunition",
+    "name": "Adamantine {base}",
+    "default": "warhammer"
+  },
+  "weapon_rules": {
+    "crits_objects": true
+  },
+  "summary": "Hits against objects are Critical Hits.",
+  "text": "This weapon or piece of ammunition is made of adamantine, one of the hardest substances in existence. Whenever it hits an object, the hit is a Critical Hit."
+}

@@ -1,0 +1,65 @@
+{
+  "id": "rod_of_alertness",
+  "name": "Rod of Alertness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "rod",
+  "weight_lb": 2,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "rod",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "initiative"
+    }
+  ],
+  "powers": [
+    {
+      "id": "detect_evil_and_good",
+      "name": "Detect Evil and Good",
+      "spell": "detect_evil_and_good",
+      "charges": 0,
+      "field": true
+    },
+    {
+      "id": "detect_magic",
+      "name": "Detect Magic",
+      "spell": "detect_magic",
+      "charges": 0,
+      "field": true
+    },
+    {
+      "id": "detect_poison_and_disease",
+      "name": "Detect Poison and Disease",
+      "spell": "detect_poison_and_disease",
+      "charges": 0,
+      "field": true
+    },
+    {
+      "id": "see_invisibility",
+      "name": "See Invisibility",
+      "spell": "see_invisibility",
+      "charges": 0
+    },
+    {
+      "id": "aura",
+      "name": "Protective Aura",
+      "cost": "magic",
+      "custom": "rod_of_alertness_aura",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Magic action (once per dawn): plant the rod; for 10 minutes it lights 60 ft, and you and your allies there have +1 AC and saves and sense invisible foes."
+    }
+  ],
+  "summary": "Advantage on Initiative; detection spells at will; once a day a protective aura (+1 AC and saves) for 10 minutes.",
+  "text": "This rod has a flanged head and the following properties. Alertness. While holding the rod, you have Advantage on Wisdom (Perception) checks and on Initiative rolls. Spells. While holding the rod, you can cast the following spells from it: Detect Evil and Good, Detect Magic, Detect Poison and Disease, and See Invisibility. Protective Aura. As a Magic action, you can plant the haft end of the rod in the ground, whereupon the rod's head sheds Bright Light in a 60-foot radius and Dim Light for an additional 60 feet. While in that Bright Light, you and any creature that is friendly to you gain a +1 bonus to Armor Class and saving throws and can sense the location of any creature with the Invisible condition that is also in the Bright Light. The rod's head stops glowing and the effect ends after 10 minutes, or when a creature takes a Magic action to pull the rod from the ground. This property can't be used again until the next dawn."
+}

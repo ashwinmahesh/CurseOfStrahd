@@ -1,0 +1,38 @@
+{
+  "id": "ring_of_spell_storing",
+  "name": "Ring of Spell Storing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "powers": [
+    {
+      "id": "cast",
+      "name": "Cast a stored spell",
+      "cost": "magic",
+      "custom": "ring_spell_storing",
+      "text": "Cast a spell stored in the ring, at the level and with the DC and attack bonus of the one who stored it."
+    },
+    {
+      "id": "store",
+      "name": "Store a spell",
+      "cost": "action",
+      "custom": "ring_store",
+      "combat": false,
+      "field": true,
+      "text": "Outside a fight, a spellcaster wearing the ring casts a spell of level 1 to 5 into it (up to 5 levels in all)."
+    }
+  ],
+  "summary": "Holds up to 5 levels of spells cast into it; whoever wears it can cast them.",
+  "text": "This ring stores spells cast into it, holding them until the attuned wearer uses them. The ring can store up to 5 levels' worth of spells at a time. When found, it contains 1d6 - 1 levels of stored spells chosen by the DM. Any creature can cast a spell of level 1 through 5 into the ring by touching the ring as the spell is cast. The spell has no effect, other than to be stored in the ring. While wearing this ring, you can cast any spell stored in it. The spell uses the slot level, spell save DC, spell attack bonus and spellcasting ability of the original caster, but is otherwise treated as if you cast the spell. The spell cast from the ring is no longer stored in it, freeing up space."
+}

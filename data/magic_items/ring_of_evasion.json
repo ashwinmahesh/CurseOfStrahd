@@ -1,0 +1,35 @@
+{
+  "id": "ring_of_evasion",
+  "name": "Ring of Evasion",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "powers": [
+    {
+      "id": "evade",
+      "name": "Evade",
+      "cost": "reaction",
+      "charges": 1,
+      "hidden": true,
+      "text": "When you fail a Dexterity saving throw, spend 1 charge and your Reaction to succeed instead (used automatically)."
+    }
+  ],
+  "summary": "3 charges: when you fail a Dexterity save, a Reaction turns it into a success.",
+  "text": "This ring has 3 charges, and it regains 1d3 expended charges daily at dawn. When you fail a Dexterity saving throw while wearing the ring, you can take a Reaction to expend 1 of its charges to succeed on that saving throw instead."
+}

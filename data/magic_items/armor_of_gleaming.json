@@ -1,0 +1,27 @@
+{
+  "id": "armor_of_gleaming",
+  "name": "Armor of Gleaming",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "kinds": [
+      "medium",
+      "heavy"
+    ],
+    "name": "Gleaming {base}",
+    "default": "chain_mail"
+  },
+  "summary": "It never gets dirty.",
+  "text": "This armor never gets dirty. (No other effect in the game.)"
+}

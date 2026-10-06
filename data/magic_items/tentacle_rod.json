@@ -1,0 +1,30 @@
+{
+  "id": "tentacle_rod",
+  "name": "Tentacle Rod",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "rod",
+  "weight_lb": 2,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "rod",
+  "powers": [
+    {
+      "id": "lash",
+      "name": "Lash",
+      "cost": "magic",
+      "custom": "tentacle_rod",
+      "targeting": "enemy",
+      "range": 15,
+      "text": "Magic action: three tentacles attack a creature within 15 ft (+9 to hit, 1d6 Bludgeoning each). If all three hit, it saves (Con DC 15) or is badly hampered for 1 minute."
+    }
+  ],
+  "summary": "Three rubbery tentacles lash a creature within 15 ft; three hits can hamper it badly for a minute.",
+  "text": "While holding the rod, you can take a Magic action to direct each of the rod's three tentacles to attack a creature you can see within 15 feet of you. Each tentacle makes a melee attack roll with a +9 bonus. On a hit, the tentacle deals 1d6 Bludgeoning damage. If you hit a target with all three tentacles, it must make a DC 15 Constitution saving throw. On a failure, the creature's Speed is halved, it has Disadvantage on Dexterity saving throws, and it can't take Reactions for 1 minute. Moreover, on each of its turns, it can take either an action or a Bonus Action, but not both. At the end of each of its turns, it can repeat the save, ending the effect on itself on a success."
+}

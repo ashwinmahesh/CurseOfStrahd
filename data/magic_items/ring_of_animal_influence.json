@@ -1,0 +1,49 @@
+{
+  "id": "ring_of_animal_influence",
+  "name": "Ring of Animal Influence",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "powers": [
+    {
+      "id": "animal_friendship",
+      "name": "Animal Friendship",
+      "spell": "animal_friendship",
+      "charges": 1,
+      "dc": 13
+    },
+    {
+      "id": "fear",
+      "name": "Fear",
+      "spell": "fear",
+      "charges": 1,
+      "dc": 13,
+      "text": "Fear, only against Beasts with Intelligence 3 or lower."
+    },
+    {
+      "id": "speak_with_animals",
+      "name": "Speak With Animals",
+      "spell": "speak_with_animals",
+      "charges": 1,
+      "field": true
+    }
+  ],
+  "summary": "3 charges: Animal Friendship, Fear (Beasts only) or Speak with Animals (save DC 13).",
+  "text": "This ring has 3 charges, and it regains 1d3 expended charges daily at dawn. While wearing the ring, you can expend 1 of its charges to cast one of the following spells (save DC 13) from it: Animal Friendship, Fear (affecting only Beasts that have an Intelligence of 3 or lower), or Speak with Animals."
+}

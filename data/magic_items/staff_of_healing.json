@@ -1,0 +1,65 @@
+{
+  "id": "staff_of_healing",
+  "name": "Staff of Healing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Bard, Cleric, or Druid",
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "vanishes in a flash of light"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Healing"
+  },
+  "powers": [
+    {
+      "id": "cure_wounds",
+      "name": "Cure Wounds",
+      "spell": "cure_wounds",
+      "charges": 1,
+      "dc": "wielder",
+      "upcast_charges": 1,
+      "max_level": 4,
+      "field": true
+    },
+    {
+      "id": "lesser_restoration",
+      "name": "Lesser Restoration",
+      "spell": "lesser_restoration",
+      "charges": 2,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "mass_cure_wounds",
+      "name": "Mass Cure Wounds",
+      "spell": "mass_cure_wounds",
+      "charges": 5,
+      "dc": "wielder",
+      "field": true
+    }
+  ],
+  "summary": "10 charges: Cure Wounds (1 per level, up to 4), Lesser Restoration (2), Mass Cure Wounds (5).",
+  "text": "This staff has 10 charges. While holding it, you can cast one of the following spells from it, using your spellcasting ability modifier: Cure Wounds (1 charge per spell level, up to level 4), Lesser Restoration (2 charges) or Mass Cure Wounds (5 charges). The staff regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff vanishes in a flash of light, lost forever."
+}

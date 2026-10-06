@@ -236,7 +236,12 @@ func item_modifiers() -> Array[Modifier]:
 			var d := md as Dictionary
 			var when := d.get("when", {}) as Dictionary
 			var scoped := str(when.get("item", "")) == "@self" or str(when.get("ammo", "")) == "@self"
-			if not (active or (scoped and attuned_ok)):
+			# "while attuned" (Berserker Axe's Hit Points) and "while on your person" (Luck Blade's saves) need no slot.
+			var anywhere := bool(d.get("attuned_only", false)) or bool(d.get("carried", false))
+			if not (active or ((scoped or anywhere) and attuned_ok)):
+				continue
+			# Only alongside other items worn (Hammer of Thunderbolts with a Belt of Giant Strength and Gauntlets of Ogre Power).
+			if d.has("requires_worn") and not _wearing_all(d["requires_worn"] as Array):
 				continue
 			# Two of the same item don't stack (one Ring of Protection counts once).
 			var dedupe := "%s|%s" % [iid, JSON.stringify(d)]
@@ -251,6 +256,20 @@ func item_modifiers() -> Array[Modifier]:
 						w[k] = iid
 			_item_mods.append(Modifier.make(d, str(data.get("name", iid)), &"item", iid, ""))
 	return _item_mods
+
+
+## Whether an active item of each named kind (an id, a template or a `variant_of` group) is worn or held.
+func _wearing_all(kinds: Array) -> bool:
+	for k: Variant in kinds:
+		var found := false
+		for e in inventory:
+			var d := compendium.item_data(str(e["id"]))
+			if str(e["id"]) == str(k) or str(d.get("template_id", "")) == str(k) or str(d.get("variant_of", "")) == str(k):
+				if item_active(e):
+					found = true
+		if not found:
+			return false
+	return true
 
 
 ## Forget cached item modifiers (after equipping or a change to an item's state).
@@ -998,7 +1017,8 @@ func spell_save_dc(class_id: String) -> Breakdown:
 	b.add("Proficiency", proficiency_bonus())
 	var ctx := formula_context()
 	for m in modifiers_for(&"spell_dc"):
-		b.add_nonzero(m.source_name, mod_value(m, ctx))
+		if m.applies_when({"spell": true, "spell_class": class_id}):
+			b.add_nonzero(m.source_name, mod_value(m, ctx))
 	return b
 
 
@@ -1010,7 +1030,8 @@ func spell_attack_bonus(class_id: String) -> Breakdown:
 	b.add("Proficiency", proficiency_bonus())
 	var ctx := formula_context()
 	for m in modifiers_for(&"spell_attack"):
-		b.add_nonzero(m.source_name, mod_value(m, ctx))
+		if m.applies_when({"spell": true, "spell_class": class_id}):
+			b.add_nonzero(m.source_name, mod_value(m, ctx))
 	return b
 
 

@@ -1,0 +1,132 @@
+{
+  "id": "staff_of_the_woodlands",
+  "name": "Staff of the Woodlands",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Druid",
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "nonmagical",
+        "text": "loses its properties and becomes a nonmagical Quarterstaff"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of the Woodlands"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "spell_attack",
+      "value": 2
+    }
+  ],
+  "powers": [
+    {
+      "id": "animal_friendship",
+      "name": "Animal Friendship",
+      "spell": "animal_friendship",
+      "charges": 1,
+      "dc": "wielder"
+    },
+    {
+      "id": "awaken",
+      "name": "Awaken",
+      "spell": "awaken",
+      "charges": 5,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "barkskin",
+      "name": "Barkskin",
+      "spell": "barkskin",
+      "charges": 2,
+      "dc": "wielder"
+    },
+    {
+      "id": "locate_animals_or_plants",
+      "name": "Locate Animals Or Plants",
+      "spell": "locate_animals_or_plants",
+      "charges": 2,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "speak_with_animals",
+      "name": "Speak With Animals",
+      "spell": "speak_with_animals",
+      "charges": 1,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "speak_with_plants",
+      "name": "Speak With Plants",
+      "spell": "speak_with_plants",
+      "charges": 3,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "wall_of_thorns",
+      "name": "Wall Of Thorns",
+      "spell": "wall_of_thorns",
+      "charges": 6,
+      "dc": "wielder"
+    },
+    {
+      "id": "pass_without_trace",
+      "name": "Pass Without Trace",
+      "spell": "pass_without_trace",
+      "charges": 0,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "tree_form",
+      "name": "Tree Form",
+      "cost": "magic",
+      "combat": false,
+      "field": true,
+      "custom": "flavour",
+      "params": {
+        "text": "is planted and becomes a great tree until it's taken up again"
+      },
+      "text": "Magic action: plant the staff and it becomes a tree 60 ft tall until you turn it back."
+    }
+  ],
+  "summary": "+2 quarterstaff and spell attacks; 10 charges of nature spells; Pass without Trace at will.",
+  "text": "This staff can be wielded as a magic Quarterstaff that grants a +2 bonus to attack rolls and damage rolls made with it. While holding it, you have a +2 bonus to spell attack rolls. The staff has 10 charges for the following properties. It regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff loses its properties and becomes a nonmagical Quarterstaff. Spells. You can expend 1 or more charges to cast one of the following spells from it, using your spell save DC: Animal Friendship (1 charge), Awaken (5), Barkskin (2), Locate Animals or Plants (2), Speak with Animals (1), Speak with Plants (3) or Wall of Thorns (6). You can also cast Pass without Trace from it without using any charges. Tree Form. You can take a Magic action to plant one end of the staff in fertile earth and expend 1 charge to transform the staff into a healthy tree, 60 feet tall, until you take a Magic action to turn it back."
+}

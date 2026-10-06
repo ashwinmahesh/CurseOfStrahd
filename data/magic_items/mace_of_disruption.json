@@ -1,0 +1,45 @@
+{
+  "id": "mace_of_disruption",
+  "name": "Mace of Disruption",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "mace"
+    ],
+    "name": "Mace of Disruption"
+  },
+  "light": {
+    "bright": 20,
+    "dim": 20,
+    "when": "drawn"
+  },
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs": [
+          "fiend",
+          "undead"
+        ],
+        "dice": "2d6",
+        "type": "radiant"
+      }
+    ],
+    "special": [
+      "disruption"
+    ]
+  },
+  "summary": "An extra 2d6 Radiant against Fiends and Undead, and one left at 25 Hit Points or fewer makes a DC 15 Wis save or is destroyed.",
+  "text": "When you hit a Fiend or an Undead with this magic weapon, that creature takes an extra 2d6 Radiant damage. If the target has 25 Hit Points or fewer after taking this damage, it must succeed on a DC 15 Wisdom saving throw or be destroyed. On a successful save, the creature has the Frightened condition until the end of your next turn. While you hold this weapon, it sheds Bright Light in a 20-foot radius and Dim Light for an additional 20 feet."
+}

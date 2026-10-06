@@ -1,0 +1,26 @@
+{
+  "id": "ring_of_water_walking",
+  "name": "Ring of Water Walking",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "water_walking"
+    }
+  ],
+  "summary": "You can walk on liquid as if it were solid ground.",
+  "text": "While wearing this ring, you can stand on and move across any liquid surface as if it were solid ground."
+}

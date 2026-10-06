@@ -1,0 +1,56 @@
+{
+  "id": "berserker_axe",
+  "name": "Berserker Axe",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true,
+    "cursed": true,
+    "curse": "You won't part with the axe, you have Disadvantage with other weapons while foes are near, and when a hostile creature damages you, a DC 15 Wisdom save or you go berserk."
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "battleaxe",
+      "greataxe",
+      "handaxe"
+    ],
+    "name": "Berserker {base}",
+    "default": "greataxe"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "hp_max",
+      "value": "level",
+      "attuned_only": true
+    }
+  ],
+  "weapon_rules": {
+    "special": [
+      "berserker"
+    ]
+  },
+  "summary": "+1 axe; +1 Hit Point maximum per level. Cursed: when a foe hurts you, a DC 15 Wisdom save or you go berserk.",
+  "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your Hit Point maximum increases by 1 for each level you have attained. Curse. This weapon is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the axe, keeping it within reach at all times. You also have Disadvantage on attack rolls with weapons other than this one, unless no foe is within 60 feet of you that you can see or hear. Whenever a hostile creature damages you while the axe is in your possession, you must succeed on a DC 15 Wisdom saving throw or go berserk. While berserk, you must use your action each round to attack the creature nearest to you with the axe. If you can make extra attacks as part of the Attack action, you use those extra attacks, moving to attack the next nearest creature after you fell your current target. If you have multiple possible targets, you attack one at random. You are berserk until you start your turn with no creatures within 60 feet of you that you can see or hear."
+}

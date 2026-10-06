@@ -1,0 +1,84 @@
+{
+  "id": "sun_blade",
+  "name": "Sun Blade",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "icon": "sun_blade",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "longsword"
+    ],
+    "name": "Sun Blade",
+    "weapon_patch": {
+      "damage_type": "radiant",
+      "properties_add": [
+        "finesse"
+      ]
+    }
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "light": {
+    "bright": 15,
+    "dim": 15,
+    "when": "drawn",
+    "sunlight": true
+  },
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs": [
+          "undead"
+        ],
+        "dice": "1d8",
+        "type": "radiant"
+      }
+    ]
+  },
+  "powers": [
+    {
+      "id": "brighten",
+      "name": "Widen or narrow the light",
+      "cost": "bonus",
+      "custom": "sun_blade_light",
+      "choice": {
+        "label": "Bright light radius",
+        "from": [
+          "10",
+          "15",
+          "20",
+          "25",
+          "30"
+        ]
+      },
+      "text": "Bonus Action: the blade's light grows or shrinks by 5 ft at a time (bright 10 to 30 ft, the same again dim)."
+    }
+  ],
+  "summary": "A blade of sunlight: +2, Radiant, Finesse; an extra 1d8 Radiant against Undead; it sheds sunlight.",
+  "text": "This item appears to be a longsword hilt. While grasping the hilt, you can take a Bonus Action to cause a blade of pure radiance to spring into existence or make the blade disappear. While the blade exists, this magic longsword has the Finesse property. If you are proficient with longswords, you are proficient with the Sun Blade. You gain a +2 bonus to attack rolls and damage rolls made with this weapon, which deals Radiant damage instead of Slashing damage. When you hit an Undead with it, that target takes an extra 1d8 Radiant damage. The sword's luminous blade emits Bright Light in a 15-foot radius and Dim Light for an additional 15 feet. The light is sunlight. While the blade persists, you can take a Bonus Action to expand or reduce its radius of Bright Light and Dim Light by 5 feet each, to a maximum of 30 feet each or a minimum of 10 feet each."
+}

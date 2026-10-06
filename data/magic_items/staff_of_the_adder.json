@@ -1,0 +1,61 @@
+{
+  "id": "staff_of_the_adder",
+  "name": "Staff of the Adder",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": "by a Cleric, Druid, or Warlock"
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of the Adder"
+  },
+  "powers": [
+    {
+      "id": "adder",
+      "name": "Snake Head",
+      "cost": "bonus",
+      "toggle": true,
+      "minutes": 1,
+      "off_cost": "bonus",
+      "text": "Bonus Action: the staff's head becomes a venomous snake for 1 minute. Its bite: your melee attack, 1d6 Piercing, and a DC 15 Con save or 3d6 Poison.",
+      "modifiers": [
+        {
+          "stat": "weapon_override",
+          "items": [
+            "@self"
+          ],
+          "die": "1d6",
+          "damage_type": "piercing"
+        }
+      ]
+    }
+  ],
+  "weapon_rules": {
+    "on_hit": [
+      {
+        "while": "adder",
+        "save": "con",
+        "dc": 15,
+        "damage": {
+          "dice": "3d6",
+          "type": "poison"
+        },
+        "save_success": "none"
+      }
+    ]
+  },
+  "summary": "The head becomes a snake: its bite deals 1d6 Piercing and 3d6 Poison (Con DC 15 avoids the poison).",
+  "text": "You can take a Bonus Action to transform the head of this staff into that of an animate poisonous snake for 1 minute. By using another Bonus Action, you return the staff to its normal inanimate form. While the staff's head is an animate snake, you can make melee attacks with it, using your attack bonus: the snake head has a reach of 5 feet and deals 1d6 Piercing damage on a hit, and the target must succeed on a DC 15 Constitution saving throw or take 3d6 Poison damage. The snake head can be attacked while it is animate. It has AC 15 and 20 Hit Points. If the head drops to 0 Hit Points, the staff is destroyed. As long as it's not destroyed, the staff regains all lost Hit Points when it reverts to its inanimate form."
+}

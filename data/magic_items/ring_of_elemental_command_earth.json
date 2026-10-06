@@ -1,0 +1,76 @@
+{
+  "id": "ring_of_elemental_command_earth",
+  "name": "Ring of Elemental Command (Earth)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true,
+    "charges": {
+      "max": 5,
+      "regain": "1d4+1",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "variant_of": "ring_of_elemental_command",
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "acid"
+    },
+    {
+      "stat": "proficiency",
+      "kind": "language",
+      "value": "terran"
+    },
+    {
+      "stat": "flag",
+      "value": "elemental_command:earth"
+    },
+    {
+      "stat": "flag",
+      "value": "earth_glide"
+    }
+  ],
+  "powers": [
+    {
+      "id": "dominate",
+      "name": "Dominate an Earth Elemental",
+      "spell": "dominate_monster",
+      "charges": 2,
+      "dc": 18,
+      "text": "2 charges: cast Dominate Monster (save DC 18) on an Earth Elemental."
+    },
+    {
+      "id": "stone_shape",
+      "name": "Stone Shape",
+      "spell": "stone_shape",
+      "charges": 2,
+      "dc": 18
+    },
+    {
+      "id": "wall_of_stone",
+      "name": "Wall Of Stone",
+      "spell": "wall_of_stone",
+      "charges": 3,
+      "dc": 18
+    },
+    {
+      "id": "earthquake",
+      "name": "Earthquake",
+      "spell": "earthquake",
+      "charges": 5,
+      "dc": 18
+    }
+  ],
+  "summary": "Command over Earth elementals, Resistance to Acid damage, and its element's spells (save DC 18).",
+  "text": "This ring is linked to the Elemental Plane of Earth. While wearing it, you have Advantage on attack rolls against Earth Elementals, and they have Disadvantage on attack rolls against you. The ring has 5 charges and regains 1d4 + 1 expended charges daily at dawn. You can expend 2 of them to cast Dominate Monster (save DC 18) on an Earth Elemental. You also have Resistance to Acid damage. You can move through earth and stone and you know Terran. You can cast its spells from it, spending the charges listed: Stone Shape (2), Wall Of Stone (3), Earthquake (5)."
+}

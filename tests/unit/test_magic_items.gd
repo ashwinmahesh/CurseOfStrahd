@@ -29,11 +29,18 @@ func test_variants_build_on_a_base_item_and_keep_its_proficiency_and_mastery() -
 
 func test_magic_armor_adds_to_ac_only_while_worn() -> void:
 	var ilse := TestChars.pregen("ilse_varga", 3)
-	var before := ilse.ac_value()
+	ilse.add_item("chain_mail")
+	ilse.equip("chain_mail", "armor")
+	var plain := ilse.ac_value()
 	ilse.add_item("armor_plus_1__chain_mail")
-	assert_eq(ilse.ac_value(), before, "carried, not worn")
+	assert_eq(ilse.ac_value(), plain, "carried, not worn")
 	ilse.equip("armor_plus_1__chain_mail", "armor")
-	assert_eq(ilse.ac_value(), 16 + 1 + (2 if ilse.equipped("off_hand").has("armor") else 0), "Chain Mail 16 + 1 (+ Shield)")
+	assert_eq(ilse.ac_value(), plain + 1, "+1 Chain Mail")
+	ilse.add_item("adamantine_armor__chain_mail")
+	ilse.equip("adamantine_armor__chain_mail", "armor")
+	assert_eq(ilse.ac_value(), plain, "Adamantine adds no AC")
+	ilse.add_item("mithral_armor__plate_armor")
+	assert_eq(int((Compendium.shared().item_data("mithral_armor__plate_armor")["armor"] as Dictionary).get("strength", 0)), 0, "Mithral: no Strength requirement")
 
 
 func test_worn_items_work_only_in_their_slot_and_rings_take_two() -> void:

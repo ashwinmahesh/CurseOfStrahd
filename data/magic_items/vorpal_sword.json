@@ -1,0 +1,55 @@
+{
+  "id": "vorpal_sword",
+  "name": "Vorpal Sword",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "icon": "vorpal_sword",
+  "template": {
+    "on": "weapon",
+    "kinds": [
+      "simple_melee",
+      "martial_melee"
+    ],
+    "damage_types": [
+      "slashing"
+    ],
+    "name": "Vorpal {base}",
+    "default": "longsword"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "ignore_resistance": [
+      "slashing"
+    ],
+    "special": [
+      "vorpal"
+    ]
+  },
+  "summary": "+3, ignores Resistance to Slashing; a 20 cuts off a creature's head (or deals an extra 30 Slashing to one that can't lose it).",
+  "text": "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. In addition, the weapon ignores Resistance to Slashing damage. When you attack a creature that has at least one head with this weapon and roll a 20 on the attack roll, you cut off one of the creature's heads. The creature dies if it can't survive without the lost head. A creature is immune to this effect if it has Immunity to Slashing damage, if it doesn't have or need a head, if it has Legendary Actions, or if the DM decides that the creature is too big for its head to be cut off with this weapon. Such a creature instead takes an extra 30 Slashing damage from the hit."
+}

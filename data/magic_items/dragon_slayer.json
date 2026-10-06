@@ -1,0 +1,49 @@
+{
+  "id": "dragon_slayer",
+  "name": "Dragon Slayer",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "name": "{base} Dragon Slayer",
+    "default": "longsword"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs": [
+          "dragon"
+        ],
+        "dice": "3d6"
+      }
+    ]
+  },
+  "summary": "+1 weapon; an extra 3d6 damage of its type against Dragons.",
+  "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. The weapon deals an extra 3d6 damage of the weapon's type to any Dragon it hits."
+}

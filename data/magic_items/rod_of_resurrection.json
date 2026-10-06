@@ -1,0 +1,48 @@
+{
+  "id": "rod_of_resurrection",
+  "name": "Rod of Resurrection",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "rod",
+  "weight_lb": 2,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a Cleric, Druid, or Paladin",
+    "charges": {
+      "max": 5,
+      "regain": "1",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "disappears in a flash of light"
+      }
+    }
+  },
+  "theme": "relics",
+  "icon": "rod",
+  "powers": [
+    {
+      "id": "heal",
+      "name": "Heal",
+      "spell": "heal",
+      "charges": 1,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "resurrection",
+      "name": "Resurrection",
+      "spell": "resurrection",
+      "charges": 5,
+      "dc": "wielder",
+      "field": true
+    }
+  ],
+  "summary": "5 charges: Heal (1) or Resurrection (5).",
+  "text": "The rod has 5 charges. While you hold it, you can cast one of the following spells from it: Heal (1 charge) or Resurrection (5 charges). The rod regains 1 expended charge daily at dawn. If you expend the last charge, roll 1d20. On a 1, the rod disappears in a flash of light, lost forever."
+}

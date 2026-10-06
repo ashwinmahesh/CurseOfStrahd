@@ -1,0 +1,30 @@
+{
+  "id": "armor_of_resistance_necrotic",
+  "name": "Armor of Resistance (Necrotic)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "name": "{base} of Necrotic Resistance",
+    "default": "chain_mail"
+  },
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "necrotic"
+    }
+  ],
+  "variant_of": "armor_of_resistance",
+  "summary": "Resistance to Necrotic damage while you wear it.",
+  "text": "You have Resistance to Necrotic damage while you wear this armor."
+}

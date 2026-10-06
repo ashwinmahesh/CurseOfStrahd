@@ -1,0 +1,80 @@
+{
+  "id": "moon_sickle_plus_1",
+  "name": "Moon Sickle, +1",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": "by a Druid or Ranger"
+  },
+  "theme": "armaments",
+  "icon": "moon_sickle",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "sickle"
+    ],
+    "name": "+1 Moon Sickle"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "spell_attack",
+      "value": 1,
+      "attuned_only": true,
+      "when": {
+        "spell_class": "druid"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 1,
+      "attuned_only": true,
+      "when": {
+        "spell_class": "druid"
+      }
+    },
+    {
+      "stat": "spell_attack",
+      "value": 1,
+      "attuned_only": true,
+      "when": {
+        "spell_class": "ranger"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 1,
+      "attuned_only": true,
+      "when": {
+        "spell_class": "ranger"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "special": [
+      "moon_sickle"
+    ]
+  },
+  "variant_of": "moon_sickle",
+  "summary": "+1 sickle; +1 to your Druid and Ranger spell attacks and save DC; healing spells you cast heal 1d4 more.",
+  "text": "This silver-bladed sickle glimmers softly with moonlight. While holding this magic weapon, you gain a +1 bonus to attack rolls and damage rolls made with it, and you gain a +1 bonus to spell attack rolls and the saving throw DCs of your Druid and Ranger spells. In addition, you can use the sickle as a Spellcasting Focus for your Druid and Ranger spells. When you cast a spell that restores Hit Points, you can roll 1d4 and add the number rolled to the amount of Hit Points restored, provided you are holding the sickle."
+}

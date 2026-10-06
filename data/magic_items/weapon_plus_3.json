@@ -1,0 +1,40 @@
+{
+  "id": "weapon_plus_3",
+  "name": "Weapon, +3",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "name": "+3 {base}",
+    "default": "longsword"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "variant_of": "weapon_plus",
+  "summary": "+3 to attack and damage rolls made with this magic weapon.",
+  "text": "You have a +3 bonus to attack rolls and damage rolls made with this magic weapon."
+}

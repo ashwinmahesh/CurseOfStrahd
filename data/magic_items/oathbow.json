@@ -1,0 +1,52 @@
+{
+  "id": "oathbow",
+  "name": "Oathbow",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "longbow"
+    ],
+    "name": "Oathbow"
+  },
+  "powers": [
+    {
+      "id": "swear",
+      "name": "Sworn Enemy",
+      "cost": "free",
+      "custom": "oathbow",
+      "targeting": "enemy",
+      "range": 600,
+      "text": "Name a creature you're about to shoot as your sworn enemy until it dies or for 7 days (one at a time; a new one only after the next dawn).",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs_marked": "oathbow_sworn",
+        "dice": "3d6",
+        "type": "piercing"
+      }
+    ],
+    "special": [
+      "oathbow"
+    ]
+  },
+  "summary": "Swear an enemy: Advantage against it, no long-range Disadvantage, cover doesn't help it, an extra 3d6; Disadvantage with other weapons meanwhile.",
+  "text": "When you nock an arrow on this bow, it whispers in Elvish, \"Swift defeat to my enemies.\" When you use this weapon to make a ranged attack, you can, as a command phrase, say, \"Swift death to you who have wronged me.\" The target of your attack becomes your sworn enemy until it dies or until dawn seven days later. You can have only one such sworn enemy at a time. When your sworn enemy dies, you can choose a new one after the next dawn. When you make a ranged attack roll with this weapon against your sworn enemy, you have Advantage on the roll. In addition, your target gains no benefit from cover other than Total Cover, and you suffer no Disadvantage due to long range. If the attack hits, your sworn enemy takes an extra 3d6 Piercing damage. While your sworn enemy lives, you have Disadvantage on attack rolls with all other weapons."
+}

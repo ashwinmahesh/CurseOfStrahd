@@ -203,6 +203,8 @@ func power_why(c: Combatant, p: Dictionary, level: int = 0) -> String:
 	var uses := power.get("uses", {}) as Dictionary
 	if not uses.is_empty() and uses_spent(p) >= int(uses.get("count", 1)):
 		return "Used (comes back %s)" % _per_text(str(uses.get("per", "dawn")))
+	if int(power.get("needs_charges", 0)) > charges_of(p) and not (bool(power.get("toggle", false)) and toggled(c, iid, str(power["id"]))):
+		return "No charges left"
 	if bool(power.get("scroll", false)):
 		var sw := scroll_why(ch, spell)
 		if sw != "":
@@ -395,7 +397,7 @@ func use(c: Combatant, item_id: String, power_id: String, targets: Array = [], p
 	var lvl := maxi(level, int(power.get("level", spell.get("level", 0))))
 	var cost := power_cost(power, spell)
 	if bool(power.get("toggle", false)):
-		return toggle(c, p)
+		return toggle(c, p, opts)
 	var who: Combatant = targets[0] as Combatant if not targets.is_empty() and targets[0] is Combatant else c
 	if power.has("custom"):
 		var r0 := specials.use(c, p, targets, point, dir, lvl, opts)
@@ -607,7 +609,7 @@ func toggle_effect(c: Combatant, item_id: String, power_id: String) -> Effect:
 
 
 ## Switches a toggle power on (an Effect with the power's modifiers, lasting its `minutes` or until switched off) or off.
-func toggle(c: Combatant, p: Dictionary) -> CombatResult:
+func toggle(c: Combatant, p: Dictionary, opts: Dictionary = {}) -> CombatResult:
 	var e := enc()
 	var power := p["power"] as Dictionary
 	var data := p["data"] as Dictionary
@@ -618,12 +620,21 @@ func toggle(c: Combatant, p: Dictionary) -> CombatResult:
 		if str(power.get("off_cost", "")) != "free":
 			_pay(c, power_cost(power, {}))
 		c.creature.remove_effect(on)
+		detach_light(c, toggle_key(iid, pid))
 		e.log.add("info", "%s: %s ends" % [c.name(), power.get("name", data.get("name", ""))], c.id)
 		e.events.append({"type": "condition", "id": c.id})
 		return CombatResult.new()
 	_pay(c, power_cost(power, {}))
 	var fx := make_power_effect(c, iid, data, power)
+	if opts.has("choice"):
+		fx.data["choice"] = str(opts["choice"])
 	c.creature.add_effect(fx)
+	if power.has("custom_light"):
+		var cl := power["custom_light"] as Dictionary
+		attach_light(c, toggle_key(iid, pid), int(cl.get("bright", 0)), int(cl.get("dim", 0)), bool(cl.get("sunlight", false)))
+		var key := toggle_key(iid, pid)
+		var cc := c
+		fx.on_end = func() -> void: detach_light(cc, key)
 	specials.toggled_on(c, p, fx)
 	_after_use(c, p, {}, 0)
 	e.log.add("info", "%s: %s" % [c.name(), power.get("log", "%s %s" % [data.get("name", ""), power.get("name", "")])], c.id)
@@ -641,6 +652,8 @@ static func make_power_effect(c: Combatant, item_id: String, data: Dictionary, p
 		var w := d.get("when", {}) as Dictionary
 		if str(w.get("item", "")) == "@self":
 			w["item"] = item_id
+		if d.has("items"):
+			d["items"] = (d["items"] as Array).map(func(x: Variant) -> String: return item_id if str(x) == "@self" else str(x))
 		fx.modifiers.append(Modifier.make(d, str(data.get("name", item_id)), &"item", item_id))
 	if power.has("minutes"):
 		fx.lasting({"kind": "minutes", "amount": int(power["minutes"])})
@@ -651,6 +664,43 @@ static func make_power_effect(c: Combatant, item_id: String, data: Dictionary, p
 		fx.lasting_rounds(int(power["rounds"]), c.id)
 	fx.data["item_toggle"] = true
 	return fx
+
+
+# --- Light from items -----------------------------------------------------------------------------
+
+## Light that follows `c` (a Flame Tongue ablaze, a Sun Blade's sunlight): a lingering light object keyed by `key`.
+func attach_light(c: Combatant, key: String, bright: int, dim: int, sunlight: bool = false) -> FieldObject:
+	var e := enc()
+	detach_light(c, key)
+	var o := FieldObject.new(FieldObject.Kind.ZONE, key, key)
+	o.caster_id = c.id
+	o.cell = c.cell
+	o.rules = {"light": {"bright": bright, "dim": dim, "sunlight": sunlight}, "light_on": "target", "light_target": c.id, "item_light": key}
+	o.rounds_left = 100000
+	e.spells.zones.add(o, CombatResult.new())
+	return o
+
+
+func detach_light(c: Combatant, key: String) -> void:
+	for o in enc().spells.zones.live():
+		if o.caster_id == c.id and str(o.rules.get("item_light", "")) == key:
+			o.ended = true
+	enc().spells.zones.prune()
+
+
+## When a fight starts: drawn weapons and worn items that shed light light up (a Sun Blade, a Mace of Disruption, a
+## Moon-Touched Sword in the dark).
+func combat_started() -> void:
+	var e := enc()
+	for c in e.combatants:
+		for it in active(c):
+			var data := it["data"] as Dictionary
+			var l := data.get("light", {}) as Dictionary
+			if str(l.get("when", "")) != "drawn":
+				continue
+			if bool(l.get("dark_only", false)) and e.ambient_light == "bright":
+				continue
+			attach_light(c, "light:%s" % it["id"], int(l.get("bright", 0)), int(l.get("dim", 0)), bool(l.get("sunlight", false)))
 
 
 # --- Weapons and ammunition -----------------------------------------------------------------------
@@ -686,9 +736,13 @@ func _rule_applies(c: Combatant, target: Combatant, iid: String, rule: Dictionar
 	var vs := rule.get("vs", []) as Array
 	if not vs.is_empty() and not str(target.creature.creature_type) in vs:
 		return false
+	if str(target.creature.creature_type) in (rule.get("not_vs", []) as Array):
+		return false
+	if rule.has("thrown") and bool(rule["thrown"]) != (str((st["option"] as Dictionary).get("kind", "")) == "thrown"):
+		return false
 	if rule.has("while") and not toggled(c, iid, str(rule["while"])):
 		return false
-	if bool(rule.get("nat20", false)) and not (st.has("t") and (st["t"] as D20Test).natural == 20):
+	if bool(rule.get("nat20", false)) and not (st.has("t") and (st["t"] as D20Test).kept == 20):
 		return false
 	if bool(rule.get("crit", false)) and not bool(st.get("critical", false)):
 		return false
@@ -696,6 +750,12 @@ func _rule_applies(c: Combatant, target: Combatant, iid: String, rule: Dictionar
 		return false
 	if rule.has("ranged") and bool(rule["ranged"]) == bool((st["option"] as Dictionary).get("melee", true)):
 		return false
+	if rule.has("melee") and bool(rule["melee"]) != bool((st["option"] as Dictionary).get("melee", true)):
+		return false
+	if int(rule.get("spend_charge", 0)) > 0:
+		var ch := ch_of(c)
+		if ch == null or ch.charges_left(iid) < int(rule["spend_charge"]):
+			return false
 	return true
 
 
@@ -712,6 +772,16 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 				continue
 			var ty := str(rule.get("type", (option["profile"] as WeaponProfile).damage_type))
 			out.append({"dice": str(rule.get("dice", "1d6")), "type": ty, "label": str(data.get("name", ""))})
+			# Armed powers that fire once and cost charges (Staff of Power's Power Strike, Staff of Withering).
+			if int(rule.get("spend_charge", 0)) > 0:
+				var ch := ch_of(c)
+				ch.spend_charges(str(it["id"]), int(rule["spend_charge"]))
+				if ch.charges_left(str(it["id"])) <= 0:
+					last_charge(c, str(it["id"]), data)
+			if rule.has("ends_toggle"):
+				var fx := toggle_effect(c, str(it["id"]), str(rule["ends_toggle"]))
+				if fx != null:
+					c.creature.remove_effect(fx)
 		out.append_array(specials.hit_dice(c, target, option, st, it))
 	return out
 
@@ -726,7 +796,9 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 			var rule := x as Dictionary
 			if not _rule_applies(c, target, str(it["id"]), rule, st) or not target.is_alive():
 				continue
-			_on_hit_rule(c, target, data, rule, r)
+			var with_id := data.duplicate()
+			with_id["id"] = str(it["id"])
+			_on_hit_rule(c, target, with_id, rule, r)
 		specials.after_hit(c, target, option, dr, st, r, it)
 	after_attack(c, target, option, true)
 
@@ -765,6 +837,15 @@ func _on_hit_rule(c: Combatant, target: Combatant, data: Dictionary, rule: Dicti
 		var t := target.creature.roll_save(e.dice, ab, dc, [], [], "%s save (%s)" % [Creature.ABILITY_SHORT[ab], label])
 		failed = not t.success
 		r.lines.append(e.log.add("roll", "%s %s the %s save against %s (DC %d)" % [target.name(), "fails" if failed else "makes", Creature.ABILITY_SHORT[ab], label, dc], target.id, [t.describe()]))
+	# Giant's Bane, a Nine Lives Stealer: a failed save and the creature dies.
+	if bool(rule.get("slay", false)):
+		if failed:
+			target.creature.hp = 0
+			target.creature.dead = true
+			r.lines.append(e.log.add("death", "%s is slain outright (%s)" % [target.name(), label], target.id))
+			e.events.append({"type": "death", "id": target.id})
+			e._check_over()
+		return
 	if rule.has("damage"):
 		var dmg := rule["damage"] as Dictionary
 		var rolled := e._roll_damage_dice(str(dmg.get("dice", "1d6")), false, 0, label)
@@ -772,7 +853,18 @@ func _on_hit_rule(c: Combatant, target: Combatant, data: Dictionary, rule: Dicti
 		if not failed:
 			amount = amount / 2 if str(rule.get("save_success", "half")) == "half" else 0
 		if amount > 0:
-			e.deal_damage(c, target, [{"amount": amount, "type": str(dmg.get("type", "force"))}], false, label, [str(rolled["text"])])
+			var hurt := e.deal_damage(c, target, [{"amount": amount, "type": str(dmg.get("type", "force"))}], false, label, [str(rolled["text"])])
+			# Rod of Lordly Might's Drain Life: the wielder regains half.
+			if bool(rule.get("drain_half", false)) and hurt.final > 0:
+				var healed := c.creature.heal(hurt.final / 2, label)
+				e.log.add("heal", "%s regains %d Hit Points (%s)" % [c.name(), healed, label], c.id)
+	# Staff of Withering: Disadvantage on Strength and Constitution checks and saves for 1 hour.
+	if failed and target.is_alive() and str(rule.get("debuff", "")) == "withering":
+		var wf := Effect.new(label, &"item", str(data.get("id", "")))
+		wf.lasting({"kind": "hours", "amount": 1})
+		wf.modifiers.append(Modifier.of("disadvantage", {"on": ["check:str", "check:con", "save:str", "save:con"]}, label, &"item"))
+		target.creature.add_effect(wf)
+		r.lines.append(e.log.add("condition", "%s withers: Disadvantage on Strength and Constitution checks and saves for 1 hour" % target.name(), target.id))
 	if failed and target.is_alive():
 		for x: Variant in rule.get("conditions", []):
 			var cond := StringName(str(x))
@@ -795,6 +887,11 @@ func _on_hit_rule(c: Combatant, target: Combatant, data: Dictionary, rule: Dicti
 			e.events.append({"type": "condition", "id": target.id})
 		if rule.has("push"):
 			e.forced_move(target, e.center_of(c), int(rule["push"]))
+	# A Dagger of Venom's coating is used up by the hit.
+	if rule.has("ends_toggle"):
+		var fx := toggle_effect(c, str(data.get("id", "")), str(rule["ends_toggle"]))
+		if fx != null:
+			c.creature.remove_effect(fx)
 
 
 ## Critical Hits that armor turns into ordinary hits (Adamantine Armor; Armor of Invulnerability doesn't).
@@ -830,8 +927,70 @@ func against_damage(st: Dictionary, total: Callable, cut: Callable, out: Array) 
 	specials.against_damage(st, total, cut, out)
 
 
+## A magical effect about to land on `t` (spells and item powers): flags like "no_magic:paralyzed" (Ring of Free
+## Action) strip what magic isn't allowed to do to the wearer.
+func filter_magic_effect(t: Combatant, fxo: Effect) -> void:
+	for cond: StringName in fxo.conditions.duplicate():
+		if t.creature.has_flag("no_magic:%s" % cond):
+			fxo.conditions.erase(cond)
+			enc().log.add("info", "%s can't be made %s by magic" % [t.name(), str(cond).capitalize()], t.id)
+	if t.creature.has_flag("no_magic:speed"):
+		for m: Modifier in fxo.modifiers.duplicate():
+			var v: Variant = m.data.get("value", 0)
+			var slows := (m.stat == &"speed" and (v is int or v is float) and int(v) < 0) \
+				or (m.stat == &"speed_percent" and (v is int or v is float) and int(v) < 100) \
+				or (m.stat == &"speed_set" and str(m.data.get("kind", "walk")) == "walk" and (v is int or v is float) and int(v) == 0)
+			if slows:
+				fxo.modifiers.erase(m)
+
+
+## Rod of Absorption, Staff of the Magi: a spell aimed at one creature alone (no area) is soaked up with a Reaction.
+## True if the spell was absorbed (it does nothing).
+func absorbs_spell(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r: CombatResult) -> bool:
+	var c := ctx["c"] as Combatant
+	var s := ctx["s"] as Dictionary
+	if tgt.size() != 1 or s.has("area") or bool(ctx.get("item", false)) or int(ctx.get("slot", 0)) <= 0:
+		return false
+	var t := tgt[0]
+	if t == c or not enc().spells.can_react(t) or ch_of(t) == null:
+		return false
+	return specials.absorb(c, t, ctx, r)
+
+
+## Ring of Spell Turning: `t` saved against a spell of level 7 or lower, so it has no effect on `t`. If it was aimed at
+## `t` alone (no area), a Reaction turns it back: its caster saves against their own spell. True if handled.
+func turns_spell(c: Combatant, t: Combatant, ctx: Dictionary, victims: Array[Combatant], r: CombatResult) -> bool:
+	if not t.creature.has_flag("spell_turning") or int(ctx.get("slot", 0)) > 7 or bool(ctx.get("turned", false)):
+		return false
+	var e := enc()
+	var s := ctx["s"] as Dictionary
+	r.lines.append(e.log.add("info", "%s's Ring of Spell Turning: %s has no effect" % [t.name(), s.get("name", "")], t.id))
+	if victims.size() == 1 and not s.has("area") and c != t and e.spells.can_react(t) and c.is_alive() \
+			and e._reaction_decision(t, "spell_turning") != "never":
+		t.reaction_available = false
+		var back := ctx.duplicate()
+		back["turned"] = true
+		r.lines.append(e.log.add("reaction", "%s turns %s back on %s" % [t.name(), s.get("name", ""), c.name()], t.id))
+		var only: Array[Combatant] = [c]
+		e.spells._save_spell(back, only, r)
+	return true
+
+
 ## Damage about to be dealt (changes `parts` in place): immunities items give against particular spells.
 func adjust_incoming(source: Combatant, target: Combatant, parts: Array, label: String) -> void:
+	for p: Variant in parts:
+		var d := p as Dictionary
+		# A Vorpal Sword cuts through Resistance to Slashing damage.
+		if str(d.get("item", "")) != "":
+			var w := comp().item_data(str(d["item"]))
+			if str(d.get("type", "")) in (_rules(w).get("ignore_resistance", []) as Array):
+				d["ignore_resistance"] = true
+				d["ignore_source"] = str(w.get("name", ""))
+		# Shield of Missile Attraction: Resistance to damage from Ranged weapons.
+		if bool(d.get("ranged_weapon", false)):
+			for it in active(target):
+				if bool(((it["data"] as Dictionary).get("armor_rules", {}) as Dictionary).get("resist_ranged_weapons", false)):
+					d["resisted_by"] = str((it["data"] as Dictionary).get("name", ""))
 	specials.adjust_incoming(source, target, parts, label)
 
 
@@ -840,6 +999,11 @@ func on_damaged(source: Combatant, target: Combatant, amount: int, parts: Array)
 	if target == null or target.creature == null:
 		return
 	specials.on_damaged(source, target, amount, parts)
+
+
+## Before a D20 Test: Advantage items give (Wand of Binding's Assisted Escape spends a charge for it).
+func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Array[String]:
+	return specials.before_d20(c, kind, keys)
 
 
 ## After a D20 Test: items that turn a failure (Ring of Evasion, a Luck Blade's reroll).

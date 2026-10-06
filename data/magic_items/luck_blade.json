@@ -1,0 +1,79 @@
+{
+  "id": "luck_blade",
+  "name": "Luck Blade",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true,
+    "charges": {
+      "max": 3,
+      "start": "1d4-1",
+      "when": "never"
+    }
+  },
+  "theme": "armaments",
+  "icon": "luck_blade",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "name": "Luck Blade {base}",
+    "default": "longsword"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "save",
+      "ability": "all",
+      "value": 1,
+      "carried": true
+    }
+  ],
+  "powers": [
+    {
+      "id": "luck",
+      "name": "Luck",
+      "cost": "free",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "hidden": true,
+      "text": "Reroll one of your attack rolls, ability checks or saving throws (used on a failure; once per dawn)."
+    },
+    {
+      "id": "wish",
+      "name": "Wish",
+      "spell": "wish",
+      "charges": 1,
+      "cost": "magic",
+      "text": "Spend a charge to cast Wish. The blade doesn't regain charges."
+    }
+  ],
+  "summary": "+1 sword, +1 to saving throws while you carry it, a daily reroll, and 0-3 wishes.",
+  "text": "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. While the weapon is on your person, you also gain a +1 bonus to saving throws. Luck. If the weapon is on your person, you can call on its luck to reroll one attack roll, ability check or saving throw you dislike; you must use the second roll. This property can't be used again until the next dawn. Wish. The weapon has 1d4 - 1 charges. While holding it, you can expend 1 charge to cast Wish from it. This property can't be used again until the next dawn. The weapon loses this property if it has no charges."
+}

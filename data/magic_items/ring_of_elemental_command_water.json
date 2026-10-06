@@ -1,0 +1,88 @@
+{
+  "id": "ring_of_elemental_command_water",
+  "name": "Ring of Elemental Command (Water)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true,
+    "charges": {
+      "max": 5,
+      "regain": "1d4+1",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "variant_of": "ring_of_elemental_command",
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "cold"
+    },
+    {
+      "stat": "proficiency",
+      "kind": "language",
+      "value": "aquan"
+    },
+    {
+      "stat": "flag",
+      "value": "elemental_command:water"
+    },
+    {
+      "stat": "speed_set",
+      "kind": "swim",
+      "value": 60
+    },
+    {
+      "stat": "flag",
+      "value": "water_breathing"
+    }
+  ],
+  "powers": [
+    {
+      "id": "dominate",
+      "name": "Dominate an Water Elemental",
+      "spell": "dominate_monster",
+      "charges": 2,
+      "dc": 18,
+      "text": "2 charges: cast Dominate Monster (save DC 18) on an Water Elemental."
+    },
+    {
+      "id": "create_or_destroy_water",
+      "name": "Create Or Destroy Water",
+      "spell": "create_or_destroy_water",
+      "charges": 1,
+      "dc": 18
+    },
+    {
+      "id": "ice_storm",
+      "name": "Ice Storm",
+      "spell": "ice_storm",
+      "charges": 2,
+      "dc": 18
+    },
+    {
+      "id": "control_water",
+      "name": "Control Water",
+      "spell": "control_water",
+      "charges": 3,
+      "dc": 18
+    },
+    {
+      "id": "wall_of_ice",
+      "name": "Wall Of Ice",
+      "spell": "wall_of_ice",
+      "charges": 3,
+      "dc": 18
+    }
+  ],
+  "summary": "Command over Water elementals, Resistance to Cold damage, and its element's spells (save DC 18).",
+  "text": "This ring is linked to the Elemental Plane of Water. While wearing it, you have Advantage on attack rolls against Water Elementals, and they have Disadvantage on attack rolls against you. The ring has 5 charges and regains 1d4 + 1 expended charges daily at dawn. You can expend 2 of them to cast Dominate Monster (save DC 18) on an Water Elemental. You also have Resistance to Cold damage. You can swim at 60 feet, breathe underwater and you know Aquan. You can cast its spells from it, spending the charges listed: Create Or Destroy Water (1), Ice Storm (2), Control Water (3), Wall Of Ice (3)."
+}

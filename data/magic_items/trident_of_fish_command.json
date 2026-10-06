@@ -1,0 +1,41 @@
+{
+  "id": "trident_of_fish_command",
+  "name": "Trident of Fish Command",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "trident"
+    ],
+    "name": "Trident of Fish Command"
+  },
+  "powers": [
+    {
+      "id": "command",
+      "name": "Dominate Beast",
+      "spell": "dominate_beast",
+      "dc": 15,
+      "charges": 1,
+      "cost": "magic",
+      "text": "1 charge: cast Dominate Beast (save DC 15) on a Beast that has a Swim Speed."
+    }
+  ],
+  "summary": "3 charges: cast Dominate Beast (DC 15) on a Beast with a Swim Speed.",
+  "text": "This trident is a magic weapon. It has 3 charges. While you carry it, you can expend 1 charge to cast Dominate Beast (save DC 15) from it on a Beast that has a Swim Speed. The trident regains 1d3 expended charges daily at dawn."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "ring_of_resistance_poison",
+  "name": "Ring of Resistance (Poison)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "variant_of": "ring_of_resistance",
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "poison"
+    }
+  ],
+  "summary": "Resistance to Poison damage while you wear it.",
+  "text": "You have Resistance to Poison damage while wearing this ring. A gemstone set in the ring hints at the type."
+}

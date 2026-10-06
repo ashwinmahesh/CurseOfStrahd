@@ -1,0 +1,41 @@
+{
+  "id": "wand_of_enemy_detection",
+  "name": "Wand of Enemy Detection",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wand",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true,
+    "charges": {
+      "max": 7,
+      "regain": "1d6+1",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "crumbles into ashes"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "wand",
+  "powers": [
+    {
+      "id": "detect",
+      "name": "Detect Enemies",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "enemy_detection",
+      "field": true,
+      "text": "Magic action, 1 charge: for 1 minute, you know the direction of the nearest creature hostile to you within 60 ft, even an invisible or hidden one."
+    }
+  ],
+  "summary": "7 charges: for a minute, sense the direction of the nearest hostile creature within 60 ft, hidden or invisible.",
+  "text": "This wand has 7 charges. While holding it, you can take a Magic action and expend 1 charge to speak its command word. For the next minute, you know the direction of the nearest creature hostile to you within 60 feet, but not its distance from you. The wand can sense the presence of hostile creatures that are invisible, ethereal, disguised or hidden, as well as those in plain sight. The effect ends if you stop holding the wand. The wand regains 1d6 + 1 expended charges daily at dawn. If you expend the wand's last charge, roll 1d20. On a 1, the wand crumbles into ashes and is destroyed."
+}

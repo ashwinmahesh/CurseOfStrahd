@@ -1,0 +1,69 @@
+{
+  "id": "dwarven_thrower",
+  "name": "Dwarven Thrower",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": "by a Dwarf or a creature attuned to a Belt of Dwarvenkind"
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "warhammer"
+    ],
+    "name": "Dwarven Thrower",
+    "weapon_patch": {
+      "properties_add": [
+        "thrown"
+      ],
+      "range": [
+        20,
+        60
+      ]
+    }
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "returns": true,
+    "extra": [
+      {
+        "thrown": true,
+        "dice": "1d8",
+        "not_vs": [
+          "giant"
+        ]
+      },
+      {
+        "thrown": true,
+        "vs": [
+          "giant"
+        ],
+        "dice": "2d8"
+      }
+    ]
+  },
+  "summary": "+3 warhammer that can be thrown (20/60 ft) and flies back; an extra 1d8 when thrown (2d8 against Giants).",
+  "text": "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. It has the Thrown property with a normal range of 20 feet and a long range of 60 feet. When you hit with a ranged attack using this weapon, it deals an extra 1d8 damage or, if the target is a Giant, 2d8 damage. Immediately after the attack, the weapon flies back to your hand."
+}

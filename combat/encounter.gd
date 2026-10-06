@@ -155,6 +155,7 @@ func start(surprised_ids: Array = []) -> void:
 	state = State.ACTIVE
 	for cc in combatants:
 		class_features.prepare(cc)
+	items.combat_started()
 	spells.zones.refresh_auras()
 	round_no = 1
 	log.round_no = 1
@@ -387,7 +388,7 @@ func move_mode(c: Combatant) -> int:
 		mode |= CombatGrid.MOVE_CLIMB
 	if c.creature.has_flag("incorporeal_movement"):
 		mode |= CombatGrid.MOVE_INCORPOREAL
-	if c.creature.has_flag("freedom_of_movement"):
+	if c.creature.has_flag("freedom_of_movement") or c.creature.has_flag("ignore_difficult_terrain"):
 		mode |= CombatGrid.MOVE_UNHINDERED
 	return mode
 
@@ -1755,6 +1756,9 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	for m in target.creature.modifiers_for(&"attacked_with"):
 		if m.source_name == "Dodging" and (not can_see(target, c) or target.speed() <= 0):
 			continue
+		# Spellguard Shield: only spell attacks.
+		if bool(m.data.get("spell_only", false)) and str(option.get("kind", "")) != "spell":
+			continue
 		if bool(m.data.get("if_seen", false)) and not can_see(c, target):
 			continue
 		var skip := false
@@ -2131,7 +2135,8 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 	var critical := bool(st["critical"])
 	var arr: Array = []
 	for k: String in parts:
-		arr.append({"amount": int(parts[k]), "type": k, "weapon": true, "melee": bool(option["melee"])})
+		arr.append({"amount": int(parts[k]), "type": k, "weapon": true, "melee": bool(option["melee"]),
+			"item": (option["profile"] as WeaponProfile).item_id, "ranged_weapon": str(option.get("kind", "")) in ["weapon", "thrown"] and not bool(option["melee"])})
 	var all_details := details.duplicate()
 	all_details.append_array(dmg_text)
 	var dr := deal_damage(c, target, arr, critical, (option["profile"] as WeaponProfile).name, all_details, true)

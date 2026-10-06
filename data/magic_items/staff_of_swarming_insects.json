@@ -1,0 +1,90 @@
+{
+  "id": "staff_of_swarming_insects",
+  "name": "Staff of Swarming Insects",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Bard, Cleric, Druid, Sorcerer, Warlock, or Wizard",
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "dissolves into a swarm of insects that flies away"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Swarming Insects"
+  },
+  "recipes": {
+    "cloud": {
+      "name": "Insect Cloud",
+      "level": 0,
+      "school": "conjuration",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 30
+      },
+      "targets": {
+        "kind": "area"
+      },
+      "duration": {
+        "kind": "minutes",
+        "amount": 10
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "zone": {
+        "triggers": [],
+        "obscured": "heavy"
+      }
+    }
+  },
+  "powers": [
+    {
+      "id": "giant_insect",
+      "name": "Giant Insect",
+      "spell": "giant_insect",
+      "charges": 4,
+      "dc": "wielder"
+    },
+    {
+      "id": "insect_plague",
+      "name": "Insect Plague",
+      "spell": "insect_plague",
+      "charges": 5,
+      "dc": "wielder"
+    },
+    {
+      "id": "cloud",
+      "name": "Insect Cloud",
+      "recipe": "cloud",
+      "charges": 1,
+      "cost": "magic",
+      "text": "Magic action, 1 charge: harmless flying insects fill a 30-ft Emanation around you for 10 minutes; the area is Heavily Obscured."
+    }
+  ],
+  "summary": "10 charges: Giant Insect (4), Insect Plague (5), or a cloud of insects that blots out sight.",
+  "text": "This staff has 10 charges and regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, a swarm of insects consumes and destroys the staff, then disperses. Spells. While holding the staff, you can expend some of its charges to cast one of the following spells from it, using your spell save DC: Giant Insect (4 charges) or Insect Plague (5 charges). Insect Cloud. While holding the staff, you can take a Magic action and expend 1 charge to cause a swarm of harmless flying insects to fill a 30-foot Emanation originating from you. The insects remain for 10 minutes, making the area Heavily Obscured for creatures other than you. The swarm moves with you. A strong wind disperses the swarm and ends the effect."
+}

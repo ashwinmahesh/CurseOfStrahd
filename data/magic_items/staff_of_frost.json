@@ -1,0 +1,73 @@
+{
+  "id": "staff_of_frost",
+  "name": "Staff of Frost",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": "by a Druid, Sorcerer, Warlock, or Wizard",
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "turns to water and is destroyed"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Frost"
+  },
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "cold"
+    }
+  ],
+  "powers": [
+    {
+      "id": "cone_of_cold",
+      "name": "Cone Of Cold",
+      "spell": "cone_of_cold",
+      "charges": 5,
+      "dc": "wielder"
+    },
+    {
+      "id": "fog_cloud",
+      "name": "Fog Cloud",
+      "spell": "fog_cloud",
+      "charges": 1,
+      "dc": "wielder"
+    },
+    {
+      "id": "ice_storm",
+      "name": "Ice Storm",
+      "spell": "ice_storm",
+      "charges": 4,
+      "dc": "wielder"
+    },
+    {
+      "id": "wall_of_ice",
+      "name": "Wall Of Ice",
+      "spell": "wall_of_ice",
+      "charges": 4,
+      "dc": "wielder"
+    }
+  ],
+  "summary": "Resistance to Cold; 10 charges: Cone of Cold (5), Fog Cloud (1), Ice Storm (4), Wall of Ice (4) at your DC.",
+  "text": "You have Resistance to Cold damage while you hold this staff. The staff has 10 charges. While holding it, you can expend some of its charges to cast one of the following spells from it, using your spell save DC: Cone of Cold (5 charges), Fog Cloud (1 charge), Ice Storm (4 charges) or Wall of Ice (4 charges). The staff regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff turns to water and is destroyed."
+}

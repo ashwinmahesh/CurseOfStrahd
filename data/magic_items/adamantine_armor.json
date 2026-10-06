@@ -1,0 +1,33 @@
+{
+  "id": "adamantine_armor",
+  "name": "Adamantine Armor",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "kinds": [
+      "medium",
+      "heavy"
+    ],
+    "exclude": [
+      "hide_armor"
+    ],
+    "name": "Adamantine {base}",
+    "default": "chain_mail"
+  },
+  "armor_rules": {
+    "no_crits": true
+  },
+  "summary": "Any Critical Hit against you becomes a normal hit.",
+  "text": "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any Critical Hit against you becomes a normal hit."
+}

@@ -1,0 +1,42 @@
+{
+  "id": "ammunition_of_slaying_fey",
+  "name": "Ammunition of Slaying (Fey)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ammunition",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "consumable": false,
+  "theme": "armaments",
+  "variant_of": "ammunition_of_slaying",
+  "template": {
+    "on": "ammunition",
+    "name": "{base} of Fey Slaying",
+    "default": "arrow"
+  },
+  "weapon_rules": {
+    "on_hit": [
+      {
+        "vs": [
+          "fey"
+        ],
+        "save": "con",
+        "dc": 17,
+        "damage": {
+          "dice": "6d10",
+          "type": "piercing"
+        },
+        "save_success": "half"
+      }
+    ],
+    "spent_on_hit": true
+  },
+  "summary": "A Fey it hits makes a DC 17 Con save: 6d10 extra Piercing, half on a success; then it's ordinary.",
+  "text": "This magic ammunition is meant to slay creatures of the Fey type. If a creature of that type takes damage from the ammunition, it makes a DC 17 Constitution saving throw, taking an extra 6d10 Piercing damage on a failed save or half as much extra damage on a successful one. Once it deals its extra damage, it becomes nonmagical."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "smoldering_armor",
+  "name": "Smoldering Armor",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "name": "Smoldering {base}",
+    "default": "scale_mail"
+  },
+  "summary": "Harmless smoke wisps off it while worn.",
+  "text": "Wisps of harmless, odorless smoke rise from this armor while it is worn. (No other effect in the game.)"
+}

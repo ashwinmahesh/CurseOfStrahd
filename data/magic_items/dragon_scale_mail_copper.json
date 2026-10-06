@@ -1,0 +1,60 @@
+{
+  "id": "dragon_scale_mail_copper",
+  "name": "Dragon Scale Mail (Copper)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "icon": "dragon_scale_mail",
+  "template": {
+    "on": "armor",
+    "items": [
+      "scale_mail"
+    ],
+    "name": "Copper Dragon Scale Mail"
+  },
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 1
+    },
+    {
+      "stat": "resistance",
+      "value": "acid"
+    },
+    {
+      "stat": "advantage",
+      "on": "save_vs:frightful_presence"
+    },
+    {
+      "stat": "advantage",
+      "on": "save_vs:breath_weapon"
+    }
+  ],
+  "variant_of": "dragon_scale_mail",
+  "powers": [
+    {
+      "id": "sense_dragon",
+      "name": "Sense Dragons",
+      "cost": "magic",
+      "combat": false,
+      "field": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "custom": "sense_dragons",
+      "text": "Magic action: learn the distance and direction to the closest copper dragon within 30 miles (once per dawn)."
+    }
+  ],
+  "summary": "+1 AC, Resistance to Acid damage, Advantage on saves against dragons' Frightful Presence and breath.",
+  "text": "Dragon Scale Mail is made of the scales of one kind of dragon. While wearing it, you gain a +1 bonus to Armor Class, you have Advantage on saving throws against the Frightful Presence and breath weapons of dragons, and you have Resistance to Acid damage. Additionally, you can focus your senses as a Magic action to discern the distance and direction to the closest copper dragon within 30 miles of yourself. This action can't be used again until the next dawn."
+}

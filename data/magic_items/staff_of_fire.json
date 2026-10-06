@@ -1,0 +1,66 @@
+{
+  "id": "staff_of_fire",
+  "name": "Staff of Fire",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": "by a Druid, Sorcerer, Warlock, or Wizard",
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "blackens, crumbles into cinders and is destroyed"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Fire"
+  },
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "fire"
+    }
+  ],
+  "powers": [
+    {
+      "id": "burning_hands",
+      "name": "Burning Hands",
+      "spell": "burning_hands",
+      "charges": 1,
+      "dc": "wielder"
+    },
+    {
+      "id": "fireball",
+      "name": "Fireball",
+      "spell": "fireball",
+      "charges": 3,
+      "dc": "wielder"
+    },
+    {
+      "id": "wall_of_fire",
+      "name": "Wall Of Fire",
+      "spell": "wall_of_fire",
+      "charges": 4,
+      "dc": "wielder"
+    }
+  ],
+  "summary": "Resistance to Fire; 10 charges: Burning Hands (1), Fireball (3), Wall of Fire (4) at your DC.",
+  "text": "You have Resistance to Fire damage while you hold this staff. The staff has 10 charges. While holding it, you can expend some of its charges to cast one of the following spells from it, using your spell save DC: Burning Hands (1 charge), Fireball (3 charges) or Wall of Fire (4 charges). The staff regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll 1d20. On a 1, the staff blackens, crumbles into cinders and is destroyed."
+}

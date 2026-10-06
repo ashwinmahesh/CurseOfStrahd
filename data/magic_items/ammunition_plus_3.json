@@ -1,0 +1,44 @@
+{
+  "id": "ammunition_plus_3",
+  "name": "Ammunition, +3",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ammunition",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "consumable": false,
+  "theme": "armaments",
+  "template": {
+    "on": "ammunition",
+    "name": "+3 {base}",
+    "default": "arrow"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "ammo": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "ammo": "@self"
+      }
+    }
+  ],
+  "variant_of": "ammunition_plus",
+  "treasure": {
+    "weight": 1
+  },
+  "summary": "+3 to attack and damage rolls with this ammunition; it loses its magic once it hits.",
+  "text": "You have a +3 bonus to attack rolls and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
+}

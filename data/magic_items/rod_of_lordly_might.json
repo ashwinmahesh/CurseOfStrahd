@@ -1,0 +1,163 @@
+{
+  "id": "rod_of_lordly_might",
+  "name": "Rod of Lordly Might",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "rod",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "rod_of_lordly_might",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "mace"
+    ],
+    "name": "Rod of Lordly Might"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "while": "form_blade",
+        "dice": "2d6",
+        "type": "fire"
+      }
+    ],
+    "on_hit": [
+      {
+        "while": "paralyze",
+        "save": "str",
+        "dc": 17,
+        "conditions": [
+          "paralyzed"
+        ],
+        "rounds": 10,
+        "repeat_save": "str",
+        "ends_toggle": "paralyze"
+      },
+      {
+        "while": "drain",
+        "save": "con",
+        "dc": 17,
+        "damage": {
+          "dice": "4d6",
+          "type": "necrotic"
+        },
+        "save_success": "none",
+        "drain_half": true,
+        "ends_toggle": "drain"
+      }
+    ]
+  },
+  "recipes": {
+    "terrify": {
+      "name": "Terrify",
+      "level": 0,
+      "school": "enchantment",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 30
+      },
+      "area_targets": "enemies",
+      "save": "wis",
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "frightened",
+            "repeat_save": "end_of_turn"
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "paralyze",
+      "name": "Paralyze",
+      "cost": "free",
+      "toggle": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "off_cost": "free",
+      "text": "Arm it (once per dawn): the next creature you hit makes a DC 17 Strength save or is Paralyzed for 1 minute."
+    },
+    {
+      "id": "terrify",
+      "name": "Terrify",
+      "recipe": "terrify",
+      "dc": 17,
+      "cost": "magic",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Magic action (once per dawn): creatures of your choice within 30 ft make a DC 17 Wisdom save or are Frightened for 1 minute."
+    },
+    {
+      "id": "drain",
+      "name": "Drain Life",
+      "cost": "free",
+      "toggle": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "off_cost": "free",
+      "text": "Arm it (once per dawn): the next creature you hit makes a DC 17 Con save or takes 4d6 Necrotic, and you regain half."
+    },
+    {
+      "id": "form",
+      "name": "Change form",
+      "cost": "bonus",
+      "custom": "lordly_might_form",
+      "choice": {
+        "label": "Form",
+        "from": [
+          "rod",
+          "blade",
+          "battleaxe",
+          "spear"
+        ]
+      },
+      "text": "Bonus Action: the rod becomes a fiery blade (like a Flame Tongue), a battleaxe, a spear or a mace again (all +3)."
+    }
+  ],
+  "summary": "+3 mace that becomes a flaming blade, axe or spear; once a day each: Paralyze, Terrify and Drain Life.",
+  "text": "This rod has a flanged head, and it functions as a magic Mace that grants a +3 bonus to attack rolls and damage rolls made with it. The rod has properties associated with six different buttons that are set in a row along the haft. It has three other properties as well. Six Buttons. You can press one of the rod's six buttons as a Bonus Action: a fiery blade sprouts from the end opposite the rod's flanged head (the rod functions as a Flame Tongue longsword, keeping its +3); the rod becomes a magic Battleaxe or Spear with the same bonus; or it becomes a climbing pole, a battering ram, or a compass and depth gauge. Paralyze. When you hit a creature with a melee attack using the rod, you can force the target to make a DC 17 Strength saving throw. On a failed save, the target has the Paralyzed condition for 1 minute; it repeats the save at the end of each of its turns. Terrify. While holding the rod, you can take a Magic action to force each creature you can see within 30 feet of you to make a DC 17 Wisdom saving throw or have the Frightened condition for 1 minute, repeating the save at the end of each of its turns. Drain Life. When you hit a creature with a melee attack using the rod, you can force the target to make a DC 17 Constitution saving throw. On a failed save, the target takes an extra 4d6 Necrotic damage, and you regain a number of Hit Points equal to half this Necrotic damage. Once you use one of these three properties, you can't use it again until the next dawn."
+}

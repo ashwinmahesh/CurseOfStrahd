@@ -1,0 +1,40 @@
+{
+  "id": "efreeti_chain",
+  "name": "Efreeti Chain",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "items": [
+      "chain_mail"
+    ],
+    "name": "Efreeti Chain"
+  },
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 3
+    },
+    {
+      "stat": "immunity",
+      "value": "fire"
+    },
+    {
+      "stat": "proficiency",
+      "kind": "language",
+      "value": "primordial"
+    }
+  ],
+  "summary": "+3 AC, Immunity to Fire damage, you know Primordial, and you can walk on molten rock.",
+  "text": "While wearing this armor, you gain a +3 bonus to Armor Class, you have Immunity to Fire damage, and you know Primordial. In addition, you can stand on and move across molten rock as if it were solid ground."
+}

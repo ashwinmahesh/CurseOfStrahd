@@ -1,0 +1,30 @@
+{
+  "id": "mariners_armor",
+  "name": "Mariner's Armor",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "name": "Mariner's {base}",
+    "default": "breastplate"
+  },
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "kind": "swim",
+      "value": "walk"
+    }
+  ],
+  "summary": "A Swim Speed equal to your Speed; if you start your turn underwater at 0 Hit Points, you rise 60 ft.",
+  "text": "Blue and green, this armor is decorated with fish and shell motifs. While wearing it, you have a Swim Speed equal to your Speed. Whenever you start your turn underwater with 0 Hit Points, the armor causes you to rise 60 feet toward the surface."
+}
