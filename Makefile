@@ -17,7 +17,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims portrait wireframes textures prop props models ui_art icons voice
+.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims portrait wireframes textures prop props models ui_art icons voice creator
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -96,6 +96,11 @@ anims:
 ## (art/manifest.json sprite_flags): make sprites [ONLY="id ..."]
 sprites:
 	python3 tools/art/rerender_sprites.py $(if $(ONLY),--only $(ONLY),)
+
+## The custom hero's paper doll (docs/art/creator.md): cuts every piece whose art exists; GENERATE=1 first draws what's
+## missing (Gemini), ONLY="bases bodies heads hair beards strips portraits" limits it.
+creator:
+	python3 tools/art/creator_art.py $(if $(GENERATE),--generate,) $(if $(ONLY),--only $(ONLY),) --process
 
 ## Portrait (square crop, 512 px, palette-snapped, flat background): make portrait SRC=<png> ID=<id> [BG=<palette name>] [SAT=1.3]
 portrait:

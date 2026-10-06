@@ -31,9 +31,17 @@ The UI never computes rules. Every list, number, reason and warning on these scr
 ## Steps
 
 ### 1. Start (`cc_01_start`)
-Three cards: **Pregenerated party** (the four in `data/pregens/`, each with portrait, class line and story hook;
-"Use as is" or "Edit", which opens that character at Review), **Build from scratch**, **Copy from a save**
-(greyed with "No other saves yet" until there are some).
+Changed by the owner (2026-10-06): "Only 1 character of the party can be the custom created one (the player can choose
+which one they want to replace). Using a custom character at all is optional." The start screen shows the four
+pregens (portrait, name, class line) with two choices: **Play these four**, or **Bring your own hero**, which asks
+who stays behind ("Leave Ilse behind" under each pregen) and opens the creator in **hero mode** for one character.
+The hero takes the replaced pregen's place in the marching order; the other three keep their builds and their
+personal quests (docs/story/personal_quests.md). Editing the pregens and building all four from scratch are gone.
+
+Hero mode is the same steps for one character, with three differences: the party strip shows the three companions
+("Travelling with Ilse, Hedda and Silvain"); the **Appearance** step is the paper doll below; and Review's party
+composition counts the companions. A hero can't take a companion's name (`CharacterBuilder.name_problems`). Madam
+Eva's respec of a custom hero opens the same Appearance step.
 
 ### 2. Class (`cc_02_class`)
 ![Class](wireframes/cc_02_class.svg)
@@ -96,8 +104,20 @@ Gear the character can't use well is flagged as a warning, never blocked.
 ### 7. Appearance (`cc_07_appearance`)
 ![Appearance](wireframes/cc_07_appearance.svg)
 
-Body type, skin, hair and outfit colors (palette swaps from the sprite library), portrait from generated sets, and
-a live in-game sprite turning through the 8 directions under the game's shaders (toggle to compare).
+For the custom hero (`AppearancePanel`, docs/art/creator.md), four tabs beside a live sprite in a gothic arch that
+slowly turns through the 8 directions, with Stand, Walk and Attack buttons and turn arrows:
+
+- **Body:** Woman or Man, Slender, Average or Broad, Short, Average or Tall (shown by how the figure stands in the
+  arch), and nine skin tones as arched swatches of their shades.
+- **Head:** seven heads (plain, sharp, round, weathered, elfin, horned, tusked), eight hairstyles and bald, eight
+  hair colours, six beards and clean-shaven. Heads, hairstyles and beards show as small pictures of this hero's own
+  head with that pick.
+- **Outfit:** six starting outfits, each with what it looks like and which classes it suits; a class pick chooses
+  the one that suits it until the player picks one themselves. The outfit is the look (and the weapon in the attack
+  art); gear on the sheet still comes from class and background.
+- **Portrait & voice:** ten portraits, and a woman's or a man's voice (`hero_female`, `hero_male`) with a sample.
+
+The pregens keep their own looks (the four portrait cards).
 
 ### 8. Identity (`cc_08_identity`)
 ![Identity](wireframes/cc_08_identity.svg)

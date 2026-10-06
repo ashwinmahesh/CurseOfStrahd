@@ -66,8 +66,11 @@ static func cell_size(frames: SpriteFrames) -> int:
 
 
 ## The frames for sprite `art_id`: its walk sheet's walk_/idle_ animations plus, when it has an attack sheet,
-## attack_<dir> (and the attack's hit frame as metadata). Null when the sprite has no sheet. Cached per id.
+## attack_<dir> (and the attack's hit frame as metadata). Null when the sprite has no sheet. Cached per id. A custom
+## hero's art id (registered by CombatToken.art_for) gets the paper doll HeroLook puts together.
 static func frames_for(art_id: String) -> SpriteFrames:
+	if HeroLook.known(art_id):
+		return HeroLook.frames_for_art(art_id)
 	if _frames_cache.has(art_id):
 		return _frames_cache[art_id] as SpriteFrames
 	var walk_path := "res://art/sprites/%s/walk.tres" % art_id
