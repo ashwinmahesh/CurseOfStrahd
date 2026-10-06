@@ -627,7 +627,7 @@ func _advance_party(next: Vector2i) -> void:
 		var was := g.cell
 		g.cell = ahead
 		var gt := tokens[g.id] as CombatToken
-		gt.face(Vector2(ahead - was), true)
+		gt.face(Vector2(ahead - was), true, SNEAK_STEP_TIME if sneaking else STEP_TIME)
 		create_tween().tween_property(gt, "position", board.cell_center(ahead), (SNEAK_STEP_TIME if sneaking else STEP_TIME) * 0.95)
 		ahead = was
 
@@ -637,7 +637,7 @@ func _move_member(i: int, to: Vector2i) -> void:
 	var from := m.cell
 	m.cell = to
 	var tok := tokens[m.id] as CombatToken
-	tok.face(Vector2(to - from), true)
+	tok.face(Vector2(to - from), true, SNEAK_STEP_TIME if sneaking else STEP_TIME)
 	var tw := create_tween()
 	tw.tween_property(tok, "position", board.cell_center(to), (SNEAK_STEP_TIME if sneaking else STEP_TIME) * 0.95)
 

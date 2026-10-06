@@ -6,7 +6,7 @@ Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverag
 
 ## Commands (add new ones to the Makefile)
 make run | arena | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
-make sprite TURNAROUND=<png> ID=<id> [STATIC=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | standin | wireframes
+make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 
@@ -46,6 +46,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - Set dressing (docs/art/set_dressing.md): a location's props, containers, doors and exits are dressed from
   art/sprites/props/catalog.json by `model` or id; a new model needs art there (test_set_dressing checks). Towns are
   built by TownBuilder (houses, roofs, yard walls). Never fall back to plain boxes for new content.
+- Every character sprite walks and attacks in 8 directions (docs/art/animation.md; a test checks): after
+  `make sprite`, add the character to art/anim/animations.json and run `make anims ONLY=<id> GENERATE=1`.
 - UI draws on CanvasLayers so the palette pass never touches it.
 
 ## Done means
