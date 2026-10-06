@@ -1,0 +1,59 @@
+{
+  "id": "true_seeing",
+  "name": "True Seeing",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "cleric",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "mushroom powder worth 25+ GP, which the spell consumes",
+    "m_cost_gp": 25,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a willing creature you touch"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "sense",
+            "kind": "truesight",
+            "value": 120
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "detection",
+    "buff"
+  ],
+  "summary": "A willing creature you touch gains Truesight out to 120 feet.",
+  "text": "It sees in magical and normal darkness, sees invisible creatures and objects, spots visual illusions and shape-changers, and sees into the Ethereal Plane."
+}

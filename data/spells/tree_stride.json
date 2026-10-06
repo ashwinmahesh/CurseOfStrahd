@@ -1,0 +1,37 @@
+{
+  "id": "tree_stride",
+  "name": "Tree Stride",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "Step into a living tree and out of another of the same kind up to 500 feet away.",
+  "text": "Both trees must be at least your size. Once per turn while the spell lasts you can use 5 feet of movement to make the jump."
+}

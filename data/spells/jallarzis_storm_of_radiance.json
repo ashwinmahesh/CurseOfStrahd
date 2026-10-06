@@ -1,0 +1,79 @@
+{
+  "id": "jallarzis_storm_of_radiance",
+  "name": "Jallarzi's Storm of Radiance",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "evocation",
+  "classes": [
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "cylinder",
+    "size": 10,
+    "height": 40
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of phosphorus"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "2d10",
+      "type": "radiant"
+    },
+    {
+      "dice": "2d10",
+      "type": "thunder"
+    }
+  ],
+  "conditions": [
+    "blinded",
+    "deafened"
+  ],
+  "upcast": {
+    "damage": "1d10",
+    "text": "The Radiant and the Thunder damage each increase by 1d10 per slot level above 5."
+  },
+  "zone": {
+    "triggers": [
+      "enter",
+      "end_turn"
+    ],
+    "resolve_on_cast": true,
+    "silence": true,
+    "inside": {
+      "conditions": [
+        "blinded",
+        "deafened"
+      ]
+    }
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "A 10-foot-radius storm of light and thunder: Con save, 2d10 Radiant plus 2d10 Thunder, half on a success.",
+  "text": "Creatures inside are Blinded and Deafened and can't cast spells with a Verbal component. They save when it appears and when they enter it or end a turn there, once per turn."
+}

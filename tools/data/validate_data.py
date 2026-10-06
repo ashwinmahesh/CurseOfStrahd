@@ -114,7 +114,7 @@ def validate(value, schema, base, path, errors):
 
 
 # Content beyond this character level may reference data that later phases add (level 4+ spells).
-PHASE_MAX_LEVEL = 5  # back to 11 once the level 5-9 spells land (Phase 5, P5-02)
+PHASE_MAX_LEVEL = 11
 
 
 def load_all():

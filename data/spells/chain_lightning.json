@@ -1,0 +1,50 @@
+{
+  "id": "chain_lightning",
+  "name": "Chain Lightning",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 150
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "three silver pins"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 4,
+    "description": "one creature you can see, then up to three others within 30 feet of it"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "10d8",
+      "type": "lightning"
+    }
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "A bolt strikes one target and leaps to up to three more within 30 feet of it: Dex save, 10d8 Lightning each, half on a success.",
+  "text": "Each extra slot level above 6 adds one more leap."
+}

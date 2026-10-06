@@ -1,0 +1,39 @@
+{
+  "id": "commune",
+  "name": "Commune",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "divination",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "incense"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "detection",
+    "communication"
+  ],
+  "summary": "Ask your deity up to three yes-or-no questions.",
+  "text": "Each answer is a single word, or a short phrase if one word would mislead. Each extra casting before a Long Rest has a cumulative 25 percent chance of getting no answer."
+}

@@ -1,0 +1,41 @@
+{
+  "id": "dream",
+  "name": "Dream",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "special"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a handful of sand"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you know on the same plane"
+  },
+  "tags": [
+    "communication"
+  ],
+  "summary": "Speak to a creature on your plane through its dreams, or plague it with a nightmare.",
+  "text": "You or a willing messenger enter the target's dreams while it sleeps. A nightmare lets it make a Wis save; on a failure it gains no benefit from that rest and takes 3d6 Psychic damage when it wakes."
+}

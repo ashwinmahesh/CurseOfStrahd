@@ -1,0 +1,40 @@
+{
+  "id": "antilife_shell",
+  "name": "Antilife Shell",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "abjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "defense"
+  ],
+  "summary": "A 10-foot barrier around you that living creatures can't push through.",
+  "text": "Creatures other than Constructs and Undead can't move into the Emanation or reach through it, though they can still cast spells or make ranged attacks into it. If you move so that a blocked creature would be forced through it, the spell ends."
+}
