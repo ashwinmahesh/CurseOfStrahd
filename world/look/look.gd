@@ -31,6 +31,49 @@ static func cel(albedo_name: String) -> ShaderMaterial:
 	return m
 
 
+const CEL_WORLD_SHADER := preload("res://shaders/cel_world.gdshader")
+const TEXTURES_JSON := "res://art/textures/manifest.json"
+static var _textures: Dictionary = {}
+static var _textured: Dictionary = {}
+
+
+## The environment texture sets (art/textures/manifest.json, docs/art/textures.md).
+static func textures() -> Dictionary:
+	if _textures.is_empty() and FileAccess.file_exists(TEXTURES_JSON):
+		_textures = JSON.parse_string(FileAccess.get_file_as_string(TEXTURES_JSON)) as Dictionary
+	return _textures
+
+
+## The surface a board theme uses for a part ("floor", "wall", "roof" ...), e.g. "interior/wood_planks", or "".
+static func theme_surface(theme: String, part: String) -> String:
+	var themes := textures().get("arena_themes", {}) as Dictionary
+	return str((themes.get(theme, {}) as Dictionary).get(part, ""))
+
+
+## A cel material with a seamless world-mapped texture ("village/cobbles"), or null if the surface doesn't exist.
+## `grid` draws a faint square grid on top faces.
+static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
+	var key := "%s|%.2f" % [surface, grid]
+	if _textured.has(key):
+		return _textured[key] as ShaderMaterial
+	var parts := surface.split("/")
+	if parts.size() != 2:
+		return null
+	var info := (((textures().get("themes", {}) as Dictionary).get(parts[0], {}) as Dictionary).get(parts[1], {})) as Dictionary
+	var path := "res://" + str(info.get("file", ""))
+	if info.is_empty() or not ResourceLoader.exists(path):
+		return null
+	var m := ShaderMaterial.new()
+	m.shader = CEL_WORLD_SHADER
+	m.set_shader_parameter("albedo_tex", load(path) as Texture2D)
+	m.set_shader_parameter("tile_units", float(info.get("tile_world_units", 2.0)))
+	m.set_shader_parameter("wall_band", str(info.get("wrap", "xy")) == "x")
+	m.set_shader_parameter("grid_strength", grid)
+	m.set_shader_parameter("grid_line", color("ink"))
+	_textured[key] = m
+	return m
+
+
 static func cel_checker(a: String, b: String, line: String) -> ShaderMaterial:
 	var m := cel(a)
 	m.set_shader_parameter("checker", true)

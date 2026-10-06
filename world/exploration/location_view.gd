@@ -84,7 +84,7 @@ var _spawn_name := ""
 func _ready() -> void:
 	assert(not loc.is_empty(), "No location %s" % loc_id)
 	grid = CombatGrid.from_rows(loc["map"]["rows"] as Array)
-	board = ArenaBoard.build(grid, str(loc["map"].get("theme", "manor")))
+	board = ArenaBoard.build(grid, ArenaBoard.theme_for(loc["map"] as Dictionary))
 	add_child(board)
 	_build_environment()
 	_build_doors()
@@ -218,7 +218,13 @@ func _build_props() -> void:
 		if kind == "search" and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false)):
 			continue
 		var colour := {"examine": "parchment", "book": "ember", "search": "bone", "lever": "pewter", "decor": "stone"}.get(kind, "bone") as String
-		prop_nodes[id] = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), colour)
+		var sprite := _prop_art(prop)
+		var node: Node3D = null
+		if sprite != "":
+			node = board.prop_sprite(sprite, board.cell_center(_cell(prop["cell"])) - Vector3(0, 0, 0), 0.8)
+		if node == null:
+			node = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), colour)
+		prop_nodes[id] = node
 	for c: Variant in loc.get("containers", []):
 		var ct := c as Dictionary
 		if not StoryConditions.check(str(ct.get("when", "")), st):
@@ -226,6 +232,18 @@ func _build_props() -> void:
 		var looted := bool((st.loc_state(loc_id)["looted"] as Dictionary).get(str(ct["id"]), false))
 		container_nodes[str(ct["id"])] = _box(Vector3(0.8, 0.55, 0.55), board.cell_center(_cell(ct["cell"])) + Vector3(0, 0.28, 0),
 			"umber" if not looted else "peat")
+
+
+## Which billboard prop art (art/sprites/props) a prop looks like, from its model or id, or "" for a plain marker.
+static func _prop_art(prop: Dictionary) -> String:
+	var key := ("%s %s" % [prop.get("model", ""), prop.get("id", "")]).to_lower()
+	for pair: Array in [["well", "well"], ["grave", "gravestone"], ["crypt", "gravestone"], ["lantern", "lantern_post"],
+			["lamp", "lantern_post"], ["shelf", "bookshelf"], ["bookcase", "bookshelf"], ["bed", "bed"], ["table", "table"],
+			["barrel", "barrel"], ["crate", "crate"], ["stall", "market_stall"], ["cart", "wagon"], ["wagon", "wagon"],
+			["tree", "dead_tree"]]:
+		if key.contains(str(pair[0])):
+			return str(pair[1])
+	return ""
 
 
 func _build_lights() -> void:
