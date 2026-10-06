@@ -32,6 +32,10 @@ PALETTE = [
 UI_PALETTE = [
     ("ui_black", "120709"), ("ui_oxblood", "2a0c12"), ("ui_wine", "4f1420"),
     ("gilt_dark", "6b4f24"), ("gilt", "b08a3e"), ("gilt_light", "e2c475"),
+    # The owner's Crimson settings concept, exactly (the pause menu matches it: docs/ui/look.md).
+    ("arch_back", "0f0a0b"), ("arch_top", "4a121b"), ("arch_bottom", "1f070b"), ("arch_button", "33090f"),
+    ("arch_button_lit", "6e1a26"), ("arch_track", "160407"), ("arch_gold", "b8913f"), ("arch_gold_light", "e3c47c"),
+    ("arch_text", "f0e2c0"),
 ]
 
 

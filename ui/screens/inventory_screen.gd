@@ -142,7 +142,7 @@ func _draw() -> void:
 		var id := str(e["id"])
 		var line := HBoxContainer.new()
 		line.add_theme_constant_override("separation", 10)
-		UiParts.add_icon(line, "item", id)
+		UiParts.add_icon(line, "item", str(MagicItems.shown_data(data, e).get("id", id)))
 		var nm := UiKit.label(MagicItems.display_name(data, e) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""), 15, "gilt_light" if id == selected else "vellum")
 		nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		line.add_child(nm)
@@ -252,17 +252,19 @@ func _draw_card() -> void:
 		return
 	var ch := _ch()
 	var data := Compendium.shared().item_data(selected)
+	# A disguised item (a Potion of Poison) shows what it passes for until it's identified.
+	var shown := MagicItems.shown_data(data, _entry(selected))
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 10)
-	UiParts.add_icon(head, "item", selected, 48.0)
+	UiParts.add_icon(head, "item", str(shown.get("id", selected)), 48.0)
 	var t := UiKit.title(MagicItems.display_name(data, _entry(selected)))
 	t.add_theme_font_size_override("font_size", 26)
 	head.add_child(t)
 	_card.add_child(head)
 	var facts := HBoxContainer.new()
 	facts.add_theme_constant_override("separation", 6)
-	for f: Array in [["Kind", str(data.get("category", "")).capitalize()], ["Weight", "%s lb" % str(data.get("weight_lb", 0))],
-			["Value", "%s gp" % str(data.get("cost_gp", 0))]]:
+	for f: Array in [["Kind", str(shown.get("category", "")).capitalize()], ["Weight", "%s lb" % str(shown.get("weight_lb", 0))],
+			["Value", "%s gp" % str(shown.get("cost_gp", 0))]]:
 		var box := VBoxContainer.new()
 		box.add_theme_constant_override("separation", -2)
 		box.add_child(UiParts.caption(str(f[0]), 10))
@@ -297,9 +299,9 @@ func _draw_card() -> void:
 		if int(arm.get("strength", 0)) > ch.ability_score(&"str"):
 			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "gilt", 420))
 	_card.add_child(UiParts.section("Description"))
-	_card.add_child(UiKit.label(str(data.get("text", data.get("summary", ""))), 14, "vellum", 420))
+	_card.add_child(UiKit.label(str(shown.get("text", shown.get("summary", ""))), 14, "vellum", 420))
 	# Magic items: rarity and attunement (three items at most; attuning takes a Short Rest).
-	var magic := data.get("magic", {}) as Dictionary
+	var magic := shown.get("magic", {}) as Dictionary
 	if not magic.is_empty():
 		var needs: Variant = magic.get("attunement", false)
 		var req := ""
@@ -327,6 +329,7 @@ func _draw_card() -> void:
 				att.tooltip_text = why
 				_card.add_child(att)
 			_card.add_child(UiKit.label("Attuned: %d of %d" % [ch.attuned.size(), Character.MAX_ATTUNED], 13, "parchment"))
+		_identify_row(ch, data)
 		_magic_card(ch, data)
 	# Actions
 	_card.add_child(UiParts.section("Actions"))
@@ -366,11 +369,16 @@ func _draw_card() -> void:
 			ch.equip(selected, "off_hand")
 			_draw(), 14))
 	# Using it outside a fight: a potion's drink, a wand's Detect Magic, a manual's study (story/field_items.gd).
+	var disguised := MagicItems.is_disguised(data, entry)
 	for opt in FieldItems.options(st.party, ch, selected, Dice.roller):
 		var label := "Use: %s" % str(opt["label"]) if str(opt["label"]) != "Drink" else "Drink"
 		var choices := opt.get("choices", []) as Array
 		var pid := str(opt["power_id"])
-		if choices.is_empty():
+		if disguised:
+			opt["text"] = str(shown.get("summary", ""))
+		if opt.has("store"):
+			_store_picker(acts, opt)
+		elif choices.is_empty():
 			var ub := UiKit.button(label, func() -> void: _use_power(pid, {}), 14)
 			ub.disabled = not bool(opt["legal"])
 			ub.tooltip_text = str(opt["reason"]) if not bool(opt["legal"]) else str(opt.get("text", ""))
@@ -470,7 +478,7 @@ func _worn_row(ch: Character, e: Dictionary) -> Control:
 	var data := Compendium.shared().item_data(str(e["id"]))
 	var line := HBoxContainer.new()
 	line.add_theme_constant_override("separation", 10)
-	UiParts.add_icon(line, "item", str(e["id"]))
+	UiParts.add_icon(line, "item", str(MagicItems.shown_data(data, e).get("id", e["id"])))
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 0)
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -557,10 +565,70 @@ func _show_put_in(res: String) -> void:
 			_card.add_child(UiKit.label(res, 14, "flame", 420))
 
 
+## Ring of Spell Storing: pick who casts which spell into the ring, then store it.
+func _store_picker(acts: Control, opt: Dictionary) -> void:
+	var pick := OptionButton.new()
+	var choices := opt["store"] as Array
+	for i in choices.size():
+		pick.add_item(str((choices[i] as Dictionary)["label"]), i)
+	pick.disabled = choices.is_empty() or not bool(opt["legal"])
+	pick.tooltip_text = str(opt["reason"]) if not bool(opt["legal"]) else str(opt.get("text", ""))
+	acts.add_child(pick)
+	var pid := str(opt["power_id"])
+	var b := UiKit.button("Cast it into the ring", func() -> void:
+		if pick.selected < 0:
+			return
+		var c := choices[pick.selected] as Dictionary
+		_use_power(pid, {"caster": str(c["caster"]), "spell": str(c["spell"]), "level": int(c["level"])}), 14)
+	b.disabled = pick.disabled
+	b.tooltip_text = pick.tooltip_text
+	acts.add_child(b)
+
+
+## Identify: a party caster with the spell casts it as a Ritual (no slot); otherwise a Short Rest spent studying the item
+## (the Rest screen) does the same. Offered for every magic item not yet identified, so it gives nothing away.
+func _identify_row(ch: Character, data: Dictionary) -> void:
+	var e := _entry(selected)
+	if not MagicItems.can_identify(data, e):
+		return
+	var caster := _identify_caster()
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	var b := UiKit.button("Identify (%s casts it as a Ritual: 11 minutes)" % caster.name.get_slice(" ", 0) if caster != null else "Identify", func() -> void:
+		var res := FieldCasting.cast_utility(st, caster, "identify", true)
+		var msg := _identified(ch, data) if bool(res["ok"]) else "Can't: %s" % res["text"]
+		_draw()
+		_card.add_child(UiKit.label(msg, 15, "bile" if bool(res["ok"]) else "flame", 420)), 14)
+	b.disabled = caster == null
+	b.tooltip_text = "Nobody in the party has Identify ready. Studying it through a Short Rest (Rest screen) works too." if caster == null else \
+		"Learn what it is, how it works and its charges. A curse stays hidden until someone attunes to it."
+	row.add_child(b)
+	_card.add_child(row)
+
+
+## Marks the selected item identified and says what it turned out to be.
+func _identified(ch: Character, data: Dictionary) -> String:
+	var seemed := MagicItems.display_name(data, _entry(selected))
+	var name_ := ch.identify(selected)
+	return "It's exactly what it seems: %s." % name_ if name_ == seemed else "It isn't a %s at all: it's a %s!" % [seemed, name_]
+
+
+## A living party member who can cast Identify now (prepared, or as a Ritual), or null.
+func _identify_caster() -> Character:
+	for m in st.party:
+		for o in FieldCasting.utility_options(st.party, m, Dice.roller):
+			if str(o["id"]) == "identify" and bool(o["legal"]) and bool(o["ritual"]):
+				return m
+	return null
+
+
 ## Uses a magic item's power outside a fight (story/field_items.gd) and shows what happened.
 func _use_power(power_id: String, opts: Dictionary) -> void:
 	var ch := _ch()
 	var res := FieldItems.use(st, ch, selected, power_id, ch, Dice.roller, opts)
+	# What it does to the place the party is in (a Wand of Secrets' pointing, a Wand of Magic Detection's Detect Magic).
+	if bool(res.get("ok", false)) and str(res.get("effect", "")) != "" and root != null and root.get("view") != null:
+		(root.get("view") as LocationView).apply_spell_effect(str(res["effect"]))
 	if _entry(selected).is_empty():
 		selected = ""
 	if root.has_method("_refresh"):

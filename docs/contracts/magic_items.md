@@ -10,7 +10,8 @@ ADR 0012. Schema: `data/schemas/item.schema.json`. Text and summaries are our ow
 | `magic.attunement` | `true`, or the requirement in words ("by a Wizard", "by a Spellcaster", "by a Cleric, Druid, or Paladin"); classes, "spellcaster" and species are checked, alignment isn't tracked |
 | `magic.charges` | `max` (number or dice), `start`, `regain` (dice or "all"), `when` (dawn, dusk, long, short, never), `last` ({die, on, result: destroyed / nonmagical, text}: what happens when the last charge goes) |
 | `magic.cursed`, `magic.curse` | a curse (attunement can't end until Remove Curse lifts it; `curse` is shown once attuned) |
-| `appears_as` | the item it passes for until identified (Potion of Poison, Dust of Sneezing and Choking) |
+| `appears_as` | the item it passes for until identified or attuned to (Potion of Poison, Dust of Sneezing and Choking) |
+| `disguise` | `{name, summary, text}` it shows until identified or attuned to, when it imitates no real item (Armor of Vulnerability as "{base} of Slashing Resistance") |
 | `worn` | head, eyes, neck, cloak, robe, wrists, hands, belt, feet, ring (two), ioun (any number) |
 | `held` | works only in a hand (default for wands, rods and staffs) |
 | `consumable` | used up by its power (default for potions and scrolls) |
@@ -58,6 +59,12 @@ for its `duration`); a Spell Scroll an implicit "Read".
   `on_dawn`, `on_dusk`, `items_passage`, `put_in` / `take_out` / `contents_of`, `remove_one` (returns the state to pass
   to `add_item(id, qty, state)`).
 - `Treasure.placed(st, loc_id)` rolls (once) and returns a location's random magic items by container.
+- Identifying: `MagicItems.is_disguised` / `shown_data` / `display_name(item, entry)` (what the player sees),
+  `Character.identify(item_id)`; `identified` on the entry. The item card offers Identify; the Rest screen offers
+  studying one item per character through a Short Rest.
+- In the world: `FieldItems.use` returns an `effect` the inventory hands to `LocationView.apply_spell_effect` (a Wand of
+  Secrets' "secrets", a wand's Detect Magic); lock openers are on `LocationView.actions_to_unlock` ("chime",
+  "mystery_key"), and Gloves of Thievery's `lockpick_plus_5` flag is in `_pick_bonus`.
 - Encounter hooks (combat/combat_items.gd): `hit_damage_dice`, `after_hit`, `after_miss`, `before_roll`,
   `against_damage`, `adjust_incoming`, `on_damaged`, `before_d20`, `after_d20`, `crit_allowed`, `attack_blocked`,
   `spell_blocked`, `absorbs_spell`, `turns_spell`, `filter_magic_effect`, `reveals_invisible`, `initiative_advantage`,

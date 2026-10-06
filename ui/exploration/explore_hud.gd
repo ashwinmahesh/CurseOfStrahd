@@ -78,7 +78,9 @@ func build(state: StoryState) -> void:
 	s.bg_color = Color(Look.color("ui_black"), 0.85)
 	s.border_color = Look.color("gilt_dark")
 	s.set_border_width_all(2)
-	s.set_corner_radius_all(2)
+	# Bevelled corners like every other panel (owner, 2026-10-06: not plain squares).
+	s.set_corner_radius_all(10)
+	s.corner_detail = 1
 	s.set_content_margin_all(18)
 	narr_panel.add_theme_stylebox_override("panel", s)
 	narr_panel.anchor_left = 0.5

@@ -11,6 +11,7 @@ var _box: VBoxContainer
 var _log: Label
 var _short_done := false   ## Arcane Recovery comes after a finished Short Rest
 var _long_done := false    ## after a Long Rest, casters may change their prepared spells
+var _study: Dictionary = {}  ## character id -> the magic item they study through the Short Rest (identifies it)
 
 
 func _init() -> void:
@@ -114,6 +115,52 @@ func _draw() -> void:
 			b.tooltip_text = "Roll it and add your Constitution modifier (minimum 1)."
 			row.add_child(b)
 		_box.add_child(UiParts.row(row))
+		_study_row(ch)
+
+
+## 2024: a character can spend a Short Rest handling one magic item and learns what it is (Identify without the spell).
+func _study_row(ch: Character) -> void:
+	var items: Array[String] = []
+	for e in ch.inventory:
+		var iid := str(e["id"])
+		if int(e.get("qty", 0)) > 0 and MagicItems.can_identify(Compendium.shared().item_data(iid), e) and not iid in items:
+			items.append(iid)
+	if items.is_empty() or ch.dead:
+		return
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	row.add_child(UiParts.caption("%s studies during the Short Rest:" % ch.name.get_slice(" ", 0), 12))
+	var pick := OptionButton.new()
+	pick.add_item("Nothing", 0)
+	for i in items.size():
+		var e2 := ch.entry_of(items[i])
+		pick.add_item(MagicItems.display_name(Compendium.shared().item_data(items[i]), e2), i + 1)
+		if str(_study.get(ch.id, "")) == items[i]:
+			pick.select(i + 1)
+	pick.tooltip_text = "Learn what the item is and how it works by the end of the rest (a curse stays hidden)."
+	pick.item_selected.connect(func(idx: int) -> void:
+		if idx <= 0:
+			_study.erase(ch.id)
+		else:
+			_study[ch.id] = items[idx - 1])
+	row.add_child(pick)
+	_box.add_child(UiParts.row(row))
+
+
+## Identifies what each character studied through the Short Rest: "" or a line for the log.
+func _finish_study(rested: Array[Character]) -> String:
+	var lines: Array[String] = []
+	for ch in rested:
+		var iid := str(_study.get(ch.id, ""))
+		var e := ch.entry_of(iid)
+		if iid == "" or e.is_empty():
+			continue
+		var data := Compendium.shared().item_data(iid)
+		var seemed := MagicItems.display_name(data, e)
+		var real := ch.identify(iid)
+		lines.append("%s learns the %s is %s." % [ch.name.get_slice(" ", 0), seemed, "just what it seemed" if real == seemed else "really a %s" % real])
+	_study.clear()
+	return " ".join(lines)
 
 
 func _spend(ch: Character, die: int) -> void:
@@ -125,6 +172,7 @@ func _spend(ch: Character, die: int) -> void:
 func _finish_short() -> void:
 	Audio.sfx("rest")
 	var denied: Array[String] = []
+	var rested: Array[Character] = []
 	for ch in st.party:
 		if ch.dead:
 			continue
@@ -132,6 +180,7 @@ func _finish_short() -> void:
 			denied.append(ch.name)
 			continue
 		ch.finish_short_rest()
+		rested.append(ch)
 	for g in st.guests:
 		if not g.dead:
 			g.finish_short_rest()
@@ -139,6 +188,9 @@ func _finish_short() -> void:
 	_log.text = "An hour passes. Short-rest features are back."
 	if not denied.is_empty():
 		_log.text += " The Mists give %s no rest (Mist Walker)." % ", ".join(denied)
+	var studied := _finish_study(rested)
+	if studied != "":
+		_log.text += " " + studied
 	_narrate("rest:short")
 	_short_done = true
 	_draw()

@@ -198,3 +198,34 @@ func test_preparing_spells_after_a_long_rest() -> void:
 	(btn[0] as Button).pressed.emit()
 	await _frames(2)
 	assert_eq(rest.find_children("*", "PrepareScreen", true, false).size(), 1)
+
+
+func test_quicksave_from_the_pause_menu() -> void:
+	# A new game has no slot: the first quicksave makes one, and later ones go over it.
+	SaveSystem.current_slot = ""
+	root.call("open_screen", "menu", 0)
+	await _frames(1)
+	var menu := root.get("screen") as PauseMenu
+	var quick := menu.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text.begins_with("Quicksave"))
+	assert_eq(quick.size(), 1, "a Quicksave button")
+	(quick[0] as Button).pressed.emit()
+	var slot := SaveSystem.current_slot
+	assert_true(slot != "" and SaveSystem.has_slot(slot), "the first quicksave made the game's slot")
+	var count := SaveSystem.list_slots().size()
+	var ev := InputEventKey.new()
+	ev.physical_keycode = KEY_F5
+	ev.pressed = true
+	menu.call("_unhandled_input", ev)
+	assert_eq(SaveSystem.current_slot, slot, "F5 saves over the same slot")
+	assert_eq(SaveSystem.list_slots().size(), count, "no new slot")
+	# A loaded game quicksaves over the slot it came from.
+	assert_eq(SaveSystem.save("test_loaded"), OK)
+	SaveSystem.current_slot = ""
+	assert_eq(SaveSystem.load_slot("test_loaded"), OK)
+	assert_eq(SaveSystem.current_slot, "test_loaded")
+	assert_eq(SaveSystem.quick_save(), OK)
+	assert_eq(SaveSystem.current_slot, "test_loaded")
+	SaveSystem.delete_slot("test_loaded")
+	SaveSystem.delete_slot(slot)
+	SaveSystem.current_slot = ""
+	root.call("close_screen")

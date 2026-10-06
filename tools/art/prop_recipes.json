@@ -911,6 +911,123 @@
         "chest_of_drawers_front",
         "wine_shelf_front"
       ]
+    },
+    "dh_book_wall_a": {
+      "view": "wall",
+      "items": [
+        "stag_head",
+        "fireplace_sword",
+        "carved_paneling",
+        "fireplace_valley"
+      ]
+    },
+    "dh_book_wall_b": {
+      "view": "wall",
+      "items": [
+        "family_portrait",
+        "fireplace_windmill",
+        "fireplace_dancers",
+        "portrait_couple"
+      ]
+    },
+    "dh_book_wall_c": {
+      "view": "wall",
+      "items": [
+        "mirror_full",
+        "skeleton_shackles",
+        "wall_alcoves",
+        "linen_shelves_front"
+      ]
+    },
+    "dh_book_floor": {
+      "view": "floor",
+      "items": [
+        "tiger_rug",
+        "straw_pallet",
+        "rug_runner",
+        "bone_scatter"
+      ]
+    },
+    "pair_stuffed_wolf_armor_wolf_helm": {
+      "view": "pair",
+      "items": [
+        "stuffed_wolf",
+        "stuffed_wolf_back",
+        "armor_wolf_helm",
+        "armor_wolf_helm_back"
+      ]
+    },
+    "pair_skeleton_leather_harp": {
+      "view": "pair",
+      "items": [
+        "skeleton_leather",
+        "skeleton_leather_back",
+        "harp",
+        "harp_back"
+      ]
+    },
+    "pair_tub_wooden_crib_shroud": {
+      "view": "pair",
+      "items": [
+        "tub_wooden",
+        "tub_wooden_back",
+        "crib_shroud",
+        "crib_shroud_back"
+      ]
+    },
+    "pair_statue_strahd_barrel_spigot": {
+      "view": "pair",
+      "items": [
+        "statue_strahd",
+        "statue_strahd_back",
+        "barrel_spigot",
+        "barrel_spigot_back"
+      ]
+    },
+    "pair_doll_yellow_chair_high": {
+      "view": "pair",
+      "items": [
+        "doll_yellow",
+        "doll_yellow_back",
+        "chair_high",
+        "chair_high_back"
+      ]
+    },
+    "p6_stand_a": {
+      "view": "stand",
+      "items": [
+        "statue_mother_night",
+        "frozen_traveller",
+        "brazier_green",
+        "bier"
+      ]
+    },
+    "p6_stand_b": {
+      "view": "stand",
+      "items": [
+        "poppet",
+        "receipt_table",
+        "frozen_birds",
+        "soul_bags"
+      ]
+    },
+    "p6_wall": {
+      "view": "wall",
+      "items": [
+        "wall_chains",
+        "notes_wall",
+        "gear_brake",
+        "amber_doors"
+      ]
+    },
+    "p6_floor": {
+      "view": "floor",
+      "items": [
+        "glass_ring",
+        "snowdrift",
+        "ice_patch",
+        "scattered_notes"
+      ]
     }
   },
   "props": {
@@ -2155,6 +2272,229 @@
       "height": 1.8,
       "mount": "front",
       "subject": "a tall wooden wine rack of square cubbies full of dusty dark wine bottles lying on their sides"
+    },
+    "stag_head": {
+      "subject": "a mounted stag's head with great antlers on a dark oak plaque",
+      "height": 0.8
+    },
+    "fireplace_sword": {
+      "subject": "a white marble fireplace with a carved mantel, low embers in the hearth and a longsword mounted on the wall above the mantel",
+      "height": 1.15
+    },
+    "carved_paneling": {
+      "subject": "a section of dark oak wall paneling richly carved with vines, flowers, nymphs and satyrs, with tiny serpents and skulls hidden among the leaves",
+      "height": 1.1
+    },
+    "fireplace_valley": {
+      "subject": "a marble fireplace with low embers and, above the mantel, a painting of an alpine valley in a heavy mahogany frame",
+      "height": 1.15
+    },
+    "family_portrait": {
+      "subject": "an oil portrait in a gilt frame: a stern nobleman holding a swaddled baby, his wife looking at the baby with scorn, a smiling girl and a smiling small boy holding a stuffed wolf toy",
+      "height": 0.85,
+      "saturate": 1.1
+    },
+    "fireplace_windmill": {
+      "subject": "a dark stone fireplace with low embers and, above the mantel, a painting of a windmill on a rocky crag",
+      "height": 1.15
+    },
+    "fireplace_dancers": {
+      "subject": "a pale marble fireplace with low embers and little white alabaster dancer figurines along its mantel",
+      "height": 1.1
+    },
+    "portrait_couple": {
+      "subject": "a dusty oil portrait in a gilt frame of a stern nobleman and his cold, beautiful wife",
+      "height": 0.75
+    },
+    "mirror_full": {
+      "subject": "a tall full-length mirror in a carved dark wooden frame, its glass dim grey-blue",
+      "height": 1.15
+    },
+    "skeleton_shackles": {
+      "subject": "a skeleton in tattered rags hanging from rusty iron shackles chained to a stone wall",
+      "height": 1.0
+    },
+    "wall_alcoves": {
+      "subject": "a stone wall with three small arched alcoves holding odd trinkets: a skull, a tarnished bell, a doll's hand, a candle stub",
+      "height": 1.0
+    },
+    "linen_shelves_front": {
+      "subject": "tall wooden shelves stacked with folded sheets and blankets and bars of soap, a broom leaning beside them",
+      "height": 1.8,
+      "mount": "front"
+    },
+    "tiger_rug": {
+      "subject": "a rotting tiger-skin rug with the tiger's head, moth-eaten",
+      "width": 1.7,
+      "mount": "floor"
+    },
+    "straw_pallet": {
+      "subject": "a straw sleeping pallet with a coarse grey blanket",
+      "width": 1.0,
+      "mount": "floor"
+    },
+    "rug_runner": {
+      "subject": "a long worn red runner rug with a faded gold border",
+      "width": 1.0,
+      "mount": "floor",
+      "saturate": 1.2
+    },
+    "bone_scatter": {
+      "subject": "a scatter of old gnawed bones and a broken skull",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "stuffed_wolf": {
+      "subject": "a stuffed grey wolf standing snarling on a low wooden plinth, glass eyes",
+      "height": 0.9
+    },
+    "armor_wolf_helm": {
+      "subject": "a suit of chain armour on a stand with a wolf-head visored helm, holding a spear upright",
+      "height": 1.9
+    },
+    "skeleton_leather": {
+      "subject": "a skeleton in old leather armour slumped sitting against nothing, three darts stuck in its ribs",
+      "height": 0.8
+    },
+    "harp": {
+      "subject": "a tall standing harp of gilded carved wood with many strings",
+      "height": 1.6
+    },
+    "tub_wooden": {
+      "subject": "a round wooden bathtub with iron hoops standing on clawed iron feet",
+      "height": 0.8
+    },
+    "crib_shroud": {
+      "subject": "a baby's crib draped in a black shroud, a wrapped blanket inside",
+      "height": 1.0
+    },
+    "statue_strahd": {
+      "subject": "a painted wooden statue of a gaunt pale man in a black cloak, one hand resting on a wolf's head, the other holding a smoky crystal orb",
+      "height": 1.9
+    },
+    "barrel_spigot": {
+      "subject": "a wooden barrel under a dry pipe and spigot coming down from above",
+      "height": 1.2
+    },
+    "doll_yellow": {
+      "subject": "a porcelain doll in a yellow lace dress sitting on a small stool",
+      "height": 0.6,
+      "saturate": 1.2
+    },
+    "chair_high": {
+      "subject": "a tall high-backed carved wooden chair with a red velvet seat",
+      "height": 1.2,
+      "saturate": 1.1
+    },
+    "stuffed_wolf_back": {
+      "height": 0.9,
+      "back_of": "stuffed_wolf"
+    },
+    "armor_wolf_helm_back": {
+      "height": 1.9,
+      "back_of": "armor_wolf_helm"
+    },
+    "skeleton_leather_back": {
+      "height": 0.8,
+      "back_of": "skeleton_leather"
+    },
+    "harp_back": {
+      "height": 1.6,
+      "back_of": "harp"
+    },
+    "tub_wooden_back": {
+      "height": 0.8,
+      "back_of": "tub_wooden"
+    },
+    "crib_shroud_back": {
+      "height": 1.0,
+      "back_of": "crib_shroud"
+    },
+    "statue_strahd_back": {
+      "height": 1.9,
+      "back_of": "statue_strahd"
+    },
+    "barrel_spigot_back": {
+      "height": 1.2,
+      "back_of": "barrel_spigot"
+    },
+    "doll_yellow_back": {
+      "height": 0.6,
+      "saturate": 1.2,
+      "back_of": "doll_yellow"
+    },
+    "chair_high_back": {
+      "height": 1.2,
+      "saturate": 1.1,
+      "back_of": "chair_high"
+    },
+    "statue_mother_night": {
+      "subject": "a dark wooden shrine statue of Mother Night, a cloaked goddess with a wolf's head, on a stone plinth with bones and dead flowers at its foot",
+      "height": 2.0
+    },
+    "frozen_traveller": {
+      "subject": "a dead traveller frozen solid, sitting hunched in a cloak rimed with frost and snow, a pack beside him",
+      "height": 0.9
+    },
+    "brazier_green": {
+      "subject": "an iron brazier burning with cold pale green flames",
+      "height": 1.1
+    },
+    "bier": {
+      "subject": "a stone bier draped in a white cloth with a veiled young woman lying still upon it",
+      "height": 0.9
+    },
+    "poppet": {
+      "subject": "a crude poppet doll of sackcloth and twigs stuck with thorns, propped on a small stand",
+      "height": 0.5
+    },
+    "receipt_table": {
+      "subject": "a small flour-dusted wooden table with an open receipt book, a rolling pin and a jar of flour",
+      "height": 0.8
+    },
+    "frozen_birds": {
+      "subject": "small dead birds frozen solid on a bare branch stuck in the snow, rimed with frost",
+      "height": 0.9
+    },
+    "soul_bags": {
+      "subject": "a row of little cloth bags tied shut with string hanging from hooks on a wooden rail on two posts",
+      "height": 1.3
+    },
+    "wall_chains": {
+      "subject": "heavy silver chains and shackles bolted to a rough rock wall",
+      "height": 1.0
+    },
+    "notes_wall": {
+      "subject": "a wall covered with hundreds of pinned scraps of notes, diagrams and sketches, no readable words",
+      "height": 1.0
+    },
+    "gear_brake": {
+      "subject": "a huge wooden gear wheel with a lever brake, mounted on a wooden beam",
+      "height": 1.1
+    },
+    "amber_doors": {
+      "subject": "a pair of tall closed stone doors set with glowing honey-gold amber panels",
+      "height": 1.15
+    },
+    "glass_ring": {
+      "subject": "a ring of fused cracked glass glinting in the ground where lightning struck",
+      "width": 1.4,
+      "mount": "floor"
+    },
+    "snowdrift": {
+      "subject": "a soft heap of drifted snow",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "ice_patch": {
+      "subject": "a patch of slick blue-white ice with cracks",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "scattered_notes": {
+      "subject": "scraps of paper and notes scattered on the floor",
+      "width": 0.9,
+      "mount": "floor"
     }
   },
   "pair_prompt": "A game prop sheet: two objects, each shown twice, arranged in a 2 by 2 grid with wide empty white space between the four drawings; nothing touches or crosses the middle of the image. Every drawing uses the same three-quarter view from slightly above, and each object is turned the same way in its pair: its front faces toward the lower right of the picture. Top left: {0}, seen from the front. Top right: the very same object seen from directly behind at the same angle, so its back faces toward the lower right. Bottom left: {1}, seen from the front. Bottom right: the very same object seen from directly behind at the same angle. Same colours, size and details in each pair, on a plain flat white background, no ground, no ground shadows, no labels, no text, no grid lines, no borders.",

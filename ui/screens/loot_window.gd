@@ -67,10 +67,11 @@ func _redraw() -> void:
 		_list.add_child(UiKit.label("Empty.", 15, "bone"))
 	for i in items.size():
 		var it := items[i] as Dictionary
-		var data := Compendium.shared().item_data(str(it["id"]))
+		# A disguised item (a Potion of Poison) shows only what it passes for.
+		var data := MagicItems.shown_data(Compendium.shared().item_data(str(it["id"])), it)
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 10)
-		UiParts.add_icon(row, "item", str(it["id"]))
+		UiParts.add_icon(row, "item", str(data.get("id", it["id"])))
 		var qty := int(it.get("qty", 1))
 		var n := UiKit.label("%s%s" % [data.get("name", it["id"]), " ×%d" % qty if qty > 1 else ""], 16, "vellum")
 		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -129,7 +130,7 @@ func _send_all() -> void:
 				break
 		if not placed:
 			_target().add_item(str(d["id"]), int(d.get("qty", 1)), d)
-			notes.append("%s is overloaded with %s" % [_target().name, data.get("name", d["id"])])
+			notes.append("%s is overloaded with %s" % [_target().name, MagicItems.display_name(data, d)])
 	items.clear()
 	_take_gold()
 	if not notes.is_empty() and view != null:

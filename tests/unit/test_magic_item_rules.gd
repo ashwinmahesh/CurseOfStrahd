@@ -245,3 +245,67 @@ func test_staff_of_power_guards_its_holder_and_casts_at_their_dc() -> void:
 	assert_true(r.ok, r.reason)
 	assert_true(bag.creature.hp < hp)
 	assert_eq(ch.charges_left("staff_of_power__quarterstaff"), 19)
+
+
+func test_identify_shows_what_a_disguised_item_really_is() -> void:
+	var ch := TestChars.pregen("ilse_varga", 3)
+	ch.add_item("potion_of_poison")
+	var data := _comp().item_data("potion_of_poison")
+	var e := ch.entry_of("potion_of_poison")
+	assert_true(MagicItems.is_disguised(data, e))
+	assert_eq(MagicItems.display_name(data, e), "Potion of Healing")
+	assert_eq(str(MagicItems.shown_data(data, e)["id"]), "potion_of_healing", "its card shows the healing potion")
+	assert_true(MagicItems.can_identify(data, e))
+	assert_eq(ch.identify("potion_of_poison"), "Potion of Poison")
+	assert_eq(MagicItems.display_name(data, ch.entry_of("potion_of_poison")), "Potion of Poison")
+	assert_false(MagicItems.can_identify(data, ch.entry_of("potion_of_poison")))
+	var copy := Character.from_dict(ch.to_dict())
+	assert_eq(MagicItems.display_name(data, copy.entry_of("potion_of_poison")), "Potion of Poison", "kept in the save")
+	# Every magic item can be identified, so the offer gives nothing away; attuning teaches an item too.
+	ch.add_item("cloak_of_protection")
+	assert_true(MagicItems.can_identify(_comp().item_data("cloak_of_protection"), ch.entry_of("cloak_of_protection")))
+	var avid := "armor_of_vulnerability_slashing__plate_armor"
+	ch.add_item(avid)
+	var av := _comp().item_data(avid)
+	assert_eq(MagicItems.display_name(av, ch.entry_of(avid)), "Plate Armor of Slashing Resistance")
+	assert_false((MagicItems.shown_data(av, ch.entry_of(avid))["magic"] as Dictionary).has("curse"), "no curse showing")
+	assert_true(MagicItems.is_cursed(av), "though it is cursed")
+	assert_true(ch.attune(avid))
+	assert_eq(MagicItems.display_name(av, ch.entry_of(avid)), "Plate Armor of Vulnerability (Slashing)", "attuning reveals it")
+
+
+func test_any_party_member_can_cast_a_spell_into_a_ring_of_spell_storing() -> void:
+	var st := StoryState.new()
+	var holder := TestChars.pregen("ilse_varga", 5)
+	var wizard := TestChars.pregen("silvain_aster", 5)
+	wizard.finish_long_rest()
+	st.party.append(holder)
+	st.party.append(wizard)
+	holder.add_item("ring_of_spell_storing")
+	var entry := holder.entry_of("ring_of_spell_storing")
+	entry["stored"] = []
+	var opts := FieldItems.options(st.party, holder, "ring_of_spell_storing", DiceRoller.new(3))
+	var store := {}
+	for o in opts:
+		if str(o["power_id"]) == "store":
+			store = o
+	assert_true(bool(store.get("legal", false)), "no attunement or wearing needed to cast into it: %s" % store.get("reason", ""))
+	var picks := store["store"] as Array
+	assert_false(picks.is_empty())
+	assert_true(picks.all(func(p: Variant) -> bool: return str((p as Dictionary)["caster"]) == wizard.id), "only the wizard casts")
+	var pick := picks[0] as Dictionary
+	var slots_before := wizard.slots_left(int(pick["level"]))
+	var res := FieldItems.use(st, holder, "ring_of_spell_storing", "store", null, DiceRoller.new(3),
+		{"caster": str(pick["caster"]), "spell": str(pick["spell"]), "level": int(pick["level"])})
+	assert_true(bool(res["ok"]), str(res["text"]))
+	var stored := holder.entry_of("ring_of_spell_storing")["stored"] as Array
+	assert_eq(stored.size(), 1)
+	assert_eq(str((stored[0] as Dictionary)["spell"]), str(pick["spell"]))
+	assert_eq(int((stored[0] as Dictionary)["dc"]), wizard.spell_save_dc(str(wizard.spellcasting[0]["class_id"])).total(), "the wizard's DC")
+	assert_eq(wizard.slots_left(int(pick["level"])), slots_before - 1, "the wizard's slot is spent")
+	entry = holder.entry_of("ring_of_spell_storing")
+	entry["stored"] = [{"spell": "x", "level": 5}]
+	var full := FieldItems.options(st.party, holder, "ring_of_spell_storing", DiceRoller.new(3))
+	for o2 in full:
+		if str(o2["power_id"]) == "store":
+			assert_false(bool(o2["legal"]), "a full ring takes nothing more")

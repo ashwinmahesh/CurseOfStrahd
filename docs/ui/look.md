@@ -22,6 +22,20 @@ a restyle pass.
   - Icons: `add_icon(row, "item" | "spell", id)`, `icon_on_button`, `action_icon` (hotbar). They use the `Icons`
     helper (ui/common/icons.gd) when it exists, and add nothing when it doesn't.
 
+## Shapes, not squares
+
+Owner, 2026-10-06, pointing at the Crimson settings concept: "Everything shouldn't just be squares." So:
+- Buttons are long hexagons (UiKit.button_style); the chosen or primary one carries lozenges at its points
+  (`UiParts.light_up`, `primary_button`, `mark_ends`).
+- Panels, cards and rows have bevelled corners (UiKit.style, `UiParts.card`); tabs have bevelled tops.
+- Hit Points and load bars come to points (`UiParts.bar`).
+- Each screen's title sits in a small pointed arch with a lozenge at its apex, and a flourish sits on the bottom
+  border (UiKit.screen_frame).
+- The pause menu is the concept itself, number for number (ui/screens/pause_menu.gd): the 280-unit arch scaled by
+  1.5, its exact colours (`arch_*` in the UI palette), Georgia, and its button, slider and footer geometry. Other
+  stand-alone menus can use the same pieces: `arch_points` + `gradient_fill` for the frame, `crest` at the apex,
+  `curl` at the shoulders, `title_rule` under the title, `footer_wave` and `brackets` below.
+
 ## Rules of thumb
 
 - Long rules text goes in a tooltip; the page keeps names, one-line summaries and tags.
