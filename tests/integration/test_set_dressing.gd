@@ -403,3 +403,20 @@ func test_props_in_an_undiscovered_room_stay_hidden() -> void:
 	letter = v.prop_nodes.get("strahd_letter", null) as Node3D
 	assert_true(letter != null and not letter.is_visible_in_tree(), "and stays hidden after the props are rebuilt")
 	v.queue_free()
+
+
+## Room rules are for rooms: Lake Zarovich's fishing landing isn't floored with a manor's marble, and its jetty is
+## planks, not grass running into the lake.
+func test_outdoor_areas_keep_outdoor_ground() -> void:
+	var v := _view("lake_zarovich")
+	await _frames(2)
+	var marble := Look.cel_textured("interior/marble_floor", 0.22)
+	var planks := Look.cel_textured("interior/wood_planks", 0.22)
+	var saw_planks := false
+	for n in v.board.get_children():
+		if n is MeshInstance3D:
+			var m := (n as MeshInstance3D).material_override
+			assert_false(m == marble, "no marble floor outdoors")
+			saw_planks = saw_planks or m == planks
+	assert_true(saw_planks, "the jetty is planks")
+	v.queue_free()

@@ -283,11 +283,14 @@ func _plan_rooms(loc: Dictionary) -> void:
 		var q0 := Vector2i(int(cells0[0][0]), int(cells0[0][1]))
 		var q1 := Vector2i(int(cells0[1][0]), int(cells0[1][1]))
 		areas.append(Rect2i(Vector2i(mini(q0.x, q1.x), mini(q0.y, q1.y)), (q1 - q0).abs() + Vector2i.ONE))
+		# Room rules are for rooms; an outdoor map has its own few (a jetty is planks), so a fishing "landing" isn't
+		# floored like a manor's.
+		var key := "rooms" if theme in INTERIORS or theme == "dungeon" else "outdoor_rooms"
 		if area.has("floor") or area.has("walls"):
 			# The data names this room's own surfaces (an area's `floor` and `walls`).
-			rules = [[[name_], {"floor": area.get("floor", ""), "wall": area.get("walls", "")}]] + (SetDressing.catalog().get("rooms", []) as Array)
+			rules = [[[name_], {"floor": area.get("floor", ""), "wall": area.get("walls", "")}]] + (SetDressing.catalog().get(key, []) as Array)
 		else:
-			rules = SetDressing.catalog().get("rooms", []) as Array
+			rules = SetDressing.catalog().get(key, []) as Array
 		for rule: Variant in rules:
 			var hit := false
 			for w: String in (rule as Array)[0]:
