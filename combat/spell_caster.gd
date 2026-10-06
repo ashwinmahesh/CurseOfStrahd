@@ -35,7 +35,7 @@ var summoned: Dictionary = {}
 
 
 ## Spells that call up a creature on a chosen square (combat/summon_blocks.gd).
-const SUMMON_SPELLS := ["summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration",
+const SUMMON_SPELLS := ["find_familiar", "summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration",
 	"summon_construct", "summon_elemental"]
 
 
@@ -76,13 +76,17 @@ func castable(c: Combatant) -> Array[Dictionary]:
 		# Mage Hand Legerdemain (Arcane Trickster 3): Mage Hand as a Bonus Action.
 		if id == "mage_hand" and CombatFeatures.has_feature(c, "mage_hand_legerdemain"):
 			unit = "bonus_action"
+		# Pact of the Chain: Find Familiar as a Magic action without a slot.
+		var chain := id == "find_familiar" and ClassFeatures.knows_invocation(c, "pact_of_the_chain")
+		if chain:
+			unit = "action"
 		var entry := {"id": id, "name": str(s["name"]), "level": level, "class_id": str(k.get("class_id", "")),
 			"ability": str(k.get("ability", "")), "free": false, "casting": unit, "legal": true, "reason": ""}
 		var res_id := "spell:%s" % id
 		if str(k["kind"]) == "granted" and ch.resource_left(res_id) > 0:
 			entry["free"] = true
 		# Warlock invocations that cast a spell at will (Armor of Shadows, Fiendish Vigor...).
-		if ClassFeatures.at_will(c, id):
+		if ClassFeatures.at_will(c, id) or chain:
 			entry["free"] = true
 			entry["at_will"] = true
 		var why := _why_not(c, s, entry)
@@ -296,7 +300,8 @@ func precast(c: Combatant, spell_id: String) -> bool:
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
 	enc().log.add("spell", "%s cast %s before the fight%s" % [c.name(), s["name"], " (level %d slot)" % slot if slot > 0 else ""], c.id)
-	var ctx := {"c": c, "s": s, "slot": slot, "nums": numbers(c, entry), "conc": conc, "opts": {}, "precast": true}
+	var ctx := {"c": c, "s": s, "slot": slot, "nums": numbers(c, entry), "conc": conc, "opts": {}, "precast": true,
+		"choice": str(c.get_meta("chain_form", "imp")) if spell_id == "find_familiar" and ClassFeatures.knows_invocation(c, "pact_of_the_chain") else ""}
 	var r := CombatResult.new()
 	match spell_id:
 		"find_familiar", "animate_dead":
@@ -417,9 +422,10 @@ func creatures_in(cells: Array[Vector2i]) -> Array[Combatant]:
 
 ## Who an area spell affects among the creatures in it: everyone (default for a point), everyone but the caster
 ## (default for areas from yourself), or "creatures of your choice" (`area_targets`: enemies / allies).
-func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i]) -> Array[Combatant]:
+func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: String = "") -> Array[Combatant]:
 	var self_area := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
 	var mode := str(s.get("area_targets", "others" if self_area else "all"))
+	mode = str((s.get("area_targets_by_choice", {}) as Dictionary).get(choice, mode))
 	var out: Array[Combatant] = []
 	for v in creatures_in(cells):
 		match mode:
@@ -480,7 +486,14 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		var qwhy := economy_block(c, "bonus_action")
 		entry["legal"] = qwhy == "" and str(entry["reason"]) in ["", "Action already used", "Only one Magic action this turn (Action Surge's action can't be Magic)"]
 		entry["reason"] = qwhy
-	if "subtle" in meta and (str(entry["reason"]) == "Can't speak" or str(entry["reason"]).begins_with("Silence")):
+	var silent_ok := "subtle" in meta or "psionic_sorcery" in meta \
+		or ("psychic_spells" in meta and str(_comp().spell_data(spell_id).get("school", "")) in ["enchantment", "illusion"])
+	# Psionic Sorcery pays with Sorcery Points: no slot needed, and it isn't a slot spell for the one-per-turn rule.
+	if "psionic_sorcery" in meta and (str(entry["reason"]).begins_with("No spell slots") or str(entry["reason"]).begins_with("Already cast a spell with a slot")):
+		entry["legal"] = true
+		entry["reason"] = ""
+		entry["free"] = true
+	if silent_ok and (str(entry["reason"]) == "Can't speak" or str(entry["reason"]).begins_with("Silence")):
 		entry["legal"] = true
 		entry["reason"] = ""
 	if war_magic and str(entry["reason"]) in ["Action already used", ""] and e.features_attack_why(c) == "" and int(_comp().spell_data(spell_id).get("level", 0)) == 0:
@@ -490,7 +503,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	var s := _comp().spell_data(spell_id)
 	var ch := c.creature as Character
 	var level := int(s.get("level", 0))
-	var use_free := bool(entry["free"]) and (bool(opts.get("free", false)) or slot <= level)
+	var use_free := bool(entry["free"]) and (bool(opts.get("free", false)) or slot <= level or "psionic_sorcery" in meta)
 	# Divine Intervention: the next Cleric spell of level 5 or lower needs no slot.
 	if level > 0 and c.has_meta("free_cleric_spell") and "cleric" in (s.get("classes", []) as Array) and level <= int(c.get_meta("free_cleric_spell")):
 		c.remove_meta("free_cleric_spell")
@@ -524,7 +537,10 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		e.spend_action(c)
 		c.magic_action_used = true
 	if level > 0:
-		if use_free:
+		if "psionic_sorcery" in meta:
+			ch.spend_resource("sorcery_points", level)
+			e.log.add("info", "%s shapes the spell with %d Sorcery Points (Psionic Sorcery)" % [c.name(), level], c.id)
+		elif use_free:
 			ch.spend_resource("spell:%s" % spell_id)
 		else:
 			ch.expend_slot(slot)
@@ -549,6 +565,9 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	var cells: Array[Vector2i] = []
 	if s.has("area"):
 		cells = area_for(c, s, point, direction, slot)
+	# Wall of Fire as a ring 20 ft across.
+	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and choice_of(s, opts) == "ring" and point != Vector2.INF:
+		cells = _ring(point, 10)
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells,
 		"targets": tgt.map(func(t: Combatant) -> String: return t.id)})
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": nums, "conc": conc, "opts": opts, "point": point,
@@ -708,6 +727,8 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 			tgt.append(t as Combatant)
 	var out := {"why": "", "targets": tgt, "cell": Vector2i(-1, -1)}
 	var rng := range_ft(s, c)
+	# Gaze of Two Minds: range and line of effect from the linked ally's space.
+	var from := e.class_features.cast_origin(c)
 	# Distant Spell: double range, Touch becomes 30 ft.
 	if bool(opts.get("range_mult", false)):
 		rng = 30 if str((s.get("range", {}) as Dictionary).get("kind", "")) == "touch" else rng * 2
@@ -746,7 +767,7 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 			out["why"] = "Choose a point"
 			return out
 		var pc := Vector2i(floori(point.x), floori(point.y))
-		if e.grid.distance_ft(c.cell, c.size_cells, pc, 1) > rng:
+		if e.grid.distance_ft(c.cell, c.size_cells, pc, 1) > rng and e.grid.distance_ft(from.cell, from.size_cells, pc, 1) > rng:
 			out["why"] = "That point is out of range (%d ft)" % rng
 		return out
 	if s.has("area") and not s.has("attack"):
@@ -765,10 +786,10 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		elif t.creature.dead:
 			out["why"] = "%s is dead" % t.name()
 			return out
-		if e.distance(c, t) > rng:
+		if e.distance(from, t) > rng and e.distance(c, t) > rng:
 			out["why"] = "%s is out of range (%d ft)" % [t.name(), rng]
 			return out
-		if t != c and int(e.cover(c, t)["cover"]) == CombatGrid.Cover.TOTAL:
+		if t != c and int(e.cover(from, t)["cover"]) == CombatGrid.Cover.TOTAL and int(e.cover(c, t)["cover"]) == CombatGrid.Cover.TOTAL:
 			out["why"] = "No line of effect to %s" % t.name()
 			return out
 		var only := str((s.get("targets", {}) as Dictionary).get("creature_type", ""))
@@ -851,6 +872,16 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		"dispel_magic":
 			_dispel(ctx, tgt[0], r)
 			return
+		"find_familiar":
+			if ClassFeatures.knows_invocation(c, "pact_of_the_chain"):
+				var form := str((ctx["opts"] as Dictionary).get("choice", "imp"))
+				ctx["choice"] = form if form in SummonBlocks.CHAIN_FORMS else "imp"
+			for old_id: Variant in summoned.get(c.id, []):
+				var oldf := enc().get_c(str(old_id))
+				if oldf != null and oldf.is_alive() and oldf.creature is Monster and bool((oldf.creature as Monster).data.get("familiar", false)):
+					_dismiss(oldf.id)
+			_summon(ctx, ctx["cell"] as Vector2i, r)
+			return
 		"summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration", "summon_construct", "summon_elemental":
 			_summon(ctx, ctx["cell"] as Vector2i, r)
 			return
@@ -894,7 +925,7 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 	var s := ctx["s"] as Dictionary
 	var victims: Array[Combatant] = tgt
 	if not cells.is_empty() and not s.has("attack"):
-		victims = _area_victims(c, s, cells)
+		victims = _area_victims(c, s, cells, str(ctx.get("choice", "")))
 	if s.has("attack"):
 		var count := 1
 		var dmg := s.get("damage", []) as Array
@@ -947,6 +978,8 @@ func _damage_dice(ctx: Dictionary, target: Combatant = null) -> String:
 func _damage_type(ctx: Dictionary, part: Dictionary = {}) -> String:
 	if ctx.has("transmute_to"):
 		return str(ctx["transmute_to"])
+	if "psychic_spells" in (ctx.get("metamagic", []) as Array):
+		return "psychic"
 	var s := ctx["s"] as Dictionary
 	var d := part if not part.is_empty() else (s.get("damage", []) as Array)[0] as Dictionary
 	if d.has("type"):
@@ -1403,6 +1436,30 @@ func _careful(ctx: Dictionary, t: Combatant) -> bool:
 	return true
 
 
+## Casting options that ride on the Metamagic menu without being Metamagic: Psychic Spells (Great Old One: Psychic
+## damage, no Verbal or Somatic components for Enchantment and Illusion) and Psionic Sorcery (Aberrant: Sorcery
+## Points equal to the spell's level instead of a slot).
+const CLASS_CAST_OPTIONS := ["psychic_spells", "psionic_sorcery"]
+## Aberrant Sorcery's Psionic Spells.
+const PSIONIC_SPELLS := ["arms_of_hadar", "calm_emotions", "detect_thoughts", "dissonant_whispers", "mind_sliver", "hunger_of_hadar",
+	"sending", "evards_black_tentacles", "summon_aberration", "raris_telepathic_bond", "telekinesis"]
+
+
+## The class casting options `c` could add to spell `s` now.
+func class_cast_options(c: Combatant, s: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	if not c.creature is Character:
+		return out
+	var classes := s.get("classes", []) as Array
+	if CombatFeatures.has_feature(c, "psychic_spells") and "warlock" in classes and (s.has("damage") or str(s.get("school", "")) in ["enchantment", "illusion"]):
+		out.append("psychic_spells")
+	var lvl := int(s.get("level", 0))
+	if CombatFeatures.has_feature(c, "psionic_sorcery") and str(s.get("id", "")) in PSIONIC_SPELLS and lvl >= 1 \
+			and (c.creature as Character).resource_left("sorcery_points") >= lvl:
+		out.append("psionic_sorcery")
+	return out
+
+
 ## The Metamagic choices' ids in the class data ("careful_spell"...), read as the option names below.
 const METAMAGIC_IDS := ["careful_spell", "distant_spell", "empowered_spell", "extended_spell", "heightened_spell", "quickened_spell",
 	"seeking_spell", "subtle_spell", "transmuted_spell", "twinned_spell"]
@@ -1420,6 +1477,10 @@ func _metamagic_check(c: Combatant, s: Dictionary, meta: Array) -> String:
 	var cost := 0
 	var main := 0
 	for m: String in meta:
+		if m in CLASS_CAST_OPTIONS:
+			if not m in class_cast_options(c, s):
+				return "Can't use %s on this spell" % m.capitalize().replace("_", " ")
+			continue
 		if not METAMAGIC_COST.has(m):
 			return "Unknown Metamagic %s" % m
 		if not m in metamagic_known(ch):
@@ -1453,7 +1514,9 @@ static func metamagic_known(ch: Character) -> Array[String]:
 func _pay_metamagic(c: Combatant, meta: Array) -> void:
 	var cost := 0
 	for m: String in meta:
-		cost += int(METAMAGIC_COST[m])
+		cost += int(METAMAGIC_COST.get(m, 0))
+	if cost == 0:
+		return
 	(c.creature as Character).spend_resource("sorcery_points", cost)
 	enc().log.add("info", "%s shapes the spell: %s (%d Sorcery Points)" % [c.name(), ", ".join(meta.map(func(x: String) -> String: return x.capitalize())), cost], c.id)
 
@@ -2346,7 +2409,18 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 		o.cell = oc
 	# Wall of Fire: the side that burns, 10 ft deep along the wall (the side `direction` points to).
 	if z.has("side_ft") and str(area_d.get("shape", "")) == "wall":
-		z["side_cells"] = _wall_side(ctx, cells, int(z["side_ft"]))
+		if str(ctx.get("choice", "")) == "ring":
+			# A ring burns on its inside.
+			var inside: Array = []
+			var pt2 := ctx["point"] as Vector2
+			for x in enc().grid.width:
+				for y in enc().grid.depth:
+					var cc := Vector2i(x, y)
+					if (Vector2(cc) + Vector2(0.5, 0.5)).distance_to(pt2) < 10 / float(CombatGrid.FEET) - 0.5 and not cc in cells:
+						inside.append([x, y])
+			z["side_cells"] = inside
+		else:
+			z["side_cells"] = _wall_side(ctx, cells, int(z["side_ft"]))
 	o.rules = z
 	if bool(z.get("spare_allies", false)):
 		for a in enc().allies_of(c):
@@ -2364,6 +2438,19 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 	_light_vs_darkness(o, int(ctx["slot"]))
 	zones.add(o, r)
 	r.lines.append(enc().log.add("spell", "%s fills %d squares" % [s["name"], cells.size()], c.id))
+
+
+## The squares of a ring wall `radius_ft` from its centre.
+func _ring(center: Vector2, radius_ft: int) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	var g := enc().grid
+	var r := radius_ft / float(CombatGrid.FEET)
+	for x in g.width:
+		for z in g.depth:
+			var p := Vector2(x + 0.5, z + 0.5)
+			if absf(p.distance_to(center) - r) <= 0.5 and not g.is_solid(Vector2i(x, z)):
+				out.append(Vector2i(x, z))
+	return out
 
 
 ## Squares within `feet` of a wall on one side of it: the side the cast's direction's left-hand normal points to.

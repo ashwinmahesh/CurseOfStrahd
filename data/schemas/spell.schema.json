@@ -896,6 +896,10 @@
         "type": "string"
       },
       "description": "Creature types that fail the save automatically (Blight: plant)."
+    },
+    "area_targets_by_choice": {
+      "type": "object",
+      "description": "Who the area affects for each cast-time choice (Calm Emotions' suppression: allies)."
     }
   }
 }

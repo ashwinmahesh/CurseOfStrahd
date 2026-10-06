@@ -32,8 +32,6 @@ started" in coverage.md, not a deviation.
 | Cast-time choices | The first option is the default; the hotbar's right-click menu picks another | Keeps one click for the common case | — |
 | Commander's Strike, Crown of Madness, Maneuvering Attack | The ally's attack target, the crowned creature's victim and the maneuvering ally are picked automatically (the best target in reach; the nearest ally) | Saves a second targeting step | With the targeting polish |
 | Charger, Lunging Attack | "Moved this turn" stands in for "moved 5 (10) ft in a straight line toward the target" | The grid path isn't tracked as straight lines | — |
-| Calm Emotions | Only the "indifferent" option; the Charmed/Frightened suppression option isn't offered | The enemy-pacifying option is the combat use | Phase 3 |
-| Bestow Curse | The ability-check curse always picks Wisdom | One fewer choice | With the cast-time choice UI |
 | Disarming Attack | The dropped weapon is picked up at the start of the creature's next turn (its free object interaction) | Items on the ground aren't modelled | Phase 4 inventory |
 | Levitate, Fly | No altitude on the grid: Levitate puts the target out of melee reach and stops its walking; flyers ignore ground terrain | The grid is flat | Phase 3 levels |
 | Blink, Etherealness, Plane Shift | Blinking back lands on the same square; a monster that escapes this way leaves the fight | Saves a placement step; the escape is what matters in a fight | — |
@@ -45,16 +43,17 @@ started" in coverage.md, not a deviation.
 | Repeatable Eldritch Invocations | Agonizing Blast, Eldritch Spear, Repelling Blast and Lessons of the First Ones can each be taken once | A choice pick is unique per option; taking one twice needs a second sub-choice | If a player asks for it |
 | Iron Mind (Gloom Stalker) | The player picks Wisdom, Intelligence or Charisma saves; the rule says Wisdom unless already proficient | The option text says so; enforcing it needs a "lacks proficiency" check on options | — |
 | Polymorph and Wild Shape forms | The creature becomes the Beast's stat block with its own Hit Points kept (Wild Shape also keeps Int, Wis, Cha and Proficiency Bonus); its gear, class features and spells wait until it changes back | A full merge of character and stat block is a large system; these are the parts a fight uses | — |
-| Find Steed | The steed fights beside its rider as its own creature; mounted combat (riding, controlled mounts) isn't modelled | No mounting on the grid yet | With mounts |
+| Mounted combat | Any willing ally a size larger can be mounted (half your Speed); a ridden ally is a controlled mount that moves on its rider's turn and can't attack; a mount moved against its will makes its rider save (DC 10 Dex) or fall Prone; an uncontrolled (independent) mount isn't offered | Every mount in the game so far is a friendly summon | When hostile riders appear |
 | Banishment | The banished creature leaves the grid; a native of another plane banished for 10 rounds doesn't return | Same as the rule, counted in rounds | — |
 | Conjure Animals | The caster's free move of the pack is a separate free action once per turn; Advantage on Strength saves within 5 ft of the pack is applied | The pack moving "when you move" needs a combined move | — |
 | Conjure Minor Elementals | The extra damage type is picked for you each attack: whichever the target doesn't resist | Saves a prompt per attack | — |
 | Call Lightning | No stormy weather bonus | The game has no weather yet | With weather |
-| Wall of Fire, Wind Wall | Straight walls only (no ring); Wind Wall blocks ranged weapon attacks across it rather than rolling them to miss | Shapes need a drawing tool; an attack that must miss isn't worth taking | — |
+| Wall of Fire | A straight wall along the cast direction or a ring 20 ft across (burning on its inside); a straight wall burns on the side its direction points left of | Free-form wall shapes need a drawing tool | With the targeting polish |
 | Dissonant Whispers, Confusion, Compulsion | The fleeing or compelled creature takes the farthest square along its path, provoking Opportunity Attacks as it goes | "Safest path" is the DM's call | — |
 | Heat Metal | What's heated is picked for you: a held metal weapon first, else worn metal armor | Saves a choice of object | — |
 | Wild Magic Surge | A condensed 8-result table of the surge's combat effects | The full table is mostly out-of-combat whimsy | With the full table |
 | Reactions that happen during a save or at the start of another creature's turn (Countercharm, Bend Luck, Cosmic Omen, Restore Balance, Dark One's Own Luck, Branches of the Tree, Inspiring Movement, Tandem Footwork, Fanatical Focus) | Used automatically when they'd help, unless the creature's rule for it is "never" | Same reason as the other mid-roll choices | When saves can pause like attacks do |
-| Psionic Sorcery, Psychic Spells, Clairvoyant Combatant, Pact of the Chain's special familiars, Gift of the Protectors, Gaze of Two Minds | Not in combat yet | Each needs its own system (Sorcery Points as slots, damage-type options, telepathic links, familiar forms) | Later in Phase 4 |
-| Cosmic Omen | Always Weal (adds to an ally's roll) | The Weal/Woe roll at dawn isn't tracked | — |
+| Pact of the Chain familiars | The eight special forms use 2025 Monster Manual numbers as we know them, not yet checked against the book; a familiar only attacks when its warlock gives up an attack (or with Investment of the Chain Master's command) | The forms are built in code from the warlock's casting; checking needs the owner's book | Check against the MM |
+| Cosmic Omen | The omen (Weal or Woe) is drawn when a fight starts rather than at the last Long Rest | Rests don't keep a dawn roll yet | — |
+| Gaze of Two Minds | The link lets you cast from the ally's space; perceiving through its senses isn't modelled | Sight sharing has no use on a grid where the player sees everything | — |
 

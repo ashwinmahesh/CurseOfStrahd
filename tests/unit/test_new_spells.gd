@@ -445,7 +445,13 @@ func test_wind_wall_turns_aside_arrows() -> void:
 	TestCombat.start_with(e, c)
 	assert_true(e.spells.cast(c, "wind_wall", 3, [], Vector2(5.5, 4.5), Vector2.DOWN).ok)
 	var opt := _ranged(e, c)
-	assert_true(e.attack_legal(c, t, e.option_by_id(c, opt)).contains("Wind Wall"))
+	c.action_available = true
+	c.magic_action_used = false
+	TestCombat.next_d20(e, 19)
+	var r := e.attack(c, t, opt)
+	assert_true(r.ok, r.reason)
+	assert_false(r.hit, "the shot is deflected")
+	assert_eq(t.creature.hp, 200)
 
 
 func test_call_lightning_strikes_now_and_again_later() -> void:
@@ -619,3 +625,64 @@ func test_eldritch_blast_fires_more_beams_with_level() -> void:
 	assert_true(e.spells.cast(c, "eldritch_blast", 0, [a, b]).ok)
 	var shots := e.drain_events().filter(func(x: Dictionary) -> bool: return str(x["type"]) == "attack" and str(x["attacker"]) == c.id)
 	assert_eq(shots.size(), 2, "two beams at level 7")
+
+
+func test_wall_of_fire_can_be_a_ring_that_burns_inside() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["wall_of_fire"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 4), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "wall_of_fire", 4, [], Vector2(6.5, 4.5), Vector2.ZERO, {"choice": "ring"}).ok)
+	var wall := e.spells.zones.object_of(c.id, "wall_of_fire")
+	assert_false(Vector2i(6, 4) in wall.cells, "the centre is open")
+	e.end_turn()
+	e.end_turn()
+	assert_true(t.creature.hp < 300, "ending a turn inside the ring burns")
+
+
+func test_bestow_curse_can_curse_any_ability() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["bestow_curse"], Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(3, 3), 200)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "bestow_curse", 3, [t], Vector2.INF, Vector2.ZERO, {"choice": "ability_str"}).ok)
+	assert_true(t.creature.modifiers_for(&"disadvantage").any(func(m: Modifier) -> bool: return m.text("on") == "save:str"))
+
+
+func test_calm_emotions_can_free_allies_from_fear() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["calm_emotions"], Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 7), 200)
+	a.creature.add_condition(&"frightened", "test")
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "calm_emotions", 2, [], Vector2(5.5, 3.5), Vector2.ZERO, {"choice": "suppress"}).ok)
+	assert_false(a.creature.has_condition(&"frightened"))
+
+
+# --- Mounted combat -------------------------------------------------------------------------------------
+
+func test_a_rider_mounts_the_steed_and_rides_it() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["find_steed"], Vector2i(2, 3))
+	var foe := TestCombat.punching_bag(e, Vector2i(10, 7), 100)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "find_steed", 2, [], Vector2(3.5, 3.5)).ok)
+	var steed := _summoned(e, c)
+	var r := e.feature_actions.perform(c, "cf:mount:" + steed.id, null, Vector2.INF)
+	assert_true(r.ok, r.reason)
+	assert_eq(e.mount_of(c), steed)
+	assert_eq(c.cell, steed.cell)
+	e.end_turn()
+	assert_eq(e.current(), steed)
+	assert_false(e.attack(steed, foe, "monster:otherworldly_slam").ok, "a controlled mount doesn't attack")
+	e.end_turn()
+	while e.current() != c:
+		e.end_turn()
+	var mv := e.move(c, Vector2i(8, 3))
+	assert_true(mv.ok, mv.reason)
+	assert_eq(steed.cell, Vector2i(8, 3), "the steed carries its rider")
+	assert_eq(c.cell, steed.cell)
+	e.deal_damage(foe, steed, [{"amount": 500, "type": "force"}], false, "test")
+	assert_true(e.mount_of(c) == null, "thrown when the mount falls")
+	assert_true(c.creature.has_condition(&"prone"))

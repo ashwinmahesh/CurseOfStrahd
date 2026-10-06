@@ -36,16 +36,16 @@
   "upcast": {
     "text": "Level 4 slot: Concentration up to 10 minutes. Level 5-6 slot: no Concentration, 8 hours. Level 7-8 slot: no Concentration, 24 hours. Level 9 slot: until dispelled."
   },
-  "tags": [
-    "debuff"
-  ],
-  "summary": "Touched creature fails a Wisdom save and is cursed with one of four penalties you choose.",
-  "text": "Touch a creature; it makes a Wisdom saving throw. On a failure it is cursed until the spell ends, suffering one effect of your choice: (1) choose an ability: the target has Disadvantage on ability checks and saving throws that use it; (2) the target has Disadvantage on attack rolls against you; (3) in combat, the target makes a Wisdom saving throw at the start of each of its turns and, on a failure, must take the Dodge action that turn; (4) whenever you deal damage to the target with an attack roll or a spell, it takes an extra 1d8 Necrotic damage. Using a Higher-Level Spell Slot: with a level 4 slot you can keep Concentration for up to 10 minutes; with a level 5 or 6 slot the spell needs no Concentration and lasts 8 hours; with a level 7 or 8 slot it needs no Concentration and lasts 24 hours; with a level 9 slot it lasts until dispelled.",
   "choice": {
     "kind": "option",
     "label": "Curse",
     "from": [
-      "ability",
+      "ability_str",
+      "ability_dex",
+      "ability_con",
+      "ability_int",
+      "ability_wis",
+      "ability_cha",
       "attacks",
       "dodge",
       "necrotic"
@@ -55,7 +55,71 @@
     {
       "effect": "modifiers",
       "params": {
-        "only_choice": "ability",
+        "only_choice": "ability_str",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:str"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:str"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "ability_dex",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:dex"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:dex"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "ability_con",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:con"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:con"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "ability_int",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:int"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:int"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "ability_wis",
         "modifiers": [
           {
             "stat": "disadvantage",
@@ -64,6 +128,22 @@
           {
             "stat": "disadvantage",
             "on": "save:wis"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "ability_cha",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:cha"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:cha"
           }
         ]
       }
@@ -104,5 +184,10 @@
         ]
       }
     }
-  ]
+  ],
+  "tags": [
+    "debuff"
+  ],
+  "summary": "Touched creature fails a Wisdom save and is cursed with one of four penalties you choose.",
+  "text": "Touch a creature; it makes a Wisdom saving throw. On a failure it is cursed until the spell ends, suffering one effect of your choice: (1) choose an ability: the target has Disadvantage on ability checks and saving throws that use it; (2) the target has Disadvantage on attack rolls against you; (3) in combat, the target makes a Wisdom saving throw at the start of each of its turns and, on a failure, must take the Dodge action that turn; (4) whenever you deal damage to the target with an attack roll or a spell, it takes an extra 1d8 Necrotic damage. Using a Higher-Level Spell Slot: with a level 4 slot you can keep Concentration for up to 10 minutes; with a level 5 or 6 slot the spell needs no Concentration and lasts 8 hours; with a level 7 or 8 slot it needs no Concentration and lasts 24 hours; with a level 9 slot it lasts until dispelled."
 }

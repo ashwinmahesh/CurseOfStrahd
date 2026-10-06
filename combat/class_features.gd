@@ -207,6 +207,20 @@ func list(c: Combatant, out: Array[Dictionary], aw: String, bw: String) -> void:
 	_sorcerer(c, ch, out, aw, bw, tw)
 	_ranger(c, ch, out, aw, bw)
 	_warlock(c, ch, out, aw, bw)
+	_riding(c, out, tw)
+
+
+## Mounting and dismounting (2024 Mounted Combat): half your Speed either way.
+func _riding(c: Combatant, out: Array[Dictionary], tw: String) -> void:
+	var e := enc()
+	if e.mount_of(c) != null:
+		out.append(_entry("dismount", "Dismount", "half your Speed", "movement", _first(tw, "" if c.movement_left >= c.speed() / 2 else "Needs half your Speed"), "none",
+			"Get down from %s into a space within 5 ft of it." % e.mount_of(c).name()))
+		return
+	for o in e.allies_of(c):
+		if o != c and e.distance(c, o) <= 5 and Creature.SIZES.find(o.creature.size) > Creature.SIZES.find(c.creature.size) and e.rider_of(o) == null:
+			out.append(_entry("mount:" + o.id, "Mount %s" % o.name(), "half your Speed", "movement", _first(tw, e.mount_why(c, o)), "none",
+				"Climb onto %s: you share its space and it carries you as a controlled mount (it can then only Dash, Disengage or Dodge)." % o.name()))
 
 
 func _barbarian(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw: String, tw: String) -> void:
@@ -464,6 +478,19 @@ func _ranger(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw
 				"Bonus Action: your beast makes its Beast's Strike against a creature (it otherwise only Dodges).", 120))
 
 
+func _familiar(c: Combatant) -> Combatant:
+	var e := enc()
+	for sid: Variant in e.spells.summoned.get(c.id, []):
+		var s := e.get_c(str(sid))
+		if s != null and s.is_alive() and s.creature is Monster and bool((s.creature as Monster).data.get("chain", false)):
+			return s
+	return null
+
+
+func e_attack_why(c: Combatant) -> String:
+	return enc().features_attack_why(c)
+
+
 func _companion(c: Combatant) -> Combatant:
 	var e := enc()
 	for sid: Variant in e.spells.summoned.get(c.id, []):
@@ -476,6 +503,23 @@ func _companion(c: Combatant) -> Combatant:
 func _warlock(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw: String) -> void:
 	if ch.class_level_of("warlock") <= 0:
 		return
+	if has(c, "awakened_mind"):
+		var cw := ""
+		if has(c, "clairvoyant_combatant") and _uses(c, "clairvoyant_combatant", "Clairvoyant Combatant", 1, "short") <= 0 and int(ch.pact_magic()["left"]) <= 0:
+			cw = " (no Clairvoyant Combatant left)"
+		out.append(_entry("awakened_mind", "Awakened Mind", "telepathic link" + ("; Wis save" if has(c, "clairvoyant_combatant") and cw == "" else ""), "bonus", bw, "creature",
+			"Bonus Action: link minds with a creature within 30 ft.%s" % (" Clairvoyant Combatant: it makes a Wisdom save or has Disadvantage on attacks against you while you have Advantage against it." if has(c, "clairvoyant_combatant") else ""), 30))
+	var fam := _familiar(c)
+	if fam != null and knows_invocation(c, "pact_of_the_chain"):
+		var fw := e_attack_why(c)
+		out.append(_entry("familiar_strike", "Familiar Strike", "%s attacks" % fam.name(), "attack", _first(fw, "" if enc().spells.can_react(fam) else "The familiar's Reaction is used"), "enemy",
+			"Give up one of your attacks: your familiar makes one attack with its Reaction.", 120))
+		if knows_invocation(c, "investment_of_the_chain_master"):
+			out.append(_entry("command_familiar", "Command Familiar", "%s attacks" % fam.name(), "bonus", bw, "enemy",
+				"Bonus Action (Investment of the Chain Master): your familiar takes the Attack action.", 120))
+	if knows_invocation(c, "gaze_of_two_minds"):
+		out.append(_entry("gaze_of_two_minds", "Gaze of Two Minds", "cast from an ally's space", "bonus", bw, "ally",
+			"Bonus Action: touch a willing creature; until the end of your next turn you can cast spells as though you were in its space.", 5))
 	if knows_invocation(c, "pact_of_the_blade") and not c.has_meta("pact_weapon"):
 		out.append(_entry("pact_of_the_blade", "Pact of the Blade", "bond your weapon", "bonus", bw, "none",
 			"Bonus Action: bond with the weapon in your hand: it's your pact weapon, you use Charisma for its attacks and it can deal Necrotic, Psychic or Radiant damage."))
@@ -497,6 +541,10 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 	match head:
 		"rage":
 			return _start_rage(c, arg)
+		"mount":
+			return e.mount(c, e.get_c(id.substr(6)))
+		"dismount":
+			return e.dismount(c)
 		"extend_rage":
 			c.bonus_available = false
 			c.set_meta("rage_kept", _turn_key())
@@ -796,6 +844,47 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 				pact.modifiers.append(Modifier.of("attacks_per_action", {"value": 3 if knows_invocation(c, "devouring_blade") else 2}, "Thirsting Blade", &"feature"))
 			c.creature.add_effect(pact)
 			e.log.add("info", "%s bonds with a pact weapon" % c.name(), c.id)
+		"familiar_strike", "command_familiar":
+			var famc := _familiar(c)
+			if famc == null or t == null:
+				return CombatResult.fail("Choose a target for your familiar")
+			var best := {}
+			for o in e.attack_options(famc):
+				if e.attack_legal(famc, t, o) == "":
+					best = o
+					break
+			if best.is_empty():
+				return CombatResult.fail("Your familiar can't reach %s" % t.name())
+			if head == "familiar_strike":
+				e.use_one_attack(c)
+				famc.reaction_available = false
+			else:
+				c.bonus_available = false
+			e.log.add("info", "%s's familiar strikes at %s" % [c.name(), t.name()], c.id)
+			return e._resolve_attack(famc, t, best, {"chain": true, "reaction": head == "familiar_strike"})
+		"awakened_mind":
+			if t == null or t == c or e.distance(c, t) > 30 or not e.can_see(c, t):
+				return CombatResult.fail("Choose a creature you can see within 30 ft")
+			c.bonus_available = false
+			c.set_meta("mind_link", t.id)
+			e.log.add("info", "%s links minds with %s (Awakened Mind)" % [c.name(), t.name()], c.id)
+			if has(c, "clairvoyant_combatant") and c.hostile_to(t):
+				var paid := false
+				if ch.resource_left("clairvoyant_combatant") > 0:
+					ch.spend_resource("clairvoyant_combatant")
+					paid = true
+				elif int(ch.pact_magic()["left"]) > 0:
+					ch.pact_slots_used = int(ch.pact_magic()["used"]) + 1
+					paid = true
+				if paid and not _save(t, &"wis", _spell_dc(c, "warlock"), "Clairvoyant Combatant"):
+					c.set_meta("clairvoyant_vs", t.id)
+					e.log.add("info", "%s reads %s's every move (Clairvoyant Combatant)" % [c.name(), t.name()], c.id)
+		"gaze_of_two_minds":
+			if t == null or t == c or not c.allied_with(t) or e.distance(c, t) > 5:
+				return CombatResult.fail("Touch a willing ally")
+			c.bonus_available = false
+			c.set_meta("gaze_link", [t.id, e.round_no + 1, c.id])
+			e.log.add("info", "%s sees through %s's eyes (Gaze of Two Minds)" % [c.name(), t.name()], c.id)
 		"healing_light":
 			if t == null or e.distance(c, t) > 60:
 				return CombatResult.fail("Choose a creature within 60 ft")
@@ -1109,6 +1198,10 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary, adv: 
 		adv.append("Reckless Attack")
 	if str(c.get_meta("vow_of_enmity", "")) == target.id:
 		adv.append("Vow of Enmity")
+	if str(c.get_meta("clairvoyant_vs", "")) == target.id:
+		adv.append("Clairvoyant Combatant")
+	if str(target.get_meta("clairvoyant_vs", "")) == c.id:
+		dis.append("Clairvoyant Combatant")
 	# Rage of the Wolf: allies attacking an enemy within 5 ft of the raging barbarian.
 	if bool(option.get("melee", false)):
 		for b in e.allies_of(c):
@@ -1263,6 +1356,37 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, st: Dictiona
 				break
 
 
+## Gift of the Protectors (Pact of the Tome): a creature in the party drops to 1 Hit Point instead of 0, once per
+## Long Rest each. True if it held.
+func gift_of_the_protectors(t: Combatant) -> bool:
+	var e := enc()
+	if not t.creature is Character:
+		return false
+	for w in e.combatants:
+		if w.is_alive() and w.allied_with(t) and knows_invocation(w, "gift_of_the_protectors") and knows_invocation(w, "pact_of_the_tome"):
+			var key := "gift_of_the_protectors"
+			if _uses(t, key, "Gift of the Protectors", 1, "long") <= 0:
+				return false
+			_ch(t).spend_resource(key)
+			e.log.add("info", "%s's name in the Book of Shadows holds: 1 Hit Point" % t.name(), t.id)
+			return true
+	return false
+
+
+## Where `c` casts spells from: its own space, or a willing ally's through Gaze of Two Minds (until the end of the
+## caster's next turn).
+func cast_origin(c: Combatant) -> Combatant:
+	var e := enc()
+	if not c.has_meta("gaze_link"):
+		return c
+	var link := c.get_meta("gaze_link") as Array
+	var other := e.get_c(str(link[0]))
+	if other == null or not other.is_alive() or e.round_no > int(link[1]):
+		c.remove_meta("gaze_link")
+		return c
+	return other
+
+
 ## A creature dropped to 0 Hit Points by `by`: Dark One's Blessing (Fiend Patron) for a warlock or a nearby ally.
 func on_drop(by: Combatant, target: Combatant) -> void:
 	var e := enc()
@@ -1404,10 +1528,22 @@ func prepare(c: Combatant) -> void:
 	var ch := _ch(c)
 	if ch != null:
 		_standing_effects(c, ch)
+	# Cosmic Omen: the omen read at the last Long Rest (an even d6 is Weal, odd is Woe), drawn once per fight here.
+	if has(c, "cosmic_omen") and not c.has_meta("omen"):
+		c.set_meta("omen", "weal" if enc().dice.roll_one(6, "Cosmic Omen") % 2 == 0 else "woe")
+		enc().log.add("info", "%s reads the stars: %s" % [c.name(), str(c.get_meta("omen")).capitalize()], c.id)
 
 
 func turn_start(c: Combatant) -> void:
 	var e := enc()
+	# Mounted combat: a controlled mount moves on its rider's turn (its Speed refreshes then) and spends its own turn
+	# only on Dash, Disengage or Dodge.
+	var steed := e.controlled_mount(c)
+	if steed != null:
+		steed.movement_left = steed.speed()
+	if e.rider_of(c) != null and c.allied_with(e.rider_of(c)):
+		c.movement_left = 0
+		e.log.add("info", "%s carries %s (a controlled mount moves on its rider's turn)" % [c.name(), e.rider_of(c).name()], c.id)
 	# Branches of the Tree (World Tree 6): a creature starting its turn within 30 ft of a raging barbarian makes a
 	# Strength save or is pulled beside it with Speed 0 for the turn.
 	for b in e.hostiles_of(c):
@@ -1681,6 +1817,14 @@ func after_d20(c: Combatant, t: D20Test) -> void:
 		return
 	balance_roll(c, t)
 	if t.success:
+		# Cosmic Omen (Woe): subtract a d6 from a foe's roll that only just succeeded.
+		for s in e.hostiles_of(c):
+			if has(s, "cosmic_omen") and str(s.get_meta("omen", "weal")) == "woe" and e.spells.can_react(s) and t.total - t.target < 6 \
+					and e.distance(s, c) <= 30 and _uses(s, "cosmic_omen", "Cosmic Omen", maxi(1, s.creature.ability_mod(&"wis")), "long") > 0:
+				_ch(s).spend_resource("cosmic_omen")
+				s.reaction_available = false
+				t.add_bonus(-e.dice.roll_one(6, "Cosmic Omen (Woe)"), "Cosmic Omen (%s)" % s.name())
+				break
 		return
 	var short := t.target - t.total
 	var ch := _ch(c)
@@ -1697,7 +1841,7 @@ func after_d20(c: Combatant, t: D20Test) -> void:
 			_ch(s).spend_resource("sorcery_points")
 			s.reaction_available = false
 			t.add_bonus(e.dice.roll_one(4, "Bend Luck"), "Bend Luck (%s)" % s.name())
-		elif has(s, "cosmic_omen") and e.spells.can_react(s) and short <= 6 and e.distance(s, c) <= 30 \
+		elif has(s, "cosmic_omen") and str(s.get_meta("omen", "weal")) == "weal" and e.spells.can_react(s) and short <= 6 and e.distance(s, c) <= 30 \
 				and _uses(s, "cosmic_omen", "Cosmic Omen", maxi(1, s.creature.ability_mod(&"wis")), "long") > 0:
 			_ch(s).spend_resource("cosmic_omen")
 			s.reaction_available = false

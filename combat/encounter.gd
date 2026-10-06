@@ -411,8 +411,9 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 	var slowed := {}
 	var occupied := {}
 	var my_size := Creature.SIZES.find(c.creature.size)
+	var partner := mount_of(c) if mount_of(c) != null else rider_of(c)
 	for o in combatants:
-		if o == c or not o.is_alive():
+		if o == c or not o.is_alive() or o == partner:
 			continue
 		var o_size := Creature.SIZES.find(o.creature.size)
 		var swarmy := o.creature.has_flag("swarm") or c.creature.has_flag("swarm")
@@ -620,6 +621,16 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail(why)
 	if c.creature.hp <= 0:
 		return CombatResult.fail("%s is down" % c.name())
+	# Riding: the controlled mount carries its rider, spending its own movement.
+	var steed := controlled_mount(c)
+	if steed != null:
+		var sreach := reachable_for(steed)
+		if not sreach.has(dest):
+			return CombatResult.fail("Your mount can't reach that square with %d ft of movement" % steed.movement_left)
+		if bool((sreach[dest] as Dictionary)["occupied"]):
+			return CombatResult.fail("Your mount can't end its move in an occupied space")
+		c.moved = true
+		return _walk(steed, CombatGrid.path_to(sreach, dest), 1, CombatResult.new(), {})
 	# Freedom of Movement: 5 ft of movement slips any grapple.
 	if c.creature.has_flag("freedom_of_movement") and grapples.has(c.id) and c.movement_left >= 5:
 		grapples.erase(c.id)
@@ -721,6 +732,11 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		c.cell = to
 		c.facing = Vector2(to - from).normalized()
 		events.append({"type": "move", "id": c.id, "from": from, "to": to})
+		var carried := rider_of(c)
+		if carried != null:
+			var rfrom := carried.cell
+			carried.cell = to
+			events.append({"type": "move", "id": carried.id, "from": rfrom, "to": to, "mounted": true})
 		_after_step(c, from)
 		if c.is_down() or state != State.ACTIVE:
 			return r
@@ -1186,9 +1202,10 @@ func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = f
 		if nxt == target.cell:
 			continue
 		var ok := true
+		var partner := mount_of(target) if mount_of(target) != null else rider_of(target)
 		for cell in CombatGrid.footprint(nxt, target.size_cells):
 			var o := occupant_at(cell)
-			if not grid.in_bounds(cell) or grid.is_solid(cell) or (o != null and o != target):
+			if not grid.in_bounds(cell) or grid.is_solid(cell) or (o != null and o != target and o != partner):
 				ok = false
 		if not ok:
 			break
@@ -1197,7 +1214,112 @@ func forced_move(target: Combatant, origin: Vector2, feet: int, toward: bool = f
 		target.cell = nxt
 		moved += 1
 		_after_step(target, was)
+	if moved > 0:
+		_forced_mount_check(target)
 	return moved
+
+
+# --- Mounted combat (2024 PHB) ------------------------------------------------------------------------------
+
+func mount_of(c: Combatant) -> Combatant:
+	if not c.has_meta("mounted_on"):
+		return null
+	var m := get_c(str(c.get_meta("mounted_on")))
+	return m if m != null and m.is_alive() else null
+
+
+func rider_of(c: Combatant) -> Combatant:
+	if not c.has_meta("ridden_by"):
+		return null
+	var r := get_c(str(c.get_meta("ridden_by")))
+	return r if r != null and r.is_alive() else null
+
+
+## A willing creature at least one size larger, within 5 ft, not already carrying someone.
+func mount_why(rider: Combatant, steed: Combatant) -> String:
+	if steed == null or steed == rider:
+		return "Choose a mount"
+	if mount_of(rider) != null:
+		return "Already mounted"
+	if rider_of(steed) != null or mount_of(steed) != null:
+		return "%s already carries someone" % steed.name()
+	if not rider.allied_with(steed) or steed.is_down():
+		return "%s isn't willing" % steed.name()
+	if Creature.SIZES.find(steed.creature.size) <= Creature.SIZES.find(rider.creature.size):
+		return "%s must be at least one size larger" % steed.name()
+	if distance(rider, steed) > 5:
+		return "Move within 5 ft first"
+	if rider.movement_left < rider.speed() / 2:
+		return "Needs half your Speed"
+	return ""
+
+
+## Mounting costs half your Speed; you then share the mount's space and ride it.
+func mount(rider: Combatant, steed: Combatant) -> CombatResult:
+	var why := _turn_check(rider)
+	if why == "":
+		why = mount_why(rider, steed)
+	if why != "":
+		return CombatResult.fail(why)
+	rider.movement_left -= rider.speed() / 2
+	var from := rider.cell
+	rider.cell = steed.cell
+	rider.set_meta("mounted_on", steed.id)
+	steed.set_meta("ridden_by", rider.id)
+	events.append({"type": "move", "id": rider.id, "from": from, "to": rider.cell, "mounted": true})
+	log.add("move", "%s mounts %s" % [rider.name(), steed.name()], rider.id)
+	return CombatResult.new()
+
+
+## Dismounting costs half your Speed (none when thrown); you land in a free space within 5 ft of the mount.
+func dismount(rider: Combatant, prone: bool = false, voluntary: bool = true) -> CombatResult:
+	var steed := get_c(str(rider.get_meta("mounted_on", "")))
+	if steed == null:
+		return CombatResult.fail("Not mounted")
+	if voluntary:
+		var why := _turn_check(rider)
+		if why == "" and rider.movement_left < rider.speed() / 2:
+			why = "Needs half your Speed"
+		if why != "":
+			return CombatResult.fail(why)
+		rider.movement_left -= rider.speed() / 2
+	rider.remove_meta("mounted_on")
+	steed.remove_meta("ridden_by")
+	var from := rider.cell
+	var spot := spells._free_cell_near(steed.cell, rider.size_cells)
+	rider.cell = spot
+	events.append({"type": "move", "id": rider.id, "from": from, "to": spot, "forced": not voluntary})
+	if prone:
+		rider.creature.add_condition(&"prone", "Thrown from the mount")
+		events.append({"type": "condition", "id": rider.id})
+	log.add("move", "%s %s %s" % [rider.name(), "is thrown from" if prone else "dismounts", steed.name()], rider.id)
+	return CombatResult.new()
+
+
+## A controlled mount (Find Steed's, or any willing ally a creature rides): it moves when its rider moves.
+func controlled_mount(rider: Combatant) -> Combatant:
+	var m := mount_of(rider)
+	return m if m != null and m.allied_with(rider) else null
+
+
+## The mount was moved against its will: the rider makes a DC 10 Dexterity save or falls off Prone; a rider moved
+## alone leaves its mount.
+func _forced_mount_check(target: Combatant) -> void:
+	var r := rider_of(target)
+	if r != null:
+		var sv := r.creature.roll_save(dice, &"dex", 10, [], [], "Dexterity save to stay mounted (%s)" % r.name())
+		if sv.success:
+			var from := r.cell
+			r.cell = target.cell
+			events.append({"type": "move", "id": r.id, "from": from, "to": r.cell, "forced": true, "mounted": true})
+		else:
+			log.add("info", "%s loses the saddle" % r.name(), r.id, [sv.describe()])
+			dismount(r, true, false)
+	elif mount_of(target) != null and target.cell != mount_of(target).cell:
+		var m := mount_of(target)
+		target.remove_meta("mounted_on")
+		m.remove_meta("ridden_by")
+		log.add("info", "%s is knocked from %s" % [target.name(), m.name()], target.id)
 
 
 ## The middle of a creature's space, in grid units.
@@ -1460,9 +1582,13 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 		return CombatResult.fail(check)
 	if c.attacks_left <= 0 and not c.action_available:
 		return CombatResult.fail("No attacks left this turn")
+	if rider_of(c) != null and c.allied_with(rider_of(c)):
+		return CombatResult.fail("A controlled mount can only Dash, Disengage or Dodge")
 	var beast_why := class_features.companion_why(c)
 	if beast_why != "":
 		return CombatResult.fail(beast_why)
+	if c.creature is Monster and bool((c.creature as Monster).data.get("familiar", false)) and not bool(opts.get("chain", false)):
+		return CombatResult.fail("A familiar doesn't attack on its own (Pact of the Chain: its warlock gives up an attack for it)")
 	var lp := option["profile"] as WeaponProfile
 	if "loading" in lp.properties and not features.has_feat(c, "crossbow_expert") and c.attacks_left > 0 \
 			and str(c.get_meta("loading_fired", "")) == "%d:%d" % [round_no, turn_index]:
@@ -1538,8 +1664,6 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "Can't attack yourself"
 	if spells.specials.sphere_blocks(c, target):
 		return "A sphere of force is in the way"
-	if not bool(option["melee"]) and str(option.get("kind", "")) in ["weapon", "thrown", "monster"] and spells.zones.deflects_between(c, target):
-		return "A Wind Wall would deflect the shot"
 	var dist := distance(c, target)
 	var p := option["profile"] as WeaponProfile
 	if bool(option["melee"]):
@@ -1787,6 +1911,13 @@ func hit_chance(c: Combatant, target: Combatant, option: Dictionary) -> Dictiona
 ## Fortitude, mastery properties and on-hit effects, then reactions to the damage (Hellish Rebuke) and Riposte.
 func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: Dictionary) -> CombatResult:
 	var r := CombatResult.new()
+	# Wind Wall: ordinary missiles shot across it are deflected upward and miss.
+	if not bool(option["melee"]) and str(option.get("kind", "")) in ["weapon", "thrown", "monster"] and spells.zones.deflects_between(c, target):
+		if c.creature is Character and str(option.get("kind", "")) == "weapon":
+			_spend_ammo(c, option["profile"] as WeaponProfile)
+		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
+		r.lines.append(log.add("miss", "The Wind Wall deflects %s's shot at %s" % [c.name(), target.name()], c.id))
+		return r
 	var sit := attack_situation(c, target, option)
 	_consume_marks(c, target)
 	spells.specials.duel_check_attack(c, target)
@@ -2099,6 +2230,11 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 				log.add("info", "%s keeps standing: Undead Fortitude" % target.name(), target.id, [save.describe()])
 	# A shape (Polymorph, Wild Shape) that runs out: the real creature comes back with what's left.
 	shapes.after_damage(target)
+	# Gift of the Protectors: a party member drops to 1 instead of 0 once per Long Rest.
+	if was_up and dr.dropped_to_zero and not target.creature.dead and class_features.gift_of_the_protectors(target):
+		target.creature.hp = 1
+		target.creature.remove_condition(&"unconscious", "0 Hit Points")
+		dr.dropped_to_zero = false
 	# Death Ward: the first drop to 0 Hit Points (or death outright from damage) leaves it at 1 instead.
 	if was_up and (dr.dropped_to_zero or target.creature.dead) and target.creature.has_flag("death_ward"):
 		for fxw: Effect in target.creature.effects.duplicate():
@@ -2131,6 +2267,12 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		log.add("info", "%s loses Concentration" % target.name(), target.id, [dr.concentration_save.describe()])
 	if was_up and target.is_down():
 		class_features.on_drop(source, target)
+		if rider_of(target) != null:
+			dismount(rider_of(target), true, false)
+		if mount_of(target) != null:
+			var mt := mount_of(target)
+			target.remove_meta("mounted_on")
+			mt.remove_meta("ridden_by")
 	if target.creature.dead and was_up:
 		target.set_meta("died_round", round_no)
 		log.add("death", "%s dies" % target.name(), target.id)

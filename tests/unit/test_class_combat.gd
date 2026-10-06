@@ -252,3 +252,52 @@ func test_cutting_words_can_turn_a_hit_into_a_miss() -> void:
 	TestCombat.next_d20(e, clampi(ac - 3, 2, 19))
 	e.attack(z, a, e.attack_options(z)[0]["id"])
 	assert_false(b.reaction_available, "Cutting Words spent")
+
+
+# --- The last gaps -------------------------------------------------------------------------------------
+
+func test_psionic_sorcery_casts_with_sorcery_points_instead_of_a_slot() -> void:
+	var e := TestCombat.open_field(3)
+	var s := _add(e, TestChars.custom("sorcerer", "human", 6, {"sorcerer_subclass": ["aberrant_sorcery"]}), Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(4, 3), 300)
+	TestCombat.start_with(e, s)
+	var ch := s.creature as Character
+	for l in range(1, 4):
+		while ch.slots_left(l) > 0:
+			ch.expend_slot(l)
+	var pts := ch.resource_left("sorcery_points")
+	var r := e.spells.cast(s, "dissonant_whispers", 1, [t], Vector2.INF, Vector2.ZERO, {"metamagic": ["psionic_sorcery"]})
+	assert_true(r.ok, r.reason)
+	assert_eq(ch.resource_left("sorcery_points"), pts - 1)
+
+
+func test_psychic_spells_turn_eldritch_blast_psychic() -> void:
+	var e := TestCombat.open_field(3)
+	var ch := TestChars.custom("warlock", "human", 3, {"warlock_subclass": ["great_old_one_patron"]})
+	var entry := ch.spellcasting[0] as Dictionary
+	if not "eldritch_blast" in (entry["cantrips"] as Array):
+		(entry["cantrips"] as Array).append("eldritch_blast")
+	var w := _add(e, ch, Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(5, 3), 300)
+	TestCombat.start_with(e, w)
+	TestCombat.next_d20(e, 19)
+	assert_true(e.spells.cast(w, "eldritch_blast", 0, [t], Vector2.INF, Vector2.ZERO, {"metamagic": ["psychic_spells"]}).ok)
+	assert_true(e.log.entries.any(func(x: Dictionary) -> bool: return str(x["text"]).contains("Psychic")))
+
+
+func test_pact_of_the_chain_familiar_attacks_in_place_of_an_attack() -> void:
+	var e := TestCombat.open_field(3)
+	var w := _warlock(e, ["pact_of_the_chain"])
+	var t := TestCombat.punching_bag(e, Vector2i(4, 3), 300)
+	TestCombat.start_with(e, w)
+	var cast := e.spells.cast(w, "find_familiar", 1, [], Vector2(3.5, 2.5), Vector2.ZERO, {"choice": "imp"})
+	assert_true(cast.ok, cast.reason)
+	var fam := e.class_features._familiar(w)
+	assert_true(fam != null and fam.name().contains("Imp"))
+	assert_false(e.attack(fam, t, "monster:sting").ok, "a familiar doesn't attack on its own")
+	w.action_available = true
+	w.magic_action_used = false
+	TestCombat.next_d20(e, 19)
+	var r := _act(e, w, "familiar_strike", t)
+	assert_true(r.ok, r.reason)
+	assert_true(t.creature.hp < 300)

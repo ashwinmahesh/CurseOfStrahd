@@ -59,6 +59,14 @@
     "side_ft": 10,
     "obscured": "heavy"
   },
+  "choice": {
+    "kind": "option",
+    "label": "Shape",
+    "from": [
+      "line",
+      "ring"
+    ]
+  },
   "tags": [
     "damage",
     "control"
