@@ -106,3 +106,6 @@ started" in coverage.md, not a deviation.
 | Water elemental's Whelm; will-o'-wisp's Vanish | No suffocation inside Whelm (it holds two creatures up to Large); Vanish ends on an attack or Consume Life, not when the wisp's Concentration breaks | Suffocation and monster Concentration aren't tracked | — |
 | Roc's Swoop | The dropped creature falls 60 ft (half the roc's Fly Speed) | The grid has no altitude | — |
 | Djinni's Create Whirlwind, nightmare's Ethereal Stride and Confer Fire Resistance | Text only | Monster-made moving zones and planar travel aren't built | With monster zones |
+| Arcanaloth's Soul Tome, Teleport and Counterspell | The tome isn't an object that can be attacked (the prison holds until the save or three failures); Teleport and its Counterspell Reaction are text only | Monster Reactions that cast spells and carried objects with Hit Points aren't built | With monster reactions |
+| Revenant's Regeneration | Regains 10 HP each turn; Fire or Radiant damage doesn't stop it yet | Waiting for Phase 6's shared regeneration field | Phase 6 |
+| Banshee's Deathly Wail | Works in sunlight too | Sunlight at the banshee isn't checked for this action | — |
