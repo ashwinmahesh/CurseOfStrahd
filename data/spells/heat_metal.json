@@ -1,0 +1,67 @@
+{
+  "id": "heat_metal",
+  "name": "Heat Metal",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a piece of iron and a flame"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a manufactured metal object you can see, such as a weapon or armor a creature holds or wears"
+  },
+  "damage": [
+    {
+      "dice": "2d8",
+      "type": "fire"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "sustain": [
+    {
+      "do": "damage",
+      "cost": "bonus_action",
+      "range": 60,
+      "damage": [
+        {
+          "dice": "2d8",
+          "type": "fire"
+        }
+      ],
+      "label": "Heat Metal: sear",
+      "sub": "2d8 fire",
+      "help": "A Bonus Action: 2d8 Fire damage again to the creature touching the glowing object."
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "A metal object glows red-hot: 2d8 Fire to whoever touches it, again each turn as a Bonus Action.",
+  "text": "Choose a manufactured metal object you can see within range, such as a metal weapon or a suit of metal armor, and make it glow red-hot. Any creature in physical contact with it takes 2d8 Fire damage when you cast the spell, and on each of your later turns you can take a Bonus Action to deal that damage again while the object is within range. A creature holding or wearing the object that takes this damage makes a Constitution saving throw; on a failure it drops the object if it can. If it doesn't drop the object, it has Disadvantage on attack rolls and ability checks until the start of your next turn. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 2."
+}

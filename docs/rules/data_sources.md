@@ -6,22 +6,24 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 
 | Data | Total | Checked | From knowledge |
 |---|---|---|---|
-| classes | 4 | 4 | 0 |
-| subclasses | 16 | 4 | 12 |
+| classes | 12 | 4 | 8 |
+| subclasses | 48 | 4 | 44 |
 | species | 10 | 9 | 1 |
 | backgrounds | 16 | 4 | 12 |
 | feats | 75 | 17 | 58 |
-| spells | 176 | 157 | 19 |
-| items | 184 | 183 | 1 |
+| spells | 256 | 216 | 40 |
+| items | 186 | 183 | 3 |
 | monsters | 30 | 28 | 2 |
 | conditions | 15 | 15 | 0 |
 
 ## Entries to check against the books
 
-- **subclasses** (PHB2024, 12): Abjurer, Arcane Trickster, Assassin, Battle Master, Diviner, Eldritch Knight, Illusionist, Light Domain, Psi Warrior, Soulknife, Trickery Domain, War Domain
+- **classes** (PHB2024, 8): Barbarian, Bard, Druid, Monk, Paladin, Ranger, Sorcerer, Warlock
+- **subclasses** (PHB2024, 44): Aberrant Sorcery, Abjurer, Arcane Trickster, Archfey Patron, Assassin, Battle Master, Beast Master, Celestial Patron, Circle of the Land, Circle of the Moon, Circle of the Sea, Circle of the Stars, Clockwork Sorcery, College of Dance, College of Glamour, College of Lore, College of Valor, Diviner, Draconic Sorcery, Eldritch Knight, Fey Wanderer, Fiend Patron, Gloom Stalker, Great Old One Patron, Hunter, Illusionist, Light Domain, Oath of Devotion, Oath of Glory, Oath of Vengeance, Oath of the Ancients, Path of the Berserker, Path of the Wild Heart, Path of the World Tree, Path of the Zealot, Psi Warrior, Soulknife, Trickery Domain, War Domain, Warrior of Mercy, Warrior of Shadow, Warrior of the Elements, Warrior of the Open Hand, Wild Magic Sorcery
 - **species** (PHB2024, 1): Aasimar
 - **backgrounds** (PHB2024, 12): Artisan, Charlatan, Entertainer, Farmer, Guard, Guide, Hermit, Merchant, Noble, Sailor, Scribe, Wayfarer
 - **feats** (PHB2024, 58): Actor, Athlete, Blind Fighting, Boon of Energy Resistance, Boon of Fortitude, Boon of Recovery, Boon of Skill, Boon of Speed, Charger, Chef, Crafter, Crossbow Expert, Crusher, Defensive Duelist, Dual Wielder, Dueling, Durable, Elemental Adept, Fey Touched, Great Weapon Master, Healer, Heavily Armored, Heavy Armor Master, Inspiring Leader, Interception, Keen Mind, Lightly Armored, Lucky, Mage Slayer, Martial Weapon Training, Medium Armor Master, Moderately Armored, Mounted Combatant, Musician, Observant, Piercer, Poisoner, Polearm Master, Protection, Resilient, Ritual Caster, Sentinel, Shadow Touched, Sharpshooter, Shield Master, Skill Expert, Skulker, Slasher, Speedy, Spell Sniper, Tavern Brawler, Telekinetic, Telepathic, Thrown Weapon Fighting, Tough, Unarmed Fighting, War Caster, Weapon Master
-- **spells** (PHB2024, 19): Arcane Vigor, Aura of Vitality, Blade Ward, Cloud of Daggers, Crown of Madness, Crusader's Mantle, Etherealness, Feign Death, Friends, Mind Sliver, Phantasmal Killer, Plane Shift, Summon Fey, Summon Undead, Thorn Whip, Thunderclap, Toll the Dead, Witch Bolt, Word of Radiance
+- **spells** (PHB2024, 40): Arcane Vigor, Armor of Agathys, Arms of Hadar, Aura of Purity, Aura of Vitality, Beast Sense, Blade Ward, Blinding Smite, Cloud of Daggers, Compelled Duel, Conjure Barrage, Cordon of Arrows, Crown of Madness, Crusader's Mantle, Elemental Weapon, Etherealness, Feign Death, Fount of Moonlight, Friends, Grasping Vine, Hail of Thorns, Hunger of Hadar, Lightning Arrow, Mind Sliver, Phantasmal Killer, Plane Shift, Staggering Smite, Summon Aberration, Summon Beast, Summon Construct, Summon Elemental, Summon Fey, Summon Undead, Thorn Whip, Thunderclap, Thunderous Smite, Toll the Dead, Witch Bolt, Word of Radiance, Wrathful Smite
+- **items** (CoS, 2): Bones of St. Andral, Dream Pastry
 - **items** (PHB2024, 1): Spellbook
 - **monsters** (CoS, 2): Broom of Animated Attack, Strahd Zombie

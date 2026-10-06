@@ -1,0 +1,68 @@
+{
+  "id": "sorcerous_burst",
+  "name": "Sorcerous Burst",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "sorcerer"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "1d8",
+      "type_choice": [
+        "acid",
+        "cold",
+        "fire",
+        "lightning",
+        "poison",
+        "psychic",
+        "thunder"
+      ]
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d8",
+    "text": "Each 8 rolled on one of the spell's d8s adds another d8, up to a number of extra dice per casting equal to your spellcasting ability modifier."
+  },
+  "choice": {
+    "kind": "damage_type",
+    "label": "Damage type",
+    "from": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison",
+      "psychic",
+      "thunder"
+    ]
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Ranged spell attack for 1d8 damage of a type you pick; each 8 rolled can add another d8.",
+  "text": "You hurl a burst of raw sorcery at a creature or object within range. Make a ranged spell attack; on a hit the target takes 1d8 damage of a type you choose: Acid, Cold, Fire, Lightning, Poison, Psychic or Thunder. Whenever one of the spell's d8s comes up 8, you can roll one more d8 and add it to the damage; in a single casting you can add no more of these extra d8s than your spellcasting ability modifier. The damage rises by 1d8 at character levels 5 (2d8), 11 (3d8) and 17 (4d8)."
+}

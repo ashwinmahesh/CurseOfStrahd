@@ -1,0 +1,49 @@
+{
+  "id": "find_steed",
+  "name": "Find Steed",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "conjuration",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space within range"
+  },
+  "upcast": {
+    "text": "Use the slot's level as the spell's level in the Otherworldly Steed stat block."
+  },
+  "choice": {
+    "kind": "option",
+    "label": "Creature type",
+    "from": [
+      "celestial",
+      "fey",
+      "fiend"
+    ]
+  },
+  "tags": [
+    "summon",
+    "movement"
+  ],
+  "summary": "Summon a loyal otherworldly steed (Celestial, Fey or Fiend) that grows stronger with the slot level.",
+  "text": "An otherworldly spirit appears in an unoccupied space within range as a loyal mount and uses the Otherworldly Steed stat block. If you already have a steed from this spell, the new one replaces it. It looks like a Large, rideable animal of your choice, such as a horse, a camel, a dire wolf or an elk, and when you cast the spell you choose its creature type, Celestial, Fey or Fiend, which sets some of its traits. In combat it is an ally of you and your allies, shares your Initiative and acts as a controlled mount while you ride it; if you have the Incapacitated condition, it takes its turn right after yours and acts on its own, concentrating on protecting you. It disappears at 0 Hit Points or if you die, leaving behind anything it was carrying; when you cast the spell again you can bring back the same steed or choose a different one. Otherworldly Steed (Large; the type you chose): AC 10 + the spell's level; Hit Points 5 + 10 times the spell's level (its Hit Dice are d10s equal to the spell's level); Speed 60 ft., plus Fly 60 ft. if the spell is level 4 or higher; Str 18, Dex 12, Con 14, Int 6, Wis 12, Cha 8; Passive Perception 11; telepathy with you only, out to 1 mile; uses your Proficiency Bonus. Life Bond: when you regain Hit Points from a spell of level 1 or higher, the steed regains the same number if it is within 5 feet of you. Otherworldly Slam: melee attack using your spell attack modifier, reach 5 ft.; hit: 1d8 + the spell's level Radiant (Celestial), Psychic (Fey) or Necrotic (Fiend) damage. Bonus Actions, each usable once per Long Rest: Fell Glare (Fiend only), one creature the steed can see within 60 feet makes a Wisdom save against your spell save DC or has the Frightened condition until the end of your next turn; Fey Step (Fey only), the steed teleports, with its rider, to an unoccupied space within 60 feet; Healing Touch (Celestial only), one creature within 5 feet of the steed regains 2d8 + the spell's level Hit Points. Using a Higher-Level Spell Slot: use the slot's level as the spell's level in the stat block."
+}

@@ -1,0 +1,62 @@
+{
+  "id": "conjure_minor_elementals",
+  "name": "Conjure Minor Elementals",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 15
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self",
+    "description": "your attacks against creatures in a 15-foot Emanation"
+  },
+  "upcast": {
+    "text": "The extra damage increases by 1d8 for each slot level above 4."
+  },
+  "choice": {
+    "kind": "damage_type",
+    "label": "Element",
+    "from": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning"
+    ]
+  },
+  "zone": {
+    "affects": "enemies",
+    "triggers": [],
+    "terrain": "difficult",
+    "terrain_affected_only": true
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "15-foot aura of elemental spirits: your hits on creatures in it deal an extra 2d8; enemies find the ground difficult.",
+  "text": "Spirits from the Elemental Planes flit around you in a 15-foot Emanation for the duration. Until the spell ends, any attack you make deals an extra 2d8 damage when it hits a creature in the Emanation; you choose Acid, Cold, Fire or Lightning as the type each time you attack. The ground in the Emanation is also Difficult Terrain for your enemies. Concentration, up to 10 minutes. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 4."
+}

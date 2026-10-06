@@ -1,0 +1,52 @@
+{
+  "id": "banishment",
+  "name": "Banishment",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "paladin",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pentacle"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "cha",
+  "save_success": "none",
+  "conditions": [
+    "incapacitated"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "tags": [
+    "control"
+  ],
+  "summary": "Cha save or the target is sent to a harmless demiplane; extraplanar creatures may not come back.",
+  "text": "A creature you can see within range makes a Charisma saving throw. On a failure it is whisked away to a harmless demiplane for the duration, where it has the Incapacitated condition. When the spell ends, it reappears in the space it left, or in the nearest unoccupied space if that one is taken. If the target is an Aberration, a Celestial, an Elemental, a Fey or a Fiend and the spell lasts the full minute, it doesn't come back; instead it is sent to a random place on a plane tied to its creature type, chosen by the DM. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 4."
+}

@@ -1,0 +1,43 @@
+{
+  "id": "plant_growth",
+  "name": "Plant Growth",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 150
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 100
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point",
+    "description": "Overgrowth: plants in a 100-foot-radius Sphere; Enrichment (8-hour casting): plants within half a mile"
+  },
+  "tags": [
+    "control",
+    "utility"
+  ],
+  "summary": "Overgrowth makes a 100-foot-radius area cost 4 ft of movement per foot; or enrich crops for a year (8-hour casting).",
+  "text": "You pour vitality into plants, with one of two effects depending on how long you take to cast it. Overgrowth (an action): choose a point within range. Every ordinary plant in a 100-foot-radius Sphere centered there becomes thick and tangled, and a creature moving through the area must spend 4 feet of movement for every 1 foot it moves. You can leave parts of the area of any size unaffected. Enrichment (8 hours): every plant within a half-mile radius of a point within range is enriched for 365 days and yields twice the usual amount of food when harvested; a plant can benefit from only one Plant Growth each year."
+}

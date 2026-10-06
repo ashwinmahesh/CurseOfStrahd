@@ -1,0 +1,52 @@
+{
+  "id": "greater_invisibility",
+  "name": "Greater Invisibility",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a creature you touch"
+  },
+  "conditions": [
+    "invisible"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "invisible"
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "defense"
+  ],
+  "summary": "A creature you touch is Invisible for up to 1 minute, even while it attacks or casts spells.",
+  "text": "A creature you touch has the Invisible condition until the spell ends. Unlike Invisibility, attacking, dealing damage or casting spells doesn't end it. Concentration, up to 1 minute."
+}

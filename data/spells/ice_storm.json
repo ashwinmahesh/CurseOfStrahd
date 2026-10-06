@@ -1,0 +1,67 @@
+{
+  "id": "ice_storm",
+  "name": "Ice Storm",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "evocation",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 300
+  },
+  "area": {
+    "shape": "cylinder",
+    "size": 20,
+    "height": 40
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a mitten"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "2d10",
+      "type": "bludgeoning"
+    },
+    {
+      "dice": "4d6",
+      "type": "cold",
+      "scales": false
+    }
+  ],
+  "upcast": {
+    "damage": "1d10",
+    "text": "Only the Bludgeoning damage increases."
+  },
+  "zone": {
+    "triggers": [
+      "cast"
+    ],
+    "terrain": "difficult"
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "20-foot-radius Cylinder of hail: Dex save, 2d10 Bludgeoning + 4d6 Cold (half on a success); the ground turns difficult.",
+  "text": "Hail pounds down in a 20-foot-radius, 40-foot-high Cylinder centered on a point within range. Each creature in the Cylinder makes a Dexterity saving throw, taking 2d10 Bludgeoning damage and 4d6 Cold damage on a failure, or half as much on a success. The hailstones make the ground in the Cylinder Difficult Terrain until the end of your next turn. Using a Higher-Level Spell Slot: the Bludgeoning damage increases by 1d10 for each slot level above 4."
+}

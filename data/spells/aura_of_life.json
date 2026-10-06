@@ -1,0 +1,54 @@
+{
+  "id": "aura_of_life",
+  "name": "Aura of Life",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 30
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "ally",
+    "description": "you and your allies while in the aura"
+  },
+  "zone": {
+    "affects": "allies",
+    "triggers": [],
+    "inside": {
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "necrotic"
+        }
+      ]
+    }
+  },
+  "tags": [
+    "defense",
+    "healing"
+  ],
+  "summary": "30-foot aura: Resistance to Necrotic, Hit Point maximums can't drop, and allies at 0 HP regain 1 HP.",
+  "text": "Life energy radiates from you in a 30-foot Emanation for the duration. While in it, you and your allies have Resistance to Necrotic damage and your Hit Point maximums can't be reduced. If an ally with 0 Hit Points starts its turn in the aura, it regains 1 Hit Point. Concentration, up to 10 minutes."
+}

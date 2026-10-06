@@ -1,0 +1,42 @@
+{
+  "id": "hunters_mark",
+  "name": "Hunter's Mark",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "divination",
+  "classes": [
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "upcast": {
+    "text": "Concentration can last up to 8 hours with a level 3-4 slot and 24 hours with a level 5+ slot."
+  },
+  "tags": [
+    "damage",
+    "detection"
+  ],
+  "summary": "Mark a creature: your attack hits deal it an extra 1d6 Force, and you have Advantage on checks to find it.",
+  "text": "You single out a creature you can see within range as your quarry. Until the spell ends, whenever you hit it with an attack roll it takes an extra 1d6 Force damage, and you have Advantage on any Wisdom (Perception or Survival) check you make to find it. If the target drops to 0 Hit Points before the spell ends, you can take a Bonus Action to move the mark to a new creature you can see within range. Concentration, up to 1 hour. Using a Higher-Level Spell Slot: your Concentration can last up to 8 hours with a level 3-4 slot or up to 24 hours with a level 5+ slot."
+}

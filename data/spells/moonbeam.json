@@ -1,0 +1,77 @@
+{
+  "id": "moonbeam",
+  "name": "Moonbeam",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "evocation",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "cylinder",
+    "size": 5,
+    "height": 40
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a moonseed leaf"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "2d10",
+      "type": "radiant"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10"
+  },
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn",
+      "moved_into"
+    ],
+    "light": {
+      "bright": 0,
+      "dim": 5
+    }
+  },
+  "sustain": [
+    {
+      "do": "move_object",
+      "cost": "magic",
+      "move": 60,
+      "label": "Move Moonbeam",
+      "sub": "60 ft",
+      "help": "A Magic action: move the beam up to 60 ft; creatures it moves onto make the save."
+    }
+  ],
+  "tags": [
+    "damage",
+    "light"
+  ],
+  "summary": "A 5-foot-radius beam of moonlight: Con save, 2d10 Radiant (half on a success); move it 60 ft as a Magic action.",
+  "text": "A pale beam of silver light shines down in a 5-foot-radius, 40-foot-high Cylinder centered on a point within range, filling it with Dim Light until the spell ends. On later turns you can take a Magic action to move the Cylinder up to 60 feet. A creature makes a Constitution saving throw when the Cylinder appears in or moves into its space, when it enters the Cylinder, and when it ends its turn there, but no more than once per turn. On a failure it takes 2d10 Radiant damage, and if it is shape-shifted (by Polymorph, for example) it reverts to its true form and can't shape-shift until it leaves the Cylinder; on a success it takes half as much damage only. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the damage increases by 1d10 for each slot level above 2."
+}

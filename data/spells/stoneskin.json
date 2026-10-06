@@ -1,0 +1,66 @@
+{
+  "id": "stoneskin",
+  "name": "Stoneskin",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "ranger",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "diamond dust worth 100+ GP, which the spell consumes",
+    "m_cost_gp": 100,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a willing creature"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "bludgeoning"
+          },
+          {
+            "stat": "resistance",
+            "value": "piercing"
+          },
+          {
+            "stat": "resistance",
+            "value": "slashing"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "defense",
+    "buff"
+  ],
+  "summary": "A willing creature has Resistance to Bludgeoning, Piercing and Slashing damage for up to 1 hour.",
+  "text": "Until the spell ends, one willing creature you touch has Resistance to Bludgeoning, Piercing and Slashing damage. Concentration, up to 1 hour. The diamond dust (100+ GP) is consumed."
+}

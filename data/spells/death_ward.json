@@ -1,0 +1,38 @@
+{
+  "id": "death_ward",
+  "name": "Death Ward",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a creature you touch"
+  },
+  "tags": [
+    "defense"
+  ],
+  "summary": "The first time the target would drop to 0 HP it drops to 1 instead; it also negates one instant-death effect.",
+  "text": "You touch a creature and shield it against death. The first time it would drop to 0 Hit Points before the spell ends, it drops to 1 Hit Point instead, and the spell ends. If the spell is still active when the target is subjected to an effect that would kill it outright without dealing damage, that effect is negated against it and the spell ends. Lasts 8 hours (no Concentration)."
+}

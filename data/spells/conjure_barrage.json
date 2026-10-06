@@ -1,0 +1,53 @@
+{
+  "id": "conjure_barrage",
+  "name": "Conjure Barrage",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 3,
+  "school": "conjuration",
+  "classes": [
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "cone",
+    "size": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a Melee or Ranged weapon worth at least 1 CP",
+    "m_cost_gp": 0.01
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area",
+    "description": "creatures of your choice in the Cone"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "5d8",
+      "type": "force"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "area_targets": "enemies",
+  "tags": [
+    "damage"
+  ],
+  "summary": "60-foot Cone of spectral weapons: Dex save, 5d8 Force, half on a success.",
+  "text": "You brandish the weapon used in the casting and conjure spectral copies of it, which launch forward and then vanish. Each creature of your choice in a 60-foot Cone makes a Dexterity saving throw, taking 5d8 Force damage on a failure or half as much on a success. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 3."
+}

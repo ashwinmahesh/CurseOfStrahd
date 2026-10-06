@@ -1,0 +1,46 @@
+{
+  "id": "freedom_of_movement",
+  "name": "Freedom of Movement",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a leather strap"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a willing creature"
+  },
+  "upcast": {
+    "targets": 1
+  },
+  "tags": [
+    "buff",
+    "defense",
+    "movement"
+  ],
+  "summary": "A willing creature ignores Difficult Terrain, gains a Swim Speed and can't be magically slowed, Paralyzed or Restrained.",
+  "text": "You touch a willing creature. For the duration, Difficult Terrain doesn't hinder its movement, and spells and other magical effects can't reduce its Speed or give it the Paralyzed or Restrained condition. It also gains a Swim Speed equal to its Speed. In addition, it can spend 5 feet of movement to escape automatically from nonmagical restraints, such as manacles or a creature that has it Grappled. Lasts 1 hour. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 4."
+}

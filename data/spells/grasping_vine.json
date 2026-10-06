@@ -1,0 +1,81 @@
+{
+  "id": "grasping_vine",
+  "name": "Grasping Vine",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 4,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature within 30 feet of the vine"
+  },
+  "attack": "melee",
+  "damage": [
+    {
+      "dice": "4d8",
+      "type": "bludgeoning"
+    }
+  ],
+  "conditions": [
+    "grappled"
+  ],
+  "upcast": {
+    "text": "The vine can grapple one more creature for each slot level above 4."
+  },
+  "effects": [
+    {
+      "effect": "pull",
+      "params": {
+        "feet": 30,
+        "max_size": "gargantuan"
+      }
+    },
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "grappled",
+        "escape": "check:athletics"
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "attack",
+      "cost": "bonus_action",
+      "range": 60,
+      "attack": "melee",
+      "label": "Grasping Vine: lash",
+      "sub": "4d8 bludgeoning",
+      "help": "A Bonus Action: the vine attacks a creature within 30 feet of it again."
+    }
+  ],
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "A vine makes a melee spell attack: 4d8 Bludgeoning, pulls the target 30 ft toward it and grabs it.",
+  "text": "A vine sprouts from a surface in an unoccupied space you can see within range and lasts for the duration. Make a melee spell attack against a creature within 30 feet of the vine. On a hit, the target takes 4d8 Bludgeoning damage and is pulled up to 30 feet toward the vine; if it is Huge or smaller, it also has the Grappled condition (escape DC equal to your spell save DC). The vine can grapple only one creature at a time, and you can release a creature it holds (no action required). On each of your later turns, you can take a Bonus Action to repeat the attack against a creature within 30 feet of the vine. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the vine can grapple one more creature for each slot level above 4."
+}

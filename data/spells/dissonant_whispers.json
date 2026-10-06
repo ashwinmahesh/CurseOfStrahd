@@ -1,0 +1,48 @@
+{
+  "id": "dissonant_whispers",
+  "name": "Dissonant Whispers",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "bard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "wis",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d6",
+      "type": "psychic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "Wis save or 3d6 Psychic and it spends its Reaction fleeing from you; half damage on a success.",
+  "text": "A creature you can see within range hears a grating, discordant tune inside its head. It makes a Wisdom saving throw. On a failure it takes 3d6 Psychic damage and must immediately use its Reaction, if it has one, to move as far from you as it can by the safest path. On a success it takes half as much damage and nothing else happens. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 1."
+}

@@ -1,0 +1,66 @@
+{
+  "id": "wall_of_fire",
+  "name": "Wall of Fire",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "evocation",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "wall",
+    "size": 60,
+    "width": 1,
+    "height": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a piece of charcoal"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a wall up to 60 feet long, or a ring up to 20 feet across, 20 feet high and 1 foot thick"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "5d8",
+      "type": "fire"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn"
+    ]
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "A wall of fire up to 60 ft long: Dex save, 5d8 Fire (half on a success); one side burns creatures near it.",
+  "text": "You create a wall of fire on a solid surface within range: either a straight wall up to 60 feet long, 20 feet high and 1 foot thick, or a ringed wall up to 20 feet across, 20 feet high and 1 foot thick. The wall is opaque and lasts for the duration. When it appears, each creature in its area makes a Dexterity saving throw, taking 5d8 Fire damage on a failure or half as much on a success. One side of the wall, chosen when you cast the spell, deals 5d8 Fire damage to each creature that ends its turn within 10 feet of that side or inside the wall; a creature also takes that damage when it enters the wall for the first time on a turn or ends its turn there. The other side deals no damage. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 4."
+}

@@ -1,0 +1,41 @@
+{
+  "id": "beast_sense",
+  "name": "Beast Sense",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 2,
+  "school": "divination",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "creature_type": "beast",
+    "description": "a willing Beast"
+  },
+  "tags": [
+    "detection",
+    "utility"
+  ],
+  "summary": "Touch a willing Beast and perceive through its senses for up to 1 hour.",
+  "text": "You touch a willing Beast. Until the spell ends, you can perceive through its senses as well as your own, and while you do you benefit from any special senses it has. Concentration, up to 1 hour. Casting time: an action, or as a Ritual."
+}

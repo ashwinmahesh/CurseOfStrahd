@@ -1,0 +1,57 @@
+{
+  "id": "guardian_of_faith",
+  "name": "Guardian of Faith",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "conjuration",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 10
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "area",
+    "description": "enemies that come within 10 feet of the guardian"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "20",
+      "type": "radiant"
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "enter",
+      "start_turn"
+    ],
+    "affects": "enemies"
+  },
+  "tags": [
+    "damage",
+    "defense",
+    "summon"
+  ],
+  "summary": "A spectral guardian: enemies coming within 10 ft make a Dex save, 20 Radiant (half on a success), up to 60 total.",
+  "text": "A spectral guardian appears in an unoccupied space within range and stays there for the duration. Any enemy that moves to a space within 10 feet of it for the first time on a turn, or starts its turn there, makes a Dexterity saving throw, taking 20 Radiant damage on a failure or half as much on a success. The guardian vanishes once it has dealt a total of 60 damage. Lasts 8 hours (no Concentration)."
+}

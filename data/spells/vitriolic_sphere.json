@@ -1,0 +1,63 @@
+{
+  "id": "vitriolic_sphere",
+  "name": "Vitriolic Sphere",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 150
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a drop of bile"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "10d4",
+      "type": "acid"
+    }
+  ],
+  "upcast": {
+    "damage": "2d4",
+    "text": "Only the initial damage increases."
+  },
+  "effects": [
+    {
+      "effect": "damage",
+      "params": {
+        "dice": "5d4",
+        "type": "acid",
+        "on": "fail"
+      }
+    }
+  ],
+  "tags": [
+    "damage"
+  ],
+  "summary": "20-foot-radius acid burst: Dex save, 10d4 Acid plus 5d4 at the end of its next turn; on a success, half the first only.",
+  "text": "You point at a spot within range and a glowing ball of acid, 1 foot across, streaks there and bursts in a 20-foot-radius Sphere. Each creature in the Sphere makes a Dexterity saving throw. On a failure it takes 10d4 Acid damage, plus another 5d4 Acid damage at the end of its next turn. On a success it takes half the initial damage and nothing more. Using a Higher-Level Spell Slot: the initial damage increases by 2d4 for each slot level above 4."
+}

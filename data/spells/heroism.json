@@ -1,0 +1,58 @@
+{
+  "id": "heroism",
+  "name": "Heroism",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a willing creature"
+  },
+  "temp_hp": {
+    "add_mod": true
+  },
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "condition_immunity",
+            "value": "frightened"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff"
+  ],
+  "summary": "A willing creature can't be Frightened and gains Temporary Hit Points equal to your modifier each turn.",
+  "text": "A willing creature you touch is filled with courage. Until the spell ends it can't be given the Frightened condition, and at the start of each of its turns it gains Temporary Hit Points equal to your spellcasting ability modifier. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1."
+}

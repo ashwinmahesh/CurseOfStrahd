@@ -1,0 +1,59 @@
+{
+  "id": "wind_wall",
+  "name": "Wind Wall",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "evocation",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "wall",
+    "size": 50,
+    "width": 1,
+    "height": 15
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a fan and a feather"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "str",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "4d8",
+      "type": "bludgeoning"
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "cast"
+    ]
+  },
+  "tags": [
+    "damage",
+    "defense"
+  ],
+  "summary": "A 50-ft wall of wind: Str save, 4d8 Bludgeoning (half on a success); blocks gas, small fliers and arrows.",
+  "text": "A wall of strong wind rises from the ground at a point you choose within range. You can make it up to 50 feet long, 15 feet high and 1 foot thick, in any shape as long as it forms one continuous path along the ground. When the wall appears, each creature in its area makes a Strength saving throw, taking 4d8 Bludgeoning damage on a failure or half as much on a success. The wind keeps fog, smoke and other gases at bay. Small or smaller flying creatures and objects can't pass through it, loose light materials carried into it fly upward, and arrows, bolts and other ordinary projectiles launched at targets behind it are deflected upward and miss automatically (boulders hurled by Giants and siege engine projectiles aren't affected). Creatures in gaseous form can't pass through it. Concentration, up to 1 minute."
+}

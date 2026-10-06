@@ -1,0 +1,53 @@
+{
+  "id": "summon_aberration",
+  "name": "Summon Aberration",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 4,
+  "school": "conjuration",
+  "classes": [
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pickled tentacle and an eyeball in a platinum-inlaid vial worth 400+ GP",
+    "m_cost_gp": 400
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space within range"
+  },
+  "upcast": {
+    "text": "Use the slot's level as the spell's level in the Aberrant Spirit stat block."
+  },
+  "choice": {
+    "kind": "option",
+    "label": "Aberration",
+    "from": [
+      "beholderkin",
+      "mind_flayer",
+      "slaad"
+    ]
+  },
+  "tags": [
+    "summon"
+  ],
+  "summary": "Summon an Aberrant Spirit (Beholderkin, Mind Flayer or Slaad) that fights beside you for up to 1 hour.",
+  "text": "You call forth an aberrant spirit, which appears in an unoccupied space within range and uses the Aberrant Spirit stat block. When you cast the spell, choose Beholderkin, Mind Flayer or Slaad; the spirit resembles that kind of creature, and the choice sets some of its traits. It disappears when it drops to 0 Hit Points or when the spell ends. It is an ally of you and your allies. In combat it shares your Initiative count but takes its turn right after yours. It follows your verbal commands (no action required by you); if you give none, it takes the Dodge action and uses its movement to stay out of danger. Aberrant Spirit (Medium Aberration): AC 11 + the spell's level; Hit Points 40 + 10 for each spell level above 4; Speed 30 ft., plus Fly 30 ft. (hover) for the Beholderkin; Str 16, Dex 10, Con 15, Int 16, Wis 10, Cha 6; Immunity to Psychic damage; Darkvision 60 ft., Passive Perception 10; speaks Deep Speech and understands the languages you know; uses your Proficiency Bonus. Regeneration (Slaad only): it regains 5 Hit Points at the start of its turn if it has at least 1 Hit Point. Whispering Aura (Mind Flayer only): at the start of each of its turns, each creature of its choice within 5 feet of it makes a Wisdom save against your spell save DC or takes 2d6 Psychic damage. Multiattack: it makes a number of attacks equal to half the spell's level (round down). Claw (Slaad only): melee attack using your spell attack modifier, reach 5 ft.; hit: 1d10 + 3 + the spell's level Slashing damage, and the target can't regain Hit Points until the start of the spirit's next turn. Eye Ray (Beholderkin only): ranged attack using your spell attack modifier, range 150 ft.; hit: 1d8 + 3 + the spell's level Psychic damage. Psychic Slam (Mind Flayer only): melee attack using your spell attack modifier, reach 5 ft.; hit: 1d8 + 3 + the spell's level Psychic damage. Using a Higher-Level Spell Slot: use the slot's level as the spell's level in the stat block."
+}

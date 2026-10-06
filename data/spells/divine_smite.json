@@ -1,0 +1,39 @@
+{
+  "id": "divine_smite",
+  "name": "Divine Smite",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "bonus_action",
+    "trigger": "Taken immediately after you hit a target with a Melee weapon or an Unarmed Strike."
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "the target you just hit"
+  },
+  "upcast": {
+    "damage": "1d8"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Right after a melee hit: the target takes an extra 2d8 Radiant damage (3d8 against Fiends and Undead).",
+  "text": "Bonus Action, cast right after you hit a target with a Melee weapon or an Unarmed Strike. The strike flares with holy power and the target takes an extra 2d8 Radiant damage from it; the extra damage is 1d8 higher if the target is a Fiend or an Undead. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 1."
+}

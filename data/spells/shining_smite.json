@@ -1,0 +1,43 @@
+{
+  "id": "shining_smite",
+  "name": "Shining Smite",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "bonus_action",
+    "trigger": "Taken immediately after you hit a creature with a Melee weapon or an Unarmed Strike."
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "the creature you just hit"
+  },
+  "upcast": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage",
+    "debuff",
+    "light"
+  ],
+  "summary": "Right after a melee hit: an extra 2d6 Radiant; the target glows, attacks against it have Advantage and it can't hide in Invisibility.",
+  "text": "Bonus Action, cast right after you hit a creature with a Melee weapon or an Unarmed Strike. The target takes an extra 2d6 Radiant damage from the attack. Until the spell ends, it sheds Bright Light in a 5-foot radius, attack rolls against it have Advantage, and it gains no benefit from the Invisible condition. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 2."
+}

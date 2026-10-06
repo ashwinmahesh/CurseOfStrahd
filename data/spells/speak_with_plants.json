@@ -1,0 +1,43 @@
+{
+  "id": "speak_with_plants",
+  "name": "Speak with Plants",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "area",
+    "description": "plants in a 30-foot Emanation"
+  },
+  "tags": [
+    "communication",
+    "utility"
+  ],
+  "summary": "For 10 minutes plants within 30 ft can talk to you, answer questions about the past day and shift terrain.",
+  "text": "Plants in a 30-foot Emanation from you gain a limited awareness and life for the duration, letting you talk with them and give them simple commands. You can ask about events in the area over the past day, learning about creatures that passed, the weather and similar things. You can also turn Difficult Terrain caused by plant growth (such as thickets) into ordinary terrain for the duration, or turn ordinary terrain where plants grow into Difficult Terrain. Plants can't uproot themselves, but they can move their branches, tendrils and stalks for you. If a Plant creature is in the area, you can communicate with it as if you shared a language."
+}

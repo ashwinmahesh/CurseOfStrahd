@@ -1,0 +1,62 @@
+{
+  "id": "enthrall",
+  "name": "Enthrall",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 99,
+    "description": "creatures of your choice that you can see; any creature you or your companions are fighting succeeds automatically"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "check",
+            "skill": "perception",
+            "value": -10
+          },
+          {
+            "stat": "passive",
+            "skill": "perception",
+            "value": -10
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "debuff",
+    "social"
+  ],
+  "summary": "Creatures of your choice make a Wis save or take -10 to Perception checks and Passive Perception.",
+  "text": "You spin a captivating stream of words. Creatures of your choice that you can see within range make a Wisdom saving throw; any creature that you or your companions are fighting succeeds automatically. On a failure, a creature has a -10 penalty to Wisdom (Perception) checks and to its Passive Perception until the spell ends. Concentration, up to 1 minute."
+}

@@ -1,0 +1,45 @@
+{
+  "id": "hallucinatory_terrain",
+  "name": "Hallucinatory Terrain",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "druid",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 300
+  },
+  "area": {
+    "shape": "cube",
+    "size": 150
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a mushroom"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Make natural terrain in a 150-foot Cube look, sound and smell like a different kind of terrain for 24 hours.",
+  "text": "Natural terrain in a 150-foot Cube within range looks, sounds and smells like some other kind of natural terrain for the duration: a meadow might pass for a bog, a pond for dry grass, or a sheer drop for an easy slope. Buildings, equipment and creatures in the area keep their appearance. The illusion fools only those senses, not touch, so a creature that enters the area usually notices it at once. If the difference isn't obvious by touch, a creature can take the Study action to examine the illusion and make an Intelligence (Investigation) check against your spell save DC to disbelieve it; a creature that sees through it sees a faint image laid over the real terrain. Lasts 24 hours. Casting time 10 minutes."
+}

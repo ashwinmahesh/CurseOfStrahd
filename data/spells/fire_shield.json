@@ -1,0 +1,83 @@
+{
+  "id": "fire_shield",
+  "name": "Fire Shield",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "evocation",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bit of phosphorus or a firefly"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "choice": {
+    "kind": "option",
+    "label": "Shield",
+    "from": [
+      "warm",
+      "chill"
+    ]
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "only_choice": "warm",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "cold"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "only_choice": "chill",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "fire"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "light",
+      "params": {
+        "bright": 10,
+        "dim": 10
+      }
+    }
+  ],
+  "tags": [
+    "defense",
+    "damage",
+    "light"
+  ],
+  "summary": "Wreathe yourself in warm or chill flames: resist Cold or Fire, and melee attackers take 2d8 Fire or Cold.",
+  "text": "Wispy flames wrap your body for the duration, shedding Bright Light in a 10-foot radius and Dim Light for a further 10 feet. Choose a warm shield or a chill shield. The warm shield gives you Resistance to Cold damage, and the chill shield gives you Resistance to Fire damage. Whenever a creature within 5 feet of you hits you with a melee attack roll, the shield bursts with flame and the attacker takes 2d8 Fire damage from the warm shield or 2d8 Cold damage from the chill one. Lasts 10 minutes (no Concentration)."
+}

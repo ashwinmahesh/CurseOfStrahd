@@ -1,0 +1,51 @@
+{
+  "id": "blight",
+  "name": "Blight",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "necromancy",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see, or a nonmagical plant"
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "8d8",
+      "type": "necrotic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Con save or 8d8 Necrotic, half on a success; Plant creatures fail automatically.",
+  "text": "A creature you can see within range makes a Constitution saving throw, taking 8d8 Necrotic damage on a failure or half as much on a success. A Plant creature fails the save automatically. Alternatively, you can target a nonmagical plant that isn't a creature, such as a tree or a shrub; it makes no save and simply withers and dies. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 4."
+}

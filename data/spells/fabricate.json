@@ -1,0 +1,37 @@
+{
+  "id": "fabricate",
+  "name": "Fabricate",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "transmutation",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "object",
+    "description": "raw materials you can see within range"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Turn raw materials into a finished object of the same material (Large or smaller; Medium for metal or stone).",
+  "text": "You turn raw materials you can see within range into finished goods made of the same stuff, such as furniture from timber, cord from plant fibers or cloth from wool. You can make a Large or smaller object, fitting within a 10-foot Cube or eight connected 5-foot Cubes, provided you have enough material. If the material is metal, stone or another mineral, the object can be no bigger than Medium (a single 5-foot Cube). The object's quality depends on the quality of the materials. The spell can't create creatures or magic items, and making intricate things such as weapons and armor requires proficiency with the right kind of Artisan's Tools. Casting time 10 minutes."
+}

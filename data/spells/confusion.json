@@ -1,0 +1,51 @@
+{
+  "id": "confusion",
+  "name": "Confusion",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "three nut shells"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "upcast": {
+    "area": 5,
+    "text": "The Sphere's radius increases by 5 feet for each slot level above 4."
+  },
+  "tags": [
+    "control"
+  ],
+  "summary": "10-foot-radius Sphere: Wis save or creatures act at random (d10 each turn) and lose Bonus Actions and Reactions.",
+  "text": "Each creature in a 10-foot-radius Sphere centered on a point within range makes a Wisdom saving throw. On a failure it can't take Bonus Actions or Reactions, and at the start of each of its turns it rolls 1d10 to see what it does: 1, it uses all its movement to move in a random direction (roll 1d4 for north, east, south or west) and takes no action; 2-6, it doesn't move or take actions; 7-8, it doesn't move and makes one melee attack against a random creature within its reach, or does nothing if none is in reach; 9-10, it acts and moves normally. At the end of each of its turns, an affected creature repeats the save, ending the spell on itself on a success. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the Sphere's radius increases by 5 feet for each slot level above 4."
+}
