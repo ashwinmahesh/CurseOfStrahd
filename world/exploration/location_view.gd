@@ -1438,6 +1438,7 @@ func search() -> void:
 		who.spend_resource("sharp_eye")
 		adv.append("Sharp Eye")
 	var t := who.roll_check(dice, &"perception", 0, adv, [], "%s searches" % who.name, ["search"])
+	var sharp_eye := not adv.is_empty()
 	check_rolled.emit(t.describe())
 	st.advance_minutes(1)
 	var found: Array[String] = []
@@ -1472,6 +1473,8 @@ func search() -> void:
 			SetDressing.reveal_door(door_nodes[str(door["id"])] as Node3D)
 			found.append(str(door.get("label", "a hidden door")))
 	st.last_check = not found.is_empty()
+	if found.is_empty() and sharp_eye:
+		who.restore_resource("sharp_eye")
 	if found.is_empty():
 		_say("check:perception:failure", who, "Nothing you can find.")
 	else:

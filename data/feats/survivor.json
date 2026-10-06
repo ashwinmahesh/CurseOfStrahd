@@ -3,7 +3,7 @@
   "name": "Survivor",
   "source": {
     "book": "RtHW",
-    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+    "checked_against": "RtHW"
   },
   "category": "origin",
   "repeatable": false,
@@ -11,17 +11,17 @@
   "benefits": [
     {
       "id": "survivor_alertness",
-      "name": "Ever Watchful",
+      "name": "Hypervigilance",
       "summary": "When your Initiative d20 shows 9 or lower, reroll it and use the new roll.",
-      "text": "When you roll Initiative and the d20 shows 9 or lower, you can reroll it, and you must use the new roll.",
+      "text": "An Initiative d20 showing 9 or lower can be rolled again; the new roll stands.",
       "action": "special",
       "implemented": "engine"
     },
     {
       "id": "survivor_resolve",
-      "name": "Steeled Nerves",
+      "name": "Steel Yourself",
       "summary": "Reaction, once per Long Rest: add your Proficiency Bonus to a save against Charmed or Frightened.",
-      "text": "When you make a saving throw to avoid or end the Charmed or Frightened condition, you can take a Reaction to add your Proficiency Bonus to the roll. Once you do, you can't again until you finish a Long Rest.",
+      "text": "Failing a save to avoid or end Charmed or Frightened, you can spend your Reaction to add your Proficiency Bonus to it, which may turn it into a success. Once per Long Rest.",
       "action": "reaction",
       "resource": {
         "id": "survivor_resolve",
