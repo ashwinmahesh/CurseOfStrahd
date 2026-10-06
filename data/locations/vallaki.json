@@ -1025,22 +1025,6 @@
           "name": "Hired sword"
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            33,
-            15
-          ],
-          "name": "Hired sword"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            32,
-            18
-          ],
-          "name": "Hired sword"
-        },
-        {
           "monster": "bandit_captain",
           "cell": [
             28,
@@ -1171,22 +1155,6 @@
           "cell": [
             33,
             15
-          ],
-          "name": "Hired sword"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            32,
-            18
-          ],
-          "name": "Hired sword"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            32,
-            13
           ],
           "name": "Hired sword"
         },
@@ -1415,30 +1383,6 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            27,
-            12
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            23,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            28,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
           "monster": "bandit",
           "cell": [
             19,
@@ -1469,6 +1413,14 @@
             13
           ],
           "name": "Town guard"
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            34,
+            13
+          ],
+          "name": "Captain of the watch"
         }
       ],
       "surprise": "",
@@ -1564,22 +1516,6 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            23,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            28,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
           "monster": "bandit_captain",
           "cell": [
             26,
@@ -1600,22 +1536,6 @@
           "cell": [
             29,
             19
-          ],
-          "name": "Town guard"
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            16,
-            13
-          ],
-          "name": "Town guard"
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            33,
-            13
           ],
           "name": "Town guard"
         }
@@ -1807,22 +1727,6 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            25,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            21,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
           "monster": "bandit_captain",
           "cell": [
             26,
@@ -1911,22 +1815,6 @@
           "monster": "warrior_veteran",
           "cell": [
             25,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            21,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            23,
             11
           ],
           "name": "Sergeant of the watch"

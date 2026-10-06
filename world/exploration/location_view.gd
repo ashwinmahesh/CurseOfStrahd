@@ -466,15 +466,20 @@ func _path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	avoid.erase(to)
 	# Closed doors that would open at a touch are part of the way: the party opens them as it reaches them.
 	var doors := _openable_doors()
-	# An exit set into a wall (a house's front door on the village map) is walked into like a door.
+	# An exit set into a wall or a tent (a house's front door, Madam Eva's tent flap) is walked into like a door.
+	var low_exit := grid.has_flag(to, CombatGrid.LOW) and _exit_at(to)
 	if grid.has_flag(to, CombatGrid.WALL) and _exit_at(to):
 		doors[to] = {}
 	for c: Vector2i in doors:
 		grid.set_flag(c, CombatGrid.WALL, false)
+	if low_exit:
+		grid.set_flag(to, CombatGrid.LOW, false)
 	var reach := grid.reachable(from, 1, 2000, func(c: Vector2i) -> bool: return avoid.has(c),
 		func(_c: Vector2i) -> bool: return false, func(_c: Vector2i) -> bool: return false)
 	for c: Vector2i in doors:
 		grid.set_flag(c, CombatGrid.WALL, true)
+	if low_exit:
+		grid.set_flag(to, CombatGrid.LOW, true)
 	return CombatGrid.path_to(reach, to)
 
 
