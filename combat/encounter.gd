@@ -913,7 +913,7 @@ func has_kit(c: Combatant) -> bool:
 func _provokers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[Combatant]:
 	var out: Array[Combatant] = []
 	for p in hostiles_of(mover):
-		if not spells.can_react(p) or not can_see(p, mover):
+		if not spells.can_react(p) or not can_see(p, mover) or p.creature.has_flag("no_opportunity_attacks"):
 			continue
 		# Disengage stops Opportunity Attacks, except a Sentinel's against a creature within 5 ft of it.
 		if mover.disengaged and not (features.has_feat(p, "sentinel") and grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells) <= 5):
@@ -2089,6 +2089,10 @@ func _reduce_by_dice(target: Combatant, parts: Array, details: Array) -> Array:
 ## Reactions to being damaged (Hellish Rebuke, Storm's Thunder) wait until the attack or spell that caused them has
 ## finished.
 func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
+	# Berserk Lashing (Clay Construct Spirit): a Slam at a random creature within 5 ft whenever it takes damage.
+	if target.creature is Monster and monster_actions.has_trait(target, "berserk_lashing") and spells.can_react(target) and target.creature.hp > 0:
+		reaction_queue.append({"kind": "berserk_lashing", "reactor": target.id, "trigger": source.id})
+		return
 	if not target.creature is Character or target.creature.hp <= 0 or distance(target, source) > 60 or not can_see(target, source):
 		return
 	for q in reaction_queue:
@@ -2116,6 +2120,8 @@ func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 			return spells.can_react(reactor) and (reactor.creature as Character).resource_left("giant_ancestry") > 0
 		"sentinel":
 			return spells.can_react(reactor) and not best_melee_option(reactor, null).is_empty()
+		"berserk_lashing":
+			return spells.can_react(reactor) and reactor.creature.hp > 0
 	return false
 
 
@@ -2133,6 +2139,18 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 			if distance(reactor, trigger) > reactor.reach_ft():
 				return CombatResult.new()
 			return _opportunity_attack(reactor, trigger)
+		"berserk_lashing":
+			var near: Array[Combatant] = []
+			for o in living():
+				if o != reactor and not o.is_down() and distance(reactor, o) <= 5:
+					near.append(o)
+			reactor.reaction_available = false
+			if near.is_empty():
+				log.add("info", "%s lashes out at no one" % reactor.name(), reactor.id)
+				return CombatResult.new()
+			var victim := near[dice.roll_one(near.size(), "Berserk Lashing target") - 1]
+			log.add("info", "%s lashes out in a frenzy at %s (Berserk Lashing)" % [reactor.name(), victim.name()], reactor.id)
+			return _resolve_attack(reactor, victim, option_by_id(reactor, "monster:slam"), {"reaction": true})
 	return CombatResult.new()
 
 
@@ -2140,6 +2158,7 @@ const _QUEUED_TEXT := {
 	"hellish_rebuke": ["Reaction: Hellish Rebuke?", "%s hurt %s. Answer with Hellish Rebuke: a Dex save or Fire damage.", "Reaction and a spell slot"],
 	"storms_thunder": ["Reaction: Storm's Thunder?", "%s hurt %s. Answer with 1d8 Thunder damage.", "Reaction and a use of Giant Ancestry"],
 	"sentinel": ["Reaction: Sentinel?", "%s attacks someone beside %s. Make an Opportunity Attack against it?", "Reaction"],
+	"berserk_lashing": ["Reaction: Berserk Lashing?", "%s hurt %s. Lash out with a Slam at a random creature within 5 ft?", "Reaction"],
 }
 
 

@@ -33,6 +33,11 @@ var sustained: Array[Dictionary] = []
 var summoned: Dictionary = {}
 
 
+## Spells that call up a creature on a chosen square (combat/summon_blocks.gd).
+const SUMMON_SPELLS := ["summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration",
+	"summon_construct", "summon_elemental"]
+
+
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
 	zones = SpellZones.new(encounter)
@@ -150,7 +155,7 @@ static func _out_of_combat_word(s: Dictionary) -> String:
 
 ## True if the spell does something the combat engine can resolve.
 func has_combat_rules(s: Dictionary) -> bool:
-	if str(s.get("id", "")) in SPECIAL:
+	if str(s.get("id", "")) in SPECIAL or str(s.get("id", "")) in SUMMON_SPELLS:
 		return true
 	for k: String in ["attack", "heal", "damage", "temp_hp", "zone", "object", "sustain"]:
 		if s.has(k):
@@ -684,7 +689,7 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		rng = 30 if str((s.get("range", {}) as Dictionary).get("kind", "")) == "touch" else rng * 2
 	var id := str(s["id"])
 	var tkind := str((s.get("targets", {}) as Dictionary).get("kind", "creature"))
-	var placed := s.has("object") or id in ["misty_step", "summon_fey", "summon_undead"]
+	var placed := s.has("object") or id in ["misty_step", "dimension_door"] or id in SUMMON_SPELLS
 	if placed:
 		var cell: Vector2i = opts.get("cell", Vector2i(-1, -1))
 		if cell.x < 0 and point != Vector2.INF:
@@ -700,7 +705,7 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		if e.grid.distance_ft(c.cell, c.size_cells, cell, 1) > rng:
 			out["why"] = "That square is out of range (%d ft)" % rng
 			return out
-		if id in ["misty_step", "summon_fey", "summon_undead", "flaming_sphere"] and e.occupant_at(cell) != null:
+		if (id in ["misty_step", "dimension_door", "flaming_sphere"] or id in SUMMON_SPELLS) and e.occupant_at(cell) != null:
 			out["why"] = "That square is occupied"
 			return out
 		if id == "misty_step" and not e.grid.can_see(c.cell, c.size_cells, cell, 1):
@@ -815,7 +820,7 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		"dispel_magic":
 			_dispel(ctx, tgt[0], r)
 			return
-		"summon_fey", "summon_undead":
+		"summon_fey", "summon_undead", "find_steed", "summon_beast", "giant_insect", "summon_aberration", "summon_construct", "summon_elemental":
 			_summon(ctx, ctx["cell"] as Vector2i, r)
 			return
 		"true_strike":
@@ -1424,6 +1429,24 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	r.lines.append(e.log.add("heal", "%s heals %s for %d" % [c.name(), t.name(), healed], c.id,
 		["%s %s: %s" % [s["name"], dice, rolled["text"]], bonus.describe()]))
 	e.events.append({"type": "heal", "id": t.id, "amount": healed})
+	_life_bond(t, healed, int(s.get("level", 0)))
+
+
+## Life Bond (Find Steed): when the rider regains Hit Points from a spell of level 1+, a steed within 5 ft regains as
+## many.
+func _life_bond(t: Combatant, healed: int, level: int) -> void:
+	if healed <= 0 or level < 1:
+		return
+	var e := enc()
+	for sid: Variant in summoned.get(t.id, []):
+		var steed := e.get_c(str(sid))
+		if steed == null or not steed.is_alive() or not steed.creature is Monster or not bool((steed.creature as Monster).data.get("steed", false)):
+			continue
+		if e.distance(t, steed) <= 5:
+			var got := steed.creature.heal(healed, "Life Bond")
+			if got > 0:
+				e.log.add("heal", "%s regains %d Hit Points (Life Bond)" % [steed.name(), got], steed.id)
+				e.events.append({"type": "heal", "id": steed.id, "amount": got})
 
 
 ## Temporary Hit Points from the spell's `temp_hp` ({dice, flat, add_mod}) plus `upcast.temp_hp` per slot level.
@@ -2621,8 +2644,15 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		return
 	var m := Monster.from_data(block, e.dice)
 	m.name = str(block["name"])
-	if cell.x < 0 or e.occupant_at(cell) != null:
-		cell = _free_cell_near(c.cell)
+	# A new Otherworldly Steed replaces the old one.
+	if bool(block.get("steed", false)):
+		for old_id: Variant in summoned.get(c.id, []):
+			var old := e.get_c(str(old_id))
+			if old != null and old.is_alive() and old.creature is Monster and bool((old.creature as Monster).data.get("steed", false)):
+				_dismiss(old.id)
+	var size := CombatGrid.size_cells_for(m.size)
+	if cell.x < 0 or not _room_for(cell, size):
+		cell = _free_cell_near(c.cell, size)
 	var sc := e.add(m, &"guest" if c.side == &"party" else c.side, cell)
 	sc.controller = c.controller
 	sc.set_meta("summoner", c.id)
@@ -2656,15 +2686,23 @@ func _dismiss(creature_id: String) -> void:
 	e.events.append({"type": "vanish", "id": sc.id})
 
 
-func _free_cell_near(cell: Vector2i) -> Vector2i:
-	var e := enc()
-	for radius in range(1, 6):
+func _free_cell_near(cell: Vector2i, size: int = 1) -> Vector2i:
+	for radius in range(1, 8):
 		for dx in range(-radius, radius + 1):
 			for dy in range(-radius, radius + 1):
 				var c2 := cell + Vector2i(dx, dy)
-				if e.grid.in_bounds(c2) and not e.grid.is_solid(c2) and e.occupant_at(c2) == null:
+				if _room_for(c2, size):
 					return c2
 	return cell
+
+
+## Whether a creature `size` squares across fits with its corner at `cell`.
+func _room_for(cell: Vector2i, size: int) -> bool:
+	var e := enc()
+	for f in CombatGrid.footprint(cell, size):
+		if not e.grid.in_bounds(f) or e.grid.is_solid(f) or e.occupant_at(f) != null:
+			return false
+	return true
 
 
 ## After a fight is loaded from a save: effects that do something when they end get their hook back (Haste's

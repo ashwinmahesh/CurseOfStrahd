@@ -385,12 +385,12 @@ func _spell_targeting(data: Dictionary) -> String:
 	if str(data.get("id", "")) == "spare_the_dying":
 		return "dying"
 	var tags := data.get("tags", []) as Array
-	if data.has("object") or str(data.get("id", "")) in ["misty_step", "summon_fey", "summon_undead"]:
+	if data.has("object") or str(data.get("id", "")) in ["misty_step", "dimension_door"] or str(data.get("id", "")) in SpellCaster.SUMMON_SPELLS:
 		return "place"
 	if str(data.get("id", "")) == "revivify":
 		return "dead"
 	if str(t.get("count", "")) == "any" or int(t.get("count", 1)) > 1 or int((data.get("upcast", {}) as Dictionary).get("targets", 0)) > 0 \
-			or str(data.get("id", "")) in ["magic_missile", "scorching_ray"]:
+			or str(data.get("id", "")) in ["magic_missile", "scorching_ray", "eldritch_blast"]:
 		return "multi"
 	if "healing" in tags or "buff" in tags or "defense" in tags or "restoration" in tags:
 		return "ally"

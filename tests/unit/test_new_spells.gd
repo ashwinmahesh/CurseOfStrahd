@@ -229,3 +229,96 @@ func test_ice_storm_deals_bludgeoning_and_cold_separately() -> void:
 	assert_true(e.spells.cast(c, "ice_storm", 4, [], Vector2(6.5, 6.5)).ok)
 	assert_true(t.creature.hp < 200, "the Bludgeoning half still lands on a creature immune to Cold")
 	assert_true(e.spells.zones.difficult_cells(t).has(t.cell), "hail makes Difficult Terrain")
+
+
+# --- Summons --------------------------------------------------------------------------------------------
+
+func _summoned(e: Encounter, c: Combatant) -> Combatant:
+	for id: Variant in e.spells.summoned.get(c.id, []):
+		var s := e.get_c(str(id))
+		if s != null and s.is_alive():
+			return s
+	return null
+
+
+func test_summon_beast_brings_a_pack_hunting_spirit_that_attacks_after_its_caster() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["summon_beast"], Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(8, 3), 100)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "summon_beast", 3, [], Vector2(3.5, 3.5), Vector2.ZERO, {"choice": "land"}).ok)
+	var b := _summoned(e, c)
+	assert_true(b != null)
+	assert_eq(b.creature.ac_value(), 14, "AC 11 + level 3")
+	assert_eq(b.creature.max_hp(), 35, "30 + 5 above level 2")
+	assert_true(b.creature.has_flag("pack_tactics"))
+	assert_true(b.is_player_controlled())
+	assert_eq(e.order[e.order.find(c) + 1], b, "takes its turn right after the caster")
+
+
+func test_summon_aberration_slaad_regenerates() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["summon_aberration"], Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(8, 3), 100)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "summon_aberration", 4, [], Vector2(3.5, 3.5), Vector2.ZERO, {"choice": "slaad"}).ok)
+	var a := _summoned(e, c)
+	a.creature.hp = 10
+	e.end_turn()
+	assert_eq(e.current(), a)
+	assert_eq(a.creature.hp, 15, "Regeneration 5")
+
+
+func test_metal_construct_spirit_burns_whoever_hits_it() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["summon_construct"], Vector2i(2, 3))
+	var z := TestCombat.foe(e, "zombie", Vector2i(5, 3))
+	z.creature.hp = 100
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "summon_construct", 4, [], Vector2(4.5, 3.5), Vector2.ZERO, {"choice": "metal"}).ok)
+	var k := _summoned(e, c)
+	e.retaliate(z, k)
+	assert_true(z.creature.hp < 100, "Heated Body")
+
+
+func test_find_steed_heals_with_its_touch_and_shares_its_riders_healing() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["find_steed", "cure_wounds"], Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 9), 100)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "find_steed", 2, [], Vector2(3.5, 3.5), Vector2.ZERO, {"choice": "celestial"}).ok)
+	var st := _summoned(e, c)
+	assert_eq(st.creature.size, &"large")
+	assert_eq(st.creature.max_hp(), 25, "5 + 10 × level 2")
+	st.creature.hp = 5
+	c.creature.hp = 5
+	c.action_available = true
+	c.magic_action_used = false
+	c.cast_slot_spell_this_turn = false
+	assert_true(e.spells.cast(c, "cure_wounds", 1, [c]).ok)
+	assert_true(st.creature.hp > 5, "Life Bond")
+	e.end_turn()
+	assert_eq(e.current(), st)
+	var touch := {}
+	for a in e.feature_actions.list(st):
+		if str(a["id"]) == "feat:creature:healing_touch":
+			touch = a
+	assert_false(touch.is_empty(), "Healing Touch is offered")
+	c.creature.hp = 3
+	assert_true(e.feature_actions.perform(st, "creature:healing_touch", c, Vector2.INF).ok)
+	assert_true(c.creature.hp > 3)
+	assert_eq(str(e.feature_actions.list(st).filter(func(a: Dictionary) -> bool: return str(a["id"]) == "feat:creature:healing_touch")[0]["why"]) != "", true, "once per Long Rest")
+
+
+func test_giant_spider_webs_its_target_in_place() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["giant_insect"], Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(8, 3), 100)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "giant_insect", 4, [], Vector2(3.5, 3.5), Vector2.ZERO, {"choice": "spider"}).ok)
+	var sp := _summoned(e, c)
+	e.end_turn()
+	assert_eq(e.current(), sp)
+	TestCombat.next_d20(e, 19)
+	assert_true(e.attack(sp, t, "monster:web_bolt").hit)
+	assert_eq(t.speed(), 0, "Speed 0 until the start of the insect's next turn")
