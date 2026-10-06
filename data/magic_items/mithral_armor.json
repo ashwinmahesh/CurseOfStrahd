@@ -30,5 +30,7 @@
     }
   },
   "summary": "No Strength requirement and no Disadvantage on Stealth checks.",
-  "text": "Mithral is a light, flexible metal. If the armor normally imposes Disadvantage on Dexterity (Stealth) checks or has a Strength requirement, the mithral version of the armor doesn't."
+  "text": "Mithral is a light, flexible metal. If the armor normally imposes Disadvantage on Dexterity (Stealth) checks or has a Strength requirement, the mithral version of the armor doesn't.",
+  "icon": "chain_shirt",
+  "icon_fallback": true
 }

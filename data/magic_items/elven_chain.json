@@ -30,5 +30,7 @@
     "no_training": true
   },
   "summary": "+1 AC; you're trained with it even without Medium armor training.",
-  "text": "You gain a +1 bonus to Armor Class while you wear this armor. You're considered trained with this armor even if you lack training with Medium armor."
+  "text": "You gain a +1 bonus to Armor Class while you wear this armor. You're considered trained with this armor even if you lack training with Medium armor.",
+  "icon": "chain_shirt",
+  "icon_fallback": true
 }

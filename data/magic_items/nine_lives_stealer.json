@@ -52,5 +52,7 @@
     ]
   },
   "summary": "+2 sword; while it has charges, a Critical Hit on a creature with fewer than 100 Hit Points may tear out its soul (Con DC 15).",
-  "text": "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon. The weapon has 1d8 + 1 charges. If you score a Critical Hit against a creature that has fewer than 100 Hit Points, it must succeed on a DC 15 Constitution saving throw or be slain instantly as the weapon tears its life force from its body (a Construct or an Undead is immune). The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+  "text": "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon. The weapon has 1d8 + 1 charges. If you score a Critical Hit against a creature that has fewer than 100 Hit Points, it must succeed on a DC 15 Constitution saving throw or be slain instantly as the weapon tears its life force from its body (a Construct or an Undead is immune). The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property.",
+  "icon": "longsword",
+  "icon_fallback": true
 }

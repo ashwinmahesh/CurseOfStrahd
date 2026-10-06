@@ -27,5 +27,7 @@
     ]
   },
   "summary": "On a 20 to hit, an extra 7 damage of the weapon's type.",
-  "text": "When you roll a 20 on an attack roll made with this magic weapon, the target takes an extra 7 damage of the weapon's type."
+  "text": "When you roll a 20 on an attack roll made with this magic weapon, the target takes an extra 7 damage of the weapon's type.",
+  "icon": "rapier",
+  "icon_fallback": true
 }

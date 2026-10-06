@@ -26,5 +26,7 @@
   ],
   "variant_of": "armor_of_resistance",
   "summary": "Resistance to Psychic damage while you wear it.",
-  "text": "You have Resistance to Psychic damage while you wear this armor."
+  "text": "You have Resistance to Psychic damage while you wear this armor.",
+  "icon": "chain_mail",
+  "icon_fallback": true
 }

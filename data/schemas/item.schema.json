@@ -826,6 +826,10 @@
         }
       },
       "additionalProperties": false
+    },
+    "icon_fallback": {
+      "type": "boolean",
+      "description": "A template's icon is only its default base item's, for lists; the finished item uses its base item's icon."
     }
   }
 }

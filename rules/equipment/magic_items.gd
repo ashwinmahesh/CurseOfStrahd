@@ -175,7 +175,8 @@ static func combine(t: Dictionary, base: Dictionary, id: String) -> Dictionary:
 			"armor_rules", "light", "consumable", "theme", "treasure", "variant_of"]:
 		if t.has(k):
 			out[k] = (t[k] as Variant) if not (t[k] is Dictionary or t[k] is Array) else t[k].duplicate(true)
-	out["icon"] = str(t.get("icon", base.get("icon", base["id"])))
+	out["icon"] = str(t["icon"]) if t.has("icon") and not bool(t.get("icon_fallback", false)) else str(base.get("icon", base["id"]))
+	out.erase("icon_fallback")
 	if t.has("cost_gp"):
 		out["cost_gp"] = float(base.get("cost_gp", 0)) + float(t["cost_gp"])
 	if spec.has("weapon_patch") and out.has("weapon"):

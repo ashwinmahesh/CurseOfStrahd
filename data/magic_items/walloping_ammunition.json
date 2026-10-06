@@ -31,5 +31,7 @@
     ]
   },
   "summary": "A creature it hits makes a DC 10 Strength save or falls Prone.",
-  "text": "This magic ammunition packs a wallop. A creature hit by it must succeed on a DC 10 Strength saving throw or have the Prone condition."
+  "text": "This magic ammunition packs a wallop. A creature hit by it must succeed on a DC 10 Strength saving throw or have the Prone condition.",
+  "icon": "arrow",
+  "icon_fallback": true
 }

@@ -31,5 +31,7 @@
     ]
   },
   "summary": "On a 20, an extra 3d6 Necrotic to a living target, and you gain that much in Temporary Hit Points.",
-  "text": "When you attack a creature with this magic weapon and roll a 20 on the attack roll, that target takes an extra 3d6 Necrotic damage, provided that the target isn't a Construct or an Undead. You gain Temporary Hit Points equal to the extra damage dealt."
+  "text": "When you attack a creature with this magic weapon and roll a 20 on the attack roll, that target takes an extra 3d6 Necrotic damage, provided that the target isn't a Construct or an Undead. You gain Temporary Hit Points equal to the extra damage dealt.",
+  "icon": "longsword",
+  "icon_fallback": true
 }

@@ -60,5 +60,7 @@
     }
   ],
   "summary": "+1 AC, you understand Abyssal, clawed gauntlets make your Unarmed Strikes +1 and 1d8 Slashing. Cursed.",
-  "text": "While wearing this armor, you gain a +1 bonus to Armor Class, and you know Abyssal. The armor's clawed gauntlets turn your Unarmed Strikes into magic weapon attacks that deal Slashing damage, with a +1 bonus to attack and damage rolls and a damage die of 1d8. Curse. Once you don this cursed armor, you can't doff it unless you're targeted by Remove Curse or similar magic. While wearing it, you have Disadvantage on attack rolls against demons and on saving throws against their spells and special abilities."
+  "text": "While wearing this armor, you gain a +1 bonus to Armor Class, and you know Abyssal. The armor's clawed gauntlets turn your Unarmed Strikes into magic weapon attacks that deal Slashing damage, with a +1 bonus to attack and damage rolls and a damage die of 1d8. Curse. Once you don this cursed armor, you can't doff it unless you're targeted by Remove Curse or similar magic. While wearing it, you have Disadvantage on attack rolls against demons and on saving throws against their spells and special abilities.",
+  "icon": "plate_armor",
+  "icon_fallback": true
 }

@@ -30,5 +30,7 @@
     }
   ],
   "summary": "A walking cane that turns into an ordinary longsword (and stays one).",
-  "text": "When you grasp this walking cane and use a Bonus Action to speak the command word, it transforms into an ordinary Longsword and ceases to be magical."
+  "text": "When you grasp this walking cane and use a Bonus Action to speak the command word, it transforms into an ordinary Longsword and ceases to be magical.",
+  "icon": "club",
+  "icon_fallback": true
 }

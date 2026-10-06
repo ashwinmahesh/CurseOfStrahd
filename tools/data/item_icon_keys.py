@@ -33,7 +33,7 @@ def main():
         add(d.get("icon", iid), d["name"])
     templates = []
     for iid, d in magic.items():
-        if "template" in d and d["template"].get("on") != "spell" and "icon" not in d:
+        if "template" in d and d["template"].get("on") != "spell" and ("icon" not in d or d.get("icon_fallback")):
             templates.append(d["name"])
             continue
         add(d.get("icon", iid), d["name"])

@@ -34,5 +34,7 @@
     }
   ],
   "summary": "Once a day, a Magic action casts Etherealness from it (10 minutes).",
-  "text": "While you're wearing this armor, you can take a Magic action to cast Etherealness from it. The spell lasts for 10 minutes, until you remove the armor, or until you take a Magic action to end it. This property can't be used again until the next dawn."
+  "text": "While you're wearing this armor, you can take a Magic action to cast Etherealness from it. The spell lasts for 10 minutes, until you remove the armor, or until you take a Magic action to end it. This property can't be used again until the next dawn.",
+  "icon": "plate_armor",
+  "icon_fallback": true
 }

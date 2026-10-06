@@ -23,5 +23,7 @@
     "default": "chain_mail"
   },
   "summary": "It never gets dirty.",
-  "text": "This armor never gets dirty. (No other effect in the game.)"
+  "text": "This armor never gets dirty. (No other effect in the game.)",
+  "icon": "chain_mail",
+  "icon_fallback": true
 }

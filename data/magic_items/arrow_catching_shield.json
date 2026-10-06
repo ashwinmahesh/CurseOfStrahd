@@ -22,5 +22,7 @@
     "catch_arrows": true
   },
   "summary": "+2 AC against ranged attacks; a Reaction makes you the target of a ranged attack aimed at someone within 5 ft.",
-  "text": "You gain a +2 bonus to Armor Class against ranged attack rolls while you wield this Shield. This bonus is in addition to the Shield's normal bonus to AC. In addition, whenever an attacker makes a ranged attack roll against a target within 5 feet of you, you can take a Reaction to become the target of the attack instead."
+  "text": "You gain a +2 bonus to Armor Class against ranged attack rolls while you wield this Shield. This bonus is in addition to the Shield's normal bonus to AC. In addition, whenever an attacker makes a ranged attack roll against a target within 5 feet of you, you can take a Reaction to become the target of the attack instead.",
+  "icon": "shield",
+  "icon_fallback": true
 }

@@ -19,5 +19,7 @@
     "default": "scale_mail"
   },
   "summary": "Harmless smoke wisps off it while worn.",
-  "text": "Wisps of harmless, odorless smoke rise from this armor while it is worn. (No other effect in the game.)"
+  "text": "Wisps of harmless, odorless smoke rise from this armor while it is worn. (No other effect in the game.)",
+  "icon": "scale_mail",
+  "icon_fallback": true
 }
