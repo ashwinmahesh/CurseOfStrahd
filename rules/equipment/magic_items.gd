@@ -172,9 +172,12 @@ static func combine(t: Dictionary, base: Dictionary, id: String) -> Dictionary:
 	var pattern := str(spec.get("name", "{base} (%s)" % t.get("name", "")))
 	out["name"] = pattern.replace("{base}", str(base.get("name", base["id"])))
 	for k: String in ["source", "magic", "modifiers", "powers", "summary", "text", "worn", "held", "weapon_rules",
-			"armor_rules", "light", "consumable", "theme", "treasure", "variant_of"]:
+			"armor_rules", "light", "consumable", "theme", "treasure", "variant_of", "disguise"]:
 		if t.has(k):
 			out[k] = (t[k] as Variant) if not (t[k] is Dictionary or t[k] is Array) else t[k].duplicate(true)
+	if out.has("disguise"):
+		var dg := out["disguise"] as Dictionary
+		dg["name"] = str(dg.get("name", "")).replace("{base}", str(base.get("name", base["id"])))
 	out["icon"] = str(t["icon"]) if t.has("icon") and not bool(t.get("icon_fallback", false)) else str(base.get("icon", base["id"]))
 	out.erase("icon_fallback")
 	if t.has("cost_gp"):
@@ -425,10 +428,35 @@ static func specific_scroll(item_id: String, seed_key: String, comp: Compendium)
 
 
 ## The name a player sees: a disguised item (a Potion of Poison, Dust of Sneezing and Choking, a cursed armor) passes for
-## what it imitates until it's used, attuned to or identified (`identified` on its entry).
+## what it imitates until it's attuned to or identified (`identified` on its entry).
 static func display_name(item: Dictionary, entry: Dictionary = {}) -> String:
-	if item.has("appears_as") and not bool(entry.get("identified", false)):
-		var other := Compendium.shared().item_data(str(item["appears_as"]))
-		if not other.is_empty():
-			return str(other.get("name", item.get("name", "")))
-	return str(item.get("name", item.get("id", "")))
+	return str(shown_data(item, entry).get("name", item.get("name", item.get("id", ""))))
+
+
+## Whether this copy of an item still passes for something else.
+static func is_disguised(item: Dictionary, entry: Dictionary = {}) -> bool:
+	if bool(entry.get("identified", false)):
+		return false
+	return item.has("disguise") or (item.has("appears_as") and not Compendium.shared().item_data(str(item["appears_as"])).is_empty())
+
+
+## What the player is shown of an item while it's disguised: the item it imitates (`appears_as`), or itself with its
+## `disguise` name and text and no curse showing; otherwise the item itself.
+static func shown_data(item: Dictionary, entry: Dictionary = {}) -> Dictionary:
+	if not is_disguised(item, entry):
+		return item
+	if item.has("disguise"):
+		var out := item.duplicate(true)
+		for k: String in ["name", "summary", "text"]:
+			out[k] = str((item["disguise"] as Dictionary).get(k, item.get(k, "")))
+		var magic := out.get("magic", {}) as Dictionary
+		magic.erase("cursed")
+		magic.erase("curse")
+		return out
+	return Compendium.shared().item_data(str(item["appears_as"]))
+
+
+## Whether a copy of a magic item can still be identified (Identify, or studying it through a Short Rest). Every magic
+## item can, so the button doesn't give away which ones are disguised; a genuine one turns out to be what it seemed.
+static func can_identify(item: Dictionary, entry: Dictionary) -> bool:
+	return is_magic(item) and not bool(entry.get("identified", false))
