@@ -294,7 +294,7 @@ func _show_fade() -> void:
 	var there := not cr.dead and _fade > 0.0
 	_ring.visible = there
 	_ring.scale = Vector3.ONE * (1.15 if _highlight else 1.0) * lerpf(0.5, 1.0, _fade)
-	_bar_back.visible = there and _fade >= 1.0
+	_bar_back.visible = _bar_wanted()
 	_bar_fill.visible = _bar_back.visible
 	_status.visible = there and _fade >= 1.0
 	if _lying != null:
@@ -341,7 +341,15 @@ func flash(colour: Color, seconds: float = 0.25) -> void:
 	_flash_color = colour
 
 
+## The health bar shows in fights only: out of combat the bars under the party read as stray boards lying on the floor
+## (owner report 2026-10-06).
+func _bar_wanted() -> bool:
+	return not combatant.creature.dead and _fade >= 1.0 and ModeController.mode == ModeController.Mode.COMBAT
+
+
 func _process(delta: float) -> void:
+	if _bar_back != null and _bar_back.visible != _bar_wanted():
+		_show_fade()
 	if sprite == null:
 		return
 	if _flash > 0.0 and not combatant.creature.dead:

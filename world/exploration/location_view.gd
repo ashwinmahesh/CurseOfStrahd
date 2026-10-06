@@ -321,6 +321,10 @@ func refresh_npcs() -> void:
 	_npc_shown.clear()
 	npc_tokens.clear()
 	_build_npcs()
+	# Rebuilt pieces in rooms nobody has found yet stay hidden (HiddenAreas only looks again when a secret door is found).
+	var hidden_areas := HiddenAreas.of(self)
+	if hidden_areas != null:
+		hidden_areas.call("_hide_nodes")
 
 
 func _build_npcs() -> void:
