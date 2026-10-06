@@ -1,5 +1,5 @@
 {
-  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it.",
+  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it. `rooms` gives a location's areas their own floor and wall by words in the area's name (a bathroom's tiles); `place_looks` overrides a whole place's floor, wall, difficult ground and `rock_walls` (cliffs instead of trees). `feet` is each standing piece's real height (a person is 6 ft; 1 unit = 5 ft): the piece is drawn at that size, and `feet` is the height of its picture at real size (low, deep things such as beds include the top you see from above). A piece wider than `big_width` units at that size (a cottage, a tent, a wagon) keeps its size whatever the room and clears the trees and the board's own scenery around it. `rooms` applies to interiors and dungeons only; `outdoor_rooms` are the few rules for outdoor maps (jetties are planks).",
   "container_default": "chest",
   "models": {
     "hearth": "fireplace",
@@ -1004,5 +1004,66 @@
     "workbench": 4.5,
     "workbench_front": 3.5
   },
-  "big_width": 1.6
+  "big_width": 1.6,
+  "models3d": {
+    "about": "3D pieces from art/models (blender/models_3d.py, docs/art/models.md) that stand in for 2D art, by art id; a value can be {board theme: model, \"*\": model} (wooden stairs indoors, stone ones elsewhere). Only the places listed use them (\"*\": everywhere, owner sign-off 2026-10-06). walls: a wall surface whose painted panelling gets 3D panels on every open face.",
+    "places": ["*"],
+    "art": {
+      "book_shelf": "bookcase",
+      "book_shelf_front": "bookcase",
+      "bookshelf": "bookcase",
+      "desk": "desk",
+      "desk_front": "desk",
+      "chair_high": "chair_high",
+      "armchair": "armchair",
+      "settee": "settee",
+      "table": "table",
+      "table_chairs": "table_chairs",
+      "candelabra": "candelabra",
+      "fireplace": "fireplace",
+      "fireplace_windmill": "fireplace_windmill",
+      "fireplace_dancers": "fireplace_dancers",
+      "stair_riser": {"*": "stairs_up_stone", "manor": "stairs_up", "townhouse": "stairs_up", "house": "stairs_up", "attic": "stairs_up", "tavern": "stairs_up", "inn": "stairs_up", "shop": "stairs_up", "tent": "stairs_up"},
+      "stair_down": {"*": "stairs_down_stone", "manor": "stairs_down", "townhouse": "stairs_down", "house": "stairs_down", "attic": "stairs_down", "tavern": "stairs_down", "inn": "stairs_down", "shop": "stairs_down", "tent": "stairs_down"},
+      "door_wood": "door_wood",
+      "barrel": "barrel",
+      "crate": "crate",
+      "chest": "chest",
+      "chest_back": "chest",
+      "chest_iron": "chest_iron",
+      "strongbox": "strongbox",
+      "trunk": "trunk",
+      "footlocker": "footlocker",
+      "bed": "bed",
+      "bed_small": "bed_small",
+      "wardrobe": "wardrobe",
+      "wardrobe_front": "wardrobe",
+      "sideboard": "sideboard",
+      "sideboard_front": "sideboard",
+      "shelves": "shelves",
+      "shelves_front": "shelves",
+      "pew": "pew",
+      "lectern": "lectern",
+      "table_set": "table_set",
+      "letters_table": "letters_table",
+      "coffin": "coffin"
+    },
+    "walls": {
+      "interior/wainscot_wall": "wainscot"
+    }
+  },
+  "outdoor_rooms": [
+    [
+      [
+        "jetty",
+        "pier",
+        "dock",
+        "boardwalk",
+        "wharf"
+      ],
+      {
+        "floor": "interior/wood_planks"
+      }
+    ]
+  ]
 }

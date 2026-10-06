@@ -208,9 +208,12 @@ void fragment() {
 		wpos = cam + dir * ((mist_floor - cam.y) / min(dir.y, -0.05));
 	}
 
+	// Water marks itself with zero roughness: it keeps its own colours through the grade and the ground patches.
+	float own_colour = empty ? 0.0 : 1.0 - step(0.08, texture(normal_tex, uv).a);
+
 	// Light on the surfaces first (patches of light and shade, cloud shadows, the grade), then what hangs in the air
 	// in its own palette colours (the land fading into the sky, the mist), then the vignette.
-	if (ground_variation > 0.0 && !empty) {
+	if (ground_variation > 0.0 && !empty && own_colour < 0.5) {
 		// Broad light and dark patches over the ground so its texture doesn't read as tiles.
 		vec3 wn = (INV_VIEW_MATRIX * vec4(normal_at(uv), 0.0)).xyz;
 		if (wn.y > 0.8) {
@@ -241,7 +244,7 @@ void fragment() {
 		vec3 li = to_srgb(grade_lights);
 		vec3 duo = l < 0.3 ? mix(to_srgb(vignette_color), sh, l / 0.3) : (l < 0.75 ? mix(sh, li, (l - 0.3) / 0.45) : mix(li, vec3(0.96, 0.93, 0.84), (l - 0.75) / 0.25));
 		float chroma = max(col.r, max(col.g, col.b)) - min(col.r, min(col.g, col.b));
-		col = mix(col, duo, grade_amount * (1.0 - smoothstep(0.2, 0.45, chroma) * 0.6));
+		col = mix(col, duo, grade_amount * (1.0 - smoothstep(0.2, 0.45, chroma) * 0.6) * (1.0 - own_colour * 0.8));
 	}
 
 	if (land_rect.z > land_rect.x) {
@@ -286,7 +289,8 @@ void fragment() {
 		float in_wall = step(0.5, wa);
 		m = max(m, in_wall);
 		vec3 mc = mix(to_srgb(mist_color) + glow / float(STEPS), to_srgb(mist_wall_color), in_wall);
-		float strength = mix(mist_strength, 1.0, in_wall);
+		// Over water the mist thins so the lake keeps its face.
+		float strength = mix(mist_strength * (1.0 - own_colour * 0.55), 1.0, in_wall);
 		col = mix(col, mc, clamp(m * strength, 0.0, 1.0));
 		if (mist_wall.w > 0.0) {
 			float fw = max(fwidth(wa), 1e-4);

@@ -17,7 +17,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims portrait wireframes textures prop props ui_art icons voice creator
+.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims portrait wireframes textures prop props models ui_art icons voice creator
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -118,6 +118,12 @@ prop:
 ## make props [GENERATE=1] [ONLY="sheet ..."]   then make import and tools/art/set_import.py on new files
 props:
 	python3 tools/art/build_props.py $(if $(GENERATE),--generate,) $(if $(ONLY),--only $(ONLY),)
+
+## 3D set pieces modelled from the 2D props they replace (docs/art/models.md): make models [ONLY="bookcase desk"]
+## [PREVIEW=captures/models.png] writes art/models/*.glb and manifest.json, then imports them.
+models:
+	$(BLENDER) -b --python blender/models_3d.py -- $(if $(ONLY),--only $(ONLY),) $(if $(PREVIEW),--preview $(abspath $(PREVIEW)),)
+	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
 
 ## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
 ui_art:

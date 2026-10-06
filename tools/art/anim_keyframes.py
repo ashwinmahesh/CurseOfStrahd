@@ -13,6 +13,7 @@ art/prompts/<kind>_keyframes.txt plus the character's entry. Strips that already
 --retry N (attack): after generating, blender/render_attack.py --check reads every strip of the characters touched and
 the views it flags (figures merged or clipped, frame 1 not the standing view) are drawn again, up to N more times.
 --recheck checks every existing strip of the chosen characters first, too.
+GEMINI_BUDGET=<counter file>:<max> caps the calls (tools/art/gemini_budget.py).
 
 kind attack: every character (wind-up, strike). kind walk: four-legged bodies only (BODY=quadruped in their
 art/manifest.json sprite_flags: two strides, profile and three-quarter views; head-on views walk with the rig).
@@ -25,6 +26,9 @@ import tempfile
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gemini_budget  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 BLENDER = "/Applications/Blender.app/Contents/MacOS/Blender"
@@ -89,9 +93,15 @@ BACKOFF = (60, 120, 240, 480)
 def generate(job):
     asset_id, kind, view, text, ref = job
     for wait in (*BACKOFF, None):
+        if not gemini_budget.take():
+            print(f"STOP {asset_id} {kind}_{view}: the Gemini call budget is spent ({gemini_budget.used()})", flush=True)
+            return False
         r = subprocess.run([sys.executable, str(ROOT / "tools" / "art" / "generate_gemini.py"), f"{kind}_{view}",
                             f"anim/{asset_id}", text, "--model", model(), "--aspect", "21:9", "--ref", str(ref)],
                            capture_output=True, text=True)
+        if "per_day" in (r.stderr + r.stdout) or "credits are depleted" in (r.stderr + r.stdout):
+            print(f"STOP {asset_id} {kind}_{view}: Gemini's daily quota or credits are used up", flush=True)
+            return False
         limited = "rate limit" in (r.stderr + r.stdout) or "(429)" in (r.stderr + r.stdout)
         if r.returncode == 0 or not limited or wait is None:
             break
@@ -125,9 +135,9 @@ def main():
     a = p.parse_args()
     reg = json.loads(REGISTRY.read_text())
     ids = a.only or sorted(reg)
-    missing = [i for i in ids if i not in reg]
-    if missing:
-        sys.exit(f"not in {REGISTRY.relative_to(ROOT)}: {', '.join(missing)}")
+    for i in [i for i in ids if i not in reg]:
+        print(f"skip {i}: not in {REGISTRY.relative_to(ROOT)} yet", flush=True)
+    ids = [i for i in ids if i in reg]
     flags = walk_flags()
     if a.kind == "walk":
         ids = [i for i in ids if flags.get(i, {}).get("BODY") == "quadruped"]

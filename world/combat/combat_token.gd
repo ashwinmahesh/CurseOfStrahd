@@ -27,7 +27,22 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"kasha_varo": 0.95, "krezk_guard": 1.3, "clovin_belview": 1.1, "belview": 1.15, "mirela": 0.85,
 	"ilka_sarnov": 0.82, "toma_sarnov": 0.65, "order_knight": 1.32, "phantom_warden": 1.3, "tsolenka_sergeant": 1.3,
 	"tsolenka_watchman": 1.28, "patrina_velikovna": 1.25, "amber_sentinel": 2.3, "argynvost_echo": 1.7,
-	"sergei_von_zarovich": 1.3}
+	"sergei_von_zarovich": 1.3,
+	"amber_golem": 2.0, "arcanaloth": 1.35, "baba_lysagas_creeping_hut": 3.0, "banshee": 1.25, "deva": 1.45,
+	"flameskull": 0.6, "flesh_golem": 1.6, "gargoyle": 1.3, "ghost": 1.25, "giant_spider": 1.3,
+	"mongrelfolk": 1.2, "mummy": 1.3, "needle_blight": 1.2, "night_hag": 1.15, "nothic": 1.0, "ogre": 2.1,
+	"phantom_warrior": 1.35, "revenant": 1.3, "roc": 3.0, "scarecrow": 1.35, "swarm_of_bats": 1.0,
+	"swarm_of_insects": 0.6, "swarm_of_ravens": 0.9, "tree_blight": 3.0, "twig_blight": 0.7, "vine_blight": 1.1,
+	"werewolf": 1.45, "wereraven": 1.3, "wight": 1.3, "will_o_wisp": 0.5, "wraith": 1.35, "berserker": 1.3,
+	"raven": 0.35,
+	"air_elemental": 2.0, "ape": 1.2, "axe_beak": 1.7, "baboon": 0.6, "badger": 0.35, "bat": 0.3,
+	"black_bear": 1.0, "boar": 0.8, "brown_bear": 1.4, "djinni": 2.0, "earth_elemental": 2.0, "efreeti": 2.1,
+	"elephant": 2.8, "fire_elemental": 2.0, "giant_badger": 0.7, "giant_boar": 1.3,
+	"giant_constrictor_snake": 1.2, "giant_elk": 2.3, "giant_fly": 1.0, "giant_goat": 1.4, "giant_hyena": 1.2,
+	"giant_owl": 1.6, "giant_rat": 0.5, "giant_weasel": 0.6, "goat": 0.8, "griffon": 1.7, "jackal": 0.55,
+	"lion": 1.1, "mastiff": 0.75, "nightmare": 1.7, "owl": 0.35, "panther": 0.8, "rat": 0.25, "rhinoceros": 1.5,
+	"saber_toothed_tiger": 1.2, "tiger": 1.1, "water_elemental": 2.0, "weasel": 0.25,
+	"mimic": 0.9}
 
 var combatant: Combatant
 var art_override := ""
@@ -301,7 +316,7 @@ func _show_fade() -> void:
 	var there := not cr.dead and _fade > 0.0
 	_ring.visible = there
 	_ring.scale = Vector3.ONE * (1.15 if _highlight else 1.0) * lerpf(0.5, 1.0, _fade)
-	_bar_back.visible = there and _fade >= 1.0
+	_bar_back.visible = _bar_wanted()
 	_bar_fill.visible = _bar_back.visible
 	_status.visible = there and _fade >= 1.0
 	if _lying != null:
@@ -348,7 +363,15 @@ func flash(colour: Color, seconds: float = 0.25) -> void:
 	_flash_color = colour
 
 
+## The health bar shows in fights only: out of combat the bars under the party read as stray boards lying on the floor
+## (owner report 2026-10-06).
+func _bar_wanted() -> bool:
+	return not combatant.creature.dead and _fade >= 1.0 and ModeController.mode == ModeController.Mode.COMBAT
+
+
 func _process(delta: float) -> void:
+	if _bar_back != null and _bar_back.visible != _bar_wanted():
+		_show_fade()
 	if sprite == null:
 		return
 	if _flash > 0.0 and not combatant.creature.dead:

@@ -94,6 +94,10 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 		art = str(look["on_wall"])
 	var mount := str(look.get("mount", (manifest()[art] as Dictionary).get("mount", "stand")))
 	var scale_ := float(look.get("scale", 1.0))
+	if _stairs(board, root, art, cell):
+		if not on_wall_square and (board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT)):
+			_take_square(board, root, cell)
+		return root
 	match mount:
 		"wall":
 			if not _hang(board, root, art, cell, scale_):
@@ -146,6 +150,7 @@ static func mark_looted(node: Node3D) -> void:
 		return
 	for c: Node in node.find_children("*", "SpriteBase3D", true, false):
 		(c as SpriteBase3D).modulate = Color(0.55, 0.5, 0.55)
+	ModelPiece.dim(node)
 
 
 # --- Doors ----------------------------------------------------------------------------------------
@@ -185,17 +190,23 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 	var yaw := 0.0 if along_x else PI / 2.0   # the leaf's face looks along z when the wall runs along x
 	var leaf := Node3D.new()
 	leaf.name = "Door_" + str(spec.get("id", ""))
+	leaf.set_meta("door", true)
 	leaf.position = base
 	leaf.rotation.y = yaw
 	board.add_child(leaf)
-	var sp := _sprite(art)
-	var info := manifest()[art] as Dictionary
-	sp.billboard = BaseMaterial3D.BILLBOARD_DISABLED
-	sp.double_sided = true
-	sp.scale = Vector3(w / float(info.get("world_width", 1.0)), h / float(info.get("world_height", 1.0)), 1.0)
-	sp.position = Vector3(0, 0, 0)
-	sp.name = "Leaf"
-	leaf.add_child(sp)
+	var model := "" if secret else ModelPiece.for_art(board, art)
+	var sp: Sprite3D = null
+	if model != "":
+		leaf.add_child(ModelPiece.door_leaf(model, w, h))   # a 3D leaf (docs/art/models.md)
+	else:
+		sp = _sprite(art)
+		var info := manifest()[art] as Dictionary
+		sp.billboard = BaseMaterial3D.BILLBOARD_DISABLED
+		sp.double_sided = true
+		sp.scale = Vector3(w / float(info.get("world_width", 1.0)), h / float(info.get("world_height", 1.0)), 1.0)
+		sp.position = Vector3(0, 0, 0)
+		sp.name = "Leaf"
+		leaf.add_child(sp)
 	var statue := str(look.get("statue", ""))
 	if bool(look.get("pillars", false)):
 		# A gateway between two stone pillars (the Gates of Barovia), each with a statue on top where there's art:
@@ -307,6 +318,14 @@ static func exit_piece(board: ArenaBoard, spec: Dictionary) -> Node3D:
 	board.add_child(root)
 	# Stairs are the way itself, so they show only while the way is open (LocationView keeps them hidden while the
 	# exit's `when` is false: a secret stair nobody has found). A door stays drawn even when it's barred.
+	var model := ModelPiece.for_art(board, art)
+	if model != "" and str((ModelPiece.manifest()[model] as Dictionary).get("mount", "")).begins_with("stairs"):
+		ModelPiece.stand(board, root, model, art, cell)
+		root.set_meta("only_when_open", true)
+		return root
+	if _stairs(board, root, art, cell):
+		root.set_meta("only_when_open", true)
+		return root
 	if mount == "floor":
 		_lay(board, root, art, cell, 1.0)
 		root.set_meta("only_when_open", true)
@@ -380,12 +399,19 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## Added to `parent`; returns the piece.
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
 		at_override: Variant = null, front_override: String = "", big: bool = false) -> Node3D:
+	var model := ModelPiece.for_art(board, art)
+	if model != "":
+		return ModelPiece.stand(board, parent, model, art, cell, at_override)   # a 3D piece (docs/art/models.md)
 	scale_ *= float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
 	var at: Vector3 = board.cell_center(cell) if at_override == null else at_override as Vector3
 	var wall := wall_side(board, cell)
 	var front := front_override if front_override != "" else front_of(art)
-	if front != "" and wall != Vector2i.ZERO:
-		var against := _against_wall(board, parent, art, front, cell, wall, scale_ * real_scale(front))
+	if front != "" and at_override == null:
+		# Furniture with a front view is never a turning billboard (owner report 2026-10-06: a bookcase stood at an
+		# angle): it stands flush with the wall or doorway behind it, or with its back to the north if nothing is.
+		var back_to := wall if wall != Vector2i.ZERO else backing_side(board, cell)
+		var against := _against_wall(board, parent, art, front, cell, back_to if back_to != Vector2i.ZERO else Vector2i(0, -1),
+			scale_ * real_scale(front))
 		against.set_meta("art", front)
 		return against
 	scale_ *= real_scale(art)
@@ -505,6 +531,15 @@ static func wall_side(board: ArenaBoard, cell: Vector2i) -> Vector2i:
 	return Vector2i.ZERO
 
 
+## Like wall_side, but a doorway counts too (the Death House's swinging bookcase stands in front of its secret door).
+static func backing_side(board: ArenaBoard, cell: Vector2i) -> Vector2i:
+	for d: Vector2i in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1)]:
+		var n := cell + d
+		if board.grid.in_bounds(n) and (board.grid.has_flag(n, CombatGrid.WALL) or board.door_cells.has(n)):
+			return d
+	return Vector2i.ZERO
+
+
 ## Furniture against a wall: its front view stands flat, parallel to the wall and facing into the room, with a body
 ## of wood behind it back to the wall (catalog "fronts": depth, body), so from the side it has thickness.
 static func _against_wall(board: ArenaBoard, parent: Node3D, art: String, front: String, cell: Vector2i, wall: Vector2i, scale_: float) -> Node3D:
@@ -525,22 +560,24 @@ static func _against_wall(board: ArenaBoard, parent: Node3D, art: String, front:
 	board.used_faces["%d,%d,%d,%d" % [cell.x + wall.x, cell.y + wall.y, -wall.x, -wall.y]] = true   # no portrait behind it
 	var root := Node3D.new()
 	root.name = "AgainstWall_" + art
+	root.set_meta("against_wall", true)
 	var n := Vector3(-wall.x, 0, -wall.y)   # into the room
-	var c := board.cell_center(cell)
-	root.position = c + Vector3(wall.x, 0, wall.y) * 0.5
+	# The root stands on the piece's own square (so it shows and hides with that square); the wall face is half a
+	# square behind it.
+	root.position = board.cell_center(cell)
 	root.rotation.y = atan2(n.x, n.z)
 	parent.add_child(root)
 	var sp := wall_sprite(front)
 	sp.pixel_size *= scale_
 	sp.scale.x = fit   # squeezed to fit along the wall, never shortened: it keeps its real height
-	sp.position = Vector3(0, 0, depth)
+	sp.position = Vector3(0, 0, depth - 0.5)
 	root.add_child(sp)
 	if body:
 		var mi := MeshInstance3D.new()
 		var bm := BoxMesh.new()
 		bm.size = Vector3(w * fit * 0.9, h * 0.86, depth - 0.02)
 		mi.mesh = bm
-		mi.position = Vector3(0, bm.size.y / 2.0, depth / 2.0)
+		mi.position = Vector3(0, bm.size.y / 2.0, depth / 2.0 - 0.5)
 		mi.material_override = Look.cel("walnut")
 		root.add_child(mi)
 	return root
@@ -591,6 +628,11 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 				key = k2
 				break
 	board.used_faces[key] = true
+	var model := ModelPiece.for_art(board, art)
+	if model != "":
+		ModelPiece.hang(board, root, model, art, wall, normal)
+		board.attach_to_building(wall, root)
+		return true
 	var info := manifest()[art] as Dictionary
 	var sp := _sprite(art)
 	sp.billboard = BaseMaterial3D.BILLBOARD_DISABLED
@@ -612,6 +654,21 @@ static func _hang(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, 
 	if window != null and is_instance_valid(window):
 		window.visible = false   # this piece hangs where a house had a window
 	return true
+
+
+static func take_square(board: ArenaBoard, root: Node3D, cell: Vector2i) -> void:
+	_take_square(board, root, cell)
+
+
+## Stairs are built as steps, not pictures (Stairs): true if `art` is a stair and it was built under `root`.
+static func _stairs(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i) -> bool:
+	if art == "stair_riser":
+		Stairs.up(board, root, cell)
+		return true
+	if art == "stair_down":
+		Stairs.down(board, root, cell)
+		return true
+	return false
 
 
 ## The prop takes a square the board dressed (a tree, a wall block, furniture): the board's piece hides while the
