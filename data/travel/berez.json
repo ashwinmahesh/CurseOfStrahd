@@ -8,8 +8,8 @@
       "location": "berez",
       "spawn": "from_road",
       "pos": [
-        0.27,
-        0.62
+        0.289,
+        0.663
       ],
       "region": "berez",
       "summary": "A village the Luna drowned, in the marsh south-west of Vallaki. A witch lives on a stump in the middle of it."
@@ -20,8 +20,8 @@
       "location": "mount_baratok",
       "spawn": "from_road",
       "pos": [
-        0.18,
-        0.2
+        0.174,
+        0.147
       ],
       "region": "mount_baratok",
       "summary": "The great peak above the lake, where the weather does strange things and a hermit lives in a stone hut."
@@ -32,8 +32,8 @@
       "location": "tsolenka_pass",
       "spawn": "from_road",
       "pos": [
-        0.39,
-        0.145
+        0.374,
+        0.171
       ],
       "region": "tsolenka_pass",
       "summary": "The high road over the mountains toward the Amber Temple: a bridge over a gorge, and a guard tower with its gate shut."
@@ -60,6 +60,7 @@
       "id": "vallaki_to_mount_baratok",
       "from": "vallaki",
       "to": "mount_baratok",
+      "via": [[0.335, 0.34], [0.25, 0.265]],
       "hours": 5,
       "table": "baratok_slopes",
       "name": "The lake shore and the goat track up Mount Baratok"

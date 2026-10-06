@@ -14,7 +14,8 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   bright red on a dark halo, hours on black tags with a gilt edge.
 - The map panel is 1152×768 at zoom 1 (the whole valley). It opens zoomed in on the known places (at most 1.6×);
   the wheel zooms up to 2.4×, dragging pans, and the art always covers the panel. A click on a place picks it. Zoomed
-  in, only the places in view get marks and names.
+  in, only the places in view get marks and names. Names go below, above, beside or at a corner of their mark,
+  wherever they're clear of other names, marks and hour tags.
 - A place's `pos` in `data/travel/barovia.json` is a fraction of the art (x right, y down). Put new places on their
   landmark in the art:
 
@@ -33,16 +34,22 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 | Old Bonegrinder (the windmill on a hill, upper right) | 0.69, 0.24 |
 | The Wizard of Wines (the vineyard and winery by Vallaki's west wall) | 0.235, 0.54 |
 | Yester Hill (the hill crowned with standing stones below Krezk) | 0.152, 0.578 |
+| The Ruins of Berez (the drowned village and the hut on a stump, south of Vallaki) | 0.289, 0.663 |
+| Mount Baratok (the tallest peak, above the lake) | 0.174, 0.147 |
+| Van Richten's Tower (the black tower on an island in a tarn at the mountain's foot) | 0.158, 0.254 |
+| The Werewolf Den (the cave mouth above the lake's north shore) | 0.249, 0.239 |
+| The Tsolenka Pass (the bridge over the gorge and its guard tower) | 0.374, 0.171 |
+| The Amber Temple (the temple front with two amber statues, high on the peak) | 0.411, 0.139 |
 | Wayside cross on the road east of Vallaki | 0.42, 0.48 |
 | Lake Zarovich (middle of the water) | 0.22, 0.39 |
 
   Keep places between 0.05 and 0.95: the mist covers the edges (a test checks it).
-- A place with no picture on the art yet (Berez, Lake Baratok and Van Richten's Tower, the Amber Temple, Tsolenka
-  Pass) gets one painted in: a section of the map is cut out, Gemini paints the landmark inside a marked circle, and
-  only that circle is blended back into the full art (art/generated/map/barovia_west_* is the Wizard of Wines and
-  Yester Hill pass). Ask the map thread for it.
+- Every place so far has its picture on the art. A new one without a picture gets it painted in: a section of the map
+  is cut out, Gemini paints the landmark inside a marked circle, and only that spot is blended back into the full art
+  (art/generated/map/barovia_{west,north,south}_* are the passes so far). Ask the map thread for it.
 - A road can take a `via` list of points (fractions of the art, like `pos`) to go round a lake or a mountain:
-  `"via": [[0.2, 0.53]]` takes the Krezk road along the south shore of Lake Zarovich. The map draws a smooth curve
+  `"via": [[0.2, 0.53]]` takes the Krezk road along the south shore of Lake Zarovich; the roads from Vallaki to the
+  werewolf den and Mount Baratok go round the lake's east shore the same way. The map draws a smooth curve
   through them; without `via` a road is a gently bowed line.
 - Roads are drawn as dashes with a slight bow; the chosen route is solid red with each leg's hours on a tag.
   The party's place has a pulsing crimson mark; the destination's name sits on a crimson plaque. At night the sheet

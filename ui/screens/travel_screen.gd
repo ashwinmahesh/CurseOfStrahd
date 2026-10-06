@@ -200,11 +200,12 @@ func _draw_map() -> void:
 			_dashed(pts, Color(Look.color("void"), 0.55), 6.0, 11.0, 7.0)
 			_dashed(pts, Look.color("bone"), 3.0, 11.0, 7.0)
 		tags.append([pts[pts.size() / 2], "%s h" % _hours_text(float(road["hours"])), on_route])
+	var tag_boxes: Array[Rect2] = []
 	for t: Array in tags:
-		_tag(t[0] as Vector2, str(t[1]), bool(t[2]))
+		tag_boxes.append(_tag(t[0] as Vector2, str(t[1]), bool(t[2])))
 	# Marks first, then names placed clear of the marks and of each other; zoomed in, only the places in view.
 	var view := Rect2(Vector2.ZERO, MAP_SIZE).grow(-4.0)
-	var taken: Array[Rect2] = []
+	var taken: Array[Rect2] = tag_boxes.duplicate()
 	for id: String in places:
 		var at := _pos(places[id] as Dictionary)
 		if view.has_point(at):
@@ -240,19 +241,26 @@ func _place_name(font: Font, at: Vector2, text: String, id: String, taken: Array
 	var size := 21 if id == _at or id == _target else 19
 	var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size)
 	var asc := font.get_ascent(size)
+	# Below, above, right, left, then the corners and a step further out.
 	var spots: Array[Vector2] = [at + Vector2(-sz.x / 2.0, 16), at + Vector2(-sz.x / 2.0, -16 - sz.y),
-		at + Vector2(18, -sz.y / 2.0), at + Vector2(-18 - sz.x, -sz.y / 2.0)]
+		at + Vector2(18, -sz.y / 2.0), at + Vector2(-18 - sz.x, -sz.y / 2.0),
+		at + Vector2(12, 12), at + Vector2(-12 - sz.x, 12), at + Vector2(12, -12 - sz.y), at + Vector2(-12 - sz.x, -12 - sz.y),
+		at + Vector2(-sz.x / 2.0, 34), at + Vector2(-sz.x / 2.0, -34 - sz.y)]
 	var inside := Rect2(Vector2(6, 6), MAP_SIZE - Vector2(12, 12))
 	var box := Rect2()
-	for i in spots.size():
-		# Kept inside the panel; the first spot clear of other marks and names wins (else the first one).
-		var r := Rect2(spots[i].clamp(inside.position, inside.end - sz), sz)
-		if i == 0:
+	var least := INF
+	for s in spots:
+		# Kept inside the panel; the first spot clear of other marks, tags and names wins, else the least crowded.
+		var r := Rect2(s.clamp(inside.position, inside.end - sz), sz)
+		var crowd := 0.0
+		for t in taken:
+			crowd += t.intersection(r.grow(3.0)).get_area()
+		if crowd < least:
+			least = crowd
 			box = r
-		if not taken.any(func(t: Rect2) -> bool: return t.intersects(r.grow(3.0))):
-			box = r
+		if crowd == 0.0:
 			break
-	taken.append(box.grow(3.0))
+	taken.append(box.grow(6.0))
 	var base := box.position + Vector2(0, asc)
 	if id == _target and id != _at:
 		var plaque := box.grow_individual(10, 3, 10, 3)
@@ -266,8 +274,8 @@ func _place_name(font: Font, at: Vector2, text: String, id: String, taken: Array
 	_map.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, colour)
 
 
-## A road's hours on a small black tag with a gilt (or, on the route, crimson) edge.
-func _tag(at: Vector2, text: String, on_route: bool) -> void:
+## A road's hours on a small black tag with a gilt (or, on the route, crimson) edge. Returns where it went.
+func _tag(at: Vector2, text: String, on_route: bool) -> Rect2:
 	var font := ThemeDB.fallback_font
 	var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13)
 	var r := Rect2(at - sz / 2.0 - Vector2(6, 2), sz + Vector2(12, 4))
@@ -275,6 +283,7 @@ func _tag(at: Vector2, text: String, on_route: bool) -> void:
 	_map.draw_rect(r, Look.color("vampire_red") if on_route else Look.color("gilt_dark"), false, 1.5 if on_route else 1.0)
 	_map.draw_string(font, r.position + Vector2(6, 2 + font.get_ascent(13)), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
 		Look.color("gilt_light") if on_route else Look.color("vellum"))
+	return r
 
 
 ## An inked trail: dashes along a polyline.
