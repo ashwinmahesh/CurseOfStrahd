@@ -390,7 +390,9 @@ def story_checks(data, errors, need):
             errors.append(f"{w}: needs a 'default' spawn")
         for ex in loc.get("exits", []):
             on_floor(ex["cell"], f"exit {ex['id']}", allow_wall=True)
-            if ex["to"] not in locations:
+            if ex["to"] == "travel":
+                pass  # the travel map (ADR 0010)
+            elif ex["to"] not in locations:
                 errors.append(f"{w}: exit {ex['id']} leads to unknown location '{ex['to']}'")
             elif ex.get("spawn") and ex["spawn"] not in locations[ex["to"]].get("spawns", {}):
                 errors.append(f"{w}: exit {ex['id']} uses spawn '{ex['spawn']}' that {ex['to']} doesn't have")

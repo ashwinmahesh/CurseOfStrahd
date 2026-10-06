@@ -36,6 +36,8 @@ var guest_ids: Array[String] = []
 var guests: Array[Creature] = []
 ## Merchants' stock as it stands: npc id -> {item id: quantity left} (only items with limited stock).
 var shops: Dictionary = {}
+## A journey interrupted by something on the road: {to: place id, at: place id the party had reached}.
+var travel_resume: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
@@ -359,7 +361,8 @@ func to_dict() -> Dictionary:
 		"codex": codex.duplicate(), "narrator": narrator.duplicate(true), "milestones": milestones, "start_level": start_level,
 		"day": day, "minute_of_day": minute_of_day, "location": location, "positions": pos,
 		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
-		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true)}
+		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
+		"travel_resume": travel_resume.duplicate()}
 
 
 static func from_dict(d: Dictionary) -> StoryState:
@@ -399,6 +402,7 @@ static func from_dict(d: Dictionary) -> StoryState:
 	st.playthrough_seed = int(d.get("seed", 0))
 	st.tarokka = (d.get("tarokka", {}) as Dictionary).duplicate()
 	st.shops = (d.get("shops", {}) as Dictionary).duplicate(true)
+	st.travel_resume = (d.get("travel_resume", {}) as Dictionary).duplicate()
 	for g: Variant in d.get("guests", []):
 		var gd := g as Dictionary
 		var cr := StoryState.make_guest(str(gd["npc"]))
