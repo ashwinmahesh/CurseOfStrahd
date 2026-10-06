@@ -155,7 +155,7 @@ func update_daylight() -> void:
 		_env.ambient_light_energy = base
 		_sun.light_color = Look.color("moonlight")
 		_sun.light_energy = 0.25 if light != "dark" else 0.08
-		lantern.visible = true
+		lantern.visible = light != "bright" or st.spell_active("light")
 		return
 	match phase:
 		"day":
@@ -176,7 +176,7 @@ func update_daylight() -> void:
 			_env.ambient_light_energy = base * 0.7
 			_sun.light_color = Look.color("moonlight")
 			_sun.light_energy = 0.45
-	lantern.visible = phase == "night" or light == "dark"
+	lantern.visible = phase == "night" or light == "dark" or st.spell_active("light")
 
 
 ## "day" (7:00-17:59), "dusk" (18:00-18:59), "night" (19:00-5:59) or "dawn" (6:00-6:59).
@@ -1239,6 +1239,46 @@ func check_flag_encounters() -> bool:
 
 static func _truthy(v: Variant) -> bool:
 	return StoryConditions._truthy(v)
+
+
+## What an exploring spell does here and now (FieldCasting.cast_utility): Light lights the lantern, Detect Magic
+## names the magic within 30 ft, Find Traps reveals the traps in sight within 120 ft.
+func apply_spell_effect(spell_id: String) -> void:
+	match spell_id:
+		"light":
+			update_daylight()
+		"detect_magic":
+			var found: Array[String] = []
+			for c: Variant in loc.get("containers", []):
+				var ct := c as Dictionary
+				if not container_nodes.has(str(ct["id"])) or grid.distance_ft(leader().cell, 1, _cell(ct["cell"]), 1) > 30:
+					continue
+				for it: Variant in ct.get("items", []):
+					if Compendium.shared().has("magic_items", str((it as Dictionary)["id"])):
+						found.append(str(ct.get("label", "a chest")))
+						break
+			for p: Variant in loc.get("props", []):
+				var pr := p as Dictionary
+				if bool(pr.get("magic", false)) and prop_nodes.has(str(pr["id"])) and grid.distance_ft(leader().cell, 1, _cell(pr["cell"]), 1) <= 30:
+					found.append(str(pr.get("label", "something")))
+			if not _say("detect_magic:%s" % loc_id, leader().creature as Character):
+				narration.emit("Magic within 30 ft: %s." % (", ".join(found) if not found.is_empty() else "nothing you can sense"))
+		"find_traps":
+			var n := 0
+			for t: Variant in loc.get("traps", []):
+				var trap := t as Dictionary
+				if not StoryConditions.check(str(trap.get("when", "")), st):
+					continue
+				var state := str((st.loc_state(loc_id)["traps"] as Dictionary).get(str(trap["id"]), ""))
+				if state != "":
+					continue
+				for tc: Variant in trap["cells"]:
+					if grid.distance_ft(leader().cell, 1, _cell(tc), 1) <= 120 and grid.can_see(leader().cell, 1, _cell(tc), 1):
+						(st.loc_state(loc_id)["traps"] as Dictionary)[str(trap["id"])] = "found"
+						_show_trap(trap)
+						n += 1
+						break
+			narration.emit("You sense %s." % ("no traps in sight" if n == 0 else "%d trap%s" % [n, "" if n == 1 else "s"]))
 
 
 ## A fight that isn't in the location's data (a random encounter on the road): added for this visit, then started.

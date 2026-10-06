@@ -5,7 +5,7 @@ extends RefCounted
 
 const FOLDERS: Array[String] = ["classes", "subclasses", "species", "backgrounds", "feats", "spells", "items",
 	"monsters", "conditions", "pregens", "encounters", "locations", "npcs", "quests", "tarokka", "travel",
-	"random_encounters"]
+	"random_encounters", "magic_items"]
 
 static var _shared: Compendium = null
 
@@ -93,8 +93,10 @@ func spell_data(id: String) -> Dictionary:
 	return get_entry("spells", id)
 
 
+## An item: mundane gear (data/items) or a magic item (data/magic_items).
 func item_data(id: String) -> Dictionary:
-	return get_entry("items", id)
+	var d := get_entry("items", id)
+	return d if not d.is_empty() else get_entry("magic_items", id)
 
 
 func monster_data(id: String) -> Dictionary:
@@ -143,4 +145,6 @@ func items_where(category: String) -> Array[Dictionary]:
 
 func display_name(folder: String, id: String) -> String:
 	var e := get_entry(folder, id)
+	if e.is_empty() and folder == "items":
+		e = get_entry("magic_items", id)
 	return str(e.get("name", id.capitalize()))

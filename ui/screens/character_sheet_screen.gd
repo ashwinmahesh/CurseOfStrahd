@@ -164,6 +164,7 @@ func _features(ch: Character) -> VBoxContainer:
 func _spells(ch: Character) -> VBoxContainer:
 	var box := VBoxContainer.new()
 	_cast_now(ch, box)
+	_cast_utility(ch, box)
 	var known := ch.known_spells()
 	if known.is_empty():
 		box.add_child(UiKit.label("No spells.", 15, "parchment"))
@@ -237,6 +238,36 @@ func _cast_now(ch: Character, box: VBoxContainer) -> void:
 							all.append(t)
 					_do_cast(ch, id, pick, all), 14))
 		box.add_child(row)
+
+
+## Exploring spells (Light, Detect Magic, Find Traps, Comprehend Languages ...): Cast, or as a Ritual.
+func _cast_utility(ch: Character, box: VBoxContainer) -> void:
+	var opts := FieldCasting.utility_options(st.party, ch, Dice.roller)
+	if opts.is_empty():
+		return
+	box.add_child(UiKit.header("Cast for exploring"))
+	for o in opts:
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		var lvl := int(o["level"])
+		row.add_child(UiKit.label("%s%s%s" % [o["name"], "" if lvl == 0 else " (level %d)" % lvl, " · active" if st.spell_active(str(o["id"])) else ""],
+			15, "flame", 260))
+		var id := str(o["id"])
+		var cast := UiKit.button("Cast", func() -> void: _do_utility(ch, id, false), 14)
+		cast.disabled = not bool(o["legal"])
+		cast.tooltip_text = str(o["reason"])
+		row.add_child(cast)
+		if bool(o["ritual"]):
+			row.add_child(UiKit.button("As a Ritual (+10 min, no slot)", func() -> void: _do_utility(ch, id, true), 14))
+		box.add_child(row)
+
+
+func _do_utility(ch: Character, spell_id: String, ritual: bool) -> void:
+	var res := FieldCasting.cast_utility(st, ch, spell_id, ritual)
+	_cast_note = str(res["text"])
+	if bool(res["ok"]) and root != null and root.get("view") != null:
+		(root.get("view") as LocationView).apply_spell_effect(spell_id)
+	_draw()
 
 
 func _do_cast(ch: Character, spell_id: String, pick: OptionButton, targets: Array) -> void:

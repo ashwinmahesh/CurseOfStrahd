@@ -138,6 +138,8 @@ func _term() -> bool:
 		return (value == str(_literal(rhs))) == (op == "==")
 	if t.begins_with("guest:"):
 		return t.substr(6) in st.guest_ids
+	if t.begins_with("spell:"):
+		return st.spell_active(t.substr(6))
 	if t == "check.last":
 		return st.last_check
 	if t == "gold":
