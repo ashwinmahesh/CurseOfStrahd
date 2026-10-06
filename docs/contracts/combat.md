@@ -23,7 +23,13 @@ How the scene, the HUD and tests talk to a fight. Everything here lives in `comb
 | `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)` | |
 | `stand_up(c)`, `drop_prone(c)`, `stabilize(c, t, use_kit)`, `death_save(c)` | |
 | `spells.cast(c, spell_id, slot, targets, point, direction, opts)` | `point` for spheres, `direction` for cones, cubes and lines from the caster; opts: `word` (Command), `damage_type` |
-| `spells.spiritual_weapon_attack(c, t, cell)` | Bonus Action follow-up |
+| `spells.use_sustained(c, action_id, targets, point, direction)` | a sustained spell action (`spells.sustained_actions(c)`): Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's roll... |
+| `spells.spiritual_weapon_attack(c, t, cell)` | shortcut for the weapon's strike |
+| `ready_spell(c, spell_id, slot)` | Ready a one-action spell: cast now, held with Concentration, released at the first enemy in range |
+| `features.toggle_rider(c, rider_id)` | arm a rider for this turn's next hit (`features.rider_options(c)`): maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike |
+| `feature_actions.perform(c, id, t, point)` | a class, subclass, feat or species action (`feature_actions.list(c)`) |
+| `free_move(c, cell)`, `jump(c, cell)` | movement without Opportunity Attacks from a feature; Jump's 30 ft leap |
+| `escape_effect(c, effect_id)`, `wake(c, t)`, `haste_action_use(c, what, t, option_id)`, `use_item(c, item_id, t)` | breaking free of Web/Entangle, shaking a sleeper awake, Haste's extra action, potions and Goodberries |
 | `features.second_wind / action_surge / steady_aim / turn_undead / divine_spark / preserve_life` | |
 | `end_turn()` | Rolls a pending Death Saving Throw, end-of-turn effects and repeated saves, next creature |
 | `run_ai_turn()` | Plays the current AI creature's turn (may pause for player reactions) |
@@ -34,7 +40,10 @@ Queries: `current()`, `order`, `living()`, `hostiles_of(c)`, `distance(a, b)`, `
 
 ## Reaction prompts (`ReactionRequest`)
 
-`kind` (opportunity_attack, shield, uncanny_dodge, readied_attack, heroic_inspiration), `reactor_id`, `trigger_id`,
+`kind` (opportunity_attack, shield, uncanny_dodge, readied_attack, heroic_inspiration, hellish_rebuke, storms_thunder,
+sentinel, reactive_strike, warding_flare, protection, lucky, precision_attack, guided_strike, defensive_duelist,
+illusory_self, riposte, parry, stones_endurance, interception, protective_field, projected_ward, homing_strikes),
+`reactor_id`, `trigger_id`,
 `title`, `text` (the trigger with its numbers), `cost`. A player-controlled creature's
 `reaction_rules[kind]` = ask (default) / auto / never decides whether it's asked.
 
@@ -49,6 +58,10 @@ Queries: `current()`, `order`, `living()`, `hostiles_of(c)`, `distance(a, b)`, `
 | death_save | id, success |
 | spell | caster, spell, cells, targets |
 | summon | caster, cell (Spiritual Weapon) |
+| object / object_gone | id, kind, cell: a spell object or lingering area appeared, moved or ended (`spells.zones.objects`) |
+| teleport | id, from, to (Misty Step, Bait and Switch, Engulf) |
+| summon_creature / vanish | id: a summoned creature (Summon Undead, a severed limb) joined; a creature vanished |
+| resize | id: Enlarge/Reduce or Large Form changed its size |
 | turn | id, round |
 | round | round |
 | over | outcome (victory, defeat) |

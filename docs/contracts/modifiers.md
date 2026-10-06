@@ -41,7 +41,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `proficiency` | kind, value | kind = skill, save, armor, weapon, tool, language. value = id (`heavy`, `martial`, `thieves_tools`, `perception`, `str`, `common`) |
 | `expertise` | value | double Proficiency Bonus with that skill or tool |
 | `advantage` / `disadvantage` | on | on = `initiative`, `attack`, `attack:melee`, `attack:ranged`, `save:<ability>`, `save:all`, `save_vs:<condition>` (saves to avoid or end it), `check:<skill or ability>`, `check:all`, `check:choice` (one check the creature picks, e.g. Guidance), `death_save`, `concentration` |
-| `attacked_with` | value (`advantage`/`disadvantage`) | attack rolls against this creature |
+| `attacked_with` | value (`advantage`/`disadvantage`), if_seen, unless_sense | attack rolls against this creature (Faerie Fire only for attackers that see it; Blur not against Blindsight or Truesight) |
 | `auto_fail` | on | automatically fail those saves or checks (Paralyzed: `save:str`, `save:dex`) |
 | `d20` | value | added to every D20 Test (Exhaustion: `-2*exhaustion`) |
 | `resistance` / `vulnerability` / `immunity` | value | damage type, or `all` |
@@ -59,12 +59,21 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `reach` | value | + reach in ft |
 | `spell` | value, ability, uses, always_prepared, at_level | grants a spell. `ability` is an ability id or `choice` (the player picks; species list it in `spellcasting_ability_choice`). `uses: {"count":1,"recharge":"long"}` = once free per rest |
 | `flag` | value | a named switch bespoke code reads (`potent_cantrip`, `relentless_endurance`) |
+| `extra_damage` | dice, type, on (`weapon`), vs, penalty | extra dice on weapon and Unarmed Strike hits (Crusader's Mantle, Enlarge +1d4; Reduce −1d4 with `penalty`) |
+| `damage_penalty_die` | dice | subtract a die from the creature's weapon damage (Ray of Enfeeblement) |
+| `attacked_penalty_die` | dice | attack rolls against the creature subtract the die (Blade Ward) |
+| `attacked_with_by_type` | value, types | Advantage/Disadvantage only for attackers of these creature types (Protection from Evil and Good) |
+| `condition_immunity_by_type` | conditions, types | can't be given these conditions by creatures of these types |
+| `damage_reduction_die` | dice, type, once_per_turn | damage of that type is reduced by the die (Resistance cantrip) |
+| `weapon_override` | items, die, ability, damage_type | reshapes a weapon or Unarmed Strike (Shillelagh, Alter Self) |
+| `speed_percent` | value | Speed × value / 100 (Haste 200, Slow 50) |
+| `size_step` | value | one size up or down while it lasts (Enlarge/Reduce, Large Form) |
 
 ### `when` filters
 `armor`: `any` (wearing any armor), `none`, `light`, `medium`, `heavy`. `shield`: true/false.
 `weapon`: `melee`, `ranged`, `finesse`, `thrown`, `one_handed_alone` (one melee weapon, nothing in the other
 hand), `two_handed` (melee weapon held in two hands), `light`, `unarmed`. `spell`: true. `school`: a school.
-`bloodied`: true. Several keys = all must hold.
+`bloodied`: true. `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). Several keys = all must hold.
 
 ### `at_level`
 Modifier starts at that character level (species spells at 3 and 5). For class features the level comes from

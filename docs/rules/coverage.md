@@ -100,7 +100,9 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | All 16 PHB subclasses, features 3-18 | data/subclasses | tested to level 5 | test_data_integrity |
 | Fighter: Fighting Style, Second Wind uses, Weapon Mastery count, Action Surge, Extra Attack | data + engine + combat/features.gd | tested | test_reference_party, test_combat_encounter |
 | Champion: Improved/Superior Critical, Remarkable Athlete | data | tested | test_attacks, test_reference_party |
-| Battle Master: Superiority Dice, maneuvers, Student of War | data | tested (choices, dice); maneuvers in combat: not started (no Phase 2 pregen uses them) | test_level_up |
+| Battle Master: Superiority Dice, maneuvers, Student of War | data + features.gd, feature_actions.gd, reactions.gd | tested: every combat maneuver (hit riders, Bonus Action maneuvers, Parry, Riposte, Precision Attack, Commander's Strike, Ambush); Commanding Presence and Tactical Assessment are checks (Phase 3) | test_feature_combat, test_level_up |
+| Subclass features in combat (all 16 subclasses, levels 3-18) | features.gd, feature_actions.gd, reactions.gd, spell_caster.gd | implemented; tested for Battle Master, Light, War, Diviner, Abjurer, Soulknife (list in the spell and ability audit log). Out of combat: War Bond, Blessing of the Trickster's duration, Psi-Bolstered Knack, Psychic Whispers, Spell Thief, Versatile Trickster, Improved War Magic, Relentless | test_feature_combat |
+| Class features in combat: Tactical Shift, Indomitable, Studied Attacks, Cunning Strike and Devious Strikes, Evasion, Reliable Talent, Elusive, Stroke of Luck, Divine Strike, Divine Intervention | features.gd, feature_actions.gd | implemented; Tactical Shift, Cunning Strike tested | test_feature_combat |
 | Eldritch Knight / Arcane Trickster spellcasting tables | data + engine | tested | test_level_up |
 | Rogue: Expertise, Sneak Attack, Cunning Action, Steady Aim, Thieves' Cant | data + combat/features.gd | tested | test_reference_party, test_combat_encounter |
 | Cleric: Divine Order, Channel Divinity uses, domain spells always prepared | data + engine | tested | test_reference_party |
@@ -112,9 +114,10 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 
 | Rule | Code | Status | Test |
 |---|---|---|---|
-| Feats: 10 origin, 43 general, 10 fighting style, 12 epic boons | data/feats | data (numeric parts tested: Tough, Alert, Defense, Archery, Dueling, GWF) | test_attacks, test_reference_party |
+| Feats: 10 origin, 43 general, 10 fighting style, 12 epic boons | data/feats + features.gd, feature_actions.gd, reactions.gd | implemented in combat (Lucky, Interception, Protection, Sentinel, Polearm Master, War Caster, Great Weapon Master, Sharpshooter, Spell Sniper, Crossbow Expert, Crusher, Piercer, Slasher, Mage Slayer, Heavy Armor Master, Shield Master, Defensive Duelist, Dual Wielder, Two-Weapon Fighting, Tavern Brawler, Unarmed Fighting, Healer, Durable, Charger, Speedy, Skulker, Telekinetic, Poisoner, Elemental Adept, Keen Mind and Observant Bonus Actions, boons); rest-time and social parts are Phase 3; `make validate` checks every "engine" label | test_feature_combat, test_attacks |
+| Species actions: Breath Weapon, Draconic Flight, Giant Ancestry, Large Form, Relentless Endurance, Adrenaline Rush, Healing Hands, Celestial Revelation, Stonecunning; saves against conditions (Dwarven Resilience, Fey Ancestry, Brave) | feature_actions.gd, spell_caster.gd | tested: Breath Weapon, Fire's Burn, Relentless Endurance, Healing Hands, Dwarven Resilience | test_feature_combat |
 | Weapon properties, Finesse, Versatile, Thrown, Range | resolution/weapon_profile.gd | tested | test_attacks |
-| Weapon Mastery properties | encounter.gd | tested: Graze, Nick, Push, Sap, Slow, Topple, Vex; Cleave not started (no Phase 2 character has it) | test_combat_encounter |
+| Weapon Mastery properties | encounter.gd, features.gd | tested: all eight (Cleave in test_feature_combat); Push and Topple can be held back from the class tab | test_combat_encounter, test_feature_combat |
 | Armor: light/medium/heavy AC, Strength requirement, Stealth Disadvantage | character.gd | tested | test_reference_party, test_attacks |
 | Armor and Shield without training | character.gd gear_d20_sources, armor_class | implemented | — |
 | Unarmed Strike (1 + Str) | weapon_profile.gd | implemented | — |
@@ -126,7 +129,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Ritual casting | data (ritual flags) | data | [Phase 3] |
 | Components and focuses | spell_caster.gd | partial: Verbal (can't speak, reveals the hidden), armor training; Material and focuses assumed carried | test_combat_spells |
 | Areas of effect | grid.gd area_cells, spell_caster.gd | tested (sphere, cube, cone, line, emanation; walls block) | test_combat_grid, test_combat_spells |
-| 173 spells of levels 0-3 for the Phase 1 classes | data/spells | data | — |
+| 176 spells (levels 0-3 for the Phase 1 classes, plus three the Night Hag casts) | data/spells, spell_caster.gd, spell_zones.gd | tested: every spell with combat rules is cast and must change the fight; 95 of them do something in combat, the rest are exploration (detection, communication, rituals) and say so on the hotbar | test_spell_sweep, test_spell_recipes, test_combat_spells |
 
 ## Combat (Phase 2: combat/, ADR 0007)
 
@@ -151,12 +154,12 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Savage Attacker, Sneak Attack once per turn (any turn) | encounter.gd, features.gd | tested | test_combat_encounter |
 | Spellcasting in combat: casting time vs the action economy, one slot-spell per turn, free castings, Concentration, range and line of effect, upcasting | spell_caster.gd | tested | test_combat_spells |
 | Spell attacks, saves (damage rolled once, half on success), healing (Disciple of Life), buffs, repeated saves | spell_caster.gd | tested | test_combat_spells |
-| Spells with their own rules: Magic Missile, Shield, Sleep, Command (Grovel, Halt, Flee), Sanctuary, Spiritual Weapon, Toll the Dead, Thunderwave push, Guiding Bolt, Shocking Grasp, Ray of Frost, Chill Touch, Aid, Potent Cantrip | spell_caster.gd | tested | test_combat_spells |
+| Spell secondary effects: pushes and pulls (farthest first), lingering areas (Spirit Guardians, Cloud of Daggers, Web, Grease, Entangle, Fog Cloud, Darkness, Silence, Stinking Cloud, Sleet Storm, Gust of Wind), spell objects (Spiritual Weapon, Flaming Sphere, Dancing Lights, Mage Hand), sustained actions (Witch Bolt, Vampiric Touch, Dragon's Breath, Produce Flame), effect durations and triggers, repeated saves, escape checks, summons (Summon Fey/Undead), teleports, Haste and Slow, Mirror Image, Blink, Invisibility ending, cast-time choices, readied spells, Command's five words | spell_caster.gd, spell_zones.gd | tested | test_spell_recipes, test_combat_spells |
 | Channel Divinity: Turn Undead (Sear Undead), Divine Spark, Preserve Life | features.gd | tested | test_combat_spells |
-| Monster stat blocks in combat: attacks, riders (wolf Prone), Pack Tactics, Undead Fortitude | encounter.gd | tested | test_combat_encounter |
-| Enemy AI v1: pack_hunter, brute, mindless, cowardly profiles | ai/ai_brain.gd | tested | test_combat_ai, test_arena_fight |
+| Monster stat blocks in combat: attacks, Multiattack choices, timed riders with exceptions, real grapples, save actions, Recharge, drains, swarms, flyers, Parry, auras, sunlight, Lightning Absorption, Incorporeal Movement, Loathsome Limbs, lycanthropy, spellcasting | encounter.gd, monster_actions.gd | tested | test_monster_actions, test_combat_encounter |
+| Enemy AI: pack_hunter, brute, mindless, cowardly, skirmisher, swarm, spellcaster, support; obeys Command, Fear, Crown of Madness, Calm Emotions | ai/ai_brain.gd | tested | test_combat_ai, test_arena_fight, test_monster_actions |
 | Encounter XP budget (2024 DMG) | tools/data/validate_data.py | tested by make validate | — |
-| Light, darkness and obscurement in combat | — | not started | [Phase 3] |
+| Light, darkness and obscurement in combat | encounter.gd can_see / light_at, spell_zones.gd | implemented: map light (bright/dim/dark), Darkvision, Blindsight and Truesight, light from spells, magical Darkness, Heavily Obscured areas, sunlight | test_spell_recipes |
 
 ## Not started (later phases)
 
