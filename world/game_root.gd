@@ -521,6 +521,44 @@ func capture_shots(tool: Node, out: String) -> void:
 			dialogue = null
 		hud.visible = true
 		ModeController.force(ModeController.Mode.EXPLORATION)
+	# --dialogue=<file:node> [--beats=N]: a conversation N beats in (the Tarokka spread, a big scene).
+	var dref := ""
+	var beats := 12
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--dialogue="):
+			dref = a.get_slice("=", 1)
+		elif a.begins_with("--beats="):
+			beats = int(a.get_slice("=", 1))
+	if dref != "":
+		start_dialogue(dref, "madam_eva" if dref.contains("madam_eva") else "")
+		for i in beats:
+			if dialogue == null:
+				break
+			if not dialogue.options_shown.is_empty():
+				dialogue.call("_choose", 0)
+			else:
+				dialogue.call("_advance")
+			await tool.call("wait_frames", 2)
+		await tool.call("wait_frames", 10)
+		tool.call("_shot", out + "_dialogue.png")
+		return
+	# --map: the travel map.
+	if "--map" in OS.get_cmdline_user_args():
+		open_travel(true)
+		if screen is TravelScreen:
+			var known := Travel.known(st)
+			if known.size() > 1:
+				(screen as TravelScreen).select(str(known[known.size() - 1]["id"]))
+		await tool.call("wait_frames", 10)
+		tool.call("_shot", out + "_map.png")
+		return
+	# --shop=<npc>: a merchant's shop.
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--shop="):
+			open_shop(a.get_slice("=", 1))
+			await tool.call("wait_frames", 10)
+			tool.call("_shot", out + "_shop.png")
+			return
 	# --encounter=<id>: the fight in place, a few turns in.
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--encounter=") and view.start_encounter(a.get_slice("=", 1)):

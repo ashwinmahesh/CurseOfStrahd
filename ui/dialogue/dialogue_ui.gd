@@ -125,7 +125,7 @@ func _tarokka_card(card_id: String, slot: String) -> Control:
 		big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(big)
 		if card.has("value"):
-			var num := _label("Master" if int(card["value"]) == 10 else str(card["value"]), 18, "ink")
+			var num := _label("Master" if int(card["value"]) == 10 else str(int(card["value"])), 18, "ink")
 			num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			v.add_child(num)
 	var nm := _label(str(card.get("name", card_id)), 17, "ink")
