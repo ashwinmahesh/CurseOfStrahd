@@ -3,7 +3,7 @@
   "name": "The Wolves",
   "title": "The Pack on the Road",
   "summary": "A wolf pack that waits in the narrows of the Old Svalich Road, too patient and too orderly to be hungry. Someone sent them to look at the new arrivals.",
-  "portrait": "mists_wolves",
+  "portrait": "wolf",
   "sprite": "wolf",
   "attitude": "hostile",
   "monster": "wolf",

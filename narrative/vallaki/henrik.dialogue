@@ -41,12 +41,18 @@ Henrik [afraid]: Milivoj said that? He... I... yes. Yes. Twenty gold. I'll give 
 
 ~ pressure
 * [Persuasion DC 12] Whatever made you do it, we can deal with it. Tell us. -> confess | confess_hard
-* [Intimidation DC 12] Tell us, or we open that door with you in front of it. -> confess | confess_hard
+* [Intimidation DC 12] Tell us, or we open that door with you in front of it. -> confess | confess_scream
 * We'll see for ourselves. -> END
 
 ~ confess_hard
 Narrator: He shakes his head so hard his spectacles fly off. Then he looks at the storeroom door, and back at you, and his voice comes out in a whisper anyway.
 -> confess
+
+~ confess_scream
+Narrator: He doesn't answer. He screams, high and thin, like a kettle left on the fire, and behind the storeroom door something heavy shifts inside a crate.
+Henrik [afraid]: No. No, no. What have I done. They hear through wood. They hear everything through wood.
+Narrator: A nail squeals slowly out of a lid. Then another.
+combat storeroom_spawn
 
 ~ confess
 set henrik_confessed

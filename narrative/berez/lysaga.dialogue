@@ -67,6 +67,7 @@ Baba Lysaga: He sent you? He thought of me? Oh, my beautiful boy. Up, up, come u
 
 ~ boy_lie_fail
 set lysaga_guests
+attitude baba_lysaga hostile
 if not quest.the_witch_of_berez >= invited
 quest the_witch_of_berez invited
 endif
@@ -107,6 +108,10 @@ endif
 set lysaga_supper_eaten
 Narrator: She ladles stew into wooden bowls from a pot that has never once been empty. It smells of onions and thyme and something underneath, sweet and dark, that you decide not to name.
 Baba Lysaga: Eat, eat. You're all too thin to be any use. Sit where the hut can see you.
+if attitude.baba_lysaga == hostile
+Baba Lysaga [sly]: Not you, liars. You sit by the door, where the draught is. My boy's name in a liar's mouth. I haven't forgotten, and neither has the hut.
+Narrator: The floor under the bench by the door is warmer than the rest, and it gives, very slightly, like a tongue.
+endif
 interject class:wizard: The fire is burning green.
 Baba Lysaga [smile]: It likes company.
 if flag.lysaga_flattered
@@ -266,10 +271,14 @@ endif
 Baba Lysaga: He didn't even shout. He just said my name, as if it was somebody else's.
 * It's over, grandmother. Let us end it. -> scorned_fight
 * Then you know how Marina's family felt. We'll leave you to it. -> leave_broken
-* [Insight DC 12] Does she mean to fight? -> scorned_read
+* [Insight DC 12] Does she mean to fight? -> scorned_read | scorned_unread
 
 ~ scorned_read
 Narrator: Her hands are shaking too badly to hold a spell. She is not going to fight anybody. She is going to sit in the mud until it rises.
+-> scorned
+
+~ scorned_unread
+Narrator: She rocks, and mutters to the mud. Whatever she means to do, she hasn't decided, or she isn't telling you first.
 -> scorned
 
 ~ scorned_fight

@@ -7,7 +7,11 @@ if flag.krezk_gate_open
 -> guard
 endif
 if flag.krezk_arrived
+if flag.krezk_threatened
+Krezk Watchman: Back again. My friend on the wall has kept an arrow out for you. He's sentimental that way. Found a reason yet, or just a louder voice?
+else
 Krezk Watchman: Back again. The gate's the same as you left it. Shut. Have you found a reason yet, or just more road?
+endif
 -> reasons
 endif
 set krezk_arrived
@@ -29,7 +33,7 @@ Krezk Watchman: We don't take strangers. Not for coin, not for pity, not for sto
 * [if flag.wizard_of_wines_hook or flag.wine_shortage_heard] Your wine comes from the Wizard of Wines, doesn't it? We know why it stopped. -> wine
 * [if flag.krezk_wolves_driven_off] We just cleared the wolves off your doorstep. -> wolves
 * [Cleric] I'm a priest. If you're this frightened of strangers, someone in there needs one. -> cleric
-* [if not flag.krezk_persuade_tried] [Persuasion DC 14] Everyone in this valley needs someone to open a door. Be the one who does. -> persuade_ok | persuade_fail
+* [if not flag.krezk_persuade_tried and not flag.krezk_threatened] [Persuasion DC 14] Everyone in this valley needs someone to open a door. Be the one who does. -> persuade_ok | persuade_fail
 * [Intimidation DC 16] Open it, or we'll find out how good your wall really is. -> cow_ok | cow_fail
 * Is there anywhere up here that does take strangers? -> abbey_hint
 * We'll come back. -> END
@@ -66,8 +70,9 @@ Krezk Watchman [afraid]: All right. All right! I'm fetching the burgomaster. Sta
 -> dmitri_comes
 
 ~ cow_fail
+set krezk_threatened
 Narrator: An arrow thumps into the road a hand's breadth from your boots. Up on the wall-walk, somebody you hadn't noticed is already nocking another.
-Krezk Watchman: The wall's very good. Thank you for asking.
+Krezk Watchman: The wall's very good. Thank you for asking. And now nobody up there will believe a sweet word out of you, so don't waste one.
 -> reasons
 
 ~ ireena
@@ -132,6 +137,9 @@ endif
 ~ opened
 set krezk_gate_open
 quest the_gate_of_krezk opened
+if flag.krezk_threatened
+Dmitri Krezkov [angry]: And you're the ones who offered to test my wall. My bowman remembers your faces. So will I. Behave inside it.
+endif
 if flag.vallaki_backed == "wachter"
 Dmitri Krezkov: One thing. Word came up from Vallaki that Fiona Wachter sits in the burgomaster's chair now, and that strangers put her there. If that was you, keep it to yourselves inside my wall.
 elif flag.vallaki_backed == "neither"

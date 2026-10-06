@@ -19,6 +19,8 @@ endif
 Narrator: Between the two cages, in a rocking chair worn smooth, a little old woman in a flour-dusted shawl is shelling something small and white into a bowl in her lap. She doesn't get up. The chair keeps rocking.
 if flag.morgantha_driven_off
 Morgantha [smile]: The brave one who chased Morgantha's cart out of the village! Morgantha told you, duckling: she remembers every face. And here's yours, come all this way to be remembered properly.
+elif flag.morgantha_threatened
+Morgantha [sly]: My plump little hero! You told Morgantha to take her cart out of the village, and she didn't, and now here you are in her house. Isn't that funny? Morgantha thinks it's funny.
 elif flag.dream_pastries_bought >= 1
 Morgantha [smile]: My customers! All those stairs, just to see where the pastries come from. How are the dreams, dearies? Sweet? Of course they are.
 elif flag.morgantha_met or flag.morgantha_cart_met
@@ -54,6 +56,9 @@ endif
 if flag.pastry_cart_raided
 Morgantha [sly]: And somebody's had their fingers in my cart. Morgantha counts her pastries, pet. She counts everything.
 endif
+if flag.coven_knows_liars
+Morgantha [sly]: And my girls tell me you fib, dearies. Morgantha has written it in her book. Fibbers' promises aren't worth the flour they're dusted with.
+endif
 -> menu
 
 ~ menu
@@ -71,13 +76,17 @@ interject guest:ireena: There's no such custom. I lived in that village all my l
 Morgantha [smile]: Then you never ran short, did you, pet? Lucky girl. He'd pay more for you than for any pastry.
 endif
 Morgantha: But Morgantha is fair. Ask anybody. You may buy them back.
+if flag.morgantha_threatened
+Morgantha [sly]: Not you at the old price, though, my plump little hero. You shouted at Morgantha in the square. Shouting is fifty gold extra.
+endif
 -> bargain
 
 ~ bargain
-* [if gold >= 150] We'll buy them back. (150 gp) -> pay_gold
-* [if not gold >= 150] We haven't that much. -> too_poor
+* [if gold >= 150 and not flag.morgantha_threatened] We'll buy them back. (150 gp) -> pay_gold
+* [if gold >= 200 and flag.morgantha_threatened] We'll buy them back. (200 gp) -> pay_gold_rude
+* [if (not (gold >= 150) and not flag.morgantha_threatened) or (not (gold >= 200) and flag.morgantha_threatened)] We haven't that much. -> too_poor
 * What else would you take? -> dream_offer
-* [Persuasion DC 16] Free them, and we'll leave you and your mill in peace. -> truce_ok | truce_fail
+* [if not flag.coven_knows_liars] [Persuasion DC 16] Free them, and we'll leave you and your mill in peace. -> truce_ok | truce_fail
 * Keep them. We want no part of this. -> abandon
 * No deals. -> menu
 
@@ -90,6 +99,13 @@ gold -150
 set bonegrinder_bargain = "gold"
 quest children_of_the_mill bargain_struck
 Morgantha [smile]: A hundred and fifty. Their mother let them go for less, if you don't count the honey. Pleasure doing business, dearies.
+-> release
+
+~ pay_gold_rude
+gold -200
+set bonegrinder_bargain = "gold"
+quest children_of_the_mill bargain_struck
+Morgantha [smile]: Two hundred. A hundred and fifty for the ducklings, and fifty for the shouting. Morgantha did say manners keep you fresh, pet.
 -> release
 
 ~ dream_offer

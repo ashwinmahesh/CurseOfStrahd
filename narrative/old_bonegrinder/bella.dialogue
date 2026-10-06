@@ -64,7 +64,9 @@ Narrator: She takes one step toward you and the next step into nothing, and she'
 -> END
 
 ~ turn_fail
+set coven_knows_liars
 Bella [smile]: Mother can't leave anything to anyone, darling. She means to live forever. That's the whole trouble.
+Bella [sly]: But what a sweet little lie. I'll tell Mother you tried it. She'll laugh, and then she'll never believe a word you say. Neither will I, darlings, but I never did.
 -> offer_menu
 
 ~ refuse

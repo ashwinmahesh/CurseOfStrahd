@@ -193,6 +193,16 @@
       ]
     },
     {
+      "id": "narrator_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/narrator_hooded.png",
+      "sprites": "art/portraits/narrator.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "The Narrator's avatar (owner request 2026-10-06: a portrait for the Dungeon Master / narrator when they speak), shown on Narrator lines in conversations and in the exploration Narrator box. Picked as the default from four options generated the same day (art/generated/portraits/narrator_hooded, _chronicler, _raven, _mists; the owner chooses). 1024 -> 512 px by blender/portrait.py, background flattened to ash_violet (BG=ash_violet).",
+      "prompt": "Bust portrait of the Narrator, the unseen storyteller who tells this tale of Barovia: a tall hooded figure in a heavy black velvet cowl lined with deep crimson, an aged gold embroidered trim along the hood's edge; inside the hood only darkness and two small cold gold glinting eyes, no face; black-gloved hands hold a closed ancient book bound in crimson leather with gold corner clasps against the chest; front view, still, patient and ominous, lit by cold moonlight from the side (no warm light, no orange tones), flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no scenery in the frame. No border or frame around the picture; the subject runs off the bottom edge of the picture (no rounded cameo or vignette cut-out)."
+    },
+    {
       "id": "wolf_portrait",
       "kind": "portrait",
       "status": "generated",
@@ -279,13 +289,15 @@
       "portrait": "art/portraits/ireena.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Ireena Kolyana, a young human noblewoman in her early twenties with long wavy auburn hair, a pale, resolute face, wearing a simple dusky-blue noble dress with a laced bodice and long sleeves, a dark plum cloak hanging from her shoulders, and a cream scarf wrapped high around her neck, plain brown boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ireena Kolyana (named NPC). Dusky-blue dress, plum cloak and a cream scarf worn high on the neck (it hides the bite marks). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands).",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ireena Kolyana (named NPC). Dusky-blue dress, plum cloak and a cream scarf worn high on the neck (it hides the bite marks). Needs art QA before final. Re-rendered (P4 cast pass, 2026-10-06, owner feedback: no speckle) with the cleaned cutter: edge-preserving smoothing before the cut (cutout.smooth_colours), then despeckle and the small-island merge after the palette snap (cutout.merge_islands). P5 cast pass (2026-10-06): re-rendered (walk and attack) with SAT=1.3, which turns the dusky-blue dress from grey with blue patches into one blue (mist/moon blue). Portraits unchanged: SAT=1.3 there made the dress patchy blue-grey and streaked the hair crimson.",
       "expressions": [
         "art/portraits/ireena_smile.png",
         "art/portraits/ireena_afraid.png",
         "art/portraits/ireena_angry.png"
       ],
-      "sprite_flags": []
+      "sprite_flags": [
+        "SAT=1.3"
+      ]
     },
     {
       "id": "ireena_portrait",
@@ -2129,42 +2141,47 @@
       "id": "gunther_arasek",
       "kind": "character",
       "status": "generated",
-      "source": "art/generated/characters/gunther_arasek_turnaround.png",
+      "source": "art/generated/characters/gunther_arasek_turnaround_v2.png",
       "sprites": "art/sprites/gunther_arasek/walk.tres",
       "portrait": "art/portraits/gunther_arasek.png",
       "expressions": [
         "art/portraits/gunther_arasek_smile.png"
       ],
       "model": "gemini-3.1-flash-image",
-      "prompt": "Character turnaround sheet of Gunther Arasek, a Vallaki stockyard trader: a broad, burly, middle-aged human man with a ruddy weathered face, a short thick dark-blond beard, close-cropped hair and a blunt, honest look, wearing a heavy brown leather apron over a dark green wool tunic with rolled sleeves on thick forearms, a coil of rope over one shoulder, a ring of iron keys and a small ledger on his belt, dark trousers and sturdy boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
-      "notes": "Gunther Arasek of the Arasek Stockyard (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.05 of a human's (burly). His dark green tunic snaps to charcoal grey (stone/slate) in sprite and portraits; SAT=1.3 only added green specks and 1.7 turned his skin red, so it stays at the default. Needs art QA before final.",
-      "sprite_flags": []
+      "prompt": "Character turnaround sheet of Gunther Arasek, a Vallaki stockyard trader: a broad, burly, middle-aged human man with a ruddy weathered face, a short thick dark-blond beard, close-cropped hair and a blunt, honest look, wearing a heavy brown leather apron over a moss-green wool tunic with rolled sleeves on thick forearms, a coil of rope over one shoulder, a ring of iron keys and a small ledger on his belt, dark trousers and sturdy boots. The reference image is this character's earlier turnaround sheet: redraw it with the same character, the same five views, poses, proportions, layout and colours, changing only the tunic: it is now a clear, fairly bright moss green with lighter green highlights (a true green that reads green at a glance, not grey-green, not olive, not dark), in every view including the sleeves and the back. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Gunther Arasek of the Arasek Stockyard (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.05 of a human's (burly). P5 cast pass (2026-10-06): his dark green tunic snapped to charcoal grey (a low-chroma green the quantizer keeps on the grey ramp), so the turnaround was redrawn from the old one (--ref) with only the tunic changed to a clear moss green (gunther_arasek_turnaround_v2.png); the walk sheet, attack strips and both portraits were redone from it. The green now reads green (moss/sickly), a little bright. Needs art QA before final.",
+      "sprite_flags": [],
+      "reference": [
+        "art/generated/characters/gunther_arasek_turnaround.png"
+      ]
     },
     {
       "id": "gunther_arasek_portrait",
       "kind": "portrait",
       "status": "generated",
-      "source": "art/generated/portraits/gunther_arasek_portrait.png",
+      "source": "art/generated/portraits/gunther_arasek_portrait_v2.png",
       "sprites": "art/portraits/gunther_arasek.png",
       "model": "gemini-3.1-flash-image",
-      "prompt": "Bust portrait of Gunther Arasek, a Vallaki stockyard trader, a broad, burly, middle-aged human man with a ruddy weathered face, a short thick dark-blond beard and close-cropped hair, in a heavy brown leather apron over a dark green wool tunic, a coil of rope over one shoulder, three-quarter view, blunt, steady, appraising expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture.",
+      "prompt": "Bust portrait of Gunther Arasek, a Vallaki stockyard trader, the same character as in the first reference image. Redraw the first reference image identically (the same face, expression, hair, beard, pose, three-quarter view, framing, lighting, leather apron, rope and plain flat dark purple background), changing only the colour of his wool tunic: at his collar, shoulders and sleeves it is now a clear moss green, a true green that reads green at a glance (not grey-green, not olive, not dark), the same green as the tunic in the second reference image, his turnaround sheet. No props, candles or scenery in the frame; no border or frame around the picture.",
       "reference": [
-        "art/generated/characters/gunther_arasek_turnaround.png"
+        "art/generated/portraits/gunther_arasek_portrait.png",
+        "art/generated/characters/gunther_arasek_turnaround_v2.png"
       ],
-      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: blunt, steady, appraising."
+      "notes": "Bust portrait (P4 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: blunt, steady, appraising. Redrawn (P5 cast pass, 2026-10-06) from the old portrait (first --ref) with only the tunic changed to the clear moss green of the new turnaround (second --ref); processed as before (default SAT)."
     },
     {
       "id": "gunther_arasek_smile_portrait",
       "kind": "portrait",
       "status": "generated",
-      "source": "art/generated/portraits/gunther_arasek_smile_portrait.png",
+      "source": "art/generated/portraits/gunther_arasek_smile_portrait_v2.png",
       "sprites": "art/portraits/gunther_arasek_smile.png",
       "model": "gemini-3.1-flash-image",
-      "prompt": "Bust portrait of Gunther Arasek, the same character as in the reference image, now with a smile expression: a broad, honest, gap-toothed grin. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "prompt": "Bust portrait of Gunther Arasek, a Vallaki stockyard trader, the same character as in the first reference image. Redraw the first reference image identically (the same face, expression, hair, beard, pose, three-quarter view, framing, lighting, leather apron, rope and plain flat dark purple background), changing only the colour of his wool tunic: at his collar, shoulders and sleeves it is now a clear moss green, a true green that reads green at a glance (not grey-green, not olive, not dark), the same green as the tunic in the second reference image, his turnaround sheet. No props, candles or scenery in the frame; no border or frame around the picture.",
       "reference": [
-        "art/generated/portraits/gunther_arasek_portrait.png"
+        "art/generated/portraits/gunther_arasek_smile_portrait.png",
+        "art/generated/characters/gunther_arasek_turnaround_v2.png"
       ],
-      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a broad, honest, gap-toothed grin)."
+      "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a broad, honest, gap-toothed grin). Redrawn (P5 cast pass, 2026-10-06) from the old portrait (first --ref) with only the tunic changed to the clear moss green of the new turnaround (second --ref); processed as before (default SAT)."
     },
     {
       "id": "luvash",
@@ -2336,17 +2353,20 @@
       "id": "stanimir",
       "kind": "character",
       "status": "generated",
-      "source": "art/generated/characters/stanimir_turnaround.png",
+      "source": "art/generated/characters/stanimir_turnaround_v2.png",
       "sprites": "art/sprites/stanimir/walk.tres",
       "portrait": "art/portraits/stanimir.png",
       "expressions": [
         "art/portraits/stanimir_angry.png"
       ],
       "model": "gemini-3.1-flash-image",
-      "prompt": "Character turnaround sheet of Stanimir, elder of a Vistani camp: a huge, broad, jovial Vistani man in his sixties with a big bushy grey beard, thick grey eyebrows, laughing eyes, a large nose and grey hair under a dark red headscarf, gold hoop earrings, wearing a loose cream shirt with billowing sleeves under a dark green embroidered vest, a wide red sash, baggy dark trousers tucked into tall brown boots, holding a fiddle and bow in one hand at his side. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
-      "notes": "Stanimir, elder of the Tser Pool Vistani camp (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's (huge). make sprite SAT=1.3 keeps the sash and headscarf red and the vest green. Generator slip: the fiddle is missing from the side view (E/W) and the bow shows only in the front three-quarter view. Needs art QA before final.",
+      "prompt": "Character turnaround sheet of Stanimir, elder of a Vistani camp: a huge, broad, jovial Vistani man in his sixties with a big bushy grey beard, thick grey eyebrows, laughing eyes, a large nose and grey hair under a dark red headscarf, gold hoop earrings, wearing a loose cream shirt with billowing sleeves under a dark green embroidered vest, a wide red sash, baggy dark trousers tucked into tall brown boots. The reference image is this character's earlier turnaround sheet: redraw it with the same character, the same five views, poses, proportions, layout and colours, with one change: he holds his fiddle and its bow together by the fiddle's neck in his RIGHT hand, hanging at his side, so the brown fiddle is clearly visible in all five views: beside his right leg in the front view, at his near side in the front three-quarter view, in front of his thigh in the side profile view, and showing past his right hip in the two back views. Nothing in his left hand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Stanimir, elder of the Tser Pool Vistani camp (P4 cast pass, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the new smoothing and island merge. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's (huge). make sprite SAT=1.3 keeps the sash and headscarf red and the vest green. P5 cast pass (2026-10-06): the first turnaround dropped the fiddle in the side view (E/W), so it was redrawn from it (--ref) with the fiddle and bow held in his right hand, visible in all five views (stanimir_turnaround_v2.png); walk sheet and attack strips redone from it. Portraits unchanged (busts). Needs art QA before final.",
       "sprite_flags": [
         "SAT=1.3"
+      ],
+      "reference": [
+        "art/generated/characters/stanimir_turnaround.png"
       ]
     },
     {
@@ -2374,6 +2394,414 @@
         "art/generated/portraits/stanimir_portrait.png"
       ],
       "notes": "Expression variant (P4 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py SAT=1.3 (as the sprite): palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (cold fury, the smile gone, brows down, eyes hard and narrowed)."
+    },
+    {
+      "id": "alenka",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/alenka_turnaround.png",
+      "sprites": "art/sprites/alenka/walk.tres",
+      "portrait": "art/portraits/alenka.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Alenka, the eldest of three Vistani sisters: a tall, handsome, full-figured Vistani woman in her forties with olive skin, a theatrical, knowing face with heavy-lidded dark eyes, arched brows and a beauty mark, and thick black hair with one silver-grey streak, worn in a high coiled braid wrapped with a crimson scarf fringed with little silver coins; far too much silver: big silver hoop earrings, a heavy necklace of silver coins, silver bangles stacked on both wrists and silver rings on every finger; wearing a cream blouse with wide billowing sleeves under a deep crimson velvet bodice laced with gold cord, a long black skirt with a broad crimson and gold embroidered hem over a red petticoat, a black shawl with a gold fringe draped low across her elbows, and dark red slippers. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Alenka, eldest of the three Vistani women at the Blood of the Vine (P5 cast pass, 2026-10-06): crimson velvet bodice, black skirt with a crimson and gold hem, black gold-fringed shawl, far too much silver, one silver streak in a coiled braid. Default flags: her reds hold. Needs art QA before final. 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the smoothing and island merge; attack sheet from art/anim/animations.json (make anims). The rig normalises every figure to the same cell height: size it with CombatToken.HEIGHTS / DirectionalSprite height_units, about 1.25 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [],
+      "expressions": [
+        "art/portraits/alenka_smile.png"
+      ]
+    },
+    {
+      "id": "mirabel",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/mirabel_turnaround.png",
+      "sprites": "art/sprites/mirabel/walk.tres",
+      "portrait": "art/portraits/mirabel.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Mirabel, the middle of three Vistani sisters: a slim, sharp-featured Vistani woman in her early thirties with olive skin, a quick, mocking, lopsided grin, bright dark eyes and a mass of loose black curls tied back with a plum ribbon, silver earrings shaped like crescent moons and a silver coin chain worn as a belt; wearing a cream short-sleeved blouse under a plum-purple laced bodice, a wide candle-orange sash knotted at the hip with long trailing ends, layered skirts in plum, mustard gold and dark purple, and short brown boots. Her colours are purple and orange, with no red. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Mirabel, middle of the three Vistani women (P5 cast pass, 2026-10-06): plum bodice, candle-orange sash, plum and mustard skirts, loose black curls. SAT=1.3 keeps the purple and orange; the draped plum overskirt still snaps to tan/leather. Needs art QA before final. 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the smoothing and island merge; attack sheet from art/anim/animations.json (make anims). The rig normalises every figure to the same cell height: size it with CombatToken.HEIGHTS / DirectionalSprite height_units, about 1.22 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [
+        "SAT=1.3"
+      ],
+      "expressions": [
+        "art/portraits/mirabel_sly.png"
+      ]
+    },
+    {
+      "id": "sorvia",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/sorvia_turnaround.png",
+      "sprites": "art/sprites/sorvia/walk.tres",
+      "portrait": "art/portraits/sorvia.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Sorvia, the youngest of three Vistani sisters: a small, round-faced Vistani girl of about eighteen with olive skin, big earnest dark eyes, lips slightly parted as if about to blurt something, and two long black braids under a moonlit-blue headscarf edged with little silver coins, silver bangles on both wrists and a small silver charm on a cord around her neck; wearing a cream blouse with puffed sleeves under a dark navy-blue laced bodice, a long moonlit-blue skirt with a bone-coloured apron embroidered with small hand and star shapes, a little leather pouch at her waist, and soft brown boots. Her colours are blues and bone, with no red. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Sorvia, youngest of the three Vistani women (P5 cast pass, 2026-10-06): moonlit-blue headscarf and skirt, navy bodice, bone apron embroidered with hands and stars, two braids. SAT=1.3 keeps the skirt one blue (default left purple patches in its shadows). Needs art QA before final. 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the smoothing and island merge; attack sheet from art/anim/animations.json (make anims). The rig normalises every figure to the same cell height: size it with CombatToken.HEIGHTS / DirectionalSprite height_units, about 1.15 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [
+        "SAT=1.3"
+      ],
+      "expressions": [
+        "art/portraits/sorvia_sad.png"
+      ]
+    },
+    {
+      "id": "arik",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/arik_turnaround.png",
+      "sprites": "art/sprites/arik/walk.tres",
+      "portrait": "art/portraits/arik.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Arik, the barkeep of a gloomy village tavern: a lean, grey, middle-aged human man with a long, flat, completely expressionless face, empty pale grey eyes that look at nothing, grey stubble and thin grey hair combed flat to his skull; wearing a grey linen shirt with the sleeves rolled to the elbow, a dark wine-red waistcoat buttoned to the top, a long stained bone-coloured apron reaching below his knees, a grey cloth rag over one shoulder, dark grey trousers and worn brown shoes, a small pewter cup held in one hand at his side; upright, stiff and perfectly still. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Arik, barkeep of the Blood of the Vine (P5 cast pass, 2026-10-06): grey, flat, empty-eyed, grey shirt, wine-red waistcoat, long bone apron, rag over one shoulder, pewter cup. SAT=1.3 keeps the waistcoat red from behind (default turned it ink-dark). His skin reads grey: soulless, on purpose. Needs art QA before final. 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the smoothing and island merge; attack sheet from art/anim/animations.json (make anims). The rig normalises every figure to the same cell height: size it with CombatToken.HEIGHTS / DirectionalSprite height_units, about 1.25 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [
+        "SAT=1.3"
+      ],
+      "expressions": [
+        "art/portraits/arik_weary.png"
+      ]
+    },
+    {
+      "id": "doru",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/doru_turnaround.png",
+      "sprites": "art/sprites/doru/walk.tres",
+      "portrait": "art/portraits/doru.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Doru, the village priest's son, a young human man of about twenty turned into a vampire spawn: a boyish face gone gaunt and hollow-cheeked, deathly pale grey-lilac skin, glowing red eyes with dark rings under them, small bared fangs, short tousled brown hair and long dirty claw-like fingernails, standing hunched and coiled like something about to spring; still dressed as the would-be hero who went to storm the castle: a torn, blood-stained dark blue quilted padded jacket with one ripped sleeve over a dirty cream shirt, a leather belt with an empty sword scabbard, torn brown trousers and scuffed brown boots, dark red blood stains at his collar and chin. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Doru, Father Donavich's son, a vampire spawn (P5 cast pass, 2026-10-06): his own sheet (the generic vampire_spawn sheet stays the monster's): short brown hair, grey-lilac skin, red eyes, a torn blood-stained dark blue quilted jacket, empty scabbard. Needs art QA before final. 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the smoothing and island merge; attack sheet from art/anim/animations.json (make anims). The rig normalises every figure to the same cell height: size it with CombatToken.HEIGHTS / DirectionalSprite height_units, about 1.22 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [],
+      "expressions": [
+        "art/portraits/doru_angry.png"
+      ]
+    },
+    {
+      "id": "gustav_durst",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/gustav_durst_turnaround.png",
+      "sprites": "art/sprites/gustav_durst/walk.tres",
+      "portrait": "art/portraits/gustav_durst.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Gustav Durst, a wealthy merchant now risen as a ghast and still dressed as the host of his own supper: a tall man who was once portly and is now gaunt, his fine clothes hanging loose off him; deathly grey-lilac skin with a cold, ghostly pallor, sunken eye sockets with small pale frost-blue glowing eyes, a too-wide courteous smile with sharp yellowed teeth, grey mutton-chop whiskers and thin grey hair slicked back; long grey fingers ending in dark claws; wearing a faded midnight-blue velvet frock coat with tarnished gold buttons, a dusty bone-coloured waistcoat, a limp cravat, an ivory linen napkin tucked into his collar, dark grey trousers and scuffed black buckled shoes. All his colours are faded and cold, as if seen through mist: dusty blues, greys, lilac and bone, with no warm tones. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Gustav Durst, a ghast at his own supper table (P5 cast pass, 2026-10-06): gaunt, grey-lilac skin with a ghostly pallor and pale frost-blue eyes, faded midnight-blue frock coat with tarnished buttons, bone waistcoat, cravat; all colours cold and faded. Needs art QA before final. 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the smoothing and island merge; attack sheet from art/anim/animations.json (make anims). The rig normalises every figure to the same cell height: size it with CombatToken.HEIGHTS / DirectionalSprite height_units, about 1.3 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [],
+      "expressions": [
+        "art/portraits/gustav_durst_smile.png"
+      ]
+    },
+    {
+      "id": "elisabeth_durst",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/elisabeth_durst_turnaround.png",
+      "sprites": "art/sprites/elisabeth_durst/walk.tres",
+      "portrait": "art/portraits/elisabeth_durst.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Elisabeth Durst, the mistress of a cursed house, now risen as a ghoul: a tall, thin, once-elegant woman, her fine gown hanging loose off her; deathly grey-lilac skin with a cold, ghostly pallor, sunken eyes with small pale frost-blue glowing pupils, a thin, mocking, sharp-toothed smile, dark hair pinned up in a severe high bun held by a tarnished silver comb, a few loose strands; long grey fingers ending in black claws; wearing a plum-purple high-necked gown with long sleeves, a black lace collar and cuffs, a tight bodice and a full skirt with a torn, ragged hem, a black lace shawl, and a cameo brooch at her throat. All her colours are cold, as if seen through mist: the gown a clear bruised plum purple with darker purple shadows (no red, no brown), black lace, grey-lilac skin. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Elisabeth Durst, a ghoul beside her husband (P5 cast pass, 2026-10-06): grey-lilac skin, frost-blue eyes, high bun with a silver comb, plum-purple gown with black lace and a cameo. Second generation: the first asked for a faded wine-red gown, which snapped to rust brown at SAT 1.0-1.6 and to loud crimson at 2.0; the plum gown needs SAT=1.6 (at 1.0 the dusty plum snaps to brown, at 1.3 it is patchy). Needs art QA before final. 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.6 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps, cleaned by the smoothing and island merge; attack sheet from art/anim/animations.json (make anims). The rig normalises every figure to the same cell height: size it with CombatToken.HEIGHTS / DirectionalSprite height_units, about 1.25 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [
+        "SAT=1.6"
+      ],
+      "expressions": [
+        "art/portraits/elisabeth_durst_sly.png"
+      ]
+    },
+    {
+      "id": "durst_nursemaid",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/durst_nursemaid_turnaround.png",
+      "sprites": "art/sprites/durst_nursemaid/walk.tres",
+      "portrait": "art/portraits/durst_nursemaid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of the Durst family's nursemaid, now a specter: the ghost of a plain young servant woman made of mist and cold, floating with no feet: her long skirt fades below the knees into a single ragged wisp that tapers to a point a little above the ground; a worn, worried, hollow-eyed face, hair in a loose bun under a plain frilled maid's cap, a high-collared long-sleeved dress with a long apron; both hands cupped together in front of her waist as if holding a sleeping baby that is not there. She is pale and cold all over: her dress, cap, hands and face are all pale frost-blue and moonlit-blue with lilac shadows, the apron a darker grey-blue (no red, no warm colours, no pure white areas), fully opaque flat colours. Exactly five full views of the same ghost in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating upright in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "The Durst nursemaid's specter (P5 cast pass, 2026-10-06): a servant woman made of mist, frilled cap, grey-blue apron, hands cupped round a baby who isn't there, the skirt tapering into a wisp; all frost-blue and moonlit-blue like the specter sheet. Needs art QA before final. 5-view turnaround (float wording, 16:9) -> make sprite BODY=float (hovers, bobs and leans, like the specter) -> 8 directions x 8 frames, 384 px cells, VRAM (BPTC) with mipmaps; attack sheet from art/anim/animations.json (make anims). Size it with CombatToken.HEIGHTS, about 1.2 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [
+        "BODY=float"
+      ],
+      "expressions": [
+        "art/portraits/durst_nursemaid_sad.png"
+      ]
+    },
+    {
+      "id": "lorghoth",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/lorghoth_turnaround.png",
+      "sprites": "art/sprites/lorghoth/walk.tres",
+      "portrait": "art/portraits/lorghoth.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Lorghoth the Decayer, a huge shambling mound that has fed for years on a cult's refuse: a towering, hunched heap of rot in a vaguely humanoid shape, much wider at the base, with two massive trailing arm-masses that drag on the ground; it is made of rotting grey-brown rushes and straw, black mould, slimy bile-green and sickly yellow-green rot, peat-brown muck and tangled roots, with scraps of black cult robes, old bones, a cracked skull and stubs of candles caught in it; a dark gaping hollow near its top like a sagging mouth, with two small sickly-green glowing eyes above it. Exactly five full views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing hunched in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow, no steam or smoke. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Lorghoth the Decayer, Death House's shambling mound (P5 cast pass, 2026-10-06): its own sheet, a towering heap of rotting grey-brown rushes, black mould, bile-green rot, cult-robe scraps, bones and candle stubs, with a gaping hollow mouth and sickly-green eyes. 5-view turnaround (21:9) -> make sprite BODY=lumber (the shambling_mound gait) -> 8 directions x 8 frames, 384 px cells, VRAM (BPTC) with mipmaps; attack sheet from art/anim/animations.json (make anims). Large and taller than a man: CombatToken.HEIGHTS about 1.9 (the shambling_mound is 1.7). Needs art QA before final.",
+      "sprite_flags": [
+        "BODY=lumber"
+      ]
+    },
+    {
+      "id": "cult_shades",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/cult_shades_turnaround.png",
+      "sprites": "art/sprites/cult_shades/walk.tres",
+      "portrait": "art/portraits/cult_shades.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a cult shade, the shadow of a dead cultist still standing at its altar: a tall, thin robed figure made of living shadow, floating with no feet: a deep hooded robe of near-black violet shadow (ink, bruise purple and dark plum tones, not pure black) whose hem frays into ragged smoky tatters that taper to wisps a little above the ground, a frayed blood-red rope cord at the waist, long thin shadowy hands with pointed fingers hanging at its sides; inside the deep hood only darkness and two small pale lilac glowing eyes, no face; fully opaque flat colours. Exactly five full views of the same ghost in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating upright in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "The cult shades of Death House (P5 cast pass, 2026-10-06): one robed shadow stands for the group, a near-black violet hooded robe fraying into smoky wisps, a frayed blood-red cord, no face, two pale lilac eyes. Distinct from the shadow (a bare silhouette) and the cultist (crimson robes). Needs art QA before final. 5-view turnaround (float wording, 16:9) -> make sprite BODY=float (hovers, bobs and leans, like the specter) -> 8 directions x 8 frames, 384 px cells, VRAM (BPTC) with mipmaps; attack sheet from art/anim/animations.json (make anims). Size it with CombatToken.HEIGHTS, about 1.3 (see docs/art/p5_cast_art_pass.md).",
+      "sprite_flags": [
+        "BODY=float"
+      ],
+      "expressions": [
+        "art/portraits/cult_shades_angry.png"
+      ]
+    },
+    {
+      "id": "alenka_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/alenka_portrait.png",
+      "sprites": "art/portraits/alenka.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Alenka, the eldest of three Vistani sisters, a handsome Vistani woman in her forties with olive skin, heavy-lidded dark eyes, arched brows, a beauty mark and black hair with one silver-grey streak in a high coiled braid wrapped with a crimson coin-fringed scarf, big silver hoop earrings and a heavy silver coin necklace, in a cream blouse under a deep crimson velvet bodice laced with gold cord, a black gold-fringed shawl, three-quarter view, knowing, appraising, heavy-lidded expression with closed lips, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face). No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/alenka_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: knowing, appraising, heavy-lidded."
+    },
+    {
+      "id": "mirabel_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/mirabel_portrait.png",
+      "sprites": "art/portraits/mirabel.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Mirabel, the middle of three Vistani sisters, a slim, sharp-featured Vistani woman in her early thirties with olive skin, bright dark eyes and a mass of loose black curls tied back with a plum ribbon, silver crescent-moon earrings, in a cream short-sleeved blouse under a plum-purple laced bodice, three-quarter view, cool, amused, appraising expression with closed lips, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face). No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/mirabel_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: cool, amused, appraising."
+    },
+    {
+      "id": "sorvia_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/sorvia_portrait.png",
+      "sprites": "art/portraits/sorvia.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Sorvia, the youngest of three Vistani sisters, a round-faced Vistani girl of about eighteen with olive skin, big earnest dark eyes and two long black braids under a moonlit-blue headscarf edged with little silver coins, a small silver charm on a cord around her neck, in a cream puffed-sleeve blouse under a dark navy-blue laced bodice, three-quarter view, earnest, wide-eyed, open expression, lips slightly parted as if about to say something, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face). No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/sorvia_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: earnest, wide-eyed, about to blurt something."
+    },
+    {
+      "id": "arik_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/arik_portrait.png",
+      "sprites": "art/portraits/arik.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Arik, a village tavern's barkeep, a lean, grey, middle-aged human man with a long flat face, empty pale grey eyes, grey stubble and thin grey hair combed flat to his skull, in a grey linen shirt and a dark wine-red waistcoat buttoned to the top, a grey cloth rag over one shoulder, three-quarter view, completely blank, flat, expressionless face, empty eyes staring at nothing, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Keep his pale, greyish skin as in the reference (no orange cast). No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/arik_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py SAT=1.3 (SAT=1.3 keeps the colour the sprite has): palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: completely blank, empty-eyed."
+    },
+    {
+      "id": "doru_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/doru_portrait.png",
+      "sprites": "art/portraits/doru.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Doru, the village priest's son, a young man of about twenty turned vampire spawn, a boyish face gone gaunt and hollow-cheeked, deathly pale grey-lilac skin, glowing red eyes with dark rings under them, small fangs, short tousled brown hair, in a torn, blood-stained dark blue quilted padded jacket over a dirty cream shirt, dark red blood stains at his collar and chin, three-quarter view, hungry, wheedling, pleading expression, a desperate boyish half-smile showing small fangs, eyes fixed on the viewer, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Keep the deathly grey-lilac skin exactly as in the reference (no warm, pink or orange cast on the face). No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/doru_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: hungry, wheedling, pleading half-smile."
+    },
+    {
+      "id": "gustav_durst_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/gustav_durst_portrait.png",
+      "sprites": "art/portraits/gustav_durst.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Gustav Durst, a wealthy merchant risen as a ghast, gaunt with his fine clothes hanging loose, deathly grey-lilac skin with a cold ghostly pallor, sunken eye sockets with small pale frost-blue glowing eyes, grey mutton-chop whiskers and thin grey hair slicked back, in a faded midnight-blue velvet frock coat with tarnished gold buttons, a dusty bone-coloured waistcoat and a limp cream cravat, three-quarter view, courteous, attentive host's expression, a polite closed-mouth smile that does not reach the eyes, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Keep the deathly grey-lilac skin exactly as in the reference (no warm, pink or orange cast on the face). No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/gustav_durst_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: courteous host, a polite smile that does not reach the eyes."
+    },
+    {
+      "id": "elisabeth_durst_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/elisabeth_durst_portrait.png",
+      "sprites": "art/portraits/elisabeth_durst.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Elisabeth Durst, the mistress of a cursed house risen as a ghoul, a thin, once-elegant woman with deathly grey-lilac skin, sunken eyes with small pale frost-blue glowing pupils, dark hair in a severe high bun held by a tarnished silver comb, in a plum-purple high-necked gown with a black lace collar and shawl and a cameo brooch at her throat, three-quarter view, cold, contemptuous expression, chin raised, looking down her nose, lips closed, lit by cold moonlight from the side (no warm light, no orange, peach or yellow tones), flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. Her gown is a rich, saturated violet purple (royal purple, the colour of a fresh bruise) in every part, not dusty, not mauve, no brown, tan or orange; her skin is a cold, neutral grey with no lilac, blue or pink cast. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Keep the deathly grey-lilac skin exactly as in the reference (no warm, pink or orange cast on the face). No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/elisabeth_durst_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py SAT=0.65 (SAT=0.65 (a desaturation before the snap): her grey-lilac skin otherwise snaps to bright lilac, and the violet gown still holds): palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: cold contempt, chin raised. Third generation: the first (candlelit) gown came out dusty mauve-brown and snapped to orange-brown; the second, moonlit, still snapped to brown; the third asks for a saturated violet gown and neutral grey skin."
+    },
+    {
+      "id": "durst_nursemaid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/durst_nursemaid_portrait.png",
+      "sprites": "art/portraits/durst_nursemaid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of the Durst family's nursemaid, now a specter, the ghost of a plain young servant woman made of mist and cold, a worn, worried, hollow-eyed face, hair in a loose bun under a plain frilled maid's cap, a high-collared dress and a darker grey-blue apron, her cupped hands raised in front of her chest as if holding a sleeping baby that is not there, her face, hands, cap and dress all pale frost-blue and moonlit-blue with lilac shadows (no red, no warm colours, no pure white), three-quarter view, worried, searching, pleading expression, brows drawn up, lips parted as if asking a question, lit by cold moonlight from the side (no warm light, no orange, peach or yellow tones), flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/durst_nursemaid_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: worried, searching, pleading. Lit by cold moonlight from the side (like the specter's portrait), not candlelight."
+    },
+    {
+      "id": "lorghoth_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/lorghoth_portrait.png",
+      "sprites": "art/portraits/lorghoth.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Lorghoth the Decayer, a huge shambling mound of rot: rotting grey-brown rushes and straw, black mould, slimy bile-green rot and peat-brown muck with scraps of black cult robes, old bones and candle stubs caught in it, a dark gaping hollow like a sagging mouth with two small sickly-green glowing eyes above it, three-quarter view, looming, hungry expression, the hollow mouth gaping, lit by cold moonlight from the side (no warm light, no orange, peach or yellow tones), flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/lorghoth_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: looming, the hollow mouth gaping. Lit by cold moonlight from the side (like the specter's portrait), not candlelight. Base portrait only: Lorghoth has no dialogue lines, so no mood is ever asked for."
+    },
+    {
+      "id": "cult_shades_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/cult_shades_portrait.png",
+      "sprites": "art/portraits/cult_shades.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a cult shade, the shadow of a dead cultist, a deep hooded robe of near-black violet shadow (ink, bruise purple and dark plum tones, not pure black) with a frayed blood-red cord, inside the hood only darkness and two small pale lilac glowing eyes, no face, three-quarter view, still, chanting, implacable expression, lit by cold moonlight from the side (no warm light, no orange, peach or yellow tones), flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. No border or frame around the picture; the shoulders and chest run off the bottom edge of the picture (no rounded cameo or vignette cut-out).",
+      "reference": [
+        "art/generated/characters/cult_shades_turnaround.png"
+      ],
+      "notes": "Bust portrait (P5 cast pass, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: still, chanting, implacable. Lit by cold moonlight from the side (like the specter's portrait), not candlelight."
+    },
+    {
+      "id": "alenka_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/alenka_smile_portrait.png",
+      "sprites": "art/portraits/alenka_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Alenka, the same character as in the reference image, now with a smile expression: a broad, honeyed, theatrical smile, warm and a little dangerous, eyes crinkled. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/alenka_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a broad, honeyed, theatrical smile); the mood is Alenka's most-used tag (4 [smile])."
+    },
+    {
+      "id": "mirabel_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/mirabel_sly_portrait.png",
+      "sprites": "art/portraits/mirabel_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Mirabel, the same character as in the reference image, now with a sly expression: a sly, mocking sidelong grin, one eyebrow cocked, eyes narrowed with mischief. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/mirabel_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sly (a mocking sidelong grin, one eyebrow cocked); the mood is Mirabel's most-used tag (4 [sly])."
+    },
+    {
+      "id": "sorvia_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/sorvia_sad_portrait.png",
+      "sprites": "art/portraits/sorvia_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Sorvia, the same character as in the reference image, now with a sad expression: sad and guilty, eyes downcast and glistening, brows drawn together, a small unhappy mouth. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/sorvia_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py SAT=1.3 (SAT=1.3 keeps the colour the sprite has): palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sad (guilty, eyes downcast and glistening); the mood is Sorvia's tags tie 1 [smile] / 1 [sad]; sad fits her secret (she feels worst about reporting to Strahd)."
+    },
+    {
+      "id": "arik_weary_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/arik_weary_portrait.png",
+      "sprites": "art/portraits/arik_weary.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Arik, the same character as in the reference image, now with a weary expression: heavy-lidded and dull, the eyelids half lowered, the mouth a flat line, utterly unbothered. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/arik_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py SAT=1.3 (SAT=1.3 keeps the colour the sprite has): palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: weary (heavy-lidded and dull, utterly unbothered); the mood is Arik's lines carry no mood tags and his voice bible says his face never changes, so the variant is the voice bible's fit: barely different from the base, on purpose."
+    },
+    {
+      "id": "doru_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/doru_angry_portrait.png",
+      "sprites": "art/portraits/doru_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Doru, the same character as in the reference image, now with an angry expression: snarling with hunger, fangs bared wide, brows twisted, red eyes blazing. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/doru_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (snarling with hunger, fangs bared, eyes blazing); the mood is Doru's tags tie 3 [sad] / 3 [angry]; angry is the hunger, the one most unlike his pleading base."
+    },
+    {
+      "id": "gustav_durst_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/gustav_durst_smile_portrait.png",
+      "sprites": "art/portraits/gustav_durst_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Gustav Durst, the same character as in the reference image, now with a smile expression: a wide, gracious host's grin showing sharp yellowed teeth, eyes glinting with hunger. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/gustav_durst_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a wide, gracious host's grin with sharp yellowed teeth); the mood is Gustav's tags tie 2 [smile] / 2 [sad]; smile is the host who never stops hosting."
+    },
+    {
+      "id": "elisabeth_durst_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/elisabeth_durst_sly_portrait.png",
+      "sprites": "art/portraits/elisabeth_durst_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Elisabeth Durst, the same character as in the reference image, now with a sly expression: a sweet, mocking, sharp-toothed sly smile, eyes narrowed, head slightly tilted. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/elisabeth_durst_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py SAT=0.65 (SAT=0.65 (a desaturation before the snap): her grey-lilac skin otherwise snaps to bright lilac, and the violet gown still holds): palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sly (a sweet, mocking, sharp-toothed smile); the mood is Elisabeth's most-used tag (2 [sly])."
+    },
+    {
+      "id": "durst_nursemaid_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/durst_nursemaid_sad_portrait.png",
+      "sprites": "art/portraits/durst_nursemaid_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of the nursemaid, the same character as in the reference image, now with a sad expression: deep grief, eyes downcast and wet, mouth trembling, the face crumpling. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/durst_nursemaid_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sad (deep grief, eyes downcast and wet); the mood is the nursemaid's most-used tag (4 [sad])."
+    },
+    {
+      "id": "cult_shades_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/cult_shades_angry_portrait.png",
+      "sprites": "art/portraits/cult_shades_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a cult shade, the same character as in the reference image, now with an angry expression: the two glowing eyes flared wide and burning blood red instead of lilac, the hood's darkness deeper, the shadowy robe bristling. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/cult_shades_portrait.png"
+      ],
+      "notes": "Expression variant (P5 cast pass, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped, despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (the eyes flared blood red); the mood is the shades' lines carry no mood tags; angry is the refusal ('Then the house will have all of you'), when Lorghoth wakes."
     }
   ],
   "image_provider": "gemini"

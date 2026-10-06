@@ -2,8 +2,9 @@ class_name DialogueUI
 extends CanvasLayer
 ## The conversation screen (plan §5.4, §5.7): the speaker's portrait and name, the line, numbered options with
 ## their skill checks (who rolls, the bonus and the chance), the roll shown in the open, notices (journal, items,
-## money, milestones), and the Narrator in italics in a candle-lit frame. It plays a DialogueRunner and never
-## decides anything itself. Keys 1-9 pick options; Space, Enter or a click continues; controller: d-pad and A.
+## money, milestones), and the Narrator in italics with their own portrait. It plays a DialogueRunner and never
+## decides anything itself. Keys 1-9 pick options; Continue, a click anywhere, Space, Enter or Escape continues (the
+## last line ends it); controller: d-pad and A.
 
 signal ended(combat: String)
 ## A `shop` line: the game opens the shop for `npc` and calls resume() when it closes.
@@ -18,6 +19,7 @@ var _name: Label
 var _text: RichTextLabel
 var _options: VBoxContainer
 var _hint: Label
+var _continue_row: HBoxContainer
 var _waiting_continue := false
 var _option_buttons: Array[Button] = []
 var _focus := 0
@@ -37,10 +39,12 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	# A click anywhere continues (or closes a description after its last line): the dim behind the box and the box
+	# itself take it, and everything inside lets it through except the buttons.
 	var dim := ColorRect.new()
 	dim.color = Color(Look.color("void"), 0.35)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	dim.gui_input.connect(_clicked)
 	add_child(dim)
 	_panel = PanelContainer.new()
 	var s := StyleBoxFlat.new()
@@ -63,6 +67,8 @@ func _ready() -> void:
 	_panel.offset_bottom = -24
 	# A long list of options grows the box upward, never off the bottom of the screen.
 	_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	_panel.gui_input.connect(_clicked)
 	add_child(_panel)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 18)
@@ -84,6 +90,7 @@ func _ready() -> void:
 	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_portrait.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	holder.add_child(_portrait)
 	holder.add_child(UiParts.drawn(Vector2(212, 212), func(c: Control) -> void:
 		if _portrait.texture == null:
@@ -114,6 +121,7 @@ func _ready() -> void:
 	_text.add_theme_font_size_override("normal_font_size", 20)
 	_text.add_theme_font_size_override("italics_font_size", 20)
 	_text.add_theme_color_override("default_color", Look.color("vellum"))
+	_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	right.add_child(_text)
 	_options = VBoxContainer.new()
 	_options.add_theme_constant_override("separation", 4)
@@ -126,8 +134,15 @@ func _ready() -> void:
 	_options_scroll.add_child(_options)
 	_options.minimum_size_changed.connect(_fit_options)
 	right.add_child(_options_scroll)
-	_hint = _label("Space / click: continue", 13, "parchment")
-	right.add_child(_hint)
+	_continue_row = HBoxContainer.new()
+	_continue_row.add_theme_constant_override("separation", 12)
+	var go := UiParts.small_button("Continue", _advance)
+	go.name = "Continue"
+	go.focus_mode = Control.FOCUS_NONE
+	_continue_row.add_child(go)
+	_hint = _label("or click, Space, Enter or Esc", 13, "parchment")
+	_continue_row.add_child(_hint)
+	right.add_child(_continue_row)
 	# The Tarokka spread: each card Madam Eva turns stays face up above the conversation.
 	_spread = HBoxContainer.new()
 	_spread.add_theme_constant_override("separation", 14)
@@ -224,8 +239,7 @@ func _show(beat: Dictionary) -> void:
 		"check":
 			var colour := "bile" if bool(beat["success"]) else "vampire_red"
 			var said := str(beat.get("said", ""))
-			_portrait.texture = null
-			_frame_art.queue_redraw()
+			_show_portrait(str(beat.get("portrait", "")))
 			_name.text = str(beat["who"])
 			_text.text = "%s[color=#%s]%s rolls %s: %d vs DC %d, %s[/color]\n[font_size=14][color=#%s]%s[/color][/font_size]" % [
 				("[i]\"%s\"[/i]\n" % _esc(said)) if said != "" else "", Look.color(colour).to_html(false), beat["who"], beat["skill"],
@@ -256,30 +270,33 @@ func _show(beat: Dictionary) -> void:
 			respec_requested.emit(int(beat["index"]))
 			return
 		"pick_member":
-			_portrait.texture = null
-			_frame_art.queue_redraw()
-			_name.text = ""
+			_show_portrait(DialogueRunner.NARRATOR_PORTRAIT)
+			_name.text = "Narrator"
 			_text.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("vampire_red").to_html(false), _esc(str(beat["text"]))]
 			var picks: Array = []
 			for n: Variant in beat["members"]:
 				picks.append({"text": str(n), "label": "", "check": {}, "enabled": true, "member": true})
 			_show_options(picks)
-	_hint.visible = _waiting_continue
+	_continue_row.visible = _waiting_continue
 
 
 func _line(beat: Dictionary) -> void:
 	if bool(beat["narrator"]):
-		_portrait.texture = null
-		_frame_art.queue_redraw()
-		_name.text = ""
+		_show_portrait(str(beat["portrait"]))
+		_name.text = "Narrator"
 		_text.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("parchment").to_html(false), _esc(str(beat["text"]))]
 		return
 	_name.text = str(beat["name"])
-	var path := "res://art/portraits/%s.png" % beat["portrait"]
-	_portrait.texture = load(path) as Texture2D if str(beat["portrait"]) != "" and ResourceLoader.exists(path) else null
-	_frame_art.queue_redraw()
+	_show_portrait(str(beat["portrait"]))
 	var colour := "moonlight" if bool(beat["party"]) else "vellum"
 	_text.text = "[color=#%s]%s[/color]" % [Look.color(colour).to_html(false), _esc(str(beat["text"]))]
+
+
+## The speaker's portrait (art/portraits/<id>.png) in the gilt frame; none if there's no such art.
+func _show_portrait(art_id: String) -> void:
+	var path := "res://art/portraits/%s.png" % art_id
+	_portrait.texture = load(path) as Texture2D if art_id != "" and ResourceLoader.exists(path) else null
+	_frame_art.queue_redraw()
 
 
 func _show_options(options: Array) -> void:
@@ -351,11 +368,23 @@ func _clear_options() -> void:
 	_option_buttons.clear()
 
 
+## A left click on the box or anywhere around it.
+func _clicked(event: InputEvent) -> void:
+	var mb := event as InputEventMouseButton
+	if mb == null or not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT:
+		return
+	get_viewport().set_input_as_handled()
+	if runner != null and _waiting_continue:
+		_advance()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if runner == null:
 		return
 	if _waiting_continue:
+		# A click that no part of the screen took (the Tarokka cards) continues too.
 		var go := event.is_action_pressed(&"combat_confirm") or event.is_action_pressed(&"combat_end_turn") \
+			or event.is_action_pressed(&"combat_cancel") \
 			or (event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT)
 		if go:
 			get_viewport().set_input_as_handled()
