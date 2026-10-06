@@ -16,7 +16,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci palette capture standin sprite sprites anims portrait wireframes textures prop props ui_art icons voice
+.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims portrait wireframes textures prop props ui_art icons voice
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -39,7 +39,7 @@ import:
 	@touch $(STAMP)
 
 test: import
-	$(G) --headless --quit-after 100000 res://tests/test_runner.tscn $(if $(ONLY),-- --only=$(ONLY),) 2>&1 | $(LOGCHK)
+	$(G) --headless --quit-after 100000 res://tests/test_runner.tscn -- $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
 
 validate:
 	python3 tools/data/validate_data.py
@@ -51,6 +51,12 @@ lint: import
 
 ## Local CI: everything main must pass before a merge (plan §4, ADR 0001).
 ci: validate lint test
+
+## The quick check while working (CLAUDE.md says when it is enough): only what covers the files changed since main,
+## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DRY=1]
+check:
+	@$(FRESH)
+	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DRY),--dry-run,)
 
 palette:
 	python3 tools/art/build_palette.py
