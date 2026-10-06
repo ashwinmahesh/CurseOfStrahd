@@ -1,0 +1,43 @@
+{
+  "id": "locate_creature",
+  "name": "Locate Creature",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "paladin",
+    "ranger",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "fur from a bloodhound"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self",
+    "description": "a creature within 1,000 feet"
+  },
+  "tags": [
+    "detection"
+  ],
+  "summary": "Sense the direction to a creature you know, or the nearest of a kind you've seen, within 1,000 ft.",
+  "text": "Describe or name a creature you know. You sense the direction to its location if it is within 1,000 feet of you, and if it is moving you know which way. You can look for a specific creature you know, or for the nearest creature of a particular kind (such as a human or a unicorn) as long as you have seen such a creature up close, within 30 feet, at least once. If the creature is in a different form, such as one from a Flesh to Stone or Polymorph spell, this spell doesn't find it. The spell can't locate a creature if any thickness of lead blocks a direct path between you and it. Concentration, up to 1 hour."
+}

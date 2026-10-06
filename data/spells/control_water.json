@@ -1,0 +1,46 @@
+{
+  "id": "control_water",
+  "name": "Control Water",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "transmutation",
+  "classes": [
+    "cleric",
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 300
+  },
+  "area": {
+    "shape": "cube",
+    "size": 100
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a mixture of water and dust"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "water in a Cube up to 100 feet on a side"
+  },
+  "tags": [
+    "control",
+    "utility"
+  ],
+  "summary": "Control water in a Cube up to 100 ft on a side: flood it, part it, redirect it or spin up a whirlpool.",
+  "text": "Until the spell ends, you control any water inside a Cube up to 100 feet on a side within range. When you cast the spell, and as a Magic action on later turns, you can choose one of these effects, which lasts until you choose another or the spell ends. Flood: the level of all standing water in the area rises by up to 20 feet; in a large body of water you instead raise a 20-foot-tall wave that rolls from one side of the area to the other and crashes down, carrying any Huge or smaller vehicles in its path, each of which has a 25 percent chance of capsizing. Part Water: the water draws aside into walls on either side of a trench across the area; when the effect ends, the water slowly fills the trench again over the next round. Redirect Flow: flowing water in the area moves in a direction you choose, even over obstacles or up walls, and resumes its normal flow beyond the area. Whirlpool: a vortex forms in the center of the area, which must be at least 50 feet square and 25 feet deep. It is 5 feet wide at the base, up to 50 feet wide at the top and 25 feet tall. Any creature in the water within 25 feet of it is pulled 10 feet toward it, and a creature entering the whirlpool for the first time on a turn or ending its turn there makes a Strength saving throw, taking 2d8 Bludgeoning damage on a failure or half as much on a success. A creature can swim away from the whirlpool only if it first takes an action to pull away and succeeds on a Strength (Athletics) check against your spell save DC. Concentration, up to 10 minutes."
+}

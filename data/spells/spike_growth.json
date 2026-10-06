@@ -1,0 +1,57 @@
+{
+  "id": "spike_growth",
+  "name": "Spike Growth",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 150
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "seven thorns"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "damage": [
+    {
+      "dice": "2d4",
+      "type": "piercing",
+      "per": "5 feet moved"
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "enter"
+    ],
+    "terrain": "difficult"
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "20-foot-radius patch of spiky Difficult Terrain: 2d4 Piercing for every 5 ft a creature moves in it.",
+  "text": "Hard spikes and thorns sprout from the ground in a 20-foot-radius Sphere centered on a point within range. The area is Difficult Terrain for the duration, and a creature takes 2d4 Piercing damage for every 5 feet it travels into or within the area. The spikes look natural: a creature that couldn't see the area when you cast the spell must take the Search action and succeed on a Wisdom (Perception or Survival) check against your spell save DC to notice the danger before entering. Concentration, up to 10 minutes."
+}

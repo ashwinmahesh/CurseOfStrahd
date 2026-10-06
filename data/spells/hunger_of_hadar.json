@@ -1,0 +1,83 @@
+{
+  "id": "hunger_of_hadar",
+  "name": "Hunger of Hadar",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 3,
+  "school": "conjuration",
+  "classes": [
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 150
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pickled tentacle"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "dex",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "2d6",
+      "type": "cold",
+      "per": "turn"
+    },
+    {
+      "dice": "2d6",
+      "type": "acid",
+      "per": "turn"
+    }
+  ],
+  "conditions": [
+    "blinded"
+  ],
+  "upcast": {
+    "damage": "1d6",
+    "text": "Only one of the two damage rolls increases: the Cold or the Acid, your choice."
+  },
+  "zone": {
+    "triggers": [
+      "end_turn"
+    ],
+    "damage": [
+      {
+        "dice": "2d6",
+        "type": "acid"
+      }
+    ],
+    "darkness": true,
+    "obscured": "heavy",
+    "terrain": "difficult",
+    "inside": {
+      "conditions": [
+        "blinded"
+      ]
+    }
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "20-foot-radius Sphere of blinding darkness: 2d6 Cold at turn start, Dex save or 2d6 Acid at turn end.",
+  "text": "You open a gateway into the dark between the stars. A 20-foot-radius Sphere of blackness and bitter cold fills a point within range for the duration. No light, magical or otherwise, can brighten it, and creatures fully inside it have the Blinded condition. The area is Difficult Terrain, and whispers and slurping noises can be heard up to 30 feet away. A creature that starts its turn in the area takes 2d6 Cold damage, and a creature that ends its turn there must succeed on a Dexterity saving throw or take 2d6 Acid damage as unseen tentacles grope at it. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the Cold or the Acid damage (your choice) increases by 1d6 for each slot level above 3."
+}

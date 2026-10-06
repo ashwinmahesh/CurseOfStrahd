@@ -1,0 +1,52 @@
+{
+  "id": "compulsion",
+  "name": "Compulsion",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "enchantment",
+  "classes": [
+    "bard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 99,
+    "description": "each creature of your choice that you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed"
+      }
+    }
+  ],
+  "tags": [
+    "control"
+  ],
+  "summary": "Wis save or creatures are Charmed and must move in a direction you pick with a Bonus Action.",
+  "text": "Each creature of your choice that you can see within range makes a Wisdom saving throw; on a failure it has the Charmed condition until the spell ends. For the duration, you can take a Bonus Action to name a horizontal direction. Each Charmed target must spend as much of its movement as possible going that way on its next turn, by the safest path, and after moving this way it repeats the save, ending the spell on itself on a success. Concentration, up to 1 minute."
+}

@@ -1,0 +1,63 @@
+{
+  "id": "vicious_mockery",
+  "name": "Vicious Mockery",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "enchantment",
+  "classes": [
+    "bard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see or hear"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "1d6",
+      "type": "psychic"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d6"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "until": "target_turn_end",
+        "consume": "next_attack",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "attack"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "Wis save or 1d6 Psychic and Disadvantage on its next attack roll before its next turn ends.",
+  "text": "You hurl magically barbed insults at a creature within range that you can see or hear. It makes a Wisdom saving throw. On a failure it takes 1d6 Psychic damage and has Disadvantage on the next attack roll it makes before the end of its next turn. The damage rises by 1d6 at character levels 5 (2d6), 11 (3d6) and 17 (4d6)."
+}

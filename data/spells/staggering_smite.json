@@ -1,0 +1,45 @@
+{
+  "id": "staggering_smite",
+  "name": "Staggering Smite",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 4,
+  "school": "enchantment",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "bonus_action",
+    "trigger": "Taken immediately after you hit a creature with a Melee weapon or an Unarmed Strike."
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "the creature you just hit"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "stunned"
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "Right after a melee hit: an extra 4d6 Psychic, and a Wis save or the target is Stunned until the end of your next turn.",
+  "text": "Bonus Action, cast right after you hit a creature with a Melee weapon or an Unarmed Strike. The target takes an extra 4d6 Psychic damage from the attack and makes a Wisdom saving throw; on a failure it has the Stunned condition until the end of your next turn. Using a Higher-Level Spell Slot: the extra damage increases by 1d6 for each slot level above 4."
+}

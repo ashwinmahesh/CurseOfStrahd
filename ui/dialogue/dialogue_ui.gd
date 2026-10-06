@@ -8,6 +8,8 @@ extends CanvasLayer
 signal ended(combat: String)
 ## A `shop` line: the game opens the shop for `npc` and calls resume() when it closes.
 signal shop_requested(npc: String)
+## A `respec` pick: the game rebuilds party member `index` and calls resume() when it's done.
+signal respec_requested(index: int)
 
 var runner: DialogueRunner
 var _panel: PanelContainer
@@ -184,11 +186,27 @@ func _show(beat: Dictionary) -> void:
 				int(beat["total"]), int(beat["dc"]), "success" if bool(beat["success"]) else "failure",
 				Look.color("parchment").to_html(false), _esc(str(beat["detail"]))]
 			_waiting_continue = true
+			# A failed check: what the roller could still spend (Heroic Inspiration, Tactical Mind).
+			for aid: Variant in beat.get("aids", []):
+				var a := aid as Dictionary
+				var b := Button.new()
+				b.text = str(a["label"])
+				b.add_theme_font_size_override("font_size", 16)
+				b.add_theme_color_override("font_color", Look.color("bile"))
+				var id := str(a["id"])
+				b.pressed.connect(func() -> void:
+					_clear_options()
+					_show(runner.use_aid(id)))
+				_options.add_child(b)
 		"options":
 			_show_options(beat["options"] as Array)
 		"shop":
 			visible = false
 			shop_requested.emit(str(beat["npc"]))
+			return
+		"respec":
+			visible = false
+			respec_requested.emit(int(beat["index"]))
 			return
 		"pick_member":
 			_portrait.texture = null

@@ -1,0 +1,50 @@
+{
+  "id": "giant_insect",
+  "name": "Giant Insect",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "conjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space you can see within range"
+  },
+  "upcast": {
+    "text": "Use the slot's level as the spell's level in the Giant Insect stat block."
+  },
+  "choice": {
+    "kind": "option",
+    "label": "Insect",
+    "from": [
+      "centipede",
+      "spider",
+      "wasp"
+    ]
+  },
+  "tags": [
+    "summon"
+  ],
+  "summary": "Summon a giant centipede, spider or wasp that fights for you for up to 10 minutes.",
+  "text": "You summon a giant centipede, spider or wasp (chosen when you cast the spell), which appears in an unoccupied space you can see within range and uses the Giant Insect stat block. It disappears when it drops to 0 Hit Points or when the spell ends. It is an ally of you and your allies. In combat it shares your Initiative count but takes its turn right after yours. It follows your verbal commands (no action required by you); if you give none, it takes the Dodge action and uses its movement to stay out of danger. Giant Insect (Large Beast): AC 11 + the spell's level; Hit Points 30 + 10 for each spell level above 4; Speed 40 ft., Climb 40 ft., and Fly 40 ft. (wasp only); Str 17, Dex 13, Con 15, Int 4, Wis 14, Cha 3; Darkvision 60 ft., Passive Perception 12; uses your Proficiency Bonus. Spider Climb: it can climb difficult surfaces, including along ceilings, without making an ability check. Multiattack: it makes a number of attacks equal to half the spell's level (round down). Poison Jab: melee attack using your spell attack modifier, reach 10 ft.; hit: 1d6 + 3 + the spell's level Piercing damage plus 1d4 Poison damage. Web Bolt (spider only): ranged attack using your spell attack modifier, range 60 ft.; hit: 1d10 + 3 + the spell's level Bludgeoning damage, and the target's Speed is 0 until the start of the insect's next turn. Venomous Spew (centipede only, Bonus Action): one creature the insect can see within 10 feet makes a Constitution save against your spell save DC or has the Poisoned condition until the start of the insect's next turn. Using a Higher-Level Spell Slot: use the slot's level as the spell's level in the stat block."
+}

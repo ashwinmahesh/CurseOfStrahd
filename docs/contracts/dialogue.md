@@ -47,6 +47,9 @@ tarokka read tome [speaker]        Turns the card for a slot (tome, symbol, swor
                                    the card, then the verse spoken by `speaker` (default madam_eva).
 shop                               Opens the shop of the NPC being spoken to; the conversation resumes after.
 join ireena / leave ireena         A story ally joins or leaves the party as a guest (ADR 0010).
+respec                             The player picks a party member to rebuild from level 1 in the creator (they
+                                   keep their belongings and level back up with milestones). Skipped when the
+                                   owner switched respec off (pause menu).
 check Skill DC n -> ok | fail      A check with no choice (e.g. a passive moment). Uses the best party member.
 interject <selector>: Text         A party member matching the selector says Text, if one is present (the first
                                    match in marching order): class:rogue, species:elf, background:criminal,
@@ -62,6 +65,7 @@ narrate trigger_key                Plays a Narrator trigger (below) inline.
 `background:acolyte`, `tag:pious`, `item:holy_symbol_amulet` (anyone carries it), `quest.<id> == stage_id`,
 `attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `day`, `hour >= 20`, `tarokka.drawn`,
 `tarokka.sword == swords_3`, `tarokka.sword.region == vallaki`, `tarokka.ally.npc == ezmerelda`, `guest:ireena`,
+`spell:speak_with_dead` (an exploring spell the party cast is still running),
 `gold >= 25` (the party's purse), `level >= 3`
 (the lowest character level in the party), `check.last` (the last check succeeded), joined with `and`, `or`, `not`
 and parentheses.

@@ -1,0 +1,39 @@
+{
+  "id": "locate_animals_or_plants",
+  "name": "Locate Animals or Plants",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "fur from a bloodhound"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "self",
+    "description": "the nearest Beast, Plant creature or plant of the named kind within 5 miles"
+  },
+  "tags": [
+    "detection"
+  ],
+  "summary": "Learn the direction and distance to the nearest Beast, Plant creature or plant of a named kind within 5 miles.",
+  "text": "Describe or name a particular kind of Beast, Plant creature or nonmagical plant. You learn the direction and distance to the closest one of that kind within 5 miles, if there is one. Casting time: an action, or as a Ritual."
+}

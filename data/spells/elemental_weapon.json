@@ -1,0 +1,76 @@
+{
+  "id": "elemental_weapon",
+  "name": "Elemental Weapon",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "paladin",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a nonmagical weapon; the bonuses go to whoever wields it"
+  },
+  "upcast": {
+    "text": "With a level 5-6 slot the bonus is +2 and the extra damage 2d4; with a level 7+ slot, +3 and 3d4."
+  },
+  "choice": {
+    "kind": "damage_type",
+    "label": "Element",
+    "from": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "thunder"
+    ]
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "object",
+        "modifiers": [
+          {
+            "stat": "attack",
+            "value": 1,
+            "text": "+2 with a level 5-6 slot, +3 with a level 7+ slot."
+          },
+          {
+            "stat": "extra_damage",
+            "dice": "1d4",
+            "type": "choice",
+            "on": "weapon"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "damage"
+  ],
+  "summary": "A nonmagical weapon becomes +1 and deals an extra 1d4 of a chosen element (more with higher slots).",
+  "text": "A nonmagical weapon you touch becomes a magic weapon. Choose Acid, Cold, Fire, Lightning or Thunder: until the spell ends, the weapon has a +1 bonus to attack rolls and deals an extra 1d4 damage of the chosen type when it hits. Concentration, up to 1 hour. Using a Higher-Level Spell Slot: with a level 5-6 slot the bonus is +2 and the extra damage 2d4; with a level 7+ slot the bonus is +3 and the extra damage 3d4."
+}

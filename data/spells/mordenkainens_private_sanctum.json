@@ -1,0 +1,47 @@
+{
+  "id": "mordenkainens_private_sanctum",
+  "name": "Mordenkainen's Private Sanctum",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "abjuration",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "cube",
+    "size": 100
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a thin sheet of lead"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a Cube from 5 to 100 feet on a side"
+  },
+  "upcast": {
+    "text": "The Cube can be up to 100 feet larger on a side for each slot level above 4."
+  },
+  "tags": [
+    "defense",
+    "utility"
+  ],
+  "summary": "Ward an area up to a 100-foot Cube against sound, sight, divination, teleportation and planar travel.",
+  "text": "You make an area within range magically secure. The area is a Cube from 5 to 100 feet on a side, and it lasts for the duration. When you cast the spell, pick any of these properties: sound can't pass through the Cube's boundary; the boundary looks dark and foggy, blocking ordinary sight and Darkvision; sensors created by Divination spells can't appear inside the area or pass through the boundary; creatures in the area can't be targeted by Divination spells; nothing can teleport into or out of the area; planar travel is blocked inside the area. Casting the spell on the same spot every day for 365 days makes it last until dispelled. Lasts 24 hours. Casting time 10 minutes. Using a Higher-Level Spell Slot: the Cube can be up to 100 feet larger on a side for each slot level above 4."
+}

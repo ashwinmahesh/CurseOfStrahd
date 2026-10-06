@@ -1,0 +1,43 @@
+{
+  "id": "otilukes_resilient_sphere",
+  "name": "Otiluke's Resilient Sphere",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "abjuration",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a glass sphere"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "a Large or smaller creature or object"
+  },
+  "save": "dex",
+  "save_success": "none",
+  "tags": [
+    "control",
+    "defense"
+  ],
+  "summary": "Dex save or a Large or smaller creature or object is sealed inside an unbreakable globe of force.",
+  "text": "A shimmering globe of force encloses a Large or smaller creature or object within range; an unwilling creature avoids it with a successful Dexterity saving throw. Nothing, whether physical objects, energy or other spell effects, can pass through the barrier in either direction, though a creature inside can breathe. The sphere is immune to all damage, and a creature or object inside can't be damaged by attacks or effects from outside, nor can a creature inside damage anything outside. The globe weighs nothing and is just big enough to hold its contents. A creature inside can take an action to push against the walls and roll the sphere at up to half its Speed, and others can pick it up and move it. A Disintegrate spell aimed at the globe destroys it without harming anything inside. Concentration, up to 1 minute."
+}

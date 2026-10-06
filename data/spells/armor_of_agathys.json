@@ -1,0 +1,43 @@
+{
+  "id": "armor_of_agathys",
+  "name": "Armor of Agathys",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 1,
+  "school": "abjuration",
+  "classes": [
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a shard of blue glass"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "temp_hp": {
+    "flat": 5
+  },
+  "upcast": {
+    "temp_hp": 5,
+    "text": "The Cold damage dealt to attackers also rises by 5 for each slot level above 1."
+  },
+  "tags": [
+    "defense"
+  ],
+  "summary": "Gain 5 Temporary Hit Points; while they last, creatures that hit you in melee take 5 Cold damage.",
+  "text": "A coat of magical frost covers you. You gain 5 Temporary Hit Points. Until the spell ends, any creature that hits you with a melee attack roll takes 5 Cold damage. The spell ends early once you have no Temporary Hit Points left. Lasts 1 hour. Using a Higher-Level Spell Slot: the Temporary Hit Points and the Cold damage each rise by 5 for each slot level above 1."
+}

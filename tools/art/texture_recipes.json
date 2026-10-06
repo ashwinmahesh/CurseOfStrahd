@@ -1,0 +1,205 @@
+{
+  "prompt_template": "Seamless tileable texture swatch of {subject}, {view}, filling the whole square edge to edge. Evenly lit with no shadows, no vignette and no lighting gradient; no objects, no border, no frame, no text. Flat cel-shaded tones with two or three hard-edged shades per material and dark ink lines, in the muted, dark gothic palette of a night-time village.",
+  "views": {
+    "floor": "seen straight from above (orthographic top-down, no perspective)",
+    "wall": "seen straight on as a flat elevation (orthographic, no perspective)",
+    "roof": "seen straight onto the roof plane (orthographic top-down, no perspective)"
+  },
+  "themes": {
+    "village": {
+      "cobbles": {
+        "subject": "worn, uneven rounded cobblestones in cold slate and pewter greys with dark ink joints and a few tufts of dark moss in the cracks, about twelve cobbles across",
+        "view": "floor",
+        "tile_world_units": 1.0,
+        "axis": "both"
+      },
+      "mud_road": {
+        "subject": "a muddy dirt path: lumpy, uneven dark brown mud with small stones, a few footprints and small dark puddles reflecting a blue night sky, no straight lines, stripes or ruts",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "grass": {
+        "subject": "sparse, dying dark green grass and moss clumps over dark earth, with a few dead brown leaves, muted bog greens",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "palette": [
+          "ink",
+          "bog_deep",
+          "bog",
+          "moss",
+          "peat",
+          "umber",
+          "bone_dark"
+        ],
+        "saturate": 1.3
+      },
+      "house_wall": {
+        "subject": "an old Barovian house wall: cracked, stained bone-coloured plaster panels between dark brown timber framing beams (vertical posts, one horizontal rail and diagonal braces), about two panels across",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "roof_slate": {
+        "subject": "a roof of overlapping dark slate tiles in staggered rows, cool grey-blue, some chipped or cracked, dark ink outlines, about ten tiles across",
+        "view": "roof",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "palette": [
+          "void",
+          "ink",
+          "stone_deep",
+          "stone",
+          "slate",
+          "night",
+          "moon_blue"
+        ]
+      },
+      "roof_thatch": {
+        "subject": "an old straw thatch roof: dense, matted, weathered straw in dull tan and dark brown bands, darkened with damp and patches of moss",
+        "view": "roof",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "palette": [
+          "void",
+          "peat",
+          "umber",
+          "bone_dark",
+          "walnut",
+          "bone",
+          "tan",
+          "bog"
+        ]
+      }
+    },
+    "interior": {
+      "wood_planks": {
+        "subject": "a floor of worn dark walnut-brown wooden planks running vertically, eight planks across, with knots, nail heads and dark ink gaps between the boards, staggered plank ends",
+        "view": "floor",
+        "tile_world_units": 1.5,
+        "axis": "both",
+        "palette": [
+          "void",
+          "peat",
+          "umber",
+          "walnut",
+          "bone_dark",
+          "leather",
+          "rust"
+        ]
+      },
+      "rug": {
+        "subject": "an old woven rug with a repeating geometric folk pattern of diamonds and crosses in faded crimson, wine red, dark umber and bone; the pattern fills the whole square edge to edge with no rug border or fringe",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "plaster_wall": {
+        "subject": "an interior wall of old cracked, stained parchment-coloured plaster with a few patches where the plaster has fallen away to show dark red-brown bricks",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "wainscot_wall": {
+        "subject": "an interior wall: dark walnut wooden wainscot panelling on the lower half (raised panels and a moulded top rail) and faded wine-red damask wallpaper on the upper half, the panelling repeating across the width",
+        "view": "wall",
+        "tile_world_units": 1.2,
+        "axis": "x",
+        "note": "Wraps in x only: map V from 0 at the top of the wall to 1 at the floor, one tile per wall height."
+      }
+    },
+    "church": {
+      "stone_flags": {
+        "subject": "a church floor of large worn rectangular grey stone flagstones of irregular sizes, dark ink joints and a few cracks",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "palette": [
+          "void",
+          "ink",
+          "stone_deep",
+          "stone",
+          "slate",
+          "pewter"
+        ]
+      },
+      "stone_wall": {
+        "subject": "a church wall of large cut grey stone blocks laid in courses, weathered, dark ink mortar lines, a few cracks and dark moss stains",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      }
+    },
+    "vallaki": {
+      "cobbled_square": {
+        "subject": "a town square paved with neat small rounded cobblestones laid in overlapping fan-shaped arcs, cold greys with darker joints",
+        "view": "floor",
+        "tile_world_units": 4.0,
+        "axis": "both"
+      },
+      "palisade_logs": {
+        "subject": "a palisade wall of tall vertical pine logs standing side by side, dark brown bark, about seven logs across, with a horizontal iron band; the logs run off the top and bottom edges (no pointed tops visible)",
+        "view": "wall",
+        "tile_world_units": 1.5,
+        "axis": "both"
+      },
+      "house_wall": {
+        "subject": "a Vallaki townhouse wall of weathered horizontal wooden clapboards painted a faded grey-blue, the paint peeling in places to show dark wood, dark ink lines between boards",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      }
+    },
+    "dungeon": {
+      "stone_floor": {
+        "subject": "a dungeon floor of rough, uneven dark grey stone slabs, cold and damp, with dark ink joints, cracks and a little grit",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "palette": [
+          "void",
+          "ink",
+          "grave",
+          "stone_deep",
+          "stone",
+          "slate",
+          "bog_deep"
+        ]
+      },
+      "stone_wall": {
+        "subject": "a dungeon wall of rough-hewn dark grey stone blocks in uneven courses, damp, with dark ink mortar lines",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "palette": [
+          "void",
+          "ink",
+          "grave",
+          "stone_deep",
+          "stone",
+          "slate",
+          "night",
+          "bog_deep"
+        ]
+      },
+      "damp_brick": {
+        "subject": "a damp cellar wall of old dark red-brown bricks with dark mortar, wet patches, and streaks of green slime and moss running down",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.2,
+        "palette": [
+          "void",
+          "peat",
+          "umber",
+          "rust",
+          "walnut",
+          "leather",
+          "bog",
+          "moss"
+        ]
+      }
+    }
+  }
+}

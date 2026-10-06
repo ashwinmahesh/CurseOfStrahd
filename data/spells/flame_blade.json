@@ -1,0 +1,70 @@
+{
+  "id": "flame_blade",
+  "name": "Flame Blade",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "evocation",
+  "classes": [
+    "druid",
+    "sorcerer"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a sumac leaf"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "upcast": {
+    "damage": "1d6"
+  },
+  "effects": [
+    {
+      "effect": "light",
+      "params": {
+        "bright": 10,
+        "dim": 10
+      }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "attack",
+      "cost": "magic",
+      "range": 5,
+      "attack": "melee",
+      "not_this_turn": false,
+      "damage": [
+        {
+          "dice": "3d6",
+          "type": "fire",
+          "add_mod": true
+        }
+      ],
+      "label": "Flame Blade",
+      "sub": "3d6 + mod fire",
+      "help": "A Magic action: a melee spell attack with the blade, 3d6 + your spellcasting modifier Fire damage."
+    }
+  ],
+  "tags": [
+    "damage",
+    "light"
+  ],
+  "summary": "A fiery scimitar in your hand: Magic action melee spell attacks for 3d6 + modifier Fire; it sheds light.",
+  "text": "A blade of fire shaped like a scimitar forms in your free hand and lasts for the duration. If you let go of it, it vanishes, but you can call it back to your hand as a Bonus Action. As a Magic action you can make a melee spell attack with it; on a hit the target takes Fire damage equal to 3d6 plus your spellcasting ability modifier. The blade sheds Bright Light in a 10-foot radius and Dim Light for a further 10 feet. Concentration, up to 10 minutes. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 2."
+}

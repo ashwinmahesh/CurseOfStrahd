@@ -1,0 +1,38 @@
+{
+  "id": "dimension_door",
+  "name": "Dimension Door",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "conjuration",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 500
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "self",
+    "description": "you, plus one willing creature within 5 feet of you"
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "Teleport up to 500 ft to a spot you can see, picture or describe, taking one willing creature along.",
+  "text": "You teleport to a spot within range. You arrive exactly where you intend, which can be a place you can see, one you can picture, or one you describe by distance and direction (such as 120 feet due east and 30 feet up). You can also bring along one willing creature within 5 feet of you; it arrives within 5 feet of your destination. If you or the creature would arrive in a space a creature occupies or that objects fill, each of you takes 4d6 Force damage and the teleportation fails."
+}

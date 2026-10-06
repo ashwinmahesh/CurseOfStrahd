@@ -1,0 +1,44 @@
+{
+  "id": "cordon_of_arrows",
+  "name": "Cordon of Arrows",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "an ornamental braid"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "object",
+    "count": 4,
+    "description": "up to four nonmagical arrows or bolts, planted in the ground"
+  },
+  "save": "dex",
+  "save_success": "none",
+  "upcast": {
+    "text": "You can plant two more pieces of ammunition for each slot level above 2."
+  },
+  "tags": [
+    "damage",
+    "defense"
+  ],
+  "summary": "Plant up to four arrows or bolts that shoot creatures coming within 30 ft: Dex save or 2d4 Piercing each.",
+  "text": "You touch up to four nonmagical arrows or bolts and plant them in the ground; the ammunition can't be moved while the spell lasts. Whenever a creature other than you comes within 30 feet of the ammunition for the first time on a turn, or ends its turn there, one piece flies up and strikes at it. The creature makes a Dexterity saving throw, taking 2d4 Piercing damage on a failure, and that piece of ammunition is then destroyed. When you cast the spell you can name creatures the ammunition will ignore. The spell ends when no ammunition remains planted. Lasts 8 hours. Using a Higher-Level Spell Slot: you can plant two more pieces of ammunition for each slot level above 2."
+}

@@ -27,7 +27,10 @@ var speaker: Character = null
 var _options: Array[Dictionary] = []
 var _pending_jump: String = ""
 var _guard: int = 0
-var _picking := false       ## waiting for the player to choose a party member (the `sacrifice` statement)
+var _picking := false       ## waiting for the player to choose a party member (`sacrifice`, `respec`)
+var _pick_purpose := "sacrifice"
+var _last_check: Dictionary = {}        ## {who, test, skill, said} of the last check rolled
+var _check_jumps: Array[String] = []    ## [ok, fail] targets of the last check
 var _queued: Array[Dictionary] = []   ## beats a statement produced beyond its first (a Tarokka card, then the verse)
 ## The NPC being spoken to (shops open for them).
 var npc_id: String = ""
@@ -164,6 +167,7 @@ func next() -> Dictionary:
 				pc += 1
 				var who2 := _best_for(str(s["skill"]))
 				var beat := _roll(who2, str(s["skill"]), int(s["dc"]), "")
+				_check_jumps = [str(s["ok"]), str(s["fail"])]
 				_pending_jump = str(s["ok"]) if bool(beat["success"]) or str(s["fail"]) == "" else str(s["fail"])
 				return beat
 			"combat":
@@ -199,6 +203,13 @@ func next() -> Dictionary:
 				pc += 1
 				if _living().size() >= 2:
 					_picking = true
+					_pick_purpose = "sacrifice"
+					return _pick_beat()
+			"respec":
+				pc += 1
+				if bool(st.options.get("respec", true)) and not _living().is_empty():
+					_picking = true
+					_pick_purpose = "respec"
 					return _pick_beat()
 			"narrate":
 				pc += 1
@@ -223,7 +234,9 @@ func _pick_beat() -> Dictionary:
 	var names: Array[String] = []
 	for ch in _living():
 		names.append(ch.name)
-	return {"kind": "pick_member", "text": "Choose who it will be. They will not come back.", "members": names}
+	var text := "Choose who it will be. They will not come back." if _pick_purpose == "sacrifice" \
+		else "Whose fate will the cards read anew? (They return to level 1 and are built again; they keep their belongings.)"
+	return {"kind": "pick_member", "text": text, "members": names, "purpose": _pick_purpose}
 
 
 ## Answers a `sacrifice` beat: the `i`th living party member dies for good and leaves the party.
@@ -233,6 +246,8 @@ func pick_member(i: int) -> Dictionary:
 		return next()
 	_picking = false
 	var ch := living[i]
+	if _pick_purpose == "respec":
+		return {"kind": "respec", "index": st.party.find(ch), "name": ch.name}
 	st.lose_member(ch, "gave their life on the altar beneath Death House")
 	speaker = st.leader_character()
 	return {"kind": "notice", "text": "%s is gone." % ch.name}
@@ -252,6 +267,7 @@ func choose(i: int) -> Dictionary:
 	var check := opt["check"] as Dictionary
 	if not check.is_empty():
 		var beat := _roll(speaker, str(check["skill"]), int(check["dc"]), str(opt["text"]))
+		_check_jumps = [str(opt["ok"]), str(opt["fail"])]
 		_pending_jump = str(opt["ok"]) if bool(beat["success"]) or str(opt["fail"]) == "" else str(opt["fail"])
 		return beat
 	_pending_jump = str(opt["ok"])
@@ -459,5 +475,25 @@ func _roll(who: Character, skill: String, dc: int, said: String) -> Dictionary:
 		return {"kind": "check", "who": "Nobody", "skill": skill, "dc": dc, "total": 0, "success": false, "detail": "", "said": said}
 	var test := who.roll_check(dice, _skill_key(skill), dc)
 	st.last_check = test.success
-	return {"kind": "check", "who": who.name, "skill": skill.replace("_", " ").capitalize(), "dc": dc, "total": test.total,
-		"success": test.success, "detail": test.describe(), "said": said}
+	_last_check = {"who": who, "test": test, "skill": skill, "said": said}
+	return _check_beat()
+
+
+## The beat for the last check, with what the roller could still spend on it (CheckAids).
+func _check_beat() -> Dictionary:
+	var who := _last_check["who"] as Character
+	var test := _last_check["test"] as D20Test
+	return {"kind": "check", "who": who.name, "skill": str(_last_check["skill"]).replace("_", " ").capitalize(), "dc": test.target,
+		"total": test.total, "success": test.success, "detail": test.describe(), "said": str(_last_check["said"]),
+		"aids": CheckAids.options(who, test)}
+
+
+## Spends an aid on the last (failed) check: Heroic Inspiration or Tactical Mind. The branch follows the new result.
+func use_aid(id: String) -> Dictionary:
+	if _last_check.is_empty():
+		return next()
+	var test := CheckAids.apply(id, _last_check["who"] as Character, _last_check["test"] as D20Test, dice)
+	st.last_check = test.success
+	if _check_jumps.size() == 2:
+		_pending_jump = str(_check_jumps[0]) if test.success or str(_check_jumps[1]) == "" else str(_check_jumps[1])
+	return _check_beat()

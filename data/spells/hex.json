@@ -1,0 +1,68 @@
+{
+  "id": "hex",
+  "name": "Hex",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "the petrified eye of a newt"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "upcast": {
+    "text": "Concentration can last up to 4 hours with a level 2 slot, 8 hours with a level 3-4 slot and 24 hours with a level 5+ slot."
+  },
+  "choice": {
+    "kind": "ability",
+    "label": "Ability",
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ]
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:choice"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "Curse a creature: your attack hits deal it an extra 1d6 Necrotic, and it has Disadvantage on checks with one ability.",
+  "text": "You lay a curse on a creature within range. Until the spell ends, whenever you hit it with an attack roll it takes an extra 1d6 Necrotic damage. Choose an ability when you cast the spell; the target has Disadvantage on ability checks made with that ability. If the target drops to 0 Hit Points before the spell ends, you can take a Bonus Action on a later turn to move the curse to a new creature. Concentration, up to 1 hour. Using a Higher-Level Spell Slot: your Concentration can last up to 4 hours with a level 2 slot, up to 8 hours with a level 3-4 slot, or up to 24 hours with a level 5+ slot."
+}

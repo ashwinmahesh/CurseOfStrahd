@@ -1,0 +1,52 @@
+{
+  "id": "divine_favor",
+  "name": "Divine Favor",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "transmutation",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "modifiers": [
+          {
+            "stat": "extra_damage",
+            "dice": "1d4",
+            "type": "radiant",
+            "on": "weapon"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "damage"
+  ],
+  "summary": "For 1 minute your weapon attacks deal an extra 1d4 Radiant damage on a hit.",
+  "text": "Divine power fills your weapon strikes. Until the spell ends, your attacks with weapons deal an extra 1d4 Radiant damage whenever they hit. Lasts 1 minute (no Concentration)."
+}

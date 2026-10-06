@@ -1,0 +1,63 @@
+{
+  "id": "conjure_animals",
+  "name": "Conjure Animals",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "creatures you choose within 10 feet of the Large spectral pack"
+  },
+  "save": "dex",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "3d10",
+      "type": "slashing"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10"
+  },
+  "zone": {
+    "triggers": [
+      "enter",
+      "end_turn",
+      "moved_into"
+    ],
+    "affects": "enemies"
+  },
+  "tags": [
+    "damage",
+    "summon"
+  ],
+  "summary": "A Large pack of spectral animals: Dex save or 3d10 Slashing to creatures it comes within 10 ft of.",
+  "text": "Nature spirits appear as a Large pack of spectral, intangible animals (wolves, serpents, birds or another form you choose) in an unoccupied space within range, and stay for the duration. You have Advantage on Strength saving throws while you're within 5 feet of the pack, and when you move on your turn you can also move the pack up to 30 feet to an unoccupied space you can see. Whenever the pack moves within 10 feet of a creature you can see, and whenever a creature you can see enters a space within 10 feet of the pack or ends its turn there, you can force that creature to make a Dexterity saving throw; on a failure it takes 3d10 Slashing damage. A creature makes this save no more than once per turn. Concentration, up to 10 minutes. Using a Higher-Level Spell Slot: the damage increases by 1d10 for each slot level above 3."
+}

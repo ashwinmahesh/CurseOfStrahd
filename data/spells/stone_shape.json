@@ -1,0 +1,39 @@
+{
+  "id": "stone_shape",
+  "name": "Stone Shape",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "transmutation",
+  "classes": [
+    "cleric",
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "soft clay"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a Medium or smaller stone object, or a section of stone no more than 5 feet in any dimension"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Reshape a Medium or smaller stone object, or a section of stone up to 5 ft in any dimension.",
+  "text": "You touch a stone object of Medium size or smaller, or a section of stone no more than 5 feet in any dimension, and mold it into any shape you like. You could, for example, carve a boulder into a statue or a crude club, open a gap in a wall up to 5 feet thick, or fuse a stone door to its frame. The object you make can have up to two hinges and a latch, but finer mechanical detail isn't possible."
+}

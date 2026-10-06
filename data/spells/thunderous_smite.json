@@ -1,0 +1,45 @@
+{
+  "id": "thunderous_smite",
+  "name": "Thunderous Smite",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "bonus_action",
+    "trigger": "Taken immediately after you hit a target with a Melee weapon or an Unarmed Strike."
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "the target you just hit"
+  },
+  "save": "str",
+  "save_success": "none",
+  "conditions": [
+    "prone"
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "Right after a melee hit: an extra 2d6 Thunder; a creature makes a Str save or is pushed 10 ft and knocked Prone.",
+  "text": "Bonus Action, cast right after you hit a target with a Melee weapon or an Unarmed Strike. Your blow booms with thunder that can be heard up to 300 feet away, and the target takes an extra 2d6 Thunder damage from the attack. If the target is a creature, it must also succeed on a Strength saving throw or be pushed 10 feet straight away from you and have the Prone condition. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 1."
+}

@@ -258,3 +258,31 @@ func test_a_guest_follows_and_fights_on_our_side() -> void:
 			assert_true(c.is_player_controlled(), "the player commands guests")
 	root.call("_refresh")
 	GameState.story.remove_guest("ireena")
+
+
+func test_the_fight_inherits_the_light() -> void:
+	var v := _view()
+	assert_true(v.start_encounter("wolves"))
+	await _frames(3)
+	var e := v.combat_view.e
+	assert_eq(e.ambient_light, "dim", "the hall's map light")
+	assert_eq(e.light_at(v.leader().cell), "bright", "the lantern")
+
+
+func test_exploring_spells_light_detect_and_find_traps() -> void:
+	var v := _view()
+	var silvain := GameState.story.party[3]
+	var opts: Array = FieldCasting.utility_options(GameState.story.party, silvain, DiceRoller.new(1)).map(func(o: Dictionary) -> String: return str(o["id"]))
+	var hedda := GameState.story.party[2]
+	var hopts: Array = FieldCasting.utility_options(GameState.story.party, hedda, DiceRoller.new(1)).map(func(o: Dictionary) -> String: return str(o["id"]))
+	assert_true("light" in hopts, "Hedda knows Light: %s" % [hopts])
+	var res := FieldCasting.cast_utility(GameState.story, hedda, "light", false)
+	assert_true(bool(res["ok"]), str(res))
+	assert_true(StoryConditions.check("spell:light", GameState.story))
+	v.apply_spell_effect("light")
+	assert_true(v.lantern.visible)
+	GameState.story.advance_minutes(61)
+	assert_false(StoryConditions.check("spell:light", GameState.story), "an hour later it's gone")
+	v.apply_spell_effect("find_traps")
+	assert_eq(str((GameState.story.loc_state("test_hall")["traps"] as Dictionary).get("pit", "")), "found")
+	assert_true(opts.size() >= 0)

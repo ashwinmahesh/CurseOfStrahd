@@ -6,6 +6,8 @@ extends RefCounted
 ## summon wait for a fight.
 
 const MAX_TARGETS := 8
+## Spells that also work in a fight but are worth casting while exploring (their light lasts).
+const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight"]
 
 
 ## What `caster` can cast right now outside combat: [{id, name, level, slots: Array[int], free, count, self_only,
@@ -110,3 +112,70 @@ static func _board(party: Array[Character], caster: Character, dice: DiceRoller)
 	e.round_no = 1
 	e.state = Encounter.State.ACTIVE
 	return e
+
+
+# --- Spells for exploring (no effect in a fight) ----------------------------------------------------
+
+## Spells whose effect is on exploring rather than fighting (Light, Detect Magic, Find Traps, Comprehend Languages,
+## Speak with Animals ...): [{id, name, level, ritual, slots, legal, reason}]. A Ritual spell can be cast as a Ritual
+## (10 minutes longer, no slot) by a caster who has it prepared (2024).
+static func utility_options(party: Array[Character], caster: Character, dice: DiceRoller) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var e := _board(party, caster, dice)
+	var seen := {}
+	for k in caster.known_spells():
+		var id := str(k["id"])
+		if seen.has(id):
+			continue
+		seen[id] = true
+		var data := Compendium.shared().spell_data(id)
+		if data.is_empty() or (e.spells.has_combat_rules(data) and not id in EXPLORING_TOO):
+			continue
+		var unit := str((data.get("casting_time", {}) as Dictionary).get("unit", "action"))
+		if unit == "reaction":
+			continue
+		var level := int(data.get("level", 0))
+		var slots := _slots(caster, level)
+		var ritual := bool(data.get("ritual", false))
+		var entry := {"id": id, "name": str(data["name"]), "level": level, "ritual": ritual, "slots": slots, "legal": true, "reason": ""}
+		if level > 0 and slots.is_empty() and not ritual:
+			entry["legal"] = false
+			entry["reason"] = "No spell slots left"
+		if caster.hp <= 0 or caster.dead:
+			entry["legal"] = false
+			entry["reason"] = "%s can't act" % caster.name
+		out.append(entry)
+	return out
+
+
+## Casts an exploring spell: spends the slot (or, `as_ritual`, ten more minutes), records it in
+## StoryState.active_spells for its duration (conditions: `spell:<id>`), and returns {ok, text, effect}; the world
+## applies `effect` (light, detect_magic, find_traps) where the party stands.
+static func cast_utility(st: StoryState, caster: Character, spell_id: String, as_ritual: bool, slot: int = 0) -> Dictionary:
+	var data := Compendium.shared().spell_data(spell_id)
+	if data.is_empty():
+		return {"ok": false, "text": "Unknown spell"}
+	var level := int(data.get("level", 0))
+	if as_ritual and not bool(data.get("ritual", false)):
+		return {"ok": false, "text": "%s isn't a Ritual" % data["name"]}
+	if level > 0 and not as_ritual:
+		var slots := _slots(caster, level)
+		if slots.is_empty():
+			return {"ok": false, "text": "No spell slots left"}
+		if not caster.expend_slot(slot if slot in slots else slots[0]):
+			return {"ok": false, "text": "No spell slots left"}
+	var minutes := 10 if as_ritual else 1
+	var dur := data.get("duration", {}) as Dictionary
+	var lasting := 0
+	match str(dur.get("kind", "")):
+		"minutes":
+			lasting = int(dur.get("amount", 1))
+		"hours":
+			lasting = int(dur.get("amount", 1)) * 60
+		"days":
+			lasting = int(dur.get("amount", 1)) * 24 * 60
+	st.advance_minutes(minutes)
+	if lasting > 0:
+		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
+	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s." % [caster.name.get_slice(" ", 0), data["name"],
+		" as a Ritual" if as_ritual else ""]}

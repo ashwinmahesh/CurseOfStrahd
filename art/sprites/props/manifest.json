@@ -1,0 +1,121 @@
+{
+  "apply": {
+    "node": "Sprite3D, billboard = BILLBOARD_FIXED_Y, centered = true, offset.y = height_px / 2 (origin at the prop's foot)",
+    "pixel_size": "per prop below: world_height / opaque height in px",
+    "alpha": "binary; alpha_cut = ALPHA_CUT_DISCARD",
+    "filter": "linear with mipmaps; imported VRAM (BPTC) with mipmaps",
+    "palette": "already snapped to art/palette/palette.json; props go through the palette pass like other scenery",
+    "doc": "docs/art/textures.md"
+  },
+  "props": {
+    "dead_tree": {
+      "file": "art/sprites/props/dead_tree.png",
+      "width_px": 332,
+      "height_px": 516,
+      "world_height": 4.0,
+      "pixel_size": 0.00781,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/dead_tree.png"
+    },
+    "pine": {
+      "file": "art/sprites/props/pine.png",
+      "width_px": 308,
+      "height_px": 516,
+      "world_height": 5.0,
+      "pixel_size": 0.00977,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/pine.png"
+    },
+    "lantern_post": {
+      "file": "art/sprites/props/lantern_post.png",
+      "width_px": 116,
+      "height_px": 516,
+      "world_height": 2.4,
+      "pixel_size": 0.00469,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/lantern_post.png"
+    },
+    "gravestone": {
+      "file": "art/sprites/props/gravestone.png",
+      "width_px": 384,
+      "height_px": 516,
+      "world_height": 0.9,
+      "pixel_size": 0.00176,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/gravestone.png"
+    },
+    "barrel": {
+      "file": "art/sprites/props/barrel.png",
+      "width_px": 396,
+      "height_px": 516,
+      "world_height": 0.8,
+      "pixel_size": 0.00156,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/barrel.png"
+    },
+    "crate": {
+      "file": "art/sprites/props/crate.png",
+      "width_px": 516,
+      "height_px": 516,
+      "world_height": 0.7,
+      "pixel_size": 0.00137,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/crate.png"
+    },
+    "bookshelf": {
+      "file": "art/sprites/props/bookshelf.png",
+      "width_px": 304,
+      "height_px": 516,
+      "world_height": 1.6,
+      "pixel_size": 0.00313,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/bookshelf.png"
+    },
+    "bed": {
+      "file": "art/sprites/props/bed.png",
+      "width_px": 516,
+      "height_px": 408,
+      "world_height": 0.8,
+      "pixel_size": 0.00198,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/bed.png"
+    },
+    "table": {
+      "file": "art/sprites/props/table.png",
+      "width_px": 516,
+      "height_px": 340,
+      "world_height": 0.7,
+      "pixel_size": 0.0021,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/table.png"
+    },
+    "well": {
+      "file": "art/sprites/props/well.png",
+      "width_px": 404,
+      "height_px": 516,
+      "world_height": 1.8,
+      "pixel_size": 0.00352,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/well.png"
+    },
+    "market_stall": {
+      "file": "art/sprites/props/market_stall.png",
+      "width_px": 516,
+      "height_px": 500,
+      "world_height": 2.0,
+      "pixel_size": 0.00403,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/market_stall.png",
+      "saturate": 1.3
+    },
+    "wagon": {
+      "file": "art/sprites/props/wagon.png",
+      "width_px": 516,
+      "height_px": 420,
+      "world_height": 1.8,
+      "pixel_size": 0.00435,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/wagon.png"
+    }
+  }
+}

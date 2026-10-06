@@ -1,0 +1,41 @@
+{
+  "id": "compelled_duel",
+  "name": "Compelled Duel",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "tags": [
+    "control",
+    "debuff"
+  ],
+  "summary": "Wis save or the target has Disadvantage against anyone but you and can't willingly move more than 30 ft away.",
+  "text": "You try to lock a creature you can see within range into a duel with you. It makes a Wisdom saving throw. On a failure, for the duration it has Disadvantage on attack rolls against any creature other than you, and it can't willingly move to a space more than 30 feet away from you. The spell ends early if you make an attack roll against another creature, cast a spell that targets an enemy other than the target, an ally of yours damages the target, or you end your turn more than 30 feet away from it. Concentration, up to 1 minute."
+}

@@ -1,0 +1,41 @@
+{
+  "id": "divination",
+  "name": "Divination",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "divination",
+  "classes": [
+    "cleric",
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "incense worth 25+ GP, which the spell consumes",
+    "m_cost_gp": 25,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "detection",
+    "utility"
+  ],
+  "summary": "Ask a god or its servants one question about something within the next 7 days and get a truthful answer.",
+  "text": "Your offering lets you contact a god or a god's servants. You ask one question about a specific goal, event or activity expected within the next 7 days, and the DM gives a truthful reply, which might be a short phrase or a cryptic rhyme or omen. The answer doesn't account for circumstances that might change the outcome, such as the casting of other spells. If you cast the spell more than once before finishing a Long Rest, each casting after the first has a cumulative 25 percent chance of getting no answer. Casting time: an action, or as a Ritual. The incense (25+ GP) is consumed."
+}

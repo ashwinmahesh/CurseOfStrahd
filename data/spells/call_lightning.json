@@ -1,0 +1,54 @@
+{
+  "id": "call_lightning",
+  "name": "Call Lightning",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "conjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 5
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "each creature within 5 feet of a point under the storm cloud (a 60-foot-radius, 10-foot-tall Cylinder)"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d10",
+      "type": "lightning"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10",
+    "text": "Cast outdoors in a storm, the spell controls that storm and its damage is 1d10 higher."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "A storm cloud: call a bolt for 3d10 Lightning (Dex save, half) on creatures within 5 ft of a point, again each turn.",
+  "text": "A storm cloud appears at a point you can see within range above you, a Cylinder 10 feet tall with a 60-foot radius. When you cast the spell, choose a point you can see under the cloud; a bolt strikes it, and each creature within 5 feet of that point makes a Dexterity saving throw, taking 3d10 Lightning damage on a failure or half as much on a success. Until the spell ends, you can take a Magic action to call down another bolt, at the same point or a different one. If you cast the spell outdoors in stormy weather, you take control of the existing storm instead of making a new cloud, and the spell's damage increases by 1d10. Concentration, up to 10 minutes. Using a Higher-Level Spell Slot: the damage increases by 1d10 for each slot level above 3."
+}

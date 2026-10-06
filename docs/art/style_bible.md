@@ -12,7 +12,9 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
   bone and parchment · bog greens and bile · candle and ember oranges · stone greys · earth browns (peat, umber, walnut, rust, leather, tan) · skin.
 - Night scenes sit in purples and blues; warmth comes only from candles, fire and blood.
 - The in-game post-process snaps every pixel to the palette at a 2x pixel grid with light ordered dithering.
-  Sprites are also quantized in the pipeline so they hold up when the pass is off.
+  Sprites are also quantized in the pipeline so they hold up when the pass is off. The pipeline's quantizer keeps neutral
+  greys on the grey ramp (so a grey wolf stays grey) and despeckles; `SAT=1.3` is an opt-in chroma boost for
+  muted reds that would otherwise snap to brown.
 - Character sprites are the exception (owner, 2026-10-06: they read blurry and grainy through the pass): their
   sheets are rendered at 384 px cells, mipmapped, and drawn after the pass at full screen resolution. They keep the
   palette because the pipeline already quantized them.
@@ -38,9 +40,13 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
 ## Portraits
 - Bust, three-quarter view, candle-lit from below or the side, plain dark purple background (keep scene detail
   out so expressions read in the dialogue frame). 3 to 4 expressions per named NPC.
+- Files: `art/portraits/<id>.png` is the default face, `<id>_<mood>.png` the others (moods: neutral, smile,
+  angry, afraid, sad, sly, weary). `make portrait` flattens the background to one palette colour; P4-09 used
+  `ash_violet` for every set (docs/art/p4_09_art_pass.md).
 
 ## Environments
 - Low-poly geometry with generated tileable textures; distant scenery as matte paintings.
+  Texture sets, billboard props and how they're applied: docs/art/textures.md (`make textures`, `make prop`).
 - Barovia is always overcast: heavy cloud, mist at ground level, red sunset bands only at dusk.
 
 ## UI

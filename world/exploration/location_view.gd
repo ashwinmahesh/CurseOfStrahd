@@ -84,7 +84,7 @@ var _spawn_name := ""
 func _ready() -> void:
 	assert(not loc.is_empty(), "No location %s" % loc_id)
 	grid = CombatGrid.from_rows(loc["map"]["rows"] as Array)
-	board = ArenaBoard.build(grid, str(loc["map"].get("theme", "manor")))
+	board = ArenaBoard.build(grid, ArenaBoard.theme_for(loc["map"] as Dictionary))
 	add_child(board)
 	_build_environment()
 	_build_doors()
@@ -155,7 +155,7 @@ func update_daylight() -> void:
 		_env.ambient_light_energy = base
 		_sun.light_color = Look.color("moonlight")
 		_sun.light_energy = 0.25 if light != "dark" else 0.08
-		lantern.visible = true
+		lantern.visible = light != "bright" or st.spell_active("light")
 		return
 	match phase:
 		"day":
@@ -176,7 +176,7 @@ func update_daylight() -> void:
 			_env.ambient_light_energy = base * 0.7
 			_sun.light_color = Look.color("moonlight")
 			_sun.light_energy = 0.45
-	lantern.visible = phase == "night" or light == "dark"
+	lantern.visible = phase == "night" or light == "dark" or st.spell_active("light")
 
 
 ## "day" (7:00-17:59), "dusk" (18:00-18:59), "night" (19:00-5:59) or "dawn" (6:00-6:59).
@@ -218,7 +218,13 @@ func _build_props() -> void:
 		if kind == "search" and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false)):
 			continue
 		var colour := {"examine": "parchment", "book": "ember", "search": "bone", "lever": "pewter", "decor": "stone"}.get(kind, "bone") as String
-		prop_nodes[id] = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), colour)
+		var sprite := _prop_art(prop)
+		var node: Node3D = null
+		if sprite != "":
+			node = board.prop_sprite(sprite, board.cell_center(_cell(prop["cell"])) - Vector3(0, 0, 0), 0.8)
+		if node == null:
+			node = _box(Vector3(0.45, 0.35, 0.45), board.cell_center(_cell(prop["cell"])) + Vector3(0, 0.2, 0), colour)
+		prop_nodes[id] = node
 	for c: Variant in loc.get("containers", []):
 		var ct := c as Dictionary
 		if not StoryConditions.check(str(ct.get("when", "")), st):
@@ -226,6 +232,18 @@ func _build_props() -> void:
 		var looted := bool((st.loc_state(loc_id)["looted"] as Dictionary).get(str(ct["id"]), false))
 		container_nodes[str(ct["id"])] = _box(Vector3(0.8, 0.55, 0.55), board.cell_center(_cell(ct["cell"])) + Vector3(0, 0.28, 0),
 			"umber" if not looted else "peat")
+
+
+## Which billboard prop art (art/sprites/props) a prop looks like, from its model or id, or "" for a plain marker.
+static func _prop_art(prop: Dictionary) -> String:
+	var key := ("%s %s" % [prop.get("model", ""), prop.get("id", "")]).to_lower()
+	for pair: Array in [["well", "well"], ["grave", "gravestone"], ["crypt", "gravestone"], ["lantern", "lantern_post"],
+			["lamp", "lantern_post"], ["shelf", "bookshelf"], ["bookcase", "bookshelf"], ["bed", "bed"], ["table", "table"],
+			["barrel", "barrel"], ["crate", "crate"], ["stall", "market_stall"], ["cart", "wagon"], ["wagon", "wagon"],
+			["tree", "dead_tree"]]:
+		if key.contains(str(pair[0])):
+			return str(pair[1])
+	return ""
 
 
 func _build_lights() -> void:
@@ -310,6 +328,29 @@ func _place_party() -> void:
 	place_guests()
 	if lantern != null and not members.is_empty():
 		(tokens[members[0].id] as Node3D).add_child(lantern)
+
+
+## Swaps in party members whose character changed (Madam Eva's respec) where the old ones stood.
+func rebuild_party() -> void:
+	for i in mini(members.size(), st.party.size()):
+		if members[i].creature == st.party[i]:
+			continue
+		var old := members[i]
+		var tok := tokens[old.id] as CombatToken
+		if lantern != null and lantern.get_parent() == tok:
+			tok.remove_child(lantern)
+		tok.queue_free()
+		tokens.erase(old.id)
+		var cb := Combatant.new(st.party[i], &"party", old.cell)
+		members[i] = cb
+		var fresh := CombatToken.create(cb)
+		fresh.position = board.cell_center(cb.cell)
+		add_child(fresh)
+		tokens[cb.id] = fresh
+		if i == 0:
+			rig.follow = fresh
+			if lantern != null and lantern.get_parent() == null:
+				fresh.add_child(lantern)
 
 
 ## Puts the party's guests behind the last member (called again when someone joins or leaves).
@@ -1241,6 +1282,46 @@ static func _truthy(v: Variant) -> bool:
 	return StoryConditions._truthy(v)
 
 
+## What an exploring spell does here and now (FieldCasting.cast_utility): Light lights the lantern, Detect Magic
+## names the magic within 30 ft, Find Traps reveals the traps in sight within 120 ft.
+func apply_spell_effect(spell_id: String) -> void:
+	match spell_id:
+		"light":
+			update_daylight()
+		"detect_magic":
+			var found: Array[String] = []
+			for c: Variant in loc.get("containers", []):
+				var ct := c as Dictionary
+				if not container_nodes.has(str(ct["id"])) or grid.distance_ft(leader().cell, 1, _cell(ct["cell"]), 1) > 30:
+					continue
+				for it: Variant in ct.get("items", []):
+					if Compendium.shared().has("magic_items", str((it as Dictionary)["id"])):
+						found.append(str(ct.get("label", "a chest")))
+						break
+			for p: Variant in loc.get("props", []):
+				var pr := p as Dictionary
+				if bool(pr.get("magic", false)) and prop_nodes.has(str(pr["id"])) and grid.distance_ft(leader().cell, 1, _cell(pr["cell"]), 1) <= 30:
+					found.append(str(pr.get("label", "something")))
+			if not _say("detect_magic:%s" % loc_id, leader().creature as Character):
+				narration.emit("Magic within 30 ft: %s." % (", ".join(found) if not found.is_empty() else "nothing you can sense"))
+		"find_traps":
+			var n := 0
+			for t: Variant in loc.get("traps", []):
+				var trap := t as Dictionary
+				if not StoryConditions.check(str(trap.get("when", "")), st):
+					continue
+				var state := str((st.loc_state(loc_id)["traps"] as Dictionary).get(str(trap["id"]), ""))
+				if state != "":
+					continue
+				for tc: Variant in trap["cells"]:
+					if grid.distance_ft(leader().cell, 1, _cell(tc), 1) <= 120 and grid.can_see(leader().cell, 1, _cell(tc), 1):
+						(st.loc_state(loc_id)["traps"] as Dictionary)[str(trap["id"])] = "found"
+						_show_trap(trap)
+						n += 1
+						break
+			narration.emit("You sense %s." % ("no traps in sight" if n == 0 else "%d trap%s" % [n, "" if n == 1 else "s"]))
+
+
 ## A fight that isn't in the location's data (a random encounter on the road): added for this visit, then started.
 func start_custom_encounter(spec: Dictionary) -> bool:
 	var s := spec.duplicate(true)
@@ -1295,6 +1376,7 @@ func start_encounter(encounter_id: String) -> bool:
 			numbered[str(md["monster"])] = int(numbered.get(str(md["monster"]), 0)) + 1
 			mon.name = "%s %d" % [mon.name, numbered[str(md["monster"])]]
 		e.add(mon, StringName(str(md.get("side", "enemy"))), _cell(md["cell"]))
+	_light_the_fight(e)
 	var surprised: Array[String] = []
 	var who := str(spec.get("surprise", ""))
 	for c in e.combatants:
@@ -1374,6 +1456,28 @@ func _combat_token(c: Combatant) -> CombatToken:
 		if not npc.is_empty():
 			return CombatToken.create(c, str(npc.get("sprite", npc["id"])))
 	return CombatToken.create(c)
+
+
+## The fight sees what the party sees (vision rules live in the encounter): outdoors the hour sets the light (an
+## overcast Barovian day is bright but not true sunlight; night is dark), indoors the map's light does; the
+## location's lamps and candles, and the party's lantern when it's lit, are light sources on the grid.
+func _light_the_fight(e: Encounter) -> void:
+	if bool(loc["map"].get("outdoors", false)):
+		e.ambient_light = {"day": "bright", "dusk": "dim", "dawn": "dim"}.get(time_phase(), "dark") as String
+	else:
+		e.ambient_light = str(loc["map"].get("light", "dim"))
+	e.sunlit = false
+	for l: Variant in loc.get("lights", []):
+		var li := l as Dictionary
+		var o := FieldObject.new(FieldObject.Kind.ZONE, "", str(li.get("kind", "light")))
+		o.cell = _cell(li["cell"])
+		o.rules = {"light": {"bright": int(li.get("bright_ft", 10)), "dim": int(li.get("dim_ft", 10))}}
+		e.spells.zones.objects.append(o)
+	if lantern != null and lantern.visible and not members.is_empty():
+		var lo := FieldObject.new(FieldObject.Kind.ZONE, "", "lantern")
+		lo.caster_id = leader().id
+		lo.rules = {"light": {"bright": 30, "dim": 30}, "light_on": "caster"}
+		e.spells.zones.objects.append(lo)
 
 
 func _stealth_surprise(e: Encounter) -> Array[String]:

@@ -1,0 +1,375 @@
+{
+  "apply": {
+    "size_px": 512,
+    "colour_space": "sRGB albedo, already snapped to art/palette/palette.json",
+    "import": "VRAM compressed with mipmaps (the .import files are in the repo)",
+    "filter": "linear with mipmaps (anisotropic for floors); nearest without mipmaps shimmers at the combat camera",
+    "repeat": true,
+    "tile_world_units": "world units (5 ft squares) one copy of the tile spans; UV = world position / tile_world_units",
+    "wrap": "xy tiles both ways; x tiles horizontally only and is mapped once over the wall height"
+  },
+  "arena_themes": {
+    "village": {
+      "floor": "village/grass",
+      "floor_alt": "village/cobbles",
+      "difficult": "village/mud_road",
+      "wall": "village/house_wall",
+      "roof": "village/roof_thatch",
+      "roof_alt": "village/roof_slate"
+    },
+    "vallaki": {
+      "floor": "vallaki/cobbled_square",
+      "floor_alt": "village/cobbles",
+      "difficult": "village/mud_road",
+      "wall": "vallaki/house_wall",
+      "outer": "vallaki/palisade_logs",
+      "roof": "village/roof_slate"
+    },
+    "tavern": {
+      "floor": "interior/wood_planks",
+      "floor_alt": "interior/rug",
+      "wall": "interior/plaster_wall"
+    },
+    "shop": {
+      "floor": "interior/wood_planks",
+      "floor_alt": "interior/rug",
+      "wall": "interior/plaster_wall"
+    },
+    "townhouse": {
+      "floor": "interior/wood_planks",
+      "floor_alt": "interior/rug",
+      "wall": "interior/wainscot_wall"
+    },
+    "manor": {
+      "floor": "interior/wood_planks",
+      "floor_alt": "interior/rug",
+      "wall": "interior/wainscot_wall"
+    },
+    "attic": {
+      "floor": "interior/wood_planks",
+      "wall": "interior/plaster_wall"
+    },
+    "church": {
+      "floor": "church/stone_flags",
+      "wall": "church/stone_wall"
+    },
+    "dungeon": {
+      "floor": "dungeon/stone_floor",
+      "difficult": "village/mud_road",
+      "wall": "dungeon/stone_wall",
+      "wall_alt": "dungeon/damp_brick"
+    }
+  },
+  "themes": {
+    "village": {
+      "cobbles": {
+        "file": "art/textures/village/cobbles.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 1.0,
+        "palette": [
+          "stone",
+          "slate",
+          "void",
+          "bog",
+          "stone_deep",
+          "ink",
+          "bog_deep",
+          "moss"
+        ],
+        "source": "art/generated/textures/village_cobbles.png"
+      },
+      "mud_road": {
+        "file": "art/textures/village/mud_road.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "bone_dark",
+          "umber",
+          "ash_violet",
+          "stone",
+          "void",
+          "stone_deep",
+          "moon_blue",
+          "grave"
+        ],
+        "source": "art/generated/textures/village_mud_road.png"
+      },
+      "grass": {
+        "file": "art/textures/village/grass.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "ink",
+          "bog_deep",
+          "bog",
+          "moss",
+          "peat",
+          "umber",
+          "bone_dark"
+        ],
+        "source": "art/generated/textures/village_grass.png",
+        "saturate": 1.3
+      },
+      "house_wall": {
+        "file": "art/textures/village/house_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "parchment",
+          "void",
+          "umber",
+          "vellum",
+          "bone",
+          "bone_dark",
+          "tan",
+          "slate"
+        ],
+        "source": "art/generated/textures/village_house_wall.png"
+      },
+      "roof_slate": {
+        "file": "art/textures/village/roof_slate.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "void",
+          "ink",
+          "stone_deep",
+          "stone",
+          "slate",
+          "night",
+          "moon_blue"
+        ],
+        "source": "art/generated/textures/village_roof_slate.png"
+      },
+      "roof_thatch": {
+        "file": "art/textures/village/roof_thatch.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "void",
+          "peat",
+          "umber",
+          "bone_dark",
+          "walnut",
+          "bone",
+          "tan",
+          "bog"
+        ],
+        "source": "art/generated/textures/village_roof_thatch.png"
+      }
+    },
+    "interior": {
+      "wood_planks": {
+        "file": "art/textures/interior/wood_planks.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 1.5,
+        "palette": [
+          "void",
+          "peat",
+          "umber",
+          "walnut",
+          "bone_dark",
+          "leather",
+          "rust"
+        ],
+        "source": "art/generated/textures/interior_wood_planks.png"
+      },
+      "rug": {
+        "file": "art/textures/interior/rug.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "vampire_red",
+          "void",
+          "blood",
+          "rust",
+          "ivory",
+          "vellum",
+          "leather",
+          "umber"
+        ],
+        "source": "art/generated/textures/interior_rug.png"
+      },
+      "plaster_wall": {
+        "file": "art/textures/interior/plaster_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "parchment",
+          "vellum",
+          "void",
+          "skin_light",
+          "rust",
+          "tan",
+          "bone",
+          "blood"
+        ],
+        "source": "art/generated/textures/interior_plaster_wall.png"
+      },
+      "wainscot_wall": {
+        "file": "art/textures/interior/wainscot_wall.png",
+        "size": 512,
+        "wrap": "x",
+        "tile_world_units": 1.2,
+        "palette": [
+          "peat",
+          "umber",
+          "void",
+          "ash_violet",
+          "ember_deep",
+          "blood_deep",
+          "blood",
+          "walnut"
+        ],
+        "source": "art/generated/textures/interior_wainscot_wall.png",
+        "note": "Wraps in x only: map V from 0 at the top of the wall to 1 at the floor, one tile per wall height."
+      }
+    },
+    "church": {
+      "stone_flags": {
+        "file": "art/textures/church/stone_flags.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "void",
+          "ink",
+          "stone_deep",
+          "stone",
+          "slate",
+          "pewter"
+        ],
+        "source": "art/generated/textures/church_stone_flags.png"
+      },
+      "stone_wall": {
+        "file": "art/textures/church/stone_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "slate",
+          "stone",
+          "pewter",
+          "void",
+          "ash_violet",
+          "stone_deep",
+          "ink",
+          "night"
+        ],
+        "source": "art/generated/textures/church_stone_wall.png"
+      }
+    },
+    "vallaki": {
+      "cobbled_square": {
+        "file": "art/textures/vallaki/cobbled_square.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 4.0,
+        "palette": [
+          "slate",
+          "stone",
+          "void",
+          "stone_deep",
+          "ink"
+        ],
+        "source": "art/generated/textures/vallaki_cobbled_square.png"
+      },
+      "palisade_logs": {
+        "file": "art/textures/vallaki/palisade_logs.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 1.5,
+        "palette": [
+          "umber",
+          "stone",
+          "void",
+          "grave",
+          "bone_dark",
+          "ash_violet",
+          "moon_blue",
+          "stone_deep"
+        ],
+        "source": "art/generated/textures/vallaki_palisade_logs.png"
+      },
+      "house_wall": {
+        "file": "art/textures/vallaki/house_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "pewter",
+          "stone",
+          "slate",
+          "void",
+          "parchment",
+          "mist_blue",
+          "stone_deep",
+          "ink"
+        ],
+        "source": "art/generated/textures/vallaki_house_wall.png"
+      }
+    },
+    "dungeon": {
+      "stone_floor": {
+        "file": "art/textures/dungeon/stone_floor.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "void",
+          "ink",
+          "grave",
+          "stone_deep",
+          "stone",
+          "slate",
+          "bog_deep"
+        ],
+        "source": "art/generated/textures/dungeon_stone_floor.png"
+      },
+      "stone_wall": {
+        "file": "art/textures/dungeon/stone_wall.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "void",
+          "ink",
+          "grave",
+          "stone_deep",
+          "stone",
+          "slate",
+          "night",
+          "bog_deep"
+        ],
+        "source": "art/generated/textures/dungeon_stone_wall.png"
+      },
+      "damp_brick": {
+        "file": "art/textures/dungeon/damp_brick.png",
+        "size": 512,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [
+          "void",
+          "peat",
+          "umber",
+          "rust",
+          "walnut",
+          "leather",
+          "bog",
+          "moss"
+        ],
+        "source": "art/generated/textures/dungeon_damp_brick.png",
+        "saturate": 1.2
+      }
+    }
+  }
+}

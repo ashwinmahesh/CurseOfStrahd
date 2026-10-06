@@ -4,14 +4,13 @@
   "source": {
     "book": "PHB2024",
     "checked_against": "BR2024",
-    "note": "The BR Duration line omits Concentration; the BR class spell tables and the D&D Beyond spell list mark it Concentration. Classes follow the BR spell heading, which includes Warlock, although the BR Warlock spell table and the D&D Beyond class filter leave it out."
+    "note": "The BR Duration line omits Concentration; the BR class spell tables and the D&D Beyond spell list mark it Concentration. The BR spell heading also names Warlock, but the 2024 Warlock spell list (BR class table and D&D Beyond class filter) doesn't include it, so the class list follows the class lists."
   },
   "level": 2,
   "school": "illusion",
   "classes": [
     "bard",
     "sorcerer",
-    "warlock",
     "wizard"
   ],
   "casting_time": {

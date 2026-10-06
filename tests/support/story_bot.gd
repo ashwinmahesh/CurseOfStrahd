@@ -170,14 +170,17 @@ func _avoided(t: String) -> bool:
 
 # --- Moving ---------------------------------------------------------------------------------------
 
-## Travels to `location_id` through the exits whose conditions hold now. True when there.
+## Travels to `location_id` through the exits whose conditions hold now, using the travel map between places
+## (ADR 0010) when no walking route leads there. True when there.
 func go_to(location_id: String) -> bool:
-	for hop in 20:
+	for hop in 30:
 		var v := view()
 		if v.loc_id == location_id:
 			return true
 		var route := _route(v.loc_id, location_id)
 		if route.is_empty():
+			if await _go_by_map(location_id):
+				continue
 			note("no way from %s to %s" % [v.loc_id, location_id])
 			return false
 		var exit := route[0]
@@ -265,6 +268,52 @@ func talk(npc_id: String) -> bool:
 	return false
 
 
+## Walks to the nearest road out (an exit to "travel"), opens the map and sets out for the place nearest
+## `location_id` (by walking from that place's location). Fights and events on the road are handled by settle().
+func _go_by_map(location_id: String) -> bool:
+	var target := ""
+	for p: Variant in Travel.map_data().get("places", []):
+		var pl := p as Dictionary
+		var loc := str(pl["location"]).get_slice(":", 0)
+		if loc == location_id or not _route(loc, location_id).is_empty():
+			if Travel.known(st()).has(pl):
+				target = str(pl["id"])
+				if loc == location_id:
+					break
+	if target == "":
+		return false
+	# Find a way to a location with a road out, then the road out itself.
+	var out_exit := {}
+	var out_loc := ""
+	for lid: String in Compendium.shared().table("locations"):
+		var loc := Compendium.shared().get_entry("locations", lid)
+		for ex: Variant in loc.get("exits", []):
+			if str((ex as Dictionary)["to"]) == "travel" and (lid == view().loc_id or not _route(view().loc_id, lid).is_empty()):
+				if out_loc == "" or lid == view().loc_id:
+					out_loc = lid
+					out_exit = ex as Dictionary
+	if out_loc == "":
+		return false
+	if view().loc_id != out_loc and not await go_to(out_loc):
+		return false
+	note("setting out for %s" % target)
+	if not await walk_to(_cell(out_exit["cell"])):
+		return false
+	for i in 60:
+		if root.get("screen") is TravelScreen:
+			break
+		await frames(1)
+	var map := root.get("screen") as TravelScreen
+	if map == null:
+		note("the map didn't open")
+		return false
+	map.select(target)
+	map.travel_chosen.emit(target)
+	map.queue_free()
+	await frames(4)
+	return await settle()
+
+
 func _route(from: String, to: String) -> Array[Dictionary]:
 	var prev := {from: {}}
 	var queue: Array[String] = [from]
@@ -276,7 +325,7 @@ func _route(from: String, to: String) -> Array[Dictionary]:
 		for ex: Variant in loc.get("exits", []):
 			var exit := ex as Dictionary
 			var there := str(exit["to"])
-			if prev.has(there) or not StoryConditions.check(str(exit.get("when", "")), st()):
+			if there == "travel" or prev.has(there) or not StoryConditions.check(str(exit.get("when", "")), st()):
 				continue
 			prev[there] = {"from": here, "exit": exit}
 			queue.append(there)

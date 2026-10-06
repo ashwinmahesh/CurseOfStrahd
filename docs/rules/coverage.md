@@ -92,12 +92,12 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Epic Boons, levels 19-20 | data | data | [Phase 5] |
 | Respec at Madam Eva | — | not started | [Phase 4] |
 
-## Classes (Phase 1: Fighter, Rogue, Cleric, Wizard and all 16 subclasses)
+## Classes (Phase 1: Fighter, Rogue, Cleric, Wizard; Phase 4: the other eight; all 48 PHB subclasses)
 
 | Rule | Code | Status | Test |
 |---|---|---|---|
-| Class tables, features 1-20, resources by level | data/classes | tested to level 5 | test_reference_party, test_data_integrity |
-| All 16 PHB subclasses, features 3-18 | data/subclasses | tested to level 5 | test_data_integrity |
+| Class tables, features 1-20, resources by level | data/classes | tested to level 7 (Phase 1 classes to 5 against the hand-worked sheets) | test_reference_party, test_data_integrity, test_classes |
+| All 48 PHB subclasses, features 3-20 | data/subclasses | tested to level 7 (every subclass built and levelled) | test_data_integrity |
 | Fighter: Fighting Style, Second Wind uses, Weapon Mastery count, Action Surge, Extra Attack | data + engine + combat/features.gd | tested | test_reference_party, test_combat_encounter |
 | Champion: Improved/Superior Critical, Remarkable Athlete | data | tested | test_attacks, test_reference_party |
 | Battle Master: Superiority Dice, maneuvers, Student of War | data + features.gd, feature_actions.gd, reactions.gd | tested: every combat maneuver (hit riders, Bonus Action maneuvers, Parry, Riposte, Precision Attack, Commander's Strike, Ambush); Commanding Presence and Tactical Assessment are checks (Phase 3) | test_feature_combat, test_level_up |
@@ -108,7 +108,17 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Cleric: Divine Order, Channel Divinity uses, domain spells always prepared | data + engine | tested | test_reference_party |
 | Life Domain: Disciple of Life | data + engine | tested | test_reference_party |
 | Wizard: spellbook (6 + 2 per level), prepared from the book, Scholar, Evocation Savant | data + engine | tested | test_reference_party, test_spellcasting |
-| Other 8 classes | — | not started | [Phase 4] |
+| Barbarian, Bard, Druid, Monk, Paladin, Ranger, Sorcerer, Warlock: tables, resources, choices to level 7 (P4-01) | data/classes, data/subclasses, character.gd | tested: Hit Points, slots, resources and choices worked by hand at level 7 | test_classes |
+| Unarmored Defense (Barbarian, Monk, Dance, Draconic), Fast Movement, Unarmored Movement, Roving, Danger Sense, Feral Instinct, Aura of Protection (own saves) | data + creature.gd (speed and Advantage `when`) | tested | test_classes |
+| Jack of All Trades | creature.gd skill_bonus | tested | test_classes |
+| Martial Arts die and Dexterity for Unarmed Strikes and Monk weapons | weapon_profile.gd, character.gd martial_arts_die | tested (the Bonus Action strike: combat side of the new classes) | test_classes |
+| Pact Magic: slots by Warlock level, one slot level, Short Rest recovery, kept apart from multiclass Spellcasting slots, prepared spells up to the slot level | character.gd pact_magic, choice_options.gd | tested | test_classes |
+| Eldritch Invocations with prerequisites (level, another invocation, a damaging cantrip), Pact of the Tome spells, Agonizing Blast | choice_options.gd invocation_problem, character.gd | tested | test_classes |
+| Metamagic options, Expertise (Bard, Ranger), Fighting Style or Blessed/Druidic Warrior, Primal Order, Elemental Fury, Magical Discoveries, Weapon Mastery counts | data + character.gd | tested | test_classes, test_data_integrity |
+| Wild Shape known forms (CR and Fly Speed by Druid level, Circle Forms) | character.gd beast_forms_for | tested (count capped by the bestiary, deviations) | test_classes |
+| Free casts from class features (Favored Enemy column, Paladin's Smite, Faithful Steed, Star Map, Steps of the Fey) | character.gd granted spells | tested | test_classes |
+| Multiclassing into every class: prerequisites, proficiencies (skills, instruments), Hit Points | level_up_controller.gd, character.gd | tested | test_classes, test_reference_party |
+| Rage, Bardic Inspiration, Wild Shape, Focus features, Lay On Hands, Sorcery Points, Channel Divinity (Paladin) and the other new features in combat | — | data and text; the combat side follows the spell and ability audit | [Phase 4] |
 
 ## Feats, equipment, spells
 
@@ -129,7 +139,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Ritual casting | data (ritual flags) | data | [Phase 3] |
 | Components and focuses | spell_caster.gd | partial: Verbal (can't speak, reveals the hidden), armor training; Material and focuses assumed carried | test_combat_spells |
 | Areas of effect | grid.gd area_cells, spell_caster.gd | tested (sphere, cube, cone, line, emanation; walls block) | test_combat_grid, test_combat_spells |
-| 176 spells (levels 0-3 for the Phase 1 classes, plus three the Night Hag casts) | data/spells, spell_caster.gd, spell_zones.gd | tested: every spell with combat rules is cast and must change the fight; 131 of them do something in combat; the other 45 are exploration (detection, communication, rituals, travel) and say so on the hotbar | test_spell_sweep, test_spell_recipes, test_combat_spells |
+| 256 spells (every 2024 PHB spell of levels 0-4 on the eight caster lists, plus Etherealness and Plane Shift for the Night Hag) | data/spells, spell_caster.gd, spell_zones.gd | tested: every spell of levels 0-3 with combat rules is cast and must change the fight; 170 of them do something in combat; the other 86 are exploration (detection, communication, rituals, travel) or wait for engine support (smites and other spells cast right after a weapon hit, Hunter's Mark and Hex's extra damage, the new summons, Banishment, Confusion, Polymorph) and say so on the hotbar | test_spell_sweep, test_spell_recipes, test_combat_spells |
 
 ## Combat (Phase 2: combat/, ADR 0007)
 
@@ -185,4 +195,4 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 ## Not started (later phases)
 
 Influence and NPC attitudes as a rule (attitudes exist in the story; checks against them arrive with merchants),
-travel, day and night effects (Phase 4); the other eight classes, magic items and attunement (Phases 4-5).
+travel, day and night effects (Phase 4); the new classes' features in combat, magic items and attunement (Phases 4-5).

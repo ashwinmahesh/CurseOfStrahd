@@ -27,6 +27,12 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 		row.add_child(UiKit.button("Save in a new slot", _save_new))
 	row.add_child(UiKit.button("Quit to title", func() -> void: get_tree().change_scene_to_file("res://scenes/main_menu.tscn")))
 	frame.add_child(row)
+	if not game_over:
+		var respec := CheckBox.new()
+		respec.text = "Allow rebuilding a character at Madam Eva (respec)"
+		respec.button_pressed = bool(st.options.get("respec", true))
+		respec.toggled.connect(func(on: bool) -> void: st.options["respec"] = on)
+		frame.add_child(respec)
 	frame.add_child(UiKit.header("Saves"))
 	_box = VBoxContainer.new()
 	frame.add_child(UiKit.scroll(_box, Vector2(720, 420)))

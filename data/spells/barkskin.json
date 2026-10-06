@@ -1,0 +1,53 @@
+{
+  "id": "barkskin",
+  "name": "Barkskin",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a handful of oak bark"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a willing creature"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "ac_min",
+            "value": 17
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "defense",
+    "buff"
+  ],
+  "summary": "A willing creature's AC can't be lower than 17 for 1 hour.",
+  "text": "You touch a willing creature and its skin turns rough and bark-like. Until the spell ends, its Armor Class is 17 if it would otherwise be lower. Lasts 1 hour (no Concentration)."
+}

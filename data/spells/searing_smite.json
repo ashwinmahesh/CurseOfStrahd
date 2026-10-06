@@ -1,0 +1,41 @@
+{
+  "id": "searing_smite",
+  "name": "Searing Smite",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "bonus_action",
+    "trigger": "Taken immediately after you hit a target with a Melee weapon or an Unarmed Strike."
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "the target you just hit"
+  },
+  "upcast": {
+    "damage": "1d6",
+    "text": "Both the extra damage and the burning damage each turn increase."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Right after a melee hit: an extra 1d6 Fire, then 1d6 Fire each turn until the target makes a Con save.",
+  "text": "Bonus Action, cast right after you hit a target with a Melee weapon or an Unarmed Strike. The strike sets the target alight and it takes an extra 1d6 Fire damage from the attack. Until the spell ends, at the start of each of its turns the target takes 1d6 Fire damage and then makes a Constitution saving throw; on a success the flames go out and the spell ends, otherwise they keep burning. Lasts 1 minute (no Concentration). Using a Higher-Level Spell Slot: all of the spell's damage increases by 1d6 for each slot level above 1."
+}

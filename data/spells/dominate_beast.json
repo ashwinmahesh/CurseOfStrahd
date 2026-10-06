@@ -1,0 +1,59 @@
+{
+  "id": "dominate_beast",
+  "name": "Dominate Beast",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "enchantment",
+  "classes": [
+    "druid",
+    "ranger",
+    "sorcerer"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "creature_type": "beast",
+    "description": "a Beast within range"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "upcast": {
+    "text": "Concentration can last up to 10 minutes with a level 5 slot, 1 hour with a level 6 slot and 8 hours with a level 7+ slot."
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed"
+      }
+    }
+  ],
+  "save_advantage_if_fighting": true,
+  "tags": [
+    "control"
+  ],
+  "summary": "Wis save or a Beast is Charmed and obeys your telepathic commands; it repeats the save when damaged.",
+  "text": "A Beast within range makes a Wisdom saving throw, with Advantage if you or your allies are fighting it. On a failure it has the Charmed condition for the duration, and each time it takes damage it repeats the save, ending the spell on a success. While it is Charmed you share a telepathic link with it whenever you're on the same plane of existence. Through the link you can give it commands on your turn (no action required), such as \"attack that one\" or \"guard this door,\" and it does its best to obey; without orders it defends and protects itself as it sees fit. You can also make it take a Reaction, but doing so costs your own Reaction. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: your Concentration can last up to 10 minutes with a level 5 slot, up to 1 hour with a level 6 slot, or up to 8 hours with a level 7+ slot."
+}

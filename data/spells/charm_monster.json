@@ -1,0 +1,63 @@
+{
+  "id": "charm_monster",
+  "name": "Charm Monster",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "druid",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed",
+        "ends_on": [
+          "damaged_by_caster_side"
+        ]
+      }
+    }
+  ],
+  "save_advantage_if_fighting": true,
+  "tags": [
+    "control",
+    "social"
+  ],
+  "summary": "Wis save (Advantage if you're fighting it) or the creature is Charmed by you for 1 hour.",
+  "text": "A creature you can see within range makes a Wisdom saving throw, with Advantage if you or your allies are fighting it. On a failure it has the Charmed condition until the spell ends or until you or your allies damage it, and it is Friendly toward you. When the spell ends, the creature knows you charmed it. Lasts 1 hour. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 4."
+}

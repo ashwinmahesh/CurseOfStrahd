@@ -38,6 +38,10 @@ var guests: Array[Creature] = []
 var shops: Dictionary = {}
 ## A journey interrupted by something on the road: {to: place id, at: place id the party had reached}.
 var travel_resume: Dictionary = {}
+## Playthrough options the owner can switch (plan §5.6): respec at Madam Eva.
+var options: Dictionary = {"respec": true}
+## Exploring spells still running: spell id -> {until: total minute, caster} (Light, Detect Magic, Speak with Dead).
+var active_spells: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
@@ -227,6 +231,11 @@ func advance_minutes(minutes: int) -> void:
 		ch.advance_minutes(minutes)
 
 
+## Whether an exploring spell is still running (`spell:light` in conditions).
+func spell_active(spell_id: String) -> bool:
+	return active_spells.has(spell_id) and int((active_spells[spell_id] as Dictionary)["until"]) > total_minutes()
+
+
 func is_night() -> bool:
 	return minute_of_day < 6 * 60 or minute_of_day >= 19 * 60
 
@@ -237,6 +246,19 @@ func loc_state(location_id: String) -> Dictionary:
 	if not location_states.has(location_id):
 		location_states[location_id] = {"doors": {}, "looted": {}, "traps": {}, "encounters": {}, "props": {}, "found": {}}
 	return location_states[location_id] as Dictionary
+
+
+## Madam Eva's respec: `ch` is replaced by `fresh` (built again at level 1), who keeps `ch`'s belongings and place in
+## the line; milestones let them level back up.
+func respec_member(ch: Character, fresh: Character) -> void:
+	var i := party.find(ch)
+	if i < 0:
+		return
+	fresh.inventory = ch.inventory.duplicate(true)
+	fresh.refresh()
+	fresh.finish_long_rest()
+	fresh.id = ch.id
+	party[i] = fresh
 
 
 ## Takes `ch` out of the party for good (a sacrifice, a death nobody undoes) and remembers them.
@@ -388,7 +410,8 @@ func to_dict() -> Dictionary:
 		"day": day, "minute_of_day": minute_of_day, "location": location, "positions": pos,
 		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
 		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
-		"travel_resume": travel_resume.duplicate()}
+		"travel_resume": travel_resume.duplicate(), "active_spells": active_spells.duplicate(true),
+		"options": options.duplicate()}
 
 
 static func from_dict(d: Dictionary) -> StoryState:
@@ -429,6 +452,8 @@ static func from_dict(d: Dictionary) -> StoryState:
 	st.tarokka = (d.get("tarokka", {}) as Dictionary).duplicate()
 	st.shops = (d.get("shops", {}) as Dictionary).duplicate(true)
 	st.travel_resume = (d.get("travel_resume", {}) as Dictionary).duplicate()
+	st.active_spells = (d.get("active_spells", {}) as Dictionary).duplicate(true)
+	st.options.merge(d.get("options", {}) as Dictionary, true)
 	for g: Variant in d.get("guests", []):
 		var gd := g as Dictionary
 		var cr := StoryState.make_guest(str(gd["npc"]))

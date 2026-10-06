@@ -6,7 +6,7 @@ BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
 G       := $(GODOT) --path .
 LOGCHK  := tools/logcheck.sh
 
-.PHONY: run arena import test lint validate ci palette capture standin sprite portrait wireframes
+.PHONY: run arena import test lint validate ci palette capture standin sprite portrait wireframes textures prop
 
 run:
 	$(G)
@@ -50,6 +50,14 @@ sprite:
 ## Portrait (square crop, 512 px, palette-snapped, flat background): make portrait SRC=<png> ID=<id> [BG=<palette name>] [SAT=1.3]
 portrait:
 	$(BLENDER) -b --python blender/portrait.py -- --in $(abspath $(SRC)) --id $(ID) $(if $(BG),--bg $(BG),) $(if $(SAT),--saturate $(SAT),)
+
+## Environment texture sets (docs/art/textures.md): make textures [GENERATE=1] [ONLY="village/cobbles ..."]
+textures:
+	python3 tools/art/build_textures.py $(if $(GENERATE),--generate,) $(if $(ONLY),--only $(ONLY),)
+
+## Billboard prop (single view on white -> cut out, palette-snapped): make prop SRC=<png> ID=<id> HEIGHT=<world units>
+prop:
+	$(BLENDER) -b --python blender/prop_sprite.py -- --in $(abspath $(SRC)) --id $(ID) --height $(HEIGHT) $(if $(SAT),--saturate $(SAT),)
 
 ## UI flow wireframes (docs/ui/wireframes/*.svg) from tools/ui/wireframes.py.
 wireframes:

@@ -1,0 +1,46 @@
+{
+  "id": "polymorph",
+  "name": "Polymorph",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a caterpillar cocoon"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "tags": [
+    "control",
+    "buff"
+  ],
+  "summary": "Wis save or a creature becomes a Beast of CR up to its own, with Temporary Hit Points equal to the form's HP.",
+  "text": "You try to turn a creature you can see within range into a Beast. It must succeed on a Wisdom saving throw or shape-shift into Beast form for the duration. You pick the form: any Beast with a Challenge Rating no higher than the target's (or its level, if it has no Challenge Rating). The target's game statistics are replaced by the Beast's stat block, but it keeps its alignment, personality, creature type, Hit Points and Hit Point Dice. It gains Temporary Hit Points equal to the Beast form's Hit Points; any left vanish when the spell ends, and the spell ends early on the target if it has none left. It is limited in what it can do by the new form's anatomy, and it can't speak or cast spells. Its gear melds into the new form, and it can't use or otherwise benefit from any of it. Concentration, up to 1 hour."
+}

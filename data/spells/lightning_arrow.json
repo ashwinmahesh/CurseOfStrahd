@@ -1,0 +1,43 @@
+{
+  "id": "lightning_arrow",
+  "name": "Lightning Arrow",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "bonus_action",
+    "trigger": "Taken immediately after you hit or miss a target with a ranged attack using a weapon."
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "the target of your ranged weapon attack"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "upcast": {
+    "damage": "1d8",
+    "text": "Both the 4d8 and the 2d8 increase."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "After a ranged weapon attack: 4d8 Lightning to the target (half on a miss), then 2d8 to creatures within 10 ft (Dex save, half).",
+  "text": "Bonus Action, cast right after you hit or miss a target with a ranged attack using a weapon. The weapon or ammunition turns into a bolt of lightning: instead of the attack's usual damage and effects, the target takes 4d8 Lightning damage on a hit, or half as much on a miss. Then each creature within 10 feet of the target makes a Dexterity saving throw, taking 2d8 Lightning damage on a failure or half as much on a success. The weapon or ammunition then returns to its normal form. Using a Higher-Level Spell Slot: both the 4d8 and the 2d8 increase by 1d8 for each slot level above 3."
+}

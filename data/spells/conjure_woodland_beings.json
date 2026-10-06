@@ -1,0 +1,61 @@
+{
+  "id": "conjure_woodland_beings",
+  "name": "Conjure Woodland Beings",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 4,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "creatures you can see that the Emanation reaches, that enter it or that end their turn in it"
+  },
+  "save": "wis",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "5d8",
+      "type": "force"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "zone": {
+    "triggers": [
+      "enter",
+      "end_turn",
+      "moved_into"
+    ],
+    "spare_allies": true
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "10-foot aura of nature spirits: Wis save, 5d8 Force (half on a success); Disengage as a Bonus Action.",
+  "text": "Nature spirits flit around you in a 10-foot Emanation for the duration. Whenever the Emanation enters the space of a creature you can see, and whenever a creature you can see enters the Emanation or ends its turn there, you can force that creature to make a Wisdom saving throw, taking 5d8 Force damage on a failure or half as much on a success. A creature makes this save no more than once per turn. For the duration you can also take the Disengage action as a Bonus Action. Concentration, up to 10 minutes. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 4."
+}

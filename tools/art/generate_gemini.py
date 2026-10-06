@@ -11,13 +11,18 @@ removes it (blender/lib/cutout.py remove_background).
 
 --ref sends an existing image along with the prompt (e.g. the neutral portrait when generating another
 expression of the same character); it is recorded in the log.
+
+Gemini usually returns JPEG data. The file is always written as a real PNG (converted with macOS `sips`), because
+Godot imports everything under res:// and refuses JPEG bytes behind a .png name ("Not a PNG file").
 """
 import argparse
 import base64
 import json
 import os
 import re
+import subprocess
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.request
@@ -38,6 +43,22 @@ def api_key():
     if not key:
         sys.exit("GEMINI_API_KEY is not set")
     return key
+
+
+def write_png(raw, out):
+    """Writes the returned image as a real PNG. Non-PNG bytes are decoded in a temp folder outside the project
+    (so Godot never sees them) and converted with sips."""
+    if raw[:8] == b"\x89PNG\r\n\x1a\n":
+        out.write_bytes(raw)
+        return
+    with tempfile.TemporaryDirectory() as tmp:
+        src = Path(tmp) / "image.jpg"
+        src.write_bytes(raw)
+        dst = Path(tmp) / "image.png"
+        r = subprocess.run(["sips", "-s", "format", "png", str(src), "--out", str(dst)], capture_output=True, text=True)
+        if r.returncode != 0 or not dst.exists():
+            sys.exit(f"Could not convert the returned image to PNG: {r.stderr.strip()[:300]}")
+        out.write_bytes(dst.read_bytes())
 
 
 def main():
@@ -76,7 +97,7 @@ def main():
         sys.exit(f"No image returned: {json.dumps(data)[:400]}")
     out = ROOT / "art" / "generated" / a.folder / f"{a.name}.png"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_bytes(base64.b64decode(images[0]))
+    write_png(base64.b64decode(images[0]), out)
     usage = data.get("usageMetadata", {})
     with open(ROOT / "art" / "generation_log.jsonl", "a") as f:
         f.write(json.dumps({"time": time.strftime("%Y-%m-%dT%H:%M:%S"), "name": a.name, "folder": a.folder,

@@ -312,3 +312,56 @@ func test_sacrifice_takes_the_chosen_member_for_good() -> void:
 	assert_true(bool(st.get_flag("gave_one")))
 	var copy := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
 	assert_eq(copy.fallen.size(), 1)
+
+
+func test_failed_checks_offer_heroic_inspiration_and_tactical_mind() -> void:
+	var f := DialogueFile.parse("~ door\n* [Athletics DC 40] Force it. -> ok | no\n~ ok\nset forced\n-> END\n~ no\n-> END\n", "test/aids")
+	DialogueFile.register(f)
+	var st := StoryState.new()
+	var ilse := TestChars.pregen("ilse_varga", 2)
+	ilse.finish_long_rest()
+	ilse.heroic_inspiration = true
+	st.party.append(ilse)
+	var r := DialogueRunner.new(st, DiceRoller.new(4))
+	r.start("test/aids:door")
+	r.next()
+	var b := r.choose(0)
+	assert_false(bool(b["success"]))
+	var ids: Array = (b["aids"] as Array).map(func(a: Dictionary) -> String: return str(a["id"]))
+	assert_true("heroic_inspiration" in ids and "tactical_mind" in ids, str(ids))
+	var wind := ilse.resource_left("second_wind")
+	b = r.use_aid("tactical_mind")
+	assert_false(bool(b["success"]), "DC 40 is out of reach")
+	assert_eq(ilse.resource_left("second_wind"), wind, "a Tactical Mind that still fails isn't spent")
+	b = r.use_aid("heroic_inspiration")
+	assert_false(ilse.heroic_inspiration, "spent")
+	var after: Array = (b["aids"] as Array).map(func(a: Dictionary) -> String: return str(a["id"]))
+	assert_false("heroic_inspiration" in after)
+	assert_eq(str(r.next()["kind"]), "end")
+	assert_false(bool(st.get_flag("forced")))
+
+
+func test_respec_rebuilds_a_member_who_keeps_their_belongings() -> void:
+	var f := DialogueFile.parse("~ eva\nrespec\nset read_again\n-> END\n", "test/respec")
+	DialogueFile.register(f)
+	var st := _party()
+	st.milestones = 1
+	var hedda := st.party[0]
+	var r := DialogueRunner.new(st, DiceRoller.new(1))
+	r.start("test/respec:eva")
+	var b := r.next()
+	assert_eq(str(b["kind"]), "pick_member")
+	assert_eq(str(b["purpose"]), "respec")
+	b = r.pick_member(0)
+	assert_eq(str(b["kind"]), "respec")
+	assert_eq(int(b["index"]), 0)
+	var fresh := TestChars.pregen("silvain_aster", 1)
+	var items := hedda.inventory.size()
+	st.respec_member(hedda, fresh)
+	assert_true(st.party[0] == fresh)
+	assert_eq(fresh.inventory.size(), items, "belongings kept")
+	assert_eq(fresh.id, hedda.id)
+	assert_true(st.can_level_up(fresh), "milestones bring them back up")
+	st.options["respec"] = false
+	r.start("test/respec:eva")
+	assert_eq(str(r.next()["kind"]), "end", "the owner can switch respec off")

@@ -12,7 +12,9 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"ghoul": 1.15, "ghast": 1.2, "specter": 1.25, "shadow": 1.2, "cultist": 1.2, "animated_armor": 1.3,
 	"animated_flying_sword": 0.8, "broom_of_animated_attack": 1.0, "grick": 0.9, "shambling_mound": 1.7,
 	"swarm_of_rats": 0.45, "vampire_spawn": 1.25, "strahd_zombie": 1.25, "commoner": 1.2, "noble": 1.25,
-	"villager": 1.2}
+	"villager": 1.2, "madam_eva": 1.05, "baron_vargas": 1.25, "izek": 1.4, "lady_wachter": 1.22, "father_lucian": 1.25,
+	"rictavio": 1.38, "blinsky": 1.2, "urwin_martikov": 1.28, "danika_martikov": 1.2, "arrigal": 1.3,
+	"victor_vallakovich": 1.15, "lydia_petrovna": 1.18, "vallaki_guard": 1.45, "vistana": 1.22}
 
 var combatant: Combatant
 var art_override := ""

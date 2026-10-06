@@ -1,0 +1,53 @@
+{
+  "id": "summon_beast",
+  "name": "Summon Beast",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 2,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a feather, a tuft of fur and a fish tail inside a gilded acorn worth 200+ GP",
+    "m_cost_gp": 200
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space within range"
+  },
+  "upcast": {
+    "text": "Use the slot's level as the spell's level in the Bestial Spirit stat block."
+  },
+  "choice": {
+    "kind": "option",
+    "label": "Environment",
+    "from": [
+      "air",
+      "land",
+      "water"
+    ]
+  },
+  "tags": [
+    "summon"
+  ],
+  "summary": "Summon a Bestial Spirit (Air, Land or Water) that fights beside you for up to 1 hour.",
+  "text": "You call up a bestial spirit, which appears in an unoccupied space within range and uses the Bestial Spirit stat block. When you cast the spell, choose an environment: Air, Land or Water. The spirit looks like an animal of your choice native to that environment, and the choice sets some of its traits. It disappears when it drops to 0 Hit Points or when the spell ends. It is an ally of you and your allies. In combat it shares your Initiative count but takes its turn right after yours. It follows your verbal commands (no action required by you); if you give none, it takes the Dodge action and uses its movement to stay out of danger. Bestial Spirit (Small Beast): AC 11 + the spell's level; Hit Points 20 + 5 for each spell level above 2 (Air) or 30 + 5 for each spell level above 2 (Land and Water); Speed 30 ft., plus Climb 30 ft. (Land), Fly 60 ft. (Air) or Swim 30 ft. (Water); Str 18, Dex 11, Con 16, Int 4, Wis 14, Cha 5; Darkvision 60 ft., Passive Perception 12; understands the languages you know; uses your Proficiency Bonus. Flyby (Air only): it doesn't provoke Opportunity Attacks when it flies out of an enemy's reach. Pack Tactics (Land and Water only): it has Advantage on an attack roll against a creature if at least one of its allies is within 5 feet of that creature and isn't Incapacitated. Water Breathing (Water only): it can breathe underwater. Multiattack: it makes a number of Rend attacks equal to half the spell's level (round down). Rend: melee attack using your spell attack modifier, reach 5 ft.; hit: 1d8 + 4 + the spell's level Piercing damage. Using a Higher-Level Spell Slot: use the slot's level as the spell's level in the stat block."
+}

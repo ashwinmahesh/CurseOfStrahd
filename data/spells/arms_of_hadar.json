@@ -1,0 +1,64 @@
+{
+  "id": "arms_of_hadar",
+  "name": "Arms of Hadar",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry. Level, school, classes, casting time, range, components, duration and Concentration match the D&D Beyond 2024 spell list."
+  },
+  "level": 1,
+  "school": "conjuration",
+  "classes": [
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "str",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "2d6",
+      "type": "necrotic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "until": "target_turn_start",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "no_reactions"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "10-foot Emanation: Str save or 2d6 Necrotic and no Reactions until its next turn; half damage on a success.",
+  "text": "Dark tendrils burst out of you. Each creature in a 10-foot Emanation originating from you makes a Strength saving throw. On a failure it takes 2d6 Necrotic damage and can't take Reactions until the start of its next turn; on a success it takes half as much damage and nothing else. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 1."
+}

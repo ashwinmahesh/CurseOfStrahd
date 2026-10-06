@@ -1,0 +1,49 @@
+{
+  "id": "animal_messenger",
+  "name": "Animal Messenger",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a morsel of food"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "creature_type": "beast",
+    "description": "a Tiny Beast you can see"
+  },
+  "save": "cha",
+  "save_success": "none",
+  "upcast": {
+    "text": "The duration increases by 48 hours for each slot level above 2."
+  },
+  "tags": [
+    "communication",
+    "utility"
+  ],
+  "summary": "A Tiny Beast carries a message of up to 25 words to a place you have been, speaking it in your voice.",
+  "text": "Choose a Tiny Beast you can see within range. It makes a Charisma saving throw, which it passes automatically if its Challenge Rating isn't 0; on a failure it sets off to carry a message for you. Name a destination you have visited and give a general description of the recipient, such as \"an old man with a lantern and a grey dog\"; then speak a message of up to twenty-five words. For the duration, the Beast heads for the destination, covering about 25 miles every 24 hours, or 50 miles if it can fly. When it arrives it delivers the message to the recipient in your voice. If it doesn't reach the recipient before the spell ends, the message is lost and the Beast makes its way back to where you cast the spell. Casting time: an action, or as a Ritual. Using a Higher-Level Spell Slot: the duration increases by 48 hours for each slot level above 2."
+}
