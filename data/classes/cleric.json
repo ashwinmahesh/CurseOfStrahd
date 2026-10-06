@@ -421,7 +421,7 @@
               }
             ]
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -503,7 +503,7 @@
           "id": "improved_blessed_strikes",
           "name": "Improved Blessed Strikes",
           "summary": "Divine Strike becomes 2d8, or Potent Spellcasting also grants Temporary Hit Points.",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },

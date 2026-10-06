@@ -29,7 +29,7 @@
       "summary": "Once per turn after a melee weapon hit, Shield bash: Str save (DC 8 + Str mod + PB) or pushed 5 ft or Prone.",
       "text": "If you attack a creature within 5 feet of you as part of the Attack action and hit it with a Melee weapon, you can immediately bash it with your equipped Shield. The target must succeed on a Strength saving throw (DC 8 plus your Strength modifier and Proficiency Bonus) or, your choice, be pushed 5 feet away from you or gain the Prone condition. You can use this benefit only once on each of your turns.",
       "action": "special",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "interpose_shield",
@@ -37,7 +37,7 @@
       "summary": "Reaction while holding a Shield: take no damage on a successful Dex save against a half-damage effect.",
       "text": "If an effect lets you make a Dexterity saving throw to take only half damage and you are holding a Shield, you can take a Reaction to take no damage if you succeed on the saving throw.",
       "action": "reaction",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

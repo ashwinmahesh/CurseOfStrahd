@@ -349,7 +349,7 @@ func move_mode(c: Combatant) -> int:
 	var mode := 0
 	if c.creature.speed("fly").total() > 0 and c.creature.speed("fly").total() >= c.creature.speed().total():
 		mode |= CombatGrid.MOVE_FLY
-	if c.creature.has_flag("spider_climb") or c.creature.speed("climb").total() > 0:
+	if c.creature.has_flag("spider_climb") or c.creature.speed("climb").total() > 0 or CombatFeatures.has_feature(c, "second_story_work"):
 		mode |= CombatGrid.MOVE_CLIMB
 	if c.creature.has_flag("incorporeal_movement"):
 		mode |= CombatGrid.MOVE_INCORPOREAL
@@ -913,6 +913,16 @@ func _polearm_option(p: Combatant) -> Dictionary:
 
 func _opportunity_attack(p: Combatant, target: Combatant) -> CombatResult:
 	var option := best_melee_option(p, target)
+	# War Caster's Reactive Spell: a one-action spell at the creature instead (when it has no melee attack, or the
+	# player's rule for it is "auto").
+	if features.has_feat(p, "war_caster") and (option.is_empty() or str(p.reaction_rules.get("reactive_spell", "never")) == "auto"):
+		for sp in spells.castable(p):
+			var data := Compendium.shared().spell_data(str(sp["id"]))
+			if int(sp["level"]) == 0 and str(sp["casting"]) == "action" and (data.has("attack") or data.has("save")) and not data.has("area") \
+					and spells.range_ft(data, p) >= distance(p, target):
+				p.reaction_available = false
+				log.add("reaction", "%s answers with %s (War Caster)" % [p.name(), data["name"]], p.id)
+				return spells.cast_free(p, str(sp["id"]), [target], Vector2.INF, {})
 	if option.is_empty():
 		return CombatResult.new()
 	p.reaction_available = false

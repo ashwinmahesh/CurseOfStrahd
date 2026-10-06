@@ -46,7 +46,7 @@
           "value": "lore_knowledge"
         }
       ],
-      "implemented": "engine"
+      "implemented": "text"
     },
     {
       "id": "quick_study",
@@ -54,7 +54,7 @@
       "summary": "You can take the Study action as a Bonus Action.",
       "text": "You can take the Study action as a Bonus Action.",
       "action": "bonus_action",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

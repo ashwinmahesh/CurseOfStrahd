@@ -35,7 +35,7 @@
           "value": 10
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "fog_of_war",

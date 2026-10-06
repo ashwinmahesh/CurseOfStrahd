@@ -74,7 +74,7 @@
           "value": "amorphous"
         }
       ],
-      "implemented": "engine"
+      "implemented": "text"
     },
     {
       "id": "sunlight_weakness",

@@ -42,7 +42,7 @@
       "summary": "After a melee Critical Hit or dropping a creature to 0 HP, make one attack with that weapon as a Bonus Action.",
       "text": "Immediately after you score a Critical Hit with a Melee weapon or reduce a creature to 0 Hit Points with one, you can make one attack with the same weapon as a Bonus Action.",
       "action": "bonus_action",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

@@ -458,6 +458,9 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 		out.append({"id": "psionic_strike", "label": "Psionic Strike", "sub": "+d%d + Int Force" % pdie, "why": why4})
 		if has_feature(c, "telekinetic_adept"):
 			out.append({"id": "telekinetic_thrust", "label": "Telekinetic Thrust", "sub": "with Psionic Strike: Str save, Prone or pushed 10 ft", "why": why4})
+	if has_feature(c, "rend_mind"):
+		var rw := "" if ch.resource_left("rend_mind") > 0 or ch.resource_left("psionic_energy") >= 3 else "No uses left"
+		out.append({"id": "rend_mind", "label": "Rend Mind", "sub": "Sneak Attack with a blade: Wis save or Stunned", "why": rw})
 	if has_feature(c, "overchannel"):
 		var uses := int(c.get_meta("overchannel_uses", 0))
 		out.append({"id": "overchannel", "label": "Overchannel", "sub": "max damage on the next level 1-5 spell%s" % ("" if uses == 0 else " · costs Necrotic damage"), "why": ""})
@@ -720,6 +723,29 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 					fx6.skip_turn_ends = e.own_turn_skip(target)
 					target.creature.add_effect(fx6)
 		e.events.append({"type": "condition", "id": target.id})
+	# Envenom Weapons (Assassin 13): the Poison Cunning Strike also deals 2d6 Poison that ignores Resistance.
+	if "poison" in (st.get("cunning", []) as Array) and has_feature(c, "envenom_weapons") and alive:
+		var ev := e._roll_damage_dice("2d6", false, 0, "Envenom Weapons")
+		e.deal_damage(c, target, [{"amount": int(ev["total"]), "type": "poison", "ignore_resistance": true, "ignore_source": "Envenom Weapons"}], false, "Envenom Weapons", [str(ev["text"])])
+	# Death Strike (Assassin 17): a first-round Sneak Attack makes the target save (Con, 8 + Dex + PB) or take double.
+	if st.has("sneak") and has_feature(c, "death_strike") and _first_round() and alive and dr.final > 0:
+		if not _save(target, &"con", maneuver_dc(c, &"dex"), "Death Strike"):
+			e.deal_damage(c, target, [{"amount": dr.final, "type": str(p.damage_type)}], false, "Death Strike", ["Damage doubled"])
+	# Rend Mind (Soulknife 17): a Sneak Attack with a Psychic Blade can stun (Wis save, repeated each turn).
+	if st.has("sneak") and "rend_mind" in c.armed and alive and str(option.get("kind", "")) == "blade":
+		c.armed.erase("rend_mind")
+		var ch2 := c.creature as Character
+		if ch2.resource_left("rend_mind") > 0:
+			ch2.spend_resource("rend_mind")
+		else:
+			ch2.spend_resource("psionic_energy", 3)
+		var rdc := maneuver_dc(c, &"dex")
+		if not _save(target, &"wis", rdc, "Rend Mind", "stunned"):
+			var fx12 := Effect.new("Stunned (Rend Mind)", &"feature", "rend_mind").with_condition(&"stunned")
+			fx12.lasting({"kind": "minutes", "amount": 1})
+			fx12.turn_owner_id = target.id
+			fx12.repeat_save = {"ability": "wis", "dc": rdc, "when": "end"}
+			target.creature.add_effect(fx12)
 	# Giant Ancestry riders.
 	match str(st.get("giant", "")):
 		"frosts_chill":

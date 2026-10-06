@@ -50,7 +50,7 @@
         "max": "pb",
         "recharge": "long"
       },
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "damage_resistance",
@@ -72,7 +72,7 @@
           "value": 60
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "draconic_flight",
@@ -86,7 +86,7 @@
         "max": 1,
         "recharge": "long"
       },
-      "implemented": "text",
+      "implemented": "engine",
       "at_level": 5
     }
   ],

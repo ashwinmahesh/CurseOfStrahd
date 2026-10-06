@@ -28,7 +28,7 @@
       "summary": "While disguised, Advantage on Deception and Performance checks to pass as that person.",
       "text": "While you are disguised as a real or fictional person, you have Advantage on Charisma (Deception or Performance) checks you make to convince others that you are that person.",
       "action": "passive",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "mimicry",
@@ -36,7 +36,7 @@
       "summary": "Mimic creature sounds and speech; listeners need a Wisdom (Insight) check vs DC 8 + Cha mod + PB to tell.",
       "text": "You can imitate the sounds other creatures make, including speech. A creature that hears the imitation must succeed on a Wisdom (Insight) check to recognize that it is fake; the DC equals 8 plus your Charisma modifier and Proficiency Bonus.",
       "action": "special",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

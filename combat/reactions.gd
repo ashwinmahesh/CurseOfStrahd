@@ -352,6 +352,18 @@ func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> 
 					pp.reaction_available = false
 					pc.spend_resource("psionic_energy")
 					cut.call(maxi(1, e.dice.roll_one(pdie, "Protective Field") + pp.creature.ability_mod(&"int")), "Protective Field (%s)" % pp.name())})
+	# Projected Ward (Abjurer 6): the Arcane Ward soaks damage to a creature within 30 ft.
+	for p2 in e.allies_of(target):
+		if p2.creature.ward_hp > 0 and CombatFeatures.has_feature(p2, "projected_ward") and _react_ok(p2) and e.distance(p2, target) <= 30:
+			var pw := p2
+			out.append({"kind": "projected_ward", "reactor": p2, "trigger": c.id, "title": "Reaction: Projected Ward?",
+				"text": "%s hits %s for %d. %s's Arcane Ward (%d Hit Points) can take the damage instead." % [c.name(), target.name(), total.call(), p2.name(), p2.creature.ward_hp],
+				"still": func() -> bool: return _react_ok(pw) and pw.creature.ward_hp > 0 and int(total.call()) > 0,
+				"use": func() -> void:
+					pw.reaction_available = false
+					var soak := mini(pw.creature.ward_hp, int(total.call()))
+					pw.creature.ward_hp -= soak
+					cut.call(soak, "Projected Ward (%s)" % pw.name())})
 	# Psi Warrior protecting itself.
 	if target.creature is Character:
 		var tc := target.creature as Character

@@ -208,7 +208,7 @@
               "proficient": true
             }
           },
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "sneak_attack",
@@ -233,7 +233,7 @@
             "kind": "language",
             "count": 1
           },
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "weapon_mastery",
@@ -249,7 +249,7 @@
             },
             "replaceable": "long_rest"
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },
@@ -354,7 +354,7 @@
               "proficient": true
             }
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },

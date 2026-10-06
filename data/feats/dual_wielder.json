@@ -30,7 +30,7 @@
       "summary": "After attacking with a Light weapon, make a Bonus Action attack with a different non-Two-Handed melee weapon.",
       "text": "When you take the Attack action on your turn and attack with a weapon that has the Light property, you can make one extra attack as a Bonus Action later that turn with a different weapon, which must be a Melee weapon without the Two-Handed property. You don't add your ability modifier to this extra attack's damage unless the modifier is negative.",
       "action": "bonus_action",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "quick_draw",

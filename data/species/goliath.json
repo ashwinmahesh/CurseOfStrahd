@@ -37,7 +37,7 @@
         "max": "pb",
         "recharge": "long"
       },
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "large_form",
@@ -73,7 +73,7 @@
           }
         }
       ],
-      "implemented": "text",
+      "implemented": "engine",
       "at_level": 5
     },
     {
@@ -104,7 +104,7 @@
           "text": "As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
           "action": "bonus_action",
           "uses_resource": "giant_ancestry",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -120,7 +120,7 @@
           "text": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to that target. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
           "action": "free",
           "uses_resource": "giant_ancestry",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -136,7 +136,7 @@
           "text": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to that target and reduce its Speed by 10 feet until the start of your next turn. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
           "action": "free",
           "uses_resource": "giant_ancestry",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -152,7 +152,7 @@
           "text": "When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
           "action": "free",
           "uses_resource": "giant_ancestry",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -168,7 +168,7 @@
           "text": "When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the roll and reduce the damage by that total. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
           "action": "reaction",
           "uses_resource": "giant_ancestry",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     },
@@ -184,7 +184,7 @@
           "text": "When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to that creature. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
           "action": "reaction",
           "uses_resource": "giant_ancestry",
-          "implemented": "text"
+          "implemented": "engine"
         }
       ]
     }

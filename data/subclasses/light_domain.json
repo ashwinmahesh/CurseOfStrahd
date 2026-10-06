@@ -93,7 +93,7 @@
         "id": "corona_of_light",
         "name": "Corona of Light",
         "summary": "Shed 60 feet of sunlight for a minute; foes in it have Disadvantage on saves against your fire and radiance.",
-        "implemented": "text",
+        "implemented": "engine",
         "resource": {
           "id": "corona_of_light",
           "name": "Corona of Light",

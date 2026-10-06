@@ -31,7 +31,7 @@
           "on": "death_save"
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "speedy_recovery",
@@ -39,7 +39,7 @@
       "summary": "Bonus Action: expend one Hit Point Die, roll it, and regain that many Hit Points.",
       "text": "As a Bonus Action, you can expend one of your Hit Point Dice, roll it, and regain Hit Points equal to the roll.",
       "action": "bonus_action",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

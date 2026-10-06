@@ -116,7 +116,7 @@
         "id": "improved_war_magic",
         "name": "Improved War Magic",
         "summary": "Replace two attacks with a level 1 or 2 Wizard spell that takes an action.",
-        "implemented": "engine"
+        "implemented": "text"
       }
     }
   ]

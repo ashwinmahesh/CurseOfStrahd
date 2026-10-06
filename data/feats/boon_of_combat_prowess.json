@@ -37,7 +37,7 @@
         "max": 1,
         "recharge": "turn"
       },
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

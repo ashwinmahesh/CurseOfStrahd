@@ -101,7 +101,7 @@
         "id": "versatile_trickster",
         "name": "Versatile Trickster",
         "summary": "Use Trip through your Mage Hand on a creature within 5 feet of it.",
-        "implemented": "engine"
+        "implemented": "text"
       }
     },
     {

@@ -293,7 +293,7 @@
             "count": 1,
             "replaceable": "level_up"
           },
-          "implemented": "data"
+          "implemented": "engine"
         },
         {
           "id": "second_wind",
@@ -321,7 +321,7 @@
             },
             "replaceable": "long_rest"
           },
-          "implemented": "data"
+          "implemented": "engine"
         }
       ]
     },

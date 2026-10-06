@@ -128,6 +128,14 @@ static func unarmed(c: Creature) -> WeaponProfile:
 	p.ability = &"str"
 	p.damage_dice = "1"
 	p.damage_type = &"bludgeoning"
+	# Tavern Brawler: 1d4. Unarmed Fighting: 1d6, or 1d8 with no weapon or Shield in hand.
+	if c.has_flag("enhanced_unarmed_strike"):
+		p.damage_dice = "1d4"
+	if c.has_flag("unarmed_fighting"):
+		var hands_free := true
+		if c is Character:
+			hands_free = (c as Character).equipped("main_hand").is_empty() and (c as Character).equipped("off_hand").is_empty()
+		p.damage_dice = "1d8" if hands_free else "1d6"
 	p.tags.assign(["melee", "unarmed"])
 	p.proficient = true
 	p._apply_overrides(c)

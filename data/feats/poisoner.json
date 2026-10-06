@@ -47,7 +47,7 @@
           "value": "poisoners_kit"
         }
       ],
-      "implemented": "text",
+      "implemented": "engine",
       "resource": {
         "id": "poison_doses",
         "name": "Poison doses",

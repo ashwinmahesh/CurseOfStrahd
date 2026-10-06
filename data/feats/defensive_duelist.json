@@ -28,7 +28,7 @@
       "summary": "Reaction when hit in melee while holding a Finesse weapon: +PB to AC against melee attacks until your next turn.",
       "text": "If you are holding a Finesse weapon and another creature hits you with a melee attack, you can take a Reaction to add your Proficiency Bonus to your Armor Class, possibly causing the attack to miss. The bonus applies against melee attacks until the start of your next turn.",
       "action": "reaction",
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

@@ -30,7 +30,7 @@
       "summary": "Bonus Action: take the Disengage action, which also ends the Grappled condition on you.",
       "text": "As a Bonus Action, you can take the Disengage action, which also ends the Grappled condition on you.",
       "action": "bonus_action",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "quickness",
@@ -44,7 +44,7 @@
           "value": 30
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     }
   ]
 }

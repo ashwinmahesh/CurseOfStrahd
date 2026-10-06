@@ -66,6 +66,9 @@ func castable(c: Combatant) -> Array[Dictionary]:
 			continue
 		var level := int(s.get("level", 0))
 		var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
+		# Mage Hand Legerdemain (Arcane Trickster 3): Mage Hand as a Bonus Action.
+		if id == "mage_hand" and CombatFeatures.has_feature(c, "mage_hand_legerdemain"):
+			unit = "bonus_action"
 		var entry := {"id": id, "name": str(s["name"]), "level": level, "class_id": str(k.get("class_id", "")),
 			"ability": str(k.get("ability", "")), "free": false, "casting": unit, "legal": true, "reason": ""}
 		var res_id := "spell:%s" % id
@@ -1141,6 +1144,12 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			var amount := int(rolled["total"])
 			if success:
 				amount = amount / 2 if half_on_success else 0
+			# Shield Master's Interpose Shield: a Reaction turns a successful Dexterity save's half damage into none.
+			if success and ab == &"dex" and half_on_success and e.features.has_feat(t, "shield_master") and e.features.wields_shield(t) and can_react(t) \
+					and e._reaction_decision(t, "interpose_shield") != "never":
+				t.reaction_available = false
+				amount = 0
+				details.append("Interpose Shield: no damage")
 			# Evasion (Rogue 7): Dexterity saves for half take none on a success, half on a failure.
 			if ab == &"dex" and half_on_success and t.creature.has_flag("evasion") and t.can_act():
 				amount = 0 if success else amount / 2

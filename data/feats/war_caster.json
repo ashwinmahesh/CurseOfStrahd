@@ -34,7 +34,7 @@
           "on": "concentration"
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "reactive_spell",
@@ -42,7 +42,7 @@
       "summary": "When a creature provokes your Opportunity Attack, cast a 1-action spell targeting only it instead.",
       "text": "When a creature provokes an Opportunity Attack from you by leaving your reach, you can take a Reaction to cast a spell at that creature instead of making the Opportunity Attack. The spell must have a casting time of one action and must target only that creature.",
       "action": "reaction",
-      "implemented": "text"
+      "implemented": "engine"
     },
     {
       "id": "war_caster_somatic_components",
@@ -56,7 +56,7 @@
           "value": "war_caster_somatic_components"
         }
       ],
-      "implemented": "engine"
+      "implemented": "text"
     }
   ]
 }

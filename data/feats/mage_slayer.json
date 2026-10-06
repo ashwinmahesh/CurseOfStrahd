@@ -46,7 +46,7 @@
         "max": 1,
         "recharge": "short"
       },
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

@@ -36,7 +36,7 @@
           "value": 10
         }
       ],
-      "implemented": "data"
+      "implemented": "engine"
     },
     {
       "id": "dash_over_difficult_terrain",

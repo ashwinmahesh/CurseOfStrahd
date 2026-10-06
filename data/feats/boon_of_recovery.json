@@ -57,7 +57,7 @@
         "die": "d10",
         "recharge": "long"
       },
-      "implemented": "text"
+      "implemented": "engine"
     }
   ]
 }

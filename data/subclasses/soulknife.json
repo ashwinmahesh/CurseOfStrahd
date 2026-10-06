@@ -124,7 +124,13 @@
         "id": "rend_mind",
         "name": "Rend Mind",
         "summary": "Sneak Attack with a Psychic Blade can Stun the target for 1 minute (Wis save).",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "rend_mind",
+          "name": "Rend Mind (free)",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     }
   ]

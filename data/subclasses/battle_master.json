@@ -135,7 +135,7 @@
               "id": "commanding_presence",
               "name": "Commanding Presence",
               "summary": "Add a Superiority Die to a Charisma (Intimidation, Performance or Persuasion) check.",
-              "implemented": "engine"
+              "implemented": "text"
             },
             {
               "id": "disarming_attack",
@@ -225,7 +225,7 @@
               "id": "tactical_assessment",
               "name": "Tactical Assessment",
               "summary": "Add a Superiority Die to an Intelligence (History or Investigation) or Wisdom (Insight) check.",
-              "implemented": "engine"
+              "implemented": "text"
             },
             {
               "id": "trip_attack",
@@ -303,7 +303,7 @@
         "id": "relentless",
         "name": "Relentless",
         "summary": "Once per turn, roll 1d8 for a maneuver instead of spending a Superiority Die.",
-        "implemented": "engine"
+        "implemented": "text"
       }
     },
     {
