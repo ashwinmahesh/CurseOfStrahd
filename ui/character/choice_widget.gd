@@ -8,7 +8,6 @@ extends VBoxContainer
 signal picks_changed(key: String, picks: Array)
 
 var choice: Choice
-var _status: Label
 
 
 static func create(c: Choice) -> ChoiceWidget:
@@ -21,10 +20,12 @@ static func create(c: Choice) -> ChoiceWidget:
 func _build() -> void:
 	add_theme_constant_override("separation", 6)
 	var head := HBoxContainer.new()
-	var t := UiKit.label(_title(), 17, "gilt")
+	head.add_theme_constant_override("separation", 10)
+	var t := UiKit.header(_title())
+	t.add_theme_font_size_override("font_size", 18)
 	head.add_child(t)
-	_status = UiKit.label(_status_text(), 15, "bile" if choice.is_complete() else "gilt")
-	head.add_child(_status)
+	var status := UiParts.pill(_status_text().strip_edges(), "bile" if choice.is_complete() else "gilt", 13)
+	head.add_child(status)
 	add_child(head)
 	if choice.kind == "ability_increase":
 		_ability_rows()
@@ -32,33 +33,36 @@ func _build() -> void:
 	var grid := GridContainer.new()
 	grid.columns = 3 if choice.options.size() > 8 else 2
 	grid.add_theme_constant_override("h_separation", 6)
-	grid.add_theme_constant_override("v_separation", 4)
+	grid.add_theme_constant_override("v_separation", 5)
 	for o in choice.options:
-		var b := Button.new()
+		var picked := o.id in choice.picks
+		var mark := "◆ " if picked else ("✕ " if not o.legal else ("~ " if o.warning != "" else "◇ "))
+		var tip := o.summary
+		var foot := ""
+		if not o.legal:
+			foot = "Can't pick: " + o.reason
+		elif o.warning != "":
+			foot = "~ " + o.warning
+		var label := o.label
+		var b := UiParts.tip_button(mark + o.label, func() -> void: pass, func() -> Control:
+			return UiParts.rules_tip(label, "", tip, [], foot), picked, 14)
 		b.toggle_mode = true
-		b.button_pressed = o.id in choice.picks
-		b.custom_minimum_size = Vector2(300 if grid.columns == 3 else 440, 34)
+		b.button_pressed = picked
+		if choice.kind in ["cantrip", "spell", "spellbook"]:
+			UiParts.icon_on_button(b, "spell", o.id, 26)
+		b.custom_minimum_size = Vector2(268 if grid.columns == 3 else 400, 32)
+		# Long option lists read better in the book face's plainer companion.
+		b.add_theme_font_override("font", ThemeDB.fallback_font)
 		b.clip_text = true
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		var mark := "" if o.legal else "✕ "
-		if o.legal and o.warning != "":
-			mark = "~ "
-		b.text = mark + o.label
-		var tip := o.summary
-		if not o.legal:
-			tip += ("\n" if tip != "" else "") + "Can't pick: " + o.reason
-		if o.warning != "":
-			tip += ("\n" if tip != "" else "") + "~ " + o.warning
-		b.tooltip_text = tip
-		b.disabled = not o.legal and not o.id in choice.picks
-		b.add_theme_font_size_override("font_size", 14)
-		b.add_theme_stylebox_override("normal", UiKit.style("ui_oxblood", "gilt_dark", 1))
-		b.add_theme_stylebox_override("pressed", UiKit.style("blood", "gilt_light", 2))
-		b.add_theme_stylebox_override("hover", UiKit.style("ui_wine", "gilt_light", 1))
-		b.add_theme_stylebox_override("disabled", UiKit.style("ui_black", "ui_oxblood", 1))
-		b.add_theme_color_override("font_color", Look.color("vellum"))
+		b.disabled = not o.legal and not picked
+		var pressed := UiKit.button_style("hover")
+		pressed.border_color = Look.color("gilt_light")
+		pressed.set_border_width_all(2)
+		b.add_theme_stylebox_override("pressed", pressed)
+		b.add_theme_stylebox_override("hover_pressed", pressed)
 		b.add_theme_color_override("font_pressed_color", Look.color("gilt_light"))
-		b.add_theme_color_override("font_disabled_color", Look.color("gilt_dark"))
+		b.add_theme_color_override("font_hover_pressed_color", Look.color("gilt_light"))
 		var id := o.id
 		b.toggled.connect(func(on: bool) -> void: _toggle(id, on))
 		grid.add_child(b)
@@ -95,9 +99,11 @@ func _ability_rows() -> void:
 	row.add_theme_constant_override("separation", 6)
 	for o in choice.options:
 		var times := choice.picks.count(o.id)
-		var b := Button.new()
-		b.text = "%s +%d" % [o.label, times] if times > 0 else o.label
-		b.tooltip_text = o.summary + ("" if o.legal else "\nCan't pick: " + o.reason)
+		var summary := o.summary
+		var reason := "" if o.legal else "Can't pick: " + o.reason
+		var label := o.label
+		var b := UiParts.tip_button("%s +%d" % [o.label, times] if times > 0 else o.label, func() -> void: pass, func() -> Control:
+			return UiParts.rules_tip(label, "", summary, [], reason), times > 0, 14)
 		b.disabled = not o.legal and times == 0
 		var id := o.id
 		b.pressed.connect(func() -> void:
