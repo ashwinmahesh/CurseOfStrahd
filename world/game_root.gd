@@ -403,6 +403,7 @@ func travel(from: String, to: String) -> void:
 	st.travel_resume = {}
 	for leg in Travel.route(from, to, st):
 		st.advance_minutes(roundi(float(leg["hours"]) * 60.0))
+		st.miles_since_long_rest += float(leg["hours"]) * 3.0
 		var ev := Travel.roll(leg["road"] as Dictionary, st, Dice.roller)
 		if ev.is_empty():
 			continue

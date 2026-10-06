@@ -1,0 +1,117 @@
+{
+  "id": "shadow_sorcery",
+  "name": "Shadow Sorcery",
+  "class": "sorcerer",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from the 2025 Unearthed Arcana (Horror Subclasses) and published reviews of Ravenloft: The Horrors Within; compare every number with the book before setting checked_against."
+  },
+  "summary": "Sorcerers whose power seeps up from the Shadowfell, bending darkness, undeath and misfortune to their will.",
+  "role_tags": [
+    "control",
+    "striker"
+  ],
+  "always_prepared": {
+    "3": [
+      "bane",
+      "darkness",
+      "inflict_wounds",
+      "pass_without_trace"
+    ],
+    "5": [
+      "hunger_of_hadar",
+      "summon_undead"
+    ],
+    "7": [
+      "greater_invisibility",
+      "phantasmal_killer"
+    ],
+    "9": [
+      "contagion",
+      "creation"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "eyes_of_the_dark",
+        "name": "Eyes of the Dark",
+        "summary": "Darkvision 120 feet and Blindsight 10 feet; you see through the Darkness of your own spells.",
+        "text": "Senses: Darkvision 120 ft and Blindsight 10 ft. Darkness created by your own spells doesn't hamper your sight.",
+        "modifiers": [
+          {
+            "stat": "darkvision",
+            "value": 120
+          },
+          {
+            "stat": "sense",
+            "kind": "blindsight",
+            "value": 10
+          }
+        ],
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "shadow_spells",
+        "name": "Shadow Spells",
+        "summary": "Bane, Darkness, Inflict Wounds and Pass without Trace always prepared; more at levels 5, 7 and 9.",
+        "text": "Always prepared from the Sorcerer level shown: 3 Bane, Darkness, Inflict Wounds, Pass without Trace; 5 Hunger of Hadar, Summon Undead; 7 Greater Invisibility, Phantasmal Killer; 9 Contagion, Creation.",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "spirits_of_ill_omen",
+        "name": "Spirits of Ill Omen",
+        "summary": "Summon Undead needs no Material component and is free once per Long Rest; you can cast it without Concentration (1 minute).",
+        "text": "Summon Undead needs no Material component from you, and one casting per Long Rest needs no slot. Any casting can drop Concentration if you choose as you begin: it then lasts 1 minute and ends if you cast the spell again.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "summon_undead",
+            "always_prepared": true,
+            "uses": {
+              "count": 1,
+              "recharge": "long"
+            }
+          }
+        ],
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "shadow_walk",
+        "name": "Shadow Walk",
+        "summary": "Bonus Action in Dim Light or Darkness: teleport up to 120 feet to another dim or dark space.",
+        "text": "Cost: a Bonus Action, standing in Dim Light or Darkness. Teleport up to 120 ft to a free space you can see that is itself dim or dark.",
+        "action": "bonus_action",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "umbral_form",
+        "name": "Umbral Form",
+        "summary": "Bonus Action: shadow form for 1 minute (Resistance to all but Force and Radiant, move through creatures, a Charisma save to stay up at 0). Once per Long Rest or 6 Sorcery Points.",
+        "text": "Cost: a Bonus Action. For 1 minute (ending early if you're Incapacitated or choose to) you are living shadow: Resistance to every damage type but Force and Radiant; you pass through creatures as Difficult Terrain, taking 1d10 Force damage if a turn ends with you inside one; and when you would fall to 0 Hit Points without dying, a Charisma save (DC 5 + half the damage) leaves you at three times your Sorcerer level instead. Recharges on a Long Rest, or at once for 6 Sorcery Points (free).",
+        "action": "bonus_action",
+        "resource": {
+          "id": "umbral_form",
+          "name": "Umbral Form",
+          "max": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "umbral_form",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

@@ -77,6 +77,7 @@ func list(c: Combatant) -> Array[Dictionary]:
 	if ch == null:
 		return out
 	e.class_features.list(c, out, aw, bw)
+	e.ravenloft.list(c, out, aw, bw)
 	# Battle Master: Bonus Action maneuvers and Commander's Strike.
 	var die := f().superiority_die(c)
 	if die > 0:
@@ -312,6 +313,8 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2) -> CombatRe
 			return _perform_creature(c, id.substr(9), t, cell)
 		"cf":
 			return e.class_features.perform(c, id.substr(3), t, cell, point)
+		"rh":
+			return e.ravenloft.perform(c, id.substr(3), t, cell, point)
 		"fast_hands_kit":
 			var keep := c.action_available
 			c.action_available = true
@@ -821,6 +824,10 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 		c.remove_meta("portent_next")
 	if kind == D20Test.Kind.ABILITY_CHECK and "initiative" in keys.map(func(k: String) -> String: return k.get_slice(":", 0)):
 		pass
+	var rh := e.ravenloft.before_d20(c, kind, keys)
+	for side: String in ["advantage", "disadvantage"]:
+		if rh.has(side):
+			out[side] = (out.get(side, []) as Array) + (rh[side] as Array)
 	return out
 
 
@@ -835,6 +842,7 @@ func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	if c == null:
 		return
 	e.class_features.after_d20(c, t)
+	e.ravenloft.after_d20(c, t, keys)
 	if not cr is Character:
 		return
 	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.
@@ -978,3 +986,4 @@ func adjust_incoming(source: Combatant, target: Combatant, parts: Array) -> void
 			var d4 := p4 as Dictionary
 			if bool(d4.get("spell", false)):
 				d4["amount"] = int(d4["amount"]) / 2
+	enc().ravenloft.adjust_incoming(source, target, parts)

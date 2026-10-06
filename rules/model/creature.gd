@@ -405,11 +405,14 @@ func d20_sources(keys: Array[String]) -> Dictionary:
 
 # --- Rolling D20 Tests ---------------------------------------------------------------------------
 
+## `extra_keys` name the action the check belongs to ("search", "study") for features that care (Sharp Eye, Watchers).
 func roll_check(dice: DiceRoller, skill_or_ability: StringName, dc: int, extra_adv: Array[String] = [],
-		extra_dis: Array[String] = [], label: String = "") -> D20Test:
+		extra_dis: Array[String] = [], label: String = "", extra_keys: Array[String] = []) -> D20Test:
 	var bonus := skill_bonus(skill_or_ability) if Abilities.SKILLS.has(skill_or_ability) else ability_check_bonus(skill_or_ability)
 	var text := label if label != "" else "%s (%s)" % [bonus.label, name]
-	return roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, check_keys(skill_or_ability), extra_adv, extra_dis, text)
+	var keys := check_keys(skill_or_ability)
+	keys.append_array(extra_keys)
+	return roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, keys, extra_adv, extra_dis, text)
 
 
 func roll_save(dice: DiceRoller, ab: StringName, dc: int, extra_adv: Array[String] = [],

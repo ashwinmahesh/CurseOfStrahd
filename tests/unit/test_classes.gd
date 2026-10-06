@@ -98,7 +98,8 @@ func test_all_twelve_classes_and_their_subclasses_are_there() -> void:
 		var cls := c.class_data(cid)
 		assert_false(cls.is_empty(), cid)
 		assert_eq((cls["levels"] as Array).size(), 20, "%s levels" % cid)
-		assert_eq(c.subclasses_of(cid).size(), 4, "%s has its four PHB subclasses" % cid)
+		var phb := c.subclasses_of(cid).filter(func(s: Dictionary) -> bool: return str((s["source"] as Dictionary)["book"]) == "PHB2024")
+		assert_eq(phb.size(), 4, "%s has its four PHB subclasses" % cid)
 		for lv in 7:
 			for f: Variant in ((cls["levels"] as Array)[lv] as Dictionary)["features"]:
 				var fd := f as Dictionary

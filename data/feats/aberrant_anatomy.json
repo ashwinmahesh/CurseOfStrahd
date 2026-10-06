@@ -1,0 +1,53 @@
+{
+  "id": "aberrant_anatomy",
+  "name": "Aberrant Anatomy",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "category": "dark_gift",
+  "repeatable": false,
+  "summary": "Ravenloft Dark Gift. Hold your breath for an hour, Expertise in Perception and Blindsight 15 feet; a natural 1 can leave you Stunned.",
+  "benefits": [
+    {
+      "id": "aberrant_lungs",
+      "name": "Aberrant Lungs",
+      "summary": "You can hold your breath for 1 hour.",
+      "text": "You can hold your breath for up to 1 hour.",
+      "action": "passive",
+      "implemented": "text"
+    },
+    {
+      "id": "aberrant_senses",
+      "name": "Aberrant Senses",
+      "summary": "Proficiency and Expertise in Perception; Blindsight 15 feet.",
+      "text": "You gain proficiency in the Perception skill (or keep it), Expertise in it, and Blindsight with a range of 15 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "perception"
+        },
+        {
+          "stat": "expertise",
+          "value": "perception"
+        },
+        {
+          "stat": "sense",
+          "kind": "blindsight",
+          "value": 15
+        }
+      ],
+      "implemented": "data"
+    }
+  ],
+  "drawback": {
+    "id": "aberrant_anatomy_drawback",
+    "name": "Drawback",
+    "summary": "On a natural 1: Constitution save (DC 13 + PB) or Stunned until the end of your next turn.",
+    "text": "Whenever you roll a 1 on the d20 of a D20 Test, you make a Constitution saving throw (DC 13 plus your Proficiency Bonus); on a failure you have the Stunned condition until the end of your next turn, as your body twists against itself.",
+    "action": "special",
+    "implemented": "engine"
+  }
+}

@@ -202,6 +202,7 @@ func after_hit_target(st: Dictionary, miss: Callable) -> Array:
 	var melee := bool((st["option"] as Dictionary)["melee"])
 	var out: Array = []
 	e.class_features.after_hit_target(st, miss, out)
+	e.ravenloft.after_hit_target(st, miss, out)
 	if not critical and t.total < ac + 5 and e.spells.can_cast_reaction(target, "shield"):
 		out.append({"kind": "shield", "reactor": target, "trigger": c.id, "title": "Reaction: Shield?",
 			"text": "%s hits %s: %d vs AC %d. Shield gives +5 AC until the start of %s's next turn (AC %d), so this attack misses." % [c.name(), target.name(), t.total, ac, target.name(), ac + 5],
@@ -300,6 +301,7 @@ func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> 
 	if int(total.call()) <= 0:
 		return out
 	e.class_features.against_damage(st, total, cut, out)
+	e.ravenloft.against_damage(st, total, cut, out)
 	if target.creature.has_flag("uncanny_dodge") and _react_ok(target) and e.can_see(target, c):
 		out.append({"kind": "uncanny_dodge", "reactor": target, "trigger": c.id, "title": "Reaction: Uncanny Dodge?",
 			"text": "%s hits %s for %d damage. Uncanny Dodge halves it (%d)." % [c.name(), target.name(), total.call(), int(total.call()) / 2],

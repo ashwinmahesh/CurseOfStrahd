@@ -145,13 +145,13 @@ func economy_block(c: Combatant, unit: String) -> String:
 			return "Action already used"
 		if c.magic_action_used:
 			return "Only one Magic action this turn (Action Surge's action can't be Magic)"
-		if c.creature.has_flag("slowed") and not c.bonus_available:
-			return "Slowed: an action or a Bonus Action, not both"
+		if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.bonus_available:
+			return "An action or a Bonus Action this turn, not both"
 	if unit == "bonus_action":
 		if not c.bonus_available:
 			return "Bonus Action already used"
-		if c.creature.has_flag("slowed") and not c.action_available and not c.surged:
-			return "Slowed: an action or a Bonus Action, not both"
+		if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.action_available and not c.surged:
+			return "An action or a Bonus Action this turn, not both"
 	return ""
 
 
@@ -342,6 +342,9 @@ func numbers(c: Combatant, entry: Dictionary) -> Dictionary:
 ## attack; Touch is 5 ft; cantrips like Spare the Dying grow with level (`cantrip_scaling.range`).
 func range_ft(s: Dictionary, caster: Combatant = null) -> int:
 	var r := s.get("range", {}) as Dictionary
+	var rh := enc().ravenloft.spell_range(caster, s) if enc() != null else -1
+	if rh >= 0:
+		return rh
 	match str(r.get("kind", "self")):
 		"feet":
 			var ft := int(r.get("feet", 0))
@@ -554,6 +557,12 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			specials.duel_check_attack(c, tt)
 	var nums := numbers(c, entry)
 	var conc: Concentration = null
+	# Spirits of Ill Omen, Second Skin: some castings need no Concentration (RavenloftFeatures.skips_concentration).
+	var unbound := e.ravenloft.skips_concentration(c, s, use_free) if bool((s.get("duration", {}) as Dictionary).get("concentration", false)) else {}
+	if not unbound.is_empty():
+		s = s.duplicate(true)
+		s["duration"] = unbound
+		e.log.add("info", "%s casts %s without Concentration" % [c.name(), s["name"]], c.id)
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
 		zones.prune()
@@ -619,6 +628,7 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 	var slot := int(ctx["slot"])
 	if not free:
 		enc().class_features.after_cast(c, s, slot)
+	enc().ravenloft.after_cast(c, s, slot)
 	if slot <= 0 or free or not c.creature is Character:
 		return
 	var ch := c.creature as Character
@@ -1016,6 +1026,7 @@ func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictio
 		rolled = {"total": mx, "text": "maximum (Overchannel) = %d" % mx}
 	var bonus := _damage_bonus(ctx)
 	var total := int(rolled["total"]) + bonus.total()
+	total += enc().ravenloft.spell_damage_bonus(ctx, bonus)
 	# Elemental Affinity (Draconic 6), Radiant Soul (Celestial 6): Charisma to one damage roll of the type.
 	var cc := ctx["c"] as Combatant
 	var dty := _damage_type_safe(ctx)
@@ -1117,7 +1128,7 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	if s.has("damage"):
 		var rolled := _roll_spell_damage(ctx, t, critical)
 		details.append(str(rolled["text"]))
-		var parts: Array = [{"amount": int(rolled["total"]), "type": _damage_type(ctx), "spell": true}]
+		var parts: Array = [{"amount": int(rolled["total"]), "type": _damage_type(ctx), "spell": true, "spell_id": str(s["id"])}]
 		# Extra damage on any attack roll that hits (Hunter's Mark, Hex).
 		for m in c.creature.modifiers_for(&"extra_damage"):
 			if m.text("on", "weapon") != "attack" or (m.data.has("vs") and str(m.data["vs"]) != t.id):
@@ -1574,6 +1585,7 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	if CombatFeatures.has_feature(c, "supreme_healing") and dice != "":
 		var pmax := DiceRoller.parse_expr(dice)
 		total = int(pmax["count"]) * int(pmax["sides"]) + int(pmax["modifier"])
+	total = e.ravenloft.spell_healing(ctx, t, dice, total)
 	var amount := total + bonus.total() + int((s.get("heal", {}) as Dictionary).get("flat", 0))
 	var healed := t.creature.heal(amount, str(s["name"]))
 	# Blessed Healer (Life Domain 6): healing another creature with a slot heals you 2 + the slot level.
