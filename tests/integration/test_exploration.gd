@@ -80,6 +80,30 @@ func test_party_is_placed_and_follows_the_leader() -> void:
 	assert_eq(GameState.story.positions[0], Vector2i(2, 1))
 
 
+func test_a_single_step_plays_the_walk_cycle() -> void:
+	# A WASD step is one square: the walk used to stop in the same frame it started, so it never showed.
+	# A step that turns something up (here the pit, spotted next to the square) used to leave the party walking in place.
+	var v := _view()
+	var tok := v.tokens[v.leader().id] as CombatToken
+	for leg: Array in [[Vector2i(1, 0), Vector2i(3, 3)], [Vector2i(-1, 0), Vector2i(2, 3)]]:
+		v.step(leg[0] as Vector2i)
+		var walked := false
+		for i in 400:
+			await get_tree().process_frame
+			if v.leader().cell == leg[1] and tok.sprite.moving:
+				walked = true
+				break
+		assert_true(walked, "the leader walks while gliding into %s" % leg[1])
+		var stood := false
+		for i in 4000:
+			await get_tree().process_frame
+			if not tok.sprite.moving:
+				stood = true
+				break
+		assert_true(stood, "and stands still once there")
+		assert_false((v.tokens[v.members[1].id] as CombatToken).sprite.moving, "followers stop too")
+
+
 func test_locked_door_opens_with_tools_or_force() -> void:
 	var v := _view()
 	assert_true(v.grid.has_flag(Vector2i(5, 3), CombatGrid.WALL), "a closed door blocks")
