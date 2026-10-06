@@ -106,6 +106,9 @@ endif
 if flag.ilse_invitation_shown
 Strahd: And the soldier who kept my invitation. I am touched. Your company asked after you, you know. Near the end.
 interject name:ilse_varga: Where are they.
+if name:ilse_varga and not (quest.kestrel_company >= the_host)
+quest kestrel_company the_host
+endif
 endif
 if flag.tamsin_locket_recognized
 Strahd [sly]: The little thief carries her portrait. Keep it close. It cost more than you can imagine.

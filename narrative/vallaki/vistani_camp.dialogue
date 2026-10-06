@@ -39,6 +39,7 @@ endif
 * What news on the roads? -> roads
 * [if guest:ireena] [Insight DC 15] What does he want with Ireena? -> insight_ok | insight_fail
 * [if flag.arrigal_suspected] You'd sell her to the castle. -> accuse
+* [name:tamsin_tealeaf] [if flag.locket_coach_known and not flag.locket_arrigal_confirmed] Ask about the black carriage that drives itself. -> companions/locket:arrigal
 * Goodbye. -> END
 
 ~ arabelle_q

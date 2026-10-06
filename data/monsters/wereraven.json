@@ -2,21 +2,22 @@
   "id": "wereraven",
   "name": "Wereraven",
   "source": {
-    "book": "CoS",
-    "edition": "2014",
-    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Changes for the engine: Shape-Shift is a Bonus Action as for the 2024 lycanthropes (the book spends the action), the 50 ft fly speed is listed for every form because it takes hybrid form at once, and its immunity to mundane, unsilvered weapons is text only (the 2024 lycanthropes dropped that immunity)."
+    "book": "RtHW",
+    "checked_against": "RtHW",
+    "edition": "2024",
+    "note": "Ravenloft: The Horrors Within's Wereraven (the 2024-era block), read on D&D Beyond (owner's account). The 50 ft fly speed is listed for every form because it takes hybrid form at once; Mimicry is text only."
   },
   "size": "medium",
-  "type": "humanoid",
+  "type": "monstrosity",
   "tags": [
     "lycanthrope"
   ],
-  "alignment": "lawful good",
+  "alignment": "neutral good",
   "ac": 12,
   "initiative": 2,
   "hp": {
-    "average": 31,
-    "dice": "7d8"
+    "average": 54,
+    "dice": "12d8"
   },
   "speed": {
     "walk": 30,
@@ -36,30 +37,20 @@
   },
   "passive_perception": 16,
   "languages": [
-    "Common (can't speak in raven form)"
+    "Common plus one other language"
   ],
   "cr": 2,
   "xp": 450,
   "proficiency_bonus": 2,
   "gear": [
-    "hand_crossbow",
-    "shortsword"
+    "shortbow"
   ],
   "traits": [
     {
       "id": "mimicry",
       "name": "Mimicry",
       "action": "passive",
-      "summary": "Copies simple sounds it has heard; a DC 10 Wisdom (Insight) check spots the copy.",
-      "text": "The wereraven can reproduce simple sounds it has heard, such as a whisper, a crying baby or a small animal's chatter. A listener who succeeds on a DC 10 Wisdom (Insight) check knows the sound is a copy.",
-      "implemented": "text"
-    },
-    {
-      "id": "mundane_weapon_immunity",
-      "name": "Immune to Mundane Weapons",
-      "action": "passive",
-      "summary": "Takes no Bludgeoning, Piercing or Slashing damage from nonmagical attacks unless the weapon is silvered.",
-      "text": "Bludgeoning, Piercing and Slashing damage from nonmagical attacks doesn't harm the wereraven, unless the attack is made with a silvered weapon.",
+      "summary": "Mimics voices and animal sounds; a DC 12 Wisdom (Insight) check spots the imitation.",
       "implemented": "text"
     }
   ],
@@ -70,27 +61,22 @@
       "kind": "multiattack",
       "multiattack": [
         {
-          "action": "shortsword",
+          "action": "scratch",
           "count": 1,
           "or": [
+            "shortbow",
             "beak"
           ]
         },
         {
-          "action": "shortsword",
+          "action": "scratch",
           "count": 1,
           "or": [
-            "beak",
-            "hand_crossbow"
+            "shortbow"
           ]
         }
       ],
-      "summary": "Two weapon attacks: Shortsword, or Beak in hybrid form; one may be a Hand Crossbow shot.",
-      "text": "Human or hybrid form only. The wereraven makes two weapon attacks, and one of them can be with its Hand Crossbow. In hybrid form either attack can be a Beak attack.",
-      "forms": [
-        "humanoid",
-        "hybrid"
-      ]
+      "summary": "Two attacks, Scratch or Shortbow in any mix; one can be a Beak."
     },
     {
       "id": "beak",
@@ -102,13 +88,11 @@
       },
       "damage": [
         {
-          "average": 4,
-          "dice": "1d4+2",
+          "average": 11,
+          "dice": "2d8+2",
           "type": "piercing"
         }
       ],
-      "summary": "Pecks in raven or hybrid form; a Humanoid it hits makes a DC 10 Con save or is cursed with wereraven lycanthropy.",
-      "text": "Raven or hybrid form only. Melee attack: +4 to hit, reach 5 ft. Hit: 4 (1d4 + 2) Piercing damage in hybrid form, or 1 Piercing damage in raven form. A Humanoid target then makes a DC 10 Constitution saving throw. Failure: it is cursed with wereraven lycanthropy.",
       "forms": [
         "raven",
         "hybrid"
@@ -123,13 +107,15 @@
           },
           "only_types": [
             "humanoid"
-          ]
+          ],
+          "immune_on_success": true
         }
-      ]
+      ],
+      "summary": "A stabbing beak; a Humanoid it hits makes a DC 10 Con save or is cursed: at 0 Hit Points it becomes a wereraven."
     },
     {
-      "id": "shortsword",
-      "name": "Shortsword (Human or Hybrid Form Only)",
+      "id": "scratch",
+      "name": "Scratch",
       "kind": "melee",
       "attack": {
         "bonus": 4,
@@ -137,44 +123,37 @@
       },
       "damage": [
         {
-          "average": 5,
-          "dice": "1d6+2",
-          "type": "piercing"
+          "average": 7,
+          "dice": "2d4+2",
+          "type": "slashing"
         }
       ],
-      "summary": "Stabs with a shortsword in human or hybrid form.",
-      "text": "Human or hybrid form only.",
-      "forms": [
-        "humanoid",
-        "hybrid"
-      ],
-      "weapon": true
+      "summary": "Raking nails or talons."
     },
     {
-      "id": "hand_crossbow",
-      "name": "Hand Crossbow (Human or Hybrid Form Only)",
+      "id": "shortbow",
+      "name": "Shortbow (Humanoid or Hybrid Form Only)",
       "kind": "ranged",
       "attack": {
         "bonus": 4,
         "range": [
-          30,
-          120
+          80,
+          320
         ]
       },
       "damage": [
         {
-          "average": 5,
-          "dice": "1d6+2",
+          "average": 9,
+          "dice": "2d6+2",
           "type": "piercing"
         }
       ],
-      "summary": "Shoots a hand crossbow in human or hybrid form.",
-      "text": "Human or hybrid form only.",
       "forms": [
         "humanoid",
         "hybrid"
       ],
-      "weapon": true
+      "weapon": true,
+      "summary": "An arrow from a shortbow."
     }
   ],
   "bonus_actions": [
@@ -182,7 +161,7 @@
       "id": "shape_shift",
       "name": "Shape-Shift",
       "kind": "special",
-      "summary": "Becomes a raven-headed winged hybrid or a Tiny raven, or returns to human form.",
+      "summary": "Becomes a raven-humanoid hybrid or a Small raven, or returns to its true humanoid form.",
       "text": "The wereraven turns into a raven-humanoid hybrid or a Tiny raven, or back into its human form. Apart from its size, its statistics are the same in every form, except that it flies 50 feet as a raven (walking only 10 feet) or as a hybrid (walking 30 feet) and can't fly in human form. What it wears or carries doesn't change with it. It returns to human form when it dies.",
       "do": "shape_shift"
     }

@@ -128,6 +128,9 @@ interject species:elf: Memories that thin are rarely an accident.
 
 ~ locket
 set tamsin_locket_recognized
+if not (quest.the_locket >= her_face)
+quest the_locket her_face
+endif
 Narrator: Tamsin opens the silver locket and holds it out. The tiny painted woman inside has Ireena's face: the same eyes, the same red hair, in a gown a few centuries out of fashion.
 Ireena [afraid]: Where did you get this? I've never sat for a painter. I've never owned a dress like that. Who is she?
 interject name:tamsin_tealeaf: I was hoping you could tell me. She's been calling my name in my sleep for three months.

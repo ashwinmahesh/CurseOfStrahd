@@ -198,10 +198,10 @@ func test_roc_talons_restrain_until_the_swoop_drops_the_victim() -> void:
 
 func test_restraining_grapple_ends_when_the_victim_breaks_free() -> void:
 	var e := _field(5)
-	var vb := TestCombat.foe(e, "vine_blight", Vector2i(3, 3))
-	var h := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3))
-	TestCombat.start_with(e, vb)
-	e.monster_actions.apply_riders(vb, h, (vb.creature as Monster).action("constrict")["on_hit"] as Array, {}, "Constrict")
+	var roc := TestCombat.foe(e, "roc", Vector2i(2, 2))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(6, 3))
+	TestCombat.start_with(e, roc)
+	e.monster_actions.apply_riders(roc, h, (roc.creature as Monster).action("talons")["on_hit"] as Array, {}, "Talons")
 	assert_true(h.creature.has_condition(&"restrained"))
 	h.creature.remove_condition(&"grappled")
 	assert_false(h.creature.has_condition(&"restrained"), "free of the grapple, free of the restraint")
@@ -411,3 +411,104 @@ func test_giant_spider_web_restrains_until_broken() -> void:
 func test_rat_slips_away_without_opportunity_attacks() -> void:
 	var r := TestCombat.monster("rat")
 	assert_true(r.has_flag("agile"))
+
+
+func test_vine_blight_grip_crushes_on_the_victims_turn_and_holds_one_at_a_time() -> void:
+	var e := _field(17)
+	var vb := TestCombat.foe(e, "vine_blight", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3))
+	TestCombat.start_with(e, vb)
+	var vine := (vb.creature as Monster).action("constricting_vine")
+	e.monster_actions.apply_riders(vb, h, vine["on_hit"] as Array, {}, "Constricting Vine")
+	assert_true(e.grapples.has(h.id))
+	assert_false(h.creature.has_condition(&"restrained"), "the 2025 vine grips but doesn't restrain")
+	assert_eq(e.monster_actions.why_not(vb, vine), "Its vine is holding someone")
+	var hp := h.creature.hp
+	e.monster_actions.turn_start(h)
+	assert_true(h.creature.hp < hp, "crushed at the start of its own turn")
+
+
+func test_banshee_wail_drops_the_weak_and_hurts_the_rest() -> void:
+	var e := _field(18)
+	var b := TestCombat.foe(e, "banshee", Vector2i(3, 3))
+	var weak := TestCombat.hero(e, "silvain_aster", Vector2i(4, 3))
+	var tough := TestCombat.hero(e, "ilse_varga", Vector2i(3, 4), 12)
+	TestCombat.start_with(e, b)
+	weak.creature.hp = 20
+	tough.creature.hp = 80
+	var wail := (b.creature as Monster).action("deathly_wail")
+	var victims := e.monster_actions.save_victims(b, wail, weak)
+	assert_true(weak in victims and tough in victims)
+	for i in 10:
+		weak.creature.hp = 20
+		tough.creature.hp = 80
+		weak.creature.remove_condition(&"unconscious")
+		e.monster_actions._save_one(b, wail, weak, CombatResult.new(), {})
+		if weak.creature.hp == 0:
+			break
+	assert_eq(weak.creature.hp, 0, "a failed save at 25 Hit Points or fewer drops it to 0")
+	var hurt := false
+	for i in 10:
+		tough.creature.hp = 80
+		e.monster_actions._save_one(b, wail, tough, CombatResult.new(), {})
+		if tough.creature.hp < 80:
+			hurt = true
+			assert_true(tough.creature.hp > 0, "a sturdier creature only takes the damage")
+			break
+	assert_true(hurt)
+
+
+func test_revenant_vow_makes_its_glare_paralyze() -> void:
+	var e := _field(19)
+	var rv := TestCombat.foe(e, "revenant", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3))
+	TestCombat.start_with(e, rv)
+	e.monster_actions.bonus_action(rv, "vow")
+	assert_eq(str(h.get_meta("vowed_by", "")), rv.id)
+	e.monster_actions.apply_riders(rv, h, (rv.creature as Monster).action("vengeful_glare")["on_fail"] as Array, {}, "Vengeful Glare")
+	assert_true(h.creature.has_condition(&"frightened") and h.creature.has_condition(&"paralyzed"), "its sworn foe is also Paralyzed")
+
+
+func test_tree_blight_drags_grips_and_gnashes() -> void:
+	var e := _field(20)
+	var tb := TestCombat.foe(e, "tree_blight", Vector2i(2, 2))
+	var h := TestCombat.hero(e, "silvain_aster", Vector2i(7, 3))
+	TestCombat.start_with(e, tb)
+	var before := e.distance(tb, h)
+	e.monster_actions.apply_riders(tb, h, (tb.creature as Monster).action("grasping_root")["on_fail"] as Array, {}, "Grasping Root")
+	assert_true(e.distance(tb, h) < before, "pulled closer")
+	assert_true(e.grapples.has(h.id), "held by a root")
+	var hp := h.creature.hp
+	e.monster_actions.bonus_action(tb, "bonus_save")
+	assert_true(h.creature.hp < hp or not tb.bonus_available, "Gnash goes at the held creature")
+
+
+func test_arcanaloth_banishing_claw_locks_a_creature_in_the_tome() -> void:
+	var e := _field(21)
+	var a := TestCombat.foe(e, "arcanaloth", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3))
+	TestCombat.start_with(e, a)
+	var rider := ((a.creature as Monster).action("banishing_claw")["on_hit"] as Array).duplicate(true)
+	(rider[0] as Dictionary).erase("save")
+	e.monster_actions.apply_riders(a, h, rider, {}, "Banishing Claw")
+	assert_true(h.creature.has_condition(&"incapacitated"))
+	assert_true(h.creature.has_flag("ethereal"), "gone into the tome, out of reach")
+	var fx: Effect = null
+	for x: Effect in h.creature.effects:
+		if not x.repeat_save.is_empty():
+			fx = x
+	assert_true(fx != null and int(fx.repeat_save.get("bind_after", 0)) == 3, "a Cha save each turn; three failures bind it")
+
+
+func test_wereraven_curse_raises_a_wereraven() -> void:
+	var e := _field(22)
+	var w := TestCombat.foe(e, "wereraven", Vector2i(3, 3))
+	var h := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3))
+	TestCombat.hero(e, "silvain_aster", Vector2i(8, 8))
+	TestCombat.start_with(e, w)
+	var fx := Effect.new("Cursed: Wereraven Lycanthropy", &"monster", "wereraven_lycanthropy").with_modifier("flag", {"value": "curse:wereraven_lycanthropy"})
+	fx.ends = Effect.Ends.NEVER
+	h.creature.add_effect(fx)
+	assert_true(e.monster_actions.lycanthrope(h))
+	var raised := e.combatants.filter(func(c: Combatant) -> bool: return c.creature.name.contains("wereraven"))
+	assert_eq(raised.size(), 1, "it rises as a wereraven")

@@ -123,6 +123,7 @@ func play_turn(c: Combatant) -> CombatResult:
 			if aid.is_paused():
 				return aid
 		ma.bonus_action(c, "fey_step")
+		ma.bonus_action(c, "vow")
 		var control := ma.bonus_action(c, "control")
 		if control.is_paused():
 			return control
@@ -132,6 +133,14 @@ func play_turn(c: Combatant) -> CombatResult:
 			var sr := ma.cast(c, str(spell_plan["spell"]), spell_plan["targets"] as Array, spell_plan.get("point", Vector2.INF) as Vector2)
 			if sr.ok or sr.is_paused():
 				return e.then(sr, func() -> CombatResult: return _after_main(c))
+		var spell_act := _recharge_spell_plan(c)
+		if not spell_act.is_empty():
+			last_plan = spell_act
+			var act0 := spell_act["action"] as Dictionary
+			ma.spend(c, act0)
+			var sr0 := ma.cast(c, str(spell_act["spell"]), [], spell_act["point"] as Vector2)
+			if sr0.ok or sr0.is_paused():
+				return e.then(sr0, func() -> CombatResult: return _after_main(c))
 		var save_plan := _save_action_plan(c)
 		if not save_plan.is_empty():
 			last_plan = save_plan
@@ -180,6 +189,7 @@ func _after_main(c: Combatant) -> CombatResult:
 		e.monster_actions.bonus_action(c, "swoop")
 		e.monster_actions.bonus_action(c, "consume_life")
 		e.monster_actions.bonus_action(c, "trample")
+		e.monster_actions.bonus_action(c, "bonus_save")
 		var rampage := e.monster_actions.bonus_action(c, "rampage")
 		if rampage.is_paused():
 			return rampage
@@ -229,6 +239,27 @@ func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 				melee_near = true
 		if weak != null and not melee_near:
 			return {"kind": "cast", "spell": "magic_missile", "targets": [weak], "why": "Magic Missile at %s" % weak.name()}
+	return {}
+
+
+## An action that casts a spell on a Recharge (a vine blight's Entangling Plants), aimed at the nearest pair of foes
+## when two stand close enough to share the area.
+func _recharge_spell_plan(c: Combatant) -> Dictionary:
+	var e := enc()
+	if not c.action_available:
+		return {}
+	for a: Variant in MonsterActions.data_of(c).get("actions", []):
+		var act := a as Dictionary
+		if not act.has("cast") or not act.has("recharge") or e.monster_actions.why_not(c, act) != "":
+			continue
+		var spell_id := str((act["cast"] as Array)[0])
+		var s := Compendium.shared().spell_data(spell_id)
+		var reach := int((s.get("range", {}) as Dictionary).get("feet", 60))
+		var foes := e.hostiles_of(c).filter(func(h: Combatant) -> bool: return not h.is_down() and e.distance(c, h) <= reach)
+		for f: Combatant in foes:
+			var near := foes.filter(func(g: Combatant) -> bool: return e.distance(f, g) <= 15)
+			if near.size() >= 2 or foes.size() == 1:
+				return {"kind": "cast", "action": act, "spell": spell_id, "point": e.center_of(f), "why": "%s at %s" % [act.get("name", ""), f.name()]}
 	return {}
 
 

@@ -3,7 +3,7 @@
   "name": "Dhampir",
   "source": {
     "book": "RtHW",
-    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+    "checked_against": "RtHW"
   },
   "summary": "Mortals touched by vampirism who climb like spiders and feed on the vitality of those they bite.",
   "creature_type": "humanoid",

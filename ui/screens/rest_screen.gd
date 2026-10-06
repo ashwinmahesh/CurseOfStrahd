@@ -89,6 +89,7 @@ func _draw() -> void:
 		UiParts.light_up(swap)
 		swap.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_box.add_child(swap)
+	_camp_talks()
 	for ch in st.party:
 		_arcane_recovery_row(ch)
 		var row := HBoxContainer.new()
@@ -290,3 +291,19 @@ static func _has_recoverable(ch: Character, budget: int) -> bool:
 		if ch.slots_used[lvl - 1] > 0:
 			return true
 	return false
+
+
+## After a Long Rest, a companion with something on their mind asks for a word (CampTalk, narrative/camp/): a
+## button per talk; choosing one closes the rest and starts the conversation.
+func _camp_talks() -> void:
+	if not _long_done or root == null or not root.has_method("start_dialogue"):
+		return
+	for talk in CampTalk.available(st):
+		var ref := str(talk["ref"])
+		var b := UiKit.button(str(talk["label"]), func() -> void:
+			CampTalk.mark(st, ref)
+			queue_free()
+			root.call("start_dialogue", ref, ""), 15)
+		UiParts.light_up(b)
+		b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		_box.add_child(b)

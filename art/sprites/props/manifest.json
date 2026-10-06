@@ -4379,6 +4379,102 @@
       "mount": "floor",
       "source": "art/generated/props/sheet_p6_floor.png",
       "slot": 3
+    },
+    "wolf_trap": {
+      "file": "art/sprites/props/wolf_trap.png",
+      "width_px": 212,
+      "height_px": 144,
+      "world_height": 0.535,
+      "world_width": 0.8,
+      "pixel_size": 0.003902,
+      "anchor": "bottom_center",
+      "mount": "floor",
+      "source": "art/generated/props/sheet_trap_floor_a.png",
+      "slot": 0
+    },
+    "broken_boards": {
+      "file": "art/sprites/props/broken_boards.png",
+      "width_px": 236,
+      "height_px": 164,
+      "world_height": 0.626,
+      "world_width": 0.9,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "floor",
+      "source": "art/generated/props/sheet_trap_floor_a.png",
+      "slot": 1
+    },
+    "spiked_pit": {
+      "file": "art/sprites/props/spiked_pit.png",
+      "width_px": 236,
+      "height_px": 148,
+      "world_height": 0.556,
+      "world_width": 0.9,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "floor",
+      "source": "art/generated/props/sheet_trap_floor_a.png",
+      "slot": 2
+    },
+    "tripwire": {
+      "file": "art/sprites/props/tripwire.png",
+      "width_px": 236,
+      "height_px": 128,
+      "world_height": 0.477,
+      "world_width": 0.9,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "floor",
+      "source": "art/generated/props/sheet_trap_floor_a.png",
+      "slot": 3
+    },
+    "floor_glyphs": {
+      "file": "art/sprites/props/floor_glyphs.png",
+      "width_px": 236,
+      "height_px": 96,
+      "world_height": 0.36,
+      "world_width": 0.9,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "floor",
+      "source": "art/generated/props/sheet_trap_floor_b.png",
+      "slot": 0
+    },
+    "floor_crack": {
+      "file": "art/sprites/props/floor_crack.png",
+      "width_px": 236,
+      "height_px": 192,
+      "world_height": 0.732,
+      "world_width": 0.9,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "floor",
+      "source": "art/generated/props/sheet_trap_floor_b.png",
+      "slot": 1
+    },
+    "soot_patch": {
+      "file": "art/sprites/props/soot_patch.png",
+      "width_px": 236,
+      "height_px": 208,
+      "world_height": 0.794,
+      "world_width": 0.9,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "floor",
+      "source": "art/generated/props/sheet_trap_floor_b.png",
+      "slot": 2
+    },
+    "blade_slits": {
+      "file": "art/sprites/props/blade_slits.png",
+      "width_px": 236,
+      "height_px": 76,
+      "world_height": 0.278,
+      "world_width": 0.9,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "floor",
+      "source": "art/generated/props/sheet_trap_floor_b.png",
+      "slot": 3
     }
   }
 }

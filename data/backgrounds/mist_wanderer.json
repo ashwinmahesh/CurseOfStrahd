@@ -1,0 +1,64 @@
+{
+  "id": "mist_wanderer",
+  "name": "Mist Wanderer",
+  "source": {
+    "book": "RtHW",
+    "checked_against": "RtHW"
+  },
+  "summary": "The Mists took you from home and have carried you between the Domains of Dread ever since; you look for the way back among fellow wanderers.",
+  "ability_scores": [
+    "dex",
+    "con",
+    "wis"
+  ],
+  "feat": "mist_walker",
+  "skills": [
+    "survival",
+    "stealth"
+  ],
+  "tool": {
+    "id": "smiths_tools",
+    "choice": "artisan"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "smiths_tools",
+          "qty": 1,
+          "choice": "artisan"
+        },
+        {
+          "id": "lamp",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 5
+        },
+        {
+          "id": "pouch",
+          "qty": 1
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 30
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

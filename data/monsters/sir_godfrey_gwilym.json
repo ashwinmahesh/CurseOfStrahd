@@ -69,7 +69,6 @@
       "action": "passive",
       "summary": "Regains 10 HP at the start of its turn unless it took Fire or Radiant damage since its last turn.",
       "text": "The revenant regains 10 Hit Points at the start of its turn. If it took Fire or Radiant damage, this doesn't work at the start of its next turn. Its body is destroyed only if it starts its turn at 0 Hit Points and doesn't regenerate.",
-      "regenerate": 10,
       "implemented": "engine"
     },
     {
@@ -140,5 +139,12 @@
     "argynvostholt"
   ],
   "ai_profile": "brute",
-  "summary": "A revenant knight of the silver dragon's order: two longsword cuts, wounds that close, and vengeance sworn on Strahd."
+  "summary": "A revenant knight of the silver dragon's order: two longsword cuts, wounds that close, and vengeance sworn on Strahd.",
+  "regenerates": {
+    "hp": 10,
+    "stopped_by": [
+      "fire",
+      "radiant"
+    ]
+  }
 }

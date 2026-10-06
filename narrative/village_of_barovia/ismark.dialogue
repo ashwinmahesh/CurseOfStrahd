@@ -68,6 +68,9 @@ Narrator: He gives you nothing but a tired man's face. It is a very good tired m
 
 ~ letter
 set ilse_invitation_shown
+if name:ilse_varga and not (quest.kestrel_company >= the_host)
+quest kestrel_company the_host
+endif
 Narrator: The sealed letter goes down on the table between the cups. Ismark looks at the ornate S, and the colour leaves his face.
 Ismark [afraid]: That's not my father's hand. Father wrote letters too, begging for help. The Vistani carried them out of the valley. Nobody ever answered. Except, it seems, him.
 interject name:ilse_varga: A year I've carried this. Now I know whose door to knock on.

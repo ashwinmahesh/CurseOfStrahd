@@ -18,6 +18,7 @@ endif
 * [if not flag.white_sun_water] Fill flasks from the pool. -> fill
 * [if not flag.pool_offerings_taken] Look at the coins on the bottom. -> offerings
 * [if flag.ireena_pool_vision and guest:ireena] (Look at Ireena.) -> ireena_after
+* [name:tamsin_tealeaf] [if quest.the_locket >= her_name and flag.locket_fate != "pool" and flag.locket_fate != "ireena"] (Take out the locket.) -> companions/locket:pool
 * Leave the water be. -> END
 
 ~ wade
@@ -78,6 +79,9 @@ Narrator: Ireena's face changes. Not fear. Something worse, and softer: recognit
 Ireena [sad]: I remember you. I remember a chapel full of white flowers, and being happy for one whole morning. And then the wall. And your brother at the top of the stair.
 if flag.tamsin_locket_recognized
 interject name:tamsin_tealeaf: The locket. It's her. It's always been her. And that's him, the one she was meant to marry.
+if not (quest.the_locket >= her_name)
+quest the_locket her_name
+endif
 elif flag.stanimir_tale_heard
 interject tag:curious: Stanimir's story. The bride and the brother. He's the brother who died.
 endif

@@ -290,3 +290,43 @@ func test_shadow_sorcery_senses_and_ill_omen() -> void:
 	assert_eq(s.creature.sense_range("blindsight"), 10)
 	assert_true(e.spells.cast(s, "summon_undead", 3, [], Vector2(3.5, 4.5), Vector2.ZERO, {"free": true}).ok)
 	assert_true(s.creature.concentration == null, "Spirits of Ill Omen: no Concentration")
+
+
+func test_the_four_ravenloft_backgrounds() -> void:
+	var defaults := {"haunted_one": "survivor", "investigator": "sharp_eye", "mist_wanderer": "mist_walker",
+		"spirit_medium": "gathered_whispers"}
+	for bg: String in defaults:
+		var ch := TestChars.custom("fighter", "human", 1, {}, bg)
+		assert_true(str(defaults[bg]) in _feat_ids(ch), "%s gives %s by default" % [bg, defaults[bg]])
+		var c := ch.choice("background.feat_choice")
+		ChoiceOptions.populate(c, ch)
+		assert_true(c.option("symbiotic_being") != null, "%s can take any Dark Gift instead" % bg)
+	var medium := TestChars.custom("wizard", "human", 1, {}, "spirit_medium")
+	assert_true(medium.skill_rank(&"religion") > 0 and medium.skill_rank(&"insight") > 0)
+
+
+func test_sharp_eye_keeps_its_use_when_the_check_fails() -> void:
+	var e := TestCombat.open_field(3)
+	var ch := _with_feat_choice(TestChars.custom("wizard", "human", 1), "sharp_eye")
+	var c := _add(e, ch, Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 3))
+	TestCombat.start_with(e, c)
+	var uses := ch.resource_left("sharp_eye")
+	var t := ch.roll_check(e.dice, &"arcana", 99, [], [], "", ["study"])
+	assert_true("Sharp Eye" in t.advantage_sources)
+	assert_eq(ch.resource_left("sharp_eye"), uses, "a failed Study check gives the use back")
+
+
+func test_living_shadow_runs_the_next_turn() -> void:
+	var e := TestCombat.open_field(3)
+	var ch := _with_feat_choice(TestChars.custom("fighter", "human", 3), "living_shadow")
+	var c := _add(e, ch, Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(3, 3), 300)
+	TestCombat.start_with(e, c)
+	c.set_meta("shadow_will", true)
+	e.ravenloft.turn_start(c)
+	if e.pending != null:
+		e.answer_reaction(false)
+	assert_false(c.has_meta("shadow_will"))
+	assert_false(c.bonus_available, "the shadow's turn has no Bonus Action")
+	assert_true(_logged(e, "shadow"), "the Shadow's Will table ran")
