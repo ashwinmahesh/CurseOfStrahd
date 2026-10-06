@@ -1021,6 +1021,8 @@
       "table_chairs": "table_chairs",
       "candelabra": "candelabra",
       "fireplace": "fireplace",
+      "fireplace_windmill": "fireplace_windmill",
+      "fireplace_dancers": "fireplace_dancers",
       "stair_riser": "stairs_up",
       "stair_down": "stairs_down",
       "door_wood": "door_wood"

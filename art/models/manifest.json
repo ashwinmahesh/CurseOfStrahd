@@ -54,7 +54,7 @@
         "pal_tan",
         "pal_vellum",
         "pal_void",
-        "pal_walnut"
+        "tex_interior__wood_planks"
       ],
       "triangles": 776,
       "sockets": {
@@ -114,8 +114,8 @@
         0.5
       ],
       "materials": [
+        "pal_leather",
         "pal_peat",
-        "pal_tan",
         "pal_umber"
       ],
       "triangles": 1208
@@ -133,9 +133,9 @@
         0.598
       ],
       "materials": [
-        "pal_leather",
         "pal_umber",
-        "pal_walnut"
+        "pal_walnut",
+        "tex_interior__wood_planks"
       ],
       "triangles": 168
     },
@@ -265,7 +265,8 @@
         "pal_grave",
         "pal_tan",
         "pal_umber",
-        "pal_walnut"
+        "pal_walnut",
+        "tex_interior__wood_planks"
       ],
       "triangles": 1640
     },
@@ -287,7 +288,8 @@
         "pal_tan",
         "pal_umber",
         "pal_void",
-        "pal_walnut"
+        "pal_walnut",
+        "tex_interior__wood_planks"
       ],
       "triangles": 2448
     },
@@ -304,10 +306,9 @@
       ],
       "materials": [
         "pal_pewter",
-        "pal_rust",
         "pal_umber",
         "pal_void",
-        "pal_walnut"
+        "tex_interior__wood_planks"
       ],
       "triangles": 572
     },
@@ -323,12 +324,136 @@
         0.046
       ],
       "materials": [
-        "pal_grave",
+        "pal_ink",
         "pal_peat",
-        "pal_umber",
-        "pal_walnut"
+        "pal_umber"
       ],
       "triangles": 300
+    },
+    "fireplace_windmill": {
+      "file": "art/models/fireplace_windmill.glb",
+      "mount": "wall",
+      "stands_for": [
+        "fireplace_windmill"
+      ],
+      "size": [
+        1.02,
+        1.15,
+        0.47
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ash_violet",
+        "pal_grave",
+        "pal_ink",
+        "pal_stone",
+        "pal_stone_deep",
+        "pal_tan",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 1280,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.07,
+          0.12
+        ],
+        "picture": [
+          0,
+          0.8798,
+          0.184
+        ]
+      },
+      "decals": [
+        {
+          "art": "fireplace_windmill",
+          "region": [
+            67,
+            25,
+            141,
+            83
+          ],
+          "socket": "picture",
+          "width": 0.56
+        }
+      ]
+    },
+    "fireplace_dancers": {
+      "file": "art/models/fireplace_dancers.glb",
+      "mount": "wall",
+      "stands_for": [
+        "fireplace_dancers"
+      ],
+      "size": [
+        1.02,
+        0.8,
+        0.46
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ink",
+        "pal_pewter",
+        "pal_slate",
+        "pal_stone",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 732,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.07,
+          0.12
+        ],
+        "figures": [
+          0,
+          0.8,
+          0.155
+        ]
+      },
+      "decals": [
+        {
+          "art": "fireplace_dancers",
+          "region": [
+            22,
+            4,
+            256,
+            67
+          ],
+          "socket": "figures",
+          "width": 0.84,
+          "anchor": "bottom",
+          "split": [
+            [
+              23,
+              58
+            ],
+            [
+              66,
+              127
+            ],
+            [
+              133,
+              166
+            ],
+            [
+              174,
+              192
+            ],
+            [
+              200,
+              231
+            ],
+            [
+              241,
+              277
+            ]
+          ]
+        }
+      ]
     }
   }
 }

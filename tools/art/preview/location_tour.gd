@@ -4,7 +4,7 @@ extends Node3D
 ##   make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=death_house_ground NAME=tour FRAMES=20
 ## Godot args after --: --location=<id> [--hour=12] [--shots=8] [--yaw=<camera steps>] [--lit] (brighter ambient, to
 ## check placement in dark interiors) [--at=x,z;x,z] (close shots of these squares) [--party=x,z] (the party, with
-## its lantern, stands there instead of at the spawn)
+## its lantern, stands there instead of at the spawn) [--dist=11] (how far the close shots are)
 
 var view: LocationView
 var _spots: Array[Vector3] = []
@@ -58,11 +58,14 @@ func _ready() -> void:
 func capture_shots(tool: Node, out: String) -> void:
 	var shots := 8
 	var yaw := 0
+	var dist := 11.0
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--shots="):
 			shots = int(a.get_slice("=", 1))
 		elif a.begins_with("--yaw="):
 			yaw = int(a.get_slice("=", 1))
+		elif a.begins_with("--dist="):
+			dist = float(a.get_slice("=", 1))
 	var rig := view.rig
 	rig.follow = null
 	var lamp: OmniLight3D = null
@@ -82,7 +85,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	rig.snap_to_target()
 	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_overview.png")
-	rig.distance = 11.0
+	rig.distance = dist
 	for i in mini(shots, _spots.size()):
 		rig.global_position = _spots[i]
 		rig.snap_to_target()

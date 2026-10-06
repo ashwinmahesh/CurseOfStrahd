@@ -311,7 +311,7 @@ def bookcase(p):
 @model("desk", "against_wall", ["desk", "desk_front"], container=True)
 def desk(p):
     W, D, H = 1.0, 0.55, 0.52
-    top, trim, body, face, brass = "pal_walnut", "pal_blood", "pal_ash_violet", "pal_grave", "pal_tan"
+    top, trim, body, face, brass = "tex_interior__wood_planks", "pal_blood", "pal_ash_violet", "pal_grave", "pal_tan"
     yc = -D / 2.0 - 0.04   # a hand's breadth out from the wall
     p.box((W, D, 0.035), (0, yc, H - 0.0175), top)
     p.box((W - 0.02, D - 0.02, 0.02), (0, yc, H - 0.045), trim)
@@ -441,7 +441,7 @@ def armchair(p):
 @model("settee", "against_wall", ["settee"])
 def settee(p):
     W, D = 0.98, 0.46
-    wood, carve, cushion = "pal_umber", "pal_peat", "pal_tan"
+    wood, carve, cushion = "pal_umber", "pal_peat", "pal_leather"
     yc = -D / 2 - 0.03
     for sx in (-1, 1):
         for sy in (-1, 1):
@@ -476,7 +476,7 @@ def settee(p):
 def table(p):
     W, D, H = 0.95, 0.6, 0.5
     rng = p.rng
-    for k, col in enumerate(["pal_walnut", "pal_leather", "pal_walnut"]):
+    for k, col in enumerate(["tex_interior__wood_planks"] * 3):
         p.box((W + rng.uniform(-0.01, 0.01), D / 3 - 0.008, 0.045), (rng.uniform(-0.006, 0.006), (k - 1) * D / 3,
               H - 0.0225 + rng.uniform(-0.003, 0.003)), col, rot=(0, 0, rng.uniform(-0.6, 0.6)))
     for s in (-1, 1):
@@ -549,65 +549,156 @@ def candelabra(p):
         p.socket("candle_%d" % i, (x, y, z + h + 0.025))
 
 
-@model("fireplace", "wall", ["fireplace"])
-def fireplace(p):
-    W, D = 0.96, 0.3
-    HB = 0.86            # the stone surround's height; the mantel sits on it
-    ow, oh = 0.5, 0.44   # the firebox opening
-    mortar = "pal_stone_deep"
+def _lay_stones(p, x0, x1, z0, z1, front, stones, hole=None, side=None):
+    """Courses of stone blocks on a face at y = `front` from x0 to x1 and z0 to z1, each block a little proud and
+    askew; `hole` (x0, x1, z_top) is an opening the courses stop at, `side` lays the two side faces too (at x = +-side)."""
+    rng = p.rng
+
+    def block(size, at):
+        p.box(size, at, rng.choice(stones), rot=(rng.uniform(-2, 2), rng.uniform(-2, 2), rng.uniform(-1.5, 1.5)))
+    z = z0
+    while z < z1 - 0.04:
+        rh = min(rng.uniform(0.09, 0.13), z1 - z)
+        segs = [(x0, x1)]
+        if hole and z < hole[2]:
+            segs = [(x0, hole[0] - 0.005), (hole[1] + 0.005, x1)]
+        for a, b in segs:
+            x = a
+            while x < b - 0.03:
+                ln = min(rng.uniform(0.1, 0.22), b - x)
+                dep = rng.uniform(0.028, 0.045)
+                block((ln - 0.012, dep, rh - 0.012), (x + ln / 2, front - dep / 2 + 0.012, z + rh / 2))
+                x += ln
+        if side is not None:
+            for sgn in (-1, 1):
+                y = 0.0
+                while y > front + 0.03:
+                    ln = min(rng.uniform(0.1, 0.18), y - front)
+                    dep = rng.uniform(0.02, 0.035)
+                    block((dep, ln - 0.012, rh - 0.012), (sgn * (side + dep / 2 - 0.01), y - ln / 2, z + rh / 2))
+                    y -= ln
+        z += rh
+
+
+def _fire(p, ow, front):
+    """Andirons, three logs and glowing embers on the hearth floor of a firebox `ow` wide; the 2D flame goes at the
+    `flame` socket."""
+    rng = p.rng
+    for s in (-1, 1):
+        p.box((0.025, 0.16, 0.025), (s * 0.13, front / 2 - 0.02, 0.05), "pal_void")
+        p.cyl(0.018, 0.05, (s * 0.13, front + 0.08, 0.03), "pal_void", segs=8)
+    for ln, at, rz in [(0.34, (0, -0.13, 0.075), 6), (0.3, (0.02, -0.09, 0.11), -12), (0.24, (-0.04, -0.17, 0.12), 25)]:
+        ln = min(ln, ow - 0.08)
+        p.cyl(0.032, ln, (at[0] - ln / 2 * math.cos(math.radians(rz)), at[1] - ln / 2 * math.sin(math.radians(rz)), at[2]),
+              "pal_umber", rot=(0, 90, rz), segs=8)
+    for _ in range(14):
+        sz = rng.uniform(0.025, 0.05)
+        p.box((sz, sz, sz * 0.6), (rng.uniform(-ow / 2 + 0.07, ow / 2 - 0.07), rng.uniform(-0.2, -0.05), 0.035),
+              rng.choice(["glow_ember", "glow_candle", "glow_ember"]), rot=(0, 0, rng.uniform(0, 90)))
+    p.socket("flame", (0.0, -0.12, 0.07))
+
+
+def _stone_fireplace(p, W, D, HB, ow, oh, stones, mortar, lintel):
+    """A stone surround HB high with a firebox `ow` x `oh`, a lintel and keystone over it, a hearth slab and a fire."""
     front = -(D - 0.03)
     pier = (W - ow) / 2
     for s in (-1, 1):
         p.box((pier, D - 0.03, HB), (s * (ow / 2 + pier / 2), front / 2, HB / 2), mortar)
     p.box((ow, D - 0.03, HB - oh), (0, front / 2, oh + (HB - oh) / 2), mortar)
     p.box((ow, 0.03, oh), (0, -0.015, oh / 2), "pal_ink")
-    rng = p.rng
-    stones = ["pal_stone", "pal_stone", "pal_slate", "pal_stone", "pal_ash_violet", "pal_slate"]
+    _lay_stones(p, -W / 2, W / 2, 0.0, HB, front, stones, hole=(-ow / 2, ow / 2, oh + 0.1), side=W / 2)
+    p.box((ow + 0.16, 0.05, 0.1), (0, front - 0.012, oh + 0.05), lintel)
+    p.prism([(-0.06, 0.0), (0.06, 0.0), (0.045, 0.13), (-0.045, 0.13)], 0.06, (0, front - 0.02, oh - 0.005), stones[0])
+    p.box((W + 0.04, 0.22, 0.03), (0, front - 0.11, 0.015), lintel)
+    p.box((ow, -front, 0.03), (0, front / 2, 0.015), mortar)
+    _fire(p, ow, front)
+    return front
 
-    def block(size, at):
-        p.box(size, at, rng.choice(stones), rot=(rng.uniform(-2, 2), rng.uniform(-2, 2), rng.uniform(-1.5, 1.5)))
-    z = 0.0
-    while z < HB - 0.04:
-        rh = min(rng.uniform(0.09, 0.13), HB - z)
-        segs = [(-W / 2, W / 2)]
-        if z < oh + 0.1:
-            segs = [(-W / 2, -ow / 2 - 0.005), (ow / 2 + 0.005, W / 2)]
-        for x0, x1 in segs:
-            x = x0
-            while x < x1 - 0.03:
-                ln = min(rng.uniform(0.1, 0.22), x1 - x)
-                dep = rng.uniform(0.028, 0.045)
-                block((ln - 0.012, dep, rh - 0.012), (x + ln / 2, front - dep / 2 + 0.012, z + rh / 2))
-                x += ln
-        for s in (-1, 1):
-            y = 0.0
-            while y > front + 0.03:
-                ln = min(rng.uniform(0.1, 0.18), y - front)
-                dep = rng.uniform(0.02, 0.035)
-                block((dep, ln - 0.012, rh - 0.012), (s * (W / 2 + dep / 2 - 0.01), y - ln / 2, z + rh / 2))
-                y -= ln
-        z += rh
-    p.box((ow + 0.16, 0.05, 0.1), (0, front - 0.012, oh + 0.05), "pal_slate")
-    p.prism([(-0.06, 0.0), (0.06, 0.0), (0.045, 0.13), (-0.045, 0.13)], 0.06, (0, front - 0.02, oh - 0.005), "pal_stone")
+
+@model("fireplace", "wall", ["fireplace"])
+def fireplace(p):
+    """The 2D stone fireplace: grey and violet stones, a wooden mantel on brackets."""
+    W, D, HB = 0.96, 0.3, 0.86
+    front = _stone_fireplace(p, W, D, HB, 0.5, 0.44, ["pal_stone", "pal_stone", "pal_slate", "pal_stone", "pal_ash_violet",
+                                                      "pal_slate"], "pal_stone_deep", "pal_slate")
     p.box((W + 0.04, D + 0.02, 0.04), (0, -(D + 0.02) / 2, HB + 0.02), "pal_peat")
     p.box((W + 0.06, D + 0.07, 0.045), (0, -(D + 0.07) / 2, HB + 0.0625), "pal_umber")
     for s in (-1, 1):
         p.prism([(0.0, 0.0), (0.0, 0.1), (-0.07, 0.1), (-0.07, 0.07), (-0.02, 0.0)], 0.05,
                 (s * (W / 2 - 0.03), front, HB - 0.1), "pal_peat", rot=(0, 0, 90))
-    p.box((W + 0.04, 0.22, 0.03), (0, front - 0.11, 0.015), "pal_slate")
-    p.box((ow, -front, 0.03), (0, front / 2, 0.015), mortar)
+
+
+@model("fireplace_windmill", "wall", ["fireplace_windmill"],
+       decals=[{"art": "fireplace_windmill", "region": [67, 25, 141, 83], "socket": "picture", "width": 0.56}])
+def fireplace_windmill(p):
+    """The library hearth (2D fireplace_windmill): near-black stone, a stone mantel, and above it on the chimney
+    breast the moonlit windmill painting, its canvas cut from the 2D art, in a carved frame."""
+    W, D, HB = 0.96, 0.28, 0.56
+    dark = ["pal_grave", "pal_ash_violet", "pal_stone_deep", "pal_grave", "pal_stone"]
+    _stone_fireplace(p, W, D, HB, 0.5, 0.34, dark, "pal_void", "pal_stone_deep")
+    p.box((W + 0.04, D + 0.03, 0.04), (0, -(D + 0.03) / 2, HB + 0.02), "pal_grave")
+    p.box((W + 0.06, D + 0.07, 0.05), (0, -(D + 0.07) / 2, HB + 0.065), "pal_stone_deep")
+    CW, CD, top = 0.8, 0.15, 1.15
+    zb = HB + 0.09
+    fb = -(CD - 0.02)
+    cw, ch = 0.56, 0.56 * 83 / 141          # the canvas, as the 2D painting's proportions
+    fw, fh = cw + 0.07, ch + 0.07
+    fz = zb + 0.03 + fh / 2
+    p.box((CW, CD - 0.02, top - zb), (0, fb / 2, zb + (top - zb) / 2), "pal_void")
+    _lay_stones(p, -CW / 2, CW / 2, zb, top, fb, dark, hole=(-fw / 2, fw / 2, fz + fh / 2), side=CW / 2)
+    yb = fb - 0.04                           # the frame's back, clear of the stones
+    p.box((fw - 0.03, 0.012, fh - 0.03), (0, yb - 0.006, fz), "pal_void")
+    for zz in (fz - fh / 2 + 0.0175, fz + fh / 2 - 0.0175):
+        p.box((fw, 0.04, 0.035), (0, yb - 0.02, zz), "pal_umber")
+        p.box((fw - 0.05, 0.01, 0.008), (0, yb - 0.041, zz + (0.012 if zz < fz else -0.012)), "pal_tan")
+    for xx in (-fw / 2 + 0.0175, fw / 2 - 0.0175):
+        p.box((0.035, 0.04, fh), (xx, yb - 0.02, fz), "pal_umber")
+        p.box((0.008, 0.01, fh - 0.05), (xx + (0.012 if xx < 0 else -0.012), yb - 0.041, fz), "pal_tan")
+    p.socket("picture", (0, yb - 0.014, fz))
+
+
+@model("fireplace_dancers", "wall", ["fireplace_dancers"],
+       decals=[{"art": "fireplace_dancers", "region": [22, 4, 256, 67], "socket": "figures", "width": 0.84,
+                "anchor": "bottom", "split": [[23, 58], [66, 127], [133, 166], [174, 192], [200, 231], [241, 277]]}])
+def fireplace_dancers(p):
+    """The conservatory hearth (2D fireplace_dancers): pale marble pilasters and frieze, an arched firebox of
+    voussoirs, and the dancing figurines on the mantel, cut from the 2D art."""
+    W, D, H = 0.96, 0.26, 0.8
+    marble, panel, deep = "pal_pewter", "pal_slate", "pal_stone"
+    front = -D
+    pw = 0.16
     for s in (-1, 1):
-        p.box((0.025, 0.16, 0.025), (s * 0.13, front / 2 - 0.02, 0.05), "pal_void")
-        p.cyl(0.018, 0.05, (s * 0.13, front + 0.08, 0.03), "pal_void", segs=8)
-    for ln, at, rz, ry in [(0.34, (0, -0.13, 0.075), 6, 0), (0.3, (0.02, -0.09, 0.11), -12, 8),
-                           (0.24, (-0.04, -0.17, 0.12), 25, -10)]:
-        p.cyl(0.032, ln, (at[0] - ln / 2 * math.cos(math.radians(rz)), at[1] - ln / 2 * math.sin(math.radians(rz)), at[2]),
-              "pal_umber", rot=(0, 90, rz), segs=8)
-    for _ in range(14):
-        sz = rng.uniform(0.025, 0.05)
-        p.box((sz, sz, sz * 0.6), (rng.uniform(-0.18, 0.18), rng.uniform(-0.2, -0.05), 0.035),
-              rng.choice(["glow_ember", "glow_candle", "glow_ember"]), rot=(0, 0, rng.uniform(0, 90)))
-    p.socket("flame", (0.0, -0.12, 0.07))
+        x = s * (W / 2 - pw / 2)
+        p.box((pw, D, H - 0.27), (x, -D / 2, 0.08 + (H - 0.27) / 2), marble)
+        p.box((pw + 0.02, D + 0.02, 0.08), (x, -D / 2 - 0.01, 0.04), marble)
+        p.box((pw - 0.06, 0.01, H - 0.45), (x, front - 0.004, 0.12 + (H - 0.45) / 2), panel)
+        p.box((pw + 0.02, D + 0.02, 0.04), (x, -D / 2 - 0.01, H - 0.17), deep)
+    inner = W / 2 - pw
+    p.box((2 * inner + 0.002, D - 0.02, 0.15), (0, -(D - 0.02) / 2, H - 0.19 + 0.075), marble)
+    for s in (-1, 1):
+        p.box((0.24, 0.01, 0.08), (s * 0.17, -(D - 0.02) - 0.004, H - 0.115), panel)
+    p.cyl(0.035, 0.012, (0, -(D - 0.02), H - 0.115), panel, rot=(90, 0, 0), segs=14)
+    r, spring = 0.21, 0.24
+    ow = 2 * r
+    for s in (-1, 1):
+        p.box((inner - r, D - 0.02, spring), (s * (r + (inner - r) / 2), -(D - 0.02) / 2, spring / 2), marble)
+    arc = [(r * math.cos(math.pi * k / 12), spring + r * math.sin(math.pi * k / 12)) for k in range(13)]
+    # The marble between the pilasters and over the arch: round the top, then back under the arch from left to right.
+    spandrel = [(inner, spring), (inner, H - 0.19), (-inner, H - 0.19), (-inner, spring)] + list(reversed(arc))
+    p.prism(spandrel, D - 0.02, (0, -(D - 0.02) / 2, 0), marble)
+    for k in range(7):
+        a0, a1 = math.pi * k / 7, math.pi * (k + 1) / 7
+        r1, r2 = r, r + 0.06
+        quad = [(r1 * math.cos(a0), spring + r1 * math.sin(a0)), (r2 * math.cos(a0), spring + r2 * math.sin(a0)),
+                (r2 * math.cos(a1), spring + r2 * math.sin(a1)), (r1 * math.cos(a1), spring + r1 * math.sin(a1))]
+        p.prism(quad, 0.03, (0, -(D - 0.02) - 0.012, 0), panel if k == 3 else marble)
+    p.box((ow, 0.03, spring + r), (0, -0.015, (spring + r) / 2), "pal_ink")
+    p.box((W + 0.04, D + 0.04, 0.03), (0, -(D + 0.04) / 2, H - 0.025 - 0.015), panel)
+    p.box((W + 0.06, D + 0.07, 0.04), (0, -(D + 0.07) / 2, H - 0.02), marble)
+    p.box((W + 0.04, 0.2, 0.025), (0, front - 0.1, 0.0125), marble)
+    p.box((ow, D, 0.03), (0, -D / 2, 0.015), deep)
+    _fire(p, ow, front)
+    p.socket("figures", (0, -(D + 0.07) / 2 + 0.01, H))
 
 
 # --- Stairs and doors ------------------------------------------------------------------------------------------
@@ -624,7 +715,7 @@ def _steps(p, z_of, top_of):
         y0 = -RUN / 2 + td * i
         base = top_of(i)
         p.box((WIDTH - 0.06, td, zt - base), (0, y0 + td / 2, (zt + base) / 2), "pal_grave")
-        p.box((WIDTH - 0.05, td + 0.02, 0.025), (0, y0 + td / 2 - 0.01, zt - 0.0125), "pal_walnut")
+        p.box((WIDTH - 0.05, td + 0.02, 0.025), (0, y0 + td / 2 - 0.01, zt - 0.0125), "tex_interior__wood_planks")
         p.box((0.5, td + 0.012, 0.006), (0, y0 + td / 2 - 0.006, zt + 0.003), "pal_blood")
         p.box((0.5, 0.006, rise - 0.03), (0, y0 - 0.016, zt - 0.025 - (rise - 0.03) / 2), "pal_blood")
         for s in (-1, 1):
@@ -691,8 +782,7 @@ def door_wood(p):
     n = 5
     pw = W / n
     for k in range(n):
-        p.box((pw - 0.006, T, H - rng.uniform(0.0, 0.01)), (-W / 2 + pw * (k + 0.5), 0, H / 2),
-              "pal_walnut" if k % 2 == 0 else "pal_rust")
+        p.box((pw - 0.006, T, H - rng.uniform(0.0, 0.01)), (-W / 2 + pw * (k + 0.5), 0, H / 2), "tex_interior__wood_planks")
     for z in (0.22, 0.92):
         p.box((W - 0.12, 0.012, 0.055), (-0.04, -T / 2 - 0.006, z), "pal_void")
         p.cyl(0.03, 0.013, (W / 2 - 0.13, -T / 2 - 0.006, z), "pal_void", rot=(90, 0, 0), segs=10)
@@ -711,13 +801,15 @@ def wainscot(p):
     """One square's face of a panelled wall: skirting, two raised panels and a chair rail over the painted wainscot's
     lower half (the damask above the rail is the wall's own texture). Modules meet at their ends along a wall."""
     W = 1.0
-    frame, field, rail = "pal_peat", "pal_umber", "pal_walnut"
-    p.box((W, 0.032, 0.075), (0, -0.016, 0.0375), frame)
+    # The painted wainscot's own colours (art/textures/interior/wainscot_wall.png): peat panels with near-black
+    # mouldings, so lamplight shows the panels' depth rather than a new colour.
+    frame, field, rail = "pal_peat", "pal_peat", "pal_umber"
+    p.box((W, 0.032, 0.075), (0, -0.016, 0.0375), "pal_ink")
     p.box((W, 0.04, 0.014), (0, -0.02, 0.082), rail)
     p.box((W, 0.016, 0.5), (0, -0.008, 0.075 + 0.25), frame)
     for s in (-1, 1):
         cx = s * 0.25
-        p.box((0.36, 0.01, 0.34), (cx, -0.021, 0.32), "pal_grave")
+        p.box((0.36, 0.01, 0.34), (cx, -0.021, 0.32), "pal_ink")
         p.box((0.3, 0.02, 0.28), (cx, -0.026, 0.32), field, soft=0.008)
     p.box((W, 0.036, 0.03), (0, -0.018, 0.555), rail)
     p.box((W, 0.046, 0.016), (0, -0.023, 0.578), rail)
@@ -775,6 +867,8 @@ def export(built):
             entry["sockets"] = {k: godot(v) for k, v in sockets.items()}
         if spec.get("container"):
             entry["container"] = True
+        if spec.get("decals"):
+            entry["decals"] = spec["decals"]
         models[id_] = entry
         print("model %s: %s, %d triangles" % (id_, entry["size"], entry["triangles"]))
     path.write_text(json.dumps(data, indent=2) + "\n")

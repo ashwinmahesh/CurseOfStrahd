@@ -87,11 +87,17 @@ func test_the_library_is_built_of_models() -> void:
 	assert_true(leaf != null and leaf.has_meta("model"), "the library door's leaf is a model")
 	var panelled := 0
 	for n in v.board.get_children():
-		if n.name.begins_with("WallModules") and Rect2(0, 0, 10, 10).has_point(Vector2((n as Node3D).position.x, (n as Node3D).position.z)):
+		if n.has_meta("wall_modules") and Rect2(0, 0, 10, 10).has_point(Vector2((n as Node3D).position.x, (n as Node3D).position.z)):
 			panelled += 1
 	assert_true(panelled >= 20, "the library's walls are panelled (%d wall squares)" % panelled)
 	for id: String in ["stairs_down", "stairs_up"]:
 		assert_eq(_models(v.exit_nodes[id] as Node).size(), 1, id + " are a model")
+	var floors := 0
+	for n in v.board.get_children():
+		if ModelPiece._is_floor_box(v.board, n, Vector2i(17, 3)):
+			floors += 1
+			assert_false((n as Node3D).visible, "the stairwell opens the floor of its square")
+	assert_eq(floors, 1, "the stairwell's square has its floor box")
 	v.queue_free()
 
 
@@ -129,7 +135,8 @@ func test_other_places_keep_their_2d_pieces() -> void:
 	await _frames(1)
 	assert_false("death_house_ground" in (ModelPiece.settings().get("places", []) as Array))
 	assert_eq(_models(v.board).size(), 0, "no models on the ground floor")
-	assert_true(v.board.find_children("WallModules*", "Node3D", false, false).is_empty(), "no 3D panelling")
+	for n in v.board.get_children():
+		assert_false(n.has_meta("wall_modules"), "no 3D panelling")
 	v.queue_free()
 
 

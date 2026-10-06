@@ -115,7 +115,7 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 			board.used_faces["%d,%d,%d,%d" % [cell.x + back.x, cell.y + back.y, -back.x, -back.y]] = true   # no portrait behind it
 		else:
 			model.position = Vector3(0, 0, -depth / 2.0)
-	_lights(model, info)
+	_extras(model, info)
 	return holder
 
 
@@ -133,7 +133,7 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	root.add_child(holder)
 	var model := instance(id)
 	holder.add_child(model)
-	_lights(model, info)
+	_extras(model, info)
 	return holder
 
 
@@ -169,6 +169,7 @@ static func dress_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> vo
 		if holder == null:
 			holder = Node3D.new()
 			holder.name = "WallModules"
+			holder.set_meta("wall_modules", id)
 			holder.position = board.cell_center(c)
 			board.add_child(holder)
 		var face := instance(id)
@@ -198,11 +199,9 @@ static func entry_side(board: ArenaBoard, cell: Vector2i) -> Vector2i:
 
 ## A stairwell opens its square's floor while it shows (a secret stair nobody has found leaves the floor whole).
 static func _open_floor(board: ArenaBoard, holder: Node3D, cell: Vector2i) -> void:
-	var at := board.cell_center(cell)
 	var floors: Array[Node3D] = []
 	for n in board.get_children():
-		if n is MeshInstance3D and str(n.name).begins_with("Floor") and absf((n as Node3D).position.x - at.x) < 0.01 \
-				and absf((n as Node3D).position.z - at.z) < 0.01:
+		if _is_floor_box(board, n, cell):
 			floors.append(n as Node3D)
 	var sync := func() -> void:
 		for f in floors:
@@ -217,8 +216,20 @@ static func _open_floor(board: ArenaBoard, holder: Node3D, cell: Vector2i) -> vo
 	sync.call()
 
 
-## Candle and hearth flames: the 2D flame (SetDressing.flame) at each socket named "flame", small ones for candles.
-static func _lights(model: Node3D, info: Dictionary) -> void:
+## The board's ground box on `cell`: a square slab whose top is the square's floor.
+static func _is_floor_box(board: ArenaBoard, n: Node, cell: Vector2i) -> bool:
+	if not (n is MeshInstance3D) or not ((n as MeshInstance3D).mesh is BoxMesh):
+		return false
+	var mi := n as MeshInstance3D
+	var size := (mi.mesh as BoxMesh).size
+	var at := board.cell_center(cell)
+	return absf(mi.position.x - at.x) < 0.01 and absf(mi.position.z - at.z) < 0.01 and is_equal_approx(size.x, 1.0) \
+		and absf(mi.position.y + size.y / 2.0 - board.floor_y(cell)) < 0.01
+
+
+## What a model takes from the 2D art (manifest "decals": a painting's canvas, figurines on a mantel, cut from the
+## 2D piece by pixel region and set at a socket, facing out) and the 2D flame at a "flame" socket (a hearth's fire).
+static func _extras(model: Node3D, info: Dictionary) -> void:
 	var sockets := info.get("sockets", {}) as Dictionary
 	for key: String in sockets:
 		if not key.begins_with("flame"):
@@ -228,6 +239,34 @@ static func _lights(model: Node3D, info: Dictionary) -> void:
 		if f != null:
 			f.position = Vector3(float(at[0]), float(at[1]), float(at[2]))
 			model.add_child(f)
+	for d: Variant in info.get("decals", []):
+		var decal := d as Dictionary
+		var art := str(decal.get("art", ""))
+		var at := sockets.get(str(decal.get("socket", "")), []) as Array
+		if not SetDressing.has_art(art) or at.size() != 3:
+			continue
+		var r := decal["region"] as Array
+		var px := float(decal.get("width", 0.5)) / float(r[2])
+		var middle := float(r[0]) + float(r[2]) / 2.0
+		# A row of small things (figurines on a mantel) is cut into one sprite each, turning to the camera.
+		var parts: Array = decal.get("split", [[float(r[0]), float(r[0]) + float(r[2])]]) as Array
+		for part: Variant in parts:
+			var x0 := float((part as Array)[0])
+			var x1 := float((part as Array)[1])
+			var sp := Sprite3D.new()
+			sp.name = "Decal_" + str(decal.get("socket", ""))
+			sp.texture = load("res://" + str((SetDressing.manifest()[art] as Dictionary)["file"])) as Texture2D
+			sp.region_enabled = true
+			sp.region_rect = Rect2(x0, float(r[1]), x1 - x0, float(r[3]))
+			sp.pixel_size = px
+			sp.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y if decal.has("split") else BaseMaterial3D.BILLBOARD_DISABLED
+			sp.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+			sp.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			sp.shaded = true
+			if str(decal.get("anchor", "center")) == "bottom":
+				sp.offset = Vector2(0, float(r[3]) / 2.0)
+			sp.position = Vector3(float(at[0]) + ((x0 + x1) / 2.0 - middle) * px, float(at[1]), float(at[2]))
+			model.add_child(sp)
 
 
 # --- Looks and picking ------------------------------------------------------------------------------------------
