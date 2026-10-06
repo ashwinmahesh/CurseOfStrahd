@@ -261,17 +261,20 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		return
 	ModeController.force(ModeController.Mode.DIALOGUE)
 	_dialogue_ref = ref
+	hud.visible = false
 	dialogue = DialogueUI.new()
 	add_child(dialogue)
 	dialogue.ended.connect(_dialogue_ended)
 	if not dialogue.play(DialogueRunner.new(st, Dice.roller, narrator), ref):
 		dialogue.queue_free()
 		dialogue = null
+		hud.visible = true
 		ModeController.force(ModeController.Mode.EXPLORATION)
 
 
 func _dialogue_ended(combat: String) -> void:
 	dialogue = null
+	hud.visible = true
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view.refresh_npcs()
 	_refresh()
@@ -401,6 +404,12 @@ func capture_shots(tool: Node, out: String) -> void:
 		if dialogue != null:
 			dialogue.queue_free()
 			dialogue = null
+	# --encounter=<id>: the fight in place, a few turns in.
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--encounter=") and view.start_encounter(a.get_slice("=", 1)):
+			await tool.call("wait_frames", 240)
+			tool.call("_shot", out + "_2b_fight.png")
+			return
 	var n := 3
 	for kind: String in ["sheet", "inventory", "journal", "party", "rest"]:
 		open_screen(kind, 2 if kind == "sheet" else 0)

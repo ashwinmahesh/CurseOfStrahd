@@ -90,11 +90,13 @@ func _open_creator(from_pregens: bool) -> void:
 			b["appearance"] = app
 			builds.append(b)
 	_creation = CreationScreen.new()
+	_box.visible = false
 	add_child(_creation)
 	_creation.finished.connect(_start)
 	_creation.cancelled.connect(func() -> void:
 		_creation.queue_free()
 		_creation = null
+		_box.visible = true
 		_title())
 	_creation.open_with(builds)
 
@@ -125,3 +127,20 @@ func _show_loads() -> void:
 func _load(slot: String) -> void:
 	if SaveSystem.load_slot(slot) == OK:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+## The capture tool's sequence: the title, the new-game choice, and character creation partway through.
+func capture_shots(tool: Node, out: String) -> void:
+	await tool.call("wait_frames", 10)
+	tool.call("_shot", out + "_1_title.png")
+	_new_game()
+	await tool.call("wait_frames", 10)
+	tool.call("_shot", out + "_2_new_game.png")
+	_open_creator(true)
+	await tool.call("wait_frames", 10)
+	tool.call("_shot", out + "_3_creation.png")
+	for step: int in [2, CharacterBuilder.Step.REVIEW]:
+		_creation.step = step
+		_creation.call("_draw")
+		await tool.call("wait_frames", 10)
+		tool.call("_shot", out + "_4_creation_step_%d.png" % step)
