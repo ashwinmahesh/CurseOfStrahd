@@ -91,7 +91,13 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
 	view.check_rolled.connect(func(t: String) -> void: hud.roll(t))
 	view.loot_opened.connect(_open_loot)
-	view.combat_started.connect(func(_v: CombatView) -> void: hud.visible = false)
+	view.combat_started.connect(func(cv: CombatView) -> void:
+		hud.visible = false
+		cv.menu_requested.connect(func() -> void:
+			if screen is PauseMenu:
+				close_screen()
+			else:
+				open_screen("menu", 0)))
 	view.combat_ended.connect(_after_combat)
 	add_child(view)
 	_refresh()
@@ -444,9 +450,14 @@ func open_screen(kind: String, index: int) -> void:
 			return
 	add_child(screen)
 	screen.call("open", self, st, index)
+	if kind == "menu" and view != null and view.in_combat:
+		# The fight waits while the menu is open.
+		screen.process_mode = Node.PROCESS_MODE_ALWAYS
+		get_tree().paused = true
 
 
 func close_screen() -> void:
+	get_tree().paused = false
 	if screen != null:
 		screen.queue_free()
 		screen = null

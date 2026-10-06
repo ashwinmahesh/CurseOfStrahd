@@ -24,7 +24,11 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	row.add_theme_constant_override("separation", 10)
 	if not game_over:
 		row.add_child(UiKit.button("Resume", func() -> void: root.call("close_screen")))
-		row.add_child(UiKit.button("Save in a new slot", _save_new))
+		var save := UiKit.button("Save in a new slot", _save_new)
+		if not SaveSystem.can_save():
+			save.disabled = true
+			save.tooltip_text = "In a fight the game saves itself at the start of each round; load that save to retry the round."
+		row.add_child(save)
 	row.add_child(UiKit.button("Quit to title", func() -> void: get_tree().change_scene_to_file("res://scenes/main_menu.tscn")))
 	frame.add_child(row)
 	if not game_over:
@@ -76,3 +80,9 @@ func _save(slot: String) -> void:
 func _load(slot: String) -> void:
 	if SaveSystem.load_slot(slot) == OK:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not game_over and event.is_action_pressed(&"combat_cancel") and root != null:
+		get_viewport().set_input_as_handled()
+		root.call("close_screen")

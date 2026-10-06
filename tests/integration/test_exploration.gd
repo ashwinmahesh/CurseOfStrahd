@@ -286,3 +286,17 @@ func test_exploring_spells_light_detect_and_find_traps() -> void:
 	v.apply_spell_effect("find_traps")
 	assert_eq(str((GameState.story.loc_state("test_hall")["traps"] as Dictionary).get("pit", "")), "found")
 	assert_true(opts.size() >= 0)
+
+
+func test_escape_in_combat_opens_the_menu_and_pauses_the_fight() -> void:
+	var v := _view()
+	assert_true(v.start_encounter("wolves"))
+	await _frames(4)
+	v.combat_view.menu_requested.emit()
+	await _frames(1)
+	assert_true(root.get("screen") is PauseMenu)
+	assert_true(get_tree().paused, "the fight waits")
+	v.combat_view.menu_requested.emit()
+	await _frames(1)
+	assert_true(root.get("screen") == null, "Escape again closes it")
+	assert_false(get_tree().paused)

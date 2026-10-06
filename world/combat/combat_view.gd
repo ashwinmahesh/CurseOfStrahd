@@ -8,6 +8,8 @@ extends Node3D
 signal finished(outcome: String)
 ## A new round is about to begin (round 1 right after Initiative): the moment the game may save a fight.
 signal round_started(round: int)
+## Escape with nothing to cancel: the game opens its pause menu (the arena has none).
+signal menu_requested
 
 const STEP_TIME := 0.13
 const AI_PAUSE := 0.35
@@ -511,9 +513,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			_confirm_at()
 	elif event.is_action_pressed(&"combat_cancel"):
-		if not hud.hide_details():
+		if hud.hide_details():
+			return
+		if mode == Mode.TARGET or not selected.is_empty():
 			_cancel_targeting()
 			_update_hover()
+		else:
+			menu_requested.emit()
 	elif event.is_action_pressed(&"combat_end_turn"):
 		_end_turn()
 	elif event.is_action_pressed(&"combat_tab_prev"):
