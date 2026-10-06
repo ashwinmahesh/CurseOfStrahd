@@ -35,7 +35,7 @@ func build(names: Array[String]) -> void:
 	help.offset_top = -64
 	add_child(help)
 
-	_toast = _label("", 22, Look.color("wick"))
+	_toast = _label("", 22, Look.color("gilt_light"))
 	_toast.anchor_left = 0.5
 	_toast.anchor_right = 0.5
 	_toast.offset_left = -300
@@ -48,7 +48,7 @@ func build(names: Array[String]) -> void:
 func set_leader(index: int) -> void:
 	for i in _rows.size():
 		var lead := i == index
-		_rows[i].add_theme_color_override("font_color", Look.color("flame") if lead else Look.color("vellum"))
+		_rows[i].add_theme_color_override("font_color", Look.color("gilt_light") if lead else Look.color("vellum"))
 		_rows[i].text = ("> " if lead else "   ") + _rows[i].text.substr(_rows[i].text.find(str(i + 1)))
 
 
@@ -75,8 +75,8 @@ func _label(text: String, size: int, colour: Color) -> Label:
 
 func _frame() -> StyleBoxFlat:
 	var s := StyleBoxFlat.new()
-	s.bg_color = Color(Look.color("ink"), 0.88)
-	s.border_color = Look.color("bone_dark")
+	s.bg_color = Color(Look.color("ui_black"), 0.88)
+	s.border_color = Look.color("gilt_dark")
 	s.set_border_width_all(2)
 	s.set_corner_radius_all(2)
 	s.set_content_margin_all(12)

@@ -74,7 +74,7 @@ func _save(slot: String) -> void:
 	if err == OK:
 		_list()
 	else:
-		_box.add_child(UiKit.label("Can't save now (in combat).", 15, "candle"))
+		_box.add_child(UiKit.label("Can't save now (in combat).", 15, "gilt"))
 
 
 func _load(slot: String) -> void:

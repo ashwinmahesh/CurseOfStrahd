@@ -48,7 +48,7 @@ func _draw() -> void:
 			index = i
 			selected = ""
 			_draw(), 14))
-	strip.add_child(UiKit.label("   Purse: %d gp" % int(st.gold), 16, "wick"))
+	strip.add_child(UiKit.label("   Purse: %d gp" % int(st.gold), 16, "gilt_light"))
 	_frame.add_child(strip)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
@@ -175,12 +175,12 @@ func _draw_card() -> void:
 		var p := WeaponProfile.build(ch, data)
 		_card.add_child(UiKit.label("For %s: %s" % [ch.name.get_slice(" ", 0), p.describe()], 15, "vellum", 500))
 		if not ch.weapon_proficient(data):
-			_card.add_child(UiKit.label("~ Not proficient: no Proficiency Bonus on attacks", 14, "candle", 500))
+			_card.add_child(UiKit.label("~ Not proficient: no Proficiency Bonus on attacks", 14, "gilt", 500))
 		var w := data.get("weapon", {}) as Dictionary
 		if str(w.get("mastery", "")) != "":
 			var usable := str(w["mastery"]) in ch.weapon_masteries or selected in ch.weapon_masteries
 			_card.add_child(UiKit.label("Mastery %s: %s%s" % [str(w["mastery"]).capitalize(), ActionCatalog.MASTERY_TEXT.get(str(w["mastery"]), ""),
-				"" if usable else " (not one of your masteries)"], 14, "lilac" if usable else "bone", 500))
+				"" if usable else " (not one of your masteries)"], 14, "moonlight" if usable else "bone", 500))
 		var main := ch.equipped("main_hand")
 		if Gear.is_weapon(main) and str(main["id"]) != selected:
 			var mp := WeaponProfile.build(ch, main)
@@ -192,9 +192,9 @@ func _draw_card() -> void:
 			"" if int(arm.get("dex_cap", 99)) == 0 else " + Dex" + (" (max %d)" % int(arm["dex_cap"]) if int(arm.get("dex_cap", 99)) < 10 else ""),
 			", Stealth Disadvantage" if bool(arm.get("stealth_disadvantage", false)) else ""], 15, "vellum", 500))
 		if not ch.has_armor_training(str(arm["kind"])):
-			_card.add_child(UiKit.label("~ No training: Disadvantage on Strength and Dexterity rolls, and no spellcasting", 14, "candle", 500))
+			_card.add_child(UiKit.label("~ No training: Disadvantage on Strength and Dexterity rolls, and no spellcasting", 14, "gilt", 500))
 		if int(arm.get("strength", 0)) > ch.ability_score(&"str"):
-			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "candle", 500))
+			_card.add_child(UiKit.label("~ Needs Strength %d: Speed -10 ft" % int(arm["strength"]), 14, "gilt", 500))
 	_card.add_child(UiKit.label(str(data.get("text", data.get("summary", ""))), 14, "vellum", 500))
 	# Magic items: rarity and attunement (three items at most; attuning takes a Short Rest).
 	var magic := data.get("magic", {}) as Dictionary
@@ -205,7 +205,7 @@ func _draw_card() -> void:
 			req = " (requires attunement %s)" % needs
 		elif needs is bool and bool(needs):
 			req = " (requires attunement)"
-		_card.add_child(UiKit.label("%s magic item%s" % [str(magic.get("rarity", "")).replace("_", " ").capitalize(), req], 14, "lilac", 500))
+		_card.add_child(UiKit.label("%s magic item%s" % [str(magic.get("rarity", "")).replace("_", " ").capitalize(), req], 14, "moonlight", 500))
 		if req != "":
 			if selected in ch.attuned:
 				_card.add_child(UiKit.button("End attunement", func() -> void:

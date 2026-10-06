@@ -31,7 +31,7 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 		for text: String in q["entries"]:
 			quests.add_child(UiKit.label(text, 15, "vellum", 1080))
 		for o: String in q["objectives"]:
-			quests.add_child(UiKit.label("◇ " + o, 15, "wick", 1080))
+			quests.add_child(UiKit.label("◇ " + o, 15, "gilt_light", 1080))
 	tabs.add_child(UiKit.scroll(quests, Vector2(1140, 600)))
 	(tabs.get_child(0) as Control).name = "Quests"
 	var codex := VBoxContainer.new()

@@ -25,7 +25,7 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	var loc := Compendium.shared().get_entry("locations", st.location)
 	var rule := str(loc.get("rest", "risky"))
 	if rule == "no":
-		frame.add_child(UiKit.label("You can't rest here: %s" % loc.get("rest_text", "this place won't let you."), 17, "candle", 1000))
+		frame.add_child(UiKit.label("You can't rest here: %s" % loc.get("rest_text", "this place won't let you."), 17, "gilt", 1000))
 		return
 	frame.add_child(UiKit.label("Short Rest: 1 hour. Spend Hit Point Dice to heal; some features come back." + 
 		"\nLong Rest: 8 hours. All Hit Points, Hit Point Dice, spell slots and features come back%s." % (
@@ -38,7 +38,7 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	row.add_child(UiKit.button("Finish the Short Rest (1 hour)", _finish_short))
 	row.add_child(UiKit.button("Take a Long Rest (8 hours)", _long_rest.bind(rule)))
 	frame.add_child(row)
-	_log = UiKit.label("", 15, "wick", 1040)
+	_log = UiKit.label("", 15, "gilt_light", 1040)
 	frame.add_child(_log)
 	_draw()
 
@@ -146,7 +146,7 @@ func _arcane_recovery_row(ch: Character) -> void:
 		return
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
-	row.add_child(UiKit.label("%s · Arcane Recovery (%d slot level%s left to recover):" % [ch.name.get_slice(" ", 0), budget, "" if budget == 1 else "s"], 15, "lilac"))
+	row.add_child(UiKit.label("%s · Arcane Recovery (%d slot level%s left to recover):" % [ch.name.get_slice(" ", 0), budget, "" if budget == 1 else "s"], 15, "moonlight"))
 	var any := false
 	for lvl in range(1, mini(5, budget) + 1):
 		if ch.slots_used[lvl - 1] <= 0:

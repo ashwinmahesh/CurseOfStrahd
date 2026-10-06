@@ -19,7 +19,7 @@ static func build(ch: Character, before: Character = null) -> VBoxContainer:
 		if before != null:
 			mark = _mark(score, before.ability_score(ab))
 		var l := UiKit.label("%s %d (%s)%s" % [Creature.ABILITY_SHORT[ab], score, UiKit.signed(ch.ability_mod(ab)), mark], 15,
-			"wick" if mark != "" else "vellum")
+			"gilt_light" if mark != "" else "vellum")
 		l.tooltip_text = ch.ability_breakdown(ab).describe()
 		l.mouse_filter = Control.MOUSE_FILTER_PASS
 		l.custom_minimum_size = Vector2(110, 0)
@@ -58,7 +58,7 @@ static func build(ch: Character, before: Character = null) -> VBoxContainer:
 		if slots[i] > 0:
 			parts.append("%d×L%d" % [slots[i], i + 1])
 	if not parts.is_empty():
-		box.add_child(UiKit.label("Spell slots: " + " ".join(parts), 14, "lilac"))
+		box.add_child(UiKit.label("Spell slots: " + " ".join(parts), 14, "moonlight"))
 	return box
 
 

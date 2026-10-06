@@ -19,14 +19,14 @@ static func label(text: String, size: int = 16, colour: String = "vellum", wrap_
 
 
 static func title(text: String) -> Label:
-	return label(text, 26, "flame")
+	return label(text, 26, "gilt_light")
 
 
 static func header(text: String) -> Label:
-	return label(text, 18, "candle")
+	return label(text, 18, "gilt")
 
 
-static func style(bg: String = "ink", border: String = "bone_dark", width: int = 2, alpha: float = 0.95) -> StyleBoxFlat:
+static func style(bg: String = "ui_black", border: String = "gilt_dark", width: int = 2, alpha: float = 0.95) -> StyleBoxFlat:
 	var s := StyleBoxFlat.new()
 	s.bg_color = Color(Look.color(bg), alpha)
 	s.border_color = Look.color(border)
@@ -36,7 +36,7 @@ static func style(bg: String = "ink", border: String = "bone_dark", width: int =
 	return s
 
 
-static func panel(bg: String = "ink", border: String = "bone_dark") -> PanelContainer:
+static func panel(bg: String = "ui_black", border: String = "gilt_dark") -> PanelContainer:
 	var p := PanelContainer.new()
 	p.add_theme_stylebox_override("panel", style(bg, border))
 	return p
@@ -48,7 +48,7 @@ static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = 
 	dim.color = Color(Look.color("void"), 0.75)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	root.add_child(dim)
-	var p := panel("ink", "bone")
+	var p := panel("ui_black", "bone")
 	p.anchor_left = 0.5
 	p.anchor_right = 0.5
 	p.anchor_top = 0.5
@@ -74,13 +74,13 @@ static func button(text: String, on_press: Callable, size: int = 16) -> Button:
 	var b := Button.new()
 	b.text = text
 	b.add_theme_font_size_override("font_size", size)
-	b.add_theme_stylebox_override("normal", style("grave", "bone_dark", 2))
-	b.add_theme_stylebox_override("hover", style("ash_violet", "flame", 2))
-	b.add_theme_stylebox_override("pressed", style("plum", "flame", 2))
-	b.add_theme_stylebox_override("focus", style("ash_violet", "wick", 3))
-	b.add_theme_stylebox_override("disabled", style("ink", "grave", 2))
+	b.add_theme_stylebox_override("normal", style("ui_oxblood", "gilt_dark", 2))
+	b.add_theme_stylebox_override("hover", style("ui_wine", "gilt_light", 2))
+	b.add_theme_stylebox_override("pressed", style("blood", "gilt_light", 2))
+	b.add_theme_stylebox_override("focus", style("ui_wine", "gilt_light", 3))
+	b.add_theme_stylebox_override("disabled", style("ui_black", "ui_oxblood", 2))
 	b.add_theme_color_override("font_color", Look.color("vellum"))
-	b.add_theme_color_override("font_disabled_color", Look.color("bone_dark"))
+	b.add_theme_color_override("font_disabled_color", Look.color("gilt_dark"))
 	b.pressed.connect(on_press)
 	return b
 

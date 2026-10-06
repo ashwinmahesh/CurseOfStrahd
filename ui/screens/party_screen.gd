@@ -36,7 +36,7 @@ func _draw() -> void:
 		var lost: Array[String] = []
 		for f in st.fallen:
 			lost.append("%s, who %s (day %d)" % [f["name"], f["how"], int(f["day"])])
-		_frame.add_child(UiKit.label("Remembered: " + "; ".join(lost), 15, "ash_violet", 1400))
+		_frame.add_child(UiKit.label("Remembered: " + "; ".join(lost), 15, "ui_wine", 1400))
 	var lower := HBoxContainer.new()
 	lower.add_theme_constant_override("separation", 30)
 	_frame.add_child(lower)
@@ -46,7 +46,7 @@ func _draw() -> void:
 		var ch := st.party[i]
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 6)
-		row.add_child(UiKit.label("%d. %s%s" % [i + 1, "★ " if i == 0 else "", ch.name], 15, "flame" if i == 0 else "vellum"))
+		row.add_child(UiKit.label("%d. %s%s" % [i + 1, "★ " if i == 0 else "", ch.name], 15, "gilt_light" if i == 0 else "vellum"))
 		row.add_child(UiKit.label("Passive Perception %d · Stealth %s · Darkvision %s" % [ch.passive_score(&"perception").total(),
 			ch.skill_bonus(&"stealth").signed(), ("%d ft" % ch.darkvision()) if ch.darkvision() > 0 else "none"], 13, "parchment"))
 		var up := UiKit.button("▲", func() -> void: _move(i, -1), 13)
@@ -61,7 +61,7 @@ func _draw() -> void:
 		if st.party[i].passive_score(&"perception").total() > st.party[best_spotter].passive_score(&"perception").total():
 			best_spotter = i
 	if best_spotter == st.party.size() - 1 and st.party.size() > 1:
-		order.add_child(UiKit.label("Tip: your best spotter walks last; traps are noticed by whoever comes near first.", 13, "candle", 600))
+		order.add_child(UiKit.label("Tip: your best spotter walks last; traps are noticed by whoever comes near first.", 13, "gilt", 600))
 	lower.add_child(order)
 	var cov := PartyCoverage.analyze(st.party)
 	var skills := VBoxContainer.new()
@@ -78,7 +78,7 @@ func _draw() -> void:
 			"" if bool(e["proficient"]) else " ~"], 13, "vellum" if bool(e["proficient"]) else "bone"))
 	skills.add_child(grid)
 	for g: String in cov["gaps"]:
-		skills.add_child(UiKit.label("· " + g, 13, "candle", 760))
+		skills.add_child(UiKit.label("· " + g, 13, "gilt", 760))
 	lower.add_child(skills)
 
 
@@ -86,7 +86,7 @@ func _column(ch: Character, i: int) -> VBoxContainer:
 	var col := VBoxContainer.new()
 	col.custom_minimum_size = Vector2(350, 0)
 	col.add_child(UiKit.portrait(CombatToken.art_for(ch), 100))
-	col.add_child(UiKit.label(ch.name, 18, "flame"))
+	col.add_child(UiKit.label(ch.name, 18, "gilt_light"))
 	col.add_child(UiKit.label(ch.class_summary(), 14, "parchment", 340))
 	var hp := "HP %d/%d" % [ch.hp, ch.max_hp()]
 	if ch.dead:
@@ -105,15 +105,15 @@ func _column(ch: Character, i: int) -> VBoxContainer:
 		if slots[l] > 0:
 			parts.append("L%d %d/%d" % [l + 1, ch.slots_left(l + 1), slots[l]])
 	if not parts.is_empty():
-		col.add_child(UiKit.label("Slots: " + " · ".join(parts), 13, "lilac"))
+		col.add_child(UiKit.label("Slots: " + " · ".join(parts), 13, "moonlight"))
 	for res_id: String in ch.resources:
 		var r := ch.resources[res_id] as Dictionary
 		col.add_child(UiKit.label("%s: %d/%d" % [r["name"], int(r["max"]) - int(r["used"]), int(r["max"])], 13, "vellum"))
 	var conds := ch.active_conditions()
 	if not conds.is_empty():
-		col.add_child(UiKit.label(", ".join(conds.map(func(c: StringName) -> String: return str(c).capitalize())), 13, "candle", 340))
+		col.add_child(UiKit.label(", ".join(conds.map(func(c: StringName) -> String: return str(c).capitalize())), 13, "gilt", 340))
 	if ch.exhaustion > 0:
-		col.add_child(UiKit.label("Exhaustion %d" % ch.exhaustion, 13, "candle"))
+		col.add_child(UiKit.label("Exhaustion %d" % ch.exhaustion, 13, "gilt"))
 	if st.can_level_up(ch):
 		col.add_child(UiKit.button("▲ Level up", func() -> void: root.call("open_screen", "level_up", i), 14))
 	col.add_child(UiKit.button("Sheet", func() -> void: root.call("open_screen", "sheet", i), 13))

@@ -39,7 +39,7 @@ func _draw() -> void:
 		top.add_child(UiKit.button(("▸ " if i == index else "") + st.party[i].name, func() -> void:
 			index = i
 			_draw(), 14))
-	top.add_child(UiKit.label("   Purse: %s gp" % _money(st.gold), 18, "wick"))
+	top.add_child(UiKit.label("   Purse: %s gp" % _money(st.gold), 18, "gilt_light"))
 	top.add_child(UiKit.button("Done", _close, 15))
 	_frame.add_child(top)
 	if _note != "":

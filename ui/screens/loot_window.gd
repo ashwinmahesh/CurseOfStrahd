@@ -48,7 +48,7 @@ func _redraw() -> void:
 	for c in _list.get_children():
 		c.queue_free()
 	if gold > 0.0:
-		_list.add_child(UiKit.label("%d gp" % int(gold), 16, "wick"))
+		_list.add_child(UiKit.label("%d gp" % int(gold), 16, "gilt_light"))
 	if items.is_empty() and gold <= 0.0:
 		_list.add_child(UiKit.label("Empty.", 15, "parchment"))
 	for i in items.size():

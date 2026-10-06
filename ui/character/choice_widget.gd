@@ -21,9 +21,9 @@ static func create(c: Choice) -> ChoiceWidget:
 func _build() -> void:
 	add_theme_constant_override("separation", 6)
 	var head := HBoxContainer.new()
-	var t := UiKit.label(_title(), 17, "candle")
+	var t := UiKit.label(_title(), 17, "gilt")
 	head.add_child(t)
-	_status = UiKit.label(_status_text(), 15, "bile" if choice.is_complete() else "candle")
+	_status = UiKit.label(_status_text(), 15, "bile" if choice.is_complete() else "gilt")
 	head.add_child(_status)
 	add_child(head)
 	if choice.kind == "ability_increase":
@@ -52,13 +52,13 @@ func _build() -> void:
 		b.tooltip_text = tip
 		b.disabled = not o.legal and not o.id in choice.picks
 		b.add_theme_font_size_override("font_size", 14)
-		b.add_theme_stylebox_override("normal", UiKit.style("grave", "bone_dark", 1))
-		b.add_theme_stylebox_override("pressed", UiKit.style("plum", "wick", 2))
-		b.add_theme_stylebox_override("hover", UiKit.style("ash_violet", "flame", 1))
-		b.add_theme_stylebox_override("disabled", UiKit.style("ink", "grave", 1))
+		b.add_theme_stylebox_override("normal", UiKit.style("ui_oxblood", "gilt_dark", 1))
+		b.add_theme_stylebox_override("pressed", UiKit.style("blood", "gilt_light", 2))
+		b.add_theme_stylebox_override("hover", UiKit.style("ui_wine", "gilt_light", 1))
+		b.add_theme_stylebox_override("disabled", UiKit.style("ui_black", "ui_oxblood", 1))
 		b.add_theme_color_override("font_color", Look.color("vellum"))
-		b.add_theme_color_override("font_pressed_color", Look.color("wick"))
-		b.add_theme_color_override("font_disabled_color", Look.color("bone_dark"))
+		b.add_theme_color_override("font_pressed_color", Look.color("gilt_light"))
+		b.add_theme_color_override("font_disabled_color", Look.color("gilt_dark"))
 		var id := o.id
 		b.toggled.connect(func(on: bool) -> void: _toggle(id, on))
 		grid.add_child(b)

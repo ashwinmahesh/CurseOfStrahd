@@ -129,7 +129,7 @@ func _abilities(ch: Character) -> VBoxContainer:
 	grid.add_theme_constant_override("h_separation", 30)
 	for ab: StringName in Abilities.ALL:
 		var col := VBoxContainer.new()
-		var l := UiKit.label("%s %d (%s)" % [Creature.ABILITY_NAMES[ab], ch.ability_score(ab), UiKit.signed(ch.ability_mod(ab))], 18, "flame")
+		var l := UiKit.label("%s %d (%s)" % [Creature.ABILITY_NAMES[ab], ch.ability_score(ab), UiKit.signed(ch.ability_mod(ab))], 18, "gilt_light")
 		l.tooltip_text = ch.ability_breakdown(ab).describe()
 		l.mouse_filter = Control.MOUSE_FILTER_PASS
 		col.add_child(l)
@@ -154,7 +154,7 @@ func _features(ch: Character) -> VBoxContainer:
 		var line := "%s · %s" % [f["name"], f["source"]]
 		if str(f["implemented"]) == "text":
 			line += " · rules text only for now"
-		box.add_child(UiKit.label(line, 16, "flame"))
+		box.add_child(UiKit.label(line, 16, "gilt_light"))
 		var text := str(f["text"]) if str(f["text"]) != "" else str(f["summary"])
 		if text != "":
 			box.add_child(UiKit.label(text, 14, "vellum", 1380))
@@ -209,7 +209,7 @@ func _cast_now(ch: Character, box: VBoxContainer) -> void:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		var lvl := int(o["level"])
-		row.add_child(UiKit.label("%s%s" % [o["name"], "" if lvl == 0 else " (level %d)" % lvl], 15, "flame", 260))
+		row.add_child(UiKit.label("%s%s" % [o["name"], "" if lvl == 0 else " (level %d)" % lvl], 15, "gilt_light", 260))
 		if not bool(o["legal"]):
 			row.add_child(UiKit.label(str(o["reason"]), 14, "parchment"))
 			box.add_child(row)
@@ -251,7 +251,7 @@ func _cast_utility(ch: Character, box: VBoxContainer) -> void:
 		row.add_theme_constant_override("separation", 8)
 		var lvl := int(o["level"])
 		row.add_child(UiKit.label("%s%s%s" % [o["name"], "" if lvl == 0 else " (level %d)" % lvl, " · active" if st.spell_active(str(o["id"])) else ""],
-			15, "flame", 260))
+			15, "gilt_light", 260))
 		var id := str(o["id"])
 		var cast := UiKit.button("Cast", func() -> void: _do_utility(ch, id, false), 14)
 		cast.disabled = not bool(o["legal"])
@@ -287,19 +287,19 @@ func _effects(ch: Character) -> VBoxContainer:
 		box.add_child(UiKit.label("Nothing affecting %s right now." % ch.name, 15, "parchment"))
 	for c in conds:
 		var data := Compendium.shared().condition_data(str(c))
-		box.add_child(UiKit.label("%s · from %s" % [str(c).capitalize(), ", ".join(ch.condition_sources(c))], 16, "flame"))
+		box.add_child(UiKit.label("%s · from %s" % [str(c).capitalize(), ", ".join(ch.condition_sources(c))], 16, "gilt_light"))
 		box.add_child(UiKit.label(str(data.get("summary", "")), 14, "vellum", 1380))
 	if ch.exhaustion > 0:
-		box.add_child(UiKit.label("Exhaustion %d" % ch.exhaustion, 16, "candle"))
+		box.add_child(UiKit.label("Exhaustion %d" % ch.exhaustion, 16, "gilt"))
 	for e in ch.effects:
 		var mods: Array[String] = []
 		for m in e.modifiers:
 			mods.append(m.describe())
-		box.add_child(UiKit.label("%s · %s%s" % [e.name, e.describe_duration(), " · Concentration" if e.concentration != null else ""], 16, "lilac"))
+		box.add_child(UiKit.label("%s · %s%s" % [e.name, e.describe_duration(), " · Concentration" if e.concentration != null else ""], 16, "moonlight"))
 		if not mods.is_empty():
 			box.add_child(UiKit.label(", ".join(mods), 14, "vellum", 1380))
 	if ch.concentration != null:
-		box.add_child(UiKit.label("Concentrating on %s" % ch.concentration.name, 15, "wick"))
+		box.add_child(UiKit.label("Concentrating on %s" % ch.concentration.name, 15, "gilt_light"))
 	return box
 
 

@@ -27,6 +27,13 @@ PALETTE = [
     ("skin_shadow", "7a4a3c"), ("skin", "c48a6a"), ("skin_light", "e6b896"),
 ]
 
+# Menus and overlays only (owner feedback after Phase 3: crimson and black with aged gold trim). Written to
+# ui_palette.json, never to the strip or the .gpl, so the world's palette pass and the sprite pipeline don't change.
+UI_PALETTE = [
+    ("ui_black", "120709"), ("ui_oxblood", "2a0c12"), ("ui_wine", "4f1420"),
+    ("gilt_dark", "6b4f24"), ("gilt", "b08a3e"), ("gilt_light", "e2c475"),
+]
+
 
 def png_strip(colors, path):
     # one row: filter byte then RGB triples
@@ -46,7 +53,8 @@ def main():
     (OUT / "strahd_palette.gpl").write_text("\n".join(lines) + "\n")
     (OUT / "palette.json").write_text(json.dumps({n: "#" + h for n, h in PALETTE}, indent=2) + "\n")
     png_strip([h for _, h in PALETTE], OUT / "strahd_palette.png")
-    print(f"{len(PALETTE)} colours written to {OUT.relative_to(ROOT)}")
+    (OUT / "ui_palette.json").write_text(json.dumps({n: "#" + h for n, h in UI_PALETTE}, indent=2) + "\n")
+    print(f"{len(PALETTE)} colours (+{len(UI_PALETTE)} for the UI) written to {OUT.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

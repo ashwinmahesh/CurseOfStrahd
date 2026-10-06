@@ -72,12 +72,12 @@ func _redraw() -> void:
 		var r := ctl.roll_hit_points(Dice.roller)
 		_hp_note = "Rolled %d on the d%d, + Con %d (minimum 1)" % [r, int(hp["die"]), int(hp["con"])]
 		_redraw(), 14))
-	hp_row.add_child(UiKit.label(_hp_note if _hp_note != "" else "Fixed value unless you roll", 15, "wick"))
+	hp_row.add_child(UiKit.label(_hp_note if _hp_note != "" else "Fixed value unless you roll", 15, "gilt_light"))
 	_body.add_child(hp_row)
 	# 3. Features
 	_body.add_child(UiKit.header("3 · New features"))
 	for f in ctl.new_features():
-		_body.add_child(UiKit.label("%s (%s)" % [f["name"], f["source"]], 16, "flame"))
+		_body.add_child(UiKit.label("%s (%s)" % [f["name"], f["source"]], 16, "gilt_light"))
 		_body.add_child(UiKit.label(str(f["text"]) if str(f["text"]) != "" else str(f["summary"]), 14, "vellum", 1000))
 	# 4. Choices
 	var choices := ctl.level_choices()
@@ -94,7 +94,7 @@ func _redraw() -> void:
 	for r in ctl.changes():
 		_body.add_child(UiKit.label("%s: %s → %s" % [r["label"], r["before"], r["after"]], 15, "vellum", 1000))
 	for w2 in ctl.warnings():
-		_body.add_child(UiKit.label("~ " + w2, 14, "candle", 1000))
+		_body.add_child(UiKit.label("~ " + w2, 14, "gilt", 1000))
 	var errs := ctl.errors()
 	for e in errs:
 		_body.add_child(UiKit.label("! " + e, 14, "vampire_red", 1000))

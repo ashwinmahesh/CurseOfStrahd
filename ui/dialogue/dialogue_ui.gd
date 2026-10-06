@@ -40,8 +40,8 @@ func _ready() -> void:
 	add_child(dim)
 	_panel = PanelContainer.new()
 	var s := StyleBoxFlat.new()
-	s.bg_color = Color(Look.color("ink"), 0.95)
-	s.border_color = Look.color("bone_dark")
+	s.bg_color = Color(Look.color("ui_black"), 0.95)
+	s.border_color = Look.color("gilt_dark")
 	s.set_border_width_all(3)
 	s.set_corner_radius_all(4)
 	s.set_content_margin_all(16)
@@ -64,7 +64,7 @@ func _ready() -> void:
 	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	left.add_child(_portrait)
-	_name = _label("", 22, "flame")
+	_name = _label("", 22, "gilt_light")
 	left.add_child(_name)
 	row.add_child(left)
 	var right := VBoxContainer.new()
@@ -102,7 +102,7 @@ func _tarokka_card(card_id: String, slot: String) -> Control:
 	var face := PanelContainer.new()
 	var st := StyleBoxFlat.new()
 	st.bg_color = Look.color("vellum")
-	st.border_color = Look.color("blood_deep") if str(card.get("deck", "")) == "high" else Look.color("ink")
+	st.border_color = Look.color("blood_deep") if str(card.get("deck", "")) == "high" else Look.color("ui_black")
 	st.set_border_width_all(4)
 	st.set_corner_radius_all(8)
 	st.set_content_margin_all(8)
@@ -121,14 +121,14 @@ func _tarokka_card(card_id: String, slot: String) -> Control:
 		v.add_child(tex)
 	else:
 		var glyph := {"swords": "⚔", "stars": "✶", "coins": "◉", "glyphs": "✠"}.get(str(card.get("suit", "")), "☾") as String
-		var big := _label(glyph, 64, "blood_deep" if str(card.get("deck", "")) == "high" else "ink")
+		var big := _label(glyph, 64, "blood_deep" if str(card.get("deck", "")) == "high" else "ui_black")
 		big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(big)
 		if card.has("value"):
-			var num := _label("Master" if int(card["value"]) == 10 else str(int(card["value"])), 18, "ink")
+			var num := _label("Master" if int(card["value"]) == 10 else str(int(card["value"])), 18, "ui_black")
 			num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			v.add_child(num)
-	var nm := _label(str(card.get("name", card_id)), 17, "ink")
+	var nm := _label(str(card.get("name", card_id)), 17, "ui_black")
 	nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nm.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(nm)
@@ -248,13 +248,13 @@ func _show_options(options: Array) -> void:
 			extra = "  (%s %+d, %d%%)" % [str(check["who"]).get_slice(" ", 0), int(check["bonus"]), roundi(float(check["chance"]) * 100.0)]
 		b.text = "%d. %s%s%s" % [i + 1, (label + " ") if label != "" else "", opt["text"], extra]
 		b.flat = true
-		b.add_theme_color_override("font_color", Look.color("flame") if label != "" else Look.color("vellum"))
-		b.add_theme_color_override("font_hover_color", Look.color("wick"))
+		b.add_theme_color_override("font_color", Look.color("gilt_light") if label != "" else Look.color("vellum"))
+		b.add_theme_color_override("font_hover_color", Look.color("gilt_light"))
 		var idx := i
 		if not bool(opt.get("enabled", true)):
 			b.disabled = true
 			b.tooltip_text = str(opt.get("reason", ""))
-			b.add_theme_color_override("font_disabled_color", Look.color("ash_violet"))
+			b.add_theme_color_override("font_disabled_color", Look.color("ui_wine"))
 		b.pressed.connect(func() -> void: _choose(idx))
 		_options.add_child(b)
 		_option_buttons.append(b)

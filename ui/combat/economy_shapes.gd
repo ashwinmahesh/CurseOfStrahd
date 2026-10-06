@@ -21,13 +21,13 @@ func set_state(a: bool, b: bool, r: bool) -> void:
 
 func _draw() -> void:
 	var font := get_theme_default_font()
-	var spent := Look.color("ash_violet")
-	var items := [["Action", action, "moss"], ["Bonus", bonus, "ember"], ["Reaction", reaction, "plum"]]
+	var spent := Look.color("ui_wine")
+	var items := [["Action", action, "moss"], ["Bonus", bonus, "gilt"], ["Reaction", reaction, "mist_blue"]]
 	for i in items.size():
 		var it := items[i] as Array
 		var cx := 40.0 + i * 100.0
 		var col := Look.color(str(it[2])) if bool(it[1]) else spent
-		var edge := Look.color("vellum") if bool(it[1]) else Look.color("grave")
+		var edge := Look.color("vellum") if bool(it[1]) else Look.color("ui_oxblood")
 		match i:
 			0:
 				draw_circle(Vector2(cx, 22), 16, col)
@@ -43,4 +43,4 @@ func _draw() -> void:
 		var text := str(it[0])
 		var w := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
 		draw_string(font, Vector2(cx - w / 2.0, 60), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15,
-			Look.color("vellum") if bool(it[1]) else Look.color("bone_dark"))
+			Look.color("vellum") if bool(it[1]) else Look.color("gilt_dark"))

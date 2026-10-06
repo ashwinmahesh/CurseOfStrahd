@@ -7,16 +7,20 @@ const CEL_SHADER := preload("res://shaders/cel.gdshader")
 const POST_SHADER := preload("res://shaders/post/strahd_post.gdshader")
 const PALETTE_TEX := preload("res://art/palette/strahd_palette.png")
 const PALETTE_JSON := "res://art/palette/palette.json"
+## Menu-only colours (crimson, black and gilt): never in the strip, so the world's palette pass doesn't change.
+const UI_PALETTE_JSON := "res://art/palette/ui_palette.json"
 
 static var _palette: Dictionary = {}
+static var _colours: Dictionary = {}
 
 
 static func color(name: String) -> Color:
 	if _palette.is_empty():
-		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(PALETTE_JSON))
-		_palette = data as Dictionary
-	assert(_palette.has(name), "Unknown palette colour: %s" % name)
-	return Color(str(_palette[name]))
+		_palette = JSON.parse_string(FileAccess.get_file_as_string(PALETTE_JSON)) as Dictionary
+		_colours = _palette.duplicate()
+		_colours.merge(JSON.parse_string(FileAccess.get_file_as_string(UI_PALETTE_JSON)) as Dictionary)
+	assert(_colours.has(name), "Unknown palette colour: %s" % name)
+	return Color(str(_colours[name]))
 
 
 static func palette_size() -> int:

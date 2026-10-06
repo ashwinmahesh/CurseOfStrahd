@@ -16,7 +16,7 @@ signal radial_picked(choice: String)
 ## Right-click → "Cast at level N" on a spell slot.
 signal cast_at_level(action: Dictionary, level: int)
 
-const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "ember", "reaction": "plum", "free": "slate",
+const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
 const SLOT_SIZE := Vector2(132, 50)
 const CONTROLS: Array[String] = [
@@ -123,7 +123,7 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 	_controls.visible = false
 	var cbox := VBoxContainer.new()
 	_controls.add_child(cbox)
-	cbox.add_child(_label("Controls (F1 or Start to close)", 20, "flame"))
+	cbox.add_child(_label("Controls (F1 or Start to close)", 20, "gilt_light"))
 	for line: String in CONTROLS:
 		var l := _label(line, 15, "vellum")
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -153,7 +153,7 @@ func _build_strip() -> void:
 	row.add_theme_constant_override("separation", 8)
 	panel.add_child(row)
 	var head := VBoxContainer.new()
-	_round_label = _label("Round 1", 24, "flame")
+	_round_label = _label("Round 1", 24, "gilt_light")
 	head.add_child(_round_label)
 	head.add_child(_label("turn order", 14, "parchment"))
 	row.add_child(head)
@@ -266,7 +266,7 @@ func _build_hotbar() -> void:
 	var fill := StyleBoxFlat.new()
 	fill.bg_color = Look.color("sickly")
 	var back := StyleBoxFlat.new()
-	back.bg_color = Look.color("grave")
+	back.bg_color = Look.color("ui_oxblood")
 	_move_bar.add_theme_stylebox_override("fill", fill)
 	_move_bar.add_theme_stylebox_override("background", back)
 	mv.add_child(_move_bar)
@@ -281,7 +281,7 @@ func _build_hotbar() -> void:
 	top.add_child(_slot_box)
 	_pips = HBoxContainer.new()
 	top.add_child(_pips)
-	_turn_note = _label("", 16, "flame")
+	_turn_note = _label("", 16, "gilt_light")
 	top.add_child(_turn_note)
 	_tabs = HBoxContainer.new()
 	_tabs.add_theme_constant_override("separation", 6)
@@ -299,10 +299,10 @@ func _build_hotbar() -> void:
 	_end_turn.text = "End\nTurn"
 	_end_turn.custom_minimum_size = Vector2(108, 108)
 	_end_turn.add_theme_font_size_override("font_size", 20)
-	_end_turn.add_theme_stylebox_override("normal", _round_style("candle"))
-	_end_turn.add_theme_stylebox_override("hover", _round_style("flame"))
-	_end_turn.add_theme_stylebox_override("pressed", _round_style("ember"))
-	_end_turn.add_theme_stylebox_override("disabled", _round_style("ash_violet"))
+	_end_turn.add_theme_stylebox_override("normal", _round_style("gilt"))
+	_end_turn.add_theme_stylebox_override("hover", _round_style("gilt_light"))
+	_end_turn.add_theme_stylebox_override("pressed", _round_style("gilt_dark"))
+	_end_turn.add_theme_stylebox_override("disabled", _round_style("ui_wine"))
 	_end_turn.add_theme_color_override("font_color", Look.color("void"))
 	_end_turn.pressed.connect(func() -> void: end_turn_pressed.emit())
 	_end_turn.anchor_left = 0.5
@@ -323,7 +323,7 @@ func _build_hotbar() -> void:
 
 
 func _build_tooltip() -> void:
-	_tooltip = _panel("vellum", "ink")
+	_tooltip = _panel("vellum", "ui_black")
 	_tooltip.visible = false
 	_tooltip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tooltip_box = VBoxContainer.new()
@@ -332,7 +332,7 @@ func _build_tooltip() -> void:
 
 
 func _build_prompt() -> void:
-	_prompt = _panel("flame")
+	_prompt = _panel("gilt_light")
 	_prompt.anchor_left = 0.5
 	_prompt.anchor_right = 0.5
 	_prompt.anchor_top = 0.5
@@ -345,7 +345,7 @@ func _build_prompt() -> void:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
 	_prompt.add_child(box)
-	_prompt_title = _label("", 22, "flame")
+	_prompt_title = _label("", 22, "gilt_light")
 	box.add_child(_prompt_title)
 	_prompt_text = _label("", 16, "vellum")
 	_prompt_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -388,7 +388,7 @@ func _build_details() -> void:
 
 
 func _build_confirm() -> void:
-	_confirm = _panel("flame")
+	_confirm = _panel("gilt_light")
 	_confirm.anchor_left = 0.5
 	_confirm.anchor_right = 0.5
 	_confirm.anchor_top = 0.5
@@ -417,7 +417,7 @@ func _build_confirm() -> void:
 
 
 func _build_banner() -> void:
-	_banner = _label("", 40, "flame")
+	_banner = _label("", 40, "gilt_light")
 	_banner.anchor_left = 0.5
 	_banner.anchor_right = 0.5
 	_banner.offset_left = -400
@@ -457,8 +457,8 @@ func _refresh_strip() -> void:
 			continue
 		var active := c == cur
 		var card := PanelContainer.new()
-		var frame := "flame" if c.side == &"party" else ("moonlight" if c.side == &"guest" else "crimson")
-		card.add_theme_stylebox_override("panel", _style("grave" if not active else "ash_violet", "wick" if active else frame, 4 if active else 2))
+		var frame := "gilt_light" if c.side == &"party" else ("moonlight" if c.side == &"guest" else "crimson")
+		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else frame, 4 if active else 2))
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 2)
 		card.add_child(v)
@@ -485,7 +485,7 @@ func _refresh_party() -> void:
 			continue
 		var on := c == shown
 		var card := PanelContainer.new()
-		card.add_theme_stylebox_override("panel", _style("ink", "wick" if on else "bone_dark", 3 if on else 2))
+		card.add_theme_stylebox_override("panel", _style("ui_black", "gilt_light" if on else "gilt_dark", 3 if on else 2))
 		card.custom_minimum_size = Vector2(270, 0)
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
@@ -582,9 +582,9 @@ func _refresh_hotbar() -> void:
 		b.text = t
 		b.toggle_mode = true
 		b.button_pressed = t == tab
-		b.add_theme_stylebox_override("normal", _style("ink", "bone_dark", 2))
-		b.add_theme_stylebox_override("pressed", _style("plum", "flame", 2))
-		b.add_theme_stylebox_override("hover", _style("grave", "flame", 2))
+		b.add_theme_stylebox_override("normal", _style("ui_black", "gilt_dark", 2))
+		b.add_theme_stylebox_override("pressed", _style("blood", "gilt_light", 2))
+		b.add_theme_stylebox_override("hover", _style("ui_oxblood", "gilt_light", 2))
 		b.pressed.connect(func() -> void:
 			tab = t
 			focus_slot = -1
@@ -607,11 +607,11 @@ func _refresh_hotbar() -> void:
 		b.text = "%s%s\n%s" % [key, a["label"], a["sub"]]
 		b.add_theme_font_size_override("font_size", 13)
 		var colour := str(COST_COLOURS.get(str(a["cost"]), "slate"))
-		var border := "wick" if i == focus_slot else "void"
-		b.add_theme_stylebox_override("normal", _style(colour if usable else "grave", border, 2 if i != focus_slot else 3))
-		b.add_theme_stylebox_override("hover", _style(colour if usable else "grave", "flame", 2))
-		b.add_theme_stylebox_override("pressed", _style("plum", "flame", 2))
-		b.add_theme_stylebox_override("disabled", _style("grave", border, 2))
+		var border := "gilt_light" if i == focus_slot else "void"
+		b.add_theme_stylebox_override("normal", _style(colour if usable else "ui_oxblood", border, 2 if i != focus_slot else 3))
+		b.add_theme_stylebox_override("hover", _style(colour if usable else "ui_oxblood", "gilt_light", 2))
+		b.add_theme_stylebox_override("pressed", _style("blood", "gilt_light", 2))
+		b.add_theme_stylebox_override("disabled", _style("ui_oxblood", border, 2))
 		b.add_theme_color_override("font_color", Look.color("ivory"))
 		b.add_theme_color_override("font_disabled_color", Look.color("bone"))
 		b.disabled = not usable
@@ -640,7 +640,7 @@ func _refresh_slot_pips(c: Combatant) -> void:
 		var left := int(p["left"])
 		var total := int(p["total"])
 		var l := _label("%s %s%s" % [ActionCatalog._ordinal(int(p["level"])), "●".repeat(left), "○".repeat(total - left)], 16,
-			"lilac" if left > 0 else "bone_dark")
+			"moonlight" if left > 0 else "gilt_dark")
 		l.tooltip_text = "Level %d spell slots: %d of %d left" % [int(p["level"]), left, total]
 		l.mouse_filter = Control.MOUSE_FILTER_PASS
 		_slot_row.add_child(l)
@@ -766,13 +766,13 @@ func refresh_log() -> void:
 			"death":
 				colour = "vampire_red"
 			"turn":
-				colour = "flame"
+				colour = "gilt_light"
 			"spell":
-				colour = "lilac"
+				colour = "moonlight"
 			"reaction":
-				colour = "orchid"
+				colour = "mist_blue"
 			"warn":
-				colour = "candle"
+				colour = "gilt"
 			"condition":
 				colour = "moonlight"
 		var line := "[color=#%s]%s[/color]" % [Look.color(colour).to_html(false), _escape(text)]
@@ -802,7 +802,7 @@ func _on_log_meta(meta: Variant) -> void:
 func show_details(title: String, lines: Array) -> void:
 	for ch in _details_box.get_children():
 		ch.queue_free()
-	_details_box.add_child(_label(title, 18, "flame"))
+	_details_box.add_child(_label(title, 18, "gilt_light"))
 	for l: Variant in lines:
 		var lab := _label(str(l), 14, "vellum")
 		lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -825,11 +825,11 @@ func hide_details() -> bool:
 func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2) -> void:
 	for ch in _tooltip_box.get_children():
 		ch.free()
-	_tooltip_box.add_child(_label(title, 18, "flame"))
+	_tooltip_box.add_child(_label(title, 18, "gilt_light"))
 	for l: Variant in lines:
 		_tooltip_box.add_child(_label(str(l), 15, "vellum"))
 	for w: Variant in warnings:
-		_tooltip_box.add_child(_label("⚠ " + str(w), 15, "candle"))
+		_tooltip_box.add_child(_label("⚠ " + str(w), 15, "gilt"))
 	_tooltip.visible = true
 	_tooltip.reset_size()
 	var vp := _tooltip.get_viewport_rect().size
@@ -943,7 +943,7 @@ func _hp_bar(c: Combatant, width: int) -> ProgressBar:
 		frac = 0.0 if cr.dead else (0.5 if cr.is_bloodied() else 1.0)
 		colour = "crimson" if cr.is_bloodied() else "sickly"
 	elif frac <= 0.5:
-		colour = "candle" if frac > 0.25 else "crimson"
+		colour = "gilt" if frac > 0.25 else "crimson"
 	bar.max_value = 1.0
 	bar.step = 0.001
 	bar.value = frac
@@ -985,7 +985,7 @@ func _round_style(bg: String) -> StyleBoxFlat:
 	return s
 
 
-func _panel(border: String = "bone_dark", bg: String = "ink") -> PanelContainer:
+func _panel(border: String = "gilt_dark", bg: String = "ui_black") -> PanelContainer:
 	var p := PanelContainer.new()
 	var s := StyleBoxFlat.new()
 	s.bg_color = Color(Look.color(bg), 0.9)

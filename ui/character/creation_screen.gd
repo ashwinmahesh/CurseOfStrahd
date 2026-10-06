@@ -215,7 +215,7 @@ func _ability_step() -> void:
 			r.add_child(UiKit.button("−", func() -> void:
 				b().set_score(ab, maxi(8, base - 1))
 				_changed(), 14))
-			r.add_child(UiKit.label(str(base), 16, "wick"))
+			r.add_child(UiKit.label(str(base), 16, "gilt_light"))
 			r.add_child(UiKit.button("+", func() -> void:
 				b().set_score(ab, mini(15, base + 1))
 				_changed(), 14))
@@ -237,13 +237,13 @@ func _ability_step() -> void:
 				_changed())
 			r.add_child(pick)
 		var bd := ch.ability_breakdown(ab)
-		var total := UiKit.label("→ %d (%s)" % [bd.total(), UiKit.signed(ch.ability_mod(ab))], 16, "flame")
+		var total := UiKit.label("→ %d (%s)" % [bd.total(), UiKit.signed(ch.ability_mod(ab))], 16, "gilt_light")
 		total.tooltip_text = bd.describe()
 		total.mouse_filter = Control.MOUSE_FILTER_PASS
 		r.add_child(total)
 		_body.add_child(r)
 	if method == "point_buy":
-		_body.add_child(UiKit.label("Points left: %d of 27" % b().point_buy_remaining(), 15, "wick"))
+		_body.add_child(UiKit.label("Points left: %d of 27" % b().point_buy_remaining(), 15, "gilt_light"))
 	for p in b().ability_problems():
 		_body.add_child(UiKit.label("! " + p, 14, "vampire_red", 880))
 
@@ -267,7 +267,7 @@ func _equipment_step() -> void:
 	var opts := b().equipment_options()
 	var chosen := b().build.get("equipment", {}) as Dictionary
 	for source: String in ["class", "background"]:
-		_body.add_child(UiKit.label(source.capitalize(), 16, "candle"))
+		_body.add_child(UiKit.label(source.capitalize(), 16, "gilt"))
 		var row := HBoxContainer.new()
 		for o: Variant in opts[source]:
 			var opt := o as Dictionary
@@ -288,7 +288,7 @@ func _equipment_step() -> void:
 	_body.add_child(UiKit.header("What it does for this character"))
 	for a in b().preview().attacks():
 		_body.add_child(UiKit.label(a.describe(), 14, "vellum", 880))
-	_body.add_child(UiKit.label("AC with this gear: %d" % b().preview().ac_value(), 15, "flame"))
+	_body.add_child(UiKit.label("AC with this gear: %d" % b().preview().ac_value(), 15, "gilt_light"))
 
 
 func _appearance_step() -> void:
@@ -365,9 +365,9 @@ func _review_step() -> void:
 			_body.add_child(UiKit.label("! " + e, 14, "vampire_red", 880))
 	var warns := b().warnings()
 	if not warns.is_empty():
-		_body.add_child(UiKit.label("Warnings (never blocking)", 16, "candle"))
+		_body.add_child(UiKit.label("Warnings (never blocking)", 16, "gilt"))
 		for w in warns:
-			_body.add_child(UiKit.label("~ " + w, 14, "candle", 880))
+			_body.add_child(UiKit.label("~ " + w, 14, "gilt", 880))
 	var confirm := UiKit.button("Confirm %s" % str(b().build.get("name", "this character")), func() -> void:
 		confirmed[slot] = true
 		var next := confirmed.find(false)
@@ -389,7 +389,7 @@ func _review_step() -> void:
 			var who := roles[r] as Array
 			_body.add_child(UiKit.label("%s: %s" % [r.replace("_", " ").capitalize(), ", ".join(who) if not who.is_empty() else "nobody"], 14, "vellum", 880))
 		for g: String in cov["gaps"]:
-			_body.add_child(UiKit.label("· " + g, 13, "candle", 880))
+			_body.add_child(UiKit.label("· " + g, 13, "gilt", 880))
 
 
 func _finish() -> void:

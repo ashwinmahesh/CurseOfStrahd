@@ -57,7 +57,7 @@ func _new_game() -> void:
 		var data := Compendium.shared().get_entry("pregens", id)
 		var col := VBoxContainer.new()
 		col.add_child(UiKit.portrait(id, 140))
-		col.add_child(UiKit.label(str(data.get("name", id)), 15, "flame"))
+		col.add_child(UiKit.label(str(data.get("name", id)), 15, "gilt_light"))
 		col.add_child(UiKit.label(str(data.get("summary", "")), 12, "parchment", 150))
 		row.add_child(col)
 	_box.add_child(row)

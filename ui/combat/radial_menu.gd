@@ -43,7 +43,7 @@ func open() -> void:
 func _draw() -> void:
 	var c := size / 2.0
 	var font := get_theme_default_font()
-	draw_circle(c, RADIUS + 14, Color(Look.color("ink"), 0.92))
+	draw_circle(c, RADIUS + 14, Color(Look.color("ui_black"), 0.92))
 	var n := CHOICES.size()
 	for i in n:
 		var a0 := -PI / 2.0 + i * TAU / n - PI / n
@@ -52,14 +52,14 @@ func _draw() -> void:
 		for k in 9:
 			var a := lerpf(a0, a1, k / 8.0)
 			pts.append(c + Vector2(cos(a), sin(a)) * RADIUS)
-		draw_colored_polygon(pts, Look.color("plum") if i == selected else Look.color("grave"))
-		draw_polyline(pts + PackedVector2Array([c]), Look.color("bone_dark"), 2.0)
+		draw_colored_polygon(pts, Look.color("blood") if i == selected else Look.color("ui_oxblood"))
+		draw_polyline(pts + PackedVector2Array([c]), Look.color("gilt_dark"), 2.0)
 		var mid := (a0 + a1) / 2.0
 		var p := c + Vector2(cos(mid), sin(mid)) * RADIUS * 0.66
 		var text := CHOICES[i]
 		var w := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
 		draw_string(font, p - Vector2(w / 2.0, -6), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Look.color("vellum"))
-	draw_circle(c, 34, Look.color("ink"))
+	draw_circle(c, 34, Look.color("ui_black"))
 	var hint := "LB"
 	var hw := font.get_string_size(hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
 	draw_string(font, c - Vector2(hw / 2.0, -6), hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Look.color("parchment"))

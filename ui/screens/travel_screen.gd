@@ -63,7 +63,7 @@ func _pos(pl: Dictionary) -> Vector2:
 
 
 func _draw_map() -> void:
-	_map.draw_rect(Rect2(Vector2.ZERO, MAP_SIZE), Look.color("bone_dark"))
+	_map.draw_rect(Rect2(Vector2.ZERO, MAP_SIZE), Look.color("gilt_dark"))
 	_map.draw_rect(Rect2(Vector2(8, 8), MAP_SIZE - Vector2(16, 16)), Look.color("parchment"))
 	var places := {}
 	for p in Travel.known(st):
@@ -84,13 +84,13 @@ func _draw_map() -> void:
 	for id: String in places:
 		var pl := places[id] as Dictionary
 		var at := _pos(pl)
-		var colour := Look.color("vampire_red") if id == here else (Look.color("ember") if id == _target else Look.color("ink"))
+		var colour := Look.color("vampire_red") if id == here else (Look.color("moon_blue") if id == _target else Look.color("ui_black"))
 		_map.draw_circle(at, 11.0 if id == here else 8.0, colour)
 		# Names alternate above and below their mark so neighbours don't print over each other.
 		var name_s := str(pl["name"])
 		var w := font.get_string_size(name_s, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x
 		var off := Vector2(-w / 2.0, -16.0 if n % 2 == 0 else 30.0)
-		_map.draw_string(font, at + off, name_s, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Look.color("ink"))
+		_map.draw_string(font, at + off, name_s, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Look.color("ui_black"))
 		n += 1
 
 
@@ -130,7 +130,7 @@ func _show_info() -> void:
 			_info.add_child(UiKit.label(str(to["summary"]), 14, "vellum", 300))
 		var legs := Travel.route(here, _target, st)
 		if legs.is_empty():
-			_info.add_child(UiKit.label("No road you know leads there.", 15, "candle", 300))
+			_info.add_child(UiKit.label("No road you know leads there.", 15, "gilt", 300))
 		else:
 			var h := Travel.hours(legs)
 			var arrive := (st.minute_of_day + roundi(h * 60.0)) % (24 * 60)
@@ -142,7 +142,7 @@ func _show_info() -> void:
 					names.append(rn)
 			_info.add_child(UiKit.label("By %s" % ", then ".join(names), 14, "vellum", 300))
 			_info.add_child(UiKit.label("%s hours · arriving about %02d:%02d%s" % [_hours_text(h), arrive / 60, arrive % 60,
-				" (after dark: the roads are worse at night)" if night else ""], 15, "candle" if night else "parchment", 300))
+				" (after dark: the roads are worse at night)" if night else ""], 15, "gilt" if night else "parchment", 300))
 			var go := UiKit.button("Set out", func() -> void:
 				travel_chosen.emit(_target)
 				queue_free(), 18)

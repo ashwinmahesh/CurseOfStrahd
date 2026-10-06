@@ -42,7 +42,7 @@ func build(state: StoryState) -> void:
 	top.offset_left = -360
 	top.offset_right = -14
 	top.offset_top = 12
-	_where = _label("", 20, "flame")
+	_where = _label("", 20, "gilt_light")
 	_where.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	top.add_child(_where)
 	_mode = _label("", 15, "parchment")
@@ -51,8 +51,8 @@ func build(state: StoryState) -> void:
 	add_child(top)
 	var narr_panel := PanelContainer.new()
 	var s := StyleBoxFlat.new()
-	s.bg_color = Color(Look.color("ink"), 0.85)
-	s.border_color = Look.color("candle")
+	s.bg_color = Color(Look.color("ui_black"), 0.85)
+	s.border_color = Look.color("gilt")
 	s.set_border_width_all(2)
 	s.set_corner_radius_all(4)
 	s.set_content_margin_all(12)
@@ -76,10 +76,10 @@ func build(state: StoryState) -> void:
 	narr_panel.name = "NarratorBox"
 	narr_panel.visible = false
 	add_child(narr_panel)
-	_hint = _label("", 16, "wick")
+	_hint = _label("", 16, "gilt_light")
 	_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_hint)
-	_toast = _label("", 20, "wick")
+	_toast = _label("", 20, "gilt_light")
 	_toast.anchor_left = 0.5
 	_toast.anchor_right = 0.5
 	_toast.offset_left = -400
@@ -127,8 +127,8 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		var ch := st.party[i]
 		var card := PanelContainer.new()
 		var s := StyleBoxFlat.new()
-		s.bg_color = Color(Look.color("ink"), 0.9)
-		s.border_color = Look.color("wick") if i == 0 else Look.color("bone_dark")
+		s.bg_color = Color(Look.color("ui_black"), 0.9)
+		s.border_color = Look.color("gilt_light") if i == 0 else Look.color("gilt_dark")
 		s.set_border_width_all(3 if i == 0 else 2)
 		s.set_corner_radius_all(4)
 		s.set_content_margin_all(6)
@@ -153,7 +153,7 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		bar.max_value = maxf(1.0, ch.max_hp())
 		bar.value = ch.hp
 		var fill := StyleBoxFlat.new()
-		fill.bg_color = Look.color("sickly") if ch.hp * 2 > ch.max_hp() else (Look.color("candle") if ch.hp * 4 > ch.max_hp() else Look.color("crimson"))
+		fill.bg_color = Look.color("sickly") if ch.hp * 2 > ch.max_hp() else (Look.color("gilt") if ch.hp * 4 > ch.max_hp() else Look.color("crimson"))
 		var back := StyleBoxFlat.new()
 		back.bg_color = Look.color("void")
 		bar.add_theme_stylebox_override("fill", fill)
@@ -185,7 +185,7 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		var g := st.guests[gi]
 		var gcard := PanelContainer.new()
 		var gs := StyleBoxFlat.new()
-		gs.bg_color = Color(Look.color("ink"), 0.85)
+		gs.bg_color = Color(Look.color("ui_black"), 0.85)
 		gs.border_color = Look.color("moonlight")
 		gs.set_border_width_all(2)
 		gs.set_corner_radius_all(4)
