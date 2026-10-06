@@ -892,6 +892,13 @@ func _play_events() -> void:
 					add_child(nt)
 					tokens[sc.id] = nt
 					nt.flash(Look.color("lilac"), 0.5)
+			"resize":
+				var rt := tokens.get(str(ev["id"])) as CombatToken
+				if rt != null:
+					var k := float(rt.combatant.size_cells)
+					var tw4 := create_tween()
+					tw4.tween_property(rt, "scale", Vector3(k, k, k) if rt.combatant.size_cells > 1 else Vector3.ONE, 0.3)
+					rt.position = board.cell_center(rt.combatant.cell, rt.combatant.size_cells)
 			"vanish":
 				var vt := tokens.get(str(ev["id"])) as CombatToken
 				if vt != null:
@@ -1009,10 +1016,21 @@ func capture_shots(tool: Node, out: String) -> void:
 				_cancel_targeting()
 			break
 		await _autoplay_turn(pilot)
+	var weapon_shot := false
 	for guard in 400:
 		if e.state != Encounter.State.ACTIVE:
 			break
 		await _autoplay_turn(pilot)
+		# Spiritual Weapon on the field (the spell audit's fix: a weapon you can see, not just a highlighted square).
+		if not weapon_shot:
+			for c3 in e.combatants:
+				var w := e.spells.weapon_of(c3)
+				if w != null:
+					weapon_shot = true
+					rig.follow = field.node_for(w.id)
+					await tool.call("wait_frames", 45)
+					tool.call("_shot", out + "_6_weapon.png")
+					break
 	_advance()
 	await tool.call("wait_frames", 40)
 	tool.call("_shot", out + "_5_end.png")

@@ -74,6 +74,8 @@ func _make(f: FieldObject) -> Node3D:
 			return _lights()
 		FieldObject.Kind.HAND:
 			return _hand()
+		FieldObject.Kind.ILLUSION:
+			return _double()
 	var zone := Node3D.new()
 	zone.name = "Zone_" + f.spell_id
 	_paint_zone(zone, f)
@@ -110,7 +112,13 @@ func _weapon() -> Node3D:
 	var spin := Node3D.new()
 	spin.name = "Spin"
 	spin.position.y = 0.9
+	spin.scale = Vector3(1.6, 1.6, 1.6)
 	root.add_child(spin)
+	# A soft lilac ring on its square, so the weapon reads at a glance.
+	var ring := TorusMesh.new()
+	ring.inner_radius = 0.3
+	ring.outer_radius = 0.38
+	_part(root, ring, Vector3(0, 0.03, 0), _glow("lilac", 0.7))
 	var blade := BoxMesh.new()
 	blade.size = Vector3(0.09, 0.85, 0.03)
 	var guard := BoxMesh.new()
@@ -176,6 +184,17 @@ func _hand() -> Node3D:
 	return root
 
 
+## Invoke Duplicity's double: a translucent, shimmering figure.
+func _double() -> Node3D:
+	var root := Node3D.new()
+	root.name = "Duplicate"
+	var cm := CapsuleMesh.new()
+	cm.radius = 0.28
+	cm.height = 1.1
+	_part(root, cm, Vector3(0, 0.55, 0), _glow("moonlight", 0.35))
+	return root
+
+
 ## The area's squares as a translucent tint just above the floor.
 func _paint_zone(zone: Node3D, f: FieldObject) -> void:
 	for ch in zone.get_children():
@@ -234,4 +253,4 @@ func _process(delta: float) -> void:
 			var spin := n.get_node_or_null("Spin") as Node3D
 			if spin != null:
 				spin.rotation.y += delta * 1.2
-				spin.position.y = 0.9 + sin(_time * 2.4) * 0.07
+				spin.position.y = 1.0 + sin(_time * 2.4) * 0.08
