@@ -428,6 +428,11 @@ func clear_cell(c: Vector2i) -> void:
 		_cleared[c] = _box("Floor", Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), _floor_mat)
 
 
+## A wall square drawn as a tree or a rock column (it has ground of its own under it).
+func is_tree(c: Vector2i) -> bool:
+	return grid.in_bounds(c) and _has_ground.has(c) and dressing.has(c) and not _wagon_cells.has(c)
+
+
 ## Puts a square's scenery back (its prop is gone).
 func restore_cell(c: Vector2i) -> void:
 	for n: Node3D in dressing.get(c, []):
@@ -655,7 +660,7 @@ func _low_cover(c: Vector2i) -> void:
 				break
 		if SetDressing.has_art(pick):
 			# Fixed in place and turned like the location's own props (against a wall, or facing south).
-			SetDressing.stand_piece(self, self, pick, c, 0.8 if pick in ["wagon", "market_stall"] else 1.0)
+			SetDressing.stand_piece(self, self, pick, c)
 			return
 	if theme in INTERIORS:
 		# Furniture: a table, a bed, a pew.
