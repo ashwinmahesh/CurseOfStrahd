@@ -30,7 +30,8 @@
       "custom": "ring_store",
       "combat": false,
       "field": true,
-      "text": "Outside a fight, a spellcaster wearing the ring casts a spell of level 1 to 5 into it (up to 5 levels in all)."
+      "text": "Outside a fight, any party member touching the ring can cast a spell of level 1 to 5 into it, up to 5 levels in all; it keeps their DC and attack bonus.",
+      "requires": "anyone"
     }
   ],
   "summary": "Holds up to 5 levels of spells cast into it; whoever wears it can cast them.",

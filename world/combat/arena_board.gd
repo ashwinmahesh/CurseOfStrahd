@@ -688,8 +688,9 @@ func _low_cover(c: Vector2i) -> void:
 ## Difficult terrain: brambles in the woods, rubble underground and indoors (catalog "difficult"); a town's mud
 ## is its texture alone. Elsewhere (the arena) a few thorny cones.
 func _brambles(c: Vector2i) -> void:
-	var key := _dressing_key() if theme in WILD or theme == "dungeon" else ("interior" if theme in INTERIORS else theme)
-	var choices := (SetDressing.catalog().get("difficult", {}) as Dictionary).get(key, []) as Array
+	var sets := SetDressing.catalog().get("difficult", {}) as Dictionary
+	var key := place if sets.has(place) else (_dressing_key() if theme in WILD or theme == "dungeon" else ("interior" if theme in INTERIORS else theme))
+	var choices := sets.get(key, []) as Array
 	if not choices.is_empty():
 		var pick := str(choices[(c.x * 5 + c.y * 11) % choices.size()])
 		if SetDressing.has_art(pick):

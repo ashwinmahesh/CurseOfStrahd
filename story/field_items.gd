@@ -28,9 +28,47 @@ static func options(party: Array[Character], ch: Character, item_id: String, dic
 		if not spell.is_empty():
 			var kind := str((spell.get("targets", {}) as Dictionary).get("kind", "self"))
 			targeting = "ally" if kind in ["creature", "ally"] else "self"
-		out.append({"power_id": str(power.get("id", "")), "label": str(power.get("name", "Use")), "legal": why == "", "reason": why,
-			"targeting": targeting, "spell_id": spell_id, "text": str(power.get("text", "")), "choices": (power.get("choice", {}) as Dictionary).get("from", [])})
+		var o := {"power_id": str(power.get("id", "")), "label": str(power.get("name", "Use")), "legal": why == "", "reason": why,
+			"targeting": targeting, "spell_id": spell_id, "text": str(power.get("text", "")), "choices": (power.get("choice", {}) as Dictionary).get("from", [])}
+		if str(power.get("custom", "")) == "ring_store":
+			o["store"] = store_options(party, p)
+			if why == "" and (o["store"] as Array).is_empty():
+				o["legal"] = false
+				o["reason"] = "Nobody can cast a spell that fits"
+		out.append(o)
 	return out
+
+
+## Ring of Spell Storing: the spells party members could cast into the ring now (any creature can, touching it), at
+## each level they have a slot for and the ring has room for: [{caster, spell, level, label}].
+static func store_options(party: Array[Character], p: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var cap := int(((p["power"] as Dictionary).get("params", {}) as Dictionary).get("capacity", 5))
+	var room := cap - stored_levels(p["entry"] as Dictionary)
+	for m in party:
+		if m.hp <= 0 or m.dead:
+			continue
+		var seen := {}
+		for k in m.known_spells():
+			var sid := str(k["id"])
+			var sd := Compendium.shared().spell_data(sid)
+			var base := int(sd.get("level", 0))
+			if seen.has(sid) or base < 1 or base > 5:
+				continue
+			seen[sid] = true
+			for lvl in range(base, mini(5, room) + 1):
+				if m.slots_left(lvl) > 0:
+					out.append({"caster": m.id, "spell": sid, "level": lvl, "label": "%s: %s (level %d)" % [m.name.get_slice(" ", 0),
+						sd.get("name", sid), lvl]})
+	return out
+
+
+## Spell levels already stored in a Ring of Spell Storing's entry.
+static func stored_levels(entry: Dictionary) -> int:
+	var used := 0
+	for s: Variant in entry.get("stored", []):
+		used += int((s as Dictionary).get("level", 1))
+	return used
 
 
 static func _field_why(e: Encounter, c: Combatant, p: Dictionary) -> String:
@@ -43,6 +81,9 @@ static func _field_why(e: Encounter, c: Combatant, p: Dictionary) -> String:
 		why = ""
 	if why == "" and power.has("custom") and not str(power["custom"]) in FIELD_CUSTOM and bool(power.get("combat", true)) == false:
 		why = "Not built yet"
+	# Lock openers work on a lock in the world: the door's or chest's right-click menu offers them.
+	if why == "" and str(power.get("custom", "")) in ["chime_of_opening", "mystery_key"]:
+		why = "Right-click a locked door or chest to use it"
 	return why
 
 
@@ -159,7 +200,7 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			st.advance_minutes(1)
 			return {"ok": true, "text": "%s's %s gleams: +3 for an hour." % [who.name.get_slice(" ", 0), Compendium.shared().display_name("items", weapon)]}
 		"ring_store":
-			return _store_spell(ch, p, opts)
+			return _store_spell(st, ch, p, opts)
 		"sense_dragons":
 			return {"ok": true, "text": "%s reaches out: no living dragon of its kind stirs within 30 miles of Barovia." % label}
 		"useful_items":
@@ -174,9 +215,9 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 					st.flags["travel_speed_today"] = st.day
 					return {"ok": true, "effect": "travel", "text": "A Roc carries the party on its back: today's journeys take half the time."}
 			return {"ok": true, "text": "The feather token works its magic (%s)." % str(params.get("kind", "")).replace("_", " ")}
-		"chime_of_opening", "mystery_key", "wand_of_secrets":
-			return {"ok": true, "effect": "unlock" if str(power["custom"]) != "wand_of_secrets" else "secrets",
-				"text": "Use it on a lock in the world (right-click the door or chest)." if str(power["custom"]) != "wand_of_secrets" else "The wand pulses."}
+		"wand_of_secrets":
+			# The world finds the nearest secret door or trap (LocationView.apply_spell_effect("secrets")).
+			return {"ok": true, "effect": "secrets", "text": "%s waves the Wand of Secrets." % nm}
 	return {"ok": false, "text": "Not built yet"}
 
 
@@ -211,33 +252,39 @@ static func _study(st: StoryState, ch: Character, p: Dictionary, opts: Dictionar
 
 
 ## Ring of Spell Storing / Ioun Stone of Reserve: the wearer casts a spell of level 1-5 into it, spending the slot.
-static func _store_spell(ch: Character, p: Dictionary, opts: Dictionary) -> Dictionary:
+## Ring of Spell Storing: `opts.caster` (a party member's id; the ring's holder if absent) casts `opts.spell` at
+## `opts.level` into the ring, spending the slot. The spell keeps the caster's DC and attack bonus for that class.
+static func _store_spell(st: StoryState, ch: Character, p: Dictionary, opts: Dictionary) -> Dictionary:
 	var entry := p["entry"] as Dictionary
 	var cap := int(((p["power"] as Dictionary).get("params", {}) as Dictionary).get("capacity", 5))
+	var caster := ch
+	for m in st.party:
+		if m.id == str(opts.get("caster", "")):
+			caster = m
 	var spell_id := str(opts.get("spell", ""))
 	var spell := Compendium.shared().spell_data(spell_id)
-	if spell.is_empty() or not ch.knows_spell(spell_id):
-		return {"ok": false, "text": "Choose a spell you can cast"}
+	var known := {}
+	for k in caster.known_spells():
+		if str(k["id"]) == spell_id:
+			known = k
+	if spell.is_empty() or known.is_empty():
+		return {"ok": false, "text": "Choose a spell %s can cast" % caster.name.get_slice(" ", 0)}
 	var lvl := maxi(int(spell.get("level", 0)), int(opts.get("level", 0)))
-	if lvl < 1 or lvl > (5 if cap == 5 else 3):
-		return {"ok": false, "text": "Only spells of level 1 to %d" % (5 if cap == 5 else 3)}
-	var stored := entry.get("stored", []) as Array
-	var used := 0
-	for s: Variant in stored:
-		used += int((s as Dictionary).get("level", 1))
+	if lvl < 1 or lvl > 5:
+		return {"ok": false, "text": "Only spells of level 1 to 5"}
+	var used := stored_levels(entry)
 	if used + lvl > cap:
 		return {"ok": false, "text": "Not enough room (%d of %d levels used)" % [used, cap]}
-	if not ch.expend_slot(lvl):
+	if not caster.expend_slot(lvl):
 		return {"ok": false, "text": "No level %d slot left" % lvl}
-	var best := {}
-	for sc in ch.spellcasting:
-		var dc := ch.spell_save_dc(str(sc["class_id"])).total()
-		if best.is_empty() or dc > int(best["dc"]):
-			best = {"dc": dc, "attack": ch.spell_attack_bonus(str(sc["class_id"])).total(), "ability": str(sc["ability"])}
-	var rec := {"spell": spell_id, "level": lvl, "dc": int(best.get("dc", 13)), "attack": int(best.get("attack", 5)), "ability": str(best.get("ability", "int"))}
+	var cid := str(known.get("class_id", ""))
+	var rec := {"spell": spell_id, "level": lvl, "dc": caster.spell_save_dc(cid).total(), "attack": caster.spell_attack_bonus(cid).total(),
+		"ability": str(known.get("ability", "int"))}
+	var stored := entry.get("stored", []) as Array
 	stored.append(rec)
 	entry["stored"] = stored
-	return {"ok": true, "text": "%s stores %s (level %d) in the %s." % [ch.name.get_slice(" ", 0), spell.get("name", ""), lvl, (p["data"] as Dictionary).get("name", "")]}
+	return {"ok": true, "text": "%s casts %s (level %d) into the %s: %d of %d levels now stored." % [caster.name.get_slice(" ", 0),
+		spell.get("name", ""), lvl, (p["data"] as Dictionary).get("name", ""), used + lvl, cap]}
 
 
 ## Robe of Useful Items: a patch becomes what it shows.
