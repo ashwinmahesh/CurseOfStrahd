@@ -8,6 +8,8 @@ var root: Node
 var st: StoryState
 var index := 0
 var _frame: VBoxContainer
+var _tab_index := 0
+var _cast_note := ""           ## what the last cast did, shown above the spell list
 
 
 func _init() -> void:
@@ -61,6 +63,8 @@ func _draw() -> void:
 	_tab(tabs, "Spells", _spells(ch))
 	_tab(tabs, "Active Effects", _effects(ch))
 	_tab(tabs, "Notes", _notes(ch))
+	tabs.current_tab = _tab_index
+	tabs.tab_changed.connect(func(t: int) -> void: _tab_index = t)
 
 
 func _tab(tabs: TabContainer, title: String, content: Control) -> void:
@@ -152,6 +156,7 @@ func _features(ch: Character) -> VBoxContainer:
 
 func _spells(ch: Character) -> VBoxContainer:
 	var box := VBoxContainer.new()
+	_cast_now(ch, box)
 	var known := ch.known_spells()
 	if known.is_empty():
 		box.add_child(UiKit.label("No spells.", 15, "parchment"))
@@ -181,6 +186,60 @@ func _spells(ch: Character) -> VBoxContainer:
 			l.mouse_filter = Control.MOUSE_FILTER_PASS
 			box.add_child(l)
 	return box
+
+
+## Healing and helpful spells cast outside a fight (FieldCasting): one row per spell, a slot picker when it can be
+## cast at more than one level, and a button per party member it can go on.
+func _cast_now(ch: Character, box: VBoxContainer) -> void:
+	var opts := FieldCasting.options(st.party, ch, Dice.roller)
+	if opts.is_empty():
+		return
+	box.add_child(UiKit.header("Cast now"))
+	if _cast_note != "":
+		box.add_child(UiKit.label(_cast_note, 15, "bile", 1380))
+	for o in opts:
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		var lvl := int(o["level"])
+		row.add_child(UiKit.label("%s%s" % [o["name"], "" if lvl == 0 else " (level %d)" % lvl], 15, "flame", 260))
+		if not bool(o["legal"]):
+			row.add_child(UiKit.label(str(o["reason"]), 14, "parchment"))
+			box.add_child(row)
+			continue
+		var pick := OptionButton.new()
+		var slots := o["slots"] as Array
+		if bool(o["free"]):
+			pick.add_item("free", lvl)
+		for sl: int in slots:
+			pick.add_item(ActionCatalog._ordinal(sl) + " slot", sl)
+		row.add_child(pick)
+		pick.visible = pick.item_count > 1
+		var id := str(o["id"])
+		if bool(o["self_only"]):
+			row.add_child(UiKit.button("Cast", func() -> void: _do_cast(ch, id, pick, [ch]), 14))
+		else:
+			for t in st.party:
+				var target := t
+				var b := UiKit.button("on " + target.name.get_slice(" ", 0), func() -> void: _do_cast(ch, id, pick, [target]), 14)
+				row.add_child(b)
+			if int(o["count"]) > 1:
+				row.add_child(UiKit.button("on %d of us" % mini(int(o["count"]), st.party.size()), func() -> void:
+					var all: Array[Character] = []
+					for t in st.party:
+						if all.size() < int(o["count"]):
+							all.append(t)
+					_do_cast(ch, id, pick, all), 14))
+		box.add_child(row)
+
+
+func _do_cast(ch: Character, spell_id: String, pick: OptionButton, targets: Array) -> void:
+	var tgt: Array[Character] = []
+	for t: Variant in targets:
+		tgt.append(t as Character)
+	var slot := pick.get_item_id(pick.selected) if pick.item_count > 0 and pick.selected >= 0 else 0
+	var res := FieldCasting.cast(st.party, ch, spell_id, slot, tgt, Dice.roller)
+	_cast_note = str(res["text"]) if str(res["text"]) != "" else "Done."
+	_draw()
 
 
 func _effects(ch: Character) -> VBoxContainer:

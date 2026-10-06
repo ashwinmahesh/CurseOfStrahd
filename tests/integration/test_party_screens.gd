@@ -109,3 +109,30 @@ func test_creation_for_every_class() -> void:
 			cs.call("_draw")
 		cs.queue_free()
 		await _frames(1)
+
+
+func test_healing_and_mage_armor_outside_combat() -> void:
+	var hedda := GameState.story.party[2]
+	var silvain := GameState.story.party[3]
+	var ilse := GameState.story.party[0]
+	ilse.hp = 2
+	var opts := FieldCasting.options(GameState.story.party, hedda, DiceRoller.new(3))
+	var ids: Array = opts.map(func(o: Dictionary) -> String: return str(o["id"]))
+	assert_true("healing_word" in ids, str(ids))
+	assert_false("guiding_bolt" in ids, "harmful spells wait for a fight")
+	var slots := hedda.slots_left(1)
+	var target: Array[Character] = [ilse]
+	var res := FieldCasting.cast(GameState.story.party, hedda, "healing_word", 1, target, DiceRoller.new(3))
+	assert_true(bool(res["ok"]), str(res))
+	assert_true(ilse.hp > 2)
+	assert_eq(hedda.slots_left(1), slots - 1)
+	if "mage_armor" in silvain.known_spells().map(func(k: Dictionary) -> String: return str(k["id"])):
+		var ac := silvain.ac_value()
+		var me: Array[Character] = [silvain]
+		res = FieldCasting.cast(GameState.story.party, silvain, "mage_armor", 1, me, DiceRoller.new(3))
+		assert_true(bool(res["ok"]), str(res))
+		assert_true(silvain.ac_value() > ac, "Mage Armor lasts after the cast")
+	root.call("open_screen", "sheet", 2)
+	await _frames(1)
+	var sheet := root.get("screen") as CharacterSheetScreen
+	sheet.call("_draw")
