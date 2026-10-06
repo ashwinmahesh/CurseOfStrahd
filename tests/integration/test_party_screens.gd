@@ -279,3 +279,18 @@ func test_quicksave_from_the_pause_menu() -> void:
 	SaveSystem.delete_slot(slot)
 	SaveSystem.current_slot = ""
 	root.call("close_screen")
+
+
+func test_pause_menu_voices_slider() -> void:
+	root.call("open_screen", "menu", 0)
+	await _frames(1)
+	var menu := root.get("screen") as PauseMenu
+	var names: Array = menu.find_children("*", "", true, false).filter(func(n: Node) -> bool: return n is PauseMenu.ConceptSlider).map(func(n: Node) -> String: return str(n.name))
+	assert_eq(names, ["Music", "Effects", "Voices"], "three volume sliders")
+	var voices := menu.find_children("Voices", "", true, false)[0] as PauseMenu.ConceptSlider
+	var was := VoiceOver.volume()
+	assert_eq(voices.value, was, "the slider starts at the voice volume")
+	voices.changed.emit(0.35)
+	assert_eq(VoiceOver.volume(), 0.35, "moving it sets the voice volume")
+	VoiceOver.set_volume(was)
+	root.call("close_screen")

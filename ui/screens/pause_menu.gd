@@ -3,20 +3,20 @@ extends CanvasLayer
 ## Esc menu (plan §10 Phase 3 "save and load anywhere outside combat"), drawn to the owner's Crimson settings concept
 ## number for number: the concept's 280-unit-wide arch scaled by K, every position, colour and stroke from its SVG.
 ## An arched frame (wine to black, a gilt line and a fainter inset one), the crest at the apex, scrolls at the
-## shoulders, the title over a lozenge rule, Music and Effects sliders with their icons, the choices as long hexagons
-## (the selected one wine with lozenges outside its points), and a footer wave between corner brackets. The concept had
-## three buttons; this menu has five and a respec option, so the arch is taller, with the concept's spacing kept. The
-## saves open in the same arch. As the game-over screen it offers only loading. Quicksave (and F5, here and exploring)
-## saves over the game's current slot (SaveSystem.current_slot).
+## shoulders, the title over a lozenge rule, Music, Effects and Voices sliders with their icons, the choices as long
+## hexagons (the selected one wine with lozenges outside its points), and a footer wave between corner brackets. The
+## concept had two sliders and three buttons; this menu has three, five and a respec option, so the arch is taller,
+## with the concept's spacing kept. The saves open in the same arch. As the game-over screen it offers only loading.
+## Quicksave (and F5, here and exploring) saves over the game's current slot (SaveSystem.current_slot).
 
 ## Concept units to pixels.
 const K := 1.5
 ## The concept's arch is 280 x 400 units; this one is taller to hold five buttons.
 const W_U := 280.0
-const H_U := 520.0
-const SLIDER_Y: Array[float] = [155.0, 192.0]
-const RESPEC_Y := 226.0
-const FIRST_BUTTON_Y := 264.0
+const H_U := 557.0
+const SLIDER_Y: Array[float] = [155.0, 192.0, 229.0]
+const RESPEC_Y := 263.0
+const FIRST_BUTTON_Y := 301.0
 const BUTTON_PITCH := 46.0
 
 var game_over := false
@@ -202,6 +202,7 @@ func _show_menu() -> void:
 	_slider_row(SLIDER_Y[1], "Effects", Audio.sfx_volume, func(v: float) -> void:
 		Audio.set_volumes(Audio.music_volume, v)
 		Audio.sfx("click"))
+	_slider_row(SLIDER_Y[2], "Voices", VoiceOver.volume(), VoiceOver.set_volume)
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
 	respec.add_theme_font_override("font", serif())
@@ -287,6 +288,17 @@ func _slider_row(y: float, text: String, value: float, on_change: Callable) -> v
 					var t := s / 12.0
 					arc.append(p0 * (1.0 - t) * (1.0 - t) + p1 * 2.0 * (1.0 - t) * t + p2 * t * t)
 				c.draw_polyline(arc, gold, 1.4 * K, true)
+		elif text == "Voices":
+			# A speech scroll in the same gold, with three lit dots.
+			var dy3 := y - 229.0
+			var bubble := PackedVector2Array()
+			for i in 20:
+				var a := TAU * i / 20.0
+				bubble.append(at.call(38.0 + cos(a) * 9.0, 225.0 + dy3 + sin(a) * 6.5) as Vector2)
+			c.draw_colored_polygon(bubble, gold)
+			c.draw_colored_polygon(PackedVector2Array([at.call(33.0, 229.0 + dy3), at.call(39.0, 230.0 + dy3), at.call(31.0, 236.0 + dy3)]), gold)
+			for dx: float in [-4.0, 0.0, 4.0]:
+				c.draw_circle(at.call(38.0 + dx, 225.0 + dy3) as Vector2, 1.1 * K, _c("arch_gold_light"))
 		else:
 			# A bell in the concept's candle colours: a gold body and rim, the clapper lit.
 			var dy2 := y - 192.0
