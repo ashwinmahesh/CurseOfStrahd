@@ -67,7 +67,7 @@
     "attack": "claw swipe",
     "windup": "rearing back with both clawed hands raised high above its head, jaws open, coat tails swinging",
     "strike": "lunging forward low with both claws raking down and forward at the enemy, jaws wide open"},
-  "specter": {"who": "a specter", "body": "float",
+  "specter": {"who": "a specter, all pale frost-blue and moonlit blue in every frame (shroud, hands and face; no purple, grey or tan)", "body": "float",
     "attack": "life-draining touch",
     "windup": "drawn back and rising, both long thin hands pulled back beside its face, shroud billowing, mouth open in a wail",
     "strike": "surging forward with both hands thrust straight out at the enemy, fingers spread, shroud streaming back"},

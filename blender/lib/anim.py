@@ -110,11 +110,22 @@ def split_strip(arr, count=3):
     if len(gaps) and gaps.min() < 0.45 * gaps.max():
         problems.append("figures are unevenly spaced (two touching, or a loose piece taken for a figure)")
     groups = [[m[3]] for m in mains]
-    boxes = [(m[1], m[2]) for m in mains]
+    boxes = [(m[1], m[2], min(r[0] for r in m[3]), max(r[0] for r in m[3])) for m in mains]
+    h_img, w_img = arr.shape[:2]
     for area, x0, x1, c in info[count:]:
+        y0, y1 = min(r[0] for r in c), max(r[0] for r in c)
         cx = 0.5 * (x0 + x1)
         dist = [max(b[0] - cx, cx - b[1], 0.0) for b in boxes]
-        groups[int(np.argmin(dist))].append(c)
+        j = int(np.argmin(dist))
+        b = boxes[j]
+        # A piece by the figure (a spark, a strand of hair, a staff the hand doesn't touch) joins it; specks out in
+        # the open (a dotted horizon, dust) are dropped unless they're sizeable (a thrown stone, a burst of flame).
+        gap_x = max(b[0] - x1, x0 - b[1], 0)
+        gap_y = max(b[2] - y1, y0 - b[3], 0)
+        near = gap_x <= 0.02 * w_img and gap_y <= 0.02 * h_img
+        sizeable = area >= 0.01 * mains[j][0] and gap_x <= 0.08 * w_img and gap_y <= 0.08 * h_img
+        if near or sizeable:
+            groups[j].append(c)
     crops = []
     for parts in groups:
         mask = np.zeros(arr.shape[:2], dtype=bool)
