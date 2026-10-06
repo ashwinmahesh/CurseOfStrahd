@@ -1,0 +1,21 @@
+# Ending: Strahd destroyed (data/endings/strahd_destroyed.json, ADR 0014). Played by the ending screen before the
+# epilogue slides. ireena_at_peace finishes with the sunrise node here.
+
+~ start
+Narrator: The thing in the coffin goes still, and stays still. Far above you, stone groans, as if the whole castle has let out a breath.
+Narrator: You climb out of the dark by the long stair. Torches gutter as you pass, like servants who no longer know whom they serve.
+if guest:ireena
+Ireena: Is it over? Truly? I keep waiting to hear his voice behind me.
+Narrator: She does not hear it. Not on the stair, not in the hall, not ever again.
+endif
+if guest:ismark
+Ismark: I have spent my whole life afraid of this place. It is only a house now. A cold, ugly house.
+endif
+interject class:cleric: Listen. No bells, no wolves. Just wind.
+-> sunrise
+
+~ sunrise
+Narrator: At the gate the mist is thinner than you have ever seen it. Grey light is coming over the mountains, and it is not his.
+Narrator: The sun rises over Barovia: a small, pale, ordinary sun. The valley stares at it the way a prisoner stares at an open door.
+interject class:paladin: Morning. I had almost forgotten the word.
+-> END

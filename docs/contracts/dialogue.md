@@ -65,6 +65,8 @@ interject <selector>: Text         A party member matching the selector says Tex
                                    could say them; use name: for a pregen's own voice.
 combat encounter_id                Ends the conversation and starts a fight from the location's encounters.
 narrate trigger_key                Plays a Narrator trigger (below) inline.
+end_game                           Ends the campaign (ADR 0014): the ending whose condition holds is played
+                                   when the conversation closes (docs/contracts/campaign.md Endings).
 ```
 
 ## Conditions

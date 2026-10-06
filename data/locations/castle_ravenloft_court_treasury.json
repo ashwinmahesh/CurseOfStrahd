@@ -1,0 +1,219 @@
+{
+  "id": "castle_ravenloft_court_treasury",
+  "name": "Castle Ravenloft, the Treasury",
+  "region": "castle_ravenloft",
+  "summary": "A vault between the floors, reached by a narrow stair behind a portrait in the King's Hall. The count's hoard lies in heaps on the floor, centuries of tithes he has never needed to spend.",
+  "text": "A low vault at the foot of a narrow stair. Coin lies on the floor in drifts, with chests and caskets sunk in it like rocks in snow.",
+  "map": {
+    "rows": [
+      "################",
+      "#######..#######",
+      "#######..#######",
+      "####........####",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "################"
+    ],
+    "theme": "manor",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "court_vault_stair",
+      "name": "The vault stair",
+      "cells": [
+        [
+          7,
+          1
+        ],
+        [
+          8,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "court_treasury",
+      "name": "The treasury vault",
+      "cells": [
+        [
+          1,
+          3
+        ],
+        [
+          14,
+          11
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      8,
+      2
+    ],
+    "from_court": [
+      8,
+      2
+    ]
+  },
+  "exits": [
+    {
+      "id": "court_vault_stairs_up",
+      "cell": [
+        7,
+        1
+      ],
+      "to": "castle_ravenloft_court",
+      "spawn": "from_treasury",
+      "label": "Secret stair up to the King's Hall"
+    }
+  ],
+  "props": [
+    {
+      "id": "court_treasury_heaps",
+      "cell": [
+        10,
+        8
+      ],
+      "kind": "examine",
+      "label": "Heaps of coin",
+      "model": "chest"
+    },
+    {
+      "id": "court_treasury_sacks",
+      "cell": [
+        4,
+        10
+      ],
+      "kind": "decor",
+      "label": "Sacks of coin",
+      "model": "sack"
+    },
+    {
+      "id": "court_treasury_chests",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "decor",
+      "label": "An old chest",
+      "model": "chest"
+    },
+    {
+      "id": "court_vault_chair",
+      "cell": [
+        7,
+        5
+      ],
+      "kind": "examine",
+      "label": "A chair on the hoard",
+      "model": "chair_high"
+    }
+  ],
+  "containers": [
+    {
+      "id": "court_treasury_hoard",
+      "cell": [
+        7,
+        8
+      ],
+      "label": "Heaps of coin",
+      "model": "chest",
+      "items": [],
+      "gold": 1200
+    },
+    {
+      "id": "court_treasury_strongbox",
+      "cell": [
+        2,
+        5
+      ],
+      "label": "An iron strongbox",
+      "model": "strongbox",
+      "items": [],
+      "gold": 600,
+      "lock_dc": 18
+    },
+    {
+      "id": "court_treasury_jewels",
+      "cell": [
+        13,
+        10
+      ],
+      "label": "A casket of gems",
+      "model": "jewel_box",
+      "items": [],
+      "gold": 400
+    }
+  ],
+  "traps": [
+    {
+      "id": "court_vault_glyph",
+      "cells": [
+        [
+          7,
+          3
+        ],
+        [
+          8,
+          3
+        ]
+      ],
+      "label": "a glyph on the bottom step",
+      "detect_dc": 16,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "5d8",
+      "damage_type": "lightning",
+      "text": "A sigil on the bottom step wakes in white fire."
+    }
+  ],
+  "encounters": [
+    {
+      "id": "court_final_treasury",
+      "trigger": "enter_area:court_treasury",
+      "final_battle": "castle_ravenloft_treasury",
+      "lair": true,
+      "text": "He sits on his hoard in a chair that has sunk to its knees in gold, turning one coin over and over in his fingers. Behind him a suit of armour with no one in it draws its sword.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            7,
+            6
+          ],
+          "name": "Strahd von Zarovich"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            4,
+            8
+          ],
+          "name": "The vault's warden"
+        }
+      ],
+      "surprise": ""
+    }
+  ],
+  "treasure_spots": {
+    "castle_ravenloft_treasury": {
+      "container": "court_treasury_hoard"
+    }
+  },
+  "narration": {
+    "enter": "enter:castle_ravenloft_court_treasury"
+  },
+  "rest": "no",
+  "rest_text": "Not on his gold. Not with the stair the only way out."
+}

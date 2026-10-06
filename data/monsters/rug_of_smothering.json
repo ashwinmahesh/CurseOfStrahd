@@ -1,0 +1,98 @@
+{
+  "id": "rug_of_smothering",
+  "name": "Rug of Smothering",
+  "source": {
+    "book": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Animated Rug of Smothering (also in SRD 5.2.1), entered from knowledge; not yet compared line by line with SRD 5.2.1. Its Hit Points (27, 5d10) and whether Smother deals damage on the hit itself especially need the check (the 2014 rug had 33 Hit Points and dealt none). Blind beyond its blindsight. The engine grapples and Restrains the target and crushes it at the start of the rug's turns (the book: the target's turns); Blinded and suffocation are text only, and so is Damage Transfer."
+  },
+  "size": "large",
+  "type": "construct",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 27,
+    "dice": "5d10"
+  },
+  "speed": {
+    "walk": 10
+  },
+  "abilities": {
+    "str": 17,
+    "dex": 14,
+    "con": 10,
+    "int": 1,
+    "wis": 3,
+    "cha": 1
+  },
+  "immunities": [
+    "poison",
+    "psychic"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "deafened",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 6,
+  "languages": [],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "damage_transfer",
+      "name": "Damage Transfer",
+      "action": "passive",
+      "summary": "While wrapped around a creature, it takes half of any damage and the creature inside takes the rest.",
+      "text": "While the rug is grappling a creature, it takes only half the damage dealt to it (rounded down), and the creature it holds takes the other half.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "smother",
+      "name": "Smother",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "2d6+3",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Wraps a Medium or smaller target (escape DC 13): Restrained, blinded and crushed for 2d6 + 3 each turn.",
+      "text": "Hit: 10 (2d6 + 3) Bludgeoning damage. A Medium or smaller target is Grappled (escape DC 13); until it gets free it is also Blinded and Restrained, can't breathe, and takes 10 (2d6 + 3) Bludgeoning damage at the start of each of its turns. The rug can hold only one creature at a time.",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 13,
+          "max_size": "medium",
+          "limit": 1,
+          "restrain": true,
+          "hold_damage": {
+            "dice": "2d6+3",
+            "type": "bludgeoning"
+          }
+        }
+      ]
+    }
+  ],
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "mindless",
+  "summary": "A fine carpet that lies still until someone steps on it, then rolls them up and squeezes."
+}

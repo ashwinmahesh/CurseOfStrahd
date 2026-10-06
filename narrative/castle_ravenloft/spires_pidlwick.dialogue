@@ -1,0 +1,196 @@
+# Pidlwick II, the clockwork jester of the high tower (docs/voice/pidlwick_ii.md). The marionette card's ally.
+# He never speaks aloud: his lines are mime in parentheses and the words he chalks on a little slate, in capitals.
+# start: on the grand landing (approach). cards: the ally scene (join pidlwick_ii). key_back: the other way he joins.
+# His secret (he pushed the first Pidlwick down the stair) comes out by Insight, the portrait by the well, or Escher.
+
+~ start
+if guest:pidlwick_ii
+-> companion
+endif
+if not flag.pidlwick_met
+-> first
+endif
+if flag.pidlwick_refused
+Narrator: Pidlwick II sits on the top step with his back to you. When you come close he shuffles along to make room, without turning round.
+else
+Narrator: Pidlwick II bounces up off the step, bells jingling, and bows so low that his cap brushes the stone.
+endif
+-> menu
+
+~ first
+set pidlwick_met
+Narrator: Something small comes down the stair toward you, one careful step at a time: a jester the height of a child, in faded motley and a cap of bells, with a painted porcelain face. Gears tick inside it.
+Narrator: It stops two steps above you, makes a deep and complicated bow, and holds up a little slate. Chalked on it, in crooked capitals:
+Pidlwick II: HELLO. I AM PIDLWICK. THE SECOND.
+interject class:wizard: Clockwork, and very old. Somebody loved making this.
+Pidlwick II: (He wipes the slate with his sleeve and writes again, quickly.) PLAY?
+-> menu
+
+~ menu
+* [if tarokka.ally.npc == pidlwick_ii and not flag.pidlwick_refused] Madam Eva's cards showed us a clockwork jester. -> cards
+* [if flag.pidlwick_key_found and not flag.pidlwick_wound] We found your key. -> key_back
+* Who made you? -> maker
+* [if not flag.pidlwick_wary and not flag.pidlwick_truth_known] Was there another Pidlwick? A first one? -> first_one
+* [if not flag.pidlwick_truth_known and (flag.jester_portrait_seen or flag.escher_told_jester)] We know what happened to the first Pidlwick. -> confront
+* [if not flag.pidlwick_played] Play a game with him. -> play
+* [if not quest.the_jesters_key] You're ticking slowly. Are you all right? -> winding
+* You know this castle. Show us its secrets. -> secrets
+* Goodbye, Pidlwick. -> bye
+
+~ maker
+Pidlwick II: A TOYMAKER. LONG AGO. FOR THE CHILDREN OF THE HOUSE.
+Narrator: He mimes a ring of small people laughing, and himself in the middle, juggling. Then the ring fades away and he goes on juggling alone.
+if flag.blinsky_met
+interject tag:cheerful: There's a toymaker in Vallaki with a cap just like yours. He'd love you. He'd take you apart to see how you work, but he'd love you.
+Pidlwick II: (He clutches his cap with both hands and backs up a step.) NO.
+endif
+-> menu
+
+~ first_one
+Narrator: The ticking inside him stops. Then it starts again, a little faster.
+Pidlwick II: HE FELL. STAIRS. LONG AGO.
+* [Insight DC 14] That isn't the whole story, is it? -> truth_seen | truth_missed
+* Poor thing. -> menu
+
+~ truth_seen
+Narrator: He holds your eye for a long moment, his painted face smiling the smile it was painted with. Then he wipes the slate very slowly and writes, small:
+-> truth
+
+~ truth_missed
+set pidlwick_wary
+Narrator: He tucks the slate behind his back and turns a cartwheel down three steps, as if nobody had asked anything. When he comes up again he won't look toward the well.
+-> menu
+
+~ confront
+Narrator: You tell him what you know. He listens with his head on one side and his bells quite still. Then he writes, small:
+-> truth
+
+~ truth
+set pidlwick_truth_known
+Pidlwick II: THEY LOVED HIM. NOT ME. SO I HELPED HIM DOWN.
+Pidlwick II: SORRY. VERY SORRY. FOR A VERY LONG TIME.
+interject name:hedda_ironvow: Centuries of sorry. That's a long penance, little one, even for a toy.
+interject tag:blunt: He pushed a man down a tower because he was jealous. Let's not forget it.
+-> menu
+
+~ play
+set pidlwick_played
+time +10
+Narrator: Three wooden balls appear from nowhere and he tosses you one. For a few minutes, on a stair in a vampire's house, you play catch with a clockwork jester, and he is very good at it.
+interject name:tamsin_tealeaf: He palmed one of those. I saw it. I'd have done the same.
+Pidlwick II: (A deep bow, then the slate.) AGAIN? LATER?
+-> menu
+
+~ winding
+Narrator: He sags a little, as if the question let the air out of him, and turns round to show you a keyhole in his back. It is empty.
+Pidlwick II: KEY. THE BIRDS TOOK IT. UP UNDER THE ROOF.
+Pidlwick II: I WIND MYSELF WITH A NAIL. IT IS NOT THE SAME.
+quest the_jesters_key asked
+* We'll look for it. -> menu
+* Can't you fetch it yourself? -> winding_why
+
+~ winding_why
+Pidlwick II: THE BIRDS DO NOT LIKE ME. I TAKE THEIR SHINY THINGS. THEY TAKE MINE.
+-> menu
+
+~ secrets
+Pidlwick II: (He points up the stair, bells jingling.) TOP: THE GLASS HEART. HE GOES THERE WHEN HE IS HURT.
+if not flag.heart_of_sorrow_known
+set heart_of_sorrow_known
+endif
+if not quest.the_heart_of_sorrow
+quest the_heart_of_sorrow heard
+endif
+Pidlwick II: (He points across, toward the tower rooms.) SAD MAN IN THE LOCKED ROOM. STAIR BEHIND HIS CUPBOARD. UP TO THE BIRDS.
+set spires_back_stair_told
+Pidlwick II: (Last of all he points at the well, and then quickly away from it.) DO NOT LEAN.
+-> start
+
+# ---------------------------------------------------------------- The ally (Madam Eva's marionette card)
+
+~ cards
+Narrator: He drops the slate. He picks it up, writes, rubs it out, and writes again.
+Pidlwick II: ME? THE CARDS SAID ME?
+Pidlwick II: NOBODY EVER PICKS ME.
+-> cards_choice
+
+~ cards_choice
+* Come with us, Pidlwick. -> join
+* [if flag.pidlwick_truth_known and not flag.pidlwick_promised] We know what you did to the first Pidlwick. Why should we trust you? -> cards_truth
+* We won't take you. -> refuse
+* Not yet. -> menu
+
+~ cards_truth
+set pidlwick_promised
+Pidlwick II: (He writes for a long time, and holds the slate up with both hands.) I WILL NOT PUSH. I WILL WALK BEHIND. ALWAYS BEHIND. PROMISE.
+-> cards_choice
+
+~ join
+Narrator: He turns three cartwheels down the landing, bells going like a sleigh, and stops in front of you at attention.
+join pidlwick_ii
+if tarokka.ally.npc == pidlwick_ii
+quest find_the_ally found
+endif
+attitude pidlwick_ii friendly
+interject name:ilse_varga: Fall in, jester. Behind me, not in front. And never behind me on a stair.
+Pidlwick II: (He salutes with the wrong hand.) YES SERGEANT.
+-> END
+
+~ refuse
+set pidlwick_refused
+if tarokka.ally.npc == pidlwick_ii
+quest find_the_ally lost
+endif
+Narrator: He nods, very politely, and sits down on the top step with the slate in his lap. He doesn't write anything else.
+-> END
+
+# ---------------------------------------------------------------- His key (the other way he joins)
+
+~ key_back
+set pidlwick_wound
+quest the_jesters_key returned
+Narrator: You hold out the brass key. He goes perfectly still, then turns his back to you and waits.
+Narrator: It takes a long time to wind him: forty turns, fifty. With every turn his ticking grows steadier.
+Pidlwick II: (He spins on one toe.) THANK YOU. THANK YOU. THANK YOU.
+if guest:pidlwick_ii
+-> companion
+endif
+if not flag.pidlwick_refused
+Pidlwick II: CAN I COME WITH YOU? I KNOW ALL THE STAIRS.
+endif
+* [if not flag.pidlwick_refused] Come with us, Pidlwick. -> join
+* [if not flag.pidlwick_refused] Better stay here, where it's safe. -> stay
+* [if flag.pidlwick_refused] Goodbye, Pidlwick. -> bye
+
+~ stay
+Pidlwick II: (He nods. He is used to it.) SAFE. YES.
+-> menu
+
+# ---------------------------------------------------------------- Travelling with the party
+
+~ companion
+Pidlwick II: (He tugs your sleeve and holds up the slate.) WHERE NOW?
+* [if flag.pidlwick_key_found and not flag.pidlwick_wound] We found your key. -> key_back
+* Show us the castle's secrets. -> secrets
+* How are you holding up? -> companion_how
+* Wait for us on the stair. -> companion_wait
+* Nothing. Let's go. -> END
+
+~ companion_how
+if flag.heart_of_sorrow_shattered
+Pidlwick II: THE HEART IS QUIET. THE HOUSE IS LISTENING FOR IT. (He shivers, bells and all.)
+elif flag.pidlwick_wound
+Pidlwick II: WOUND UP. TICKING. HAPPY.
+else
+Pidlwick II: TICKING. MOSTLY. (He winds himself a little with a bent nail.)
+endif
+-> companion
+
+~ companion_wait
+leave pidlwick_ii
+Pidlwick II: (He trots off toward the high tower.) ON THE STAIR. DO NOT FORGET ME.
+-> END
+
+~ bye
+Narrator: He waves with his whole arm until you are out of sight.
+-> END

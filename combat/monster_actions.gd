@@ -38,7 +38,11 @@ func why_not(c: Combatant, act: Dictionary) -> String:
 		var used := int(c.get_meta("used_%s" % act["id"], 0))
 		if used >= int((act["uses"] as Dictionary).get("count", 1)):
 			return "No uses left"
-	if act.has("forms") and not str(c.get_meta("form", "humanoid")) in (act["forms"] as Array):
+	# A Shapechanger's shape limits its actions (Strahd's mist form has none), as do the action's own `forms`.
+	var shape_acts: Variant = enc().legendary.shape_actions(c)
+	if shape_acts != null and not str(act.get("id", "")) in (shape_acts as Array):
+		return "Not in this form"
+	if act.has("forms") and not enc().legendary.form(c) in (act["forms"] as Array):
 		return "Not in this form"
 	if c.has_meta("disarmed") and bool(act.get("weapon", false)):
 		return "Disarmed"
@@ -163,6 +167,9 @@ func _timed_condition(src: Combatant, t: Combatant, cond: String, until: String,
 	# Webbing and the like: an action and an ability check frees the target.
 	if rd.has("escape"):
 		fx.escape = (rd["escape"] as Dictionary).duplicate()
+	# A save to shake it off: at the end or start of the target's turns, or each time it takes damage (Strahd's Charm).
+	if rd.has("repeat_save"):
+		fx.repeat_save = (rd["repeat_save"] as Dictionary).duplicate()
 	if cond != "":
 		fx.conditions.append(StringName(cond))
 	# "Until the end of your next turn" for a summon's rider means its summoner's turn (Fell Glare).
@@ -350,6 +357,9 @@ func save_targets(c: Combatant, act: Dictionary) -> Array[Combatant]:
 		if tg.has("requires"):
 			var ok := false
 			for need: Variant in tg["requires"]:
+				# A creature the monster has Charmed counts as willing (Strahd's Bite).
+				if str(need) in ["willing", "charmed"] and Legendary.charmed_by(t, c):
+					ok = true
 				if str(need) == "willing":
 					continue
 				if t.creature.has_condition(StringName(str(need))):

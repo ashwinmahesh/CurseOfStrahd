@@ -1,0 +1,1008 @@
+{
+  "id": "castle_ravenloft_main_floor",
+  "name": "Castle Ravenloft, the Main Floor",
+  "region": "castle_ravenloft",
+  "summary": "The heart of the castle's ground floor: the entry and the vaulted great entry with the grand stairs, the guests' hall and the dining hall where Strahd entertains, the turret posts, the hall of faces with its ever-burning hearth, and the passage to the chapel and the crypt stairs. Every part of the castle is reached from here.",
+  "text": "Cold stone, high vaults and dust, and somewhere an organ playing. Stairs climb, stairs descend, and every door is a little ajar, as if the house expects you.",
+  "map": {
+    "rows": [
+      "####################################################",
+      "#............#....#..............#......####.......#",
+      "#............#....#.....................####.......#",
+      "###########.##....#..............#......####.......#",
+      "#............#....#..............#......####.......#",
+      "#..........~.#....#...#......#...##############.####",
+      "#............#....#..............#.................#",
+      "#............#...................#.................#",
+      "#............#....#................................#",
+      "#..========.......#..............#.................#",
+      "#............#....#...#......#...#.................#",
+      "#............#....#..............#####.#############",
+      "#............#....#..............###.........#######",
+      "#.~..........#....#..............###.........#######",
+      "#............#....#..............###.........#######",
+      "#########################..#########.........#######",
+      "######################........######.........#######",
+      "#################....#........#....#..........######",
+      "#################....#........#....#..........######",
+      "#################....#........#....#.........#######",
+      "#################............................#######",
+      "#################....#........#....#.........#######",
+      "#################....#........#....#....~....#######",
+      "#################....#........#....#.........#######",
+      "#########################..#########################"
+    ],
+    "theme": "manor",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "crg_servery",
+      "name": "The servery",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          12,
+          2
+        ]
+      ],
+      "floor": "interior/kitchen_flags",
+      "walls": "interior/kitchen_wall"
+    },
+    {
+      "id": "crg_dining_hall",
+      "name": "The dining hall",
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          12,
+          14
+        ]
+      ],
+      "floor": "interior/parquet",
+      "walls": "interior/wood_panel",
+      "light": "dim"
+    },
+    {
+      "id": "crg_guests_hall",
+      "name": "The guests' hall",
+      "cells": [
+        [
+          14,
+          1
+        ],
+        [
+          17,
+          14
+        ]
+      ],
+      "floor": "interior/carpet",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "crg_great_entry",
+      "name": "The great entry",
+      "cells": [
+        [
+          19,
+          1
+        ],
+        [
+          32,
+          14
+        ]
+      ],
+      "floor": "interior/marble_floor",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "crg_tower_stair_foot",
+      "name": "The foot of the high tower stairway",
+      "cells": [
+        [
+          34,
+          1
+        ],
+        [
+          39,
+          4
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "crg_hidden_hoard",
+      "name": "The hoard behind the hearth",
+      "cells": [
+        [
+          44,
+          1
+        ],
+        [
+          50,
+          4
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "crg_hall_of_faces",
+      "name": "The hall of faces",
+      "cells": [
+        [
+          34,
+          6
+        ],
+        [
+          50,
+          10
+        ]
+      ],
+      "floor": "interior/marble_floor",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "crg_chapel_access",
+      "name": "The chapel passage",
+      "cells": [
+        [
+          36,
+          12
+        ],
+        [
+          44,
+          23
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "crg_turret_post_east",
+      "name": "The east turret post",
+      "cells": [
+        [
+          31,
+          17
+        ],
+        [
+          34,
+          23
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "crg_turret_post_west",
+      "name": "The west turret post",
+      "cells": [
+        [
+          17,
+          17
+        ],
+        [
+          20,
+          23
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "crg_entry",
+      "name": "The entry hall",
+      "cells": [
+        [
+          22,
+          16
+        ],
+        [
+          29,
+          23
+        ]
+      ],
+      "floor": "interior/marble_floor",
+      "walls": "church/stone_wall"
+    }
+  ],
+  "spawns": {
+    "default": [
+      25,
+      22
+    ],
+    "from_gates": [
+      25,
+      22
+    ],
+    "from_court": [
+      25,
+      4
+    ],
+    "from_spires": [
+      38,
+      3
+    ],
+    "from_larders": [
+      3,
+      2
+    ],
+    "from_catacombs": [
+      42,
+      22
+    ],
+    "from_chapel": [
+      43,
+      17
+    ]
+  },
+  "exits": [
+    {
+      "id": "great_doors_out",
+      "cell": [
+        25,
+        24
+      ],
+      "to": "castle_ravenloft_gates",
+      "spawn": "from_main_floor",
+      "label": "Out through the great doors to the courtyard"
+    },
+    {
+      "id": "great_doors_out_east",
+      "cell": [
+        26,
+        24
+      ],
+      "to": "castle_ravenloft_gates",
+      "spawn": "from_main_floor",
+      "label": "Out through the great doors to the courtyard"
+    },
+    {
+      "id": "grand_stairs_up",
+      "cell": [
+        25,
+        1
+      ],
+      "to": "castle_ravenloft_court",
+      "spawn": "from_gates",
+      "label": "The grand stairs up"
+    },
+    {
+      "id": "grand_stairs_up_east",
+      "cell": [
+        26,
+        1
+      ],
+      "to": "castle_ravenloft_court",
+      "spawn": "from_gates",
+      "label": "The grand stairs up"
+    },
+    {
+      "id": "high_tower_stairway",
+      "cell": [
+        39,
+        1
+      ],
+      "to": "castle_ravenloft_spires",
+      "spawn": "from_gates",
+      "label": "The high tower stairway, up"
+    },
+    {
+      "id": "servants_stairs_down",
+      "cell": [
+        1,
+        1
+      ],
+      "to": "castle_ravenloft_larders",
+      "spawn": "from_gates",
+      "label": "The servants' stairs down to the kitchens"
+    },
+    {
+      "id": "crypt_stairs_down",
+      "cell": [
+        44,
+        23
+      ],
+      "to": "castle_ravenloft_catacombs",
+      "spawn": "from_gates",
+      "label": "The stairs down to the crypts"
+    },
+    {
+      "id": "chapel_doors",
+      "cell": [
+        45,
+        17
+      ],
+      "to": "castle_ravenloft_chapel",
+      "spawn": "from_main_floor",
+      "label": "The church doors of the chapel"
+    },
+    {
+      "id": "chapel_doors_south",
+      "cell": [
+        45,
+        18
+      ],
+      "to": "castle_ravenloft_chapel",
+      "spawn": "from_main_floor",
+      "label": "The church doors of the chapel"
+    }
+  ],
+  "doors": [
+    {
+      "id": "crg_servery_door",
+      "cell": [
+        11,
+        3
+      ],
+      "label": "the servery door"
+    },
+    {
+      "id": "crg_dining_doors",
+      "cell": [
+        13,
+        9
+      ],
+      "label": "the dining hall doors"
+    },
+    {
+      "id": "crg_guests_hall_doors",
+      "cell": [
+        18,
+        7
+      ],
+      "label": "the guests' hall doors"
+    },
+    {
+      "id": "crg_tower_stair_door",
+      "cell": [
+        33,
+        2
+      ],
+      "label": "a narrow door"
+    },
+    {
+      "id": "crg_faces_doors",
+      "cell": [
+        33,
+        8
+      ],
+      "label": "the gallery doors"
+    },
+    {
+      "id": "crg_chapel_passage_door",
+      "cell": [
+        38,
+        11
+      ],
+      "label": "the door to the chapel passage"
+    },
+    {
+      "id": "crg_turret_west_door",
+      "cell": [
+        21,
+        20
+      ],
+      "label": "the west turret door"
+    },
+    {
+      "id": "crg_turret_east_door",
+      "cell": [
+        30,
+        20
+      ],
+      "label": "the east turret door"
+    },
+    {
+      "id": "crg_turret_back_door",
+      "cell": [
+        35,
+        20
+      ],
+      "label": "the turret's back door"
+    },
+    {
+      "id": "crg_hearth_back",
+      "cell": [
+        47,
+        5
+      ],
+      "label": "a seam beside the firebox",
+      "secret_dc": 13,
+      "when": "flag.crg_ever_hearth_out"
+    }
+  ],
+  "props": [
+    {
+      "id": "crg_dining_organ",
+      "cell": [
+        4,
+        3
+      ],
+      "kind": "examine",
+      "label": "The organ",
+      "model": "pipe_organ"
+    },
+    {
+      "id": "crg_dining_hearth",
+      "cell": [
+        0,
+        8
+      ],
+      "kind": "examine",
+      "label": "The dining hall hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "crg_dining_places",
+      "cell": [
+        6,
+        10
+      ],
+      "kind": "examine",
+      "label": "The laid table",
+      "model": "candelabra"
+    },
+    {
+      "id": "crg_dining_candles",
+      "cell": [
+        9,
+        8
+      ],
+      "kind": "decor",
+      "label": "A candelabrum",
+      "model": "candelabra"
+    },
+    {
+      "id": "crg_dining_portrait",
+      "cell": [
+        13,
+        5
+      ],
+      "kind": "examine",
+      "label": "A portrait of a young woman",
+      "model": "painting"
+    },
+    {
+      "id": "crg_dining_tapestry",
+      "cell": [
+        7,
+        15
+      ],
+      "kind": "decor",
+      "label": "A tapestry of a hunt",
+      "model": "tapestry"
+    },
+    {
+      "id": "crg_guests_portraits",
+      "cell": [
+        14,
+        0
+      ],
+      "kind": "examine",
+      "label": "Portraits of guests",
+      "model": "painting_row"
+    },
+    {
+      "id": "crg_guests_settee",
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "decor",
+      "label": "A settee",
+      "model": "settee"
+    },
+    {
+      "id": "crg_guests_armchair",
+      "cell": [
+        15,
+        12
+      ],
+      "kind": "decor",
+      "label": "An armchair",
+      "model": "armchair"
+    },
+    {
+      "id": "crg_great_entry_pillar",
+      "cell": [
+        22,
+        5
+      ],
+      "kind": "examine",
+      "label": "A pillar carved with dragons",
+      "model": "relief"
+    },
+    {
+      "id": "crg_great_entry_suit",
+      "cell": [
+        31,
+        13
+      ],
+      "kind": "decor",
+      "label": "A suit of armour",
+      "model": "armor_stand"
+    },
+    {
+      "id": "crg_great_entry_suit_2",
+      "cell": [
+        20,
+        13
+      ],
+      "kind": "decor",
+      "label": "A suit of armour",
+      "model": "armor_stand"
+    },
+    {
+      "id": "crg_great_entry_banner",
+      "cell": [
+        32,
+        0
+      ],
+      "kind": "decor",
+      "label": "A black banner",
+      "model": "tapestry"
+    },
+    {
+      "id": "crg_entry_crest",
+      "cell": [
+        25,
+        19
+      ],
+      "kind": "examine",
+      "label": "A long rug with the family crest",
+      "model": "rug_runner"
+    },
+    {
+      "id": "crg_entry_candles",
+      "cell": [
+        28,
+        17
+      ],
+      "kind": "decor",
+      "label": "A candelabrum",
+      "model": "candelabra"
+    },
+    {
+      "id": "crg_ever_hearth",
+      "cell": [
+        46,
+        5
+      ],
+      "kind": "examine",
+      "label": "A hearth burning with no wood",
+      "model": "fireplace",
+      "dialogue": "castle_ravenloft/gates_hearth:start",
+      "burning": "not flag.crg_ever_hearth_out"
+    },
+    {
+      "id": "crg_faces_relief_1",
+      "cell": [
+        36,
+        5
+      ],
+      "kind": "examine",
+      "label": "Carved faces",
+      "model": "relief"
+    },
+    {
+      "id": "crg_faces_relief_2",
+      "cell": [
+        40,
+        5
+      ],
+      "kind": "decor",
+      "label": "Carved faces",
+      "model": "relief"
+    },
+    {
+      "id": "crg_faces_relief_3",
+      "cell": [
+        43,
+        5
+      ],
+      "kind": "decor",
+      "label": "Carved faces",
+      "model": "relief"
+    },
+    {
+      "id": "crg_faces_relief_4",
+      "cell": [
+        41,
+        11
+      ],
+      "kind": "decor",
+      "label": "Carved faces",
+      "model": "relief"
+    },
+    {
+      "id": "crg_faces_relief_5",
+      "cell": [
+        46,
+        11
+      ],
+      "kind": "decor",
+      "label": "Carved faces",
+      "model": "relief"
+    },
+    {
+      "id": "crg_faces_portrait",
+      "cell": [
+        50,
+        11
+      ],
+      "kind": "examine",
+      "label": "A portrait that watches",
+      "model": "painting"
+    },
+    {
+      "id": "crg_hoard_sacks",
+      "cell": [
+        45,
+        1
+      ],
+      "kind": "decor",
+      "label": "Sacks of old coin",
+      "model": "sack"
+    },
+    {
+      "id": "crg_chapel_access_saint",
+      "cell": [
+        36,
+        12
+      ],
+      "kind": "examine",
+      "label": "A saint in a niche",
+      "model": "statue_saint"
+    },
+    {
+      "id": "crg_turret_arrow_slit",
+      "cell": [
+        34,
+        24
+      ],
+      "kind": "decor",
+      "label": "An arrow slit",
+      "model": "window_shuttered"
+    },
+    {
+      "id": "crg_turret_west_slit",
+      "cell": [
+        17,
+        24
+      ],
+      "kind": "decor",
+      "label": "An arrow slit",
+      "model": "window_shuttered"
+    }
+  ],
+  "containers": [
+    {
+      "id": "crg_servery_cupboard",
+      "cell": [
+        6,
+        1
+      ],
+      "label": "A servery cupboard",
+      "model": "cupboard",
+      "items": [
+        {
+          "id": "ration",
+          "qty": 4
+        },
+        {
+          "id": "candle",
+          "qty": 6
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "crg_dining_sideboard",
+      "cell": [
+        12,
+        12
+      ],
+      "label": "A sideboard",
+      "model": "sideboard",
+      "items": [
+        {
+          "id": "glass_bottle",
+          "qty": 2
+        }
+      ],
+      "gold": 25
+    },
+    {
+      "id": "crg_guests_wardrobe",
+      "cell": [
+        17,
+        1
+      ],
+      "label": "A guest wardrobe",
+      "model": "wardrobe",
+      "items": [
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "crg_turret_rack",
+      "cell": [
+        17,
+        18
+      ],
+      "label": "A weapon rack",
+      "model": "shelves",
+      "items": [
+        {
+          "id": "halberd",
+          "qty": 1
+        },
+        {
+          "id": "shield",
+          "qty": 1
+        },
+        {
+          "id": "crossbow_bolt",
+          "qty": 20
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "crg_hearth_hoard",
+      "cell": [
+        49,
+        2
+      ],
+      "label": "An iron strongbox",
+      "model": "strongbox",
+      "items": [],
+      "gold": 320,
+      "flag": "crg_hoard_opened"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        46,
+        6
+      ],
+      "kind": "fire",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        6,
+        8
+      ],
+      "kind": "candle",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        9,
+        8
+      ],
+      "kind": "candle",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        28,
+        17
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "strahd",
+      "cell": [
+        5,
+        5
+      ],
+      "dialogue": "castle_ravenloft/gates_dinner:start",
+      "when": "flag.strahd_invitation == \"accepted\" and not flag.castle_dinner",
+      "facing": "south",
+      "approach": 8
+    }
+  ],
+  "encounters": [
+    {
+      "id": "crg_dinner_affront",
+      "trigger": "dialogue",
+      "text": "Strahd sets down his glass. At my table, he says, almost fondly. The candles gutter, and the dark above the organ comes apart into bats.",
+      "surprise": "",
+      "flag": "crg_dinner_fight_over",
+      "withdraw": {
+        "who": "strahd_von_zarovich",
+        "at_hp_below": 100,
+        "after_rounds": 3,
+        "flag": "strahd_withdrew"
+      },
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            5,
+            5
+          ],
+          "name": "Strahd von Zarovich"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            2,
+            5
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            9,
+            5
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            2,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crg_turret_guard",
+      "trigger": "enter_area:crg_turret_post_east",
+      "when": "level >= 10",
+      "text": "Two suits of black armour step down from their stands at once, as if someone had called the watch.",
+      "surprise": "",
+      "flag": "crg_turret_guard_broken",
+      "monsters": [
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            32,
+            18
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            33,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crg_turret_guard",
+      "trigger": "enter_area:crg_turret_post_east",
+      "text": "A suit of black armour steps down from its stand, as if someone had called the watch.",
+      "surprise": "",
+      "flag": "crg_turret_guard_broken",
+      "monsters": [
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            32,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crg_faces_wake",
+      "trigger": "flag:crg_ever_hearth_out",
+      "when": "not flag.crg_hearth_quiet and level >= 10",
+      "text": "The fire dies, and every face in the hall turns toward you. Two portraits lean out of their frames; helmed armour marches in from the dark.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            36,
+            6
+          ]
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            48,
+            10
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            9
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            42,
+            7
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            35,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crg_faces_wake",
+      "trigger": "flag:crg_ever_hearth_out",
+      "when": "not flag.crg_hearth_quiet",
+      "text": "The fire dies, and every face in the hall turns toward you. Two portraits lean out of their frames; helmed armour marches in from the dark.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            36,
+            6
+          ]
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            48,
+            10
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            9
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            42,
+            7
+          ]
+        }
+      ]
+    }
+  ],
+  "treasure_spots": {
+    "castle_ravenloft_hidden_hearth": {
+      "container": "crg_hearth_hoard"
+    }
+  },
+  "narration": {
+    "enter": "enter:castle_ravenloft_main_floor"
+  },
+  "rest": "risky"
+}

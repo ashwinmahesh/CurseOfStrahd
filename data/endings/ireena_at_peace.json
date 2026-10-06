@@ -1,0 +1,27 @@
+{
+  "id": "ireena_at_peace",
+  "title": "At Sergei's Side",
+  "summary": "Strahd is destroyed, and Ireena keeps the promise she made at the Pool of the White Sun.",
+  "priority": 30,
+  "when": "flag.strahd_destroyed and flag.ireena_pool_choice == promised",
+  "narration": "endings/ireena_at_peace:start",
+  "tone": "dawn",
+  "music": "ending",
+  "epilogue_from": "strahd_destroyed",
+  "epilogue": [
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "sergei_von_zarovich",
+      "when": "",
+      "text": "Ireena is gone from the world, and not lost. Pilgrims say the Pool of the White Sun stays warm now, even in the deepest winter."
+    },
+    {
+      "topic": "ismark",
+      "title": "Ismark",
+      "portrait": "ismark",
+      "when": "",
+      "text": "Once a year Ismark climbs to Krezk and sits by the pool for an hour without a word. Then he goes home and rules his village well."
+    }
+  ]
+}

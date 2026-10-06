@@ -1,0 +1,97 @@
+{
+  "$id": "ending.schema.json",
+  "title": "An ending of the campaign and its epilogue slides (ADR 0014, docs/contracts/campaign.md Endings)",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "summary",
+    "priority",
+    "when",
+    "narration",
+    "epilogue"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "slide": {
+      "type": "object",
+      "required": [
+        "when",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "topic": {
+          "$ref": "common.schema.json#/$defs/id",
+          "description": "What the slide is about (vallaki, ireena ...). A topic is shown once: the first slide of it whose `when` holds, this ending's own slides before the ones it inherits."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "when": {
+          "type": "string",
+          "description": "A dialogue condition (docs/contracts/dialogue.md); empty is always."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Our own words, one or two sentences. {name} is the heir (the bearer of the Second Thirst) or else the leader; {leader} is the leader."
+        },
+        "portrait": {
+          "type": "string",
+          "description": "An art/portraits id, or {name} for the heir's (or leader's) own portrait."
+        }
+      }
+    }
+  },
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One line under the title card, and the finished save's note."
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "The highest-priority ending whose `when` holds is the one reached."
+    },
+    "when": {
+      "type": "string"
+    },
+    "narration": {
+      "type": "string",
+      "pattern": "^[a-z0-9_/]+:[a-z0-9_]+$",
+      "description": "The .dialogue node played first (file:node under narrative/)."
+    },
+    "tone": {
+      "enum": [
+        "dawn",
+        "night",
+        "blood"
+      ],
+      "description": "The ending screen's light: a pale dawn, the valley's night, or the castle's red."
+    },
+    "music": {
+      "type": "string",
+      "description": "The art/audio.json mood the ending screen plays (default: ending)."
+    },
+    "epilogue_from": {
+      "$ref": "common.schema.json#/$defs/id",
+      "description": "Another ending whose slides follow this one's (topics already shown are skipped)."
+    },
+    "epilogue": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/slide"
+      }
+    }
+  }
+}

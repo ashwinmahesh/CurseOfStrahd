@@ -5,6 +5,7 @@ flag, speaker, item, quest, skill and encounter a file uses. Stdlib only.
 parse_file(path) -> {"nodes": {id: line_no}, "jumps": [(target, line)], "flags_read": {id: [where]},
                      "flags_set": {id: [where]}, "speakers": [(id, line)], "items": [...], "quests": [...],
                      "skills": [...], "encounters": [...], "selectors": [...], "errors": [str]}
+                     (+ "end_games": [where] for each `end_game`, when a file has one)
 """
 import re
 from pathlib import Path
@@ -41,6 +42,7 @@ RE_DARK_GIFT = re.compile(r"^dark_gift\s+([a-z][a-z0-9_]*)$")
 RE_TAROKKA = re.compile(r"^tarokka\s+(draw|read\s+(tome|symbol|sword|ally|enemy)(\s+[a-z][a-z0-9_]*)?)$")
 RE_TIME = re.compile(r"^time\s+(\+\d+|until\s+\d{1,2})$")
 RE_SHOP = re.compile(r"^(shop|respec)$")
+RE_END_GAME = re.compile(r"^end_game$")
 RE_GUEST = re.compile(rf"^(join|leave)\s+({ID})$")
 RE_FLAG_REF = re.compile(rf"\bflag\.({ID})")
 CLASS_TAGS = {"fighter", "rogue", "cleric", "wizard", "barbarian", "bard", "druid", "monk", "paladin", "ranger",
@@ -169,6 +171,9 @@ def parse_file(path):
             out.setdefault("dark_gifts", []).append((m.group(1), where))
             continue
         if RE_GOLD.match(line) or RE_XP.match(line) or RE_SACRIFICE.match(line) or RE_TAROKKA.match(line) or RE_SHOP.match(line) or RE_TIME.match(line):
+            continue
+        if RE_END_GAME.match(line):
+            out.setdefault("end_games", []).append(where)  # the campaign ends here (ADR 0014)
             continue
         m = RE_GUEST.match(line)
         if m:

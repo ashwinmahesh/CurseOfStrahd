@@ -1,0 +1,66 @@
+# The ravens' roost under the castle's roofs (castle_ravenloft_spires_roost). The ravens guard the great nest (a
+# Tarokka place): friends of the Keepers or of the road raven, food, or Animal Handling calm them; a failed try or a
+# grab at the nest is a fight. Pidlwick II's wind-up key is in a smaller nest.
+
+~ ravens
+if flag.roost_swarm_cleared
+Narrator: The few ravens left keep to the far beams and watch you with flat black eyes. None of them comes near.
+-> END
+endif
+if flag.roost_ravens_calm
+Narrator: The ravens shuffle along the beams to make room for you. One clacks its beak at the great nest, as if to say: well, go on.
+-> END
+endif
+Narrator: Ravens, hundreds of them, on every beam. Every head turns toward you at once.
+if flag.raven_harmed
+Narrator: One old bird shrieks, and the shriek runs down the beams like a rumour. They know you. Ravens talk.
+endif
+* [if flag.keepers_allied or flag.raven_fed] Hold out an open hand, the way a friend of the ravens would. -> friends
+* [if item:ration] Scatter some food on the boards. -> fed
+* [if not flag.raven_harmed] [Animal Handling DC 14] Move slowly and talk low. -> calm | roused
+* [if flag.raven_harmed] [Animal Handling DC 18] Move slowly and talk low. -> calm | roused
+* Leave them be. -> END
+
+~ friends
+set roost_ravens_calm
+Narrator: A big raven drops onto your wrist, looks you over, and croaks once. The whole roost settles like a breath let out.
+if flag.keepers_allied
+interject tag:cheerful: I think somebody vouched for us.
+endif
+-> hint
+
+~ fed
+take ration 1
+set roost_ravens_calm
+Narrator: The ravens come down in a black rush and the food is gone in a heartbeat. Afterwards they sit closer, and the roost is quieter.
+-> hint
+
+~ calm
+set roost_ravens_calm
+Narrator: You move like someone with all night to spare, and the ravens decide you aren't worth the trouble of a fight.
+-> hint
+
+~ hint
+if treasure_at:castle_ravenloft_ravens_roost
+Narrator: Something in the great nest in the middle of the roost catches what little light there is.
+endif
+-> END
+
+~ roused
+Narrator: A raven screams. Then all of them do.
+combat roost_swarm_roused
+
+~ brass
+if flag.pidlwick_key_found
+Narrator: Only twigs now, and a scrap of red ribbon.
+-> END
+endif
+Narrator: Wedged deep in a nest of twigs and wire: a brass key as long as your hand, its bow shaped like a jester's cap with a tiny bell on every point.
+set pidlwick_key_found
+if quest.the_jesters_key
+quest the_jesters_key found
+endif
+if not guest:pidlwick_ii
+interject class:rogue: A wind-up key. Somebody, somewhere, is running down.
+endif
+-> END

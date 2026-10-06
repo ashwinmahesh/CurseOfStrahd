@@ -1,0 +1,31 @@
+{
+  "id": "the_heart_of_sorrow",
+  "name": "The Heart of Sorrow",
+  "summary": "At the top of Castle Ravenloft's high tower hangs a crystal heart that takes Strahd's wounds before he does.",
+  "giver": "escher",
+  "region": "castle_ravenloft",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Something at the top of the high tower keeps Strahd standing: a heart of glass that beats for him and takes his wounds first. Break it, and he bleeds like anyone else.",
+      "objectives": [
+        "Climb to the top of the high tower"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "At the very top of the high tower a heart of red crystal hangs on chains, taller than a man, beating slowly. It has to matter to someone very much.",
+      "objectives": [
+        "Break the heart, or leave it beating"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "shattered",
+      "journal": "We broke the heart at the top of the high tower. Whatever wounds it used to take for Strahd, he takes himself now. He felt it break.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

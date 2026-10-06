@@ -1,0 +1,13 @@
+# Ending: Strahd destroyed while a party member carries the Second Thirst (gift:gift_of_the_hollow; data/endings/
+# new_darklord.json, ADR 0014). The ending screen makes that character the speaker, so {name} is the heir.
+
+~ start
+Narrator: The thing in the coffin goes still. For one long breath the castle is silent, waiting.
+Narrator: Then {name} feels it. The thirst that filled him has nowhere left to go, except into the one who already carries a piece of it.
+if guest:ireena
+Ireena: Your eyes. They have gone so dark. Tell me I am wrong.
+endif
+Narrator: The mist does not lift at dawn. It curls around {name}'s boots like a hound greeting its new master.
+Narrator: Somewhere below, a black carriage is being made ready. The castle opens its doors from the inside.
+Narrator: The valley has a new lord. It does not much matter to the valley which name it fears.
+-> END

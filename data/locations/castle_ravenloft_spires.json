@@ -1,0 +1,543 @@
+{
+  "id": "castle_ravenloft_spires",
+  "name": "Castle Ravenloft, the High Tower",
+  "region": "castle_ravenloft",
+  "summary": "The high tower of Castle Ravenloft: a stair that winds up the inside of the tallest tower around an open well, from the main floor past the count's floor to the high landing, where one door leads to the tower rooms and one last stair to the Heart of Sorrow.",
+  "text": "A stair without a rail climbs the inside of a tower so tall its top is lost in the dark. In the middle there is nothing at all: a well of black air going straight down.",
+  "map": {
+    "rows": [
+      "###################2############",
+      "#......#22222222222222222222333#",
+      "#......#22222222222222222222333#",
+      "#......#22222222222222222222333#",
+      "###.####111                 333#",
+      "#......#111                 333#",
+      "#......#111                 333#",
+      "#......#111                 333#",
+      "#......#111                 333#",
+      "#......#111                 333#",
+      "#......#111                 333#",
+      "#......#111                 444#",
+      ".......#111                 444#",
+      "#......#111                 444#",
+      "#......#111                 444#",
+      "#......#111                 444#",
+      "#......1111                 444#",
+      "#......1111#4444444444444444444#",
+      "#......1111#4444444444444444444#",
+      "#......#111#4444444444444444444#",
+      "########################4#######"
+    ],
+    "theme": "church",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "spires_tower_foot",
+      "name": "The foot of the high tower",
+      "cells": [
+        [
+          1,
+          5
+        ],
+        [
+          7,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "spires_lamp_closet",
+      "name": "The lamplighters' closet",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "floor": "interior/workshop_boards"
+    },
+    {
+      "id": "spires_lower_stair",
+      "name": "The lower turns of the stair",
+      "cells": [
+        [
+          8,
+          4
+        ],
+        [
+          10,
+          19
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "spires_grand_landing",
+      "name": "The grand landing",
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          30,
+          3
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "spires_upper_stair",
+      "name": "The upper turns of the stair",
+      "cells": [
+        [
+          28,
+          4
+        ],
+        [
+          30,
+          16
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "spires_high_landing",
+      "name": "The high landing",
+      "cells": [
+        [
+          12,
+          17
+        ],
+        [
+          30,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      12
+    ],
+    "from_gates": [
+      3,
+      12
+    ],
+    "from_court": [
+      19,
+      2
+    ],
+    "from_heart": [
+      14,
+      18
+    ],
+    "from_rooms": [
+      24,
+      18
+    ]
+  },
+  "exits": [
+    {
+      "id": "to_main_floor",
+      "cell": [
+        0,
+        12
+      ],
+      "to": "castle_ravenloft_main_floor",
+      "spawn": "from_spires",
+      "label": "The door to the main floor"
+    },
+    {
+      "id": "to_court",
+      "cell": [
+        19,
+        0
+      ],
+      "to": "castle_ravenloft_court",
+      "spawn": "from_spires",
+      "label": "The arch to the count's floor"
+    },
+    {
+      "id": "up_to_heart",
+      "cell": [
+        12,
+        18
+      ],
+      "to": "castle_ravenloft_spires_heart",
+      "spawn": "from_stair",
+      "label": "Up to the top of the tower"
+    },
+    {
+      "id": "to_rooms",
+      "cell": [
+        24,
+        20
+      ],
+      "to": "castle_ravenloft_spires_rooms",
+      "spawn": "from_high_tower",
+      "label": "The door to the tower rooms"
+    }
+  ],
+  "doors": [
+    {
+      "id": "spires_closet_panel",
+      "cell": [
+        3,
+        4
+      ],
+      "label": "a panel in the wainscot",
+      "secret_dc": 14
+    }
+  ],
+  "props": [
+    {
+      "id": "spires_jester_portrait",
+      "cell": [
+        22,
+        1
+      ],
+      "kind": "examine",
+      "label": "A portrait of a jester",
+      "model": "painting",
+      "flag": "jester_portrait_seen"
+    },
+    {
+      "id": "spires_well_edge",
+      "cell": [
+        10,
+        9
+      ],
+      "kind": "examine",
+      "label": "The edge of the well",
+      "model": "wall_low"
+    },
+    {
+      "id": "spires_landing_armor",
+      "cell": [
+        12,
+        1
+      ],
+      "kind": "decor",
+      "label": "An empty suit of armour",
+      "model": "armor_stand"
+    },
+    {
+      "id": "spires_landing_bench",
+      "cell": [
+        26,
+        1
+      ],
+      "kind": "decor",
+      "label": "A stone bench",
+      "model": "stone_bench"
+    },
+    {
+      "id": "spires_foot_tapestry",
+      "cell": [
+        1,
+        8
+      ],
+      "kind": "examine",
+      "label": "A faded tapestry",
+      "model": "tapestry"
+    },
+    {
+      "id": "spires_high_window",
+      "cell": [
+        18,
+        19
+      ],
+      "kind": "examine",
+      "label": "A window over the valley",
+      "model": "window_tall"
+    },
+    {
+      "id": "spires_high_candelabra",
+      "cell": [
+        27,
+        17
+      ],
+      "kind": "decor",
+      "label": "A candelabrum",
+      "model": "candelabra"
+    },
+    {
+      "id": "spires_closet_lamps",
+      "cell": [
+        6,
+        1
+      ],
+      "kind": "decor",
+      "label": "Lamps on hooks",
+      "model": "shelves"
+    }
+  ],
+  "containers": [
+    {
+      "id": "spires_closet_cupboard",
+      "cell": [
+        1,
+        2
+      ],
+      "label": "The lamplighters' cupboard",
+      "model": "sideboard",
+      "items": [
+        {
+          "id": "lamp",
+          "qty": 2
+        },
+        {
+          "id": "oil",
+          "qty": 3
+        },
+        {
+          "id": "candle",
+          "qty": 6
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "gold": 40
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        3,
+        6
+      ],
+      "kind": "torch",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        5,
+        18
+      ],
+      "kind": "torch",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        19,
+        1
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        27,
+        18
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "traps": [
+    {
+      "id": "spires_broken_step",
+      "cells": [
+        [
+          29,
+          7
+        ]
+      ],
+      "label": "a broken step",
+      "detect_dc": 14,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d6",
+      "damage_type": "bludgeoning",
+      "text": "The step crumbles under your boot and you go over the edge, onto the turn of the stair below."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "pidlwick_ii",
+      "cell": [
+        16,
+        2
+      ],
+      "dialogue": "castle_ravenloft/spires_pidlwick:start",
+      "when": "not guest:pidlwick_ii",
+      "facing": "south",
+      "approach": 5
+    }
+  ],
+  "encounters": [
+    {
+      "id": "spires_stair_watch",
+      "trigger": "enter_area:spires_upper_stair",
+      "when": "not flag.spires_stair_watch_cleared and level >= 11",
+      "text": "Two shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
+      "surprise": "",
+      "flag": "spires_stair_watch_cleared",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            28,
+            13
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            30,
+            15
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            29,
+            17
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            28,
+            5
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            30,
+            4
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            29,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spires_stair_watch",
+      "trigger": "enter_area:spires_upper_stair",
+      "when": "not flag.spires_stair_watch_cleared and level >= 10",
+      "text": "Two shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
+      "surprise": "",
+      "flag": "spires_stair_watch_cleared",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            28,
+            13
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            30,
+            15
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            28,
+            5
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            30,
+            4
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            29,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spires_stair_watch",
+      "trigger": "enter_area:spires_upper_stair",
+      "when": "not flag.spires_stair_watch_cleared",
+      "text": "Two shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
+      "surprise": "",
+      "flag": "spires_stair_watch_cleared",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            29,
+            11
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            28,
+            13
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            29,
+            9
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_spires"
+  },
+  "rest": "risky"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "brother_anatol",
+  "name": "Brother Anatol",
+  "title": "A Prisoner at Prayer",
+  "summary": "A gentle monk of the Morninglord who says he came to pray for the castle's lord and was thrown in a cell. He is a vampire spawn, set there as bait for rescuers.",
+  "portrait": "brother_anatol",
+  "sprite": "brother_anatol",
+  "attitude": "indifferent",
+  "voice": "docs/voice/brother_anatol.md",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "undead",
+    "vampire_spawn",
+    "prisoner",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

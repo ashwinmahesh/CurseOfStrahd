@@ -1,0 +1,15 @@
+# Ending: Strahd destroyed, and Ireena keeps the promise she made at the Pool of the White Sun (ireena_pool_choice is
+# promised; data/endings/ireena_at_peace.json, ADR 0014). Ends with the sunrise of strahd_destroyed.
+
+~ start
+Narrator: The thing in the coffin goes still, and stays still. Far above you, stone groans, as if the whole castle has let out a breath.
+Narrator: Three mornings later the sun is still rising, and Ireena asks to be taken to Krezk.
+Narrator: At the Pool of the White Sun she kneels and looks into the water. The face that looks back at her is not her own.
+Sergei: You kept your promise. So did I. I have waited a very long time.
+Ireena: Then we will not make each other wait any longer.
+if guest:ismark
+Ismark: Go on, little sister. I will tell the village you were happy. It will even be true.
+endif
+Narrator: She steps into the pool, and the water takes the light and her with it. When the ripples settle, the surface shows only sky.
+interject class:cleric: Wherever that light went, it was going home.
+-> endings/strahd_destroyed:sunrise

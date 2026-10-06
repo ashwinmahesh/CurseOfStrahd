@@ -66,6 +66,7 @@ var _closed := false
 ## encounter (rolling Initiative) unless it's already running.
 func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: Dictionary, surprised: Array[String] = []) -> void:
 	name = "CombatView"
+	InputActions.ensure()   # the camera keys and the pad cursor, wherever the fight is shown from
 	e = encounter
 	board = board_
 	rig = rig_
@@ -204,7 +205,10 @@ func _advance() -> void:
 		overlay.clear_all()
 		hud.hide_tooltip()
 		var tail := "R: fight again" if restart_allowed else "Space or A: continue"
-		hud.banner(("Victory!" if e.outcome == "victory" else "The party has fallen") + "\n" + tail, 600.0)
+		var head := e.legendary.end_title()
+		if head == "":
+			head = "Victory!" if e.outcome == "victory" else "The party has fallen"
+		hud.banner(head + "\n" + tail, 600.0)
 		return
 	if e.pending != null:
 		mode = Mode.PROMPT
@@ -241,7 +245,9 @@ func _advance() -> void:
 func _refresh_all() -> void:
 	var cur := e.current()
 	for id: String in tokens:
-		var t := tokens[id] as CombatToken
+		var t := _tok(id)
+		if t == null:
+			continue
 		t.refresh()
 		t.set_active(cur != null and t.combatant == cur and e.state == Encounter.State.ACTIVE)
 	hud.refresh()
@@ -906,11 +912,13 @@ func _play_events() -> void:
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
 	var cast_by := ""
 	for ev in events:
+		if _closed:
+			return   # the story took the fight back mid-way: its tokens may be gone
 		var kind := str(ev["type"])
 		match kind:
 			"move":
 				cast_by = ""
-				var tok := tokens.get(str(ev["id"])) as CombatToken
+				var tok := _tok(str(ev["id"]))
 				if tok == null:
 					continue
 				var from: Vector2i = ev["from"]
@@ -924,8 +932,8 @@ func _play_events() -> void:
 				await tw.finished
 			"attack":
 				_stop_walking(walking)
-				var a := tokens.get(str(ev["attacker"])) as CombatToken
-				var d := tokens.get(str(ev["target"])) as CombatToken
+				var a := _tok(str(ev["attacker"]))
+				var d := _tok(str(ev["target"]))
 				if a != null and d != null:
 					var dir := (d.position - a.position)
 					var home := a.position
@@ -949,20 +957,20 @@ func _play_events() -> void:
 					elif bool(ev.get("critical", false)):
 						_narrate("combat:crit", a.combatant, d.combatant)
 			"damage":
-				var t := tokens.get(str(ev["id"])) as CombatToken
+				var t := _tok(str(ev["id"]))
 				if t != null:
 					t.flash(Look.color("vampire_red"))
 					_float(t, ("CRIT %d" if bool(ev.get("critical", false)) else "-%d") % int(ev["amount"]), "vampire_red", 64)
 					t.refresh()
 					await get_tree().create_timer(0.35).timeout
 			"heal":
-				var th := tokens.get(str(ev["id"])) as CombatToken
+				var th := _tok(str(ev["id"]))
 				if th != null:
 					Audio.sfx("heal")
 					_float(th, "+%d" % int(ev["amount"]), "bile")
 					th.refresh()
 			"condition", "down", "death", "death_save":
-				var tc := tokens.get(str(ev["id"])) as CombatToken
+				var tc := _tok(str(ev["id"]))
 				if tc != null:
 					tc.refresh()
 					if kind == "down" and tc.combatant.side == &"party":
@@ -976,7 +984,7 @@ func _play_events() -> void:
 			"spell":
 				_stop_walking(walking)
 				Audio.sfx("spell")
-				var caster := tokens.get(str(ev["caster"])) as CombatToken
+				var caster := _tok(str(ev["caster"]))
 				cast_by = ""
 				if caster != null:
 					caster.flash(Look.color("lilac"), 0.3)
@@ -992,7 +1000,7 @@ func _play_events() -> void:
 			"summon", "object", "object_gone":
 				_show_weapons()
 			"teleport":
-				var tt := tokens.get(str(ev["id"])) as CombatToken
+				var tt := _tok(str(ev["id"]))
 				if tt != null:
 					# Back from Banishment: the token shows again.
 					if not tt.visible:
@@ -1009,14 +1017,26 @@ func _play_events() -> void:
 					add_child(nt)
 					tokens[sc.id] = nt
 					nt.flash(Look.color("lilac"), 0.5)
+			"legendary", "lair":
+				# A boss acting between turns (ADR 0014): its name over the field, and a flash on the boss.
+				_stop_walking(walking)
+				var lt := _tok(str(ev["id"]))
+				if lt != null:
+					lt.flash(Look.color("vampire_red"), 0.3)
+				hud.banner(("Lair action: %s" if kind == "lair" else "Legendary action: %s") % str(ev["name"]), 1.1)
+				await get_tree().create_timer(0.35).timeout
+			"form":
+				_swap_form_art(str(ev["id"]), str(ev.get("art", "")))
 			"vanish":
-				var vt := tokens.get(str(ev["id"])) as CombatToken
+				var vt := _tok(str(ev["id"]))
+				if str(ev.get("narration", "")) != "" and vt != null:
+					_narrate(str(ev["narration"]), null, vt.combatant)
 				if vt != null:
 					var tw3 := create_tween()
 					tw3.tween_property(vt, "scale", Vector3(0.01, 0.01, 0.01), 0.3)
 					tw3.tween_callback(vt.hide)
 			"resize":
-				var rt := tokens.get(str(ev["id"])) as CombatToken
+				var rt := _tok(str(ev["id"]))
 				if rt != null:
 					var k := float(rt.combatant.size_cells)
 					var tw4 := create_tween()
@@ -1036,11 +1056,35 @@ func _play_events() -> void:
 	_refresh_all()
 
 
+## The token shown for a creature, or null (none, or freed once the story took the fight back).
+func _tok(id: Variant) -> CombatToken:
+	var v: Variant = tokens.get(str(id))
+	return v as CombatToken if is_instance_valid(v) else null
+
+
+## A Shapechanger took another shape (ADR 0014): its token wears the shape's sprite when it has one (`forms` art),
+## and the stat block's own again in its true form.
+func _swap_form_art(id: String, art: String) -> void:
+	var old := _tok(id)
+	if old == null:
+		return
+	var want := art if art != "" and DirectionalSprite.frames_for(art) != null else ""
+	if want == old.art_override:
+		old.flash(Look.color("lilac"), 0.3)
+		return
+	var nt := CombatToken.create(old.combatant, want)
+	nt.position = old.position
+	add_child(nt)
+	tokens[id] = nt
+	nt.flash(Look.color("lilac"), 0.4)
+	old.queue_free()
+
+
 ## Where a spell goes, as a ground direction from its caster: its first other target, else the middle of its area.
 ## Zero for a spell on the caster alone.
 func _spell_aim(ev: Dictionary, caster: CombatToken) -> Vector2:
 	for id: Variant in ev.get("targets", []) as Array:
-		var t := tokens.get(str(id)) as CombatToken
+		var t := _tok(str(id))
 		if t != null and t != caster:
 			var d := t.position - caster.position
 			return Vector2(d.x, d.z)
