@@ -8,9 +8,9 @@
     "light": "dim",
     "rows": [
       "############################",
+      "#........#.....####....#...#",
       "#........#.....####....#..=#",
-      "#........#.....####....#..=#",
-      "#........#.....==.#.==.....#",
+      "#........#.....==.#.=......#",
       "#..=..=..#........#....#...#",
       "#......................#...#",
       "#...==...#=.......###.######",
@@ -41,7 +41,9 @@
           16,
           17
         ]
-      ]
+      ],
+      "floor": "interior/marble_floor",
+      "walls": "interior/wood_panel"
     },
     {
       "id": "dh_cloakroom",
@@ -56,7 +58,9 @@
           16
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "interior/wood_planks",
+      "walls": "interior/wood_panel"
     },
     {
       "id": "dh_main_hall",
@@ -70,7 +74,9 @@
           17,
           12
         ]
-      ]
+      ],
+      "floor": "interior/marble_floor",
+      "walls": "interior/carved_panel"
     },
     {
       "id": "dh_den",
@@ -84,7 +90,9 @@
           8,
           11
         ]
-      ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/wood_panel"
     },
     {
       "id": "dh_kitchen",
@@ -98,7 +106,9 @@
           22,
           5
         ]
-      ]
+      ],
+      "floor": "interior/kitchen_flags",
+      "walls": "interior/kitchen_wall"
     },
     {
       "id": "dh_pantry",
@@ -113,7 +123,9 @@
           5
         ]
       ],
-      "light": "dark"
+      "light": "dark",
+      "floor": "interior/kitchen_flags",
+      "walls": "interior/whitewash"
     },
     {
       "id": "dh_dining_room",
@@ -127,7 +139,9 @@
           26,
           14
         ]
-      ]
+      ],
+      "floor": "interior/parquet",
+      "walls": "interior/carved_panel"
     }
   ],
   "spawns": {
@@ -242,15 +256,25 @@
       "model": "crest"
     },
     {
-      "id": "hall_family_portrait",
+      "id": "hall_hearth",
       "cell": [
-        9,
-        8
+        12,
+        0
       ],
       "kind": "examine",
-      "label": "the family portrait",
-      "model": "painting",
-      "dialogue": "death_house/house:family_portrait"
+      "label": "the marble hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "hall_carvings",
+      "cell": [
+        18,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "label": "serpents and skulls in the carving",
+      "model": "ledge"
     },
     {
       "id": "hall_lamp",
@@ -263,14 +287,44 @@
       "model": "oil_lamp"
     },
     {
-      "id": "den_trophies",
+      "id": "den_stag_head",
       "cell": [
-        4,
+        5,
         0
       ],
       "kind": "examine",
-      "label": "wolf-head trophies",
+      "label": "a stag's head",
       "model": "trophy_wolf"
+    },
+    {
+      "id": "den_stuffed_wolf_c",
+      "cell": [
+        5,
+        11
+      ],
+      "kind": "examine",
+      "label": "a stuffed wolf",
+      "model": "stuffed_wolf"
+    },
+    {
+      "id": "den_stuffed_wolf_b",
+      "cell": [
+        8,
+        8
+      ],
+      "kind": "examine",
+      "label": "a stuffed wolf",
+      "model": "stuffed_wolf"
+    },
+    {
+      "id": "den_stuffed_wolf_a",
+      "cell": [
+        1,
+        2
+      ],
+      "kind": "examine",
+      "label": "a stuffed wolf",
+      "model": "stuffed_wolf"
     },
     {
       "id": "den_hearth",
@@ -299,8 +353,18 @@
         0
       ],
       "kind": "examine",
-      "label": "the iron stove",
-      "model": "stove"
+      "label": "the oven",
+      "model": "oven_brick"
+    },
+    {
+      "id": "kitchen_worktable",
+      "cell": [
+        20,
+        3
+      ],
+      "kind": "decor",
+      "label": "a worktable with a rolling pin",
+      "model": "workbench"
     },
     {
       "id": "kitchen_dumbwaiter",
@@ -331,6 +395,16 @@
       "kind": "examine",
       "label": "a hunting tapestry",
       "model": "tapestry"
+    },
+    {
+      "id": "dining_hearth",
+      "cell": [
+        23,
+        6
+      ],
+      "kind": "examine",
+      "label": "the marble hearth",
+      "model": "fireplace"
     },
     {
       "id": "dining_table_set",
@@ -390,12 +464,31 @@
       "lock_dc": 12,
       "items": [
         {
+          "id": "heavy_crossbow",
+          "qty": 1
+        },
+        {
           "id": "light_crossbow",
           "qty": 1
         },
         {
           "id": "crossbow_bolt",
           "qty": 20
+        }
+      ]
+    },
+    {
+      "id": "den_card_cabinet",
+      "cell": [
+        8,
+        2
+      ],
+      "label": "a cabinet of glasses and cards",
+      "model": "cupboard",
+      "items": [
+        {
+          "id": "playing_card_set",
+          "qty": 1
         }
       ]
     },

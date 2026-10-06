@@ -30,42 +30,48 @@ the road to lure new guests inside.
 
 ## 3. Layout and scenes
 
-Six maps (data/locations/), joined by exits. Exterior: Death House's lot is part of `village_of_barovia` (the Village
+Six maps (data/locations/), joined by exits. Every room is one of the book's areas 1 to 38; the room-by-room
+comparison with the book (floors, walls, furniture, art) is docs/regions/death_house_book_check.md. Exterior: Death House's lot is part of `village_of_barovia` (the Village
 owner's map): its `death_house_door` exit leads to `death_house_ground` spawn `from_village`; Death House's front door
 and the escape window lead to `village_of_barovia` spawn `from_death_house`. The children's plea happens on
 `into_the_mists_road` (docs/regions/into_the_mists.md).
 
 | Map (size, light, rest) | Areas (`enter:` triggers) | Contents |
 |---|---|---|
-| `death_house_ground` (28x19, dim, risky) | `dh_foyer`, `dh_cloakroom`, `dh_main_hall`, `dh_den`, `dh_kitchen`, `dh_pantry`, `dh_dining_room` | Family portrait (the children from the road, decades ago), the burning lamp, the Den of Wolves (trophies, locked hunting cabinet: light crossbow), dumbwaiter, set dinner table, a lantern hidden behind the cloakroom coats (search 12). After a refusal: the front door is brick, the chandelier falls, the hall's weapons attack, and the dining room's tall window is the only way out. Mother's emergency purse under the bottom stair appears once the children are at rest. |
-| `death_house_upper` (28x17, dim, risky) | `dh_upper_hall`, `dh_library`, `dh_secret_study`, `dh_servants_room`, `dh_conservatory` | Ancestor portraits, the stopped clock, a valley history (codex), a bookcase that is a secret door (DC 13; the library's narration points at it), the secret study (Strahd's letter, the deeds with the windmill, the cult's pamphlet, a chest with a scroll), the harpsichord with the nursemaid's lullaby. Rotten floorboard. After a refusal: blades in the wainscot. |
-| `death_house_third` (28x17, dim, risky) | `dh_attic_stair`, `dh_attic_landing`, `dh_third_hall`, `dh_master_suite`, `dh_bathroom`, `dh_nursemaid_room`, `dh_nursery` | The animated black armor on the landing in front of the attic stair, the master suite, the black bath, the nursemaid's room (Gustav's letters to her: Walter), and the nursery, whose doorway the nursemaid's specter guards. After a refusal: soot from every hearth, and the floor's blades. |
-| `death_house_attic` (26x16, dim, risky) | `dh_attic_hall`, `dh_spare_bedroom`, `dh_storage_room`, `dh_childrens_room` | The broom in the storage room, the spare bedroom with a warm alcove by the chimney (the hidden stair: search DC 14, or the dollhouse, or Rose), and the locked children's room (lock DC 12): Rose and Thorn's ghosts, the toy chest with their bones, the dollhouse. After a refusal: a falling beam. |
-| `death_house_dungeon_1` (30x23, dark, risky) | `dh_stair_foot`, `dh_family_crypts`, `dh_crypt_passage`, `dh_cult_refectory`, `dh_cult_dormitory`, `dh_durst_chambers`, `dh_reliquary`, `dh_well_chamber`, `dh_lower_stair` | The family crypts (the children's empty crypts, Walter's unmarked one), a covered pit, the refectory with the cult's ledger, the dormitory of ghoul cultists, the Dursts at supper, the locked reliquary of victims' keepsakes (shadows), the well chamber (grick), the stair down. |
-| `death_house_dungeon_2` (30x22, dark, **no rest**) | `dh_lower_landing`, `dh_flooded_passage`, `dh_robing_room`, `dh_winch_room`, `dh_ritual_antechamber`, `dh_ritual_chamber` | The flooded passage (rat swarms), the robing room, the winch that raises the portcullis, the antechamber, and the ritual chamber: the altar, the braziers, the shades beside the altar, and the breathing heap where Lorghoth sleeps. |
+| `death_house_ground` (28x19, dim, risky) | `dh_foyer`, `dh_cloakroom`, `dh_main_hall`, `dh_den`, `dh_kitchen`, `dh_pantry`, `dh_dining_room` | The marble hearth with a longsword over it and the carved paneling (search 12: serpents and skulls), the burning lamp, the Den of Wolves (stag's head, a locked cabinet of crossbows, a cabinet of cards), the oven and dumbwaiter, the set dinner table under an alpine painting, a lantern hidden behind the cloakroom coats (search 12). After a refusal: the front door is brick, the chandelier falls, the hall's weapons attack, and the dining room's tall window is the only way out. Mother's emergency purse under the bottom stair appears once the children are at rest. |
+| `death_house_upper` (28x17, dim, risky) | `dh_upper_hall`, `dh_library`, `dh_secret_study`, `dh_servants_room`, `dh_conservatory` | The family portrait over the hall's hearth (the children from the road, decades ago, and a baby in their father's arms), two suits of wolf-helmed armor, the stopped clock, a valley history (codex), the library desk with the attic key, a bookcase that is a secret door (DC 13; the library's narration points at it), the secret study (Strahd's letter, the deeds with the windmill, the cult's pamphlet, a chest of blank books and three scrolls, a dead adventurer), the dumbwaiter, the harpsichord with the nursemaid's lullaby. Rotten floorboard. After a refusal: blades in the wainscot. |
+| `death_house_third` (28x17, dim, risky) | `dh_attic_stair`, `dh_attic_landing`, `dh_third_hall`, `dh_third_storage`, `dh_master_suite`, `dh_bathroom`, `dh_nursemaid_room`, `dh_nursery` | The balcony (landing and hall) with the animated black armor; the attic stair hidden behind the carved paneling (secret door, DC 12) or the nursemaid's mirror (DC 10); the master suite (jewels worth 900 gp, a portrait of the master and mistress), the black bath with its stove and dry spigot, the storage room with the broom, the nursemaid's room (Gustav's letters to her: Walter), and the nursery, whose doorway the nursemaid's specter guards. After a refusal: soot from every hearth, and the floor's blades. |
+| `death_house_attic` (26x16, dim, risky) | `dh_attic_hall`, `dh_spare_bedroom`, `dh_spare_bedroom_2`, `dh_storage_room`, `dh_childrens_room` | Two spare bedrooms, the storage room with the nursemaid's remains in a trunk and a warm nook in the corner (the hidden stair: search DC 14, or the dollhouse, or Rose), and the padlocked children's room (the library key, or lock DC 12): Rose and Thorn's ghosts, the toy chest with their bones, the dollhouse. After a refusal: a falling beam. |
+| `death_house_dungeon_1` (30x23, dark, risky) | `dh_stair_foot`, `dh_family_crypts`, `dh_cult_dormitory`, `dh_well_chamber`, `dh_pit_passage`, `dh_cult_refectory`, `dh_larder`, `dh_ghoul_passage`, `dh_shrine`, `dh_trapdoor_stair`, `dh_durst_chambers`, `dh_durst_quarters`, `dh_lower_stair` | Book areas 22 to 34: the family crypts (the children's empty crypts, Walter's, Elisabeth's full of insects), the initiates' quarters, the well with the cultists' alcove chests, the spiked pit on the way to the dining hall (the cult's ledger) and the larder (grick), the bone-strewn passage (ghouls) to the Darklord's shrine (a statue of Strahd; take its orb and five shadows wake; a secret door to a trapdoor stair that opens after the sacrifice), the mimic door into the cult leaders' den (the Dursts at supper) and their quarters (the footlocker of guests' gear), the stair down. |
+| `death_house_dungeon_2` (30x22, dark, **no rest**) | `dh_lower_landing` (Reliquary), `dh_flooded_passage`, `dh_robing_room` (Prison), `dh_winch_room`, `dh_ritual_antechamber`, `dh_ritual_chamber` | Book areas 35 to 38: the reliquary's alcoves of relics, the prison (a robed skeleton with a gold ring), the flooded passage, the winch that raises the portcullis, the antechamber, and the ritual chamber: the altar, the braziers, the shades beside the altar, and the breathing heap where Lorghoth sleeps. |
 
 Exits: ground `stairs_up` [17,3] ↔ upper `stairs_down` [17,3]; upper `stairs_up` [17,12] ↔ third `stairs_down`
-[17,12]; third `attic_stairs` [15,1] ↔ attic `stairs_down` [1,6]; attic `secret_stair_down` [7,2] (the alcove, open
-once `death_house_secret_stair_found`) ↔ dungeon 1 `secret_stair_up` [3,1]; dungeon 1 `stairs_down` [27,18] ↔
-dungeon 2 `stairs_up` [3,1]. Every exit cell sits on floor in a nook beside its stairs so nobody walks onto it by
+[17,12]; third `attic_stairs` [15,1] (behind a secret door) ↔ attic `stairs_down` [1,6]; attic `secret_stair_down`
+[17,1] (the storage room's nook, open once `death_house_secret_stair_found`) ↔ dungeon 1 `secret_stair_up` [2,1];
+dungeon 1 `stairs_down` [25,21] ↔ dungeon 2 `stairs_up` [3,1]; dungeon 1 `trapdoor_up` [3,21] → the village (after
+the sacrifice). Every exit cell sits on floor in a nook beside its stairs so nobody walks onto it by
 accident.
 
 ### Scene flow
 
 1. **The plea** (road). Rose and Thorn beg the party to save Walter from the monster in the basement. Insight 13 or
    Arcana 14 sees the illusion. Promise, refuse, pray, ask questions.
-2. **The house is too tidy** (ground floor). The door clicks shut; the children are gone from the road. The family
-   portrait shows the same children, decades old. No basement door anywhere.
-3. **Upstairs** (second floor). The bookcase that opens: Strahd's letter, the deeds, the cult's pamphlet. The
-   harpsichord's lullaby.
-4. **The family floor** (third). The black armor wakes when the party nears the attic stair (fight). The nursemaid
-   bars the nursery: calm her with the lullaby, words or prayer, or fight her. Her letters name Walter.
-5. **The attic.** The broom. The locked children's room: Rose and Thorn's ghosts, who don't know they are dead. Tell
+2. **The house is too tidy** (ground floor). The door clicks shut; the children are gone from the road. Serpents and
+   skulls hide in the hall's carving. No basement door anywhere. Nobody here, nothing to fight (as in the book).
+3. **Upstairs** (second floor). The family portrait shows the same children, decades old, and a baby the mother
+   can't bear to look at. The bookcase that opens: Strahd's letter, the deeds, the cult's pamphlet. The harpsichord's
+   lullaby. The attic key in the library desk. Still nothing to fight.
+4. **The family floor** (third). The black armor on the balcony wakes (fight). The attic stair is hidden: the
+   paneling beside the armor, or the nursemaid's mirror. The broom in the storage room. The nursemaid bars the
+   nursery: calm her with the lullaby, words or prayer, or fight her. Her letters name Walter.
+5. **The attic.** The nursemaid's remains in a trunk. The padlocked children's room: Rose and Thorn's ghosts, who don't know they are dead. Tell
    them or not; let them ride along inside the party; carry their bones. The dollhouse shows the hidden stair (and,
    on a close look, the altar and the sleeping heap). **Finding the stair: level 2.**
 6. **Below** (dungeon 1). The crypts (lay the children to rest: they say goodbye and tell you where Mother hid her
-   purse). The ledger of victims. Ghoul cultists. The grick. The Dursts at supper (talk, then fight). The reliquary.
-7. **The altar** (dungeon 2). Rats in the black water; the winch and the portcullis; the shades: *one must die*.
+   purse; Elisabeth's crypt is full of insects). The cultists' chests. The spiked pit and the ledger of victims. The
+   grick in the larder. Ghouls in the bone-strewn passage, the shrine to Strahd (the orb wakes five shadows), the
+   mimic door, the Dursts at supper (talk, then fight).
+7. **The altar** (dungeon 2). The reliquary and the prison; the winch and the portcullis; the shades: *one must die*.
 8. **The ending.** Sacrifice: the house is satisfied, every lock turns, **level 3**, walk out. Refuse: Lorghoth wakes;
    run (Dexterity, or fight the shades) or stand and fight; the house turns on the party floor by floor; the front
    door is brick; break out through the closing dining room window (**level 3**).
@@ -78,7 +84,7 @@ accident.
 | `thorn` | Thorn (Thornboldt Durst) | road (illusion); attic (ghost) | not to be left again | grown-ups who say they'll be right back | three-word truths at the worst moment | — |
 | `durst_nursemaid` | The Nursemaid | third floor, nursery doorway | Walter, his lullaby, then rest | the robed ones | soft two-in-the-morning voice | specter |
 | `gustav_durst` | Gustav Durst | dungeon 1 supper table | guests; to be noticed by Strahd | being ordinary | the host who never stops hosting | ghast |
-| `elisabeth_durst` | Elisabeth Durst | dungeon 1 supper table | to be proven right | that the gift was wasted | sweet, low, mocking society voice | ghoul |
+| `elisabeth_durst` | Elisabeth Durst | dungeon 1 supper table | to be proven right | that the gift was wasted | sweet, low, mocking society voice | ghast |
 | `cult_shades` | The Shades | dungeon 2, beside the altar | one death on the altar | being known; the dawn | many voices, one refrain | — |
 | `lorghoth` | Lorghoth the Decayer | dungeon 2 refuse heap | to wake and eat | — | says its own name, like a drain | shambling_mound |
 
@@ -100,12 +106,13 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 |---|---|---|---|---|---|---|
 | third | `armor_guardian` | enter `dh_attic_landing` | animated armor ("Black Armor") | 200 | 1 | Low |
 | third | `nursery_specter` | dialogue (fail or attack) | specter ("The Nursemaid") | 200 | 1 | Low (avoidable) |
-| attic | `storage_broom` | enter `dh_storage_room` | broom of animated attack | 50 | 1 | Trivial |
-| dungeon 1 | `dormitory_ghouls` | enter `dh_cult_dormitory` | 3 ghouls | 600 | 2 | Moderate (optional room) |
-| dungeon 1 | `well_grick` | enter `dh_well_chamber` | grick | 450 | 2 | Low (on the path) |
-| dungeon 1 | `reliquary_shadows` | enter `dh_reliquary` | 2 shadows | 200 | 2 | Below Low (optional, locked) |
-| dungeon 1 | `durst_reunion` / `durst_reunion_shaken` | dialogue | ghast (Gustav) + ghoul (Elisabeth) | 650 | 2 | Moderate; the "shaken" version surprises the Dursts |
-| dungeon 2 | `drowned_rats` | enter `dh_flooded_passage` | 2 swarms of rats | 100 | 2 | Trivial |
+| third | `storage_broom` | enter `dh_third_storage` | broom of animated attack | 50 | 1 | Trivial (optional room) |
+| dungeon 1 | `crypt_insects` | dialogue (open Elisabeth's crypt) | swarm of insects | 100 | 2 | Trivial (optional) |
+| dungeon 1 | `larder_grick` | enter `dh_larder` | grick | 450 | 2 | Low (optional room) |
+| dungeon 1 | `passage_ghouls` | enter `dh_ghoul_passage` | 4 ghouls | 800 | 2 | High (on the way to the shrine and the Dursts, off the way down) |
+| dungeon 1 | `shrine_shadows` | dialogue (take the statue's orb) | 5 shadows | 500 | 2 | Moderate (optional) |
+| dungeon 1 | `den_mimic` | open `durst_door` | mimic ("The Door") | 450 | 2 | Low |
+| dungeon 1 | `durst_reunion` / `durst_reunion_shaken` | dialogue | 2 ghasts (Gustav, Elisabeth) | 900 | 2 | Above High, as in the book; the "shaken" version surprises the Dursts |
 | dungeon 2 | `shades_harry` | dialogue (failed run) | 2 shadows | 200 | 2 | Below Low |
 | dungeon 2 | `lorghoth_rises` / `lorghoth_rises_late` | dialogue ("stand and fight") | shambling mound | 1,800 | 2 | **Far beyond High, on purpose.** Only by choice; "run" avoids it. `_late` starts it 4 squares farther away. |
 | ground | `ground_escape_weapons` | enter `dh_main_hall` after a refusal | 1 animated flying sword + broom (tuned down from 2 swords: AC 17 flyers at full speed ground down level 2 parties) | 100 | 2 | Trivial (pressure, not attrition) |
@@ -113,8 +120,10 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 | ground | `window_last_guard` | dialogue (failed window check) | 2 animated flying swords | 100 | 2 | Trivial |
 
 Critical path at level 1: the armor (200), plus the nursemaid (200, avoidable) and the broom (50, optional). Critical
-path at level 2: the grick (450) and the rats (100); the ghouls, the Dursts and the shadows sit in side rooms off the
-route (stair foot, crypts, refectory, well chamber, lower stair), so a cautious party can skip them.
+path at level 2: no fight, only the spiked pit (stair foot, crypts, well, pit passage, dining hall, stair down). The
+grick, the ghouls, the shrine, the mimic and the Dursts are all off that route, as the book's dungeon is: the
+deadliest rooms are the ones a party chooses to open. The book's counts are kept (four ghouls, five shadows, two
+ghasts); the fights are harder than the Phase 3 tuning on purpose (owner ask 2026-10-06: match the book).
 
 Traps (fair DCs; damage sized for level 1 above ground and level 2 below):
 
@@ -122,7 +131,7 @@ Traps (fair DCs; damage sized for level 1 above ground and level 2 below):
 |---|---|---|---|---|---|---|
 | upper | `rotten_floorboard` | [12,8] | 11 / 11 | Dex 11 | 1d6 bludgeoning | always |
 | attic | `attic_floorboards` | [10,7] | 12 / 12 | Dex 11 | 1d6 bludgeoning | always |
-| dungeon 1 | `passage_pit` | [13,8] | 13 / 13 | Dex 12 | 2d6 bludgeoning | always |
+| dungeon 1 | `passage_pit` | [20,10] | 15 / 15 | Dex 12 | 2d6 piercing (spikes) | always |
 | ground | `hall_chandelier` | [13,7] [14,7] | 12 / — | Dex 12 | 2d6 bludgeoning | after a refusal |
 | upper | `hall_wall_blades` | [16,7] [17,7] | 13 / 13 | Dex 12 | 2d6 slashing | after a refusal |
 | third | `soot_cloud` | [15,9] [16,9] | 12 / — | Con 12 | 1d6 poison + Poisoned | after a refusal |
@@ -200,7 +209,7 @@ Every flag is registered, set and read. "V" = the Village of Barovia reads it al
 | `death_house_nursemaid_destroyed` | bool | encounter `nursery_specter` | map (nursemaid NPC) |
 | `death_house_learned_walter` | bool | house, nursemaid, dursts, dungeon | house, nursemaid, dursts, dungeon |
 | `death_house_armor_destroyed` | bool | encounter `armor_guardian` | encounter `when`, narrator |
-| `death_house_broom_destroyed` | bool | encounter `storage_broom` | encounter `when` |
+| `death_house_broom_destroyed` | bool | encounter `storage_broom` (third floor) | encounter `when` |
 | `death_house_children_met` | bool | rose_thorn_ghosts | rose_thorn_ghosts, attic, rose_thorn (return) |
 | `death_house_children_truth` | bool | rose_thorn_ghosts, attic | rose_thorn_ghosts, attic, dursts, banter |
 | `death_house_children_riding` | bool | rose_thorn_ghosts (cleared by dungeon, escape, altar) | map (ghost NPCs), attic, dungeon, escape, altar, narrator, banter; V |
@@ -212,10 +221,12 @@ Every flag is registered, set and read. "V" = the Village of Barovia reads it al
 | `death_house_read_cult_ledger` | bool | dungeon | dungeon |
 | `death_house_dursts_confessed` | bool | dursts | dursts; P4+ |
 | `death_house_dursts_destroyed` | bool | encounters `durst_reunion(_shaken)` | map (Durst NPCs), dungeon |
-| `death_house_ghouls_destroyed` | bool | encounter `dormitory_ghouls` | encounter `when` |
-| `death_house_grick_slain` | bool | encounter `well_grick` | encounter `when` |
-| `death_house_shadows_destroyed` | bool | encounter `reliquary_shadows` | encounter `when` |
-| `death_house_rats_scattered` | bool | encounter `drowned_rats` | encounter `when` |
+| `death_house_ghouls_destroyed` | bool | encounter `passage_ghouls` | encounter `when`, narrator |
+| `death_house_grick_slain` | bool | encounter `larder_grick` | encounter `when` |
+| `death_house_shadows_destroyed` | bool | encounter `shrine_shadows` | dungeon (statue) |
+| `death_house_insects_scattered` | bool | encounter `crypt_insects` | dungeon (Elisabeth's crypt) |
+| `death_house_mimic_slain` | bool | encounter `den_mimic` | encounter `when` |
+| `death_house_took_shrine_orb` | bool | dungeon (statue) | dungeon (statue) |
 | `death_house_lore` | int | `+= 1` once per discovery (7 sources) | altar (>= 4); V/P4+ |
 | `death_house_portcullis_raised` | bool | lever `winch_lever` | door `portcullis`, narrator |
 | `death_house_altar_denounced` | bool | altar | altar |
@@ -281,3 +292,8 @@ altar, the cult's ledger, the Dursts' confession.
   else Dexterity 12 or a small shadow fight) or "stand and fight". If playtests show players choosing to fight and
   dying, add a "flee by leaving the map" combat rule or soften the mound.
 - Level 3 on the sacrifice path is granted at the altar (the house releases the party there), not at the door.
+- Book accuracy pass (2026-10-06, owner: "validate that the layout and decor looks like the descriptions"): rooms,
+  decor, encounters and loot now follow appendix B area by area (docs/regions/death_house_book_check.md); what we
+  aren't sure of is listed in docs/rules/data_sources.md. Ground and second floors hold nobody and nothing hostile until
+  a refusal, as in the book. Book loot that our data can't express yet: the silvered shortsword (plain for now), gems
+  and trinkets (paid out as their gp value).

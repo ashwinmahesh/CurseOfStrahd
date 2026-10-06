@@ -1,0 +1,13 @@
+{
+  "id": "durst_attic_key",
+  "name": "Iron Attic Key",
+  "source": {
+    "book": "CoS",
+    "note": "Death House area 8: the library desk holds the key to the padlock on the children's room (area 20)."
+  },
+  "category": "quest",
+  "weight_lb": 0,
+  "cost_gp": 0,
+  "summary": "A plain iron key from the drawer of the Dursts' library desk.",
+  "text": "A plain iron key, cold and a little rusty, kept in the top drawer of the library desk in Death House. It fits the padlock on a door in the attic."
+}
