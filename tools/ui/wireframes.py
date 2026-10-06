@@ -3,6 +3,7 @@
 Run: python3 tools/ui/wireframes.py   (writes docs/ui/wireframes/*.svg)
 The specs that explain them: docs/ui/character_creation.md, level_up.md, inventory.md, party_management.md."""
 import sys
+import textwrap
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -864,9 +865,263 @@ def pm04_prepare():
     s.save(OUT / "pm_04_spell_preparation.svg")
 
 
+
+
+# ------------------------------------------------------------------------------------------------ combat (plan §5.3)
+def _scene(s, x0=0, y0=0, w=1600, h=900):
+    """Isometric-ish stone floor with a 5 ft grid, for the combat wireframes."""
+    s.rect(x0, y0, w, h, P["night"], rx=0)
+    tw, th = 64, 32
+    for row in range(-2, 34):
+        for col in range(-2, 30):
+            cx = x0 + 120 + (col - row) * tw / 2 + 420
+            cy = y0 + 40 + (col + row) * th / 2
+            if not (x0 - tw < cx < x0 + w + tw and y0 - th < cy < y0 + h + th):
+                continue
+            pts = f"{cx},{cy - th / 2} {cx + tw / 2},{cy} {cx},{cy + th / 2} {cx - tw / 2},{cy}"
+            shade = P["stone"] if (row + col) % 2 else "#34343e"
+            s.parts.append(f'<polygon points="{pts}" fill="{shade}" stroke="{P["slate"]}" stroke-width="0.6" opacity="0.9"/>')
+
+
+def _iso(col, row):
+    tw, th = 64, 32
+    return 120 + (col - row) * tw / 2 + 420, 40 + (col + row) * th / 2
+
+
+def _token(s, col, row, label, side, active=False, hp=1.0, prone=False):
+    x, y = _iso(col, row)
+    ring = {"party": P["flame"], "enemy": P["red"], "guest": P["moonlight"]}[side]
+    s.parts.append(f'<ellipse cx="{x}" cy="{y + 4}" rx="24" ry="12" fill="{P["void"]}" opacity="0.6"/>')
+    s.parts.append(f'<ellipse cx="{x}" cy="{y}" rx="22" ry="11" fill="none" stroke="{ring}" stroke-width="{4 if active else 2}"/>')
+    if not prone:
+        s.rect(x - 14, y - 52, 28, 50, P["ash"], ring, 1, rx=10)
+    else:
+        s.rect(x - 24, y - 16, 48, 18, P["ash"], ring, 1, rx=8)
+    s.text(x, y - 60 if not prone else y - 22, label, 13, P["ivory"], "bold", anchor="middle")
+    s.rect(x - 22, y + 12, 44, 5, P["void"], rx=2)
+    s.rect(x - 22, y + 12, max(2, int(44 * hp)), 5, P["moss"] if side != "enemy" else P["crimson"], rx=2)
+
+
+def _initiative(s, entries, round_no):
+    x = 800 - len(entries) * 70 / 2
+    s.rect(x - 110, 10, len(entries) * 70 + 120, 78, P["void"], P["ash"], 1, rx=8, opacity=0.92)
+    s.text(x - 96, 44, f"Round {round_no}", 15, P["wick"], "bold")
+    s.text(x - 96, 66, "turn order", 11, P["pewter"])
+    for i, (name, side, cur, hp) in enumerate(entries):
+        bx = x + i * 70
+        col = P["red"] if side == "enemy" else (P["moonlight"] if side == "guest" else P["flame"])
+        s.rect(bx, 18 if not cur else 12, 60, 56 if not cur else 70, P["ash"], P["wick"] if cur else col, 4 if cur else 2, rx=5)
+        s.text(bx + 30, 52 if not cur else 50, name, 11, P["ivory"], "bold", anchor="middle")
+        s.rect(bx + 6, 62 if not cur else 70, 48, 5, P["void"], rx=2)
+        s.rect(bx + 6, 62 if not cur else 70, int(48 * hp), 5, P["crimson"] if side == "enemy" else P["moss"], rx=2)
+
+
+def _party_frames(s, frames):
+    y = 110
+    for name, hp, cond, active in frames:
+        s.rect(14, y, 190, 66, P["void"], P["wick"] if active else P["ash"], 3 if active else 1, rx=6, opacity=0.92)
+        s.rect(22, y + 8, 50, 50, P["ash"], P["slate"], rx=4)
+        s.text(80, y + 26, name, 14, P["ivory"], "bold")
+        cur, mx = [int(v) for v in hp.split("/")]
+        s.rect(80, y + 34, 116, 8, P["ink"], rx=4)
+        s.rect(80, y + 34, int(116 * cur / mx), 8, P["crimson"] if cur / mx <= 0.5 else P["moss"], rx=4)
+        s.text(80, y + 58, hp + ("  " + cond if cond else ""), 11, P["silver"])
+        y += 74
+
+
+def _hotbar(s, active_name, hp, ac, resources, tabs, slots, end_label="End Turn"):
+    s.rect(220, 712, 1160, 178, P["void"], P["ash"], 1, rx=10, opacity=0.95)
+    # portrait and core numbers
+    s.rect(234, 726, 110, 150, P["ash"], P["wick"], 3, rx=6)
+    s.text(289, 800, "portrait", 12, P["pewter"], anchor="middle")
+    s.text(289, 744, active_name, 13, P["ivory"], "bold", anchor="middle")
+    s.text(289, 866, f"HP {hp} · AC {ac}", 12, P["ivory"], "bold", anchor="middle")
+    # action economy
+    x = 356
+    for label, shape, avail, col in resources:
+        fill = col if avail else P["stone"]
+        if shape == "circle":
+            s.circle(x + 14, 744, 12, fill, P["ivory"] if avail else P["slate"], 2)
+        elif shape == "tri":
+            s.parts.append(f'<polygon points="{x + 14},{730} {x + 28},{756} {x},{756}" fill="{fill}" stroke="{P["ivory"] if avail else P["slate"]}" stroke-width="2"/>')
+        else:
+            s.parts.append(f'<polygon points="{x + 14},{730} {x + 28},{744} {x + 14},{758} {x},{744}" fill="{fill}" stroke="{P["ivory"] if avail else P["slate"]}" stroke-width="2"/>')
+        s.text(x + 14, 778, label, 11, P["silver"] if avail else P["pewter"], anchor="middle")
+        x += 66
+    s.text(x + 6, 742, "Movement", 11, P["silver"])
+    s.rect(x + 6, 750, 150, 10, P["ink"], rx=5)
+    s.rect(x + 6, 750, 100, 10, P["sickly"], rx=5)
+    s.text(x + 6, 778, "20 / 30 ft", 11, P["ivory"])
+    # tabs
+    tx = 356
+    for t, on in tabs:
+        w = 16 + 8 * len(t)
+        s.rect(tx, 790, w, 24, P["bruise"] if on else P["ink"], P["candle"] if on else P["ash"], 2 if on else 1, rx=4)
+        s.text(tx + w / 2, 807, t, 12, P["ivory"], anchor="middle")
+        tx += w + 6
+    # slots
+    for i, (name, sub, kind, ok) in enumerate(slots):
+        sx = 356 + (i % 10) * 82
+        sy = 820 + (i // 10) * 34
+        col = {"action": P["moss"], "bonus": P["ember"], "reaction": P["plum"], "free": P["slate"]}[kind]
+        s.rect(sx, sy, 76, 30, col if ok else P["stone"], P["ink"], 1, rx=4)
+        s.text(sx + 38, sy + 13, name, 10, P["ivory"] if ok else P["pewter"], "bold", anchor="middle")
+        s.text(sx + 38, sy + 25, sub, 9, P["vellum"] if ok else P["pewter"], anchor="middle")
+    # end turn
+    s.circle(1318, 800, 50, P["candle"], P["wick"], 3)
+    s.text(1318, 798, end_label.split()[0], 15, P["ink"], "bold", anchor="middle")
+    s.text(1318, 816, end_label.split()[1] if " " in end_label else "", 15, P["ink"], "bold", anchor="middle")
+    s.text(1318, 868, "Space / Y", 11, P["silver"], anchor="middle")
+
+
+def _log(s, lines, x=1390, y=110, w=200, h=590, title="COMBAT LOG"):
+    s.rect(x, y, w, h, P["void"], P["ash"], 1, rx=8, opacity=0.92)
+    s.text(x + 12, y + 24, title, 12, P["lilac"], "bold")
+    yy = y + 48
+    for kind, text in lines:
+        col = {"roll": P["silver"], "hit": P["ivory"], "narr": P["lilac"], "warn": P["flame"]}[kind]
+        for chunk in textwrap.wrap(text, 30):
+            s.text(x + 12, yy, chunk, 11, col, italic=(kind == "narr"))
+            yy += 15
+        yy += 6
+
+
+PARTY_FRAMES = [("Ilse", "40/44", "", True), ("Tamsin", "18/32", "Prone", False), ("Hedda", "35/35", "◎ Bless", False),
+                ("Silvain", "26/26", "", False), ("Ireena (guest)", "14/14", "", False)]
+INIT = [("Ilse", "party", True, 0.9), ("Wolf", "enemy", False, 0.4), ("Tamsin", "party", False, 0.56), ("Wolf", "enemy", False, 1.0),
+        ("Hedda", "party", False, 1.0), ("Dire Wolf", "enemy", False, 1.0), ("Silvain", "party", False, 1.0), ("Ireena", "guest", False, 1.0)]
+SLOTS_FIGHTER = [("Greatsword", "+7 · 2d6+4", "action", True), ("Javelin", "+7 · 1d6+4", "action", True),
+                 ("Shove", "DC 15", "action", True), ("Grapple", "DC 15", "action", True), ("Dash", "", "action", True),
+                 ("Disengage", "", "action", True), ("Dodge", "", "action", True), ("Help", "", "action", True),
+                 ("Hide", "Stealth +2", "action", True), ("Ready", "", "action", True),
+                 ("Second Wind", "3 left", "bonus", True), ("Action Surge", "1 left", "free", True),
+                 ("Potion", "×2 · 2d4+2", "bonus", True), ("Influence", "", "action", True), ("Study", "", "action", True),
+                 ("Search", "", "action", True), ("Utilize", "", "action", True), ("Weapon swap", "free", "free", True),
+                 ("Opp. Attack", "auto: ask", "reaction", True), ("Jump", "15 ft", "free", True)]
+
+
+def cb01_view():
+    s = Svg("Combat · View and controls", 1600, 900)
+    _scene(s)
+    _initiative(s, INIT, 2)
+    _party_frames(s, PARTY_FRAMES)
+    for col, row, label, side, act, hp, prone in [(9, 8, "Ilse", "party", True, 0.9, False), (11, 6, "Wolf", "enemy", False, 0.4, False),
+                                                  (12, 9, "Tamsin", "party", False, 0.56, True), (14, 7, "Wolf", "enemy", False, 1.0, False),
+                                                  (8, 11, "Hedda", "party", False, 1.0, False), (16, 10, "Dire Wolf", "enemy", False, 1.0, False),
+                                                  (5, 9, "Silvain", "party", False, 1.0, False), (6, 12, "Ireena", "guest", False, 1.0, False)]:
+        _token(s, col, row, label, side, act, hp, prone)
+    # movement path with an Opportunity Attack warning
+    pts = [_iso(9, 8), _iso(10, 8), _iso(11, 8), _iso(12, 8)]
+    s.parts.append('<polyline points="' + " ".join(f"{x},{y}" for x, y in pts) + f'" fill="none" stroke="{P["wick"]}" stroke-width="3" stroke-dasharray="7 5"/>')
+    ex, ey = pts[-1]
+    s.circle(ex, ey, 7, P["wick"])
+    s.rect(ex - 250, ey + 24, 250, 50, P["void"], P["flame"], 2, rx=6, opacity=0.95)
+    s.text(ex - 240, ey + 44, "Move 15 ft · 5 ft left after", 12, P["ivory"], "bold")
+    s.text(ex - 240, ey + 62, "⚠ leaves Wolf's reach: Opportunity Attack", 11, P["flame"])
+    # target tooltip on the wolf
+    wx, wy = _iso(11, 6)
+    s.tooltip(wx + 30, wy - 150, 300, "Wolf · Bloodied", ["Greatsword: hit 80% (needs 5+ on the d20)", "Damage 2d6+4 (avg 11) · Graze on a miss: 4",
+                                                         "Your roll: no Advantage or Disadvantage", "AC 12 · Resistances: none known"])
+    _log(s, [("roll", "Wolf bites Tamsin: d20 14 + 4 = 18 vs AC 15, hit"), ("hit", "Tamsin takes 5 Piercing and falls Prone"),
+             ("narr", "The wolf drags at Tamsin's cloak, eager and patient."), ("roll", "Ilse: Initiative 17 (adv: Remarkable Athlete)"),
+             ("warn", "Hedda is concentrating on Bless (8 rounds)")])
+    _hotbar(s, "Ilse", "40/44", 17, [("Action", "circle", True, P["moss"]), ("Bonus", "tri", True, P["ember"]), ("Reaction", "dia", True, P["plum"])],
+            [("Common", False), ("Fighter", True), ("Items", False), ("Passives", False)], SLOTS_FIGHTER)
+    s.text(1380, 708, "Extra Attack: 2 attacks per Attack action", 11, P["silver"], anchor="end")
+    for n, (x, y) in enumerate([(800, 100), (110, 104), (1490, 104), (300, 700), (1318, 742)], start=1):
+        s.callout(n, x, y)
+    s.save(OUT / "cb_01_combat_view.svg")
+
+
+def cb02_targeting():
+    s = Svg("Combat · Targeting and area previews", 1600, 900)
+    _scene(s)
+    _initiative(s, [(n, sd, n == "Silvain", hp) for n, sd, _, hp in INIT], 3)
+    _party_frames(s, [(n, hp, c, n == "Silvain") for n, hp, c, _ in PARTY_FRAMES])
+    tokens = [(9, 8, "Ilse", "party", 0.9), (11, 6, "Wolf", "enemy", 0.2), (12, 9, "Tamsin", "party", 0.56), (14, 7, "Wolf", "enemy", 1.0),
+              (8, 11, "Hedda", "party", 1.0), (16, 10, "Dire Wolf", "enemy", 1.0), (5, 9, "Silvain", "party", 1.0), (6, 12, "Ireena", "guest", 1.0)]
+    # Fireball: 20 ft radius sphere = 4 squares; ellipse on the iso floor
+    cx, cy = _iso(13, 8)
+    s.parts.append(f'<ellipse cx="{cx}" cy="{cy}" rx="{4 * 64 * 0.72}" ry="{4 * 32 * 0.72}" fill="{P["candle"]}" opacity="0.28" stroke="{P["flame"]}" stroke-width="3"/>')
+    for col, row, label, side, hp in tokens:
+        _token(s, col, row, label, side, label == "Silvain", hp, label == "Tamsin")
+    sx, sy = _iso(5, 9)
+    s.line(sx, sy - 30, cx, cy, P["flame"], 2, dash="6 4")
+    s.tooltip(cx + 150, cy - 230, 360, "Fireball · level 3 slot", ["Dexterity save DC 15 · 8d6 Fire (avg 28), half on success",
+                                                                    "In the 20-ft sphere:", "  Wolf (Bloodied): fails 55% → likely dies",
+                                                                    "  Wolf: fails 55%", "  Dire Wolf: fails 45%", "  ⚠ Tamsin (ally): fails 40%; avg 28 ≥ her 18 HP",
+                                                                    "Slots: 3rd ●●  ·  cast at 4th: 9d6 ▸"])
+    s.rect(cx + 150, cy + 26, 360, 44, P["void"], P["red"], 2, rx=6)
+    s.text(cx + 166, cy + 54, "⚠ Friendly fire: Tamsin drops to 0 HP if she fails", 13, P["rose"], "bold")
+    slots = [("Fire Bolt", "+7 · 2d10", "action", True), ("Ray of Frost", "+7 · 2d8", "action", True), ("Shocking Grasp", "+7 · 2d8", "action", True),
+             ("Minor Illusion", "", "action", True), ("Magic Missile", "L1 · 3×1d4+1", "action", True), ("Shield", "L1 · reaction", "reaction", True),
+             ("Scorching Ray", "L2 · 3×2d6", "action", True), ("Web", "L2 · DC 15", "action", True), ("Fireball", "L3 · DC 15", "action", True),
+             ("Counterspell", "L3 · reaction", "reaction", True), ("Misty Step", "free 1/day", "bonus", True), ("Hold Person", "L2 · DC 15", "action", True),
+             ("Sleep", "L1 · DC 15", "action", True), ("Detect Magic", "free 1/day", "action", True), ("Find Familiar", "ritual", "action", False)]
+    _hotbar(s, "Silvain", "26/26", 11, [("Action", "circle", True, P["moss"]), ("Bonus", "tri", True, P["ember"]), ("Reaction", "dia", True, P["plum"])],
+            [("Common", False), ("Spells", True), ("Items", False), ("Passives", False)], slots)
+    s.text(1380, 708, "Slots  1st ●●●●  2nd ●●○  3rd ●●   · Concentration: none", 11, P["silver"], anchor="end")
+    _log(s, [("roll", "Silvain: Concentration free"), ("narr", "Smoke curls from Silvain's fingers. The wolves do not like it.")])
+    s.callout(1, cx + 150, cy - 240)
+    s.callout(2, cx + 150, cy + 30)
+    s.callout(3, 1395, 690)
+    s.save(OUT / "cb_02_targeting.svg")
+
+
+def cb03_reactions():
+    s = Svg("Combat · Reactions, roll details and controller", 1600, 900)
+    _scene(s)
+    s.rect(0, 0, 1600, 900, P["void"], rx=0, opacity=0.55)
+    # reaction prompt
+    s.parchment(420, 120, 760, 290, "Reaction: Shield?")
+    s.lines(444, 184, ["A Dire Wolf hits Silvain: d20 10 + 5 = 15 vs AC 11.", "Shield: +5 AC until the start of Silvain's next turn (AC 16),",
+                       "so this attack misses, and so do later ones that roll under 16.",
+                       "Costs: Silvain's Reaction and a level 1 slot (3 of 4 left)."], 15, P["ink"])
+    s.button(444, 316, 180, 44, "Cast Shield (A)", primary=True, focus=True)
+    s.button(640, 316, 140, 44, "Skip (B)")
+    s.text(800, 345, "Next time:", 13, P["umber"])
+    s.chip(890, 326, "Ask", P["ink"], P["candle"])
+    s.chip(944, 326, "Auto when it turns a hit to a miss")
+    s.callout(1, 1160, 140)
+    # roll detail popover
+    s.rect(60, 450, 640, 260, P["ivory"], P["bone"], 2, rx=6)
+    s.text(80, 482, "Roll details (click any log line)", 16, P["ink"], "bold")
+    s.lines(80, 514, ["Ilse → Wolf, Greatsword", "d20: 14 (Advantage: rolled 14 and 6 · Wolf Prone within 5 ft)",
+                      "+ Str +4 + Proficiency +3 = 21 vs AC 12 → hit", "Damage: 2d6 [5, 2→3 Great Weapon Fighting] + 4 = 12 Slashing",
+                      "Wolf: no Resistance · 12 → 0 HP · dies", "Mastery Graze: not needed (hit)"], 14, P["umber"], gap=26)
+    s.callout(2, 690, 470)
+    # controller radial
+    cx, cy = 1300, 560
+    s.circle(cx, cy, 160, P["void"], P["ash"], 2)
+    sectors = ["Attacks", "Spells", "Class", "Items", "Common", "Move", "End Turn", "Inspect"]
+    import math
+    for i, name in enumerate(sectors):
+        a = -math.pi / 2 + i * 2 * math.pi / len(sectors)
+        x = cx + math.cos(a) * 112
+        y = cy + math.sin(a) * 112
+        on = i == 1
+        s.circle(x, y, 36, P["bruise"] if on else P["grave"], P["wick"] if on else P["ash"], 3 if on else 1)
+        s.text(x, y + 5, name, 12, P["ivory"], "bold" if on else "normal", anchor="middle")
+    s.text(cx, cy - 4, "LB radial", 14, P["wick"], "bold", anchor="middle")
+    s.text(cx, cy + 16, "right stick picks", 11, P["silver"], anchor="middle")
+    s.callout(3, cx + 150, cy - 150)
+    # key map
+    s.rect(60, 730, 1480, 150, P["void"], P["ash"], 1, rx=8)
+    keys = [("Select / act", "Left-click", "A"), ("Move here", "Left-click floor", "A on floor"), ("Cancel / back", "Right-click, Esc", "B"),
+            ("End turn", "Space", "Y (hold)"), ("Hotbar slot", "1-0, Shift+1-0", "LB radial"), ("Next party member", "Tab", "RB"),
+            ("Inspect / roll math", "Right-click target, L", "R3"), ("Camera rotate / zoom", "Q E / wheel", "right stick / LT RT")]
+    for i, (a, k, c) in enumerate(keys):
+        x = 80 + (i % 4) * 365
+        y = 770 + (i // 4) * 56
+        s.text(x, y, a, 13, P["lilac"], "bold")
+        s.text(x, y + 22, f"{k}  ·  {c}", 13, P["ivory"])
+    s.save(OUT / "cb_03_reactions_and_controls.svg")
+
+
 ALL = [cc01_start, cc02_class, cc03_origin, cc04_abilities, cc05_choices, cc05b_spells, cc06_equipment, cc07_appearance,
        cc08_identity, cc09_review, cc10_explain, lu01_class, lu02_hp, lu03_choices, lu03b_subclass, lu04_summary,
-       inv01_character, inv02_loot, pm01_overview, pm02_sheet, pm03_formation_rest, pm04_prepare]
+       inv01_character, inv02_loot, pm01_overview, pm02_sheet, pm03_formation_rest, pm04_prepare,
+       cb01_view, cb02_targeting, cb03_reactions]
 
 if __name__ == "__main__":
     for f in ALL:
