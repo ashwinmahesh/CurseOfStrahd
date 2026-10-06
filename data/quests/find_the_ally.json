@@ -1,0 +1,29 @@
+{
+  "id": "find_the_ally",
+  "name": "The Destined Ally",
+  "summary": "Madam Eva's fourth card named the one who will stand with us against the devil.",
+  "giver": "madam_eva",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "foretold",
+      "journal": "Madam Eva's fourth card spoke of a friend in the fight to come. {tarokka.ally.hint}",
+      "objectives": [
+        "Find the ally the cards named"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "The one the cards named stands with us now.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "lost",
+      "journal": "The ally the cards named will not stand with us. We go on without them.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

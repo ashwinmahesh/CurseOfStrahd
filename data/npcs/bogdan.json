@@ -1,0 +1,18 @@
+{
+  "id": "bogdan",
+  "name": "Bogdan",
+  "title": "A Farmer on the Road",
+  "summary": "A Barovian farmer from a steading off the Old Svalich Road, carrying his mother's coffin to the village church with his son because he will not put her in the ground unblessed.",
+  "portrait": "commoner",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "voice": "docs/voice/road_folk.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

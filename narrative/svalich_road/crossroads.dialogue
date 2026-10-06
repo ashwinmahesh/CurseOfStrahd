@@ -1,0 +1,112 @@
+# The River Ivlis crossroads (data/locations/svalich_crossroads.json): the gallows and the signpost.
+# The hanged man is Nicu, a young Vistana from the Tser Pool camp (stanimir.dialogue, luminita.dialogue). Cut him down
+# and he stays dead; leave him, and after dark he and the old hanged dead in the field rise (crossroads_hanged_dead).
+
+~ gallows
+if flag.nicu_cut_down
+Narrator: The gallows rope hangs empty, cut short above the knot. Beside the road, a mound of turned earth, marked with a board laid face down.
+-> END
+endif
+if flag.crossroads_dead_cleared
+-> remains
+endif
+if not flag.crossroads_gallows_seen
+set crossroads_gallows_seen
+quest the_hanged_vistana found
+endif
+Narrator: A young man turns slowly on the rope, black hair across his face, a silver earring catching what light there is. A board hung round his neck says HORSE THIEF, in large and careful letters.
+if night
+Narrator: His fingers twitch. It could be the wind. There is no wind.
+endif
+if guest:ireena
+Ireena: Father used to ride out and cut them down himself. He said a crossroads is no place to be left; the dead get confused about which road leads home.
+endif
+if guest:ismark
+Ismark [weary]: Vistani, by the earring. Whoever did this was proud of their lettering.
+endif
+-> gallows_menu
+
+~ gallows_menu
+* Cut him down and bury him. -> cut_down
+* [if not flag.nicu_body_examined] [Medicine DC 12] Look at the body. -> body_ok | body_fail
+* [if not flag.nicu_token_taken] Take the earring, for his people. -> token
+* Leave him. -> leave
+
+~ body_ok
+set nicu_body_examined
+Narrator: Dead a day, two at most. Split knuckles: he fought them. The knot is a farmer's knot, tied fast and badly by somebody angry and in a hurry.
+Narrator: And he is cold, colder than the dead should be, the way the ground is cold in the field behind the gallows. Something there is waiting for dark.
+-> gallows_menu
+
+~ body_fail
+set nicu_body_examined
+Narrator: A dead young man and a cheap rope. If there is more to read in him, the crows got to it first.
+-> gallows_menu
+
+~ token
+set nicu_token_taken
+Narrator: You work the earring free. It is a little silver horse's head, warm from nothing at all.
+interject name:tamsin_tealeaf: I'm not keeping it. For the record. It's going home.
+-> gallows_menu
+
+~ leave
+Narrator: You leave him turning. Behind you, the rope creaks once, as if he has shifted his weight.
+-> END
+
+~ cut_down
+set nicu_cut_down
+quest the_hanged_vistana buried
+Narrator: The rope parts at the first cut. You lay him on the road, then dig beside it where the earth is soft, with blades and hands and whatever else will move dirt.
+if not flag.nicu_token_taken
+set nicu_token_taken
+Narrator: Before the earth goes over him, someone thinks to take the silver earring. His people will want it.
+endif
+interject tag:veteran: Not my first roadside grave. Shallow is fine. Straight matters.
+* [Cleric] Say the rites over him. -> rites
+* [Religion DC 12] Say what words you can remember. -> rites | rites_fumbled
+* Fill in the grave. -> buried
+
+~ rites
+set nicu_rites_said
+Narrator: The words go down into the grave with him. Behind the gallows, one of the old mounds settles, like a sleeper turning over.
+-> buried
+
+~ rites_fumbled
+Narrator: The words come out in the wrong order. You say them anyway. It is the meaning that counts, or so you have to hope.
+-> buried
+
+~ buried
+Narrator: You mark the grave with the HORSE THIEF board, turned face down. It is the kindest thing anyone has done with it.
+-> END
+
+~ remains
+Narrator: The rope hangs empty. What is left of the hanged man lies on the planks, where you put him down the second time.
+* Bury what's left of him. -> bury_remains
+* [if not flag.nicu_token_taken] Take the earring, for his people. -> remains_token
+* Leave him. -> END
+
+~ remains_token
+set nicu_token_taken
+Narrator: The silver earring is still there, a little horse's head. You work it free.
+-> remains
+
+~ bury_remains
+set nicu_cut_down
+Narrator: You bury him by the road. This time he stays where he is put.
+if not flag.nicu_token_taken
+set nicu_token_taken
+Narrator: Someone keeps the silver earring back from the grave. His people will want it.
+endif
+-> END
+
+~ signpost
+Narrator: Four arms on a leaning post, the paint long gone and the names cut deep with a knife: BAROVIA east, VALLAKI and TSER POOL west, TSER FALLS north. The south arm has been sawn off, and someone has nailed a dead crow in its place.
+if guest:ireena and not flag.ireena_crossroads
+set ireena_crossroads
+Ireena: Father said there was nothing past the crossroads but more Barovia. He was right. It's the same mud. I still want to see it.
+if guest:ismark
+Ismark: It's very good mud. Westward mud. I'm told the gentry prefer it.
+endif
+endif
+interject class:rogue: The crow's fresh. Somebody keeps replacing it.
+-> END

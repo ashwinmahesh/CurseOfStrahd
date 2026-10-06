@@ -1,0 +1,462 @@
+# Madam Eva, seer of the Tser Pool Vistani (docs/voice/madam_eva.md). The Tarokka reading (docs/contracts/campaign.md):
+# `tarokka draw` deals the playthrough's five cards once; each `tarokka read <slot>` shows a card and Eva speaks its
+# verse (data/tarokka/outcomes.json). The path: greeting -> the price (coin, a true thing, kin's thanks, Persuasion,
+# a threat) -> the reading -> one question -> later visits (`again`: hear it again, a reading for one of you alone).
+
+~ start
+if flag.eva_reading_done
+-> again
+endif
+if flag.tser_pool_brawl_won
+-> after_brawl
+endif
+if flag.eva_met
+-> return_visit
+endif
+set eva_met
+quest madam_evas_reading invited
+Narrator: Incense, candle smoke and old canvas. Behind a low table sits a woman so old she seems made of the same leather as her chair, shuffling a deck of cards without looking at it.
+if flag.death_house_completed
+Madam Eva [sly]: There you are. The house at the end of the village let you go. It doesn't, as a rule. Sit.
+else
+Madam Eva [sly]: There you are. I turned up a card for you three nights ago, and it has been tapping its foot ever since. Sit.
+endif
+interject name:silvain_aster: Foretelling is a parlour trick. I would nonetheless very much like to know how it's done.
+if not flag.madam_eva_rumor
+Madam Eva: Nobody sent you? No. The road sent you. It sends everyone to my table in the end; most of them simply don't stop.
+endif
+if guest:ireena
+-> ireena_seen
+endif
+-> before_price
+
+~ return_visit
+if quest.madam_evas_reading == refused
+Madam Eva [sly]: You came back. They always come back. The cards waited; they are better at it than you.
+else
+Madam Eva: Sit. We were in the middle of something.
+endif
+-> before_price
+
+~ ireena_seen
+set eva_recognized_ireena
+Narrator: The shuffling stops. Madam Eva looks past you at Ireena for a long moment, the way you might look at a house you lived in as a child.
+Madam Eva [sad]: So. You have come round again, child. Further along the road than last time.
+Ireena: I've never been here in my life.
+Madam Eva: No. Not in this one. Sit by the brazier; you are cold all the way through, and it isn't the weather.
+if flag.tamsin_locket_recognized
+interject name:tamsin_tealeaf: She means the locket. The woman in the locket. Doesn't she?
+Madam Eva [sly]: Keep that stolen face in your pocket, little thief. Some faces belong to the dead, and the dead want them back.
+endif
+-> before_price
+
+# --- The price ---
+
+~ before_price
+if flag.vistani_robbed and not flag.vistani_repaid
+-> robbed
+endif
+if flag.stanimir_deceived
+Madam Eva: You lied to Stanimir about his strongbox. He believed you; he is a kind man. I am not, but I will let it pass. Once.
+endif
+-> price
+
+~ price
+Madam Eva: The cards are free. The one who turns them is not. Ten gold, or one true thing that one of you has told nobody. The cards take either. They prefer the second.
+if flag.nicu_kin_told
+Madam Eva [sad]: No. Put your purse away. You brought our Nicu home to his people, as much of him as the road left. That is paid already, and more.
+set eva_reading_paid = "kin"
+attitude madam_eva friendly
+-> reading
+endif
+-> price_menu
+
+~ price_menu
+* Pay ten gold. -> paid_coin
+* [if not (gold >= 10)] We can't spare ten gold. -> poor
+* One of us will tell you something true. -> truth
+* [if not flag.eva_haggle_failed] [Persuasion DC 15] Read for us because the valley needs it, not for coin. -> free_ok | free_fail
+* [Intimidation DC 18] Turn the cards, old woman. Now. -> threat_ok | threat_fail
+* We didn't come for fortunes. -> refuse
+
+~ paid_coin
+gold -10
+set eva_reading_paid = "coin"
+Madam Eva: Gold. Honest, at least. The cards will take it. Sit closer.
+-> reading
+
+~ poor
+Madam Eva [sly]: Then you are like everyone else in this valley. A true thing, then. Barovia has not found a way to tax those yet.
+-> truth
+
+~ truth
+Madam Eva: Who pays? Not something clever. Something that costs you to say out loud.
+* [name:ilse_varga] Report the fever. -> truth_ilse
+* [name:hedda_ironvow] Admit what the mist did to her prayers. -> truth_hedda
+* [name:silvain_aster] Admit why they really want the book. -> truth_silvain
+* [name:tamsin_tealeaf] Admit the truth about the locket. -> truth_tamsin
+* Lean close and tell her the thing you have never told the others. -> truth_other
+* On second thought, no. -> price_menu
+
+~ truth_ilse
+set eva_reading_paid = "truth"
+set eva_truth_teller = "ilse_varga"
+Player: Report. Kestrel Company marched into the fog without me. I had a fever. It wasn't bad enough to keep me back. I was tired of the work. That's all.
+Madam Eva: And you have been counting heads ever since, so that nobody is ever missing again. Yes. That will do. That is worth more than gold.
+interject name:hedda_ironvow: Mm. Thank you for telling us, Ilse.
+interject name:tamsin_tealeaf: For what it's worth, I'd have stayed in bed too. I'd have stayed in bed for a week.
+-> reading
+
+~ truth_hedda
+set eva_reading_paid = "truth"
+set eva_truth_teller = "hedda_ironvow"
+Player: Since we crossed the mist, I have not felt my god. The prayers still answer. They answer cold. I have told no one, because a healer who doubts is a healer nobody lets near the bed.
+Madam Eva [sad]: The Morninglord's light is a long way from here, priestess. It still reaches you. Ask why it reaches, not why it's cold.
+interject name:silvain_aster: Hedda. For the record, those cold prayers have kept me alive twice. I will take cold.
+-> reading
+
+~ truth_silvain
+set eva_reading_paid = "truth"
+set eva_truth_teller = "silvain_aster"
+Player: I tell everyone I want the book for the scholarship. I want it because Aurel went after it, and I would like to know whether my friend is alive. There. Somebody write that down.
+Madam Eva: A scholar who came for a friend, and was ashamed of it. The cards like you better already.
+interject name:tamsin_tealeaf: I knew it. I knew you liked him.
+-> reading
+
+~ truth_tamsin
+set eva_reading_paid = "truth"
+set eva_truth_teller = "tamsin_tealeaf"
+Player: The locket. I'm good, but I'm not that good. Nobody leaves a coach that easy to rob. I think somebody put it where my hand would find it, so I'd carry it here.
+Madam Eva [sly]: Somebody did. And now you have said it aloud, you can stop pretending you are only a thief. Good.
+interject name:ilse_varga: Noted.
+-> reading
+
+~ truth_other
+set eva_reading_paid = "truth"
+set eva_truth_teller = "other"
+Narrator: {name} leans across the table and says it low, so that only the old woman hears. It takes longer than you'd expect, and {name} does not look at anyone afterwards.
+Madam Eva: Yes. That will do. Keep the rest of it; you will need something to carry.
+-> reading
+
+~ free_ok
+set eva_reading_paid = "free"
+Madam Eva [sly]: For the valley. Ha! Nobody has said that to me in sixty years. Very well. The valley can owe me. It already owes me a great deal.
+-> reading
+
+~ free_fail
+set eva_haggle_failed
+Madam Eva: The valley has needed things for four hundred years, and still the candles cost money. Pay, or tell me something true.
+-> price_menu
+
+~ threat_ok
+set eva_threatened
+set eva_reading_paid = "forced"
+attitude madam_eva hostile
+Narrator: For a heartbeat something old and very cold looks out of her eyes. Then she laughs, a dry sound like a deck being cut.
+Madam Eva [sly]: Brave. Stupid, but brave. Fine. The cards will speak to you, and you will wish you had paid them.
+-> reading
+
+~ threat_fail
+set eva_threatened
+Narrator: The tent flap opens behind you. Stanimir fills it, and he is not holding his fiddle. Outside, the music has stopped.
+Madam Eva: You came into my tent and showed me your teeth. Now my family is showing you theirs. Choose again.
+* Put the weapons away. We'll pay. -> threat_backdown
+* Then we'll go through them. -> threat_fight
+
+~ threat_backdown
+Narrator: Stanimir steps back out without a word. After a while the fiddle starts again, a little slower than before.
+Madam Eva: Better. The price has doubled. Twenty gold, or the true thing. The true thing has not doubled; the truth is never on sale.
+* Pay twenty gold. -> paid_double
+* One of us will tell you something true. -> truth
+
+~ paid_double
+gold -20
+set eva_reading_paid = "coin"
+Madam Eva: There. Expensive manners are still manners. Sit.
+-> reading
+
+~ threat_fight
+set vistani_turned_hostile
+attitude madam_eva hostile
+attitude stanimir hostile
+Madam Eva: Then go and do it. I will be here when you are finished. I always am.
+-> END
+
+~ refuse
+quest madam_evas_reading refused
+Madam Eva: As you like. The cards are patient. They have outlived everyone who walked away from them.
+-> END
+
+~ robbed
+Madam Eva: Before we begin. One of you has forty of my nephew's gold pieces about you. The cards will not speak over the clink of them.
+* Give it back. -> repay
+* [Deception DC 18] We don't know what you mean. -> robbed_lie_ok | robbed_lie_fail
+* It's ours now. -> robbed_keep
+
+~ repay
+gold -40
+set vistani_repaid
+Madam Eva: Good. The cards prefer clean hands. Cleaner hands. They are not fussy.
+-> price
+
+~ robbed_lie_ok
+set stanimir_deceived
+Madam Eva [sly]: Hm. Then perhaps the cards are mistaken. They are not. But perhaps.
+-> price
+
+~ robbed_lie_fail
+Madam Eva: Liar. A bad one, which is almost to your credit. Give it back, or keep it and listen to what it costs you.
+* Give it back. -> repay
+* Keep it. -> robbed_keep
+
+~ robbed_keep
+set eva_reading_paid = "forced"
+attitude madam_eva hostile
+Madam Eva: Then it is yours, and so is what comes with it. Remember that I said so. Sit. The cards will speak to thieves; they have spoken to worse.
+-> reading
+
+~ after_brawl
+if not flag.eva_met
+set eva_met
+quest madam_evas_reading invited
+endif
+set eva_reading_paid = "forced"
+Narrator: The camp outside is empty and the fire has burned low. Madam Eva has not moved from her table.
+Madam Eva [sad]: You have bloodied my family and driven the rest into the trees. And still you come to my table. Sit. The cards do not care who deserves them.
+-> reading
+
+# --- The reading ---
+
+~ reading
+tarokka draw
+Narrator: She shuffles once, twice, and the cards whisper together like dry leaves. Then she deals five face down in the shape of a cross, and lays her hand flat beside them.
+Madam Eva: Five cards. Three for what was lost, one for who will help you, one for where he waits. Don't touch them. Don't breathe on them. Listen.
+if flag.eva_reading_paid == "forced"
+Madam Eva: You did not pay what the cards asked. They will tell you anyway. They are not kind, and neither am I.
+endif
+Madam Eva: The first card is the past: a book in his own hand, the story of how he became what he is. Knowing it is a weapon. This one cuts him.
+tarokka read tome
+if name:silvain_aster
+interject name:silvain_aster: His own hand. His own account. I... yes. Go on. Please, go on.
+elif class:wizard
+interject class:wizard: A primary source. The devil kept a diary. Of course he did.
+endif
+Madam Eva: The second card is a holy thing, made by people who believed the sun would come back. In the right hands it makes the dead remember they are dead.
+tarokka read symbol
+if name:hedda_ironvow
+interject name:hedda_ironvow: The raven and the sun. I have dreamed that symbol every night for a year. Mm. Then it's real, and it's here.
+elif class:cleric
+interject class:cleric: A holy thing, still holding its light in this place. Then somebody kept faith here, once.
+endif
+Madam Eva: The third card is a blade. Not steel: daylight with an edge, once carried by the one he hated most. He cannot bear to look at it.
+tarokka read sword
+if name:ilse_varga
+interject name:ilse_varga: A sword. Good. I understand swords.
+elif class:fighter
+interject class:fighter: A blade he can't stand to look at. I can work with that.
+endif
+Madam Eva: The fourth card is a friend. One who will stand beside you when the others run.
+tarokka read ally
+-> ally_seen
+
+~ ally_seen
+if tarokka.ally == darklord
+Narrator: She looks at the card for a long time, and does not touch it again.
+interject tag:blunt: Then we stand with each other. Count off.
+interject class:cleric: Mm. We were never going to be alone. There are four of us.
+elif tarokka.ally.npc == ismark
+if guest:ismark
+Ismark: Me? The cards want me? Somebody tell the tavern. No, don't. They'll only laugh, and then they'll stop, and that will be worse.
+else
+interject tag:loyal: Ismark. The one they call the Lesser. Then we go back for him, or he comes to us.
+endif
+if guest:ireena
+Ireena [smile]: I could have told you that for free.
+endif
+elif tarokka.ally.npc == kolyan_indirovich
+if guest:ireena
+Ireena [afraid]: My father is in the ground. We put him there. I watched the earth go on.
+Madam Eva [sad]: Earth is a door, child. Most doors open both ways, if someone pays the toll.
+else
+interject class:cleric: A dead man for an ally. Calling a soul back is no small mercy, and no cheap one.
+endif
+elif tarokka.ally.npc == parriwimple
+interject name:tamsin_tealeaf: The big lad from Bildrath's? He counted my fingers after he shook my hand. All there. Very thorough.
+elif tarokka.ally.region == vallaki
+if guest:ireena
+Ireena: Vallaki. Where we were going anyway. At least the cards are economical.
+endif
+elif tarokka.ally.npc == ezmerelda
+Madam Eva: That one is my people's own. She left the wagons to hunt the things that hunt us. If you find her, tell her the old woman says to eat something.
+elif tarokka.ally.npc == arabelle
+Madam Eva [sad]: A child of ours. Don't sit here listening to me. When we're done, go.
+endif
+Madam Eva: The last card. Where the darkness will be waiting when you come for him. And you will come for him; the cards are very sure of that part.
+tarokka read enemy
+Narrator: The candles lean, all together, as if someone has opened a door. Nobody has.
+Madam Eva [sad]: There. That is the shape of it. Three things lost, a friend, and the room at the end. Everything else, you will have to do yourselves.
+set eva_reading_done
+quest find_the_tome foretold
+quest find_the_holy_symbol foretold
+quest find_the_sunsword foretold
+quest find_the_ally foretold
+quest strahds_lair foretold
+quest madam_evas_reading read
+if flag.eva_reading_paid != "forced"
+attitude madam_eva friendly
+endif
+-> treasure_here
+
+~ treasure_here
+if tarokka.tome == stars_2 or tarokka.symbol == stars_2 or tarokka.sword == stars_2
+Madam Eva [sly]: And one of the three, you need not walk a step for. The cards put it in my keeping long ago, and told me to wait for the right hands. My hands are tired.
+Narrator: She unlocks the iron-bound chest behind her with a key she keeps on a cord round her neck, lifts out a bundle of oilcloth, and sets it on the table between the cards.
+if tarokka.tome == stars_2
+Narrator: Inside lies a heavy book bound in black leather, clasped in tarnished silver. Nobody wants to be the first to touch it.
+interject name:silvain_aster: I will be the first to touch it.
+give tome_of_strahd
+quest find_the_tome found
+elif tarokka.symbol == stars_2
+Narrator: Inside lies a platinum sunburst with a raven at its heart. Even through the oilcloth, it is warm.
+interject name:hedda_ironvow: Oh. Oh, there you are.
+give holy_symbol_of_ravenkind
+quest find_the_holy_symbol found
+else
+Narrator: Inside lies a sword hilt of pale platinum with a sunburst guard and no blade. The candles burn a little brighter while it is uncovered.
+interject name:ilse_varga: No blade. I'll take it anyway.
+give sunsword
+quest find_the_sunsword found
+endif
+set tser_treasure_given
+endif
+-> question
+
+# --- One question more ---
+
+~ question
+Madam Eva: One question more, and then the cards sleep. Only one. Choose it well; I am old, and I don't repeat myself for free.
+* [if guest:ireena] What does he want with Ireena? -> q_ireena
+* How do we leave Barovia? -> q_escape
+* How is he destroyed? -> q_weakness
+* [name:ilse_varga] Where is Kestrel Company? -> q_kestrel
+* [name:tamsin_tealeaf] Who is the woman in the locket? -> q_locket
+* [name:hedda_ironvow] Will dawn ever come to this valley? -> q_dawn
+* [name:silvain_aster] Is Aurel Mirescu alive? -> q_aurel
+* Why were we brought here? -> q_why
+* We've heard enough. -> q_none
+
+~ q_ireena
+set eva_question = "ireena"
+Madam Eva: He wants what he has always wanted: a woman who told him no, long ago, and keeps being born to tell him again. Keep her away from high places and still water. She has fallen before.
+Ireena [afraid]: I dream about falling. Every time I close my eyes near a window.
+Madam Eva [sad]: Then you know more than he would like. Good. Hold on to that.
+-> farewell
+
+~ q_escape
+set eva_question = "escape"
+Madam Eva: The mists open for my people and for the dead. When the devil is truly ended, they will open for you. There is no other door. People have looked. You walked past some of them in the village churchyard.
+-> farewell
+
+~ q_weakness
+set eva_question = "weakness"
+Madam Eva: The things the cards named, in the hands the cards named, in the room the cards named. He has been hurt before. He has never been hurt by all of it at once. And sunlight. Always sunlight.
+interject tag:veteran: Three items, one ally, one room. That's a plan. I've followed worse.
+-> farewell
+
+~ q_kestrel
+set eva_question = "kestrel"
+Madam Eva: Some of your forty went into his house as guests and never came out as anything. Some walk his roads still, in colours that are not their own. You will see one before the end, sergeant. Count carefully.
+Player: ...Noted.
+-> farewell
+
+~ q_locket
+set eva_question = "locket"
+Madam Eva: Her name was Tatyana. She is dead, and she is not. Whoever put her in your hand wanted you to carry her face home, and you have.
+if guest:ireena
+Ireena: Who is Tatyana?
+Madam Eva [sly]: Ask him, child. He will tell you at great length, and every word will be a lie except her name.
+elif flag.tamsin_locket_recognized
+interject name:tamsin_tealeaf: Home. You mean the burgomaster's house. You mean Ireena.
+Madam Eva: I mean what the cards mean. Put it away, now.
+endif
+-> farewell
+
+~ q_dawn
+set eva_question = "dawn"
+Madam Eva: Dawn comes to this valley every day, priestess. It simply never arrives. Carry the raven's sun into his house and you will see the difference.
+Player: Mm. Then I'll carry it.
+-> farewell
+
+~ q_aurel
+set eva_question = "aurel"
+Madam Eva: Your friend with the ink to his elbows went up to the castle to read. He is reading still. Whether he is still alive is a question even the cards find rude.
+Player: That is not an answer. It is very nearly an answer. Thank you.
+-> farewell
+
+~ q_why
+set eva_question = "why"
+Madam Eva: Because he was bored, and he called. Because the cards wanted players. Because each of you was already walking toward the mist before you ever saw it. Pick whichever answer lets you sleep.
+-> farewell
+
+~ q_none
+set eva_question = "none"
+Madam Eva [sly]: Wise. Most people ask. Most people wish they hadn't.
+-> farewell
+
+~ farewell
+if flag.eva_reading_paid == "forced"
+Madam Eva: Now get out of my tent.
+-> END
+endif
+Madam Eva: Go. Stanimir will feed you if you let him. And when you meet the devil on the road, as you will, be polite. It confuses him.
+-> END
+
+# --- Later visits ---
+
+~ again
+if flag.tser_pool_brawl_won
+Madam Eva [sad]: You again. The camp is empty because of you, and the cards still haven't changed their minds. What do you want?
+else
+Madam Eva [sly]: Back again. The cards haven't changed their minds. I might have.
+endif
+-> again_menu
+
+~ again_menu
+* Say the reading again. -> reread
+* [if attitude.madam_eva == friendly and option:respec] Read for one of us alone: a different road. -> personal
+* Tell us about yourself. -> herself
+* Your people and the castle: what are you to him? -> vistani_and_castle
+* Goodbye. -> END
+
+~ reread
+Madam Eva: Once more, then, and slowly.
+tarokka read tome
+tarokka read symbol
+tarokka read sword
+tarokka read ally
+tarokka read enemy
+Madam Eva: The cards don't change. Only the people carrying them.
+-> again_menu
+
+~ personal
+Madam Eva: One of you is walking a road that doesn't fit their feet. I can read them another. It costs nothing you will miss; not today. Choose who sits.
+respec
+Madam Eva: There. You are who you are now. Try not to waste it.
+-> again_menu
+
+~ herself
+Madam Eva: I am old. Older than the walled town on the lake, older than the inn in the village, older than some of his walls. I knew him when he was young and only ambitious. That much you get for free.
+interject name:silvain_aster: That would make you... no. That isn't possible.
+Madam Eva [sly]: Many things here are not possible. Sit in enough of them and you stop counting.
+-> again_menu
+
+~ vistani_and_castle
+Madam Eva: My people come and go through the mists, and he lets us. Long ago one of us did him a kindness. He has a long memory for kindness, and a longer one for the other thing.
+Madam Eva: So yes, some of us carry tales up the hill. Be careful what you say at our fires. Be more careful what you say at other people's.
+if flag.vistani_spies_suspected
+interject tag:curious: The women in the village tavern were counting us. Heads, blades, purses. I knew it.
+endif
+if flag.stanimir_misdirects
+Madam Eva: Stanimir has told the castle you went east. He thinks I don't know. Let him think it.
+endif
+-> again_menu

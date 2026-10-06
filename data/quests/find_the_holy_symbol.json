@@ -1,0 +1,23 @@
+{
+  "id": "find_the_holy_symbol",
+  "name": "The Holy Symbol of Ravenkind",
+  "summary": "A holy symbol of great power against the undead, lost long ago in the valley.",
+  "giver": "madam_eva",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "foretold",
+      "journal": "Madam Eva's second card spoke of a power of light and faith: a sunburst with a raven at its heart, made to hold vampires still. She saw where it lies. {tarokka.symbol.hint}",
+      "objectives": [
+        "Find the Holy Symbol of Ravenkind"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "We have the Holy Symbol of Ravenkind. It is warm to the touch, even here.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

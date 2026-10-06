@@ -1,0 +1,19 @@
+{
+  "id": "sunsword",
+  "name": "Sunsword",
+  "source": {
+    "book": "CoS",
+    "note": "One of the three Tarokka treasures (data/tarokka). Properties paraphrased from the adventure in our own words; every number must be checked against the book when the weapon is built (Phase 5). It is a quest item until then, so nobody equips half a sword."
+  },
+  "category": "quest",
+  "weight_lb": 3,
+  "cost_gp": 0,
+  "quest_locked": true,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true,
+    "sentient": true
+  },
+  "summary": "A platinum sword hilt with a sunburst guard and no blade. Held and willed, a blade of pure sunlight grows from it, and the hilt has opinions.",
+  "text": "Once the sword of Strahd's brother Sergei, it was stripped of its blade and thrown away by a lord who could not bear to look at it. Attuned, the hilt grows a blade of radiance and fights as a longsword with a +2 bonus to attack and damage rolls that deals Radiant damage instead of Slashing, an extra 1d8 Radiant damage to Undead, and the Finesse property. The blade sheds bright sunlight for 15 feet and dim light for 15 feet more; the wielder can widen or narrow the light by 5 feet at a time, up to 30 feet bright and 30 feet dim. The sword is a sentient thing (Intelligence 11, Wisdom 17, Charisma 16) that sees and hears for 60 feet and speaks into its wielder's mind. It hates the undead, longs to see Strahd destroyed, and does not forgive a wielder who flees from him."
+}

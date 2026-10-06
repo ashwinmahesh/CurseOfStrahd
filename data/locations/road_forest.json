@@ -1,0 +1,144 @@
+{
+  "id": "road_forest",
+  "name": "The Svalich Woods",
+  "region": "svalich_road",
+  "summary": "The Old Svalich Road where it narrows through the Svalich Woods: pines close on both sides, a few clearings, a fallen trunk. Where the woods' random fights and meetings play out.",
+  "map": {
+    "rows": [
+      "################################",
+      "################################",
+      "################################",
+      "##############....##############",
+      "##############....####.......###",
+      "###.......####....####.~.....###",
+      "###.....~~##.........#...#...###",
+      "###...#...##.~.===...#.......###",
+      "###.......##.........#.......###",
+      "................................",
+      "................................",
+      "###......##.........##.......###",
+      "###......##.#.....~~##....#..###",
+      "###.~....##.........##.....~.###",
+      "###..~.#.#####...#####......~###",
+      "###......#####...#####.......###",
+      "##############...###############",
+      "################################",
+      "################################",
+      "################################"
+    ],
+    "theme": "forest",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "forest_road",
+      "name": "The forest road",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      15,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        9
+      ],
+      "to": "travel",
+      "label": "On along the road, west"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        31,
+        9
+      ],
+      "to": "travel",
+      "label": "On along the road, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "fallen_trunk",
+      "cell": [
+        16,
+        7
+      ],
+      "kind": "examine",
+      "label": "A fallen trunk",
+      "model": "log"
+    },
+    {
+      "id": "claw_marked_pine",
+      "cell": [
+        21,
+        11
+      ],
+      "kind": "examine",
+      "label": "A claw-marked pine",
+      "model": "tree_marked"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "road_hunters",
+      "trigger": "dialogue",
+      "monsters": [
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            23,
+            9
+          ],
+          "name": "Grigor, hunt leader"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            24,
+            6
+          ],
+          "name": "Barovian hunter"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            26,
+            13
+          ],
+          "name": "Barovian hunter"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            6,
+            6
+          ],
+          "name": "Barovian hunter"
+        }
+      ],
+      "surprise": "",
+      "flag": "hunters_fought",
+      "text": "Grigor spits, nocks, and shouts a name. Arrows answer from three sides."
+    }
+  ],
+  "narration": {
+    "enter": "enter:road_forest"
+  },
+  "rest": "risky"
+}

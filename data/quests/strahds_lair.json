@@ -1,0 +1,29 @@
+{
+  "id": "strahds_lair",
+  "name": "Where the Devil Waits",
+  "summary": "Madam Eva's last card showed where in his castle Strahd will be when the end comes.",
+  "giver": "madam_eva",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "foretold",
+      "journal": "Madam Eva's last card showed where the devil will be waiting when we come for him. {tarokka.enemy.hint}",
+      "objectives": [
+        "Find the treasures and the ally before facing Strahd"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "confronted",
+      "journal": "We came for Strahd in his castle, where the cards said he would be.",
+      "objectives": [],
+      "ends": ""
+    },
+    {
+      "id": "destroyed",
+      "journal": "Strahd von Zarovich is destroyed, where the cards said we would find him.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
