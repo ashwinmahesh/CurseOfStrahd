@@ -1028,6 +1028,24 @@
         "ice_patch",
         "scattered_notes"
       ]
+    },
+    "trap_floor_a": {
+      "view": "floor",
+      "items": [
+        "wolf_trap",
+        "broken_boards",
+        "spiked_pit",
+        "tripwire"
+      ]
+    },
+    "trap_floor_b": {
+      "view": "floor",
+      "items": [
+        "floor_glyphs",
+        "floor_crack",
+        "soot_patch",
+        "blade_slits"
+      ]
     }
   },
   "props": {
@@ -2493,6 +2511,46 @@
     },
     "scattered_notes": {
       "subject": "scraps of paper and notes scattered on the floor",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "wolf_trap": {
+      "subject": "an open steel jaw trap for wolves, its two toothed iron jaws spread wide and flat, a short chain and an iron stake beside it",
+      "width": 0.8,
+      "mount": "floor"
+    },
+    "broken_boards": {
+      "subject": "a patch of rotten, sagging wooden floorboards, split and cracked down the middle with a dark gap showing between them",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "spiked_pit": {
+      "subject": "a square pit in the ground half hidden under thin broken cover boards, sharpened wooden stakes showing in the darkness below",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "tripwire": {
+      "subject": "a thin taut tripwire stretched low across the ground between two small iron pegs hammered in at either end",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "floor_glyphs": {
+      "subject": "three glowing violet warding glyphs in a row, the glowing carved lines only with no stone, floor or anything behind them",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "floor_crack": {
+      "subject": "a jagged black crack with pale wisps of frost rising out of it, the crack and the frost only with no floor or stones around them",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "soot_patch": {
+      "subject": "a fan-shaped smear of black soot and grey ash, the soot only with no floor, fireplace or anything else around it",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "blade_slits": {
+      "subject": "three thin steel blade tips poking out of three narrow dark slits in a row, the slits and blades only with no floor, wall or board around them",
       "width": 0.9,
       "mount": "floor"
     }

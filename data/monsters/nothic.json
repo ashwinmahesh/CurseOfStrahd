@@ -3,8 +3,9 @@
   "name": "Nothic",
   "source": {
     "book": "MM2025",
-    "edition": "2014",
-    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual nothic; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. The Claws' +4 with 1d6 + 3 is as remembered and doesn't fit Strength 14 or Dexterity 16. Weird Insight is text only, and the AI doesn't pick Rotting Gaze yet (it uses save actions only with a recharge or in a Multiattack)."
+    "checked_against": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Nothic, read on D&D Beyond (owner's account). Weird Insight's secret is text only."
   },
   "size": "medium",
   "type": "aberration",
@@ -29,28 +30,20 @@
   "skills": {
     "arcana": 3,
     "insight": 4,
-    "perception": 2,
+    "perception": 4,
     "stealth": 5
   },
   "senses": {
     "truesight": 120
   },
-  "passive_perception": 12,
+  "passive_perception": 14,
   "languages": [
     "Undercommon"
   ],
   "cr": 2,
   "xp": 450,
   "proficiency_bonus": 2,
-  "traits": [
-    {
-      "id": "keen_sight",
-      "name": "Keen Sight",
-      "action": "passive",
-      "summary": "Advantage on Wisdom (Perception) checks that rely on sight.",
-      "implemented": "text"
-    }
-  ],
+  "traits": [],
   "actions": [
     {
       "id": "multiattack",
@@ -58,28 +51,28 @@
       "kind": "multiattack",
       "multiattack": [
         {
-          "action": "claws",
+          "action": "claw",
           "count": 2
         }
       ],
-      "summary": "Makes two Claws attacks."
+      "summary": "Two Claw attacks."
     },
     {
-      "id": "claws",
-      "name": "Claws",
+      "id": "claw",
+      "name": "Claw",
       "kind": "melee",
       "attack": {
-        "bonus": 4,
+        "bonus": 5,
         "reach": 5
       },
       "damage": [
         {
-          "average": 6,
-          "dice": "1d6+3",
+          "average": 8,
+          "dice": "1d10+3",
           "type": "slashing"
         }
       ],
-      "summary": "Rakes with long claws."
+      "summary": "Long hooked claws."
     },
     {
       "id": "rotting_gaze",
@@ -87,37 +80,34 @@
       "kind": "save",
       "save": {
         "ability": "con",
-        "dc": 12,
-        "success": "none"
+        "dc": 13,
+        "success": "half"
       },
-      "area": {
-        "targets": 1,
-        "range": 30
+      "targets": {
+        "range": 120
       },
       "damage": [
         {
-          "average": 10,
-          "dice": "3d6",
+          "average": 17,
+          "dice": "5d6",
           "type": "necrotic"
         }
       ],
-      "summary": "DC 12 Con save by a creature within 30 ft or 10 (3d6) Necrotic as its flesh rots.",
-      "targets": {
-        "range": 30,
-        "count": 1
-      }
-    },
-    {
-      "id": "weird_insight",
-      "name": "Weird Insight",
-      "kind": "special",
-      "summary": "Pits its Wisdom (Insight) against a creature's Charisma (Deception) within 30 ft; on a win it learns a secret about the target.",
-      "text": "Text only for the engine."
+      "summary": "DC 13 Con save by a creature within 120 ft it can see: 5d6 Necrotic, half on a success."
     }
   ],
   "regions": [
     "amber_temple"
   ],
   "ai_profile": "brute",
-  "summary": "A one-eyed, clawed horror: a gaze that rots flesh and an uncanny knack for secrets."
+  "summary": "A one-eyed, clawed horror: a gaze that rots flesh and an uncanny knack for secrets.",
+  "bonus_actions": [
+    {
+      "id": "weird_insight",
+      "name": "Weird Insight",
+      "kind": "special",
+      "recharge": "6",
+      "summary": "Recharge 6. A creature within 120 ft makes a DC 14 Wis save or the nothic learns one of its secrets."
+    }
+  ]
 }

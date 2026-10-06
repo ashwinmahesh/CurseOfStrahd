@@ -3,8 +3,9 @@
   "name": "Revenant",
   "source": {
     "book": "MM2025",
-    "edition": "2014",
-    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual block (the one Curse of Strahd uses); the 2024 changes are not entered yet. Entered from knowledge, not yet checked against the book. The engine runs Regeneration's 10 Hit Points a turn but not its pause after Fire or Radiant damage; Rejuvenation, Turn Immunity, the vengeance damage and Vengeful Glare are text only (the engine has no sworn foe yet)."
+    "checked_against": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Revenant, read on D&D Beyond (owner's account). Undead Restoration is text only."
   },
   "size": "medium",
   "type": "undead",
@@ -12,8 +13,8 @@
   "ac": 13,
   "initiative": 2,
   "hp": {
-    "average": 136,
-    "dice": "16d8+64"
+    "average": 127,
+    "dice": "15d8+60"
   },
   "speed": {
     "walk": 30
@@ -52,7 +53,7 @@
   },
   "passive_perception": 13,
   "languages": [
-    "the languages it knew in life"
+    "Common plus one other language"
   ],
   "cr": 5,
   "xp": 1800,
@@ -65,33 +66,15 @@
       "id": "regeneration",
       "name": "Regeneration",
       "action": "passive",
-      "summary": "Regains 10 HP at the start of its turn unless it took Fire or Radiant damage since its last turn.",
+      "summary": "Regains 10 HP at the start of its turn; Fire or Radiant damage stops that for its next turn.",
       "text": "The revenant regains 10 Hit Points at the start of its turn. If it took Fire or Radiant damage, this doesn't work at the start of its next turn. Its body is destroyed only if it starts its turn at 0 Hit Points and doesn't regenerate.",
-      "regenerate": 10,
       "implemented": "engine"
     },
     {
-      "id": "rejuvenation",
-      "name": "Rejuvenation",
+      "id": "undead_restoration",
+      "name": "Undead Restoration",
       "action": "passive",
-      "summary": "If its body is destroyed, its soul takes another corpse within a day.",
-      "text": "When the revenant's body is destroyed, its soul lingers. After 24 hours the soul enters and animates another Humanoid corpse on the same plane and regains all its Hit Points. While the soul has no body, a Wish spell can send it on to the afterlife for good.",
-      "implemented": "text"
-    },
-    {
-      "id": "turn_immunity",
-      "name": "Turn Immunity",
-      "action": "passive",
-      "summary": "Effects that turn Undead don't affect it.",
-      "text": "The revenant is immune to effects that turn Undead.",
-      "implemented": "text"
-    },
-    {
-      "id": "vengeful_tracker",
-      "name": "Vengeful Tracker",
-      "action": "passive",
-      "summary": "Always knows the distance and direction to the one it hunts.",
-      "text": "The revenant knows how far away and in which direction the creature it has sworn vengeance on is, even on another plane, and it knows if that creature dies.",
+      "summary": "Killed, it rises again a day later in another corpse unless Dispel Evil and Good is cast on the body.",
       "implemented": "text"
     }
   ],
@@ -102,15 +85,19 @@
       "kind": "multiattack",
       "multiattack": [
         {
-          "action": "fist",
+          "action": "vengeful_glare",
+          "count": 1
+        },
+        {
+          "action": "slam",
           "count": 2
         }
       ],
-      "summary": "Two Fist attacks."
+      "summary": "Vengeful Glare and two Slams."
     },
     {
-      "id": "fist",
-      "name": "Fist",
+      "id": "slam",
+      "name": "Slam",
       "kind": "melee",
       "attack": {
         "bonus": 7,
@@ -120,23 +107,65 @@
         {
           "average": 11,
           "dice": "2d6+4",
-          "type": "bludgeoning"
+          "type": "necrotic"
         }
       ],
-      "summary": "Pounds a target; its sworn foe takes 14 (4d6) more, and it can grab instead of hitting.",
-      "text": "Melee attack: +7 to hit, reach 5 ft. Hit: 11 (2d6 + 4) Bludgeoning damage. The creature it has sworn vengeance on takes an extra 14 (4d6) Bludgeoning damage. Instead of dealing damage, the revenant can grapple a Large or smaller target (escape DC 14)."
+      "summary": "A blow of cold, undying fury."
     },
     {
       "id": "vengeful_glare",
       "name": "Vengeful Glare",
-      "kind": "special",
-      "summary": "Its sworn foe within 30 ft makes a DC 15 Wis save or is Paralyzed, then Frightened.",
-      "text": "The revenant picks the creature it has sworn vengeance on, if it can see it within 30 feet. That creature makes a DC 15 Wisdom saving throw. Failure: it has the Paralyzed condition until the revenant damages it or until the end of the revenant's next turn. When the paralysis ends, it has the Frightened condition for 1 minute, repeating the save at the end of each of its turns (with Disadvantage while it can see the revenant) and ending the effect on a success."
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 15,
+        "success": "none"
+      },
+      "targets": {
+        "range": 30
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "minute",
+          "also_if_vowed": "paralyzed",
+          "repeat_save": {
+            "ability": "wis",
+            "dc": 15,
+            "when": "end"
+          }
+        }
+      ],
+      "summary": "DC 15 Wis save by a creature within 30 ft or Frightened for a minute (saving at the end of its turns); its sworn foe is Paralyzed too."
     }
   ],
   "regions": [
     "argynvostholt"
   ],
   "ai_profile": "brute",
-  "summary": "A dead knight risen for vengeance: heavy fists, a paralyzing glare for its foe, and wounds that close on their own."
+  "summary": "A dead knight risen for vengeance: heavy fists, a paralyzing glare for its foe, and wounds that close on their own.",
+  "bonus_actions": [
+    {
+      "id": "vow_of_revenge",
+      "name": "Vow of Revenge",
+      "kind": "special",
+      "do": "vow",
+      "uses": {
+        "count": 1,
+        "per": "day"
+      },
+      "targets": {
+        "range": 30
+      },
+      "summary": "Once a day: curses a creature within 30 ft as its sworn foe, always knowing where it is."
+    }
+  ],
+  "regenerates": {
+    "hp": 10,
+    "stopped_by": [
+      "fire",
+      "radiant"
+    ]
+  }
 }

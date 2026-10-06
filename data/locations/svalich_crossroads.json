@@ -178,7 +178,9 @@
         25
       ],
       "to": "travel",
-      "label": "The road south, to Castle Ravenloft"
+      "label": "The road south, to Castle Ravenloft",
+      "when": "false",
+      "locked_text": "The road climbs south through dead pines toward the castle on its cliff. Every sensible part of you says: not yet, and not like this."
     }
   ],
   "props": [
@@ -265,6 +267,18 @@
       "kind": "decor",
       "label": "A raven on a fencepost",
       "model": "crow"
+    },
+    {
+      "id": "kestrel_tally_crossroads",
+      "cell": [
+        26,
+        9
+      ],
+      "kind": "examine",
+      "label": "A carved milestone",
+      "model": "milestone",
+      "when": "name:ilse_varga",
+      "dialogue": "companions/kestrel:tally_crossroads"
     }
   ],
   "encounters": [
@@ -321,10 +335,96 @@
         "stage": "risen"
       },
       "text": "On the gallows the hanged man lifts his head. Behind him, all across the field, the mounds begin to split."
+    },
+    {
+      "id": "kestrel_patrol",
+      "trigger": "dialogue",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            18,
+            22
+          ],
+          "name": "Corporal Vell"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            16,
+            22
+          ],
+          "name": "Kestrel soldier"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            20,
+            22
+          ],
+          "name": "Kestrel soldier"
+        }
+      ],
+      "surprise": "",
+      "flag": "kestrel_vell_rests",
+      "quest": {
+        "id": "kestrel_company",
+        "stage": "vell_rests"
+      }
+    },
+    {
+      "id": "kestrel_patrol_reached",
+      "trigger": "dialogue",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            18,
+            22
+          ],
+          "name": "Corporal Vell",
+          "hp": 45
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            16,
+            22
+          ],
+          "name": "Kestrel soldier"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            20,
+            22
+          ],
+          "name": "Kestrel soldier"
+        }
+      ],
+      "surprise": "",
+      "flag": "kestrel_vell_rests",
+      "quest": {
+        "id": "kestrel_company",
+        "stage": "vell_rests"
+      }
     }
   ],
   "narration": {
     "enter": "enter:svalich_crossroads"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "npcs": [
+    {
+      "npc": "kestrel_vell",
+      "cell": [
+        18,
+        22
+      ],
+      "dialogue": "companions/kestrel:vell",
+      "when": "night and name:ilse_varga and quest.kestrel_company >= the_count and level >= 5 and not flag.kestrel_vell_rests",
+      "facing": "north",
+      "approach": 6
+    }
+  ]
 }

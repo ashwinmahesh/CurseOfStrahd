@@ -1,7 +1,8 @@
 extends TestCase
 ## The other 2024 level-up swaps: gaining a level in the class lets a Warlock replace one Eldritch Invocation (never one
-## another invocation needs), a Battle Master one Maneuver, a Sorcerer one Metamagic option, and a Fighter, Paladin or
-## Ranger its Fighting Style, offered every level even when the count stays. LevelUpController opens the chance;
+## another invocation needs), a Battle Master one Maneuver, a Sorcerer one Metamagic option, a Paladin or Ranger one
+## Blessed or Druidic Warrior cantrip, and a Fighter its Fighting Style (a Paladin's or Ranger's feat stays), offered
+## every level even when the count stays. LevelUpController opens the chance;
 ## ChoiceOptions limits it.
 
 
@@ -101,10 +102,24 @@ func test_a_fighter_switches_fighting_style_by_picking_the_new_one() -> void:
 	assert_true(other[0] in ch.picks_for(key) and not before[0] in ch.picks_for(key))
 
 
-func test_a_paladin_may_change_its_fighting_style_too() -> void:
-	var ch := TestChars.custom("paladin", "human", 2)
-	var c := ((_level(ch, "paladin")[1]) as Dictionary).get("paladin.2.fighting_style") as Choice
-	assert_true(c != null and c.swap_max == 1, "Paladin 3 may change its Fighting Style")
+func test_a_paladin_keeps_its_fighting_style_but_swaps_a_blessed_warrior_cantrip() -> void:
+	var feat := TestChars.custom("paladin", "human", 2)
+	assert_false("paladin.2.fighting_style" in ((_level(feat, "paladin")[1]) as Dictionary), "only a Fighter's Fighting Style feat changes at a level up")
+	var blessed := TestChars.custom("paladin", "human", 2, {"fighting_style": ["blessed_warrior"]})
+	assert_true("blessed_warrior" in blessed.picks_for("paladin.2.fighting_style"))
+	var by_key := (_level(blessed, "paladin")[1]) as Dictionary
+	assert_false("paladin.2.fighting_style" in by_key, str(by_key.keys()))
+	var cantrips: Choice = null
+	for k: String in by_key:
+		if k.contains("blessed_warrior"):
+			cantrips = by_key[k] as Choice
+	assert_true(cantrips != null and cantrips.kind == "cantrip" and cantrips.swap_max == 1,
+		"one Blessed Warrior cantrip per Paladin level: %s" % [by_key.keys()])
+
+
+func test_a_ranger_keeps_its_fighting_style() -> void:
+	var ch := TestChars.custom("ranger", "human", 2)
+	assert_false("ranger.2.fighting_style" in ((_level(ch, "ranger")[1]) as Dictionary))
 
 
 func test_another_class_level_changes_none_of_them() -> void:

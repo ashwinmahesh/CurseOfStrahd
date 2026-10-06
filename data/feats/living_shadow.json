@@ -3,7 +3,7 @@
   "name": "Living Shadow",
   "source": {
     "book": "RtHW",
-    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+    "checked_against": "RtHW"
   },
   "category": "dark_gift",
   "repeatable": false,
@@ -11,9 +11,9 @@
   "benefits": [
     {
       "id": "shadow_hand",
-      "name": "Shadow Hand",
+      "name": "Grasping Shadow",
       "summary": "You know Mage Hand; the hand is your shadow.",
-      "text": "You know the Mage Hand cantrip; the hand is your own shadow stretching out. Intelligence, Wisdom or Charisma is your spellcasting ability for it (choose when you take the gift).",
+      "text": "You learn Mage Hand and cast it with no components; the hand is your shadow. Intelligence, Wisdom or Charisma is the casting ability (picked with the gift).",
       "action": "passive",
       "choice": {
         "id": "ability",
@@ -36,9 +36,9 @@
     },
     {
       "id": "shadow_reach",
-      "name": "Shadow Reach",
-      "summary": "When you make a melee attack, your shadow can extend its reach by 10 feet (PB times per Long Rest).",
-      "text": "When you make a melee attack on your turn, your shadow can carry it: the attack's reach increases by 10 feet. You can do this a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
+      "name": "Lengthened Strike",
+      "summary": "A melee attack roll in your Attack or Magic action can reach 10 feet farther (PB times per Long Rest).",
+      "text": "When you make a melee attack roll as part of the Attack or Magic action on your turn, your shadow can carry it: +10 feet of reach for that attack. Uses: your Proficiency Bonus per Long Rest.",
       "action": "special",
       "resource": {
         "id": "shadow_reach",
@@ -51,10 +51,13 @@
   ],
   "drawback": {
     "id": "living_shadow_drawback",
-    "name": "Drawback",
-    "summary": "On a natural 1: Wisdom save (DC 13 + PB) or your shadow takes over until the start of your next turn (Incapacitated; it moves you, attacks or drops you Prone at random).",
-    "text": "Whenever you roll a 1 on the d20 of a D20 Test, you make a Wisdom saving throw (DC 13 plus your Proficiency Bonus); on a failure your shadow rebels: you have the Incapacitated condition until the start of your next turn, and on your next turn it drags your body at random (roll a d6: 1-2 it walks you up to your Speed in a random direction, 3-4 it makes you attack the nearest creature, 5-6 it throws you Prone).",
+    "name": "Ominous Will",
+    "summary": "On a natural 1: Wisdom save (DC 13 + PB) or Incapacitated until your next turn, which your shadow then runs (a d8: wander, lash out at a random creature, or fall Prone).",
+    "text": "Right after a D20 Test shows a 1 on the d20, your shadow pushes back: make a Wisdom save (DC 13 + your Proficiency Bonus). Fail, and you are Incapacitated until your next turn starts; then roll a d8 for that turn. 1: no action or Bonus Action, and you spend all your movement walking one way (a d4 picks north, east, south or west). 2-6: no movement or Bonus Action; you take the Attack action for one melee attack on a random creature in reach, or no action if none is. 7-8: you fall Prone and your turn ends.",
     "action": "special",
     "implemented": "engine"
+  },
+  "prerequisites": {
+    "text": "Ravenloft campaign"
   }
 }

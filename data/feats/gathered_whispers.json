@@ -3,7 +3,7 @@
   "name": "Gathered Whispers",
   "source": {
     "book": "RtHW",
-    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+    "checked_against": "RtHW"
   },
   "category": "dark_gift",
   "repeatable": false,
@@ -11,9 +11,9 @@
   "benefits": [
     {
       "id": "whispering_magic",
-      "name": "Whispering Magic",
+      "name": "Spirit Whispers",
       "summary": "You know Message; Augury is always prepared and free once per Long Rest.",
-      "text": "You know the Message cantrip, and you always have Augury prepared; you can cast Augury once without a spell slot, regaining that use on a Long Rest. Intelligence, Wisdom or Charisma is your spellcasting ability for these spells (choose when you take the gift).",
+      "text": "You learn Message (no Material component needed) and always have Augury prepared; once per Long Rest you cast Augury with no slot and no components, and you can also cast it with slots. Intelligence, Wisdom or Charisma is the casting ability (picked with the gift).",
       "action": "passive",
       "choice": {
         "id": "ability",
@@ -46,7 +46,7 @@
     },
     {
       "id": "whispered_warning",
-      "name": "Whispered Warning",
+      "name": "Unearthly Scream",
       "summary": "Reaction when an attack would hit you: add your Proficiency Bonus to your AC against it (PB times per Long Rest).",
       "text": "When you are hit by an attack roll, the whispers warn you: you can take a Reaction to add your Proficiency Bonus to your AC against that attack, possibly turning the hit into a miss. You can do this a number of times equal to your Proficiency Bonus, regaining all uses on a Long Rest.",
       "action": "reaction",
@@ -61,10 +61,13 @@
   ],
   "drawback": {
     "id": "gathered_whispers_drawback",
-    "name": "Drawback",
+    "name": "Voices from Beyond",
     "summary": "On a natural 1: Wisdom save (DC 13 + PB) or Deafened, with Disadvantage on ability checks and attack rolls, until the end of your next turn.",
-    "text": "Whenever you roll a 1 on the d20 of a D20 Test, you make a Wisdom saving throw (DC 13 plus your Proficiency Bonus); on a failure the whispers roar: you have the Deafened condition and Disadvantage on ability checks and attack rolls until the end of your next turn.",
+    "text": "Right after a D20 Test shows a 1 on the d20, the voices swell: make a Wisdom save (DC 13 + your Proficiency Bonus). Fail, and you are Deafened until the end of your next turn, with Disadvantage on ability checks and attack rolls while Deafened.",
     "action": "special",
     "implemented": "engine"
+  },
+  "prerequisites": {
+    "text": "Ravenloft campaign"
   }
 }
