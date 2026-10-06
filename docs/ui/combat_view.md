@@ -91,3 +91,24 @@ templates, hit-chance math, the reaction system and the hotbar's action catalog.
   controller only.
 - Every hotbar slot, tooltip and log line shows numbers that match the rules engine.
 - No party member ever acts without the player choosing it or a rule the player set.
+
+## Built (Phase 2)
+
+`make arena` opens the screen with the arena fight; `ui/combat/` draws it from `combat/action_catalog.gd`. Captures:
+`captures/arena_p2_1_move.png` (movement preview), `_2_attack.png` (target tooltip), `_3_area.png` (Thunderwave
+template), `_5_end.png` (the end of a fight). Where the build differs from the wireframes, and why:
+
+- **Jump** isn't a hotbar slot: in 2024 it's part of movement, and the arena has no gaps. It arrives with Phase 3
+  levels.
+- **Ready** holds an attack for an enemy coming into reach; readied spells come later (deviations.md).
+  **Influence** is greyed with the reason ("Wolves and the walking dead can't be reasoned with").
+- **Level-up badge**: no experience is earned in the arena, so it never shows.
+- **Controller**: the radial menu (hold LB, aim with the right stick) is in; inside a tab, LT/RT step through the
+  slots and RB uses one, and the left stick moves a square cursor that A confirms. Controls are listed on F1 / Start
+  instead of a permanent bottom panel, to keep the field clear.
+- **Names on the field** show for the active creature and the one under the cursor only, so a crowded fight stays
+  readable; conditions and the health bar always show.
+- **Heroic Inspiration** uses the reaction prompt after a missed attack roll ("Spend Heroic Inspiration to reroll?").
+
+Owner sign-off on the built screen: **pending** (P2-09).
+

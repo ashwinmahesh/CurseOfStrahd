@@ -5,13 +5,15 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node]
-make sprite TURNAROUND=<png> ID=<id> | standin | wireframes
+make run | arena | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node]
+make sprite TURNAROUND=<png> ID=<id> [STATIC=1] | portrait SRC=<png> ID=<id> | standin | wireframes
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.
 - `rules/` is a pure library: no nodes, scenes, autoloads or UI. It takes a DiceRoller argument.
+- `combat/` (grid, Encounter, spells, features, AI, action catalog) is pure logic too (ADR 0007); scenes and the
+  HUD only show it and send it commands. Contract: docs/contracts/combat.md.
 - Every die roll goes through DiceRoller (Dice.roller in game code). Cosmetic randomness uses its own RNG.
 - The player controls every party member and guest; AI only drives enemies and neutrals.
 - Scenes are built in code; .tscn files are thin roots. 1 world unit = one 5 ft square.
@@ -22,7 +24,7 @@ python3 tools/data/validate_data.py --pending (later-phase references) · python
   and the engine together, never only in data). Every number the UI shows is a `Breakdown`.
 - A character is its `build` (keyed choices, see ADR 0006); `refresh()` derives the rest. The UI never computes rules:
   it reads CharacterBuilder / LevelUpController and picks widgets by `Choice.kind`.
-- `make lint` compiles rules/ standalone, so an autoload reference there fails CI.
+- `make lint` compiles rules/ and combat/ standalone, so an autoload reference there fails CI.
 
 ## Rules source
 Full 2024 PHB (owner decision 2026-10-05, personal use only). SRD 5.2 is the import starting point.

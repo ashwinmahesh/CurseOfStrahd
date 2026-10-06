@@ -21,7 +21,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Saving throw proficiency | character.gd | tested | test_reference_party |
 | Passive scores (+5/−5) | creature.gd passive_score | tested | test_abilities, test_reference_party |
 | Initiative = Dexterity check, Alert adds PB | creature.gd initiative_bonus | tested | test_reference_party |
-| Heroic Inspiration | character.gd (Resourceful) | implemented | [Phase 2: spending it] |
+| Heroic Inspiration | character.gd (Resourceful); encounter.gd reroll | partial: reroll offered on a missed attack roll; saves and checks [Phase 3] | test_combat_encounter |
 | Bonus/penalty dice on D20 Tests (Bless, Bane) | creature.gd roll_d20 | tested | test_effects |
 | Automatic failure (Paralyzed etc.) | creature.gd roll_d20 | tested | test_conditions |
 
@@ -41,7 +41,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Death Saving Throws (10+, nat 1, nat 20, 3/3) | creature.gd roll_death_save | tested | test_death_saves |
 | Damage at 0 HP = failure (crit = 2) | creature.gd | tested | test_damage |
 | Stabilizing, Stable creatures | creature.gd stabilize | tested | test_death_saves |
-| Knocking a creature out | — | not started | [Phase 2] |
+| Knocking a creature out | — | not started | [Phase 3] |
 | Critical Hits: roll damage dice twice | resolution/attack_resolver.gd | tested | test_attacks |
 
 ## Rules Glossary: conditions (data/conditions)
@@ -50,10 +50,10 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 |---|---|---|---|
 | Blinded, Charmed, Deafened | data + creature.gd | partial (sight/hearing/charmer checks: Phase 2-3) | test_conditions |
 | Exhaustion (−2 per level to D20 Tests, −5 ft, death at 6, Long Rest −1) | data + creature.gd | tested | test_conditions |
-| Frightened | data | partial (line of sight: Phase 2) | test_conditions |
-| Grappled (Speed 0) | data | partial (other-target Disadvantage, dragging: Phase 2) | test_conditions |
+| Frightened | data; Turn Undead fleeing in ai_brain.gd | partial (Disadvantage always on, see deviations; can't-approach only for AI) | test_conditions, test_combat_spells |
+| Grappled (Speed 0) | data + encounter.gd | tested (Speed 0, escape, other-target Disadvantage); dragging: deviations | test_conditions, test_combat_encounter |
 | Incapacitated (no actions, breaks Concentration) | data + creature.gd | tested | test_conditions |
-| Invisible | data | partial (who can see whom: Phase 2) | test_conditions |
+| Invisible | data + encounter.gd can_see | tested (hidden creatures, attacks either way) | test_conditions, test_combat_encounter |
 | Paralyzed, Petrified, Stunned, Unconscious | data + creature.gd | tested (auto-crit within 5 ft) | test_conditions, test_attacks |
 | Poisoned, Restrained | data | tested | test_conditions |
 | Prone (attackers within 5 ft Advantage, else Disadvantage) | data + attack_resolver.gd | tested | test_attacks |
@@ -87,7 +87,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Multiclass prerequisites (new class and current classes) | level_up_controller.gd | tested | test_level_up, test_reference_party |
 | Multiclass proficiencies, Hit Points, Proficiency Bonus | character.gd | tested | test_level_up |
 | Multiclass spell slots; third casters alone round up | magic/spellcasting.gd | tested | test_spellcasting, test_level_up |
-| Extra Attack doesn't stack across classes | modifiers (highest wins) | implemented | [Phase 2 attack action] |
+| Extra Attack doesn't stack across classes | encounter.gd attacks_per_action (highest wins) | implemented | — |
 | Unarmored Defense from two classes: pick one | character.gd armor_class (best formula) | implemented | — |
 | Epic Boons, levels 19-20 | data | data | [Phase 5] |
 | Respec at Madam Eva | — | not started | [Phase 4] |
@@ -98,11 +98,11 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 |---|---|---|---|
 | Class tables, features 1-20, resources by level | data/classes | tested to level 5 | test_reference_party, test_data_integrity |
 | All 16 PHB subclasses, features 3-18 | data/subclasses | tested to level 5 | test_data_integrity |
-| Fighter: Fighting Style, Second Wind uses, Weapon Mastery count, Action Surge, Extra Attack | data + engine | tested (numbers); actions: Phase 2 | test_reference_party |
+| Fighter: Fighting Style, Second Wind uses, Weapon Mastery count, Action Surge, Extra Attack | data + engine + combat/features.gd | tested | test_reference_party, test_combat_encounter |
 | Champion: Improved/Superior Critical, Remarkable Athlete | data | tested | test_attacks, test_reference_party |
-| Battle Master: Superiority Dice, maneuvers, Student of War | data | tested (choices, dice); maneuvers in combat: Phase 2 | test_level_up |
+| Battle Master: Superiority Dice, maneuvers, Student of War | data | tested (choices, dice); maneuvers in combat: not started (no Phase 2 pregen uses them) | test_level_up |
 | Eldritch Knight / Arcane Trickster spellcasting tables | data + engine | tested | test_level_up |
-| Rogue: Expertise, Sneak Attack dice, Thieves' Cant | data | tested (numbers); Sneak Attack trigger: Phase 2 | test_reference_party |
+| Rogue: Expertise, Sneak Attack, Cunning Action, Steady Aim, Thieves' Cant | data + combat/features.gd | tested | test_reference_party, test_combat_encounter |
 | Cleric: Divine Order, Channel Divinity uses, domain spells always prepared | data + engine | tested | test_reference_party |
 | Life Domain: Disciple of Life | data + engine | tested | test_reference_party |
 | Wizard: spellbook (6 + 2 per level), prepared from the book, Scholar, Evocation Savant | data + engine | tested | test_reference_party, test_spellcasting |
@@ -114,7 +114,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 |---|---|---|---|
 | Feats: 10 origin, 43 general, 10 fighting style, 12 epic boons | data/feats | data (numeric parts tested: Tough, Alert, Defense, Archery, Dueling, GWF) | test_attacks, test_reference_party |
 | Weapon properties, Finesse, Versatile, Thrown, Range | resolution/weapon_profile.gd | tested | test_attacks |
-| Weapon Mastery properties | data | data (who can use them is tested) | [Phase 2 effects] |
+| Weapon Mastery properties | encounter.gd | tested: Graze, Nick, Push, Sap, Slow, Topple, Vex; Cleave not started (no Phase 2 character has it) | test_combat_encounter |
 | Armor: light/medium/heavy AC, Strength requirement, Stealth Disadvantage | character.gd | tested | test_reference_party, test_attacks |
 | Armor and Shield without training | character.gd gear_d20_sources, armor_class | implemented | — |
 | Unarmed Strike (1 + Str) | weapon_profile.gd | implemented | — |
@@ -124,12 +124,41 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Cantrip scaling at 5/11/17; upcasting | magic/spellcasting.gd | tested | test_spellcasting |
 | Prepared spells, always-prepared spells, spellbook | character.gd | tested | test_reference_party |
 | Ritual casting | data (ritual flags) | data | [Phase 3] |
-| Components and focuses | data | data | [Phase 2] |
-| Areas of effect | data | data | [Phase 2 grid] |
+| Components and focuses | spell_caster.gd | partial: Verbal (can't speak, reveals the hidden), armor training; Material and focuses assumed carried | test_combat_spells |
+| Areas of effect | grid.gd area_cells, spell_caster.gd | tested (sphere, cube, cone, line, emanation; walls block) | test_combat_grid, test_combat_spells |
 | 173 spells of levels 0-3 for the Phase 1 classes | data/spells | data | — |
+
+## Combat (Phase 2: combat/, ADR 0007)
+
+| Rule | Code | Status | Test |
+|---|---|---|---|
+| Initiative: Dexterity check, surprise = Disadvantage, identical monsters share a roll, ties | encounter.gd start | tested | test_combat_encounter |
+| Turn order, rounds, the action economy (Action, Bonus Action, Reaction, movement, one free object interaction) | encounter.gd, combatant.gd | tested | test_combat_encounter |
+| Grid movement: 5 ft squares, diagonals 5 ft, no corner cutting, Difficult Terrain double, climbing | grid.gd | tested | test_combat_grid |
+| Moving through creatures (allies, Incapacitated, Tiny, two sizes different; enemy squares are Difficult Terrain); can't end in an occupied square | encounter.gd _occupancy_for | tested | test_combat_encounter |
+| Halfling Nimbleness, Naturally Stealthy, Luck | encounter.gd, d20_test.gd reroll_ones | tested (Nimbleness, Luck through the suite) | test_combat_encounter |
+| Prone: Disadvantage to attack, Advantage within 5 ft / Disadvantage beyond against it, standing costs half Speed, crawling double | encounter.gd, action_catalog.gd | tested | test_combat_encounter, test_action_catalog |
+| Opportunity Attacks (leaving reach of a creature that can see you; Disengage; forced movement doesn't provoke) | encounter.gd _walk, _provokers | tested | test_combat_encounter |
+| Reactions: one per round, prompts for the player with per-reaction rules | encounter.gd, reaction_request.gd | tested | test_combat_encounter, test_combat_ai |
+| Attack rolls: every Advantage/Disadvantage source, cover, long range, ranged attacks in melee, unseen attackers and targets, Heavy | encounter.gd attack_situation | tested | test_combat_encounter |
+| Cover: Half +2, Three-Quarters +5, Total untargetable; creatures give Half; Dex saves add cover | grid.gd cover_between, spell_caster.gd | tested | test_combat_grid, test_combat_encounter |
+| Critical Hits, automatic crits against Paralyzed/Unconscious within 5 ft | encounter.gd | tested | test_combat_encounter |
+| Standard actions: Attack, Dash, Disengage, Dodge, Help (attack), Hide, Search, Study, Ready (attacks), Magic, Utilize (Healer's Kit), Influence | encounter.gd, action_catalog.gd | tested (Influence has no target in the arena; readied spells: deviations) | test_combat_encounter, test_action_catalog |
+| Grapple and Shove with Unarmed Strike; escape | encounter.gd | tested | test_combat_encounter |
+| Two-weapon fighting (Light) and Nick | encounter.gd offhand_attack | tested | test_combat_encounter |
+| Thrown weapons leave the hand; ammunition used up | encounter.gd | tested | test_combat_encounter |
+| Death Saving Throws on the creature's turn, stabilizing (Medicine DC 10 or Healer's Kit) | encounter.gd death_save, stabilize | tested (rules in test_death_saves) | test_death_saves, test_combat_arena_scene |
+| Savage Attacker, Sneak Attack once per turn (any turn) | encounter.gd, features.gd | tested | test_combat_encounter |
+| Spellcasting in combat: casting time vs the action economy, one slot-spell per turn, free castings, Concentration, range and line of effect, upcasting | spell_caster.gd | tested | test_combat_spells |
+| Spell attacks, saves (damage rolled once, half on success), healing (Disciple of Life), buffs, repeated saves | spell_caster.gd | tested | test_combat_spells |
+| Spells with their own rules: Magic Missile, Shield, Sleep, Command (Grovel, Halt, Flee), Sanctuary, Spiritual Weapon, Toll the Dead, Thunderwave push, Guiding Bolt, Shocking Grasp, Ray of Frost, Chill Touch, Aid, Potent Cantrip | spell_caster.gd | tested | test_combat_spells |
+| Channel Divinity: Turn Undead (Sear Undead), Divine Spark, Preserve Life | features.gd | tested | test_combat_spells |
+| Monster stat blocks in combat: attacks, riders (wolf Prone), Pack Tactics, Undead Fortitude | encounter.gd | tested | test_combat_encounter |
+| Enemy AI v1: pack_hunter, brute, mindless, cowardly profiles | ai/ai_brain.gd | tested | test_combat_ai, test_arena_fight |
+| Encounter XP budget (2024 DMG) | tools/data/validate_data.py | tested by make validate | — |
+| Light, darkness and obscurement in combat | — | not started | [Phase 3] |
 
 ## Not started (later phases)
 
-Actions in combat, Opportunity Attacks, Reactions, cover, movement and terrain, surprise (Phase 2); exploration,
-social interaction and Influence, travel, light and vision, hiding (Phase 3); the other eight classes, magic items
-and attunement (Phases 4-5).
+Exploration, social interaction and Influence, travel, light and vision, hiding outside combat (Phase 3); the other
+eight classes, magic items and attunement (Phases 4-5).
