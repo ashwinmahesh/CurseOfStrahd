@@ -22,6 +22,7 @@ var _focus := 0
 var _history: Array[String] = []
 ## The options on screen now (the runner's option dictionaries), for the controller focus and for tests.
 var options_shown: Array = []
+var _spread: HBoxContainer
 
 
 func _init() -> void:
@@ -81,6 +82,61 @@ func _ready() -> void:
 	right.add_child(_options)
 	_hint = _label("Space / click: continue", 13, "parchment")
 	right.add_child(_hint)
+	# The Tarokka spread: each card Madam Eva turns stays face up above the conversation.
+	_spread = HBoxContainer.new()
+	_spread.add_theme_constant_override("separation", 14)
+	_spread.anchor_left = 0.5
+	_spread.anchor_right = 0.5
+	_spread.offset_left = -560
+	_spread.offset_right = 560
+	_spread.offset_top = 60
+	_spread.alignment = BoxContainer.ALIGNMENT_CENTER
+	add_child(_spread)
+
+
+## A face-up Tarokka card: its art if there is any, else its name, suit and number on a card face.
+func _tarokka_card(card_id: String, slot: String) -> Control:
+	var card := Tarokka.card(card_id)
+	var face := PanelContainer.new()
+	var st := StyleBoxFlat.new()
+	st.bg_color = Look.color("vellum")
+	st.border_color = Look.color("blood_deep") if str(card.get("deck", "")) == "high" else Look.color("ink")
+	st.set_border_width_all(4)
+	st.set_corner_radius_all(8)
+	st.set_content_margin_all(8)
+	face.add_theme_stylebox_override("panel", st)
+	face.custom_minimum_size = Vector2(170, 250)
+	var v := VBoxContainer.new()
+	v.alignment = BoxContainer.ALIGNMENT_CENTER
+	face.add_child(v)
+	var art := "res://art/tarokka/%s.png" % str(card.get("art", card_id))
+	if ResourceLoader.exists(art):
+		var tex := TextureRect.new()
+		tex.texture = load(art) as Texture2D
+		tex.custom_minimum_size = Vector2(150, 170)
+		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		v.add_child(tex)
+	else:
+		var glyph := {"swords": "⚔", "stars": "✶", "coins": "◉", "glyphs": "✠"}.get(str(card.get("suit", "")), "☾") as String
+		var big := _label(glyph, 64, "blood_deep" if str(card.get("deck", "")) == "high" else "ink")
+		big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		v.add_child(big)
+		if card.has("value"):
+			var num := _label("Master" if int(card["value"]) == 10 else str(card["value"]), 18, "ink")
+			num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			v.add_child(num)
+	var nm := _label(str(card.get("name", card_id)), 17, "ink")
+	nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	nm.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(nm)
+	var sl := _label(str(Tarokka.SLOT_NAMES.get(slot, "")), 12, "peat")
+	sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(sl)
+	for l in v.find_children("*", "Label", false, false):
+		(l as Label).add_theme_constant_override("outline_size", 0)
+	return face
 
 
 ## Starts a conversation at "file:node". Returns false if it doesn't exist.
@@ -116,6 +172,8 @@ func _show(beat: Dictionary) -> void:
 		"notice":
 			_text.text = "[color=#%s]◆ %s[/color]" % [Look.color("bile").to_html(false), _esc(str(beat["text"]))]
 			_waiting_continue = true
+			if beat.has("card"):
+				_spread.add_child(_tarokka_card(str(beat["card"]), str(beat.get("slot", ""))))
 		"check":
 			var colour := "bile" if bool(beat["success"]) else "vampire_red"
 			var said := str(beat.get("said", ""))
