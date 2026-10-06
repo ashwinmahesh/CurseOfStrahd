@@ -310,9 +310,23 @@ func attune(item_id: String) -> bool:
 	if attune_blocker(item_id) != "":
 		return false
 	attuned.append(item_id)
+	# Attuning to an item teaches its properties (a disguised one shows what it is, and its curse takes hold).
+	var e := entry_of(item_id)
+	if not e.is_empty():
+		e["identified"] = true
 	_item_mods_key = ""
 	refresh_item_resources()
 	return true
+
+
+## Identifies the carried `item_id` (Identify, or a Short Rest spent studying it): its true name and properties
+## show from now on. Returns its name, or "" if it isn't carried. A curse stays hidden until someone attunes to it.
+func identify(item_id: String) -> String:
+	var e := entry_of(item_id)
+	if e.is_empty():
+		return ""
+	e["identified"] = true
+	return str(compendium.item_data(item_id).get("name", item_id))
 
 
 ## "" if attunement to `item_id` can end now; a cursed item holds on until the curse is lifted (Remove Curse).
@@ -1837,6 +1851,7 @@ func put_in(container_id: String, item_id: String) -> String:
 		return "rift"
 	var st := remove_one(item_id)
 	if bool(spec.get("devours", false)) and (item_id in FOOD or str(data.get("category", "")) == "consumable"):
+		ce["identified"] = true
 		return "devoured"
 	if not ce.has("contents"):
 		ce["contents"] = []
