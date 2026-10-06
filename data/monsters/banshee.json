@@ -3,8 +3,9 @@
   "name": "Banshee",
   "source": {
     "book": "MM2025",
-    "edition": "2014",
-    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual banshee; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical weapons is entered as plain Bludgeoning, Piercing and Slashing resistance, as the 2024 books do for such creatures. Horrifying Visage and Wail are text only (the engine has no area save actions or drop-to-0 effect yet)."
+    "checked_against": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Banshee, read on D&D Beyond (owner's account). Deathly Wail's sunlight condition isn't checked."
   },
   "size": "medium",
   "type": "undead",
@@ -12,11 +13,11 @@
   "ac": 12,
   "initiative": 2,
   "hp": {
-    "average": 58,
-    "dice": "13d8"
+    "average": 54,
+    "dice": "12d8"
   },
   "speed": {
-    "walk": 0,
+    "walk": 5,
     "fly": 40,
     "hover": true
   },
@@ -29,13 +30,11 @@
     "cha": 17
   },
   "saves": {
-    "wis": 2,
-    "cha": 5
+    "wis": 2
   },
   "resistances": [
     "acid",
     "bludgeoning",
-    "cold",
     "fire",
     "lightning",
     "piercing",
@@ -43,6 +42,7 @@
     "thunder"
   ],
   "immunities": [
+    "cold",
     "necrotic",
     "poison"
   ],
@@ -73,58 +73,112 @@
       "id": "detect_life",
       "name": "Detect Life",
       "action": "passive",
-      "summary": "Senses living creatures within 5 miles that aren't Constructs or Undead, but not exactly where.",
+      "summary": "Senses the direction of living creatures (not Constructs or Undead) within a mile.",
       "implemented": "text"
     },
     {
       "id": "incorporeal_movement",
       "name": "Incorporeal Movement",
       "action": "passive",
-      "summary": "Moves through creatures and objects as Difficult Terrain; 5 (1d10) Force if it ends a turn inside one.",
       "modifiers": [
         {
           "stat": "flag",
           "value": "incorporeal_movement"
         }
       ],
+      "summary": "Moves through creatures and objects as Difficult Terrain; 5 (1d10) Force if it ends a turn inside one.",
       "implemented": "engine"
     }
   ],
   "actions": [
     {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "corrupting_touch",
+          "count": 2
+        },
+        {
+          "action": "horrify",
+          "count": 1
+        }
+      ],
+      "summary": "Two Corrupting Touches and Horrify."
+    },
+    {
       "id": "corrupting_touch",
       "name": "Corrupting Touch",
       "kind": "melee",
       "attack": {
-        "bonus": 4,
+        "bonus": 5,
         "reach": 5
       },
       "damage": [
         {
-          "average": 12,
-          "dice": "3d6+2",
+          "average": 7,
+          "dice": "1d8+3",
           "type": "necrotic"
         }
       ],
       "summary": "A withering touch."
     },
     {
-      "id": "horrifying_visage",
-      "name": "Horrifying Visage",
-      "kind": "special",
-      "summary": "Non-Undead within 60 ft that see it: DC 13 Wis save or Frightened for 1 minute; failing by 5 or more also ages the target.",
-      "text": "The target repeats the save at the end of each of its turns; a success gives a day's immunity. Text only for the engine."
+      "id": "horrify",
+      "name": "Horrify",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 13,
+        "success": "none"
+      },
+      "targets": {
+        "range": 60
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_start"
+        }
+      ],
+      "immune_on_success": true,
+      "summary": "DC 13 Wis save by a creature within 60 ft that sees it, or Frightened until the banshee's next turn; success gives a day's immunity."
     },
     {
-      "id": "wail",
-      "name": "Wail",
-      "kind": "special",
-      "summary": "Once a day, in darkness: creatures within 30 ft make a DC 13 Con save or drop to 0 Hit Points; success means 10 (3d6) Psychic.",
-      "text": "Constructs and Undead are unaffected. Text only for the engine.",
+      "id": "deathly_wail",
+      "name": "Deathly Wail",
+      "kind": "save",
       "uses": {
         "count": 1,
         "per": "day"
-      }
+      },
+      "save": {
+        "ability": "con",
+        "dc": 13,
+        "success": "none"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 30
+      },
+      "targets": {
+        "range": 30,
+        "not_types": [
+          "construct",
+          "undead"
+        ]
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "psychic"
+        }
+      ],
+      "drop_at_hp": 25,
+      "summary": "Once a day: everyone within 30 ft but Constructs and Undead makes a DC 13 Con save; a failure drops one at 25 HP or fewer to 0, else 3d6 Psychic."
     }
   ],
   "regions": [

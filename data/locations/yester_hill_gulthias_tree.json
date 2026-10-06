@@ -652,14 +652,6 @@
           "hp": 60
         },
         {
-          "monster": "druid",
-          "cell": [
-            9,
-            8
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
           "monster": "twig_blight",
           "cell": [
             12,
