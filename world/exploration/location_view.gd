@@ -111,6 +111,7 @@ func _ready() -> void:
 	_say(str((loc.get("narration", {}) as Dictionary).get("enter", "enter:" + loc_id)))
 	if first and str(loc.get("text", "")) != "":
 		narration.emit(str(loc["text"]))
+	add_child(HiddenAreas.create(self))   # rooms behind undiscovered secret doors stay out of sight
 	_check_areas()
 
 
@@ -990,6 +991,8 @@ func _look(cell: Vector2i, thing: Dictionary) -> void:
 
 ## What's at a square for the hover hint and clicks: {kind, id, label} or {}.
 func thing_at(cell: Vector2i) -> Dictionary:
+	if HiddenAreas.hides(self, cell):
+		return {}
 	for shown in _npc_shown:
 		var spec := shown["spec"] as Dictionary
 		if shown["cell"] == cell:

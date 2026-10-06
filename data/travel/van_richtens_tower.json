@@ -21,8 +21,8 @@
       "location": "werewolf_den",
       "spawn": "from_trail",
       "pos": [
-        0.285,
-        0.22
+        0.249,
+        0.239
       ],
       "region": "werewolf_den",
       "when": "flag.werewolf_rumor or flag.den_way_known or tarokka.tome.region == werewolf_den or tarokka.symbol.region == werewolf_den or tarokka.sword.region == werewolf_den or tarokka.ally.npc == emil_toranescu",
@@ -34,8 +34,8 @@
       "location": "van_richtens_tower",
       "spawn": "from_path",
       "pos": [
-        0.14,
-        0.27
+        0.158,
+        0.254
       ],
       "region": "van_richtens_tower",
       "when": "flag.tower_rumor or flag.khazan_known or tarokka.tome.region == van_richtens_tower or tarokka.symbol.region == van_richtens_tower or tarokka.sword.region == van_richtens_tower",
@@ -64,6 +64,7 @@
       "id": "vallaki_to_den",
       "from": "vallaki",
       "to": "werewolf_den",
+      "via": [[0.335, 0.34]],
       "hours": 5,
       "table": "zarovich_hills",
       "name": "The north track round the lake and up into the hills"
@@ -89,6 +90,7 @@
       "id": "tower_to_krezk",
       "from": "van_richtens_tower",
       "to": "krezk",
+      "via": [[0.11, 0.33]],
       "hours": 4,
       "table": "zarovich_hills",
       "name": "The Baratok track, down to Krezk"
