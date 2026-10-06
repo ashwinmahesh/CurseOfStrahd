@@ -31,8 +31,8 @@ top, party on the left, hotbar and End Turn at the bottom, log on the right), dr
    Every PHB action is on Common: Attack, Dash, Disengage, Dodge, Help, Hide, Influence, Magic, Ready, Search,
    Study, Utilize, plus Grapple and Shove (Unarmed Strike options) and Jump. Extra Attack shows "2 attacks per
    Attack action".
-5. **End Turn**: a large round button (Space, or hold Y). If the character still has unspent Action or movement, the
-   first press shows "End turn with Action unused?".
+5. **End Turn**: a large round button (Space, or hold Y). If the character still has their Action, the first press
+   shows "End turn with your Action unused?". Leftover movement doesn't ask (owner feedback 2026-10-06).
 
 On the field: the 5 ft grid appears in combat; hovering the floor shows the movement path with feet used and left,
 and warns before a step that provokes an Opportunity Attack ("leaves Wolf's reach"), naming the creature. Hovering
@@ -110,5 +110,8 @@ template), `_5_end.png` (the end of a fight). Where the build differs from the w
   readable; conditions and the health bar always show.
 - **Heroic Inspiration** uses the reaction prompt after a missed attack roll ("Spend Heroic Inspiration to reroll?").
 
-Owner sign-off on the built screen: **pending** (P2-09).
+- **Combat log** minimizes to its title bar (the – button or L), which then shows the latest line (owner request).
+- **Damage and healing numbers** stay over the creature for about 2.5 seconds (owner request).
+
+Owner sign-off on the built screen: **approved 2026-10-06** with the changes above (P2-09).
 

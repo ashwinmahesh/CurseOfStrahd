@@ -7,6 +7,8 @@ extends Node3D
 const ENCOUNTER_ID := "arena_wolves_and_zombies"
 const STEP_TIME := 0.13
 const AI_PAUSE := 0.35
+## How long damage and healing numbers stay over a creature.
+const FLOAT_TIME := 2.4
 
 enum Mode { BUSY, IDLE, TARGET, PROMPT, OVER }
 
@@ -192,14 +194,10 @@ func _end_turn() -> void:
 		return
 	if hud.confirm_open():
 		hud.close_confirm()
-	elif c.can_act() and (c.action_available or c.movement_left > 0) and not _confirmed_end:
+	elif c.can_act() and c.action_available and not _confirmed_end:
+		# Only an unused Action asks first; leftover movement never does (owner feedback 2026-10-06).
 		_confirmed_end = true
-		var what: Array[String] = []
-		if c.action_available:
-			what.append("Action")
-		if c.movement_left > 0:
-			what.append("%d ft of movement" % c.movement_left)
-		hud.confirm_end_turn("End turn with %s unused?" % " and ".join(what))
+		hud.confirm_end_turn("End turn with your Action unused?")
 		return
 	_confirmed_end = false
 	mode = Mode.BUSY
@@ -546,6 +544,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_change_slot(-1 if event.is_action_pressed(&"combat_slot_level_down") else 1)
 	elif event.is_action_pressed(&"cycle_leader"):
 		_cycle_inspect()
+	elif event.is_action_pressed(&"combat_toggle_log"):
+		hud.toggle_log()
 	else:
 		for i in 10:
 			if event.is_action_pressed(StringName("combat_slot_%d" % (i + 1))):
@@ -830,9 +830,9 @@ func _play_events() -> void:
 				var t := tokens.get(str(ev["id"])) as CombatToken
 				if t != null:
 					t.flash(Look.color("vampire_red"))
-					_float(t, ("CRIT %d" if bool(ev.get("critical", false)) else "-%d") % int(ev["amount"]), "vampire_red")
+					_float(t, ("CRIT %d" if bool(ev.get("critical", false)) else "-%d") % int(ev["amount"]), "vampire_red", 64)
 					t.refresh()
-					await get_tree().create_timer(0.18).timeout
+					await get_tree().create_timer(0.35).timeout
 			"heal":
 				var th := tokens.get(str(ev["id"])) as CombatToken
 				if th != null:
@@ -873,10 +873,11 @@ func _stop_walking(walking: Dictionary) -> void:
 	walking.clear()
 
 
-func _float(t: CombatToken, text: String, colour: String) -> void:
+## A number or word rising over a creature: stays readable for about 2 seconds, then fades (damage a little bigger).
+func _float(t: CombatToken, text: String, colour: String, size: int = 52) -> void:
 	var l := Label3D.new()
 	l.text = text
-	l.font_size = 52
+	l.font_size = size
 	l.pixel_size = 0.006
 	l.outline_size = 12
 	l.modulate = Look.color(colour)
@@ -887,8 +888,8 @@ func _float(t: CombatToken, text: String, colour: String) -> void:
 	l.position = t.position + Vector3(0, float(CombatToken.HEIGHTS.get(CombatToken.art_id(t.combatant), 1.2)) + 0.2, 0)
 	add_child(l)
 	var tw := create_tween()
-	tw.tween_property(l, "position", l.position + Vector3(0, 0.8, 0), 0.9)
-	tw.parallel().tween_property(l, "modulate:a", 0.0, 0.9).set_delay(0.4)
+	tw.tween_property(l, "position", l.position + Vector3(0, 0.6, 0), FLOAT_TIME).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.parallel().tween_property(l, "modulate:a", 0.0, 0.7).set_delay(FLOAT_TIME - 0.7)
 	tw.tween_callback(l.queue_free)
 
 

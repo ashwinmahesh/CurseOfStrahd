@@ -70,9 +70,9 @@ func test_player_moves_acts_and_ends_turn() -> void:
 		arena.call("_choose", catalog.find(c, "dodge"))
 		await _frames(10)
 		assert_false(c.action_available, "Dodge used the action")
+		assert_true(c.movement_left > 0)
 		arena.call("_end_turn")
-		assert_true((arena.get("hud") as CombatHud).confirm_open(), "asks before ending with movement left")
-		arena.call("_end_turn")
+		assert_false((arena.get("hud") as CombatHud).confirm_open(), "leftover movement never asks")
 		await _frames(5)
 		assert_ne(e.current().id, c.id, "the turn passed")
 
@@ -93,3 +93,27 @@ func test_enemy_turns_play_and_prompts_wait() -> void:
 	assert_true(e.round_no >= start_round + 1 or e.state == Encounter.State.OVER)
 	var attacked := e.log.texts().any(func(t: String) -> bool: return t.contains(" hits ") or t.contains(" misses "))
 	assert_true(attacked, "enemies attacked")
+
+
+func test_end_turn_asks_only_with_the_action_unused() -> void:
+	await _until_player_turn()
+	var e := _enc()
+	var c := e.current()
+	var hud := arena.get("hud") as CombatHud
+	arena.call("_end_turn")
+	assert_true(hud.confirm_open(), "Action still available")
+	arena.call("_end_turn")
+	await _frames(5)
+	assert_ne(e.current().id, c.id, "the second press ends the turn")
+
+
+func test_combat_log_minimizes_and_restores() -> void:
+	var hud := arena.get("hud") as CombatHud
+	var was := CombatHud.log_minimized
+	hud.toggle_log()
+	assert_eq(CombatHud.log_minimized, not was)
+	assert_eq(hud._log.visible, was)
+	hud.toggle_log()
+	assert_eq(hud._log.visible, true if not was else false)
+	CombatHud.log_minimized = false
+

@@ -19,7 +19,7 @@ const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "ember", "re
 const SLOT_SIZE := Vector2(132, 50)
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click cancels.",
-	"Keyboard: 1-0 use hotbar slots · Z / X change tab · Enter confirms (casts early with fewer targets) · Esc cancels · Space ends the turn · [ and ] change the spell slot · T jumps to the next target · Tab inspects the next party member.",
+	"Keyboard: L minimizes or restores the combat log · 1-0 use hotbar slots · Z / X change tab · Enter confirms (casts early with fewer targets) · Esc cancels · Space ends the turn · [ and ] change the spell slot · T jumps to the next target · Tab inspects the next party member.",
 	"Camera: WASD or arrows pan · Q / E rotate · mouse wheel zooms.",
 	"Controller: left stick moves the cursor · A confirms · B cancels · X next target · Y ends the turn · hold LB for the radial menu (right stick picks, release to choose) · LT / RT pick a hotbar slot · RB uses it · d-pad left/right changes the spell slot · View inspects the next party member.",
 	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
@@ -70,6 +70,12 @@ var _pips: HBoxContainer
 var _death_button: Button
 var radial: RadialMenu
 var _portraits: Dictionary = {}
+## The log panel can be minimized to its title bar; the choice lasts for the session.
+static var log_minimized := false
+const LOG_BOTTOM := 600.0
+var _log_panel: PanelContainer
+var _log_title: Label
+var _log_toggle: Button
 var _controls: PanelContainer
 
 
@@ -155,17 +161,27 @@ func _build_party() -> void:
 
 
 func _build_log() -> void:
-	var panel := _panel()
-	panel.anchor_left = 1.0
-	panel.anchor_right = 1.0
-	panel.offset_left = -420
-	panel.offset_right = -12
-	panel.offset_top = 140
-	panel.offset_bottom = 600
-	add_child(panel)
+	_log_panel = _panel()
+	_log_panel.anchor_left = 1.0
+	_log_panel.anchor_right = 1.0
+	_log_panel.offset_left = -420
+	_log_panel.offset_right = -12
+	_log_panel.offset_top = 140
+	_log_panel.offset_bottom = LOG_BOTTOM
+	add_child(_log_panel)
 	var box := VBoxContainer.new()
-	panel.add_child(box)
-	box.add_child(_label("COMBAT LOG · click a line for the math", 14, "parchment"))
+	_log_panel.add_child(box)
+	var head := HBoxContainer.new()
+	_log_title = _label("COMBAT LOG · click a line for the math", 14, "parchment")
+	_log_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_log_title.clip_text = true
+	head.add_child(_log_title)
+	_log_toggle = Button.new()
+	_log_toggle.custom_minimum_size = Vector2(30, 26)
+	_log_toggle.tooltip_text = "Minimize or restore the combat log (L)"
+	_log_toggle.pressed.connect(toggle_log)
+	head.add_child(_log_toggle)
+	box.add_child(head)
 	_log = RichTextLabel.new()
 	_log.bbcode_enabled = true
 	_log.scroll_following = true
@@ -176,6 +192,27 @@ func _build_log() -> void:
 	_log.add_theme_color_override("default_color", Look.color("vellum"))
 	_log.meta_clicked.connect(_on_log_meta)
 	box.add_child(_log)
+	_apply_log_state()
+
+
+## Minimizes the log to its title bar (showing the latest line) or restores it. Remembered for the session.
+func toggle_log() -> void:
+	log_minimized = not log_minimized
+	_apply_log_state()
+
+
+func _apply_log_state() -> void:
+	_log.visible = not log_minimized
+	_log_toggle.text = "+" if log_minimized else "–"
+	_log_panel.offset_bottom = _log_panel.offset_top + 46 if log_minimized else LOG_BOTTOM
+	_update_log_title()
+
+
+func _update_log_title() -> void:
+	if not log_minimized or e == null or e.log.entries.is_empty():
+		_log_title.text = "COMBAT LOG · click a line for the math"
+		return
+	_log_title.text = "LOG · " + str(e.log.entries.back()["text"])
 
 
 func _build_hotbar() -> void:
@@ -655,6 +692,7 @@ func refresh_log() -> void:
 			line = "[url=%d]%s[/url]" % [i, line]
 		_log.append_text(line + "\n")
 	_log_count = entries.size()
+	_update_log_title()
 
 
 static func _escape(t: String) -> String:

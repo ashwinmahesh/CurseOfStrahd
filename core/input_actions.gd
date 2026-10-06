@@ -28,6 +28,7 @@ const BINDINGS := {
 	&"combat_slot_level_down": [KEY_BRACKETLEFT],
 	&"combat_slot_level_up": [KEY_BRACKETRIGHT],
 	&"combat_next_target": [KEY_T],
+	&"combat_toggle_log": [KEY_L],
 	&"combat_slot_1": [KEY_1],
 	&"combat_slot_2": [KEY_2],
 	&"combat_slot_3": [KEY_3],
