@@ -6,7 +6,8 @@ extends CanvasLayer
 ## shoulders, the title over a lozenge rule, Music and Effects sliders with their icons, the choices as long hexagons
 ## (the selected one wine with lozenges outside its points), and a footer wave between corner brackets. The concept had
 ## three buttons; this menu has five and a respec option, so the arch is taller, with the concept's spacing kept. The
-## saves open in the same arch. As the game-over screen it offers only loading. F5 quicksaves, here and exploring.
+## saves open in the same arch. As the game-over screen it offers only loading. Quicksave (and F5, here and exploring)
+## saves over the game's current slot (SaveSystem.current_slot).
 
 ## Concept units to pixels.
 const K := 1.5
@@ -17,7 +18,6 @@ const SLIDER_Y: Array[float] = [155.0, 192.0]
 const RESPEC_Y := 226.0
 const FIRST_BUTTON_Y := 264.0
 const BUTTON_PITCH := 46.0
-const QUICK_SLOT := "quick"
 
 var game_over := false
 var root: Node
@@ -220,7 +220,7 @@ func _show_menu() -> void:
 	_button(0, "Resume", func() -> void: root.call("close_screen"))
 	var quick := _button(1, "Quicksave  (F5)", _quick_save)
 	quick.disabled = not can
-	quick.tooltip_text = why if not can else "Saves over your quicksave; F9 loads it."
+	quick.tooltip_text = why if not can else ("Saves over this game's slot; F9 loads it." if SaveSystem.current_slot != "" else "Saves this game in a new slot; F5 and F9 use it from then on.")
 	var save := _button(2, "Save Game", _save_new)
 	save.disabled = not can
 	save.tooltip_text = why if not can else "Saves in a new slot."
@@ -440,7 +440,7 @@ func _list() -> void:
 		var info := VBoxContainer.new()
 		info.add_theme_constant_override("separation", 0)
 		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		var where := "Quicksave · %s" % s["location"] if str(s["slot"]) == QUICK_SLOT else str(s["location"])
+		var where := "This game · %s" % s["location"] if str(s["slot"]) == SaveSystem.current_slot else str(s["location"])
 		info.add_child(_text("%s · Day %d" % [where, int(s["day"])], 10.0, _c("arch_text")))
 		info.add_child(_text(str(s["saved_at"]).replace("T", " "), 8.0, Color(_c("arch_text"), 0.55)))
 		row.add_child(info)
@@ -452,9 +452,9 @@ func _list() -> void:
 		_list_box.add_child(UiParts.row(row, func() -> Control: return UiParts.rules_tip("Party", "", party_text)))
 
 
-## F5 and the Quicksave button: the same slot the exploring F5 writes, so F9 loads it back.
+## F5 and the Quicksave button: over the game's current slot (a new one the first time), as the exploring F5 does.
 func _quick_save() -> void:
-	var err := SaveSystem.save(QUICK_SLOT)
+	var err := SaveSystem.quick_save()
 	if err == OK:
 		Audio.sfx("page")
 	if _note != null:

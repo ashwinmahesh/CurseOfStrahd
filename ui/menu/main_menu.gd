@@ -172,6 +172,7 @@ func _open_creator(from_pregens: bool) -> void:
 ## A fresh playthrough: the party at level 1 on the Old Svalich Road, at dusk.
 func _start(party: Array[Character]) -> void:
 	GameState.reset()
+	SaveSystem.current_slot = ""    # a new game has no save slot until its first save
 	var st := GameState.story
 	for ch in party:
 		st.party.append(ch)
