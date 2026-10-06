@@ -12,7 +12,8 @@ const RING_SHADER := preload("res://shaders/atmosphere/ring.gdshader")
 const MOTE_SHADER := preload("res://shaders/atmosphere/mote.gdshader")
 const CROW_SHADER := preload("res://shaders/atmosphere/crow.gdshader")
 
-## Pieces that follow the camera (rain, snow, leaves, crows): the Atmosphere moves them to the camera's focus.
+## Pieces that follow the camera (rain, snow, leaves, crows): the Atmosphere moves them to the camera's focus, keeping
+## each one's offset from it (`offset` meta).
 var follow: Array[Node3D] = []
 ## Lights this added (lit windows), shown only after dark.
 var night_lights: Array[OmniLight3D] = []
@@ -42,6 +43,8 @@ static func build(parent: Node, board: ArenaBoard, mood: Dictionary, outdoors: b
 				w._snow(spec)
 			"wisps":
 				w._wisps(spec)
+			"dust":
+				w._dust(spec)
 			"crows":
 				w._crows(spec)
 			"chimney_smoke":
@@ -139,25 +142,29 @@ func _rain(spec: Dictionary) -> void:
 	s.draw_pass_1 = plane
 
 
-## Snow drifting down on the wind; `blizzard` drives it nearly sideways.
+## Snow drifting down on the wind; a higher `wind` drives it nearly sideways. The wind is the flakes' starting
+## speed (gravity here is only a gentle sink and sway), so they cross the view instead of racing off it.
 func _snow(spec: Dictionary) -> void:
 	var gale := float(spec.get("wind", 1.0))
-	var p := _particles("Snow", int(spec.get("amount", 260)), 7.0, Vector3(16, 1.0, 16), 5.0)
+	var p := _particles("Snow", int(spec.get("amount", 260)), 5.0, Vector3(14, 2.5, 14), 4.0)
 	var pm := p.process_material as ParticleProcessMaterial
-	pm.direction = Vector3(_wind.x * gale, -1.0, _wind.y * gale).normalized()
-	pm.spread = 12.0
-	pm.initial_velocity_min = 0.5
-	pm.initial_velocity_max = 0.9 + gale * 0.6
-	pm.gravity = Vector3(_wind.x * gale, -0.25, _wind.y * gale)
-	pm.scale_min = 0.6
-	pm.scale_max = 1.2
+	var drift := Vector3(_wind.x * gale, -0.6, _wind.y * gale)
+	pm.direction = drift.normalized()
+	pm.spread = 10.0
+	pm.initial_velocity_min = drift.length() * 0.7
+	pm.initial_velocity_max = drift.length() * 1.1
+	pm.gravity = Vector3(0, -0.15, 0)
+	pm.scale_min = 0.7
+	pm.scale_max = 1.3
 	pm.turbulence_enabled = true
-	pm.turbulence_noise_strength = 0.8
+	pm.turbulence_noise_strength = 0.5
 	pm.turbulence_noise_scale = 3.0
-	pm.turbulence_influence_min = 0.05
-	pm.turbulence_influence_max = 0.2
+	pm.turbulence_influence_min = 0.03
+	pm.turbulence_influence_max = 0.1
+	# Start them upwind, so the whole view fills.
+	p.position -= Vector3(_wind.x, 0, _wind.y).normalized() * minf(gale * 2.0, 8.0)
 	var quad := QuadMesh.new()
-	quad.size = Vector2(0.09, 0.09)
+	quad.size = Vector2(0.07, 0.07)
 	var mat := ShaderMaterial.new()
 	mat.shader = MOTE_SHADER
 	mat.set_shader_parameter("core", Look.color("ivory"))
@@ -193,6 +200,31 @@ func _wisps(spec: Dictionary) -> void:
 	p.draw_pass_1 = quad
 	if bool(spec.get("night_only", true)):
 		night_only.append(p)
+
+
+## Dust hanging in the air of a shut-up room, drifting slowly and catching the light.
+func _dust(spec: Dictionary) -> void:
+	var p := _particles("Dust", int(spec.get("amount", 60)), 12.0, Vector3(11, 1.0, 11), 1.4)
+	var pm := p.process_material as ParticleProcessMaterial
+	pm.gravity = Vector3(0, -0.01, 0)
+	pm.initial_velocity_min = 0.02
+	pm.initial_velocity_max = 0.08
+	pm.spread = 180.0
+	pm.turbulence_enabled = true
+	pm.turbulence_noise_strength = 0.3
+	pm.turbulence_noise_scale = 2.0
+	pm.turbulence_influence_min = 0.02
+	pm.turbulence_influence_max = 0.06
+	var size := float(spec.get("size", 0.035))
+	var quad := QuadMesh.new()
+	quad.size = Vector2(size, size)
+	var mat := ShaderMaterial.new()
+	mat.shader = MOTE_SHADER
+	mat.set_shader_parameter("core", Look.color(str(spec.get("core", "parchment"))))
+	mat.set_shader_parameter("rim", Look.color(str(spec.get("rim", "bone"))))
+	mat.set_shader_parameter("pulse", 0.4)
+	quad.material = mat
+	p.draw_pass_1 = quad
 
 
 ## A few crows wheeling high over the place.

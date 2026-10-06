@@ -523,6 +523,7 @@ func _wall(c: Vector2i) -> void:
 		_box("Wall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), wall_mat)
 		# The cut face reads as the dark inside of the wall, so rooms stand out of the dark rather than out of a slab.
 		_box("WallCap", Vector3(1.02, 0.1, 1.02), Vector3(c.x + 0.5, h + 0.05, c.y + 0.5), Look.cel(CUT_FACE))
+		ModelPiece.dress_wall(self, c, wall_mat)   # 3D panelling where this place uses the models (docs/art/models.md)
 		return
 	if theme in TOWNS:
 		var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1

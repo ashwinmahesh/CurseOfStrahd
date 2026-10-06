@@ -66,13 +66,18 @@ func test_death_house_doors_props_and_containers() -> void:
 	var v := _view("death_house_ground")
 	await _frames(2)
 	var door := v.door_nodes["dh_den_door"] as Node3D
-	assert_true(door.get_node_or_null("Leaf") is Sprite3D, "the den door has a leaf")
+	var leaf := door.get_node_or_null("Leaf")
+	assert_true(leaf is Sprite3D or (leaf != null and leaf.has_meta("model")), "the den door has a leaf (2D, or a 3D model)")
 	assert_eq(door.position, v.board.cell_center(Vector2i(9, 5)), "in its square")
 	assert_true(is_equal_approx(absf(door.rotation.y), PI / 2.0), "the wall runs north-south, so the leaf faces east-west")
 	var hearth := v.prop_nodes["den_hearth"] as Node3D
-	var sp := hearth.get_child(0) as Sprite3D
-	assert_eq(sp.billboard, BaseMaterial3D.BILLBOARD_DISABLED, "hung flat")
-	assert_true(absf(sp.position.z - 1.0) < 0.05, "on the wall's south face (the wall square is row 0)")
+	var piece := hearth.get_child(0) as Node3D
+	if piece is Sprite3D:
+		assert_eq((piece as Sprite3D).billboard, BaseMaterial3D.BILLBOARD_DISABLED, "hung flat")
+	else:
+		assert_true(piece.has_meta("model") and piece.global_basis.z.normalized().is_equal_approx(Vector3(0, 0, 1)),
+			"a 3D hearth (docs/art/models.md) facing into the room")
+	assert_true(absf(piece.position.z - 1.0) < 0.05, "on the wall's south face (the wall square is row 0)")
 	var cabinet := v.container_nodes["den_gun_cabinet"] as Node3D
 	var pictures := cabinet.find_children("*", "Sprite3D", true, false)
 	assert_false(pictures.is_empty(), "the hunting cabinet is a picture, not a box")

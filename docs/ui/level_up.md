@@ -53,7 +53,9 @@ Constitution increase) and how current Hit Points rise.
   likewise only adds kinds at a level up.
 - **Other swaps** (2024), offered every level of the class: one Eldritch Invocation (one another invocation needs is
   locked, "Thirsting Blade needs it"), one Maneuver, one Metamagic option, a Blessed or Druidic Warrior cantrip, and
-  a Fighter's Fighting Style (picking a new one replaces it; a Paladin's or Ranger's feat stays).
+  a Fighter's Fighting Style (picking a new one replaces it; a Paladin's or Ranger's feat stays). Some choices share
+  one swap: a Warlock's four Mystic Arcanum spells, and one Magic Initiate's cantrips and spell (on any level); once it
+  is used the rest lock.
 - A counter shows the choices left; Next is allowed, Confirm isn't until all are made.
 
 ### 4. Summary (`lu_04_summary`)

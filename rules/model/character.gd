@@ -786,6 +786,7 @@ func _register_choice(def: Dictionary, key: String, src: Dictionary, label: Stri
 	c.level = int(src.get("character_level", character_level()))
 	c.replaceable = str(def.get("replaceable", ""))
 	c.replace_max = int(def.get("replace_max", -1))
+	c.replace_group = str(def.get("replace_group", ""))
 	c.per_ability = int(def.get("per_ability", 1))
 	c.max_score = int(def.get("max", 20))
 	for v: Variant in def.get("from", []):

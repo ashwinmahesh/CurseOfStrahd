@@ -1,0 +1,133 @@
+{
+ "about": "The custom hero's options (docs/art/creator.md). The game (world/look/hero_look.gd) and the art tools (tools/art/creator_art.py, blender/creator_pieces.py) both read this file. Prompts describe what Gemini draws on the keyed base figures; labels and summaries are what the player reads.",
+ "genders": [
+  {"id": "female", "label": "Woman"},
+  {"id": "male", "label": "Man"}
+ ],
+ "builds": [
+  {"id": "slender", "label": "Slender", "prompt": "a slender, lightly built {person} of average height, with narrow shoulders, thin arms and a slim waist"},
+  {"id": "average", "label": "Average", "prompt": "a {person} of average height and average build"},
+  {"id": "broad", "label": "Broad", "prompt": "a broad, heavyset {person} of average height, with very wide shoulders, thick muscular arms, a barrel chest and a heavy waist"}
+ ],
+ "heights": [
+  {"id": "short", "label": "Short", "scale": 0.92},
+  {"id": "average", "label": "Average", "scale": 1.0},
+  {"id": "tall", "label": "Tall", "scale": 1.08}
+ ],
+ "species_heights": {
+  "aasimar": 1.3, "dhampir": 1.28, "dragonborn": 1.38, "dwarf": 1.0, "elf": 1.25, "gnome": 0.72, "goliath": 1.55,
+  "halfling": 0.75, "hexblood": 1.28, "human": 1.28, "lupin": 1.3, "orc": 1.36, "reborn": 1.28, "tiefling": 1.28,
+  "small": 0.8, "default": 1.28
+ },
+ "skins": [
+  {"id": "pale", "label": "Pale", "ramp": ["skin_shadow", "skin", "skin_light", "ivory"]},
+  {"id": "fair", "label": "Fair", "ramp": ["rust", "skin_shadow", "skin", "skin_light"]},
+  {"id": "olive", "label": "Olive", "ramp": ["walnut", "leather", "tan", "parchment"]},
+  {"id": "bronze", "label": "Bronze", "ramp": ["umber", "walnut", "leather", "tan"]},
+  {"id": "brown", "label": "Brown", "ramp": ["peat", "umber", "walnut", "leather"]},
+  {"id": "deep", "label": "Deep brown", "ramp": ["ink", "peat", "umber", "walnut"]},
+  {"id": "ashen", "label": "Ashen", "ramp": ["stone", "slate", "pewter", "silver"]},
+  {"id": "infernal", "label": "Infernal red", "ramp": ["blood_deep", "blood", "crimson", "rose"]},
+  {"id": "verdant", "label": "Grey-green", "ramp": ["bog_deep", "bog", "moss", "sickly"]}
+ ],
+ "heads": [
+  {"id": "plain", "label": "Plain", "prompt": ""},
+  {"id": "sharp", "label": "Sharp", "prompt": "a sharp, angular face with high cheekbones, a long straight nose and a narrow pointed chin"},
+  {"id": "round", "label": "Round", "prompt": "a soft, round face with full cheeks, a small upturned nose and a dimpled chin"},
+  {"id": "weathered", "label": "Weathered", "prompt": "an older, weathered face with deep lines, a heavy brow, sunken cheeks and a pale scar across one cheek"},
+  {"id": "elfin", "label": "Elfin", "prompt": "fine, delicate features with large almond eyes, high cheekbones and long pointed elven ears"},
+  {"id": "horned", "label": "Horned", "prompt": "a pair of short ridged horns curving back from the temples, painted dark bone grey (not green and not magenta), and a fierce brow"},
+  {"id": "tusked", "label": "Tusked", "prompt": "a heavy square jaw with two short tusks jutting up from the lower lip, a broad flat nose and small pointed ears"}
+ ],
+ "hair": [
+  {"id": "none", "label": "Bald"},
+  {"id": "cropped", "label": "Cropped", "prompt": "very short cropped hair close to the scalp"},
+  {"id": "tousled", "label": "Tousled", "prompt": "short, thick, messy tousled hair"},
+  {"id": "wavy", "label": "Wavy", "prompt": "shoulder-length wavy hair"},
+  {"id": "long", "label": "Long", "prompt": "long straight hair falling past the shoulders to the middle of the back"},
+  {"id": "braid", "label": "Braid", "prompt": "hair pulled back tight into one thick braid hanging down the back to the shoulder blades"},
+  {"id": "bun", "label": "Topknot", "prompt": "hair pulled up tight into a round knot on the crown of the head"},
+  {"id": "curls", "label": "Curls", "prompt": "a full, rounded head of tight curls"},
+  {"id": "crest", "label": "Crest", "prompt": "the sides of the head shaved bare, with a short crest of hair running along the top from brow to nape"}
+ ],
+ "hair_colours": [
+  {"id": "black", "label": "Black", "ramp": ["void", "ink", "stone_deep", "stone"]},
+  {"id": "dark_brown", "label": "Dark brown", "ramp": ["peat", "umber", "walnut", "leather"]},
+  {"id": "chestnut", "label": "Chestnut", "ramp": ["peat", "rust", "leather", "tan"]},
+  {"id": "auburn", "label": "Auburn", "ramp": ["blood_deep", "rust", "ember", "candle"]},
+  {"id": "copper", "label": "Copper", "ramp": ["ember_deep", "ember", "candle", "flame"]},
+  {"id": "blonde", "label": "Blonde", "ramp": ["bone_dark", "tan", "parchment", "vellum"]},
+  {"id": "ash", "label": "Ash grey", "ramp": ["stone", "slate", "pewter", "silver"]},
+  {"id": "white", "label": "White", "ramp": ["slate", "silver", "frost", "ivory"]}
+ ],
+ "beards": [
+  {"id": "none", "label": "Clean-shaven"},
+  {"id": "stubble", "label": "Stubble", "prompt": "a short, rough stubble shadow over the jaw, chin and upper lip"},
+  {"id": "moustache", "label": "Moustache", "prompt": "a thick, drooping moustache and no beard"},
+  {"id": "goatee", "label": "Goatee", "prompt": "a pointed goatee on the chin joined to a thin moustache"},
+  {"id": "full", "label": "Full beard", "prompt": "a full, short-trimmed beard joined to a moustache"},
+  {"id": "long", "label": "Long beard", "prompt": "a long, full beard reaching down to the chest, with a moustache"},
+  {"id": "braided", "label": "Braided", "prompt": "a long beard worked into two thick braids hanging to the chest, with a moustache"}
+ ],
+ "outfits": [
+  {"id": "mercenary", "label": "Sellsword's mail", "suits": ["fighter", "paladin", "barbarian"],
+   "summary": "Chain mail under a faded red tabard, and a longsword at the hip.",
+   "prompt": "a mercenary's kit: a short-sleeved chain mail shirt over a padded gambeson, a faded blood-red tabard belted with brown leather, leather bracers, dark grey trousers and tall brown boots, with a longsword in a scabbard at the left hip",
+   "attack": {"action": "longsword slash", "casts": false,
+    "windup": "{they} draws the longsword from the hip and raises it high over the right shoulder in both hands, body coiled back",
+    "strike": "{they} slashes the longsword down and across in front, lunging forward on the front foot, arms extended"}},
+  {"id": "shadow", "label": "Shadow's leathers", "suits": ["rogue", "monk", "ranger"],
+   "summary": "Close-fitting dark leathers, a half-cape and a pair of long daggers.",
+   "prompt": "a thief's kit: a fitted dark brown leather jerkin with buckled straps over a charcoal shirt, a short charcoal half-cape over one shoulder, dark trousers, soft knee-high boots, a belt of small pouches and a long dagger sheathed on each hip",
+   "attack": {"action": "quick dagger stab", "casts": false,
+    "windup": "{they} draws a long dagger and crouches low, the dagger hand pulled back by the hip, the other hand forward",
+    "strike": "{they} lunges forward and stabs the dagger straight out at chest height, the other arm swept back for balance"}},
+  {"id": "scholar", "label": "Scholar's robes", "suits": ["wizard", "sorcerer", "warlock"],
+   "summary": "Long blue-violet robes, a satchel of scrolls and a crystal-tipped staff.",
+   "prompt": "a scholar-mage's robes: a long deep blue-violet robe with wide sleeves and a dark red sash, a leather satchel of scrolls on a strap across the chest, soft dark boots, and a tall wooden staff topped with a small pale crystal held upright in the right hand",
+   "attack": {"action": "spell cast with the staff", "casts": true,
+    "windup": "{they} plants the feet and draws the staff back over the shoulder, the free hand raised beside the head with the fingers spread",
+    "strike": "{they} thrusts the staff out toward the target at arm's length, the crystal tip pointed straight ahead, the free hand flung back"}},
+  {"id": "pilgrim", "label": "Pilgrim's vestments", "suits": ["cleric", "paladin", "druid"],
+   "summary": "A bone-white surcoat with a stitched sun over mail, a mace and a holy symbol.",
+   "prompt": "a travelling priest's vestments: a knee-length bone-white surcoat with a gold sunburst stitched on the chest over a chain mail shirt, a dark red stole, a brown leather belt, grey trousers and brown boots, with a flanged mace at the belt and a silver sun symbol on a chain round the neck",
+   "attack": {"action": "mace blow", "casts": false,
+    "windup": "{they} raises the flanged mace high over the head in one hand, the other hand holding the silver sun symbol out in front",
+    "strike": "{they} brings the mace down in a heavy overhead blow in front, stepping forward, the symbol hand braced at the chest"}},
+  {"id": "duelist", "label": "Duelist's finery", "suits": ["bard", "warlock", "rogue"],
+   "summary": "A slashed crimson doublet, a short black cape and a rapier.",
+   "prompt": "a duelist's finery: a fitted dark crimson doublet with brass buttons and slashed sleeves, a short black cape over one shoulder, a white shirt collar, black breeches, tall black boots, leather gloves, and a rapier in a scabbard at the left hip",
+   "attack": {"action": "rapier lunge", "casts": false,
+    "windup": "{they} draws the rapier and settles into a fencing stance, the sword arm drawn back with the point raised, the free hand up behind",
+    "strike": "{they} lunges deep forward, front knee bent and back leg straight, the rapier thrust straight out at full stretch"}},
+  {"id": "wildling", "label": "Wildling's furs", "suits": ["barbarian", "druid", "ranger"],
+   "summary": "Hide and a grey wolf-fur mantle, forearm wraps and a hand axe.",
+   "prompt": "a wilderness wanderer's kit: a sleeveless hide jerkin, a heavy grey wolf-fur mantle over the shoulders, leather wraps on the forearms, rough brown trousers bound with cord at the shins, fur-trimmed boots, and a hand axe at the belt",
+   "attack": {"action": "hand axe chop", "casts": false,
+    "windup": "{they} raises the hand axe high over the shoulder in one hand, body twisting back, the free arm out for balance",
+    "strike": "{they} chops the axe down and across in front with full force, stepping forward onto the front foot"}}
+ ],
+ "portraits": [
+  {"id": "hero_01", "prompt": "a weathered human woman sellsword in her thirties with close-cropped dark hair, a pale scar through one eyebrow and steady grey eyes, wearing a dark travelling coat with a high collar over chain mail", "expression": "wary, determined"},
+  {"id": "hero_02", "prompt": "a young human man in his twenties with tousled chestnut hair, stubble and a crooked grin, wearing a worn dark leather jerkin with a dagger hilt over his shoulder", "expression": "sly, amused"},
+  {"id": "hero_03", "prompt": "a cool, poised elven woman with long silver-white hair, long pointed ears and violet eyes, wearing deep blue-violet scholar's robes with a pale crystal pendant", "expression": "calm, appraising"},
+  {"id": "hero_04", "prompt": "a broad dwarven man with a long red beard worked into two braids, a bald scalp with faded blue tattoos and a heavy grey wolf-fur mantle", "expression": "gruff, unimpressed"},
+  {"id": "hero_05", "prompt": "a tiefling woman with dark ridged horns curving back from her temples, deep red skin, gold eyes and black hair in a high knot, wearing a dark crimson duelist's doublet", "expression": "proud, faintly mocking"},
+  {"id": "hero_06", "prompt": "a human man in his fifties with grey hair, a lined, kind face and a short grey beard, a travelling priest in a bone-white surcoat with a silver sun symbol on a chain", "expression": "kind, tired"},
+  {"id": "hero_07", "prompt": "a half-orc woman with grey-green skin, two short tusks, a crest of black hair along her shaved head and a grey wolf-fur mantle over her shoulders", "expression": "fierce"},
+  {"id": "hero_08", "prompt": "a halfling woman with a mop of bright auburn curls, freckles and a gap-toothed smile, wearing a dark leather jerkin with a half-cape", "expression": "cheeky, delighted"},
+  {"id": "hero_09", "prompt": "a dark-skinned human man in his forties with close-cropped black hair and a neat black beard, a scholar-mage in deep blue-violet robes with a satchel strap across his chest", "expression": "thoughtful, calm"},
+  {"id": "hero_10", "prompt": "a pale young noblewoman with long black hair in a single braid over her shoulder, sharp features and dark eyes, wearing a black and crimson doublet with a rapier hilt rising behind her shoulder", "expression": "cold, proud"}
+ ],
+ "voice_sample": "I came into this valley by my own road. I mean to leave it by the same one.",
+ "voices": [
+  {"id": "hero_female", "label": "Woman's voice"},
+  {"id": "hero_male", "label": "Man's voice"}
+ ],
+ "defaults": {
+  "female": {"build": "average", "height": "average", "head": "plain", "skin": "fair", "hair": "braid",
+   "hair_colour": "dark_brown", "beard": "none", "outfit": "mercenary", "portrait": "hero_01", "voice": "hero_female"},
+  "male": {"build": "average", "height": "average", "head": "plain", "skin": "fair", "hair": "cropped",
+   "hair_colour": "dark_brown", "beard": "stubble", "outfit": "mercenary", "portrait": "hero_02", "voice": "hero_male"}
+ }
+}

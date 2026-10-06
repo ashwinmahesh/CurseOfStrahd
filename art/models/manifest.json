@@ -1,0 +1,854 @@
+{
+  "about": "3D set pieces from blender/models_3d.py (docs/art/models.md). size is [width, height, depth] in world units; sockets are in Godot axes (x, y up, z toward the front).",
+  "models": {
+    "bookcase": {
+      "file": "art/models/bookcase.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "book_shelf",
+        "book_shelf_front",
+        "bookshelf"
+      ],
+      "size": [
+        0.98,
+        1.39,
+        0.34
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_bog",
+        "pal_bone_dark",
+        "pal_leather",
+        "pal_moon_blue",
+        "pal_night",
+        "pal_parchment",
+        "pal_peat",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 1824
+    },
+    "desk": {
+      "file": "art/models/desk.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "desk",
+        "desk_front"
+      ],
+      "size": [
+        1.0,
+        0.765,
+        0.55
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ash_violet",
+        "pal_blood",
+        "pal_grave",
+        "pal_ivory",
+        "pal_parchment",
+        "pal_tan",
+        "pal_vellum",
+        "pal_void",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 776,
+      "sockets": {
+        "candle": [
+          -0.36,
+          0.67,
+          0.185
+        ]
+      },
+      "container": true
+    },
+    "chair_high": {
+      "file": "art/models/chair_high.glb",
+      "mount": "free",
+      "stands_for": [
+        "chair_high"
+      ],
+      "size": [
+        0.42,
+        1.035,
+        0.418
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 1022
+    },
+    "armchair": {
+      "file": "art/models/armchair.glb",
+      "mount": "free",
+      "stands_for": [
+        "armchair"
+      ],
+      "size": [
+        0.57,
+        0.902,
+        0.561
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_crimson",
+        "pal_umber"
+      ],
+      "triangles": 1280
+    },
+    "settee": {
+      "file": "art/models/settee.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "settee"
+      ],
+      "size": [
+        0.98,
+        0.8,
+        0.5
+      ],
+      "materials": [
+        "pal_leather",
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 1376
+    },
+    "table": {
+      "file": "art/models/table.glb",
+      "mount": "free",
+      "stands_for": [
+        "table",
+        "table_back"
+      ],
+      "size": [
+        0.96,
+        0.502,
+        0.598
+      ],
+      "materials": [
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 168
+    },
+    "table_chairs": {
+      "file": "art/models/table_chairs.glb",
+      "mount": "free",
+      "stands_for": [
+        "table_chairs",
+        "table_chairs_back"
+      ],
+      "size": [
+        1.0,
+        1.11,
+        0.48
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ash_violet",
+        "pal_bone_dark",
+        "pal_ivory",
+        "pal_peat",
+        "pal_pewter",
+        "pal_rust",
+        "pal_umber"
+      ],
+      "triangles": 1802,
+      "sockets": {
+        "candle": [
+          0,
+          0.6,
+          0.02
+        ]
+      }
+    },
+    "candelabra": {
+      "file": "art/models/candelabra.glb",
+      "mount": "free",
+      "stands_for": [
+        "candelabra"
+      ],
+      "size": [
+        0.672,
+        1.149,
+        0.359
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ink",
+        "pal_ivory",
+        "pal_vellum"
+      ],
+      "triangles": 2462,
+      "sockets": {
+        "candle_0": [
+          0,
+          1.115,
+          0
+        ],
+        "candle_1": [
+          -0.15,
+          1.005,
+          -0.0
+        ],
+        "candle_2": [
+          -0.28,
+          0.885,
+          -0.0
+        ],
+        "candle_3": [
+          0.15,
+          1.005,
+          -0.0
+        ],
+        "candle_4": [
+          0.28,
+          0.885,
+          -0.0
+        ]
+      }
+    },
+    "fireplace": {
+      "file": "art/models/fireplace.glb",
+      "mount": "wall",
+      "stands_for": [
+        "fireplace"
+      ],
+      "size": [
+        1.02,
+        0.945,
+        0.49
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ash_violet",
+        "pal_ink",
+        "pal_peat",
+        "pal_slate",
+        "pal_stone",
+        "pal_stone_deep",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 1324,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.07,
+          0.12
+        ]
+      }
+    },
+    "stairs_up": {
+      "file": "art/models/stairs_up.glb",
+      "mount": "stairs_up",
+      "stands_for": [
+        "stair_riser",
+        "stair_riser_back"
+      ],
+      "size": [
+        0.936,
+        2.0,
+        1.028
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_grave",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 1640
+    },
+    "stairs_down": {
+      "file": "art/models/stairs_down.glb",
+      "mount": "stairs_down",
+      "stands_for": [
+        "stair_down"
+      ],
+      "size": [
+        1.0,
+        2.13,
+        1.028
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_grave",
+        "pal_peat",
+        "pal_tan",
+        "pal_umber",
+        "pal_void",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 2448
+    },
+    "door_wood": {
+      "file": "art/models/door_wood.glb",
+      "mount": "door",
+      "stands_for": [
+        "door_wood"
+      ],
+      "size": [
+        0.854,
+        1.148,
+        0.112
+      ],
+      "materials": [
+        "pal_pewter",
+        "pal_umber",
+        "pal_void",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 572
+    },
+    "wainscot": {
+      "file": "art/models/wainscot.glb",
+      "mount": "wall_face",
+      "stands_for": [
+        "interior/wainscot_wall"
+      ],
+      "size": [
+        1.0,
+        0.586,
+        0.046
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_peat",
+        "pal_umber"
+      ],
+      "triangles": 300
+    },
+    "fireplace_windmill": {
+      "file": "art/models/fireplace_windmill.glb",
+      "mount": "wall",
+      "stands_for": [
+        "fireplace_windmill"
+      ],
+      "size": [
+        1.02,
+        1.15,
+        0.47
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ash_violet",
+        "pal_grave",
+        "pal_ink",
+        "pal_stone",
+        "pal_stone_deep",
+        "pal_tan",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 1280,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.07,
+          0.12
+        ],
+        "picture": [
+          0,
+          0.8798,
+          0.184
+        ]
+      },
+      "decals": [
+        {
+          "art": "fireplace_windmill",
+          "region": [
+            67,
+            25,
+            141,
+            83
+          ],
+          "socket": "picture",
+          "width": 0.56
+        }
+      ]
+    },
+    "fireplace_dancers": {
+      "file": "art/models/fireplace_dancers.glb",
+      "mount": "wall",
+      "stands_for": [
+        "fireplace_dancers"
+      ],
+      "size": [
+        1.02,
+        0.8,
+        0.46
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_ink",
+        "pal_pewter",
+        "pal_slate",
+        "pal_stone",
+        "pal_umber",
+        "pal_void"
+      ],
+      "triangles": 732,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.07,
+          0.12
+        ],
+        "figures": [
+          0,
+          0.8,
+          0.155
+        ]
+      },
+      "decals": [
+        {
+          "art": "fireplace_dancers",
+          "region": [
+            22,
+            4,
+            256,
+            67
+          ],
+          "socket": "figures",
+          "width": 0.84,
+          "anchor": "bottom",
+          "split": [
+            [
+              23,
+              58
+            ],
+            [
+              66,
+              127
+            ],
+            [
+              133,
+              166
+            ],
+            [
+              174,
+              192
+            ],
+            [
+              200,
+              231
+            ],
+            [
+              241,
+              277
+            ]
+          ]
+        }
+      ]
+    },
+    "barrel": {
+      "file": "art/models/barrel.glb",
+      "mount": "free",
+      "stands_for": [
+        "barrel"
+      ],
+      "size": [
+        0.48,
+        0.72,
+        0.49
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_stone_deep",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 768
+    },
+    "crate": {
+      "file": "art/models/crate.glb",
+      "mount": "free",
+      "stands_for": [
+        "crate"
+      ],
+      "size": [
+        0.626,
+        0.6,
+        0.626
+      ],
+      "materials": [
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 252
+    },
+    "chest": {
+      "file": "art/models/chest.glb",
+      "mount": "free",
+      "stands_for": [
+        "chest",
+        "chest_back"
+      ],
+      "size": [
+        0.79,
+        0.448,
+        0.532
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 602,
+      "container": true
+    },
+    "chest_iron": {
+      "file": "art/models/chest_iron.glb",
+      "mount": "free",
+      "stands_for": [
+        "chest_iron",
+        "chest_iron_back"
+      ],
+      "size": [
+        0.79,
+        0.448,
+        0.532
+      ],
+      "materials": [
+        "pal_night",
+        "pal_stone",
+        "pal_stone_deep"
+      ],
+      "triangles": 602,
+      "container": true
+    },
+    "strongbox": {
+      "file": "art/models/strongbox.glb",
+      "mount": "free",
+      "stands_for": [
+        "strongbox",
+        "strongbox_back"
+      ],
+      "size": [
+        0.426,
+        0.375,
+        0.383
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_pewter",
+        "pal_silver",
+        "pal_slate",
+        "pal_stone_deep",
+        "pal_void"
+      ],
+      "triangles": 240,
+      "container": true
+    },
+    "trunk": {
+      "file": "art/models/trunk.glb",
+      "mount": "free",
+      "stands_for": [
+        "trunk",
+        "trunk_back"
+      ],
+      "size": [
+        0.827,
+        0.446,
+        0.47
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_stone",
+        "pal_tan",
+        "pal_umber"
+      ],
+      "triangles": 1360,
+      "container": true
+    },
+    "footlocker": {
+      "file": "art/models/footlocker.glb",
+      "mount": "free",
+      "stands_for": [
+        "footlocker",
+        "footlocker_back"
+      ],
+      "size": [
+        0.67,
+        0.384,
+        0.429
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 208,
+      "container": true
+    },
+    "bed": {
+      "file": "art/models/bed.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "bed",
+        "bed_back"
+      ],
+      "size": [
+        0.678,
+        0.685,
+        0.978
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_ivory",
+        "pal_umber",
+        "pal_vellum",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 980
+    },
+    "bed_small": {
+      "file": "art/models/bed_small.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "bed_small",
+        "bed_small_back"
+      ],
+      "size": [
+        0.574,
+        0.63,
+        0.974
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_ivory",
+        "pal_slate",
+        "pal_vellum"
+      ],
+      "triangles": 952
+    },
+    "wardrobe": {
+      "file": "art/models/wardrobe.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "wardrobe",
+        "wardrobe_front"
+      ],
+      "size": [
+        1.0,
+        1.48,
+        0.54
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 664
+    },
+    "sideboard": {
+      "file": "art/models/sideboard.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "sideboard",
+        "sideboard_front"
+      ],
+      "size": [
+        0.99,
+        0.853,
+        0.45
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ivory",
+        "pal_peat",
+        "pal_silver",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 870
+    },
+    "shelves": {
+      "file": "art/models/shelves.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "shelves",
+        "shelves_front"
+      ],
+      "size": [
+        0.939,
+        1.3,
+        0.36
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_leather",
+        "pal_moon_blue",
+        "pal_moss",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 2324
+    },
+    "pew": {
+      "file": "art/models/pew.glb",
+      "mount": "free",
+      "stands_for": [
+        "pew",
+        "pew_back"
+      ],
+      "size": [
+        0.98,
+        0.88,
+        0.48
+      ],
+      "materials": [
+        "pal_umber",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 124
+    },
+    "lectern": {
+      "file": "art/models/lectern.glb",
+      "mount": "free",
+      "stands_for": [
+        "lectern",
+        "lectern_back"
+      ],
+      "size": [
+        0.46,
+        0.922,
+        0.387
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_peat",
+        "pal_umber",
+        "pal_vellum"
+      ],
+      "triangles": 360
+    },
+    "table_set": {
+      "file": "art/models/table_set.glb",
+      "mount": "free",
+      "stands_for": [
+        "table_set",
+        "table_set_back"
+      ],
+      "size": [
+        0.98,
+        0.818,
+        0.6
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone",
+        "pal_ivory",
+        "pal_pewter",
+        "pal_silver",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 1378
+    },
+    "letters_table": {
+      "file": "art/models/letters_table.glb",
+      "mount": "free",
+      "stands_for": [
+        "letters_table"
+      ],
+      "size": [
+        0.5,
+        0.628,
+        0.5
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_ivory",
+        "pal_plum",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 396
+    },
+    "coffin": {
+      "file": "art/models/coffin.glb",
+      "mount": "free",
+      "stands_for": [
+        "coffin",
+        "coffin_back"
+      ],
+      "size": [
+        0.5,
+        0.582,
+        0.989
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_grave",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 132
+    },
+    "stairs_up_stone": {
+      "file": "art/models/stairs_up_stone.glb",
+      "mount": "stairs_up",
+      "stands_for": [
+        "stair_riser"
+      ],
+      "size": [
+        1.02,
+        1.72,
+        1.028
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "tex_dungeon__stone_floor",
+        "tex_dungeon__stone_wall"
+      ],
+      "triangles": 240
+    },
+    "stairs_down_stone": {
+      "file": "art/models/stairs_down_stone.glb",
+      "mount": "stairs_down",
+      "stands_for": [
+        "stair_down"
+      ],
+      "size": [
+        1.02,
+        1.8,
+        1.029
+      ],
+      "materials": [
+        "pal_slate",
+        "pal_stone_deep",
+        "pal_void",
+        "tex_dungeon__stone_floor",
+        "tex_dungeon__stone_wall"
+      ],
+      "triangles": 288
+    }
+  }
+}
