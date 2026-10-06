@@ -188,6 +188,8 @@ func go_to(location_id: String) -> bool:
 		if view() == v:
 			note("didn't leave by %s" % exit["id"])
 			return false
+		# Like a careful player: patch up on arriving somewhere you can rest.
+		await recover()
 	return view().loc_id == location_id
 
 
@@ -307,8 +309,11 @@ func recover() -> void:
 	var hurt := party.filter(func(c: Character) -> bool: return not c.dead and c.hp < c.max_hp() / 2)
 	if not hurt.is_empty():
 		await rest(false)
-	var worn := party.filter(func(c: Character) -> bool: return not c.dead and c.hp < c.max_hp() * 2 / 3)
-	if worn.size() >= 2:
+	# A long rest when anyone is still below 60% after that, or the healers are out of spell slots.
+	var worn := party.filter(func(c: Character) -> bool: return not c.dead and c.hp * 10 < c.max_hp() * 6)
+	var dry := party.filter(func(c: Character) -> bool:
+		return not c.dead and (c.class_level_of("cleric") > 0 or c.class_level_of("wizard") > 0) and c.slots_left(1) == 0)
+	if not worn.is_empty() or not dry.is_empty():
 		await rest(true)
 	await level_up()
 

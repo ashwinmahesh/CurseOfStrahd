@@ -95,8 +95,13 @@ func footprint() -> Array[Vector2i]:
 	return CombatGrid.footprint(cell, size_cells)
 
 
+## Movement on the grid: the best of walking and flying (the grid has no altitude, so a flyer moves over the floor
+## like a walker; walls still stop it). Grappled, Restrained and the like stop both.
 func speed() -> int:
-	return creature.speed().total()
+	var walk := creature.speed().total()
+	if int(creature.base_speed.get("fly", 0)) > 0:
+		return maxi(walk, creature.speed("fly").total())
+	return walk
 
 
 ## Reach for melee attacks and Opportunity Attacks (5 ft, more with Reach weapons or stat-block reach).

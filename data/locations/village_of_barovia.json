@@ -747,7 +747,7 @@
     {
       "id": "night_streets_dead",
       "trigger": "enter_area:village_square",
-      "when": "night and not flag.night_dead_cleared and level >= 3",
+      "when": "night and flag.ismark_met and not flag.night_dead_cleared and level >= 3",
       "text": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once.",
       "monsters": [
         {
@@ -799,7 +799,7 @@
     {
       "id": "night_streets_dead",
       "trigger": "enter_area:village_square",
-      "when": "night and not flag.night_dead_cleared",
+      "when": "night and flag.ismark_met and not flag.night_dead_cleared",
       "text": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once.",
       "monsters": [
         {

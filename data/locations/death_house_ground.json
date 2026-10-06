@@ -525,14 +525,6 @@
           "name": "Hunting Sword"
         },
         {
-          "monster": "animated_flying_sword",
-          "cell": [
-            12,
-            9
-          ],
-          "name": "Boar Spear Blade"
-        },
-        {
           "monster": "broom_of_animated_attack",
           "cell": [
             11,

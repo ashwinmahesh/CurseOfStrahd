@@ -108,8 +108,8 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 | dungeon 2 | `drowned_rats` | enter `dh_flooded_passage` | 2 swarms of rats | 100 | 2 | Trivial |
 | dungeon 2 | `shades_harry` | dialogue (failed run) | 2 shadows | 200 | 2 | Below Low |
 | dungeon 2 | `lorghoth_rises` / `lorghoth_rises_late` | dialogue ("stand and fight") | shambling mound | 1,800 | 2 | **Far beyond High, on purpose.** Only by choice; "run" avoids it. `_late` starts it 4 squares farther away. |
-| ground | `ground_escape_weapons` | enter `dh_main_hall` after a refusal | 2 animated flying swords + broom | 150 | 2 | Trivial (pressure, not attrition) |
-| third | `third_escape_swords` | enter `dh_third_hall` after a refusal | 3 animated flying swords | 150 | 2 | Trivial |
+| ground | `ground_escape_weapons` | enter `dh_main_hall` after a refusal | 1 animated flying sword + broom (tuned down from 2 swords: AC 17 flyers at full speed ground down level 2 parties) | 100 | 2 | Trivial (pressure, not attrition) |
+| third | `third_escape_swords` | enter `dh_third_hall` after a refusal | 2 animated flying swords (tuned down from 3) | 100 | 2 | Trivial |
 | ground | `window_last_guard` | dialogue (failed window check) | 2 animated flying swords | 100 | 2 | Trivial |
 
 Critical path at level 1: the armor (200), plus the nursemaid (200, avoidable) and the broom (50, optional). Critical

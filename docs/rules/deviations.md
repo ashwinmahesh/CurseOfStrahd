@@ -28,4 +28,4 @@ started" in coverage.md, not a deviation.
 | Long Rest interruption | In a "risky" place, a 1 in 6 chance; an interrupted rest gives a Short Rest's benefits | Random encounters arrive with travel in Phase 4 | Phase 4 |
 | Group Stealth for surprise | The party's lowest Stealth total is compared with each enemy's passive Perception | The rules leave group stealth to the DM; the lowest roll is the one that gets heard | — |
 | Exploration movement | On the grid, one square at a time, followers stepping into the square ahead | ADR 0009: one geometry for exploring and fighting | — |
-
+| Flying | A flyer moves over the grid at its Fly Speed like a walker: no altitude, so it can't pass over walls, pits or other creatures, and it isn't out of melee reach | The maps have no vertical space yet; Death House's animated weapons and broom need to move | Phase 5, with elevation in the bigger maps |

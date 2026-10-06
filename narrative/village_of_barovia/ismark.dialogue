@@ -113,6 +113,9 @@ quest escort_ireena asked
 attitude ismark friendly
 Ismark [smile]: Thank you. I mean that, and I don't say it often, mostly because nobody gives me cause.
 Ismark: The house with the iron fence, north-west of the square. Follow the claw marks. I'll go ahead and tell Ireena not to stab you.
+if night
+  Ismark [weary]: One more thing. After dark the square isn't ours. If you can wait for morning, wait. If you can't, keep together.
+endif
 interject class:cleric: We'll see him buried right. You have my word on it.
 -> END
 
