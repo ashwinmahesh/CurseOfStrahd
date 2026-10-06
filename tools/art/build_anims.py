@@ -68,6 +68,10 @@ def main():
     unknown = [i for i in ids if i not in reg]
     if unknown:
         sys.exit(f"not in {REGISTRY.relative_to(ROOT)}: {', '.join(unknown)}")
+    ready = [i for i in ids if (ROOT / reg[i].get("turnaround", f"art/generated/characters/{i}_turnaround.png")).exists()]
+    for i in sorted(set(ids) - set(ready)):
+        print(f"skip {i}: no turnaround yet", flush=True)
+    ids = ready
     with ThreadPoolExecutor(max_workers=a.jobs) as pool:
         results = list(pool.map(lambda i: build(i, reg[i], not a.attack_only, not a.walk_only), ids))
     failed = [i for i, ok in zip(ids, results) if not ok]

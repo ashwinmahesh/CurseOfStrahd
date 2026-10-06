@@ -118,6 +118,10 @@ def main():
         sys.exit(f"not in {REGISTRY.relative_to(ROOT)}: {', '.join(missing)}")
     if a.kind == "walk":
         ids = [i for i in ids if reg[i].get("body") == "quadruped"]
+    ready = [i for i in ids if (ROOT / reg[i].get("turnaround", f"art/generated/characters/{i}_turnaround.png")).exists()]
+    for i in sorted(set(ids) - set(ready)):
+        print(f"skip {i}: no turnaround yet", flush=True)
+    ids = ready
     with tempfile.TemporaryDirectory(prefix="anim_refs_") as tmp:
         refs_cache = {}
 
