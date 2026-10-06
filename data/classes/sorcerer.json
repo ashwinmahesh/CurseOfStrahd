@@ -274,6 +274,7 @@
             "count": 2,
             "count_column": "metamagic",
             "replaceable": "level_up",
+            "replace_max": 1,
             "options": [
               {
                 "id": "careful_spell",

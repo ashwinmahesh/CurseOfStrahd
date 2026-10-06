@@ -28,15 +28,20 @@ const PROFILES := {
 	"spellcaster": {"oa_fear": 1.5, "finish": 1.0, "nearest": false, "flee_bloodied": false, "caster": true},
 	## Priests: heal and bless allies, then fight.
 	"support": {"oa_fear": 1.0, "finish": 1.0, "nearest": false, "flee_bloodied": false, "support": true},
+	## Strahd (ADR 0014): BossBrain plays his shapes, Charm and Children of the Night, and picks his targets.
+	"strahd": {"oa_fear": 0.8, "finish": 1.5, "nearest": false, "flee_bloodied": false},
 }
 
 var _enc: WeakRef
 ## The last plan made, for tests and the debug overlay: {kind, target, cell, option, score, why}.
 var last_plan: Dictionary = {}
+## Legendary and lair choices, and the strahd profile (combat/ai/boss_brain.gd).
+var boss: BossBrain
 
 
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
+	boss = BossBrain.new(encounter)
 
 
 func enc() -> Encounter:
@@ -103,6 +108,10 @@ func play_turn(c: Combatant) -> CombatResult:
 			return _flee(c, caster, true)
 	if not c.can_act():
 		return CombatResult.new()
+	if str(c.ai_profile) == "strahd":
+		var bt: Variant = boss.play_turn(c)
+		if bt != null:
+			return bt as CombatResult
 	var prof := profile(c)
 	var ma := e.monster_actions
 	# Bonus Actions that come first: Shape-Shift into fighting form, Divine Aid for a fallen ally, Fey Step.
@@ -450,6 +459,7 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	# Concentrating casters are worth breaking.
 	if t.creature.concentration != null:
 		score += 1.0
+	score += boss.target_bonus(c, t)
 	# Opportunity Attacks along the way.
 	if cell != c.cell and float(prof["oa_fear"]) > 0.0:
 		score -= float(prof["oa_fear"]) * _oa_risk(c, CombatGrid.path_to(reach, cell), threats)
@@ -517,9 +527,9 @@ func _approach_plan(c: Combatant, visible: Array[Combatant], prof: Dictionary) -
 func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var e := enc()
 	var target := plan["target"] as Combatant
-	if bool(plan.get("dash", false)) and c.action_available and c.speed() > 0:
-		e.dash(c)
-	var reach := e.reachable_for(c)
+	# Dash only when the best square needs it: no wasted action when nothing gets closer (a shut door between them).
+	var dash_ok := bool(plan.get("dash", false)) and c.action_available and c.speed() > 0
+	var reach := e.reachable_for(c, c.movement_left + (c.speed() if dash_ok else 0))
 	# Walking distance to the target (around walls), not the straight line: a creature on the far side of a wall
 	# heads for the door rather than pressing its face to the stones.
 	var walk := e.grid.reachable(target.cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
@@ -548,6 +558,8 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 			best_cost = cost
 	if best_cell == c.cell:
 		return CombatResult.new()
+	if dash_ok and best_cost > c.movement_left:
+		e.dash(c)
 	return e.move(c, best_cell)
 
 
@@ -641,7 +653,7 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 					break
 		if tt == null:
 			continue
-		var avg := m.average_damage(cid2)
+		var avg := m.average_damage(cid2) + boss.action_bonus(c, act2)
 		if avg > best_avg:
 			best_avg = avg
 			best_id = cid2

@@ -48,6 +48,24 @@ func save_round(slot: String = "round_start") -> Error:
 	return OK
 
 
+## The campaign's end (ADR 0014): the game's own slot (a new one if it has none) is written one last time, marked
+## finished with the ending reached. Finished saves list last and show the ending instead of the place.
+func save_finished(ending_id: String, title: String) -> Error:
+	var slot := current_slot if current_slot != "" and current_slot != "round_start" \
+		else "save_%s" % Time.get_datetime_string_from_system().replace(":", "-")
+	DirAccess.make_dir_recursive_absolute(save_dir)
+	var data := GameState.to_dict()
+	data["finished"] = {"ending": ending_id, "title": title}
+	var f := FileAccess.open(slot_path(slot), FileAccess.WRITE)
+	if f == null:
+		return FileAccess.get_open_error()
+	f.store_string(JSON.stringify(data, "\t"))
+	f.close()
+	current_slot = slot
+	EventBus.game_saved.emit(slot)
+	return OK
+
+
 func load_slot(slot: String) -> Error:
 	if not FileAccess.file_exists(slot_path(slot)):
 		return ERR_FILE_NOT_FOUND
@@ -70,7 +88,8 @@ func has_slot(slot: String) -> bool:
 	return FileAccess.file_exists(slot_path(slot))
 
 
-## Every save on disk, newest first: [{slot, saved_at, location, day, party}].
+## Every save on disk, newest first (finished games last): [{slot, saved_at, location, day, party, finished: the
+## ending's title or ""}].
 func list_slots() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var dir := DirAccess.open(save_dir)
@@ -88,9 +107,15 @@ func list_slots() -> Array[Dictionary]:
 		for m: Variant in story.get("party", []):
 			names.append(str(((m as Dictionary).get("build", {}) as Dictionary).get("name", "?")))
 		var loc := Compendium.shared().get_entry("locations", str(story.get("location", "")))
-		out.append({"slot": f.get_basename(), "saved_at": str(d.get("saved_at", "")), "location": str(loc.get("name", story.get("location", ""))),
-			"day": int(story.get("day", 1)), "party": ", ".join(names)})
-	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return str(a["saved_at"]) > str(b["saved_at"]))
+		var ended := str((d.get("finished", {}) as Dictionary).get("title", ""))
+		var place := str(loc.get("name", story.get("location", ""))) if ended == "" else "The End: %s" % ended
+		out.append({"slot": f.get_basename(), "saved_at": str(d.get("saved_at", "")), "location": place,
+			"day": int(story.get("day", 1)), "party": ", ".join(names), "finished": ended})
+	# Unfinished games first (Continue picks the newest of them), finished ones after.
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if (str(a["finished"]) == "") != (str(b["finished"]) == ""):
+			return str(a["finished"]) == ""
+		return str(a["saved_at"]) > str(b["saved_at"]))
 	return out
 
 

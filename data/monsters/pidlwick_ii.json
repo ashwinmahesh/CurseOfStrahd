@@ -1,0 +1,111 @@
+{
+  "id": "pidlwick_ii",
+  "name": "Pidlwick II",
+  "source": {
+    "book": "CoS",
+    "edition": "2014",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. His Performance bonus and alignment especially need the book. Ambusher is text only."
+  },
+  "size": "small",
+  "type": "construct",
+  "alignment": "neutral evil",
+  "ac": 14,
+  "ac_note": "Natural armor",
+  "initiative": 2,
+  "hp": {
+    "average": 10,
+    "dice": "3d6"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 10,
+    "dex": 14,
+    "con": 11,
+    "int": 8,
+    "wis": 13,
+    "cha": 10
+  },
+  "skills": {
+    "performance": 2
+  },
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned"
+  ],
+  "passive_perception": 11,
+  "languages": [
+    "understands Common but doesn't speak, read or write"
+  ],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "gear": [
+    "club",
+    "dart"
+  ],
+  "traits": [
+    {
+      "id": "ambusher",
+      "name": "Ambusher",
+      "action": "passive",
+      "summary": "In the first round of a fight, Advantage on attacks against anyone who hasn't taken a turn yet.",
+      "text": "During the first round of combat, Pidlwick II has Advantage on attack rolls against any creature that hasn't had a turn yet.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "club",
+      "name": "Club",
+      "kind": "melee",
+      "attack": {
+        "bonus": 2,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 2,
+          "dice": "1d4",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Bonks a target with a little wooden club.",
+      "weapon": true
+    },
+    {
+      "id": "dart",
+      "name": "Dart",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          20,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 4,
+          "dice": "1d4+2",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Throws a dart up to 60 ft.",
+      "weapon": true
+    }
+  ],
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A clockwork jester the size of a child: darts from a distance and a club up close, sneakiest on the first strike."
+}

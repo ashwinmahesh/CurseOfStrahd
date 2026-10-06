@@ -1,0 +1,128 @@
+{
+  "id": "strahds_animated_armor",
+  "name": "Strahd's Animated Armor",
+  "source": {
+    "book": "CoS",
+    "edition": "2014",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Shocking Bolt's +4 to hit (low for the block) and any traits (the plain 2014 animated armor has Antimagic Susceptibility and False Appearance; none are entered) need the book. Blind beyond its blindsight. Multiattack lets it mix one Greatsword swing with one Shocking Bolt (the book: two swings or two bolts)."
+  },
+  "size": "medium",
+  "type": "construct",
+  "alignment": "unaligned",
+  "ac": 21,
+  "ac_note": "Natural armor",
+  "initiative": 1,
+  "hp": {
+    "average": 112,
+    "dice": "15d8+45"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 17,
+    "dex": 13,
+    "con": 16,
+    "int": 9,
+    "wis": 10,
+    "cha": 9
+  },
+  "skills": {
+    "perception": 3
+  },
+  "resistances": [
+    "cold",
+    "fire"
+  ],
+  "immunities": [
+    "lightning",
+    "poison"
+  ],
+  "condition_immunities": [
+    "blinded",
+    "charmed",
+    "deafened",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 13,
+  "languages": [
+    "understands Common but can't speak"
+  ],
+  "cr": 6,
+  "xp": 2300,
+  "proficiency_bonus": 3,
+  "gear": [
+    "greatsword"
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "greatsword",
+          "count": 2,
+          "or": [
+            "shocking_bolt"
+          ]
+        }
+      ],
+      "summary": "Two Greatsword attacks, or Shocking Bolt twice."
+    },
+    {
+      "id": "greatsword",
+      "name": "Greatsword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "2d6+3",
+          "type": "slashing"
+        },
+        {
+          "average": 3,
+          "dice": "1d6",
+          "type": "lightning"
+        }
+      ],
+      "summary": "A heavy sword that crackles with lightning.",
+      "weapon": true
+    },
+    {
+      "id": "shocking_bolt",
+      "name": "Shocking Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "lightning"
+        }
+      ],
+      "summary": "Hurls a bolt of lightning up to 60 ft."
+    }
+  ],
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "brute",
+  "summary": "Strahd's own war armor, walking on its own: a lightning-charged greatsword and bolts from range."
+}

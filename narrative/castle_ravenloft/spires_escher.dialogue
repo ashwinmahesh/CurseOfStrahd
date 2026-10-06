@@ -1,0 +1,140 @@
+# Escher, a cast-off consort of the count (docs/voice/escher.md). A vampire spawn locked in his suite in the towers.
+# He knows what the heart at the top of the high tower is, and sells it: a promise, gold, or Persuasion. A failed
+# Persuasion doubles his price; Intimidation works but turns him hostile, and a failed one is a fight.
+
+~ start
+if flag.escher_threatened or attitude.escher == hostile
+-> cold
+endif
+if not flag.escher_met
+-> first
+endif
+if flag.escher_bargain
+Escher: My jailbreakers. Is he dust yet? No? Then I can't think why you're bothering me.
+elif flag.escher_paid
+Escher: Customers. Come for something else? Everything here has a price, darlings, including the conversation.
+else
+Escher: Back again. I'm flattered. I'd offer you a chair, but you'd only sit in it.
+endif
+-> menu
+
+~ first
+set escher_met
+Narrator: The suite is all velvet and dust. A young man in a beautiful coat lounges in an armchair with one leg over the arm, and doesn't get up. The tall mirror behind him shows an empty chair.
+Escher: Well. Visitors. Has our host sent you up to look at me? I'm not on display today. Come back when I've been dusted.
+interject class:cleric: He's dead. Walking dead. One of Strahd's.
+Escher: One of Strahd's former. Do keep up.
+-> menu
+
+~ menu
+* Who are you? -> who
+* [if not flag.escher_heart_told] There must be something that keeps Strahd standing. What is it? -> heart_ask
+* [if flag.escher_heart_told and not flag.spires_back_stair_told] Is there a quieter way around this castle? -> stair
+* [if not flag.escher_told_jester and (flag.pidlwick_met or tarokka.ally.npc == pidlwick_ii)] What do you know about the clockwork jester on the stair? -> jester
+* Come with us. Help us end him. -> come
+* You're one of his. This ends now. -> attack
+* Goodbye, Escher. -> bye
+
+~ who
+Escher: I was a guest here, once. Then a favourite. Then this. Then the favourite part ended, and here I am, locked in with my coats.
+Escher: He collects people, you see. He just doesn't play with them for very long.
+interject tag:blunt: So he got bored of you.
+Escher [angry]: He got bored of everyone. I was simply the most recent.
+-> menu
+
+# ---------------------------------------------------------------- The heart, for a price
+
+~ heart_ask
+Escher [sly]: There is something. I've seen it. He took me up to see it once, the way you'd show a lover a scar. What's it worth to you?
+* We'll leave your door open behind us. When he's gone, you're free. -> promise
+* [if gold >= 100 and not flag.escher_slighted] We can pay. (100 gp) -> pay
+* [if gold >= 200 and flag.escher_slighted] We can pay. (200 gp) -> pay_more
+* [Persuasion DC 15] You hate him more than we do. Tell us for the pleasure of it. -> persuaded | persuade_fail
+* [Intimidation DC 14] Tell us, or we open your curtains at dawn. -> scared | scare_fail
+* Never mind. -> menu
+
+~ promise
+set escher_bargain
+attitude escher friendly
+Escher: A promise. How quaint. Nobody has made me one of those in a hundred years. Here, something to remember it by.
+Narrator: He twists a heavy ring off his finger and tosses it to you. It's worth more than most houses in the valley.
+gold +150
+-> heart_tell
+
+~ pay
+gold -100
+set escher_paid
+Escher: Coin. Vulgar, and so reliable.
+-> heart_tell
+
+~ pay_more
+gold -200
+set escher_paid
+Escher: Double. I did warn you. I always warn people; it's the only manners I have left.
+-> heart_tell
+
+~ persuaded
+Escher: ...Yes. Yes, I do. Oh, very well. It's been so long since anyone asked me anything.
+-> heart_tell
+
+~ persuade_fail
+set escher_slighted
+Escher: Oh, don't. Flattery from the living. It smells of soup. Now it will cost you double.
+-> heart_ask
+
+~ scared
+set escher_threatened
+attitude escher hostile
+Escher [afraid]: You wouldn't. ...You would. Fine. Fine!
+-> heart_tell
+
+~ scare_fail
+Escher [angry]: You think I'm afraid of the sun? I'm afraid of him. You're merely rude.
+-> attack
+
+~ heart_tell
+set escher_heart_told
+set heart_of_sorrow_known
+if not quest.the_heart_of_sorrow
+quest the_heart_of_sorrow heard
+endif
+Escher: At the top of the high tower there is a heart. Not his own; that stopped centuries ago. A glass one, big as a man, and it beats for him.
+Escher: Cut him, and the glass bleeds instead. That's why your swords never seem to take. Break it, and he bleeds like the rest of us.
+Escher [sly]: He'll feel it the moment it breaks, of course. I'd be somewhere else when it does, if I were you.
+if flag.escher_threatened
+-> END
+endif
+-> menu
+
+# ---------------------------------------------------------------- Other things he knows
+
+~ stair
+set spires_back_stair_told
+Escher: Behind my wardrobe there's a stair the servants used, up into the roof where the ravens live. I'd use it myself, but he'd know. He always knows.
+-> menu
+
+~ jester
+set escher_told_jester
+Escher: That little clockwork thing? It was built to amuse the children of the house in place of their jester, a little man called Pidlwick. The children went on preferring the real one.
+Escher: Then one night the real one went down the high tower stair the quick way, and the toy was standing at the top. Draw your own conclusions.
+-> menu
+
+~ come
+Escher: With you? Into a fight with him? I've seen what he does to people who leave. I've seen what he does to people who stay, which is worse, only slower.
+if flag.escher_bargain
+Escher: Keep your promise. Leave my door open. That is all the help I can stand.
+endif
+-> menu
+
+~ attack
+Narrator: Escher comes up out of the chair without seeming to use his legs.
+combat escher_fight
+
+~ cold
+Escher [angry]: Get out. Go and threaten somebody with a pulse.
+* You're one of his. This ends now. -> attack
+* Leave him to sulk. -> END
+
+~ bye
+Escher: Do shut the door on your way out. The draught is dreadful, and I can't even die of it.
+-> END

@@ -1,0 +1,166 @@
+# Strahd comes for Ireena where she shelters (docs/regions/strahd_presence.md; visits ireena_at_the_inn,
+# ireena_in_krezk, ireena_at_the_church). At the inn or in Krezk he is outside her window and she is going to him.
+# Several ways stop him; a failed prayer or plea lets her take a step (strahd_window_pull), and two steps, or letting
+# her go, and she is gone to the castle (ireena_held_by_strahd). Going for him starts the visit's fight, which he
+# leaves (after_fight). At St. Andral's holy ground holds and he can only call her from the gate.
+
+# ---------------------------------------------------------------- At the Blue Water Inn (Vallaki)
+
+~ inn
+Narrator: Across the dark, one upstairs window of the Blue Water Inn stands wide open to the cold. You run.
+Narrator: In Ireena's room the candles are out. She stands at the open window in her nightdress, and outside it, standing on nothing, is Strahd.
+if flag.ismark_guards_ireena
+Narrator: Ismark sits slumped by the door with his sword across his knees, deeply and unnaturally asleep.
+endif
+-> window
+
+# ---------------------------------------------------------------- At the Krezkovs' house (Krezk)
+
+~ krezk
+Narrator: Krezk's wall stands and its gate is barred, and none of it matters: the shutters of the Krezkovs' upper room hang open in the cold.
+Narrator: Inside, Ireena holds out her hand at the window, as if to someone helping her down from a carriage. Outside it, standing on nothing, is Strahd.
+if flag.ismark_in_krezk
+Narrator: Ismark lies across the doorway, breathing slow and deep, his spear beside him. Nothing wakes him.
+endif
+-> window
+
+# ---------------------------------------------------------------- The window
+
+~ window
+Strahd: Ah. My guests. You are just in time to say goodbye.
+Ireena: He's right. I'm so tired of running. It's only a window.
+-> window_menu
+
+~ window_menu
+* [if item:holy_symbol_of_ravenkind] Raise the Holy Symbol of Ravenkind. -> symbol
+* [Cleric] Stand in the window and call on your god. -> faith
+* [Paladin] Stand in the window and call on your oath. -> faith
+* [Religion DC 15] Speak a warding prayer over the sill. -> ward | ward_failed
+* [Persuasion DC 15] Ireena. Remember who you are. -> woke | woke_failed
+* Go for him. -> fight
+* Let her go. -> taken
+
+~ symbol
+set strahd_window = "symbol"
+Narrator: The sun in the symbol wakes. White light fills the room, and Strahd turns his face from it with a hiss like water on a hot stove.
+Strahd [angry]: Keep your trinket. It will not keep her.
+Narrator: Then there is only the night outside, and Ireena on her knees by the sill, shaking, herself again.
+-> saved
+
+~ faith
+set strahd_window = "faith"
+Narrator: You put yourself in the window with your faith held up before you. It is a small light, but it is between them.
+Strahd: How brave, and how thin. Another night. There are so many nights.
+Narrator: He steps back into the dark, and the dark keeps him. Ireena sags against the wall, blinking, herself again.
+-> saved
+
+~ ward
+set strahd_window = "ward"
+Narrator: The old words come right, every one, and on the last the sill seems to harden like ice on a pond. His hand stops a finger's width from it.
+Strahd: Well said. I shall have to find a less learned house.
+-> saved
+
+~ ward_failed
+set strahd_window_pull += 1
+Narrator: The words tangle and the prayer comes apart in your mouth. Strahd smiles at you, kindly. Ireena takes a step toward him.
+-> pulled
+
+~ woke
+set strahd_window = "woke"
+Ireena: I'm... Ireena. Ireena Kolyana. My father was the burgomaster. I buried him myself.
+Ireena [angry]: And I am not going anywhere with you.
+Strahd [smile]: Not tonight. I can wait. I am very good at it.
+-> saved
+
+~ woke_failed
+set strahd_window_pull += 1
+Narrator: She doesn't hear you, or hears you from very far off, the way you hear a voice in a dream. She takes a step toward him.
+-> pulled
+
+~ pulled
+if flag.strahd_window_pull >= 2
+-> taken
+endif
+-> window_menu
+
+~ fight
+set strahd_window = "fight"
+Narrator: You go for him. Ireena cries out and stumbles back from the sill, and Strahd laughs, delighted, and steps into the room.
+Strahd: At last. Some conversation.
+-> END
+
+~ taken
+set strahd_window = "taken"
+set ireena_held_by_strahd
+Narrator: Ireena puts her hand in his. He lifts her over the sill as lightly as a dancer, and she does not look back.
+Strahd: Do come to dinner. She will be there. She has always been there.
+Narrator: Then the window is empty and the night is empty, and her shawl lies on the floor where it fell.
+if flag.ireena_in_krezk
+set ireena_in_krezk = false
+else
+set ireena_sanctuary = "taken"
+endif
+if flag.ismark_guards_ireena or flag.ismark_in_krezk
+-> ismark_wakes
+endif
+-> END
+
+~ ismark_wakes
+Narrator: Ismark comes awake all at once, sees the empty window, and the colour leaves his face.
+Ismark [afraid]: No. No, no. I was awake. I was awake the whole time.
+Ismark [angry]: I'm coming with you. Don't argue. We go up that mountain and we bring her down.
+set ismark_guards_ireena = false
+set ismark_in_krezk = false
+join ismark
+-> END
+
+~ after_fight
+set strahd_withdrew
+Narrator: Mist pours out through the window and takes the cold with it. Somewhere below, a dog that has barked all night goes quiet.
+Strahd: You bleed well, all of you. Keep her, for now. I enjoy the way you hold on.
+-> saved
+
+~ saved
+if flag.ismark_guards_ireena or flag.ismark_in_krezk
+Ismark [weary]: What... Ireena? Why is everybody standing at the window?
+endif
+Ireena [afraid]: I was going to go. I wanted to. That's the worst of it.
+* Come with us. We won't leave you alone again. -> come_along
+* You're safe now. Stay, and bar the window. -> stays
+
+~ come_along
+if flag.ireena_in_krezk
+-> krezk/ireena:rejoin
+endif
+-> vallaki/ireena:rejoin
+
+~ stays
+Ireena: Then come back soon. And next time, knock louder.
+-> END
+
+# ---------------------------------------------------------------- At St. Andral's (holy ground)
+
+~ church
+set strahd_window = "church"
+Narrator: Past midnight the bell of St. Andral's starts to toll on its own, slow and uneven. You find Ireena at the church door, wide awake.
+Narrator: At the churchyard gate stands Strahd, one gloved hand on the gatepost, coming no further.
+Strahd: Ireena. Come out. The night is fine, and the company in there is very old and very dead.
+Ireena [angry]: The company in here is a saint. Go home.
+Strahd: Holy ground. Bones in a box. You will not stay inside a church forever, my dear. Nobody does.
+* Tell him to leave. -> church_go
+* Ask him what he's afraid of. -> church_fear
+* Stand beside Ireena and say nothing. -> church_end
+
+~ church_go
+Strahd [smile]: As my guests wish. I was leaving in any case. I only wanted her to hear the bell.
+-> church_end
+
+~ church_fear
+Strahd: Afraid? Of a box of bones and a tired priest? I am disappointed in you. I had thought you clever.
+Narrator: But he doesn't take his hand off the gatepost, and he doesn't take one step past it.
+-> church_end
+
+~ church_end
+Narrator: Then the gate is empty. The bell stops in the middle of a stroke. Ireena breathes out, slowly, for a long time.
+Ireena: He can't come in. He can't. I'm going to tell myself that all night.
+-> END

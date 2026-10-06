@@ -1,0 +1,464 @@
+{
+  "id": "castle_ravenloft_spires_roofs",
+  "name": "Castle Ravenloft, the Roofs",
+  "region": "castle_ravenloft",
+  "summary": "The roofs of Castle Ravenloft: the south tower's battlements, a walkway to the slate roof of the keep, and a narrow bridge across the drop to the north tower peak, where stone guardians crouch on the parapet.",
+  "text": "Wind, and nothing between you and the valley but a parapet. Slate roofs fall away on every side, and beyond them a long, long drop.",
+  "map": {
+    "rows": [
+      "                        ############",
+      "###################     #1111111111#",
+      "#.................#     #1111111111#",
+      "#.................#     #1111111111#",
+      "#.......##........#     #1111111111#",
+      "#.......##...............1111111111#",
+      "#........................1111111111#",
+      "#.................#     #1111111111#",
+      "#.................#     #1111111111#",
+      "#............##...#     #1111111111#",
+      "#.................#     #1111111111#",
+      "#.................#     ############",
+      "######..###########                 ",
+      "      ..                            ",
+      "      ..                            ",
+      " #####..#####                       ",
+      " #..........#                       ",
+      " #..........#                       ",
+      " #..........#                       ",
+      " #..........#                       ",
+      " #..........#                       ",
+      " #..........#                       ",
+      " #..........#                       ",
+      " #..........#                       ",
+      " ############                       ",
+      "                                    "
+    ],
+    "theme": "dungeon",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "spires_south_tower_roof",
+      "name": "The south tower roof",
+      "cells": [
+        [
+          2,
+          16
+        ],
+        [
+          11,
+          23
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "spires_walkway",
+      "name": "The walkway",
+      "cells": [
+        [
+          6,
+          12
+        ],
+        [
+          7,
+          15
+        ]
+      ],
+      "floor": "church/stone_flags"
+    },
+    {
+      "id": "spires_keep_roof",
+      "name": "The keep roof",
+      "cells": [
+        [
+          1,
+          2
+        ],
+        [
+          17,
+          11
+        ]
+      ],
+      "floor": "village/roof_slate",
+      "walls": "church/stone_wall"
+    },
+    {
+      "id": "spires_bridge",
+      "name": "The bridge",
+      "cells": [
+        [
+          18,
+          5
+        ],
+        [
+          24,
+          6
+        ]
+      ],
+      "floor": "church/stone_flags"
+    },
+    {
+      "id": "spires_north_peak",
+      "name": "The north tower peak",
+      "cells": [
+        [
+          25,
+          1
+        ],
+        [
+          34,
+          10
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "walls": "church/stone_wall"
+    }
+  ],
+  "spawns": {
+    "default": [
+      7,
+      20
+    ],
+    "from_rooms": [
+      7,
+      20
+    ],
+    "from_roost": [
+      5,
+      5
+    ]
+  },
+  "exits": [
+    {
+      "id": "down_to_rooms",
+      "cell": [
+        6,
+        21
+      ],
+      "to": "castle_ravenloft_spires_rooms",
+      "spawn": "from_roofs",
+      "label": "A hatch down to the tower rooms"
+    },
+    {
+      "id": "hatch_to_roost",
+      "cell": [
+        4,
+        4
+      ],
+      "to": "castle_ravenloft_spires_roost",
+      "spawn": "from_roofs",
+      "label": "A hatch down to the ravens' roost"
+    }
+  ],
+  "props": [
+    {
+      "id": "spires_guardian_a",
+      "cell": [
+        26,
+        2
+      ],
+      "kind": "decor",
+      "label": "A stone guardian",
+      "model": "statue_knight"
+    },
+    {
+      "id": "spires_guardian_b",
+      "cell": [
+        33,
+        9
+      ],
+      "kind": "decor",
+      "label": "A stone guardian",
+      "model": "statue_knight"
+    },
+    {
+      "id": "spires_guardian_c",
+      "cell": [
+        26,
+        9
+      ],
+      "kind": "decor",
+      "label": "A stone guardian",
+      "model": "statue_knight"
+    },
+    {
+      "id": "spires_peak_view",
+      "cell": [
+        34,
+        5
+      ],
+      "kind": "examine",
+      "label": "The parapet, facing the valley",
+      "model": "bridge_parapet"
+    },
+    {
+      "id": "spires_bridge_rail",
+      "cell": [
+        21,
+        5
+      ],
+      "kind": "examine",
+      "label": "The bridge",
+      "model": "bridge_parapet"
+    },
+    {
+      "id": "spires_keep_perch",
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "decor",
+      "label": "A weathervane perch",
+      "model": "perch"
+    },
+    {
+      "id": "spires_keep_crows",
+      "cell": [
+        6,
+        3
+      ],
+      "kind": "examine",
+      "label": "Ravens on the ridge",
+      "model": "crow_barrel"
+    },
+    {
+      "id": "spires_south_view",
+      "cell": [
+        2,
+        23
+      ],
+      "kind": "examine",
+      "label": "The parapet, facing the courtyard",
+      "model": "wall_low"
+    }
+  ],
+  "containers": [
+    {
+      "id": "spires_hollow_guardian",
+      "cell": [
+        31,
+        3
+      ],
+      "label": "A guardian that never moved",
+      "model": "statue_knight",
+      "gold": 60
+    }
+  ],
+  "lights": [],
+  "traps": [
+    {
+      "id": "spires_slick_slates",
+      "cells": [
+        [
+          12,
+          7
+        ],
+        [
+          12,
+          8
+        ]
+      ],
+      "label": "slick slates",
+      "detect_dc": 13,
+      "disarm_dc": 20,
+      "save": {
+        "ability": "dex",
+        "dc": 14
+      },
+      "damage": "3d6",
+      "damage_type": "bludgeoning",
+      "condition": "prone",
+      "text": "Wet slates slide out from under you and you go skidding down the roof toward the parapet."
+    }
+  ],
+  "npcs": [],
+  "encounters": [
+    {
+      "id": "peak_guardians",
+      "trigger": "enter_area:spires_north_peak",
+      "when": "not flag.peak_guardians_cleared and level >= 11",
+      "text": "The carvings on the parapet turn their heads. Stone grinds on stone as wings unfold that were never meant to be carved.",
+      "surprise": "",
+      "flag": "peak_guardians_cleared",
+      "monsters": [
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            2
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            30,
+            1
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            33,
+            2
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            34,
+            7
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            32,
+            10
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            10
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            25,
+            6
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            6
+          ],
+          "name": "Stone Guardian"
+        }
+      ]
+    },
+    {
+      "id": "peak_guardians",
+      "trigger": "enter_area:spires_north_peak",
+      "when": "not flag.peak_guardians_cleared and level >= 10",
+      "text": "The carvings on the parapet turn their heads. Stone grinds on stone as wings unfold that were never meant to be carved.",
+      "surprise": "",
+      "flag": "peak_guardians_cleared",
+      "monsters": [
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            2
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            30,
+            1
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            33,
+            2
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            34,
+            7
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            32,
+            10
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            10
+          ],
+          "name": "Stone Guardian"
+        }
+      ]
+    },
+    {
+      "id": "peak_guardians",
+      "trigger": "enter_area:spires_north_peak",
+      "when": "not flag.peak_guardians_cleared",
+      "text": "The carvings on the parapet turn their heads. Stone grinds on stone as wings unfold that were never meant to be carved.",
+      "surprise": "",
+      "flag": "peak_guardians_cleared",
+      "monsters": [
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            2
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            30,
+            1
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            33,
+            2
+          ],
+          "name": "Stone Guardian"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            34,
+            7
+          ],
+          "name": "Stone Guardian"
+        }
+      ]
+    }
+  ],
+  "treasure_spots": {
+    "castle_ravenloft_north_tower_peak": {
+      "container": "spires_hollow_guardian"
+    }
+  },
+  "narration": {
+    "enter": "enter:castle_ravenloft_spires_roofs"
+  },
+  "rest": "no",
+  "rest_text": "The wind up here would take a blanket and the sleeper in it."
+}

@@ -1,0 +1,180 @@
+{
+  "region": "castle_ravenloft_larders",
+  "flags": [
+    {
+      "id": "larders_cyrus_met",
+      "type": "bool",
+      "summary": "The party has met Cyrus Belview in the castle kitchen (larders_cyrus:first)."
+    },
+    {
+      "id": "larders_guests_heard",
+      "type": "bool",
+      "summary": "Cyrus told the party he cooks for the Master's guests in the cells (quest the_cooks_guests heard)."
+    },
+    {
+      "id": "larders_cyrus_family_news",
+      "type": "bool",
+      "summary": "The party brought Cyrus news of the Belviews at the abbey. He turns friendly and will help Nadia without a roll."
+    },
+    {
+      "id": "larders_father_told",
+      "type": "bool",
+      "summary": "The party told Cyrus what became of the Abbot (reads abbot_fate)."
+    },
+    {
+      "id": "larders_niche_told",
+      "type": "bool",
+      "summary": "Cyrus told the party he bricked up the wine merchant at the back of the cellar."
+    },
+    {
+      "id": "larders_lamp_told",
+      "type": "bool",
+      "summary": "Cyrus told the party the lamp over the table of bones drinks from the furnace, and the sluice wheel puts it out."
+    },
+    {
+      "id": "larders_anatol_warned",
+      "type": "bool",
+      "summary": "Cyrus said the holy brother never eats and the Master says leave him be. A no-roll way to unmask Anatol."
+    },
+    {
+      "id": "larders_cyrus_helps",
+      "type": "bool",
+      "summary": "Cyrus agreed to smuggle Nadia out at dawn in his scrap barrel (family news, gold, Persuasion or fear)."
+    },
+    {
+      "id": "larders_cyrus_wary",
+      "type": "bool",
+      "summary": "A failed Persuasion made Cyrus wary: his price for helping Nadia rises from 30 to 80 gp."
+    },
+    {
+      "id": "larders_cyrus_hostile",
+      "type": "bool",
+      "summary": "A failed Intimidation made Cyrus scream for the watch (larders_watch_alarm). He cowers and won't help. Epilogue may read."
+    },
+    {
+      "id": "larders_cyrus_cask_told",
+      "type": "bool",
+      "summary": "Cyrus told the party the scrap barrel went down the cliff path with Nadia in it."
+    },
+    {
+      "id": "larders_cyrus_box_opened",
+      "type": "bool",
+      "summary": "Someone opened Cyrus's painted box (container flag). He notices once."
+    },
+    {
+      "id": "larders_cyrus_box_noticed",
+      "type": "bool",
+      "summary": "Cyrus has complained about his box being opened (once)."
+    },
+    {
+      "id": "larders_cyrus_slain",
+      "type": "bool",
+      "summary": "The party killed Cyrus Belview (encounter larders_cyrus_fight). The kitchen goes cold. Epilogue may read."
+    },
+    {
+      "id": "larders_watch_beaten",
+      "type": "bool",
+      "summary": "The dead watch is destroyed, in the guardroom (larders_guardroom) or in the kitchen after Cyrus's alarm (larders_watch_alarm)."
+    },
+    {
+      "id": "larders_lift_ready",
+      "type": "bool",
+      "summary": "The lift winch's brake is set (larders_machinery:winch). Opens the lift exit from the larders down to the cells."
+    },
+    {
+      "id": "larders_niche_opened",
+      "type": "bool",
+      "summary": "The party pulled down the bricks over the wine merchant (larders_cellar:niche): 35 gp, his ledger, and the Tarokka treasure if the reading put one there."
+    },
+    {
+      "id": "larders_keys_taken",
+      "type": "bool",
+      "summary": "The party took the jailers' keys from the key board in the dungeon (prop flag). Opens Nadia's shackle without a roll."
+    },
+    {
+      "id": "larders_jailers_beaten",
+      "type": "bool",
+      "summary": "The three helmed horrors at the jailers' post are destroyed (larders_jailers)."
+    },
+    {
+      "id": "larders_furnace_beaten",
+      "type": "bool",
+      "summary": "The furnace keepers are destroyed (larders_furnace)."
+    },
+    {
+      "id": "larders_furnace_quenched",
+      "type": "bool",
+      "summary": "The party turned the sluice wheel and drowned the green furnace (larders_machinery:sluice). The bone lamp goes out and its trap no longer fires."
+    },
+    {
+      "id": "larders_questioner_beaten",
+      "type": "bool",
+      "summary": "The Questioner and the things in the drain are destroyed (larders_questioner)."
+    },
+    {
+      "id": "larders_hall_told",
+      "type": "bool",
+      "summary": "Nadia told the party about the hall of bones, its table and its green lamp."
+    },
+    {
+      "id": "larders_nadia_met",
+      "type": "bool",
+      "summary": "The party has spoken with Nadia Boteanu in her cell (quest the_cooks_guests found)."
+    },
+    {
+      "id": "larders_nadia_freed",
+      "type": "bool",
+      "summary": "Nadia's chain is off (keys, Sleight of Hand or Athletics; quest the_cooks_guests freed)."
+    },
+    {
+      "id": "larders_nadia_fate",
+      "type": "string",
+      "summary": "WHAT BECAME OF NADIA: escaped (out with Cyrus's scrap barrel), sent_alone (ran up the stair alone and was caught), waits (hiding in her cell; lives if Strahd is destroyed). Unset if left chained. The endings' epilogue reads it."
+    },
+    {
+      "id": "larders_nadia_lost",
+      "type": "bool",
+      "summary": "The party found Nadia's shawl folded on the stair (quest the_cooks_guests caught)."
+    },
+    {
+      "id": "larders_doru_met",
+      "type": "bool",
+      "summary": "The party spoke with Doru, chained in the castle's cells (only if they had let him out of the undercroft)."
+    },
+    {
+      "id": "larders_doru_fate",
+      "type": "string",
+      "summary": "Doru in the castle: rest (the party ended him at his asking), freed (he attacked: larders_doru_hunger), left (still chained). Donavich's epilogue slide reads it."
+    },
+    {
+      "id": "larders_doru_destroyed",
+      "type": "bool",
+      "summary": "Doru was destroyed fighting the party after they freed him (larders_doru_hunger)."
+    },
+    {
+      "id": "larders_anatol_met",
+      "type": "bool",
+      "summary": "The party has spoken with Brother Anatol in his cell."
+    },
+    {
+      "id": "larders_anatol_noticed",
+      "type": "bool",
+      "summary": "The party saw that Anatol's breath doesn't fog in the cold (asked how long he's been there). A no-roll way to unmask him."
+    },
+    {
+      "id": "larders_anatol_prayed",
+      "type": "bool",
+      "summary": "The party tried the dawn prayer with Anatol (one Religion try)."
+    },
+    {
+      "id": "larders_anatol_fate",
+      "type": "string",
+      "summary": "Brother Anatol: unmasked (seen through; may be left in his cell) or freed (he ambushed the party, who were surprised)."
+    },
+    {
+      "id": "larders_anatol_destroyed",
+      "type": "bool",
+      "summary": "Brother Anatol and his two spawn are destroyed (larders_false_brother or larders_false_brother_unmasked)."
+    }
+  ]
+}

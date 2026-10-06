@@ -1,0 +1,19 @@
+{
+  "id": "ludmilla_vilisevic",
+  "name": "Ludmilla Vilisevic",
+  "title": "Bride of Strahd",
+  "summary": "The eldest of the count's three brides: cold, well read and jealous of every portrait in the house. She knows everything in the castle that hurts.",
+  "portrait": "ludmilla_vilisevic",
+  "sprite": "ludmilla_vilisevic",
+  "attitude": "indifferent",
+  "voice": "docs/voice/ludmilla_vilisevic.md",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "vampire",
+    "bride_of_strahd",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "she/her"
+}

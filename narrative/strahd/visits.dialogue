@@ -1,0 +1,137 @@
+# Strahd on the road and at rest (docs/regions/strahd_presence.md; data/strahd/visits.json): the watcher on the
+# ridge, the night visit at a Long Rest, and the test of strength on a night road. The test's fight is the visit's
+# `then` (it starts when strahd_test is "fought"); he leaves it by the encounter's `withdraw`, then test_after plays.
+# Voice: docs/voice/strahd.md. Courteous, patient, amused; every kindness a threat.
+
+# ---------------------------------------------------------------- The watcher (the first journey after the burial)
+
+~ watcher
+set strahd_watcher_seen
+Narrator: The road bends under a bare ridge. Up on the skyline a rider sits a black horse, perfectly still, watching you go by.
+if guest:ireena
+Ireena [afraid]: Don't look at him. That's what he wants. Keep walking.
+endif
+interject class:ranger: High ground, downwind, in no hurry. Whoever taught him to hunt taught him well.
+interject class:rogue: He isn't hiding. That's the part I don't like.
+* Raise a hand to him. -> watcher_wave
+* Stare back until he looks away. -> watcher_stare
+* Keep walking. -> watcher_gone
+
+~ watcher_wave
+Narrator: After a moment the rider lifts a gloved hand in return, slow and correct, like a host seeing guests off from his door.
+-> watcher_gone
+
+~ watcher_stare
+Narrator: He doesn't look away. In the end you do, to mind your footing, and when you look up again the ridge is bare.
+-> watcher_gone
+
+~ watcher_gone
+Narrator: A ragged flock of bats lifts off the ridge and beats away south, toward the castle. Nobody is up there now.
+-> END
+
+# ---------------------------------------------------------------- The night visit (a Long Rest through the night)
+
+~ night
+Narrator: You wake in the small hours and know at once you are not alone. Just past the last of the light, a tall man stands watching the others sleep.
+if flag.strahd_met
+Strahd: Do not get up. I only came to see how my guests are sleeping. Badly, I think. The valley does that.
+else
+set strahd_met
+Strahd: Do not get up. We have not been introduced. I am Strahd von Zarovich, and you are sleeping in my house. All of this is my house.
+endif
+if flag.strahd_letter_read
+Strahd: You had my letter, I trust. I write so few now. Nobody writes back.
+endif
+if guest:ireena
+Narrator: Ireena is sitting up, quite still, her eyes on him. Her hand is on her sword, and the hand isn't moving.
+Strahd [smile]: Ireena. Such late hours. Shall I wait while you decide whether to scream?
+Ireena [angry]: I've decided. Get away from us.
+endif
+-> night_menu
+
+~ night_menu
+* Wake the others. -> night_wake
+* What do you want? -> night_want
+* [if guest:ireena] Get up and stand between him and Ireena. -> night_shield
+* [Insight DC 16] Watch for what he isn't saying. -> night_read | night_read_failed
+* [Cleric] Hold up your holy symbol. -> night_ward
+* [Paladin] Hold up your holy symbol. -> night_ward
+* Attack him. -> night_attack
+
+~ night_want
+Strahd: Tonight? Only to look at you. A man may admire his guests. Tomorrow, who can say. I have had a very long time to collect whims.
+-> night_menu
+
+~ night_read
+set strahd_seen_trapped
+Narrator: You catch it as he glances past you at the mountains: the look of a man at a window that will not open. Then it's gone.
+Strahd: You stare, guest. Is something the matter with my face?
+-> night_menu
+
+~ night_read_failed
+Narrator: His face gives you nothing at all. It is a very good face for that. He looks back as if you were the one being read.
+-> night_menu
+
+~ night_wake
+set strahd_night_visit = "woke"
+Narrator: You shout. The others come up out of sleep with weapons in their hands, and there is nobody there. The fire has burned down to blue.
+-> END
+
+~ night_shield
+set strahd_night_visit = "shield"
+Strahd [smile]: Gallant. Do you know how many gallant men have stood exactly there? I kept count, for a while.
+Narrator: He bows to Ireena, not to you, and the dark he stood in is only dark.
+-> END
+
+~ night_ward
+set strahd_night_visit = "warded"
+Narrator: The symbol catches the last of the firelight. He doesn't flinch. He looks at it the way one looks at a candle in a neighbour's window.
+Strahd: Keep it lit. It will be dark a long while yet. Good night.
+-> END
+
+~ night_attack
+set strahd_night_visit = "attacked"
+Narrator: Your blade goes through him like a hand through fog, and the fog is cold enough to ache.
+Strahd: Rude, in a man's own house. Sleep, then. If you can.
+-> END
+
+# ---------------------------------------------------------------- The test of strength (a night road, level 7+)
+
+~ test
+Narrator: Eyes in the dark ahead, a dozen pairs, low to the ground. The wolves part, and a man in black walks out between them as if through a garden.
+Strahd: Good evening. I hear you are becoming formidable. I like to see such things for myself. Indulge me.
+if guest:ireena
+Strahd: Ireena, stand aside, please. This is between your friends and me.
+Ireena [angry]: Then you'll have to go through me as well.
+endif
+if flag.strahd_road_encounter == "violent"
+Strahd [smile]: You drew on me once, on this very road. I said not here. I have changed my mind.
+endif
+* Draw steel. -> test_fight
+* [Persuasion DC 18] Tell him a brawl on a muddy road is beneath a lord. -> test_talked | test_talk_failed
+
+~ test_fight
+set strahd_test = "fought"
+Strahd [smile]: Splendid. Do not die too quickly. I should have to find new guests, and the valley is so short of them.
+-> END
+
+~ test_talk_failed
+set strahd_test = "fought"
+Strahd [smile]: Beneath me? Everything here is beneath me. That is the point of a castle. Begin.
+-> END
+
+~ test_talked
+set strahd_test = "talked"
+Strahd: Hm. You are right, and I dislike it. Another night, then, with better light. Do keep improving.
+Narrator: He whistles once, as a man calls a dog, and the wolves go back into the trees with him.
+-> END
+
+~ test_after
+set strahd_withdrew
+Narrator: Fog rolls across the road, and he is inside it, and then there is only fog. His voice comes from everywhere at once.
+Strahd: Better than I hoped. Not yet what you will need. Do keep practising.
+if guest:ireena
+Ireena [angry]: Coward!
+Strahd: Patient, my dear. There is a difference. You will learn it.
+endif
+-> END

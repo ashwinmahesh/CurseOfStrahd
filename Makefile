@@ -7,7 +7,7 @@ G       := $(GODOT) --path .
 ## A Godot window an agent opens never takes focus: started from a tool, Godot forces itself to the front unless the
 ## bundle id matches and no standard stream is a terminal (from the owner's terminal it still comes to the front).
 NOFOCUS := env __CFBundleIdentifier=org.godotengine.godot $(G)
-UNSEEN  := $(NOFOCUS) --resolution 64x64 --position 100000,100000 --max-fps 60 --audio-driver Dummy
+UNSEEN  := $(NOFOCUS) --resolution 1x1 --position 100000,100000 --max-fps 60 --audio-driver Dummy
 LOGCHK  := tools/logcheck.sh
 STAMP   := .godot/.last_import
 FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./captures -o -path ./builds \) -prune -o \
@@ -61,7 +61,7 @@ voice:
 	python3 tools/audio/generate_voice.py $(if $(SPEAKER),--speaker $(SPEAKER),) $(if $(LIMIT),--limit $(LIMIT),) $(if $(DRY),--dry-run,) $(if $(MAX_USD),--max-usd $(MAX_USD),) $(if $(RECAST),--recast,) $(if $(PRUNE),--prune,)
 	$(if $(DRY),,$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null)
 
-## Writes screenshots to captures/ from a window that never takes focus or shows: it opens small in a corner, moves
+## Writes screenshots to captures/ from a window that never takes focus or shows: it opens 1 px wide in a corner, moves
 ## off screen and is drawn by tools/capture (silent, 60 fps). LOCATION=<id> starts the story game there.
 capture:
 	$(UNSEEN) res://tools/capture/capture.tscn -- --scene=$(or $(SCENE),res://scenes/test/graybox_room.tscn) --out=$(CURDIR)/captures/$(or $(NAME),capture) --frames=$(or $(FRAMES),90) $(if $(FOCUS),--focus=$(FOCUS),) $(if $(LOCATION),--location=$(LOCATION),) $(if $(ENCOUNTER),--encounter=$(ENCOUNTER),) $(if $(LOAD),--load=$(LOAD),) $(if $(DIALOGUE),--dialogue=$(DIALOGUE),) $(if $(BEATS),--beats=$(BEATS),) $(if $(MAP),--map,) $(if $(SHOP),--shop=$(SHOP),) $(ARGS) < /dev/null

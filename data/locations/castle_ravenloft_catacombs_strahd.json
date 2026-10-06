@@ -1,0 +1,360 @@
+{
+  "id": "castle_ravenloft_catacombs_strahd",
+  "name": "Castle Ravenloft, Strahd's Tomb",
+  "region": "castle_ravenloft",
+  "summary": "The tomb at the bottom of the castle where Strahd von Zarovich keeps his coffin and sleeps away the day. The only place in the valley where he can be ended for good.",
+  "text": "A square vault at the foot of a long black stair. In the middle, on a stepped dais, a plain wooden coffin on trestles, and the smell of turned earth.",
+  "map": {
+    "rows": [
+      "#######################",
+      "###########.###########",
+      "########.......########",
+      "########.......########",
+      "########.......########",
+      "########.......########",
+      "##########...##########",
+      "##...................##",
+      "##...................##",
+      "##..#.............#..##",
+      "##.....111111111.....##",
+      "##.....112222211.....##",
+      "##.....112222211.....##",
+      "##.....112222211.....##",
+      "##.....112222211.....##",
+      "##.....111111111.....##",
+      "##.....111111111.....##",
+      "##..#.............#..##",
+      "##...................##",
+      "##...................##",
+      "#######################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "cat_black_stair",
+      "name": "The foot of the black stair",
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          14,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "castle_ravenloft_strahds_tomb",
+      "name": "Strahd's tomb",
+      "cells": [
+        [
+          2,
+          7
+        ],
+        [
+          20,
+          19
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    }
+  ],
+  "spawns": {
+    "default": [
+      11,
+      3
+    ],
+    "from_catacombs": [
+      11,
+      3
+    ]
+  },
+  "exits": [
+    {
+      "id": "cat_black_stair_up",
+      "cell": [
+        11,
+        1
+      ],
+      "to": "castle_ravenloft_catacombs",
+      "spawn": "from_strahd",
+      "label": "The black stair up"
+    }
+  ],
+  "props": [
+    {
+      "id": "cat_strahds_coffin",
+      "cell": [
+        11,
+        12
+      ],
+      "kind": "examine",
+      "label": "Strahd's coffin",
+      "model": "coffin",
+      "dialogue": "castle_ravenloft/catacombs_coffin:coffin"
+    },
+    {
+      "id": "cat_tomb_epitaph",
+      "cell": [
+        11,
+        0
+      ],
+      "kind": "examine",
+      "label": "Words cut over the stair",
+      "model": "arch_carved"
+    },
+    {
+      "id": "cat_tomb_statue",
+      "cell": [
+        11,
+        8
+      ],
+      "kind": "examine",
+      "label": "A statue of a young man in armour",
+      "model": "statue_knight"
+    },
+    {
+      "id": "cat_tomb_brazier_w",
+      "cell": [
+        3,
+        13
+      ],
+      "kind": "decor",
+      "label": "A brazier of cold green fire",
+      "model": "brazier_green"
+    },
+    {
+      "id": "cat_tomb_brazier_e",
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "decor",
+      "label": "A brazier of cold green fire",
+      "model": "brazier_green"
+    },
+    {
+      "id": "cat_tomb_altar",
+      "cell": [
+        16,
+        18
+      ],
+      "kind": "examine",
+      "label": "A stained stone block",
+      "model": "altar_stone"
+    },
+    {
+      "id": "cat_tomb_candles_w",
+      "cell": [
+        8,
+        9
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candelabra"
+    },
+    {
+      "id": "cat_tomb_candles_e",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candelabra"
+    }
+  ],
+  "containers": [
+    {
+      "id": "cat_tomb_chest",
+      "cell": [
+        11,
+        16
+      ],
+      "label": "An iron chest at the foot of the dais",
+      "model": "chest_iron",
+      "items": [
+        {
+          "id": "candle",
+          "qty": 3
+        }
+      ],
+      "gold": 150
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        3,
+        13
+      ],
+      "kind": "magic",
+      "bright_ft": 5,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "magic",
+      "bright_ft": 5,
+      "dim_ft": 20
+    }
+  ],
+  "encounters": [
+    {
+      "id": "cat_darklord_final",
+      "trigger": "enter_area:castle_ravenloft_strahds_tomb",
+      "when": "not flag.strahd_in_coffin",
+      "final_battle": "castle_ravenloft_strahds_tomb",
+      "lair": true,
+      "surprise": "",
+      "flag": "cat_keepers_defeated",
+      "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            11,
+            11
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_tomb_keepers",
+      "trigger": "enter_area:castle_ravenloft_strahds_tomb",
+      "when": "not flag.cat_keepers_defeated",
+      "surprise": "",
+      "flag": "cat_keepers_defeated",
+      "text": "Two pale shapes rise from behind the dais, and the ceiling comes loose and becomes bats.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            13
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            13
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            5,
+            11
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            11
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            11,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_daylight_waking",
+      "trigger": "dialogue",
+      "lair": true,
+      "surprise": "",
+      "flag": "strahd_in_coffin",
+      "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            11,
+            13
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            6,
+            9
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            16,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat_oathbreakers",
+      "trigger": "dialogue",
+      "surprise": "",
+      "flag": "cat_oathbreakers_beaten",
+      "text": "Vladimir draws, and his knights come down the black stair behind him with their swords already out.",
+      "monsters": [
+        {
+          "monster": "vladimir_horngaard",
+          "cell": [
+            11,
+            9
+          ]
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            9,
+            8
+          ]
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            13,
+            8
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_catacombs_strahd"
+  },
+  "rest": "no",
+  "rest_text": "Not within reach of that coffin. Nobody here could close their eyes.",
+  "treasure_spots": {
+    "castle_ravenloft_strahds_tomb": {
+      "container": "cat_tomb_chest"
+    }
+  }
+}

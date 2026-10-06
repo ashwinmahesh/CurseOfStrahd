@@ -1,0 +1,125 @@
+# Gertruda, Mad Mary's daughter (docs/voice/gertruda.md; quest find_gertruda, village_of_barovia).
+# start: the yellow guest room on the third floor. She joins as a guest when the party breaks the spell; Rahadin waits
+# at the stairs (court_rahadin:intercept). returned: after the party gave her back.
+# homecoming, mary_after, at_home: Mad Mary's house in the village (data/locations/mad_marys_house.json).
+
+~ start
+if flag.gertruda_met
+Gertruda: You came back! I hoped you would. Nobody here talks, not properly. Rahadin only counts things.
+-> menu
+endif
+set gertruda_met
+Narrator: A girl of about sixteen sits on the edge of a curtained bed in a blue gown too fine for her, turning a ribbon over in her fingers. She jumps up when the door opens, and her face falls when she sees it isn't him.
+Gertruda: Oh! You're guests too? Isn't it wonderful? I never saw a room this big. I never saw a room I wasn't locked into.
+-> menu
+
+~ menu
+* Who are you? -> who
+* Who brought you here? -> him
+* [Insight DC 13] (Look at her carefully.) -> insight_ok | insight_fail
+* [if flag.court_gertruda_insight] You're frightened, Gertruda. You have been since you got here. -> convinced_fear
+* [if flag.gertruda_search_promised] Your mother isn't angry. She said the door is unlocked now. All three locks. -> convinced_mother
+* [if flag.court_anastrasya_story] Anastrasya slept in this room once, in gowns like yours. -> convinced_anastrasya
+* [if flag.court_ledger_read] The ledger downstairs has an account in your name. -> convinced_ledger
+* [Cleric] (Say a blessing over her.) -> convinced_blessing
+* [if not flag.court_gertruda_warned_him] [Persuasion DC 15] He doesn't love you. He collects. -> convinced_persuaded | persuade_fail
+* We'll come back for you. -> END
+
+~ who
+Gertruda: Gertruda. From the village, the house with the shutters; maybe you passed it. My mother is careful. Very careful. I'd never been out at night before. I'd never been out.
+if flag.mad_mary_met
+Narrator: You know the house. You have heard the woman weeping in it.
+endif
+-> menu
+
+~ him
+Gertruda: He sang under my window. Old songs, the ones Mother never let me hear. Then a black carriage came with nobody driving it, and the door opened by itself, just like in the stories.
+Gertruda: He says I'm to be a lady. He says soon.
+interject tag:blunt: Soon. That's the word I don't like.
+-> menu
+
+~ insight_ok
+set court_gertruda_insight
+Narrator: Under the chatter her hands never stop on that ribbon, and she is humming, very quietly, without knowing she does it.
+-> menu
+
+~ insight_fail
+Narrator: She seems entirely, dazzlingly happy. Perhaps she is.
+-> menu
+
+~ convinced_fear
+Gertruda: I'm not... I hum. Mother says I hum when I'm frightened. I've been humming since the carriage.
+-> convinced
+
+~ convinced_mother
+Gertruda [afraid]: She said that? She isn't angry? All three locks. She'd never. She must have been so frightened.
+-> convinced
+
+~ convinced_anastrasya
+Gertruda [afraid]: The lady downstairs, at the window? She was in this room? These were...
+Narrator: She looks down at the blue dress as if it had moved.
+-> convinced
+
+~ convinced_ledger
+Gertruda [afraid]: An account. In a book. Like a horse. Like buying a horse.
+-> convinced
+
+~ convinced_blessing
+Narrator: A plain blessing, said plainly. Something in the room thins, like perfume when a window is opened, and the girl blinks as if waking.
+Gertruda: Why did I... I don't even like blue.
+-> convinced
+
+~ convinced_persuaded
+Gertruda [sad]: He did say I was the prettiest one yet. Yet. I didn't think about that word.
+-> convinced
+
+~ persuade_fail
+set court_gertruda_warned_him
+Gertruda [angry]: You're jealous. Everyone is jealous of the girl in the story. I'm going to tell him what you said!
+Narrator: She rings a little silver bell by the bed, and somewhere far off in the castle a door opens and closes.
+-> menu
+
+~ convinced
+Gertruda [afraid]: I want to go home. I want to go home, and I don't know the way. It was dark in the carriage.
+* Come home, Gertruda. Stay close to us. -> join
+* Not yet. Wait here; we'll come back for you. -> wait
+
+~ join
+join gertruda
+set gertruda_rescued
+quest find_gertruda found
+Gertruda: I'll be quiet. I'm good at quiet. I've had practice.
+interject tag:cheerful: Stay behind me and you'll be fine. Mostly behind me. Generally in the direction of behind.
+-> END
+
+~ wait
+Gertruda: You'll come back? Yes. I'll wait. I'm good at waiting.
+-> END
+
+~ returned
+Narrator: Gertruda sits on the bed in a new gown, a green one. She smiles at you politely, the way you smile at strangers.
+Gertruda: He wasn't angry. He said I'd been frightened, and that it was natural. He said everyone is frightened before a wedding.
+-> END
+
+# ---------------------------------------------------------------- Home (Mad Mary's house, village of Barovia)
+
+~ homecoming
+leave gertruda
+set gertruda_home
+quest find_gertruda home
+attitude mad_mary friendly
+Narrator: Mary is on her feet before the door is fully open. For a moment neither of them moves. Then Gertruda says "Mother", very small, and Mary has her.
+Mad Mary [sad]: You're cold. You're so cold. Where are your good shoes? Never mind. Never mind the shoes.
+Gertruda: I'm sorry. I'm sorry, I'm sorry.
+Mad Mary: Hush. The door's unlocked. It's staying unlocked. We'll learn how, the two of us.
+Mad Mary: You brought her home. I said nobody listens. I was wrong, and I'm glad to be wrong. Sit. Let me mend something for you. Let me do something.
+interject class:cleric: Bless this house, and its door, and the two of you in it.
+-> END
+
+~ mary_after
+Mad Mary: She sleeps late now. I let her. I sit and listen to her breathing and I don't weep at all. The neighbours think I've gone madder.
+-> END
+
+~ at_home
+Gertruda: Mother wants me to learn the woods. Just the edges, by day. I went as far as the well yesterday. It was wonderful. It was only a well.
+-> END

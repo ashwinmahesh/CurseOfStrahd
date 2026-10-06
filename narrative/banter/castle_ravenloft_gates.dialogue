@@ -1,0 +1,65 @@
+# Party banter at Castle Ravenloft's gates, main floor, chapel and overlook. Each node opens with an `if` gate: the
+# node is eligible only while its condition holds. Party members speak only through interjections.
+
+~ banter_gates
+if at:castle_ravenloft_gates and not visited:castle_ravenloft_main_floor
+interject name:tamsin_tealeaf: Drawbridge down, portcullis up, doors open. Nobody locks up against us. I hate that.
+interject name:ilse_varga: An open gate is an ambush or an invitation. Here it's both.
+interject tag:blunt: Then we go in ready for both.
+endif
+-> END
+
+~ banter_invited
+if flag.strahd_invitation == "accepted" and not flag.castle_dinner
+interject name:hedda_ironvow: Dinner with a vampire. Mind your manners and keep your hand near your hammer.
+interject name:silvain_aster: If he offers the soup, I'm eating the soup. I've had eleven days of trail rations.
+endif
+-> END
+
+~ banter_dined
+if flag.castle_dinner == "dined"
+interject name:hedda_ironvow: I ate a vampire's bread at a vampire's table. If my mother could see me.
+interject name:tamsin_tealeaf: It was very good bread.
+interject name:hedda_ironvow: That's what worries me.
+endif
+-> END
+
+~ banter_wine
+if flag.crg_dinner_wine_known
+interject tag:cheerful: The wine was only wine. Best I've ever had, mind. Is that worse?
+endif
+-> END
+
+~ banter_affront
+if flag.crg_dinner_fight_over
+interject name:ilse_varga: He left. He wasn't losing. He just got bored and left.
+interject class:wizard: He was measuring us. Next time he won't leave.
+endif
+-> END
+
+~ banter_hearth
+if flag.crg_ever_hearth_out and not flag.crg_hoard_opened
+interject class:rogue: A fire that burns on nothing, in front of a seam in the stone. You don't guard what you don't keep.
+endif
+-> END
+
+~ banter_hoard
+if flag.crg_hoard_opened
+interject name:tamsin_tealeaf: Three hundred crowns he never spent. In centuries. What's he saving for?
+interject name:silvain_aster: Nothing. That's rather the point of him.
+endif
+-> END
+
+~ banter_chapel
+if at:castle_ravenloft_chapel
+interject name:hedda_ironvow: Nobody's prayed honestly in here in a long time. When we're done, I'll put that right.
+interject class:cleric: Holy ground, once. It still remembers.
+endif
+-> END
+
+~ banter_overlook
+if at:castle_ravenloft_overlook
+interject name:silvain_aster: You can see the whole valley from here. Every road, every roof.
+interject tag:blunt: That's why he likes it. It's all his, from up here.
+endif
+-> END

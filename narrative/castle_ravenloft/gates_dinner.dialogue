@@ -1,0 +1,128 @@
+# The dinner with Strahd in the dining hall (docs/regions/castle_ravenloft_gates.md §5; voice docs/voice/strahd.md).
+# He waits at the organ when the party came by his invitation (strahd_invitation == "accepted": the presence
+# package's black carriage) and speaks as they come in. He is a host: he feeds them, talks, and leaves. A fight only
+# if the party starts one (crg_dinner_affront), and he leaves that too (withdraw). No menu depends on a roll.
+
+~ start
+if flag.castle_dinner
+-> END
+endif
+Narrator: The organ stops in the middle of a phrase. The man at the keys closes the lid, gently, and turns on the bench.
+quest dinner_at_castle_ravenloft seated
+if flag.strahd_first_impression == "defiant"
+Strahd [smile]: The guests who told me no across a grave. And here you are at my table. I find that deeply satisfying.
+elif flag.strahd_first_impression == "violent"
+Strahd [smile]: You drew steel at a funeral. Tonight, I hope, you will settle for the cutlery.
+elif flag.strahd_met
+Strahd: My guests. You came. Sit, please. I trust the carriage was comfortable.
+else
+Strahd: Welcome to my house. I am Strahd von Zarovich, and you are very welcome in it.
+endif
+if name:ilse_varga
+Strahd: Sergeant. You carried my letter all this way. I do like a guest who keeps her correspondence.
+endif
+if guest:ireena
+Strahd: Ireena. Candlelight suits you. Sit beside me. No? Then sit wherever you like.
+Ireena [angry]: I'll stand.
+Strahd: As you wish. The chair will wait. It is good at waiting. So am I.
+elif flag.ireena_held_by_strahd
+Strahd: Ireena is resting upstairs. She will not join us tonight. It has been a long week for her.
+endif
+if flag.strahd_test == "fought"
+Strahd: We have met on the road, of course. You and my wolves. I have not had a better evening's exercise in years.
+endif
+if flag.argynvost_beacon_lit
+Strahd: Someone lit the old dragon's lamp on the ridge. I watched it from my window. It is very pretty.
+endif
+if flag.dark_gifts_taken >= 1
+Strahd: One of you has been up the mountain, to the temple. I can tell. We have more in common than you would like.
+endif
+if flag.strahd_knows_marina_truth
+Strahd [sad]: I owe you the truth about Marina. I do not often owe anyone. Consider it noted.
+endif
+Narrator: Places are laid for each of you. The silver is real, the food is hot, and nobody carries it in.
+-> table
+
+~ table
+* Why did you invite us? -> why
+* Tell us about this house. -> house
+* [if guest:ireena or flag.ireena_met] What do you want with Ireena? -> ireena
+* [if not flag.crg_dinner_wine_known] [Medicine DC 13] Smell the wine before anyone drinks it. -> wine_ok | wine_fail
+* [if not flag.crg_dinner_want_seen] [Insight DC 17] Watch him. What does he actually want? -> want_ok | want_fail
+* [if not flag.crg_dinner_grace_said] [Cleric] Say grace before eating. -> grace
+* Thank him for his hospitality. -> thanks
+* Draw on him. -> affront
+
+~ why
+Strahd: Because you are the most interesting thing to happen in my valley for a very long time. And because I wanted to see you up close. Before.
+* Before what? -> before
+* Fair enough. -> table
+
+~ before
+Strahd [smile]: Before whatever you are planning. You are planning something. Everyone who sits at this table is.
+-> table
+
+~ house
+Strahd: I built it to be seen from everywhere in the valley. I have been looking out of it ever since.
+Strahd: Walk where you like tonight. Some doors will open for you and some will not. That is true of every house.
+interject class:wizard: Is the library on this floor?
+Strahd: Upstairs. I will not say where. Finding it is half the pleasure.
+-> table
+
+~ ireena
+Strahd: Want? That is a merchant's word. I want nothing from her that she does not choose to give.
+if guest:ireena
+Ireena [angry]: Then you'll get nothing.
+Strahd [smile]: You see? We understand each other already.
+else
+Strahd: Tell her I asked after her. She will pretend not to care. She always did.
+endif
+-> table
+
+~ wine_ok
+set crg_dinner_wine_known
+Narrator: It is wine. Very old, very good, and nothing else at all. He watches you work that out and looks pleased.
+Strahd: Poison would be so impolite. And so dull.
+-> table
+
+~ wine_fail
+Narrator: Plums, cellar dust, and something under them you can't name. Probably only age. Probably.
+-> table
+
+~ want_ok
+set crg_dinner_want_seen
+Narrator: Behind the host's smile is a man who has been bored for centuries. Tonight he is not bored. That is what he wants from you: to stay that way.
+-> table
+
+~ want_fail
+set crg_dinner_stared
+Narrator: You watch him. He watches you watching, smiles, and you learn nothing at all.
+Strahd: Do keep looking. I am told I am worth it.
+-> table
+
+~ grace
+set crg_dinner_grace_said
+Narrator: The grace comes out steady. Every candle on the table leans away from the speaker at once, then stands straight again.
+Strahd: How brave. Your god has not eaten at this table in a very long time. Do tell him the soup was excellent.
+-> table
+
+~ thanks
+set castle_dinner = "dined"
+quest dinner_at_castle_ravenloft dined
+Strahd: You are most welcome. It has been a charming evening. I so rarely get to use the good silver.
+if flag.crg_dinner_stared
+Strahd [smile]: And you, who watched me all through the meal. I hope you found what you were looking for.
+endif
+if flag.crg_dinner_want_seen
+Strahd: Keep me interested. In this house, it is the only thing that has ever kept anyone safe.
+endif
+Strahd: The house is yours tonight. Do not let me keep you.
+Narrator: He bows, and between one flicker of the candles and the next, the bench at the organ is empty. Somewhere above, a door closes.
+-> END
+
+~ affront
+set castle_dinner = "affront"
+quest dinner_at_castle_ravenloft affront
+Narrator: Steel clears the table's edge. A glass goes over. Strahd watches the wine run toward his sleeve, and moves the sleeve.
+Strahd: Ah. And the evening was going so well.
+combat crg_dinner_affront

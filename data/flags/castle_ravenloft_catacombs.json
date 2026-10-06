@@ -1,0 +1,74 @@
+{
+  "flags": [
+    {
+      "id": "strahd_in_coffin",
+      "type": "bool",
+      "summary": "Strahd was dropped to 0 Hit Points somewhere other than his coffin and fled as mist to it (ADR 0014 Misty Escape; set by the engine). He lies helpless in castle_ravenloft_catacombs_strahd until the party finishes him (castle_ravenloft/catacombs_coffin:resting). Every final battle's `when` reads it."
+    },
+    {
+      "id": "strahd_destroyed",
+      "type": "bool",
+      "summary": "Strahd von Zarovich is destroyed for good: the stake, the Sunsword or the Holy Symbol at his coffin (castle_ravenloft/catacombs_coffin:the_end, which also moves strahds_lair to destroyed and ends the game). The endings read it."
+    },
+    {
+      "id": "cat_staked_by",
+      "type": "string",
+      "summary": "How Strahd was ended at his coffin: party (the stake), ireena (she drove it herself) or sun (the Sunsword's light or the Holy Symbol's dawn). Epilogues may read it."
+    },
+    {
+      "id": "cat_ireena_at_tomb",
+      "type": "string",
+      "summary": "Ireena's scene at Sergei's tomb (castle_ravenloft/catacombs_sergei): remembered (her first sight of him, she never saw the pool), promised (she renewed her promise to come back to him) or farewell (she said goodbye properly). Epilogues may read it."
+    },
+    {
+      "id": "cat_sergei_rites_said",
+      "type": "bool",
+      "summary": "A party member said the rites for the dead over Sergei's tomb (Religion)."
+    },
+    {
+      "id": "cat_keepers_defeated",
+      "type": "bool",
+      "summary": "The vampire spawn who keep Strahd's tomb are dead (the darklord battle or cat_tomb_keepers). The keepers' fight doesn't start again."
+    },
+    {
+      "id": "cat_coffin_hallowed",
+      "type": "bool",
+      "summary": "The party poured holy water into the earth of Strahd's empty coffin; when he comes home to it, it burns him."
+    },
+    {
+      "id": "cat_last_words_heard",
+      "type": "bool",
+      "summary": "The party let Strahd speak from his coffin (once)."
+    },
+    {
+      "id": "cat_vladimir_stood_aside",
+      "type": "bool",
+      "summary": "Vladimir Horngaard came to stop the killing blow for his pact and was moved aside (the dragon's last words or Persuasion)."
+    },
+    {
+      "id": "cat_oathbreakers_beaten",
+      "type": "bool",
+      "summary": "The party broke Vladimir's pact at the coffin and beat him and his knights in the tomb (cat_oathbreakers)."
+    },
+    {
+      "id": "cat_sleepers_slain",
+      "type": "bool",
+      "summary": "The vampire spawn of the sleepers' crypt are destroyed (cat_sleepers)."
+    },
+    {
+      "id": "cat_gargoyles_slain",
+      "type": "bool",
+      "summary": "The gargoyles that watch the champion's tomb are broken (cat_gargoyle_watch)."
+    },
+    {
+      "id": "cat_guardians_stilled",
+      "type": "bool",
+      "summary": "The animated guardians of the hall before the royal tomb are destroyed (cat_guardians)."
+    },
+    {
+      "id": "cat_mad_dog_blade_known",
+      "type": "bool",
+      "summary": "The scything blade in the Mad Dog's crypt was spotted or sprung."
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "the_jesters_key",
+  "name": "The Jester's Key",
+  "summary": "Pidlwick II, the clockwork jester of the high tower, is running down: the ravens took his wind-up key.",
+  "giver": "pidlwick_ii",
+  "region": "castle_ravenloft",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Pidlwick II winds himself with a bent nail since the ravens took his brass key up under the castle's roofs. He is ticking slower every day.",
+      "objectives": [
+        "Find Pidlwick II's key in the ravens' roost"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "We found a brass wind-up key in a ravens' nest under the roofs, its bow shaped like a jester's cap.",
+      "objectives": [
+        "Bring the key back to Pidlwick II on the high tower stair"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "returned",
+      "journal": "We wound Pidlwick II with his own key. Fifty turns, and his ticking is steady again.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

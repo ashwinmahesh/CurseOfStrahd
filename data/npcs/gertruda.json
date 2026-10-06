@@ -1,0 +1,23 @@
+{
+  "id": "gertruda",
+  "name": "Gertruda",
+  "title": "Mad Mary's daughter",
+  "summary": "Mad Mary's sixteen-year-old daughter from the village of Barovia, kept indoors all her life until a voice sang under her window. She lives in the castle's yellow guest room in borrowed gowns, believing she is in a love story.",
+  "portrait": "gertruda",
+  "sprite": "gertruda",
+  "attitude": "friendly",
+  "voice": "docs/voice/gertruda.md",
+  "monster": "commoner",
+  "guest": true,
+  "guest_build": {
+    "monster": "commoner",
+    "note": "A sheltered girl, not a fighter: she joins only to be taken home to her mother."
+  },
+  "tags": [
+    "barovian",
+    "village_of_barovia",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "she/her"
+}

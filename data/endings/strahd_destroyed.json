@@ -1,0 +1,314 @@
+{
+  "id": "strahd_destroyed",
+  "title": "Dawn over Barovia",
+  "summary": "Strahd von Zarovich is destroyed, and the sun rises over his valley.",
+  "priority": 20,
+  "when": "flag.strahd_destroyed",
+  "narration": "endings/strahd_destroyed:start",
+  "tone": "dawn",
+  "music": "ending",
+  "epilogue": [
+    {
+      "topic": "land",
+      "title": "Barovia",
+      "when": "",
+      "text": "The mists thin through the summer and are gone by the harvest. For the first time in centuries, the road out of the valley leads somewhere."
+    },
+    {
+      "topic": "party",
+      "title": "The Road Out",
+      "when": "",
+      "text": "The way home is open. Whether you take it at once, or stay to see what a Barovian summer looks like, is yours to decide."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "guest:ireena and flag.ireena_pool_choice == stayed",
+      "text": "At the pool, Ireena chose her own life. Now she gets to live it, and she never once looks up at the castle."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "guest:ireena",
+      "text": "Ireena walks out of the castle's shadow into a morning that belongs to her. For the first time she can remember, nobody is watching her sleep."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "flag.ireena_in_krezk",
+      "text": "Behind Krezk's wall, Ireena hears the bells before she hears the news. She is the first one through the gate to see the sun."
+    },
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "",
+      "text": "Wherever Ireena is when the sun comes up, she is free of him. It takes her a long time to believe it."
+    },
+    {
+      "topic": "ismark",
+      "title": "Ismark",
+      "portrait": "ismark",
+      "when": "",
+      "text": "Ismark goes home and takes up his father's chain of office. Nobody calls him the Lesser any more, and he never has to ask them to stop."
+    },
+    {
+      "topic": "death_house",
+      "title": "The House on the Corner",
+      "portrait": "rose",
+      "when": "flag.death_house_children_at_rest",
+      "text": "The old house at the village's edge stands quiet. Children play in its street again, and none of them are made of smoke."
+    },
+    {
+      "topic": "death_house",
+      "title": "The House on the Corner",
+      "when": "flag.death_house_sacrificed",
+      "text": "The altar under the old house keeps the name of the one you left there. The house never asks for another."
+    },
+    {
+      "topic": "vallaki",
+      "title": "Vallaki",
+      "portrait": "baron_vargas",
+      "when": "flag.vallaki_backed == baron",
+      "text": "The Baron declares a festival for the sun, and for once every soul in Vallaki comes without being made to."
+    },
+    {
+      "topic": "vallaki",
+      "title": "Vallaki",
+      "portrait": "lady_wachter",
+      "when": "flag.vallaki_backed == wachter",
+      "text": "With her master gone, Lady Wachter's hold on Vallaki crumbles within a week. The town decides it can manage without lords of any kind."
+    },
+    {
+      "topic": "vallaki",
+      "title": "Vallaki",
+      "portrait": "father_lucian",
+      "when": "flag.vallaki_backed == neither",
+      "text": "Father Lucian and Urwin Martikov hold Vallaki's council in the open square now, by daylight. The meetings are long, loud and entirely free."
+    },
+    {
+      "topic": "vallaki",
+      "title": "Vallaki",
+      "when": "visited:vallaki",
+      "text": "Vallaki's gates stand open at noon for the first time in living memory. Nobody remembers who gave the order."
+    },
+    {
+      "topic": "wine",
+      "title": "The Wizard of Wines",
+      "portrait": "davian_martikov",
+      "when": "flag.winery_wine_flows and flag.martikovs_reconciled",
+      "text": "Davian and Adrian work the press side by side. The first vintage under a real sun is the best the family has ever made, and Davian says so."
+    },
+    {
+      "topic": "wine",
+      "title": "The Wizard of Wines",
+      "portrait": "davian_martikov",
+      "when": "flag.winery_wine_flows",
+      "text": "Wine flows from the Martikov vineyard again, and under a real sun the grapes taste of something other than patience."
+    },
+    {
+      "topic": "wine",
+      "title": "The Keepers of the Feather",
+      "portrait": "urwin_martikov",
+      "when": "flag.keepers_allied or flag.ilinca_vouched",
+      "text": "The ravens of the Keepers of the Feather fly over the valley in daylight, with nobody left to spy on."
+    },
+    {
+      "topic": "krezk",
+      "title": "Krezk",
+      "portrait": "abbot",
+      "when": "flag.abbot_fate == repentant",
+      "text": "The Abbot is found on the mountain road, kneeling toward the sunrise. Whatever judgment he walked out to meet, the light seems to have given it."
+    },
+    {
+      "topic": "krezk",
+      "title": "Krezk",
+      "portrait": "abbot",
+      "when": "flag.abbot_fate == broken",
+      "text": "In the abbey church the Abbot still sits where you left him. When the sun reaches his face he weeps, and does not stop for a long time."
+    },
+    {
+      "topic": "krezk",
+      "title": "Krezk",
+      "portrait": "vasilka",
+      "when": "flag.abbot_fate == wedding",
+      "text": "The bride the Abbot stitched together waits in the castle for a groom who will never come. Krezk's priests pray for her anyway."
+    },
+    {
+      "topic": "krezk",
+      "title": "Krezk",
+      "portrait": "dmitri_krezkov",
+      "when": "visited:krezk",
+      "text": "Krezk keeps its wall out of habit, but the gate stands open. Dmitri Krezkov greets every traveller himself."
+    },
+    {
+      "topic": "ilya",
+      "title": "Ilya Krezkov",
+      "portrait": "ilya_krezkov",
+      "when": "flag.ilya_fate == healed",
+      "text": "Ilya Krezkov grows up to be taller than his father and twice as stubborn. Anna says that is the healing's fault."
+    },
+    {
+      "topic": "ilya",
+      "title": "Ilya Krezkov",
+      "portrait": "ilya_krezkov",
+      "when": "flag.ilya_fate == frail",
+      "text": "Ilya never grows strong, but he grows. He spends his summers in the sun by the pool, which is more than any Krezkov child has had in a long while."
+    },
+    {
+      "topic": "ilya",
+      "title": "Ilya Krezkov",
+      "portrait": "ilya_krezkov",
+      "when": "flag.ilya_heard",
+      "text": "Ilya Krezkov does not see the spring. His parents bury him in sunlight, and find that it helps a little."
+    },
+    {
+      "topic": "order",
+      "title": "Argynvostholt",
+      "portrait": "argynvost",
+      "when": "flag.order_fate == rest",
+      "text": "The beacon still burns on its hill, though the knights have laid down their swords at last. The dragon's light keeps watch alone."
+    },
+    {
+      "topic": "order",
+      "title": "Argynvostholt",
+      "portrait": "vladimir_horngaard",
+      "when": "flag.order_fate == ride",
+      "text": "The knights who rode with you to the castle ride home again. In the morning there are no knights at all, only armour resting in the mansion's hall."
+    },
+    {
+      "topic": "order",
+      "title": "Argynvostholt",
+      "portrait": "vladimir_horngaard",
+      "when": "flag.order_fate == grudge",
+      "text": "The oath Vladimir made you swear is broken, and his knights know it. They lay down their arms in fury, and then, slowly, in relief."
+    },
+    {
+      "topic": "amber",
+      "title": "The Amber Temple",
+      "portrait": "exethanter",
+      "when": "flag.amber_temple_sealed",
+      "text": "High in the mountains the amber stays sealed. The voices inside it whisper to no one."
+    },
+    {
+      "topic": "dark_gifts",
+      "title": "The Gifts You Took",
+      "portrait": "vestige_amber",
+      "when": "flag.dark_gifts_taken >= 1",
+      "text": "The gifts you took from the amber did not die with their old customer. In quiet hours, they still ask to be used."
+    },
+    {
+      "topic": "kasimir",
+      "title": "Kasimir Velikov",
+      "portrait": "kasimir_velikov",
+      "when": "flag.kasimir_bargain == made",
+      "text": "Kasimir gave all his years but one to bring Patrina back. He spends the last one at her side, and she spends it learning to forgive him."
+    },
+    {
+      "topic": "kasimir",
+      "title": "Kasimir Velikov",
+      "portrait": "kasimir_velikov",
+      "when": "flag.kasimir_at_peace",
+      "text": "Kasimir said at last what he owed his sister, and she let him go. He leaves Barovia lighter than he came."
+    },
+    {
+      "topic": "kasimir",
+      "title": "Patrina Velikovna",
+      "portrait": "patrina_velikovna",
+      "when": "flag.patrina_fate == rest",
+      "text": "Patrina's bones lie quiet in the crypts beneath the castle. Kasimir visits them once, alone, and never says what he told her."
+    },
+    {
+      "topic": "van_richten",
+      "title": "Rudolph van Richten",
+      "portrait": "rictavio",
+      "when": "flag.van_richten_reunited",
+      "text": "Van Richten and Ezmerelda leave the valley together, already arguing about where the next monster is. Neither of them means to retire."
+    },
+    {
+      "topic": "van_richten",
+      "title": "Rudolph van Richten",
+      "portrait": "rictavio",
+      "when": "flag.rictavio_unmasked or flag.van_richten_met_at_tower",
+      "text": "Van Richten packs away his disguises and his notes. He has one fewer monster to hunt, and admits he will not miss this one."
+    },
+    {
+      "topic": "ezmerelda",
+      "title": "Ezmerelda d'Avenir",
+      "portrait": "ezmerelda",
+      "when": "flag.ezmerelda_met and not flag.van_richten_reunited",
+      "text": "Ezmerelda's wagon is the first out of Barovia when the mists lift. She promises to come back. You both know she is lying."
+    },
+    {
+      "topic": "mordenkainen",
+      "title": "Mordenkainen",
+      "portrait": "mordenkainen",
+      "when": "flag.mordenkainen_restored",
+      "text": "Mordenkainen, his mind his own again, vanishes from his mountain one morning. He leaves a note of thanks that is slightly too pleased with itself."
+    },
+    {
+      "topic": "mordenkainen",
+      "title": "The Mad Mage",
+      "portrait": "mad_mage",
+      "when": "flag.mordenkainen_met",
+      "text": "The mad wizard of Mount Baratok still mutters on his peak, but he mutters toward the sun now."
+    },
+    {
+      "topic": "pack",
+      "title": "The Werewolves",
+      "portrait": "emil_toranescu",
+      "when": "flag.wolf_pack_leader == emil",
+      "text": "Emil's pack keeps to the high hills and hunts deer, not travellers. On full moons the villages bar their doors anyway, and Emil does not blame them."
+    },
+    {
+      "topic": "pack",
+      "title": "The Werewolves",
+      "portrait": "kiril_stoyanovich",
+      "when": "flag.wolf_pack_leader == kiril",
+      "text": "Kiril's pack has lost its master's leash but not its appetite. The roads are safer by day, and no safer by night."
+    },
+    {
+      "topic": "pack",
+      "title": "The Werewolves",
+      "when": "flag.wolf_pack_leader == none",
+      "text": "The den by the lake stands empty. The howling in the hills is only wolves now."
+    },
+    {
+      "topic": "berez",
+      "title": "Berez",
+      "portrait": "baba_lysaga",
+      "when": "flag.lysaga_dead",
+      "text": "Berez sinks a little further into its marsh each spring. Nothing lives in the witch's hut now, and nothing wants to."
+    },
+    {
+      "topic": "berez",
+      "title": "Berez",
+      "portrait": "baba_lysaga",
+      "when": "flag.lysaga_fate == bargained or flag.lysaga_fate == broken",
+      "text": "Baba Lysaga outlives the child she raised, and has no idea what to do with the time. She sits in the mud of Berez and waits for orders that never come."
+    },
+    {
+      "topic": "bonegrinder",
+      "title": "Old Bonegrinder",
+      "when": "flag.bonegrinder_fate == destroyed",
+      "text": "The windmill on the hill grinds only grain now. The valley's children slowly stop having nightmares about pies."
+    },
+    {
+      "topic": "bonegrinder",
+      "title": "Old Bonegrinder",
+      "portrait": "morgantha",
+      "when": "flag.bonegrinder_fate == broken or flag.bonegrinder_fate == bella",
+      "text": "One hag still keeps the mill on the hill. With the castle empty, she is suddenly the worst thing in the valley, and she knows it."
+    },
+    {
+      "topic": "bonegrinder",
+      "title": "Old Bonegrinder",
+      "portrait": "morgantha",
+      "when": "flag.bonegrinder_fate == bargain or flag.bonegrinder_fate == abandoned",
+      "text": "The coven still bakes on the hill. Sunlight has not improved the smell."
+    }
+  ]
+}

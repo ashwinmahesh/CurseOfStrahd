@@ -33,7 +33,8 @@ cooldown 20
 
 ~ enter:mad_marys_house
 | Three locks on the door, boards on every window, and a cold stove in the middle of it all. The weeping fills the house the way water fills a jar.
-| [flag.gertruda_search_promised] The weeping is quieter than it was. Mary is mending something by the stove, and keeps glancing at the door.
+| [flag.gertruda_search_promised and not flag.gertruda_home] The weeping is quieter than it was. Mary is mending something by the stove, and keeps glancing at the door.
+| [flag.gertruda_home] The boards are off one window. Two cups by the stove, and somebody humming in the back room.
 cooldown 20
 
 # ---------------------------------------------------------------- Village areas
