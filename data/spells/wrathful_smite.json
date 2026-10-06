@@ -37,6 +37,22 @@
   "upcast": {
     "damage": "1d6"
   },
+  "on_hit_spell": true,
+  "damage": [
+    {
+      "dice": "1d6",
+      "type": "necrotic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "frightened",
+        "repeat_save": "end_of_turn"
+      }
+    }
+  ],
   "tags": [
     "damage",
     "debuff"

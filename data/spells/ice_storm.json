@@ -53,10 +53,11 @@
     "text": "Only the Bludgeoning damage increases."
   },
   "zone": {
-    "triggers": [
-      "cast"
-    ],
-    "terrain": "difficult"
+    "triggers": [],
+    "terrain": "difficult",
+    "resolve_on_cast": true,
+    "caster_turn_ends": 2,
+    "uses_spell_damage": false
   },
   "tags": [
     "damage",

@@ -1839,6 +1839,10 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	for extra: Variant in opts.get("extra_dice", []):
 		dice_list.append(extra as Dictionary)
 	dice_list.append_array(features.hit_damage_dice(c, target, option, st))
+	# Lightning Arrow: the bolt's damage instead of the weapon's.
+	var replaced := bool(st.get("replace_weapon_damage", false))
+	if replaced:
+		dice_list.assign(dice_list.filter(func(x: Dictionary) -> bool: return not bool(x.get("weapon", false)) and str(x.get("label", "")) != "Sneak Attack"))
 	# Extra damage on weapon and Unarmed Strike hits from spells (Crusader's Mantle, Enlarge) and features.
 	for m in c.creature.modifiers_for(&"damage_penalty_die"):
 		dice_list.append({"dice": m.text("dice", "1d8"), "type": str(p.damage_type), "label": m.source_name, "penalty": true})
@@ -1865,7 +1869,7 @@ func _after_hit(st: Dictionary) -> CombatResult:
 			continue
 		parts[ty] = int(parts.get(ty, 0)) + int(rolled["total"])
 		dmg_text.append("%s %s%s: %s" % [entry["label"], entry["dice"], " ×2 (Critical Hit)" if critical else "", rolled["text"]])
-	var bonus := p.damage_bonus.total() + features.flat_damage_bonus(c, target, option, st, dmg_text)
+	var bonus := 0 if replaced else p.damage_bonus.total() + features.flat_damage_bonus(c, target, option, st, dmg_text)
 	if bool(opts.get("offhand", false)) and bonus > 0 and not c.creature.has_flag("two_weapon_fighting") \
 			and not (features.has_feat(c, "crossbow_expert") and p.item_id == "hand_crossbow"):
 		bonus = 0
@@ -1874,7 +1878,8 @@ func _after_hit(st: Dictionary) -> CombatResult:
 		bonus = maxi(0, bonus - p.damage_bonus.total())
 		dmg_text.append("No ability modifier to this damage")
 	var primary := str(p.damage_type)
-	parts[primary] = maxi(0, int(parts.get(primary, 0)) + bonus)
+	if not replaced:
+		parts[primary] = maxi(0, int(parts.get(primary, 0)) + bonus)
 	if bonus != 0:
 		dmg_text.append(p.damage_bonus.describe())
 	var details := st["details"] as Array[String]
@@ -1899,9 +1904,30 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 	if target.is_down():
 		r.killed.append(target.id)
 	_on_hit_effects(c, target, option, dr, r)
+	if bool(option["melee"]):
+		retaliate(c, target)
 	features.after_hit(c, target, option, dr, st, r)
 	_queue_sentinels(c, target)
 	return run_reaction_queue(r)
+
+
+## A melee hit on a creature wrapped in Armor of Agathys or Fire Shield: the attacker takes the spell's damage
+## (`retaliate` modifiers: `value` or `dice`, `type`, `within` feet).
+func retaliate(attacker: Combatant, target: Combatant) -> void:
+	if attacker == null or not attacker.is_alive():
+		return
+	for m in target.creature.modifiers_for(&"retaliate"):
+		if distance(attacker, target) > int(m.data.get("within", 5)):
+			continue
+		var amount := m.number("value") if m.data.has("value") else 0
+		var text := "%d" % amount
+		if m.data.has("dice"):
+			var rolled := _roll_damage_dice(m.text("dice"), false, 0, m.source_name)
+			amount += int(rolled["total"])
+			text = str(rolled["text"])
+		if amount > 0:
+			deal_damage(target, attacker, [{"amount": amount, "type": m.text("type", "cold"), "spell": true}], false, m.source_name,
+				["%s strikes back: %s" % [m.source_name, text]])
 
 
 ## Rolls damage dice (doubled on a Critical Hit; dice below `minimum` count as `minimum`).
@@ -1976,6 +2002,25 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 				target.creature.dead = false
 				target.creature.hp = 1
 				log.add("info", "%s keeps standing: Undead Fortitude" % target.name(), target.id, [save.describe()])
+	# Death Ward: the first drop to 0 Hit Points (or death outright from damage) leaves it at 1 instead.
+	if was_up and (dr.dropped_to_zero or target.creature.dead) and target.creature.has_flag("death_ward"):
+		for fxw: Effect in target.creature.effects.duplicate():
+			if fxw.modifiers.any(func(m: Modifier) -> bool: return m.stat == &"flag" and m.text("value") == "death_ward"):
+				target.creature.remove_effect(fxw)
+		target.creature.dead = false
+		target.creature.hp = 1
+		target.creature.remove_condition(&"unconscious", "0 Hit Points")
+		target.creature.death_failures = 0
+		dr.dropped_to_zero = false
+		dr.died = false
+		dr.instant_death = false
+		log.add("info", "Death Ward holds: %s stays up with 1 Hit Point" % target.name(), target.id)
+	# Armor of Agathys ends once its Temporary Hit Points are gone.
+	if target.creature.temp_hp <= 0:
+		for fxa: Effect in target.creature.effects.duplicate():
+			if bool(fxa.data.get("ends_without_temp_hp", false)):
+				target.creature.remove_effect(fxa)
+				log.add("info", "%s ends: no Temporary Hit Points left" % fxa.name, target.id)
 	var text := dr.describe(target.name())
 	if log_it:
 		var headline := text

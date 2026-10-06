@@ -33,6 +33,39 @@
   "upcast": {
     "damage": "1d6"
   },
+  "on_hit_spell": true,
+  "damage": [
+    {
+      "dice": "2d6",
+      "type": "radiant"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "on": "hit",
+        "modifiers": [
+          {
+            "stat": "attacked_with",
+            "value": "advantage"
+          },
+          {
+            "stat": "flag",
+            "value": "no_invisible"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "light",
+      "params": {
+        "on": "hit",
+        "bright": 5,
+        "dim": 0
+      }
+    }
+  ],
   "tags": [
     "damage",
     "debuff",

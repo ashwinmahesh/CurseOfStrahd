@@ -36,6 +36,22 @@
   "upcast": {
     "damage": "1d6"
   },
+  "on_hit_spell": true,
+  "damage": [
+    {
+      "dice": "4d6",
+      "type": "psychic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "stunned",
+        "until": "caster_turn_end"
+      }
+    }
+  ],
   "tags": [
     "damage",
     "control"

@@ -843,6 +843,9 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		return
 	if s.has("zone"):
 		_place_zone(ctx, cells, r)
+		# The spell resolves as usual and leaves an area behind (Ice Storm's hail on the ground).
+		if bool((s["zone"] as Dictionary).get("resolve_on_cast", false)):
+			_generic(ctx, tgt, cells, r)
 	else:
 		_generic(ctx, tgt, cells, r)
 	if s.has("sustain"):
@@ -1039,6 +1042,8 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 			details.append("%s %s: %s" % [m.source_name, m.text("dice"), xr["text"]])
 		var dr := e.deal_damage(c, t, parts, critical, str(s["name"]), details)
 		r.damage += dr.final
+		if melee:
+			e.retaliate(c, t)
 		if bool(s.get("drain", false)) and dr.final > 0:
 			var healed := c.creature.heal(dr.final / 2, str(s["name"]))
 			if healed > 0:
@@ -1072,9 +1077,10 @@ func _secondary(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var sec := s["secondary"] as Dictionary
 	var e := enc()
 	var cells := e.grid.area_cells("emanation", int(sec.get("radius", 5)), e.center_of(t), Vector2.RIGHT, 5, t.cell, t.size_cells)
-	for cell in t.footprint():
-		if not cell in cells:
-			cells.append(cell)
+	if not bool(sec.get("exclude_target", false)):
+		for cell in t.footprint():
+			if not cell in cells:
+				cells.append(cell)
 	e.events.append({"type": "spell", "caster": (ctx["c"] as Combatant).id, "spell": str(s["id"]), "cells": cells, "targets": []})
 	var sub := ctx.duplicate()
 	var sub_s := s.duplicate()
@@ -1146,10 +1152,20 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 	var ab := StringName(str(s["save"]))
 	var has_damage := s.has("damage") and not (s["damage"] as Array).is_empty()
 	var shared := {}
-	if has_damage and str(s["id"]) != "toll_the_dead":
-		shared = _roll_spell_damage(ctx, null, false) if not ctx.has("secondary_parts") else {}
-		if (s["damage"] as Array).size() > 1 or not (s["damage"] as Array)[0].has("dice") or ctx.has("secondary"):
-			pass
+	# Several damage types at once (Ice Storm's Bludgeoning and Cold): each part rolled once, halved on its own.
+	var multi: Array[Dictionary] = []
+	if has_damage and (s["damage"] as Array).size() > 1:
+		for i in (s["damage"] as Array).size():
+			var part := (s["damage"] as Array)[i] as Dictionary
+			if str(part.get("per", "")) == "turn":
+				continue
+			var pr := roll_damage_parts(ctx, [part], false, null)
+			if i == 0:
+				var bonus0 := _damage_bonus(ctx)
+				pr["total"] = int(pr["total"]) + bonus0.total()
+			multi.append(pr)
+	elif has_damage and str(s["id"]) != "toll_the_dead":
+		shared = _roll_spell_damage(ctx, null, false)
 	var half_on_success := str(s.get("save_success", "none")) == "half" or (int(s.get("level", 0)) == 0 and c.creature.has_flag("potent_cantrip"))
 	var pushes: Array[Dictionary] = []
 	ctx["push_queue"] = pushes
@@ -1184,6 +1200,9 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			dis.append("%s against %s" % [vs.capitalize(), s["name"]])
 		if bool(s.get("save_advantage_if_fighting", false)) and c.hostile_to(t):
 			adv.append("you're fighting it")
+		var min_size := str(s.get("save_advantage_min_size", ""))
+		if min_size != "" and Creature.SIZES.find(t.creature.size) >= Creature.SIZES.find(StringName(min_size)):
+			adv.append("%s or larger" % min_size.capitalize())
 		if str(s["id"]) == "sleep" and t.creature.is_condition_immune(&"exhaustion"):
 			r.lines.append(e.log.add("info", "%s doesn't sleep: unaffected" % t.name(), t.id))
 			continue
@@ -1201,7 +1220,22 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			details.append(test.describe() + bonus_text)
 		else:
 			details.append("%s doesn't resist" % t.name())
-		if has_damage:
+		if has_damage and not multi.is_empty():
+			var parts: Array = []
+			for pr in multi:
+				var amt := int(pr["total"])
+				if success:
+					amt = amt / 2 if half_on_success else 0
+				if ab == &"dex" and half_on_success and t.creature.has_flag("evasion") and t.can_act():
+					amt = 0 if success else int(pr["total"]) / 2
+				parts.append({"amount": amt, "type": str(pr["type"]), "spell": true})
+				details.append(str(pr["text"]))
+			if parts.any(func(x: Dictionary) -> bool: return int(x["amount"]) > 0):
+				var drm := e.deal_damage(c, t, parts, false, str(s["name"]), details)
+				r.damage += drm.final
+			else:
+				r.lines.append(e.log.add("info", "%s saves against %s" % [t.name(), s["name"]], t.id, details))
+		elif has_damage:
 			var rolled := shared if not shared.is_empty() else _roll_spell_damage(ctx, t, false)
 			var amount := int(rolled["total"])
 			if success:
@@ -1589,6 +1623,23 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 			fxo.consume_when_attacked = true
 	if bool(params.get("wakeable", false)):
 		fxo.data["wakeable"] = true
+	# Damage at the start of each of the target's turns (Searing Smite, Ensnaring Strike), with the slot's extra dice.
+	if params.has("turn_damage"):
+		var td := (params["turn_damage"] as Dictionary).duplicate()
+		var tb := DiceRoller.parse_expr(str(td.get("dice", "1d6")))
+		var tn := int(tb["count"])
+		var tup := str((s.get("upcast", {}) as Dictionary).get("damage", ""))
+		if tup != "" and slot > int(s.get("level", 0)):
+			tn += int(DiceRoller.parse_expr(tup)["count"]) * (slot - int(s.get("level", 0)))
+		td["dice"] = "%dd%d" % [tn, int(tb["sides"])]
+		fxo.data["turn_damage"] = td
+	# Temporary Hit Points at the start of each of its turns (Heroism: the spellcasting modifier).
+	if params.has("turn_temp_hp"):
+		var th: Variant = params["turn_temp_hp"]
+		fxo.data["turn_temp_hp"] = int((ctx["nums"] as Dictionary).get("mod", 0)) if str(th) == "mod" else int(th)
+	# Ends once its Temporary Hit Points are gone (Armor of Agathys).
+	if bool(params.get("ends_without_temp_hp", false)):
+		fxo.data["ends_without_temp_hp"] = true
 	# Protection from Evil and Good: no Charmed or Frightened from the warded-against creature types.
 	var caster_type := str(c.creature.creature_type)
 	for m in t.creature.modifiers_for(&"condition_immunity_by_type"):
@@ -2150,6 +2201,9 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 	o.keep_with(ctx["conc"] as Concentration)
 	if ctx["conc"] == null:
 		o.rounds_left = int(d.get("amount", 1)) * (10 if str(d.get("kind", "")) == "minutes" else (600 if str(d.get("kind", "")) == "hours" else 1))
+	# Lasts until the end of the caster's next turn (Ice Storm's hail): counted down at the end of the caster's turns.
+	if z.has("caster_turn_ends"):
+		o.rounds_left = -1
 	_light_vs_darkness(o, int(ctx["slot"]))
 	zones.add(o, r)
 	r.lines.append(enc().log.add("spell", "%s fills %d squares" % [s["name"], cells.size()], c.id))
@@ -2707,6 +2761,7 @@ func turn_start(c: Combatant) -> void:
 	var e := enc()
 	zones.turn_start(c)
 	_prune_sustained()
+	_turn_start_effects(c)
 	_repeat_saves(c, "start")
 	# Bestow Curse (Dodge): a Wisdom save at the start of its turn or it must take the Dodge action.
 	if c.creature.has_flag("cursed_dodge") and c.can_act():
@@ -2730,6 +2785,23 @@ func turn_start(c: Combatant) -> void:
 		c.creature.remove_effects_named("Blinked away")
 		e.log.add("info", "%s blinks back" % c.name(), c.id)
 		e.events.append({"type": "condition", "id": c.id})
+
+
+## Effects that act at the start of their bearer's turn: burning and thorns (`turn_damage`), Heroism's Temporary Hit
+## Points (`turn_temp_hp`).
+func _turn_start_effects(c: Combatant) -> void:
+	var e := enc()
+	for fx: Effect in c.creature.effects.duplicate():
+		if not fx in c.creature.effects or not c.is_alive():
+			continue
+		var td := fx.data.get("turn_damage", {}) as Dictionary
+		if not td.is_empty() and str(td.get("when", "start")) == "start":
+			var rolled := e._roll_damage_dice(str(td["dice"]), false, 0, fx.name)
+			e.deal_damage(e.get_c(fx.caster_id), c, [{"amount": int(rolled["total"]), "type": str(td.get("type", "fire")), "spell": true}], false, fx.name, [str(rolled["text"])])
+		if fx.data.has("turn_temp_hp") and c.creature.hp > 0:
+			var amount := int(fx.data["turn_temp_hp"])
+			if amount > 0 and c.creature.add_temp_hp(amount, fx.name):
+				e.log.add("heal", "%s gains %d Temporary Hit Points (%s)" % [c.name(), amount, fx.name], c.id)
 
 
 func turn_end(c: Combatant) -> void:

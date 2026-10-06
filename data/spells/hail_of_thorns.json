@@ -33,6 +33,20 @@
   "upcast": {
     "damage": "1d10"
   },
+  "on_hit_spell": true,
+  "on_hit_melee_only": false,
+  "on_hit_ranged_only": true,
+  "secondary": {
+    "radius": 5,
+    "save": "dex",
+    "save_success": "half",
+    "damage": [
+      {
+        "dice": "1d10",
+        "type": "piercing"
+      }
+    ]
+  },
   "tags": [
     "damage"
   ],

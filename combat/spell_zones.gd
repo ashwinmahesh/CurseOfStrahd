@@ -171,6 +171,12 @@ func turn_start(c: Combatant) -> void:
 
 
 func turn_end(c: Combatant) -> void:
+	for o in objects:
+		if o.caster_id == c.id and o.rules.has("caster_turn_ends"):
+			o.rules["caster_turn_ends"] = int(o.rules["caster_turn_ends"]) - 1
+			if int(o.rules["caster_turn_ends"]) <= 0:
+				o.ended = true
+	prune()
 	for o: FieldObject in objects.duplicate():
 		if o.expired():
 			continue

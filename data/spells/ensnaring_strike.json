@@ -38,6 +38,23 @@
   "upcast": {
     "damage": "1d6"
   },
+  "on_hit_spell": true,
+  "on_hit_melee_only": false,
+  "save_advantage_min_size": "large",
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "restrained",
+        "escape": "check:athletics",
+        "turn_damage": {
+          "dice": "1d6",
+          "type": "piercing",
+          "when": "start"
+        }
+      }
+    }
+  ],
   "tags": [
     "control",
     "damage"

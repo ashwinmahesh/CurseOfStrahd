@@ -490,6 +490,10 @@
           "items": {
             "$ref": "common.schema.json#/$defs/effect_ref"
           }
+        },
+        "exclude_target": {
+          "type": "boolean",
+          "description": "The burst spares the creature it centres on (Lightning Arrow)."
         }
       }
     },
@@ -598,6 +602,14 @@
             }
           },
           "additionalProperties": false
+        },
+        "resolve_on_cast": {
+          "type": "boolean",
+          "description": "The spell also resolves as usual when cast (Ice Storm), then leaves the area."
+        },
+        "caster_turn_ends": {
+          "type": "integer",
+          "description": "The area ends after this many ends of the caster's turns (2: until the end of your next turn)."
         }
       }
     },
@@ -783,6 +795,22 @@
           "type": "string"
         }
       }
+    },
+    "on_hit_ranged_only": {
+      "type": "boolean",
+      "description": "Only after a hit with a Ranged weapon (Hail of Thorns, Lightning Arrow)."
+    },
+    "on_miss_too": {
+      "type": "boolean",
+      "description": "Also cast after a miss (Lightning Arrow: half damage)."
+    },
+    "replaces_weapon_damage": {
+      "type": "boolean",
+      "description": "The spell's damage replaces the weapon's (Lightning Arrow)."
+    },
+    "save_advantage_min_size": {
+      "type": "string",
+      "description": "Creatures of this size or larger save with Advantage (Ensnaring Strike: large)."
     }
   }
 }

@@ -31,9 +31,6 @@
     "count": 1,
     "description": "a willing creature"
   },
-  "temp_hp": {
-    "add_mod": true
-  },
   "upcast": {
     "targets": 1
   },
@@ -41,6 +38,7 @@
     {
       "effect": "modifiers",
       "params": {
+        "turn_temp_hp": "mod",
         "modifiers": [
           {
             "stat": "condition_immunity",

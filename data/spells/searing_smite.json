@@ -33,6 +33,34 @@
     "damage": "1d6",
     "text": "Both the extra damage and the burning damage each turn increase."
   },
+  "on_hit_spell": true,
+  "damage": [
+    {
+      "dice": "1d6",
+      "type": "fire"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "on": "hit",
+        "repeat_save": "start_of_turn",
+        "repeat_ability": "con",
+        "turn_damage": {
+          "dice": "1d6",
+          "type": "fire",
+          "when": "start"
+        },
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "burning"
+          }
+        ]
+      }
+    }
+  ],
   "tags": [
     "damage"
   ],

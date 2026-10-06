@@ -36,6 +36,28 @@
   "upcast": {
     "damage": "1d6"
   },
+  "on_hit_spell": true,
+  "damage": [
+    {
+      "dice": "2d6",
+      "type": "thunder"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "push",
+      "params": {
+        "feet": 10
+      }
+    },
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "prone",
+        "plain": true
+      }
+    }
+  ],
   "tags": [
     "damage",
     "control"
