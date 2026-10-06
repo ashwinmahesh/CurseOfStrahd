@@ -95,18 +95,29 @@ def binarize_alpha(arr, threshold=0.5):
     return out
 
 
-def load_palette():
+def load_palette(names=None):
+    """The Strahd palette as an (N, 3) float array; `names` picks a subset (palette.json keys)."""
     data = json.loads((ROOT / "art" / "palette" / "palette.json").read_text())
-    return np.array([[int(h[i:i + 2], 16) / 255.0 for i in (1, 3, 5)] for h in data.values()], dtype=np.float32)
+    keys = list(data) if names is None else list(names)
+    return np.array([[int(data[k][i:i + 2], 16) / 255.0 for i in (1, 3, 5)] for k in keys], dtype=np.float32)
 
 
-def quantize(arr, palette=None, chunk=200_000):
-    """Snaps every visible pixel to the nearest palette colour (redmean distance, same as the shader)."""
+# Neutral greys: the palette's grey ramp is cool (stone, slate, pewter, silver), so by redmean alone a
+# neutral mid grey lands on warm `bone` (the grey wolf came out beige, Build Log 04). A pixel with almost
+# no chroma is only matched against low-chroma palette colours, unless it is near-white (eye glints).
+NEUTRAL_PIXEL = 0.06
+NEUTRAL_PALETTE = 0.075
+
+
+def quantize(arr, palette=None, chunk=200_000, keep_neutrals=True):
+    """Snaps every visible pixel to the nearest palette colour (redmean distance, same as the shader).
+    keep_neutrals: grey pixels stay on the grey ramp instead of drifting to bone/tan."""
     if palette is None:
         palette = load_palette()
     out = arr.copy()
     flat = out.reshape(-1, 4)
     idx = np.nonzero(flat[:, 3] > 0)[0]
+    pal_chroma = palette.max(axis=1) - palette.min(axis=1)
     for start in range(0, len(idx), chunk):
         sel = idx[start:start + chunk]
         c = flat[sel, :3][:, None, :]
@@ -114,7 +125,57 @@ def quantize(arr, palette=None, chunk=200_000):
         r = (c[..., 0] + p[..., 0]) * 0.5
         d = c - p
         dist = (2 + r) * d[..., 0] ** 2 + 4 * d[..., 1] ** 2 + (3 - r) * d[..., 2] ** 2
+        if keep_neutrals and (pal_chroma < NEUTRAL_PALETTE).any():
+            px = flat[sel, :3]
+            neutral = ((px.max(axis=1) - px.min(axis=1)) < NEUTRAL_PIXEL) & (px.max(axis=1) < 0.86)
+            dist = dist + np.where(neutral[:, None] & (pal_chroma[None, :] >= NEUTRAL_PALETTE), 10.0, 0.0)
         flat[sel, :3] = palette[np.argmin(dist, axis=1)]
+    return out
+
+
+def saturate(arr, k):
+    """Scales colourfulness around each pixel's luma by `k` before quantizing. Gemini's colours are muted and a
+    muted red or pink lands on brown (leather, rust) in the saturated Strahd palette; k of about 1.3 keeps it
+    red. Greys barely move (they have no chroma to scale). k = 1 is a no-op."""
+    if k == 1.0:
+        return arr
+    out = arr.copy()
+    rgb = out[..., :3]
+    luma = (rgb @ np.array([0.299, 0.587, 0.114], dtype=np.float32))[..., None]
+    out[..., :3] = np.clip(luma + (rgb - luma) * k, 0.0, 1.0)
+    return out
+
+
+def despeckle(arr, max_same=1, wrap=False):
+    """Cleans the salt-and-pepper left when a noisy (JPEG) source is snapped to the palette: an opaque pixel
+    with at most `max_same` of its 8 neighbours in its own colour takes its neighbours' most common colour.
+    wrap=True treats the image as a tile (textures). Run after quantize; colours stay in the palette."""
+    out = arr.copy()
+    h, w = arr.shape[:2]
+    rgb8 = np.round(arr[..., :3] * 255).astype(np.int64)
+    key = (rgb8[..., 0] << 16) | (rgb8[..., 1] << 8) | rgb8[..., 2]
+    key = np.where(arr[..., 3] > 0, key, -1)
+    if wrap:
+        nb = np.stack([np.roll(np.roll(key, dy, 0), dx, 1)
+                       for dy in (-1, 0, 1) for dx in (-1, 0, 1) if dy or dx])
+    else:
+        pad = np.pad(key, 1, constant_values=-1)
+        nb = np.stack([pad[1 + dy:1 + dy + h, 1 + dx:1 + dx + w]
+                       for dy in (-1, 0, 1) for dx in (-1, 0, 1) if dy or dx])
+    same = (nb == key[None]).sum(axis=0)
+    fix = (key >= 0) & (same <= max_same)
+    if not fix.any():
+        return out
+    ys, xs = np.nonzero(fix)
+    cand = nb[:, ys, xs]                                   # (8, n)
+    votes = (cand[:, None, :] == cand[None, :, :]).sum(axis=1)
+    votes = np.where(cand >= 0, votes, -1)
+    best = cand[np.argmax(votes, axis=0), np.arange(len(ys))]
+    ok = best >= 0
+    ys, xs, best = ys[ok], xs[ok], best[ok]
+    out[ys, xs, 0] = ((best >> 16) & 255) / 255.0
+    out[ys, xs, 1] = ((best >> 8) & 255) / 255.0
+    out[ys, xs, 2] = (best & 255) / 255.0
     return out
 
 

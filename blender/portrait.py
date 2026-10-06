@@ -1,9 +1,11 @@
 """Generated portrait -> square, palette-snapped portrait for the initiative strip and party frames.
 
-blender -b --python blender/portrait.py -- --in <png> --id <asset_id> [--size 512]
+blender -b --python blender/portrait.py -- --in <png> --id <asset_id> [--size 512] [--keep-background] [--bg NAME] [--saturate K]
 
 Centre-crops to a square, downsizes by box averaging (whole factors) or Blender's scaler, snaps every
-pixel to the Strahd palette (cutout.quantize, same as the sprites) and writes art/portraits/<id>.png.
+pixel to the Strahd palette (cutout.quantize, same as the sprites), clears the single-pixel speckle the
+JPEG source leaves (cutout.despeckle), flattens the background to one palette colour (Gemini often paints a
+grainy or mottled purple, worst on expression variants made from a reference) and writes art/portraits/<id>.png.
 """
 import argparse
 import sys
@@ -21,6 +23,9 @@ def args():
     p.add_argument("--in", dest="src", required=True)
     p.add_argument("--id", required=True)
     p.add_argument("--size", type=int, default=512)
+    p.add_argument("--keep-background", action="store_true", help="skip the flat-background pass")
+    p.add_argument("--bg", default="", help="palette name for the flat background (default: the border's own colour)")
+    p.add_argument("--saturate", type=float, default=1.0, help="chroma boost before quantizing (cutout.saturate)")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -44,12 +49,49 @@ def resize(arr, size):
     return np.flipud(out.reshape(size, size, 4)).copy()
 
 
+def flatten_background(arr, min_share=0.04, colour=None, max_island=150):
+    """The background is whatever is reachable from the top edge and the upper two thirds of the side edges
+    through the colours that make up that border (each at least `min_share` of it). The figure's ink outline
+    stops the fill; small islands inside the background are absorbed. Every such pixel takes the border's most common colour. Runs on the quantized image."""
+    h, w = arr.shape[:2]
+    rgb8 = np.round(arr[..., :3] * 255).astype(np.int64)
+    key = (rgb8[..., 0] << 16) | (rgb8[..., 1] << 8) | rgb8[..., 2]
+    side = int(h * 0.66)
+    ring = np.concatenate([key[0], key[:side, 0], key[:side, -1]])
+    vals, counts = np.unique(ring, return_counts=True)
+    bg = vals[counts >= min_share * len(ring)]
+    allowed = np.isin(key, bg)
+    seed = np.zeros_like(allowed)
+    seed[0] = True
+    seed[:side, 0] = True
+    seed[:side, -1] = True
+    mask = cutout._grow(seed, allowed)
+    # Specks of other colours left in the background (islands under max_island px, clear of the bottom edge,
+    # where the bust is) join it.
+    for comp in cutout.label_components(~mask):
+        if sum(x1 - x0 for _, x0, x1 in comp) < max_island and max(y for y, _, _ in comp) < h - 1:
+            for y, x0, x1 in comp:
+                mask[y, x0:x1] = True
+    top = vals[np.argmax(counts)]
+    if colour is not None:
+        r, g, b = (int(round(c * 255)) for c in colour)
+        top = (r << 16) | (g << 8) | b
+    out = arr.copy()
+    out[mask, 0] = ((top >> 16) & 255) / 255.0
+    out[mask, 1] = ((top >> 8) & 255) / 255.0
+    out[mask, 2] = (top & 255) / 255.0
+    return out
+
+
 def main():
     a = args()
     arr = resize(square(cutout.load_rgba(a.src)), a.size)
     arr[..., 3] = 1.0
     out = cutout.ROOT / "art" / "portraits" / f"{a.id}.png"
-    cutout.save_rgba(cutout.quantize(arr), out)
+    arr = cutout.despeckle(cutout.quantize(cutout.saturate(arr, a.saturate)))
+    if not a.keep_background:
+        arr = flatten_background(arr, colour=cutout.palette_colour(a.bg) if a.bg else None)
+    cutout.save_rgba(arr, out)
     print(f"portrait: {out} ({a.size}x{a.size})")
 
 

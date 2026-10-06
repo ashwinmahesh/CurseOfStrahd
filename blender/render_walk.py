@@ -2,7 +2,7 @@
 (plan §7 steps 4-6).
 
 blender -b --python blender/render_walk.py -- --turnaround <png> --id <asset_id>
-        [--side-faces left] [--cell 384] [--frames 8] [--static] [--views 3|5]
+        [--side-faces left] [--cell 384] [--frames 8] [--static] [--views 3|5] [--saturate K]
 
 The sheet shows views left to right: either 5 (front, front three-quarter, side, back three-quarter,
 back — best, gives true diagonals) or 3 (front, side, back; diagonals reuse front/back turned 25
@@ -62,6 +62,7 @@ def args():
     p.add_argument("--frames", type=int, default=8)
     p.add_argument("--static", action="store_true", help="one still frame per direction, no rig")
     p.add_argument("--views", type=int, choices=[3, 5], help="views on the sheet (default: detect)")
+    p.add_argument("--saturate", type=float, default=1.0, help="chroma boost before quantizing (cutout.saturate)")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -232,7 +233,7 @@ def main():
             bpy.ops.render.render(write_still=True)
             frames.append(cutout.load_rgba(path))
     walk = cutout.pack_grid(frames, frames_per_dir)
-    walk = cutout.quantize(cutout.binarize_alpha(walk))
+    walk = cutout.despeckle(cutout.quantize(cutout.saturate(cutout.binarize_alpha(walk), a.saturate)))
     cutout.save_rgba(walk, out_dir / "walk.png")
     cutout.write_sprite_frames(out_dir / "walk.tres", f"res://art/sprites/{a.id}/walk.png",
                                (a.cell, a.cell), DIRECTIONS, frames_per_dir)

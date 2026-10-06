@@ -32,7 +32,16 @@
       "sprites": "art/sprites/ilse_varga/walk.tres",
       "portrait": "art/portraits/ilse_varga.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Human fighter (party). Tabard snaps to rust/brown under the palette. Needs art QA before final."
+      "notes": "Human fighter (party). Regenerated (P4-09, 2026-10-06) for the owner's Build Log 04 note (her face read masculine): the old sheet sent as the reference with a clearly feminine face, a braid and the same kit. make sprite SAT=1.3 so the tabard stays red instead of rust. 8 directions x 8-frame walk, 384 px cells. Same height_units as before. Needs art QA before final.",
+      "prompt": "Character turnaround sheet of Ilse Varga, a human woman fighter in her late thirties, a veteran mercenary sergeant, who must clearly read as a woman: a feminine face with high cheekbones, fuller lips, a softer jaw and a thin pale scar across her left cheek, ash-blonde hair pulled back into one thick braid hanging down her back with a few loose strands at her temples, and a strong but female figure; she wears a short-sleeved chainmail shirt under a rust-red tabard with a leather belt and pouches, a diagonal sword strap across her chest, leather bracers, slate-grey trousers and tall brown boots, a greatsword sheathed across her back. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. The reference image is her old sheet: keep the same clothes, colours and greatsword, but redraw her face, hair and figure as described so she is unmistakably a woman.",
+      "reference": [
+        "art/generated/characters/ilse_varga_turnaround.png"
+      ],
+      "expressions": [
+        "art/portraits/ilse_varga_smile.png",
+        "art/portraits/ilse_varga_angry.png",
+        "art/portraits/ilse_varga_weary.png"
+      ]
     },
     {
       "id": "tamsin_tealeaf",
@@ -42,7 +51,12 @@
       "sprites": "art/sprites/tamsin_tealeaf/walk.tres",
       "portrait": "art/portraits/tamsin_tealeaf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Halfling rogue (party). Drawn alone, so he fills the cell like a human: use about half a human's height_units. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Halfling rogue (party). Drawn alone, so he fills the cell like a human: use about half a human's height_units. Needs art QA before final.",
+      "expressions": [
+        "art/portraits/tamsin_tealeaf_afraid.png",
+        "art/portraits/tamsin_tealeaf_sly.png",
+        "art/portraits/tamsin_tealeaf_sad.png"
+      ]
     },
     {
       "id": "hedda_ironvow",
@@ -52,7 +66,12 @@
       "sprites": "art/sprites/hedda_ironvow/walk.tres",
       "portrait": "art/portraits/hedda_ironvow.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Dwarf cleric (party). Sheet had touching shield/mace silhouettes; split by the new connected-component pass in blender/lib/cutout.py. Use a smaller height_units than humans. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Dwarf cleric (party). Sheet had touching shield/mace silhouettes; split by the new connected-component pass in blender/lib/cutout.py. Use a smaller height_units than humans. Needs art QA before final.",
+      "expressions": [
+        "art/portraits/hedda_ironvow_smile.png",
+        "art/portraits/hedda_ironvow_angry.png",
+        "art/portraits/hedda_ironvow_sad.png"
+      ]
     },
     {
       "id": "silvain_aster",
@@ -62,7 +81,12 @@
       "sprites": "art/sprites/silvain_aster/walk.tres",
       "portrait": "art/portraits/silvain_aster.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. High elf wizard (party). Staff below the hips is kept rigid by the new prop pass (cutout.split_props); robe hem still swings with the legs. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game). The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. High elf wizard (party). Staff below the hips is kept rigid by the new prop pass (cutout.split_props); robe hem still swings with the legs. Needs art QA before final.",
+      "expressions": [
+        "art/portraits/silvain_aster_smile.png",
+        "art/portraits/silvain_aster_afraid.png",
+        "art/portraits/silvain_aster_angry.png"
+      ]
     },
     {
       "id": "zombie",
@@ -82,7 +106,7 @@
       "sprites": "art/sprites/wolf/walk.tres",
       "portrait": "art/portraits/wolf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Grey wolf: the grey fur snaps to pale bone/pewter under the palette. Needs art QA before final."
+      "notes": "5-view quadruped turnaround (21:9) -> blender/render_walk.py --static -> 8 directions x 1 still frame, 384 px cells (re-rendered 2026-10-06 at the owner's request: sharper in game), same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00 (tallest view fills the standard band). Grey wolf. Re-rendered (P4-09, 2026-10-06) for the owner's Build Log 04 note (it came out beige): cutout.quantize now keeps neutral greys on the palette's grey ramp (pewter/slate) instead of letting redmean pick bone, and despeckles. Needs art QA before final."
     },
     {
       "id": "dire_wolf",
@@ -101,7 +125,11 @@
       "source": "art/generated/portraits/ilse_varga_portrait.png",
       "sprites": "art/portraits/ilse_varga.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: grim, steady. One expression only so far."
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: grim, steady.",
+      "prompt": "Bust portrait of Ilse Varga, a human woman fighter in her late thirties, a veteran mercenary sergeant, with a clearly feminine face: high cheekbones, fuller lips, a softer jaw and a thin pale scar across her left cheek, ash-blonde hair pulled back into one thick braid with loose strands at her temples, in a chainmail shirt under a rust-red tabard with a leather sword strap across her chest and the hilt of a greatsword over her shoulder, three-quarter view, grim, steady expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/ilse_varga_turnaround.png"
+      ]
     },
     {
       "id": "tamsin_tealeaf_portrait",
@@ -110,7 +138,7 @@
       "source": "art/generated/portraits/tamsin_tealeaf_portrait.png",
       "sprites": "art/portraits/tamsin_tealeaf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: cheeky grin (third generation: first had a visible candle and banded halo, second a textured background). One expression only so far."
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: cheeky grin (third generation: first had a visible candle and banded halo, second a textured background). One expression only so far. Reprocessed (P4-09, 2026-10-06) from the same source with the new portrait pass (despeckle, flat ash_violet background) so the set matches its new expressions."
     },
     {
       "id": "hedda_ironvow_portrait",
@@ -119,7 +147,7 @@
       "source": "art/generated/portraits/hedda_ironvow_portrait.png",
       "sprites": "art/portraits/hedda_ironvow.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: stern but kindly. One expression only so far."
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: stern but kindly. One expression only so far. Reprocessed (P4-09, 2026-10-06) from the same source with the new portrait pass (despeckle, flat ash_violet background) so the set matches its new expressions."
     },
     {
       "id": "silvain_aster_portrait",
@@ -128,7 +156,11 @@
       "source": "art/generated/portraits/silvain_aster_portrait.png",
       "sprites": "art/portraits/silvain_aster.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: aloof, thoughtful (red rim light on the blue robes). One expression only so far."
+      "notes": "Bust portrait regenerated (P4-09, 2026-10-06) for the owner's Build Log 04 note (strong red rim light): soft frontal candlelight and an explicit no-rim-light line; the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: aloof, thoughtful.",
+      "prompt": "Bust portrait of Silvain Aster, a high elf wizard with an ageless, narrow, androgynous face, grey eyes, pointed ears and long straight silver-white hair, in deep navy-blue robes with silver trim and a high collar over a burgundy under-robe, three-quarter view, aloof, thoughtful expression, lit softly from the front by warm candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. No rim light: the edges of the hair, face and robes keep their own colours, with no red, orange or pink glow along them.",
+      "reference": [
+        "art/generated/characters/silvain_aster_turnaround.png"
+      ]
     },
     {
       "id": "wolf_portrait",
@@ -137,7 +169,7 @@
       "source": "art/generated/portraits/wolf_portrait.png",
       "sprites": "art/portraits/wolf.png",
       "model": "gemini-3.1-flash-image",
-      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: snarling. One expression only so far."
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: snarling. One expression only so far. Reprocessed (P4-09, 2026-10-06) with the neutral-grey quantizer (grey, not beige) and the flat ash_violet background."
     },
     {
       "id": "dire_wolf_portrait",
@@ -216,7 +248,12 @@
       "portrait": "art/portraits/ireena.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Ireena Kolyana, a young human noblewoman in her early twenties with long wavy auburn hair, a pale, resolute face, wearing a simple dusky-blue noble dress with a laced bodice and long sleeves, a dark plum cloak hanging from her shoulders, and a cream scarf wrapped high around her neck, plain brown boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ireena Kolyana (named NPC). Dusky-blue dress, plum cloak and a cream scarf worn high on the neck (it hides the bite marks). Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ireena Kolyana (named NPC). Dusky-blue dress, plum cloak and a cream scarf worn high on the neck (it hides the bite marks). Needs art QA before final.",
+      "expressions": [
+        "art/portraits/ireena_smile.png",
+        "art/portraits/ireena_afraid.png",
+        "art/portraits/ireena_angry.png"
+      ]
     },
     {
       "id": "ireena_portrait",
@@ -229,7 +266,7 @@
       "reference": [
         "art/generated/characters/ireena_turnaround.png"
       ],
-      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: calm, resolute."
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: calm, resolute. Reprocessed (P4-09, 2026-10-06) from the same source with the new portrait pass (despeckle, flat ash_violet background) so the set matches its new expressions."
     },
     {
       "id": "ireena_afraid_portrait",
@@ -242,7 +279,7 @@
       "reference": [
         "art/generated/portraits/ireena_portrait.png"
       ],
-      "notes": "Expression variant: the neutral portrait (art/generated/portraits/ireena_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: afraid, wide-eyed (background came out a little darker and the cloak lining red: art review)."
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/ireena_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: afraid, wide-eyed (background came out a little darker and the cloak lining red: art review). Reprocessed (P4-09, 2026-10-06) from the same source with the new portrait pass (despeckle, flat ash_violet background) so the set matches its new expressions."
     },
     {
       "id": "ireena_smile_portrait",
@@ -255,7 +292,7 @@
       "reference": [
         "art/generated/portraits/ireena_portrait.png"
       ],
-      "notes": "Expression variant: the neutral portrait (art/generated/portraits/ireena_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: gentle, warm smile."
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/ireena_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: gentle, warm smile. Reprocessed (P4-09, 2026-10-06) from the same source with the new portrait pass (despeckle, flat ash_violet background) so the set matches its new expressions."
     },
     {
       "id": "rose",
@@ -341,7 +378,11 @@
       "portrait": "art/portraits/donavich.png",
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Father Donavich, a haggard, gaunt old human priest with thinning grey hair, sunken bloodshot eyes and grey stubble, wearing a threadbare, patched charcoal-black cassock with a frayed hem, a wooden sunburst holy symbol on a cord around his neck, and worn sandals. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
-      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Father Donavich (named NPC). Cassock hem swings with the legs. Needs art QA before final."
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Father Donavich (named NPC). Cassock hem swings with the legs. Needs art QA before final.",
+      "expressions": [
+        "art/portraits/donavich_afraid.png",
+        "art/portraits/donavich_sad.png"
+      ]
     },
     {
       "id": "donavich_portrait",
@@ -354,7 +395,7 @@
       "reference": [
         "art/generated/characters/donavich_turnaround.png"
       ],
-      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: haunted, guilt-ridden. Second generation: the first showed a lit candle in the frame."
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: haunted, guilt-ridden. Second generation: the first showed a lit candle in the frame. Reprocessed (P4-09, 2026-10-06) from the same source with the new portrait pass (despeckle, flat ash_violet background) so the set matches its new expressions."
     },
     {
       "id": "bildrath",
@@ -848,6 +889,1068 @@
         "art/generated/characters/noble_turnaround.png"
       ],
       "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: haughty, disdainful."
+    },
+    {
+      "id": "madam_eva",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/madam_eva_turnaround.png",
+      "sprites": "art/sprites/madam_eva/walk.tres",
+      "portrait": "art/portraits/madam_eva.png",
+      "expressions": [
+        "art/portraits/madam_eva_sly.png",
+        "art/portraits/madam_eva_sad.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Madam Eva, an ancient Vistani fortune-teller: a tiny, stooped old woman with a deeply lined brown face, a hooked nose, sharp glittering dark eyes and long silver-white hair spilling from under a dark plum headscarf hung with small gold coins, big gold hoop earrings, layered wine-red and deep purple shawls over a long dark skirt, many gold bangles on her thin wrists, and soft worn slippers. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Madam Eva (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.85 of a human's height_units (tiny, stooped). Needs art QA before final."
+    },
+    {
+      "id": "madam_eva_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/madam_eva_portrait.png",
+      "sprites": "art/portraits/madam_eva.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Madam Eva, an ancient Vistani fortune-teller, a tiny old woman with a deeply lined brown face, a hooked nose, sharp glittering dark eyes and long silver-white hair under a dark plum headscarf hung with small gold coins, big gold hoop earrings and layered wine-red and deep purple shawls, three-quarter view, knowing, inscrutable expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/madam_eva_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: knowing, inscrutable."
+    },
+    {
+      "id": "madam_eva_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/madam_eva_sly_portrait.png",
+      "sprites": "art/portraits/madam_eva_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Madam Eva, the same character as in the reference image, now with a sly expression: a sly, knowing crooked smile, one eye narrowed. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/madam_eva_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: sly (a sly, knowing crooked smile, one eye narrowed)."
+    },
+    {
+      "id": "madam_eva_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/madam_eva_sad_portrait.png",
+      "sprites": "art/portraits/madam_eva_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Madam Eva, the same character as in the reference image, now with a sad expression: grave sorrow: heavy-lidded eyes, mouth turned down, brows drawn together. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/madam_eva_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: sad (grave sorrow: heavy-lidded eyes, mouth turned down, brows drawn together)."
+    },
+    {
+      "id": "baron_vargas",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/baron_vargas_turnaround.png",
+      "sprites": "art/sprites/baron_vargas/walk.tres",
+      "portrait": "art/portraits/baron_vargas.png",
+      "expressions": [
+        "art/portraits/baron_vargas_angry.png",
+        "art/portraits/baron_vargas_afraid.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Baron Vargas Vallakovich, the pompous burgomaster of Vallaki: a portly middle-aged human man with a round, ruddy face, small eyes, a waxed curling moustache and thinning slicked-back dark hair, wearing a fine crimson velvet coat with gold buttons over a cream waistcoat, a heavy gold chain of office across his chest, a burgundy sash, dark breeches and polished black boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Baron Vargas Vallakovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "baron_vargas_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/baron_vargas_portrait.png",
+      "sprites": "art/portraits/baron_vargas.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Baron Vargas Vallakovich, the pompous burgomaster of Vallaki, a portly middle-aged human man with a round, ruddy face, small eyes, a waxed curling moustache and thinning slicked-back dark hair, in a crimson velvet coat with gold buttons over a cream waistcoat and a heavy gold chain of office, three-quarter view, pompous, self-satisfied expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture.",
+      "reference": [
+        "art/generated/characters/baron_vargas_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: pompous, self-satisfied."
+    },
+    {
+      "id": "baron_vargas_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/baron_vargas_angry_portrait.png",
+      "sprites": "art/portraits/baron_vargas_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Baron Vargas Vallakovich, the same character as in the reference image, now with a angry expression: red-faced fury: eyes bulging, moustache bristling, mouth open in a shout. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/baron_vargas_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (red-faced fury: eyes bulging, moustache bristling, mouth open in a shout)."
+    },
+    {
+      "id": "baron_vargas_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/baron_vargas_afraid_portrait.png",
+      "sprites": "art/portraits/baron_vargas_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Baron Vargas Vallakovich, the same character as in the reference image, now with a afraid expression: pale panic: eyes wide, sweating, mouth agape. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/baron_vargas_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: afraid (pale panic: eyes wide, sweating, mouth agape)."
+    },
+    {
+      "id": "izek",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/izek_turnaround.png",
+      "sprites": "art/sprites/izek/walk.tres",
+      "portrait": "art/portraits/izek.png",
+      "expressions": [
+        "art/portraits/izek_angry.png",
+        "art/portraits/izek_sly.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Izek Strazni, the brutish enforcer of Vallaki's burgomaster: a tall, hulking human man in his thirties with a hard, scowling face, short dark hair and heavy stubble; his right arm, from the shoulder down, is a monstrous fiendish arm, bigger than the other, with dark red scaly skin and black claws; he wears a long dark-brown leather coat with the right sleeve torn away, a dark grey shirt, a wide belt, dark trousers and heavy boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Izek Strazni (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's height_units (hulking). Needs art QA before final."
+    },
+    {
+      "id": "izek_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/izek_portrait.png",
+      "sprites": "art/portraits/izek.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Izek Strazni, a hulking, brutish human enforcer in his thirties with a hard, scowling face, short dark hair and heavy stubble; his bare right arm is a monstrous fiendish arm with dark red scaly skin and black claws, raised into view; he wears a dark-brown leather coat with the right sleeve torn away over a dark grey shirt, three-quarter view, sullen, menacing expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/izek_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: sullen, menacing."
+    },
+    {
+      "id": "izek_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/izek_angry_portrait.png",
+      "sprites": "art/portraits/izek_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Izek Strazni, the same character as in the reference image, now with a angry expression: savage rage: teeth bared, brows crushed down, glaring. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/izek_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: angry (savage rage: teeth bared, brows crushed down, glaring)."
+    },
+    {
+      "id": "izek_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/izek_sly_portrait.png",
+      "sprites": "art/portraits/izek_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Izek Strazni, the same character as in the reference image, now with a sly expression: a leering, cruel lopsided grin. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/izek_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: sly (a leering, cruel lopsided grin)."
+    },
+    {
+      "id": "lady_wachter",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/lady_wachter_turnaround.png",
+      "sprites": "art/sprites/lady_wachter/walk.tres",
+      "portrait": "art/portraits/lady_wachter.png",
+      "expressions": [
+        "art/portraits/lady_wachter_sly.png",
+        "art/portraits/lady_wachter_angry.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Lady Fiona Wachter, a stern aristocratic human widow in her fifties: a cold, handsome face with sharp cheekbones and thin lips, grey-streaked black hair in a severe tight bun, wearing a high-collared, long-sleeved mourning gown of black and deep plum with a white lace collar, a silver brooch at her throat and a black shawl over her shoulders. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Lady Fiona Wachter (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "lady_wachter_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/lady_wachter_portrait.png",
+      "sprites": "art/portraits/lady_wachter.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Lady Fiona Wachter, a stern aristocratic human widow in her fifties with a cold, handsome face, sharp cheekbones, thin lips and grey-streaked black hair in a severe tight bun, in a high-collared black and deep plum mourning gown with a white lace collar and a silver brooch at her throat, three-quarter view, cold, composed expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/lady_wachter_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: cold, composed."
+    },
+    {
+      "id": "lady_wachter_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/lady_wachter_sly_portrait.png",
+      "sprites": "art/portraits/lady_wachter_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Lady Fiona Wachter, the same character as in the reference image, now with a sly expression: a thin, knowing, faintly cruel smile, eyes narrowed. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/lady_wachter_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sly (a thin, knowing, faintly cruel smile, eyes narrowed)."
+    },
+    {
+      "id": "lady_wachter_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/lady_wachter_angry_portrait.png",
+      "sprites": "art/portraits/lady_wachter_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Lady Fiona Wachter, the same character as in the reference image, now with a angry expression: icy anger: lips pressed thin, nostrils flared, a hard glare. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/lady_wachter_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (icy anger: lips pressed thin, nostrils flared, a hard glare)."
+    },
+    {
+      "id": "father_lucian",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/father_lucian_turnaround.png",
+      "sprites": "art/sprites/father_lucian/walk.tres",
+      "portrait": "art/portraits/father_lucian.png",
+      "expressions": [
+        "art/portraits/father_lucian_afraid.png",
+        "art/portraits/father_lucian_sad.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Father Lucian Petrovich, a kind, careworn human priest in his forties: a thin, gentle face, short greying brown hair and a neat short beard, wearing a long dark-grey cassock with a candle-orange stole embroidered with a sunburst, a small brass sunburst holy symbol on a chain, and plain leather shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Father Lucian Petrovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "father_lucian_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/father_lucian_portrait.png",
+      "sprites": "art/portraits/father_lucian.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Father Lucian Petrovich, a kind, careworn human priest in his forties with a thin, gentle face, short greying brown hair and a neat short beard, in a dark-grey cassock with a candle-orange stole embroidered with a sunburst and a small brass sunburst holy symbol on a chain, three-quarter view, kind but worried expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/father_lucian_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: kind but worried."
+    },
+    {
+      "id": "father_lucian_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/father_lucian_afraid_portrait.png",
+      "sprites": "art/portraits/father_lucian_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Father Lucian Petrovich, the same character as in the reference image, now with a afraid expression: fear: eyes wide, brows raised, lips parted. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/father_lucian_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: afraid (fear: eyes wide, brows raised, lips parted)."
+    },
+    {
+      "id": "father_lucian_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/father_lucian_sad_portrait.png",
+      "sprites": "art/portraits/father_lucian_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Father Lucian Petrovich, the same character as in the reference image, now with a sad expression: grief: eyes glistening, brows tilted up, mouth turned down. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame. It must be unmistakably the same man as the reference: same face shape, hair colour and length, beard, clothes and the same warm candlelight and skin colours (no blue or grey cast on the skin).",
+      "reference": [
+        "art/generated/portraits/father_lucian_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sad (grief: eyes glistening, brows tilted up, mouth turned down)."
+    },
+    {
+      "id": "rictavio",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/rictavio_turnaround.png",
+      "sprites": "art/sprites/rictavio/walk.tres",
+      "portrait": "art/portraits/rictavio.png",
+      "expressions": [
+        "art/portraits/rictavio_sly.png",
+        "art/portraits/rictavio_weary.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Rictavio, a flamboyant travelling carnival ringmaster who looks like a lean, middle-aged half-elf with slightly pointed ears, keen eyes, a sly smile and a neatly trimmed silver goatee, wearing a garish long crimson ringmaster's tailcoat with gold trim and brass buttons over a mustard-yellow waistcoat, a wide-brimmed dark hat with a long red feather, dark green breeches and tall black boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Rictavio (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.1 of a human's (the hat and feather are part of the figure). Needs art QA before final."
+    },
+    {
+      "id": "rictavio_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/rictavio_portrait.png",
+      "sprites": "art/portraits/rictavio.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Rictavio, a flamboyant carnival ringmaster who looks like a lean, middle-aged half-elf with slightly pointed ears, keen eyes and a neatly trimmed silver goatee, in a garish crimson ringmaster's tailcoat with gold trim over a mustard-yellow waistcoat and a wide-brimmed dark hat with a long red feather, three-quarter view, charming showman's half-smile expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/rictavio_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: charming showman's half-smile."
+    },
+    {
+      "id": "rictavio_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/rictavio_sly_portrait.png",
+      "sprites": "art/portraits/rictavio_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Rictavio, the same character as in the reference image, now with a sly expression: a conspiratorial, knowing grin, one brow raised. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/rictavio_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sly (a conspiratorial, knowing grin, one brow raised)."
+    },
+    {
+      "id": "rictavio_weary_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/rictavio_weary_portrait.png",
+      "sprites": "art/portraits/rictavio_weary.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Rictavio, the same character as in the reference image, now with a weary expression: the showman's mask slipping: grave, tired, haunted eyes, no smile. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame. It must be unmistakably the same man as the reference: same face shape, hair colour and length, beard, clothes and the same warm candlelight and skin colours (no blue or grey cast on the skin).",
+      "reference": [
+        "art/generated/portraits/rictavio_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: weary (the showman's mask slipping: grave, tired, haunted eyes, no smile)."
+    },
+    {
+      "id": "blinsky",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/blinsky_turnaround.png",
+      "sprites": "art/sprites/blinsky/walk.tres",
+      "portrait": "art/portraits/blinsky.png",
+      "expressions": [
+        "art/portraits/blinsky_sad.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Gadof Blinsky, Vallaki's eccentric toymaker: a lanky middle-aged human man with a long nose, a wide manic grin, tired sad eyes and shaggy dark hair under a floppy faded red-and-mustard two-pointed jester's cap with little bells, wearing a patched motley coat of faded red, mustard and green squares, a leather toymaker's apron with tools in the pockets, striped stockings and worn pointed shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Gadof Blinsky (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.05 of a human's (jester's cap). Needs art QA before final."
+    },
+    {
+      "id": "blinsky_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/blinsky_portrait.png",
+      "sprites": "art/portraits/blinsky.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Gadof Blinsky, an eccentric toymaker, a lanky middle-aged human man with a long nose, tired sad eyes and shaggy dark hair under a floppy faded red-and-mustard two-pointed jester's cap with little bells, in a patched motley coat of faded red, mustard and green squares and a leather apron, three-quarter view, wide, manic toymaker's grin expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/blinsky_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: wide, manic toymaker's grin."
+    },
+    {
+      "id": "blinsky_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/blinsky_sad_portrait.png",
+      "sprites": "art/portraits/blinsky_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Gadof Blinsky, the same character as in the reference image, now with a sad expression: sad clown sorrow: drooping eyes, a trembling downturned mouth. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/blinsky_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: sad (sad clown sorrow: drooping eyes, a trembling downturned mouth)."
+    },
+    {
+      "id": "urwin_martikov",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/urwin_martikov_turnaround.png",
+      "sprites": "art/sprites/urwin_martikov/walk.tres",
+      "portrait": "art/portraits/urwin_martikov.png",
+      "expressions": [
+        "art/portraits/urwin_martikov_smile.png",
+        "art/portraits/urwin_martikov_angry.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Urwin Martikov, the calm, broad-shouldered innkeeper of the Blue Water Inn: a human man in his forties with black hair greying at the temples, a neat short black beard and watchful dark eyes, wearing a dark-blue waistcoat over a bone-coloured shirt with rolled sleeves, a long grey-brown innkeeper's apron, dark trousers, sturdy boots and a small silver raven pin on his waistcoat. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Urwin Martikov (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "urwin_martikov_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/urwin_martikov_portrait.png",
+      "sprites": "art/portraits/urwin_martikov.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Urwin Martikov, a calm, broad-shouldered innkeeper in his forties with black hair greying at the temples, a neat short black beard and watchful dark eyes, in a dark-blue waistcoat with a small silver raven pin over a bone-coloured shirt with rolled sleeves, three-quarter view, calm, watchful expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/urwin_martikov_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: calm, watchful."
+    },
+    {
+      "id": "urwin_martikov_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/urwin_martikov_smile_portrait.png",
+      "sprites": "art/portraits/urwin_martikov_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Urwin Martikov, the same character as in the reference image, now with a smile expression: a warm, relieved, friendly smile. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/urwin_martikov_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a warm, relieved, friendly smile)."
+    },
+    {
+      "id": "urwin_martikov_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/urwin_martikov_angry_portrait.png",
+      "sprites": "art/portraits/urwin_martikov_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Urwin Martikov, the same character as in the reference image, now with a angry expression: stern anger: jaw set, brows drawn down, a hard stare. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/urwin_martikov_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (stern anger: jaw set, brows drawn down, a hard stare)."
+    },
+    {
+      "id": "danika_martikov",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/danika_martikov_turnaround.png",
+      "sprites": "art/sprites/danika_martikov/walk.tres",
+      "portrait": "art/portraits/danika_martikov.png",
+      "expressions": [
+        "art/portraits/danika_martikov_angry.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Danika Martikov, the sharp, protective co-owner of the Blue Water Inn: a human woman in her forties with dark auburn hair tied back under a cream kerchief and a strong, alert face, wearing a dusky-blue working dress with rolled sleeves, a bone-coloured apron, a dark shawl knotted at her chest and sturdy boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Danika Martikov (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's. Needs art QA before final."
+    },
+    {
+      "id": "danika_martikov_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/danika_martikov_portrait.png",
+      "sprites": "art/portraits/danika_martikov.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Danika Martikov, a sharp, protective innkeeper, a human woman in her forties with dark auburn hair tied back under a cream kerchief and a strong, alert face, in a dusky-blue working dress, a bone-coloured apron and a dark shawl knotted at her chest, three-quarter view, sharp, alert expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/danika_martikov_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sharp, alert."
+    },
+    {
+      "id": "danika_martikov_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/danika_martikov_angry_portrait.png",
+      "sprites": "art/portraits/danika_martikov_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Danika Martikov, the same character as in the reference image, now with a angry expression: fierce protective anger: brows drawn down, lips tight, glaring. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/danika_martikov_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (fierce protective anger: brows drawn down, lips tight, glaring)."
+    },
+    {
+      "id": "arrigal",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/arrigal_turnaround.png",
+      "sprites": "art/sprites/arrigal/walk.tres",
+      "portrait": "art/portraits/arrigal.png",
+      "expressions": [
+        "art/portraits/arrigal_sly.png",
+        "art/portraits/arrigal_angry.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Arrigal, a dangerous Vistani leader: a lean, handsome human man in his forties with a cold stare, long black hair tied back, a thin black moustache and a gold hoop earring, wearing a black open-necked shirt under a dark wine-red embroidered vest, a crimson sash at his waist with a curved dagger tucked into it, a long dark travelling coat, dark trousers and tall black boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Arrigal (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "arrigal_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/arrigal_portrait.png",
+      "sprites": "art/portraits/arrigal.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Arrigal, a dangerous Vistani leader, a lean, handsome human man in his forties with a cold stare, long black hair tied back, a thin black moustache and a gold hoop earring, in a black open-necked shirt under a dark wine-red embroidered vest and a long dark travelling coat, three-quarter view, cold, disdainful expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/arrigal_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: cold, disdainful."
+    },
+    {
+      "id": "arrigal_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/arrigal_sly_portrait.png",
+      "sprites": "art/portraits/arrigal_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Arrigal, the same character as in the reference image, now with a sly expression: a slow, predatory smirk. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/arrigal_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sly (a slow, predatory smirk)."
+    },
+    {
+      "id": "arrigal_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/arrigal_angry_portrait.png",
+      "sprites": "art/portraits/arrigal_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Arrigal, the same character as in the reference image, now with a angry expression: a dangerous snarl: lip curled, eyes narrowed to slits. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/arrigal_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (a dangerous snarl: lip curled, eyes narrowed to slits)."
+    },
+    {
+      "id": "victor_vallakovich",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/victor_vallakovich_turnaround.png",
+      "sprites": "art/sprites/victor_vallakovich/walk.tres",
+      "portrait": "art/portraits/victor_vallakovich.png",
+      "expressions": [
+        "art/portraits/victor_vallakovich_angry.png",
+        "art/portraits/victor_vallakovich_afraid.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Victor Vallakovich, the burgomaster's sullen teenage son: a thin, pale human boy of about sixteen with messy dark hair, dark-circled eyes and a scowl, wearing a too-large, rumpled dark-blue scholar's robe over a white shirt with a loose cravat and ink stains on the cuffs, dark breeches, black slippers and a small leather-bound spellbook hanging from his belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Victor Vallakovich (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's (a teenager). Needs art QA before final."
+    },
+    {
+      "id": "victor_vallakovich_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/victor_vallakovich_portrait.png",
+      "sprites": "art/portraits/victor_vallakovich.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Victor Vallakovich, a thin, pale human boy of about sixteen with messy dark hair and dark-circled eyes, in a too-large, rumpled dark-blue scholar's robe over a white shirt with a loose cravat, three-quarter view, sullen, resentful expression, lit softly from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame. Natural skin tones (no green, yellow or orange cast on the face); no border or frame around the picture.",
+      "reference": [
+        "art/generated/characters/victor_vallakovich_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sullen, resentful."
+    },
+    {
+      "id": "victor_vallakovich_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/victor_vallakovich_angry_portrait.png",
+      "sprites": "art/portraits/victor_vallakovich_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Victor Vallakovich, the same character as in the reference image, now with a angry expression: a petulant, furious scowl, teeth gritted. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/victor_vallakovich_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (a petulant, furious scowl, teeth gritted)."
+    },
+    {
+      "id": "victor_vallakovich_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/victor_vallakovich_afraid_portrait.png",
+      "sprites": "art/portraits/victor_vallakovich_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Victor Vallakovich, the same character as in the reference image, now with a afraid expression: wide-eyed fright, pale, mouth open. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/victor_vallakovich_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: afraid (wide-eyed fright, pale, mouth open)."
+    },
+    {
+      "id": "lydia_petrovna",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/lydia_petrovna_turnaround.png",
+      "sprites": "art/sprites/lydia_petrovna/walk.tres",
+      "portrait": "art/portraits/lydia_petrovna.png",
+      "expressions": [
+        "art/portraits/lydia_petrovna_afraid.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Lady Lydia Petrovna, the burgomaster's relentlessly cheerful wife: a plump, rosy-cheeked human woman in her forties with fair hair in elaborate pinned curls and a bright fixed smile, wearing an over-decorated festival gown in rose-red and cream with puffed sleeves, ribbons and a lace collar, a string of pearls and little dark shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Lady Lydia Petrovna (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's (the hair counts). Needs art QA before final."
+    },
+    {
+      "id": "lydia_petrovna_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/lydia_petrovna_portrait.png",
+      "sprites": "art/portraits/lydia_petrovna.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Lady Lydia Petrovna, a plump, rosy-cheeked human woman in her forties with fair hair in elaborate pinned curls, in an over-decorated rose-red and cream festival gown with puffed sleeves, ribbons, a lace collar and a string of pearls, three-quarter view, beaming, bright fixed smile expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/lydia_petrovna_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: beaming, bright fixed smile."
+    },
+    {
+      "id": "lydia_petrovna_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/lydia_petrovna_afraid_portrait.png",
+      "sprites": "art/portraits/lydia_petrovna_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Lady Lydia Petrovna, the same character as in the reference image, now with a afraid expression: brittle fear behind the smile: eyes wide and wet, the smile cracking. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/lydia_petrovna_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: afraid (brittle fear behind the smile: eyes wide and wet, the smile cracking)."
+    },
+    {
+      "id": "vallaki_guard",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/vallaki_guard_turnaround.png",
+      "sprites": "art/sprites/vallaki_guard/walk.tres",
+      "portrait": "art/portraits/vallaki_guard.png",
+      "expressions": [],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Vallaki town guard: a weary, stocky human man with a stubbled face under an iron kettle helmet, wearing a padded brown gambeson under a faded crimson tabard, a leather belt with a short sword, dark trousers and boots, holding a tall spear upright in his right hand with its butt on the ground. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "a Vallaki town guard (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite SAT=1.3 -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 1.15 of a human's: the spear tip sets the figure height. Needs art QA before final."
+    },
+    {
+      "id": "vallaki_guard_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/vallaki_guard_portrait.png",
+      "sprites": "art/portraits/vallaki_guard.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a Vallaki town guard, a weary, stocky human man with a stubbled face under an iron kettle helmet, in a padded brown gambeson under a faded crimson tabard, three-quarter view, weary, suspicious expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/vallaki_guard_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet), chroma boost SAT=1.3 (muted reds otherwise snap to brown). Expression: weary, suspicious."
+    },
+    {
+      "id": "vistana",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/vistana_turnaround.png",
+      "sprites": "art/sprites/vistana/walk.tres",
+      "portrait": "art/portraits/vistana.png",
+      "expressions": [],
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Vistana, a young Vistani woman traveller: long black curly hair under a red headscarf, gold hoop earrings and coin necklaces, a dark embroidered bodice over a cream blouse, bright layered skirts in crimson, purple and mustard, a fringed dark shawl, a knife tucked in her sash and soft brown boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "a Vistana (P4-09, 2026-10-06). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, VRAM (BPTC) with mipmaps. The rig normalises every figure to the same cell height: size it with DirectionalSprite height_units, about 0.95 of a human's. Needs art QA before final."
+    },
+    {
+      "id": "vistana_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/vistana_portrait.png",
+      "sprites": "art/portraits/vistana.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a Vistana, a young Vistani woman with long black curly hair under a red headscarf, gold hoop earrings and coin necklaces, a dark embroidered bodice over a cream blouse and a fringed dark shawl, three-quarter view, amused, sly expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/vistana_turnaround.png"
+      ],
+      "notes": "Bust portrait (P4-09, 2026-10-06), the character's turnaround sent as the reference image (--ref) so face and clothes match the sprite. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: amused, sly."
+    },
+    {
+      "id": "ilse_varga_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ilse_varga_smile_portrait.png",
+      "sprites": "art/portraits/ilse_varga_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ilse Varga, the same character as in the reference image, now with a smile expression: a rare, small, wry half-smile, eyes softened. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/ilse_varga_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a rare, small, wry half-smile, eyes softened)."
+    },
+    {
+      "id": "ilse_varga_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ilse_varga_angry_portrait.png",
+      "sprites": "art/portraits/ilse_varga_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ilse Varga, the same character as in the reference image, now with a angry expression: hard, cold anger: jaw clenched, brows drawn down, a level glare. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/ilse_varga_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (hard, cold anger: jaw clenched, brows drawn down, a level glare)."
+    },
+    {
+      "id": "ilse_varga_weary_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ilse_varga_weary_portrait.png",
+      "sprites": "art/portraits/ilse_varga_weary.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ilse Varga, the same character as in the reference image, now with a weary expression: bone-tired: heavy-lidded eyes with shadows under them, a flat, tired mouth. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/ilse_varga_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: weary (bone-tired: heavy-lidded eyes with shadows under them, a flat, tired mouth)."
+    },
+    {
+      "id": "tamsin_tealeaf_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/tamsin_tealeaf_afraid_portrait.png",
+      "sprites": "art/portraits/tamsin_tealeaf_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Tamsin Tealeaf, the same character as in the reference image, now with a afraid expression: frightened: eyes wide, brows raised, the grin gone, mouth a small tight line. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/tamsin_tealeaf_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: afraid (frightened: eyes wide, brows raised, the grin gone, mouth a small tight line)."
+    },
+    {
+      "id": "tamsin_tealeaf_sly_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/tamsin_tealeaf_sly_portrait.png",
+      "sprites": "art/portraits/tamsin_tealeaf_sly.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Tamsin Tealeaf, the same character as in the reference image, now with a sly expression: a sly, scheming sidelong smirk, eyes narrowed, one brow raised. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/tamsin_tealeaf_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sly (a sly, scheming sidelong smirk, eyes narrowed, one brow raised)."
+    },
+    {
+      "id": "tamsin_tealeaf_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/tamsin_tealeaf_sad_portrait.png",
+      "sprites": "art/portraits/tamsin_tealeaf_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Tamsin Tealeaf, the same character as in the reference image, now with a sad expression: quiet sadness: downcast eyes, brows tilted up, no smile. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/tamsin_tealeaf_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sad (quiet sadness: downcast eyes, brows tilted up, no smile)."
+    },
+    {
+      "id": "hedda_ironvow_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/hedda_ironvow_smile_portrait.png",
+      "sprites": "art/portraits/hedda_ironvow_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Hedda Ironvow, the same character as in the reference image, now with a smile expression: a serene, warm smile, eyes crinkled at the corners. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/hedda_ironvow_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a serene, warm smile, eyes crinkled at the corners)."
+    },
+    {
+      "id": "hedda_ironvow_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/hedda_ironvow_angry_portrait.png",
+      "sprites": "art/portraits/hedda_ironvow_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Hedda Ironvow, the same character as in the reference image, now with a angry expression: righteous anger: brows drawn down hard, jaw set, eyes blazing. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/hedda_ironvow_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (righteous anger: brows drawn down hard, jaw set, eyes blazing)."
+    },
+    {
+      "id": "hedda_ironvow_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/hedda_ironvow_sad_portrait.png",
+      "sprites": "art/portraits/hedda_ironvow_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Hedda Ironvow, the same character as in the reference image, now with a sad expression: quiet grief: eyes downcast and glistening, mouth turned down. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/hedda_ironvow_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sad (quiet grief: eyes downcast and glistening, mouth turned down)."
+    },
+    {
+      "id": "silvain_aster_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/silvain_aster_smile_portrait.png",
+      "sprites": "art/portraits/silvain_aster_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Silvain Aster, the same character as in the reference image, now with a smile expression: a small, superior, satisfied smile. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame. No rim light: the edges of the hair, face and robes keep their own colours, with no red, orange or pink glow along them.",
+      "reference": [
+        "art/generated/portraits/silvain_aster_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: smile (a small, superior, satisfied smile)."
+    },
+    {
+      "id": "silvain_aster_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/silvain_aster_afraid_portrait.png",
+      "sprites": "art/portraits/silvain_aster_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Silvain Aster, the same character as in the reference image, now with a afraid expression: barely contained fear: eyes wide, brows raised, lips pressed tight. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame. No rim light: the edges of the hair, face and robes keep their own colours, with no red, orange or pink glow along them.",
+      "reference": [
+        "art/generated/portraits/silvain_aster_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: afraid (barely contained fear: eyes wide, brows raised, lips pressed tight)."
+    },
+    {
+      "id": "silvain_aster_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/silvain_aster_angry_portrait.png",
+      "sprites": "art/portraits/silvain_aster_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Silvain Aster, the same character as in the reference image, now with a angry expression: cold indignation: brows drawn down, nostrils flared, lips thin. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame. No rim light: the edges of the hair, face and robes keep their own colours, with no red, orange or pink glow along them. The robes stay deep navy blue with silver trim exactly as in the reference.",
+      "reference": [
+        "art/generated/portraits/silvain_aster_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (cold indignation: brows drawn down, nostrils flared, lips thin)."
+    },
+    {
+      "id": "ireena_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ireena_angry_portrait.png",
+      "sprites": "art/portraits/ireena_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ireena Kolyana, the same character as in the reference image, now with a angry expression: defiant anger: brows drawn down, jaw set, eyes flashing. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/ireena_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: angry (defiant anger: brows drawn down, jaw set, eyes flashing)."
+    },
+    {
+      "id": "donavich_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/donavich_afraid_portrait.png",
+      "sprites": "art/portraits/donavich_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Father Donavich, the same character as in the reference image, now with a afraid expression: terror: bloodshot eyes wide, mouth open, brows raised. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/donavich_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: afraid (terror: bloodshot eyes wide, mouth open, brows raised)."
+    },
+    {
+      "id": "donavich_sad_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/donavich_sad_portrait.png",
+      "sprites": "art/portraits/donavich_sad.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Father Donavich, the same character as in the reference image, now with a sad expression: broken grief: eyes squeezed half shut, tears on his cheeks, mouth trembling. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/donavich_portrait.png"
+      ],
+      "notes": "Expression variant (P4-09, 2026-10-06): the base portrait sent as the reference image (--ref) with only the expression changed. 1024 -> 512 px by blender/portrait.py: palette-snapped (neutral greys kept on the grey ramp), despeckled, background flattened to ash_violet (BG=ash_violet). Expression: sad (broken grief: eyes squeezed half shut, tears on his cheeks, mouth trembling)."
+    },
+    {
+      "id": "prop_dead_tree",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/dead_tree.png",
+      "sprites": "art/sprites/props/dead_tree.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a gnarled, leafless dead tree with twisted dark brown-black branches reaching up like claws, a thick crooked trunk and exposed roots, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 4.0 world units tall: Sprite3D pixel_size 0.00781, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_pine",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/pine.png",
+      "sprites": "art/sprites/props/pine.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a tall, dark Barovian pine tree with drooping, layered dark green boughs and a short dark trunk, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 5.0 world units tall: Sprite3D pixel_size 0.00977, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_lantern_post",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/lantern_post.png",
+      "sprites": "art/sprites/props/lantern_post.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a wrought-iron lantern post: a tall, thin dark iron pole on a small stone base with an iron lantern at the top glowing candle-orange, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 2.4 world units tall: Sprite3D pixel_size 0.00469, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_gravestone",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/gravestone.png",
+      "sprites": "art/sprites/props/gravestone.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a weathered, slightly leaning grey stone gravestone with a rounded top, cracks and a patch of moss, with no lettering, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 0.9 world units tall: Sprite3D pixel_size 0.00176, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_barrel",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/barrel.png",
+      "sprites": "art/sprites/props/barrel.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single an old wooden barrel with dark iron hoops, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 0.8 world units tall: Sprite3D pixel_size 0.00156, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_crate",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/crate.png",
+      "sprites": "art/sprites/props/crate.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a battered wooden crate with plank sides and cross braces, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 0.7 world units tall: Sprite3D pixel_size 0.00137, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_bookshelf",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/bookshelf.png",
+      "sprites": "art/sprites/props/bookshelf.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a tall dark wooden bookshelf seen from the front, filled with old leather-bound books, a few scrolls and a candle stub, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 1.6 world units tall: Sprite3D pixel_size 0.00313, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_bed",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/bed.png",
+      "sprites": "art/sprites/props/bed.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a simple old wooden bed with a straw mattress, a rumpled grey-blue wool blanket and a pillow, seen from the foot end in three-quarter view, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 0.8 world units tall: Sprite3D pixel_size 0.00198, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_table",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/table.png",
+      "sprites": "art/sprites/props/table.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a sturdy old rectangular wooden tavern table on four thick legs, bare top, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 0.7 world units tall: Sprite3D pixel_size 0.0021, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_well",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/well.png",
+      "sprites": "art/sprites/props/well.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single an old village well: a round stone wall, a small shingled wooden roof on two posts, a winch with rope and a hanging bucket, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 1.8 world units tall: Sprite3D pixel_size 0.00352, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "prop_market_stall",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/market_stall.png",
+      "sprites": "art/sprites/props/market_stall.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single a small wooden market stall with a faded red-and-bone striped cloth awning on posts and a counter with baskets of turnips and cabbages, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 2.0 world units tall: Sprite3D pixel_size 0.00403, anchored bottom centre (art/sprites/props/manifest.json). SAT=1.3 (the awning's red otherwise snaps to brown)."
+    },
+    {
+      "id": "prop_wagon",
+      "kind": "prop",
+      "status": "generated",
+      "source": "art/generated/props/wagon.png",
+      "sprites": "art/sprites/props/wagon.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "A single an old wooden covered wagon with four spoked wheels and a patched, faded canvas cover, no horses, seen from the side in three-quarter view, shown whole and alone as a game prop, three-quarter view from slightly above, centred with space around it, on a plain flat white background, no ground, no ground shadow, nothing else in the image, no text.",
+      "notes": "Billboard prop (P4-09, 2026-10-06): single view on white -> make prop (blender/prop_sprite.py): background removed, cropped, longest side 512 px, palette-snapped, despeckled; VRAM + mipmaps. 1.8 world units tall: Sprite3D pixel_size 0.00435, anchored bottom centre (art/sprites/props/manifest.json)."
+    },
+    {
+      "id": "textures_village",
+      "kind": "texture_set",
+      "status": "generated",
+      "source": [
+        "art/generated/textures/village_cobbles.png",
+        "art/generated/textures/village_mud_road.png",
+        "art/generated/textures/village_grass.png",
+        "art/generated/textures/village_house_wall.png",
+        "art/generated/textures/village_roof_slate.png",
+        "art/generated/textures/village_roof_thatch.png"
+      ],
+      "sprites": [
+        "art/textures/village/cobbles.png",
+        "art/textures/village/mud_road.png",
+        "art/textures/village/grass.png",
+        "art/textures/village/house_wall.png",
+        "art/textures/village/roof_slate.png",
+        "art/textures/village/roof_thatch.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "notes": "Tileable 512 px texture set (P4-09, 2026-10-06): cobbles, mud_road, grass, house_wall, roof_slate, roof_thatch. Prompts and settings in tools/art/texture_recipes.json, built by make textures (blender/make_texture.py: min-cut seamless, area downscale, light flattening, palette subset, despeckle). How to apply: docs/art/textures.md and art/textures/manifest.json."
+    },
+    {
+      "id": "textures_interior",
+      "kind": "texture_set",
+      "status": "generated",
+      "source": [
+        "art/generated/textures/interior_wood_planks.png",
+        "art/generated/textures/interior_rug.png",
+        "art/generated/textures/interior_plaster_wall.png",
+        "art/generated/textures/interior_wainscot_wall.png"
+      ],
+      "sprites": [
+        "art/textures/interior/wood_planks.png",
+        "art/textures/interior/rug.png",
+        "art/textures/interior/plaster_wall.png",
+        "art/textures/interior/wainscot_wall.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "notes": "Tileable 512 px texture set (P4-09, 2026-10-06): wood_planks, rug, plaster_wall, wainscot_wall. Prompts and settings in tools/art/texture_recipes.json, built by make textures (blender/make_texture.py: min-cut seamless, area downscale, light flattening, palette subset, despeckle). How to apply: docs/art/textures.md and art/textures/manifest.json."
+    },
+    {
+      "id": "textures_church",
+      "kind": "texture_set",
+      "status": "generated",
+      "source": [
+        "art/generated/textures/church_stone_flags.png",
+        "art/generated/textures/church_stone_wall.png"
+      ],
+      "sprites": [
+        "art/textures/church/stone_flags.png",
+        "art/textures/church/stone_wall.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "notes": "Tileable 512 px texture set (P4-09, 2026-10-06): stone_flags, stone_wall. Prompts and settings in tools/art/texture_recipes.json, built by make textures (blender/make_texture.py: min-cut seamless, area downscale, light flattening, palette subset, despeckle). How to apply: docs/art/textures.md and art/textures/manifest.json."
+    },
+    {
+      "id": "textures_vallaki",
+      "kind": "texture_set",
+      "status": "generated",
+      "source": [
+        "art/generated/textures/vallaki_cobbled_square.png",
+        "art/generated/textures/vallaki_palisade_logs.png",
+        "art/generated/textures/vallaki_house_wall.png"
+      ],
+      "sprites": [
+        "art/textures/vallaki/cobbled_square.png",
+        "art/textures/vallaki/palisade_logs.png",
+        "art/textures/vallaki/house_wall.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "notes": "Tileable 512 px texture set (P4-09, 2026-10-06): cobbled_square, palisade_logs, house_wall. Prompts and settings in tools/art/texture_recipes.json, built by make textures (blender/make_texture.py: min-cut seamless, area downscale, light flattening, palette subset, despeckle). How to apply: docs/art/textures.md and art/textures/manifest.json."
+    },
+    {
+      "id": "textures_dungeon",
+      "kind": "texture_set",
+      "status": "generated",
+      "source": [
+        "art/generated/textures/dungeon_stone_floor.png",
+        "art/generated/textures/dungeon_stone_wall.png",
+        "art/generated/textures/dungeon_damp_brick.png"
+      ],
+      "sprites": [
+        "art/textures/dungeon/stone_floor.png",
+        "art/textures/dungeon/stone_wall.png",
+        "art/textures/dungeon/damp_brick.png"
+      ],
+      "model": "gemini-3.1-flash-image",
+      "notes": "Tileable 512 px texture set (P4-09, 2026-10-06): stone_floor, stone_wall, damp_brick. Prompts and settings in tools/art/texture_recipes.json, built by make textures (blender/make_texture.py: min-cut seamless, area downscale, light flattening, palette subset, despeckle). How to apply: docs/art/textures.md and art/textures/manifest.json."
     }
   ],
   "image_provider": "gemini"
