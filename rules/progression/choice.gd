@@ -26,6 +26,9 @@ var max_score: int = 20
 var replaceable: String = ""
 ## How many earlier picks one such chance may swap; -1 means any number (a Cleric's list after a Long Rest).
 var replace_max: int = -1
+## Choices that share one swap between them name the same group, also how the player reads them ("Mystic Arcanum":
+## one arcanum spell per Warlock level across all four).
+var replace_group: String = ""
 ## Set while a swap chance is open (ChoiceOptions.open_swap): the picks it started from, and how many of them may
 ## still go (-1 any). Empty `swap_from` means no chance is open and the picks are free (character creation).
 var swap_from: Array[String] = []

@@ -860,7 +860,9 @@
               "level": 6,
               "granted": true
             },
-            "replaceable": "level_up"
+            "replaceable": "level_up",
+            "replace_max": 1,
+            "replace_group": "Mystic Arcanum"
           },
           "modifiers": [
             {
@@ -917,7 +919,9 @@
               "level": 7,
               "granted": true
             },
-            "replaceable": "level_up"
+            "replaceable": "level_up",
+            "replace_max": 1,
+            "replace_group": "Mystic Arcanum"
           },
           "modifiers": [
             {
@@ -962,7 +966,9 @@
               "level": 8,
               "granted": true
             },
-            "replaceable": "level_up"
+            "replaceable": "level_up",
+            "replace_max": 1,
+            "replace_group": "Mystic Arcanum"
           },
           "modifiers": [
             {
@@ -1019,7 +1025,9 @@
               "level": 9,
               "granted": true
             },
-            "replaceable": "level_up"
+            "replaceable": "level_up",
+            "replace_max": 1,
+            "replace_group": "Mystic Arcanum"
           },
           "modifiers": [
             {
