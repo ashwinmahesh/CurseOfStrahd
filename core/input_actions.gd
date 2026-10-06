@@ -64,6 +64,11 @@ const PAD_AXES := {
 	&"cursor_right": [JOY_AXIS_LEFT_X, 1.0],
 	&"cursor_up": [JOY_AXIS_LEFT_Y, -1.0],
 	&"cursor_down": [JOY_AXIS_LEFT_Y, 1.0],
+	# Exploration: the left stick walks the leader (the keys are in BINDINGS).
+	&"move_left": [JOY_AXIS_LEFT_X, -1.0],
+	&"move_right": [JOY_AXIS_LEFT_X, 1.0],
+	&"move_forward": [JOY_AXIS_LEFT_Y, -1.0],
+	&"move_back": [JOY_AXIS_LEFT_Y, 1.0],
 }
 
 
@@ -85,11 +90,11 @@ static func ensure() -> void:
 			if not InputMap.action_has_event(action, jb):
 				InputMap.action_add_event(action, jb)
 	for action: StringName in PAD_AXES:
-		if InputMap.has_action(action):
-			continue
-		InputMap.add_action(action, 0.5)
+		if not InputMap.has_action(action):
+			InputMap.add_action(action, 0.5)
 		var spec := PAD_AXES[action] as Array
 		var jm := InputEventJoypadMotion.new()
 		jm.axis = int(spec[0]) as JoyAxis
 		jm.axis_value = float(spec[1])
-		InputMap.action_add_event(action, jm)
+		if not InputMap.action_has_event(action, jm):
+			InputMap.action_add_event(action, jm)

@@ -77,7 +77,7 @@ var _spawn_name := ""
 func _ready() -> void:
 	assert(not loc.is_empty(), "No location %s" % loc_id)
 	grid = CombatGrid.from_rows(loc["map"]["rows"] as Array)
-	board = ArenaBoard.build(grid)
+	board = ArenaBoard.build(grid, str(loc["map"].get("theme", "manor")))
 	add_child(board)
 	_build_environment()
 	_build_doors()

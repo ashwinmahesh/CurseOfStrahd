@@ -127,6 +127,20 @@ func _unhandled_input(event: InputEvent) -> void:
 				_quick_save()
 			KEY_F9:
 				_quick_load()
+	if event is InputEventJoypadButton and (event as InputEventJoypadButton).pressed:
+		match (event as InputEventJoypadButton).button_index:
+			JOY_BUTTON_A:
+				_interact_nearby()
+			JOY_BUTTON_X:
+				view.search()
+			JOY_BUTTON_Y:
+				open_screen("journal", 0)
+			JOY_BUTTON_START:
+				open_screen("menu", 0)
+			JOY_BUTTON_LEFT_SHOULDER:
+				open_screen("sheet", 0)
+			JOY_BUTTON_RIGHT_SHOULDER:
+				open_screen("inventory", 0)
 	if event.is_action_pressed(&"cycle_leader"):
 		view.set_leader(1)
 		_refresh()
@@ -150,6 +164,17 @@ func _process(delta: float) -> void:
 	var b := view.rig.ground_basis()
 	var w := b[0] * -v.y + b[1] * v.x
 	view.step(Vector2i(roundi(w.x), roundi(w.z)))
+
+
+## Controller A: use the nearest interactable within a square of the leader.
+func _interact_nearby() -> void:
+	var c := view.leader().cell
+	for d: Vector2i in [Vector2i.ZERO] + CombatGrid.DIRS:
+		var thing := view.thing_at(c + d)
+		if not thing.is_empty() and str(thing["kind"]) != "exit":
+			view.interact(thing)
+			return
+	hud.toast("Nothing to use here")
 
 
 func _command(name_: String) -> void:
