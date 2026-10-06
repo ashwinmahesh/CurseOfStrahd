@@ -1,0 +1,82 @@
+{
+  "id": "potion_of_fire_breath",
+  "name": "Potion of Fire Breath",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_orange",
+  "stackable": true,
+  "effects": [],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "recipes": {
+    "breath": {
+      "name": "Fire Breath",
+      "level": 0,
+      "school": "evocation",
+      "targets": {
+        "kind": "enemy",
+        "count": 1
+      },
+      "range": {
+        "kind": "feet",
+        "feet": 30
+      },
+      "save": "dex",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "4d6",
+          "type": "fire"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "drink",
+      "name": "Drink",
+      "cost": "bonus",
+      "consume": true,
+      "field": true,
+      "custom": "drink_grant",
+      "grants": {
+        "hours": 1,
+        "powers": [
+          {
+            "id": "breath",
+            "name": "Fire Breath",
+            "recipe": "breath",
+            "dc": 13,
+            "cost": "bonus",
+            "uses": {
+              "count": 3,
+              "per": "never"
+            },
+            "ends_effect": true
+          }
+        ]
+      }
+    }
+  ],
+  "summary": "For 1 hour, a Bonus Action breath of fire at a creature within 30 ft (Dex DC 13, 4d6 Fire, half on a success), three times.",
+  "text": "Flickering orange liquid fills the bottle, and smoke gathers in its neck and escapes whenever it is unstoppered. After drinking it, you can breathe fire as a Bonus Action at one target up to 30 feet away, which makes a Dexterity saving throw against DC 13 and takes 4d6 Fire damage on a failure or half that on a success. You get three breaths, and the effect ends early if 1 hour passes first."
+}

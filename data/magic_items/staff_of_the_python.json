@@ -1,0 +1,37 @@
+{
+  "id": "staff_of_the_python",
+  "name": "Staff of the Python",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": "by a Cleric, Druid, or Warlock"
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of the Python"
+  },
+  "powers": [
+    {
+      "id": "python",
+      "name": "Become a Snake",
+      "cost": "magic",
+      "custom": "staff_python",
+      "targeting": "place",
+      "range": 10,
+      "text": "Magic action: throw the staff to a space within 10 ft; it becomes a Giant Constrictor Snake under your command. A Bonus Action turns it back (it heals). If the snake dies, the staff is destroyed."
+    }
+  ],
+  "summary": "Throw it down and it becomes a Giant Constrictor Snake that obeys you.",
+  "text": "As a Magic action, toss the staff into an unoccupied space up to 10 feet away and it turns into a Giant Constrictor Snake that you control, acting on an Initiative count of its own. Each of your turns, while the snake stays within 60 feet and you aren't Incapacitated, you can direct it mentally: choose its action and movement for its coming turn, or give it a broad order. A Bonus Action turns it back into a staff lying where the snake was. A snake that changes back before running out of Hit Points returns to full Hit Points. A snake brought to 0 Hit Points dies and reverts to a staff, which then shatters, destroyed for good."
+}

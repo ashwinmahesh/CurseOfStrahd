@@ -1,0 +1,66 @@
+{
+  "id": "demon_armor",
+  "name": "Demon Armor",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true,
+    "cursed": true,
+    "curse": "Until the curse is broken, the armor can't be removed, and against demons your attack rolls have Disadvantage, as do your saves versus their spells and special abilities."
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "items": [
+      "plate_armor"
+    ],
+    "name": "Demon {base}"
+  },
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 1
+    },
+    {
+      "stat": "proficiency",
+      "kind": "language",
+      "value": "abyssal"
+    },
+    {
+      "stat": "weapon_override",
+      "items": [
+        "unarmed_strike"
+      ],
+      "die": "1d8",
+      "damage_type": "slashing"
+    },
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "unarmed_strike"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "unarmed_strike"
+      }
+    },
+    {
+      "stat": "flag",
+      "value": "demon_armor_curse"
+    }
+  ],
+  "summary": "+1 AC, you understand Abyssal, clawed gauntlets make your Unarmed Strikes +1 and 1d8 Slashing. Cursed.",
+  "text": "This armor grants +1 to Armor Class and the knowledge of the Abyssal language. Its clawed gauntlets make your Unarmed Strikes count as magic weapon attacks dealing Slashing damage, using a 1d8 damage die with +1 to attack and damage rolls. Curse. Once you put it on, you can't take it off unless Remove Curse or similar magic targets you. Against demons, your attack rolls have Disadvantage while you wear it, and so do your saves against a demon's spells and special abilities.",
+  "icon": "plate_armor",
+  "icon_fallback": true
+}

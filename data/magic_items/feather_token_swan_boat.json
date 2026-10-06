@@ -1,0 +1,36 @@
+{
+  "id": "feather_token_swan_boat",
+  "name": "Feather Token (Swan Boat)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 2000.0,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "feather",
+  "variant_of": "feather_token",
+  "powers": [
+    {
+      "id": "use",
+      "name": "Use",
+      "cost": "magic",
+      "consume": true,
+      "custom": "feather_token",
+      "params": {
+        "kind": "swan_boat"
+      },
+      "text": "On water, it becomes a swan-shaped boat 50 ft long that carries you for 24 hours.",
+      "combat": false,
+      "field": true
+    }
+  ],
+  "summary": "On water, it becomes a swan-shaped boat 50 ft long that carries you for 24 hours.",
+  "text": "A one-use token shaped like a feather. As a Magic action, touch it to a body of water at least 60 feet across and it becomes a boat shaped like a swan, 50 feet long and 20 feet wide, with room for up to 32 Medium or smaller creatures. The boat drives itself at 6 miles per hour, and while aboard you can order it to move or turn as a Magic action. It lasts 24 hours, then vanishes; you can dismiss it sooner with a Magic action."
+}

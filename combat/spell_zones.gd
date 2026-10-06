@@ -264,7 +264,11 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 	var details: Array[String] = []
 	if has_save:
 		var ab := StringName(str(o.rules["save"]))
-		var test := t.creature.roll_save(e.dice, ab, o.save_dc, [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], o.name, t.name()])
+		# Necklace of Adaptation: harmful gases (Stinking Cloud, Cloudkill, Incendiary Cloud) are saved against with Advantage.
+		var gas: Array[String] = ["save_vs:spell"]
+		if o.spell_id in ["stinking_cloud", "cloudkill", "incendiary_cloud", "dust_of_sneezing_and_choking__cloud"]:
+			gas.append("save_vs:gas")
+		var test := t.creature.roll_save(e.dice, ab, o.save_dc, [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], o.name, t.name()], gas)
 		failed = not test.success
 		details.append(test.describe())
 	if has_damage:

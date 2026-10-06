@@ -1,0 +1,54 @@
+{
+  "id": "oathbow",
+  "name": "Oathbow",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "longbow"
+    ],
+    "name": "Oathbow"
+  },
+  "powers": [
+    {
+      "id": "swear",
+      "name": "Sworn Enemy",
+      "cost": "free",
+      "custom": "oathbow",
+      "targeting": "enemy",
+      "range": 600,
+      "text": "Name a creature you're about to shoot as your sworn enemy until it dies or for 7 days (one at a time; a new one only after the next dawn).",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs_marked": "oathbow_sworn",
+        "dice": "3d6",
+        "type": "piercing"
+      }
+    ],
+    "special": [
+      "oathbow"
+    ]
+  },
+  "summary": "Swear an enemy: Advantage against it, no long-range Disadvantage, cover doesn't help it, an extra 3d6; Disadvantage with other weapons meanwhile.",
+  "text": "Whenever you nock an arrow, the bow murmurs a wish in Elvish for quick defeat of your foes. As you make a ranged attack with it, you can speak its command phrase, an oath of swift death against one who has wronged you, and the target becomes your sworn enemy. Only one creature can hold that role at a time; the oath ends when that enemy dies or at dawn seven days later, and after a sworn enemy dies you must wait for the next dawn to name another. Your ranged attack rolls with the bow against your sworn enemy have Advantage, take no Disadvantage at long range, and ignore every degree of cover short of Total Cover; a hit deals an extra 3d6 Piercing damage. For as long as the sworn enemy lives, attack rolls you make with any other weapon have Disadvantage.",
+  "icon": "longbow",
+  "icon_fallback": true
+}

@@ -1,0 +1,124 @@
+{
+  "id": "gem_of_brightness",
+  "name": "Gem of Brightness",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false,
+    "charges": {
+      "max": 50,
+      "when": "never",
+      "last": {
+        "die": 1,
+        "on": 1,
+        "result": "destroyed",
+        "text": "becomes a worthless gem"
+      }
+    }
+  },
+  "theme": "implements",
+  "icon": "gem",
+  "recipes": {
+    "ray": {
+      "name": "Gem of Brightness: Ray",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "feet",
+        "feet": 60
+      },
+      "targets": {
+        "kind": "enemy",
+        "count": 1
+      },
+      "save": "con",
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "blinded",
+            "repeat_save": "end_of_turn"
+          }
+        }
+      ]
+    },
+    "cone": {
+      "name": "Gem of Brightness: Flare",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 30
+      },
+      "save": "con",
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "blinded",
+            "repeat_save": "end_of_turn"
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "light",
+      "name": "Shine",
+      "cost": "magic",
+      "toggle": true,
+      "off_cost": "free",
+      "custom_light": {
+        "bright": 30,
+        "dim": 30
+      },
+      "text": "Magic action: the gem sheds bright light 30 ft and dim light 30 ft more (no charges)."
+    },
+    {
+      "id": "ray",
+      "name": "Blinding Ray",
+      "recipe": "ray",
+      "charges": 1,
+      "dc": 15,
+      "cost": "magic",
+      "text": "1 charge: a ray at a creature within 60 ft: a DC 15 Con save or Blinded for 1 minute."
+    },
+    {
+      "id": "cone",
+      "name": "Blinding Flare",
+      "recipe": "cone",
+      "charges": 5,
+      "dc": 15,
+      "cost": "magic",
+      "text": "5 charges: a 30-ft cone of blinding light: a DC 15 Con save or Blinded for 1 minute."
+    }
+  ],
+  "summary": "50 charges: light, a blinding ray (1) or a blinding cone of light (5), Con DC 15.",
+  "text": "A crystal prism holding 50 charges. While holding it, speak one of its three command words as a Magic action. Light (no charge): the gem gives off Bright Light out to 30 feet and Dim Light for 30 feet more. Ray (1 charge): a dazzling beam strikes a creature within 60 feet that you can see, which must pass a Constitution saving throw (DC 15) or spend 1 minute with the Blinded condition; it can retry the save as each of its turns ends. Flare (5 charges): a 30-foot Cone of searing light forces every creature in it to make that same save. Once the last charge is spent, the gem becomes an ordinary jewel worth 50 GP."
+}

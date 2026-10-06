@@ -1,0 +1,68 @@
+{
+  "id": "pipes_of_haunting",
+  "name": "Pipes of Haunting",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 2,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "instrument",
+  "recipes": {
+    "haunt": {
+      "name": "Pipes of Haunting",
+      "level": 0,
+      "school": "enchantment",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 30
+      },
+      "area_targets": "enemies",
+      "save": "wis",
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "frightened",
+            "repeat_save": "end_of_turn"
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "play",
+      "name": "Play",
+      "recipe": "haunt",
+      "charges": 1,
+      "dc": 15,
+      "cost": "magic",
+      "text": "Magic action, 1 charge: creatures of your choice within 30 ft make a DC 15 Wisdom save or are Frightened for 1 minute."
+    }
+  ],
+  "summary": "3 charges: an eerie tune frightens creatures within 30 ft (Wis DC 15) for a minute.",
+  "text": "Only a creature proficient with wind instruments can use these pipes, which hold 3 charges and regain 1d3 of them each dawn. As a Magic action, spend 1 charge to play a haunting, mesmerising melody: every creature you choose within 30 feet makes a Wisdom saving throw against DC 15, and on a failure it has the Frightened condition, which lasts 1 minute. A frightened creature gets a new save whenever one of its turns ends, freeing itself on a success."
+}

@@ -36,7 +36,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `damage` | value, when | bonus to damage rolls. Dueling: `{"stat":"damage","value":2,"when":{"weapon":"one_handed_alone"}}` |
 | `spell_dc`, `spell_attack` | value | bonus to spell save DC / spell attack rolls |
 | `speed` | value, kind (default walk), when | +value ft; `when` sees the armor worn (Fast Movement: `{"armor":"not_heavy"}`, Unarmored Movement: `{"armor":"none","shield":false}`) |
-| `speed_set` | value, kind | speed becomes value (Grappled: 0). `kind` may be `fly` etc. to grant a speed |
+| `speed_set` | value, kind | speed becomes value (Grappled: 0). `kind` may be `fly` etc. to grant a speed; value `"walk"` = equal to the walking Speed (Potion of Flying) |
 | `hp_max` | value | + to Hit Point maximum (formulas recompute on level up) |
 | `proficiency` | kind, value | kind = skill, save, armor, weapon, tool, language. value = id (`heavy`, `martial`, `thieves_tools`, `perception`, `str`, `common`) |
 | `expertise` | value | double Proficiency Bonus with that skill or tool |
@@ -76,7 +76,8 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 `armor`: `any` (wearing any armor), `none`, `light`, `medium`, `heavy`. `shield`: true/false.
 `weapon`: `melee`, `ranged`, `finesse`, `thrown`, `one_handed_alone` (one melee weapon, nothing in the other
 hand), `two_handed` (melee weapon held in two hands), `light`, `unarmed`. `spell`: true. `school`: a school.
-`bloodied`: true. `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). `spell_id`: one spell
+`bloodied`: true. `item` / `ammo`: the weapon or ammunition an attack uses (a magic item's `"@self"`; `"unarmed_strike"`
+for Unarmed Strikes), `base_item`: the mundane weapon underneath (Bracers of Archery: `longbow`). `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). `spell_id`: one spell
 (Agonizing Blast: `"@cantrip"`, the pick of the feature's own choice). `damage_type`: the spell's damage type
 (Elemental Affinity: `"@element"`). `incapacitated`: false (Danger Sense; Advantage and Disadvantage sources see
 the armor worn and whether the creature is Incapacitated). `armor` also takes `not_heavy`. A `when` value starting
@@ -135,3 +136,14 @@ Spells and features that create something with a duration use `effects`: `{"effe
 "params": {"condition": "prone"}}`, `{"effect": "temp_hp", ...}`, `{"effect": "light", "params": {"bright": 20, "dim": 20}}` (dim = feet beyond
 the bright radius), `{"effect": "custom", "params": {"id": ...}}`.
 The engine's `Effect` (rules/model/effect.gd) holds the source, duration and concentration link.
+
+## Keys only magic items use (docs/contracts/magic_items.md)
+
+`attuned_only` (works while attuned, worn or not: Berserker Axe's Hit Points), `carried` (while on your person: Luck
+Blade's saves), `requires_worn` (other items worn and working too: Hammer of Thunderbolts), `requires_gem` (Helm of
+Brilliance), and on `attacked_with`, `spell_only` (Spellguard Shield). Flags items set that the engine reads include
+`proficiency_plus_1`, `speed_not_reduced`, `max_hit_dice`, `double_hit_dice`, `wound_closure`, `no_magic:<condition or
+speed>`, `ignore_difficult_terrain`, `oa_disadvantage`, `sees_invisible`, `lantern_of_revealing`, `hard_to_perceive`,
+`spell_attacks_ignore_half_cover`, `spell_turning`, `immune_magic_missile`, `web_immune`, `elemental_command:<element>`,
+`bat_cloak`, `regeneration_ring`, `ioun_regeneration`, `kas_initiative`, `illusion`, `berserk` and the Cube of Force's
+`cube_*`.

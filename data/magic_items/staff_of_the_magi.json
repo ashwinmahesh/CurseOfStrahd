@@ -1,0 +1,210 @@
+{
+  "id": "staff_of_the_magi",
+  "name": "Staff of the Magi",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a Sorcerer, Warlock, or Wizard",
+    "charges": {
+      "max": 50,
+      "regain": "4d6+2",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 20,
+        "result": "regain",
+        "text": "regains 1d12 + 1 charges"
+      }
+    }
+  },
+  "theme": "relics",
+  "icon": "staff_of_the_magi",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of the Magi"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "spell_attack",
+      "value": 2
+    },
+    {
+      "stat": "advantage",
+      "on": "save_vs:spell"
+    }
+  ],
+  "powers": [
+    {
+      "id": "conjure_elemental",
+      "name": "Conjure Elemental",
+      "spell": "conjure_elemental",
+      "charges": 7,
+      "dc": "wielder"
+    },
+    {
+      "id": "dispel_magic",
+      "name": "Dispel Magic",
+      "spell": "dispel_magic",
+      "charges": 3,
+      "dc": "wielder"
+    },
+    {
+      "id": "fireball",
+      "name": "Fireball (level 7)",
+      "spell": "fireball",
+      "charges": 7,
+      "dc": "wielder",
+      "level": 7
+    },
+    {
+      "id": "flaming_sphere",
+      "name": "Flaming Sphere",
+      "spell": "flaming_sphere",
+      "charges": 2,
+      "dc": "wielder"
+    },
+    {
+      "id": "ice_storm",
+      "name": "Ice Storm",
+      "spell": "ice_storm",
+      "charges": 4,
+      "dc": "wielder"
+    },
+    {
+      "id": "invisibility",
+      "name": "Invisibility",
+      "spell": "invisibility",
+      "charges": 2,
+      "dc": "wielder"
+    },
+    {
+      "id": "knock",
+      "name": "Knock",
+      "spell": "knock",
+      "charges": 2,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "lightning_bolt",
+      "name": "Lightning Bolt (level 7)",
+      "spell": "lightning_bolt",
+      "charges": 7,
+      "dc": "wielder",
+      "level": 7
+    },
+    {
+      "id": "passwall",
+      "name": "Passwall",
+      "spell": "passwall",
+      "charges": 5,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "plane_shift",
+      "name": "Plane Shift",
+      "spell": "plane_shift",
+      "charges": 7,
+      "dc": "wielder"
+    },
+    {
+      "id": "telekinesis",
+      "name": "Telekinesis",
+      "spell": "telekinesis",
+      "charges": 5,
+      "dc": "wielder"
+    },
+    {
+      "id": "wall_of_fire",
+      "name": "Wall Of Fire",
+      "spell": "wall_of_fire",
+      "charges": 4,
+      "dc": "wielder"
+    },
+    {
+      "id": "arcane_lock",
+      "name": "Arcane Lock",
+      "spell": "arcane_lock",
+      "charges": 0,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "detect_magic",
+      "name": "Detect Magic",
+      "spell": "detect_magic",
+      "charges": 0,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "enlarge_reduce",
+      "name": "Enlarge Reduce",
+      "spell": "enlarge_reduce",
+      "charges": 0,
+      "dc": "wielder"
+    },
+    {
+      "id": "light",
+      "name": "Light",
+      "spell": "light",
+      "charges": 0,
+      "dc": "wielder",
+      "field": true
+    },
+    {
+      "id": "mage_hand",
+      "name": "Mage Hand",
+      "spell": "mage_hand",
+      "charges": 0,
+      "dc": "wielder"
+    },
+    {
+      "id": "protection_from_evil_and_good",
+      "name": "Protection From Evil And Good",
+      "spell": "protection_from_evil_and_good",
+      "charges": 0,
+      "dc": "wielder"
+    },
+    {
+      "id": "absorb",
+      "name": "Spell Absorption",
+      "cost": "reaction",
+      "hidden": true,
+      "text": "When another creature casts a spell that targets only you, a Reaction cancels it and the staff gains charges equal to its level (past 50, it explodes)."
+    },
+    {
+      "id": "retributive_strike",
+      "name": "Retributive Strike",
+      "cost": "magic",
+      "custom": "retributive_strike",
+      "text": "Break the staff: everything within 30 ft takes Force damage by distance and the charges left (Dex DC 17, half); you may be thrown to another plane."
+    }
+  ],
+  "summary": "+2 quarterstaff and spell attacks, Advantage on saves against spells, 50 charges of spells, Spell Absorption, Retributive Strike.",
+  "text": "A magic Quarterstaff granting +2 to attack and damage rolls; while you hold it, your spell attack rolls also get +2. It stores 50 charges and recovers 4d6 + 2 at dawn. If you spend the last one, roll 1d20; a 20 gives it 1d12 + 1 fresh charges. Spell Absorption: while you hold the staff, your saving throws against spells have Advantage. If a spell cast by another creature targets only you, you can use your Reaction to have the staff soak up its magic, cancelling the effect and gaining charges equal to that spell's level; if this would push the staff above 50 charges, it explodes as though you had triggered Retributive Strike. Spells: cast these from the staff using your own spell attack bonus and save DC. 2 charges: Flaming Sphere, Invisibility or Knock. 3 charges: Dispel Magic. 4 charges: Ice Storm or Wall of Fire. 5 charges: Passwall or Telekinesis. 7 charges: Conjure Elemental, Plane Shift, or Fireball or Lightning Bolt at level 7. No charge: Protection from Evil and Good, Light, Mage Hand, Detect Magic, Arcane Lock or Enlarge/Reduce. Retributive Strike: as a Magic action, break the staff. There is a 50 percent chance you are carried off to another plane; if not, the blast deals you 16 Force damage per remaining charge. All other creatures within 30 feet must attempt a Dexterity saving throw (DC 17), and on a failure take Force damage of 8 times the remaining charges if within 10 feet of the staff, 6 times at 11 to 20 feet, or 4 times at 21 to 30 feet; a success halves it."
+}

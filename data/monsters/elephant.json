@@ -1,0 +1,71 @@
+{
+  "id": "elephant",
+  "name": "Elephant",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "huge",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": -1,
+  "hp": {
+    "average": 76,
+    "dice": "8d12+24"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 22,
+    "dex": 9,
+    "con": 17,
+    "int": 3,
+    "wis": 11,
+    "cha": 6
+  },
+  "senses": {},
+  "passive_perception": 10,
+  "languages": [],
+  "cr": 4,
+  "xp": 1100,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "gore",
+          "count": 2
+        }
+      ],
+      "summary": "Two Gore attacks."
+    },
+    {
+      "id": "gore",
+      "name": "Gore",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 15,
+          "dice": "2d8+6",
+          "type": "piercing"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Gore: +8 to hit, 2d8+6 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A colossal beast that tramples what it knocks down."
+}

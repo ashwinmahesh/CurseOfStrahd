@@ -1,0 +1,84 @@
+{
+  "id": "sun_blade",
+  "name": "Sun Blade",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "icon": "sun_blade",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "longsword"
+    ],
+    "name": "Sun Blade",
+    "weapon_patch": {
+      "damage_type": "radiant",
+      "properties_add": [
+        "finesse"
+      ]
+    }
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 2,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "light": {
+    "bright": 15,
+    "dim": 15,
+    "when": "drawn",
+    "sunlight": true
+  },
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs": [
+          "undead"
+        ],
+        "dice": "1d8",
+        "type": "radiant"
+      }
+    ]
+  },
+  "powers": [
+    {
+      "id": "brighten",
+      "name": "Widen or narrow the light",
+      "cost": "bonus",
+      "custom": "sun_blade_light",
+      "choice": {
+        "label": "Bright light radius",
+        "from": [
+          "10",
+          "15",
+          "20",
+          "25",
+          "30"
+        ]
+      },
+      "text": "Bonus Action: the blade's light grows or shrinks by 5 ft at a time (bright 10 to 30 ft, the same again dim)."
+    }
+  ],
+  "summary": "A blade of sunlight: +2, Radiant, Finesse; an extra 1d8 Radiant against Undead; it sheds sunlight.",
+  "text": "It looks like nothing more than a longsword hilt. Gripping it, you can use a Bonus Action to call forth a blade of pure radiance, or to dismiss it. With the blade out it is a magic longsword with the Finesse property, and longsword proficiency covers it. It grants +2 to attack and damage rolls and deals Radiant damage in place of Slashing, and Undead it hits suffer 1d8 extra Radiant damage. The blade gives off sunlight: Bright Light out to 15 feet and Dim Light 15 feet past that. While the blade is out, a Bonus Action widens or narrows the lit area by 5 feet for both Bright and Dim Light, with each kept between 10 and 30 feet."
+}

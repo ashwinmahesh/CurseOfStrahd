@@ -82,10 +82,13 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.banter_player = banter
 	view.banter.connect(func(lines: Array) -> void:
 		var text: Array[String] = []
+		var faces := {}
 		for l: Variant in lines:
 			var d := l as Dictionary
 			text.append(str(d["text"]) if bool(d["narrator"]) else "%s: %s" % [str(d["name"]).get_slice(" ", 0), d["text"]])
-		hud.narrate("\n".join(text)))
+			faces[str(d.get("portrait", ""))] = true
+		# One voice shows its face (the Narrator's included); a back-and-forth shows none.
+		hud.narrate("\n".join(text), str(faces.keys()[0]) if faces.size() == 1 else ""))
 	view.exit_requested.connect(func(to: String, sp: String) -> void: enter_location.call_deferred(to, sp))
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
@@ -127,17 +130,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	if loot != null:
 		return
 	if event is InputEventMouseMotion:
-		var pick := GridPick.cell_under(view.rig.camera, view.grid, (event as InputEventMouseMotion).position)
+		var pick := view.pick_cell(view.rig.camera, (event as InputEventMouseMotion).position)
 		_hover = pick
 		var thing := view.thing_at(pick) if pick.x >= 0 else {}
 		hud.hint(str(thing.get("label", "")), (event as InputEventMouseMotion).position)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-		var cell := GridPick.cell_under(view.rig.camera, view.grid, (event as InputEventMouseButton).position)
+		var cell := view.pick_cell(view.rig.camera, (event as InputEventMouseButton).position)
 		if cell.x >= 0:
 			view.click(cell)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
 		var at := (event as InputEventMouseButton).position
-		open_world_menu(GridPick.cell_under(view.rig.camera, view.grid, at), at)
+		open_world_menu(view.pick_cell(view.rig.camera, at), at)
 	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo:
 		match (event as InputEventKey).physical_keycode:
 			KEY_C:
@@ -157,7 +160,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_G:
 				_command("split")
 			KEY_ESCAPE:
-				open_screen("menu", 0)
+				if hud.narration_showing():
+					hud.close_narration()
+				else:
+					open_screen("menu", 0)
 			KEY_M:
 				open_travel(false)
 			KEY_F5:

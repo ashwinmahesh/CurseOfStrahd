@@ -1,0 +1,121 @@
+{
+  "id": "hand_of_vecna",
+  "name": "Hand of Vecna",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "hand",
+  "treasure": {
+    "random": false
+  },
+  "worn": "hands",
+  "artifact": {
+    "properties": {
+      "minor_beneficial": 1,
+      "major_beneficial": 1,
+      "minor_detrimental": 1,
+      "major_detrimental": 1
+    }
+  },
+  "modifiers": [
+    {
+      "stat": "ability_min",
+      "ability": "str",
+      "value": 20
+    },
+    {
+      "stat": "flag",
+      "value": "hand_of_vecna"
+    }
+  ],
+  "recipes": {
+    "touch": {
+      "name": "Hand of Vecna",
+      "level": 0,
+      "school": "necromancy",
+      "range": {
+        "kind": "touch"
+      },
+      "targets": {
+        "kind": "enemy",
+        "count": 1
+      },
+      "attack": "melee",
+      "damage": [
+        {
+          "dice": "2d8",
+          "type": "cold"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "touch",
+      "name": "Cold touch",
+      "recipe": "touch",
+      "cost": "attack",
+      "attack": "wielder",
+      "text": "A melee spell attack with your spell attack bonus: 2d8 Cold."
+    },
+    {
+      "id": "finger_of_death",
+      "name": "Finger Of Death",
+      "spell": "finger_of_death",
+      "dc": 18,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "sleep",
+      "name": "Sleep",
+      "spell": "sleep",
+      "dc": 18,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "slow",
+      "name": "Slow",
+      "spell": "slow",
+      "dc": 18,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    },
+    {
+      "id": "teleport",
+      "name": "Teleport",
+      "spell": "teleport",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "combat": false,
+      "field": true
+    }
+  ],
+  "summary": "Vecna's hand: Strength 20, a freezing touch, and dreadful spells (DC 18), for one who cuts off their own hand.",
+  "text": "Attuning to this artifact demands that you cut off your own left hand at the wrist, then press the Hand to the stump, where it fuses to your arm and works as a living hand. While attuned, your Strength score becomes 20, and a hit with a melee spell attack made through the Hand adds 2d8 Cold damage. Once per dawn each, you can cast Teleport, Slow, Sleep and Finger of Death through the Hand (save DC 18). It also bears four random properties: a minor and a major beneficial one, and a minor and a major detrimental one."
+}

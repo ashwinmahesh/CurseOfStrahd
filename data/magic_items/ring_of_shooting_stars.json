@@ -1,0 +1,125 @@
+{
+  "id": "ring_of_shooting_stars",
+  "name": "Ring of Shooting Stars",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true,
+    "charges": {
+      "max": 6,
+      "regain": "1d6",
+      "when": "dawn"
+    }
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "recipes": {
+    "stars": {
+      "name": "Shooting Stars",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "feet",
+        "feet": 60
+      },
+      "area": {
+        "shape": "sphere",
+        "size": 15
+      },
+      "save": "dex",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "4d4",
+          "type": "fire"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    },
+    "ball": {
+      "name": "Ball Lightning",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "feet",
+        "feet": 120
+      },
+      "area": {
+        "shape": "sphere",
+        "size": 5
+      },
+      "save": "dex",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "4d12",
+          "type": "lightning"
+        }
+      ],
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "components": {},
+      "tags": [
+        "damage"
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "dancing_lights",
+      "name": "Dancing Lights",
+      "spell": "dancing_lights",
+      "charges": 0
+    },
+    {
+      "id": "light",
+      "name": "Light",
+      "spell": "light",
+      "charges": 0,
+      "field": true
+    },
+    {
+      "id": "faerie_fire",
+      "name": "Faerie Fire",
+      "spell": "faerie_fire",
+      "charges": 1,
+      "dc": 15
+    },
+    {
+      "id": "ball",
+      "name": "Ball Lightning",
+      "recipe": "ball",
+      "charges": 2,
+      "dc": 15,
+      "cost": "magic",
+      "text": "2 charges: a crackling sphere of lightning bursts on a point within 120 ft (Dex DC 15, 4d12 Lightning, half on a success)."
+    },
+    {
+      "id": "stars",
+      "name": "Shooting Stars",
+      "recipe": "stars",
+      "charges": 1,
+      "dc": 15,
+      "cost": "magic",
+      "upcast_charges": 1,
+      "max_level": 2,
+      "text": "1 to 3 charges: a glowing mote per charge streaks to a point within 60 ft; creatures there make a Dex save (DC 15) or take 4d4 Fire per mote (half on a success)."
+    }
+  ],
+  "summary": "6 charges: Faerie Fire, ball lightning and shooting stars; Dancing Lights and Light at will in the dark.",
+  "text": "Dancing Lights and Light are castable from this ring at will while you wear it in Dim Light or darkness. It also holds 6 charges, regaining 1d6 each dawn, which power three other effects. Faerie Fire (1 charge): cast the spell, save DC 15. Ball Lightning (2 charges): a sphere of lightning appears at a point you choose within 120 feet, and creatures within 5 feet of the sphere each make a Dexterity saving throw (DC 15) and take 4d12 Lightning damage on a failure, or half that on a success. Shooting Stars (1 to 3 charges): one mote of light per charge streaks out to a spot up to 60 feet away, and creatures inside a 15-foot cube centred there each make a Dexterity saving throw (DC 15); on a failure a creature takes 4d4 Fire damage per mote, or half that on a success."
+}

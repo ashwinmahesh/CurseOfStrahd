@@ -1,0 +1,24 @@
+{
+  "id": "bag_of_holding",
+  "name": "Bag of Holding",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "bag",
+  "container": {
+    "capacity_lb": 500,
+    "weightless": true,
+    "extradimensional": true
+  },
+  "summary": "Holds 500 lb (64 cubic feet) and always weighs 5 lb.",
+  "text": "Inside, this bag opens onto a space roughly 4 feet deep and 2 feet square, far bigger than its outside. It carries up to 500 pounds of contents with a volume of no more than 64 cubic feet, yet always weighs just 5 pounds. Taking something out costs a Utilize action. Overloading, piercing or tearing the bag makes it burst and be destroyed, scattering everything inside across the Astral Plane. Turned inside out, it spills its contents unharmed, but must be turned right side out before you can use it again. Put it inside the extradimensional space of a Portable Hole, Handy Haversack or similar item and both items are instantly destroyed as a portal rips open into the Astral Plane."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "eyes_of_minute_seeing",
+  "name": "Eyes of Minute Seeing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "eye",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "check:investigation"
+    }
+  ],
+  "worn": "eyes",
+  "summary": "Advantage on Intelligence (Investigation) checks that rely on sight.",
+  "text": "Worn over your eyes, these crystal lenses sharpen your sight dramatically for anything within 1 foot of you. When you search an area or study an object that close, Intelligence (Investigation) checks that depend on sight have Advantage."
+}

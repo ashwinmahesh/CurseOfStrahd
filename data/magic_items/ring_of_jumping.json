@@ -1,0 +1,30 @@
+{
+  "id": "ring_of_jumping",
+  "name": "Ring of Jumping",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "powers": [
+    {
+      "id": "jump",
+      "name": "Jump",
+      "spell": "jump",
+      "charges": 0,
+      "cost": "bonus",
+      "text": "Bonus Action: cast Jump on yourself (no charges)."
+    }
+  ],
+  "summary": "Cast Jump on yourself as a Bonus Action, at will.",
+  "text": "At will, you can cast Jump from this ring as a Bonus Action, though only on yourself."
+}

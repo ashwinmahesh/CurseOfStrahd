@@ -12,9 +12,12 @@ signal command(name: String)
 var st: StoryState
 var _party_box: VBoxContainer
 var _where: Label
+## The width of the top-right block the location's name has to fit.
+const WHERE_WIDTH := 346.0
 var _mode: Label
 var _narr: RichTextLabel
 var _narr_time := 0.0
+var _narr_face: Control
 var _hint: Label
 var _toast: Label
 var _toast_time := 0.0
@@ -54,6 +57,8 @@ func build(state: StoryState) -> void:
 	top.offset_left = -360
 	top.offset_right = -14
 	top.offset_top = 12
+	# Anything wider than the block grows it leftward, never off the right edge of the screen.
+	top.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	minimap = Minimap.new()
 	minimap.size_flags_horizontal = Control.SIZE_SHRINK_END
@@ -61,6 +66,8 @@ func build(state: StoryState) -> void:
 	_where = _label("", 24, "gilt_light")
 	_where.add_theme_font_override("font", UiKit.display_font())
 	_where.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_where.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_where.custom_minimum_size = Vector2(WHERE_WIDTH, 0)
 	top.add_child(_where)
 	_mode = _label("", 15, "parchment")
 	_mode.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -82,14 +89,38 @@ func build(state: StoryState) -> void:
 	narr_panel.offset_right = 420
 	narr_panel.offset_top = -196
 	narr_panel.offset_bottom = -84
-	narr_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Long passages grow the box upward, clear of the command bar. A click on it (or Esc) puts it away.
+	narr_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	narr_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	narr_panel.gui_input.connect(func(ev: InputEvent) -> void:
+		var mb := ev as InputEventMouseButton
+		if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
+			narr_panel.accept_event()
+			close_narration())
+	var narr_row := HBoxContainer.new()
+	narr_row.add_theme_constant_override("separation", 14)
+	narr_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	narr_panel.add_child(narr_row)
+	# Who's speaking: the Narrator's portrait, or the one party member a banter line comes from.
+	_narr_face = CenterContainer.new()
+	_narr_face.custom_minimum_size = Vector2(76, 76)
+	_narr_face.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	narr_row.add_child(_narr_face)
+	var narr_col := VBoxContainer.new()
+	narr_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	narr_col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	narr_row.add_child(narr_col)
 	_narr = RichTextLabel.new()
 	_narr.bbcode_enabled = true
 	_narr.fit_content = true
+	_narr.custom_minimum_size = Vector2(680, 0)
 	_narr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_narr.add_theme_font_size_override("italics_font_size", 19)
 	_narr.add_theme_font_size_override("normal_font_size", 19)
-	narr_panel.add_child(_narr)
+	narr_col.add_child(_narr)
+	var close_hint := _label("Click or Esc to close", 12, "parchment")
+	close_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	narr_col.add_child(close_hint)
 	narr_panel.name = "NarratorBox"
 	UiKit.trim(narr_panel, 56.0)
 	narr_panel.visible = false
@@ -248,10 +279,23 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		grow.add_child(gv)
 		_party_box.add_child(gcard)
 	if location_name != "":
-		_where.text = location_name
+		_fit_where(location_name)
 	var hours := st.minute_of_day / 60
 	_mode.text = "Day %d · %02d:%02d%s%s · %d gp" % [st.day, hours, st.minute_of_day % 60, " · Sneaking" if sneaking else "",
 		" · Split party" if solo else "", int(st.gold)]
+
+
+## The location's name at the top right: the book hand at 24 px, smaller for a long name ("The Amber Temple: Hall of
+## the Faceless God"), broken after a colon onto a second line, and wrapped if it still doesn't fit.
+func _fit_where(text: String) -> void:
+	var font := UiKit.display_font()
+	var size := 24
+	while size > 18 and font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x > WHERE_WIDTH:
+		size -= 1
+	if font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x > WHERE_WIDTH and text.contains(": "):
+		text = text.replace(": ", ":\n")
+	_where.add_theme_font_size_override("font_size", size)
+	_where.text = text
 
 
 ## A new location: the minimap and the signs at its ways out.
@@ -260,11 +304,27 @@ func show_location(view: LocationView) -> void:
 	exit_signs.show_location(view)
 
 
-func narrate(text: String) -> void:
+## Shows a passage in the Narrator's box, with `portrait` (art/portraits/<id>.png; the Narrator's by default, ""
+## for none) beside it. It fades on its own after a while, or goes at a click on it or Esc.
+func narrate(text: String, portrait: String = DialogueRunner.NARRATOR_PORTRAIT) -> void:
 	var box := get_node("NarratorBox") as PanelContainer
 	box.visible = true
+	for c in _narr_face.get_children():
+		c.queue_free()
+	_narr_face.visible = portrait != ""
+	if portrait != "":
+		_narr_face.add_child(UiParts.framed_portrait(portrait, 76.0))
 	_narr.text = "[i][color=#%s]%s[/color][/i]" % [Look.color("parchment").to_html(false), text.replace("[", "[lb]")]
 	_narr_time = clampf(3.0 + text.length() * 0.05, 4.0, 10.0)
+
+
+func narration_showing() -> bool:
+	return (get_node("NarratorBox") as PanelContainer).visible
+
+
+func close_narration() -> void:
+	_narr_time = 0.0
+	(get_node("NarratorBox") as PanelContainer).visible = false
 
 
 func hint(text: String, at: Vector2) -> void:

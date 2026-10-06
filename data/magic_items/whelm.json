@@ -1,0 +1,130 @@
+{
+  "id": "whelm",
+  "name": "Whelm",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true,
+    "sentient": true
+  },
+  "theme": "relics",
+  "icon": "whelm",
+  "treasure": {
+    "random": false
+  },
+  "template": {
+    "on": "weapon",
+    "items": [
+      "warhammer"
+    ],
+    "name": "Whelm",
+    "weapon_patch": {
+      "properties_add": [
+        "thrown"
+      ],
+      "range": [
+        20,
+        60
+      ]
+    }
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "flag",
+      "value": "whelm"
+    }
+  ],
+  "weapon_rules": {
+    "returns": true,
+    "on_hit": [
+      {
+        "thrown": true,
+        "save": "con",
+        "dc": 15,
+        "conditions": [
+          "stunned"
+        ],
+        "until": "caster_turn_end"
+      }
+    ],
+    "special": [
+      "whelm"
+    ]
+  },
+  "powers": [
+    {
+      "id": "shockwave",
+      "name": "Shock Wave",
+      "cost": "magic",
+      "recipe": "wave",
+      "dc": 15,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Magic action (once per dawn): strike the ground: creatures within 60 ft make a DC 15 Con save or are Stunned for 1 minute."
+    }
+  ],
+  "recipes": {
+    "wave": {
+      "name": "Shock Wave",
+      "level": 0,
+      "school": "evocation",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 60
+      },
+      "area_targets": "enemies",
+      "save": "con",
+      "duration": {
+        "kind": "minutes",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "stunned",
+            "repeat_save": "end_of_turn"
+          }
+        }
+      ]
+    }
+  },
+  "sentience": {
+    "int": 15,
+    "wis": 12,
+    "cha": 15,
+    "alignment": "lawful neutral",
+    "purpose": "to slay giants and goblinoids"
+  },
+  "summary": "+3 warhammer that returns when thrown, stuns those it hits on a throw, and shakes the ground once a day.",
+  "text": "Dwarves forged this mighty warhammer, which later went missing in White Plume Mountain's dungeon. It grants +3 to attack and damage rolls and has the Thrown property (range 20/60 feet). When a ranged attack with it hits, the target makes a Constitution saving throw against DC 15 or is Stunned until your next turn ends, and the hammer then flies back into your hand. Once per dawn, as a Magic action, you can slam it into the ground to release a shock wave: every creature you choose within 60 feet must make a Constitution saving throw (DC 15) or be Stunned for 1 minute. The hammer is sentient (Wisdom 12, Intelligence 15, Charisma 15) and loathes giants and goblinoids."
+}

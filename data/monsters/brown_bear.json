@@ -1,0 +1,98 @@
+{
+  "id": "brown_bear",
+  "name": "Brown Bear",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 11,
+  "initiative": 1,
+  "hp": {
+    "average": 22,
+    "dice": "3d10+6"
+  },
+  "speed": {
+    "walk": 40,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 17,
+    "dex": 12,
+    "con": 15,
+    "int": 2,
+    "wis": 13,
+    "cha": 7
+  },
+  "skills": {
+    "perception": 3
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 13,
+  "languages": [],
+  "cr": 1,
+  "xp": 200,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bite",
+          "count": 1
+        },
+        {
+          "action": "claw",
+          "count": 1
+        }
+      ],
+      "summary": "A Bite and a Claw."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d8+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite: +5 to hit, 1d8+3 Piercing."
+    },
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d4+3",
+          "type": "slashing"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Claw: +5 to hit, 1d4+3 Slashing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A great bear."
+}

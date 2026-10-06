@@ -1,0 +1,41 @@
+{
+  "id": "giant_fly",
+  "name": "Giant Fly",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 11,
+  "initiative": 1,
+  "hp": {
+    "average": 19,
+    "dice": "3d10+3"
+  },
+  "speed": {
+    "walk": 30,
+    "fly": 60
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 13,
+    "con": 13,
+    "int": 2,
+    "wis": 10,
+    "cha": 3
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [],
+  "cr": 0,
+  "xp": 10,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [],
+  "ai_profile": "brute",
+  "summary": "A fly the size of a horse; a mount, not a fighter."
+}

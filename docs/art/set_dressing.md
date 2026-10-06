@@ -23,6 +23,33 @@ Opening road specifics: the Gates of Barovia are two stone pillars with headless
 mist the party came out of is a fog bank at the east edge; the first cottage stands at the village edge; the
 signpost, wayside shrine, deer carcass, statue heads, crow and abandoned cart are where the data puts them.
 
+## Pieces keep their place and facing (owner request, 2026-10-06)
+
+"Environmental items shouldn't rotate with the view of the camera, we should see the correct view." Every piece now has
+a fixed place and facing, and the camera sees the side that faces it:
+
+- **Furniture against a wall** (bookcases, shelves, wardrobes, cabinets, sideboards, desks, counters, the bar, the
+  organ, cask racks, clocks): its *front view* (catalog `fronts`, drawn straight on) stands flat and parallel to the
+  wall beside it, a little way out, with a wooden body behind it back to the wall, so from the side it has thickness
+  and from behind you see its back. On a wall square it hangs on the wall like a portrait.
+- **Free-standing pieces with a front and a back** (chests, tables, beds, chairs, carts, wagons, statues, pews,
+  signposts, stalls, the cottage and tent ...): drawn twice in one Gemini call, from the front and from behind, each
+  with that side toward the lower right (`<id>` and `<id>_back`, linked by `back` in the manifest). `PropView`
+  (`world/look/prop_view.gd`) shows the front when the camera is in front of the piece and the back when it's
+  behind, mirrored for the other corner. A piece faces away from a wall beside it, else south (toward the opening
+  camera).
+- **Pieces that look the same from every side** (barrels, wells, braziers, trees, boulders, brambles, towers) stay
+  plain billboards: they show the right view from anywhere.
+- `tools/art/preview/prop_turntable.tscn` shoots a small room of these from the four camera headings
+  (`make capture SCENE=res://tools/art/preview/prop_turntable.tscn NAME=turntable`).
+
+## Pointing at pieces (owner report, 2026-10-06)
+
+The top of a tall piece is drawn over the squares behind it, so the mouse now tests what's drawn before the floor
+(`LocationView.pick_cell`, `world/exploration/sprite_pick.gd`): each person's and piece's quad as drawn, nearest the
+camera first, and for pieces the texture's alpha, so only painted pixels count. Floor pieces and empty floor fall
+back to the floor square (`GridPick`).
+
 ## How a thing finds its art
 
 `art/sprites/props/catalog.json`, read by `world/look/set_dressing.gd` (`SetDressing`):
@@ -34,7 +61,13 @@ signpost, wayside shrine, deer carcass, statue heads, crow and abandoned cart ar
 3. Doors: `doors.ids`, then the first `doors.rules` entry whose words are in the door's id or label, then
    `doors.default`. Exits: `exits.rules`, then `outdoor_default` / `indoor_default`.
 4. `low_cover.<theme>` dresses '=' squares (with `<theme>_run` / `<theme>_wall_run` for runs of three or more, so
-   a long table or a bar is one piece of furniture), `difficult.<theme>` dresses '~' squares.
+   a long table or a bar is one piece of furniture), `difficult.<theme>` dresses '~' squares. `low_cover.<place>`
+   overrides it for one location (the Wizard of Wines' rows are vines).
+5. `scales` sizes a piece wherever it stands (stairs fill their square, beds and coffins are full length); `floors`
+   gives a place its own ground (grass on Bonegrinder's hill); `town_walls` makes a walled town's wall tall (Krezk).
+6. `building: true` on an entry makes the piece stand in for the whole house on its square (Old Bonegrinder's
+   windmill, the Abbey's bell tower, Van Richten's tower); `fade: true` fades a tall piece like the trees (the
+   Gulthias Tree, the colossi).
 
 New content: give a new prop a `model` that names art, or add an entry. `tests/integration/test_set_dressing.gd`
 fails when a location has a prop, container or door without art.
@@ -87,10 +120,22 @@ around its doors, props and containers:
 
 `--lit` adds a work light for checking placement in dark interiors; `--hour=` sets the time outdoors.
 
+## Phase 5
+
+The Phase 5 places (Old Bonegrinder, the Wizard of Wines and Yester Hill, Krezk and the Abbey, Argynvostholt, Berez
+and Lake Baratok, Van Richten's Tower and the werewolf den, the Tsolenka Pass and the Amber Temple) use the same
+catalog, with new art for their signature pieces: the windmill, the Gulthias Tree, the wicker effigy of Strahd,
+standing stones, the wine press, vats, cask racks and vine rows, scarecrows, St. Markovia's statue, the bell tower,
+the pipe organ, a surgery table, the dragon's bones, the beacon cradle, amber sarcophagi, the colossus and the faceless
+god, Baba Lysaga's hut on its stump, Van Richten's tower, a rowboat, net racks and a roc's nest. Open-air yards
+(`shrine_yard`: the Abbey's garden, the White Sun pool, the Gulthias Tree's hilltop) are grass inside stone walls, with
+sheds and shrines built as houses. The region docs ask for further themes (marsh, mountain, cave, vineyard, tower
+interiors); those are still to do.
+
 ## Not right yet
 
-- Billboards turn to face the camera, so a long piece (a bar, a pew) drawn on each square of a run reads as a row
-  of pieces rather than one long one.
+- A long piece (a bar, a pew) drawn on each square of a run reads as a row of pieces rather than one long one.
+- A piece's back is Gemini's idea of its back, drawn alongside the front; a few pairs differ in colour.
 - Wall pieces and door leaves are flat: seen along the wall they disappear, as the cut-away walls' faces do.
 - Houses are rectangles; a building the data draws as an L becomes two houses with their own roofs.
 - Interiors stay dark at dusk and night by design; the party's lantern lights the pieces near the party.

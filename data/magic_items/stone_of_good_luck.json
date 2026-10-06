@@ -1,0 +1,31 @@
+{
+  "id": "stone_of_good_luck",
+  "name": "Stone of Good Luck (Luckstone)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "stone",
+  "modifiers": [
+    {
+      "stat": "check",
+      "skill": "all",
+      "value": 1
+    },
+    {
+      "stat": "save",
+      "ability": "all",
+      "value": 1
+    }
+  ],
+  "summary": "+1 to ability checks and saving throws while it's on your person.",
+  "text": "Keep this smooth agate anywhere on you and your ability checks and saving throws get a +1 bonus."
+}

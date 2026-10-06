@@ -1,0 +1,55 @@
+{
+  "id": "vorpal_sword",
+  "name": "Vorpal Sword",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "icon": "vorpal_sword",
+  "template": {
+    "on": "weapon",
+    "kinds": [
+      "simple_melee",
+      "martial_melee"
+    ],
+    "damage_types": [
+      "slashing"
+    ],
+    "name": "Vorpal {base}",
+    "default": "longsword"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    }
+  ],
+  "weapon_rules": {
+    "ignore_resistance": [
+      "slashing"
+    ],
+    "special": [
+      "vorpal"
+    ]
+  },
+  "summary": "+3, ignores Resistance to Slashing; a 20 cuts off a creature's head (or deals an extra 30 Slashing to one that can't lose it).",
+  "text": "This magic weapon grants +3 to attack and damage rolls and disregards Resistance to Slashing damage. Roll a 20 to hit a creature with at least one head and you sever one of its heads; it dies if it can't live without it. Some creatures are immune to the beheading: those with Immunity to Slashing damage, those with no head or no need for one, those with Legendary Actions, and any the DM judges too large to behead with this blade. Such a creature instead suffers 30 extra Slashing damage from the hit."
+}

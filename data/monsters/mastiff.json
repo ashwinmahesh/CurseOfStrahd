@@ -1,0 +1,62 @@
+{
+  "id": "mastiff",
+  "name": "Mastiff",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "medium",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 5,
+    "dice": "1d8+1"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 13,
+    "dex": 14,
+    "con": 12,
+    "int": 3,
+    "wis": 12,
+    "cha": 7
+  },
+  "skills": {
+    "perception": 3
+  },
+  "senses": {},
+  "passive_perception": 13,
+  "languages": [],
+  "cr": 0.125,
+  "xp": 25,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 4,
+          "dice": "1d6+1",
+          "type": "piercing"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Bite: +3 to hit, 1d6+1 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A loyal guard dog."
+}

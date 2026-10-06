@@ -1,0 +1,29 @@
+{
+  "id": "ring_of_telekinesis",
+  "name": "Ring of Telekinesis",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "powers": [
+    {
+      "id": "telekinesis",
+      "name": "Telekinesis",
+      "spell": "telekinesis",
+      "charges": 0,
+      "text": "Cast Telekinesis at will, targeting only objects you aren't wearing or carrying... and creatures as the spell allows."
+    }
+  ],
+  "summary": "Cast Telekinesis at will.",
+  "text": "Wearing this ring lets you cast Telekinesis at will, though it can affect only objects that no one is wearing or carrying."
+}

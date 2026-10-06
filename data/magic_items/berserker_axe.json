@@ -1,0 +1,58 @@
+{
+  "id": "berserker_axe",
+  "name": "Berserker Axe",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true,
+    "cursed": true,
+    "curse": "You keep the axe within reach always, other weapons attack at Disadvantage while a foe is near, and taking damage from a hostile creature can send you berserk (DC 15 Wisdom save)."
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "battleaxe",
+      "greataxe",
+      "handaxe"
+    ],
+    "name": "Berserker {base}",
+    "default": "greataxe"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "hp_max",
+      "value": "level",
+      "attuned_only": true
+    }
+  ],
+  "weapon_rules": {
+    "special": [
+      "berserker"
+    ]
+  },
+  "summary": "+1 axe; +1 Hit Point maximum per level. Cursed: when a foe hurts you, a DC 15 Wisdom save or you go berserk.",
+  "text": "Attack and damage rolls with this magic axe gain +1, and while you're attuned to it, your Hit Point maximum goes up by 1 per level you have. Curse: the axe is cursed, and attuning to it passes the curse to you. While cursed, you refuse to be parted from the axe and always keep it within reach, and attack rolls you make with any other weapon have Disadvantage unless no foe you can see or hear is within 60 feet. Each time you take damage from a hostile creature while the axe is yours, make a Wisdom saving throw against DC 15; on a failure you go berserk. In that state you spend your action every round attacking the nearest creature with the axe. If the Attack action gives you extra attacks, you use them, moving on to the next-nearest creature once your current target falls. When several targets qualify, pick one at random. The rage lasts until you begin a turn with no creature you can see or hear within 60 feet.",
+  "icon": "greataxe",
+  "icon_fallback": true
+}

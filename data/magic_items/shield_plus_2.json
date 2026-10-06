@@ -1,0 +1,32 @@
+{
+  "id": "shield_plus_2",
+  "name": "Shield, +2",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "shield",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "shield",
+    "name": "+2 {base}",
+    "default": "shield"
+  },
+  "modifiers": [
+    {
+      "stat": "ac",
+      "value": 2
+    }
+  ],
+  "variant_of": "shield_plus",
+  "summary": "+2 to Armor Class while you wield it, beyond the Shield's normal bonus.",
+  "text": "On top of the AC a Shield normally gives, this one adds a further +2 to your Armor Class while you hold it.",
+  "icon": "shield",
+  "icon_fallback": true
+}

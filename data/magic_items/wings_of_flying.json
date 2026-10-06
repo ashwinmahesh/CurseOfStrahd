@@ -1,0 +1,42 @@
+{
+  "id": "wings_of_flying",
+  "name": "Wings of Flying",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "powers": [
+    {
+      "id": "wings",
+      "name": "Spread the wings",
+      "cost": "magic",
+      "toggle": true,
+      "off_cost": "magic",
+      "hours": 1,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "modifiers": [
+        {
+          "stat": "speed_set",
+          "kind": "fly",
+          "value": 60
+        }
+      ],
+      "text": "Magic action: the cloak becomes wings: a Fly Speed of 60 ft for 1 hour (once per dawn)."
+    }
+  ],
+  "worn": "cloak",
+  "summary": "The cloak becomes bat or bird wings: fly at 60 ft for an hour, once a day.",
+  "text": "Wearing this cloak, use a Magic action to transform it into wings sprouting from your back, granting a 60-foot Fly Speed. They last 1 hour, or until you dismiss them with another Magic action. Once the wings vanish, they can't be used again for 1d12 hours."
+}

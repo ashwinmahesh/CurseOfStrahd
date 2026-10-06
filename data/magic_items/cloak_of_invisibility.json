@@ -1,0 +1,40 @@
+{
+  "id": "cloak_of_invisibility",
+  "name": "Cloak of Invisibility",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "cloak",
+  "powers": [
+    {
+      "id": "hood",
+      "name": "Pull up the hood",
+      "cost": "magic",
+      "toggle": true,
+      "off_cost": "free",
+      "budget_rounds": 600,
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "cloak_invisible"
+        }
+      ],
+      "conditions_on": [
+        "invisible"
+      ],
+      "text": "Magic action: you're Invisible while the hood is up (up to 1 hour a day, in 1-minute steps)."
+    }
+  ],
+  "worn": "cloak",
+  "summary": "Pull up the hood to be Invisible, up to an hour a day.",
+  "text": "Pulling the hood over your head is a Magic action that gives you the Invisible condition, and everything you wear or carry vanishes along with you. Removing the hood takes a Bonus Action. The cloak holds 1 hour of invisibility in total, spent in 1-minute increments, and all of it returns at dawn."
+}

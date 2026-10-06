@@ -1,0 +1,34 @@
+{
+  "id": "boots_of_the_winterlands",
+  "name": "Boots of the Winterlands",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "boots",
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "cold"
+    },
+    {
+      "stat": "flag",
+      "value": "ignore_snow_and_ice"
+    },
+    {
+      "stat": "flag",
+      "value": "cold_tolerant"
+    }
+  ],
+  "worn": "feet",
+  "summary": "Resistance to Cold; snow and ice don't slow you; you're comfortable in bitter cold.",
+  "text": "These snug, warm, fur-lined boots grant three benefits while worn: Resistance to Cold damage, freedom from Difficult Terrain caused by snow or ice, and the ability to endure temperatures down to -50 degrees Fahrenheit with no other protection."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "gloves_of_thievery",
+  "name": "Gloves of Thievery",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "gloves",
+  "modifiers": [
+    {
+      "stat": "check",
+      "skill": "sleight_of_hand",
+      "value": 5
+    },
+    {
+      "stat": "flag",
+      "value": "lockpick_plus_5"
+    }
+  ],
+  "worn": "hands",
+  "summary": "+5 to Sleight of Hand checks and to Dexterity checks to pick locks.",
+  "text": "Invisible once worn, these gloves give you +5 on lockpicking Dexterity checks as well as Dexterity (Sleight of Hand) checks."
+}

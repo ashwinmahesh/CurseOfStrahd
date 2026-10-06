@@ -18,7 +18,7 @@ func test_phase_1_content_counts() -> void:
 	assert_eq((rthw_only.call(c.all("species")) as Array).size(), 4, "Dhampir, Hexblood, Lupin, Reborn")
 	assert_eq(c.all("feats").filter(func(f: Dictionary) -> bool: return str(f["category"]) == "dark_gift").size(), 9, "nine Ravenloft Dark Gifts")
 	assert_eq(c.table("backgrounds").size(), 16)
-	assert_eq(c.table("monsters").size(), 76)
+	assert_eq(c.table("monsters").size(), 112, "76 from Phase 1, 36 that magic items summon or become")
 	assert_eq(c.table("pregens").size(), 4)
 	assert_true(c.table("feats").size() >= 70)
 	assert_true(c.table("spells").size() >= 170)

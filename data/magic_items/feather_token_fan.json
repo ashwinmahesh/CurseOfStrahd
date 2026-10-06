@@ -1,0 +1,36 @@
+{
+  "id": "feather_token_fan",
+  "name": "Feather Token (Fan)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 2000.0,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "feather",
+  "variant_of": "feather_token",
+  "powers": [
+    {
+      "id": "use",
+      "name": "Use",
+      "cost": "magic",
+      "consume": true,
+      "custom": "feather_token",
+      "params": {
+        "kind": "fan"
+      },
+      "text": "On a boat, it becomes a giant fan that drives the vessel for 8 hours.",
+      "combat": false,
+      "field": true
+    }
+  ],
+  "summary": "On a boat, it becomes a giant fan that drives the vessel for 8 hours.",
+  "text": "A one-use, feather-shaped token. Aboard a boat or ship, toss it up to 10 feet into the air as a Magic action: it vanishes and a giant fan appears, hovering and flapping. Its wind fills the sails of one vessel and adds 5 miles per hour to that vessel's speed for 8 hours. A Magic action dismisses the fan."
+}

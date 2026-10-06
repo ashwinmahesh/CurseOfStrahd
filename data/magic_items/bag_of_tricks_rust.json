@@ -1,0 +1,50 @@
+{
+  "id": "bag_of_tricks_rust",
+  "name": "Bag of Tricks (Rust)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0.5,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false,
+    "charges": {
+      "max": 3,
+      "regain": "1d3",
+      "when": "dawn"
+    }
+  },
+  "theme": "implements",
+  "icon": "bag",
+  "variant_of": "bag_of_tricks",
+  "powers": [
+    {
+      "id": "pull",
+      "name": "Pull out a creature",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "summon_random",
+      "params": {
+        "table": [
+          "rat",
+          "owl",
+          "mastiff",
+          "goat",
+          "giant_goat",
+          "giant_boar",
+          "lion",
+          "brown_bear"
+        ],
+        "until": "dawn"
+      },
+      "targeting": "place",
+      "range": 20,
+      "text": "Magic action, 1 charge: throw a fuzzy ball up to 20 ft; it becomes a random Beast that fights for you until dawn."
+    }
+  ],
+  "summary": "3 charges: pull out a fuzzy ball that becomes a random Beast friendly to you (rat, owl, mastiff, and others).",
+  "text": "The rust cloth bag seems empty, but feel around inside and you find a small fuzzy object. It holds 3 charges and regains 1d3 spent charges each dawn. As a Magic action while holding the bag, spend 1 charge to draw out the fuzzy object and toss it up to 20 feet; where it lands it becomes a creature, chosen by a d8 roll on the bag's table (1 rat, 2 owl, 3 mastiff, 4 goat, 5 giant goat, 6 giant boar, 7 lion, 8 brown bear). The creature regards you and your allies as friends and takes its turn right after yours. With a Bonus Action you can tell it where to go and which action to use on its next turn, or hand it broader instructions; left without orders, it behaves as its nature dictates. It vanishes once it drops to 0 Hit Points or when dawn next arrives."
+}

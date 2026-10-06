@@ -1,0 +1,27 @@
+{
+  "id": "ring_of_resistance_cold",
+  "name": "Ring of Resistance (Cold)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "variant_of": "ring_of_resistance",
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "cold"
+    }
+  ],
+  "summary": "Resistance to Cold damage while you wear it.",
+  "text": "Wearing the ring gives you Resistance to Cold damage; a gemstone in its setting hints at which type it guards against."
+}

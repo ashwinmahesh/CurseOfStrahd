@@ -1,0 +1,30 @@
+{
+  "id": "periapt_of_health",
+  "name": "Periapt of Health",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "amulet",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "immune_disease"
+    },
+    {
+      "stat": "advantage",
+      "on": "save_vs:poisoned"
+    }
+  ],
+  "worn": "neck",
+  "summary": "You can't contract a disease, and you have Advantage on saves against being Poisoned.",
+  "text": "Wearing this pendant gives you Immunity to catching any disease, and a disease you already carry has its effects held in check for as long as you keep it on. It also gives you Advantage on any saving throw to resist the Poisoned condition or shake it off."
+}
