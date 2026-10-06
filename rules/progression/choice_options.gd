@@ -147,7 +147,7 @@ static func toggled(c: Choice, id: String, on: bool) -> Array:
 static func swap_note(c: Choice) -> String:
 	if not swap_open(c):
 		return ""
-	var noun := "cantrip" if c.kind == "cantrip" else "spell"
+	var noun := _swap_noun(c)
 	if c.swap_max == 0:
 		return "Pick the new %ss; the others %s." % [noun, _swap_when(c)]
 	return "Replace up to %d %s%s: unpick it, then pick the new one (%d of %d replaced)." % [c.swap_max, noun,
@@ -164,7 +164,7 @@ static func _swap_limits(c: Choice) -> void:
 	for p in c.picks:
 		if not p in c.swap_from:
 			only_earlier = false
-	var noun := "cantrip" if c.kind == "cantrip" else "spell"
+	var noun := _swap_noun(c)
 	for o in c.options:
 		var picked := o.id in c.picks
 		if picked and o.id in c.swap_from and out >= c.swap_max:
@@ -174,11 +174,22 @@ static func _swap_limits(c: Choice) -> void:
 
 
 static func _swap_rule(c: Choice) -> String:
-	var noun := "cantrip" if c.kind == "cantrip" else "spell"
+	var noun := _swap_noun(c)
 	if c.swap_max == 0:
 		return "Your earlier %ss %s" % [noun, _swap_when(c)]
 	return "Only %d %s%s can change %s" % [c.swap_max, noun, "" if c.swap_max == 1 else "s",
 		"after a Long Rest" if c.replaceable == "long_rest" else "at a level up"]
+
+
+static func _swap_noun(c: Choice) -> String:
+	match c.kind:
+		"cantrip":
+			return "cantrip"
+		"spell", "spellbook":
+			return "spell"
+		"weapon_mastery":
+			return "weapon choice"
+	return "choice"
 
 
 static func _swap_when(c: Choice) -> String:
