@@ -810,16 +810,19 @@ func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 func _play_events() -> void:
 	var events := e.drain_events()
 	var walking: Dictionary = {}
+	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
+	var cast_by := ""
 	for ev in events:
 		var kind := str(ev["type"])
 		match kind:
 			"move":
+				cast_by = ""
 				var tok := tokens.get(str(ev["id"])) as CombatToken
 				if tok == null:
 					continue
 				var from: Vector2i = ev["from"]
 				var to: Vector2i = ev["to"]
-				tok.face(Vector2(to - from), not bool(ev.get("forced", false)))
+				tok.face(Vector2(to - from), not bool(ev.get("forced", false)), STEP_TIME)
 				walking[tok] = true
 				var tw := create_tween()
 				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), STEP_TIME)
@@ -832,10 +835,15 @@ func _play_events() -> void:
 				var d := tokens.get(str(ev["target"])) as CombatToken
 				if a != null and d != null:
 					var dir := (d.position - a.position)
-					a.face(Vector2(dir.x, dir.z), false)
 					var home := a.position
+					# The drawn attack winds up, then the token steps in on the blow; without one, just the step.
+					var drawn := str(ev["attacker"]) != cast_by and a.start_attack(Vector2(dir.x, dir.z))
+					if drawn:
+						await a.wait_for_strike()
+					else:
+						a.face(Vector2(dir.x, dir.z), false)
 					var tw2 := create_tween()
-					tw2.tween_property(a, "position", home + dir.normalized() * 0.3, 0.1)
+					tw2.tween_property(a, "position", home + dir.normalized() * (0.15 if drawn else 0.3), 0.1)
 					tw2.tween_property(a, "position", home, 0.12)
 					await tw2.finished
 					Audio.sfx(("crit" if bool(ev.get("critical", false)) else "hit") if bool(ev["hit"]) else "swing")
@@ -872,8 +880,13 @@ func _play_events() -> void:
 				_stop_walking(walking)
 				Audio.sfx("spell")
 				var caster := tokens.get(str(ev["caster"])) as CombatToken
+				cast_by = ""
 				if caster != null:
 					caster.flash(Look.color("lilac"), 0.3)
+					var aim := _spell_aim(ev, caster)
+					if caster.casts_with_attack() and aim != Vector2.ZERO and caster.start_attack(aim):
+						cast_by = caster.combatant.id
+						await caster.wait_for_strike()
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
 					overlay.show_cells("area", cells)
@@ -913,6 +926,7 @@ func _play_events() -> void:
 					tw4.tween_property(rt, "scale", Vector3(k, k, k) if rt.combatant.size_cells > 1 else Vector3.ONE, 0.3)
 					rt.position = board.cell_center(rt.combatant.cell, rt.combatant.size_cells)
 			"turn":
+				cast_by = ""
 				_stop_walking(walking)
 				_refresh_all()
 			"round":
@@ -922,6 +936,24 @@ func _play_events() -> void:
 				_refresh_all()
 	_stop_walking(walking)
 	_refresh_all()
+
+
+## Where a spell goes, as a ground direction from its caster: its first other target, else the middle of its area.
+## Zero for a spell on the caster alone.
+func _spell_aim(ev: Dictionary, caster: CombatToken) -> Vector2:
+	for id: Variant in ev.get("targets", []) as Array:
+		var t := tokens.get(str(id)) as CombatToken
+		if t != null and t != caster:
+			var d := t.position - caster.position
+			return Vector2(d.x, d.z)
+	var cells := ev.get("cells", []) as Array
+	if cells.is_empty():
+		return Vector2.ZERO
+	var mid := Vector3.ZERO
+	for cell: Variant in cells:
+		mid += board.cell_center(cell as Vector2i)
+	var d2 := mid / float(cells.size()) - caster.position
+	return Vector2(d2.x, d2.z) if Vector2(d2.x, d2.z).length() > 0.1 else Vector2.ZERO
 
 
 ## A Narrator line in the combat log (and briefly as a banner), if the story has one for this moment.
