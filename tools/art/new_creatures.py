@@ -19,6 +19,7 @@ turnarounds  draws the missing sheets (two Gemini calls at a time) and redraws a
 register     adds the art/manifest.json entries (with sprite_flags), the animations.json entries and the heights.
 portraits    draws the missing turn-bar portraits from each turnaround and runs make portrait (BG=ash_violet).
 Then: tools/art/anim_keyframes.py --only ... --retry 2 (and --kind walk), and make anims ONLY="...".
+GEMINI_BUDGET=<counter file>:<max> caps the calls across all of these tools (tools/art/gemini_budget.py).
 """
 import argparse
 import json
@@ -27,6 +28,9 @@ import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gemini_budget  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 BLENDER = "/Applications/Blender.app/Contents/MacOS/Blender"
@@ -48,6 +52,8 @@ def model():
 
 
 def gemini(name, folder, prompt, aspect, ref=None):
+    if not gemini_budget.take():
+        sys.exit(f"Gemini call budget spent (GEMINI_BUDGET, {gemini_budget.used()} calls); stopped at {name}")
     cmd = [sys.executable, str(ROOT / "tools" / "art" / "generate_gemini.py"), name, folder, prompt,
            "--model", model(), "--aspect", aspect] + (["--ref", str(ref)] if ref else [])
     r = subprocess.run(cmd, capture_output=True, text=True)
