@@ -24,7 +24,8 @@ func _init(seed_value: int = 11) -> void:
 			_nodes.append("%s:%s" % [df.key, node])
 
 
-## The lines of an unplayed exchange that suits the party now ([{name, text}]), or [] if none. Marks it played.
+## The lines of an unplayed exchange that suits the party now ([{name, text, narrator, portrait}]), or [] if none.
+## Marks it played.
 func next(st: StoryState, region: String = "") -> Array[Dictionary]:
 	var pool: Array[String] = []
 	for ref in _nodes:
@@ -51,7 +52,7 @@ static func _lines(ref: String, st: StoryState) -> Array[Dictionary]:
 		var b := r.next()
 		match str(b["kind"]):
 			"line":
-				out.append({"name": str(b["name"]), "text": str(b["text"]), "narrator": bool(b["narrator"])})
+				out.append({"name": str(b["name"]), "text": str(b["text"]), "narrator": bool(b["narrator"]), "portrait": str(b["portrait"])})
 			"end":
 				break
 			"options", "check":

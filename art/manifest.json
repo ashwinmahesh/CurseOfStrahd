@@ -193,6 +193,16 @@
       ]
     },
     {
+      "id": "narrator_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/narrator_hooded.png",
+      "sprites": "art/portraits/narrator.png",
+      "model": "gemini-3.1-flash-image",
+      "notes": "The Narrator's avatar (owner request 2026-10-06: a portrait for the Dungeon Master / narrator when they speak), shown on Narrator lines in conversations and in the exploration Narrator box. Picked as the default from four options generated the same day (art/generated/portraits/narrator_hooded, _chronicler, _raven, _mists; the owner chooses). 1024 -> 512 px by blender/portrait.py, background flattened to ash_violet (BG=ash_violet).",
+      "prompt": "Bust portrait of the Narrator, the unseen storyteller who tells this tale of Barovia: a tall hooded figure in a heavy black velvet cowl lined with deep crimson, an aged gold embroidered trim along the hood's edge; inside the hood only darkness and two small cold gold glinting eyes, no face; black-gloved hands hold a closed ancient book bound in crimson leather with gold corner clasps against the chest; front view, still, patient and ominous, lit by cold moonlight from the side (no warm light, no orange tones), flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no scenery in the frame. No border or frame around the picture; the subject runs off the bottom edge of the picture (no rounded cameo or vignette cut-out)."
+    },
+    {
       "id": "wolf_portrait",
       "kind": "portrait",
       "status": "generated",

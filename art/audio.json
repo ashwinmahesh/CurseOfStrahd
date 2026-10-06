@@ -98,6 +98,10 @@
       "res://art/sourced/kenney_rpg_audio/Audio/doorOpen_1.ogg",
       "res://art/sourced/kenney_rpg_audio/Audio/doorOpen_2.ogg"
     ],
+    "locked": [
+      "res://art/sourced/kenney_rpg_audio/Audio/doorClose_3.ogg",
+      "res://art/sourced/kenney_rpg_audio/Audio/doorClose_1.ogg"
+    ],
     "unlock": [
       "res://art/sourced/kenney_rpg_audio/Audio/metalLatch.ogg",
       "res://art/sourced/oga_80_cc0_rpg_sfx/lock_01.ogg",

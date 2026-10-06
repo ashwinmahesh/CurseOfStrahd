@@ -21,7 +21,7 @@ func test_every_place_has_music() -> void:
 
 
 func test_the_effects_the_game_plays_exist() -> void:
-	for id: String in ["click", "page", "door", "unlock", "coins", "card", "rest", "level_up", "hit", "crit", "swing",
+	for id: String in ["click", "page", "door", "locked", "unlock", "coins", "card", "rest", "level_up", "hit", "crit", "swing",
 			"spell", "heal", "victory", "defeat"]:
 		assert_false(Audio.files("sfx", id).is_empty(), id)
 	for mood: String in (Audio._data["ambient"] as Dictionary):

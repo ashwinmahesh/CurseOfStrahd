@@ -1,7 +1,7 @@
 class_name LootWindow
 extends CanvasLayer
-## The loot window (docs/ui/inventory.md, inv_02): what a container holds, with Take all, Take one, or Send to whoever
-## can carry it (overloaded characters are skipped, and it says so). Coins go to the party purse.
+## The loot window (docs/ui/inventory.md, inv_02): what a container holds, with Take all, Take one, Take gold, or Send
+## to whoever can carry it (overloaded characters are skipped, and it says so). Coins go to the party purse.
 
 signal closed
 
@@ -58,7 +58,10 @@ func _redraw() -> void:
 		var coins := HBoxContainer.new()
 		coins.add_theme_constant_override("separation", 10)
 		coins.add_child(UiParts.figure("%d" % int(gold), 20, "gilt_light"))
-		coins.add_child(UiKit.label("gold pieces, for the party purse", 15, "parchment"))
+		var what := UiKit.label("gold pieces, for the party purse", 15, "parchment")
+		what.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		coins.add_child(what)
+		coins.add_child(UiParts.small_button("Take gold", take_coins))
 		_list.add_child(UiParts.row(coins))
 	if items.is_empty() and gold <= 0.0:
 		_list.add_child(UiKit.label("Empty.", 15, "bone"))
@@ -132,6 +135,15 @@ func _send_all() -> void:
 	if not notes.is_empty() and view != null:
 		view.toast.emit("; ".join(notes))
 	_close()
+
+
+## The coins alone into the party purse; the items stay to be taken or left.
+func take_coins() -> void:
+	if gold <= 0.0:
+		return
+	Audio.sfx("coins")
+	_take_gold()
+	_redraw()
 
 
 func _take_gold() -> void:

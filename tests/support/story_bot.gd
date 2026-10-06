@@ -237,7 +237,12 @@ func _open_blocking_door(goal: Vector2i) -> bool:
 		if not v.grid.has_flag(dc, CombatGrid.WALL):
 			continue
 		for tries in 6:
-			v.click(dc)
+			# A click on a locked door only rattles it: like a player, try the lock from its right-click menu.
+			var way := _way_through(v, dc)
+			if way != "":
+				v.act(dc, way)
+			else:
+				v.click(dc)
 			if not await settle():
 				return false
 			if not v.grid.has_flag(dc, CombatGrid.WALL):
@@ -246,6 +251,18 @@ func _open_blocking_door(goal: Vector2i) -> bool:
 			v.set("_queue", [])
 			return true
 	return false
+
+
+## The right-click menu's way to open a locked door (the key, then the picks, then force, Knock last), or "".
+static func _way_through(v: LocationView, cell: Vector2i) -> String:
+	var ids: Array[String] = []
+	for a: Variant in v.actions_at(cell)["actions"] as Array:
+		if bool((a as Dictionary).get("enabled", true)):
+			ids.append(str((a as Dictionary)["id"]))
+	for way: String in ["key", "pick", "force", "knock"]:
+		if way in ids:
+			return way
+	return ""
 
 
 ## Walks next to a person, prop or container and uses it (talks, examines, opens, searches for it first). A walk cut
@@ -260,7 +277,11 @@ func use(cell: Vector2i) -> bool:
 		return false
 	for attempt in 5:
 		var talks := conversations.size()
-		v.click(cell)
+		var way := _way_through(v, cell)
+		if way != "":
+			v.act(cell, way)
+		else:
+			v.click(cell)
 		if not await settle():
 			return false
 		if view() != v or conversations.size() > talks or v.grid.distance_ft(v.leader().cell, 1, cell, 1) <= 5:
