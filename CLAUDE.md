@@ -5,8 +5,9 @@ Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log 
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | test [ONLY=substr] | validate | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node]
-make sprite TURNAROUND=<png> ID=<id> | standin
+make run | test [ONLY=substr] | validate | lint | ci | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node]
+make sprite TURNAROUND=<png> ID=<id> | standin | wireframes
+python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.
@@ -16,9 +17,18 @@ make sprite TURNAROUND=<png> ID=<id> | standin
 - Scenes are built in code; .tscn files are thin roots. 1 world unit = one 5 ft square.
 - After adding a class_name, `make import` before `make test`.
 
+## Rules engine (ADR 0003, 0005, 0006)
+- Data is read through `Compendium.shared()`; modifiers follow docs/contracts/modifiers.md (add a stat to the contract
+  and the engine together, never only in data). Every number the UI shows is a `Breakdown`.
+- A character is its `build` (keyed choices, see ADR 0006); `refresh()` derives the rest. The UI never computes rules:
+  it reads CharacterBuilder / LevelUpController and picks widgets by `Choice.kind`.
+- `make lint` compiles rules/ standalone, so an autoload reference there fails CI.
+
 ## Rules source
 Full 2024 PHB (owner decision 2026-10-05, personal use only). SRD 5.2 is the import starting point.
 Rule deviations go in docs/rules/deviations.md; a rule is "done" only when coverage.md says so.
+Data `text` and `summary` are our own words, never copied. Set `source.checked_against` only after comparing every
+number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribution: docs/assets/LICENSES.md.
 
 ## Art
 - Colours only from art/palette/palette.json (via Look) — run `make palette` after editing the list.
