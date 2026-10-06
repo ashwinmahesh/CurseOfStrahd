@@ -239,27 +239,32 @@ func _mark(at: Vector2, id: String) -> void:
 ## mark, wherever it's clear. The chosen destination's name sits on a small crimson plaque.
 func _place_name(font: Font, at: Vector2, text: String, id: String, taken: Array[Rect2]) -> void:
 	var size := 21 if id == _at or id == _target else 19
-	var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size)
-	var asc := font.get_ascent(size)
-	# Below, above, right, left, then the corners and a step further out.
-	var spots: Array[Vector2] = [at + Vector2(-sz.x / 2.0, 16), at + Vector2(-sz.x / 2.0, -16 - sz.y),
-		at + Vector2(18, -sz.y / 2.0), at + Vector2(-18 - sz.x, -sz.y / 2.0),
-		at + Vector2(12, 12), at + Vector2(-12 - sz.x, 12), at + Vector2(12, -12 - sz.y), at + Vector2(-12 - sz.x, -12 - sz.y),
-		at + Vector2(-sz.x / 2.0, 34), at + Vector2(-sz.x / 2.0, -34 - sz.y)]
 	var inside := Rect2(Vector2(6, 6), MAP_SIZE - Vector2(12, 12))
 	var box := Rect2()
 	var least := INF
-	for s in spots:
-		# Kept inside the panel; the first spot clear of other marks, tags and names wins, else the least crowded.
-		var r := Rect2(s.clamp(inside.position, inside.end - sz), sz)
-		var crowd := 0.0
-		for t in taken:
-			crowd += t.intersection(r.grow(3.0)).get_area()
-		if crowd < least:
-			least = crowd
-			box = r
-		if crowd == 0.0:
+	# Where it's crowded (every place known, zoomed out) a name may come down a size to find a clear spot.
+	for try_size: int in [size, size - 3]:
+		var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, try_size)
+		# Below, above, right, left, then the corners and a step further out.
+		var spots: Array[Vector2] = [at + Vector2(-sz.x / 2.0, 16), at + Vector2(-sz.x / 2.0, -16 - sz.y),
+			at + Vector2(18, -sz.y / 2.0), at + Vector2(-18 - sz.x, -sz.y / 2.0),
+			at + Vector2(12, 12), at + Vector2(-12 - sz.x, 12), at + Vector2(12, -12 - sz.y), at + Vector2(-12 - sz.x, -12 - sz.y),
+			at + Vector2(-sz.x / 2.0, 34), at + Vector2(-sz.x / 2.0, -34 - sz.y)]
+		for s in spots:
+			# Kept inside the panel; the first spot clear of other marks, tags and names wins, else the least crowded.
+			var r := Rect2(s.clamp(inside.position, inside.end - sz), sz)
+			var crowd := 0.0
+			for t in taken:
+				crowd += t.intersection(r.grow(3.0)).get_area()
+			if crowd < least:
+				least = crowd
+				box = r
+				size = try_size
+			if crowd == 0.0:
+				break
+		if least == 0.0:
 			break
+	var asc := font.get_ascent(size)
 	taken.append(box.grow(6.0))
 	var base := box.position + Vector2(0, asc)
 	if id == _target and id != _at:
