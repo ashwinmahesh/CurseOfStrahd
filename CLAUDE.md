@@ -26,6 +26,9 @@ Rule deviations go in docs/rules/deviations.md; a rule is "done" only when cover
   provider and model pinned in art/manifest.json. Key: GEMINI_API_KEY, sent as a header. Gemini gives opaque
   images, so ask for a plain flat white background; the pipeline removes it. OpenAI is a fallback
   (tools/art/generate_openai.sh); never use OpenAI models with a shutdown date.
+- Asset packs from the internet are allowed (owner, 2026-10-06): CC0 or clearly free licences only. Keep
+  downloads untouched with their licence in art/sourced/<pack>/ and list each in docs/assets/LICENSES.md.
+  Characters come from the Gemini pipeline so the style stays consistent.
 - UI draws on CanvasLayers so the palette pass never touches it.
 
 ## Done means
