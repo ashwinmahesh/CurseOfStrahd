@@ -38,6 +38,19 @@ line that hasn't changed, and the game must work with any mix of voiced and unvo
   beat and stops on any other beat, the explore HUD's Narrator box speaks and stays up until the voice ends, and the
   combat log's Narrator lines speak.
 
+## Casting decisions (owner, 2026-10-06)
+
+- **The Narrator** is a designed voice in the style of the Baldur's Gate 3 narrator (a low, warm English woman,
+  intimate and wryly amused), picked from auditions; nothing is cloned from a real person.
+- **Accents:** Barovians, the Vistani and Strahd speak with a strong, clearly audible Eastern European (Romanian)
+  accent; outsiders keep their own (Van Richten Dutch, the Silver Dragon knights, Exethanter and Vosk English).
+- **Main characters** (the Narrator and 26 leads) keep saved voices on the account, for new and edited lines.
+- **Minor characters** each get a voice designed from their description, used for their lines and then deleted from
+  the account (`audition.py release`, `"released": true` in casting.json) to stay within the plan's 30 voice slots.
+  Their clips stay; a new or edited line for one of them needs a newly designed voice (`audition.py auto`).
+- **Children and teens:** ElevenLabs will not design voices for anyone under 18. The children use ready-made library
+  voices (`"library": true`); Luminita (17) and Victor (16) have young adult voices.
+
 ## Consequences
 
 - Writers keep writing text; a line is voiced by running `make voice` after it lands, and costs only its own

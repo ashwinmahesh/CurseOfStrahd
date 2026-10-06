@@ -6929,10 +6929,20 @@
   "recipe": "3b5b9a1e64",
   "text": "Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves."
  },
+ "lady_wachter/06685818278b04da": {
+  "chars": 129,
+  "recipe": "78f9fe1f41",
+  "text": "And don't kill Izek before the festival, however tempting. Today it would look like murder. On the day it will look like justice."
+ },
  "lady_wachter/07923b9b90773cfd": {
   "chars": 210,
   "recipe": "78f9fe1f41",
   "text": "A hundred and fifty, as agreed, and the thanks of the burgomistress of Vallaki. My lord will have heard by nightfall; he hears everything in this valley sooner or later. I expect he'll be very pleased with you."
+ },
+ "lady_wachter/0bf4c04044996bde": {
+  "chars": 169,
+  "recipe": "78f9fe1f41",
+  "text": "Go and tell Vargas, if you haven't. Go and tell the priest. And when you watch that wicker sun tomorrow, remember: the night is longer than any fire anyone has ever lit."
  },
  "lady_wachter/11292c0b40137a83": {
   "chars": 58,
@@ -6943,6 +6953,41 @@
   "chars": 98,
   "recipe": "78f9fe1f41",
   "text": "You took my sons from me in my own cellar. My purse you left alone. Gentlemen, you have been paid."
+ },
+ "lady_wachter/121c5acdc227f7ed": {
+  "chars": 118,
+  "recipe": "78f9fe1f41",
+  "text": "The strangers the whole town is pretending not to talk about. Sit. The chairs belong to my book club; they won't mind."
+ },
+ "lady_wachter/16c6b7f1b6553dac": {
+  "chars": 60,
+  "recipe": "78f9fe1f41",
+  "text": "Come to gloat? Please do. There's so little else to look at."
+ },
+ "lady_wachter/19c166ae1d37ed62": {
+  "chars": 143,
+  "recipe": "78f9fe1f41",
+  "text": "You killed my sons in my own cellar, and now you come to my parlour. I'd offer you a cup, but I don't think you'd drink it, and you'd be right."
+ },
+ "lady_wachter/1e4a7c756782445d": {
+  "chars": 115,
+  "recipe": "78f9fe1f41",
+  "text": "Someone has been through my desk. Forty-five gold and a bottle of scent. I mention it only so you know that I know."
+ },
+ "lady_wachter/2168c11ca08c4c81": {
+  "chars": 204,
+  "recipe": "78f9fe1f41",
+  "text": "No more festivals. No more stocks for a sour face. A town that stops pretending its lord isn't there, and stops annoying him. A vassal who pays her rent sleeps soundly, my dears. Ask Vargas how he sleeps."
+ },
+ "lady_wachter/2534002e7fc27f2f": {
+  "chars": 209,
+  "recipe": "78f9fe1f41",
+  "text": "Quiet. Curfew. Courtesy. When a black carriage stops at the gate, the gate opens. When a guest of the castle passes, the town bows. In return, the wolves keep to the woods and nobody vanishes without a reason."
+ },
+ "lady_wachter/2cb4a71e62ba050b": {
+  "chars": 128,
+  "recipe": "78f9fe1f41",
+  "text": "I hear you were civil to our lord, at your burgomaster's graveside. Good manners are so rare in this valley. I knew we'd get on."
  },
  "lady_wachter/350116afb1b97e70": {
   "chars": 100,
@@ -6959,25 +7004,90 @@
   "recipe": "78f9fe1f41",
   "text": "Vargas, you sad little man. Your people don't love you, they fear your watch, and your watch is very small. Now, my dears."
  },
+ "lady_wachter/4bc4b120dde639d4": {
+  "chars": 158,
+  "recipe": "78f9fe1f41",
+  "text": "And when he does, I will step up and offer the town something better. The watch will have to choose. I'd like them to see you standing behind me when they do."
+ },
  "lady_wachter/4f1bf5eeaa97aa69": {
   "chars": 71,
   "recipe": "78f9fe1f41",
   "text": "You've earned a say in it, my friends. What shall we do with our Baron?"
+ },
+ "lady_wachter/4fce973cbf70bc7c": {
+  "chars": 238,
+  "recipe": "78f9fe1f41",
+  "text": "Vargas? Vargas is a frightened man who has discovered that if you make everyone else frightened, nobody notices you are. He thinks a wicker sun keeps the night out. It doesn't. Nothing does. One simply has to come to terms with the night."
  },
  "lady_wachter/527348918a3fbf96": {
   "chars": 102,
   "recipe": "78f9fe1f41",
   "text": "Vargas. Enough. Your sun won't burn and your people won't smile. They're done pretending, and so am I."
  },
+ "lady_wachter/55a766bab2cc24c2": {
+  "chars": 73,
+  "recipe": "78f9fe1f41",
+  "text": "Then go to the square at noon and tell that dreadful herald you're ready."
+ },
  "lady_wachter/58ca11362c1b5267": {
   "chars": 76,
   "recipe": "78f9fe1f41",
   "text": "The stocks, then. He built them. It seems only fair that he should try them."
  },
+ "lady_wachter/5dc897874c93cd39": {
+  "chars": 121,
+  "recipe": "78f9fe1f41",
+  "text": "Kolyan's girl is welcome to stay, of course. More than welcome. I'd see her very well looked after, and so would my lord."
+ },
+ "lady_wachter/5fb10d7bb6d13b5e": {
+  "chars": 135,
+  "recipe": "78f9fe1f41",
+  "text": "Oh, the classics. History, mostly. The history of this valley, and who it has always belonged to. We're very well read on that subject."
+ },
  "lady_wachter/6c18725b2a6f4a32": {
   "chars": 121,
   "recipe": "78f9fe1f41",
   "text": "Merciful. How unfashionable. Very well: he leaves at dawn with what he can carry, which, knowing Vargas, will be bunting."
+ },
+ "lady_wachter/6ea384a69c9c87b0": {
+  "chars": 55,
+  "recipe": "78f9fe1f41",
+  "text": "Mice. Old houses have mice. Old families too. More tea?"
+ },
+ "lady_wachter/70ae9fbf591289ce": {
+  "chars": 157,
+  "recipe": "78f9fe1f41",
+  "text": "You've been to Vargas. Or to the priest. It doesn't matter which; the tea tastes the same either way. Sit, if you like. I don't hold grudges. I collect them."
+ },
+ "lady_wachter/7ae8f5ac59150c1e": {
+  "chars": 80,
+  "recipe": "78f9fe1f41",
+  "text": "Do come again. Bring an appetite and an open mind; I can supply everything else."
+ },
+ "lady_wachter/7b66e790543a0db9": {
+  "chars": 36,
+  "recipe": "78f9fe1f41",
+  "text": "You have experience. How delightful."
+ },
+ "lady_wachter/8b1c0da3bb6d6aaa": {
+  "chars": 40,
+  "recipe": "78f9fe1f41",
+  "text": "People have, my dear. Ask the fishermen."
+ },
+ "lady_wachter/8d6dc9b73abd1d03": {
+  "chars": 60,
+  "recipe": "78f9fe1f41",
+  "text": "And Kolyan's girl. You have a face people remember, my dear."
+ },
+ "lady_wachter/8ea5206055c4f78e": {
+  "chars": 31,
+  "recipe": "78f9fe1f41",
+  "text": "It's more than Vargas ever got."
+ },
+ "lady_wachter/8ed21d465f542318": {
+  "chars": 226,
+  "recipe": "78f9fe1f41",
+  "text": "No, I didn't. Very well, plainly: at the festival, the Baron's sun will fail. It has rained for a week, and suns are made of straw. When it fails, Vargas will lose his temper in front of the whole town, the way he always does."
  },
  "lady_wachter/9594b0d7d561a25e": {
   "chars": 43,
@@ -6994,6 +7104,11 @@
   "recipe": "78f9fe1f41",
   "text": "Watch closely, my dears. The best part of any festival is the end."
  },
+ "lady_wachter/9b18d7871da1226d": {
+  "chars": 186,
+  "recipe": "78f9fe1f41",
+  "text": "For him? With him. It's his valley; it always has been. I'd simply stop pretending otherwise. Do you know what he does to towns that pretend? Look at your village. Look at its graveyard."
+ },
  "lady_wachter/9fb915ccd07aff63": {
   "chars": 73,
   "recipe": "78f9fe1f41",
@@ -7004,20 +7119,60 @@
   "recipe": "78f9fe1f41",
   "text": "Then let him sing at your funeral."
  },
+ "lady_wachter/aa9c8e459f17f9b1": {
+  "chars": 100,
+  "recipe": "78f9fe1f41",
+  "text": "I hear you told our lord no, at a funeral, to his face. How brave. I do hope you've grown out of it."
+ },
  "lady_wachter/ac49221a8c89f0d1": {
   "chars": 44,
   "recipe": "78f9fe1f41",
   "text": "People of Vallaki. You may stop smiling now."
+ },
+ "lady_wachter/adf73e920969615e": {
+  "chars": 215,
+  "recipe": "78f9fe1f41",
+  "text": "Wonderful. Then a small task first. The night before the festival, it would be a great shame if that wicker sun got wet. A very great deal of water. The watchman by it will be asleep after midnight. I've seen to it."
+ },
+ "lady_wachter/c470f6094b0fdd08": {
+  "chars": 158,
+  "recipe": "78f9fe1f41",
+  "text": "And on the day, stand where the watch can see you. When I speak, don't let Izek reach me. That's all. The town will do the rest; it has been waiting years to."
+ },
+ "lady_wachter/cbb3da18b7e2f51e": {
+  "chars": 224,
+  "recipe": "78f9fe1f41",
+  "text": "My daughter, Stella. She was a clever, wilful girl, and she made a promise to someone she shouldn't have, and he took it very literally. Now she believes she's a cat. She's quite happy. Happier than most of us. Leave her be."
  },
  "lady_wachter/d28840fac1af3493": {
   "chars": 158,
   "recipe": "78f9fe1f41",
   "text": "People of Vallaki: no more festivals. No more stocks for a sour face. Peace, with the lord who has always really ruled us, and an end to this fool's shouting."
  },
+ "lady_wachter/d29b3ad97d810aa8": {
+  "chars": 109,
+  "recipe": "78f9fe1f41",
+  "text": "Ask me again in a year, when Vargas is still holding festivals and his lord has stopped finding them amusing."
+ },
  "lady_wachter/d3d81d76adab7cc4": {
   "chars": 46,
   "recipe": "78f9fe1f41",
   "text": "Such a shame. Do give my regards to the abbot."
+ },
+ "lady_wachter/d53c5bfa1735ddb2": {
+  "chars": 72,
+  "recipe": "78f9fe1f41",
+  "text": "I hear you drew steel on our lord. How exciting for you. How very brief."
+ },
+ "lady_wachter/d87114e56e759a71": {
+  "chars": 124,
+  "recipe": "78f9fe1f41",
+  "text": "And? I'm not ashamed of my correspondents. I'm only sorry you read it before I showed you. I'd have liked to see your faces."
+ },
+ "lady_wachter/d9fbf83f4a76d4b5": {
+  "chars": 67,
+  "recipe": "78f9fe1f41",
+  "text": "The sun, my dears. Water. After midnight, when the square is empty."
  },
  "lady_wachter/dc86e1766f695c03": {
   "chars": 56,
@@ -7029,10 +7184,20 @@
   "recipe": "78f9fe1f41",
   "text": "Well. The town needs a steady hand, now that it has shaken off a foolish one. I am happy to offer..."
  },
+ "lady_wachter/ed7a71e9e38546cc": {
+  "chars": 163,
+  "recipe": "78f9fe1f41",
+  "text": "So you've been in my cellar. How bold. Do what you like with it. Vargas reads with his lips moving, and the priest won't believe evil of anyone until it bites him."
+ },
  "lady_wachter/ee7b2fed93b95e96": {
   "chars": 48,
   "recipe": "78f9fe1f41",
   "text": "My friends. I believe this is where you come in."
+ },
+ "lady_wachter/f1dac3ad9f068ec7": {
+  "chars": 80,
+  "recipe": "78f9fe1f41",
+  "text": "There's a word for most things in temples. Very few of them keep the wolves off."
  },
  "lady_wachter/f29a27a48b315c4d": {
   "chars": 54,
@@ -7044,10 +7209,20 @@
   "recipe": "78f9fe1f41",
   "text": "You have no idea what you've done. He was going to be kind to you."
  },
+ "lady_wachter/fa61236febd354fb": {
+  "chars": 50,
+  "recipe": "78f9fe1f41",
+  "text": "Back for more tea? I'll ring for a fresh pot. Sit."
+ },
  "lady_wachter/fcf7aae160003fff": {
   "chars": 97,
   "recipe": "78f9fe1f41",
   "text": "My friends. Sit. You've done this town a great service, whatever the priest says from his pulpit."
+ },
+ "lady_wachter/ff9b818c9febf64d": {
+  "chars": 159,
+  "recipe": "78f9fe1f41",
+  "text": "You again. Come to see how the losers live? Very comfortably, as it happens. Enjoy your council. It will talk you all to death long before he gets round to it."
  },
  "luminita/0d2878bcf2224c6a": {
   "chars": 112,
@@ -7289,6 +7464,96 @@
   "recipe": "4967f96e22",
   "text": "And Victor's gone. There was a light in the attic, and then there wasn't any Victor. I keep laying a place for him."
  },
+ "mad_mage/20f5a4e36bace942": {
+  "chars": 80,
+  "recipe": "6cd20329a3",
+  "text": "You said it before, and it hurt. It doesn't hurt now. It fits, like an old boot."
+ },
+ "mad_mage/2fd9bb5410849bbf": {
+  "chars": 229,
+  "recipe": "6cd20329a3",
+  "text": "I went down to the castle with a plan. The plan was excellent. I remember the plan was excellent. The plan went in, and I came out, and some time after that a little old woman with a jar said \"hush now\" and everything went quiet."
+ },
+ "mad_mage/4176cb9fd5b67da2": {
+  "chars": 77,
+  "recipe": "6cd20329a3",
+  "text": "You again. Or someone wearing you. Sit. Don't touch the black king; he bites."
+ },
+ "mad_mage/46870eece5e97fb2": {
+  "chars": 47,
+  "recipe": "6cd20329a3",
+  "text": "Stop it. Stop poking at the hole. It's MY hole."
+ },
+ "mad_mage/56f232040dcf6b20": {
+  "chars": 154,
+  "recipe": "6cd20329a3",
+  "text": "Mordenkainen. That's... that's my hand. That's how I make a capital M, with the little hook. Nobody else makes it like that. It's a terrible M. It's mine."
+ },
+ "mad_mage/5c3760d732362f9b": {
+  "chars": 56,
+  "recipe": "6cd20329a3",
+  "text": "Am I? How interesting. I wonder what I'm practising for."
+ },
+ "mad_mage/5fedeec9aae48a3f": {
+  "chars": 86,
+  "recipe": "6cd20329a3",
+  "text": "Don't. Don't say it like that, as if it were somebody's. It hurts. Why does that hurt?"
+ },
+ "mad_mage/68ed30870b056c13": {
+  "chars": 138,
+  "recipe": "6cd20329a3",
+  "text": "There's more. I can feel there's more. Read me the end. Not the spells. The last page. I wrote something there for myself, I'm sure of it."
+ },
+ "mad_mage/714b67bacb8ebc2b": {
+  "chars": 85,
+  "recipe": "6cd20329a3",
+  "text": "Lost? It was taken. One doesn't simply lose a name like that. One would hear it fall."
+ },
+ "mad_mage/9bdef57f60a76228": {
+  "chars": 45,
+  "recipe": "6cd20329a3",
+  "text": "That is exactly what the persuasive one said."
+ },
+ "mad_mage/9c7fc3955d87cb87": {
+  "chars": 55,
+  "recipe": "6cd20329a3",
+  "text": "Goodbye! Mind the birds. Don't believe a word they say."
+ },
+ "mad_mage/b328bf23f63abd24": {
+  "chars": 37,
+  "recipe": "6cd20329a3",
+  "text": "I'm sorry. Have we met? Are you real?"
+ },
+ "mad_mage/c9494af8a083f107": {
+  "chars": 187,
+  "recipe": "6cd20329a3",
+  "text": "I am... Osric. No. Osric was a goat. I am Marvellous Something. I had a name like a staircase, long, with a landing in the middle. I have looked for it under every stone on this mountain."
+ },
+ "mad_mage/d63fb7d5f1748a2e": {
+  "chars": 123,
+  "recipe": "6cd20329a3",
+  "text": "Did you see my storm on the ridge? I made it to tell me something every evening. I can't remember what. It's very punctual."
+ },
+ "mad_mage/d843c40716433037": {
+  "chars": 111,
+  "recipe": "6cd20329a3",
+  "text": "Cards! I love cards. Yes, certainly, I'll come, where are we going? We'll need provisions, and a plan, and a..."
+ },
+ "mad_mage/e8acd3a85e5ac97b": {
+  "chars": 197,
+  "recipe": "6cd20329a3",
+  "text": "A jar. Yes. A little woman with a jar, saying hush now. I remember the jar more than I remember anything else. Bring me the jar. No: don't. She'll want something for it. They always want something."
+ },
+ "mad_mage/f8c8ff03e596b080": {
+  "chars": 106,
+  "recipe": "6cd20329a3",
+  "text": "Ah. Are you real? Be honest. The last three visitors were birds, and one of them was extremely persuasive."
+ },
+ "mad_mage/feb63825dc54ccc9": {
+  "chars": 108,
+  "recipe": "6cd20329a3",
+  "text": "I play the other fellow every day. He's very good. He was always very good. I just can't remember who he is."
+ },
  "mad_mary/179c247692b53c1e": {
   "chars": 73,
   "recipe": "a0c7852e61",
@@ -7353,6 +7618,706 @@
   "chars": 144,
   "recipe": "a0c7852e61",
   "text": "Four nights ago. I went to wake her, and the bed was cold, and the window was open. No blood. The wolves didn't take her; I'd have heard wolves."
+ },
+ "madam_eva/0018ac7df17a2422": {
+  "chars": 101,
+  "recipe": "ef7260cf5a",
+  "text": "You did not pay what the cards asked. They will tell you anyway. They are not kind, and neither am I."
+ },
+ "madam_eva/01fdca2312b6448e": {
+  "chars": 107,
+  "recipe": "ef7260cf5a",
+  "text": "The mist lies over this card; it will not show me. He will be wherever he chooses, and he will choose well."
+ },
+ "madam_eva/0650e7ff89df5612": {
+  "chars": 113,
+  "recipe": "ef7260cf5a",
+  "text": "Then you are like everyone else in this valley. A true thing, then. Barovia has not found a way to tax those yet."
+ },
+ "madam_eva/0c55a0c56668e3dd": {
+  "chars": 103,
+  "recipe": "ef7260cf5a",
+  "text": "Somewhere in his pits, his old enemies were made into furniture. Sit at their table, and mind the lamp."
+ },
+ "madam_eva/0ca9eeeb1b24a9e7": {
+  "chars": 97,
+  "recipe": "ef7260cf5a",
+  "text": "Brave. Stupid, but brave. Fine. The cards will speak to you, and you will wish you had paid them."
+ },
+ "madam_eva/0cd78673cd483ec1": {
+  "chars": 90,
+  "recipe": "ef7260cf5a",
+  "text": "A scholar who came for a friend, and was ashamed of it. The cards like you better already."
+ },
+ "madam_eva/0defab9ba8dfdbdc": {
+  "chars": 120,
+  "recipe": "ef7260cf5a",
+  "text": "The Morninglord's light is a long way from here, priestess. It still reaches you. Ask why it reaches, not why it's cold."
+ },
+ "madam_eva/0f41f1d8ec1b60e3": {
+  "chars": 116,
+  "recipe": "ef7260cf5a",
+  "text": "You lied to Stanimir about his strongbox. He believed you; he is a kind man. I am not, but I will let it pass. Once."
+ },
+ "madam_eva/11bef8b65b3c0334": {
+  "chars": 131,
+  "recipe": "ef7260cf5a",
+  "text": "And you have been counting heads ever since, so that nobody is ever missing again. Yes. That will do. That is worth more than gold."
+ },
+ "madam_eva/1243a6922446c35b": {
+  "chars": 98,
+  "recipe": "ef7260cf5a",
+  "text": "You came into my tent and showed me your teeth. Now my family is showing you theirs. Choose again."
+ },
+ "madam_eva/163899baff438cb1": {
+  "chars": 111,
+  "recipe": "ef7260cf5a",
+  "text": "It lies in the room where he sleeps the day away, beneath everything, guarded by the oldest dark in the valley."
+ },
+ "madam_eva/174a56cb5d88ea40": {
+  "chars": 115,
+  "recipe": "ef7260cf5a",
+  "text": "He receives you the way a lord receives petitioners: seated high in his great hall, with all the time in the world."
+ },
+ "madam_eva/1df0a20d0c451ba6": {
+  "chars": 129,
+  "recipe": "ef7260cf5a",
+  "text": "Beyond the last gate in the valley, where the walls keep out everything but snow, there is water that remembers the sun. Wade in."
+ },
+ "madam_eva/1f70242dba474489": {
+  "chars": 188,
+  "recipe": "ef7260cf5a",
+  "text": "Because he was bored, and he called. Because the cards wanted players. Because each of you was already walking toward the mist before you ever saw it. Pick whichever answer lets you sleep."
+ },
+ "madam_eva/1fac0f23f7021b7a": {
+  "chars": 122,
+  "recipe": "ef7260cf5a",
+  "text": "Better. The price has doubled. Twenty gold, or the true thing. The true thing has not doubled; the truth is never on sale."
+ },
+ "madam_eva/2124266ef14d925a": {
+  "chars": 127,
+  "recipe": "ef7260cf5a",
+  "text": "You have already shaken his hand. A village measured him against his father and found him short. The cards measure differently."
+ },
+ "madam_eva/2221a0668b4da3ef": {
+  "chars": 143,
+  "recipe": "ef7260cf5a",
+  "text": "Where the river ate a village whole, an old woman keeps house on the wreck, singing to the child she raised long ago. Take it from her kitchen."
+ },
+ "madam_eva/2434bfbff4d184c8": {
+  "chars": 137,
+  "recipe": "ef7260cf5a",
+  "text": "Then it is yours, and so is what comes with it. Remember that I said so. Sit. The cards will speak to thieves; they have spoken to worse."
+ },
+ "madam_eva/24b59c718c8add66": {
+  "chars": 140,
+  "recipe": "ef7260cf5a",
+  "text": "In his house a lady made of paint and varnish keeps her place above the hearth. She has watched it burn for centuries. Look where she looks."
+ },
+ "madam_eva/2537cdf226c80f0d": {
+  "chars": 116,
+  "recipe": "ef7260cf5a",
+  "text": "One question more, and then the cards sleep. Only one. Choose it well; I am old, and I don't repeat myself for free."
+ },
+ "madam_eva/273697b223892e78": {
+  "chars": 109,
+  "recipe": "ef7260cf5a",
+  "text": "There you are. I turned up a card for you three nights ago, and it has been tapping its foot ever since. Sit."
+ },
+ "madam_eva/28072ffc8f31e64c": {
+  "chars": 109,
+  "recipe": "ef7260cf5a",
+  "text": "You need not walk far. It has been under my own canvas all along, waiting for the hands the cards would send."
+ },
+ "madam_eva/29cacbcfc0c9302e": {
+  "chars": 73,
+  "recipe": "ef7260cf5a",
+  "text": "Yes. That will do. Keep the rest of it; you will need something to carry."
+ },
+ "madam_eva/2eecb7bdaa9e1d33": {
+  "chars": 129,
+  "recipe": "ef7260cf5a",
+  "text": "In his house there is a room built for kneeling, and nobody has knelt there in centuries. Look under the dust of its last prayer."
+ },
+ "madam_eva/3101ae0569746bce": {
+  "chars": 72,
+  "recipe": "ef7260cf5a",
+  "text": "He keeps vigil by the queen who bore him, in the cold beneath his house."
+ },
+ "madam_eva/32dbda4e233d8325": {
+  "chars": 138,
+  "recipe": "ef7260cf5a",
+  "text": "Find the hearth in his keep that is always burning, and ask why a dead man needs a fire. Behind it is something he keeps and never spends."
+ },
+ "madam_eva/34fc4d1a1c3e5216": {
+  "chars": 79,
+  "recipe": "ef7260cf5a",
+  "text": "The fourth card is a friend. One who will stand beside you when the others run."
+ },
+ "madam_eva/37ac89b4213f9cd4": {
+  "chars": 54,
+  "recipe": "ef7260cf5a",
+  "text": "The cards don't change. Only the people carrying them."
+ },
+ "madam_eva/391a4a2ba4b4f8df": {
+  "chars": 187,
+  "recipe": "ef7260cf5a",
+  "text": "The things the cards named, in the hands the cards named, in the room the cards named. He has been hurt before. He has never been hurt by all of it at once. And sunlight. Always sunlight."
+ },
+ "madam_eva/3b9c30c0217d2f5f": {
+  "chars": 116,
+  "recipe": "ef7260cf5a",
+  "text": "He stands at the castle's lookout, high over the valley, admiring his property. He will turn around when you arrive."
+ },
+ "madam_eva/3c14895dc7ecffa8": {
+  "chars": 153,
+  "recipe": "ef7260cf5a",
+  "text": "Behind the walled town's finest door, a widow raises a glass to the castle every night. Her strongbox holds it, and an old enemy's bones keep it company."
+ },
+ "madam_eva/3e04ff3674b4827a": {
+  "chars": 202,
+  "recipe": "ef7260cf5a",
+  "text": "Some of your forty went into his house as guests and never came out as anything. Some walk his roads still, in colours that are not their own. You will see one before the end, sergeant. Count carefully."
+ },
+ "madam_eva/4105d794994b9cec": {
+  "chars": 145,
+  "recipe": "ef7260cf5a",
+  "text": "Find the painting of the woman he lost. Behind her lies his hoard, and he will be sitting on it like a dragon, counting what it never bought him."
+ },
+ "madam_eva/42195eab315cdce3": {
+  "chars": 147,
+  "recipe": "ef7260cf5a",
+  "text": "Something clockwork walks the castle's stairs on its own: a jester with a wound-down smile. It knows every passage in that house, and it is lonely."
+ },
+ "madam_eva/424e4d350f2b9372": {
+  "chars": 201,
+  "recipe": "ef7260cf5a",
+  "text": "The mists open for my people and for the dead. When the devil is truly ended, they will open for you. There is no other door. People have looked. You walked past some of them in the village churchyard."
+ },
+ "madam_eva/42cc0cc93ac9320f": {
+  "chars": 106,
+  "recipe": "ef7260cf5a",
+  "text": "Two brothers: one walked into the dark, the other was put into the ground. Look where the good one sleeps."
+ },
+ "madam_eva/4510b034acdef30a": {
+  "chars": 181,
+  "recipe": "ef7260cf5a",
+  "text": "He wants what he has always wanted: a woman who told him no, long ago, and keeps being born to tell him again. Keep her away from high places and still water. She has fallen before."
+ },
+ "madam_eva/46066d03cc8e3301": {
+  "chars": 111,
+  "recipe": "ef7260cf5a",
+  "text": "You again. The camp is empty because of you, and the cards still haven't changed their minds. What do you want?"
+ },
+ "madam_eva/4945ea2a304b5bfc": {
+  "chars": 100,
+  "recipe": "ef7260cf5a",
+  "text": "No. Not in this one. Sit by the brazier; you are cold all the way through, and it isn't the weather."
+ },
+ "madam_eva/4a21867e3a3ae820": {
+  "chars": 64,
+  "recipe": "ef7260cf5a",
+  "text": "Back again. The cards haven't changed their minds. I might have."
+ },
+ "madam_eva/4b499985c0baf09c": {
+  "chars": 155,
+  "recipe": "ef7260cf5a",
+  "text": "West of the vines the old dead are heaped into a hill, and from them grows one tree that drinks wrongly. Those who go there in green worship it. Go anyway."
+ },
+ "madam_eva/4fc40ed73175bd37": {
+  "chars": 73,
+  "recipe": "ef7260cf5a",
+  "text": "Who pays? Not something clever. Something that costs you to say out loud."
+ },
+ "madam_eva/4ffa36fd03f1d8b6": {
+  "chars": 111,
+  "recipe": "ef7260cf5a",
+  "text": "Keep that stolen face in your pocket, little thief. Some faces belong to the dead, and the dead want them back."
+ },
+ "madam_eva/4fffa764fdaa6c06": {
+  "chars": 108,
+  "recipe": "ef7260cf5a",
+  "text": "He will be in the room where his own coffin lies, deep below, where the night is oldest and he is strongest."
+ },
+ "madam_eva/50e577bb95aa520d": {
+  "chars": 107,
+  "recipe": "ef7260cf5a",
+  "text": "The dragon's house has a lamp at its crown that nobody lights any more. Climb to where the light should be."
+ },
+ "madam_eva/519c374832ebc6f1": {
+  "chars": 87,
+  "recipe": "ef7260cf5a",
+  "text": "You came back. They always come back. The cards waited; they are better at it than you."
+ },
+ "madam_eva/52ecc787c79c14d8": {
+  "chars": 108,
+  "recipe": "ef7260cf5a",
+  "text": "No hand reaches for yours. The cards set no friend at your side: you will face him with only what you carry."
+ },
+ "madam_eva/533595004393499b": {
+  "chars": 158,
+  "recipe": "ef7260cf5a",
+  "text": "Among the wagons outside the walled town sits an elf with dusk-dark skin who mourns a sister. He keeps it, and he will trade it for a road into the mountains."
+ },
+ "madam_eva/54f8482eee19aebe": {
+  "chars": 103,
+  "recipe": "ef7260cf5a",
+  "text": "Under the castle, past the cells, there is a room furnished with the dead. He likes to entertain there."
+ },
+ "madam_eva/56ee5380ffe823ff": {
+  "chars": 104,
+  "recipe": "ef7260cf5a",
+  "text": "Go to the woman who bore him. She sleeps beneath his house, and she has kept this for her son's enemies."
+ },
+ "madam_eva/5b1e4c30a8b97aae": {
+  "chars": 129,
+  "recipe": "ef7260cf5a",
+  "text": "So yes, some of us carry tales up the hill. Be careful what you say at our fires. Be more careful what you say at other people's."
+ },
+ "madam_eva/5e2ba9d9f3d149cd": {
+  "chars": 147,
+  "recipe": "ef7260cf5a",
+  "text": "It rides in a wagon of my cousins by the lake town, in a chest whose owner has lost a daughter. Bring the girl home, and the lid will open for you."
+ },
+ "madam_eva/61c2d6e80634018b": {
+  "chars": 142,
+  "recipe": "ef7260cf5a",
+  "text": "Dawn comes to this valley every day, priestess. It simply never arrives. Carry the raven's sun into his house and you will see the difference."
+ },
+ "madam_eva/61c2fb7adb7fe188": {
+  "chars": 129,
+  "recipe": "ef7260cf5a",
+  "text": "The third card is a blade. Not steel: daylight with an edge, once carried by the one he hated most. He cannot bear to look at it."
+ },
+ "madam_eva/6280a36a5657d35c": {
+  "chars": 116,
+  "recipe": "ef7260cf5a",
+  "text": "Climb until you can hear the castle's pulse, a great glass heart that bleeds for him. He will be standing beside it."
+ },
+ "madam_eva/653b22a046cd254b": {
+  "chars": 111,
+  "recipe": "ef7260cf5a",
+  "text": "Follow the howling into the high hills above the cold lake. The wolves keep a mother there who never bore them."
+ },
+ "madam_eva/65a9e34a43e7019e": {
+  "chars": 76,
+  "recipe": "ef7260cf5a",
+  "text": "Earth is a door, child. Most doors open both ways, if someone pays the toll."
+ },
+ "madam_eva/65ecdb79cd86bf0c": {
+  "chars": 59,
+  "recipe": "ef7260cf5a",
+  "text": "Gold. Honest, at least. The cards will take it. Sit closer."
+ },
+ "madam_eva/6882e2561b981222": {
+  "chars": 113,
+  "recipe": "ef7260cf5a",
+  "text": "Nobody sent you? No. The road sent you. It sends everyone to my table in the end; most of them simply don't stop."
+ },
+ "madam_eva/6922cc68d2a1a3fb": {
+  "chars": 79,
+  "recipe": "ef7260cf5a",
+  "text": "Many things here are not possible. Sit in enough of them and you stop counting."
+ },
+ "madam_eva/6a05ac169d5c12c9": {
+  "chars": 69,
+  "recipe": "ef7260cf5a",
+  "text": "A child of ours. Don't sit here listening to me. When we're done, go."
+ },
+ "madam_eva/6ab65269cd1a607d": {
+  "chars": 127,
+  "recipe": "ef7260cf5a",
+  "text": "A gentle giant of a boy sweeps a shop floor for an uncle who doesn't deserve him. He is stronger than anyone has ever told him."
+ },
+ "madam_eva/6c8f02150ff5f529": {
+  "chars": 95,
+  "recipe": "ef7260cf5a",
+  "text": "Ask him, child. He will tell you at great length, and every word will be a lie except her name."
+ },
+ "madam_eva/6ca7b843243ed8f4": {
+  "chars": 52,
+  "recipe": "ef7260cf5a",
+  "text": "There. You are who you are now. Try not to waste it."
+ },
+ "madam_eva/6ca9b59dc1915da2": {
+  "chars": 115,
+  "recipe": "ef7260cf5a",
+  "text": "You brought our Nicu home, and then you lied to me at my own table. The one cancels the other. Pay like a stranger."
+ },
+ "madam_eva/6df30b21d00ac525": {
+  "chars": 135,
+  "recipe": "ef7260cf5a",
+  "text": "Among the vines lives an old man whose family wears feathers by night. He is tired, and proud, and he would like very much to be asked."
+ },
+ "madam_eva/70e49428d5d75677": {
+  "chars": 83,
+  "recipe": "ef7260cf5a",
+  "text": "A seat made for one, in a hall made for the many who were meant to kneel before it."
+ },
+ "madam_eva/755e9249a4318faa": {
+  "chars": 148,
+  "recipe": "ef7260cf5a",
+  "text": "Somewhere in his house a famous killer is laid out on a stone slab, with winged stone guardians crouched at his head and his feet. He won't miss it."
+ },
+ "madam_eva/7746fd09c8ea8770": {
+  "chars": 76,
+  "recipe": "ef7260cf5a",
+  "text": "So. You have come round again, child. Further along the road than last time."
+ },
+ "madam_eva/799ac90a489a49f5": {
+  "chars": 97,
+  "recipe": "ef7260cf5a",
+  "text": "Somebody did. And now you have said it aloud, you can stop pretending you are only a thief. Good."
+ },
+ "madam_eva/7ced0aaaabe057b2": {
+  "chars": 130,
+  "recipe": "ef7260cf5a",
+  "text": "Where a silver dragon once kept his hall, a captain with no heartbeat keeps a grudge instead. It lies within reach of that grudge."
+ },
+ "madam_eva/7e8ff7f9bf2d93e5": {
+  "chars": 126,
+  "recipe": "ef7260cf5a",
+  "text": "He waits in the room where his family prayed, among the broken pews, under a window that has not let in morning for centuries."
+ },
+ "madam_eva/7f12a0eea5d4a703": {
+  "chars": 137,
+  "recipe": "ef7260cf5a",
+  "text": "The last card. Where the darkness will be waiting when you come for him. And you will come for him; the cards are very sure of that part."
+ },
+ "madam_eva/807df4214bf9081b": {
+  "chars": 120,
+  "recipe": "ef7260cf5a",
+  "text": "Follow the birds that will not leave his roofs. Where they sleep, a clever hand tucked something bright among the twigs."
+ },
+ "madam_eva/81c84ff7956f63d8": {
+  "chars": 115,
+  "recipe": "ef7260cf5a",
+  "text": "Climb his highest tower until your knees shake, and mind the carvings on the parapet. Not all of them are carvings."
+ },
+ "madam_eva/83828659920e21fc": {
+  "chars": 130,
+  "recipe": "ef7260cf5a",
+  "text": "No. Put your purse away. You brought our Nicu home to his people, as much of him as the road left. That is paid already, and more."
+ },
+ "madam_eva/843dc9c81e82eae8": {
+  "chars": 181,
+  "recipe": "ef7260cf5a",
+  "text": "Beside the walled town, among my cousins' wagons, sits an elf who lost his sister and won't stop trying to buy her back. Walk his road with him a little way, and he will walk yours."
+ },
+ "madam_eva/86542efcf81b7f53": {
+  "chars": 172,
+  "recipe": "ef7260cf5a",
+  "text": "Climb to where the snow never melts and the air won't fill your lungs. There is a temple there, and a great statue whose sculptor never finished the face. Look at its feet."
+ },
+ "madam_eva/8780dc9008c780c7": {
+  "chars": 124,
+  "recipe": "ef7260cf5a",
+  "text": "Before we begin. One of you has forty of my nephew's gold pieces about you. The cards will not speak over the clink of them."
+ },
+ "madam_eva/89d2d233081c4db6": {
+  "chars": 69,
+  "recipe": "ef7260cf5a",
+  "text": "Then go and do it. I will be here when you are finished. I always am."
+ },
+ "madam_eva/8e63c00154ef42e5": {
+  "chars": 40,
+  "recipe": "ef7260cf5a",
+  "text": "Sit. We were in the middle of something."
+ },
+ "madam_eva/8f2777cc11cfc74d": {
+  "chars": 113,
+  "recipe": "ef7260cf5a",
+  "text": "Go back the way you came, to the village, and dig where the mourners stand. It sleeps under somebody else's name."
+ },
+ "madam_eva/8fb18a1061bfdba4": {
+  "chars": 156,
+  "recipe": "ef7260cf5a",
+  "text": "Your friend with the ink to his elbows went up to the castle to read. He is reading still. Whether he is still alive is a question even the cards find rude."
+ },
+ "madam_eva/91664ab02d0008bf": {
+  "chars": 118,
+  "recipe": "ef7260cf5a",
+  "text": "The valley has needed things for four hundred years, and still the candles cost money. Pay, or tell me something true."
+ },
+ "madam_eva/91fa82fba96cfc14": {
+  "chars": 106,
+  "recipe": "ef7260cf5a",
+  "text": "Liar. A bad one, which is almost to your credit. Give it back, or keep it and listen to what it costs you."
+ },
+ "madam_eva/92aec909706f598c": {
+  "chars": 128,
+  "recipe": "ef7260cf5a",
+  "text": "Her name was Tatyana. She is dead, and she is not. Whoever put her in your hand wanted you to carry her face home, and you have."
+ },
+ "madam_eva/93e3edf474af1847": {
+  "chars": 100,
+  "recipe": "ef7260cf5a",
+  "text": "He will be among his books, by a fire that warms nothing, reading old letters he should have burned."
+ },
+ "madam_eva/93fd52694ae86543": {
+  "chars": 125,
+  "recipe": "ef7260cf5a",
+  "text": "Down where his wine sleeps in racks, one rack holds no wine. A tradesman was walled in among the bottles, and it is with him."
+ },
+ "madam_eva/97b099f8feaf9a36": {
+  "chars": 90,
+  "recipe": "ef7260cf5a",
+  "text": "There you are. The house at the end of the village let you go. It doesn't, as a rule. Sit."
+ },
+ "madam_eva/98c68cbc443c6337": {
+  "chars": 115,
+  "recipe": "ef7260cf5a",
+  "text": "A windmill leans on a crag above the road with its sails stopped. Something in it bakes, and something in it cries."
+ },
+ "madam_eva/9a3af6066bf80837": {
+  "chars": 132,
+  "recipe": "ef7260cf5a",
+  "text": "Above the walled village stands a holy house that has become a kennel for madness. Look in the rooms where the young were once kept."
+ },
+ "madam_eva/9c90ee152e0c68f5": {
+  "chars": 152,
+  "recipe": "ef7260cf5a",
+  "text": "Far up the mountain road a door is cut into the rock, and two great figures the colour of old resin stand on either side of it. It waits just past them."
+ },
+ "madam_eva/9cfb5cc2626481d5": {
+  "chars": 134,
+  "recipe": "ef7260cf5a",
+  "text": "Up the mountain lives a mage who has forgotten who he is. What he has not forgotten is how to bring down a sky. Help him find himself."
+ },
+ "madam_eva/a02b6a99fda0cf75": {
+  "chars": 190,
+  "recipe": "ef7260cf5a",
+  "text": "A hunter of my blood left the wagons to chase what chases us, and the man who taught her. Catch her if you can; lately she has been seen on the road up to the abbey above the walled village."
+ },
+ "madam_eva/a0f08af1ff1fe48b": {
+  "chars": 136,
+  "recipe": "ef7260cf5a",
+  "text": "Five cards. Three for what was lost, one for who will help you, one for where he waits. Don't touch them. Don't breathe on them. Listen."
+ },
+ "madam_eva/a4b0884c2ba2ad75": {
+  "chars": 152,
+  "recipe": "ef7260cf5a",
+  "text": "A man of standing lies cold, and a daughter who was never his by blood still keeps his memory. Give breath back to that body and he will stand with you."
+ },
+ "madam_eva/a5eb737a6e9ac7d0": {
+  "chars": 153,
+  "recipe": "ef7260cf5a",
+  "text": "And one of the three, you need not walk a step for. The cards put it in my keeping long ago, and told me to wait for the right hands. My hands are tired."
+ },
+ "madam_eva/a77f3bc0e063a9af": {
+  "chars": 140,
+  "recipe": "ef7260cf5a",
+  "text": "High where the road climbs over the mountain's shoulder, a pale tower keeps a gate that nobody uses. Its sentries have not blinked in years."
+ },
+ "madam_eva/ad2e83cd86240826": {
+  "chars": 28,
+  "recipe": "ef7260cf5a",
+  "text": "Once more, then, and slowly."
+ },
+ "madam_eva/b0012c1b2237773a": {
+  "chars": 142,
+  "recipe": "ef7260cf5a",
+  "text": "One of you is walking a road that doesn't fit their feet. I can read them another. It costs nothing you will miss; not today. Choose who sits."
+ },
+ "madam_eva/b3942a3f0f5baad5": {
+  "chars": 133,
+  "recipe": "ef7260cf5a",
+  "text": "The first card is the past: a book in his own hand, the story of how he became what he is. Knowing it is a weapon. This one cuts him."
+ },
+ "madam_eva/b3cb1792a410babc": {
+  "chars": 130,
+  "recipe": "ef7260cf5a",
+  "text": "In the den in the hills, one wolf has started to look at his pack the way you look at the castle. When they turn on him, be there."
+ },
+ "madam_eva/b3ce92af02753cc8": {
+  "chars": 85,
+  "recipe": "ef7260cf5a",
+  "text": "Stanimir has told the castle you went east. He thinks I don't know. Let him think it."
+ },
+ "madam_eva/b3e110d307b4c214": {
+  "chars": 124,
+  "recipe": "ef7260cf5a",
+  "text": "Go. Stanimir will feed you if you let him. And when you meet the devil on the road, as you will, be polite. It confuses him."
+ },
+ "madam_eva/c0b1f714fd72ea4f": {
+  "chars": 70,
+  "recipe": "ef7260cf5a",
+  "text": "Good. The cards prefer clean hands. Cleaner hands. They are not fussy."
+ },
+ "madam_eva/c1408cb74ee2ef3e": {
+  "chars": 144,
+  "recipe": "ef7260cf5a",
+  "text": "That one is my people's own. She left the wagons to hunt the things that hunt us. If you find her, tell her the old woman says to eat something."
+ },
+ "madam_eva/c1e5ea103b172f81": {
+  "chars": 146,
+  "recipe": "ef7260cf5a",
+  "text": "The second card is a holy thing, made by people who believed the sun would come back. In the right hands it makes the dead remember they are dead."
+ },
+ "madam_eva/c2ab6fee12a17bb6": {
+  "chars": 99,
+  "recipe": "ef7260cf5a",
+  "text": "Among the endless crypts below, where his house keeps its dead in rows, he walks between the names."
+ },
+ "madam_eva/c426145414895b8d": {
+  "chars": 48,
+  "recipe": "ef7260cf5a",
+  "text": "There. Expensive manners are still manners. Sit."
+ },
+ "madam_eva/c6ddc16fcda2b762": {
+  "chars": 90,
+  "recipe": "ef7260cf5a",
+  "text": "As you like. The cards are patient. They have outlived everyone who walked away from them."
+ },
+ "madam_eva/c7ce6b6d0ec2672d": {
+  "chars": 106,
+  "recipe": "ef7260cf5a",
+  "text": "Among his honoured dead lies a general whose own men called him a mad hound. It is in his tomb, under him."
+ },
+ "madam_eva/c7e60c197ffa803f": {
+  "chars": 129,
+  "recipe": "ef7260cf5a",
+  "text": "For the valley. Ha! Nobody has said that to me in sixty years. Very well. The valley can owe me. It already owes me a great deal."
+ },
+ "madam_eva/ca4f951be512df0d": {
+  "chars": 154,
+  "recipe": "ef7260cf5a",
+  "text": "Behind a town's bright banners stands a house where something has gone wrong, and in it a room crowded with small, still faces. Every one of them is hers."
+ },
+ "madam_eva/cac253802a045176": {
+  "chars": 61,
+  "recipe": "ef7260cf5a",
+  "text": "Then you know more than he would like. Good. Hold on to that."
+ },
+ "madam_eva/cb4419e14ee02f9d": {
+  "chars": 67,
+  "recipe": "ef7260cf5a",
+  "text": "Hm. Then perhaps the cards are mistaken. They are not. But perhaps."
+ },
+ "madam_eva/cc462687661e588f": {
+  "chars": 113,
+  "recipe": "ef7260cf5a",
+  "text": "He keeps company with the brother he murdered for a woman. He talks to him, sometimes. The brother never answers."
+ },
+ "madam_eva/d2b83fb10fd36958": {
+  "chars": 153,
+  "recipe": "ef7260cf5a",
+  "text": "A small magician sleeps among the castle's grand dead, remembered by nothing but his name on a stone. What he carried in his hand unlocks what he guards."
+ },
+ "madam_eva/d371a11eead0db7b": {
+  "chars": 144,
+  "recipe": "ef7260cf5a",
+  "text": "Where frost lies on the beds of a walled garden, a man of straw stands sentry with a stitched mouth. He holds it closer than any gardener would."
+ },
+ "madam_eva/d7b1aca6d7f6722e": {
+  "chars": 45,
+  "recipe": "ef7260cf5a",
+  "text": "I mean what the cards mean. Put it away, now."
+ },
+ "madam_eva/d8795af26f8e0a34": {
+  "chars": 130,
+  "recipe": "ef7260cf5a",
+  "text": "In a village the river swallowed, the mud remembers a girl he loved once, and keeps her in stone. Ask the hag who rules the reeds."
+ },
+ "madam_eva/d9357c26bd4ea9bd": {
+  "chars": 98,
+  "recipe": "ef7260cf5a",
+  "text": "Somewhere a barrel that held the best vintage in the valley stands as dry as a skull. Knock on it."
+ },
+ "madam_eva/d9a2ece81a424659": {
+  "chars": 117,
+  "recipe": "ef7260cf5a",
+  "text": "A holy woman's house stands above the walled village, and its brightest symbol hides a hollow. Look behind the light."
+ },
+ "madam_eva/da3a95bf1deabbef": {
+  "chars": 134,
+  "recipe": "ef7260cf5a",
+  "text": "There. That is the shape of it. Three things lost, a friend, and the room at the end. Everything else, you will have to do yourselves."
+ },
+ "madam_eva/da58eea1338fba57": {
+  "chars": 141,
+  "recipe": "ef7260cf5a",
+  "text": "You have bloodied my family and driven the rest into the trees. And still you come to my table. Sit. The cards do not care who deserves them."
+ },
+ "madam_eva/dc2950079d63536e": {
+  "chars": 95,
+  "recipe": "ef7260cf5a",
+  "text": "It lies where a lord counts what he has never needed, buried under coin heaped like snowdrifts."
+ },
+ "madam_eva/dfa92ee92d896259": {
+  "chars": 52,
+  "recipe": "ef7260cf5a",
+  "text": "Wise. Most people ask. Most people wish they hadn't."
+ },
+ "madam_eva/e24326a589a1158c": {
+  "chars": 161,
+  "recipe": "ef7260cf5a",
+  "text": "In the walled town's grandest house, a clever young man has made his attic into a cell and a workshop. Free his mind from that house, and he will lend it to you."
+ },
+ "madam_eva/e6401d2459c554bb": {
+  "chars": 23,
+  "recipe": "ef7260cf5a",
+  "text": "Now get out of my tent."
+ },
+ "madam_eva/eb580deba95f2f8a": {
+  "chars": 154,
+  "recipe": "ef7260cf5a",
+  "text": "The dragon's house is full of dead knights who have forgotten their oath. One of them still remembers, a little. Find him, and make him remember the rest."
+ },
+ "madam_eva/ebc01ad3ca8f52e9": {
+  "chars": 158,
+  "recipe": "ef7260cf5a",
+  "text": "The cards are free. The one who turns them is not. Ten gold, or one true thing that one of you has told nobody. The cards take either. They prefer the second."
+ },
+ "madam_eva/eed7087167f2a077": {
+  "chars": 191,
+  "recipe": "ef7260cf5a",
+  "text": "I am old. Older than the walled town on the lake, older than the inn in the village, older than some of his walls. I knew him when he was young and only ambitious. That much you get for free."
+ },
+ "madam_eva/f55b007a354eeb58": {
+  "chars": 120,
+  "recipe": "ef7260cf5a",
+  "text": "Follow the vines to the house that pressed the valley's last good wine. A bargain was struck there that nobody has paid."
+ },
+ "madam_eva/f6a37fd4ddc2f878": {
+  "chars": 168,
+  "recipe": "ef7260cf5a",
+  "text": "My people come and go through the mists, and he lets us. Long ago one of us did him a kindness. He has a long memory for kindness, and a longer one for the other thing."
+ },
+ "madam_eva/f6e84097931b2c9b": {
+  "chars": 151,
+  "recipe": "ef7260cf5a",
+  "text": "A ringmaster has rolled into the walled town with a painted wagon he lets nobody near. Ask yourself what a showman keeps locked up that he never shows."
+ },
+ "madam_eva/f8c59dd4ace36593": {
+  "chars": 169,
+  "recipe": "ef7260cf5a",
+  "text": "A ringmaster with a menagerie of one has come to the walled town, laughing too loudly. Under the laugh is a hunter who has buried everyone he ever loved. Earn his trust."
+ },
+ "madam_eva/f9a80b49e26db9ad": {
+  "chars": 101,
+  "recipe": "ef7260cf5a",
+  "text": "He goes down to stand over his brother's coffin, over the man he could never be. He goes there often."
+ },
+ "madam_eva/fa8ea2bbc34c8376": {
+  "chars": 146,
+  "recipe": "ef7260cf5a",
+  "text": "In the mountain's golden halls, behind a door that glows like honey held to a candle, the gifts of forgotten gods lie heaped up. It is among them."
+ },
+ "madam_eva/fbb1b1cff0e89b80": {
+  "chars": 165,
+  "recipe": "ef7260cf5a",
+  "text": "A tower stands in a cold mountain lake, and the mage who built it is long dead. Its door still answers to him, and to the one who served him. Find out who they were."
+ },
+ "madam_eva/fecd5a677028a1db": {
+  "chars": 143,
+  "recipe": "ef7260cf5a",
+  "text": "One of our little ones has wandered where she shouldn't, out onto the big water by the walled town. Someone has her who should not. Go quickly."
+ },
+ "madam_eva/ffbfb8f7486b02c2": {
+  "chars": 88,
+  "recipe": "ef7260cf5a",
+  "text": "He has gone down to visit the king who made him. Father and son, both of them stone now."
  },
  "milivoj/030796c029e50baa": {
   "chars": 113,
@@ -7568,6 +8533,396 @@
   "chars": 89,
   "recipe": "abe63ff074",
   "text": "The priest in Krezk is old and his hands shake. But he's kind. I'll make him do it right."
+ },
+ "mordenkainen/118fa3e7ce0b5eab": {
+  "chars": 200,
+  "recipe": "6cd20329a3",
+  "text": "Eva. That woman read my cards forty years ago and told me I'd be broken, and here I am, with the pieces in a heap. If her cards say I mend in your company, I'm not going to argue with them. Not twice."
+ },
+ "mordenkainen/13e98db11da162fd": {
+  "chars": 28,
+  "recipe": "6cd20329a3",
+  "text": "Go on. And stay out of jars."
+ },
+ "mordenkainen/3135cf3405f63f8b": {
+  "chars": 64,
+  "recipe": "6cd20329a3",
+  "text": "Everyone has questions. Very few have the right ones. Ask later."
+ },
+ "mordenkainen/56086bdec4d7f055": {
+  "chars": 119,
+  "recipe": "6cd20329a3",
+  "text": "The witch. Lysaga. She held my eyes open while she did it, and sang. I'll remember that now, too. Thank you, I suppose."
+ },
+ "mordenkainen/606ac0fb7ba9e610": {
+  "chars": 157,
+  "recipe": "6cd20329a3",
+  "text": "Not like this. If I go down that mountain today, I'll be a clever old man with half his spells and all his pride, which is exactly how I lost the first time."
+ },
+ "mordenkainen/65392f815acc93b5": {
+  "chars": 24,
+  "recipe": "6cd20329a3",
+  "text": "My name is Mordenkainen."
+ },
+ "mordenkainen/6689274c263564ea": {
+  "chars": 175,
+  "recipe": "6cd20329a3",
+  "text": "The Tsolenka watch. Dead sergeant, very correct, wants the word. I went up that road the year I came here, looking for a weapon in the temple. I didn't find one, and I'm glad."
+ },
+ "mordenkainen/67fea953e056f8f3": {
+  "chars": 142,
+  "recipe": "6cd20329a3",
+  "text": "Take nothing that's offered. Anything they give you, they keep a hand on. I've seen what that looks like after forty years. It looks like him."
+ },
+ "mordenkainen/6fa1a4ba6a60db7a": {
+  "chars": 165,
+  "recipe": "6cd20329a3",
+  "text": "The word is \"cold hearth, shut door\". Their old officers' joke, I think: keep the fire out and the door shut. Say it like you're bored. Sergeants trust bored people."
+ },
+ "mordenkainen/7acf851bea72f67c": {
+  "chars": 169,
+  "recipe": "6cd20329a3",
+  "text": "Amber. Rooms of it, and things sleeping in the amber, very old and very hungry, that will offer you whatever you've always wanted for the small price of the rest of you."
+ },
+ "mordenkainen/87567073b5aca62a": {
+  "chars": 20,
+  "recipe": "6cd20329a3",
+  "text": "Then try to keep up."
+ },
+ "mordenkainen/8cf20a6650bf9565": {
+  "chars": 112,
+  "recipe": "6cd20329a3",
+  "text": "I'll come. My spells are rusty and my pride is worse. Keep me away from mirrors and from anyone who says \"hush\"."
+ },
+ "mordenkainen/a1212da00ddc2d25": {
+  "chars": 236,
+  "recipe": "6cd20329a3",
+  "text": "I came to this valley to kill him, and he beat me, and then he had his witch take everything I was and put it on her shelf, so I would live up here forever and not even know enough to be ashamed. He thought that was funny. He was right."
+ },
+ "mordenkainen/dffb877c0f19c47c": {
+  "chars": 109,
+  "recipe": "6cd20329a3",
+  "text": "And he cheats. Not with magic. With people. He'll put somebody you care about between you and him, and smile."
+ },
+ "mordenkainen/ea4f69a7cc8b911d": {
+  "chars": 163,
+  "recipe": "6cd20329a3",
+  "text": "You again. Good. I've been rebuilding my spells from the bottom up; it's like learning to walk after a fall, if walking could set things on fire. What do you need?"
+ },
+ "mordenkainen/f249036fae21249c": {
+  "chars": 213,
+  "recipe": "6cd20329a3",
+  "text": "He is not the strongest thing I've fought. He is the most patient. He doesn't win the battle; he wins the week after it, when you're tired and he isn't. Don't fight him on the day he chooses. He chooses every day."
+ },
+ "mordenkainen/fcfea92e84679f35": {
+  "chars": 155,
+  "recipe": "6cd20329a3",
+  "text": "Give me time to mend. When you go up to the castle, send a raven to this mountain, and I will come. That's a promise, and I remember how to keep those now."
+ },
+ "morgantha/0a20853a07dc0937": {
+  "chars": 54,
+  "recipe": "1291fded04",
+  "text": "And you gave Morgantha your word. Morgantha remembers."
+ },
+ "morgantha/0d2d8ffb640afd5d": {
+  "chars": 96,
+  "recipe": "1291fded04",
+  "text": "So soon? Take a pastry for the road. No? Ah, well. Everybody comes back to Morgantha in the end."
+ },
+ "morgantha/0f3d8aa1a1a05761": {
+  "chars": 113,
+  "recipe": "1291fded04",
+  "text": "Off you go, ducklings. Mind the stairs. Give your mother Morgantha's love; she'll be wanting another basket soon."
+ },
+ "morgantha/107ffdb9111984eb": {
+  "chars": 68,
+  "recipe": "1291fded04",
+  "text": "My heroes! No more children today, dearies. There's always pastries."
+ },
+ "morgantha/15986dc938a55bf8": {
+  "chars": 126,
+  "recipe": "1291fded04",
+  "text": "Two hundred. A hundred and fifty for the ducklings, and fifty for the shouting. Morgantha did say manners keep you fresh, pet."
+ },
+ "morgantha/1c83c38d01c962c9": {
+  "chars": 75,
+  "recipe": "1291fded04",
+  "text": "Back for a pastry, my sensible dearies? The little ones are keeping nicely."
+ },
+ "morgantha/23c9274e64a17c66": {
+  "chars": 142,
+  "recipe": "1291fded04",
+  "text": "Well, well. The brave one from the village square. Morgantha said she'd remember you, duckling. Out here there's nobody to watch you be brave."
+ },
+ "morgantha/250a54cb90b4bb54": {
+  "chars": 209,
+  "recipe": "1291fded04",
+  "text": "Gold is dull, pet. Here's a better price. One dream: your sweetest, the one you save for bad nights. Morgantha draws it out like a splinter, and after that she visits now and then while you sleep. Only to sit."
+ },
+ "morgantha/28d88fc5743dad88": {
+  "chars": 96,
+  "recipe": "1291fded04",
+  "text": "Taking a poor old woman's grandchildren, in her own home. Shame on you. Girls! Mother needs you!"
+ },
+ "morgantha/2cc9eba7e9e8df28": {
+  "chars": 94,
+  "recipe": "1291fded04",
+  "text": "Then you never ran short, did you, pet? Lucky girl. He'd pay more for you than for any pastry."
+ },
+ "morgantha/30a2e683f5a7254a": {
+  "chars": 179,
+  "recipe": "1291fded04",
+  "text": "Peace, from heroes. That's worth something: you're the sort who keeps a promise and hates yourselves for it. Very well. The children, for your word. Morgantha will hold you to it."
+ },
+ "morgantha/3206ee2c2b178eb0": {
+  "chars": 58,
+  "recipe": "1291fded04",
+  "text": "But Morgantha is fair. Ask anybody. You may buy them back."
+ },
+ "morgantha/370e7b6cb79ad8b3": {
+  "chars": 126,
+  "recipe": "1291fded04",
+  "text": "Vallaki, dearie. Lady Wachter orders two dozen a week for her book club. Such a refined lady. Such deep sleepers, her friends."
+ },
+ "morgantha/39af81953efe6ec0": {
+  "chars": 71,
+  "recipe": "1291fded04",
+  "text": "Back again, dearies? Morgantha knew you would be. Everybody comes back."
+ },
+ "morgantha/3cad612fc06ad5e1": {
+  "chars": 203,
+  "recipe": "1291fded04",
+  "text": "Let them go? But they're paid for, dearie. Their mother had a basket a week all season and dreamed of her little lost one every night. A child for a season. That's the custom. Everybody knows the custom."
+ },
+ "morgantha/3d7deab26e1443bb": {
+  "chars": 156,
+  "recipe": "1291fded04",
+  "text": "Read the family receipts, did you? Then you know about the special flour. Every family has a secret ingredient, duckling. Ours is just more honest about it."
+ },
+ "morgantha/3de9e03442bb9f96": {
+  "chars": 106,
+  "recipe": "1291fded04",
+  "text": "Well. Aren't you brave. Morgantha's going, duckling. But Morgantha remembers every face. Every single one."
+ },
+ "morgantha/4b1a230d5a872a8b": {
+  "chars": 77,
+  "recipe": "1291fded04",
+  "text": "Back again, dearies. I knew you would be. They always come back to Morgantha."
+ },
+ "morgantha/4ca123486283d494": {
+  "chars": 134,
+  "recipe": "1291fded04",
+  "text": "Peace? From you? Morgantha has peace. She has a mill, and a hill, and a valley full of hungry people. What she hasn't got is a reason."
+ },
+ "morgantha/4fc1b2929f36506f": {
+  "chars": 103,
+  "recipe": "1291fded04",
+  "text": "And somebody's had their fingers in my cart. Morgantha counts her pastries, pet. She counts everything."
+ },
+ "morgantha/53cc13fa6580e434": {
+  "chars": 101,
+  "recipe": "1291fded04",
+  "text": "Visitors! Up all those stairs and not one of you carrying a basket. Never mind. Morgantha has plenty."
+ },
+ "morgantha/549fbcc753317d32": {
+  "chars": 154,
+  "recipe": "1291fded04",
+  "text": "Pastries! Fresh dream pastries! Oh, look at you. New faces. Lovely, plump new faces. Come, come, my ducklings. One bite and all your troubles go to sleep."
+ },
+ "morgantha/54c0af5cb4949eab": {
+  "chars": 129,
+  "recipe": "1291fded04",
+  "text": "My customers! All those stairs, just to see where the pastries come from. How are the dreams, dearies? Sweet? Of course they are."
+ },
+ "morgantha/582120bae15daa24": {
+  "chars": 109,
+  "recipe": "1291fded04",
+  "text": "Then you can't afford them, can you? Morgantha doesn't give credit. Credit is how folk end up owing children."
+ },
+ "morgantha/5d109fcae21ddd05": {
+  "chars": 116,
+  "recipe": "1291fded04",
+  "text": "And you broke my Offalia. She was the slow one, dearies, but she was mine. Morgantha is adding that to your account."
+ },
+ "morgantha/614e0d6218cd1735": {
+  "chars": 146,
+  "recipe": "1291fded04",
+  "text": "My windmill, pet, on the road to Vallaki. Me and my two daughters, baking day and night. Do visit. Bring the little ones. Bring everyone you love."
+ },
+ "morgantha/61816b6f28de3057": {
+  "chars": 153,
+  "recipe": "1291fded04",
+  "text": "My ducklings from the village, out on Morgantha's lane! She's on her way home to bake. You must visit. Up the hill, past the dead oak. Bring an appetite."
+ },
+ "morgantha/640fa1e2e1e397a2": {
+  "chars": 138,
+  "recipe": "1291fded04",
+  "text": "And my girls tell me you fib, dearies. Morgantha has written it in her book. Fibbers' promises aren't worth the flour they're dusted with."
+ },
+ "morgantha/6bb2410dc1a14d11": {
+  "chars": 111,
+  "recipe": "1291fded04",
+  "text": "There. Warm as a kiss. Eat it tonight, pet, and dream of whoever you've lost. Morgantha will know if you don't."
+ },
+ "morgantha/75dc16b4eb2c313c": {
+  "chars": 113,
+  "recipe": "1291fded04",
+  "text": "Vallaki, dearie. All those festivals make everybody so terribly cheerful. Folk need a good long sleep afterwards."
+ },
+ "morgantha/785bebb608a3d5ec": {
+  "chars": 152,
+  "recipe": "1291fded04",
+  "text": "All on her own, then. Bella's sulking somewhere and Offalia's gone somewhere, and it's only Morgantha and you. Well. Morgantha has managed alone before."
+ },
+ "morgantha/78a0521ab06df067": {
+  "chars": 152,
+  "recipe": "1291fded04",
+  "text": "Sent my Offalia trotting down the hill after nobody. She'll stop at every hedge from here to Vallaki. Never mind. Morgantha can see to her own visitors."
+ },
+ "morgantha/78b4bf8b9b9d8d73": {
+  "chars": 108,
+  "recipe": "1291fded04",
+  "text": "Three! Oh, you've a family to feed, I can tell. Do bring them by sometime. Bring the little ones especially."
+ },
+ "morgantha/8277fbc9a3cf144d": {
+  "chars": 102,
+  "recipe": "1291fded04",
+  "text": "There. Wasn't that lovely? You'll want another one tonight. Morgantha will be back. You'll be waiting."
+ },
+ "morgantha/8351308967951774": {
+  "chars": 180,
+  "recipe": "1291fded04",
+  "text": "The brave one who chased Morgantha's cart out of the village! Morgantha told you, duckling: she remembers every face. And here's yours, come all this way to be remembered properly."
+ },
+ "morgantha/8f8a6406d487a651": {
+  "chars": 109,
+  "recipe": "1291fded04",
+  "text": "Back again, my ducklings! And how were the dreams? Sweet? Of course they were. Morgantha's dreams always are."
+ },
+ "morgantha/9541ed6b3ea7144c": {
+  "chars": 98,
+  "recipe": "1291fded04",
+  "text": "Flour, honey, butter, a pinch of this and a pinch of that. Family recipe, dearie. Very old family."
+ },
+ "morgantha/95d2ebd704ac9191": {
+  "chars": 175,
+  "recipe": "1291fded04",
+  "text": "My plump little hero! You told Morgantha to take her cart out of the village, and she didn't, and now here you are in her house. Isn't that funny? Morgantha thinks it's funny."
+ },
+ "morgantha/9bf5a7206c42a352": {
+  "chars": 110,
+  "recipe": "1291fded04",
+  "text": "Out on the open road, dearie, with all these ravens watching? Come up to the mill. We'll do it properly there."
+ },
+ "morgantha/a62492249d61da58": {
+  "chars": 158,
+  "recipe": "1291fded04",
+  "text": "Pastries! Fresh dream pastries! Oh, new faces on my lane. Lovely. Come and visit Morgantha's mill, dearies. Up the hill, past the dead oak. Bring an appetite."
+ },
+ "morgantha/a64d2465817009b2": {
+  "chars": 101,
+  "recipe": "1291fded04",
+  "text": "Out? Oh, I'll go when I've sold out, my plump little hero. Mind your manners. Manners keep you fresh."
+ },
+ "morgantha/a75b1583951cdc19": {
+  "chars": 125,
+  "recipe": "1291fded04",
+  "text": "Not you at the old price, though, my plump little hero. You shouted at Morgantha in the square. Shouting is fifty gold extra."
+ },
+ "morgantha/b316583254ce14bd": {
+  "chars": 64,
+  "recipe": "1291fded04",
+  "text": "And who doesn't need a good night's sleep, in a place like this?"
+ },
+ "morgantha/b4449f7cced4bf21": {
+  "chars": 100,
+  "recipe": "1291fded04",
+  "text": "A wise choice. Wrap it up warm, dearie. And remember: Morgantha remembers every customer. Every one."
+ },
+ "morgantha/b5672ec3f4133018": {
+  "chars": 172,
+  "recipe": "1291fded04",
+  "text": "Sweet dreams, pet. Dreams of whoever you've lost: mothers, sweethearts, little brothers. One bite, and you're with them all night. Two bites, and you're with them all week."
+ },
+ "morgantha/b7a8ea306026ade3": {
+  "chars": 75,
+  "recipe": "1291fded04",
+  "text": "The new faces! Still lovely. A little leaner. The road does that to people."
+ },
+ "morgantha/c14640dfec8a9140": {
+  "chars": 119,
+  "recipe": "1291fded04",
+  "text": "A hundred and fifty. Their mother let them go for less, if you don't count the honey. Pleasure doing business, dearies."
+ },
+ "morgantha/c1dfce400a0238f6": {
+  "chars": 69,
+  "recipe": "1291fded04",
+  "text": "No? Ah, well. Everyone comes round to Morgantha eventually. Everyone."
+ },
+ "morgantha/c57647aa8f4787a2": {
+  "chars": 111,
+  "recipe": "1291fded04",
+  "text": "Everybody, dearie. The farms, the village, Vallaki. Folk who've lost somebody. In this valley that's everybody."
+ },
+ "morgantha/c76459e5a4cd46be": {
+  "chars": 191,
+  "recipe": "1291fded04",
+  "text": "Just an old baker, dearie, and her two girls, doing an honest trade in a hard country. Folk want sweet dreams. Morgantha sells them. Is it Morgantha's fault the dreams are better than waking?"
+ },
+ "morgantha/ca493a060873becf": {
+  "chars": 106,
+  "recipe": "1291fded04",
+  "text": "All three of us, dearies? Together? Oh, you are brave. Bella, pet, put down the mirror. Offalia! Visitors!"
+ },
+ "morgantha/ccaa3b98743547d8": {
+  "chars": 97,
+  "recipe": "1291fded04",
+  "text": "And you had the free sample, pet. Morgantha has looked in on your dreams since. You were smiling."
+ },
+ "morgantha/cd33591b74a3b2d4": {
+  "chars": 120,
+  "recipe": "1291fded04",
+  "text": "Then Morgantha will have you for the oven, and your bones for the stone, and your dreams for supper. Waste not, dearies."
+ },
+ "morgantha/d41bbab09e84d654": {
+  "chars": 51,
+  "recipe": "1291fded04",
+  "text": "Off you go. Everybody comes up the hill in the end."
+ },
+ "morgantha/d79c734f3a26d7d3": {
+  "chars": 126,
+  "recipe": "1291fded04",
+  "text": "My plump little hero from the village square! Still shouting at old women? Out here, dearie, there's nobody to hear you do it."
+ },
+ "morgantha/e42b22bfb6b3b000": {
+  "chars": 87,
+  "recipe": "1291fded04",
+  "text": "Fed my own girl my own baking. Oh, that's clever. Morgantha likes clever. Clever keeps."
+ },
+ "morgantha/e57df6828597badd": {
+  "chars": 127,
+  "recipe": "1291fded04",
+  "text": "Such words, from such a pretty mouth. Morgantha will sit a little further off from your sun-trinket, pet, if it's all the same."
+ },
+ "morgantha/e722d6fda51d7bfc": {
+  "chars": 48,
+  "recipe": "1291fded04",
+  "text": "Secret ingredient, dearie. Every family has one."
+ },
+ "morgantha/eaee8a1ff5961005": {
+  "chars": 77,
+  "recipe": "1291fded04",
+  "text": "Delicious. Morgantha will be seeing you, duckling. Now and again. Don't wake."
+ },
+ "morgantha/f6d264ed9d649917": {
+  "chars": 77,
+  "recipe": "1291fded04",
+  "text": "Sensible. You'll go far, dearies. Not very far; it's a small valley. But far."
+ },
+ "morgantha/ff7c96e890c851ea": {
+  "chars": 154,
+  "recipe": "1291fded04",
+  "text": "And keep your fingers out of Morgantha's oven. There's something at the back of it that won't burn, and Morgantha doesn't care for things that won't burn."
  },
  "narrator/0006cf46805d499c": {
   "chars": 151,
@@ -21249,6 +22604,286 @@
   "recipe": "2a808ef40e",
   "text": "Not the words. I opened a gate once, to a voice that sounded right. I'll not do it twice."
  },
+ "rictavio/06a35e1fc8575f1f": {
+  "chars": 47,
+  "recipe": "3bd70588c7",
+  "text": "It's the only one I've ever seen work. Briefly."
+ },
+ "rictavio/07ca385a6f16d9a4": {
+  "chars": 31,
+  "recipe": "3bd70588c7",
+  "text": "The hungry kind. Next question!"
+ },
+ "rictavio/0905d1808a1eb359": {
+  "chars": 200,
+  "recipe": "3bd70588c7",
+  "text": "The same as you, I expect, only for longer. I came to see whether the lord of this valley can be killed. I'm still deciding. I am also, I'm afraid, still deciding whether I care to survive the answer."
+ },
+ "rictavio/090d2c6471f2f7e8": {
+  "chars": 127,
+  "recipe": "3bd70588c7",
+  "text": "I told you once what I think of people who help this valley choose its masters. Words are cheap here. What have you done since?"
+ },
+ "rictavio/132578667bee3dfe": {
+  "chars": 37,
+  "recipe": "3bd70588c7",
+  "text": "Ezmerelda. You went through the ward."
+ },
+ "rictavio/1470fc1d27cecffe": {
+  "chars": 56,
+  "recipe": "3bd70588c7",
+  "text": "Cards! Gypsy nonsense! Fortune-telling for the gullible!"
+ },
+ "rictavio/1724568071ef5a8c": {
+  "chars": 151,
+  "recipe": "3bd70588c7",
+  "text": "Eva's cards again. And I hear five children walked down out of the wolves' hills because of you. That counts for something. It counts for a great deal."
+ },
+ "rictavio/18c52cdfbd6fb32e": {
+  "chars": 164,
+  "recipe": "3bd70588c7",
+  "text": "Someone has been in my wagon. No, don't deny it; I leave a hair across the lock. You're alive, so you didn't open the cage. Good. That was the most important thing."
+ },
+ "rictavio/1a7edab3ec2e330c": {
+  "chars": 168,
+  "recipe": "3bd70588c7",
+  "text": "Not that name. Not here. Rudolph van Richten made a great many enemies, and some of them have extremely long lives. Rictavio has none. I would like to keep it that way."
+ },
+ "rictavio/1c811af458c80dc4": {
+  "chars": 98,
+  "recipe": "3bd70588c7",
+  "text": "And if you can't, bar the church and stand in it. Holy water. Fire. Don't let them get behind you."
+ },
+ "rictavio/209aeacce5720468": {
+  "chars": 66,
+  "recipe": "3bd70588c7",
+  "text": "You're hunting a good night's sleep, I expect. So am I. Goodnight!"
+ },
+ "rictavio/25749d0b0678189a": {
+  "chars": 197,
+  "recipe": "3bd70588c7",
+  "text": "That town chose its master, and I watched who helped it choose. I came home to think about whether anything in this valley is worth the trouble. I've been thinking for a week. It's gone very badly."
+ },
+ "rictavio/262619061eaeec97": {
+  "chars": 58,
+  "recipe": "3bd70588c7",
+  "text": "And you've read my journal, so there's no use in feathers."
+ },
+ "rictavio/282b1f6c27de0792": {
+  "chars": 146,
+  "recipe": "3bd70588c7",
+  "text": "You. How did you... Khazan. Of course. She found the name, and you walked in on it. I taught her to find things. I should have taught her to stop."
+ },
+ "rictavio/30d8da1fbbdd500f": {
+  "chars": 98,
+  "recipe": "3bd70588c7",
+  "text": "Very well. I'm too old to hunt alone, and you are much too young to be doing it at all. I'll come."
+ },
+ "rictavio/3405d4e110a7ef94": {
+  "chars": 199,
+  "recipe": "3bd70588c7",
+  "text": "Very well. I am too old to keep hunting alone, and you are much too young to be doing it at all. I'll come. The wagon stays; the beast in it is the only creature in Barovia I trust to guard my notes."
+ },
+ "rictavio/3a1ced185966179b": {
+  "chars": 65,
+  "recipe": "3bd70588c7",
+  "text": "Keep your voice down and your back to the wall. What do you need?"
+ },
+ "rictavio/3d168f305d47470b": {
+  "chars": 60,
+  "recipe": "3bd70588c7",
+  "text": "I know. I can hear her. Everyone within a mile can hear her."
+ },
+ "rictavio/467601bb062c58f9": {
+  "chars": 117,
+  "recipe": "3bd70588c7",
+  "text": "Everywhere, and recently. I go where the audiences are. Here, there are no audiences, so I suppose I've come to rest."
+ },
+ "rictavio/46d0bbe2f815ee20": {
+  "chars": 86,
+  "recipe": "3bd70588c7",
+  "text": "Then come back when you have. I'll be here. I'm not going anywhere quickly these days."
+ },
+ "rictavio/518f9a32f1fe99a8": {
+  "chars": 140,
+  "recipe": "3bd70588c7",
+  "text": "And don't tell me what Eva's cards say. I know what they say. I won't stand beside people who handed a town to him, whatever the cards want."
+ },
+ "rictavio/5742e59de32f4d11": {
+  "chars": 253,
+  "recipe": "3bd70588c7",
+  "text": "Then he means to send his spawn for the church, and whoever is sheltering in it. They'll be close by, somewhere dark, somewhere nobody looks. Spawn sleep by day like anyone who works nights. Find their beds while the sun is up, and you choose the fight."
+ },
+ "rictavio/59542027a13df3cf": {
+  "chars": 41,
+  "recipe": "3bd70588c7",
+  "text": "It's a costume. It's a very good costume."
+ },
+ "rictavio/5ad08290d8b1fc54": {
+  "chars": 82,
+  "recipe": "3bd70588c7",
+  "text": "My audience returns! Twice in one week. In Barovia that's practically a following."
+ },
+ "rictavio/60146b3c8d1d2613": {
+  "chars": 163,
+  "recipe": "3bd70588c7",
+  "text": "Eva's cards again. And the ravens tell me two children came home from a hags' mill on the Vallaki road, because of you. Hags don't give anything back. That counts."
+ },
+ "rictavio/634183adca5337c1": {
+  "chars": 195,
+  "recipe": "3bd70588c7",
+  "text": "Both of them will get people killed. Vargas from fear, Fiona from faith. One of them only wants the town to be quiet. The other wants it quiet for him. I'd want neither in charge of a dog kennel."
+ },
+ "rictavio/647e2132f89bfcd3": {
+  "chars": 199,
+  "recipe": "3bd70588c7",
+  "text": "Friends! Strangers! Strange friends! Rictavio, at your service: teller of tales, singer of songs, proprietor of the most marvellous carnival wagon in seven valleys, which none of you may look inside!"
+ },
+ "rictavio/67c8323142be15b9": {
+  "chars": 47,
+  "recipe": "3bd70588c7",
+  "text": "Have you now. A scholar. How dangerous for you."
+ },
+ "rictavio/682ac7919ac1e224": {
+  "chars": 89,
+  "recipe": "3bd70588c7",
+  "text": "The ward upstairs is down too. I'd rather not have to explain how I cooked my own guests."
+ },
+ "rictavio/694bdd83070b02a3": {
+  "chars": 65,
+  "recipe": "3bd70588c7",
+  "text": "Take these. I've more than I need, and you, I suspect, have less."
+ },
+ "rictavio/78c5e6ef7f127522": {
+  "chars": 69,
+  "recipe": "3bd70588c7",
+  "text": "Ah. My front door. Stand back, please; it's particular about company."
+ },
+ "rictavio/834e14eb4f41ca75": {
+  "chars": 98,
+  "recipe": "3bd70588c7",
+  "text": "Farewell, farewell! Tell your friends! Tell your enemies! Tell anyone, really; I'm not particular."
+ },
+ "rictavio/85bdf7d3e419d3fd": {
+  "chars": 107,
+  "recipe": "3bd70588c7",
+  "text": "I know that face. Thirty years older and wild as a goat, but I know it. Good God. They told me he was dead."
+ },
+ "rictavio/85efc5a375448c06": {
+  "chars": 213,
+  "recipe": "3bd70588c7",
+  "text": "A tale! There was once a hunter who chased a monster across the whole world, and caught it, and killed it. And do you know what he found? That there was always another monster. The end. It goes better with a lute."
+ },
+ "rictavio/8639724b13d1db19": {
+  "chars": 173,
+  "recipe": "3bd70588c7",
+  "text": "Eva's cards again. And there's a silver light on the ridge over Argynvostholt, where there's been none for four hundred years. Somebody lit it. That counts for a great deal."
+ },
+ "rictavio/869b063e047979ad": {
+  "chars": 67,
+  "recipe": "3bd70588c7",
+  "text": "Stay in the light where you can. And when you can't, stay together."
+ },
+ "rictavio/87f684ff6f7259c2": {
+  "chars": 164,
+  "recipe": "3bd70588c7",
+  "text": "A beast! A marvel! A creature that would eat a horse and then complain about the seasoning. I keep it locked away for its protection as much as yours. Mostly yours."
+ },
+ "rictavio/8b856f84b424305c": {
+  "chars": 59,
+  "recipe": "3bd70588c7",
+  "text": "Goodbye. I hope you find a better ally than your judgement."
+ },
+ "rictavio/8f62deb6f19ebb49": {
+  "chars": 122,
+  "recipe": "3bd70588c7",
+  "text": "She has made me promise never to key a ward to anyone again. I have agreed to nothing. She knows I have agreed to nothing."
+ },
+ "rictavio/934ce88767b17b26": {
+  "chars": 171,
+  "recipe": "3bd70588c7",
+  "text": "Clever. Patient. Bored, which is the dangerous part. He plays with people the way a cat plays, and like a cat he gets careless when he's amused. Keep him amused, and wait."
+ },
+ "rictavio/968243c1bd243bf6": {
+  "chars": 95,
+  "recipe": "3bd70588c7",
+  "text": "Thank you. People rarely keep secrets in Barovia. It's not malice; it's that he asks so nicely."
+ },
+ "rictavio/96c86bc7a8a3ef69": {
+  "chars": 20,
+  "recipe": "3bd70588c7",
+  "text": "Most good tales are."
+ },
+ "rictavio/a46ff5184f738ba7": {
+  "chars": 133,
+  "recipe": "3bd70588c7",
+  "text": "And you let it go. I understand. I did that once. It found me again eleven years later, and it remembered my kindness very precisely."
+ },
+ "rictavio/a9e8b9803955e2fc": {
+  "chars": 69,
+  "recipe": "3bd70588c7",
+  "text": "Still here. You've a talent for being where you shouldn't. I used to."
+ },
+ "rictavio/af5e6687fda271c9": {
+  "chars": 181,
+  "recipe": "3bd70588c7",
+  "text": "I'm going home to think: a tower on the little lake under the mountain, west of Zarovich. If you do something worth hearing about, come and tell me there. Bring proof. Not speeches."
+ },
+ "rictavio/bb288d78f7331c27": {
+  "chars": 97,
+  "recipe": "3bd70588c7",
+  "text": "Reasons. Old ones. I came home to think. I've been thinking for a week, and it's gone very badly."
+ },
+ "rictavio/c1d9e833b4cbcc72": {
+  "chars": 156,
+  "recipe": "3bd70588c7",
+  "text": "I keyed the ward to her because everyone I have ever taught is in the ground, and she is the last. If she can't get in, she can't follow me where I'm going."
+ },
+ "rictavio/c330f89b47913b54": {
+  "chars": 103,
+  "recipe": "3bd70588c7",
+  "text": "And you've been in my strongbox upstairs. Keep it. Where you're going, you'll need it more than I will."
+ },
+ "rictavio/c5ebffa90d3a51d3": {
+  "chars": 97,
+  "recipe": "3bd70588c7",
+  "text": "A bad bargain, and a pretty speech about it. I've had better speeches from vampires. Much better."
+ },
+ "rictavio/ce2709ef2448e303": {
+  "chars": 109,
+  "recipe": "3bd70588c7",
+  "text": "Everyone I have ever taught is in the ground, Ezmerelda. You are the last. I would like you to stay the last."
+ },
+ "rictavio/d8846064ac542919": {
+  "chars": 114,
+  "recipe": "3bd70588c7",
+  "text": "Eva. Of course it was Eva. That old woman has been shuffling me about this valley for longer than I care to count."
+ },
+ "rictavio/dca72d665817cb97": {
+  "chars": 167,
+  "recipe": "3bd70588c7",
+  "text": "This town has chosen its master, and I watched who helped it choose. I won't sleep another night under a roof that bows to him. I'll be gone by morning, wagon and all."
+ },
+ "rictavio/e62b6f69eea2ff48": {
+  "chars": 46,
+  "recipe": "3bd70588c7",
+  "text": "Hunting? I hunt applause, and rarely catch it."
+ },
+ "rictavio/e8b09842c300913f": {
+  "chars": 72,
+  "recipe": "3bd70588c7",
+  "text": "Eva's cards. I have spent thirty years refusing to be anybody's fortune."
+ },
+ "rictavio/ec1e7fd812ba1882": {
+  "chars": 94,
+  "recipe": "3bd70588c7",
+  "text": "...Words are cheap in this valley. Deeds are what I'll watch. I'll come, and I'll be watching."
+ },
+ "rictavio/f87e25a2c5cba2b3": {
+  "chars": 107,
+  "recipe": "3bd70588c7",
+  "text": "And you put it down. Good. Every one of them was somebody. That's the part the books don't prepare you for."
+ },
  "rose/0852c0344261550c": {
   "chars": 61,
   "recipe": "c1709687b9",
@@ -21504,6 +23139,291 @@
   "recipe": "76fa753639",
   "text": "No. Not this time. But you came to the water. You always did, in the mornings, before the bells."
  },
+ "sir_godfrey_gwilym/04587b68a62d27d6": {
+  "chars": 159,
+  "recipe": "31cb6abbc7",
+  "text": "Lord Argynvost lit it every night with his own breath. Silver fire, no heat in it. You could see it from every farm in the valley. It meant somebody was awake."
+ },
+ "sir_godfrey_gwilym/0c1e15afe1aace24": {
+  "chars": 146,
+  "recipe": "31cb6abbc7",
+  "text": "It went out when he died. The commander won't hear it spoken of. If you want the rest, try the chapel. Something there still answers, some nights."
+ },
+ "sir_godfrey_gwilym/19d67deb1eddda5e": {
+  "chars": 143,
+  "recipe": "31cb6abbc7",
+  "text": "I follow the commander. I have since we were boys with wooden swords. And he's not wrong about Strahd. He's never once been wrong about Strahd."
+ },
+ "sir_godfrey_gwilym/1e4c51239b9cda9a": {
+  "chars": 12,
+  "recipe": "31cb6abbc7",
+  "text": "...We watch."
+ },
+ "sir_godfrey_gwilym/206b1f58eb5106ec": {
+  "chars": 144,
+  "recipe": "31cb6abbc7",
+  "text": "The horses are four hundred years dead, so we'll walk to war. We've walked further for worse reasons. Say the word when you go up to the castle."
+ },
+ "sir_godfrey_gwilym/23501f153ff932a6": {
+  "chars": 185,
+  "recipe": "31cb6abbc7",
+  "text": "Ask the commander to call the muster. All of us at the table, the way it was. Say your piece to the Order, not to him. I'll stand up when you do. I promise, and I'll remember promising."
+ },
+ "sir_godfrey_gwilym/2d5e96189dfa6421": {
+  "chars": 159,
+  "recipe": "31cb6abbc7",
+  "text": "Our patrol saw a black carriage at Vallaki's gate, bold as you like, by daylight. So the town bends the knee to him now. We'd have ridden out about that, once."
+ },
+ "sir_godfrey_gwilym/2e3d3fc18b50344b": {
+  "chars": 187,
+  "recipe": "31cb6abbc7",
+  "text": "One thing, and then I'll stop fussing. Don't cross the courtyard after dark. Our men-at-arms are still fighting the last battle out there, and they don't stop to ask whose side you're on."
+ },
+ "sir_godfrey_gwilym/2e610ef49b854b3d": {
+  "chars": 111,
+  "recipe": "31cb6abbc7",
+  "text": "Welcome to Argynvostholt. Mind the steps. The third one's gone, and the fourth, and honestly most of the house."
+ },
+ "sir_godfrey_gwilym/3020aec7965cd09b": {
+  "chars": 79,
+  "recipe": "31cb6abbc7",
+  "text": "One more. I'll remember this light till then. That's an easy thing to remember."
+ },
+ "sir_godfrey_gwilym/320eddff19d99170": {
+  "chars": 113,
+  "recipe": "31cb6abbc7",
+  "text": "Me? The old woman's cards wanted me? I'm the one who loses his boots. Some mornings I lose which foot they go on."
+ },
+ "sir_godfrey_gwilym/3577239f45d852be": {
+  "chars": 157,
+  "recipe": "31cb6abbc7",
+  "text": "Let them go home. ...I heard that. I was lying beside them in the courtyard. I heard him say it, and Vladimir told me I'd heard wrong, and I let him tell me."
+ },
+ "sir_godfrey_gwilym/36462ddedb5ccc2d": {
+  "chars": 147,
+  "recipe": "31cb6abbc7",
+  "text": "That it mattered. Yes. I can hold on to that. The rest will come back or it won't, and either way I'll know which side of the door I'm standing on."
+ },
+ "sir_godfrey_gwilym/3792fb6b0e103fbd": {
+  "chars": 122,
+  "recipe": "31cb6abbc7",
+  "text": "The patrol says Vallaki's quieter these days. Not frightened-quiet. Busy-quiet. I'd forgotten towns could sound like that."
+ },
+ "sir_godfrey_gwilym/385fd4d11100cec0": {
+  "chars": 73,
+  "recipe": "31cb6abbc7",
+  "text": "Or I could stay for one more ride. Your choice. I've made enough of mine."
+ },
+ "sir_godfrey_gwilym/41b69637de903d95": {
+  "chars": 38,
+  "recipe": "31cb6abbc7",
+  "text": "Four hundred years. I let him tell me."
+ },
+ "sir_godfrey_gwilym/451a14960875f69d": {
+  "chars": 37,
+  "recipe": "31cb6abbc7",
+  "text": "I'll stand, Vladimir. I won't say it."
+ },
+ "sir_godfrey_gwilym/45c95d412678ee87": {
+  "chars": 92,
+  "recipe": "31cb6abbc7",
+  "text": "I'll be in my room with the wall. Come and fetch me when you need a big man in a lot of tin."
+ },
+ "sir_godfrey_gwilym/4ab075c3efa98c54": {
+  "chars": 60,
+  "recipe": "31cb6abbc7",
+  "text": "I'll stand with you. I won't say it. I said it once already."
+ },
+ "sir_godfrey_gwilym/4c4aa0f51cb4f7c7": {
+  "chars": 185,
+  "recipe": "31cb6abbc7",
+  "text": "The Order of the Silver Dragon. Lord Argynvost founded us: a silver dragon who liked people enough to look like one at dinner. We kept a watch over the valley. Farms, roads, the passes."
+ },
+ "sir_godfrey_gwilym/4f69014c1732e3de": {
+  "chars": 198,
+  "recipe": "31cb6abbc7",
+  "text": "The great hall, straight through. He sits at the head of the table, where he's sat since... I stopped counting at three hundred years. Be courteous. He isn't dangerous unless you mention the castle."
+ },
+ "sir_godfrey_gwilym/580798fb44a8dc24": {
+  "chars": 108,
+  "recipe": "31cb6abbc7",
+  "text": "Go carefully. And if you hear singing in the chapel at night, don't worry. It's only the house, remembering."
+ },
+ "sir_godfrey_gwilym/5b4ee3cef9e2a17e": {
+  "chars": 142,
+  "recipe": "31cb6abbc7",
+  "text": "Sit in his chair and add my name to the roster as absent. It'll be the first absence in four hundred years. He'll take it harder than a sword."
+ },
+ "sir_godfrey_gwilym/5fafe414210f32f6": {
+  "chars": 41,
+  "recipe": "31cb6abbc7",
+  "text": "I am. It comes and goes, how much I mind."
+ },
+ "sir_godfrey_gwilym/623c392c50d4720d": {
+  "chars": 133,
+  "recipe": "31cb6abbc7",
+  "text": "Be the light. Not \"hate the dark\". We swore to be the light, and we've been sitting in the dark for four hundred years keeping score."
+ },
+ "sir_godfrey_gwilym/6466086714787ecc": {
+  "chars": 41,
+  "recipe": "31cb6abbc7",
+  "text": "You'll mention the castle. Everyone does."
+ },
+ "sir_godfrey_gwilym/6775a32f41d84d4e": {
+  "chars": 174,
+  "recipe": "31cb6abbc7",
+  "text": "The Lantern Company. Twenty men we sent over the passes for help, the week before the end. They came back too late, and the young lord's archers were waiting on our own road."
+ },
+ "sir_godfrey_gwilym/695d41359906052b": {
+  "chars": 125,
+  "recipe": "31cb6abbc7",
+  "text": "Then a young lord came over the mountains with an army. We lost. We died. We got up again. That last part wasn't in the oath."
+ },
+ "sir_godfrey_gwilym/702ee54db7f0181e": {
+  "chars": 103,
+  "recipe": "31cb6abbc7",
+  "text": "The oath's still there. I checked this morning, the way you'd pat a pocket for your purse. Still there."
+ },
+ "sir_godfrey_gwilym/709d74e8c14f9640": {
+  "chars": 47,
+  "recipe": "31cb6abbc7",
+  "text": "Still here. Still me, mostly. What do you need?"
+ },
+ "sir_godfrey_gwilym/714d00242d5dceaf": {
+  "chars": 48,
+  "recipe": "31cb6abbc7",
+  "text": "Vladimir. Please. Look at what's in their hands."
+ },
+ "sir_godfrey_gwilym/752c2eaad350e279": {
+  "chars": 112,
+  "recipe": "31cb6abbc7",
+  "text": "They ride home every night. They never get here. I go down to the gate sometimes, to see if tonight's the night."
+ },
+ "sir_godfrey_gwilym/770fe3b8db864418": {
+  "chars": 114,
+  "recipe": "31cb6abbc7",
+  "text": "And St. Andral's has its saint back, I hear. Good. I was christened under that roof, I think. Or one very like it."
+ },
+ "sir_godfrey_gwilym/78d594322991decc": {
+  "chars": 107,
+  "recipe": "31cb6abbc7",
+  "text": "Cold. You lot are warm, though. I'd forgotten people were warm. I keep standing too close; tell me if I do."
+ },
+ "sir_godfrey_gwilym/8265c7d332b834ae": {
+  "chars": 34,
+  "recipe": "31cb6abbc7",
+  "text": "Stand easy, Piet. They're with me."
+ },
+ "sir_godfrey_gwilym/91ac9a3cee42dfd7": {
+  "chars": 124,
+  "recipe": "31cb6abbc7",
+  "text": "The light's still pulling at me, very gently, like a child at a sleeve. I don't mind. It means it'll be there when I'm done."
+ },
+ "sir_godfrey_gwilym/98f82c5559f6a3eb": {
+  "chars": 31,
+  "recipe": "31cb6abbc7",
+  "text": "Do you think so? I've wondered."
+ },
+ "sir_godfrey_gwilym/a0ca13cff01065fa": {
+  "chars": 123,
+  "recipe": "31cb6abbc7",
+  "text": "But some nights I can't remember why we swore what we swore. I remember that it mattered. I've lost the words for the rest."
+ },
+ "sir_godfrey_gwilym/a9e1740e3e4c4cd4": {
+  "chars": 68,
+  "recipe": "31cb6abbc7",
+  "text": "Back again. Good. The house is better with somebody breathing in it."
+ },
+ "sir_godfrey_gwilym/baffb1d75728c777": {
+  "chars": 47,
+  "recipe": "31cb6abbc7",
+  "text": "I'm with them, Vladimir. Put me down as absent."
+ },
+ "sir_godfrey_gwilym/bfe4b45b4b29c2cc": {
+  "chars": 72,
+  "recipe": "31cb6abbc7",
+  "text": "I'll write it on the inside of my gauntlet. I write everything down now."
+ },
+ "sir_godfrey_gwilym/c9ab46f3276c7bb3": {
+  "chars": 166,
+  "recipe": "31cb6abbc7",
+  "text": "Then I'll come. I'll tell the commander myself, so he hears it from me and not from the hall. He'll say I'm a fool. He's said it before. It has never once stopped me."
+ },
+ "sir_godfrey_gwilym/cae45f233069c797": {
+  "chars": 60,
+  "recipe": "31cb6abbc7",
+  "text": "There wouldn't be. The young lord kept the libraries, after."
+ },
+ "sir_godfrey_gwilym/d2639688c06f08b6": {
+  "chars": 63,
+  "recipe": "31cb6abbc7",
+  "text": "Brothers. Hear them out. I did, and I remember things I'd lost."
+ },
+ "sir_godfrey_gwilym/dcbacc496a0af82b": {
+  "chars": 126,
+  "recipe": "31cb6abbc7",
+  "text": "You swore his oath. I heard you. I'm not angry. I swore it too, once, and it took me four hundred years to hear what I'd said."
+ },
+ "sir_godfrey_gwilym/ddc2da278151928f": {
+  "chars": 87,
+  "recipe": "31cb6abbc7",
+  "text": "Thank you. Tell the old woman her cards were right about me, and that I was very tired."
+ },
+ "sir_godfrey_gwilym/de2279e9c60b9863": {
+  "chars": 132,
+  "recipe": "31cb6abbc7",
+  "text": "It's calling. It's warm. ...Not yet. I promised somebody a ride. I'll come when the castle's done, and the light will still be here."
+ },
+ "sir_godfrey_gwilym/de58c19c92cfbddc": {
+  "chars": 103,
+  "recipe": "31cb6abbc7",
+  "text": "Teodor. The pears were Teodor's. I've been remembering his pears for years and thinking they were mine."
+ },
+ "sir_godfrey_gwilym/e78f6c2d8d6823b7": {
+  "chars": 78,
+  "recipe": "31cb6abbc7",
+  "text": "\"Remember the oath.\" I wrote that for tonight, I think. I just didn't know it."
+ },
+ "sir_godfrey_gwilym/e8c1ee3b4ed48cd2": {
+  "chars": 175,
+  "recipe": "31cb6abbc7",
+  "text": "Pears. I remember pears very clearly. And a grey mare who bit everyone but me. And my sister Gwenllian, who laughed like a goose. I've lost her face. I've still got the laugh."
+ },
+ "sir_godfrey_gwilym/ea3825a5f90eda63": {
+  "chars": 115,
+  "recipe": "31cb6abbc7",
+  "text": "The cards. The old woman's cards wanted me, didn't they? I can feel the light pulling. I could go now. I'd like to."
+ },
+ "sir_godfrey_gwilym/ecb56e1681c0e431": {
+  "chars": 138,
+  "recipe": "31cb6abbc7",
+  "text": "The town with the festivals? The patrol says the singing carries all the way up the ridge. It isn't happy singing. It's very loud singing."
+ },
+ "sir_godfrey_gwilym/f142b3dabe87e177": {
+  "chars": 136,
+  "recipe": "31cb6abbc7",
+  "text": "It's kind of you. It isn't enough, not yet. Find me the words, if you can. They're carved somewhere in this house. I used to know where."
+ },
+ "sir_godfrey_gwilym/f3943f3c6235ef4a": {
+  "chars": 141,
+  "recipe": "31cb6abbc7",
+  "text": "I'd go. I'd go tonight. But I'd be half a knight. I've lost the oath, and a knight without his oath is a man standing in a great deal of tin."
+ },
+ "sir_godfrey_gwilym/f681f11517f970f3": {
+  "chars": 113,
+  "recipe": "31cb6abbc7",
+  "text": "The road patrol said you'd be coming. They said you were polite. That's rare enough that they mentioned it twice."
+ },
+ "sir_godfrey_gwilym/f787802f1769b31e": {
+  "chars": 158,
+  "recipe": "31cb6abbc7",
+  "text": "Sir Godfrey Gwilym, of the Order of the Silver Dragon, or what's left of it. You'll want the commander. Everyone does, eventually. Then they wish they hadn't."
+ },
+ "sir_godfrey_gwilym/ff475f0e82e94b5e": {
+  "chars": 63,
+  "recipe": "31cb6abbc7",
+  "text": "Something new. I haven't had anything new since... well. Since."
+ },
  "sorvia/0761c60ad36005ab": {
   "chars": 82,
   "recipe": "2bda362418",
@@ -21558,6 +23478,176 @@
   "chars": 89,
   "recipe": "2bda362418",
   "text": "Your boots have walked farther than boots should, in this valley. Sorry. I notice things."
+ },
+ "stanimir/08d8095dca3571c5": {
+  "chars": 104,
+  "recipe": "cbde6f771e",
+  "text": "Nicu. My sister's boy. He rode to Vallaki to sell a horse, and he came home by the crossroads after all."
+ },
+ "stanimir/1f6dc2ade61dc2df": {
+  "chars": 96,
+  "recipe": "cbde6f771e",
+  "text": "Pay her what she asks. It is never only money, and it is never more than you can spare. Usually."
+ },
+ "stanimir/20cf33fb024316a7": {
+  "chars": 148,
+  "recipe": "cbde6f771e",
+  "text": "Madam Eva has been old since my grandmother was a girl. She reads the cards for whoever the road brings, and the road brings whoever the cards want."
+ },
+ "stanimir/20d74d2a834eca05": {
+  "chars": 111,
+  "recipe": "cbde6f771e",
+  "text": "Everyone knew your father. He shouted at me for an hour once, about a horse. Best conversation I had that year."
+ },
+ "stanimir/23d69df75df8c44b": {
+  "chars": 146,
+  "recipe": "cbde6f771e",
+  "text": "You showed the old woman your teeth in her own tent. I play the fiddle at my fire, friends; I don't play the fool. Mind your manners in that tent."
+ },
+ "stanimir/24b63ff492a7a1ba": {
+  "chars": 123,
+  "recipe": "cbde6f771e",
+  "text": "He walked again? This land won't even let our dead lie down. Then you gave him his rest the hard way. That is still a gift."
+ },
+ "stanimir/2dd3b841515f12d9": {
+  "chars": 93,
+  "recipe": "cbde6f771e",
+  "text": "To the fire, the fiddle and Madam Eva, in that order on a good day. On a bad day, to my wife."
+ },
+ "stanimir/2df3d7f82af3096b": {
+  "chars": 123,
+  "recipe": "cbde6f771e",
+  "text": "And you bring the burgomaster's girl, out past the crossroads. Well, well. Sit near the fire, lady. Not too near the trees."
+ },
+ "stanimir/2e9120f8158888dc": {
+  "chars": 114,
+  "recipe": "cbde6f771e",
+  "text": "Forty. You owe me ten and a true word, and I will never see either. Sit if you must. The wine is not free tonight."
+ },
+ "stanimir/40d102ff30549c17": {
+  "chars": 196,
+  "recipe": "cbde6f771e",
+  "text": "Once there was a prince who won this valley with his sword, and he had a younger brother whom everybody loved. The brother was to marry a girl as lovely as a spring morning. The prince wanted her."
+ },
+ "stanimir/46fb27e2b93e8421": {
+  "chars": 109,
+  "recipe": "cbde6f771e",
+  "text": "Madam Eva is in the big tent. She has been expecting you. Don't ask me how; I stopped asking forty years ago."
+ },
+ "stanimir/4d160909b05c9ec8": {
+  "chars": 100,
+  "recipe": "cbde6f771e",
+  "text": "Plum wine, from plums that grew in a summer before any of you were born. Drink! It won't hurt. Much."
+ },
+ "stanimir/50c17e74018ab9a9": {
+  "chars": 110,
+  "recipe": "cbde6f771e",
+  "text": "Good. A guest who takes and then gives back is still a guest. Barely. Sit, but sit where I can see your hands."
+ },
+ "stanimir/5f8f847ec37419fe": {
+  "chars": 63,
+  "recipe": "cbde6f771e",
+  "text": "Back at my fire! Good. Sit, drink, tell me lies about the road."
+ },
+ "stanimir/63d2d28c28e41789": {
+  "chars": 145,
+  "recipe": "cbde6f771e",
+  "text": "His own guards filled him with arrows. He did not die. He has been not dying ever since. Drink! It's a wedding story. It should end with a drink."
+ },
+ "stanimir/6e79103f570fa6cc": {
+  "chars": 193,
+  "recipe": "cbde6f771e",
+  "text": "And listen. Somebody in this camp will send word up the hill that you passed this way. That is how it is with us. It will be me, and I will tell him you went east. Small thing. Big thing. Both."
+ },
+ "stanimir/7e8ace48cceba5f7": {
+  "chars": 98,
+  "recipe": "cbde6f771e",
+  "text": "My strongbox is lighter by forty gold, and you are the only strangers in my camp. I will ask once."
+ },
+ "stanimir/9d04d5231e027a2d": {
+  "chars": 77,
+  "recipe": "cbde6f771e",
+  "text": "With words said over him, even. I don't know your gods. I hope they knew him."
+ },
+ "stanimir/a6f01617ed66eb42": {
+  "chars": 107,
+  "recipe": "cbde6f771e",
+  "text": "You lie the way I play the flute: loudly and badly. Give it back. And ten more, for making me listen to it."
+ },
+ "stanimir/aeed4839f49ba7ee": {
+  "chars": 39,
+  "recipe": "cbde6f771e",
+  "text": "As you like. Nobody robs my fire twice."
+ },
+ "stanimir/b03a394720d0a087": {
+  "chars": 101,
+  "recipe": "cbde6f771e",
+  "text": "Forty for the box, ten for the flute solo. Sit, but sit where I can see your hands. And nobody sings."
+ },
+ "stanimir/b262fde593dc3157": {
+  "chars": 71,
+  "recipe": "cbde6f771e",
+  "text": "Sit, friends. Sit. The fire is still free, and for you the wine is too."
+ },
+ "stanimir/b52b74ba165bca60": {
+  "chars": 53,
+  "recipe": "cbde6f771e",
+  "text": "A pleasure! Come again. Bring more gold and less mud."
+ },
+ "stanimir/b6654653d0bffdbe": {
+  "chars": 106,
+  "recipe": "cbde6f771e",
+  "text": "Silver earring shaped like a horse's head? Black hair, too long? A laugh like a donkey falling downstairs?"
+ },
+ "stanimir/b8eda7ce1ae81f2d": {
+  "chars": 185,
+  "recipe": "cbde6f771e",
+  "text": "Guests! Off the road, out of the dark, into the light! I am Stanimir. The fire is free, the wine is cheap, and the music is the best in Barovia, because it is the only music in Barovia."
+ },
+ "stanimir/bc3f5c81f4495245": {
+  "chars": 165,
+  "recipe": "cbde6f771e",
+  "text": "We answer to the road and the cards. And a little, yes, to the man on the hill. He lets our wagons through the mist. A dog doesn't bite the hand that holds the gate."
+ },
+ "stanimir/bf96c970957f2faf": {
+  "chars": 116,
+  "recipe": "cbde6f771e",
+  "text": "You cut him down. Strangers, and you stopped and cut him down, when nobody else on that road would slow their horse."
+ },
+ "stanimir/c6fe845ec66f764c": {
+  "chars": 53,
+  "recipe": "cbde6f771e",
+  "text": "Luminita must hear it from me. Not from you. From me."
+ },
+ "stanimir/c80ad6548de76012": {
+  "chars": 96,
+  "recipe": "cbde6f771e",
+  "text": "Still hanging, then. I'll go myself, tonight, with a knife and a good horse, and bring him home."
+ },
+ "stanimir/d0cb02acc88db549": {
+  "chars": 76,
+  "recipe": "cbde6f771e",
+  "text": "Then we will play something cheerful. Something very loud and very cheerful."
+ },
+ "stanimir/e94af3ae1ec34e08": {
+  "chars": 62,
+  "recipe": "cbde6f771e",
+  "text": "Then one of my own owes me an apology. Sit. I'm sorry I asked."
+ },
+ "stanimir/f34fda4152450da2": {
+  "chars": 192,
+  "recipe": "cbde6f771e",
+  "text": "On the wedding day, the prince made a bargain with something under the world. He killed his brother. The bride ran from him, and the castle wall was high, and the gorge below it was very deep."
+ },
+ "stanimir/fb60780a3216d6a6": {
+  "chars": 109,
+  "recipe": "cbde6f771e",
+  "text": "Rope, oil, food that keeps, blankets that keep you. Two potions, very dear, because they are very dear to me."
+ },
+ "stanimir/fbe7d9a6c9c954e1": {
+  "chars": 107,
+  "recipe": "cbde6f771e",
+  "text": "You put a knife to the old woman's throat in my camp. Walk through, if you must. Don't stop, and don't sit."
  },
  "stefania_martikov/1b9bf20ed8e19014": {
   "chars": 133,
@@ -21638,6 +23728,221 @@
   "chars": 46,
   "recipe": "ea5a569563",
   "text": "Back again. There's soup. There's always soup."
+ },
+ "strahd/0926b6152e0d0675": {
+  "chars": 85,
+  "recipe": "b6be7724e7",
+  "text": "My guests. You do get everywhere. I am not sure I like you being here, of all places."
+ },
+ "strahd/0a0c10bfbcc85ebc": {
+  "chars": 47,
+  "recipe": "b6be7724e7",
+  "text": "Ireena. You came to see her. Of course you did."
+ },
+ "strahd/0dbfdb15415714e5": {
+  "chars": 106,
+  "recipe": "b6be7724e7",
+  "text": "Then you have done my work for me without asking, which I will forgive once. Do not let it become a habit."
+ },
+ "strahd/19877930fb6c28fd": {
+  "chars": 43,
+  "recipe": "b6be7724e7",
+  "text": "Dead. Lysaga. And you tell me she did this."
+ },
+ "strahd/1ad03e8f4325d722": {
+  "chars": 100,
+  "recipe": "b6be7724e7",
+  "text": "And a scholar. My library would delight you. You must come up and see it. Everyone does, eventually."
+ },
+ "strahd/1f317c6729a24191": {
+  "chars": 128,
+  "recipe": "b6be7724e7",
+  "text": "Thank you. That was courageous, and very foolish, and I shall remember both. Now go home, all of you. I have to see to my house."
+ },
+ "strahd/24f5e6c03f927435": {
+  "chars": 116,
+  "recipe": "b6be7724e7",
+  "text": "My guests, on my road. The ones who told me no across a graveside. I have thought about it often. It was refreshing."
+ },
+ "strahd/2c2b4a9816ead25b": {
+  "chars": 122,
+  "recipe": "b6be7724e7",
+  "text": "Not on the road. The road is for travelling. We will do this properly, in my house, when you are ready. You are not ready."
+ },
+ "strahd/2c9d5b84214a6330": {
+  "chars": 106,
+  "recipe": "b6be7724e7",
+  "text": "My quiet guests. You said nothing at the graveside. Let us see whether the road has loosened your tongues."
+ },
+ "strahd/2fe7ad289c11dc72": {
+  "chars": 61,
+  "recipe": "b6be7724e7",
+  "text": "Yes. You did well in that house. Let us see you do well here."
+ },
+ "strahd/312bde15c86c4833": {
+  "chars": 125,
+  "recipe": "b6be7724e7",
+  "text": "What every man wants, in the end. To be welcomed home. Ireena knows the way. She has always known it; she has only forgotten."
+ },
+ "strahd/364bcf03d8d64ae7": {
+  "chars": 90,
+  "recipe": "b6be7724e7",
+  "text": "Ireena. The road suits you; the cold puts colour in your face. Are they treating you well?"
+ },
+ "strahd/38821d945454a325": {
+  "chars": 33,
+  "recipe": "b6be7724e7",
+  "text": "Perhaps you are. Let us find out."
+ },
+ "strahd/3a598decbe21f0a3": {
+  "chars": 95,
+  "recipe": "b6be7724e7",
+  "text": "Ah. The ones who drew steel at a funeral. I keep the memory the way one keeps a pressed flower."
+ },
+ "strahd/3cebfdb52efbb4ae": {
+  "chars": 86,
+  "recipe": "b6be7724e7",
+  "text": "You quarrelled with the Vistani. A pity. They are so useful, and so easily frightened."
+ },
+ "strahd/3f7f03c780f75854": {
+  "chars": 29,
+  "recipe": "b6be7724e7",
+  "text": "You did once. You will again."
+ },
+ "strahd/437baeb9a2091e2e": {
+  "chars": 88,
+  "recipe": "b6be7724e7",
+  "text": "The little thief carries her portrait. Keep it close. It cost more than you can imagine."
+ },
+ "strahd/49f70e1190190c06": {
+  "chars": 127,
+  "recipe": "b6be7724e7",
+  "text": "Good evening. You will be the strangers my wolves keep telling me about. I am Strahd von Zarovich, and this is a private grave."
+ },
+ "strahd/530a6ddeae7d0359": {
+  "chars": 61,
+  "recipe": "b6be7724e7",
+  "text": "Silence. How restful. Keep it; I have a great deal of my own."
+ },
+ "strahd/55d912948ec16338": {
+  "chars": 154,
+  "recipe": "b6be7724e7",
+  "text": "I came to welcome you to my land, all of you. You have been so busy since you arrived. I do hope you will stay. I have arranged for it to be a long visit."
+ },
+ "strahd/7353397776bf690c": {
+  "chars": 108,
+  "recipe": "b6be7724e7",
+  "text": "Sergeant. You still carry my letter. I am touched. Your company kept theirs too. They were so very punctual."
+ },
+ "strahd/74d286efd03edb7f": {
+  "chars": 80,
+  "recipe": "b6be7724e7",
+  "text": "Off my road. In my land. Under my sky. You have a gift for comedy. Good evening."
+ },
+ "strahd/7a445f6e6c8d603e": {
+  "chars": 111,
+  "recipe": "b6be7724e7",
+  "text": "You have been to see the old woman at the pool. She always did love an audience. Did she tell you where to dig?"
+ },
+ "strahd/833797f298aa83b3": {
+  "chars": 103,
+  "recipe": "b6be7724e7",
+  "text": "Do not stop on my account. It is so rare that I attend a funeral I did not arrange. Well. Not directly."
+ },
+ "strahd/8780459f2aaf106d": {
+  "chars": 107,
+  "recipe": "b6be7724e7",
+  "text": "And the soldier who kept my invitation. I am touched. Your company asked after you, you know. Near the end."
+ },
+ "strahd/9d106733b2d0fbdd": {
+  "chars": 63,
+  "recipe": "b6be7724e7",
+  "text": "Do. And mind the lamp, if you lit it. She never liked the dark."
+ },
+ "strahd/ab32549c1df7b336": {
+  "chars": 140,
+  "recipe": "b6be7724e7",
+  "text": "I am not in, my dear. Observe: the gate. I keep my manners even where others have forgotten theirs. Ireena. You look tired. You need not be."
+ },
+ "strahd/bdc7866686b62ae2": {
+  "chars": 143,
+  "recipe": "b6be7724e7",
+  "text": "Silence. The wise answer, and the dull one. We will speak again when you have found your tongues. Ireena. Do keep the window latched. Or don't."
+ },
+ "strahd/c6b11a1f0907c485": {
+  "chars": 121,
+  "recipe": "b6be7724e7",
+  "text": "Oh, well said. Truly. I have been threatened by better, but rarely with such conviction. Allow me to return the courtesy."
+ },
+ "strahd/cbed612c9fcf2c4b": {
+  "chars": 134,
+  "recipe": "b6be7724e7",
+  "text": "The village hid her from me, and in the morning she was dead in their chapel. So I sent the river to ask them why. It is still asking."
+ },
+ "strahd/cec57bb061ccb2ea": {
+  "chars": 56,
+  "recipe": "b6be7724e7",
+  "text": "That is not a high bar, I grant you. I am working on it."
+ },
+ "strahd/d479a239e65fac1b": {
+  "chars": 8,
+  "recipe": "b6be7724e7",
+  "text": "Explain."
+ },
+ "strahd/d68982128f27c294": {
+  "chars": 99,
+  "recipe": "b6be7724e7",
+  "text": "My guests, on my road, and still so well mannered. I did hope the village would not cure you of it."
+ },
+ "strahd/da2e646897d9f2c7": {
+  "chars": 143,
+  "recipe": "b6be7724e7",
+  "text": "Good evening. You will be the guests my wolves keep telling me about. I am Strahd von Zarovich. This is my road. I do hope you are enjoying it."
+ },
+ "strahd/da5b747519fac5b3": {
+  "chars": 76,
+  "recipe": "b6be7724e7",
+  "text": "Ask the old woman at the pool. Or ask me, over dinner. Good evening, Ireena."
+ },
+ "strahd/dd752dce32294053": {
+  "chars": 95,
+  "recipe": "b6be7724e7",
+  "text": "There. You see? Civilisation survives, even here. We will dine together, one evening. I insist."
+ },
+ "strahd/e23e45a95101e032": {
+  "chars": 105,
+  "recipe": "b6be7724e7",
+  "text": "And my thanks for the boy from under the church. He arrived hungry and grateful. Such a rare combination."
+ },
+ "strahd/e7ffae2b02167605": {
+  "chars": 130,
+  "recipe": "b6be7724e7",
+  "text": "Manners. In Barovia. You have made an old man very happy. We will speak again, my guests, at my table, I hope. Ireena. Sleep well."
+ },
+ "strahd/e808943ff041373b": {
+  "chars": 122,
+  "recipe": "b6be7724e7",
+  "text": "How gallant. She hardly needs you there; she can refuse me perfectly well on her own. She has been doing it for centuries."
+ },
+ "strahd/e85b87b64212da26": {
+  "chars": 167,
+  "recipe": "b6be7724e7",
+  "text": "A candlemaker's daughter, which is to say nobody, which is to say someone I had looked for over a very long time. She was frightened of me. They usually are, at first."
+ },
+ "strahd/e9a06b6f37f38f19": {
+  "chars": 66,
+  "recipe": "b6be7724e7",
+  "text": "Rude. But spirited. Here, then: something you are allowed to kill."
+ },
+ "strahd/f46bf620d8da2ef8": {
+  "chars": 63,
+  "recipe": "b6be7724e7",
+  "text": "She sang to me, when I was small. She was the only one who did."
+ },
+ "strahd/fa41f524ea0b0b20": {
+  "chars": 145,
+  "recipe": "b6be7724e7",
+  "text": "Under your protection. How splendid. Then let us see what your protection is worth. Do try to keep her alive. I should hate for this to be short."
  },
  "thorn/1c164bf19430445d": {
   "chars": 41,
@@ -23198,5 +25503,660 @@
   "chars": 81,
   "recipe": "286076527e",
   "text": "I told Arrigal. Arrigal said fishermen carry sacks. Go north to the water. Hurry."
+ },
+ "vladimir_horngaard/0452a8ffac2906e8": {
+  "chars": 153,
+  "recipe": "792f1d07f7",
+  "text": "You wish to speak to the Order. Very well. They will not listen. They have listened to nothing but me for four hundred years, and they have been content."
+ },
+ "vladimir_horngaard/06738fbc77ba0605": {
+  "chars": 196,
+  "recipe": "792f1d07f7",
+  "text": "The Lord Argynvost founded us to keep the watch over this valley. We kept it. When the army came over the mountains we held the passes, then the road, then this house. We held the house one night."
+ },
+ "vladimir_horngaard/145c7d7206f500fc": {
+  "chars": 119,
+  "recipe": "792f1d07f7",
+  "text": "Oathbreakers. In my own tower. I should have seen it in your faces; the living always look like that when they mean it."
+ },
+ "vladimir_horngaard/1770432b6f2cd0e4": {
+  "chars": 111,
+  "recipe": "792f1d07f7",
+  "text": "Then you will fail, or you will succeed and let him go free. I do not know which I would hate more. Good night."
+ },
+ "vladimir_horngaard/1967f31061061e6d": {
+  "chars": 78,
+  "recipe": "792f1d07f7",
+  "text": "One of mine will stand as my second, so that it is a contest and not a lesson."
+ },
+ "vladimir_horngaard/1cd199acbe31f01a": {
+  "chars": 128,
+  "recipe": "792f1d07f7",
+  "text": "End him. Everyone who climbs this ridge wants to end him. You will not manage it, and if you could, the Order would not let you."
+ },
+ "vladimir_horngaard/1ee38ce6e2169629": {
+  "chars": 85,
+  "recipe": "792f1d07f7",
+  "text": "What he would want. You sound like Godfrey. Go, before I start to find it persuasive."
+ },
+ "vladimir_horngaard/24fc6a6f84d59ee1": {
+  "chars": 94,
+  "recipe": "792f1d07f7",
+  "text": "So that is what it looks like from up here. In four hundred years I never once came up to see."
+ },
+ "vladimir_horngaard/382afcfe81885124": {
+  "chars": 55,
+  "recipe": "792f1d07f7",
+  "text": "Go, then. The gate is where you left it. It usually is."
+ },
+ "vladimir_horngaard/41bb100b548083bb": {
+  "chars": 98,
+  "recipe": "792f1d07f7",
+  "text": "They follow Godfrey now. Take them. Somebody must keep the hall, and it was always going to be me."
+ },
+ "vladimir_horngaard/459f65dd3d4ea067": {
+  "chars": 165,
+  "recipe": "792f1d07f7",
+  "text": "The red-haired one. I know the look the castle wears when it thinks of you; I have watched it from this ridge. He wants you forever. We know something about forever."
+ },
+ "vladimir_horngaard/45bb927f501af088": {
+  "chars": 12,
+  "recipe": "792f1d07f7",
+  "text": "Put it down."
+ },
+ "vladimir_horngaard/49d53f888b2c4e32": {
+  "chars": 119,
+  "recipe": "792f1d07f7",
+  "text": "Then it rides. Godfrey will lead it; he was always the one they liked. I will keep the hall, as the beaten keep things."
+ },
+ "vladimir_horngaard/4a583e7f9de7e9b2": {
+  "chars": 181,
+  "recipe": "792f1d07f7",
+  "text": "He fell in the courtyard, in his own shape, with forty of us around him. They took his head to the castle to hang on a wall where guests can admire it. I am told he is much admired."
+ },
+ "vladimir_horngaard/4e2685dbfd6caf56": {
+  "chars": 86,
+  "recipe": "792f1d07f7",
+  "text": "The Order marches when you march. Do not keep us waiting. We have done enough of that."
+ },
+ "vladimir_horngaard/55f2d40b2f3f9b42": {
+  "chars": 159,
+  "recipe": "792f1d07f7",
+  "text": "You have met him. Then you saw it: he is bored. Imagine an eternity of that, in a valley that hates him, watched by men he cannot kill. That is my gift to him."
+ },
+ "vladimir_horngaard/5accd5074488a346": {
+  "chars": 68,
+  "recipe": "792f1d07f7",
+  "text": "I will be up again within a day. I always am. Unless you light that."
+ },
+ "vladimir_horngaard/5b39fac311a283fe": {
+  "chars": 67,
+  "recipe": "792f1d07f7",
+  "text": "The Order's law stands. I yielded. I will not pretend I enjoyed it."
+ },
+ "vladimir_horngaard/5f1a538d112abe62": {
+  "chars": 53,
+  "recipe": "792f1d07f7",
+  "text": "It is a cage. The only question is who holds the key."
+ },
+ "vladimir_horngaard/69168df13b7ae7ca": {
+  "chars": 162,
+  "recipe": "792f1d07f7",
+  "text": "Yes. It came to this house long ago in the hands of a hunter who meant to end him with it. The hands died at our door. I have kept it since, so that nobody would."
+ },
+ "vladimir_horngaard/7a0c666523d9aa36": {
+  "chars": 142,
+  "recipe": "792f1d07f7",
+  "text": "He said it. \"Let them go home. Do not keep them for me.\" I held his head and heard him, and then I stood up and swore you all to this instead."
+ },
+ "vladimir_horngaard/7bb50773f69f84ed": {
+  "chars": 174,
+  "recipe": "792f1d07f7",
+  "text": "If that burns, the Order goes out like a row of candles, and he sits in his castle with nobody left, living or dead, who hates him properly. I will not let you give him that."
+ },
+ "vladimir_horngaard/7f4daf162055990b": {
+  "chars": 132,
+  "recipe": "792f1d07f7",
+  "text": "Fine words. The young lord had fine words too, the night a voice at the gate asked for it to be opened. The Order defends its house."
+ },
+ "vladimir_horngaard/81111d1401f87efe": {
+  "chars": 110,
+  "recipe": "792f1d07f7",
+  "text": "Yielded. The Order's law is the Order's law, and I wrote most of it. The stronger arm commands. Command, then."
+ },
+ "vladimir_horngaard/83fa43b9c3276809": {
+  "chars": 87,
+  "recipe": "792f1d07f7",
+  "text": "Absent. There has not been an absence in four hundred years. I shall need a new column."
+ },
+ "vladimir_horngaard/84b5b5f2c4045621": {
+  "chars": 75,
+  "recipe": "792f1d07f7",
+  "text": "He told you. Of course he told you. He never could keep a thing to himself."
+ },
+ "vladimir_horngaard/91377a9780109ace": {
+  "chars": 48,
+  "recipe": "792f1d07f7",
+  "text": "Say it after me. He lives. He suffers. We watch."
+ },
+ "vladimir_horngaard/9588346c008685fb": {
+  "chars": 70,
+  "recipe": "792f1d07f7",
+  "text": "Light it. I will stand with you while it catches. I owe him that much."
+ },
+ "vladimir_horngaard/95e58c02d05c2772": {
+  "chars": 97,
+  "recipe": "792f1d07f7",
+  "text": "Then you know how a hall sounds with forty empty chairs. Mine are not empty. I have seen to that."
+ },
+ "vladimir_horngaard/a4fc2a455ea01ec2": {
+  "chars": 167,
+  "recipe": "792f1d07f7",
+  "text": "I held his head and he said it, and I could not bear to go where he was going and tell him I had lost his house. So I kept them here, so that none of us would have to."
+ },
+ "vladimir_horngaard/a8bca075c83f98d7": {
+  "chars": 128,
+  "recipe": "792f1d07f7",
+  "text": "Fine words. The young lord had fine words too, the night a voice at the gate asked for it to be opened. The Order does not ride."
+ },
+ "vladimir_horngaard/a916537106fd4e33": {
+  "chars": 125,
+  "recipe": "792f1d07f7",
+  "text": "Words on a stone. Go, then, all of you who want to. Follow Godfrey to the castle and die a second time. I will keep the hall."
+ },
+ "vladimir_horngaard/aa66f5cf1498fe1b": {
+  "chars": 46,
+  "recipe": "792f1d07f7",
+  "text": "Go on, then. I can feel it waiting. So can he."
+ },
+ "vladimir_horngaard/aaad1beec00c87f1": {
+  "chars": 151,
+  "recipe": "792f1d07f7",
+  "text": "I am Vladimir Horngaard, commander of the Order of the Silver Dragon. State your names and your business. Godfrey will enter you in the book of guests."
+ },
+ "vladimir_horngaard/ad3468bf3c809cc4": {
+  "chars": 113,
+  "recipe": "792f1d07f7",
+  "text": "Because it is his light, and if it burns it will call us after him. The Order would go out like a row of candles."
+ },
+ "vladimir_horngaard/adefe8148dcf9f41": {
+  "chars": 54,
+  "recipe": "792f1d07f7",
+  "text": "The Order rides, then. Not to watch him. To finish it."
+ },
+ "vladimir_horngaard/af961c4eed9a01b7": {
+  "chars": 176,
+  "recipe": "792f1d07f7",
+  "text": "The Order's law: the stronger arm commands. Your company against me, and I will not complain of the odds. I have had four hundred years of practice, and you have had breakfast."
+ },
+ "vladimir_horngaard/c105c824ad33b315": {
+  "chars": 75,
+  "recipe": "792f1d07f7",
+  "text": "You may have it on the Order's terms, or by the Order's law. Not otherwise."
+ },
+ "vladimir_horngaard/c28a175cfe555abc": {
+  "chars": 51,
+  "recipe": "792f1d07f7",
+  "text": "Light it, then. Quickly, before I remember why not."
+ },
+ "vladimir_horngaard/ca1612dc61b348f9": {
+  "chars": 109,
+  "recipe": "792f1d07f7",
+  "text": "Be the light. I had forgotten it said that. I had forgotten a great deal, it seems, and called it discipline."
+ },
+ "vladimir_horngaard/cc038dcb4888c5f6": {
+  "chars": 140,
+  "recipe": "792f1d07f7",
+  "text": "Not for hate, then. For the valley, as he would have had it. One last march, and then home. I will lead it, if the Order will still have me."
+ },
+ "vladimir_horngaard/cda81a25237d0ee4": {
+  "chars": 101,
+  "recipe": "792f1d07f7",
+  "text": "Take it. Use it to break him. If you use it to end him, the Order will know, and the Order will come."
+ },
+ "vladimir_horngaard/cf6cb97658b57a97": {
+  "chars": 127,
+  "recipe": "792f1d07f7",
+  "text": "Living. In this hall. You will forgive me if I do not rise. I have been rising for four hundred years, and I find it overrated."
+ },
+ "vladimir_horngaard/d01e6ac4cf7bab96": {
+  "chars": 70,
+  "recipe": "792f1d07f7",
+  "text": "Where a thief would have to go through me. Purely professional advice."
+ },
+ "vladimir_horngaard/d15c2f237dce580e": {
+  "chars": 87,
+  "recipe": "792f1d07f7",
+  "text": "Company. ...Four hundred years in the front row, and he has never once looked up at us."
+ },
+ "vladimir_horngaard/d1d0e2f5bffea9a7": {
+  "chars": 33,
+  "recipe": "792f1d07f7",
+  "text": "Then the Order defends its house."
+ },
+ "vladimir_horngaard/d584eb5a1f0b9628": {
+  "chars": 64,
+  "recipe": "792f1d07f7",
+  "text": "You again. State your business. The living spend so much breath."
+ },
+ "vladimir_horngaard/da633fd405b09283": {
+  "chars": 182,
+  "recipe": "792f1d07f7",
+  "text": "Swear it, and what I keep is yours, and the Order's war chest besides, and no dead thing on the knights' road will trouble you. And we will be there at the end, to see the oath kept."
+ },
+ "vladimir_horngaard/dde8c0aac3dbfb7f": {
+  "chars": 99,
+  "recipe": "792f1d07f7",
+  "text": "The Order's war chest, what there is of it, and the chaplain's water. Spend it getting to his door."
+ },
+ "vladimir_horngaard/deeb94bf8a66c33e": {
+  "chars": 191,
+  "recipe": "792f1d07f7",
+  "text": "Swear the Order's second oath with us. When you reach him, you will break him and not end him. Take his castle, his servants, his sleep, his bride. Leave him alive in the ruin of it, forever."
+ },
+ "vladimir_horngaard/defa1d9e9c562cb6": {
+  "chars": 82,
+  "recipe": "792f1d07f7",
+  "text": "It is warmer than I remembered. He always said it would not be, and it always was."
+ },
+ "vladimir_horngaard/dfb97a04a823be7e": {
+  "chars": 168,
+  "recipe": "792f1d07f7",
+  "text": "Death is a door. He would walk through it, out of this valley and away from us. We want him here. In the room. Forever. Death is a mercy, and the Order is not merciful."
+ },
+ "vladimir_horngaard/e1f14b9c20faf884": {
+  "chars": 117,
+  "recipe": "792f1d07f7",
+  "text": "I could not go where he went and tell him I had lost his house. So I kept you here, so that none of us would have to."
+ },
+ "vladimir_horngaard/e2a7ac2d652b8f7d": {
+  "chars": 110,
+  "recipe": "792f1d07f7",
+  "text": "And he would sit in his castle with nobody left in the world who hates him properly. I will not give him that."
+ },
+ "vladimir_horngaard/e4436f960ca4a4c3": {
+  "chars": 114,
+  "recipe": "792f1d07f7",
+  "text": "Audience. ...Yes. That is what we are. Four hundred years in the front row, and he has never once looked up at us."
+ },
+ "vladimir_horngaard/e82f2f0b817645bb": {
+  "chars": 152,
+  "recipe": "792f1d07f7",
+  "text": "Every knight of the Order died at his post. Every knight of the Order is still at his post. That is the whole history. Godfrey tells it with more pears."
+ },
+ "vladimir_horngaard/ea2d885d644efdee": {
+  "chars": 65,
+  "recipe": "792f1d07f7",
+  "text": "Four hundred years. A long marriage. We have not quarrelled once."
+ },
+ "vladimir_horngaard/ebedfa860c1989e3": {
+  "chars": 103,
+  "recipe": "792f1d07f7",
+  "text": "You remember your oath. Good. He lives, he suffers, and we watch. That is all the Order asks of anyone."
+ },
+ "vladimir_horngaard/f79b3f19c98d5a10": {
+  "chars": 83,
+  "recipe": "792f1d07f7",
+  "text": "Take it. I kept it so that nobody would end him. It seems I was keeping it for you."
+ },
+ "vladimir_horngaard/fc4296ca3f1b2da0": {
+  "chars": 124,
+  "recipe": "792f1d07f7",
+  "text": "Very well. The Order rides. I will lead it, since somebody must keep Godfrey from forgetting which end of the sword to hold."
+ },
+ "vosk/07b7ec32c315ae6b": {
+  "chars": 103,
+  "recipe": "6e8d24cf54",
+  "text": "Ah, visitors. Vosk, a scholar of the temple. I've been expecting someone for a while, and here you are."
+ },
+ "vosk/0b084ab7e40808ad": {
+  "chars": 89,
+  "recipe": "6e8d24cf54",
+  "text": "That was in the warden's notes. I told him to burn those. He forgot. Of course he forgot."
+ },
+ "vosk/1728a0b9262c0152": {
+  "chars": 177,
+  "recipe": "6e8d24cf54",
+  "text": "Oh! Company. Forgive me, I've been reading so long I'd forgotten other people were real. Vosk. Master Vosk, if you're formal. A scholar, like yourselves. Well. Like some of you."
+ },
+ "vosk/1847cd10c5b8bacc": {
+  "chars": 204,
+  "recipe": "6e8d24cf54",
+  "text": "The oldest are in the vaults. And at the very bottom there's a sarcophagus with nothing in it at all, which is the most interesting of the lot. I'm going down there myself, presently. Do come and find me."
+ },
+ "vosk/19892fb6dc58475b": {
+  "chars": 165,
+  "recipe": "6e8d24cf54",
+  "text": "Oh, you must listen to them. Everyone should, once. You'll never meet anything so honest. They tell you exactly what they'll give you, and very nearly what it costs."
+ },
+ "vosk/31f750cf99f036e2": {
+  "chars": 74,
+  "recipe": "6e8d24cf54",
+  "text": "You'd be amazed what people will pay for the thing they most want to hear."
+ },
+ "vosk/34b30fea0e7d202e": {
+  "chars": 174,
+  "recipe": "6e8d24cf54",
+  "text": "Do you know what this is? Of course you don't. This is where your prince came, long ago, when he was only a prince. He stood exactly where you're standing and asked for time."
+ },
+ "vosk/3a807026dfd1ce1f": {
+  "chars": 143,
+  "recipe": "6e8d24cf54",
+  "text": "Forgive me, my dear. You have a face I've seen before, in a very old portrait and on a very old contract. The same face. A different signature."
+ },
+ "vosk/5495c200281af666": {
+  "chars": 157,
+  "recipe": "6e8d24cf54",
+  "text": "Mirescu? Thin, ink to the elbows, never finished a sentence without a footnote? Of course. He sat just there. He was going up to the castle to read, he said."
+ },
+ "vosk/553a37895f48b1f5": {
+  "chars": 58,
+  "recipe": "6e8d24cf54",
+  "text": "I introduced them. He did the selling. I only took my fee."
+ },
+ "vosk/5dc00ad1526f7f7f": {
+  "chars": 89,
+  "recipe": "6e8d24cf54",
+  "text": "Concluded. A pleasure doing business. Do give him my regards; he'll want to meet you now."
+ },
+ "vosk/5f27b908ca51fc5e": {
+  "chars": 55,
+  "recipe": "6e8d24cf54",
+  "text": "You saw my ears in the library, I expect. I did wonder."
+ },
+ "vosk/6d4562dafe51b006": {
+  "chars": 139,
+  "recipe": "6e8d24cf54",
+  "text": "So someone did. Congratulations. Most people only look. Don't let the warden lecture you; he took one himself, long ago. Everyone here has."
+ },
+ "vosk/83a36c916845a9bb": {
+  "chars": 192,
+  "recipe": "6e8d24cf54",
+  "text": "A little longer than you. I came for a season and the snow closed the pass. Then it opened again, and I found I didn't want to leave. The warden is very hospitable, when he remembers I'm here."
+ },
+ "vosk/848344d92ab8a5fd": {
+  "chars": 188,
+  "recipe": "6e8d24cf54",
+  "text": "Contracts, mostly. This temple is full of them, if you know how to read. Every sarcophagus is a standing offer, and every offer has terms. I find terms fascinating. People never read them."
+ },
+ "vosk/88a3382e6a8326d4": {
+  "chars": 62,
+  "recipe": "6e8d24cf54",
+  "text": "Very well. Bound by my name, I answer. What do you want of me?"
+ },
+ "vosk/8f7210022199e60d": {
+  "chars": 80,
+  "recipe": "6e8d24cf54",
+  "text": "Nothing? Not even something small for the road? A pity. I do hate a wasted trip."
+ },
+ "vosk/93b73b1fa6324526": {
+  "chars": 157,
+  "recipe": "6e8d24cf54",
+  "text": "Of course. I'll be going down to the vaults myself; the light's better there. Come and find me at the bottom. I'd like to show you something nobody else can."
+ },
+ "vosk/9eb453f1ed12a6f8": {
+  "chars": 21,
+  "recipe": "6e8d24cf54",
+  "text": "No. But someone does."
+ },
+ "vosk/9fb77568785dbec8": {
+  "chars": 62,
+  "recipe": "6e8d24cf54",
+  "text": "Isn't it? How rude of me. Let's not make a scene in a library."
+ },
+ "vosk/a917e4cbfb62a7f4": {
+  "chars": 25,
+  "recipe": "6e8d24cf54",
+  "text": "Oh, that was nearly good."
+ },
+ "vosk/b0a0a04a0fa49183": {
+  "chars": 59,
+  "recipe": "6e8d24cf54",
+  "text": "You came down. I knew you would. Everyone does, eventually."
+ },
+ "vosk/b5b6fa862f79de87": {
+  "chars": 141,
+  "recipe": "6e8d24cf54",
+  "text": "The thing in this amber gave it to him. Then it went into him, and it's in him still. And the amber, as you see, is empty. Room for one more."
+ },
+ "vosk/bfd7204021927ab5": {
+  "chars": 63,
+  "recipe": "6e8d24cf54",
+  "text": "Of the people who make them. The bargains are all rather alike."
+ },
+ "vosk/c3d088092bf363d0": {
+  "chars": 197,
+  "recipe": "6e8d24cf54",
+  "text": "This. The Thirst lives in your prince, but its amber still fits. Lay one of you down in it for a moment, and the Thirst will know them too. A second vessel. A rival. An heir. Call it what you like."
+ },
+ "vosk/c5cadc47b3a00f49": {
+  "chars": 166,
+  "recipe": "6e8d24cf54",
+  "text": "Think of it: as strong as he is, as hard to kill, never growing old. The one thing in this valley he couldn't simply take. And I'd have my fee, and we'd all be happy."
+ },
+ "vosk/c608174ec461735b": {
+  "chars": 194,
+  "recipe": "6e8d24cf54",
+  "text": "I witnessed his contract. I'm rather proud of it. One prince, one brother, one valley, and the whole arrangement still running after four hundred years. Most bargains don't outlast a generation."
+ },
+ "vosk/d384403351c78a55": {
+  "chars": 107,
+  "recipe": "6e8d24cf54",
+  "text": "You've been generous upstairs. My commission thanks you. I thought you might be ready for something larger."
+ },
+ "vosk/e79b23e2878c012b": {
+  "chars": 102,
+  "recipe": "6e8d24cf54",
+  "text": "No one? You came all this way down to say no one. Well. I've been told no before. Never for very long."
+ },
+ "vosk/eb8ed6f7863b7d28": {
+  "chars": 41,
+  "recipe": "6e8d24cf54",
+  "text": "That's mine. Give that back. That's MINE."
+ },
+ "vosk/ef6e5f685ae65470": {
+  "chars": 182,
+  "recipe": "6e8d24cf54",
+  "text": "A broker. Someone has to write the terms down, and the vestiges have no hands. I take a small commission on every bargain struck in this house. Very small. A soul here, a soul there."
+ },
+ "vosk/fa3f579abb10433c": {
+  "chars": 180,
+  "recipe": "6e8d24cf54",
+  "text": "But since you ask, under compulsion: the Thirst holds him to the valley and the valley to him. Hurt one, and the other feels it. That's all you get, and it's more than he ever did."
+ },
+ "vosk/fbc7bea8f00b1653": {
+  "chars": 170,
+  "recipe": "6e8d24cf54",
+  "text": "Broken? It's a contract, not a pot. It ends when its terms end: when he does, or when the land does. You can't have one without the other quite as much as you would like."
+ },
+ "vosk/fec6f1d9fce07f21": {
+  "chars": 81,
+  "recipe": "6e8d24cf54",
+  "text": "Never? That is a very long word for a mortal to use. ...Agreed. Bound and agreed."
+ },
+ "zuleika_toranescu/0213b26030ccd87f": {
+  "chars": 157,
+  "recipe": "43a093fd17",
+  "text": "Those were Kiril's favourites, most of them. You've saved me a job. I'm Zuleika. My husband Emil hangs in chains in the west alcove because he told Kiril no."
+ },
+ "zuleika_toranescu/028f5d6fe75c9ba7": {
+  "chars": 138,
+  "recipe": "43a093fd17",
+  "text": "Free my husband. Let him howl his challenge, and when Kiril comes home to answer it, stand beside Emil. Do that, and the children go home."
+ },
+ "zuleika_toranescu/02cbdb795d8e6d2f": {
+  "chars": 140,
+  "recipe": "43a093fd17",
+  "text": "And you've brought the Vistani butcher. She has killed two of ours this month. Tell her to keep her silver in its sheath, or this ends here."
+ },
+ "zuleika_toranescu/03e2bd5fb9b0db4b": {
+  "chars": 143,
+  "recipe": "43a093fd17",
+  "text": "Here. My own brewing: the same thing that keeps the pack sleepy when I want them sleepy. Don't ask what's in it. Drink it when you're bleeding."
+ },
+ "zuleika_toranescu/08b08c290206fe2a": {
+  "chars": 185,
+  "recipe": "43a093fd17",
+  "text": "Then come. Walk behind me, keep your hands away from your weapons, and don't look anyone in the eye for long. The ones inside are mine, or near enough. They'll let you pass if I say so."
+ },
+ "zuleika_toranescu/0a9ca395729679a5": {
+  "chars": 67,
+  "recipe": "43a093fd17",
+  "text": "Go carefully. These hills are full of people who used to be people."
+ },
+ "zuleika_toranescu/0f8692f5a8c38a2c": {
+  "chars": 27,
+  "recipe": "43a093fd17",
+  "text": "...Keep it sheathed anyway."
+ },
+ "zuleika_toranescu/13595bf8de375372": {
+  "chars": 156,
+  "recipe": "43a093fd17",
+  "text": "Five, from the farms under Krezk. The ones who live through their first moon will be wolves. The others will be supper. That's Kiril's arithmetic, not mine."
+ },
+ "zuleika_toranescu/159b8e3dfc40afdf": {
+  "chars": 59,
+  "recipe": "43a093fd17",
+  "text": "Then you'll have six wolves between you and the sky. Don't."
+ },
+ "zuleika_toranescu/172eda6638fdd6ad": {
+  "chars": 57,
+  "recipe": "43a093fd17",
+  "text": "Are tired, and frightened, and they listen to me. Mostly."
+ },
+ "zuleika_toranescu/354bbb31a8404ea8": {
+  "chars": 128,
+  "recipe": "43a093fd17",
+  "text": "I am one of them. That's why. I know exactly what Kiril will turn those children into, because he turned the pack into it first."
+ },
+ "zuleika_toranescu/423c2a213a4d3bb3": {
+  "chars": 63,
+  "recipe": "43a093fd17",
+  "text": "I mean bring yourself back in one piece. Or most of the pieces."
+ },
+ "zuleika_toranescu/4db9e735639afeb2": {
+  "chars": 142,
+  "recipe": "43a093fd17",
+  "text": "Someone left a thing at her feet last winter, wrapped in oilcloth. Not one of us. We don't touch what's given to Mother. You aren't one of us."
+ },
+ "zuleika_toranescu/516d2e336c34397e": {
+  "chars": 73,
+  "recipe": "43a093fd17",
+  "text": "Kiril finds it funny. Kiril finds most things funny, until they bite him."
+ },
+ "zuleika_toranescu/6523869a1776e089": {
+  "chars": 79,
+  "recipe": "43a093fd17",
+  "text": "Back again. Have you decided, or did you climb all this way to admire the view?"
+ },
+ "zuleika_toranescu/66cb2eda5bd919e2": {
+  "chars": 138,
+  "recipe": "43a093fd17",
+  "text": "He's out. I heard him howl; the whole hill heard him. Go to the great cave and stand where Kiril can see you. Don't make him come looking."
+ },
+ "zuleika_toranescu/67711ce9ce2933d4": {
+  "chars": 127,
+  "recipe": "43a093fd17",
+  "text": "Then go back down the hill and don't come up again. The ones inside won't be as polite as me, and Kiril won't be polite at all."
+ },
+ "zuleika_toranescu/760a3cd272337e62": {
+  "chars": 136,
+  "recipe": "43a093fd17",
+  "text": "I'll take them down the stream path to the Krezk road at first light. And the eldest has a bite on her arm she thinks nobody saw. I saw."
+ },
+ "zuleika_toranescu/7aa73728d9180e32": {
+  "chars": 101,
+  "recipe": "43a093fd17",
+  "text": "You've still got him, then. Feed him properly. He sulks when he's hungry, and he bites when he sulks."
+ },
+ "zuleika_toranescu/7d765af050724fd2": {
+  "chars": 108,
+  "recipe": "43a093fd17",
+  "text": "Wolfsbane and the right words, three nights running. By the moon it'll be a scar and a story. Nothing worse."
+ },
+ "zuleika_toranescu/7fe5e772b95d47a7": {
+  "chars": 36,
+  "recipe": "43a093fd17",
+  "text": "Then your books were written by day."
+ },
+ "zuleika_toranescu/896c10b9ef310d76": {
+  "chars": 98,
+  "recipe": "43a093fd17",
+  "text": "The children got home. All five. The eldest scolded the Krezk gate guard for keeping them waiting."
+ },
+ "zuleika_toranescu/8d239ef147d1ab31": {
+  "chars": 83,
+  "recipe": "43a093fd17",
+  "text": "Then go. I held this den with you in silver. I can hold it with you out for a walk."
+ },
+ "zuleika_toranescu/94eba7297b7f2b6b": {
+  "chars": 170,
+  "recipe": "43a093fd17",
+  "text": "Emil is in the alcove off the great cave, to the west. Here: the key to his chains. Kiril trusted me with it so I could watch him suffer. He has never once understood me."
+ },
+ "zuleika_toranescu/aa65f52aaf0d980d": {
+  "chars": 135,
+  "recipe": "43a093fd17",
+  "text": "The pack's mending fences. Literally; I have them mending the pen into a woodshed. Wolves hate mending things. It's very good for them."
+ },
+ "zuleika_toranescu/ba07d68e52d39d57": {
+  "chars": 85,
+  "recipe": "43a093fd17",
+  "text": "Somebody drew you a map. I'd like to know who, one day, so I can thank them properly."
+ },
+ "zuleika_toranescu/bf56d01a80a5c325": {
+  "chars": 153,
+  "recipe": "43a093fd17",
+  "text": "Emil said no, in front of everyone. Kiril's favourites held him down. Kiril and those favourites are out on the Krezk road now, hunting. They'll be back."
+ },
+ "zuleika_toranescu/bf694533b85963e8": {
+  "chars": 127,
+  "recipe": "43a093fd17",
+  "text": "You smell of Dragan, too. Dragan liked to wait at the falls for travellers. He was one of Kiril's. I won't pretend to miss him."
+ },
+ "zuleika_toranescu/c6d2b05a133b6d95": {
+  "chars": 29,
+  "recipe": "43a093fd17",
+  "text": "You stupid, stubborn old dog."
+ },
+ "zuleika_toranescu/ca733d278f64254f": {
+  "chars": 145,
+  "recipe": "43a093fd17",
+  "text": "Kiril Stoyanovich runs the pack now, and Kiril runs it for the castle. The castle wants more wolves. So Kiril has started bringing home children."
+ },
+ "zuleika_toranescu/cccc18a470b0ef44": {
+  "chars": 85,
+  "recipe": "43a093fd17",
+  "text": "I feed them when he isn't looking. It won't be enough. The moon comes in eleven days."
+ },
+ "zuleika_toranescu/d05a29cc95fcd98f": {
+  "chars": 178,
+  "recipe": "43a093fd17",
+  "text": "Mother Night. The Barovians call her the Morninglord's dark sister and lock their doors on her nights. We just call her Mother. She keeps the dark kind to things that live in it."
+ },
+ "zuleika_toranescu/d893c150ee315821": {
+  "chars": 96,
+  "recipe": "43a093fd17",
+  "text": "That's far enough. You've walked a long way uphill to be eaten. Most people only manage it once."
+ },
+ "zuleika_toranescu/e11571319e0cd056": {
+  "chars": 94,
+  "recipe": "43a093fd17",
+  "text": "Free him. Let him howl. Stand beside him when Kiril comes home. Then the children go home too."
+ },
+ "zuleika_toranescu/f786d1e45ef93a00": {
+  "chars": 93,
+  "recipe": "43a093fd17",
+  "text": "Still here? Emil is in the west alcove. He isn't going anywhere, which is rather the problem."
+ },
+ "zuleika_toranescu/f9de5e5bb9b09c39": {
+  "chars": 123,
+  "recipe": "43a093fd17",
+  "text": "I do. Kiril gave it to me so I could watch him suffer. Here. Wrap the bow in something; the silver runs right up the chain."
+ },
+ "zuleika_toranescu/febd1838d3b62f7e": {
+  "chars": 171,
+  "recipe": "43a093fd17",
+  "text": "Zuleika. Wife to Emil Toranescu, who led this pack for nineteen winters, and who is hanging in the back of that cave in silver chains because he said no to the wrong wolf."
  }
 }
