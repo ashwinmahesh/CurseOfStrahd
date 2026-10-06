@@ -1,21 +1,35 @@
 class_name TravelScreen
 extends CanvasLayer
-## The map of Barovia (plan §5.2, ADR 0010): the places the party knows and the roads between them, drawn on a
-## parchment panel. Pick a place to see the way there (roads, hours, when you'd arrive, day or night) and set out.
-## Opened from a way out of town (`setting_out`), or just to look (M).
+## The map of Barovia (plan §5.2, ADR 0010): an illustrated parchment map of the whole valley (art/ui/map/barovia.png,
+## docs/ui/travel_map.md) with the places the party knows and the roads between them inked on top, so names stay
+## sharp at any zoom. Pick a place to see the way there (roads, hours, when you'd arrive, day or night) and set out.
+## The wheel zooms and dragging pans. Opened from a way out of town (`setting_out`), or just to look (M).
 
 signal travel_chosen(place_id: String)
 signal closed
 
-const MAP_SIZE := Vector2(1100, 640)
+const MAP_ART := preload("res://art/ui/map/barovia.png")
+## The map panel at zoom 1: the whole valley. The art is 3:2 and a place's `pos` is a fraction of it.
+const MAP_SIZE := Vector2(1152, 768)
+const ZOOM_MAX := 2.4
+## The most the map zooms in on what the party knows when it opens.
+const ZOOM_OPEN_MAX := 1.6
 
 var st: StoryState
 var here := ""
 var setting_out := false
+var zoom := 1.0
+## Where the art's top-left corner sits in the panel (zero or less: the art always covers the panel).
+var pan := Vector2.ZERO
 var _map: Control
 var _info: VBoxContainer
 var _target := ""
-var _bounds := Rect2()
+var _hover := ""
+var _drag_from := Vector2(-1, -1)
+var _dragged := false
+var _time := 0.0
+## The place the party is at for the marks and routes: `here`, or the one place of the region it's indoors in.
+var _at := ""
 
 
 func _init() -> void:
@@ -27,110 +41,319 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	st = state
 	here = from_place
 	setting_out = can_travel
-	var frame := UiKit.screen_frame(self, "Barovia", Vector2(1500, 820))
+	_at = here if here != "" else _place_of_region(st.location)
+	var frame := UiKit.screen_frame(self, "Barovia", Vector2(1540, 840))
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 18)
+	row.add_theme_constant_override("separation", 16)
 	frame.add_child(row)
+	# The map sits in a gilt rule with the wrought-iron corners laid over it.
+	var holder := PanelContainer.new()
+	var hs := UiKit.style("ui_black", "gilt", 2, 1.0)
+	hs.set_content_margin_all(2)
+	holder.add_theme_stylebox_override("panel", hs)
+	row.add_child(holder)
 	_map = Control.new()
+	_map.name = "Map"
 	_map.custom_minimum_size = MAP_SIZE
+	_map.clip_contents = true
+	_map.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_map.draw.connect(_draw_map)
 	_map.gui_input.connect(_on_map_input)
-	row.add_child(_map)
+	_map.mouse_exited.connect(func() -> void:
+		_hover = ""
+		_map.queue_redraw())
+	holder.add_child(_map)
+	var corners := Control.new()
+	corners.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	holder.add_child(corners)
+	UiKit.trim(corners, 60.0)
 	_info = VBoxContainer.new()
-	_info.custom_minimum_size = Vector2(320, 0)
+	_info.custom_minimum_size = Vector2(296, 0)
+	_info.add_theme_constant_override("separation", 8)
 	row.add_child(_info)
+	_frame_known()
 	_show_info()
 
 
-## Where a place sits on the panel: the known places are fitted to the panel with a margin, so a handful of nearby
-## places spread out instead of bunching in a corner of the valley.
+## The only travel place in the region of `location_id` (inside a village's tavern: the village), or "".
+func _place_of_region(location_id: String) -> String:
+	var region := str(Compendium.shared().get_entry("locations", location_id).get("region", ""))
+	var found := ""
+	for p: Variant in Travel.map_data().get("places", []):
+		if str((p as Dictionary).get("region", "")) == region and region != "":
+			if found != "":
+				return ""
+			found = str((p as Dictionary)["id"])
+	return found
+
+
+# --- Where things are ------------------------------------------------------------------------------
+
+## A point on the art (fractions of the whole map) in panel pixels at the current zoom and pan.
+func to_panel(frac: Vector2) -> Vector2:
+	return pan + frac * MAP_SIZE * zoom
+
+
 func _pos(pl: Dictionary) -> Vector2:
 	var p := pl["pos"] as Array
-	var at := Vector2(float(p[0]), float(p[1]))
-	if _bounds.size == Vector2.ZERO:
-		var lo := Vector2(1, 1)
-		var hi := Vector2(0, 0)
-		for k in Travel.known(st):
-			var kp := k["pos"] as Array
-			lo = lo.min(Vector2(float(kp[0]), float(kp[1])))
-			hi = hi.max(Vector2(float(kp[0]), float(kp[1])))
-		var span := (hi - lo).max(Vector2(0.25, 0.25))
-		var center := (lo + hi) / 2.0
-		_bounds = Rect2(center - span / 2.0, span)
-	var margin := Vector2(140, 90)
-	var rel := (at - _bounds.position) / _bounds.size
-	return margin + rel * (MAP_SIZE - margin * 2.0)
+	return to_panel(Vector2(float(p[0]), float(p[1])))
 
 
-func _draw_map() -> void:
-	_map.draw_rect(Rect2(Vector2.ZERO, MAP_SIZE), Look.color("gilt_dark"))
-	_map.draw_rect(Rect2(Vector2(8, 8), MAP_SIZE - Vector2(16, 16)), Look.color("parchment"))
-	var places := {}
-	for p in Travel.known(st):
-		places[str(p["id"])] = p
-	var route_roads := {}
-	if _target != "" and _target != here:
-		for leg in Travel.route(here, _target, st):
-			route_roads[str((leg["road"] as Dictionary)["id"])] = true
-	var font := ThemeDB.fallback_font
-	for road in Travel.roads(st):
-		var a := places[str(road["from"])] as Dictionary
-		var b := places[str(road["to"])] as Dictionary
-		var on_route := route_roads.has(str(road["id"]))
-		_map.draw_line(_pos(a), _pos(b), Look.color("vampire_red") if on_route else Look.color("umber"), 5.0 if on_route else 3.0)
-		var mid := (_pos(a) + _pos(b)) / 2.0
-		_map.draw_string(font, mid + Vector2(6, -6), "%sh" % _hours_text(float(road["hours"])), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("peat"))
-	var n := 0
-	for id: String in places:
-		var pl := places[id] as Dictionary
-		var at := _pos(pl)
-		var colour := Look.color("vampire_red") if id == here else (Look.color("moon_blue") if id == _target else Look.color("ui_black"))
-		_map.draw_circle(at, 11.0 if id == here else 8.0, colour)
-		# Names alternate above and below their mark so neighbours don't print over each other.
-		var name_s := str(pl["name"])
-		var w := font.get_string_size(name_s, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x
-		var off := Vector2(-w / 2.0, -16.0 if n % 2 == 0 else 30.0)
-		_map.draw_string(font, at + off, name_s, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Look.color("ui_black"))
-		n += 1
-
-
-func _on_map_input(ev: InputEvent) -> void:
-	if not (ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed):
+## Opens zoomed in on the places the party knows (never closer than ZOOM_OPEN_MAX), centred on them.
+func _frame_known() -> void:
+	var lo := Vector2(1, 1)
+	var hi := Vector2(0, 0)
+	for k in Travel.known(st):
+		var kp := k["pos"] as Array
+		lo = lo.min(Vector2(float(kp[0]), float(kp[1])))
+		hi = hi.max(Vector2(float(kp[0]), float(kp[1])))
+	if lo.x > hi.x:
+		zoom = 1.0
+		pan = Vector2.ZERO
 		return
-	var at := (ev as InputEventMouseButton).position
+	var pad := Vector2(180, 130)
+	var need := (hi - lo) * MAP_SIZE + pad * 2.0
+	zoom = clampf(minf(MAP_SIZE.x / need.x, MAP_SIZE.y / need.y), 1.0, ZOOM_OPEN_MAX)
+	pan = MAP_SIZE / 2.0 - (lo + hi) / 2.0 * MAP_SIZE * zoom
+	_clamp()
+
+
+func _clamp() -> void:
+	pan = pan.clamp(MAP_SIZE - MAP_SIZE * zoom, Vector2.ZERO)
+
+
+## Zooms by `factor` keeping the point under the mouse where it is.
+func zoom_at(at: Vector2, factor: float) -> void:
+	var z := clampf(zoom * factor, 1.0, ZOOM_MAX)
+	var frac := (at - pan) / (MAP_SIZE * zoom)
+	zoom = z
+	pan = at - frac * MAP_SIZE * zoom
+	_clamp()
+	_map.queue_redraw()
+
+
+func _place_at(at: Vector2) -> String:
 	var best := ""
-	var best_d := 30.0
+	var best_d := 26.0
 	for p in Travel.known(st):
 		var d := _pos(p).distance_to(at)
 		if d < best_d:
 			best_d = d
 			best = str(p["id"])
-	if best != "":
-		select(best)
+	return best
+
+
+## A road as a gently bowed ink line (the bow's side comes from the road's id, so it never changes).
+func _road_points(a: Vector2, b: Vector2, id: String) -> PackedVector2Array:
+	var bow := 0.07 if absi(id.hash()) % 2 == 0 else -0.07
+	var ctrl := (a + b) / 2.0 + (b - a).orthogonal() * bow
+	var pts := PackedVector2Array()
+	for i in 21:
+		var t := i / 20.0
+		pts.append(a.lerp(ctrl, t).lerp(ctrl.lerp(b, t), t))
+	return pts
+
+
+# --- Drawing ---------------------------------------------------------------------------------------
+
+func _draw_map() -> void:
+	_map.draw_texture_rect(MAP_ART, Rect2(pan, MAP_SIZE * zoom), false)
+	if st.is_night():
+		_map.draw_rect(Rect2(Vector2.ZERO, MAP_SIZE), Color(Look.color("night_deep"), 0.3))
+	var places := {}
+	for p in Travel.known(st):
+		places[str(p["id"])] = p
+	var route_roads := {}
+	if _target != "" and _target != _at and _at != "":
+		for leg in Travel.route(_at, _target, st):
+			route_roads[str((leg["road"] as Dictionary)["id"])] = true
+	var font := UiKit.display_font()
+	var tags: Array[Array] = []
+	for road in Travel.roads(st):
+		var id := str(road["id"])
+		var pts := _road_points(_pos(places[str(road["from"])] as Dictionary), _pos(places[str(road["to"])] as Dictionary), id)
+		var on_route := route_roads.has(id)
+		if on_route:
+			_map.draw_polyline(pts, Color(Look.color("vellum"), 0.85), 9.0, true)
+			_map.draw_polyline(pts, Look.color("crimson"), 4.5, true)
+		else:
+			_dashed(pts, Color(Look.color("peat"), 0.9), 3.0, 11.0, 7.0)
+		tags.append([pts[pts.size() / 2], "%s h" % _hours_text(float(road["hours"])), on_route])
+	for t: Array in tags:
+		_tag(t[0] as Vector2, str(t[1]), bool(t[2]))
+	# Marks first, then names placed clear of the marks and of each other.
+	var taken: Array[Rect2] = []
+	for id: String in places:
+		var at := _pos(places[id] as Dictionary)
+		taken.append(Rect2(at - Vector2(12, 12), Vector2(24, 24)))
+		_mark(at, id)
+	for id: String in places:
+		_place_name(font, _pos(places[id] as Dictionary), str((places[id] as Dictionary)["name"]), id, taken)
+
+
+func _mark(at: Vector2, id: String) -> void:
+	var grow := 2.0 if id == _hover else 0.0
+	var ink := Look.color("ink")
+	if id == _at:
+		var pulse := 0.5 + 0.5 * sin(_time * 3.0)
+		_map.draw_circle(at, 15.0 + 5.0 * pulse, Color(Look.color("vampire_red"), 0.45 * (1.0 - pulse)), false, 3.0, true)
+		_map.draw_circle(at, 11.0 + grow, ink, true, -1.0, true)
+		_map.draw_circle(at, 9.0 + grow, Look.color("crimson"), true, -1.0, true)
+		_map.draw_circle(at, 9.0 + grow, Look.color("gilt_light"), false, 2.0, true)
+		_map.draw_circle(at, 3.0, Look.color("gilt_light"), true, -1.0, true)
+		return
+	if id == _target:
+		_map.draw_circle(at, 15.0 + grow, Look.color("gilt_light"), false, 3.0, true)
+	_map.draw_circle(at, 9.0 + grow, ink, true, -1.0, true)
+	_map.draw_circle(at, 7.0 + grow, Look.color("ui_wine") if id == _target else Look.color("vellum"), true, -1.0, true)
+	_map.draw_circle(at, 3.0 + grow * 0.5, ink, true, -1.0, true)
+
+
+## A place's name in ink with a pale halo, put below, above, right or left of its mark, wherever it's clear. The
+## chosen destination's name sits on a small crimson plaque.
+func _place_name(font: Font, at: Vector2, text: String, id: String, taken: Array[Rect2]) -> void:
+	var size := 21 if id == _at or id == _target else 19
+	var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size)
+	var asc := font.get_ascent(size)
+	var spots: Array[Vector2] = [at + Vector2(-sz.x / 2.0, 16), at + Vector2(-sz.x / 2.0, -16 - sz.y),
+		at + Vector2(18, -sz.y / 2.0), at + Vector2(-18 - sz.x, -sz.y / 2.0)]
+	var inside := Rect2(Vector2(6, 6), MAP_SIZE - Vector2(12, 12))
+	var box := Rect2()
+	for i in spots.size():
+		# Kept inside the panel; the first spot clear of other marks and names wins (else the first one).
+		var r := Rect2(spots[i].clamp(inside.position, inside.end - sz), sz)
+		if i == 0:
+			box = r
+		if not taken.any(func(t: Rect2) -> bool: return t.intersects(r.grow(3.0))):
+			box = r
+			break
+	taken.append(box.grow(3.0))
+	var base := box.position + Vector2(0, asc)
+	if id == _target and id != _at:
+		var plaque := box.grow_individual(10, 3, 10, 3)
+		_map.draw_rect(plaque, Color(Look.color("void"), 0.5), true)
+		_map.draw_rect(plaque.grow(-1.0), Look.color("ui_oxblood"), true)
+		_map.draw_rect(plaque.grow(-1.0), Look.color("gilt"), false, 1.5)
+		_map.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Look.color("gilt_light"))
+		return
+	var colour := Look.color("blood") if id == _at else (Look.color("ui_wine") if id == _hover else Look.color("ink"))
+	_map.draw_string_outline(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, 7, Color(Look.color("ivory"), 0.92))
+	_map.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, colour)
+
+
+## A road's hours on a small parchment tag.
+func _tag(at: Vector2, text: String, on_route: bool) -> void:
+	var font := ThemeDB.fallback_font
+	var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13)
+	var r := Rect2(at - sz / 2.0 - Vector2(6, 2), sz + Vector2(12, 4))
+	_map.draw_rect(r, Color(Look.color("vellum"), 0.92), true)
+	_map.draw_rect(r, Look.color("crimson") if on_route else Look.color("umber"), false, 1.5 if on_route else 1.0)
+	_map.draw_string(font, r.position + Vector2(6, 2 + font.get_ascent(13)), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
+		Look.color("blood") if on_route else Look.color("peat"))
+
+
+## An inked trail: dashes along a polyline.
+func _dashed(pts: PackedVector2Array, colour: Color, width: float, dash: float, gap: float) -> void:
+	var on := true
+	var left := dash
+	for i in pts.size() - 1:
+		var a := pts[i]
+		var b := pts[i + 1]
+		var seg := a.distance_to(b)
+		var t := 0.0
+		while t < seg:
+			var step := minf(left, seg - t)
+			if on:
+				_map.draw_line(a.lerp(b, t / seg), a.lerp(b, (t + step) / seg), colour, width, true)
+			t += step
+			left -= step
+			if left <= 0.0:
+				on = not on
+				left = dash if on else gap
+
+
+# --- Input -----------------------------------------------------------------------------------------
+
+func _on_map_input(ev: InputEvent) -> void:
+	if ev is InputEventMouseButton:
+		var mb := ev as InputEventMouseButton
+		if mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom_at(mb.position, 1.15)
+		elif mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom_at(mb.position, 1.0 / 1.15)
+		elif mb.button_index in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE]:
+			if mb.pressed:
+				_drag_from = mb.position
+				_dragged = false
+			else:
+				if not _dragged and mb.button_index == MOUSE_BUTTON_LEFT:
+					var id := _place_at(mb.position)
+					if id != "":
+						select(id)
+				_drag_from = Vector2(-1, -1)
+		_map.accept_event()
+	elif ev is InputEventMouseMotion:
+		var mm := ev as InputEventMouseMotion
+		if _drag_from.x >= 0.0 and mm.button_mask != 0:
+			if _dragged or mm.position.distance_to(_drag_from) > 5.0:
+				_dragged = true
+				pan += mm.relative
+				_clamp()
+		var h := _place_at(mm.position)
+		if h != _hover:
+			_hover = h
+		_map.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if h != "" else (Control.CURSOR_DRAG if _dragged else Control.CURSOR_ARROW)
+		_map.queue_redraw()
 
 
 func select(place_id: String) -> void:
 	_target = place_id
+	# Bring a destination outside the view into it.
+	var pl := Travel.place(place_id)
+	if not pl.is_empty() and not Rect2(Vector2(60, 60), MAP_SIZE - Vector2(120, 120)).has_point(_pos(pl)):
+		pan += MAP_SIZE / 2.0 - _pos(pl)
+		_clamp()
 	_map.queue_redraw()
 	_show_info()
 
 
+func _process(delta: float) -> void:
+	_time += delta
+	if _map != null:
+		_map.queue_redraw()
+
+
+# --- The side panel --------------------------------------------------------------------------------
+
 func _show_info() -> void:
 	for c in _info.get_children():
 		c.queue_free()
-	var cur := Travel.place(here)
-	_info.add_child(UiKit.header("You are at %s" % cur.get("name", "the edge of the map")))
-	_info.add_child(UiKit.label("Day %d · %02d:%02d" % [st.day, st.minute_of_day / 60, st.minute_of_day % 60], 15, "parchment"))
-	if _target == "" or _target == here:
-		_info.add_child(UiKit.label("Choose a place on the map.", 15, "vellum", 300))
+	var cur := Travel.place(_at)
+	_info.add_child(UiKit.label("You are at" if here != "" else ("You are in" if _at != "" else "You are"), 14, "parchment"))
+	var where := UiKit.header(str(cur.get("name", "off the roads")))
+	where.add_theme_font_size_override("font_size", 23)
+	where.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	where.custom_minimum_size = Vector2(290, 0)
+	_info.add_child(where)
+	_info.add_child(UiKit.label("Day %d · %02d:%02d · %s" % [st.day, st.minute_of_day / 60, st.minute_of_day % 60,
+		"night" if st.is_night() else "day"], 15, "vellum"))
+	_info.add_child(UiKit.divider(280))
+	if _target == "" or _target == _at:
+		_info.add_child(UiKit.label("Choose a place on the map to see the way there.", 15, "vellum", 290))
 	else:
 		var to := Travel.place(_target)
-		_info.add_child(UiKit.title(str(to["name"])))
+		var t := UiKit.title(str(to["name"]))
+		t.add_theme_font_size_override("font_size", 27)
+		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		t.custom_minimum_size = Vector2(290, 0)
+		_info.add_child(t)
 		if str(to.get("summary", "")) != "":
-			_info.add_child(UiKit.label(str(to["summary"]), 14, "vellum", 300))
-		var legs := Travel.route(here, _target, st)
+			_info.add_child(UiKit.label(str(to["summary"]), 14, "vellum", 290))
+		var legs: Array[Dictionary] = []
+		if _at != "":
+			legs = Travel.route(_at, _target, st)
 		if legs.is_empty():
-			_info.add_child(UiKit.label("No road you know leads there.", 15, "gilt", 300))
+			_info.add_child(UiKit.label("No road you know leads there from here.", 15, "gilt", 290))
 		else:
 			var h := Travel.hours(legs)
 			var arrive := (st.minute_of_day + roundi(h * 60.0)) % (24 * 60)
@@ -140,19 +363,50 @@ func _show_info() -> void:
 				var rn := str((l["road"] as Dictionary).get("name", "a road"))
 				if names.is_empty() or names.back() != rn:
 					names.append(rn)
-			_info.add_child(UiKit.label("By %s" % ", then ".join(names), 14, "vellum", 300))
-			_info.add_child(UiKit.label("%s hours · arriving about %02d:%02d%s" % [_hours_text(h), arrive / 60, arrive % 60,
-				" (after dark: the roads are worse at night)" if night else ""], 15, "gilt" if night else "parchment", 300))
+			_info.add_child(UiKit.label("By %s" % ", then ".join(names), 14, "parchment", 290))
+			_info.add_child(UiKit.label("%s hours on the road, arriving about %02d:%02d" % [_hours_text(h), arrive / 60, arrive % 60],
+				16, "gilt_light", 290))
+			if night:
+				_info.add_child(UiKit.label("After dark: the roads are worse at night.", 14, "rose", 290))
 			var go := UiKit.button("Set out", func() -> void:
 				travel_chosen.emit(_target)
-				queue_free(), 18)
+				queue_free(), 18, "map")
+			go.name = "SetOut"
 			go.disabled = not setting_out
 			if not setting_out:
 				go.tooltip_text = "Set out from a road out of town."
 			_info.add_child(go)
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_info.add_child(spacer)
+	_info.add_child(_legend())
+	_info.add_child(UiKit.label("Click a place to plan a journey. Wheel: zoom · Drag: pan", 13, "parchment", 290))
 	_info.add_child(UiKit.button("Close", func() -> void:
 		closed.emit()
 		queue_free(), 15))
+
+
+## What the marks mean, drawn with the map's own marks.
+func _legend() -> Control:
+	var c := Control.new()
+	c.custom_minimum_size = Vector2(290, 84)
+	c.draw.connect(func() -> void:
+		var font := ThemeDB.fallback_font
+		var ink := Look.color("ink")
+		c.draw_rect(Rect2(Vector2.ZERO, c.size), Color(Look.color("vellum"), 0.1), true)
+		c.draw_rect(Rect2(Vector2.ZERO, c.size), Look.color("gilt_dark"), false, 1.0)
+		c.draw_circle(Vector2(20, 16), 8.0, Look.color("crimson"), true, -1.0, true)
+		c.draw_circle(Vector2(20, 16), 8.0, Look.color("gilt_light"), false, 2.0, true)
+		c.draw_string(font, Vector2(40, 21), "Where the party is", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
+		c.draw_circle(Vector2(20, 41), 8.0, ink, true, -1.0, true)
+		c.draw_circle(Vector2(20, 41), 6.0, Look.color("vellum"), true, -1.0, true)
+		c.draw_string(font, Vector2(40, 46), "A place you know", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
+		c.draw_line(Vector2(8, 66), Vector2(18, 66), Look.color("parchment"), 3.0, true)
+		c.draw_line(Vector2(24, 66), Vector2(32, 66), Look.color("parchment"), 3.0, true)
+		c.draw_string(font, Vector2(40, 71), "Road", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
+		c.draw_line(Vector2(130, 66), Vector2(156, 66), Look.color("crimson"), 4.5, true)
+		c.draw_string(font, Vector2(164, 71), "Your way there", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum")))
+	return c
 
 
 static func _hours_text(h: float) -> String:

@@ -3,6 +3,19 @@
   "image_model_note": "Pinned 2026-10-06 by the owner after the Phase 0 style test (Build Log 02): the most Saturday-morning-cartoon look and the most readable sprites. Gemini returns opaque images; prompts ask for a plain flat white background and the pipeline removes it. Previous pin: gpt-image-2.5-flare-2026-09-08 (OpenAI), kept as a fallback via tools/art/generate_openai.sh.",
   "assets": [
     {
+      "id": "travel_map_barovia",
+      "kind": "map",
+      "status": "generated",
+      "source": "art/generated/map/barovia_map_a.png",
+      "sprites": "art/ui/map/barovia.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "An illustrated map of the cursed valley of Barovia, drawn on one sheet of aged parchment, seen from above like a hand-drawn old-world fantasy map, with mountains, trees and buildings drawn as small upright pictures in a slight three-quarter view. The reference image is a rough layout guide: keep every feature in the same place and at about the same size, but paint it as a finished, detailed illustrated map, not as flat shapes. Features: a ring of jagged grey mountains along the top and bottom edges, the tallest at the upper left; a big dark-blue lake (Lake Zarovich) left of centre; a small walled town with a wooden palisade, steep roofs and a church spire on the lake's lower-right shore (Vallaki); a tiny walled hilltop village with an abbey at the far left (Krezk); a ruined mansion at the top centre; an old windmill on a hill in a clearing; a dense, dark pine forest (the Svalich Woods) filling most of the valley in deep greens; a river that comes down from the northern mountains, drops over a white waterfall on a cliff, then winds down through the woods to the right and out of the valley at the right edge; a small dark pool beside the waterfall's foot with a few colourful Vistani wagon-tents; a crossroads gallows by the river; a small village of crooked houses with a little church right of centre; a pair of stone gate pillars with headless knight statues near the right edge; and, dominating the lower right, a tall black gothic castle with spires (Castle Ravenloft) on a sheer pillar of rock above a chasm. Pale grey mist creeps in all around the edges of the valley. A small ornate compass rose in the lower-left corner. Do not draw any roads, paths or trails, and no dotted lines. Bold, clean black ink outlines and flat cel colour with two or three tones on warm parchment; crisp, sharp and clean, with no grain, noise, paper texture speckle or blur. The parchment fills the whole image edge to edge: no border, frame, torn edges, scroll ends or background around it. No text, letters, labels, numbers, legend or cartouche anywhere in the image.",
+      "reference": [
+        "art/generated/map/barovia_layout.png"
+      ],
+      "notes": "The travel map's art (Map screen and minimap thread, 2026-10-06): the whole valley as an illustrated parchment sheet, 3:2 at 2K (--size 2K, 2528x1696) so it stays sharp when the map zooms in. The reference is a layout sketch drawn to match the place positions in data/travel/barovia.json; the prompt asks for no roads and no text, because the game inks the known roads and names on top. Two takes; take a (clean edges, no torn border) is used as is, imported lossless with mipmaps. Landmark positions on the art are listed in docs/ui/travel_map.md for placing new places."
+    },
+    {
       "id": "party_placeholder",
       "kind": "character",
       "status": "placeholder",

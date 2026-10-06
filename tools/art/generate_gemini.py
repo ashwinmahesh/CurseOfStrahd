@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Gemini image generation, the counterpart of tools/art/generate.sh for Gemini Flash image models.
 
-Usage: tools/art/generate_gemini.py <name> <subfolder> "<prompt>" [--model M] [--aspect 3:2] [--ref img.png]
+Usage: tools/art/generate_gemini.py <name> <subfolder> "<prompt>" [--model M] [--aspect 3:2] [--ref img.png] [--size 2K]
 Adds the project style preamble, saves art/generated/<subfolder>/<name>.png and logs the call to
 art/generation_log.jsonl. Stdlib only. The key comes from GEMINI_API_KEY (read from ~/.zshrc if
 the shell doesn't have it) and is sent as a header, never in the URL.
@@ -11,6 +11,8 @@ removes it (blender/lib/cutout.py remove_background).
 
 --ref sends an existing image along with the prompt (e.g. the neutral portrait when generating another
 expression of the same character); it is recorded in the log.
+
+--size asks for a larger image (2K or 4K) where a picture is shown big, such as the travel map; the default is 1K.
 
 Gemini usually returns JPEG data. The file is always written as a real PNG (converted with macOS `sips`), because
 Godot imports everything under res:// and refuses JPEG bytes behind a .png name ("Not a PNG file").
@@ -69,6 +71,7 @@ def main():
     p.add_argument("--model", default=os.environ.get("GEMINI_MODEL", DEFAULT_MODEL))
     p.add_argument("--aspect", default="1:1", help="e.g. 1:1, 3:2, 16:9")
     p.add_argument("--ref", action="append", default=[], help="reference image (PNG), may repeat")
+    p.add_argument("--size", default="", help="1K (default), 2K or 4K")
     a = p.parse_args()
 
     preamble = (ROOT / "art" / "prompts" / "style_preamble.txt").read_text().strip()
@@ -79,6 +82,8 @@ def main():
         "contents": [{"role": "user", "parts": parts}],
         "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": {"aspectRatio": a.aspect}},
     }
+    if a.size:
+        body["generationConfig"]["imageConfig"]["imageSize"] = a.size
     req = urllib.request.Request(ENDPOINT.format(model=a.model), data=json.dumps(body).encode(),
                                  headers={"x-goog-api-key": api_key(), "Content-Type": "application/json"})
     try:
@@ -101,7 +106,7 @@ def main():
     usage = data.get("usageMetadata", {})
     with open(ROOT / "art" / "generation_log.jsonl", "a") as f:
         f.write(json.dumps({"time": time.strftime("%Y-%m-%dT%H:%M:%S"), "name": a.name, "folder": a.folder,
-                            "model": a.model, "aspect": a.aspect, "prompt": a.prompt,
+                            "model": a.model, "aspect": a.aspect, **({"size": a.size} if a.size else {}), "prompt": a.prompt,
                             **({"ref": [os.path.relpath(Path(r).resolve(), ROOT) for r in a.ref]} if a.ref else {}),
                             "output_tokens": usage.get("candidatesTokenCount")}) + "\n")
     print(f"Saved image: {out}")
