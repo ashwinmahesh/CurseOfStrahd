@@ -1,7 +1,8 @@
 extends TestCase
 ## The travel map and the minimap (owner ask 2026-10-06): the map of Barovia is a sharp illustrated sheet with the
 ## known places on it, zooming and panning without leaving the art; the minimap shows the current location north up
-## and keeps the party in its middle; ways out to other regions are marked, and doors into buildings are not.
+## and keeps the party in its middle; ways out to other regions are marked, and doors into buildings are not; rooms
+## behind secret doors stay out of the level view and off the minimap until the door is found.
 
 var root: Node
 
@@ -134,3 +135,29 @@ func test_the_minimap_follows_the_party_north_up() -> void:
 		await get_tree().process_frame
 	assert_eq(view.leader().cell, Vector2i(7, 3))
 	assert_eq(map.cell_at(map.size / 2.0), Vector2i(7, 3), "and stays there as the party walks")
+
+
+func test_a_room_behind_a_secret_door_stays_hidden_until_found() -> void:
+	var st := GameState.story
+	st.location = "vallaki_wachter_house"
+	st.visited["vallaki_wachter_house"] = true
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(3)
+	var view := root.get("view") as LocationView
+	var areas := HiddenAreas.of(view)
+	var shrine := Vector2i(14, 15)
+	assert_true(areas != null and areas.is_hidden(shrine), "the cellar behind the panel is hidden")
+	assert_false(areas.is_hidden(Vector2i(10, 9)), "the study in front of it is not")
+	assert_false(areas.is_hidden(Vector2i(11, 13)), "nor the panel, which looks like wall")
+	assert_true(view.thing_at(shrine).is_empty(), "nothing to hover or click down there yet")
+	var prop := view.prop_nodes.get("dark_shrine") as Node3D
+	assert_true(prop != null and not prop.visible, "the shrine isn't drawn")
+	var map := (root.get("hud") as ExploreHud).minimap
+	assert_true(map.cell_at(map.size / 2.0) == view.leader().cell and map.get("_hidden").has(shrine), "or on the minimap")
+	(st.loc_state("vallaki_wachter_house")["found"] as Dictionary)["cellar_panel"] = true
+	await _frames(30)
+	assert_false(areas.is_hidden(shrine), "found: the cellar comes into sight")
+	assert_true(prop.visible, "the shrine fades in")
+	assert_false(map.get("_hidden").has(shrine), "and onto the minimap")
+	assert_false(view.thing_at(shrine).is_empty())

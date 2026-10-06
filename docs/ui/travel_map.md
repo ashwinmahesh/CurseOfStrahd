@@ -1,4 +1,4 @@
-# Travel map, minimap and ways out
+# Travel map, minimap, ways out and hidden areas
 
 Owner ask (2026-10-06): the map screen should look like a real map, there should be a minimap of the current area in
 the top right of the HUD that moves with the party, and the ways out of an area to another region should be obvious.
@@ -81,3 +81,18 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 - A way out inside the map (the abbey's garden gate) gets the square and the plaque but no chevrons or arrow.
 - It's a screen-space overlay on the HUD layer, so it stays crisp, the palette pass never touches it and it sits on top
   of whatever the world assets put at the exit. Ground marks stay off squares where the party stands.
+
+## Hidden areas (`world/exploration/hidden_areas.gd`)
+
+- Owner ask (2026-10-06): rooms the party hasn't discovered stay out of sight, in the level view and on the minimap.
+- A hidden area is every square that can't be reached from the location's spawns (or where the party stands) without
+  going through a secret door (`secret_dc`) nobody has found yet; ordinary doors count as open. Its walls are hidden
+  too, except those that also face a square in sight, so the wall the secret door is set in stays. Nothing in the
+  data marks an area hidden: drawing a room behind a secret door is enough.
+- In the level view its floor, walls, furniture, props, containers, lights and people aren't drawn, and hovering or
+  clicking there finds nothing. The minimap leaves it dark (no doors, people or ways out drawn there), and ways out
+  inside it get no markers. When the door is found (searching), the room fades in over 0.6 s and comes onto the
+  minimap.
+- The rules grid is never changed; LocationView adds the HiddenAreas node at the end of `_ready` and asks it in
+  `thing_at`.
+
