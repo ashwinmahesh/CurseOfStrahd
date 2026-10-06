@@ -129,7 +129,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Ritual casting | data (ritual flags) | data | [Phase 3] |
 | Components and focuses | spell_caster.gd | partial: Verbal (can't speak, reveals the hidden), armor training; Material and focuses assumed carried | test_combat_spells |
 | Areas of effect | grid.gd area_cells, spell_caster.gd | tested (sphere, cube, cone, line, emanation; walls block) | test_combat_grid, test_combat_spells |
-| 176 spells (levels 0-3 for the Phase 1 classes, plus three the Night Hag casts) | data/spells, spell_caster.gd, spell_zones.gd | tested: every spell with combat rules is cast and must change the fight; 95 of them do something in combat, the rest are exploration (detection, communication, rituals) and say so on the hotbar | test_spell_sweep, test_spell_recipes, test_combat_spells |
+| 176 spells (levels 0-3 for the Phase 1 classes, plus three the Night Hag casts) | data/spells, spell_caster.gd, spell_zones.gd | tested: every spell with combat rules is cast and must change the fight; 131 of them do something in combat; the other 45 are exploration (detection, communication, rituals, travel) and say so on the hotbar | test_spell_sweep, test_spell_recipes, test_combat_spells |
 
 ## Combat (Phase 2: combat/, ADR 0007)
 

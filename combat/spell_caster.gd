@@ -17,7 +17,7 @@ const SPECIAL := ["magic_missile", "shield", "sleep", "command", "sanctuary", "s
 	"true_strike", "shillelagh", "enlarge_reduce", "vampiric_touch", "lesser_restoration", "protection_from_poison",
 	"expeditious_retreat", "summon_fey", "summon_undead", "goodberry", "jump", "alter_self", "beacon_of_hope",
 	"resistance", "blade_ward", "protection_from_evil_and_good", "crown_of_madness", "bestow_curse", "fear",
-	"calm_emotions", "fly", "levitate", "gaseous_form", "spider_climb", "animate_dead", "find_familiar", "etherealness", "plane_shift"]
+	"calm_emotions", "fly", "levitate", "gaseous_form", "spider_climb", "animate_dead", "find_familiar", "etherealness", "plane_shift", "remove_curse"]
 ## Command's words (2024): all five.
 const COMMAND_WORDS := ["approach", "drop", "flee", "grovel", "halt"]
 ## Effect kinds the engine resolves in a fight (anything else is narrative or exploration).
@@ -786,6 +786,15 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			return
 		"true_strike":
 			_true_strike(ctx, tgt[0], r)
+			return
+		"remove_curse":
+			var t0 := tgt[0]
+			var gone := 0
+			for fx: Effect in t0.creature.effects.duplicate():
+				if fx.source_id == "bestow_curse" or fx.modifiers.any(func(m: Modifier) -> bool: return m.text("value").begins_with("curse:")):
+					t0.creature.remove_effect(fx)
+					gone += 1
+			r.lines.append(enc().log.add("spell", "%s: %s" % [s["name"], "%d curse%s lifted from %s" % [gone, "" if gone == 1 else "s", t0.name()] if gone > 0 else "%s bears no curse" % t0.name()], c.id))
 			return
 		"etherealness", "plane_shift":
 			c.creature.dead = true
