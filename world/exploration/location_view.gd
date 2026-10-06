@@ -1065,6 +1065,7 @@ func _use_door(door: Dictionary, method: String = "auto") -> void:
 		if not _unlock(door, method):
 			return
 	(st.loc_state(loc_id)["doors"] as Dictionary)[id] = DOOR_OPEN
+	Audio.sfx("door")
 	grid.set_flag(_cell(door["cell"]), CombatGrid.WALL, false)
 	(door_nodes[id] as Node3D).visible = false
 	if door.has("flag"):
@@ -1081,6 +1082,7 @@ func _unlock(spec: Dictionary, method: String = "auto") -> bool:
 	var key := str(spec.get("key", ""))
 	if key != "" and st.party_has_item(key) and method in ["auto", "key"]:
 		(st.loc_state(loc_id)["doors"] as Dictionary)[id] = "unlocked"
+		Audio.sfx("unlock")
 		toast.emit("Unlocked with the %s" % Compendium.shared().display_name("items", key))
 		return true
 	if method == "key":
@@ -1108,6 +1110,7 @@ func _unlock(spec: Dictionary, method: String = "auto") -> bool:
 	st.last_check = t.success
 	if t.success:
 		(st.loc_state(loc_id)["doors"] as Dictionary)[id] = "unlocked"
+		Audio.sfx("unlock")
 		_say("check:unlock:success", who)
 		return true
 	_say("check:unlock:failure", who, "It holds.")

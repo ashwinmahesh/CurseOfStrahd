@@ -8,6 +8,7 @@ var _box: VBoxContainer
 
 func _ready() -> void:
 	InputActions.ensure()
+	Audio.play_music("title")
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	var bg := ColorRect.new()
 	bg.color = Look.color("void")

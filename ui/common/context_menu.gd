@@ -29,6 +29,7 @@ func _init() -> void:
 	add_theme_constant_override("icon_max_width", 18)
 	add_theme_font_override("font_separator", UiKit.display_font())
 	id_pressed.connect(func(i: int) -> void:
+		Audio.sfx("click")
 		if i >= 0 and i < _ids.size():
 			picked.emit(_ids[i]))
 

@@ -1,0 +1,19 @@
+{
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md. A mood or effect with no file is silent. levels: volume offsets in dB.",
+  "themes": {
+    "svalich_road": "wilds", "forest": "wilds", "road": "wilds", "wilderness": "wilds", "riverside": "wilds",
+    "camp": "camp", "tser_pool": "camp", "tent": "camp",
+    "village": "village", "vallaki": "town", "town": "town", "shop": "town", "townhouse": "town", "house": "town",
+    "tavern": "tavern", "inn": "tavern",
+    "manor": "haunted", "attic": "haunted", "dungeon": "haunted",
+    "church": "church", "shrine_yard": "church"
+  },
+  "places": {
+    "tser_pool": "camp", "tser_falls": "wilds", "tser_pool_eva_tent": "tarokka",
+    "burgomaster_mansion": "village", "mad_marys_house": "village", "bildraths_mercantile": "village",
+    "vallaki_burgomaster_mansion": "town"
+  },
+  "levels": {},
+  "music": {},
+  "sfx": {}
+}

@@ -79,6 +79,7 @@ func _spend(ch: Character, die: int) -> void:
 
 
 func _finish_short() -> void:
+	Audio.sfx("rest")
 	for ch in st.party:
 		if not ch.dead:
 			ch.finish_short_rest()
@@ -93,6 +94,7 @@ func _finish_short() -> void:
 
 
 func _long_rest(rule: String) -> void:
+	Audio.sfx("rest")
 	var interrupted := false
 	if rule == "risky":
 		interrupted = Dice.roller.roll_one(6, "Long Rest interruption") == 1

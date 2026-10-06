@@ -179,6 +179,7 @@ func _show(beat: Dictionary) -> void:
 			_text.text = "[color=#%s]◆ %s[/color]" % [Look.color("bile").to_html(false), _esc(str(beat["text"]))]
 			_waiting_continue = true
 			if beat.has("card"):
+				Audio.sfx("card")
 				_spread.add_child(_tarokka_card(str(beat["card"]), str(beat.get("slot", ""))))
 		"check":
 			var colour := "bile" if bool(beat["success"]) else "vampire_red"
@@ -287,6 +288,7 @@ func _option_look(b: Button) -> void:
 
 
 func _choose(i: int) -> void:
+	Audio.sfx("click")
 	var member := i < options_shown.size() and bool((options_shown[i] as Dictionary).get("member", false))
 	_clear_options()
 	_show(runner.pick_member(i) if member else runner.choose(i))

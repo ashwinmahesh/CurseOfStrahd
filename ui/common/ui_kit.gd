@@ -170,6 +170,7 @@ static func button(text: String, on_press: Callable, size: int = 16, icon_id: St
 	if icon_id != "":
 		b.icon = icon(icon_id)
 		b.add_theme_constant_override("icon_max_width", size + 8)
+	b.pressed.connect(func() -> void: Audio.sfx("click"))
 	b.pressed.connect(on_press)
 	return b
 

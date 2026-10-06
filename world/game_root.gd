@@ -78,6 +78,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 		view = null
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view = LocationView.create(location_id, st, narrator, Dice.roller, spawn)
+	Audio.play_music(_place_mood())
 	view.banter_player = banter
 	view.banter.connect(func(lines: Array) -> void:
 		var text: Array[String] = []
@@ -94,6 +95,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
 		hud.visible = false
+		Audio.play_music("combat")
 		cv.menu_requested.connect(func() -> void:
 			if screen is PauseMenu:
 				close_screen()
@@ -356,6 +358,8 @@ func _open_loot(container_id: String, items: Array, gold: float) -> void:
 
 func _after_combat(outcome: String) -> void:
 	hud.visible = true
+	Audio.sting("defeat" if outcome == "defeat" else "victory")
+	Audio.play_music(_place_mood())
 	if outcome == "defeat":
 		open_screen("game_over", 0)
 		return
@@ -469,8 +473,16 @@ func _exit_tree() -> void:
 
 # --- Screens --------------------------------------------------------------------------------------
 
+## The music for where the party is (art/audio.json: the place's own mood, else its map's theme).
+func _place_mood() -> String:
+	var loc := Compendium.shared().get_entry("locations", st.location)
+	return Audio.mood_for(st.location, ArenaBoard.theme_for(loc.get("map", {}) as Dictionary))
+
+
 func open_screen(kind: String, index: int) -> void:
 	close_screen()
+	if kind in ["sheet", "inventory", "journal", "party", "level_up"]:
+		Audio.sfx("page")
 	match kind:
 		"sheet":
 			screen = CharacterSheetScreen.new()

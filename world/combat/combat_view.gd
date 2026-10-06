@@ -826,6 +826,7 @@ func _play_events() -> void:
 					tw2.tween_property(a, "position", home + dir.normalized() * 0.3, 0.1)
 					tw2.tween_property(a, "position", home, 0.12)
 					await tw2.finished
+					Audio.sfx(("crit" if bool(ev.get("critical", false)) else "hit") if bool(ev["hit"]) else "swing")
 					if not bool(ev["hit"]):
 						_float(d, "miss", "parchment")
 					elif bool(ev.get("critical", false)):
@@ -840,6 +841,7 @@ func _play_events() -> void:
 			"heal":
 				var th := tokens.get(str(ev["id"])) as CombatToken
 				if th != null:
+					Audio.sfx("heal")
 					_float(th, "+%d" % int(ev["amount"]), "bile")
 					th.refresh()
 			"condition", "down", "death", "death_save":
@@ -856,6 +858,7 @@ func _play_events() -> void:
 						_float(tc, "✓" if bool(ev["success"]) else "✗", "bile" if bool(ev["success"]) else "vampire_red")
 			"spell":
 				_stop_walking(walking)
+				Audio.sfx("spell")
 				var caster := tokens.get(str(ev["caster"])) as CombatToken
 				if caster != null:
 					caster.flash(Look.color("lilac"), 0.3)

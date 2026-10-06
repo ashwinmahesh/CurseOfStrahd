@@ -104,5 +104,6 @@ func _redraw() -> void:
 
 
 func _confirm() -> void:
+	Audio.sfx("level_up")
 	if ctl.confirm():
 		root.call("close_screen")

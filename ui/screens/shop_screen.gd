@@ -91,6 +91,8 @@ func _draw() -> void:
 
 func _buy(item_id: String) -> void:
 	var why := st.shop_buy(npc_id, item_id, st.party[index])
+	if why == "":
+		Audio.sfx("coins")
 	_note = why if why != "" else "%s buys %s." % [st.party[index].name.get_slice(" ", 0), Compendium.shared().display_name("items", item_id)]
 	_draw()
 
@@ -98,6 +100,8 @@ func _buy(item_id: String) -> void:
 func _sell(item_id: String) -> void:
 	var name_ := Compendium.shared().display_name("items", item_id)
 	var why := st.shop_sell(npc_id, item_id, st.party[index])
+	if why == "":
+		Audio.sfx("coins")
 	_note = why if why != "" else "Sold %s." % name_
 	_draw()
 
