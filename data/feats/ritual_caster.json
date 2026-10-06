@@ -35,7 +35,7 @@
       "choice": {
         "id": "ritual_spells",
         "kind": "spell",
-        "count": 2,
+        "count": "pb",
         "filter": {
           "level": 1,
           "ritual": true

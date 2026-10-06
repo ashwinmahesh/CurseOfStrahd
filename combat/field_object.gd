@@ -6,7 +6,7 @@ extends RefCounted
 ## that keeps it, and the spell's `zone` rules (what it does to creatures, terrain, sight, sound). SpellZones runs
 ## the rules; the scene draws it from `kind` and `cells`.
 
-enum Kind { ZONE, WEAPON, SPHERE, LIGHTS, HAND }
+enum Kind { ZONE, WEAPON, SPHERE, LIGHTS, HAND, ILLUSION }
 
 static var _next_id: int = 1
 
@@ -81,4 +81,4 @@ func has_trigger(trigger: String) -> bool:
 
 
 static func kind_name(k: Kind) -> String:
-	return ["zone", "weapon", "sphere", "lights", "hand"][k]
+	return ["zone", "weapon", "sphere", "lights", "hand", "illusion"][k]

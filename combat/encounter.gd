@@ -33,6 +33,7 @@ var studied: Dictionary = {}
 var spells: SpellCaster
 var features: CombatFeatures
 var reactions: Reactions
+var feature_actions: FeatureActions
 var ai: AiBrain
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.
@@ -55,6 +56,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	spells = SpellCaster.new(self)
 	features = CombatFeatures.new(self)
 	reactions = Reactions.new(self)
+	feature_actions = FeatureActions.new(self)
 	ai = AiBrain.new(self)
 
 
@@ -68,6 +70,8 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 		c.id = "%s_%d" % [base, n]
 		n += 1
 	creature.id = c.id
+	creature.d20_before = feature_actions.before_d20
+	creature.d20_after = feature_actions.after_d20
 	combatants.append(c)
 	return c
 
@@ -102,6 +106,10 @@ func start(surprised_ids: Array = []) -> void:
 		var bonus := c.creature.initiative_bonus()
 		var t := c.creature.roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, 0, c.creature.initiative_keys(), [], dis,
 			"Initiative (%s)" % c.name())
+		# Ambush (Battle Master): a Superiority Die on Initiative.
+		if features.knows_maneuver(c, "ambush") and (c.creature as Character).resource_left("superiority_dice") > 0:
+			(c.creature as Character).spend_resource("superiority_dice")
+			t.add_bonus(dice.roll_one(features.superiority_die(c), "Ambush"), "Ambush")
 		c.initiative_test = t
 		c.initiative = t.total
 		if group != "":
@@ -117,6 +125,22 @@ func start(surprised_ids: Array = []) -> void:
 		if da != db:
 			return da > db
 		return a.side == &"party" and b.side != &"party")
+	# Portent (Diviner): the two (Greater Portent: three) foreseen d20s for this fight.
+	for c in combatants:
+		if CombatFeatures.has_feature(c, "portent") and c.creature is Character:
+			var n := 3 if CombatFeatures.has_feature(c, "greater_portent") else 2
+			c.set_meta("portent_rolls", dice.roll(20, n, "Portent"))
+			log.add("info", "%s foresees: %s (Portent)" % [c.name(), str(c.get_meta("portent_rolls"))], c.id)
+	# Thief's Reflexes (Thief 17): a second turn in the first round, at Initiative − 10.
+	for c: Combatant in combatants.duplicate():
+		if CombatFeatures.has_feature(c, "thiefs_reflexes"):
+			var at := order.size()
+			for i in order.size():
+				if order[i].initiative < c.initiative - 10:
+					at = i
+					break
+			order.insert(at, c)
+			c.set_meta("reflex_turn", true)
 	state = State.ACTIVE
 	round_no = 1
 	log.round_no = 1
@@ -382,6 +406,13 @@ func _begin_turn() -> void:
 	log.add("turn", "%s's turn" % c.name(), c.id)
 	events.append({"type": "turn", "id": c.id, "round": round_no})
 	spells.turn_start(c)
+	feature_actions.turn_start(c)
+	if c.creature.has_flag("dazed"):
+		c.bonus_available = false
+		log.add("info", "%s is Dazed: it can move or act this turn, not both" % c.name(), c.id)
+	if c.has_meta("disarmed"):
+		c.remove_meta("disarmed")
+		log.add("info", "%s picks up what it dropped" % c.name(), c.id)
 	if c.creature.has_flag("no_action_or_bonus"):
 		c.action_available = false
 		c.bonus_available = false
@@ -405,6 +436,7 @@ func end_turn() -> CombatResult:
 		o.creature.on_turn_end(c.id)
 	_expire_marks(c.id, "end")
 	c.armed.clear()
+	feature_actions.turn_end(c)
 	spells.turn_end(c)
 	spells.zones.prune()
 	_check_over()
@@ -415,6 +447,7 @@ func end_turn() -> CombatResult:
 		if turn_index >= order.size():
 			turn_index = 0
 			round_no += 1
+			_drop_reflex_turns()
 			log.round_no = round_no
 			log.add("turn", "Round %d" % round_no, "")
 			events.append({"type": "round", "round": round_no})
@@ -422,6 +455,17 @@ func end_turn() -> CombatResult:
 			break
 	_begin_turn()
 	return CombatResult.new()
+
+
+## After round 1, Thief's Reflexes' extra turns leave the order.
+func _drop_reflex_turns() -> void:
+	for c in combatants:
+		if c.has_meta("reflex_turn"):
+			c.remove_meta("reflex_turn")
+			var first := order.find(c)
+			var second := order.find(c, first + 1)
+			if second >= 0:
+				order.remove_at(second)
 
 
 func is_over() -> bool:
@@ -530,7 +574,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled: Dictionary) -> CombatResult:
 	while i < path.size():
 		var to := path[i]
-		if not c.disengaged and not c.creature.has_flag("flyby"):
+		if not c.creature.has_flag("flyby"):
 			for p in _provokers(c, c.cell, to):
 				var key := "%s@%d" % [p.id, i]
 				if handled.has(key):
@@ -577,6 +621,47 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		if c.is_down() or state != State.ACTIVE:
 			return r
 		i += 1
+		# Polearm Master's Reactive Strike: entering the reach of a polearm-wielder.
+		for pm in hostiles_of(c):
+			var pkey := "pole:%s" % pm.id
+			if handled.has(pkey) or not features.has_feat(pm, "polearm_master") or not spells.can_react(pm) or not can_see(pm, c):
+				continue
+			var pole := _polearm_option(pm)
+			if pole.is_empty():
+				continue
+			var preach := (pole["profile"] as WeaponProfile).reach
+			if grid.distance_ft(pm.cell, pm.size_cells, to, c.size_cells) <= preach and grid.distance_ft(pm.cell, pm.size_cells, from, c.size_cells) > preach:
+				handled[pkey] = true
+				var pdec := _reaction_decision(pm, "reactive_strike")
+				if pdec == "auto":
+					pm.reaction_available = false
+					log.add("reaction", "%s strikes as %s closes in (Polearm Master)" % [pm.name(), c.name()], pm.id)
+					var psub := _resolve_attack(pm, c, pole, {"reaction": true})
+					if pending != null:
+						var ii := i
+						return then(psub, func() -> CombatResult:
+							if c.is_down() or c.speed() <= 0 or state != State.ACTIVE:
+								return r
+							return _walk(c, path, ii, r, handled))
+					if c.is_down() or state != State.ACTIVE:
+						return r
+				elif pdec == "ask":
+					var preq := ReactionRequest.new("reactive_strike", pm.id, c.id)
+					preq.title = "Reaction: Reactive Strike?"
+					preq.text = "%s enters %s's reach. Strike with the polearm?" % [c.name(), pm.name()]
+					var jj := i
+					preq.continuation = func(use: bool) -> CombatResult:
+						var cont := func() -> CombatResult:
+							if c.is_down() or c.speed() <= 0 or state != State.ACTIVE:
+								return r
+							return _walk(c, path, jj, r, handled)
+						if use:
+							pm.reaction_available = false
+							return then(_resolve_attack(pm, c, pole, {"reaction": true}), cont)
+						return cont.call() as CombatResult
+					pending = preq
+					r.pending = preq
+					return r
 		# Readied attacks trigger when the mover comes into reach.
 		for p in _readied_triggers(c, from, to):
 			var rkey := "ready:%s" % p.id
@@ -797,12 +882,24 @@ func _provokers(mover: Combatant, from: Vector2i, to: Vector2i) -> Array[Combata
 	for p in hostiles_of(mover):
 		if not spells.can_react(p) or not can_see(p, mover):
 			continue
+		# Disengage stops Opportunity Attacks, except a Sentinel's against a creature within 5 ft of it.
+		if mover.disengaged and not (features.has_feat(p, "sentinel") and grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells) <= 5):
+			continue
 		var reach := p.reach_ft()
 		var before := grid.distance_ft(p.cell, p.size_cells, from, mover.size_cells)
 		var after := grid.distance_ft(p.cell, p.size_cells, to, mover.size_cells)
 		if before <= reach and after > reach:
 			out.append(p)
 	return out
+
+
+## The weapon a Polearm Master reacts with: a Quarterstaff, a Spear, or a Heavy weapon with Reach.
+func _polearm_option(p: Combatant) -> Dictionary:
+	for o in attack_options(p):
+		var pr := o["profile"] as WeaponProfile
+		if bool(o["melee"]) and (pr.item_id in ["quarterstaff", "spear"] or ("heavy" in pr.properties and "reach" in pr.properties)):
+			return o
+	return {}
 
 
 func _opportunity_attack(p: Combatant, target: Combatant) -> CombatResult:
@@ -875,7 +972,7 @@ func reveal(c: Combatant, why: String) -> void:
 func stand_up(c: Combatant) -> CombatResult:
 	if not c.creature.has_condition(&"prone"):
 		return CombatResult.fail("Not Prone")
-	var cost := c.speed() / 2
+	var cost := 5 if c.creature.has_flag("hop_up") else c.speed() / 2
 	if c.speed() <= 0 or c.movement_left < cost:
 		return CombatResult.fail("Standing up costs %d ft" % cost)
 	c.movement_left -= cost
@@ -1018,6 +1115,28 @@ func _action_check(c: Combatant) -> String:
 	return ""
 
 
+## "" if `c` could make one attack of the Attack action now (starting it if it hasn't).
+func features_attack_why(c: Combatant) -> String:
+	var why := _turn_check(c)
+	if why != "":
+		return why
+	if not c.can_act():
+		return "Can't act"
+	if c.attacks_left <= 0 and not c.action_available:
+		return "Action already used"
+	return ""
+
+
+## Uses one attack of the Attack action (starting it if needed): Breath Weapon, Commander's Strike, War Magic.
+func use_one_attack(c: Combatant) -> void:
+	if c.attacks_left > 0:
+		c.attacks_left -= 1
+	elif c.action_available:
+		spend_action(c)
+		c.took_attack_action = true
+		c.attacks_left = attacks_per_action(c) - 1
+
+
 func spend_action(c: Combatant) -> void:
 	if c.extra_actions > 0:
 		c.extra_actions -= 1
@@ -1147,6 +1266,11 @@ func attack_options(c: Combatant) -> Array[Dictionary]:
 			out.append({"id": ("thrown:" if p.thrown else "weapon:") + p.item_id, "label": p.name,
 				"kind": "thrown" if p.thrown else ("unarmed" if p.item_id == "unarmed_strike" else "weapon"),
 				"profile": p, "melee": p.melee, "range": [p.normal_range, p.long_range], "reach": p.reach})
+		if CombatFeatures.has_feature(c, "psychic_blades"):
+			for thrown: bool in [false, true]:
+				var pb := _psychic_blade(c, thrown, c.light_attack_weapon == "psychic_blade")
+				out.append({"id": ("blade:thrown" if thrown else "blade:melee"), "label": pb.name, "kind": "blade",
+					"profile": pb, "melee": not thrown, "range": [pb.normal_range, pb.long_range], "reach": pb.reach})
 	elif c.creature is Monster:
 		var m := c.creature as Monster
 		for a: Variant in m.data.get("actions", []):
@@ -1158,6 +1282,18 @@ func attack_options(c: Combatant) -> Array[Dictionary]:
 				"profile": p, "action_id": str(act["id"]), "melee": p.melee, "range": [p.normal_range, p.long_range],
 				"reach": p.reach})
 	return out
+
+
+## Soulknife's Psychic Blade: a Simple Melee weapon with Finesse and Thrown (60/120 ft), 1d6 Psychic + the
+## ability modifier, Vex mastery; the second blade (a Bonus Action after attacking with the first) deals 1d4.
+func _psychic_blade(c: Combatant, thrown: bool, second: bool) -> WeaponProfile:
+	var item := {"id": "psychic_blade", "name": "Psychic Blade", "weapon": {"kind": "simple_melee", "damage": "1d4" if second else "1d6",
+		"damage_type": "psychic", "properties": ["finesse", "thrown", "light"], "range": [60, 120], "mastery": "vex"}}
+	var p := WeaponProfile.build(c.creature, item, thrown)
+	p.mastery = "vex"
+	p.proficient = true
+	p._compute(c.creature)
+	return p
 
 
 func option_by_id(c: Combatant, option_id: String) -> Dictionary:
@@ -1208,6 +1344,10 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 		return CombatResult.fail(check)
 	if c.attacks_left <= 0 and not c.action_available:
 		return CombatResult.fail("No attacks left this turn")
+	var lp := option["profile"] as WeaponProfile
+	if "loading" in lp.properties and not features.has_feat(c, "crossbow_expert") and c.attacks_left > 0 \
+			and str(c.get_meta("loading_fired", "")) == "%d:%d" % [round_no, turn_index]:
+		return CombatResult.fail("Loading: one shot with it per action")
 	var sanct := spells.sanctuary_blocks(c, target)
 	if sanct != "":
 		return CombatResult.fail(sanct)
@@ -1224,6 +1364,9 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 	var p := option["profile"] as WeaponProfile
 	if "light" in p.properties and c.light_attack_weapon == "":
 		c.light_attack_weapon = p.item_id
+	# Loading: one shot per action, whatever the number of attacks (Crossbow Expert ignores it).
+	if "loading" in p.properties and not features.has_feat(c, "crossbow_expert"):
+		c.set_meta("loading_fired", "%d:%d" % [round_no, turn_index])
 	return _resolve_attack(c, target, option, opts)
 
 
@@ -1239,7 +1382,10 @@ func offhand_attack(c: Combatant, target: Combatant, option_id: String) -> Comba
 	var p := option["profile"] as WeaponProfile
 	if c.light_attack_weapon == "" or not c.took_attack_action:
 		return CombatResult.fail("First attack with a Light weapon in the Attack action")
-	if not "light" in p.properties or p.item_id == c.light_attack_weapon:
+	# Dual Wielder: the extra attack can use any melee weapon that isn't Two-Handed. Psychic Blades: a second blade.
+	var dual := features.has_feat(c, "dual_wielder") and bool(option["melee"]) and not "two_handed" in p.properties
+	var blade := c.light_attack_weapon == "psychic_blade" and p.item_id == "psychic_blade"
+	if not blade and ((not "light" in p.properties and not dual) or p.item_id == c.light_attack_weapon):
 		return CombatResult.fail("Needs a different Light weapon")
 	var nick := false
 	var first_mastery := ""
@@ -1367,9 +1513,14 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 		else:
 			dis.append("target Prone beyond 5 ft")
 	if not melee:
-		if p.normal_range > 0 and dist > p.normal_range:
+		var sharp := features.has_feat(c, "sharpshooter") and not str(option.get("kind", "")) in ["spell", "thrown"]
+		if p.normal_range > 0 and dist > p.normal_range and not sharp:
 			dis.append("long range")
+		var melee_ok := sharp or (features.has_feat(c, "crossbow_expert") and p.item_id.contains("crossbow")) \
+			or (str(option.get("kind", "")) == "spell" and features.has_feat(c, "spell_sniper"))
 		for h in hostiles_of(c):
+			if melee_ok:
+				break
 			if h.can_act() and distance(c, h) <= 5 and can_see(h, c):
 				dis.append("ranged attack with %s within 5 ft" % h.name())
 				break
@@ -1387,6 +1538,17 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 			dis.append("%s (target)" % m.source_name)
 	if c.creature.has_flag("cursed_attacks:%s" % target.id):
 		dis.append("Bestow Curse")
+	if CombatFeatures.has_feature(c, "assassinate") and round_no == 1 and not target.has_acted:
+		adv.append("Assassinate (it hasn't acted yet)")
+	if features.has_feat(c, "grappler") and str(grapples.get(target.id, "")) == c.id:
+		adv.append("Grappler")
+	var dup := spells.zones.object_of(c.id, "invoke_duplicity")
+	if dup != null and distance(c, target) <= 5 and grid.distance_ft(dup.cell, 1, target.cell, target.size_cells) <= 5:
+		adv.append("Invoke Duplicity")
+	for ally in allies_of(c):
+		var dup2 := spells.zones.object_of(ally.id, "invoke_duplicity")
+		if dup2 != null and CombatFeatures.has_feature(ally, "improved_duplicity") and grid.distance_ft(dup2.cell, 1, target.cell, target.size_cells) <= 5:
+			adv.append("Improved Duplicity")
 	if grapples.has(c.id) and str(grapples[c.id]) != target.id:
 		dis.append("Grappled (attacking someone other than the grappler)")
 	if c.hidden or not can_see(target, c):
@@ -1412,8 +1574,19 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 		adv.clear()
 	var cov := cover(c, target)
 	var degree := int(cov["cover"])
+	var by := str(cov["by"])
+	# Bulwark of Force: at least Half Cover.
+	if target.creature.has_flag("half_cover") and degree < CombatGrid.Cover.HALF:
+		degree = CombatGrid.Cover.HALF
+		by = "Bulwark of Force"
+	# Sharpshooter (weapons) and Spell Sniper (spell attacks) ignore Half and Three-Quarters Cover.
+	var ranged_kind := str(option.get("kind", ""))
+	if degree in [CombatGrid.Cover.HALF, CombatGrid.Cover.THREE_QUARTERS] and not melee and \
+			((features.has_feat(c, "sharpshooter") and ranged_kind != "spell") or (features.has_feat(c, "spell_sniper") and ranged_kind == "spell")):
+		degree = CombatGrid.Cover.NONE
+		by = ""
 	return {"advantage": adv, "disadvantage": dis, "cover": degree, "cover_bonus": CombatGrid.COVER_BONUS[degree],
-		"cover_by": str(cov["by"])}
+		"cover_by": by}
 
 
 ## Dice the target's effects add to attack rolls against it (Blade Ward: −1d4).
@@ -1489,8 +1662,10 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 	_consume_marks(c, target)
 	spells.end_sanctuary(c, "attacked")
 	spells.trigger_ends(c, "attack_roll")
-	if c.hidden and not c.creature.has_flag("stays_hidden_on_miss"):
+	if c.hidden and not features.has_feat(c, "skulker"):
 		reveal(c, "attacked")
+	if bool(opts.get("reaction", false)) and features.has_feat(target, "speedy") and not bool(opts.get("readied", false)):
+		(sit["disadvantage"] as Array[String]).append("Agile Movement")
 	var st := {"c": c, "target": target, "option": option, "opts": opts, "sit": sit, "r": r,
 		"ac": target.creature.ac_value() + int(sit["cover_bonus"])}
 	return reactions.offer(reactions.before_roll(st), func() -> CombatResult: return _roll_attack(st), r)
@@ -1601,6 +1776,8 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	var p := option["profile"] as WeaponProfile
 	r.hit = true
 	r.critical = critical
+	if c.hidden and features.has_feat(c, "skulker"):
+		reveal(c, "hit with an attack")
 	var parts := {}
 	var dmg_text: Array[String] = []
 	var dice_list: Array[Dictionary] = [{"dice": p.damage_dice, "type": str(p.damage_type), "label": p.name, "weapon": true}]
@@ -1676,6 +1853,7 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 		r.killed.append(target.id)
 	_on_hit_effects(c, target, option, dr, r)
 	features.after_hit(c, target, option, dr, st, r)
+	_queue_sentinels(c, target)
 	return run_reaction_queue(r)
 
 
@@ -1720,7 +1898,15 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		details = details.duplicate()
 		details.append("Bestow Curse 1d8: %s" % extra["text"])
 	parts = _reduce_by_dice(target, parts, details)
+	feature_actions.adjust_incoming(source, target, parts)
+	# Mage Slayer: creatures it damages have Disadvantage on the Concentration save.
+	var slayer: Effect = null
+	if source != null and features.has_feat(source, "mage_slayer") and target.creature.concentration != null:
+		slayer = Effect.new("Mage Slayer", &"feature", "mage_slayer").with_modifier("disadvantage", {"on": "concentration"})
+		target.creature.add_effect(slayer)
 	var dr := target.creature.take_damage_parts(parts, critical, dice, label)
+	if slayer != null:
+		target.creature.remove_effect(slayer)
 	if source != null and dr.final > 0:
 		spells.trigger_ends(source, "deal_damage")
 	if dr.final > 0:
@@ -1758,6 +1944,8 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		events.append({"type": "death", "id": target.id})
 		if target.has_meta("vanishes"):
 			events.append({"type": "vanish", "id": target.id})
+	elif dr.dropped_to_zero and not target.creature.dead and feature_actions.on_zero(target):
+		events.append({"type": "heal", "id": target.id, "amount": 1})
 	elif dr.dropped_to_zero and not target.creature.dead:
 		log.add("death", "%s falls unconscious" % target.name(), target.id)
 		events.append({"type": "down", "id": target.id})
@@ -1798,48 +1986,87 @@ func _reduce_by_dice(target: Combatant, parts: Array, details: Array) -> Array:
 	return out
 
 
-## Reactions to being damaged (Hellish Rebuke) wait until the attack or spell that caused them has finished.
+## Reactions to being damaged (Hellish Rebuke, Storm's Thunder) wait until the attack or spell that caused them has
+## finished.
 func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
-	if not target.creature is Character or not spells.can_cast_reaction(target, "hellish_rebuke"):
-		return
-	if distance(target, source) > 60 or not can_see(target, source) or target.creature.hp <= 0:
+	if not target.creature is Character or target.creature.hp <= 0 or distance(target, source) > 60 or not can_see(target, source):
 		return
 	for q in reaction_queue:
 		if str(q["reactor"]) == target.id:
 			return
-	reaction_queue.append({"kind": "hellish_rebuke", "reactor": target.id, "trigger": source.id})
+	if spells.can_cast_reaction(target, "hellish_rebuke"):
+		reaction_queue.append({"kind": "hellish_rebuke", "reactor": target.id, "trigger": source.id})
+	elif CombatFeatures.has_feature(target, "storms_thunder") and (target.creature as Character).resource_left("giant_ancestry") > 0 and spells.can_react(target):
+		reaction_queue.append({"kind": "storms_thunder", "reactor": target.id, "trigger": source.id})
 
 
-## Offers the queued reactions one by one (asking the player, or the AI deciding), then returns `r`.
+## Sentinel's Guardian: a creature within 5 ft of a Sentinel hits someone else: an Opportunity Attack against it.
+func _queue_sentinels(attacker: Combatant, target: Combatant) -> void:
+	for p in hostiles_of(attacker):
+		if p == target or not features.has_feat(p, "sentinel") or not spells.can_react(p) or distance(p, attacker) > 5:
+			continue
+		reaction_queue.append({"kind": "sentinel", "reactor": p.id, "trigger": attacker.id})
+
+
+func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
+	match str(q["kind"]):
+		"hellish_rebuke":
+			return spells.can_cast_reaction(reactor, "hellish_rebuke")
+		"storms_thunder":
+			return spells.can_react(reactor) and (reactor.creature as Character).resource_left("giant_ancestry") > 0
+		"sentinel":
+			return spells.can_react(reactor) and not best_melee_option(reactor, null).is_empty()
+	return false
+
+
+func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> CombatResult:
+	match str(q["kind"]):
+		"hellish_rebuke":
+			return spells.cast_reaction_spell(reactor, "hellish_rebuke", trigger)
+		"storms_thunder":
+			reactor.reaction_available = false
+			(reactor.creature as Character).spend_resource("giant_ancestry")
+			var rolled := _roll_damage_dice("1d8", false, 0, "Storm's Thunder")
+			deal_damage(reactor, trigger, [{"amount": int(rolled["total"]), "type": "thunder"}], false, "Storm's Thunder", [str(rolled["text"])])
+			return CombatResult.new()
+		"sentinel":
+			if distance(reactor, trigger) > reactor.reach_ft():
+				return CombatResult.new()
+			return _opportunity_attack(reactor, trigger)
+	return CombatResult.new()
+
+
+const _QUEUED_TEXT := {
+	"hellish_rebuke": ["Reaction: Hellish Rebuke?", "%s hurt %s. Answer with Hellish Rebuke: a Dex save or Fire damage.", "Reaction and a spell slot"],
+	"storms_thunder": ["Reaction: Storm's Thunder?", "%s hurt %s. Answer with 1d8 Thunder damage.", "Reaction and a use of Giant Ancestry"],
+	"sentinel": ["Reaction: Sentinel?", "%s attacks someone beside %s. Make an Opportunity Attack against it?", "Reaction"],
+}
+
+
+## Offers the queued reactions one by one (asking the player, or the AI deciding), then the queued Cleave attacks,
+## then returns `r`.
 func run_reaction_queue(r: CombatResult) -> CombatResult:
-	while reaction_queue.is_empty() and not cleave_queue.is_empty():
-		var cq := cleave_queue.pop_front() as Dictionary
-		var cc := cq["c"] as Combatant
-		var ct := cq["target"] as Combatant
-		if ct.is_alive() and not ct.is_down() and cc.can_act():
-			var sub := _resolve_attack(cc, ct, cq["option"] as Dictionary, {"cleave": true, "no_mod": true})
-			if pending != null:
-				return then(sub, func() -> CombatResult: return run_reaction_queue(r))
 	while not reaction_queue.is_empty():
 		var q := reaction_queue.pop_front() as Dictionary
 		var reactor := get_c(str(q["reactor"]))
 		var trigger := get_c(str(q["trigger"]))
-		if reactor == null or trigger == null or not trigger.is_alive() or not spells.can_cast_reaction(reactor, str(q["kind"])):
+		if reactor == null or trigger == null or not trigger.is_alive() or not _queued_ok(q, reactor):
 			continue
-		var decision := _reaction_decision(reactor, str(q["kind"]))
+		var kind := str(q["kind"])
+		var decision := _reaction_decision(reactor, kind)
 		if decision == "never":
 			continue
-		var fire := func() -> CombatResult: return spells.cast_reaction_spell(reactor, str(q["kind"]), trigger)
+		var fire := func() -> CombatResult: return _fire_queued(q, reactor, trigger)
 		if decision == "auto":
 			var sub := fire.call() as CombatResult
 			if pending != null:
 				return then(sub, func() -> CombatResult: return run_reaction_queue(r))
 			continue
-		var req := ReactionRequest.new(str(q["kind"]), reactor.id, trigger.id)
-		var s := Compendium.shared().spell_data(str(q["kind"]))
-		req.title = "Reaction: %s?" % s.get("name", q["kind"])
-		req.text = "%s hurt %s. %s can answer with %s: %s" % [trigger.name(), reactor.name(), reactor.name(), s.get("name", ""), s.get("summary", "")]
-		req.cost = "Reaction and a level %d spell slot" % int(s.get("level", 1))
+		var words := _QUEUED_TEXT[kind] as Array
+		var req := ReactionRequest.new(kind, reactor.id, trigger.id)
+		req.title = str(words[0])
+		req.text = str(words[1]) % [trigger.name(), reactor.name()]
+		req.cost = str(words[2])
 		req.continuation = func(use: bool) -> CombatResult:
 			if use:
 				return then(fire.call() as CombatResult, func() -> CombatResult: return run_reaction_queue(r))
@@ -1847,6 +2074,14 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 		pending = req
 		r.pending = req
 		return r
+	while not cleave_queue.is_empty():
+		var cq := cleave_queue.pop_front() as Dictionary
+		var cc := cq["c"] as Combatant
+		var ct := cq["target"] as Combatant
+		if ct.is_alive() and not ct.is_down() and cc.can_act():
+			var sub2 := _resolve_attack(cc, ct, cq["option"] as Dictionary, {"cleave": true, "no_mod": true})
+			if pending != null:
+				return then(sub2, func() -> CombatResult: return run_reaction_queue(r))
 	return r
 
 
@@ -1985,8 +2220,9 @@ func dash(c: Combatant, use_bonus: bool = false) -> CombatResult:
 		c.bonus_available = false
 	else:
 		spend_action(c)
-	c.movement_left += c.speed()
-	log.add("info", "%s takes the Dash action (+%d ft)" % [c.name(), c.speed()], c.id)
+	var extra := c.speed() + (10 if features.has_feat(c, "charger") else 0)
+	c.movement_left += extra
+	log.add("info", "%s takes the Dash action (+%d ft)" % [c.name(), extra], c.id)
 	return CombatResult.new()
 
 

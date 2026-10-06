@@ -215,6 +215,34 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 				pw = "No Bloodied allies within 30 ft"
 			out.append(_entry("preserve_life", tab, "Preserve Life", "%d HP to share" % (5 * ch.class_level_of("cleric")), "action", pw, "none"))
 	_effect_actions(c, out, tab)
+	for fa in e.feature_actions.list(c):
+		var en := _entry(str(fa["id"]), tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]), str(fa["targeting"]), str(fa["help"]))
+		en["kind"] = "feat"
+		en["range"] = int(fa["range"])
+		out.append(en)
+	for ro in e.features.rider_options(c):
+		var armed := str(ro["id"]) in c.armed
+		var rw := e._turn_check(c)
+		if rw == "" and not armed:
+			rw = str(ro["why"])
+		var re := _entry("rider:" + str(ro["id"]), tab, ("✓ " if armed else "") + str(ro["label"]), ("armed · " if armed else "") + str(ro["sub"]), "free", rw, "none",
+			"Arm it for your next hit this turn (click again to disarm). %s" % ro["sub"])
+		re["kind"] = "rider"
+		out.append(re)
+	# War Magic (Eldritch Knight 7): a cantrip in place of one attack of the Attack action.
+	if CombatFeatures.has_feature(c, "war_magic") and c.attacks_left > 0:
+		for sp in e.spells.castable(c):
+			if int(sp["level"]) == 0 and str(sp["casting"]) == "action":
+				var data := Compendium.shared().spell_data(str(sp["id"]))
+				if not e.spells.has_combat_rules(data):
+					continue
+				var wm := _entry("war_magic:" + str(sp["id"]), tab, "War Magic: %s" % sp["name"], "replaces an attack", "attack", e.features_attack_why(c), _spell_targeting(data),
+					"Cast this cantrip in place of one of your attacks.")
+				wm["kind"] = "spell"
+				wm["spell_id"] = str(sp["id"])
+				wm["range"] = e.spells.range_ft(data, c)
+				wm["opts"] = {"war_magic": true}
+				out.append(wm)
 
 
 ## Actions that come from effects on the creature: breaking free of Web or Entangle, shaking a sleeping ally
@@ -680,6 +708,10 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 			return e.spells.cast(c, str(action["spell_id"]), slot, targets, point, dir, all_opts)
 		"ready_spell":
 			return e.ready_spell(c, str(action["spell_id"]), slot)
+		"feat":
+			return e.feature_actions.perform(c, id.substr(5), t, point if point != Vector2.INF else (Vector2(dir.x, dir.y) + e.center_of(c) if dir != Vector2.ZERO else Vector2.INF))
+		"rider":
+			return e.features.toggle_rider(c, id.substr(6))
 		"sustain":
 			var sid := str(action["sustain_id"])
 			var a := e.spells.sustained_for(c, str(action["spell_id"]))

@@ -164,6 +164,9 @@ func second_wind(c: Combatant) -> CombatResult:
 	var rolled := e._roll_damage_dice("1d10+%d" % level, false, 0, "Second Wind")
 	var healed := ch.heal(int(rolled["total"]), "Second Wind")
 	var r := CombatResult.new()
+	# Tactical Shift (Fighter 5): move up to half Speed without provoking Opportunity Attacks.
+	if has_feature(c, "tactical_shift"):
+		c.free_move_ft = maxi(c.free_move_ft, c.speed() / 2)
 	r.lines.append(e.log.add("heal", "%s catches a Second Wind and regains %d Hit Points" % [c.name(), healed], c.id,
 		["Second Wind 1d10 + Fighter level %d: %s" % [level, rolled["text"]]]))
 	e.events.append({"type": "heal", "id": c.id, "amount": healed})
@@ -455,6 +458,9 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 		out.append({"id": "psionic_strike", "label": "Psionic Strike", "sub": "+d%d + Int Force" % pdie, "why": why4})
 		if has_feature(c, "telekinetic_adept"):
 			out.append({"id": "telekinetic_thrust", "label": "Telekinetic Thrust", "sub": "with Psionic Strike: Str save, Prone or pushed 10 ft", "why": why4})
+	if has_feature(c, "overchannel"):
+		var uses := int(c.get_meta("overchannel_uses", 0))
+		out.append({"id": "overchannel", "label": "Overchannel", "sub": "max damage on the next level 1-5 spell%s" % ("" if uses == 0 else " · costs Necrotic damage"), "why": ""})
 	if has_feature(c, "tactical_master"):
 		for m: String in ["push", "sap", "slow"]:
 			out.append({"id": "mastery:" + m, "label": "Tactical Master: %s" % m.capitalize(), "sub": "use %s this hit" % m.capitalize(), "why": ""})

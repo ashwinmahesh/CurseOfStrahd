@@ -47,7 +47,13 @@
           "value": "poisoners_kit"
         }
       ],
-      "implemented": "text"
+      "implemented": "text",
+      "resource": {
+        "id": "poison_doses",
+        "name": "Poison doses",
+        "max": "pb",
+        "recharge": "long"
+      }
     }
   ]
 }

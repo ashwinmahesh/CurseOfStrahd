@@ -279,7 +279,13 @@
         "name": "Know Your Enemy",
         "summary": "Bonus Action: learn a creature's Immunities, Resistances and Vulnerabilities.",
         "text": "As a Bonus Action, study a creature within 30 feet to learn its damage and condition Immunities, Resistances and Vulnerabilities. Once per Long Rest, or spend a Superiority Die to do it again.",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "know_your_enemy",
+          "name": "Know Your Enemy (free)",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     },
     {

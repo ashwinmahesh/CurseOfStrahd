@@ -411,7 +411,10 @@
                 "modifiers": [
                   {
                     "stat": "cantrip_damage",
-                    "value": "mod:wis"
+                    "value": "mod:wis",
+                    "when": {
+                      "spell_class": "cleric"
+                    }
                   }
                 ],
                 "implemented": "data"

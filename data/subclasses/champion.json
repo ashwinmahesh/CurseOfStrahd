@@ -96,6 +96,10 @@
           {
             "stat": "advantage",
             "on": "death_save"
+          },
+          {
+            "stat": "flag",
+            "value": "survivor"
           }
         ]
       }

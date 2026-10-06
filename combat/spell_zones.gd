@@ -222,7 +222,7 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 			amount = amount / 2 if bool(o.rule("half", false)) else 0
 		details.append(str(rolled["text"]))
 		if amount > 0:
-			e.deal_damage(e.get_c(o.caster_id), t, [{"amount": amount, "type": str(rolled["type"])}], false, label, details)
+			e.deal_damage(e.get_c(o.caster_id), t, [{"amount": amount, "type": str(rolled["type"]), "spell": true}], false, label, details)
 		else:
 			r.lines.append(e.log.add("info", "%s avoids %s" % [t.name(), label], t.id, details))
 	elif has_save:

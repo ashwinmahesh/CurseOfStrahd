@@ -81,7 +81,13 @@
         "name": "Psionic Power",
         "summary": "Psionic Energy Dice (4d6 to start) fuel Protective Field, Psionic Strike and Telekinetic Movement.",
         "text": "You have Psionic Energy Dice (see the table; one comes back on a Short Rest, all on a Long Rest). Protective Field: as a Reaction when you or a creature within 30 feet takes damage, spend a die to reduce it by the roll + your Intelligence modifier (minimum 1). Psionic Strike: once per turn after you hit a target within 30 feet with a weapon attack, spend a die to deal Force damage equal to the roll + your Intelligence modifier. Telekinetic Movement: as a Magic action, move a Large or smaller loose object or willing creature within 30 feet up to 30 feet; once per rest, or spend a die.",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "telekinetic_movement",
+          "name": "Telekinetic Movement (free)",
+          "max": 1,
+          "recharge": "short"
+        }
       }
     },
     {
@@ -90,7 +96,13 @@
         "id": "telekinetic_adept",
         "name": "Telekinetic Adept",
         "summary": "Psi-Powered Leap (fly briefly) and Telekinetic Thrust (Psionic Strike can knock Prone or push 10 feet).",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "psi_leap",
+          "name": "Psi-Powered Leap (free)",
+          "max": 1,
+          "recharge": "short"
+        }
       }
     },
     {
@@ -114,7 +126,13 @@
         "id": "bulwark_of_force",
         "name": "Bulwark of Force",
         "summary": "Bonus Action: give up to Int modifier creatures Half Cover for 1 minute.",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "bulwark_of_force",
+          "name": "Bulwark of Force (free)",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     },
     {

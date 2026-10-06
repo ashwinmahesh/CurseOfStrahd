@@ -141,6 +141,18 @@ func after_miss_attacker(st: Dictionary) -> Array:
 					var v := e.dice.roll_one(die, "Precision Attack")
 					t.add_bonus(v, "Precision Attack")
 					e.log.add("info", "%s uses Precision Attack: +%d" % [c.name(), v], c.id)})
+		var pdie := feats().psionic_die(c)
+		if pdie > 0 and CombatFeatures.has_feature(c, "soul_blades") and str((st["option"] as Dictionary).get("kind", "")) == "blade" \
+				and ch.resource_left("psionic_energy") > 0 and t.total + pdie >= ac:
+			out.append({"kind": "homing_strikes", "reactor": c, "title": "Homing Strikes?",
+				"text": "%d vs AC %d: a miss. Roll a Psionic Energy Die (d%d) and add it (spent only if it hits)?" % [t.total, ac, pdie], "cost": "A Psionic Energy Die if it hits",
+				"still": func() -> bool: return not t.success,
+				"use": func() -> void:
+					var v := e.dice.roll_one(pdie, "Homing Strikes")
+					if t.total + v >= ac:
+						ch.spend_resource("psionic_energy")
+						t.add_bonus(v, "Homing Strikes")
+					e.log.add("info", "%s's blade homes in: +%d" % [c.name(), v], c.id)})
 		if CombatFeatures.has_feature(c, "guided_strike") and ch.resource_left("channel_divinity") > 0 and t.total + 10 >= ac:
 			out.append({"kind": "guided_strike", "reactor": c, "title": "Guided Strike?",
 				"text": "%d vs AC %d: a miss. Channel Divinity for +10?" % [t.total, ac], "cost": "A use of Channel Divinity",

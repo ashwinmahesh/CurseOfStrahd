@@ -109,7 +109,13 @@
         "id": "psychic_veil",
         "name": "Psychic Veil",
         "summary": "Magic action: become Invisible for 1 hour; once per Long Rest or spend a die.",
-        "implemented": "engine"
+        "implemented": "engine",
+        "resource": {
+          "id": "psychic_veil",
+          "name": "Psychic Veil (free)",
+          "max": 1,
+          "recharge": "long"
+        }
       }
     },
     {
