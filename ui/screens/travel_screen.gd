@@ -143,14 +143,34 @@ func _place_at(at: Vector2) -> String:
 	return best
 
 
-## A road as a gently bowed ink line (the bow's side comes from the road's id, so it never changes).
-func _road_points(a: Vector2, b: Vector2, id: String) -> PackedVector2Array:
-	var bow := 0.07 if absi(id.hash()) % 2 == 0 else -0.07
-	var ctrl := (a + b) / 2.0 + (b - a).orthogonal() * bow
+## A road on the panel: a gently bowed line (the bow's side comes from the road's id, so it never changes), or a
+## smooth curve through the road's `via` points (fractions of the art, to take it round a lake or a mountain).
+func road_points(road: Dictionary, a: Vector2, b: Vector2) -> PackedVector2Array:
 	var pts := PackedVector2Array()
-	for i in 21:
-		var t := i / 20.0
-		pts.append(a.lerp(ctrl, t).lerp(ctrl.lerp(b, t), t))
+	var via := road.get("via", []) as Array
+	if via.is_empty():
+		var bow := 0.07 if absi(str(road["id"]).hash()) % 2 == 0 else -0.07
+		var ctrl := (a + b) / 2.0 + (b - a).orthogonal() * bow
+		for i in 21:
+			var t := i / 20.0
+			pts.append(a.lerp(ctrl, t).lerp(ctrl.lerp(b, t), t))
+		return pts
+	var knots: Array[Vector2] = [a]
+	for v: Variant in via:
+		knots.append(to_panel(Vector2(float((v as Array)[0]), float((v as Array)[1]))))
+	knots.append(b)
+	# Catmull-Rom through the knots, the ends doubled.
+	for k in knots.size() - 1:
+		var p0 := knots[maxi(k - 1, 0)]
+		var p1 := knots[k]
+		var p2 := knots[k + 1]
+		var p3 := knots[mini(k + 2, knots.size() - 1)]
+		for i in 16:
+			var t := i / 16.0
+			var t2 := t * t
+			pts.append(0.5 * (2.0 * p1 + (p2 - p0) * t + (2.0 * p0 - 5.0 * p1 + 4.0 * p2 - p3) * t2
+				+ (3.0 * p1 - p0 - 3.0 * p2 + p3) * t2 * t))
+	pts.append(b)
 	return pts
 
 
@@ -171,7 +191,7 @@ func _draw_map() -> void:
 	var tags: Array[Array] = []
 	for road in Travel.roads(st):
 		var id := str(road["id"])
-		var pts := _road_points(_pos(places[str(road["from"])] as Dictionary), _pos(places[str(road["to"])] as Dictionary), id)
+		var pts := road_points(road, _pos(places[str(road["from"])] as Dictionary), _pos(places[str(road["to"])] as Dictionary))
 		var on_route := route_roads.has(id)
 		if on_route:
 			_map.draw_polyline(pts, Color(Look.color("void"), 0.8), 10.0, true)
@@ -182,14 +202,18 @@ func _draw_map() -> void:
 		tags.append([pts[pts.size() / 2], "%s h" % _hours_text(float(road["hours"])), on_route])
 	for t: Array in tags:
 		_tag(t[0] as Vector2, str(t[1]), bool(t[2]))
-	# Marks first, then names placed clear of the marks and of each other.
+	# Marks first, then names placed clear of the marks and of each other; zoomed in, only the places in view.
+	var view := Rect2(Vector2.ZERO, MAP_SIZE).grow(-4.0)
 	var taken: Array[Rect2] = []
 	for id: String in places:
 		var at := _pos(places[id] as Dictionary)
-		taken.append(Rect2(at - Vector2(12, 12), Vector2(24, 24)))
-		_mark(at, id)
+		if view.has_point(at):
+			taken.append(Rect2(at - Vector2(12, 12), Vector2(24, 24)))
+			_mark(at, id)
 	for id: String in places:
-		_place_name(font, _pos(places[id] as Dictionary), str((places[id] as Dictionary)["name"]), id, taken)
+		var at := _pos(places[id] as Dictionary)
+		if view.has_point(at):
+			_place_name(font, at, str((places[id] as Dictionary)["name"]), id, taken)
 
 
 func _mark(at: Vector2, id: String) -> void:

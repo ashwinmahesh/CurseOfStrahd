@@ -24,7 +24,8 @@ func show_location(v: LocationView) -> void:
 
 
 ## Every way out of a location: {id, cell, label, to, destination, region, open, dir}. `region` is a road to another
-## outdoor place or onto the travel map (as opposed to a door into a building); `dir` points out of the map there.
+## outdoor place or onto the travel map (as opposed to a door into a building); `dir` points out of the map there, or
+## is zero for a way out inside the map (a garden gate), which gets no arrows.
 static func ways_out(v: LocationView) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var outdoors := bool((v.loc["map"] as Dictionary).get("outdoors", false))
@@ -37,8 +38,12 @@ static func ways_out(v: LocationView) -> Array[Dictionary]:
 		var cell := Vector2i(int(a[0]), int(a[1]))
 		out.append({"id": str(e["id"]), "cell": cell, "label": str(e.get("label", "Leave")), "to": to,
 			"destination": "Opens the travel map" if to == "travel" else str(dest.get("name", "")), "region": region,
-			"open": StoryConditions.check(str(e.get("when", "")), v.st), "dir": outward(v.grid, cell)})
+			"open": StoryConditions.check(str(e.get("when", "")), v.st), "dir": outward(v.grid, cell) if on_edge(v.grid, cell) else Vector2i.ZERO})
 	return out
+
+
+static func on_edge(grid: CombatGrid, cell: Vector2i) -> bool:
+	return cell.x == 0 or cell.y == 0 or cell.x == grid.width - 1 or cell.y == grid.depth - 1
 
 
 ## The way out of the map at a square: straight off the nearest edge.
@@ -83,7 +88,7 @@ func _draw() -> void:
 			ring.append(sq[0])
 			draw_polyline(ring, Color(glow, 0.95), 2.5, true)
 		# Chevrons on the open ground leading to it, marching outward.
-		if open:
+		if open and dir != Vector2i.ZERO:
 			for k in range(3, 0, -1):
 				var c := cell - dir * k
 				if not view.grid.in_bounds(c) or view.grid.has_flag(c, CombatGrid.WALL | CombatGrid.VOID) or stood.has(c):
@@ -141,9 +146,9 @@ func _plaque(cam: Camera3D, e: Dictionary, at: Vector3, out_dir: Vector3, glow: 
 	if on_screen:
 		var shown := p.clamp(screen.position + Vector2(box.x / 2.0 + 12.0, box.y + 12.0), screen.end - Vector2(box.x / 2.0 + 12.0, 12.0))
 		r = Rect2(shown - Vector2(box.x / 2.0, box.y), box)
-		# The arrow points the way out as the camera sees it.
+		# The arrow points the way out as the camera sees it (down at the square for a way out inside the map).
 		var ahead := cam.unproject_position(at + out_dir) - p
-		d = ahead.normalized() if ahead.length() > 0.01 else Vector2.RIGHT
+		d = ahead.normalized() if out_dir != Vector3.ZERO and ahead.length() > 0.01 else Vector2.DOWN
 		# A thin stem down to the square.
 		draw_line(Vector2(shown.x, r.end.y), cam.unproject_position(at - Vector3(0, 1.6, 0)), Color(glow, 0.6), 1.5, true)
 	else:

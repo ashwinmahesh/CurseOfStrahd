@@ -9,7 +9,7 @@
       "spawn": "from_road",
       "pos": [
         0.075,
-        0.51
+        0.48
       ],
       "region": "krezk",
       "summary": "The walled village at the western end of the valley, where the road stops. Its gate opens only for a reason."
@@ -33,6 +33,7 @@
       "id": "vallaki_to_krezk",
       "from": "vallaki",
       "to": "krezk",
+      "via": [[0.2, 0.53]],
       "hours": 5,
       "table": "krezk_road",
       "name": "Old Svalich Road, west to Krezk"

@@ -20,8 +20,8 @@
       "location": "yester_hill",
       "spawn": "from_road",
       "pos": [
-        0.12,
-        0.565
+        0.152,
+        0.578
       ],
       "region": "yester_hill",
       "when": "flag.yester_hill_known or tarokka.tome.region == yester_hill or tarokka.symbol.region == yester_hill or tarokka.sword.region == yester_hill",
