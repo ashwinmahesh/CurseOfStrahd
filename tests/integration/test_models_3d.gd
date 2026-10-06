@@ -1,7 +1,7 @@
 extends TestCase
-## 3D set pieces (docs/art/models.md, owner request 2026-10-06): the Death House upper floor is the pilot. Its
-## furniture, hearths, panelled walls, doors and stairs are Blender models standing where the 2D pieces stood, each
-## inside its own square, pickable, and every other place keeps its 2D pieces until the owner signs off.
+## 3D set pieces (docs/art/models.md, owner request 2026-10-06; everywhere after the Death House upper floor pilot):
+## furniture, containers, hearths, panelled walls, doors and stairs are Blender models standing where the 2D pieces
+## stood, each inside its own square and pickable; a place left out of the catalog keeps its 2D pieces.
 
 
 func before_each() -> void:
@@ -49,7 +49,9 @@ func test_catalog_models_exist() -> void:
 	assert_false((cfg.get("places", []) as Array).is_empty(), "the pilot names its places")
 	for art: String in cfg.get("art", {}):
 		assert_true(SetDressing.has_art(art), "it stands in for art that exists: " + art)
-		assert_true(ModelPiece.has_model(str((cfg["art"] as Dictionary)[art])), "model built for " + art)
+		var entry: Variant = (cfg["art"] as Dictionary)[art]
+		for id: Variant in ((entry as Dictionary).values() if entry is Dictionary else [entry]):
+			assert_true(ModelPiece.has_model(str(id)), "model %s built for %s" % [id, art])
 	for surface: String in cfg.get("walls", {}):
 		assert_true(Look.cel_textured(surface) != null, "wall surface exists: " + surface)
 		assert_true(ModelPiece.has_model(str((cfg["walls"] as Dictionary)[surface])), "model built for " + surface)
@@ -105,9 +107,10 @@ func test_the_library_is_built_of_models() -> void:
 ## its wall), so the 3D pieces never cut into a wall or each other.
 func test_models_stay_in_their_square() -> void:
 	var problems: Array[String] = []
-	for loc_id: String in ModelPiece.settings().get("places", []):
-		if loc_id == "*":
-			continue
+	var places := ModelPiece.settings().get("places", []) as Array
+	if "*" in places:
+		places = (Compendium.shared().tables["locations"] as Dictionary).keys()
+	for loc_id: String in places:
 		var v := _view(loc_id)
 		await _frames(1)
 		for m in _models(v.board):
@@ -117,7 +120,7 @@ func test_models_stay_in_their_square() -> void:
 			var mount := str((ModelPiece.manifest()[str(m.get_meta("model"))] as Dictionary)["mount"])
 			var cell := v.grid.cell_at(m.global_position)
 			var room := Rect2(cell.x - 0.03, cell.y - 0.03, 1.06, 1.06)
-			if mount == "wall":
+			if mount == "wall" or m.has_meta("hung"):
 				var n := m.global_basis.z.normalized()
 				var front := v.grid.cell_at(m.global_position + n * 0.5)
 				room = Rect2(front.x - 0.06, front.y - 0.06, 1.12, 1.12)
@@ -129,11 +132,15 @@ func test_models_stay_in_their_square() -> void:
 	assert_eq(problems, [] as Array[String], "models in their squares")
 
 
-## The pilot stays a pilot: places not listed keep their 2D pieces.
-func test_other_places_keep_their_2d_pieces() -> void:
+## A place left out of the catalog's models3d places keeps its 2D pieces (how the pilot was shown, and how a place
+## can stay 2D).
+func test_a_place_left_out_keeps_its_2d_pieces() -> void:
+	var cfg := ModelPiece.settings()
+	var was: Variant = cfg.get("places", [])
+	cfg["places"] = ["death_house_upper"]
 	var v := _view("death_house_ground")
 	await _frames(1)
-	assert_false("death_house_ground" in (ModelPiece.settings().get("places", []) as Array))
+	cfg["places"] = was
 	assert_eq(_models(v.board).size(), 0, "no models on the ground floor")
 	for n in v.board.get_children():
 		assert_false(n.has_meta("wall_modules"), "no 3D panelling")

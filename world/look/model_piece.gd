@@ -41,11 +41,15 @@ static func in_use(board: ArenaBoard) -> bool:
 	return board != null and ("*" in places or board.place in places)
 
 
-## The model that stands in for 2D `art` on this board, or "".
+## The model that stands in for 2D `art` on this board, or "". A catalog entry can depend on the board's theme
+## ({theme: model, "*": model}): wooden stairs in houses, stone ones in dungeons and churches.
 static func for_art(board: ArenaBoard, art: String) -> String:
 	if art == "" or not in_use(board):
 		return ""
-	var id := str((settings().get("art", {}) as Dictionary).get(art, ""))
+	var entry: Variant = (settings().get("art", {}) as Dictionary).get(art, "")
+	var id := str(entry)
+	if entry is Dictionary:
+		id = str((entry as Dictionary).get(board.theme, (entry as Dictionary).get("*", "")))
 	return id if has_model(id) else ""
 
 
@@ -130,9 +134,13 @@ static func hang(board: ArenaBoard, root: Node3D, id: String, art: String, wall:
 	holder.rotation.y = atan2(n.x, n.z)
 	holder.set_meta("art", art)
 	holder.set_meta("model", id)
+	holder.set_meta("hung", true)
 	root.add_child(holder)
 	var model := instance(id)
 	holder.add_child(model)
+	if str(info.get("mount", "wall")) != "wall":
+		# A piece modelled round its middle (a door leaf hung as a picture) stands just in front of the face.
+		model.position = Vector3(0, 0, float((info.get("size", [1, 1, 0.1]) as Array)[2]) / 2.0)
 	_extras(model, info)
 	return holder
 

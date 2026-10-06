@@ -58,12 +58,25 @@ def _hex_of(name):
     return PALETTE[info["palette"][0]]
 
 
+def _preview_colour(name):
+    """The colour Blender shows a surface in (the game draws its own): a palette colour, or a texture's average."""
+    if not name.startswith("tex_"):
+        return _linear(_hex_of(name))
+    theme, _, surface = name[4:].partition("__")
+    img = bpy.data.images.load(str(ROOT / TEXTURES["themes"][theme][surface]["file"]))
+    px = list(img.pixels)
+    n = len(px) // 4
+    avg = [sum(px[i::4]) / n for i in range(3)]   # sRGB values, as stored
+    bpy.data.images.remove(img)
+    return [x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in avg] + [1.0]
+
+
 def material(name):
     m = bpy.data.materials.get(name)
     if m is not None:
         return m
     m = bpy.data.materials.new(name)
-    col = _linear(_hex_of(name))
+    col = _preview_colour(name)
     m.diffuse_color = col
     bsdf = m.node_tree.nodes.get("Principled BSDF")
     bsdf.inputs["Base Color"].default_value = col
@@ -452,8 +465,14 @@ def settee(p):
              (-W * 0.15, -0.065), (-W * 0.3, -0.04), (-W / 2, -0.06)], 0.02, (0, yc - D / 2 - 0.008, 0.22), carve)
     cw = (W - 0.16) / 2 - 0.01
     for s in (-1, 1):
-        p.box((cw, D - 0.1, 0.08), (s * (cw / 2 + 0.005), yc - 0.03, 0.26), cushion, soft=0.025)
-        p.box((cw, 0.08, 0.3), (s * (cw / 2 + 0.005), yc + D / 2 - 0.1, 0.44), cushion, soft=0.025, rot=(-8, 0, 0))
+        cx = s * (cw / 2 + 0.005)
+        p.box((cw, D - 0.1, 0.08), (cx, yc - 0.03, 0.26), cushion, soft=0.025)
+        p.box((cw - 0.03, 0.012, 0.012), (cx, yc - 0.03 - (D - 0.1) / 2 + 0.004, 0.292), wood)   # piping
+        p.box((cw, 0.08, 0.3), (cx, yc + D / 2 - 0.1, 0.44), cushion, soft=0.025, rot=(-8, 0, 0))
+        for dz in (-0.07, 0.07):                                                                 # buttoned back
+            for dx in (-cw / 4, 0.0, cw / 4):
+                y = yc + D / 2 - 0.1 - 0.04 * math.cos(math.radians(8)) + dz * math.sin(math.radians(8))
+                p.box((0.02, 0.012, 0.02), (cx + dx, y - 0.002, 0.44 + dz), wood, rot=(-8, 0, 0))
     for s in (-1, 1):
         p.box((0.05, 0.05, 0.62), (s * (W / 2 - 0.03), yc + D / 2 - 0.03, 0.14 + 0.31), wood)
     p.box((W - 0.1, 0.03, 0.42), (0, yc + D / 2 - 0.03, 0.22 + 0.21), carve)
@@ -701,6 +720,425 @@ def fireplace_dancers(p):
     p.socket("figures", (0, -(D + 0.07) / 2 + 0.01, H))
 
 
+# --- Containers and common furniture (rollout batch 1) ----------------------------------------------------------
+
+WOOD = "tex_interior__wood_planks"
+
+
+def _iron_bands(p, W, D, zs, mat, t=0.012, w=0.035):
+    """Flat iron straps round a box W x D at heights zs (each band's centre)."""
+    for z in zs:
+        p.box((W + 2 * t, D + 2 * t, w), (0, 0, z), mat)
+
+
+@model("barrel", "free", ["barrel"])
+def barrel(p):
+    """The 2D barrel: bellied oak staves, dark iron hoops, a lid of boards and a bung."""
+    H = 0.72
+    prof = [(0.0, 0.0), (0.2, 0.0), (0.225, 0.12), (0.24, H / 2), (0.225, H - 0.12), (0.2, H), (0.0, H)]
+    p.lathe(prof, (0, 0, 0), "pal_walnut", segs=16, smooth=False)
+    for z, r in ((0.05, 0.207), (0.17, 0.231), (H - 0.17, 0.231), (H - 0.05, 0.207)):
+        p.lathe([(r, -0.018), (r + 0.008, -0.016), (r + 0.008, 0.016), (r, 0.018)], (0, 0, z), "pal_stone_deep", segs=16,
+                smooth=False)
+    p.cyl(0.185, 0.012, (0, 0, H - 0.02), "pal_umber", segs=16, smooth=False)
+    for x in (-0.06, 0.06):
+        p.box((0.004, 0.36, 0.004), (x, 0, H - 0.007), "pal_peat")
+    p.cyl(0.02, 0.01, (0, -0.24, H / 2), "pal_peat", rot=(90, 0, 0), segs=8)
+
+
+@model("crate", "free", ["crate"])
+def crate(p):
+    """The 2D crate: boards in a dark frame, an X brace on each side."""
+    S = 0.6
+    p.box((S - 0.02, S - 0.02, S - 0.02), (0, 0, S / 2), WOOD)
+    e = 0.05
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((e, e, S), (sx * (S / 2 - e / 2), sy * (S / 2 - e / 2), S / 2), "pal_umber")
+    for z in (e / 2, S - e / 2):
+        for s in (-1, 1):
+            p.box((S, e, e), (0, s * (S / 2 - e / 2), z), "pal_umber")
+            p.box((e, S, e), (s * (S / 2 - e / 2), 0, z), "pal_umber")
+    diag = math.degrees(math.atan2(S - 2 * e, S - 2 * e))
+    for s in (-1, 1):
+        for a in (diag, -diag):
+            p.box((0.05, 0.018, (S - 2 * e) * 1.38), (0, s * (S / 2 + 0.004), S / 2), "pal_umber", rot=(0, a, 0))
+            p.box((0.018, 0.05, (S - 2 * e) * 1.38), (s * (S / 2 + 0.004), 0, S / 2), "pal_umber", rot=(a, 0, 0))
+
+
+def _chest(p, wood, band, lock):
+    """A chest with a rounded lid: the body, the lid's half-round, iron straps over both, a hasp and padlock."""
+    W, D, Hb = 0.72, 0.44, 0.3
+    r = D / 2
+    p.box((W, D, Hb), (0, 0, Hb / 2), wood)
+    lid = [(-r, 0.0), (r, 0.0)] + [(r * math.cos(math.pi * k / 10), r * 0.62 * math.sin(math.pi * k / 10)) for k in range(1, 10)]
+    p.prism(lid, W, (0, 0, Hb), wood, rot=(0, 0, 90))
+    band_lid = [(-r - 0.012, 0.0), (r + 0.012, 0.0)] + [((r + 0.012) * math.cos(math.pi * k / 10),
+                                                         (r * 0.62 + 0.012) * math.sin(math.pi * k / 10)) for k in range(1, 10)]
+    for x in (-W / 2 + 0.06, 0.0, W / 2 - 0.06):
+        p.prism(band_lid, 0.04, (x, 0, Hb), band, rot=(0, 0, 90))
+        p.box((0.04, D + 0.024, 0.012), (x, 0, 0.006), band)
+        for s in (-1, 1):
+            p.box((0.04, 0.012, Hb), (x, s * (D / 2 + 0.006), Hb / 2), band)
+    p.box((W + 0.024, D + 0.024, 0.03), (0, 0, Hb - 0.015), band)
+    p.box((0.07, 0.016, 0.1), (0, -D / 2 - 0.012, Hb - 0.02), band)
+    p.lathe([(0.0, 0.0), (0.035, 0.0), (0.04, 0.02), (0.035, 0.05), (0.0, 0.05)], (0, -D / 2 - 0.03, Hb - 0.14), lock,
+            rot=(90, 0, 0), segs=10)
+    p.tube(curve((-0.022, -D / 2 - 0.03, Hb - 0.07), (0.0, -D / 2 - 0.03, Hb - 0.02), (0.022, -D / 2 - 0.03, Hb - 0.07), n=6),
+           0.006, lock)
+    for s in (-1, 1):
+        p.tube(curve((s * (W / 2 + 0.01), -0.06, Hb - 0.06), (s * (W / 2 + 0.04), 0.0, Hb - 0.1), (s * (W / 2 + 0.01), 0.06,
+                     Hb - 0.06), n=6), 0.01, band)
+
+
+@model("chest", "free", ["chest", "chest_back"], container=True)
+def chest(p):
+    _chest(p, WOOD, "pal_slate", "pal_stone_deep")
+
+
+@model("chest_iron", "free", ["chest_iron", "chest_iron_back"], container=True)
+def chest_iron(p):
+    _chest(p, "pal_night", "pal_stone", "pal_stone_deep")
+
+
+@model("strongbox", "free", ["strongbox", "strongbox_back"], container=True)
+def strongbox(p):
+    """The 2D strongbox: a squat iron box, red-painted, riveted grey edges and a keyhole plate."""
+    W, D, H = 0.42, 0.36, 0.36
+    p.box((W, D, H), (0, 0, H / 2), "pal_blood")
+    e = 0.03
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((e, e, H + 0.006), (sx * (W / 2 - e / 2 + 0.003), sy * (D / 2 - e / 2 + 0.003), H / 2), "pal_pewter")
+    for s in (-1, 1):
+        p.box((W + 0.006, e, e), (0, s * (D / 2 - e / 2 + 0.003), H - e / 2 + 0.003), "pal_pewter")
+        p.box((e, D + 0.006, e), (s * (W / 2 - e / 2 + 0.003), 0, H - e / 2 + 0.003), "pal_pewter")
+    p.box((W - 0.06, D - 0.06, 0.012), (0, 0, H + 0.006), "pal_slate")
+    p.box((0.09, 0.012, 0.12), (0, -D / 2 - 0.006, H * 0.55), "pal_stone_deep")
+    p.cyl(0.012, 0.014, (0, -D / 2 - 0.006, H * 0.58), "pal_void", rot=(90, 0, 0), segs=8)
+    for x in (-W / 2 + 0.06, W / 2 - 0.06):
+        for z in (0.05, H - 0.06):
+            p.cyl(0.009, 0.01, (x, -D / 2 - 0.002, z), "pal_silver", rot=(90, 0, 0), segs=6)
+
+
+@model("trunk", "free", ["trunk", "trunk_back"], container=True)
+def trunk(p):
+    """The 2D travelling trunk: dark canvas over wood, leather straps, brass corners, a brass lock."""
+    W, D, H = 0.76, 0.44, 0.44
+    p.box((W, D, H - 0.12), (0, 0, (H - 0.12) / 2), "pal_stone", soft=0.01)
+    p.box((W + 0.006, D + 0.006, 0.12), (0, 0, H - 0.06), "pal_stone", soft=0.02)
+    p.box((W + 0.012, D + 0.012, 0.02), (0, 0, H - 0.12), "pal_peat")
+    for x in (-W / 4, W / 4):
+        p.box((0.05, D + 0.02, 0.008), (x, 0, H + 0.002), "pal_umber")
+        for s in (-1, 1):
+            p.box((0.05, 0.01, H - 0.02), (x, s * (D / 2 + 0.006), H / 2), "pal_umber")
+        p.box((0.06, 0.014, 0.05), (x, -D / 2 - 0.012, H - 0.16), "pal_tan")
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            for z in (0.03, H - 0.03):
+                p.box((0.06, 0.06, 0.06), (sx * (W / 2 - 0.022), sy * (D / 2 - 0.022), z), "pal_tan", soft=0.012)
+        p.tube(curve((sx * (W / 2 + 0.008), -0.07, H - 0.17), (sx * (W / 2 + 0.035), 0.0, H - 0.2), (sx * (W / 2 + 0.008),
+                     0.07, H - 0.17), n=6), 0.012, "pal_peat")
+    p.box((0.07, 0.016, 0.07), (0, -D / 2 - 0.008, H - 0.13), "pal_tan")
+
+
+@model("footlocker", "free", ["footlocker", "footlocker_back"], container=True)
+def footlocker(p):
+    """The 2D footlocker: a plain board box with grey metal edging and a hasp."""
+    W, D, H = 0.66, 0.4, 0.38
+    p.box((W, D, H), (0, 0, H / 2), WOOD)
+    e = 0.03
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((e, e, H + 0.004), (sx * (W / 2 - e / 2 + 0.002), sy * (D / 2 - e / 2 + 0.002), H / 2), "pal_slate")
+    for s in (-1, 1):
+        for z in (e / 2, H - e / 2):
+            p.box((W + 0.004, e, e), (0, s * (D / 2 - e / 2 + 0.002), z), "pal_slate")
+            p.box((e, D + 0.004, e), (s * (W / 2 - e / 2 + 0.002), 0, z), "pal_slate")
+    p.box((W + 0.01, D + 0.01, 0.012), (0, 0, H - 0.07), "pal_stone_deep")
+    p.box((0.06, 0.014, 0.12), (0, -D / 2 - 0.007, H - 0.08), "pal_stone_deep")
+    p.cyl(0.014, 0.012, (0, -D / 2 - 0.012, H - 0.12), "pal_slate", rot=(90, 0, 0), segs=8)
+
+
+def _bed_linen(p, W, L, z, blanket, stripes=None):
+    """Mattress, a turned-down blanket (striped if given) and a pillow, on a bed W wide and L long whose head is at +y."""
+    p.box((W - 0.04, L - 0.04, 0.1), (0, 0, z + 0.05), "pal_vellum", soft=0.02)
+    bl = L * 0.68
+    p.box((W - 0.02, bl, 0.03), (0, -L / 2 + bl / 2 + 0.01, z + 0.11), blanket, soft=0.012)
+    for s in (-1, 1):
+        p.box((0.015, bl, 0.12), (s * (W / 2 - 0.005), -L / 2 + bl / 2 + 0.01, z + 0.06), blanket)
+    if stripes:
+        for k in range(5):
+            y = -L / 2 + 0.08 + k * bl / 5.5
+            p.box((W - 0.01, 0.05, 0.006), (0, y, z + 0.127), stripes)
+            for s in (-1, 1):
+                p.box((0.004, 0.05, 0.12), (s * (W / 2 + 0.003), y, z + 0.06), stripes)
+    p.box((W - 0.06, 0.06, 0.012), (0, -L / 2 + bl + 0.03, z + 0.105), "pal_vellum", soft=0.004)
+    p.box((W * 0.7, 0.18, 0.07), (0, L / 2 - 0.13, z + 0.13), "pal_ivory", soft=0.025, rot=(-12, 0, 0))
+
+
+@model("bed", "against_wall", ["bed", "bed_back"])
+def bed(p):
+    """The 2D wooden bed: a turned frame, a red and cream striped blanket, a pillow; the headboard on the wall."""
+    W, L = 0.66, 0.96
+    yc = -L / 2 - 0.02
+    wood = "pal_walnut"
+    for sx in (-1, 1):
+        for sy, h in ((1, 0.62), (-1, 0.4)):
+            p.box((0.05, 0.05, h), (sx * (W / 2 - 0.025), yc + sy * (L / 2 - 0.025), h / 2), wood)
+            p.lathe([(0.03, 0.0), (0.034, 0.012), (0.016, 0.026), (0.022, 0.04), (0.0, 0.065)],
+                    (sx * (W / 2 - 0.025), yc + sy * (L / 2 - 0.025), h), wood, segs=8)
+        p.box((0.035, L - 0.1, 0.1), (sx * (W / 2 - 0.025), yc, 0.2), "pal_umber")
+    p.box((W - 0.1, 0.04, 0.4), (0, yc + L / 2 - 0.025, 0.36), WOOD)
+    p.box((W - 0.1, 0.04, 0.22), (0, yc - L / 2 + 0.025, 0.25), WOOD)
+    _bed_linen_at(p, W - 0.1, L - 0.1, 0.22, yc, "pal_blood", "pal_vellum")
+
+
+def _bed_linen_at(p, W, L, z, yc, blanket, stripes):
+    """_bed_linen shifted to a bed centred at y = yc."""
+    sub = Piece(p.id + "_linen", seed=7)
+    _bed_linen(sub, W, L, z, blanket, stripes)
+    sub.bm.transform(Matrix.Translation((0, yc, 0)))
+    tmp = bpy.data.meshes.new("_linen")
+    sub.bm.to_mesh(tmp)
+    sub.bm.free()
+    remap = [p._slot(m) for m in sub.mats]
+    tb = bmesh.new()
+    tb.from_mesh(tmp)
+    for f in tb.faces:
+        f.material_index = remap[f.material_index]
+    tb.to_mesh(tmp)
+    tb.free()
+    p.bm.from_mesh(tmp)
+    bpy.data.meshes.remove(tmp)
+    bpy.data.meshes.remove(sub._scratch)
+
+
+@model("bed_small", "against_wall", ["bed_small", "bed_small_back"])
+def bed_small(p):
+    """The 2D narrow iron bed: black iron bedstead, a grey blanket, a pillow."""
+    W, L = 0.56, 0.96
+    yc = -L / 2 - 0.02
+    iron = "pal_ink"
+    for sx in (-1, 1):
+        for sy, h in ((1, 0.6), (-1, 0.42)):
+            p.cyl(0.014, h, (sx * (W / 2 - 0.015), yc + sy * (L / 2 - 0.015), 0), iron, segs=8)
+            p.lathe([(0.018, 0.0), (0.022, 0.01), (0.0, 0.03)], (sx * (W / 2 - 0.015), yc + sy * (L / 2 - 0.015), h), iron,
+                    segs=8)
+        p.box((0.02, L - 0.03, 0.03), (sx * (W / 2 - 0.015), yc, 0.2), iron)
+    for sy, h in ((1, 0.6), (-1, 0.42)):
+        y = yc + sy * (L / 2 - 0.015)
+        for z in (0.24, h - 0.03):
+            p.cyl(0.011, W - 0.03, (-W / 2 + 0.015, y, z), iron, rot=(0, 90, 0), segs=6)
+        for k in range(1, 5):
+            p.cyl(0.007, h - 0.27, (-W / 2 + 0.015 + k * (W - 0.03) / 5, y, 0.24), iron, segs=6)
+    _bed_linen_at(p, W - 0.04, L - 0.06, 0.2, yc, "pal_slate", None)
+
+
+@model("wardrobe", "against_wall", ["wardrobe", "wardrobe_front"])
+def wardrobe(p):
+    """The 2D wardrobe: a tall walnut press with two panelled doors, a moulded cornice, a plinth on bracket feet."""
+    W, D, H = 0.92, 0.5, 1.4
+    yc = -D / 2
+    body, trim, panel = "pal_walnut", "pal_umber", "pal_rust"
+    p.box((W, D - 0.02, H - 0.17), (0, yc + 0.01, 0.09 + (H - 0.17) / 2), body)
+    p.box((W + 0.03, D + 0.01, 0.06), (0, yc - 0.005, 0.07), trim)
+    for sx in (-1, 1):
+        p.prism([(0.0, 0.0), (0.09, 0.0), (0.09, 0.04), (0.04, 0.04), (0.0, 0.06)], 0.05,
+                (sx * (W / 2 - 0.0) - (0.09 if sx > 0 else 0.0), yc - D / 2 + 0.03, 0.0), trim)
+    p.box((W + 0.04, D + 0.02, 0.04), (0, yc - 0.01, H - 0.06), trim)
+    p.box((W + 0.08, D + 0.04, 0.04), (0, yc - 0.02, H - 0.02), body)
+    p.prism([(-0.22, 0.0), (0.22, 0.0), (0.1, 0.06), (0.0, 0.08), (-0.1, 0.06)], 0.03, (0, yc - D / 2 + 0.005, H), trim)
+    dw = (W - 0.08) / 2
+    front = yc - (D - 0.02) / 2 - 0.004
+    for s in (-1, 1):
+        cx = s * (dw / 2 + 0.008)
+        p.box((dw - 0.01, 0.014, H - 0.33), (cx, front, 0.13 + (H - 0.33) / 2), body)
+        for z0, h in ((0.17, 0.42), (0.66, 0.5)):
+            p.box((dw - 0.12, 0.012, h), (cx, front - 0.008, z0 + h / 2), "pal_peat")
+            p.box((dw - 0.16, 0.02, h - 0.05), (cx, front - 0.012, z0 + h / 2), panel, soft=0.006)
+        p.lathe([(0.0, 0.0), (0.012, 0.0), (0.016, 0.012), (0.0, 0.024)], (s * 0.03, front - 0.008, 0.66), "pal_tan",
+                rot=(90, 0, 0), segs=8)
+
+
+@model("sideboard", "against_wall", ["sideboard", "sideboard_front"])
+def sideboard(p):
+    """The 2D sideboard: dark walnut, a row of drawers over carved cupboard doors, a silver candelabrum on top."""
+    W, D, H = 0.96, 0.42, 0.52
+    yc = -D / 2 - 0.01
+    body, trim, face = "pal_umber", "pal_peat", "pal_walnut"
+    p.box((W, D, H - 0.1), (0, yc, 0.08 + (H - 0.1) / 2), body)
+    p.box((W + 0.03, D + 0.03, 0.035), (0, yc - 0.01, H - 0.0025), WOOD)
+    p.prism([(-W / 2, 0.0), (W / 2, 0.0), (W / 2, 0.08), (W / 2 - 0.06, 0.08), (W * 0.25, 0.04), (0.0, 0.06),
+             (-W * 0.25, 0.04), (-W / 2 + 0.06, 0.08), (-W / 2, 0.08)], 0.03, (0, yc - D / 2 + 0.014, 0.0), trim)
+    front = yc - D / 2 - 0.005
+    for k in range(3):
+        x = -W / 3 + k * W / 3
+        p.box((W / 3 - 0.03, 0.012, 0.09), (x, front, H - 0.1), face)
+        p.box((0.05, 0.01, 0.012), (x, front - 0.01, H - 0.1), "pal_tan")
+    for s in (-1, 1):
+        p.box((W / 2 - 0.05, 0.012, 0.26), (s * W / 4, front, 0.24), face)
+        lancet = [(-0.08, 0.0), (0.08, 0.0)] + list(reversed(arch(-0.08, 0.08, 0.14, 0.07, n=8)))
+        p.prism(lancet, 0.01, (s * W / 4, front - 0.01, 0.15), trim)
+        p.cyl(0.01, 0.012, (s * 0.04, front - 0.006, 0.28), "pal_tan", rot=(90, 0, 0), segs=8)
+    c = (0.0, yc + 0.02, H + 0.015)
+    p.lathe([(0.05, 0.0), (0.055, 0.01), (0.02, 0.03), (0.012, 0.15), (0.03, 0.17), (0.0, 0.17)], c, "pal_silver", segs=10)
+    for s in (-1, 0, 1):
+        x = c[0] + s * 0.1
+        z = c[2] + (0.19 if s == 0 else 0.15)
+        if s:
+            p.tube(curve((c[0], c[1], c[2] + 0.12), (x * 0.9, c[1], c[2] + 0.1), (x, c[1], z - 0.01), n=6), 0.007, "pal_silver")
+        p.lathe([(0.0, 0.0), (0.028, 0.0), (0.03, 0.01), (0.0, 0.012)], (x, c[1], z - 0.012), "pal_silver", segs=8)
+        p.cyl(0.013, 0.08, (x, c[1], z), "pal_ivory", segs=8)
+        p.lathe([(0.0, 0.0), (0.009, 0.008), (0.011, 0.02), (0.006, 0.034), (0.0, 0.044)], (x, c[1], z + 0.084),
+                "glow_flame", segs=8)
+
+
+@model("shelves", "against_wall", ["shelves", "shelves_front"])
+def shelves(p):
+    """The 2D storage shelves: an open frame of five shelves stocked with jars, crocks, sacks and boxes."""
+    W, D, H = 0.9, 0.36, 1.3
+    yc = -D / 2
+    rng = p.rng
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.045, 0.045, H), (sx * (W / 2 - 0.0225), yc + sy * (D / 2 - 0.0225), H / 2), "pal_umber")
+    zs = [0.06 + k * (H - 0.08) / 4.6 for k in range(5)]
+    for z in zs:
+        p.box((W - 0.03, D - 0.02, 0.025), (0, yc, z), WOOD)
+    for z0, z1 in zip(zs, zs[1:] + [H + 0.3]):
+        room = min(z1 - z0 - 0.04, 0.26)
+        x = -W / 2 + 0.06
+        while x < W / 2 - 0.1:
+            kind = rng.random()
+            y = yc - rng.uniform(-0.04, 0.06)
+            if kind < 0.4:
+                r = rng.uniform(0.03, 0.05)
+                h = rng.uniform(0.08, min(room, 0.18))
+                col = rng.choice(["pal_moss", "pal_bone", "pal_moon_blue", "pal_rust", "pal_bone_dark", "pal_bog"])
+                p.lathe([(0.0, 0.0), (r, 0.0), (r * 1.05, h * 0.7), (r * 0.6, h * 0.85), (r * 0.6, h), (0.0, h)],
+                        (x + r, y, z0 + 0.0125), col, segs=10)
+                if rng.random() < 0.5:
+                    p.cyl(r * 0.65, 0.012, (x + r, y, z0 + 0.0125 + h), "pal_umber", segs=8)
+                x += 2 * r + rng.uniform(0.01, 0.03)
+            elif kind < 0.7:
+                w = rng.uniform(0.12, 0.18)
+                h = rng.uniform(0.09, min(room, 0.16))
+                p.box((w, 0.14, h), (x + w / 2, y, z0 + 0.0125 + h / 2), rng.choice(["pal_tan", "pal_bone_dark", "pal_leather"]),
+                      soft=min(0.03, h * 0.3), rot=(0, 0, rng.uniform(-8, 8)))
+                x += w + 0.02
+            elif kind < 0.85:
+                w = rng.uniform(0.1, 0.16)
+                h = rng.uniform(0.06, min(room, 0.12))
+                p.box((w, 0.15, h), (x + w / 2, y, z0 + 0.0125 + h / 2), WOOD)
+                x += w + 0.02
+            else:
+                x += rng.uniform(0.05, 0.12)
+
+
+@model("pew", "free", ["pew", "pew_back"])
+def pew(p):
+    """The 2D church pew: a plank seat and tall back between carved end panels."""
+    W, D = 0.98, 0.44
+    wood = "pal_walnut"
+    end = [(-D / 2, 0.0), (D / 2, 0.0), (D / 2, 0.82), (D / 2 - 0.04, 0.88), (D / 2 - 0.12, 0.86), (D / 2 - 0.1, 0.4),
+           (-D / 2 + 0.06, 0.38), (-D / 2 + 0.02, 0.44), (-D / 2, 0.42)]
+    for s in (-1, 1):
+        p.prism(end, 0.05, (s * (W / 2 - 0.025), 0, 0), "pal_umber", rot=(0, 0, 90))
+    p.box((W - 0.06, D - 0.12, 0.04), (0, -0.04, 0.34), WOOD)
+    p.box((W - 0.06, 0.035, 0.46), (0, D / 2 - 0.08, 0.6), WOOD, rot=(-8, 0, 0))
+    p.box((W - 0.06, 0.05, 0.04), (0, D / 2 - 0.05, 0.84), wood)
+    p.box((W - 0.06, 0.03, 0.14), (0, -D / 2 + 0.06, 0.25), wood)
+    p.box((W - 0.06, 0.12, 0.03), (0, D / 2 - 0.02, 0.6), "pal_umber")
+
+
+@model("lectern", "free", ["lectern", "lectern_back"])
+def lectern(p):
+    """The 2D lectern: a red-panelled pedestal on a stepped base, a sloped desk with a great open book."""
+    p.box((0.42, 0.36, 0.05), (0, 0, 0.025), "pal_peat")
+    p.box((0.36, 0.3, 0.04), (0, 0, 0.07), "pal_umber")
+    p.box((0.26, 0.22, 0.62), (0, 0, 0.09 + 0.31), "pal_peat")
+    for s in (-1, 1):
+        p.box((0.16, 0.012, 0.5), (0, s * 0.116, 0.4), "pal_blood")
+        p.box((0.012, 0.15, 0.5), (s * 0.136, 0, 0.4), "pal_blood")
+    p.box((0.3, 0.26, 0.04), (0, 0, 0.72), "pal_umber")
+    p.box((0.46, 0.36, 0.035), (0, -0.01, 0.82), "pal_umber", rot=(-22, 0, 0))
+    p.box((0.46, 0.02, 0.04), (0, -0.19, 0.76), "pal_peat", rot=(-22, 0, 0))
+    for s in (-1, 1):
+        p.box((0.2, 0.27, 0.025), (s * 0.105, -0.015, 0.852), "pal_vellum", rot=(-22, s * 6, 0), soft=0.005)
+    p.box((0.42, 0.29, 0.006), (0, -0.015, 0.838), "pal_blood", rot=(-22, 0, 0))
+    p.box((0.004, 0.24, 0.004), (0.0, -0.015, 0.866), "pal_peat", rot=(-22, 0, 0))
+
+
+def _table_frame(p, W, D, H, top, legs):
+    p.box((W, D, 0.04), (0, 0, H - 0.02), top)
+    for s in (-1, 1):
+        p.box((W - 0.14, 0.03, 0.07), (0, s * (D / 2 - 0.06), H - 0.075), legs)
+        p.box((0.03, D - 0.14, 0.07), (s * (W / 2 - 0.07), 0, H - 0.075), legs)
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            p.box((0.06, 0.06, H - 0.04), (sx * (W / 2 - 0.07), sy * (D / 2 - 0.06), (H - 0.04) / 2), legs)
+
+
+@model("table_set", "free", ["table_set", "table_set_back"])
+def table_set(p):
+    """The 2D table laid for a meal: pewter plates and goblets, a three-branch candelabrum, a gnawed bone."""
+    W, D, H = 0.98, 0.6, 0.5
+    _table_frame(p, W, D, H, WOOD, "pal_umber")
+    p.box((W - 0.2, 0.018, 0.04), (0, 0, 0.1), "pal_umber")
+    for x, y in ((-0.3, -0.17), (0.25, -0.17), (-0.25, 0.17), (0.3, 0.17)):
+        p.cyl(0.075, 0.01, (x, y, H), "pal_pewter", r2=0.085, segs=14, smooth=False)
+        p.lathe([(0.0, 0.0), (0.03, 0.0), (0.008, 0.01), (0.008, 0.05), (0.03, 0.065), (0.032, 0.1), (0.0, 0.1)],
+                (x + 0.1 * (1 if x < 0 else -1) * 0, y + (0.09 if y < 0 else -0.09), H), "pal_silver", segs=10)
+    p.cyl(0.012, 0.14, (0.05, 0.02, H + 0.015), "pal_bone", rot=(0, 90, 30), segs=6)
+    for s in (-1, 1):
+        p.lathe([(0.0, 0.0), (0.016, 0.0), (0.02, 0.012), (0.0, 0.016)], (0.05 + s * 0.06 * math.cos(math.radians(30)),
+                0.02 + s * 0.06 * math.sin(math.radians(30)), H + 0.008), "pal_bone", segs=6)
+    c = (0.0, 0.0, H)
+    p.lathe([(0.05, 0.0), (0.055, 0.01), (0.02, 0.03), (0.012, 0.15), (0.03, 0.17), (0.0, 0.17)], c, "pal_silver", segs=10)
+    for s in (-1, 0, 1):
+        x = s * 0.1
+        z = H + (0.19 if s == 0 else 0.15)
+        if s:
+            p.tube(curve((0.0, 0.0, H + 0.12), (x * 0.9, 0.0, H + 0.1), (x, 0.0, z - 0.01), n=6), 0.007, "pal_silver")
+        p.lathe([(0.0, 0.0), (0.028, 0.0), (0.03, 0.01), (0.0, 0.012)], (x, 0.0, z - 0.012), "pal_silver", segs=8)
+        p.cyl(0.013, 0.08, (x, 0.0, z), "pal_ivory", segs=8)
+        p.lathe([(0.0, 0.0), (0.009, 0.008), (0.011, 0.02), (0.006, 0.034), (0.0, 0.044)], (x, 0.0, z + 0.084),
+                "glow_flame", segs=8)
+
+
+@model("letters_table", "free", ["letters_table"])
+def letters_table(p):
+    """The 2D side table with a bundle of letters tied in violet ribbon and a guttering candle."""
+    W, D, H = 0.5, 0.5, 0.5
+    _table_frame(p, W, D, H, WOOD, "pal_umber")
+    p.box((0.2, 0.15, 0.06), (-0.05, 0.0, H + 0.03), "pal_vellum", rot=(0, 0, 12), soft=0.004)
+    for a, w in ((12, 0.022), (102, 0.022)):
+        p.box((0.24 if a == 12 else 0.18, w, 0.064), (-0.05, 0.0, H + 0.031), "pal_plum", rot=(0, 0, a))
+    p.lathe([(0.0, 0.0), (0.04, 0.0), (0.045, 0.008), (0.012, 0.012), (0.0, 0.012)], (0.14, 0.1, H), "pal_tan", segs=10)
+    p.cyl(0.02, 0.07, (0.14, 0.1, H + 0.01), "pal_ivory", segs=10)
+    p.box((0.012, 0.012, 0.04), (0.155, 0.09, H + 0.05), "pal_vellum")
+    p.lathe([(0.0, 0.0), (0.009, 0.008), (0.011, 0.02), (0.006, 0.034), (0.0, 0.044)], (0.14, 0.1, H + 0.084),
+            "glow_flame", segs=8)
+
+
+@model("coffin", "free", ["coffin", "coffin_back"])
+def coffin(p):
+    """The 2D coffin on two trestles: a six-sided box of dark wood with a raised lid."""
+    L, Wd, H = 0.96, 0.44, 0.2
+    top = [(-0.12, -L / 2), (0.12, -L / 2), (Wd / 2, L * 0.18), (0.16, L / 2), (-0.16, L / 2), (-Wd / 2, L * 0.18)]
+    zb = 0.32
+    p.prism(top, H, (0, 0, zb + H / 2), "pal_ash_violet", rot=(90, 0, 0))
+    lid = [(x * 1.06, y * 1.03) for x, y in top]
+    p.prism(lid, 0.035, (0, 0, zb + H + 0.0175), WOOD, rot=(90, 0, 0))
+    inner = [(x * 0.8, y * 0.85) for x, y in top]
+    p.prism(inner, 0.02, (0, 0, zb + H + 0.045), "pal_grave", rot=(90, 0, 0))
+    for y in (-L / 2 + 0.2, L / 2 - 0.22):
+        p.box((0.5, 0.06, 0.05), (0, y, zb - 0.025), "pal_umber")
+        for s in (-1, 1):
+            p.tube([(s * 0.13, y, zb - 0.04), (s * 0.22, y, 0.0)], 0.022, "pal_umber", segs=4, smooth=False)
+
+
 # --- Stairs and doors ------------------------------------------------------------------------------------------
 
 STEPS, RISE, RUN, WIDTH = 7, 1.5, 1.0, 0.9   # as world/look/stairs.gd: 7.5 ft up over one square
@@ -772,6 +1210,56 @@ def stairs_down(p):
             x, y = a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t
             p.lathe([(0.012, 0.0), (0.018, 0.02), (0.01, 0.05), (0.01, rail_h - 0.1), (0.016, rail_h - 0.06),
                      (0.012, rail_h - 0.03)], (x, y, 0.0), "pal_umber", segs=6)
+
+
+STONE_WALL = "tex_dungeon__stone_wall"
+STONE_FLOOR = "tex_dungeon__stone_floor"
+
+
+def _stone_steps(p, z_of, top_of):
+    """Worn stone steps across one square, each a block with a slightly darker riser, from the entry (front) back."""
+    td = RUN / STEPS
+    rng = p.rng
+    for i in range(STEPS):
+        zt = z_of(i)
+        y0 = -RUN / 2 + td * i
+        base = top_of(i)
+        p.box((WIDTH - 0.04, td, zt - base - 0.03), (0, y0 + td / 2, (zt - 0.03 + base) / 2), "pal_stone_deep")
+        p.box((WIDTH - 0.03, td + 0.015, 0.03), (rng.uniform(-0.005, 0.005), y0 + td / 2 - 0.0075, zt - 0.015), STONE_FLOOR,
+              rot=(0, rng.uniform(-0.8, 0.8), rng.uniform(-0.8, 0.8)))
+
+
+@model("stairs_up_stone", "stairs_up", ["stair_riser"])
+def stairs_up_stone(p):
+    """Stairs up in stone places (dungeons, churches, the castle): stone steps between two stone side walls."""
+    rh = RISE / STEPS
+    td = RUN / STEPS
+    _stone_steps(p, lambda i: rh * (i + 1), lambda i: 0.0)
+    side = [(-RUN / 2, 0.0), (RUN / 2, 0.0), (RUN / 2, RISE + 0.18), (RUN / 2 - td, RISE + 0.18), (-RUN / 2, rh + 0.18)]
+    cap = [(-RUN / 2 - 0.01, rh + 0.16), (RUN / 2 - td, RISE + 0.16), (RUN / 2 + 0.01, RISE + 0.16), (RUN / 2 + 0.01, RISE + 0.22),
+           (RUN / 2 - td, RISE + 0.22), (-RUN / 2 - 0.01, rh + 0.22)]
+    for s in (-1, 1):
+        x = s * (WIDTH / 2 + 0.01)
+        p.prism(side, 0.08, (x, 0, 0), STONE_WALL, rot=(0, 0, 90))
+        p.prism(cap, 0.1, (x, 0, 0), "pal_slate", rot=(0, 0, 90))
+
+
+@model("stairs_down_stone", "stairs_down", ["stair_down"])
+def stairs_down_stone(p):
+    """A stair well down in stone places: stone steps into a shaft of stone, a low parapet round three sides."""
+    drop = 1.4
+    rh = drop / STEPS
+    _stone_steps(p, lambda i: -rh * (i + 1), lambda i: -drop - 0.02)
+    p.box((1.0, 1.0, 0.04), (0, 0, -drop - 0.04), "pal_void")
+    p.box((1.0, 0.05, drop), (0, 0.475, -drop / 2), STONE_WALL)
+    for s in (-1, 1):
+        p.box((0.05, 1.0, drop), (s * 0.475, 0, -drop / 2), STONE_WALL)
+    h = 0.3
+    p.box((1.0, 0.1, h), (0, 0.45, h / 2), STONE_WALL)
+    p.box((1.02, 0.12, 0.04), (0, 0.45, h + 0.02), "pal_slate")
+    for s in (-1, 1):
+        p.box((0.1, 0.9, h), (s * 0.45, 0.0, h / 2), STONE_WALL)
+        p.box((0.12, 0.92, 0.04), (s * 0.45, 0.0, h + 0.02), "pal_slate")
 
 
 @model("door_wood", "door", ["door_wood"])
