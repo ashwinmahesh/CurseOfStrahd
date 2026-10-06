@@ -104,7 +104,8 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
-		Audio.play_music("boss" if _boss_fight(cv) else "combat")
+		Audio.play_music("combat")
+		_boss_music.call_deferred(cv)   # the fight is set up just after this signal
 		cv.menu_requested.connect(func() -> void:
 			if screen is PauseMenu:
 				close_screen()
@@ -479,11 +480,13 @@ func _arrive(place_id: String) -> void:
 
 
 ## A fight with a foe that has legendary actions (Strahd, ADR 0014) plays the boss music.
-static func _boss_fight(cv: CombatView) -> bool:
+func _boss_music(cv: CombatView) -> void:
+	if not is_instance_valid(cv) or cv.e == null:
+		return
 	for c in cv.e.combatants:
 		if c.creature is Monster and not ((c.creature as Monster).data.get("legendary_actions", {}) as Dictionary).is_empty():
-			return true
-	return false
+			Audio.play_music("boss")
+			return
 
 
 # --- Strahd's presence (ADR 0014, story/strahd_presence.gd) -----------------------------------------
