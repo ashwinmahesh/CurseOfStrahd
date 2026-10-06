@@ -1,6 +1,6 @@
 # Elisabeth Durst — voice bible
 
-NPC `elisabeth_durst` (ghoul). The mistress of Death House, she/her. At the supper table beside Gustav
+NPC `elisabeth_durst` (ghast). The mistress of Death House, she/her. At the supper table beside Gustav
 (`death_house/dursts`).
 
 ## Who she is
@@ -8,7 +8,7 @@ NPC `elisabeth_durst` (ghoul). The mistress of Death House, she/her. At the supp
 The cult's true believer. Where Gustav wanted status, Elisabeth wanted the creed itself: one must die, that the rest
 may live forever. When she learned of her husband's child by the nursemaid, she gave the baby to the robed ones on
 the night he was born, and called it the first gift. She locked her own children in the attic so they would not see,
-and never went back. Now a ghoul, she is sharper and hungrier than her husband, and less polite about it.
+and never went back. Now a ghast, she is sharper and hungrier than her husband, and less polite about it.
 
 - **Wants:** to be proven right. Eternity, still.
 - **Fears:** that the gift was wasted; that the lord's refusal meant she was nothing to him.

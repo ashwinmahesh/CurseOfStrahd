@@ -330,6 +330,16 @@
       "kind": "examine",
       "label": "the conservatory hearth",
       "model": "fireplace"
+    },
+    {
+      "id": "conservatory_glass",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "examine",
+      "label": "stained glass of singers",
+      "model": "window_stained"
     }
   ],
   "containers": [
@@ -375,8 +385,16 @@
           "qty": 3
         },
         {
-          "id": "spell_scroll_level_1",
-          "qty": 3
+          "id": "spell_scroll__bless",
+          "qty": 1
+        },
+        {
+          "id": "spell_scroll__protection_from_poison",
+          "qty": 1
+        },
+        {
+          "id": "spell_scroll__spiritual_weapon",
+          "qty": 1
         }
       ]
     },

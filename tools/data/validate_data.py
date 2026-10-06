@@ -149,6 +149,12 @@ def semantic_checks(data):
     def need(kind, table, ident, where, level=0):
         if ident in table or (kind == "item" and ident in data.get("magic_items", {})):
             return
+        if kind == "item" and "__" in ident:
+            # A magic item template on a base (ADR 0012): "<template>__<base>", e.g. spell_scroll__bless.
+            tid, _, base = ident.partition("__")
+            tpl = data.get("magic_items", {}).get(tid, {}).get("template")
+            if tpl is not None and base in (data["spells"] if tpl.get("on") == "spell" else items):
+                return
         if kind == "spell" and level > PHASE_MAX_LEVEL:
             pending.append(f"{where}: spell '{ident}' (level {level} content, added in a later phase)")
         else:

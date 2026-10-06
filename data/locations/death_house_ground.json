@@ -310,7 +310,7 @@
       ],
       "kind": "examine",
       "label": "the oven",
-      "model": "stove"
+      "model": "oven_brick"
     },
     {
       "id": "kitchen_worktable",
