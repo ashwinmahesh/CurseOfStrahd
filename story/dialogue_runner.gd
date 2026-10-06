@@ -213,8 +213,8 @@ func next() -> Dictionary:
 				var taker := st.leader_character()
 				for item in got:
 					st.give_item(item, 1, taker)
-				for item in got.slice(1):
-					_queued.append({"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", item)]})
+				for item: Variant in got.slice(1):
+					_queued.append({"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", str(item))]})
 				return {"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", got[0])]}
 			"dark_gift":
 				pc += 1
