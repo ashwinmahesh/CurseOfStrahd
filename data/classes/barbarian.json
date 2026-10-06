@@ -238,7 +238,8 @@
               ],
               "melee": true
             },
-            "replaceable": "long_rest"
+            "replaceable": "long_rest",
+            "replace_max": 1
           },
           "implemented": "engine"
         }

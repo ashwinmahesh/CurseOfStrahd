@@ -67,7 +67,8 @@ Per character: "7 of 7" counter, always-prepared domain spells marked ★ and no
 tags, spells above the character's slots greyed with the reason, and saved **loadouts** (Exploring, Dungeon crawl,
 Undead hunt). Wizards prepare from their spellbook; the screen notes that they can cast spellbook Rituals unprepared.
 2024 limits: Clerics, Druids and Wizards change any number; Paladins and Rangers replace one spell and Wizards one
-cantrip (unpick it, then pick the new one; the rest lock once it's used). The limit counts from the list the Long Rest
+cantrip (unpick it, then pick the new one; the rest lock once it's used). Weapon Mastery is on the same screen:
+Barbarians and Fighters swap one kind, Paladins, Rangers and Rogues any. The limit counts from the list the Long Rest
 ended with, so closing and reopening the screen doesn't give another swap. Opened from the Rest screen's "Change
 prepared spells" button after an uninterrupted Long Rest.
 
