@@ -19,7 +19,7 @@
         "name": "Wild Magic Surge",
         "summary": "Once per turn after casting a Sorcerer spell with a slot, roll a d20; on a 20, roll on the Wild Magic Surge table.",
         "text": "Once per turn, right after you cast a Sorcerer spell with a spell slot, you can roll a d20. On a 20, roll on the Wild Magic Surge table to create a random magical effect. If that effect is a spell, it is too wild to be affected by your Metamagic.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -36,7 +36,7 @@
           "recharge": "long"
         },
         "uses_resource": "tides_of_chaos",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -48,7 +48,7 @@
         "text": "Immediately after another creature you can see rolls the d20 for a D20 Test, you can take a Reaction and spend 1 Sorcery Point to roll 1d4 and apply the number as a bonus or penalty (your choice) to the d20 roll.",
         "action": "reaction",
         "uses_resource": "sorcery_points",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

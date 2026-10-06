@@ -342,7 +342,7 @@
                 "name": "Devil's Sight",
                 "summary": "See normally in Dim Light and Darkness, magical or not, within 120 feet.",
                 "text": "You can see normally in Dim Light and Darkness, both magical and nonmagical, within 120 feet of you.",
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 2
                 }
@@ -386,7 +386,7 @@
                 "name": "Eldritch Spear",
                 "summary": "One damaging Warlock cantrip with a range of 10 feet or more reaches 30 feet times your Warlock level.",
                 "text": "Choose one of your known Warlock cantrips that deals damage and has a range of 10 or more feet. When you cast it, its range increases by a number of feet equal to 30 times your Warlock level.",
-                "implemented": "text",
+                "implemented": "engine",
                 "prerequisites": {
                   "level": 2,
                   "cantrip": "damage"

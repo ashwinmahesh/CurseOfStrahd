@@ -148,6 +148,9 @@ func start(surprised_ids: Array = []) -> void:
 			order.insert(at, c)
 			c.set_meta("reflex_turn", true)
 	state = State.ACTIVE
+	for cc in combatants:
+		class_features.prepare(cc)
+	spells.zones.refresh_auras()
 	round_no = 1
 	log.round_no = 1
 	log.add("turn", "Round 1", "")
@@ -251,13 +254,17 @@ func can_see(a: Combatant, b: Combatant) -> bool:
 		var sees_invisible := a.creature.has_flag("see_invisibility") or (truesight > 0 and dist <= truesight)
 		if not sees_invisible:
 			return false
-	if spells.zones.line_obscured(a.cell, a.size_cells, b.cell, b.size_cells) and not by_sense:
+	# Devil's Sight (invocation): normal sight in Darkness, magical or not, within 120 ft.
+	var devil := a.creature.has_flag("devils_sight") and dist <= 120
+	if spells.zones.line_obscured(a.cell, a.size_cells, b.cell, b.size_cells, devil) and not by_sense:
 		return false
+	# Umbral Sight (Gloom Stalker): unseen in Darkness by creatures that rely on Darkvision.
+	var umbral := b.creature.has_flag("umbral_sight") and light_at(b.cell) == "dark"
 	match light_at(b.cell):
 		"magic_dark":
-			return by_sense
+			return by_sense or devil
 		"dark":
-			return by_sense or (a.creature.darkvision() >= dist and a.creature.darkvision() > 0) or outlined
+			return by_sense or devil or (a.creature.darkvision() >= dist and a.creature.darkvision() > 0 and not umbral) or outlined
 	return true
 
 
@@ -1014,7 +1021,9 @@ func _opportunity_attack(p: Combatant, target: Combatant) -> CombatResult:
 		return CombatResult.new()
 	p.reaction_available = false
 	log.add("reaction", "%s makes an Opportunity Attack against %s" % [p.name(), target.name()], p.id)
-	return _resolve_attack(p, target, option, {"reaction": true})
+	var oa := option.duplicate()
+	oa["opportunity"] = true
+	return _resolve_attack(p, target, oa, {"reaction": true, "opportunity": true})
 
 
 ## Runs `next` after `result`, or after the player answers the prompt `result` paused on (chaining again if the
@@ -2208,6 +2217,10 @@ func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
 		return
 	if not target.creature is Character or target.creature.hp <= 0 or distance(target, source) > 60 or not can_see(target, source):
 		return
+	var cfr := class_features.damage_reaction(source, target)
+	if not cfr.is_empty():
+		reaction_queue.append(cfr)
+		return
 	if target.creature.has_flag("fount_of_moonlight") and spells.can_react(target):
 		reaction_queue.append({"kind": "fount_of_moonlight", "reactor": target.id, "trigger": source.id})
 		return
@@ -2240,6 +2253,8 @@ func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 			return spells.can_react(reactor) and reactor.creature.hp > 0
 		"fount_of_moonlight":
 			return spells.can_react(reactor) and reactor.creature.has_flag("fount_of_moonlight")
+		"misty_escape":
+			return spells.can_react(reactor) and reactor.creature.hp > 0
 	return false
 
 
@@ -2257,6 +2272,8 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 			if distance(reactor, trigger) > reactor.reach_ft():
 				return CombatResult.new()
 			return _opportunity_attack(reactor, trigger)
+		"misty_escape":
+			return class_features.misty_escape(reactor, trigger)
 		"fount_of_moonlight":
 			reactor.reaction_available = false
 			var dc := (spells.numbers(reactor, spells._entry_any(reactor, "fount_of_moonlight"))["dc"] as Breakdown).total()
@@ -2292,6 +2309,7 @@ const _QUEUED_TEXT := {
 	"hellish_rebuke": ["Reaction: Hellish Rebuke?", "%s hurt %s. Answer with Hellish Rebuke: a Dex save or Fire damage.", "Reaction and a spell slot"],
 	"storms_thunder": ["Reaction: Storm's Thunder?", "%s hurt %s. Answer with 1d8 Thunder damage.", "Reaction and a use of Giant Ancestry"],
 	"sentinel": ["Reaction: Sentinel?", "%s attacks someone beside %s. Make an Opportunity Attack against it?", "Reaction"],
+	"misty_escape": ["Reaction: Misty Escape?", "%s hurt %s. Vanish with Misty Step (Steps of the Fey or a slot)?", "Reaction and a use of Steps of the Fey"],
 	"fount_of_moonlight": ["Reaction: Fount of Moonlight?", "%s hurt %s. Flare moonlight at it: a Constitution save or Blinded?", "Reaction"],
 	"berserk_lashing": ["Reaction: Berserk Lashing?", "%s hurt %s. Lash out with a Slam at a random creature within 5 ft?", "Reaction"],
 }

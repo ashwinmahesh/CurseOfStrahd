@@ -803,6 +803,9 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 	var out := {}
 	if c == null:
 		return out
+	if "tides_of_chaos" in c.armed:
+		c.armed.erase("tides_of_chaos")
+		out["advantage"] = ["Tides of Chaos"]
 	if "lucky" in c.armed and cr is Character and (cr as Character).resource_left("luck_points") > 0:
 		c.armed.erase("lucky")
 		(cr as Character).spend_resource("luck_points")
@@ -826,10 +829,13 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 ## for each (default: use it), since a save can't pause the fight.
 func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	var e := enc()
-	if e == null or not cr is Character:
+	if e == null:
 		return
 	var c := e.get_c(cr.id)
 	if c == null:
+		return
+	e.class_features.after_d20(c, t)
+	if not cr is Character:
 		return
 	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.
 	if not t.success and t.target > 0 and t.kind == D20Test.Kind.SAVING_THROW:

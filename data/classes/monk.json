@@ -433,7 +433,7 @@
           "name": "Empowered Strikes",
           "summary": "Your Unarmed Strikes can deal Force damage instead of Bludgeoning.",
           "text": "Whenever you deal damage with your Unarmed Strike, it can deal Force damage or its normal damage type.",
-          "implemented": "text"
+          "implemented": "engine"
         },
         {
           "id": "subclass_feature",

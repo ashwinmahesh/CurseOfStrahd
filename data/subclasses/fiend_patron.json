@@ -67,7 +67,7 @@
           "recharge": "long"
         },
         "uses_resource": "dark_ones_own_luck",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

@@ -202,3 +202,53 @@ func test_colossus_slayer_adds_a_d8_to_a_wounded_target() -> void:
 	assert_true(e.attack(r, t, _melee(e, r)).hit)
 	assert_true(e.log.entries.any(func(x: Dictionary) -> bool:
 		return (x.get("details", []) as Array).any(func(d: Variant) -> bool: return str(d).contains("Colossus Slayer"))))
+
+
+# --- Warlock ----------------------------------------------------------------------------------------------
+
+func _warlock(e: Encounter, invs: Array) -> Combatant:
+	var ch := TestChars.custom("warlock", "human", 1, {"eldritch_invocations": [invs[0]]})
+	# Later invocations (level 2+) added straight to the choice, as levelling up would.
+	for cd in ch.choice_defs:
+		if cd.kind == "invocation":
+			for i in range(1, invs.size()):
+				cd.picks.append(str(invs[i]))
+			break
+	var entry := ch.spellcasting[0] as Dictionary
+	if not "eldritch_blast" in (entry["cantrips"] as Array):
+		(entry["cantrips"] as Array).append("eldritch_blast")
+	return _add(e, ch, Vector2i(2, 3))
+
+
+func test_invocations_cast_at_will_push_with_eldritch_blast_and_see_in_darkness() -> void:
+	var e := TestCombat.open_field(3)
+	var w := _warlock(e, ["armor_of_shadows", "repelling_blast", "devils_sight"])
+	var t := TestCombat.punching_bag(e, Vector2i(5, 3), 300)
+	TestCombat.start_with(e, w)
+	assert_true(w.creature.has_flag("devils_sight"))
+	var picked := ClassFeatures.picks_of_kind(w, "invocation")
+	assert_true("armor_of_shadows" in picked, str(picked))
+	var ma := {}
+	for sp in e.spells.castable(w):
+		if str(sp["id"]) == "mage_armor":
+			ma = sp
+	assert_true(bool(ma.get("free", false)), "Mage Armor at will")
+	TestCombat.next_d20(e, 19)
+	assert_true(e.spells.cast(w, "eldritch_blast", 0, [t]).ok)
+	assert_true(t.cell.x > 5, "Repelling Blast pushed it: %s" % t.cell)
+
+
+# --- Archfey and Lore ---------------------------------------------------------------------------------------
+
+func test_cutting_words_can_turn_a_hit_into_a_miss() -> void:
+	var e := TestCombat.open_field(3)
+	var b := _add(e, TestChars.custom("bard", "human", 3, {"bard_subclass": ["college_of_lore"]}), Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(3, 4))
+	var z := TestCombat.foe(e, "zombie", Vector2i(4, 4))
+	b.reaction_rules["cutting_words"] = "auto"
+	TestCombat.start_with(e, z)
+	var ac := a.creature.ac_value()
+	# A roll that only just hits: the zombie's +3 with a d20 that lands exactly on the AC.
+	TestCombat.next_d20(e, clampi(ac - 3, 2, 19))
+	e.attack(z, a, e.attack_options(z)[0]["id"])
+	assert_false(b.reaction_available, "Cutting Words spent")

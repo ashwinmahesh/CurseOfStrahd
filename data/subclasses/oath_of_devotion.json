@@ -77,7 +77,7 @@
         "id": "smite_of_protection",
         "name": "Smite of Protection",
         "summary": "When you cast Divine Smite, you and allies in your aura have Half Cover until your next turn.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

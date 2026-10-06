@@ -201,6 +201,7 @@ func after_hit_target(st: Dictionary, miss: Callable) -> Array:
 	var critical := bool(st["critical"])
 	var melee := bool((st["option"] as Dictionary)["melee"])
 	var out: Array = []
+	e.class_features.after_hit_target(st, miss, out)
 	if not critical and t.total < ac + 5 and e.spells.can_cast_reaction(target, "shield"):
 		out.append({"kind": "shield", "reactor": target, "trigger": c.id, "title": "Reaction: Shield?",
 			"text": "%s hits %s: %d vs AC %d. Shield gives +5 AC until the start of %s's next turn (AC %d), so this attack misses." % [c.name(), target.name(), t.total, ac, target.name(), ac + 5],

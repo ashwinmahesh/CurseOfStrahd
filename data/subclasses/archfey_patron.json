@@ -61,7 +61,7 @@
             }
           }
         ],
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {
@@ -72,7 +72,7 @@
         "summary": "Cast Misty Step as a Reaction when you take damage; adds the Disappearing and Dreadful step options.",
         "text": "You can cast Misty Step as a Reaction when you take damage. You also gain two more options for Steps of the Fey. Disappearing Step: you have the Invisible condition until the start of your next turn or until you attack, deal damage or cast a spell. Dreadful Step: creatures within 5 feet of the space you left or the space you arrive in (your choice) make a Wisdom saving throw against your spell save DC, taking 2d10 Psychic damage on a failure.",
         "action": "reaction",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

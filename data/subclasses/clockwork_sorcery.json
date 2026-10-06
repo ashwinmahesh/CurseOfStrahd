@@ -58,7 +58,7 @@
           "recharge": "long"
         },
         "uses_resource": "restore_balance",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

@@ -52,7 +52,7 @@
         "summary": "Right after casting Divine Smite, spend Channel Divinity to share 2d8 + Paladin level Temporary Hit Points among creatures within 30 feet.",
         "text": "Immediately after you cast Divine Smite, you can expend a use of Channel Divinity and hand out Temporary Hit Points to creatures of your choice within 30 feet of you, which can include you. The total equals 2d8 plus your Paladin level, divided among them as you like.",
         "uses_resource": "paladin_channel_divinity",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

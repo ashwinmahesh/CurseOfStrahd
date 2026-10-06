@@ -68,23 +68,23 @@
                   "value": 60
                 }
               ],
-              "implemented": "text"
+              "implemented": "engine"
             },
             {
               "id": "panther",
               "name": "Panther",
               "summary": "A Climb Speed equal to your Speed.",
-              "implemented": "text"
+              "implemented": "engine"
             },
             {
               "id": "salmon",
               "name": "Salmon",
               "summary": "A Swim Speed equal to your Speed.",
-              "implemented": "text"
+              "implemented": "engine"
             }
           ]
         },
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

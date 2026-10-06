@@ -344,6 +344,9 @@ func range_ft(s: Dictionary, caster: Combatant = null) -> int:
 			if caster != null and ft >= 10 and ((s.has("attack") and enc().features.has_feat(caster, "spell_sniper")) \
 					or (str(s.get("school", "")) == "illusion" and CombatFeatures.has_feature(caster, "improved_illusions"))):
 				ft += 60
+			# Eldritch Spear: a damaging Warlock cantrip reaches 30 ft × Warlock level.
+			if caster != null and int(s.get("level", 0)) == 0 and s.has("damage") and ClassFeatures.knows_invocation(caster, "eldritch_spear") and "warlock" in (s.get("classes", []) as Array):
+				ft = maxi(ft, 30 * ClassFeatures.level_of(caster, "warlock"))
 			var sc := s.get("cantrip_scaling", {}) as Dictionary
 			if sc.has("range_doubles") and caster != null:
 				ft *= int(pow(2, Spellcasting.cantrip_tier(caster.creature.character_level())))
@@ -595,6 +598,8 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
 	var slot := int(ctx["slot"])
+	if not free:
+		enc().class_features.after_cast(c, s, slot)
 	if slot <= 0 or free or not c.creature is Character:
 		return
 	var ch := c.creature as Character
@@ -833,7 +838,9 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			_spare_the_dying(ctx, tgt[0], r)
 			return
 		"misty_step":
+			var start := c.cell
 			_teleport(c, ctx["cell"] as Vector2i, r)
+			enc().class_features.fey_step_rider(c, start)
 			return
 		"revivify":
 			_revivify(ctx, tgt[0], r)
@@ -976,6 +983,13 @@ func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictio
 		rolled = {"total": mx, "text": "maximum (Overchannel) = %d" % mx}
 	var bonus := _damage_bonus(ctx)
 	var total := int(rolled["total"]) + bonus.total()
+	# Elemental Affinity (Draconic 6), Radiant Soul (Celestial 6): Charisma to one damage roll of the type.
+	var cc := ctx["c"] as Combatant
+	var dty := _damage_type_safe(ctx)
+	if (ClassFeatures.has(cc, "elemental_affinity") and dty in ClassFeatures.picks(cc, "elemental_affinity")) \
+			or (ClassFeatures.has(cc, "radiant_soul") and dty in ["radiant", "fire"] and enc().class_features._once(cc, "radiant_soul")):
+		bonus.add("Charisma (%s)" % ("Elemental Affinity" if ClassFeatures.has(cc, "elemental_affinity") else "Radiant Soul"), maxi(0, cc.creature.ability_mod(&"cha")))
+		total += maxi(0, cc.creature.ability_mod(&"cha"))
 	var text := "%s %s%s: %s" % [(ctx["s"] as Dictionary)["name"], dice, " ×2 (Critical Hit)" if critical else "", rolled["text"]]
 	if str(sp["id"]) == "sorcerous_burst":
 		var burst := specials.sorcerous_burst_extra(ctx, str(rolled["text"]))
@@ -1410,7 +1424,9 @@ func _metamagic_check(c: Combatant, s: Dictionary, meta: Array) -> String:
 		cost += int(METAMAGIC_COST[m])
 		if not m in ["empowered", "seeking"]:
 			main += 1
-	if main > 1:
+	# Sorcery Incarnate (Sorcerer 7): two options on one spell while Innate Sorcery is active.
+	var allowed := 2 if CombatFeatures.has_feature(c, "sorcery_incarnate") and c.creature.has_flag("innate_sorcery") else 1
+	if main > allowed:
 		return "Only one Metamagic option per spell (Empowered and Seeking can join another)"
 	if "twinned" in meta and int((s.get("upcast", {}) as Dictionary).get("targets", 0)) <= 0:
 		return "Twinned Spell needs a spell that can target more creatures at a higher level"

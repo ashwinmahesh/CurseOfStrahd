@@ -68,7 +68,7 @@
           "recharge": "long"
         },
         "uses_resource": "cosmic_omen",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

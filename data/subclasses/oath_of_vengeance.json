@@ -62,7 +62,7 @@
         "name": "Relentless Avenger",
         "summary": "When you hit with an Opportunity Attack, the target's Speed drops to 0 and you can move half your Speed.",
         "text": "Your supernatural focus helps you close off a foe's retreat. When you hit a creature with an Opportunity Attack, you can reduce its Speed to 0 until the end of the current turn, and you can then move up to half your Speed as part of the same Reaction without provoking Opportunity Attacks.",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

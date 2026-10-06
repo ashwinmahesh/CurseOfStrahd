@@ -397,10 +397,12 @@ func difficult_cells(c: Combatant) -> Dictionary:
 
 ## "heavy", "light" or "" for a square (Fog Cloud, Darkness, Stinking Cloud, Sleet Storm are Heavily Obscured; Web
 ## is Lightly Obscured).
-func obscured(cell: Vector2i) -> String:
+func obscured(cell: Vector2i, see_in_darkness: bool = false) -> String:
 	var best := ""
 	for o in objects:
 		if o.expired() or not cell in o.cells:
+			continue
+		if see_in_darkness and bool(o.rule("darkness", false)):
 			continue
 		var ob := str(o.rule("obscured", ""))
 		if ob == "heavy":
@@ -478,7 +480,7 @@ func spell_light(cell: Vector2i) -> Dictionary:
 
 ## Whether the straight line between two squares passes through a Heavily Obscured or magically dark square
 ## (the end squares count too).
-func line_obscured(a: Vector2i, a_size: int, b: Vector2i, b_size: int) -> bool:
+func line_obscured(a: Vector2i, a_size: int, b: Vector2i, b_size: int, see_in_darkness: bool = false) -> bool:
 	if objects.is_empty():
 		return false
 	var from := Vector2(a.x + a_size / 2.0, a.y + a_size / 2.0)
@@ -487,6 +489,6 @@ func line_obscured(a: Vector2i, a_size: int, b: Vector2i, b_size: int) -> bool:
 	for i in steps + 1:
 		var p := from.lerp(to, float(i) / steps)
 		var cell := Vector2i(floori(p.x), floori(p.y))
-		if obscured(cell) == "heavy":
+		if obscured(cell, see_in_darkness) == "heavy":
 			return true
 	return false

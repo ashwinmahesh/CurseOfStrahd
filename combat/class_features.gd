@@ -315,11 +315,19 @@ func _bard(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw: 
 			"Expend a spell slot (no action required) to regain a use of Bardic Inspiration."))
 	match ch.subclasses.get("bard", ""):
 		"college_of_glamour":
+			if has(c, "mantle_of_majesty"):
+				var active := c.creature.has_flag("mantle_of_majesty")
+				var mw := bw
+				if mw == "" and not active and _uses(c, "mantle_of_majesty", "Mantle of Majesty", 1, "long") <= 0 and _lowest_slot(ch) < 3:
+					mw = "Used (or a level 3 slot)"
+				out.append(_entry("mantle_of_majesty", "Mantle of Majesty: Command" if active else "Mantle of Majesty", "Command, no slot", "bonus", mw, "enemy",
+					"Bonus Action: cast Command without a slot; for 1 minute you can do so again each turn.", 60))
 			if has(c, "mantle_of_inspiration"):
 				out.append(_entry("mantle_of_inspiration", "Mantle of Inspiration", "temp HP to allies", "bonus", _first(bw, iw), "none",
 					"Bonus Action, Bardic Inspiration: up to Charisma-modifier creatures within 60 ft gain twice the die in Temporary Hit Points and can move without provoking."))
 		"college_of_dance":
-			pass
+			if c.has_meta("agile_strike") and str(c.get_meta("agile_strike")) == _turn_key():
+				out.append(_entry("agile_strike", "Agile Strikes", "Unarmed Strike", "free", tw, "enemy", "Expending Bardic Inspiration lets you make one Unarmed Strike.", 5))
 
 
 static func _lowest_slot(ch: Character) -> int:
@@ -371,9 +379,6 @@ func _druid(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, bw:
 						"dragon": "Intelligence and Wisdom checks and Constitution saves to keep Concentration treat a 9 or lower as a 10."}[form]))
 			if c.creature.has_flag("starry_archer"):
 				out.append(_entry("starry_arrow", "Luminous Arrow", "1d8 + %d Radiant" % c.creature.ability_mod(&"wis"), "bonus", bw, "enemy", "Bonus Action: a ranged spell attack.", 60))
-	if c.creature.has_flag("moon_form") or ch.subclasses.get("druid", "") == "circle_of_the_moon":
-		if has(c, "moonlight_step"):
-			pass
 
 
 ## The Beasts this druid can become now: known forms (or the bestiary's) up to its Challenge Rating limit.
@@ -417,7 +422,9 @@ func _sorcerer(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, 
 			out.append(_entry("slot_to_points:%d" % low, "Level %d slot → %d points" % [low, low], "Font of Magic", "free", tw, "none", "Expend a spell slot to gain Sorcery Points equal to its level."))
 	match ch.subclasses.get("sorcerer", ""):
 		"wild_magic_sorcery":
-			pass
+			if has(c, "tides_of_chaos") and not "tides_of_chaos" in c.armed:
+				out.append(_entry("tides_of_chaos", "Tides of Chaos", "Advantage on a D20 Test", "free", _first(tw, "" if _uses(c, "tides_of_chaos", "Tides of Chaos", 1, "long") > 0 else "Used"), "none",
+					"Advantage on your next D20 Test; your next Sorcerer spell with a slot then surges."))
 		"clockwork_sorcery":
 			if has(c, "bastion_of_law"):
 				out.append(_entry("bastion_of_law", "Bastion of Law", "ward of d8s", "action", _first(aw, _res_why(c, "sorcery_points")), "ally",
@@ -611,6 +618,8 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			ch.spend_resource("bardic_inspiration")
 			c.bonus_available = false
 			give_inspiration(c, t)
+			if has(c, "dazzling_footwork"):
+				c.set_meta("agile_strike", _turn_key())
 		"font_of_inspiration":
 			var slot := _lowest_slot(ch)
 			ch.expend_slot(slot)
@@ -688,6 +697,29 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 		"starry_arrow":
 			c.bonus_available = false
 			return _luminous_arrow(c, t)
+		"tides_of_chaos":
+			ch.spend_resource("tides_of_chaos")
+			c.armed.append("tides_of_chaos")
+			c.set_meta("tides_used", true)
+			e.log.add("info", "%s calls on the Tides of Chaos" % c.name(), c.id)
+		"agile_strike":
+			c.remove_meta("agile_strike")
+			var keep := c.bonus_available
+			var res := _unarmed(c, t, "Agile Strikes", false)
+			c.bonus_available = keep
+			return res
+		"mantle_of_majesty":
+			if t == null:
+				return CombatResult.fail("Choose a creature")
+			if not c.creature.has_flag("mantle_of_majesty"):
+				if ch.resource_left("mantle_of_majesty") > 0:
+					ch.spend_resource("mantle_of_majesty")
+				else:
+					ch.expend_slot(maxi(3, _lowest_slot(ch)))
+				c.creature.add_effect(_minutes(c, "Mantle of Majesty", "mantle_of_majesty", 1).with_modifier("flag", {"value": "mantle_of_majesty"}))
+			c.bonus_available = false
+			var word := "grovel" if Creature.SIZES.find(t.creature.size) <= Creature.SIZES.find(&"large") else "halt"
+			return e.spells.cast_free(c, "command", [t], Vector2.INF, {"choice": word, "word": word, "no_concentration": true})
 		"innate_sorcery":
 			if ch.resource_left("innate_sorcery") > 0:
 				ch.spend_resource("innate_sorcery")
@@ -920,6 +952,8 @@ func give_inspiration(c: Combatant, t: Combatant) -> void:
 	fx.turn_owner_id = c.id
 	fx.stack_key = "feature:bardic_inspiration"
 	fx.modifiers.append(Modifier.of("inspiration_die", {"dice": "1d%d" % die}, "Bardic Inspiration", &"feature"))
+	if has(c, "combat_inspiration"):
+		fx.data = {"valor": true, "die": die}
 	t.creature.add_effect(fx)
 	e.log.add("info", "%s inspires %s (d%d)" % [c.name(), t.name(), die], c.id)
 	e.events.append({"type": "condition", "id": t.id})
@@ -943,7 +977,9 @@ func _wild_shape(c: Combatant, form_id: String) -> CombatResult:
 		opts["ac_floor"] = 13 + c.creature.ability_mod(&"wis")
 	if c.creature.concentration == null:
 		pass
-	e.shapes.transform(c, form, opts)
+	var m := e.shapes.transform(c, form, opts)
+	if has(c, "improved_circle_forms"):
+		m.add_effect(Effect.new("Improved Circle Forms", &"feature", "improved_circle_forms").with_modifier("save", {"ability": "con", "value": maxi(0, ch.ability_mod(&"wis"))}))
 	return CombatResult.new()
 
 
@@ -1074,7 +1110,7 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary, adv: 
 	# Hunter: Escape the Horde (Opportunity Attacks against you), Multiattack Defense.
 	if has(target, "multiattack_defense") and str(target.get_meta("hit_by_%s" % c.id, "")) == _turn_key():
 		dis.append("Multiattack Defense")
-	if bool((option.get("opts", {}) as Dictionary).get("opportunity", false)) and has(target, "escape_the_horde"):
+	if bool(option.get("opportunity", false)) and has(target, "escape_the_horde"):
 		dis.append("Escape the Horde")
 	if has(c, "precise_hunter") and c.creature.modifiers_for(&"extra_damage").any(func(m: Modifier) -> bool: return str(m.data.get("vs", "")) == target.id and m.source_name == "Hunter's Mark"):
 		adv.append("Precise Hunter")
@@ -1202,6 +1238,11 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, st: Dictiona
 	if c.creature.has_flag("elemental_attunement") and p.item_id == "unarmed_strike" and alive and Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large"):
 		if not _save(target, &"str", 8 + c.creature.proficiency_bonus() + c.creature.ability_mod(&"wis"), "Elemental Attunement"):
 			e.forced_move(target, e.center_of(c), 10)
+	# Relentless Avenger (Vengeance 7): an Opportunity Attack hit stops the target and lets the paladin move.
+	if bool(option.get("opportunity", false)) and has(c, "relentless_avenger"):
+		if alive:
+			var stop := _timed(c, "Speed 0 (Relentless Avenger)", "relentless_avenger", Effect.Ends.END_OF_TURN, e.current() if e.current() != null else target).with_modifier("speed_set", {"value": 0})
+			target.creature.add_effect(stop)
 	# Eldritch Smite: knock a Huge or smaller creature Prone.
 	if bool(st.get("eldritch_smite", false)) and alive and Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"huge"):
 		target.creature.add_condition(&"prone", "Eldritch Smite")
@@ -1336,6 +1377,13 @@ func _in_aura(p: Combatant, t: Combatant) -> bool:
 
 # --- Turns --------------------------------------------------------------------------------------------
 
+## When a fight starts: the always-on benefits are in place before anyone acts.
+func prepare(c: Combatant) -> void:
+	var ch := _ch(c)
+	if ch != null:
+		_standing_effects(c, ch)
+
+
 func turn_start(c: Combatant) -> void:
 	var e := enc()
 	# Primal companion: a fresh order each round.
@@ -1344,6 +1392,7 @@ func turn_start(c: Combatant) -> void:
 	var ch := _ch(c)
 	if ch == null:
 		return
+	_standing_effects(c, ch)
 	if raging(c) and (c.creature.has_condition(&"incapacitated") or str(ch.armor_situation().get("armor", "")) == "heavy"):
 		end_rage(c, "incapacitated or in Heavy armor")
 	# World Tree: Vitality Surge's life-giving branches to another creature within 10 ft.
@@ -1367,6 +1416,43 @@ func turn_start(c: Combatant) -> void:
 	if has(c, "dread_ambusher") and not c.has_meta("ambushed"):
 		c.set_meta("ambushed", true)
 		c.movement_left += 10
+
+
+## Always-on benefits these features give in a fight, kept as one effect (rebuilt each turn): Dazzling Footwork's
+## and Empowered Strikes' Unarmed Strikes, Roving, Aspect of the Wilds, Umbral Sight, Devil's Sight, Beguiling Twist.
+func _standing_effects(c: Combatant, ch: Character) -> void:
+	for fx: Effect in c.creature.effects.duplicate():
+		if fx.stack_key == "feature:class_standing":
+			c.creature.remove_effect(fx)
+	var fx2 := Effect.new("Class features", &"feature", "class_standing")
+	fx2.stack_key = "feature:class_standing"
+	fx2.ends = Effect.Ends.NEVER
+	var unarmored := ch.equipped("armor").is_empty() and str(ch.equipped("off_hand").get("category", "")) != "shield"
+	if has(c, "dazzling_footwork") and unarmored:
+		fx2.modifiers.append(Modifier.of("weapon_override", {"items": ["unarmed_strike"], "die": "1d%d" % bardic_die(c), "ability": "dex"}, "Agile Strikes", &"feature"))
+	if has(c, "empowered_strikes"):
+		fx2.modifiers.append(Modifier.of("weapon_override", {"items": ["unarmed_strike"], "damage_type": "force"}, "Empowered Strikes", &"feature"))
+	if has(c, "roving") and str(ch.armor_situation().get("armor", "")) != "heavy":
+		fx2.modifiers.append(Modifier.of("speed", {"value": 10}, "Roving", &"feature"))
+		fx2.modifiers.append(Modifier.of("speed_set", {"kind": "climb", "value": ch.speed().total() + 10}, "Roving", &"feature"))
+		fx2.modifiers.append(Modifier.of("speed_set", {"kind": "swim", "value": ch.speed().total() + 10}, "Roving", &"feature"))
+	var aspect := picks(c, "aspect_of_the_wilds")
+	if "panther" in aspect:
+		fx2.modifiers.append(Modifier.of("speed_set", {"kind": "climb", "value": ch.speed().total()}, "Aspect of the Panther", &"feature"))
+	if "salmon" in aspect:
+		fx2.modifiers.append(Modifier.of("speed_set", {"kind": "swim", "value": ch.speed().total()}, "Aspect of the Salmon", &"feature"))
+	if "owl" in aspect:
+		fx2.modifiers.append(Modifier.of("darkvision", {"value": maxi(60, c.creature.darkvision() + 60)}, "Aspect of the Owl", &"feature"))
+	if has(c, "umbral_sight"):
+		fx2.modifiers.append(Modifier.of("flag", {"value": "umbral_sight"}, "Umbral Sight", &"feature"))
+		fx2.modifiers.append(Modifier.of("darkvision", {"value": maxi(60, c.creature.darkvision() + 60)}, "Umbral Sight", &"feature"))
+	if knows_invocation(c, "devils_sight"):
+		fx2.modifiers.append(Modifier.of("flag", {"value": "devils_sight"}, "Devil's Sight", &"feature"))
+	if has(c, "beguiling_twist"):
+		fx2.modifiers.append(Modifier.of("advantage", {"on": "save_vs:charmed"}, "Beguiling Twist", &"feature"))
+		fx2.modifiers.append(Modifier.of("advantage", {"on": "save_vs:frightened"}, "Beguiling Twist", &"feature"))
+	if not fx2.modifiers.is_empty():
+		c.creature.add_effect(fx2)
 
 
 func turn_end(c: Combatant) -> void:
@@ -1406,3 +1492,233 @@ func cantrip_hit(ctx: Dictionary, t: Combatant) -> void:
 	if knows_invocation(c, "lance_of_lethargy") and _once(c, "lance_of_lethargy"):
 		var fx := _timed(c, "Lance of Lethargy", "lance_of_lethargy", Effect.Ends.START_OF_TURN, c).with_modifier("speed", {"value": -10})
 		t.creature.add_effect(fx)
+
+
+# --- More reactions and riders ------------------------------------------------------------------------------
+
+## A hit about to land: Cutting Words against the attack roll (College of Lore), Combat Inspiration's AC (College of
+## Valor) for a creature holding a Valor bard's die.
+func after_hit_target(st: Dictionary, miss: Callable, out: Array) -> void:
+	var e := enc()
+	var c := st["c"] as Combatant
+	var target := st["target"] as Combatant
+	var t := st["t"] as D20Test
+	var ac := int(st["ac"])
+	if bool(st.get("critical", false)):
+		return
+	for b in e.allies_of(target):
+		if has(b, "cutting_words") and _ch(b).resource_left("bardic_inspiration") > 0 and e.distance(b, c) <= 60 and e.can_see(b, c) \
+				and t.total - bardic_die(b) < ac:
+			var bard := b
+			out.append({"kind": "cutting_words", "reactor": bard, "trigger": c.id, "title": "Reaction: Cutting Words?",
+				"text": "%s hits %s (%d vs AC %d). %s can spend Bardic Inspiration to subtract a d%d from the roll." % [c.name(), target.name(), t.total, ac, bard.name(), bardic_die(bard)],
+				"cost": "Reaction and a use of Bardic Inspiration",
+				"still": func() -> bool: return e.spells.can_react(bard),
+				"use": func() -> void:
+					bard.reaction_available = false
+					_ch(bard).spend_resource("bardic_inspiration")
+					var cut := e.dice.roll_one(bardic_die(bard), "Cutting Words")
+					t.add_bonus(-cut, "Cutting Words")
+					e.log.add("reaction", "%s's Cutting Words: −%d (now %d)" % [bard.name(), cut, t.total], bard.id),
+				"stop": func() -> CombatResult:
+					if t.total < ac:
+						return miss.call() as CombatResult
+					return e._after_hit(st)})
+			break
+	for fx: Effect in target.creature.effects:
+		if fx.source_id == "bardic_inspiration" and bool(fx.data.get("valor", false)) and e.spells.can_react(target):
+			var die := int(fx.data.get("die", 6))
+			if t.total - die >= ac:
+				break
+			var holder := target
+			var fxi := fx
+			out.append({"kind": "combat_inspiration", "reactor": holder, "trigger": c.id, "title": "Reaction: Combat Inspiration?",
+				"text": "%s hits %s (%d vs AC %d). Roll the Bardic Inspiration die (d%d) and add it to AC?" % [c.name(), target.name(), t.total, ac, die],
+				"still": func() -> bool: return e.spells.can_react(holder) and fxi in holder.creature.effects,
+				"use": func() -> void:
+					holder.reaction_available = false
+					holder.creature.remove_effect(fxi)
+					st["ac"] = ac + e.dice.roll_one(die, "Combat Inspiration")
+					e.log.add("reaction", "%s raises AC to %d (Combat Inspiration)" % [holder.name(), int(st["ac"])], holder.id),
+				"stop": func() -> CombatResult:
+					if t.total < int(st["ac"]):
+						return miss.call() as CombatResult
+					return e._after_hit(st)})
+			break
+
+
+## A creature just took damage from `source`: Misty Escape (Archfey 6) is a reaction offer queued with the others.
+func damage_reaction(source: Combatant, target: Combatant) -> Dictionary:
+	if has(target, "misty_escape") and enc().spells.can_react(target) and target.creature.hp > 0 \
+			and (_uses(target, "steps_of_the_fey", "Steps of the Fey", maxi(1, target.creature.ability_mod(&"cha")), "long") > 0 or _ch(target).slots_left(2) > 0):
+		return {"kind": "misty_escape", "reactor": target.id, "trigger": source.id}
+	return {}
+
+
+func misty_escape(c: Combatant, from: Combatant) -> CombatResult:
+	var e := enc()
+	var ch := _ch(c)
+	c.reaction_available = false
+	if ch.resource_left("steps_of_the_fey") > 0:
+		ch.spend_resource("steps_of_the_fey")
+	else:
+		ch.expend_slot(2)
+	var best := c.cell
+	var bd := -1
+	for dx in range(-6, 7):
+		for dy in range(-6, 7):
+			var cell := c.cell + Vector2i(dx, dy)
+			if e.grid.distance_ft(c.cell, c.size_cells, cell, c.size_cells) > 30 or not e.spells._room_for(cell, c.size_cells):
+				continue
+			var d := e.grid.distance_ft(from.cell, from.size_cells, cell, c.size_cells)
+			if d > bd:
+				bd = d
+				best = cell
+	var r := CombatResult.new()
+	e.log.add("reaction", "%s vanishes in a silvery mist (Misty Escape)" % c.name(), c.id)
+	var start := c.cell
+	e.spells._teleport(c, best, r)
+	fey_step_rider(c, start)
+	return r
+
+
+## Steps of the Fey's extra when the warlock teleports with Misty Step: Taunting Step if enemies stood beside where it
+## left (Wisdom save or Disadvantage on attacks against anyone else), otherwise Refreshing Step (1d10 Temporary Hit
+## Points).
+func fey_step_rider(c: Combatant, from: Vector2i) -> void:
+	if not has(c, "steps_of_the_fey"):
+		return
+	var e := enc()
+	var dc := _spell_dc(c, "warlock")
+	var taunted := false
+	for o in e.hostiles_of(c):
+		if not o.is_down() and e.grid.distance_ft(from, c.size_cells, o.cell, o.size_cells) <= 5:
+			taunted = true
+			if not _save(o, &"wis", dc, "Taunting Step"):
+				e.add_mark({"kind": "disadvantage_next_attack", "attacker": o.id, "source": "Taunting Step", "expires_owner": c.id, "expires_phase": "start", "consume": false})
+	if not taunted:
+		_temp(c, e.dice.roll_one(10, "Refreshing Step"), "Refreshing Step")
+
+
+## Before a creature's d20: Restore Balance (Clockwork Sorcery 3) cancels an ally's Disadvantage or a foe's Advantage
+## within 60 ft (Charisma-modifier uses per Long Rest). Called after the roll: it rerolls the d20 straight.
+func balance_roll(c: Combatant, t: D20Test) -> void:
+	var e := enc()
+	if not (t.advantage or t.disadvantage) or (t.advantage and t.disadvantage):
+		return
+	for s in e.living():
+		if not has(s, "restore_balance") or not e.spells.can_react(s) or e.distance(s, c) > 60:
+			continue
+		var friendly := s.allied_with(c)
+		if (friendly and t.disadvantage) or (not friendly and t.advantage):
+			if _uses(s, "restore_balance", "Restore Balance", maxi(1, s.creature.ability_mod(&"cha")), "long") <= 0:
+				continue
+			_ch(s).spend_resource("restore_balance")
+			s.reaction_available = false
+			t.set_natural(t.rolls[0] if not t.rolls.is_empty() else t.kept, "Restore Balance (%s)" % s.name())
+			e.log.add("reaction", "%s restores balance to %s's roll" % [s.name(), c.name()], s.id, [t.describe()])
+			return
+
+
+## After any D20 Test a character makes: Dark One's Own Luck (Fiend 6), Bend Luck (Wild Magic 6) from an ally,
+## Cosmic Omen (Stars 6), Tides of Chaos.
+func after_d20(c: Combatant, t: D20Test) -> void:
+	var e := enc()
+	if t.target <= 0:
+		return
+	balance_roll(c, t)
+	if t.success:
+		return
+	var short := t.target - t.total
+	var ch := _ch(c)
+	if ch != null and has(c, "dark_ones_own_luck") and t.kind != D20Test.Kind.ATTACK_ROLL and short <= 10 \
+			and _uses(c, "dark_ones_own_luck", "Dark One's Own Luck", maxi(1, c.creature.ability_mod(&"cha")), "long") > 0:
+		ch.spend_resource("dark_ones_own_luck")
+		t.add_bonus(e.dice.roll_one(10, "Dark One's Own Luck"), "Dark One's Own Luck")
+		if t.success:
+			return
+	for s in e.allies_of(c):
+		if t.success:
+			return
+		if has(s, "bend_luck") and s != c and e.spells.can_react(s) and _ch(s).resource_left("sorcery_points") > 0 and short <= 4 and e.distance(s, c) <= 60:
+			_ch(s).spend_resource("sorcery_points")
+			s.reaction_available = false
+			t.add_bonus(e.dice.roll_one(4, "Bend Luck"), "Bend Luck (%s)" % s.name())
+		elif has(s, "cosmic_omen") and e.spells.can_react(s) and short <= 6 and e.distance(s, c) <= 30 \
+				and _uses(s, "cosmic_omen", "Cosmic Omen", maxi(1, s.creature.ability_mod(&"wis")), "long") > 0:
+			_ch(s).spend_resource("cosmic_omen")
+			s.reaction_available = false
+			t.add_bonus(e.dice.roll_one(6, "Cosmic Omen (Weal)"), "Cosmic Omen (%s)" % s.name())
+
+
+## After a spell with a slot: Beguiling Magic (Glamour 3), Wild Magic Surge (Wild Magic 3), Inspiring Smite (Glory 3),
+## Smite of Protection (Devotion 7).
+func after_cast(c: Combatant, s: Dictionary, slot: int) -> void:
+	var e := enc()
+	if slot <= 0 or not c.creature is Character:
+		return
+	var school := str(s.get("school", ""))
+	if has(c, "beguiling_magic") and school in ["enchantment", "illusion"] and _uses(c, "beguiling_magic", "Beguiling Magic", 1, "long") > 0:
+		var foe := _nearest_foe(c, 60)
+		if foe != null:
+			_ch(c).spend_resource("beguiling_magic")
+			if not _save(foe, &"wis", _spell_dc(c, "bard"), "Beguiling Magic", "charmed"):
+				var fx := _minutes(c, "Charmed (Beguiling Magic)", "beguiling_magic", 1).with_condition(&"charmed")
+				fx.turn_owner_id = foe.id
+				fx.repeat_save = {"ability": "wis", "dc": _spell_dc(c, "bard"), "when": "end"}
+				foe.creature.add_effect(fx)
+	if has(c, "wild_magic_surge") and "sorcerer" in (s.get("classes", []) as Array) and _once(c, "wild_surge"):
+		var roll := e.dice.roll_one(20, "Wild Magic Surge")
+		if roll == 20 or bool(c.get_meta("tides_used", false)):
+			c.remove_meta("tides_used")
+			_surge(c)
+	if str(s.get("id", "")) == "divine_smite":
+		if has(c, "inspiring_smite") and _ch(c).resource_left("paladin_channel_divinity") > 0 and str(c.reaction_rules.get("inspiring_smite", "auto")) != "never":
+			_ch(c).spend_resource("paladin_channel_divinity")
+			var pool := int(e._roll_damage_dice("2d8", false, 0, "Inspiring Smite")["total"]) + level_of(c, "paladin")
+			var friends: Array[Combatant] = []
+			for a in e.allies_of(c):
+				if a.is_alive() and e.distance(c, a) <= 30:
+					friends.append(a)
+			for a in friends:
+				_temp(a, pool / maxi(1, friends.size()), "Inspiring Smite")
+		if has(c, "smite_of_protection"):
+			for a in e.allies_of(c):
+				if _in_aura(c, a):
+					var cv := _timed(c, "Half Cover (Smite of Protection)", "smite_of_protection", Effect.Ends.START_OF_TURN, c).with_modifier("ac", {"value": 2}).with_modifier("save", {"ability": "dex", "value": 2})
+					a.creature.add_effect(cv)
+
+
+## A Wild Magic Surge (2024 table, condensed to its combat results): rolled on a d8.
+func _surge(c: Combatant) -> void:
+	var e := enc()
+	var roll := e.dice.roll_one(8, "Wild Magic Surge table")
+	e.log.add("spell", "Wild Magic surges around %s!" % c.name(), c.id)
+	match roll:
+		1:
+			for o in e.living():
+				if o != c and e.distance(c, o) <= 30:
+					e.deal_damage(c, o, [{"amount": e.dice.roll_one(10, "Surge") + e.dice.roll_one(10, "Surge"), "type": "force"}], false, "Wild Magic Surge")
+		2:
+			_temp(c, e.dice.roll_one(10, "Surge") * 2, "Wild Magic Surge")
+		3:
+			var fx := _minutes(c, "Invisible (Wild Magic Surge)", "wild_magic_surge", 1).with_condition(&"invisible")
+			fx.ends_on.append("attack_roll")
+			fx.ends_on.append("cast_spell")
+			c.creature.add_effect(fx)
+		4:
+			_heal(c, c, int(e._roll_damage_dice("2d10", false, 0, "Surge")["total"]), "Wild Magic Surge")
+		5:
+			var foe := _nearest_foe(c, 60)
+			if foe != null:
+				e.deal_damage(c, foe, [{"amount": int(e._roll_damage_dice("4d10", false, 0, "Surge")["total"]), "type": "lightning"}], false, "Wild Magic Surge")
+		6:
+			c.creature.add_effect(_minutes(c, "Resistance (Wild Magic Surge)", "wild_magic_surge", 1).with_modifier("resistance", {"value": "all"}))
+		7:
+			e.spells._teleport(c, e.spells._free_cell_near(c.cell + Vector2i(e.dice.roll_one(7, "Surge") - 4, e.dice.roll_one(7, "Surge") - 4), c.size_cells), CombatResult.new())
+		_:
+			for o in e.living():
+				if o != c and e.distance(c, o) <= 30 and not o.creature.dead:
+					o.creature.add_condition(&"prone", "Wild Magic Surge")
+	if _ch(c).resources.has("tides_of_chaos"):
+		_refund(_ch(c), "tides_of_chaos")
