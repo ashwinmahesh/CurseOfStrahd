@@ -140,6 +140,7 @@
         "id": "stalkers_flurry",
         "name": "Stalker's Flurry",
         "summary": "Dreadful Strike's damage becomes 2d8, and each use can add a Sudden Strike or a Mass Fear.",
+        "text": "Your Dreadful Strike's Psychic damage becomes 2d8. When you use it, you can also add one effect. Sudden Strike: make another attack with the same weapon against a different creature within 5 feet of the first target and within the weapon's range. Mass Fear: the target and each creature within 10 feet of it make a Wisdom saving throw against your spell save DC or are Frightened until the start of your next turn.",
         "implemented": "engine"
       }
     },

@@ -1,0 +1,193 @@
+{
+  "id": "argynvostholt_road",
+  "map": "road_forest",
+  "chance_day": 0.15,
+  "chance_night": 0.4,
+  "summary": "The knights' road: a narrow track that leaves the Svalich Woods and climbs through old pines to the ridge of Argynvostholt. The Order's dead walk it at night; so do older things.",
+  "entries": [
+    {
+      "id": "order_patrol",
+      "weight": 2,
+      "when": "night and not flag.order_patrol_met",
+      "once": true,
+      "dialogue": "argynvostholt/events:patrol"
+    },
+    {
+      "id": "phantom_ride",
+      "weight": 2,
+      "when": "night and not flag.phantom_ride_seen",
+      "once": true,
+      "dialogue": "argynvostholt/events:phantom_ride"
+    },
+    {
+      "id": "knights_hunting",
+      "weight": 3,
+      "when": "night and flag.order_fate == \"ride\" and not flag.knights_hunt_seen",
+      "once": true,
+      "dialogue": "argynvostholt/events:knights_hunting"
+    },
+    {
+      "id": "beacon_light",
+      "weight": 3,
+      "when": "night and flag.argynvost_beacon_lit and not flag.beacon_light_seen",
+      "once": true,
+      "dialogue": "argynvostholt/events:beacon_light"
+    },
+    {
+      "id": "werewolf_hunters",
+      "weight": 2,
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            5
+          ]
+        }
+      ],
+      "text": "A howl from up the ridge, answered from below the road, and answered again much closer. The two at the front run on two legs."
+    },
+    {
+      "id": "the_conquerors_dead",
+      "weight": 2,
+      "when": "night and not flag.argynvost_beacon_lit",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            28,
+            7
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            13
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            4,
+            8
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            23,
+            8
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            11
+          ]
+        }
+      ],
+      "text": "Shapes in rusted helmets of an old pattern come up the road in a ragged column, still marching on a house they burned four hundred years ago. Two at the back sniff the air and break into a run."
+    },
+    {
+      "id": "dire_wolves_day",
+      "weight": 2,
+      "when": "day",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            13,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            25,
+            12
+          ]
+        }
+      ],
+      "text": "Wolves the size of ponies lope out of the pines on both sides of the track, and spread out without hurrying."
+    }
+  ]
+}

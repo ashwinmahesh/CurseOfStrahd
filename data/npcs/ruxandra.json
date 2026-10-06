@@ -1,0 +1,20 @@
+{
+  "id": "ruxandra",
+  "name": "Mother Ruxandra",
+  "title": "Archdruid of Yester Hill",
+  "summary": "The old woman who leads the druids of Yester Hill. She believes the lord in the castle and the land of Barovia are one and the same, and she tends the black tree on the hill as other women tend a grave. Gentle in manner, merciless in faith.",
+  "portrait": "ruxandra",
+  "sprite": "ruxandra",
+  "attitude": "hostile",
+  "voice": "docs/voice/ruxandra.md",
+  "monster": "druid",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "druid",
+    "yester_hill",
+    "strahd_servant"
+  ],
+  "region": "yester_hill",
+  "pronouns": "she/her"
+}

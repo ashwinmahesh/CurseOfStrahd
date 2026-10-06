@@ -1,0 +1,184 @@
+{
+  "id": "kiril_stoyanovich",
+  "name": "Kiril Stoyanovich",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd's pack leader: the 2024 Werewolf (data/monsters/werewolf.json) with the book's change as remembered, 90 Hit Points (Constitution 16 here to fit 12d8 + 36). Challenge 4 is our estimate for the extra Hit Points. Entered from knowledge, not yet checked against the book."
+  },
+  "size": "medium",
+  "type": "monstrosity",
+  "tags": [
+    "medium_or_small",
+    "lycanthrope"
+  ],
+  "alignment": "chaotic evil",
+  "ac": 15,
+  "initiative": 4,
+  "hp": {
+    "average": 90,
+    "dice": "12d8+36"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 14,
+    "con": 16,
+    "int": 10,
+    "wis": 11,
+    "cha": 10
+  },
+  "skills": {
+    "perception": 4,
+    "stealth": 4
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 14,
+  "languages": [
+    "Common (can't speak in wolf form)"
+  ],
+  "cr": 4,
+  "xp": 1100,
+  "proficiency_bonus": 2,
+  "gear": [
+    "longbow"
+  ],
+  "traits": [
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "action": "passive",
+      "summary": "Advantage on attack rolls against a target that has a non-Incapacitated ally of this creature within 5 ft.",
+      "text": "The werewolf has Advantage on an attack roll against a creature when at least one of the werewolf's allies is within 5 feet of that creature and that ally doesn't have the Incapacitated condition.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "pack_tactics"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "scratch",
+          "count": 1,
+          "or": [
+            "longbow"
+          ]
+        },
+        {
+          "action": "scratch",
+          "count": 1,
+          "or": [
+            "longbow",
+            "bite"
+          ]
+        }
+      ],
+      "summary": "Two attacks with Scratch or Longbow in any mix; one may be a Bite instead.",
+      "text": "The werewolf makes two attacks, using Scratch or Longbow in any combination, and it can make a Bite attack in place of one of them."
+    },
+    {
+      "id": "bite",
+      "name": "Bite (Wolf or Hybrid Form Only)",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "2d8+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite usable in wolf or hybrid form; a bitten Humanoid makes a DC 12 Con save or is cursed.",
+      "text": "Usable only in wolf or hybrid form. Hit: 12 (2d8 + 3) Piercing damage. A Humanoid target then makes a DC 12 Constitution saving throw. Failure: the target is cursed with lycanthropy; if it drops to 0 Hit Points while cursed, it instead turns into a Werewolf under the DM's control with 10 Hit Points. Success: the target is immune to this werewolf's curse for 24 hours.",
+      "forms": [
+        "wolf",
+        "hybrid"
+      ],
+      "on_hit": [
+        {
+          "do": "curse",
+          "curse": "lycanthropy",
+          "save": {
+            "ability": "con",
+            "dc": 12
+          },
+          "only_types": [
+            "humanoid"
+          ],
+          "immune_on_success": true
+        }
+      ]
+    },
+    {
+      "id": "scratch",
+      "name": "Scratch",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "2d6+3",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Rakes a target with claws or nails."
+    },
+    {
+      "id": "longbow",
+      "name": "Longbow (Humanoid or Hybrid Form Only)",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          150,
+          600
+        ]
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d8+2",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Shoots a longbow; usable only in humanoid or hybrid form.",
+      "text": "Usable only in humanoid or hybrid form.",
+      "forms": [
+        "humanoid",
+        "hybrid"
+      ]
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "shape_shift",
+      "name": "Shape-Shift",
+      "kind": "special",
+      "summary": "Turns into a Large hybrid or a Medium wolf (Speed 40 ft.), or back to its humanoid form.",
+      "text": "The werewolf changes into a Large wolf-humanoid hybrid or a Medium wolf, or back into its true humanoid form. Its statistics stay the same in every form except its size, and its Speed is 40 feet while in wolf form. Equipment it wears or carries doesn't change with it.",
+      "do": "shape_shift"
+    }
+  ],
+  "regions": [
+    "werewolf_den"
+  ],
+  "ai_profile": "pack_hunter",
+  "summary": "The werewolf pack's brutal leader: tougher than his followers, he shoots, then shifts to tear and curse with his bite."
+}

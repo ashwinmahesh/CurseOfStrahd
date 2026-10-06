@@ -1,0 +1,333 @@
+# Baba Lysaga, the witch of Berez (docs/regions/berez.md §2). Her window on the stump, supper at her hearth, the
+# bargain, Strahd's punishment, her last words, and the region's one milestone.
+
+# ---------------------------------------------------------------- At her window (approach, on the stump)
+
+~ window
+if flag.lysaga_bargained
+-> bargained_after
+endif
+if not flag.berez_witch_met
+set berez_witch_met
+if not quest.the_witch_of_berez
+quest the_witch_of_berez arrived
+endif
+Narrator: The hut on the stump leans down toward you on its knotted legs of root, like a dog sniffing at a stranger. A shutter bangs open. A tiny old woman looks out, with a face like a walnut and eyes like two wet currants.
+Baba Lysaga: Visitors! Nobody visits. The river took all the visitors years ago. What are you, then: lost, hungry, or stupid?
+interject tag:blunt: Yes.
+Baba Lysaga [smile]: Ha! An honest one. Honest ones boil soft.
+else
+Baba Lysaga: Back again, my ducks? The hut remembers you. It's been licking its doorstep.
+endif
+if flag.berez_scarecrows_burned
+Baba Lysaga [angry]: And you've been burning my straw men. Do you know how long it takes to stuff a man properly? Years. Years!
+endif
+if guest:ireena
+-> window_ireena
+endif
+-> window_menu
+
+~ window_ireena
+Narrator: Her currant eyes find Ireena and stop there. For a moment the old woman doesn't breathe at all.
+Baba Lysaga: That face. Well, well. They keep making that face, don't they? Like a bad penny.
+Baba Lysaga [smile]: Come up, all of you. Come up, and bring the pretty one. I'll do her hair.
+interject guest:ireena: I'd rather she didn't.
+-> window_menu
+
+~ window_menu
+* We're only travellers, grandmother. We'd be glad of a fire. -> invited
+* [Deception DC 15] Your boy sent us, to see that you're well. -> boy_sent | boy_lie_fail
+* [if flag.marina_truth_known] We know what happened to Marina. -> window_truth
+* What is this place? -> what_place
+* Come down, witch. We've come for the green stone. -> challenge
+* Not today, grandmother. -> not_today
+
+~ what_place
+Baba Lysaga: This was Berez. Bakers, a chapel, a burgomaster with a fat neck. Then they did a wicked thing, and my boy sent the river up the street to tuck them in. Now it's mine, and quiet, and nobody walks on my floors.
+-> window_menu
+
+~ invited
+set lysaga_guests
+if not quest.the_witch_of_berez >= invited
+quest the_witch_of_berez invited
+endif
+Baba Lysaga [smile]: Then come up, come up. The hut won't bite. Not while I'm watching.
+Narrator: The hut folds its root legs and kneels in the mud, and a ladder of living roots unrolls from its door to your feet. It is warm to the touch.
+-> END
+
+~ boy_sent
+set lysaga_guests
+set lysaga_flattered
+if not quest.the_witch_of_berez >= invited
+quest the_witch_of_berez invited
+endif
+Narrator: Her whole face changes. It goes soft and pink and dreadful, like a girl's.
+Baba Lysaga: He sent you? He thought of me? Oh, my beautiful boy. Up, up, come up, the stew's on, and I've a cradle to show you.
+-> END
+
+~ boy_lie_fail
+set lysaga_guests
+if not quest.the_witch_of_berez >= invited
+quest the_witch_of_berez invited
+endif
+Baba Lysaga [sly]: My boy doesn't send. My boy comes, or he doesn't. Liars, then. Never mind. Liars taste the same as anybody. Come up.
+-> END
+
+~ window_truth
+set lysaga_guests
+if not quest.the_witch_of_berez >= invited
+quest the_witch_of_berez invited
+endif
+Narrator: The shutter stops swinging. The old woman goes so still that the hut, beneath her, goes still too.
+Baba Lysaga: Who's been telling stories in my marsh? Come up. We'll talk about it inside, where the reeds can't listen.
+-> END
+
+~ challenge
+Baba Lysaga [angry]: Come down? COME DOWN? Nobody gives orders on my stump but me and my boy!
+Narrator: She slams the shutter. The stump heaves under the hut, and the hut stands up.
+combat lysaga_and_hut
+
+~ not_today
+Baba Lysaga: Then go, before the hut decides for me. It's always hungry in the evenings.
+-> END
+
+# ---------------------------------------------------------------- Supper at the hearth (approach, inside the hut)
+
+~ hearth
+if not flag.lysaga_supper_eaten
+-> supper
+endif
+Baba Lysaga: Back for seconds? There's always more in the pot. Don't ask what.
+if flag.lysaga_suspected
+Baba Lysaga [sly]: And you can stop watching me like that. I've been watched by better.
+endif
+-> hearth_menu
+
+~ supper
+set lysaga_supper_eaten
+Narrator: She ladles stew into wooden bowls from a pot that has never once been empty. It smells of onions and thyme and something underneath, sweet and dark, that you decide not to name.
+Baba Lysaga: Eat, eat. You're all too thin to be any use. Sit where the hut can see you.
+interject class:wizard: The fire is burning green.
+Baba Lysaga [smile]: It likes company.
+if flag.lysaga_flattered
+Baba Lysaga: And tell me how he looks. Is he eating? He never ate enough. He'd sit at that window with his supper going cold, waiting for the sun to go down.
+endif
+if guest:ireena
+-> ireena_bowl
+endif
+-> hearth_menu
+
+~ ireena_bowl
+Narrator: Lysaga fills one more bowl, from a second, smaller pot at the back of the hearth, and puts it in front of Ireena with both hands, very kindly.
+* [Insight DC 14] Watch the second pot. -> bowl_spotted | bowl_missed
+* [Medicine DC 13] Lean over and smell Ireena's bowl. -> bowl_spotted | bowl_missed
+* Eat your supper. -> bowl_missed
+
+~ bowl_spotted
+Player: Ireena. Don't touch that.
+Narrator: Under the thyme, faint and bitter: almonds. Ireena sets her spoon down without a sound.
+Baba Lysaga [angry]: Not that face. Not again! I put one of you in the ground already, girl, and he still won't look at me the way he looked at you!
+set marina_truth_known
+if not quest.the_witch_of_berez >= truth
+quest the_witch_of_berez truth
+endif
+Narrator: She is out of her chair before the words are finished, with a carving knife in one fist and green fire in the other.
+combat lysaga_in_hut
+
+~ bowl_missed
+Narrator: Ireena lifts the spoon, stops, and sniffs.
+Ireena: This smells of bitter almonds.
+Narrator: She sets the bowl down very carefully, and pushes it away with one finger.
+Baba Lysaga: Fussy. Her sort always were.
+set lysaga_suspected
+-> hearth_menu
+
+~ hearth_menu
+* Who is your boy? -> her_boy
+* What's in the cradle? -> cradle
+* What happened to Berez? -> berez_story
+* [if not flag.lysaga_jar_heard] Do you know the wizard on the mountain? -> wizard
+* [Insight DC 14] Watch her when she talks about the village. -> watch_ok | watch_fail
+* [if flag.marina_truth_known and not flag.lysaga_bargained] He'll hear about Marina from us, unless you make it worth our silence. -> blackmail
+* Enough games. Give us the green stone, or we'll take it. -> fight_inside
+* Thank you for supper. We'll be going. -> leave_supper
+
+~ her_boy
+Baba Lysaga [smile]: My boy. My little prince. I pulled him into the world with these two hands, and he came out angry and beautiful, and he bit me. Teeth already! I knew then.
+Baba Lysaga: His mother had no milk and less sense. I was the one who sang to him. I was the one he came to. Whatever they tell you, I was the one.
+if flag.strahd_met
+Baba Lysaga: You've seen him! Isn't he handsome? Did he ask after me?
+interject tag:blunt: No.
+Baba Lysaga [angry]: He's busy. He has a whole country to look after.
+endif
+interject name:hedda_ironvow: Mm. Every nursemaid I ever met thought the baby was hers. Most of them didn't raise a vampire.
+-> hearth_menu
+
+~ cradle
+Narrator: In the cradle by the tub, under a crocheted blanket, lies a root dug out of the marsh and trimmed into the shape of a swaddled infant. Tucked under its chin like a rattle is a green gem the size of a hen's egg, glowing softly.
+Baba Lysaga: My new boy. He's growing. Green things grow, if you give them the right stone.
+if flag.wizard_of_wines_hook
+interject class:wizard: That gem. The winery at the crossroads lost three like it. Their vines are dying.
+Baba Lysaga [sly]: Then the vines should have kept a better watch, shouldn't they.
+endif
+if flag.lysaga_flattered
+Baba Lysaga: My boy's carriage brought it, all by itself, with a bow on. He likes me to have nice things. Nice things keep an old woman out of his hair.
+endif
+interject class:druid: That root is alive. Barely. Whatever she's feeding it, it isn't happy.
+-> hearth_menu
+
+~ berez_story
+Baba Lysaga: There was a girl here once. Candlemaker's daughter. Pretty, if you like that sort of thing, and my boy did. He came calling with presents. She hid from him in the chapel like a mouse.
+Baba Lysaga: Then she died in her sleep, poor lamb, and he blamed the village for it, and the river came up the street. Served them right. Served her right.
+if treasure_at:berez_marinas_monument
+Baba Lysaga [sly]: He buried something pretty with her, under the stone on the mound. I can smell it from here, through all that mud. Shiny things stink, to an old nose.
+endif
+-> hearth_menu
+
+~ wizard
+set lysaga_jar_heard
+Baba Lysaga [smile]: The clever one? He came up the road with his nose in the air and fire in his fists, to kill my boy. My boy asked me very nicely, so I took his remembering out and put it in a jar.
+Baba Lysaga: It's on my shelf. It hums at night. Sometimes I take it down and listen. He knew a great many things, that one.
+interject class:wizard: You bottled a mind.
+Baba Lysaga: I bottle plums, too. It's the same knack.
+-> hearth_menu
+
+~ watch_ok
+set lysaga_suspected
+Narrator: Each time the dead girl comes up, the old woman's eyes go, quick as a lizard's tongue, to a little doll hanging over the hearth. Then back to you, to see if you saw.
+-> hearth_menu
+
+~ watch_fail
+Narrator: She rocks, and hums, and scrapes the pot. If she is hiding anything, she has had a very long time to practise.
+-> hearth_menu
+
+~ blackmail
+if guest:ireena
+Baba Lysaga [angry]: Tell him, then! I'll have that face in the pot long before he hears a word of it!
+combat lysaga_in_hut
+endif
+Narrator: For the first time since you met her, Baba Lysaga looks her age, which is very great.
+Baba Lysaga: He mustn't know. He'd look at me the way he looks at the rest of you. Like furniture. What do you want? Say it quick, before I change my mind and feed you to the floor.
+* The green stone from the cradle, and whatever's in your kitchen. -> bargain_struck
+* [Intimidation DC 15] Everything. The stone, the kitchen, and the wizard's jar. -> bargain_jar | bargain_jar_fail
+* On second thought, he'll hear it anyway. -> fight_inside
+
+~ bargain_jar
+set mordenkainen_memory_jar_taken
+if not quest.the_mad_mage >= jar_found
+quest the_mad_mage jar_found
+endif
+Narrator: She snatches a jar from the shelf and shoves it at you. Something silver turns over inside it, slow as a fish.
+Baba Lysaga [angry]: Take his thinking, then. It was getting loud.
+-> bargain_struck
+
+~ bargain_jar_fail
+Baba Lysaga [sly]: The jar stays. A woman needs a little conversation in the evenings. Take what you asked for first, and be grateful.
+-> bargain_struck
+
+~ bargain_struck
+set lysaga_bargained
+set lysaga_fate = "bargained"
+set winery_gem_berez_found
+quest the_third_stone found
+quest the_witch_of_berez bargained
+Narrator: She digs under the crocheted blanket, prises the green stone out from under the root's chin, and drops it into your palm as if it burned. In the cradle, the root begins very slowly to wither.
+Baba Lysaga: There. And the pantry's open. Take your crumbs. Not a word to him, ever, or I'll find you. I found her, didn't I?
+-> milestone
+
+~ fight_inside
+Baba Lysaga [angry]: Take it? From my house? From my BABY?
+combat lysaga_in_hut
+
+~ leave_supper
+Baba Lysaga [smile]: Go on, then. Come back when you're hungry. Everybody does.
+-> END
+
+# ---------------------------------------------------------------- After the bargain
+
+~ bargained_after
+Baba Lysaga [angry]: You again. You've had what you came for. Go away, before I forget I'm a woman of my word.
+* We're going. -> END
+* [if at:berez_baba_lysagas_hut] We never said we'd leave you alive. -> fight_inside
+* [if not at:berez_baba_lysagas_hut] We never said we'd leave you alive. -> betrayal_outside
+
+~ betrayal_outside
+Baba Lysaga [angry]: Oath-breakers! I knew it! The hut knew it!
+combat lysaga_and_hut
+
+# ---------------------------------------------------------------- After Strahd has heard the truth
+
+~ scorned
+Narrator: The hut lies on its side in the mud like a dead ox, its root legs snapped and splayed, its door hanging by one hinge. The scarecrows lie face down in the reeds. Baba Lysaga sits beside the wreck, rocking.
+Baba Lysaga: He came. He came to see me, at last, after all these years. He stood in my door and looked at me like a stranger, and he broke my house with his hands.
+if flag.lysaga_bargained
+Baba Lysaga [angry]: You promised me. You stood at my hearth and ate my stew and promised me!
+endif
+Baba Lysaga: He didn't even shout. He just said my name, as if it was somebody else's.
+* It's over, grandmother. Let us end it. -> scorned_fight
+* Then you know how Marina's family felt. We'll leave you to it. -> leave_broken
+* [Insight DC 12] Does she mean to fight? -> scorned_read
+
+~ scorned_read
+Narrator: Her hands are shaking too badly to hold a spell. She is not going to fight anybody. She is going to sit in the mud until it rises.
+-> scorned
+
+~ scorned_fight
+Narrator: She looks up at you, and something of the old fury comes back into her face, because it is easier than the other thing.
+combat lysaga_scorned
+
+~ leave_broken
+set lysaga_left_broken
+set lysaga_fate = "broken"
+quest the_witch_of_berez broken
+if flag.winery_gem_berez_found
+Baba Lysaga: You've had my baby's stone already, haven't you. Thieves at the end, as well as liars. Go on. There's nobody left to grow.
+else
+set winery_gem_berez_found
+quest the_third_stone found
+Narrator: She digs in her apron and throws something at your feet without looking: the green stone from the cradle, muddy and still warm.
+Baba Lysaga: Take it. Take it all. There's nobody left to grow.
+endif
+-> milestone
+
+~ broken
+Narrator: Baba Lysaga sits in the reeds by her broken hut, singing something without a tune to nobody. She doesn't look up.
+* End it. -> scorned_fight
+* Leave her. -> END
+
+# ---------------------------------------------------------------- Her last words (approach, where she fell)
+
+~ last_words
+set lysaga_dead
+set lysaga_fate = "slain"
+set marina_truth_known
+if flag.lysaga_slain_in_hut
+set creeping_hut_destroyed
+Narrator: The old woman lies by her own hearth. All around you the hut groans, long and low, and its timbers settle like an animal lying down for the last time. The green fire gutters out.
+elif flag.lysaga_slain_at_monument
+Narrator: She has fallen at the foot of the white statue, her bone bowl cracked beside her, one hand still clawing at the plinth.
+elif flag.lysaga_slain_scorned
+Narrator: She lies in the mud beside the wreck of her house, which is very small now, and so is she.
+else
+set creeping_hut_destroyed
+Narrator: The hut is down, its roots twitching. The old woman lies at the foot of the stump in its shadow, breathing in little sips.
+endif
+Baba Lysaga: Tell my boy... no. Don't tell him anything. He never listened to me anyway.
+if flag.lysaga_slain_at_monument
+Baba Lysaga: Look at her up there. Still smiling. I'd do it again, you know. A thorn, a little doll, a little red hair. I'd do it a hundred times.
+else
+Baba Lysaga: The candlemaker's girl. That was me. A thorn, a little doll, a little red hair. He drowned a whole village for my sake and never knew it. That's love, ducks. That's what it looks like.
+endif
+Narrator: Then she is gone, and Berez is empty at last, and the marsh goes on making its small wet sounds as if nothing has happened.
+quest the_witch_of_berez slain
+-> milestone
+
+# ---------------------------------------------------------------- The milestone (every ending comes here)
+
+~ milestone
+if not flag.berez_milestone_reached
+set berez_milestone_reached
+xp milestone
+Narrator: Whatever you carry out of Berez, you carry it on your backs for a long time. You find you are stronger for the weight.
+endif
+-> END

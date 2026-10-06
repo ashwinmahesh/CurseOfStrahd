@@ -1,0 +1,25 @@
+{
+  "id": "sir_godfrey_gwilym",
+  "name": "Sir Godfrey Gwilym",
+  "title": "Knight of the Silver Dragon",
+  "summary": "Vladimir's second and oldest friend: a big, courteous dead knight in dented plate who keeps a list of his brothers' names on his wall because he is forgetting them. The Tarokka can name him as the party's ally.",
+  "portrait": "sir_godfrey_gwilym",
+  "sprite": "sir_godfrey_gwilym",
+  "attitude": "friendly",
+  "voice": "docs/voice/sir_godfrey_gwilym.md",
+  "monster": "sir_godfrey_gwilym",
+  "guest": true,
+  "guest_build": {
+    "monster": "sir_godfrey_gwilym",
+    "note": "His own stat block (a revenant knight in plate); joins if the Tarokka names him, or stays for one last ride when the beacon is lit."
+  },
+  "tags": [
+    "revenant",
+    "knight",
+    "order_of_the_silver_dragon",
+    "tarokka_ally",
+    "argynvostholt"
+  ],
+  "region": "argynvostholt",
+  "pronouns": "he/him"
+}

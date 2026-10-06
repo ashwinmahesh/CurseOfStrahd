@@ -1,0 +1,203 @@
+{
+  "id": "ezmerelda_davenir",
+  "name": "Ezmerelda d'Avenir",
+  "art": "ezmerelda",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Her prepared spells, languages and any saving throws need the book. Fire Bolt runs as an attack; spell slots are listed per spell. The book also gives her the Vistani curse and evil eye; they are left out until checked."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "alignment": "chaotic good",
+  "ac": 17,
+  "ac_note": "+1 studded leather",
+  "initiative": 4,
+  "hp": {
+    "average": 82,
+    "dice": "11d8+33"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 19,
+    "con": 16,
+    "int": 16,
+    "wis": 11,
+    "cha": 17
+  },
+  "skills": {
+    "acrobatics": 7,
+    "arcana": 6,
+    "athletics": 5,
+    "deception": 9,
+    "insight": 3,
+    "medicine": 3,
+    "perception": 6,
+    "performance": 6,
+    "sleight_of_hand": 7,
+    "stealth": 7
+  },
+  "passive_perception": 16,
+  "languages": [
+    "Common",
+    "Elvish"
+  ],
+  "cr": 8,
+  "xp": 3900,
+  "proficiency_bonus": 3,
+  "gear": [
+    "handaxe",
+    "rapier",
+    "shortsword",
+    "studded_leather_armor"
+  ],
+  "traits": [
+    {
+      "id": "special_equipment",
+      "name": "Special Equipment",
+      "action": "passive",
+      "summary": "Her armour, rapier and handaxe are +1 magic items (already in the numbers); her shortsword is silvered.",
+      "implemented": "data"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "rapier",
+          "count": 2
+        },
+        {
+          "action": "handaxe",
+          "count": 1,
+          "or": [
+            "silvered_shortsword"
+          ]
+        }
+      ],
+      "summary": "Two Rapier attacks and one Handaxe or Silvered Shortsword attack."
+    },
+    {
+      "id": "rapier",
+      "name": "Rapier +1",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "1d8+5",
+          "type": "piercing"
+        }
+      ],
+      "summary": "A quick thrust with her magic rapier.",
+      "weapon": true
+    },
+    {
+      "id": "handaxe",
+      "name": "Handaxe +1",
+      "kind": "melee_or_ranged",
+      "attack": {
+        "bonus": 6,
+        "reach": 5,
+        "range": [
+          20,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d6+3",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Chops with her magic handaxe, or throws it.",
+      "weapon": true
+    },
+    {
+      "id": "silvered_shortsword",
+      "name": "Silvered Shortsword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 7,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d6+4",
+          "type": "piercing"
+        }
+      ],
+      "summary": "A silvered blade for creatures that shrug off plain steel.",
+      "weapon": true
+    },
+    {
+      "id": "fire_bolt",
+      "name": "Fire Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 6,
+        "range": [
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d10",
+          "type": "fire"
+        }
+      ],
+      "summary": "Casts Fire Bolt up to 120 ft."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Int, DC 14, +6: a 7th-level wizard's spells, Magic Missile to Greater Invisibility.",
+      "text": "A 7th-level spellcaster using Intelligence (spell save DC 14, +6 to hit). Cantrips: Fire Bolt, Light, Mage Hand, Prestidigitation. 1st level (4 slots): Magic Missile, Protection from Evil and Good, Shield. 2nd level (3 slots): Darkvision, Knock, Mirror Image. 3rd level (3 slots): Clairvoyance, Lightning Bolt, Magic Circle. 4th level (1 slot): Greater Invisibility."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 14,
+    "attack": 6,
+    "at_will": [
+      "light",
+      "mage_hand",
+      "prestidigitation"
+    ],
+    "per_day": {
+      "4": [
+        "magic_missile",
+        "protection_from_evil_and_good",
+        "shield"
+      ],
+      "3": [
+        "darkvision",
+        "knock",
+        "mirror_image",
+        "clairvoyance",
+        "lightning_bolt",
+        "magic_circle"
+      ],
+      "1": [
+        "greater_invisibility"
+      ]
+    }
+  },
+  "regions": [
+    "van_richtens_tower"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A monster hunter in magic armour: rapier, handaxe and silvered sword, backed by a wizard's spells."
+}

@@ -900,6 +900,11 @@
     "area_targets_by_choice": {
       "type": "object",
       "description": "Who the area affects for each cast-time choice (Calm Emotions' suppression: allies)."
+    },
+    "icon": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "Key of its icon in art/icons.json when it isn't the spell's own id."
     }
   }
 }

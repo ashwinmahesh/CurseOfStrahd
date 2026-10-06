@@ -1,0 +1,103 @@
+# Party banter in Krezk and at the Abbey of St. Markovia. Each node opens with an `if` gate: the node is eligible only
+# while its condition holds. Party members speak through interjections; a line plays if a matching member is present.
+
+~ banter_wall
+if visited:krezk and not flag.krezk_gate_open
+interject tag:blunt: A wall that size, and they still check every face that comes up the road. I'd do the same.
+interject tag:cheerful: We have very trustworthy faces.
+interject name:tamsin_tealeaf: Speak for yourself. Mine's been on posters.
+endif
+-> END
+
+~ banter_angel
+if flag.abbot_nature_known and not flag.abbot_fate
+interject name:hedda_ironvow: Mm. I prayed my whole life to meet something sent from above. I didn't think it would be lighting candles with its thumb and sewing corpses.
+interject name:silvain_aster: The old texts say they're made for one purpose. Leave them too long without it, they find another.
+interject name:hedda_ironvow: Don't. I don't want it to make sense.
+endif
+-> END
+
+~ banter_belviews
+if flag.belview_family_met
+interject tag:curious: The Belviews repeat everything you say. Everything. I said "hello" and got it back in my own voice from six directions.
+interject tag:blunt: They were a family from Krezk. Farmers. He did that to them and called it a gift.
+interject tag:devout: Then we treat them like a family from Krezk. Whatever they look like now.
+endif
+-> END
+
+~ banter_bride
+if flag.abbot_bride_revealed and not flag.abbot_fate
+interject name:ilse_varga: A wife, for him. As a cure. I've seen officers try to cure a bad general with a better horse.
+interject name:silvain_aster: Did it work?
+interject name:ilse_varga: The horse died first.
+endif
+-> END
+
+~ banter_dress
+if flag.wedding_dress_found and not flag.wedding_dress_delivered
+interject tag:loyal: Anna's dress. She folded it in lavender. We're carrying it up a mountain to put it on a dead girl.
+interject class:cleric: For her son. She knew what she was doing. That's what makes it hard to carry.
+endif
+-> END
+
+~ banter_letter
+if flag.markovia_letter_read and not flag.abbot_fate
+interject tag:bookish: "Patience is how he feeds." The saint saw through him four hundred years ago. In one line.
+interject tag:blunt: And the angel kept the letter under a floorboard.
+interject tag:bookish: No. The angel lost it. Clovin kept it. That's the part I keep thinking about.
+endif
+-> END
+
+~ banter_pool
+if flag.ireena_pool_vision and guest:ireena
+interject tag:curious: Ireena. The man in the water. Do you want to talk about it?
+interject guest:ireena: No. Yes. Later. Ask me again when we're somewhere with a fire and no water anywhere.
+endif
+-> END
+
+~ banter_hunter
+if guest:ezmerelda
+interject name:silvain_aster: Is it true Van Richten writes his notes in three ciphers?
+interject guest:ezmerelda: Four. The fourth is his handwriting.
+interject name:tamsin_tealeaf: I like her.
+interject guest:ezmerelda: Everyone does, at first. Ask Rudolph.
+endif
+-> END
+
+~ banter_wedding
+if flag.abbot_fate == "wedding"
+interject class:cleric: We let it happen. A bride in a cart, waving at nobody.
+interject name:ilse_varga: We got the boy healed. That was the bargain. I've made worse ones and slept.
+interject class:cleric: I haven't. Give me time; I'll learn, I suppose. I'd rather not.
+endif
+-> END
+
+~ banter_repentant
+if flag.abbot_fate == "repentant"
+interject tag:devout: He walked up the mountain to be judged. I keep wondering who's going to do it.
+interject tag:curious: Maybe nobody. Maybe that's the point. You go anyway.
+endif
+-> END
+
+~ banter_slain
+if flag.abbot_fate == "slain"
+interject name:hedda_ironvow: There was no blood. Only light. I don't know what we killed, exactly. I know it needed killing. Mm. I'll pray for it anyway.
+interject name:tamsin_tealeaf: Can you pray for something like that?
+interject name:hedda_ironvow: You can pray for anything. That's rather the point of it.
+endif
+-> END
+
+~ banter_cells
+if flag.wards_cells_fought
+interject tag:cheerful: Those weren't monsters. They were people he'd been practising on.
+interject tag:blunt: They were both. That's the worst thing about this valley. Everything's both.
+endif
+-> END
+
+~ banter_ilya
+if flag.ilya_fate == "healed"
+interject tag:cheerful: Did you see the boy? Shouting his own name down the well. I want to do that.
+interject tag:blunt: Do it, then.
+interject tag:cheerful: Not with everyone watching!
+endif
+-> END

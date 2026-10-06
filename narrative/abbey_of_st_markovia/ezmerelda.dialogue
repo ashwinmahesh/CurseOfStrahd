@@ -1,0 +1,102 @@
+# Ezmerelda d'Avenir, the Vistana monster hunter Van Richten trained (docs/voice/ezmerelda.md). The Tarokka's Mists
+# card names her: she is found at the top of the abbey switchback, watching the abbey, and joins the party here.
+# Other regions may meet her too (Van Richten's Tower); they read guest:ezmerelda and ezmerelda_met.
+
+~ start
+if flag.ezmerelda_met
+Ezmerelda: Back. Good. I've counted the Belviews twice more and got two different numbers. Are we going in, or are you going to make me admire the view?
+-> menu
+endif
+set ezmerelda_met
+Narrator: On a boulder at the top of the switchback, a woman with a spyglass is watching the abbey roof: a long dark coat, a rapier across her knees, and below her right knee a fitted brace of oak and steel.
+Narrator: She doesn't lower the spyglass. She raises a small crossbow in her other hand instead, and points it at you without looking.
+Ezmerelda: Stop there. Say something a vampire wouldn't say.
+* Garlic. -> garlic
+* [Cleric] (Bless her, out loud, by name of your god.) -> blessing
+* Madam Eva's cards named you. -> cards
+* Who are you? -> who
+
+~ garlic
+Ezmerelda [smile]: Ha. All right. A vampire would have said something charming. That was the least charming thing I've heard all month.
+-> who
+
+~ blessing
+interject class:cleric: Dawn keep you, stranger, and the dark keep its distance.
+Ezmerelda: That sounded like you meant it, and nothing came off you in smoke. Good enough.
+-> who
+
+~ cards
+Ezmerelda: Eva. Of course it's Eva. That old woman has been dealing me into other people's games since I was six.
+if flag.eva_reading_done
+Ezmerelda: Did she say anything else? About me?
+* She says you should eat something. -> eat
+* Only that you hunt what hunts the Vistani. -> who
+endif
+-> who
+
+~ eat
+Ezmerelda [smile]: She would. Tell her I ate a whole sausage last week. Don't tell her it was the only thing I ate. Fine. Fine, you've got honest faces, and she sent you.
+-> who
+
+~ who
+Narrator: She lowers the spyglass at last and looks you over properly, the way a horse trader looks at a horse.
+Ezmerelda: Ezmerelda d'Avenir. Of the Vistani, when they'll have me. I hunt the things that hunt people. I'm very good at it, as you can tell from all the bits of me that are left.
+-> menu
+
+~ menu
+* What are you watching up there? -> watching
+* [if flag.rictavio_unmasked] Your teacher is in Vallaki, pretending to be a showman. -> teacher_found
+* [if not flag.rictavio_unmasked] Are you looking for someone? -> teacher_lost
+* What happened to your leg? -> leg
+* [if not guest:ezmerelda] We're going after the devil in the castle. Hunt with us. -> join
+* Goodbye, for now. -> END
+
+~ watching
+Ezmerelda: The abbey. The locals call the man in charge an angel. Angels don't stitch, and somebody up there stitches a great deal. I've seen a sack carried in at night that was shaped like a woman.
+Ezmerelda: I could go in on my own. I've decided I'm not that brave. Which, for me, is new.
+if flag.abbot_met
+interject tag:blunt: We've met him. He's not a man. He's not lying when he says he's kind. That's the frightening part.
+Ezmerelda: The kind ones always are.
+endif
+-> menu
+
+~ teacher_found
+Ezmerelda: Rudolph? A showman? In feathers?
+Narrator: She closes her eyes. Something in her face can't decide between laughing and throwing the spyglass off the mountain.
+if flag.rictavio_gone
+Ezmerelda: And he's left Vallaki already. Of course he has. He never stays where people might start to depend on him. It's his only real flaw, and he has it in bulk.
+else
+Ezmerelda: In a taproom, pretending to be loud. I trained under that man for six years and never once heard him raise his voice. Did he do the lute? Please say he did the lute.
+endif
+if flag.rictavio_secret_kept
+interject tag:loyal: We promised to keep his secret.
+Ezmerelda: Then keep it. From everyone but me. I'm not everyone; I'm the reason he needs a secret.
+endif
+-> menu
+
+~ teacher_lost
+Ezmerelda: An old man with burned hands and a head full of monsters. Rudolph van Richten. He taught me everything, then went off into the mists to die heroically without me. I'd like a word with him first.
+Ezmerelda: If you see a man who looks too tired for the face he's wearing, tell me before you tell him.
+-> menu
+
+~ leg
+Ezmerelda: A werewolf in the hills above the lake, when I was young and quick and stupid. I kept the rest of me. Fair trade. The brace was Rudolph's work; it kicks harder than the old one did.
+interject name:ilse_varga: I've known soldiers who lost less and stopped. You didn't.
+Ezmerelda: Stopping's the one thing I'm bad at.
+-> menu
+
+~ join
+if tarokka.ally.npc == ezmerelda
+Ezmerelda: The cards said I'd find friends on this road. I told Eva the cards had never met me. Fine. I'll come. I go first through doors, I take the silver, and nobody calls me "girl".
+else
+Ezmerelda: I hunt alone. Usually. But this valley's too big for one pair of eyes, and too dark. All right. Until it's done.
+endif
+join ezmerelda
+if tarokka.ally.npc == ezmerelda
+quest find_the_ally found
+endif
+if name:silvain_aster
+interject name:silvain_aster: You trained under Van Richten. I have read everything he ever published. I have so many questions.
+Ezmerelda: Save them for the walk. It's a long walk, and he wrote very long books.
+endif
+-> END

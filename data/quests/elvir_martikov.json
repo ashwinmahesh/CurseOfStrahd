@@ -1,0 +1,31 @@
+{
+  "id": "elvir_martikov",
+  "name": "The Son Who Didn't Fly",
+  "summary": "Davian Martikov has never forgiven his son Adrian for coming home alone from Yester Hill, where his youngest, Elvir, was taken.",
+  "giver": "stefania_martikov",
+  "region": "wizard_of_wines",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Last spring Davian sent his sons Adrian and Elvir to watch Yester Hill. The druids' blights caught them; Adrian flew home alone and has said nothing since but \"I flew.\" Davian has barely spoken a kind word to him in a year. Stefania would give a great deal to know what really happened.",
+      "objectives": [
+        "Find out what happened to Elvir on Yester Hill"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "truth_found",
+      "journal": "Elvir was pinned by a root and couldn't change. He ordered Adrian to fly for help, and Adrian obeyed. The druids caged Elvir on Yester Hill and gave him to their tree. He made sure someone would know it was his order.",
+      "objectives": [
+        "Tell Davian the truth"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "reconciled",
+      "journal": "Davian crossed the yard to his son and gave him the press. Neither of them is any good at this. They managed anyway.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

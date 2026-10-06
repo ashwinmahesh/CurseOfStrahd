@@ -1,0 +1,20 @@
+{
+  "id": "kasha_varo",
+  "name": "Kasha Varo",
+  "title": "Keeper of the Shrine of the White Sun",
+  "summary": "A tiny old widow in three shawls who sweeps the snow from around the Pool of the White Sun, sings to the water, and has kept Krezk's graves for sixty years. Her knees know things.",
+  "portrait": "kasha_varo",
+  "sprite": "kasha_varo",
+  "attitude": "friendly",
+  "voice": "docs/voice/kasha_varo.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "krezk",
+    "devout",
+    "shrine_keeper"
+  ],
+  "region": "krezk",
+  "pronouns": "she/her"
+}

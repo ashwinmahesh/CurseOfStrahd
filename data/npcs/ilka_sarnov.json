@@ -1,0 +1,19 @@
+{
+  "id": "ilka_sarnov",
+  "name": "Ilka Sarnov",
+  "title": "A Child in a Cage",
+  "summary": "A thin, fierce girl of ten from the village under the castle, caged in the loft of Old Bonegrinder with her little brother. She counts the days on the bars and has stopped eating so she won't get heavier.",
+  "portrait": "ilka_sarnov",
+  "sprite": "ilka_sarnov",
+  "attitude": "friendly",
+  "voice": "docs/regions/old_bonegrinder.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "child",
+    "old_bonegrinder"
+  ],
+  "region": "old_bonegrinder",
+  "pronouns": "she/her"
+}

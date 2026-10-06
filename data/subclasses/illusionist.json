@@ -38,7 +38,7 @@
         "id": "illusion_savant",
         "name": "Illusion Savant (new spell level)",
         "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Illusion spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -48,7 +48,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -57,7 +58,7 @@
         "id": "illusion_savant",
         "name": "Illusion Savant (new spell level)",
         "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Illusion spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -67,7 +68,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -76,7 +78,7 @@
         "id": "illusion_savant",
         "name": "Illusion Savant (new spell level)",
         "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Illusion spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -86,7 +88,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -95,7 +98,7 @@
         "id": "illusion_savant",
         "name": "Illusion Savant (new spell level)",
         "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
-        "implemented": "data",
+        "text": "You gain spell slots of a new level: add one Illusion spell from the Wizard list, of a level you can cast, to your spellbook for free.",
         "choice": {
           "kind": "spellbook",
           "count": 1,
@@ -105,7 +108,8 @@
             "max_level": "slots",
             "min_level": 1
           }
-        }
+        },
+        "implemented": "data"
       }
     },
     {
@@ -188,6 +192,7 @@
         "id": "phantasmal_creatures",
         "name": "Phantasmal Creatures",
         "summary": "Summon Beast and Summon Fey always prepared and castable as Illusions, once free per Long Rest at half HP.",
+        "text": "You always have Summon Beast and Summon Fey prepared. When you cast either, you can make it an Illusion spell, so the creature looks spectral. You can cast that Illusion version once without a spell slot, and the creature then has half its usual Hit Points; the free casting comes back on a Long Rest.",
         "implemented": "engine",
         "modifiers": [
           {
@@ -209,14 +214,15 @@
         "id": "illusory_self",
         "name": "Illusory Self",
         "summary": "Reaction: an attack against you automatically misses; once per rest or spend a level 2+ slot.",
-        "implemented": "engine",
+        "text": "When a creature makes an attack roll against you, you can take a Reaction to put an illusory double of yourself in the way: the attack automatically misses and the illusion fades. You regain this on a Short or Long Rest, or by expending a level 2+ spell slot (no action required).",
         "action": "reaction",
         "resource": {
           "id": "illusory_self",
           "name": "Illusory Self",
           "max": 1,
           "recharge": "short"
-        }
+        },
+        "implemented": "engine"
       }
     },
     {

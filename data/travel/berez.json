@@ -1,0 +1,92 @@
+{
+  "id": "berez",
+  "name": "Berez, Mount Baratok and the Tsolenka Pass",
+  "places": [
+    {
+      "id": "berez",
+      "name": "The Ruins of Berez",
+      "location": "berez",
+      "spawn": "from_road",
+      "pos": [
+        0.27,
+        0.62
+      ],
+      "region": "berez",
+      "summary": "A village the Luna drowned, in the marsh south-west of Vallaki. A witch lives on a stump in the middle of it."
+    },
+    {
+      "id": "mount_baratok",
+      "name": "Mount Baratok",
+      "location": "mount_baratok",
+      "spawn": "from_road",
+      "pos": [
+        0.18,
+        0.2
+      ],
+      "region": "mount_baratok",
+      "summary": "The great peak above the lake, where the weather does strange things and a hermit lives in a stone hut."
+    },
+    {
+      "id": "tsolenka_pass",
+      "name": "The Tsolenka Pass",
+      "location": "tsolenka_pass",
+      "spawn": "from_road",
+      "pos": [
+        0.39,
+        0.145
+      ],
+      "region": "tsolenka_pass",
+      "summary": "The high road over the mountains toward the Amber Temple: a bridge over a gorge, and a guard tower with its gate shut."
+    }
+  ],
+  "roads": [
+    {
+      "id": "vallaki_to_berez",
+      "from": "vallaki",
+      "to": "berez",
+      "hours": 3,
+      "table": "berez_marsh",
+      "name": "The marsh track along the Luna"
+    },
+    {
+      "id": "wizard_of_wines_to_berez",
+      "from": "wizard_of_wines",
+      "to": "berez",
+      "hours": 2,
+      "table": "berez_marsh",
+      "name": "The ravens' way along the Luna"
+    },
+    {
+      "id": "vallaki_to_mount_baratok",
+      "from": "vallaki",
+      "to": "mount_baratok",
+      "hours": 5,
+      "table": "baratok_slopes",
+      "name": "The lake shore and the goat track up Mount Baratok"
+    },
+    {
+      "id": "vallaki_to_tsolenka_pass",
+      "from": "vallaki",
+      "to": "tsolenka_pass",
+      "hours": 6,
+      "table": "baratok_slopes",
+      "name": "The old mountain road north"
+    },
+    {
+      "id": "mount_baratok_to_tsolenka_pass",
+      "from": "mount_baratok",
+      "to": "tsolenka_pass",
+      "hours": 4,
+      "table": "baratok_slopes",
+      "name": "The high ridges"
+    },
+    {
+      "id": "van_richtens_tower_to_mount_baratok",
+      "from": "van_richtens_tower",
+      "to": "mount_baratok",
+      "hours": 2,
+      "table": "baratok_slopes",
+      "name": "The path up from the tower's lake"
+    }
+  ]
+}

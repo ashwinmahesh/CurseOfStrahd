@@ -1,0 +1,48 @@
+{
+  "id": "the_dark_beacon",
+  "name": "The Dragon's Beacon",
+  "summary": "Argynvost lit a beacon at the top of his tower every night so the valley would know someone was keeping watch. It has been dark since he died.",
+  "giver": "argynvost",
+  "region": "argynvostholt",
+  "stages": [
+    {
+      "id": "seen",
+      "journal": "Argynvostholt's tower once held a beacon the dragon lit every night. Sir Godfrey says it went out when he died, and that the commander won't hear it spoken of. Something in the chapel still answers questions, some nights.",
+      "objectives": [
+        "Visit the chapel of Argynvostholt"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "echo",
+      "journal": "The echo of the dragon Argynvost lingers in his chapel. His skull hangs in Strahd's castle as a trophy; brought home to his bones it would light the beacon as it should. But a little of his fire still sleeps in the bones themselves: enough to light it for one night, and one night would be enough to let his knights go.",
+      "objectives": [
+        "Kindle the dragon's fire at his bones in the mausoleum",
+        "Carry it to the beacon at the top of the tower"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "kindled",
+      "journal": "We carry a flame taken from the frost on the dragon's bones. It burns silver, gives no heat and casts no shadow. The commander will feel it moving through his house.",
+      "objectives": [
+        "Light the beacon at the top of the tower"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "lit",
+      "journal": "The beacon of Argynvostholt burns again. Its light reaches the castle on its rock, and every window in the valley.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "waiting",
+      "journal": "The beacon stays dark for now. The dragon's skull still hangs somewhere in Castle Ravenloft; brought home to his bones, it would light the beacon for good.",
+      "objectives": [
+        "Bring Argynvost's skull home from Castle Ravenloft"
+      ],
+      "ends": ""
+    }
+  ]
+}

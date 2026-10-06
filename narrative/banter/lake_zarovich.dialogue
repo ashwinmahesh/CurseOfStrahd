@@ -1,0 +1,31 @@
+# Party banter at Lake Zarovich (the landing and the hill trail). Each node opens with an `if` gate.
+
+~ banter_empty_lake
+if visited:lake_zarovich and not flag.bluto_fate
+interject tag:curious: A whole lake and not one fish in a year. Where do fish go? Do they have somewhere better?
+interject class:druid: Lakes go quiet when something in them is wrong. Or when something on the shore is.
+interject tag:blunt: Or the fishers ate them all and blamed the lake. People do that.
+endif
+-> END
+
+~ banter_bluto_saved
+if flag.bluto_fate == "saved"
+interject class:cleric: He'd filled his pockets with stones. A man doesn't do that in a hurry. He'd been thinking about it for days.
+interject tag:loyal: And then somebody gave him something to row for. That's all it takes, some days. One thing.
+endif
+-> END
+
+~ banter_bluto_dark
+if flag.bluto_fate == "killed" or flag.bluto_fate == "drowned"
+interject tag:veteran: The lake got somebody in the end. I keep thinking it was always going to.
+interject tag:devout: It was never going to. It just did. There's a difference, and I'll keep insisting on it.
+endif
+-> END
+
+~ banter_arabelle_lake
+if guest:arabelle and visited:lake_zarovich
+Arabelle: The lake lady wanted me twice. She doesn't get a third time. I asked.
+interject tag:cheerful: Asked who?
+Arabelle: Her. She's not very nice. She was polite about it, though.
+endif
+-> END

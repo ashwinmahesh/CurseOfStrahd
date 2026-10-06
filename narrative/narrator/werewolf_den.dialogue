@@ -1,0 +1,121 @@
+# Narrator: the werewolf den in the hills above Lake Zarovich, outside and in (docs/voice/narrator.md).
+
+~ enter:werewolf_den
+| The trail climbs out of the pines onto a bare slope under a rock face. High up in the rock is a cave mouth, and the warm air coming out of it smells of wet dog and old meat.
+| [flag.wolf_pack_leader == "emil"] The slope is quiet. A grey wolf lies in the sun on the watch rock, sees you, and puts its head back down on its paws.
+| [flag.wolf_pack_leader == "kiril"] Eyes on the watch rock, eyes in the pines, eyes in the cave mouth. Nobody stops you. Nobody needs to.
+| [flag.wolf_pack_leader == "none"] The cave mouth is dark and nothing breathes out of it. Crows have found the bone heap, and nobody is chasing them off.
+cooldown 30
+
+~ enter:den_trail
+| The trail is worn smooth and wide, the way paths get when a great many feet use them. Some of the prints in the mud are boots. Most of them aren't.
+once
+
+~ enter:den_stream
+| A cold stream runs down the slope in a cut of grey rock. On the far bank, purple flowers grow thick, and nothing has drunk on that side for a long time.
+once
+
+~ enter:den_slope
+| The slope under the cave mouth is beaten bare. A clay pot of water sits by the rock, and a knife, and a basket of cut stalks: someone has been working here and only just stopped.
+| [flag.pack_resolved] The ground under the cave mouth is still beaten bare, but the clay pot is gone and the knife with it.
+once
+
+~ enter:den_watch_rock
+| From the watch rock you can see the whole lake and the trail coming up from it, every bend. Nobody has climbed this hill unseen for a long time.
+once
+
+~ examine:den_bone_midden
+| A heap of bones in a hollow, out of sight of the trail. Deer, mostly. Sheep. Further down, newer, the long bones of something that walked on two legs, cracked for the marrow.
+
+~ examine:den_claw_pine
+| Five gouges in the bark, higher than a man can reach, deep enough to lay a finger in. The pine is still alive. It does not look happy about it.
+
+~ examine:den_herb_patch
+| Purple hooded flowers, planted in rows and weeded. Wolfsbane, a whole garden of it, at a werewolf's front door. Either somebody here has a sense of humour, or a plan.
+| [class:druid] {name} knows the plant at a glance: wolfsbane, grown with care. In small doses it makes a beast drowsy. In large ones it does worse.
+
+~ examine:den_watch_stone
+| The top of the watch rock is polished smooth by a great many patient bellies. There's a good view, and a fine collection of fleas.
+
+~ examine:den_rag_doll
+| A rag doll, face down in the mud: a little stitched woman with a wool scarf and one button eye. Somebody small has loved it nearly to pieces, and then dropped it here.
+
+~ open:den_hunter_pack
+| A hunter's pack, torn open, with the bow still in it. Whoever carried it didn't get the chance to string it.
+| [flag.hunters_befriended] A hunter's pack, torn open. The quiver is stitched with the same running-deer mark as Grigor's sons wore on their sleeves. You've found his brother, or what the wolves left.
+
+~ rest:long:werewolf_den
+| You sleep in turns at the edge of the pines. All night something walks the slope above you, round and round, never quite close enough to see.
+| [flag.wolf_pack_leader == "emil"] You sleep at the edge of the pines, and grey shapes keep watch on the slope above you all night. For once, they're watching for you, not at you.
+
+~ enter:werewolf_den_caves
+| The cave goes down into the hill, warm, close and dark. Straw rustles in the side chambers. Somewhere deeper, small voices are whispering, and stop.
+| [flag.wolf_pack_leader == "none"] The den is silent. The fire pit is ash, and the straw beds along the walls are empty, and they will stay that way.
+| [flag.wolf_pack_leader == "emil"] The den smells of woodsmoke and stew now. Somewhere a wolf is grumbling as it mends a fence, and a woman's voice is telling it to stop grumbling.
+cooldown 30
+
+~ enter:den_mouth_cave
+| The mouth cave is full of straw and the smell of animals, and every heap of straw could be a wolf, or a sleeping man, or both.
+once
+
+~ enter:den_passage
+| A low passage, the rock polished at shoulder height by bodies brushing past. Two kinds of shoulder: one at a man's height, one at a wolf's.
+once
+
+~ enter:den_great_cave
+| The great cave: a fire pit in the middle, furs and straw round the walls, a litter of bones, and a long scratched tally on the rock that nobody explains.
+once
+
+~ enter:den_emil_alcove
+| A side chamber off the great cave, cold after the fire. Something in the dark rattles softly: a chain, moving because someone at the end of it has looked up.
+once
+
+~ enter:den_children_pen
+| A gate of lashed poles closes off the back of a little cave. The smell is straw, and fear, and children who haven't been washed in a month.
+once
+
+~ enter:den_kiril_lair
+| Kiril's lair: a bed of good furs, a wolf-skin rug, an iron chest, and a wall of trophies. The trophies are not wolves.
+once
+
+~ enter:den_shrine
+| A low cave lit by candle stubs, and in it, a hooded figure of carved rock taller than any of you, with her hands open and no face at all.
+once
+
+~ enter:den_zuleika_nook
+| A neat little chamber hung with drying herbs, with a swept floor and a real bed. Somebody in this den still lives like a person.
+once
+
+~ examine:den_silver_chains
+| Two iron rings set deep in the rock, and two lengths of bright silver chain hanging from them, with cuffs at the ends. The silver is blackened on the inside of each cuff, where it has been burning someone for a month.
+
+~ examine:den_pen_tally
+| Scratches on the wall in groups of five, made with something small and sharp. Six groups and one more. Under them, in a child's careful letters, eleven more scratches, crossed out one by one in advance.
+
+~ examine:den_kiril_trophies
+| A wall of trophies: a shepherd's crook, a hunter's cap, a Vistani boot with a fine buckle, a child's bonnet. The boot has a knife slash across the ankle and a dark stain down to the heel.
+| [guest:ezmerelda] A wall of trophies. Ezmerelda stops in front of a Vistani boot with a fine buckle and stares at it for a long time, and says nothing at all.
+
+~ examine:den_key_peg
+| A wooden peg driven into the rock, and on it an iron key, its bow wrapped in rag. Kiril keeps it where he can see it from his bed.
+
+~ examine:den_fire_pit
+| A fire pit of blackened stones, a spit across it, and something on the spit you decide very firmly is a deer.
+
+~ examine:den_zuleika_herbs
+| Bundles of herbs hang drying from the roof: yarrow, valerian, and a great deal of wolfsbane. Each bundle is tied with a different coloured thread, in an order only one person understands.
+
+~ examine:den_bone_heap
+| Bones gnawed clean and stacked, with a kind of tidiness. The tidiness is the worst part.
+
+~ open:mother_night_offerings
+| Coins, teeth, a child's shoe, candle stubs. The wolves bring her what they value, and some of it is very strange.
+| [treasure_at:werewolf_den_shrine] Coins, teeth, candle stubs, and under them a bundle in oiled cloth that no wolf ever brought here.
+
+~ open:kiril_hoard
+| Kiril's hoard: the purses, rings and good coats of everyone who ever walked the Krezk road at the wrong time.
+
+~ combat:start
+| [at:werewolf_den_caves] The den erupts in yellow eyes and snapping, and the cave is suddenly much too small.
+| [at:lake_zarovich_trail and night] Grey shapes come through the pines at a run, low and fast, and the ones behind are already standing up on two legs.
+| [at:van_richtens_tower] The pale figures on the shore move all at once, faster than anything dead has a right to.

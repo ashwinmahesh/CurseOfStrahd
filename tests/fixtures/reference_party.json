@@ -124,6 +124,264 @@
    },
    "crit_range": 19,
    "attacks_per_action": 2
+  },
+  "6": {
+   "pb": 3,
+   "hp": 64,
+   "ac": 17,
+   "initiative": 2,
+   "scores": {
+    "str": 20,
+    "con": 15
+   },
+   "saves": {
+    "str": 8,
+    "dex": 2,
+    "con": 5,
+    "int": -1,
+    "wis": 0,
+    "cha": 1
+   },
+   "skills": {
+    "athletics": 8,
+    "intimidation": 4,
+    "perception": 3
+   },
+   "passive_perception": 13,
+   "attack": {
+    "weapon": "greatsword",
+    "bonus": 8,
+    "damage": "2d6+5"
+   },
+   "crit_range": 19,
+   "attacks_per_action": 2,
+   "resources": {
+    "second_wind": 3,
+    "action_surge": 1,
+    "indomitable": 0
+   },
+   "choice_counts": {
+    "fighter.1.weapon_mastery": 4
+   },
+   "advantage": [
+    "initiative",
+    "check:athletics"
+   ]
+  },
+  "7": {
+   "pb": 3,
+   "hp": 74,
+   "ac": 17,
+   "initiative": 2,
+   "scores": {
+    "str": 20,
+    "con": 15
+   },
+   "saves": {
+    "str": 8,
+    "dex": 2,
+    "con": 5,
+    "int": -1,
+    "wis": 0,
+    "cha": 1
+   },
+   "skills": {
+    "athletics": 8,
+    "intimidation": 4,
+    "perception": 3
+   },
+   "passive_perception": 13,
+   "attack": {
+    "weapon": "greatsword",
+    "bonus": 8,
+    "damage": "2d6+5"
+   },
+   "crit_range": 19,
+   "attacks_per_action": 2,
+   "resources": {
+    "second_wind": 3,
+    "action_surge": 1,
+    "indomitable": 0
+   },
+   "choice_counts": {
+    "fighter.1.weapon_mastery": 4
+   },
+   "advantage": [
+    "initiative",
+    "check:athletics"
+   ]
+  },
+  "8": {
+   "pb": 3,
+   "hp": 92,
+   "ac": 17,
+   "initiative": 2,
+   "scores": {
+    "str": 20,
+    "con": 16
+   },
+   "saves": {
+    "str": 8,
+    "dex": 2,
+    "con": 6,
+    "int": -1,
+    "wis": 0,
+    "cha": 1
+   },
+   "skills": {
+    "athletics": 8,
+    "intimidation": 4,
+    "perception": 3
+   },
+   "passive_perception": 13,
+   "attack": {
+    "weapon": "greatsword",
+    "bonus": 8,
+    "damage": "2d6+5"
+   },
+   "crit_range": 19,
+   "attacks_per_action": 2,
+   "resources": {
+    "second_wind": 3,
+    "action_surge": 1,
+    "indomitable": 0
+   },
+   "choice_counts": {
+    "fighter.1.weapon_mastery": 4
+   },
+   "advantage": [
+    "initiative",
+    "check:athletics"
+   ]
+  },
+  "9": {
+   "pb": 4,
+   "hp": 103,
+   "ac": 17,
+   "initiative": 2,
+   "scores": {
+    "str": 20,
+    "con": 16
+   },
+   "saves": {
+    "str": 9,
+    "dex": 2,
+    "con": 7,
+    "int": -1,
+    "wis": 0,
+    "cha": 1
+   },
+   "skills": {
+    "athletics": 9,
+    "intimidation": 5,
+    "perception": 4
+   },
+   "passive_perception": 14,
+   "attack": {
+    "weapon": "greatsword",
+    "bonus": 9,
+    "damage": "2d6+5"
+   },
+   "crit_range": 19,
+   "attacks_per_action": 2,
+   "resources": {
+    "second_wind": 3,
+    "action_surge": 1,
+    "indomitable": 1
+   },
+   "choice_counts": {
+    "fighter.1.weapon_mastery": 4
+   },
+   "advantage": [
+    "initiative",
+    "check:athletics"
+   ]
+  },
+  "10": {
+   "pb": 4,
+   "hp": 114,
+   "ac": 17,
+   "initiative": 2,
+   "scores": {
+    "str": 20,
+    "con": 16
+   },
+   "saves": {
+    "str": 9,
+    "dex": 2,
+    "con": 7,
+    "int": -1,
+    "wis": 0,
+    "cha": 1
+   },
+   "skills": {
+    "athletics": 9,
+    "intimidation": 5,
+    "perception": 4
+   },
+   "passive_perception": 14,
+   "attack": {
+    "weapon": "greatsword",
+    "bonus": 9,
+    "damage": "2d6+5"
+   },
+   "crit_range": 19,
+   "attacks_per_action": 2,
+   "resources": {
+    "second_wind": 4,
+    "action_surge": 1,
+    "indomitable": 1
+   },
+   "choice_counts": {
+    "fighter.1.weapon_mastery": 5
+   },
+   "advantage": [
+    "initiative",
+    "check:athletics"
+   ]
+  },
+  "11": {
+   "pb": 4,
+   "hp": 125,
+   "ac": 17,
+   "initiative": 2,
+   "scores": {
+    "str": 20,
+    "con": 16
+   },
+   "saves": {
+    "str": 9,
+    "dex": 2,
+    "con": 7,
+    "int": -1,
+    "wis": 0,
+    "cha": 1
+   },
+   "skills": {
+    "athletics": 9,
+    "intimidation": 5,
+    "perception": 4
+   },
+   "passive_perception": 14,
+   "attack": {
+    "weapon": "greatsword",
+    "bonus": 9,
+    "damage": "2d6+5"
+   },
+   "crit_range": 19,
+   "attacks_per_action": 3,
+   "resources": {
+    "second_wind": 4,
+    "action_surge": 1,
+    "indomitable": 1
+   },
+   "choice_counts": {
+    "fighter.1.weapon_mastery": 5
+   },
+   "advantage": [
+    "initiative",
+    "check:athletics"
+   ]
   }
  },
  "tamsin_tealeaf": {
@@ -220,6 +478,150 @@
     "damage": "1d6+4"
    },
    "sneak_attack": "3d6"
+  },
+  "6": {
+   "pb": 3,
+   "hp": 46,
+   "ac": 15,
+   "initiative": 7,
+   "saves": {
+    "dex": 7,
+    "int": 5
+   },
+   "skills": {
+    "stealth": 10,
+    "sleight_of_hand": 10,
+    "acrobatics": 10,
+    "perception": 6,
+    "investigation": 5
+   },
+   "passive_perception": 16,
+   "attack": {
+    "weapon": "shortsword",
+    "bonus": 7,
+    "damage": "1d6+4"
+   },
+   "sneak_attack": "3d6"
+  },
+  "7": {
+   "pb": 3,
+   "hp": 53,
+   "ac": 15,
+   "initiative": 7,
+   "saves": {
+    "dex": 7,
+    "int": 5
+   },
+   "skills": {
+    "stealth": 10,
+    "sleight_of_hand": 10,
+    "acrobatics": 10,
+    "perception": 6,
+    "investigation": 5
+   },
+   "passive_perception": 16,
+   "attack": {
+    "weapon": "shortsword",
+    "bonus": 7,
+    "damage": "1d6+4"
+   },
+   "sneak_attack": "4d6"
+  },
+  "8": {
+   "pb": 3,
+   "hp": 60,
+   "ac": 16,
+   "initiative": 8,
+   "saves": {
+    "dex": 8,
+    "int": 5
+   },
+   "skills": {
+    "stealth": 11,
+    "sleight_of_hand": 11,
+    "acrobatics": 11,
+    "perception": 6,
+    "investigation": 5
+   },
+   "passive_perception": 16,
+   "attack": {
+    "weapon": "shortsword",
+    "bonus": 8,
+    "damage": "1d6+5"
+   },
+   "sneak_attack": "4d6"
+  },
+  "9": {
+   "pb": 4,
+   "hp": 67,
+   "ac": 16,
+   "initiative": 9,
+   "saves": {
+    "dex": 9,
+    "int": 6
+   },
+   "skills": {
+    "stealth": 13,
+    "sleight_of_hand": 13,
+    "acrobatics": 13,
+    "perception": 8,
+    "investigation": 6
+   },
+   "passive_perception": 18,
+   "attack": {
+    "weapon": "shortsword",
+    "bonus": 9,
+    "damage": "1d6+5"
+   },
+   "sneak_attack": "5d6"
+  },
+  "10": {
+   "pb": 4,
+   "hp": 84,
+   "ac": 16,
+   "initiative": 9,
+   "saves": {
+    "dex": 9,
+    "int": 6
+   },
+   "skills": {
+    "stealth": 13,
+    "sleight_of_hand": 13,
+    "acrobatics": 13,
+    "perception": 8,
+    "investigation": 6
+   },
+   "passive_perception": 18,
+   "attack": {
+    "weapon": "shortsword",
+    "bonus": 9,
+    "damage": "1d6+5"
+   },
+   "sneak_attack": "5d6"
+  },
+  "11": {
+   "pb": 4,
+   "hp": 92,
+   "ac": 16,
+   "initiative": 9,
+   "saves": {
+    "dex": 9,
+    "int": 6
+   },
+   "skills": {
+    "stealth": 13,
+    "sleight_of_hand": 13,
+    "acrobatics": 13,
+    "perception": 8,
+    "investigation": 6
+   },
+   "passive_perception": 18,
+   "attack": {
+    "weapon": "shortsword",
+    "bonus": 9,
+    "damage": "1d6+5"
+   },
+   "sneak_attack": "6d6"
   }
  },
  "hedda_ironvow": {
@@ -403,6 +805,291 @@
     "dice": "6d8",
     "bonus": 9
    }
+  },
+  "6": {
+   "pb": 3,
+   "hp": 51,
+   "ac": 14,
+   "saves": {
+    "wis": 7,
+    "cha": 4,
+    "con": 2
+   },
+   "skills": {
+    "medicine": 7,
+    "religion": 3,
+    "persuasion": 4
+   },
+   "passive_perception": 14,
+   "spell": {
+    "class": "cleric",
+    "dc": 15,
+    "attack": 7
+   },
+   "slots": [
+    4,
+    3,
+    3
+   ],
+   "choice_counts": {
+    "cleric.prepared": 10,
+    "cleric.cantrips": 4
+   },
+   "cantrip": {
+    "id": "sacred_flame",
+    "dice": "2d8"
+   },
+   "attack": {
+    "weapon": "mace",
+    "bonus": 5,
+    "damage": "1d6+2"
+   },
+   "resources": {
+    "channel_divinity": 3,
+    "divine_intervention": 0
+   }
+  },
+  "7": {
+   "pb": 3,
+   "hp": 59,
+   "ac": 14,
+   "saves": {
+    "wis": 7,
+    "cha": 4,
+    "con": 2
+   },
+   "skills": {
+    "medicine": 7,
+    "religion": 3,
+    "persuasion": 4
+   },
+   "passive_perception": 14,
+   "spell": {
+    "class": "cleric",
+    "dc": 15,
+    "attack": 7
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    1
+   ],
+   "choice_counts": {
+    "cleric.prepared": 11,
+    "cleric.cantrips": 4
+   },
+   "cantrip": {
+    "id": "sacred_flame",
+    "dice": "2d8"
+   },
+   "attack": {
+    "weapon": "mace",
+    "bonus": 5,
+    "damage": "1d6+2"
+   },
+   "resources": {
+    "channel_divinity": 3,
+    "divine_intervention": 0
+   }
+  },
+  "8": {
+   "pb": 3,
+   "hp": 67,
+   "ac": 14,
+   "saves": {
+    "wis": 8,
+    "cha": 4,
+    "con": 2
+   },
+   "skills": {
+    "medicine": 8,
+    "religion": 3,
+    "persuasion": 4
+   },
+   "passive_perception": 15,
+   "spell": {
+    "class": "cleric",
+    "dc": 16,
+    "attack": 8
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    2
+   ],
+   "choice_counts": {
+    "cleric.prepared": 12,
+    "cleric.cantrips": 4
+   },
+   "cantrip": {
+    "id": "sacred_flame",
+    "dice": "2d8"
+   },
+   "attack": {
+    "weapon": "mace",
+    "bonus": 5,
+    "damage": "1d6+2"
+   },
+   "resources": {
+    "channel_divinity": 3,
+    "divine_intervention": 0
+   }
+  },
+  "9": {
+   "pb": 4,
+   "hp": 75,
+   "ac": 14,
+   "saves": {
+    "wis": 9,
+    "cha": 5,
+    "con": 2
+   },
+   "skills": {
+    "medicine": 9,
+    "religion": 4,
+    "persuasion": 5
+   },
+   "passive_perception": 15,
+   "spell": {
+    "class": "cleric",
+    "dc": 17,
+    "attack": 9
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    3,
+    1
+   ],
+   "choice_counts": {
+    "cleric.prepared": 14,
+    "cleric.cantrips": 4
+   },
+   "cantrip": {
+    "id": "sacred_flame",
+    "dice": "2d8"
+   },
+   "attack": {
+    "weapon": "mace",
+    "bonus": 6,
+    "damage": "1d6+2"
+   },
+   "resources": {
+    "channel_divinity": 3,
+    "divine_intervention": 0
+   },
+   "heal": {
+    "spell": "cure_wounds",
+    "slot": 5,
+    "dice": "10d8",
+    "bonus": 12
+   },
+   "always_prepared": [
+    "greater_restoration",
+    "mass_cure_wounds",
+    "aura_of_life",
+    "death_ward"
+   ]
+  },
+  "10": {
+   "pb": 4,
+   "hp": 83,
+   "ac": 14,
+   "saves": {
+    "wis": 9,
+    "cha": 5,
+    "con": 2
+   },
+   "skills": {
+    "medicine": 9,
+    "religion": 4,
+    "persuasion": 5
+   },
+   "passive_perception": 15,
+   "spell": {
+    "class": "cleric",
+    "dc": 17,
+    "attack": 9
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    3,
+    2
+   ],
+   "choice_counts": {
+    "cleric.prepared": 15,
+    "cleric.cantrips": 5
+   },
+   "cantrip": {
+    "id": "sacred_flame",
+    "dice": "2d8"
+   },
+   "attack": {
+    "weapon": "mace",
+    "bonus": 6,
+    "damage": "1d6+2"
+   },
+   "resources": {
+    "channel_divinity": 3,
+    "divine_intervention": 1
+   }
+  },
+  "11": {
+   "pb": 4,
+   "hp": 91,
+   "ac": 14,
+   "saves": {
+    "wis": 9,
+    "cha": 5,
+    "con": 2
+   },
+   "skills": {
+    "medicine": 9,
+    "religion": 4,
+    "persuasion": 5
+   },
+   "passive_perception": 15,
+   "spell": {
+    "class": "cleric",
+    "dc": 17,
+    "attack": 9
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    3,
+    2,
+    1
+   ],
+   "choice_counts": {
+    "cleric.prepared": 16,
+    "cleric.cantrips": 5
+   },
+   "cantrip": {
+    "id": "sacred_flame",
+    "dice": "3d8"
+   },
+   "attack": {
+    "weapon": "mace",
+    "bonus": 6,
+    "damage": "1d6+2"
+   },
+   "resources": {
+    "channel_divinity": 3,
+    "divine_intervention": 1
+   },
+   "heal": {
+    "spell": "cure_wounds",
+    "slot": 6,
+    "dice": "12d8",
+    "bonus": 13
+   }
   }
  },
  "silvain_aster": {
@@ -563,6 +1250,297 @@
     "spell": "fireball",
     "slot": 3,
     "dice": "8d6"
+   },
+   "granted": [
+    "prestidigitation",
+    "detect_magic",
+    "misty_step"
+   ]
+  },
+  "6": {
+   "pb": 3,
+   "hp": 38,
+   "ac": 11,
+   "saves": {
+    "int": 7,
+    "wis": 5
+   },
+   "skills": {
+    "arcana": 10,
+    "history": 7,
+    "investigation": 7,
+    "insight": 5,
+    "perception": 5
+   },
+   "passive_perception": 15,
+   "spell": {
+    "class": "wizard",
+    "dc": 15,
+    "attack": 7
+   },
+   "slots": [
+    4,
+    3,
+    3
+   ],
+   "choice_counts": {
+    "wizard.prepared": 10,
+    "wizard.spellbook": 16,
+    "wizard.cantrips": 4
+   },
+   "spellbook": 19,
+   "cantrip": {
+    "id": "fire_bolt",
+    "dice": "2d10"
+   },
+   "damage": {
+    "spell": "fireball",
+    "slot": 3,
+    "dice": "8d6"
+   },
+   "granted": [
+    "prestidigitation",
+    "detect_magic",
+    "misty_step"
+   ]
+  },
+  "7": {
+   "pb": 3,
+   "hp": 44,
+   "ac": 11,
+   "saves": {
+    "int": 7,
+    "wis": 5
+   },
+   "skills": {
+    "arcana": 10,
+    "history": 7,
+    "investigation": 7,
+    "insight": 5,
+    "perception": 5
+   },
+   "passive_perception": 15,
+   "spell": {
+    "class": "wizard",
+    "dc": 15,
+    "attack": 7
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    1
+   ],
+   "choice_counts": {
+    "wizard.prepared": 11,
+    "wizard.spellbook": 18,
+    "wizard.cantrips": 4
+   },
+   "spellbook": 22,
+   "cantrip": {
+    "id": "fire_bolt",
+    "dice": "2d10"
+   },
+   "damage": {
+    "spell": "fireball",
+    "slot": 3,
+    "dice": "8d6"
+   },
+   "granted": [
+    "prestidigitation",
+    "detect_magic",
+    "misty_step"
+   ]
+  },
+  "8": {
+   "pb": 3,
+   "hp": 50,
+   "ac": 11,
+   "saves": {
+    "int": 8,
+    "wis": 5
+   },
+   "skills": {
+    "arcana": 11,
+    "history": 8,
+    "investigation": 8,
+    "insight": 5,
+    "perception": 5
+   },
+   "passive_perception": 15,
+   "spell": {
+    "class": "wizard",
+    "dc": 16,
+    "attack": 8
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    2
+   ],
+   "choice_counts": {
+    "wizard.prepared": 12,
+    "wizard.spellbook": 20,
+    "wizard.cantrips": 4
+   },
+   "spellbook": 24,
+   "cantrip": {
+    "id": "fire_bolt",
+    "dice": "2d10"
+   },
+   "damage": {
+    "spell": "fireball",
+    "slot": 3,
+    "dice": "8d6"
+   },
+   "granted": [
+    "prestidigitation",
+    "detect_magic",
+    "misty_step"
+   ]
+  },
+  "9": {
+   "pb": 4,
+   "hp": 56,
+   "ac": 11,
+   "saves": {
+    "int": 9,
+    "wis": 6
+   },
+   "skills": {
+    "arcana": 13,
+    "history": 9,
+    "investigation": 9,
+    "insight": 6,
+    "perception": 6
+   },
+   "passive_perception": 16,
+   "spell": {
+    "class": "wizard",
+    "dc": 17,
+    "attack": 9
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    3,
+    1
+   ],
+   "choice_counts": {
+    "wizard.prepared": 14,
+    "wizard.spellbook": 22,
+    "wizard.cantrips": 4
+   },
+   "spellbook": 27,
+   "cantrip": {
+    "id": "fire_bolt",
+    "dice": "2d10"
+   },
+   "damage": {
+    "spell": "fireball",
+    "slot": 3,
+    "dice": "8d6"
+   },
+   "granted": [
+    "prestidigitation",
+    "detect_magic",
+    "misty_step"
+   ]
+  },
+  "10": {
+   "pb": 4,
+   "hp": 62,
+   "ac": 11,
+   "saves": {
+    "int": 9,
+    "wis": 6
+   },
+   "skills": {
+    "arcana": 13,
+    "history": 9,
+    "investigation": 9,
+    "insight": 6,
+    "perception": 6
+   },
+   "passive_perception": 16,
+   "spell": {
+    "class": "wizard",
+    "dc": 17,
+    "attack": 9
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    3,
+    2
+   ],
+   "choice_counts": {
+    "wizard.prepared": 15,
+    "wizard.spellbook": 24,
+    "wizard.cantrips": 5
+   },
+   "spellbook": 29,
+   "cantrip": {
+    "id": "fire_bolt",
+    "dice": "2d10"
+   },
+   "damage": {
+    "spell": "fireball",
+    "slot": 3,
+    "dice": "8d6"
+   },
+   "granted": [
+    "prestidigitation",
+    "detect_magic",
+    "misty_step"
+   ]
+  },
+  "11": {
+   "pb": 4,
+   "hp": 68,
+   "ac": 11,
+   "saves": {
+    "int": 9,
+    "wis": 6
+   },
+   "skills": {
+    "arcana": 13,
+    "history": 9,
+    "investigation": 9,
+    "insight": 6,
+    "perception": 6
+   },
+   "passive_perception": 16,
+   "spell": {
+    "class": "wizard",
+    "dc": 17,
+    "attack": 9
+   },
+   "slots": [
+    4,
+    3,
+    3,
+    3,
+    2,
+    1
+   ],
+   "choice_counts": {
+    "wizard.prepared": 16,
+    "wizard.spellbook": 26,
+    "wizard.cantrips": 5
+   },
+   "spellbook": 32,
+   "cantrip": {
+    "id": "fire_bolt",
+    "dice": "3d10"
+   },
+   "damage": {
+    "spell": "fireball",
+    "slot": 6,
+    "dice": "11d6"
    },
    "granted": [
     "prestidigitation",

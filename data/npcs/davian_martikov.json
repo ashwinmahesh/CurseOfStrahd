@@ -1,0 +1,26 @@
+{
+  "id": "davian_martikov",
+  "name": "Davian Martikov",
+  "title": "Master of the Wizard of Wines",
+  "summary": "The old master of the Martikov winery: white-bearded, black-eyed, proud as a cask and about as easy to move. A wereraven of the Keepers of the Feather, hiding with his family in the woods while druids sleep in his house. He has not forgiven his son Adrian for coming home alone.",
+  "portrait": "davian_martikov",
+  "sprite": "davian_martikov",
+  "attitude": "indifferent",
+  "voice": "docs/voice/davian_martikov.md",
+  "monster": "wereraven",
+  "guest": true,
+  "tags": [
+    "barovian",
+    "vintner",
+    "wereraven",
+    "keepers_of_the_feather",
+    "tarokka_ally",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "he/him",
+  "guest_build": {
+    "monster": "wereraven",
+    "note": "The wereraven block (hand crossbow, shortsword, beak; flies in raven and hybrid form). Joins as the Tarokka's Raven ally once the druids are out of his winery."
+  }
+}

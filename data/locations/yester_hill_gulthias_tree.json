@@ -1,0 +1,798 @@
+{
+  "id": "yester_hill_gulthias_tree",
+  "name": "The Crown of Yester Hill",
+  "region": "yester_hill",
+  "summary": "The top of Yester Hill inside a ring of standing stones: a black, twisted tree that drinks what it is given, a fire, and a great earthen effigy of the lord of the valley, lying on its back with a stone in its heart.",
+  "text": "The crown of the hill is flat and bare inside its ring of stones. In the middle stands a tree with bark like a burnt hand and roots that go into the ground the way fingers go into a wound. Beside it lies a man made of earth and timber, forty feet long, cloaked, with a face you have seen before.",
+  "map": {
+    "rows": [
+      "################################",
+      "#..............................#",
+      "#..............................#",
+      "#.......................#......#",
+      "#......#.......................#",
+      "#..............................#",
+      "#..............==..............#",
+      "#..............==.......===....#",
+      "#.......................===....#",
+      "#.......................===....#",
+      "#.......................===..#.#",
+      "#...#...................===....#",
+      "#.......................===....#",
+      "#.......................===....#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "#......#.................#.....#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "################.###############"
+    ],
+    "theme": "shrine_yard",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "summit_edge",
+      "name": "The edge of the crown",
+      "cells": [
+        [
+          1,
+          18
+        ],
+        [
+          30,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "ritual_ring",
+      "name": "Inside the ring",
+      "cells": [
+        [
+          5,
+          2
+        ],
+        [
+          28,
+          17
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      16,
+      21
+    ],
+    "from_path": [
+      16,
+      21
+    ],
+    "from_gully": [
+      1,
+      19
+    ]
+  },
+  "exits": [
+    {
+      "id": "summit_down",
+      "cell": [
+        16,
+        23
+      ],
+      "to": "yester_hill",
+      "spawn": "from_summit",
+      "label": "Down the hill path"
+    }
+  ],
+  "props": [
+    {
+      "id": "gulthias_tree",
+      "cell": [
+        15,
+        6
+      ],
+      "kind": "examine",
+      "label": "The black tree",
+      "model": "dead_tree",
+      "dialogue": "yester_hill/summit:tree",
+      "burning": "flag.gulthias_tree_burned"
+    },
+    {
+      "id": "strahd_effigy",
+      "cell": [
+        25,
+        10
+      ],
+      "kind": "examine",
+      "label": "The effigy",
+      "model": "grave_mound"
+    },
+    {
+      "id": "ritual_fire",
+      "cell": [
+        12,
+        12
+      ],
+      "kind": "examine",
+      "label": "The ritual fire",
+      "model": "brazier"
+    },
+    {
+      "id": "wintersplinter_heart",
+      "cell": [
+        21,
+        10
+      ],
+      "kind": "examine",
+      "label": "The splintered heartwood",
+      "model": "log",
+      "dialogue": "yester_hill/summit:heart",
+      "when": "flag.yester_hill_resolved and not flag.yester_stone_recovered"
+    },
+    {
+      "id": "elvir_remains",
+      "cell": [
+        14,
+        8
+      ],
+      "kind": "examine",
+      "label": "Bones among the roots",
+      "model": "bones",
+      "dialogue": "yester_hill/summit:elvir",
+      "when": "flag.yester_hill_resolved and not flag.elvir_remains_recovered"
+    },
+    {
+      "id": "standing_stones",
+      "cell": [
+        8,
+        4
+      ],
+      "kind": "examine",
+      "label": "A standing stone",
+      "model": "statue_headless"
+    }
+  ],
+  "containers": [
+    {
+      "id": "gulthias_roots",
+      "cell": [
+        17,
+        8
+      ],
+      "label": "Among the roots",
+      "model": "rocks",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "shortsword",
+          "qty": 1
+        }
+      ],
+      "gold": 41
+    },
+    {
+      "id": "ritual_offerings",
+      "cell": [
+        11,
+        13
+      ],
+      "label": "The druids' offerings",
+      "model": "chest_painted",
+      "items": [
+        {
+          "id": "herbalism_kit",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        },
+        {
+          "id": "druidic_focus_staff",
+          "qty": 1
+        }
+      ],
+      "gold": 25
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        12,
+        12
+      ],
+      "kind": "fire",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        21,
+        10
+      ],
+      "kind": "magic",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "ruxandra",
+      "cell": [
+        15,
+        10
+      ],
+      "dialogue": "yester_hill/ruxandra:summit",
+      "when": "not flag.yester_hill_resolved",
+      "facing": "south",
+      "approach": 10
+    },
+    {
+      "npc": "ruxandra",
+      "cell": [
+        15,
+        10
+      ],
+      "dialogue": "yester_hill/ruxandra:fallen",
+      "when": "flag.yester_hill_resolved and not flag.yester_druids_fate",
+      "facing": "south",
+      "approach": 12
+    }
+  ],
+  "encounters": [
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "flag.yester_druids_fate == \"fled\"",
+      "text": "The humming breaks into a shout. The effigy's chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 120
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "flag.yester_struck_first",
+      "text": "You are among them before the chant can end. The effigy cracks too soon, and what drags itself out of its chest is half-made and furious.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 100
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 55
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            9,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            22,
+            15
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        }
+      ],
+      "surprise": "enemies",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "flag.yester_circle_broken",
+      "text": "Ruxandra presses her forehead to the effigy and shouts one word into the earth. The chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 140
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 60
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "flag.kostin_fled and not flag.kostin_doubts",
+      "text": "The humming breaks into a shout. The effigy's chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 140
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 60
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            13,
+            14
+          ],
+          "name": "Kostin",
+          "hp": 44
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            9,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            22,
+            15
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "level >= 7",
+      "text": "The humming breaks into a shout. The effigy's chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 60
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            9,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            22,
+            15
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            13,
+            15
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            8,
+            13
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            11,
+            9
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            18,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "The humming breaks into a shout. The effigy's chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 140
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 60
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            9,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            22,
+            15
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "text": "The humming breaks into a shout. The effigy's chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 110
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 50
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            9,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    }
+  ],
+  "narration": {
+    "enter": "enter:yester_hill_gulthias_tree"
+  },
+  "rest": "no",
+  "rest_text": "Nobody sleeps in reach of those roots. Nobody who wants to wake up.",
+  "treasure_spots": {
+    "yester_hill_gulthias_tree": {
+      "container": "gulthias_roots"
+    }
+  }
+}

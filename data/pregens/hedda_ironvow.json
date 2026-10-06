@@ -155,6 +155,155 @@
           "dispel_magic"
         ]
       }
+    },
+    {
+      "level": 6,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon",
+          "hold_person",
+          "spirit_guardians",
+          "dispel_magic",
+          "prayer_of_healing"
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon",
+          "hold_person",
+          "spirit_guardians",
+          "dispel_magic",
+          "prayer_of_healing",
+          "banishment"
+        ],
+        "cleric.7.blessed_strikes": [
+          "potent_spellcasting"
+        ]
+      }
+    },
+    {
+      "level": 8,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon",
+          "hold_person",
+          "spirit_guardians",
+          "dispel_magic",
+          "prayer_of_healing",
+          "banishment",
+          "guardian_of_faith"
+        ],
+        "cleric.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "cleric.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "wis",
+          "wis"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon",
+          "hold_person",
+          "spirit_guardians",
+          "dispel_magic",
+          "prayer_of_healing",
+          "banishment",
+          "guardian_of_faith",
+          "beacon_of_hope",
+          "protection_from_evil_and_good"
+        ]
+      }
+    },
+    {
+      "level": 10,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon",
+          "hold_person",
+          "spirit_guardians",
+          "dispel_magic",
+          "prayer_of_healing",
+          "banishment",
+          "guardian_of_faith",
+          "beacon_of_hope",
+          "protection_from_evil_and_good",
+          "warding_bond"
+        ],
+        "cleric.cantrips": [
+          "guidance",
+          "sacred_flame",
+          "thaumaturgy",
+          "resistance",
+          "spare_the_dying"
+        ]
+      }
+    },
+    {
+      "level": 11,
+      "class": "cleric",
+      "hp": 0,
+      "choices": {
+        "cleric.prepared": [
+          "command",
+          "guiding_bolt",
+          "healing_word",
+          "shield_of_faith",
+          "detect_magic",
+          "spiritual_weapon",
+          "hold_person",
+          "spirit_guardians",
+          "dispel_magic",
+          "prayer_of_healing",
+          "banishment",
+          "guardian_of_faith",
+          "beacon_of_hope",
+          "protection_from_evil_and_good",
+          "warding_bond",
+          "freedom_of_movement"
+        ]
+      }
     }
   ]
 }

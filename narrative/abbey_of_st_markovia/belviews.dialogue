@@ -1,0 +1,64 @@
+# The Belview family, the Abbot's "improved" patients (docs/voice/belview.md). courtyard: one of them by the well.
+# kitchen: the family's warren in the old kitchen of the wards. cells: the barred cells along the corridor where the Abbot keeps
+# the ones whose gifts didn't take (a prop's conversation). Mongrelfolk mimic voices; it's how they say hello.
+
+~ courtyard
+Narrator: A Belview crouches by the well, picking at the ice on the rope. Her face is a girl's, mostly, with a goat's slotted eyes, and when she speaks it's in your own voice, a beat behind you.
+Belview: Hello. Hello. Who are you? Who are you? That's what you were going to say. I heard you think it.
+* Who are you? -> courtyard_who
+* What does the Abbot do to you? -> courtyard_abbot
+* Goodbye. -> END
+
+~ courtyard_who
+Belview: Belview. We're all Belview. Mother is Belview, Clovin is Belview, the ones in the cells are Belview, only louder.
+-> END
+
+~ courtyard_abbot
+Belview: Gifts. He gives us gifts. I had my eyes. Before, I couldn't see in the dark. Now I can't see in the light. That's a gift. He said so.
+interject tag:cheerful: Would you... would you like to come down to Krezk, one day?
+Belview: Krezk throws stones. Krezk throws stones at Belviews. Stones, stones. I'll stay.
+-> END
+
+~ kitchen
+set belview_family_met
+Narrator: A long low kitchen gone feral: straw beds, a hearth with a black pot, bones in a pile, and a dozen Belviews of all sizes who stop what they're doing and repeat your footsteps back to you on the flagstones.
+Belview: Visitors! Visitors! Mother, visitors! Mother doesn't come out. Mother has had nine gifts.
+if flag.abbot_fate == "repentant" or flag.abbot_fate == "slain"
+Belview: Nobody's improving us now. Nobody. We're stopping where we are. Clovin says that's all right. Is it all right?
+* It's all right. You can just be yourselves now. -> kitchen_ok
+* Goodbye. -> END
+endif
+* Is there anything you need? -> kitchen_need
+* Goodbye. -> END
+
+~ kitchen_ok
+Belview: Ourselves. Ourselves. That's a lot of selves. We'll practise.
+-> END
+
+~ kitchen_need
+Belview: Wine. Clovin says. Wine and no more gifts. And the loud ones in the cells fed. The Abbot forgets them. He forgets things in rooms. He locks the rooms so he can forget them better.
+-> END
+
+~ cells
+if flag.wards_cells_freed or flag.wards_cells_fought
+Narrator: The cells stand open and empty. Straw, a tin cup, scratches on the wall in long rows, counting something.
+-> END
+endif
+Narrator: A row of narrow cells with iron bars across their doors. Behind them, in the straw, shapes move: Belviews whose gifts didn't take, all elbows and fur and wrong-jointed legs, thin as winter. They watch you through the bars without blinking.
+Narrator: The bars are on the outside, held by simple iron pins. Anyone could let them out. Nobody has.
+* [Animal Handling DC 13] Draw the pins slowly, talking low the whole time. -> calm | riot
+* [Persuasion DC 14] Tell them, gently, that the doors are going to open and nobody will hurt them. -> calm | riot
+* Draw the pins, and stand ready to fight if they come at you. -> riot
+* Leave them be. -> END
+
+~ calm
+set wards_cells_freed
+Narrator: One by one the doors swing out. They come out on all fours and on two feet and on the shapes in between, slowly, sniffing your hands. One of them touches your sleeve with a paw that was once a hand.
+Narrator: Then they're gone down the corridor and out through the kitchen, and the Belviews in the kitchen are wailing and laughing at once, and the mountain has some new and strange residents.
+interject tag:devout: Whatever he made of them, they were people first. They should have a sky over them.
+-> END
+
+~ riot
+set wards_cells_riot
+Narrator: The first pin comes out, and the whole row erupts. Starved things are not grateful. Starved things are fast.
+-> END

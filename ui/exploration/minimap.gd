@@ -58,16 +58,17 @@ func show_location(v: LocationView) -> void:
 	_rim.queue_redraw()
 
 
-## Map colours by the kind of place: trees in the wilds, roofs in a town, walls indoors.
+## Map colours by the kind of place, in the game's gothic tones: grey ground outdoors with dark pines in the wilds and
+## blood-dark roofs in a town; dark planks and black walls with a gilt edge indoors.
 static func colours_for(theme: String) -> Dictionary:
-	var c := {"floor": "parchment", "raised": "vellum", "wall": "ink", "edge": "void", "low": "walnut", "rough": "bone",
-		"water": "moon_blue", "water_edge": "night"}
+	var c := {"floor": "walnut", "raised": "leather", "wall": "void", "edge": "gilt_dark", "low": "umber", "rough": "peat",
+		"water": "moon_blue", "water_edge": "night_deep"}
 	if theme in ArenaBoard.WILD:
-		c.merge({"wall": "moss", "edge": "bog_deep", "low": "umber", "rough": "tan"}, true)
+		c.merge({"floor": "slate", "raised": "pewter", "wall": "bog", "edge": "bog_deep", "low": "umber", "rough": "stone"}, true)
 	elif theme in ArenaBoard.TOWNS or theme == "shrine_yard":
-		c.merge({"wall": "walnut", "edge": "peat", "low": "umber", "rough": "tan"}, true)
+		c.merge({"floor": "slate", "raised": "pewter", "wall": "blood_deep", "edge": "void", "low": "umber", "rough": "stone"}, true)
 	elif theme == "dungeon":
-		c.merge({"floor": "slate", "raised": "pewter", "wall": "ink", "rough": "stone"}, true)
+		c.merge({"floor": "stone", "raised": "slate", "rough": "stone_deep"}, true)
 	var out := {}
 	for k: String in c:
 		out[k] = Look.color(str(c[k]))
@@ -154,7 +155,7 @@ func _process(_delta: float) -> void:
 
 func _draw_content() -> void:
 	var mid := _mid()
-	_content.draw_circle(mid, RADIUS, Look.color("grave"), true, -1.0, true)
+	_content.draw_circle(mid, RADIUS, Look.color("ink"), true, -1.0, true)
 	if view == null or not is_instance_valid(view) or _tex == null:
 		return
 	_content.draw_texture_rect(_tex, Rect2(to_map(Vector2.ZERO), Vector2(_grid.width, _grid.depth) * cell_px), false)

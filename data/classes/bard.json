@@ -385,8 +385,23 @@
         {
           "id": "magical_secrets",
           "name": "Magical Secrets",
-          "summary": "Your prepared spells can come from the Bard, Cleric, Druid and Wizard lists.",
-          "implemented": "text"
+          "summary": "From now on your prepared spells can come from the Bard, Cleric, Druid and Wizard lists.",
+          "text": "Secrets gathered from other traditions widen your repertoire. Whenever you gain a Bard level and may prepare more spells, and whenever you swap a prepared spell, the new spell can come from the Bard, Cleric, Druid or Wizard spell list. Spells chosen this way count as Bard spells for you.",
+          "modifiers": [
+            {
+              "stat": "spell_list",
+              "value": "cleric"
+            },
+            {
+              "stat": "spell_list",
+              "value": "druid"
+            },
+            {
+              "stat": "spell_list",
+              "value": "wizard"
+            }
+          ],
+          "implemented": "data"
         }
       ]
     },

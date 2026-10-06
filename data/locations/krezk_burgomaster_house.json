@@ -1,0 +1,347 @@
+{
+  "id": "krezk_burgomaster_house",
+  "name": "The Krezkovs' House",
+  "region": "krezk",
+  "summary": "The burgomaster's house: a long hall with a hearth and a table older than the village, the room where Ilya lies burning with fever, Dmitri and Anna's bedroom, and a small room that was their eldest son's.",
+  "map": {
+    "rows": [
+      "######################",
+      "#......#......#.....=#",
+      "#=.....#....=.#.....=#",
+      "#......#......#......#",
+      "#......#......#......#",
+      "###.#######.######.###",
+      "#....................#",
+      "#..====.........=....#",
+      "#..====..............#",
+      "#....................#",
+      "#=..................=#",
+      "#....................#",
+      "##########..##########"
+    ],
+    "theme": "house",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "krezkov_hall",
+      "name": "The hall",
+      "cells": [
+        [
+          1,
+          6
+        ],
+        [
+          20,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "guest_room",
+      "name": "The eldest son's room",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          6,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "ilya_room",
+      "name": "Ilya's room",
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          13,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "krezkov_bedroom",
+      "name": "The burgomaster's bedroom",
+      "cells": [
+        [
+          15,
+          1
+        ],
+        [
+          20,
+          4
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      10,
+      11
+    ]
+  },
+  "exits": [
+    {
+      "id": "krezkov_out",
+      "cell": [
+        10,
+        12
+      ],
+      "to": "krezk",
+      "spawn": "from_krezkov_house",
+      "label": "Out to the yard"
+    },
+    {
+      "id": "krezkov_out_east",
+      "cell": [
+        11,
+        12
+      ],
+      "to": "krezk",
+      "spawn": "from_krezkov_house",
+      "label": "Out to the yard"
+    }
+  ],
+  "doors": [
+    {
+      "id": "guest_room_door",
+      "cell": [
+        3,
+        5
+      ],
+      "label": "Door to the small room"
+    },
+    {
+      "id": "sickroom_door",
+      "cell": [
+        11,
+        5
+      ],
+      "label": "Ilya's door"
+    },
+    {
+      "id": "bedroom_door",
+      "cell": [
+        18,
+        5
+      ],
+      "label": "Bedroom door"
+    }
+  ],
+  "props": [
+    {
+      "id": "krezkov_hearth",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "examine",
+      "label": "The hearth",
+      "model": "hearth"
+    },
+    {
+      "id": "krezkov_table",
+      "cell": [
+        4,
+        7
+      ],
+      "kind": "examine",
+      "label": "The long table",
+      "model": "table_round"
+    },
+    {
+      "id": "krezkov_ledger",
+      "cell": [
+        5,
+        8
+      ],
+      "kind": "book",
+      "label": "The burgomaster's ledger",
+      "model": "ledger",
+      "codex": "krezk_ledger",
+      "text": "The village ledger of Krezk, in Dmitri's square hand. Births, deaths, goats, the wine cart each autumn and what it cost. The deaths outnumber the births by two pages. Five names on the last page are in a different ink and underlined: Pyotr, Mila, Sofia, Anya, Lev. The sixth line has been ruled and left empty, and the ruling has been gone over many times."
+    },
+    {
+      "id": "spinning_wheel",
+      "cell": [
+        16,
+        7
+      ],
+      "kind": "examine",
+      "label": "Anna's spinning wheel",
+      "model": "chair"
+    },
+    {
+      "id": "eldest_bed",
+      "cell": [
+        1,
+        2
+      ],
+      "kind": "examine",
+      "label": "A narrow bed",
+      "model": "bed_small"
+    },
+    {
+      "id": "ilya_bed",
+      "cell": [
+        12,
+        2
+      ],
+      "kind": "decor",
+      "label": "Ilya's bed",
+      "model": "bed_small"
+    },
+    {
+      "id": "krezkov_bed",
+      "cell": [
+        20,
+        2
+      ],
+      "kind": "decor",
+      "label": "The burgomaster's bed",
+      "model": "bed"
+    },
+    {
+      "id": "bench_by_door",
+      "cell": [
+        1,
+        10
+      ],
+      "kind": "decor",
+      "label": "Bench",
+      "model": "chair"
+    }
+  ],
+  "containers": [
+    {
+      "id": "anna_chest",
+      "cell": [
+        19,
+        1
+      ],
+      "label": "Anna's chest",
+      "items": [
+        {
+          "id": "perfume",
+          "qty": 1
+        },
+        {
+          "id": "candle",
+          "qty": 4
+        },
+        {
+          "id": "blanket",
+          "qty": 1
+        }
+      ],
+      "gold": 15,
+      "model": "chest_painted",
+      "lock_dc": 15,
+      "flag": "krezkov_chest_robbed"
+    },
+    {
+      "id": "krezkov_larder",
+      "cell": [
+        20,
+        6
+      ],
+      "label": "The larder",
+      "items": [
+        {
+          "id": "ration",
+          "qty": 4
+        },
+        {
+          "id": "jug",
+          "qty": 1
+        }
+      ],
+      "gold": 0,
+      "model": "cupboard"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        10,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        5,
+        7
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "dmitri_krezkov",
+      "cell": [
+        7,
+        9
+      ],
+      "dialogue": "krezk/dmitri:start"
+    },
+    {
+      "npc": "anna_krezkova",
+      "cell": [
+        10,
+        3
+      ],
+      "dialogue": "krezk/anna:start"
+    },
+    {
+      "npc": "ilya_krezkov",
+      "cell": [
+        12,
+        3
+      ],
+      "dialogue": "krezk/anna:ilya",
+      "when": "not flag.ilya_fate"
+    },
+    {
+      "npc": "ireena",
+      "cell": [
+        14,
+        9
+      ],
+      "dialogue": "krezk/ireena:at_krezk",
+      "when": "flag.ireena_in_krezk and not guest:ireena"
+    },
+    {
+      "npc": "ismark",
+      "cell": [
+        16,
+        9
+      ],
+      "dialogue": "krezk/ireena:ismark_at_krezk",
+      "when": "flag.ismark_in_krezk and not guest:ismark"
+    }
+  ],
+  "narration": {
+    "enter": "enter:krezk_burgomaster_house"
+  },
+  "rest": "safe"
+}

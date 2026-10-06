@@ -1,0 +1,77 @@
+# Things in Baba Lysaga's hut that start a conversation: the doll over the hearth, and the jar with a label.
+
+~ poppet
+Narrator: Over the hearth, on a black thread, hangs a little doll of rag and straw with a head of real red hair. A tiny M is stitched on its breast. Through the M goes a long black thorn, pushed in and drawn out so many times the cloth around it has worn to lace.
+if not flag.lysaga_dead and not flag.lysaga_left_broken and flag.lysaga_guests and not flag.strahd_knows_marina_truth
+Baba Lysaga [angry]: Leave that be! That's a keepsake. That's mine.
+endif
+if flag.lysaga_doll_studied
+-> poppet_known
+endif
+* [Arcana DC 13] Study the knots that hold the thorn. -> poppet_arcana | poppet_plain
+* [Religion DC 13] Is there a prayer in it, or a curse? -> poppet_arcana | poppet_plain
+* Look at it, and think about who M was. -> poppet_plain
+
+~ poppet_arcana
+set lysaga_doll_studied
+Narrator: The knots are a killing charm, old and plain: whatever is done to the doll is done to the one whose hair is in it. The thorn went through the heart. Whoever M was, she died in her sleep with a scratch above her heart and no other mark on her.
+-> poppet_truth
+
+~ poppet_plain
+set lysaga_doll_studied
+Narrator: Red hair. An M. A thorn through the heart, and the cloth worn soft from being handled, the way a rosary goes soft. You don't need to read witch-knots to read that.
+-> poppet_truth
+
+~ poppet_truth
+set marina_truth_known
+if not quest.the_witch_of_berez >= truth
+quest the_witch_of_berez truth
+endif
+if flag.berez_diary_read
+Narrator: The burgomaster's diary said the candlemaker's girl died with a scratch over her heart, like a bramble's. It was never a bramble.
+endif
+if guest:ireena
+interject guest:ireena: She had my hair. Didn't she. Whoever she was.
+endif
+interject name:tamsin_tealeaf: So Berez didn't kill the girl. The nanny did. And the whole village went under for it.
+interject name:silvain_aster: And the one person who most needs to know is the one who did the drowning. Fascinating. Horrible, but fascinating.
+-> END
+
+~ poppet_known
+Narrator: The little red-haired doll turns slowly on its thread in the heat from the hearth.
+-> END
+
+~ jar
+Narrator: One jar on the shelf is different from the others: blue glass, stoppered with wax, and inside it something silver turns over slowly, like a fish in a pool. The label is in a crabbed hand: THE CLEVER ONE ON THE MOUNTAIN, HIS REMEMBERING. DO NOT SHAKE.
+interject class:wizard: That's a mind. Most of one. I can hear it thinking.
+* Take the jar, gently. -> jar_take
+* Leave it on the shelf. -> END
+
+~ jar_take
+set mordenkainen_memory_jar_taken
+if not quest.the_mad_mage >= jar_found
+quest the_mad_mage jar_found
+endif
+Narrator: The jar is warm, and it hums against your palm the way a cat does. Somewhere inside it, faintly, someone is arguing with himself about the correct way to open a door.
+-> END
+
+~ cradle
+if flag.winery_gem_berez_found
+Narrator: In the cradle, the root that was shaped like a baby has withered to a twist of brown, like a thing left too long in a cellar. The blanket is still tucked around it, very neatly.
+-> END
+endif
+if not flag.lysaga_dead and not flag.lysaga_left_broken and not flag.strahd_knows_marina_truth
+Narrator: A cradle on rockers, under a crocheted blanket. Something green glows under the blanket, softly. When you lean over it, the old woman stops rocking and watches your hands until you straighten up again.
+-> END
+endif
+Narrator: Under the crocheted blanket lies a marsh root trimmed into the shape of a swaddled infant, and tucked under its chin like a rattle, a green gem the size of a hen's egg, glowing softly.
+interject class:druid: The root is feeding on it. Take it out and the root dies. It was never going to grow into anything you'd want.
+* Take the green stone. -> cradle_take
+* Leave it be. -> END
+
+~ cradle_take
+set winery_gem_berez_found
+quest the_third_stone found
+Narrator: The stone comes free with a small wet sound. It is warm, and it smells, impossibly, of grapes in the sun. In the cradle the root sighs and begins, very slowly, to wither.
+interject class:cleric: Let that be the last thing that grows in this house.
+-> END

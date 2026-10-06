@@ -1,8 +1,8 @@
 class_name TravelScreen
 extends CanvasLayer
-## The map of Barovia (plan §5.2, ADR 0010): an illustrated parchment map of the whole valley (art/ui/map/barovia.png,
-## docs/ui/travel_map.md) with the places the party knows and the roads between them inked on top, so names stay
-## sharp at any zoom. Pick a place to see the way there (roads, hours, when you'd arrive, day or night) and set out.
+## The map of Barovia (plan §5.2, ADR 0010): an illustrated gothic map of the whole valley, painted as the land itself
+## (art/ui/map/barovia.png, docs/ui/travel_map.md) with the places the party knows and the roads between them drawn on
+## top, so names stay sharp at any zoom. Pick a place to see the way there (roads, hours, when you'd arrive, day or night) and set out.
 ## The wheel zooms and dragging pans. Opened from a way out of town (`setting_out`), or just to look (M).
 
 signal travel_chosen(place_id: String)
@@ -159,7 +159,7 @@ func _road_points(a: Vector2, b: Vector2, id: String) -> PackedVector2Array:
 func _draw_map() -> void:
 	_map.draw_texture_rect(MAP_ART, Rect2(pan, MAP_SIZE * zoom), false)
 	if st.is_night():
-		_map.draw_rect(Rect2(Vector2.ZERO, MAP_SIZE), Color(Look.color("night_deep"), 0.3))
+		_map.draw_rect(Rect2(Vector2.ZERO, MAP_SIZE), Color(Look.color("night_deep"), 0.18))
 	var places := {}
 	for p in Travel.known(st):
 		places[str(p["id"])] = p
@@ -174,10 +174,11 @@ func _draw_map() -> void:
 		var pts := _road_points(_pos(places[str(road["from"])] as Dictionary), _pos(places[str(road["to"])] as Dictionary), id)
 		var on_route := route_roads.has(id)
 		if on_route:
-			_map.draw_polyline(pts, Color(Look.color("vellum"), 0.85), 9.0, true)
-			_map.draw_polyline(pts, Look.color("crimson"), 4.5, true)
+			_map.draw_polyline(pts, Color(Look.color("void"), 0.8), 10.0, true)
+			_map.draw_polyline(pts, Look.color("vampire_red"), 4.5, true)
 		else:
-			_dashed(pts, Color(Look.color("peat"), 0.9), 3.0, 11.0, 7.0)
+			_dashed(pts, Color(Look.color("void"), 0.55), 6.0, 11.0, 7.0)
+			_dashed(pts, Look.color("bone"), 3.0, 11.0, 7.0)
 		tags.append([pts[pts.size() / 2], "%s h" % _hours_text(float(road["hours"])), on_route])
 	for t: Array in tags:
 		_tag(t[0] as Vector2, str(t[1]), bool(t[2]))
@@ -193,7 +194,7 @@ func _draw_map() -> void:
 
 func _mark(at: Vector2, id: String) -> void:
 	var grow := 2.0 if id == _hover else 0.0
-	var ink := Look.color("ink")
+	var ink := Look.color("void")
 	if id == _at:
 		var pulse := 0.5 + 0.5 * sin(_time * 3.0)
 		_map.draw_circle(at, 15.0 + 5.0 * pulse, Color(Look.color("vampire_red"), 0.45 * (1.0 - pulse)), false, 3.0, true)
@@ -205,12 +206,12 @@ func _mark(at: Vector2, id: String) -> void:
 	if id == _target:
 		_map.draw_circle(at, 15.0 + grow, Look.color("gilt_light"), false, 3.0, true)
 	_map.draw_circle(at, 9.0 + grow, ink, true, -1.0, true)
-	_map.draw_circle(at, 7.0 + grow, Look.color("ui_wine") if id == _target else Look.color("vellum"), true, -1.0, true)
+	_map.draw_circle(at, 7.0 + grow, Look.color("ui_wine") if id == _target else Look.color("bone"), true, -1.0, true)
 	_map.draw_circle(at, 3.0 + grow * 0.5, ink, true, -1.0, true)
 
 
-## A place's name in ink with a pale halo, put below, above, right or left of its mark, wherever it's clear. The
-## chosen destination's name sits on a small crimson plaque.
+## A place's name in pale vellum with a dark outline, like the rest of the UI, put below, above, right or left of its
+## mark, wherever it's clear. The chosen destination's name sits on a small crimson plaque.
 func _place_name(font: Font, at: Vector2, text: String, id: String, taken: Array[Rect2]) -> void:
 	var size := 21 if id == _at or id == _target else 19
 	var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size)
@@ -236,20 +237,20 @@ func _place_name(font: Font, at: Vector2, text: String, id: String, taken: Array
 		_map.draw_rect(plaque.grow(-1.0), Look.color("gilt"), false, 1.5)
 		_map.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Look.color("gilt_light"))
 		return
-	var colour := Look.color("blood") if id == _at else (Look.color("ui_wine") if id == _hover else Look.color("ink"))
-	_map.draw_string_outline(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, 7, Color(Look.color("ivory"), 0.92))
+	var colour := Look.color("gilt_light") if id == _at else (Look.color("rose") if id == _hover else Look.color("vellum"))
+	_map.draw_string_outline(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, 7, Color(Look.color("void"), 0.9))
 	_map.draw_string(font, base, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, colour)
 
 
-## A road's hours on a small parchment tag.
+## A road's hours on a small black tag with a gilt (or, on the route, crimson) edge.
 func _tag(at: Vector2, text: String, on_route: bool) -> void:
 	var font := ThemeDB.fallback_font
 	var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13)
 	var r := Rect2(at - sz / 2.0 - Vector2(6, 2), sz + Vector2(12, 4))
-	_map.draw_rect(r, Color(Look.color("vellum"), 0.92), true)
-	_map.draw_rect(r, Look.color("crimson") if on_route else Look.color("umber"), false, 1.5 if on_route else 1.0)
+	_map.draw_rect(r, Color(Look.color("ui_black"), 0.9), true)
+	_map.draw_rect(r, Look.color("vampire_red") if on_route else Look.color("gilt_dark"), false, 1.5 if on_route else 1.0)
 	_map.draw_string(font, r.position + Vector2(6, 2 + font.get_ascent(13)), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
-		Look.color("blood") if on_route else Look.color("peat"))
+		Look.color("gilt_light") if on_route else Look.color("vellum"))
 
 
 ## An inked trail: dashes along a polyline.
@@ -399,12 +400,12 @@ func _legend() -> Control:
 		c.draw_circle(Vector2(20, 16), 8.0, Look.color("gilt_light"), false, 2.0, true)
 		c.draw_string(font, Vector2(40, 21), "Where the party is", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
 		c.draw_circle(Vector2(20, 41), 8.0, ink, true, -1.0, true)
-		c.draw_circle(Vector2(20, 41), 6.0, Look.color("vellum"), true, -1.0, true)
+		c.draw_circle(Vector2(20, 41), 6.0, Look.color("bone"), true, -1.0, true)
 		c.draw_string(font, Vector2(40, 46), "A place you know", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
-		c.draw_line(Vector2(8, 66), Vector2(18, 66), Look.color("parchment"), 3.0, true)
-		c.draw_line(Vector2(24, 66), Vector2(32, 66), Look.color("parchment"), 3.0, true)
+		c.draw_line(Vector2(8, 66), Vector2(18, 66), Look.color("bone"), 3.0, true)
+		c.draw_line(Vector2(24, 66), Vector2(32, 66), Look.color("bone"), 3.0, true)
 		c.draw_string(font, Vector2(40, 71), "Road", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
-		c.draw_line(Vector2(130, 66), Vector2(156, 66), Look.color("crimson"), 4.5, true)
+		c.draw_line(Vector2(130, 66), Vector2(156, 66), Look.color("vampire_red"), 4.5, true)
 		c.draw_string(font, Vector2(164, 71), "Your way there", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum")))
 	return c
 

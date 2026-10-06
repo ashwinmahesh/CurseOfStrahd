@@ -1,0 +1,20 @@
+{
+  "id": "order_knight",
+  "name": "Dead Knight",
+  "title": "Knight of the Silver Dragon",
+  "summary": "One of the revenant knights who sit at Vladimir's table and keep the watch he sets, armoured, patient, and short of words.",
+  "portrait": "order_knight",
+  "sprite": "order_knight",
+  "attitude": "indifferent",
+  "voice": "docs/voice/order_knight.md",
+  "monster": "revenant",
+  "guest": false,
+  "tags": [
+    "revenant",
+    "knight",
+    "order_of_the_silver_dragon",
+    "argynvostholt"
+  ],
+  "region": "argynvostholt",
+  "pronouns": "they/them"
+}

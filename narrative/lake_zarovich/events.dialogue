@@ -1,0 +1,49 @@
+# Events on the roads of Lake Zarovich, the hills and Lake Baratok (random tables zarovich_hills, zarovich_shore).
+
+~ howl_call
+Narrator: Up in the hills a wolf howls, long and rising. Another answers it from the north, and then a third, and then the whole ridge is singing.
+* [Survival DC 13] Listen to where they're coming from. -> howl_ok | howl_fail
+* Keep walking. -> END
+
+~ howl_ok
+set den_way_known
+Narrator: The first howl came from the rock face at the top of the pine slope, north and a little east of the lake, and every other voice is answering it. That is where they sleep.
+-> END
+
+~ howl_fail
+Narrator: The howls come from everywhere and nowhere, the way they do in hills. By the time they stop, you have lost track of all of them.
+-> END
+
+~ krezk_cart
+Narrator: A farm cart lies on its side in the ditch, one wheel still turning slowly in the wind. No horse. No driver. In the bed of the cart, a child's coat, and a long smear leading up the slope into the trees.
+* [Survival DC 12] Follow the marks a little way. -> cart_ok | cart_fail
+* Leave it. -> END
+
+~ cart_ok
+set den_way_known
+Narrator: The marks go up and up, north toward the rock face above the lake, and the prints beside them change, halfway, from boots to paws.
+-> END
+
+~ cart_fail
+Narrator: The trail vanishes into pine needles and rock. Whatever carried the child knew this slope better than you do.
+-> END
+
+~ silver_snare
+set tower_rumor
+Narrator: A dead wolf hangs by one leg from a bent sapling, the snare bitten deep: silvered wire, tied with a neat, showy Vistani knot. More snares run off west, toward the little cold lake under the mountain.
+interject tag:curious: Somebody out here hunts wolves for a living, and hunts them well.
+-> END
+
+~ emil_wolves
+Narrator: Three grey wolves cross the trail ahead of you at a lope. The last one stops, looks at you for a long moment, and dips its head before it goes on. Emil's wolves know your smell.
+-> END
+
+~ ridge_watcher
+set den_way_known
+Narrator: On a ridge above the trail, a big wolf stands outlined against the sky, watching you. When it sees you looking, it turns and lopes away north, unhurried, toward the rock face above the lake.
+-> END
+
+~ drowned_bell
+Narrator: From somewhere out on the water, through the mist, a bell tolls once. Then again. There is no bell on Lake Zarovich, and no church on its shores.
+interject class:cleric: Somebody rang that. I'd rather not meet them.
+-> END

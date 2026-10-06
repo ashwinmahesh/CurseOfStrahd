@@ -1,0 +1,19 @@
+{
+  "id": "anna_krezkova",
+  "name": "Anna Krezkova",
+  "title": "The Burgomaster's Wife",
+  "summary": "Dmitri's wife, small and unbending, who has sat at her son Ilya's bedside for a month singing so he knows she's there. She would climb the mountain to the Abbot on her knees if Dmitri let her, and she keeps a wedding dress in her chest for a daughter she no longer has.",
+  "portrait": "anna_krezkova",
+  "sprite": "anna_krezkova",
+  "attitude": "indifferent",
+  "voice": "docs/voice/anna_krezkova.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "krezk",
+    "devout"
+  ],
+  "region": "krezk",
+  "pronouns": "she/her"
+}

@@ -1,0 +1,142 @@
+{
+  "id": "flesh_golem",
+  "name": "Flesh Golem",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Flesh Golem. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Hit Points, the Slam's Lightning damage and the Berserk trigger. Aversion to Fire, Berserk and Immutable Form are text only. Krezk's Vasilka uses this block under her own name."
+  },
+  "size": "medium",
+  "type": "construct",
+  "alignment": "neutral",
+  "ac": 9,
+  "initiative": -1,
+  "hp": {
+    "average": 127,
+    "dice": "15d8+60"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 19,
+    "dex": 9,
+    "con": 18,
+    "int": 6,
+    "wis": 10,
+    "cha": 5
+  },
+  "immunities": [
+    "lightning",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "understands Common and one other language but can't speak"
+  ],
+  "cr": 5,
+  "xp": 1800,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "aversion_to_fire",
+      "name": "Aversion to Fire",
+      "action": "passive",
+      "summary": "After taking Fire damage it has Disadvantage on attack rolls and ability checks until the end of its next turn.",
+      "implemented": "text"
+    },
+    {
+      "id": "berserk",
+      "name": "Berserk",
+      "action": "passive",
+      "summary": "Starting a turn Bloodied, it rolls a d6; on a 6 it attacks the nearest creature (or an object) every turn until it is no longer Bloodied.",
+      "implemented": "text"
+    },
+    {
+      "id": "immutable_form",
+      "name": "Immutable Form",
+      "action": "passive",
+      "summary": "Effects that would change its shape don't work on it.",
+      "implemented": "text"
+    },
+    {
+      "id": "lightning_absorption",
+      "name": "Lightning Absorption",
+      "action": "passive",
+      "summary": "Lightning damage heals it instead: it regains Hit Points equal to the Lightning damage dealt.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "lightning_absorption"
+        }
+      ],
+      "absorb": "lightning",
+      "implemented": "engine"
+    },
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "slam",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Slam attacks."
+    },
+    {
+      "id": "slam",
+      "name": "Slam",
+      "kind": "melee",
+      "attack": {
+        "bonus": 7,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "2d8+4",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 4,
+          "dice": "1d8",
+          "type": "lightning"
+        }
+      ],
+      "summary": "A heavy blow that also shocks."
+    }
+  ],
+  "regions": [
+    "krezk",
+    "abbey_of_st_markovia"
+  ],
+  "ai_profile": "brute",
+  "summary": "A stitched-together brute: two shocking slams, healed by lightning, hampered by fire, and liable to rage when hurt."
+}

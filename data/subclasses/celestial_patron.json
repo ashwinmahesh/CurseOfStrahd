@@ -86,8 +86,15 @@
       "feature": {
         "id": "celestial_resilience",
         "name": "Celestial Resilience",
-        "summary": "After a Short or Long Rest gain Temporary Hit Points (Warlock level + Charisma) and share some with up to five creatures.",
-        "implemented": "text"
+        "summary": "After a Short or Long Rest (or using Magical Cunning) gain Warlock level + Charisma Temporary Hit Points; up to five others gain half your Warlock level + Charisma.",
+        "text": "Whenever you use Magical Cunning or finish a Short or Long Rest, you gain Temporary Hit Points equal to your Warlock level plus your Charisma modifier, and up to five creatures you can see each gain Temporary Hit Points equal to half your Warlock level (round down) plus your Charisma modifier.",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "celestial_resilience"
+          }
+        ],
+        "implemented": "engine"
       }
     },
     {

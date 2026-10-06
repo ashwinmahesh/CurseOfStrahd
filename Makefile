@@ -6,7 +6,7 @@ BLENDER ?= /Applications/Blender.app/Contents/MacOS/Blender
 G       := $(GODOT) --path .
 LOGCHK  := tools/logcheck.sh
 
-.PHONY: run arena import test lint validate ci palette capture standin sprite sprites portrait wireframes textures prop ui_art
+.PHONY: run arena import test lint validate ci palette capture standin sprite sprites anims portrait wireframes textures prop props ui_art icons
 
 run:
 	$(G)
@@ -37,15 +37,26 @@ palette:
 
 ## Opens a window for a few seconds and writes a screenshot to captures/. LOCATION=<id> starts the story game there.
 capture:
-	$(G) --resolution 1600x900 res://tools/capture/capture.tscn -- --scene=$(or $(SCENE),res://scenes/test/graybox_room.tscn) --out=$(CURDIR)/captures/$(or $(NAME),capture) --frames=$(or $(FRAMES),90) $(if $(FOCUS),--focus=$(FOCUS),) $(if $(LOCATION),--location=$(LOCATION),) $(if $(ENCOUNTER),--encounter=$(ENCOUNTER),) $(if $(LOAD),--load=$(LOAD),) $(if $(DIALOGUE),--dialogue=$(DIALOGUE),) $(if $(BEATS),--beats=$(BEATS),) $(if $(MAP),--map,) $(if $(SHOP),--shop=$(SHOP),)
+	$(G) --resolution 1600x900 res://tools/capture/capture.tscn -- --scene=$(or $(SCENE),res://scenes/test/graybox_room.tscn) --out=$(CURDIR)/captures/$(or $(NAME),capture) --frames=$(or $(FRAMES),90) $(if $(FOCUS),--focus=$(FOCUS),) $(if $(LOCATION),--location=$(LOCATION),) $(if $(ENCOUNTER),--encounter=$(ENCOUNTER),) $(if $(LOAD),--load=$(LOAD),) $(if $(DIALOGUE),--dialogue=$(DIALOGUE),) $(if $(BEATS),--beats=$(BEATS),) $(if $(MAP),--map,) $(if $(SHOP),--shop=$(SHOP),) $(ARGS)
 
 ## Stand-in turnaround (primitive villager) so the sprite pipeline can run without generated art.
 standin:
 	$(BLENDER) -b --python blender/make_standin_turnaround.py -- $(CURDIR)/art/generated/standin/villager_turnaround.png
 
 ## Turnaround sheet (3 or 5 views) -> cutout rig -> 8-direction walk: make sprite TURNAROUND=<png> ID=<id> [SAT=1.3]
+## [BODY=quadruped|float|hop|slither|lumber|swarm] (docs/art/animation.md). Then add the character to
+## art/anim/animations.json and run make anims ONLY=<id> GENERATE=1 for its attack.
 sprite:
-	$(BLENDER) -b --python blender/render_walk.py -- --turnaround $(abspath $(TURNAROUND)) --id $(ID) $(if $(SIDE),--side-faces $(SIDE),) $(if $(STATIC),--static,) $(if $(SAT),--saturate $(SAT),)
+	$(BLENDER) -b --python blender/render_walk.py -- --turnaround $(abspath $(TURNAROUND)) --id $(ID) $(if $(SIDE),--side-faces $(SIDE),) $(if $(STATIC),--static,) $(if $(SAT),--saturate $(SAT),) $(if $(BODY),--body $(BODY),)
+
+## Walk and attack sheets for every character in art/anim/animations.json, or ONLY="id ...", from the keyframe
+## strips in art/generated/anim (docs/art/animation.md). GENERATE=1 first draws the strips that are missing (Gemini).
+anims:
+	$(if $(GENERATE),python3 tools/art/anim_keyframes.py --retry 2 $(if $(ONLY),--only $(ONLY),) && python3 tools/art/anim_keyframes.py --kind walk $(if $(ONLY),--only $(ONLY),),true)
+	python3 tools/art/build_anims.py $(if $(ONLY),--only $(ONLY),)
+	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
+	python3 tools/art/set_import.py $(wildcard art/sprites/*/walk.png) $(wildcard art/sprites/*/attack.png)
+	$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null
 
 ## Re-render every character walk sheet from its turnaround with the current cutter and its recorded flags
 ## (art/manifest.json sprite_flags): make sprites [ONLY="id ..."]
@@ -64,9 +75,19 @@ textures:
 prop:
 	$(BLENDER) -b --python blender/prop_sprite.py -- --in $(abspath $(SRC)) --id $(ID) --height $(HEIGHT) $(if $(SAT),--saturate $(SAT),)
 
+## Set dressing props, wall pieces and doors, four per Gemini call (docs/art/set_dressing.md):
+## make props [GENERATE=1] [ONLY="sheet ..."]   then make import and tools/art/set_import.py on new files
+props:
+	python3 tools/art/build_props.py $(if $(GENERATE),--generate,) $(if $(ONLY),--only $(ONLY),)
+
 ## Menu ornaments and icons (black-on-white Gemini art -> white shapes with alpha, tinted in game): make ui_art
 ui_art:
 	$(BLENDER) -b --python blender/ui_art.py
+
+## Spell and item icons (game-icons.net silhouettes framed in the menu colours; keys in art/icons.json): make icons
+icons:
+	$(G) --headless --script res://tools/art/build_icons.gd 2>&1 | $(LOGCHK)
+	$(MAKE) import
 
 ## UI flow wireframes (docs/ui/wireframes/*.svg) from tools/ui/wireframes.py.
 wireframes:

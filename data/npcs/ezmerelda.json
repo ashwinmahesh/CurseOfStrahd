@@ -1,0 +1,24 @@
+{
+  "id": "ezmerelda",
+  "name": "Ezmerelda d'Avenir",
+  "title": "Vistana Monster Hunter",
+  "summary": "A Vistana who left the wagons to hunt the things that hunt people, trained by Rudolph van Richten and now looking for him. Rapier, silver, a crossbow, a long dark coat, and an oak-and-steel brace where a werewolf took her leg below the knee. The Tarokka can name her as the party's ally.",
+  "portrait": "ezmerelda",
+  "sprite": "ezmerelda",
+  "attitude": "indifferent",
+  "voice": "docs/voice/ezmerelda.md",
+  "monster": "ezmerelda_davenir",
+  "guest": true,
+  "tags": [
+    "vistani",
+    "monster_hunter",
+    "tarokka_ally",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "she/her",
+  "guest_build": {
+    "monster": "ezmerelda_davenir",
+    "note": "Her own stat block (Ezmerelda d'Avenir). Joins at the abbey switchback when the Tarokka's Mists card names her; other regions may also let her join."
+  }
+}

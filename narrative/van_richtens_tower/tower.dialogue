@@ -1,0 +1,110 @@
+# Van Richten's Tower: the door on the island (prop vrt_door_ward) and the hearth inside (prop vrt_hearth), whose
+# copper rod feeds the lightning ward on the lantern-room floor.
+
+~ door
+if flag.tower_door_opened
+Narrator: The door stands open on its silent hinges. Warm air comes out of the dark inside, smelling of lamp oil and old paper.
+-> END
+endif
+Narrator: An iron-bound door in a round tower of black stone, with no handle, no keyhole and no knocker. Under the moss on the lintel, letters have been cut very deep. The wood is warm to the touch, like a sleeping animal.
+if guest:rictavio
+Rictavio: Ah. My front door. Stand back, please; it's particular about company.
+-> vr_opens
+endif
+if guest:ezmerelda
+Narrator: As Ezmerelda comes near, a thread of blue light runs round the door frame and crackles, like a dog lifting its lip.
+Ezmerelda: Yes, yes. I know. I love you too.
+endif
+-> door_menu
+
+~ door_menu
+* [if flag.khazan_known] Say the name: Khazan. -> open
+* [if not flag.tower_lintel_read] [History DC 14] Read the worn letters on the lintel. -> read_ok | read_fail
+* [if not flag.tower_ward_known] [Arcana DC 14] Study the wards on the door. -> arcana_ok | arcana_fail
+* Knock. -> knock
+* Leave it. -> END
+
+~ read_ok
+set tower_lintel_read
+set khazan_known
+Narrator: Old Barovian letters, from before the castle was built. Not a blessing or a warning: a single name, cut by someone who wanted it remembered. KHAZAN.
+interject tag:bookish: Khazan. An archmage of the old kingdom. There is a footnote about him in almost everything, and nothing about him anywhere else.
+-> door_menu
+
+~ read_fail
+set tower_lintel_read
+Narrator: The letters are worn soft and written in a script that went out of fashion centuries ago. They might say anything. They might be a name.
+-> door_menu
+
+~ arcana_ok
+set tower_ward_known
+Narrator: Two wards, one nested inside the other. The outer one is ancient and simple: it is waiting to hear a name. The inner one is new, neat and spiteful, and it is listening for one particular person. It isn't listening for you.
+-> door_menu
+
+~ arcana_fail
+set tower_ward_known
+Narrator: The door hums faintly under your palm, like a hive. Whatever it is waiting for, it keeps to itself.
+-> door_menu
+
+~ knock
+Narrator: You knock. The tower considers the question and declines to answer.
+interject tag:cheerful: Rude.
+-> door_menu
+
+~ open
+set tower_door_opened
+if not quest.the_hunters_tower or quest.the_hunters_tower == heard or quest.the_hunters_tower == asked
+quest the_hunters_tower inside
+endif
+Narrator: You say the name. Something in the wood listens, thinks it over, and lets go. The door swings inward on hinges that make no sound at all.
+if guest:ezmerelda
+Narrator: As Ezmerelda follows you in, blue fire crawls over the frame and snaps at her. She swears in three languages, shoulders through it with her hair standing on end, and doesn't look back.
+Ezmerelda: Remind me to kill him. After I've hugged him.
+endif
+if flag.rictavio_gone
+Narrator: Somewhere above you, a chair scrapes on stone. Someone is home.
+endif
+-> END
+
+~ vr_opens
+set khazan_known
+set tower_door_opened
+set tower_ward_lowered
+if not quest.the_hunters_tower or quest.the_hunters_tower == heard or quest.the_hunters_tower == asked
+quest the_hunters_tower inside
+endif
+Narrator: He says a word under his breath, and the door swings open. Then he lays his palm flat on the frame and murmurs again, and somewhere high in the tower something goes quiet, like a held breath let out.
+Rictavio: The ward upstairs is down too. I'd rather not have to explain how I cooked my own guests.
+-> END
+
+# ---------------------------------------------------------------- The hearth (ground floor)
+
+~ hearth
+if flag.tower_ward_lowered
+Narrator: The hearth is cold. The green copper rod at its back has been drawn out of its socket, and the air in the tower no longer tastes of thunder.
+-> END
+endif
+Narrator: A wide stone hearth, cold and swept clean. Set into its back wall, where a cookpot ought to hang, is a rod of green copper as thick as a thumb, running straight up into the chimney.
+-> hearth_menu
+
+~ hearth_menu
+* [if flag.van_richten_notes_read] Pull the copper rod, as the casebook says. -> lower
+* [if not flag.hearth_studied] [Arcana DC 13] Where does the copper go? -> rod_ok | rod_fail
+* [if not flag.hearth_studied] [Investigation DC 14] Look the hearth over properly. -> rod_ok | rod_fail
+* Leave it. -> END
+
+~ rod_ok
+set hearth_studied
+Narrator: The rod runs up the chimney and into the floors above, and it is humming, very faintly. It isn't for cooking. Something at the top of the tower is drinking from it.
+* Pull it out. -> lower
+* Leave it. -> END
+
+~ rod_fail
+set hearth_studied
+Narrator: Copper, soot, a cold hearth. If it means something, it is keeping it between itself and the chimney.
+-> hearth_menu
+
+~ lower
+set tower_ward_lowered
+Narrator: The rod comes out of its socket with a squeal. Somewhere far overhead something goes tok, and the air in the whole tower loses a taste you hadn't noticed it had: the taste of a coming storm.
+-> END

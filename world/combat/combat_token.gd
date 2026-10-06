@@ -1,6 +1,7 @@
 class_name CombatToken
 extends Node3D
-## A creature on the combat field: its 8-direction sprite (art/sprites/<id>/walk.tres from the Gemini pipeline) or a
+## A creature on the combat field: its 8-direction sprite (art/sprites/<id>/walk.tres and attack.tres from the Gemini
+## pipeline, docs/art/animation.md) or a
 ## placeholder capsule, a base ring in its side's colour (party gold, enemies red, guests moonlight blue), a thin
 ## health bar (exact for the party, only Bloodied for enemies, per the combat view spec), its name and its
 ## conditions. It only shows state; the encounter decides everything.
@@ -75,7 +76,7 @@ static func create(c: Combatant, art: String = "") -> CombatToken:
 func _build() -> void:
 	var c := combatant
 	var aid := art_override if art_override != "" else art_id(c)
-	var frames := load("res://art/sprites/%s/walk.tres" % aid) as SpriteFrames if ResourceLoader.exists("res://art/sprites/%s/walk.tres" % aid) else null
+	var frames := DirectionalSprite.frames_for(aid)
 	var size_units := float(c.size_cells)
 	if frames != null:
 		sprite = DirectionalSprite.create(frames, float(HEIGHTS.get(aid, 1.2)))
@@ -251,13 +252,37 @@ func set_highlight(on: bool) -> void:
 	_label.visible = (_active or _highlight) and not combatant.creature.dead
 
 
-## Faces a ground direction (x, z) and plays walking or idle.
-func face(dir: Vector2, walking: bool) -> void:
+## Faces a ground direction (x, z) and plays walking or idle. `step_time` (seconds per square) paces the walk cycle.
+func face(dir: Vector2, walking: bool, step_time: float = 0.0) -> void:
 	if sprite == null:
 		return
 	if dir.length() > 0.01:
 		sprite.facing = Vector3(dir.x, 0, dir.y).normalized()
 	sprite.moving = walking
+	if walking:
+		sprite.set_step_time(step_time)
+
+
+## Turns toward `dir` (x, z) and starts the sprite's attack. False when there is no attack to play (no attack
+## sheet, a placeholder body, or lying down), so the caller can fall back to a plain lunge.
+func start_attack(dir: Vector2) -> bool:
+	if sprite == null or not sprite.visible:
+		return false
+	face(dir, false)
+	return sprite.attack()
+
+
+## Whether this creature's attack animation is a spell gesture, played when it casts at something too.
+func casts_with_attack() -> bool:
+	return sprite != null and DirectionalSprite.attack_casts(sprite.sprite_frames)
+
+
+## Waits until the started attack's blow lands (its hit frame), at most `max_wait` seconds.
+func wait_for_strike(max_wait: float = 1.0) -> void:
+	var waited := 0.0
+	while sprite != null and is_inside_tree() and not sprite.has_struck() and waited < max_wait:
+		await get_tree().process_frame
+		waited += get_process_delta_time()
 
 
 func flash(colour: Color, seconds: float = 0.25) -> void:

@@ -1,0 +1,103 @@
+# Ilinca Vrana, a Keeper of the Feather (voice: docs/regions/old_bonegrinder.md §3). An old midwife and wereraven who
+# watches the mill from the dead oak. She warns the party, tells them how to split the coven, and may fly in with them
+# as a guest. She takes the children away at the end (children.dialogue).
+
+~ start
+if flag.ilinca_met
+-> again
+endif
+set ilinca_met
+if not quest.children_of_the_mill
+quest children_of_the_mill heard
+endif
+Narrator: A raven drops out of the dead oak and lands badly, the way old birds do. By the time it has straightened up, it is an old woman in a black shawl, brushing feathers off her sleeves like crumbs.
+if flag.raven_harmed
+Ilinca [angry]: You. One of you broke my nephew's wing on the Svalich road. He's mending. I'm told I should be gracious about it. I'm not, much.
+elif flag.raven_fed or flag.keepers_of_the_feather_met
+Ilinca: The ones who feed ravens. Word gets about, among us. Good. I need people who don't throw stones.
+else
+Ilinca: Strangers on the hill. Either you're customers, or you're fools, or you're what I've been waiting for. Let's find out which.
+endif
+if class:wizard
+interject class:wizard: She was a bird. She was a bird a moment ago.
+Ilinca: I'm still a bird. I'm also seventy-one, and I've no patience left for being stared at.
+endif
+-> menu
+
+~ again
+Ilinca: Still on the hill? The oven's lit. Every hour you stand about out here, the old woman knows a little more about you.
+-> menu
+
+~ menu
+* Who are you? -> who
+* Who's in the mill? -> mill
+* Whose children are they? -> children
+* How do we get them out alive? -> how
+* What else have your ravens seen? -> ravens_seen
+* [if flag.bone_heap_searched] We found a holy symbol in the bone heap. -> amulet
+* [if not flag.raven_harmed] Fly with us. We're going in. -> join
+* [if flag.raven_harmed and not flag.ilinca_refused] [Persuasion DC 13] The wing was a mistake. Fly with us and let us make it right. -> forgiven | not_forgiven
+* We'll go in alone. Goodbye. -> alone
+
+~ who
+Ilinca: Ilinca Vrana. Forty years the midwife in the village under the castle. I brought both of those children into the world, and I'd like them to stay in it a while.
+Ilinca: The feathers? There are a few of us. We keep watch on things. We call ourselves the Keepers of the Feather, when we're feeling grand.
+if flag.keepers_of_the_feather_met
+interject tag:curious: Urwin Martikov said those same words at the Blue Water Inn. With the same face, too.
+Ilinca: Urwin's a good boy. Talks too much.
+endif
+-> menu
+
+~ mill
+Ilinca: Three of them. Morgantha, who pushes the pastry cart, and the two she calls daughters. Bella, who's pretty and wants you to notice. Offalia, who's large and always eating. Under the faces they're one thing: night hags.
+Ilinca: Offalia minds the oven, downstairs. Bella sulks at her mirror in the loft. Morgantha sits between the cages and rocks.
+interject class:cleric: Night hags. Fiends who ride sleepers' dreams and keep the souls they steal in little bags. I'd hoped those were stories for novices.
+Ilinca: Most things in this valley are stories for novices, right up until they aren't.
+-> menu
+
+~ children
+Ilinca: Ilka and Toma Sarnov, ten and six. Their mother bought a basket of pastries every week since the baby died, to dream of her. When the coin ran out, the old woman came for the children. She calls that the custom.
+interject tag:blunt: Their mother sold them.
+Ilinca [weary]: Their mother is grieving and hungry and stupid with sweet dreams. I'm not here to judge her. I'm here because the children didn't get a say.
+-> menu
+
+~ how
+set coven_explained
+Ilinca: Three hags together are a coven. Their magic swells, they see far, and they're hard to kill. One at a time they're only very dangerous. So don't fight three.
+Ilinca: The fat one would sell her mother for a pie: feed her one of Mother's own pastries and she'll sleep like a felled ox. The pretty one hates her mother more than she loves her. Use that.
+interject tag:devout: Divide them, then. It feels like cheating.
+Ilinca: It's hags, dear. Cheating is the only fair fight on offer.
+-> menu
+
+~ ravens_seen
+if treasure_at:old_bonegrinder
+Ilinca: One thing I can't make sense of. Something lies in the ashes at the back of that oven, and it shines when the fire burns low. The hags bake around it. They won't touch it. Whatever it is, it isn't theirs.
+interject tag:curious: Something a hag won't touch. I want it already.
+else
+Ilinca: Morgantha takes the cart down to the village and the Vallaki road twice a week. Folk who can't pay in coin pay another way. My ravens count the households that owe. The list is long.
+endif
+-> menu
+
+~ amulet
+Ilinca [sad]: That'll be Brother Kesten's. He walked up this hill last spring with that and a cudgel, to fetch back the Petrescu boy. Neither came down. Keep it. He'd want it used.
+-> menu
+
+~ join
+set ilinca_joined
+join ilinca_vrana
+Ilinca: Then I'll come. Don't expect much: I'm an old bird with a short sword. But I can work a cage lock, and I know where the old one keeps her keys.
+interject tag:loyal: An old soldier with a short sword has saved my life more than once. Welcome.
+-> END
+
+~ forgiven
+Ilinca: Hm. You say it like you mean it, which is more than most manage. Very well. For the children, not for you.
+-> join
+
+~ not_forgiven
+set ilinca_refused
+Ilinca: No. I'll watch from the oak. If you get them out, I'll carry them home. That much I'll do for anyone.
+-> menu
+
+~ alone
+Ilinca: Suit yourselves. I'll be in the oak. Shout if you need someone to carry the children down, or to tell your families how it went.
+-> END

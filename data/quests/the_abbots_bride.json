@@ -1,0 +1,72 @@
+{
+  "id": "the_abbots_bride",
+  "name": "The Abbot's Bride",
+  "summary": "The Abbot of St. Markovia is stitching a bride for the lord of Barovia from Krezk's dead, and believes a wife will cure him.",
+  "giver": "abbot",
+  "region": "abbey_of_st_markovia",
+  "stages": [
+    {
+      "id": "met",
+      "journal": "The Abbot of St. Markovia keeps the abbey above Krezk with the Belview family he has been 'improving'. He looks like a young monk and lights candles with his fingertips. Krezk is afraid of him.",
+      "objectives": [
+        "Learn what the Abbot is working on"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "The Abbot is making a bride for Strahd, sewn from Krezk's dead, and believes a wife will gentle him. He asked us for a wedding dress. In return he offered to heal the burgomaster's son.",
+      "objectives": [
+        "Find a wedding dress, perhaps in Krezk",
+        "Or decide not to help him"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "dress_found",
+      "journal": "We have a wedding dress for the Abbot's bride.",
+      "objectives": [
+        "Take the dress to the Abbot in the abbey church"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "delivered",
+      "journal": "We gave the Abbot the dress. He woke his bride, Vasilka, in the church that same hour.",
+      "objectives": [
+        "Decide what becomes of the Abbot's work"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "wedding",
+      "journal": "We let the Abbot have his wedding. Clovin drove Vasilka down the road to the castle in a white dress, and the Abbot went down to Krezk to keep his bargain.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "repented",
+      "journal": "The Abbot understood what he had done. He laid his bride to rest, went down to Krezk once more, and then walked up the mountain to wait for a judgement that may never come.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "broken",
+      "journal": "Vasilka was destroyed defending her wedding. The Abbot sits in his church and will not speak.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "slain",
+      "journal": "The Abbot of St. Markovia is dead. Whatever he was sent here to be, he is light and a brown habit now.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "fled",
+      "journal": "The Abbot wanted Ireena instead of his stitched bride. We left with her. He means to write to the castle and tell its lord where she sleeps.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

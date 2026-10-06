@@ -655,7 +655,8 @@ func _has_inline_option(c: Choice, pick: String) -> bool:
 
 
 ## Choices whose count follows a class table column (Weapon Mastery 3 -> 4 -> 5 -> 6). Wild Shape's known forms
-## are also capped by the Beasts the game's bestiary has (deviations.md), so the choice never dead-ends.
+## are also capped by the Beasts the game's bestiary has (deviations.md), so the choice never dead-ends; so is a
+## free-cast spell of one exact level (Mystic Arcanum) by the spells of that level the game has.
 func _fix_dynamic_counts() -> void:
 	for c in choice_defs:
 		if c.filter.has("_count_column") and c.class_id != "":
@@ -664,6 +665,8 @@ func _fix_dynamic_counts() -> void:
 				c.count = int(v)
 		if c.kind == "beast_form":
 			c.count = mini(c.count, beast_forms_for(c).size())
+		if c.kind == "spell" and bool(c.filter.get("granted", false)) and c.filter.has("level"):
+			c.count = mini(c.count, compendium.spells_for(str(c.filter.get("list", "")), int(c.filter["level"])).size())
 
 
 ## Beast stat blocks a Wild Shape choice may pick: Beasts up to the class table's maximum CR (Circle Forms
@@ -753,6 +756,12 @@ func _build_spellcasting() -> void:
 				"filter": {"list": list, "max_level": "slots"}}, "%s.spellbook" % cid, src, "Spellbook").duplicate()
 		if prepared_max > 0:
 			var filter := {"list": list, "max_level": "slots", "min_level": 1}
+			# Magical Secrets (Bard 10): the class's `spell_list` modifiers open more lists to its prepared spells.
+			var extra := extra_spell_lists(cid)
+			if not extra.is_empty():
+				var lists: Array = [list]
+				lists.append_array(extra)
+				filter["lists"] = lists
 			if not book.is_empty():
 				filter["from_choice"] = "%s.spellbook" % cid
 			entry["prepared"] = _register_choice({"kind": "spell", "count": prepared_max, "filter": filter,
@@ -770,8 +779,9 @@ func _build_spellcasting() -> void:
 	for c in choice_defs:
 		if c.class_id == "" or not c.kind in ["cantrip", "spell", "spellbook"]:
 			continue
-		# A choice that only points at a spell you already know (Agonizing Blast's cantrip) grants nothing.
-		if bool(c.filter.get("known_only", false)):
+		# A choice that only points at a spell you already know (Agonizing Blast's cantrip) grants nothing; a free-cast
+		# pick (Mystic Arcanum) is cast through its feature's own `spell` modifier, never with a slot.
+		if bool(c.filter.get("known_only", false)) or bool(c.filter.get("granted", false)):
 			continue
 		if c.key.begins_with("%s." % c.class_id) and (c.key.ends_with(".cantrips") or c.key.ends_with(".prepared") or c.key.ends_with(".spellbook")) and c.key.count(".") == 1:
 			continue
@@ -824,6 +834,19 @@ func spellcasting_entry(class_id: String) -> Dictionary:
 		if str(e["class_id"]) == class_id:
 			return e
 	return {}
+
+
+## Spell lists beyond its own that a class may prepare from: the `spell_list` modifiers of its features (Magical
+## Secrets: Cleric, Druid and Wizard). The picks count as that class's spells.
+func extra_spell_lists(class_id: String) -> Array[String]:
+	var out: Array[String] = []
+	for m in _modifiers:
+		if m.stat != &"spell_list" or m.class_id != class_id or m.at_level() > character_level():
+			continue
+		if class_level_of(class_id) < m.number("at_class_level", 0) or m.text("value") in out:
+			continue
+		out.append(m.text("value"))
+	return out
 
 
 ## Every slot this character can cast with, by spell level: the Spellcasting slots (Multiclass Spellcaster table)
@@ -1209,9 +1232,24 @@ func mists_deny_short_rest(dice: DiceRoller, miles_since_long_rest: float) -> bo
 
 
 ## Short Rest: resources (Creature) and every Pact Magic slot come back. Hit Point Dice are spent separately.
+## Tireless (Ranger 10) also takes away a level of Exhaustion.
 func finish_short_rest() -> void:
 	super.finish_short_rest()
 	pact_slots_used = 0
+	if has_flag("tireless") and exhaustion > 0 and not dead:
+		exhaustion -= 1
+		log_event({"type": "exhaustion", "creature": id, "level": exhaustion})
+	_rest_temp_hp()
+
+
+## Celestial Resilience (Celestial Warlock 10): after a Short or Long Rest, Temporary Hit Points equal to the Warlock
+## level + Charisma modifier. (Sharing some with up to five others is the rest screen's part.)
+func _rest_temp_hp() -> void:
+	if dead:
+		return
+	for m in modifiers_for(&"flag"):
+		if m.text("value") == "celestial_resilience":
+			add_temp_hp(maxi(0, class_level_of(m.class_id) + ability_mod(&"cha")), m.source_name)
 
 
 func finish_long_rest() -> void:
@@ -1221,6 +1259,7 @@ func finish_long_rest() -> void:
 	hit_dice_spent.clear()
 	slots_used = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 	pact_slots_used = 0
+	_rest_temp_hp()
 	if has_flag("resourceful"):
 		heroic_inspiration = true
 

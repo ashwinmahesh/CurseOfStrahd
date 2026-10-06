@@ -1,0 +1,87 @@
+# Mirela and the four smaller children in the pen at the back of the den (docs/voice/mirela.md).
+# They won't run until the pack is dealt with; if the party left them with Kiril, coming back for them breaks his
+# truce (pack_challenge).
+
+~ start
+if not flag.den_children_found
+set den_children_found
+if not quest.the_stolen_children
+quest the_stolen_children found
+endif
+Narrator: Behind the pole gate, in a cave that smells of straw and fear, five children sit close together on a heap of furs. The eldest, a girl of about ten with a split lip, has put herself between the gate and the others.
+Mirela: If you're here to look at us, look and go. If you're here to eat us, you'll have to start with me. I'm the stringiest.
+interject tag:cheerful: Nobody's eating anybody. That's a promise, and I'm very good at promises.
+else
+if flag.den_children_left and not flag.den_children_freed
+Mirela: You came back. You left, and you came back. I counted the days you were gone.
+else
+Mirela: Still here. We're always still here.
+endif
+endif
+-> menu
+
+~ menu
+* We've come to get you out. -> out
+* Who are you? -> who
+* How long have you been here? -> how_long
+* [if flag.den_doll_found and not flag.ana_doll_returned] We found a rag doll on the hillside. -> doll
+* [if not flag.mirela_bite_tried] [Medicine DC 13] You're holding your arm strangely. Let me see. -> bite_ok | bite_fail
+* [if flag.wolf_pack_leader == "kiril" and not flag.den_children_freed] We're taking you out of here. Now. -> break_truce
+* Goodbye. -> bye
+
+~ who
+Mirela: Mirela. From the Vadu farm under Krezk. That's Ana, she's six, and Petru, and the twins, Ilie and Ioana. They came in the night with sacks. They took my dog first so he wouldn't bark.
+-> menu
+
+~ how_long
+Mirela: Thirty-one days. I scratch them on the wall. The big one says the moon comes in eleven more, and then we'll find out which of us are wolves and which of us are supper.
+interject class:fighter: Neither. You're going to be nine-year-olds and ten-year-olds who were very brave. That's the only thing you're going to be.
+Mirela: Petru's eight. But thank you.
+-> menu
+
+~ out
+if flag.emil_freed and not flag.pack_resolved
+Mirela: Emil's loose? I heard him howl. Then hurry up and win. We'll be here. We're always here.
+else
+Mirela: We can't run. They'd smell us on the hill before we got to the trees, and they're faster than horses. Zuleika says wait for Emil. Zuleika says a lot of things, but she brings bread.
+endif
+-> menu
+
+~ doll
+set ana_doll_returned
+Mirela: That's Ana's! She dropped it when they carried us up. She's been crying for it every night.
+Narrator: The smallest girl takes the doll through the poles without a word and folds herself around it, and for the first time since you came in, nobody in the pen is shaking.
+-> menu
+
+~ bite_ok
+set mirela_bite_tried
+set mirela_bite_seen
+Narrator: Under the sleeve, a bite: half healed, ringed in angry red, the marks of long teeth. She pulls the sleeve down fast and glares at you.
+Mirela: Don't tell the little ones. Is it going to make me one of them?
+* [Cleric] (Take her arm through the poles and pray over it.) -> bite_prayer
+* Not if we can help it. -> menu
+
+~ bite_fail
+set mirela_bite_tried
+Narrator: She tucks the arm inside her coat and turns her shoulder to you, and that's the end of that.
+-> menu
+
+~ bite_prayer
+set mirela_cured
+Narrator: The prayer is short and plain, and for once something in this valley seems to be listening. The red ring round the bite fades slowly, like a blush.
+Mirela: It doesn't itch any more. It always itched.
+-> menu
+
+~ break_truce
+set truce_broken
+Mirela: Now? With all of them out there?
+Narrator: In the great cave behind you, somebody laughs: a big, delighted laugh that turns into a howl halfway through.
+combat pack_challenge
+
+~ bye
+if flag.mirela_cured
+Mirela: Come back. You have to come back. You promised, or your friend did.
+else
+Mirela: Don't be long.
+endif
+-> END

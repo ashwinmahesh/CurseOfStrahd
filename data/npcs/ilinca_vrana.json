@@ -1,0 +1,24 @@
+{
+  "id": "ilinca_vrana",
+  "name": "Ilinca Vrana",
+  "title": "Keeper of the Feather",
+  "summary": "The old midwife of the village under the castle, now a raven more often than not. A Keeper of the Feather who watches Old Bonegrinder from a dead oak, waiting for someone to help her get two children out.",
+  "portrait": "ilinca_vrana",
+  "sprite": "ilinca_vrana",
+  "attitude": "indifferent",
+  "voice": "docs/regions/old_bonegrinder.md",
+  "monster": "wereraven",
+  "guest": true,
+  "guest_build": {
+    "monster": "wereraven",
+    "note": "Joins for the assault on the mill (old_bonegrinder/ilinca:join) and leaves with the children."
+  },
+  "tags": [
+    "barovian",
+    "wereraven",
+    "keepers_of_the_feather",
+    "old_bonegrinder"
+  ],
+  "region": "old_bonegrinder",
+  "pronouns": "she/her"
+}

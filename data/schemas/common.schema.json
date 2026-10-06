@@ -219,7 +219,8 @@
             "speed_percent",
             "size_step",
             "inspiration_die",
-            "retaliate"
+            "retaliate",
+            "spell_list"
           ]
         },
         "value": {

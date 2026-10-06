@@ -1,0 +1,96 @@
+# Narrator: Van Richten's Tower on Lake Baratok, outside and in (docs/voice/narrator.md).
+# Book props (Ezmerelda's note, the casebook, the ledger, the letter) show their own text.
+
+~ enter:van_richtens_tower
+| Lake Baratok is small, cold and very still, held in the lap of the mountain like water in a cupped hand. In the middle of it, on a knuckle of rock, stands a round black tower with one window lit.
+| [flag.van_richten_reunited] Two people are sitting by the fire on the shore, not quite looking at each other, passing a cup back and forth. The tower's window is dark for once.
+| [night] The tower's one lit window throws a long yellow line across the black water, all the way to your feet, like an invitation nobody actually sent.
+cooldown 30
+
+~ enter:vrt_camp
+| A painted wagon, a horse hobbled in the reeds, a fire built small and hot the way hunters build them. Somebody here expects company, and has planned for the wrong kind.
+once
+
+~ enter:vrt_shore
+| The shingle shore of Lake Baratok. A stone causeway runs out from it toward the island, broad and solid until halfway, where the lake starts to win.
+once
+
+~ enter:vrt_causeway
+| The causeway stones are slick and the water laps over them in places. Halfway across, the hair on your arms starts to stand up, all by itself.
+| [flag.tower_door_opened] The causeway again. The tower's door stands open at the far end, which somehow makes it less welcoming rather than more.
+cooldown 15
+
+~ enter:vrt_island
+| The island is bare rock, moss and a few stunted thorns, and the tower takes up most of it. Close to, the stone hums very faintly, like a bell long after it has been struck.
+once
+
+~ examine:vrt_scorch
+| A long black scorch across the stones at the foot of the door, as though something was thrown backwards very hard. A few long dark hairs are fused into the soot.
+
+~ examine:vrt_campfire
+| A good fire, banked with stones and burning hot and smokeless. Silver-headed crossbow bolts lie in a neat row beside it, drying.
+
+~ examine:vrt_lookout
+| From the rock you can see the whole tarn and, above it, Mount Baratok climbing into weather. High on its flank a thread of smoke rises from somewhere nobody should live.
+| [night] Up on the mountain, where nobody should live, lightning is falling on the same spot over and over, very patiently, with no storm to speak of.
+
+~ open:ezmerelda_wagon
+| The inside of the wagon is a hunter's armoury squeezed into a Vistani caravan: stakes, mirrors, bundles of herbs, and a neat little bed nobody seems to sleep in.
+
+~ trap:vrt_wagon_tripwire:found
+| [class:rogue] {name} spots the wire a finger's width above the wagon step, and the clay jar it's tied to. Somebody here is very good at this.
+| A wire, a finger's width above the wagon step, running to a clay jar wedged under the footboard. Somebody here is very good at this.
+
+~ trap:vrt_wagon_tripwire:triggered
+| The wire parts with a ping, the jar drops, and the night turns orange.
+
+~ open:van_richten_strongbox
+| A plain iron strongbox, unlocked. The man who owns it trusts the room more than any lock.
+| [treasure_at:van_richtens_tower] A plain iron strongbox, unlocked, and under the holy water a bundle in oilcloth that the old man clearly didn't want to carry and couldn't bring himself to leave.
+
+~ enter:van_richtens_tower_interior
+| Inside, the tower is warm and dry and tidy in the way of a man who expects to leave in a hurry. Stone stairs wind up through the wall toward lamplight.
+cooldown 30
+
+~ enter:vrt_hall
+| The bottom room was a wizard's hall once: you can see where the carvings were chiselled off the walls. Now it's a hunter's storeroom: crates of holy water, bundles of stakes, a camp cot made with military corners.
+once
+
+~ enter:vrt_workroom
+| Maps, notes and books cover every surface, weighted down with candle stubs and skulls. Small skulls. Not human. Mostly.
+| [flag.rictavio_gone and not flag.van_richten_reunited] Lamplight, maps, the smell of cold tea. Someone has been working at the table very late, every night, for a week.
+once
+
+~ enter:vrt_lantern_room
+| The top of the tower: windows on every side and a strongbox under the sill. The floor is studded with copper nails in a careful spiral, and the air tastes of a storm that hasn't arrived yet.
+| [flag.tower_ward_lowered or guest:rictavio] The top of the tower: windows on every side, a strongbox under the sill, a spiral of copper nails in the floor, now dull and quiet.
+once
+
+~ examine:vrt_cot
+| A narrow camp cot with the blanket folded square and tucked tight. Under the pillow, a stake. Under the stake, a little bag of lavender.
+
+~ examine:vrt_trophies
+| Not trophies of hunting: trophies of hunters. A row of small things on nails: a scarf, a brass compass, a girl's hair ribbon, a pair of spectacles. Each has a name written under it and a date. All the dates are a long time ago.
+
+~ examine:vrt_valley_map
+| A map of the whole valley, closely annotated. A cave in the hills above Lake Zarovich is ringed in red ink with one word: WOLVES. Beside Vallaki, in smaller letters: R. The Blue Water.
+
+~ examine:vrt_jars
+| Jars and bottles in neat rows, each labelled in a small hand: wolfsbane, garlic oil, grave dirt (three cemeteries), holy water (blessed twice), and one simply marked DO NOT.
+
+~ examine:vrt_window
+| From the top of the tower the whole tarn is laid out below, and the causeway, and Ezmerelda's fire, and far away to the east, small and black on its crag, the castle.
+| [night] From up here, every light in the valley is visible at once. There aren't many, and the brightest is the castle's.
+
+~ trap:vrt_lightning_ward:found
+| [class:wizard] {name} reads the spiral at a glance: every nail is a conductor, and they all drink from one rod coming up through the floor. Step on any of them and the tower answers.
+| The copper nails in the floor are faintly warm, and a little blue spark crawls between two of them as you watch. That spiral isn't decoration.
+
+~ trap:vrt_lightning_ward:triggered
+| Blue fire leaps from every nail in the floor at once, and the room smells of a lightning-struck tree.
+
+~ rest:long:van_richtens_tower_interior
+| You sleep inside Van Richten's wards, on his floor, under his maps. For the first time in Barovia nothing scratches at the door all night. It turns out to be very hard to sleep without it.
+
+~ rest:long:van_richtens_tower
+| You sleep on the shore with the tower at your backs. Twice in the night, out on the ridge, eyes catch the firelight and then think better of it.

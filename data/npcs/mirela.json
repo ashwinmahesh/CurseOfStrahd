@@ -1,0 +1,20 @@
+{
+  "id": "mirela",
+  "name": "Mirela",
+  "title": "A Child Taken from Krezk",
+  "summary": "The eldest of five children the pack carried off from the farms below Krezk: ten years old, a split lip, and a habit of standing between the gate and the little ones.",
+  "portrait": "mirela",
+  "sprite": "mirela",
+  "attitude": "indifferent",
+  "voice": "docs/voice/mirela.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "child",
+    "krezk",
+    "werewolf_den"
+  ],
+  "region": "werewolf_den",
+  "pronouns": "she/her"
+}

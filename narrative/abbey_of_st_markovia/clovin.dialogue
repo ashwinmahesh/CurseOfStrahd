@@ -1,0 +1,93 @@
+# Clovin Belview, the Abbot's errand-runner and gatekeeper (docs/voice/clovin_belview.md). He meets the party inside
+# the abbey gate. He carries St. Markovia's last letter, which he can't read: reading it to him is the key to the
+# Abbot's repentance at the unveiling. after: his lines once the Abbot's fate is settled.
+
+~ start
+if flag.abbot_fate
+-> after
+endif
+if not flag.clovin_met
+set clovin_met
+if flag.clovin_met_on_road
+Clovin Belview: You! The people from the road. With the wheel. Well. Well, now. Come in out of the wind; it gets up here before anyone else does.
+else
+Narrator: Inside the gate, a stooped figure in a cast-off monk's habit is sweeping snow into a heap with no particular plan. One of his ears is a hound's. One of his hands is mostly feathers. He looks up and sighs.
+Clovin Belview: Visitors. He said there'd be visitors today. He's always right. It's exhausting. Clovin Belview. I open the gate and I carry things.
+endif
+else
+Clovin Belview: You again. Gate's open. Everything's open. The Abbot doesn't believe in locks, except on the wards. He believes in those a great deal.
+endif
+-> menu
+
+~ menu
+* We've come to see the Abbot. -> see_abbot
+* Who are the Belviews? -> belviews
+* [if not flag.markovia_letter_read] What's that paper you keep touching? -> letter
+* [if flag.abbot_bride_revealed] Tell us about the bride. -> bride
+* [if flag.abbot_dress_asked and not flag.wedding_dress_found and not flag.wards_dress_found] Where would anyone find a wedding dress up here? -> dress_hint
+* [if not flag.clovin_befriended] You look like a man who could use a drink. -> drink
+* Goodbye, Clovin. -> END
+
+~ see_abbot
+Clovin Belview: Chapel. North door, the big one. He's in the chapel or he's over in the wards, with her. He doesn't sleep. I've checked. I've checked a lot.
+if guest:ireena
+Narrator: His hound's ear goes flat as he looks at Ireena. He looks away, and then back, and then away.
+Clovin Belview [afraid]: Maybe keep your hood up, miss. In the chapel. He likes red. He likes it too much.
+endif
+-> menu
+
+~ belviews
+Clovin Belview: We were Krezk folk once. Grandmother says. Then we all got sick and came up here and got better. Then he made us better again. And again. He calls it improving.
+Clovin Belview: I've had three improvements. You can see two of them. Don't ask about the third. Mother's had nine. She doesn't come out much.
+interject tag:blunt: That's not medicine.
+Clovin Belview: No. But he says it with such a kind face.
+-> menu
+
+~ letter
+Clovin Belview: This? Found it under a loose board in the saint's old room, when I was a lad. Pretty writing. Nobody's ever read it to me. The Abbot says it's nothing. He said it very quickly.
+* May we read it to you? -> read_letter
+* Keep it safe, Clovin. -> menu
+
+~ read_letter
+set markovia_letter_read
+Narrator: The paper is old and soft as cloth. The hand is firm, a little hurried, signed with a single M.
+Player: "To whoever keeps this house after me. Tomorrow I take the bell-ringers, the gravediggers and the two old soldiers who still remember how, and we go up the road to his door."
+Player: "They tell me to reason with him. That he was a prince once and could be again, if someone were patient. I have been patient. Patience is how he feeds."
+Player: "Some sicknesses are cured by tenderness. Others only grow fat on it. Keep this house open to the hurt and shut to him. If I do not come back, don't come looking. Light a candle and go on."
+Narrator: Clovin is very quiet for a while. His feathered hand opens and closes.
+Clovin Belview: She went to kill him. The saint. She didn't go to make friends with him. He told us she went to make friends.
+Clovin Belview: Keep it. No. Read it to him. Read it to him when he's happy. I want to see his face.
+-> menu
+
+~ bride
+Clovin Belview: Vasilka. That's her name; he picked it. I carried half of her up the mountain myself, in a sack, at night, from the graves by the pool. Don't ask which half.
+Clovin Belview [sad]: She's very beautiful. That's the worst part. He's very good at it. She'll be the most beautiful thing that ever went down that road, and he'll send her to the castle like a ham.
+-> menu
+
+~ dress_hint
+Clovin Belview: A dress? Up here? The nuns left in a hurry; they left everything. The matron's room, in the wards, past the cots. It's locked. He locked it. He locks the things he doesn't want to think about.
+Clovin Belview: The door sticks. Low down, by the hinge. A good kick and it'd remember it's a door. I didn't tell you that.
+-> menu
+
+~ drink
+set clovin_befriended
+Narrator: From somewhere in his habit he produces a bottle with an inch of wine left in it, and looks at the inch, and at you, and makes a terrible decision.
+Clovin Belview: The last of the Martikovs'. Go on. Nobody drinks with me. Mother says it's because of the ear. I say it's because of the wine.
+interject tag:cheerful: To the ear.
+Clovin Belview [smile]: To the ear!
+-> menu
+
+~ after
+if flag.abbot_fate == "repentant"
+Clovin Belview: He walked up the mountain at dawn and didn't stop at the top. We all watched. Mother came out to watch. Nobody's going to improve us any more. I keep waiting to be sad.
+elif flag.abbot_fate == "slain"
+Clovin Belview: You killed him. In his own chapel. I swept up after. There wasn't much; it went to light. Mother says we'll go down to Krezk. Krezk won't have us. We'll go anyway.
+elif flag.abbot_fate == "broken"
+Clovin Belview: He sits. In the chapel. He doesn't talk. I bring him water and he doesn't drink it, and I take it away and bring more. Somebody has to carry things.
+else
+Clovin Belview [sad]: I drove her down to the castle. Vasilka. She sat up straight the whole way and asked me what the weather was like at weddings. I said lovely. I'm a liar now. I'm a lot of things.
+endif
+if flag.markovia_letter_read
+Clovin Belview: I've still got the letter. I've learned three of the words. "Light", "candle" and "go". They're good words.
+endif
+-> END

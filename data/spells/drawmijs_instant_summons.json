@@ -1,0 +1,40 @@
+{
+  "id": "drawmijs_instant_summons",
+  "name": "Drawmij's Instant Summons",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "conjuration",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a sapphire worth 1,000+ GP",
+    "m_cost_gp": 1000
+  },
+  "duration": {
+    "kind": "until_dispelled"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "an object you touch"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Mark an object so that crushing the sapphire brings it to your hand.",
+  "text": "The object weighs 10 pounds or less and is no longer than 6 feet. If someone else holds it, you instead learn who and roughly where they are."
+}

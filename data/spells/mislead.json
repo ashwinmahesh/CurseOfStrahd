@@ -1,0 +1,55 @@
+{
+  "id": "mislead",
+  "name": "Mislead",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 5,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "conditions": [
+    "invisible"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "target": "self",
+        "condition": "invisible",
+        "ends_on": [
+          "attack_roll",
+          "deal_damage",
+          "cast_spell"
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "defense",
+    "utility"
+  ],
+  "summary": "You turn Invisible while an illusory double of you appears where you stand.",
+  "text": "The invisibility ends right after you attack, deal damage or cast a spell. The double acts as you direct with a Magic action, moving up to twice your Speed, and you can see and hear through its senses."
+}

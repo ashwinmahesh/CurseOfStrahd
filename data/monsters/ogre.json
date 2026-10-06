@@ -1,0 +1,88 @@
+{
+  "id": "ogre",
+  "name": "Ogre",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Ogre. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. The Javelin is entered as a thrown (ranged) attack only; up close the ogre uses its Greatclub."
+  },
+  "size": "large",
+  "type": "giant",
+  "alignment": "chaotic evil",
+  "ac": 11,
+  "initiative": -1,
+  "hp": {
+    "average": 68,
+    "dice": "8d10+24"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 19,
+    "dex": 8,
+    "con": 16,
+    "int": 5,
+    "wis": 7,
+    "cha": 7
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 8,
+  "languages": [
+    "Common",
+    "Giant"
+  ],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "gear": [
+    "greatclub",
+    "hide_armor",
+    "javelin"
+  ],
+  "actions": [
+    {
+      "id": "greatclub",
+      "name": "Greatclub",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "2d8+4",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "A crushing swing of a huge club.",
+      "weapon": true
+    },
+    {
+      "id": "javelin",
+      "name": "Javelin",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 6,
+        "range": [
+          30,
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d6+4",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Hurls a heavy javelin.",
+      "text": "Also usable in melee (reach 5 ft) in the book.",
+      "weapon": true
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A hulking brute: one huge club blow a turn, or a hurled javelin."
+}

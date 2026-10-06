@@ -447,6 +447,7 @@
           "id": "improved_cunning_strike",
           "name": "Improved Cunning Strike",
           "summary": "Use up to two Cunning Strike effects at once.",
+          "text": "When you use Cunning Strike you can apply up to two of its effects to the same Sneak Attack, paying the cost of each in Sneak Attack dice.",
           "implemented": "engine"
         }
       ]

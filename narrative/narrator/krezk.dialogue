@@ -1,0 +1,169 @@
+# Narrator: Krezk, the Krezkovs' house and the Pool of the White Sun (docs/voice/narrator.md). Second person, present
+# tense, one or two sentences. The abbey above has its own file (narrator/abbey_of_st_markovia.dialogue).
+
+# ---------------------------------------------------------------- The village
+
+~ enter:krezk
+| The road climbs out of the pines and stops dead at a wall of grey stone three men high, with one black oak gate in it and the mountain going on up behind. Somewhere inside, a goat is complaining about the weather.
+| [night and not flag.krezk_gate_open] The wall of Krezk is a darker dark against the mountain. There are lamps on the wall-walk, and every one of them is turned outward, toward you.
+| [flag.krezk_gate_open and not flag.abbot_fate] Krezk inside its wall: low stone cottages with turf on the roofs, smoke going straight up, and people who stop what they're doing to watch you pass and don't start again until you've gone.
+| [flag.abbot_fate == "repentant" or flag.abbot_fate == "slain"] Krezk looks the same as ever, but people have started glancing up at the mountain and then, for the first time in years, not looking away quickly.
+| [flag.abbot_fate == "wedding"] Somebody has tied a black ribbon to the gate. Nobody in Krezk will say who, and nobody has taken it down.
+| [guest:ireena and flag.ireena_destination == "krezk"] The end of the road. Ireena stops and looks at the wall for a long moment, the way you'd look at the far shore after a long swim.
+cooldown 30
+
+~ enter:krezk_road
+| The road ends here, in a trampled half-circle of snow before the gate, as if it had walked all this way and lost its nerve.
+once
+
+~ enter:abbey_track
+| The track to the abbey goes up the mountainside in switchbacks, cut into the rock, so steep in places that someone has driven iron pegs into the stone to hold on by. Far above, a bell tower stands against the clouds.
+once
+
+~ enter:krezk_gate_inside
+| Inside the gate the bar leans against the wall, as thick as a man's thigh. The watch fire is kept high. Everyone who passes it puts out their hands to it, the way you'd touch a doorpost for luck.
+once
+
+~ enter:krezk_square
+| A square of trodden snow round a stone well, with a frozen trough and a few women filling buckets who stop talking when they see you, and start again, much more quietly, about you.
+once
+
+~ enter:burgomaster_yard
+| The burgomaster's house is the biggest in Krezk, which is to say it has two chimneys. Only one of them is smoking. In an upper window, a candle burns in the middle of the day.
+once
+
+~ enter:pool_lane
+| The lane north narrows between cottages and climbs toward a gap in the wall, and the snow on it is swept, every flake, by somebody very old and very determined.
+once
+
+~ enter:krezk_east_lanes
+| Cottages huddle in the lee of the wall here, shutters closed, a ladder against every eave so the roofs can be cleared of snow before they come down. One ladder has a boy's coat hung on it, not taken in.
+once
+
+~ enter:krezk_pens
+| Goat pens, a hay rick, and a great many goats, all of whom look at you with the same yellow, unimpressed expression as the village.
+once
+
+~ enter:krezk_south_row
+| The south row backs onto the wall, and beyond the wall there's nothing: the shelf of the mountain ends in a drop into cloud. Children here learn very young not to climb.
+once
+
+~ open:krezk_gate
+| The bar groans up out of its brackets and the gate opens a body's width, exactly. Krezk doesn't do anything wider than it has to.
+
+~ examine:krezk_wall
+| Grey stone, fitted without mortar by people long dead, three men high. Here and there are marks scored deep into the stones from outside, at about the height of a big dog standing on its hind legs.
+| [flag.krezk_wolves_driven_off] Grey stone three men high. At its foot, the snow is trampled and stained where the wolves came for you and you didn't let them reach the wall.
+
+~ examine:abbey_cairn
+| A cairn of flat stones by the track, each one carried up from the road by somebody going to the abbey for healing. The newest stone is a very small one, the size a child could carry.
+
+~ examine:krezk_well
+| A deep well with a stone lip worn smooth by buckets. When you drop a pebble, it takes a long time to hit the water, and the water, when it answers, sounds warm.
+
+~ examine:krezk_trough
+| A trough frozen solid, with a goat's beard frozen into the top of it. The goat seems to have got away. Mostly.
+
+~ examine:goat_pens
+| A dozen goats in a pen of split rails, and a billy with one horn who stands between you and the nannies and stares with absolute conviction.
+| [species:halfling] The billy goat looks {name} up and down and decides, visibly, that this is a fight he could win.
+
+~ examine:krezk_watch_fire
+| A fire in an iron basket, banked high. The watchmen keep a pot of something on the edge of it that smells mostly of turnips and partly of hope.
+
+~ examine:krezkov_facade
+| A long stone house with a turf roof and a door with three bolts on the inside. Over the door, five little wooden suns are nailed in a row, and a sixth nail with nothing on it.
+| [flag.ilya_fate == "healed"] Over the door, five little wooden suns in a row, and a sixth, new, still pale, hammered on crooked by someone who couldn't wait for the glue.
+
+~ examine:abbey_on_the_mountain
+| High above, on a shelf of the mountain, the abbey's bell tower and grey roofs. Even from here you can see that one window up there is always lit.
+| [flag.abbot_fate == "repentant"] High above, the abbey's grey roofs. The window that was always lit is dark now, and the dark looks ordinary.
+
+# ---------------------------------------------------------------- The Krezkovs' house
+
+~ enter:krezk_burgomaster_house
+| Warmth, peat smoke and the smell of vinegar from upstairs. It's a good house, and a careful one, and every room in it is listening for a cough.
+| [flag.ilya_fate == "healed"] Warmth, peat smoke and somebody small running along the upper floor in boots, being told off for it, and running anyway.
+cooldown 20
+
+~ enter:krezkov_hall
+| A long hall round a long table, scarred by a hundred years of elbows, with a hearth at one end and a spinning wheel at the other.
+once
+
+~ enter:guest_room
+| A small room with a narrow bed, a peg with nothing on it, and a carved wooden sword on the sill. It's been kept clean. It hasn't been slept in for a long time.
+once
+
+~ enter:ilya_room
+| A small, too-hot room. A boy in the bed, a woman beside it, and on the sill a row of willow-bark cups, all of them full.
+once
+
+~ enter:krezkov_bedroom
+| A plain bedroom with a painted chest at the foot of the bed. The bed has been slept in on one side only. The other side has a chair pulled up by it, facing the door to the sickroom.
+once
+
+~ examine:krezkov_hearth
+| A peat fire burning low and steady. The mantel holds a row of small things in no order: a wooden horse, a hair ribbon, a sling, a doll with no face. Five of them. Room for a sixth.
+
+~ examine:krezkov_table
+| A table older than the house it's in, by the look of it. Somebody has carved notches into the edge, in rows, the way you'd count days.
+
+~ examine:spinning_wheel
+| A spinning wheel with the wool still on it, stopped halfway through a thread a month ago.
+| [flag.ilya_fate] A spinning wheel, turning. The thread's coming on again, fine and even.
+
+~ examine:eldest_bed
+| A narrow boy's bed, made tight. Under the pillow, when you lift it, there's a stone with a hole in it, the kind children think lets you see fairies.
+
+~ rest:long:krezk_burgomaster_house
+| You sleep under the Krezkovs' roof with the shutters barred. Twice in the night you hear Anna singing upstairs, and once you hear Dmitri on the stair, stopping to listen, then going back down.
+| [flag.ilya_fate == "healed"] You sleep under the Krezkovs' roof. Nobody sings in the night. Somebody small snores like a bear instead, and the house sleeps round it.
+
+# ---------------------------------------------------------------- The Pool of the White Sun
+
+~ enter:krezk_pool_of_the_white_sun
+| A round pool of black water open to the sky, the snow melted back from its edge, and Krezk's graves all round it like people waiting their turn at a well. Beside it, a white pavilion where a statue holds up the sun.
+| [guest:ireena and not flag.ireena_pool_vision] The pool lies still as glass. Ireena has stopped walking. She hasn't noticed she's stopped.
+| [flag.ireena_pool_choice == "promised"] The pool lies still as glass, and the sky in it is a little brighter than the sky above it, as if someone down there were keeping a lamp lit.
+cooldown 30
+
+~ enter:pool_edge
+| At the water's edge the air is warmer, very slightly, the way a room is warmer when someone's just left it.
+once
+
+~ enter:white_sun_pavilion
+| Six thin pillars of white stone hold up a round roof over a statue whose face has been worn away by hands. The floor round its feet is scattered with candle stubs and wax.
+once
+
+~ enter:krezk_graves
+| Graves, close-set, each with a small stone sun on it instead of a name. The ones by the pavilion are very small, and there are five of them.
+once
+
+~ enter:north_graves
+| The oldest graves, along the north wall, sunk and tilted. Someone still sweeps them.
+once
+
+~ examine:krezkov_stones
+| Five small stones in a row, each with a little sun carved on it and a name below: Pyotr, Mila, Sofia, Anya, Lev. The snow has been brushed off all five this morning.
+
+~ examine:old_graves
+| Graves so old the suns carved on them are only dents. Whoever lies here was buried facing the pool, every one of them.
+
+~ examine:offering_box
+| A wooden box of candle stubs and a flint, for anyone who wants to light one. A slate beside it says, in chalk, TAKE ONE, LEAVE ONE, PRAY FOR KREZK.
+
+~ search:turned_earth
+| The earth on this grave has been turned since the last snow, and filled back in with care, by someone who didn't want it noticed. The stone sun on top is facing the wrong way.
+
+~ rest:long:krezk_pool_of_the_white_sun
+| You sleep in the pavilion with your backs to the statue. In the night the pool gives off a faint warmth, like a banked hearth, and nothing comes near the wall.
+
+# ---------------------------------------------------------------- Fights
+
+~ combat:start
+| [at:krezk and night] The wolves fan out without a sound. On the wall above, someone has started praying, very fast.
+cooldown 10
+
+~ combat:victory
+| [at:krezk and night] On the wall, somebody bangs a spear on the stones, once, twice. In Krezk, apparently, that's applause.
+cooldown 10

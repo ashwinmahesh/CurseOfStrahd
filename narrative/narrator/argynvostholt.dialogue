@@ -1,0 +1,320 @@
+# Narrator: Argynvostholt (docs/voice/narrator.md). Second person, present tense, one or two sentences.
+# Book props (the oath stone, the roll of honour, the chronicle, Godfrey's wall, the roster) have no examine: line
+# here, so their own text is shown. The cradle and the bones open conversations instead.
+
+# ---------------------------------------------------------------- The places
+
+~ enter:argynvostholt
+| The drive climbs between dead trees to a house that burned a long time ago and never quite finished falling down. Above it a square tower stands against the sky, with no light at the top of it at all.
+| [night and not flag.order_fate] The house on the ridge is black against a blacker sky, and in the courtyard something grey moves in ranks, back and forth, the way a tide does.
+| [flag.argynvost_beacon_lit] Silver light lies over the whole ridge from the top of the tower, steady as a held note. The house under it is still a ruin. It looks like a ruin that has been forgiven.
+| [flag.order_fate == "ride"] Someone has dragged the fallen banner poles upright in the courtyard. From inside the house comes the long, patient sound of whetstones on old steel.
+| [flag.order_fate == "grudge"] Dead knights stand at the broken gate now, faces turned toward the castle. They step aside for you without a word, the way sentries step aside for officers.
+cooldown 30
+
+~ enter:argynvostholt_hall
+| Cold ash underfoot and the smell of a fire that went out four hundred years ago. Somewhere ahead, beyond tall doors, armour creaks as something turns its head.
+| [flag.argynvost_beacon_lit] The house is silent in a new way: not the hush of something listening, but the hush after a long day's work is done.
+| [flag.order_fate == "ride"] The house is busy with the dead: knights in the corridors carrying armour, and nobody saying anything, and everybody going the same way.
+cooldown 20
+
+~ enter:argynvostholt_upper
+| The upper floor creaks under every step, a long drawn-out complaint passed from board to board ahead of you like a rumour.
+cooldown 20
+
+~ enter:argynvostholt_beacon
+| The stair winds up inside the wall, every step worn into a hollow by four hundred years of boots that only ever went up to look at a dark lamp.
+| [flag.argynvost_beacon_lit] Silver light comes down the stair from above, lying on every step like snow.
+cooldown 20
+
+~ enter:argynvostholt_mausoleum
+| Cold stone and the smell of old candle wax. The floor of the vestibule is worn into two shallow hollows, side by side, where people knelt for a very long time.
+| [flag.dragon_fire_kindled] The vault is a little warmer than it was, the way a room is after someone has opened a shutter.
+cooldown 20
+
+# ---------------------------------------------------------------- The grounds
+
+~ enter:holt_north_woods
+| Pines crowd up to the house's west wall. Nothing sings in them.
+once
+
+~ enter:holt_courtyard
+| The courtyard is cracked flagstones and blown leaves, and running across the middle of it is a long pale scar where the stones look frost-bitten in high summer.
+| [night and not flag.order_fate] Ghost-light moves along the broken wall: men-at-arms in grey, shields up, running toward a gate that isn't there any more.
+| [flag.argynvost_beacon_lit] The frost scar in the courtyard has gone. There is only a long, clean stretch of flagstones, as if someone had swept it.
+cooldown 15
+
+~ enter:holt_stable_ruin
+| The stables lost their roof long ago. The stalls still have their names painted over them, and their bones in them.
+once
+
+~ enter:holt_approach
+| The drive runs between dead trees planted in two straight rows, as straight as the day someone set them out to make an approach worth approaching.
+once
+
+~ enter:holt_squires_graves
+| Small graves in a neat row, each with a small stone. The squires buried the knights' horses and the dragon, and then somebody buried the squires.
+once
+
+~ enter:holt_mausoleum_yard
+| The mausoleum stands apart from the house, as if out of respect. Its door is shut and its stones are white with a frost that the sun doesn't touch.
+once
+
+# ---------------------------------------------------------------- The ground floor
+
+~ enter:holt_entry_hall
+| A burned entry hall with a cracked stair going up on one side and, in the middle, the stump of a statue that used to be something rearing up.
+once
+
+~ enter:holt_great_hall
+| A long table runs the length of the hall under banners rotted to lace, and at it sit armoured figures, both sides, all the way down. Every one of them is facing the head of the table.
+| [flag.argynvost_beacon_lit] The knights still sit at the long table, but their heads are bowed, and the hall feels like a church after the last hymn.
+| [flag.order_fate == "ride"] The table is half empty; the rest of the knights are on their feet, buckling on things that have not been buckled in centuries.
+cooldown 20
+
+~ enter:holt_chapel
+| A small chapel under a tall window of coloured glass. The glass shows a silver dragon curled around a lamp, and it is the only thing in the house that nobody has broken.
+| [flag.argynvost_beacon_lit] The frost has gone from the great window. The glass dragon curls around its lamp, and the lamp in the picture seems brighter than glass can be.
+cooldown 20
+
+~ enter:holt_armory
+| Racks of weapons gone to rust, and a row of armour stands wearing nothing. Someone took the armour, and then someone else went on wearing it for four hundred years.
+once
+
+~ enter:holt_west_gallery
+| A long gallery of fallen frames and torn canvas. Somebody has turned the few portraits still hanging to face the wall.
+once
+
+~ enter:holt_servants_hall
+| The servants' hall is the only room with its table still laid: plates, cups, a loaf gone to stone. Nobody in this house has needed to eat for a long time, and nobody has cleared up either.
+once
+
+# ---------------------------------------------------------------- The upper floor
+
+~ enter:holt_landing
+| The great stair arrives at a landing hung with smoke-stained hangings. Every door on the floor is shut except the one to the study, which stands a little open, the way a door does when someone left in a hurry.
+once
+
+~ enter:holt_dormitory
+| Rows of narrow beds, all made with the blankets folded square at the foot. Nobody has slept in any of them. Somebody makes them every morning anyway.
+once
+
+~ enter:holt_study
+| The dragon's study: burned bookcases, a broad desk, a map table, and a window facing the valley. It's the only room in the house with a chair too big for a man.
+once
+
+~ enter:holt_hall_of_heroes
+| A long gallery of statues and portraits of knights. At the far end a narrow door leads into the tower, and the floorboards in front of it are worn pale, from people stopping there and not going through.
+once
+
+~ enter:holt_godfrey_quarters
+| A plain room with a cot and a chest, and every inch of one wall covered in charcoal writing, floor to as high as a big man can reach.
+once
+
+~ enter:holt_commanders_room
+| A bare room: a cot with a blanket stretched tight enough to bounce a coin, a lectern, a strongbox. Nothing on the walls. Nothing on the floor. A room kept by someone who has stopped living in it.
+once
+
+# ---------------------------------------------------------------- The tower and the mausoleum
+
+~ enter:holt_tower_stair
+| The stair is narrow enough that two people can't pass, and it goes up and up with no window, as if the tower meant to keep its secret until the top.
+once
+
+~ enter:holt_lantern_room
+| The stair ends on an open platform under the sky, ringed by a low parapet. In the middle, on a stone plinth, stands a great iron cradle full of old ash, and the wind up here sounds like someone breathing.
+| [flag.argynvost_beacon_lit] The beacon burns silver in its cradle. Standing in its light is like standing in the first sun of spring: not warm yet, but promising to be.
+cooldown 10
+
+~ enter:holt_vestibule
+| A low vestibule and one narrow doorway beyond it, with the dark of the vault behind.
+once
+
+~ enter:holt_bone_hall
+| The vault is long enough for a church, and it needs to be. Along the middle, on a raised stone bier, lies a skeleton with folded wings, as long as a ship, its neck ending in nothing.
+once
+
+# ---------------------------------------------------------------- Examining the grounds
+
+~ examine:holt_mansion_front
+| The windows are shuttered or simply gone. Fire went through this house once, room by room, and it took its time.
+
+~ examine:holt_beacon_tower
+| A square tower above the east wing, with an open lantern room at its top. Even from down here you can see the soot that climbs the parapet like a black tongue.
+| [flag.argynvost_beacon_lit] The tower holds up its light like an arm held up in a crowd: here, over here.
+
+~ examine:holt_order_banners
+| What's left of the Order's banners, rotted to grey lace on the house front. The device is still just visible: a silver dragon holding a lamp.
+
+~ examine:holt_fallen_statue
+| A stone dragon's head lies in the dry basin of the fountain, its body somewhere else. Someone has set it upright, carefully, facing the house.
+
+~ examine:holt_dragon_scar
+| A long scar runs across the flagstones, pale and rimed with frost that doesn't melt. It's exactly the shape of something very large falling.
+| [flag.argynvost_beacon_lit] Only clean flagstones now, as if the frost was waiting for a reason to leave.
+
+~ examine:holt_gatehouse_ruin
+| The gatehouse was pulled down to its footings. The hinges of the gate are still set in the stone, and they have been forced inward.
+
+~ examine:holt_dead_avenue
+| Two straight rows of dead trees, planted with care. Their bark is grey and smooth, and every one of them leans very slightly toward the house.
+
+~ examine:holt_warhorse_bones
+| Horse bones in the stalls, still in their rotted harness, each under its own name: Briar, Thunder, Old Meg. The stablehands didn't leave them. The stablehands didn't leave either.
+
+~ examine:holt_squires_headstones
+| Small stones, hand-cut, each with a first name and nothing else. Whoever cut the last few was running out of time and was careful anyway.
+
+~ examine:holt_mausoleum_front
+| Over the mausoleum door, a carving of a dragon lying down with its head on its forepaws, the way a dog sleeps by a fire. Someone loved him, and someone could carve.
+
+~ examine:holt_ridge_well
+| A well with its rope rotted away. When you drop a pebble, it takes a long time to land, and then something below says the word "thank you" very quietly.
+| [class:cleric] A well with its rope rotted away. {name} drops a pebble and listens. Far below, a voice says "thank you", and {name} decides to say a prayer for whoever it was.
+
+~ examine:holt_resting_sentry
+| A dead knight sits on the front step with his back to the doorpost and his helmet in his lap, facing the light, the way a man sits at the end of a long watch.
+
+# ---------------------------------------------------------------- Examining the ground floor
+
+~ examine:holt_dragon_window
+| A silver dragon in coloured glass, curled around a lamp. The glass is cold enough to fog your breath, and the frost on it has a grain, like the lines of a face.
+| [flag.argynvost_echo_met and not flag.argynvost_beacon_lit] The frost on the window holds the shape of a long, patient head. When you look straight at it, it is only frost.
+| [flag.argynvost_beacon_lit] Clear glass now, and behind it the dragon and his lamp, the lamp bright enough that you look twice.
+
+~ examine:holt_chapel_altar
+| A plain altar of grey stone with a lamp carved on its front instead of a sun. On top, a hundred stubs of candle, every one burned all the way down.
+
+~ examine:holt_chapel_pews
+| Pews worn smooth along the backs by armoured shoulders. In front of every one, the stone floor is dented where knees went down in plate.
+
+~ examine:holt_vladimir_chair
+| A great chair at the head of the table, carved with a dragon's folded wings. The arms are worn bright where gauntleted hands have gripped them, night after night, for centuries.
+
+~ examine:holt_long_table
+| The table is laid for forty, as if for a feast: plate, cup, knife. Nothing has been eaten from any of them. Every cup is turned upside down.
+
+~ examine:holt_cold_hearth
+| A hearth big enough to stand in, swept perfectly clean. Nobody has lit it since the night the house fell. Somebody sweeps it anyway.
+
+~ examine:holt_hall_banners
+| Banners so rotted they hang like grey cobweb. The one over the head of the table has been mended, badly, with the stitches of someone who had never sewn before and had a very long time to learn.
+
+~ examine:holt_resting_knights
+| The knights sit along the table with their heads bowed, quite still. It looks less like death than like the end of a long grace before a meal.
+
+~ examine:holt_armory_dummies
+| Armour stands with nothing on them but cobwebs, and a rack of helmets with the names still painted inside.
+
+~ examine:holt_gallery_frames
+| Frames on the floor, canvases slashed. In the one picture left whole, a young knight laughs at something out of frame, as if somebody just told him a joke.
+
+~ examine:holt_broken_statue
+| A statue of a dragon rearing up, broken off at the neck. The break is old and clean, and the stump has been polished by hands, the way a pilgrim's stone gets polished.
+
+~ examine:holt_servants_table
+| Plates set for a meal four centuries cold. A child's wooden cup sits among them, with a name burned into it that you can almost read.
+
+~ search:holt_loose_hearthstone
+| Behind the servants' hearth, one stone sits a finger's width proud of the others. Behind it, wrapped in a rag, somebody's careful little savings.
+
+~ check:perception:holt_loose_hearthstone:failure
+| The hearth looks like a hearth. If anyone hid anything in it, they did it well, and they did it a long time ago.
+
+# ---------------------------------------------------------------- Examining the upper floor
+
+~ examine:holt_knights_beds
+| Forty beds, blankets folded square, pillows plumped. Somebody makes them every morning for men who never come up to sleep.
+
+~ examine:holt_dragon_bookcases
+| Burned books, mostly; a few spines still readable. Histories, songs, a very old cookbook with a great many notes in the margins about mutton.
+
+~ examine:holt_valley_map
+| A map of the whole valley painted on the tabletop, villages and roads and farms, and from the tower on its ridge thin lines of silver paint run out to every one of them.
+
+~ examine:holt_hero_portraits
+| Knights in silver and blue, every one painted in front of the same window with the same tower behind. They look like people who expected to be remembered.
+
+~ examine:holt_vladimir_portrait
+| A young knight with his helmet under his arm, grinning as if he has been told to look solemn and can't. The brass plate on the frame says HORNGAARD.
+| [flag.vladimir_met] A young knight with his helmet under his arm, grinning. It takes you a moment to recognise the commander, and the moment is not a comfortable one.
+
+~ examine:holt_empty_plinth
+| An empty plinth at the centre of the gallery. The plate on it says only OUR LORD, and the dust on top is undisturbed in the shape of nothing at all.
+
+~ examine:holt_godfrey_cot
+| A cot made up neatly, a lump of charcoal on the pillow, and the blanket worn through at the place where a big man sits every night to read a wall.
+
+~ examine:holt_commander_cot
+| The blanket is stretched so tight you could bounce a coin on it. It has been made every night for four hundred years, and never once unmade.
+
+~ trap:holt_weak_floor:found
+| The boards in front of the tower door sag a finger's breadth when you lean on the one before them. Rotten through, and only the carpet holding them.
+
+~ trap:holt_weak_floor:triggered
+| The gallery floor gives way with a long tearing groan, and the dark underneath comes up to meet you.
+
+~ trap:holt_weak_floor:disarmed
+| You find the joists under the rot and lay a path along them, and the old floor lets you pass.
+
+# ---------------------------------------------------------------- Examining the tower and the mausoleum
+
+~ examine:holt_stair_hollows
+| Each step is worn into a hollow in its middle. A great many boots have come up these stairs, all the way to the top, to look at a lamp that wouldn't light.
+
+~ examine:holt_parapet_castle
+| From the parapet you can see the whole valley, and across it, on its rock, the castle. From up here it looks small. That's the trick of distance; it isn't.
+| [flag.argynvost_beacon_lit] The silver light runs out from the tower across the trees to the castle on its rock. Up there, a single window that was lit goes dark.
+
+~ examine:holt_parapet_valley
+| Below, the woods and the far grey lake, and here and there a farmhouse with no light in it. Every one of them could see this tower once.
+
+~ examine:holt_lamp_soot
+| Soot on the plinth, old and greasy, in a long black smear like a lick from a tongue. The dark up here came in after the light went out, and made itself at home.
+
+~ examine:holt_empty_skull_place
+| At the head of the bier there is a hollow in the stone, smooth and round, made for something that isn't here. Someone has laid a single dried flower in it.
+
+~ examine:holt_kneeling_marks
+| Candle stubs in rows, a hundred years of them, and the stone floor worn into two hollows where the same knees went down every night.
+
+~ examine:holt_vestibule_carving
+| Cut into the lintel, in letters taller than your hand: HE KEPT THE WATCH. Below it, smaller and newer and much less tidy: WE KEEP IT NOW.
+
+# ---------------------------------------------------------------- Opening things
+
+~ open:holt_stable_saddlebags
+| The leather crumbles as you lift the flap. Inside, the coins of a kingdom that doesn't exist any more, still perfectly good silver.
+once
+
+~ open:holt_armory_chest
+| The chest is full of oiled cloth, and in the cloth, two flasks of holy water and the Order's last pay chest, counted out to the coin.
+once
+
+~ open:holt_dragon_desk
+| Ink gone to powder, pens cut to a hand much broader than a man's, and parchment covered in a tidy, patient script about the price of grain.
+once
+
+~ open:holt_godfrey_chest
+| A book of poems with the pages turned down at the funny ones, and a few coins wrapped in a handkerchief embroidered with a goose.
+once
+
+~ open:holt_commanders_chest
+| The lock gives. Inside, coin and a scroll, packed square, and nothing personal at all. Not one letter, not one keepsake.
+once
+
+~ open:holt_lampkeeper_locker
+| Flint, wicks, a tinderbox, and lamp oil in stoppered flasks, all laid out ready for a night that has been four hundred years coming.
+once
+
+~ open:holt_offering_niches
+| The niches hold offerings: silver buttons, a ring, a child's carved dragon, candle stubs. The squires left what they had.
+once
+
+# ---------------------------------------------------------------- Resting
+
+~ rest:long:argynvostholt
+| You sleep in shifts in a house full of the dead. Every watch hears armour in the corridors and every watch hears it stop outside the door, politely, and move on.
+| [flag.argynvost_beacon_lit] You sleep under the beacon's light, and for the first time since the mists closed behind you, nobody has a dream worth mentioning.
+| [flag.order_fate == "ride" or flag.order_fate == "grudge"] You sleep while dead knights stand guard at your door. It is very safe. It is not very restful.
+cooldown 60

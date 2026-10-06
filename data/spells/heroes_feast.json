@@ -1,0 +1,43 @@
+{
+  "id": "heroes_feast",
+  "name": "Heroes' Feast",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "conjuration",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a gem-encrusted bowl worth 1,000+ GP, which the spell consumes",
+    "m_cost_gp": 1000,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 12,
+    "description": "up to twelve creatures who eat the feast"
+  },
+  "tags": [
+    "buff",
+    "restoration"
+  ],
+  "summary": "A magical feast that hardens up to twelve diners for the next day.",
+  "text": "Eating takes an hour. For 24 hours afterwards each diner has Resistance to Poison damage, immunity to the Poisoned and Frightened conditions, and a Hit Point maximum raised by 2d10, gaining that many Hit Points too."
+}

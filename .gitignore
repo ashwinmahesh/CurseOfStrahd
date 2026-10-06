@@ -13,8 +13,11 @@ __pycache__/
 
 # Sprite sheets keep their import settings (mipmaps, VRAM compression) in the repo.
 !art/sprites/**/walk.png.import
+!art/sprites/**/attack.png.import
 # So do the environment textures and billboard props (tools/art/set_import.py, docs/art/textures.md).
 !art/textures/**/*.png.import
 !art/sprites/props/*.png.import
 # The travel map keeps its mipmaps, so it shrinks cleanly when zoomed out (docs/ui/travel_map.md).
 !art/ui/map/*.png.import
+# Spell and item icons keep mipmaps so lists can draw them small (make icons).
+!art/icons/**/*.png.import

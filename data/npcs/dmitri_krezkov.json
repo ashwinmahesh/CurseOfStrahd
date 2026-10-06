@@ -1,0 +1,19 @@
+{
+  "id": "dmitri_krezkov",
+  "name": "Dmitri Krezkov",
+  "title": "Burgomaster of Krezk",
+  "summary": "Krezk's burgomaster: broad, grey-bearded, sparing with words, the keeper of the last wall on the road. He has buried five children and his sixth is burning with fever upstairs, and he would rather lose the boy than owe the Abbot on the mountain.",
+  "portrait": "dmitri_krezkov",
+  "sprite": "dmitri_krezkov",
+  "attitude": "indifferent",
+  "voice": "docs/voice/dmitri_krezkov.md",
+  "monster": "warrior_veteran",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "burgomaster",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

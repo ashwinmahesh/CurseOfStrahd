@@ -1,0 +1,57 @@
+{
+  "id": "flesh_to_stone",
+  "name": "Flesh to Stone",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a cockatrice feather"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see within range"
+  },
+  "save": "con",
+  "save_success": "none",
+  "conditions": [
+    "restrained"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "restrained",
+        "repeat_save": "end_of_turn"
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "debuff"
+  ],
+  "summary": "Con save or the target is Restrained as it starts turning to stone.",
+  "text": "A Restrained target repeats the save at the end of each of its turns: three successes end the spell, three failures leave it Petrified. If you keep Concentration for the full minute, the petrification lasts until removed."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "vladimir_horngaard",
+  "name": "Vladimir Horngaard",
+  "title": "Commander of the Order of the Silver Dragon",
+  "summary": "The dead commander of a dead order, holding court at the head of a table of revenant knights in the ruin of Argynvostholt. He hates Strahd too much to want him dead.",
+  "portrait": "vladimir_horngaard",
+  "sprite": "vladimir_horngaard",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vladimir_horngaard.md",
+  "monster": "vladimir_horngaard",
+  "guest": false,
+  "tags": [
+    "revenant",
+    "knight",
+    "order_of_the_silver_dragon",
+    "argynvostholt"
+  ],
+  "region": "argynvostholt",
+  "pronouns": "he/him"
+}

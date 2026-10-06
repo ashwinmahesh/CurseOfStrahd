@@ -1,0 +1,19 @@
+{
+  "id": "clovin_belview",
+  "name": "Clovin Belview",
+  "title": "The Abbot's Errand-Runner",
+  "summary": "A stooped Belview in a cast-off monk's habit, with a hound's ear and a hand that is mostly feathers. He opens the abbey gate, fetches the wine (when there is wine), drinks most of it, and carries a letter he can't read.",
+  "portrait": "clovin_belview",
+  "sprite": "clovin_belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/clovin_belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "he/him"
+}

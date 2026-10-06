@@ -71,6 +71,7 @@
         "id": "stormborn",
         "name": "Stormborn",
         "summary": "While Wrath of the Sea is active, fly at your Speed and resist Cold, Lightning and Thunder damage.",
+        "text": "While your Wrath of the Sea is active, you have a Fly Speed equal to your Speed and Resistance to Cold, Lightning and Thunder damage.",
         "implemented": "text"
       }
     },

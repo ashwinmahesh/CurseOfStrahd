@@ -1,0 +1,41 @@
+{
+  "id": "wizard_of_wines",
+  "name": "The Wizard of Wines",
+  "summary": "Druids from Yester Hill have driven the Martikov family out of their winery and taken the magic gems, the family's three vine stones, that keep its vines alive.",
+  "giver": "davian_martikov",
+  "region": "wizard_of_wines",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Davian Martikov, master of the Wizard of Wines, is camped under the trees with his family while druids from Yester Hill hold his winery. Three green stones keep his vines alive in this sunless valley: one was stolen to Berez, one carried to Yester Hill, and one he hid in the founder's cask at the foot of the cellar stair. He asked us to drive the druids out of the winery and the press house and bring the hidden stone up.",
+      "objectives": [
+        "Drive the druids out of the winery and the press house",
+        "Bring up the stone from the founder's cask in the cellar (third hoop, pull)",
+        "Stop whatever the druids are building on Yester Hill"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "reclaimed",
+      "journal": "The druids are gone from the winery, and the Martikovs have moved back into their house. Davian means to plant every stone he gets back.",
+      "objectives": [
+        "Break the druids' ritual on Yester Hill and bring back the stone they took"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "hill_broken",
+      "journal": "The druids' work on Yester Hill is broken, but their brothers still hold the Martikovs' winery.",
+      "objectives": [
+        "Drive the druids out of the winery and the press house"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "saved",
+      "journal": "The winery is the Martikovs' again and Yester Hill is broken. The family drank to us in the yard, and Davian called us good for something.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

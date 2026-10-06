@@ -1,0 +1,89 @@
+{
+  "id": "ottos_irresistible_dance",
+  "name": "Otto's Irresistible Dance",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see within range"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "value": 0
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:dex"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "attack"
+          },
+          {
+            "stat": "attacked_with",
+            "value": "advantage"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "on": "success",
+        "until": "target_turn_end",
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "value": 0
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "debuff"
+  ],
+  "summary": "Wis save or the target is Charmed and dances helplessly: no movement, worse defence and attacks.",
+  "text": "While dancing it has Disadvantage on Dex saves and attack rolls, and attacks against it have Advantage; on each of its turns it can use an action to repeat the save. Even on a success, it spends all its movement dancing until the end of its next turn."
+}

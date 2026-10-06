@@ -1,0 +1,30 @@
+# The shrine of Mother Night in the den (a prop). The Tarokka may have hidden a treasure among the offerings
+# (container mother_night_offerings; place werewolf_den_shrine).
+
+~ statue
+Narrator: A woman carved from the cave's own rock, cloaked and hooded, with no face under the hood at all and her hands held open at her sides. At her feet: bones, teeth, coins, a child's shoe, a heel of bread still soft from someone's pocket.
+if treasure_at:werewolf_den_shrine
+Narrator: And among the offerings, something no wolf would think to give: a bundle in oiled cloth, too square and too carefully wrapped. Somebody hid it here, among things nobody would steal.
+endif
+-> menu
+
+~ menu
+* [if not flag.mother_night_studied] [Religion DC 13] Who is she? -> rel_ok | rel_fail
+* [Cleric] Say a prayer to the Morninglord, here, in her house. -> morninglord
+* Leave her be. -> END
+
+~ rel_ok
+set mother_night_studied
+Narrator: Mother Night. The old Barovian almanacs give her the dark half of the year and the Morninglord the light, and say the two were never on speaking terms. Farmers lock their doors on her feast nights. Wolves, it seems, open theirs.
+interject tag:bookish: A goddess of the dark who keeps the dark kind to those who live in it. I can see why she'd appeal to a werewolf. I can see why she'd appeal to anyone, here.
+-> menu
+
+~ rel_fail
+set mother_night_studied
+Narrator: A cloaked woman with no face. Whatever she is, she is very old, and very patient, and she was here long before the wolves.
+-> menu
+
+~ morninglord
+Narrator: The words echo strangely in the low cave. The candles at her feet don't gutter; nothing answers. But nothing objects, either, and the air feels a little less close when you are done.
+interject name:hedda_ironvow: Mm. Sisters don't have to like each other to share a house.
+-> END

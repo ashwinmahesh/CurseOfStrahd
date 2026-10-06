@@ -461,6 +461,22 @@
           "id": "tireless",
           "name": "Tireless",
           "summary": "Magic action: gain 1d8 + Wisdom Temporary Hit Points (Wisdom-modifier uses per Long Rest); Short Rests also remove a level of Exhaustion.",
+          "text": "Primal forces sustain you. As a Magic action you gain Temporary Hit Points equal to 1d8 + your Wisdom modifier (minimum 1); you can do this a number of times equal to your Wisdom modifier (minimum once), regaining every use on a Long Rest. And whenever you finish a Short Rest, your Exhaustion level, if any, drops by 1.",
+          "action": "action",
+          "modifiers": [
+            {
+              "stat": "flag",
+              "value": "tireless"
+            }
+          ],
+          "resource": {
+            "id": "tireless",
+            "name": "Tireless",
+            "max": "mod:wis",
+            "min": 1,
+            "recharge": "long"
+          },
+          "uses_resource": "tireless",
           "implemented": "engine"
         }
       ]

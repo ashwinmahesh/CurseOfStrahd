@@ -1,0 +1,80 @@
+{
+  "id": "conjure_fey",
+  "name": "Conjure Fey",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "conjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature within 5 feet of the spirit"
+  },
+  "attack": "melee",
+  "damage": [
+    {
+      "dice": "3d12",
+      "type": "psychic",
+      "add_mod": true
+    }
+  ],
+  "conditions": [
+    "frightened"
+  ],
+  "upcast": {
+    "damage": "2d12"
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "frightened",
+        "until": "caster_turn_start"
+      }
+    }
+  ],
+  "object": {
+    "kind": "weapon",
+    "range": 60,
+    "on_appear": "attack"
+  },
+  "sustain": [
+    {
+      "do": "attack",
+      "cost": "bonus_action",
+      "move": 30,
+      "reach": 5,
+      "label": "Fey spirit: strike",
+      "sub": "teleport 30 ft + attack",
+      "help": "A Bonus Action: the spirit teleports up to 30 ft and makes a melee spell attack against a creature within 5 ft of it."
+    }
+  ],
+  "tags": [
+    "damage",
+    "summon",
+    "control"
+  ],
+  "summary": "A Medium fey spirit strikes a creature next to it: 3d12 + your modifier Psychic and Frightened.",
+  "text": "When it appears and as a Bonus Action on later turns (after teleporting up to 30 ft), it makes a melee spell attack against a creature within 5 ft. A hit also leaves the target Frightened of you and the spirit until the start of your next turn."
+}

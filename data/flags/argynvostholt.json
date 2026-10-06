@@ -1,0 +1,165 @@
+{
+  "region": "argynvostholt",
+  "flags": [
+    {
+      "id": "godfrey_met",
+      "type": "bool",
+      "summary": "Sir Godfrey Gwilym greeted the party on the front steps (godfrey:first). He moves to his room upstairs; the night courtyard fight can start."
+    },
+    {
+      "id": "vladimir_met",
+      "type": "bool",
+      "summary": "The party has been received by Vladimir Horngaard in the great hall (vladimir:first)."
+    },
+    {
+      "id": "argynvost_echo_met",
+      "type": "bool",
+      "summary": "The echo of the dragon Argynvost answered the party in the chapel (argynvost:first). Unlocks kindling the dragon's fire at the bones."
+    },
+    {
+      "id": "vladimir_last_words_known",
+      "type": "bool",
+      "summary": "The party knows the dragon's last words to Vladimir: let them go home (argynvost:last_words). The no-roll key to the muster and to the beacon confrontation."
+    },
+    {
+      "id": "vladimir_guilt_seen",
+      "type": "bool",
+      "summary": "Insight on Vladimir saw guilt behind the dark beacon (vladimir:beacon_insight); the echo can be asked about it."
+    },
+    {
+      "id": "order_oath_learned",
+      "type": "bool",
+      "summary": "The party knows the Order's oath, from the oath stone in the chapel or the echo. Passes the mausoleum warden; helps Godfrey remember."
+    },
+    {
+      "id": "argynvost_skull_known",
+      "type": "bool",
+      "summary": "The party knows the dragon's skull hangs as a trophy in Castle Ravenloft (chronicle, Vladimir, the echo). Phase 6: bringing it home to the mausoleum lights the beacon for good."
+    },
+    {
+      "id": "godfrey_list_read",
+      "type": "bool",
+      "summary": "The party read Godfrey's charcoal wall of names in his room (prop). Helps him remember; ally route."
+    },
+    {
+      "id": "godfrey_doubt_pressed",
+      "type": "bool",
+      "summary": "Guard: the Persuasion attempt to make Godfrey remember failed; it can't be retried."
+    },
+    {
+      "id": "godfrey_remembers",
+      "type": "bool",
+      "summary": "Sir Godfrey remembers the oath and why it mattered (oath, his wall, the dragon's words or Persuasion). He will stand up at the muster; the warden accepts his word. Phase 6 Godfrey scenes."
+    },
+    {
+      "id": "muster_refused",
+      "type": "bool",
+      "summary": "Guard: Vladimir refused the party's unaided Persuasion at the muster; it can't be retried."
+    },
+    {
+      "id": "mausoleum_opened",
+      "type": "bool",
+      "summary": "The Phantom Warden let the party pass into the dragon's vault (oath, Godfrey's word, History or Religion)."
+    },
+    {
+      "id": "warden_challenge_failed",
+      "type": "bool",
+      "summary": "Guard: a History or Religion answer to the warden failed; those options close."
+    },
+    {
+      "id": "bone_watch_defeated",
+      "type": "bool",
+      "summary": "The party forced the mausoleum door and beat the phantom watch (encounter bone_watch)."
+    },
+    {
+      "id": "dragon_fire_kindled",
+      "type": "bool",
+      "summary": "The party kindled a cold silver flame from the frost on the dragon's bones (mausoleum:kindle). Needed to light the beacon."
+    },
+    {
+      "id": "lamp_dark_cleared",
+      "type": "bool",
+      "summary": "The wraith and specters nesting in the dead lamp at the top of the tower are destroyed (encounter lamp_dark)."
+    },
+    {
+      "id": "courtyard_phantoms_defeated",
+      "type": "bool",
+      "summary": "The party beat the phantom men-at-arms fighting their last battle in the courtyard at night (encounter courtyard_phantoms)."
+    },
+    {
+      "id": "beacon_persuade_failed",
+      "type": "bool",
+      "summary": "Guard: Persuasion failed at the beacon; Vladimir fights."
+    },
+    {
+      "id": "beacon_stand_begun",
+      "type": "bool",
+      "summary": "Vladimir and his knights went up the tower to fight for the dark beacon (beacon:fight). They leave the great hall."
+    },
+    {
+      "id": "beacon_stand_won",
+      "type": "bool",
+      "summary": "The party beat Vladimir and his knights at the top of the tower (encounter beacon_stand); his voice speaks from the fallen armour."
+    },
+    {
+      "id": "vladimir_duel_won",
+      "type": "bool",
+      "summary": "The party won Vladimir's trial of arms in the great hall (encounter vladimir_duel)."
+    },
+    {
+      "id": "vladimir_yielded",
+      "type": "bool",
+      "summary": "After the trial of arms, Vladimir yielded to the party (vladimir:yield). The party may command the Order to march."
+    },
+    {
+      "id": "argynvost_beacon_lit",
+      "type": "bool",
+      "summary": "THE BEACON BURNS: lit with the dragon's fire (beacon:light). The knights rest, the land is blessed. Phase 6 and the epilogue read it (the light reaches the castle every night)."
+    },
+    {
+      "id": "order_fate",
+      "type": "string",
+      "summary": "THE END STATE of Argynvostholt: rest (beacon lit, knights at peace), ride (the Order marches with the party on Castle Ravenloft), grudge (the party swore Vladimir's oath to leave Strahd alive; the Order watches at the castle). Unset if the party walked away. Phase 6 and the epilogue read it."
+    },
+    {
+      "id": "vladimir_fate",
+      "type": "string",
+      "summary": "How Vladimir ended: made_peace (moved at the beacon), released (fought, then freed by the light), rides (moved at the muster), abandoned (his knights followed Godfrey), yielded (beaten in the trial; Godfrey leads), pact (sworn to the grudge). Epilogue and Phase 6."
+    },
+    {
+      "id": "vladimir_pact",
+      "type": "bool",
+      "summary": "The party swore Vladimir's oath: break Strahd, never end him. Phase 6: the Order moves to stop the killing blow."
+    },
+    {
+      "id": "vladimir_pact_broken",
+      "type": "bool",
+      "summary": "The party swore the pact and then lit the beacon anyway; Vladimir fought them as oathbreakers."
+    },
+    {
+      "id": "argynvostholt_milestone_reached",
+      "type": "bool",
+      "summary": "Guard: the one Argynvostholt milestone has been given (vladimir:climax_end, reached from every ending)."
+    },
+    {
+      "id": "order_patrol_met",
+      "type": "bool",
+      "summary": "Road event: two dead knights of the Order stopped the party on the knights' road at night."
+    },
+    {
+      "id": "phantom_ride_seen",
+      "type": "bool",
+      "summary": "Road event: the ghostly Lantern Company rode past the party at night, still riding home."
+    },
+    {
+      "id": "knights_hunt_seen",
+      "type": "bool",
+      "summary": "Road event (the Order marches): the knights put down one of Strahd's messengers on the road."
+    },
+    {
+      "id": "beacon_light_seen",
+      "type": "bool",
+      "summary": "Road event (the beacon lit): the party saw the beacon burning from the road."
+    }
+  ]
+}

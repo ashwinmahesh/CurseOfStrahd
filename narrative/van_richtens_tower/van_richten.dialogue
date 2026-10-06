@@ -1,0 +1,92 @@
+# Rudolph van Richten (NPC rictavio, docs/voice/rictavio.md) at his own tower. He is only here if he left Vallaki
+# (rictavio_gone: Lady Wachter's town): he came home to think, and has been ignoring his student on the doorstep.
+# start: in the workroom. shore: at Ezmerelda's fire after the two of them are reconciled.
+
+~ start
+if not flag.van_richten_met_at_tower
+set van_richten_met_at_tower
+Narrator: At the workroom table, under a lamp, sits the showman from the Blue Water Inn without his feathers or his voice: a thin old man in shirtsleeves, burn-scarred hands spread flat on a map of the valley.
+Rictavio: You. How did you... Khazan. Of course. She found the name, and you walked in on it. I taught her to find things. I should have taught her to stop.
+else
+Rictavio: Still here. You've a talent for being where you shouldn't. I used to.
+endif
+if flag.van_richten_strongbox_opened
+Rictavio: And you've been in my strongbox upstairs. Keep it. Where you're going, you'll need it more than I will.
+endif
+-> menu
+
+~ menu
+* [if not flag.ezmerelda_left_tower and tarokka.ally.npc != ezmerelda and not guest:ezmerelda] Ezmerelda is outside. She's been waiting for days. -> ezm
+* [if guest:ezmerelda] She's right behind us, Doctor. -> ezm_here
+* Why did you leave Vallaki? -> why
+* [if tarokka.ally.npc == rictavio and not guest:rictavio] The cards still name you. Hunt with us. -> ally_again
+* Goodbye. -> bye
+
+~ why
+if flag.vallaki_backed == "wachter"
+Rictavio: That town chose its master, and I watched who helped it choose. I came home to think about whether anything in this valley is worth the trouble. I've been thinking for a week. It's gone very badly.
+else
+Rictavio: Reasons. Old ones. I came home to think. I've been thinking for a week, and it's gone very badly.
+endif
+-> menu
+
+~ ezm
+Rictavio: I know. I can hear her. Everyone within a mile can hear her.
+Rictavio: I keyed the ward to her because everyone I have ever taught is in the ground, and she is the last. If she can't get in, she can't follow me where I'm going.
+* [Persuasion DC 14] Then go down and tell her that yourself, while there's still someone to tell. -> reunite
+* She'll get in eventually. You trained her. Better beside you than behind you. -> reunite
+* It's your business, Doctor. -> menu
+
+~ ezm_here
+Narrator: Ezmerelda doesn't say anything. She just looks at him, with her hair still standing up from his ward, until he looks away first.
+Ezmerelda: Hello, Rudolph.
+Rictavio: Ezmerelda. You went through the ward.
+Ezmerelda: You'd have done the same. You taught me.
+-> reunite
+
+~ reunite
+set van_richten_reunited
+set ezmerelda_trust += 2
+set tower_ward_lowered
+quest the_hunters_tower reunited
+Narrator: He takes a long time to stand up, and longer to put his coat on, and longest of all on the stairs. From the lantern room above, something hums and goes quiet as he passes the hearth rod: the ward is down.
+if guest:ezmerelda
+Narrator: The two of them go down the stairs together, arguing in low voices about whose fault the last twelve years were.
+else
+Narrator: A little later, through the window, you hear the shouting start on the shore. It goes on for a long time. Then it stops, and there is only the sound of two people sitting by a fire.
+endif
+interject name:silvain_aster: I would like it noted that I just watched Rudolph van Richten put on his coat to go and be shouted at. Nobody at the academy will believe me.
+-> END
+
+~ ally_again
+if flag.den_children_freed
+Rictavio: Eva's cards again. And I hear five children walked down out of the wolves' hills because of you. That counts for something. It counts for a great deal.
+-> ally_join
+endif
+Rictavio: I told you once what I think of people who help this valley choose its masters. Words are cheap here. What have you done since?
+* [Persuasion DC 15] We've learned. Come and watch us prove it. -> ally_join | ally_no
+* Nothing yet. -> ally_no
+
+~ ally_join
+Rictavio: Very well. I'm too old to hunt alone, and you are much too young to be doing it at all. I'll come.
+join rictavio
+quest find_the_ally found
+-> END
+
+~ ally_no
+Rictavio: Then come back when you have. I'll be here. I'm not going anywhere quickly these days.
+-> menu
+
+~ bye
+Rictavio: Stay in the light where you can. And when you can't, stay together.
+-> END
+
+# ---------------------------------------------------------------- At the fire, afterwards
+
+~ shore
+Rictavio: She has made me promise never to key a ward to anyone again. I have agreed to nothing. She knows I have agreed to nothing.
+if not flag.ezmerelda_left_tower
+Ezmerelda: He's agreed. He just doesn't know it yet.
+endif
+* [if tarokka.ally.npc == rictavio and not guest:rictavio] The cards still name you, Doctor. -> ally_again
+* Goodbye. -> bye

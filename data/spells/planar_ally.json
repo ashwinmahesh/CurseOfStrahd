@@ -1,0 +1,38 @@
+{
+  "id": "planar_ally",
+  "name": "Planar Ally",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "conjuration",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space within range"
+  },
+  "tags": [
+    "summon",
+    "social"
+  ],
+  "summary": "Ask a power you serve to send a Celestial, Elemental or Fiend to help you.",
+  "text": "The creature isn't compelled to obey; you bargain with it, usually paying for a service in gold or deeds, and it may refuse unreasonable or dangerous requests."
+}

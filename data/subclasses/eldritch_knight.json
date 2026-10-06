@@ -89,6 +89,7 @@
         "id": "war_magic",
         "name": "War Magic",
         "summary": "Replace one attack of your Attack action with a Wizard cantrip that takes an action.",
+        "text": "When you take the Attack action on your turn, you can replace one of its attacks with casting one of your Wizard cantrips that takes an action to cast.",
         "implemented": "engine"
       }
     },
@@ -98,6 +99,7 @@
         "id": "eldritch_strike",
         "name": "Eldritch Strike",
         "summary": "A creature you hit with a weapon has Disadvantage on its next save against your spell before the end of your next turn.",
+        "text": "When you hit a creature with a weapon attack, it has Disadvantage on the next saving throw it makes against a spell you cast before the end of your next turn.",
         "implemented": "engine"
       }
     },

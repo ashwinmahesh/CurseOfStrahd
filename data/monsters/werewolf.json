@@ -177,7 +177,8 @@
     }
   ],
   "regions": [
-    "svalich_road"
+    "svalich_road",
+    "werewolf_den"
   ],
   "ai_profile": "pack_hunter",
   "summary": "Shoots from cover, then shifts to hybrid form to scratch and bite with its pack; the bite curses."

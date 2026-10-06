@@ -53,6 +53,7 @@
         "id": "life_domain_spells",
         "name": "Life Domain Spells",
         "summary": "Always prepared: Aid, Bless, Cure Wounds, Lesser Restoration; more at levels 5, 7 and 9.",
+        "text": "Your domain keeps these spells prepared for you: Aid, Bless, Cure Wounds and Lesser Restoration at Cleric level 3, Mass Healing Word and Revivify at 5, Aura of Life and Death Ward at 7, Greater Restoration and Mass Cure Wounds at 9.",
         "implemented": "data"
       }
     },
@@ -74,6 +75,7 @@
         "id": "blessed_healer",
         "name": "Blessed Healer",
         "summary": "When your slot-powered spell heals someone else, you regain 2 + the slot's level.",
+        "text": "The healing you give others mends you too: when a spell you cast with a spell slot restores Hit Points to a creature other than you, you regain 2 + the slot's level Hit Points.",
         "implemented": "engine"
       }
     },

@@ -1,0 +1,225 @@
+# Morgantha at home (docs/voice/morgantha.md): the loft of Old Bonegrinder, rocking between the cages. The region's
+# turning point: buy the children back (gold, a dream, a promise), walk away, or fight. Whoever of her daughters is
+# still at hand fights beside her (coven_last_stand). Remembers the village (morgantha.dialogue there) and the lane.
+
+~ start
+if flag.bonegrinder_bargain == "abandoned"
+-> kept
+endif
+if flag.bonegrinder_bargain
+-> after_bargain
+endif
+if flag.morgantha_home_met
+-> again
+endif
+set morgantha_home_met
+if not quest.children_of_the_mill
+quest children_of_the_mill heard
+endif
+Narrator: Between the two cages, in a rocking chair worn smooth, a little old woman in a flour-dusted shawl is shelling something small and white into a bowl in her lap. She doesn't get up. The chair keeps rocking.
+if flag.morgantha_driven_off
+Morgantha [smile]: The brave one who chased Morgantha's cart out of the village! Morgantha told you, duckling: she remembers every face. And here's yours, come all this way to be remembered properly.
+elif flag.dream_pastries_bought >= 1
+Morgantha [smile]: My customers! All those stairs, just to see where the pastries come from. How are the dreams, dearies? Sweet? Of course they are.
+elif flag.morgantha_met or flag.morgantha_cart_met
+Morgantha [smile]: The new faces! Still lovely. A little leaner. The road does that to people.
+else
+Morgantha [smile]: Visitors! Up all those stairs and not one of you carrying a basket. Never mind. Morgantha has plenty.
+endif
+if flag.dream_pastry_eaten
+Morgantha [sly]: And you had the free sample, pet. Morgantha has looked in on your dreams since. You were smiling.
+endif
+if species:halfling
+interject species:halfling: She's looking at me like a ham again.
+endif
+-> family
+
+~ again
+Morgantha [smile]: Back again, dearies? Morgantha knew you would be. Everybody comes back.
+-> family
+
+~ family
+if flag.offalia_slain
+Morgantha [sad]: And you broke my Offalia. She was the slow one, dearies, but she was mine. Morgantha is adding that to your account.
+elif flag.offalia_asleep
+Morgantha [sly]: Fed my own girl my own baking. Oh, that's clever. Morgantha likes clever. Clever keeps.
+elif flag.offalia_lured
+Morgantha: Sent my Offalia trotting down the hill after nobody. She'll stop at every hedge from here to Vallaki. Never mind. Morgantha can see to her own visitors.
+endif
+if flag.bella_pact
+Narrator: The dressing table in the corner stands empty. Morgantha glances at it once, and goes on smiling, and goes on shelling.
+elif flag.bella_fled
+Narrator: The mirror in the corner is cracked clean across. Morgantha doesn't look at it.
+endif
+if flag.pastry_cart_raided
+Morgantha [sly]: And somebody's had their fingers in my cart. Morgantha counts her pastries, pet. She counts everything.
+endif
+-> menu
+
+~ menu
+* The children. Let them go. -> children
+* What are you? -> what
+* [if flag.bonegrinder_recipe_read] We read your receipt book. -> receipts
+* [Insight DC 13] Watch her while she talks. -> read_ok | read_fail
+* Then we'll take them from you. -> fight_warning
+* We're leaving. -> leaving
+
+~ children
+Morgantha: Let them go? But they're paid for, dearie. Their mother had a basket a week all season and dreamed of her little lost one every night. A child for a season. That's the custom. Everybody knows the custom.
+if guest:ireena
+interject guest:ireena: There's no such custom. I lived in that village all my life.
+Morgantha [smile]: Then you never ran short, did you, pet? Lucky girl. He'd pay more for you than for any pastry.
+endif
+Morgantha: But Morgantha is fair. Ask anybody. You may buy them back.
+-> bargain
+
+~ bargain
+* [if gold >= 150] We'll buy them back. (150 gp) -> pay_gold
+* [if not gold >= 150] We haven't that much. -> too_poor
+* What else would you take? -> dream_offer
+* [Persuasion DC 16] Free them, and we'll leave you and your mill in peace. -> truce_ok | truce_fail
+* Keep them. We want no part of this. -> abandon
+* No deals. -> menu
+
+~ too_poor
+Morgantha: Then you can't afford them, can you? Morgantha doesn't give credit. Credit is how folk end up owing children.
+-> bargain
+
+~ pay_gold
+gold -150
+set bonegrinder_bargain = "gold"
+quest children_of_the_mill bargain_struck
+Morgantha [smile]: A hundred and fifty. Their mother let them go for less, if you don't count the honey. Pleasure doing business, dearies.
+-> release
+
+~ dream_offer
+Morgantha: Gold is dull, pet. Here's a better price. One dream: your sweetest, the one you save for bad nights. Morgantha draws it out like a splinter, and after that she visits now and then while you sleep. Only to sit.
+* Take mine. -> dream_paid
+* No. -> bargain
+
+~ dream_paid
+set bonegrinder_bargain = "dream"
+quest children_of_the_mill bargain_struck
+Narrator: She leans close enough that {name} can smell the honey on her, and lays one cold finger on {name}'s brow. Something small and warm goes out of {name}, and afterwards {name} can't remember what it was.
+Morgantha [smile]: Delicious. Morgantha will be seeing you, duckling. Now and again. Don't wake.
+-> release
+
+~ truce_ok
+set bonegrinder_bargain = "truce"
+quest children_of_the_mill bargain_struck
+Morgantha [sly]: Peace, from heroes. That's worth something: you're the sort who keeps a promise and hates yourselves for it. Very well. The children, for your word. Morgantha will hold you to it.
+-> release
+
+~ truce_fail
+Morgantha [smile]: Peace? From you? Morgantha has peace. She has a mill, and a hill, and a valley full of hungry people. What she hasn't got is a reason.
+-> bargain
+
+~ abandon
+set bonegrinder_bargain = "abandoned"
+set bonegrinder_fate = "abandoned"
+set pastry_trade = "thriving"
+quest children_of_the_mill children_abandoned
+Morgantha [smile]: Sensible. You'll go far, dearies. Not very far; it's a small valley. But far.
+Narrator: Behind the bars, the girl puts an arm round her brother and watches you go. She doesn't call out. She has stopped expecting anyone to.
+-> END
+
+~ release
+Narrator: Morgantha unhooks a ring of iron keys from her apron and opens both cages, humming. The children don't move until she has sat back down.
+Morgantha [smile]: Off you go, ducklings. Mind the stairs. Give your mother Morgantha's love; she'll be wanting another basket soon.
+-> old_bonegrinder/children:freed
+
+~ what
+Morgantha: Just an old baker, dearie, and her two girls, doing an honest trade in a hard country. Folk want sweet dreams. Morgantha sells them. Is it Morgantha's fault the dreams are better than waking?
+if class:cleric
+interject class:cleric: You're a night hag. You ride sleepers' dreams and steal what's left of them.
+Morgantha [sly]: Such words, from such a pretty mouth. Morgantha will sit a little further off from your sun-trinket, pet, if it's all the same.
+endif
+if treasure_at:old_bonegrinder
+Morgantha: And keep your fingers out of Morgantha's oven. There's something at the back of it that won't burn, and Morgantha doesn't care for things that won't burn.
+endif
+-> menu
+
+~ receipts
+Morgantha [sly]: Read the family receipts, did you? Then you know about the special flour. Every family has a secret ingredient, duckling. Ours is just more honest about it.
+-> menu
+
+~ read_ok
+Narrator: She never looks at the cages. She looks at the stair, and at the corner, and at the stair again, counting her family. She is far less sure of this than she sounds, and she doesn't want to do it alone.
+-> menu
+
+~ read_fail
+Narrator: She smiles. She rocks. She shells. Whatever is under that smile has had a very long time to practise staying there.
+-> menu
+
+~ leaving
+Morgantha [smile]: So soon? Take a pastry for the road. No? Ah, well. Everybody comes back to Morgantha in the end.
+-> END
+
+# --- The fight: who stands with her ---
+
+~ fight_warning
+set offalia_in_last_stand = false
+set bella_in_last_stand = false
+if not flag.offalia_slain and not flag.offalia_asleep and not flag.offalia_lured
+set offalia_in_last_stand
+endif
+if not flag.bella_pact and not flag.bella_fled and not flag.bella_slain
+set bella_in_last_stand
+endif
+if flag.offalia_in_last_stand and flag.bella_in_last_stand
+-> whole_coven
+endif
+if flag.offalia_in_last_stand or flag.bella_in_last_stand
+Morgantha [smile]: Taking a poor old woman's grandchildren, in her own home. Shame on you. Girls! Mother needs you!
+-> fight
+endif
+Morgantha [sad]: All on her own, then. Bella's sulking somewhere and Offalia's gone somewhere, and it's only Morgantha and you. Well. Morgantha has managed alone before.
+-> fight
+
+~ whole_coven
+Morgantha [smile]: All three of us, dearies? Together? Oh, you are brave. Bella, pet, put down the mirror. Offalia! Visitors!
+Narrator: Downstairs, something heavy stops chewing. In the corner, a stool scrapes back. Three voices begin humming the same tune, and the loft is suddenly much smaller.
+* We stand by it. -> fight
+* Wait. Not like this. -> menu
+
+~ fight
+if flag.offalia_in_last_stand
+set offalia_slain
+endif
+if flag.bella_in_last_stand
+set bella_slain
+endif
+if flag.offalia_slain and flag.bella_slain
+set bonegrinder_fate = "destroyed"
+set pastry_trade = "ended"
+elif flag.bella_pact and not flag.bella_slain and not flag.bella_fled
+set bonegrinder_fate = "bella"
+set pastry_trade = "dwindling"
+else
+set bonegrinder_fate = "broken"
+set pastry_trade = "dwindling"
+endif
+Morgantha [angry]: Then Morgantha will have you for the oven, and your bones for the stone, and your dreams for supper. Waste not, dearies.
+combat coven_last_stand
+
+# --- Later visits ---
+
+~ after_bargain
+Morgantha [smile]: My heroes! No more children today, dearies. There's always pastries.
+if flag.bonegrinder_bargain == "truce"
+Morgantha [sly]: And you gave Morgantha your word. Morgantha remembers.
+endif
+* Your bargaining days are over. -> broken_word
+* Goodbye. -> END
+
+~ broken_word
+if flag.bonegrinder_bargain == "truce"
+Narrator: A promise is a heavy thing to set down. You feel the weight of this one as you do it.
+endif
+-> fight_warning
+
+~ kept
+Morgantha [smile]: Back for a pastry, my sensible dearies? The little ones are keeping nicely.
+* We've changed our minds about the children. -> bargain
+* Then we'll take them from you. -> fight_warning
+* Goodbye. -> END

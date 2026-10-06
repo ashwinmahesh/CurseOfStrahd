@@ -158,7 +158,8 @@
     "attack": 6
   },
   "regions": [
-    "svalich_road"
+    "svalich_road",
+    "old_bonegrinder"
   ],
   "ai_profile": "spellcaster",
   "summary": "Opens with Phantasmal Killer and level 4 Magic Missiles, claws anyone close, and slips away ethereally."

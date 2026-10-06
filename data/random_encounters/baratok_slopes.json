@@ -1,0 +1,171 @@
+{
+  "id": "baratok_slopes",
+  "map": "mount_baratok_trail",
+  "chance_day": 0.2,
+  "chance_night": 0.4,
+  "summary": "The mountain roads north of Vallaki: up Mount Baratok, along the high ridges and over the Tsolenka Pass. Wolves, ogres and spiders by day, werewolves by night, and a roc overhead.",
+  "entries": [
+    {
+      "id": "dire_wolves",
+      "weight": 3,
+      "text": "Grey shapes come down the scree above the road at a lope, spreading out as they come.",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            9
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            10,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            12,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ogres",
+      "weight": 2,
+      "when": "day",
+      "text": "Three ogres sit on the road ahead around a dead goat, arguing about who caught it. They stop arguing when they see you.",
+      "monsters": [
+        {
+          "monster": "ogre",
+          "cell": [
+            24,
+            9
+          ]
+        },
+        {
+          "monster": "ogre",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "ogre",
+          "cell": [
+            25,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spiders",
+      "weight": 2,
+      "text": "The pines over the road are hung with grey sheets of web, and the sheets are moving.",
+      "monsters": [
+        {
+          "monster": "giant_spider",
+          "cell": [
+            22,
+            4
+          ]
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            4,
+            11
+          ]
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            25,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "werewolves_ridge",
+      "weight": 2,
+      "when": "night",
+      "text": "Howling, close and getting closer, from voices that sound almost like men's.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            7
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            26,
+            11
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lightning_ridge",
+      "weight": 1,
+      "once": true,
+      "dialogue": "mount_baratok/events:lightning_ridge"
+    },
+    {
+      "id": "roc_shadow",
+      "weight": 1,
+      "when": "day",
+      "once": true,
+      "dialogue": "tsolenka_pass/events:roc_shadow"
+    }
+  ]
+}

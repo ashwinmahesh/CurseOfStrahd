@@ -1,0 +1,247 @@
+{
+  "id": "werewolf_den",
+  "name": "The Hills above Lake Zarovich",
+  "region": "werewolf_den",
+  "summary": "A pine-dark slope in the hills above Lake Zarovich, climbing to a rock face with a cave in it. The ground around the cave mouth is bare from the traffic of many feet, not all of them on two legs.",
+  "text": "A cold stream, boulders, pines scored with claw marks, a heap of bones politely out of sight of the trail, and a cave mouth breathing out warm air that smells of wet dog and old meat.",
+  "map": {
+    "rows": [
+      "##################################",
+      "###############....###############",
+      "###############....###############",
+      "###############....###############",
+      "#................................#",
+      "#.##..........................#..#",
+      "#.#................=....222....#.#",
+      "#......#................222......#",
+      "#.......................222......#",
+      "#....#......#....................#",
+      "#................................#",
+      "#................................#",
+      "#........#..........==......#.#..#",
+      "#.~..........................#...#",
+      "#..~~............................#",
+      "#....~~....=.....................#",
+      "#......~~................=.......#",
+      "#.....=..~.....................#.#",
+      "#.........~~..................#..#",
+      "#...........~.........#..........#",
+      "#.........#......................#",
+      "#................................#",
+      "#..#.......................#.....#",
+      "#...#.......................#....#",
+      "#................................#",
+      "################..################"
+    ],
+    "theme": "wilderness",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "den_trail",
+      "name": "The trail up",
+      "cells": [
+        [
+          1,
+          17
+        ],
+        [
+          32,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "den_stream",
+      "name": "The stream",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          13,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "den_slope",
+      "name": "Below the cave",
+      "cells": [
+        [
+          14,
+          4
+        ],
+        [
+          23,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "den_watch_rock",
+      "name": "The watch rock",
+      "cells": [
+        [
+          24,
+          4
+        ],
+        [
+          32,
+          16
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      16,
+      23
+    ],
+    "from_trail": [
+      16,
+      23
+    ],
+    "from_caves": [
+      16,
+      4
+    ]
+  },
+  "exits": [
+    {
+      "id": "den_trail_out",
+      "cell": [
+        16,
+        25
+      ],
+      "to": "travel",
+      "label": "The trail back down to the lake"
+    },
+    {
+      "id": "den_trail_out_2",
+      "cell": [
+        17,
+        25
+      ],
+      "to": "travel",
+      "label": "The trail back down to the lake"
+    },
+    {
+      "id": "den_cave_mouth",
+      "cell": [
+        16,
+        1
+      ],
+      "to": "werewolf_den_caves",
+      "spawn": "from_mouth",
+      "label": "Down to the caves"
+    },
+    {
+      "id": "den_cave_mouth_2",
+      "cell": [
+        17,
+        1
+      ],
+      "to": "werewolf_den_caves",
+      "spawn": "from_mouth",
+      "label": "Down to the caves"
+    }
+  ],
+  "props": [
+    {
+      "id": "den_bone_midden",
+      "cell": [
+        21,
+        9
+      ],
+      "kind": "examine",
+      "label": "A heap of bones",
+      "model": "bones"
+    },
+    {
+      "id": "den_claw_pine",
+      "cell": [
+        9,
+        12
+      ],
+      "kind": "examine",
+      "label": "A clawed pine",
+      "model": "pine_clawed"
+    },
+    {
+      "id": "den_herb_patch",
+      "cell": [
+        13,
+        5
+      ],
+      "kind": "examine",
+      "label": "A patch of purple flowers",
+      "model": "leaves"
+    },
+    {
+      "id": "den_watch_stone",
+      "cell": [
+        26,
+        9
+      ],
+      "kind": "examine",
+      "label": "The watch rock",
+      "model": "boulder"
+    },
+    {
+      "id": "den_rag_doll",
+      "cell": [
+        18,
+        15
+      ],
+      "kind": "examine",
+      "label": "Something small in the mud",
+      "model": "doll",
+      "flag": "den_doll_found"
+    }
+  ],
+  "containers": [
+    {
+      "id": "den_hunter_pack",
+      "cell": [
+        3,
+        20
+      ],
+      "label": "A torn hunter's pack",
+      "model": "satchel",
+      "gold": 8,
+      "items": [
+        {
+          "id": "longbow",
+          "qty": 1
+        },
+        {
+          "id": "arrow",
+          "qty": 20
+        },
+        {
+          "id": "ration",
+          "qty": 2
+        }
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "zuleika_toranescu",
+      "cell": [
+        14,
+        6
+      ],
+      "dialogue": "werewolf_den/zuleika:start",
+      "approach": 9,
+      "when": "not flag.zuleika_vouched and not flag.den_guards_cleared and not flag.emil_freed and not flag.pack_resolved"
+    }
+  ],
+  "narration": {
+    "enter": "enter:werewolf_den"
+  },
+  "rest": "risky"
+}

@@ -78,6 +78,15 @@
         "id": "flurry_of_healing_and_harm",
         "name": "Flurry of Healing and Harm",
         "summary": "Replace each Flurry of Blows strike with Hand of Healing for free; add Hand of Harm to Flurry hits without Focus, Wisdom-modifier times per Long Rest.",
+        "text": "When you use Flurry of Blows, you can swap each Unarmed Strike for a use of Hand of Healing that costs no Focus Point. And when an Unarmed Strike from Flurry of Blows deals damage, you can add Hand of Harm to it without spending a Focus Point (still only once per turn). You can use these free benefits a total number of times equal to your Wisdom modifier (minimum once), regaining every use on a Long Rest.",
+        "resource": {
+          "id": "flurry_of_healing_and_harm",
+          "name": "Flurry of Healing and Harm",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "flurry_of_healing_and_harm",
         "implemented": "text"
       }
     },

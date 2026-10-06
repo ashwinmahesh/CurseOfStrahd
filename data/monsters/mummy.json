@@ -1,0 +1,134 @@
+{
+  "id": "mummy",
+  "name": "Mummy",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Mummy. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Fist's damage dice, whether its curse allows a save, and Dreadful Glare's rider. The curse is recorded on the target, but its effects (no healing, a shrinking Hit Point maximum) are text only."
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "lawful evil",
+  "ac": 11,
+  "initiative": -1,
+  "hp": {
+    "average": 58,
+    "dice": "9d8+18"
+  },
+  "speed": {
+    "walk": 20
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 8,
+    "con": 15,
+    "int": 6,
+    "wis": 12,
+    "cha": 12
+  },
+  "saves": {
+    "wis": 3
+  },
+  "vulnerabilities": [
+    "fire"
+  ],
+  "immunities": [
+    "necrotic",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 11,
+  "languages": [
+    "the languages it knew in life"
+  ],
+  "cr": 3,
+  "xp": 700,
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "rotting_fist",
+          "count": 2
+        },
+        {
+          "action": "dreadful_glare",
+          "count": 1
+        }
+      ],
+      "summary": "Makes two Rotting Fist attacks and uses Dreadful Glare."
+    },
+    {
+      "id": "rotting_fist",
+      "name": "Rotting Fist",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "1d10+3",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A blow that curses: the target can't regain Hit Points and slowly withers.",
+      "text": "A creature hit is cursed: it can't regain Hit Points, and its Hit Point maximum drops by 10 (3d6) every 24 hours until the curse is removed. A creature this attack drops to 0 Hit Points dies and crumbles to dust.",
+      "on_hit": [
+        {
+          "do": "curse",
+          "curse": "mummy_rot"
+        }
+      ]
+    },
+    {
+      "id": "dreadful_glare",
+      "name": "Dreadful Glare",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 11,
+        "success": "none"
+      },
+      "area": {
+        "targets": 1,
+        "range": 60
+      },
+      "damage": [],
+      "summary": "DC 11 Wis save by a creature within 60 ft or Frightened until the end of the mummy's next turn.",
+      "targets": {
+        "range": 60,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_end"
+        }
+      ]
+    }
+  ],
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "brute",
+  "summary": "A cursed, bandaged corpse: rotting blows that stop healing, and a stare that freezes the heart. Burns easily."
+}

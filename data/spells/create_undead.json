@@ -1,0 +1,45 @@
+{
+  "id": "create_undead",
+  "name": "Create Undead",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 6,
+  "school": "necromancy",
+  "classes": [
+    "cleric",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "one black onyx stone worth 150+ GP for each corpse",
+    "m_cost_gp": 150
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 3,
+    "description": "up to three corpses of Medium or Small Humanoids"
+  },
+  "upcast": {
+    "text": "Level 7: four Ghouls. Level 8: five Ghouls, or two Ghasts or Wights. Level 9: six Ghouls, three Ghasts or Wights, or two Mummies."
+  },
+  "tags": [
+    "summon"
+  ],
+  "summary": "At night, raise up to three corpses as Ghouls under your control.",
+  "text": "You command them with a Bonus Action for 24 hours, after which you must recast the spell to keep control of them."
+}

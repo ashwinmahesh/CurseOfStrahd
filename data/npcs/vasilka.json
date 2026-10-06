@@ -1,0 +1,18 @@
+{
+  "id": "vasilka",
+  "name": "Vasilka",
+  "title": "The Abbot's Bride",
+  "summary": "A bride sewn together from Krezk's dead by the Abbot's patient hands, beautiful and perfectly still until he wakes her. Taught manners, not wants.",
+  "portrait": "vasilka",
+  "sprite": "vasilka",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vasilka.md",
+  "monster": "flesh_golem",
+  "guest": false,
+  "tags": [
+    "construct",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "she/her"
+}

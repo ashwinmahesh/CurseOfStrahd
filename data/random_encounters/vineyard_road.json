@@ -1,0 +1,287 @@
+{
+  "id": "vineyard_road",
+  "map": "road_forest",
+  "chance_day": 0.15,
+  "chance_night": 0.4,
+  "summary": "The lake road west of Vallaki and the barrow track to Yester Hill: hedgerows, moor and thin woods. Blights grown on Yester Hill by day and night until the tree burns, druid patrols until the hill is broken, wolves after dark, the Keepers' ravens, and the druids come back for revenge if they were let go and the tree still stands.",
+  "entries": [
+    {
+      "id": "hedgerow_blights",
+      "weight": 3,
+      "when": "not flag.gulthias_tree_burned",
+      "monsters": [
+        {
+          "monster": "vine_blight",
+          "cell": [
+            13,
+            6
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            24,
+            5
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            5
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            7,
+            8
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            25,
+            12
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            24,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            16,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            5,
+            12
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            25,
+            11
+          ]
+        }
+      ],
+      "surprise": "party",
+      "text": "The hedge on both sides of the road stands up and walks toward you, rustling."
+    },
+    {
+      "id": "druid_patrol",
+      "weight": 2,
+      "when": "not flag.yester_hill_resolved",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            24,
+            5
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            5,
+            6
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            25,
+            12
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            13,
+            7
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            15,
+            15
+          ]
+        }
+      ],
+      "text": "Two figures in green-dyed sacking step into the road ahead, and the brush behind them steps out too."
+    },
+    {
+      "id": "wolves_on_the_moor",
+      "weight": 2,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            13,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            26,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            24,
+            7
+          ]
+        }
+      ],
+      "text": "Eyes in the dark on both sides of the road, low to the ground, keeping pace."
+    },
+    {
+      "id": "keepers_word",
+      "weight": 1,
+      "when": "day and flag.davian_met and not flag.raven_word_heard",
+      "once": true,
+      "dialogue": "wizard_of_wines/road:keepers_word"
+    },
+    {
+      "id": "druids_return",
+      "weight": 3,
+      "when": "(flag.yester_druids_fate == \"spared\" or flag.yester_druids_fate == \"fled\") and not flag.gulthias_tree_burned",
+      "once": true,
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            24,
+            5
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 55
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            5,
+            6
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            25,
+            12
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            13,
+            6
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            16,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            7
+          ]
+        }
+      ],
+      "text": "Green-painted figures step out of the hedgerow on both sides of the road, and at their head walks an old woman you last saw among the roots of a black tree. The tree called her back, as she said it would. You let it keep calling."
+    }
+  ]
+}

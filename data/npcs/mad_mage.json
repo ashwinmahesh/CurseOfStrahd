@@ -1,0 +1,19 @@
+{
+  "id": "mad_mage",
+  "name": "The Mad Mage",
+  "title": "Hermit of Mount Baratok",
+  "summary": "An old wizard in a magnificent ruin of a robe who lives alone in a stone hut on Mount Baratok and cannot remember his own name. The weather around him does whatever he forgets he told it to.",
+  "portrait": "mad_mage",
+  "sprite": "mordenkainen",
+  "attitude": "indifferent",
+  "voice": "docs/regions/berez.md",
+  "monster": "mordenkainen",
+  "guest": false,
+  "tags": [
+    "wizard",
+    "hermit",
+    "mount_baratok"
+  ],
+  "region": "mount_baratok",
+  "pronouns": "he/him"
+}

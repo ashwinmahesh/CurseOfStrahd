@@ -1,0 +1,98 @@
+{
+  "id": "giant_spider",
+  "name": "Giant Spider",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Giant Spider. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Bite's Poison damage and the Web's save. Web is text only (the engine has no restraint that lasts until a web is broken)."
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 14,
+  "initiative": 3,
+  "hp": {
+    "average": 26,
+    "dice": "4d10+4"
+  },
+  "speed": {
+    "walk": 30,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 16,
+    "con": 12,
+    "int": 2,
+    "wis": 11,
+    "cha": 4
+  },
+  "skills": {
+    "perception": 4,
+    "stealth": 7
+  },
+  "senses": {
+    "blindsight": 10,
+    "darkvision": 60
+  },
+  "passive_perception": 14,
+  "languages": [],
+  "cr": 1,
+  "xp": 200,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "spider_climb",
+      "name": "Spider Climb",
+      "action": "passive",
+      "summary": "Climbs difficult surfaces, even upside down on ceilings, with no ability check.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "spider_climb"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "web_walker",
+      "name": "Web Walker",
+      "action": "passive",
+      "summary": "Webs don't slow it, and it feels anything touching its webs.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d8+3",
+          "type": "piercing"
+        },
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "poison"
+        }
+      ],
+      "summary": "A venomous bite."
+    },
+    {
+      "id": "web",
+      "name": "Web",
+      "kind": "special",
+      "summary": "Recharge 5-6. DC 13 Dex save by a creature within 60 ft or Restrained by webbing until it is broken.",
+      "text": "The webbing has AC 10 and 5 Hit Points, is vulnerable to Fire and immune to Bludgeoning, Poison and Psychic damage. Text only for the engine.",
+      "recharge": "5-6"
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A horse-sized hunting spider: climbs walls, binds prey in webs and bites with venom."
+}
