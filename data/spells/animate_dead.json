@@ -1,0 +1,57 @@
+{
+  "id": "animate_dead",
+  "name": "Animate Dead",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "necromancy",
+  "classes": [
+    "cleric",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a drop of blood, a piece of flesh, and a pinch of bone dust"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a pile of bones or the corpse of a Small or Medium Humanoid"
+  },
+  "upcast": {
+    "targets": 2,
+    "text": "Animate or reassert control over two more Undead per slot level above 3; each must come from a different corpse or pile of bones."
+  },
+  "effects": [
+    {
+      "effect": "summon",
+      "params": {
+        "creature_choice": [
+          "skeleton",
+          "zombie"
+        ],
+        "count": 1,
+        "control_hours": 24
+      }
+    }
+  ],
+  "tags": [
+    "summon"
+  ],
+  "summary": "Raise a Skeleton or Zombie from bones or a corpse and command it with a Bonus Action for 24 hours.",
+  "text": "Pick a pile of bones or the corpse of a Small or Medium Humanoid within 10 feet. It rises as an Undead: a Skeleton if you chose bones, a Zombie if you chose a corpse (use those stat blocks). On each of your turns you can take a Bonus Action to mentally command any creature made with this spell that is within 60 feet of you; if you control several, you can command any or all of them at once with the same order. You decide what action it takes and where it moves on its next turn, or you give a general order such as guarding a room or hallway. With no orders it takes the Dodge action and moves only to avoid harm. Once ordered, it keeps at the task until it is done. You control the creature for 24 hours, after which it stops obeying you. Casting the spell on it again before the 24 hours run out keeps control for another 24 hours; used this way, the casting reasserts control over up to four creatures you animated with this spell instead of animating a new one. Casting time 1 minute. Using a Higher-Level Spell Slot: you animate or reassert control over two more Undead for each slot level above 3, each from a different corpse or pile of bones."
+}

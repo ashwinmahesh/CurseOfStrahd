@@ -1,0 +1,66 @@
+{
+  "id": "ray_of_enfeeblement",
+  "name": "Ray of Enfeeblement",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "necromancy",
+  "classes": [
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "con",
+  "save_success": "special",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:str"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "save:str"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "custom",
+      "params": {
+        "id": "ray_of_enfeeblement",
+        "repeat_save": "end_of_turn"
+      }
+    }
+  ],
+  "tags": [
+    "debuff"
+  ],
+  "summary": "Con save: on a failure, Disadvantage on Strength D20 Tests and -1d8 damage; on a success, Disadvantage on next attack.",
+  "text": "A ray of draining energy shoots at a creature within range, which makes a Constitution saving throw. On a success, it has Disadvantage on the next attack roll it makes before the start of your next turn. On a failure, for the duration it has Disadvantage on Strength-based D20 Tests (Strength checks, Strength saving throws and attack rolls that use Strength) and subtracts 1d8 from all its damage rolls. It repeats the save at the end of each of its turns, ending the spell on a success."
+}

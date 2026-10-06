@@ -1,0 +1,15 @@
+{
+  "id": "crossbow_bolt",
+  "name": "Crossbow Bolt",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "ammunition",
+  "weight_lb": 0.075,
+  "cost_gp": 0.05,
+  "stackable": true,
+  "bundle": 20,
+  "summary": "Ammunition for Light, Hand and Heavy Crossbows; sold 20 at a time.",
+  "text": "One piece of ammunition for Light, Hand and Heavy Crossbows. A bundle of 20 costs 1 GP and weighs 1.5 lb.; it is usually kept in a Crossbow Bolt Case, bought separately. Each attack with an Ammunition weapon uses one piece. After a fight, spending 1 minute lets you recover half of the pieces you used (round down); the rest are lost."
+}

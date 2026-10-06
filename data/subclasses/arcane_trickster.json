@@ -1,0 +1,117 @@
+{
+  "id": "arcane_trickster",
+  "name": "Arcane Trickster",
+  "class": "rogue",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "Mixes Wizard illusions and enchantments with an invisible Mage Hand for remote larceny.",
+  "role_tags": [
+    "arcane magic",
+    "trickery"
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "progression": "third",
+    "list": "wizard",
+    "focus": "arcane",
+    "cantrips": [
+      0,
+      0,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "prepared": [
+      0,
+      0,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6,
+      7,
+      8,
+      8,
+      9,
+      10,
+      10,
+      11,
+      11,
+      11,
+      12,
+      13
+    ],
+    "fixed_cantrips": [
+      "mage_hand"
+    ],
+    "swap_prepared": "level_up"
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "spellcasting",
+        "name": "Spellcasting",
+        "summary": "Cast Wizard spells with Intelligence: Mage Hand plus two cantrips, three prepared spells.",
+        "text": "You know Mage Hand and two other Wizard cantrips (one more at level 10) and prepare level 1+ Wizard spells as shown in the Arcane Trickster table; whenever you gain a Rogue level you can swap one cantrip (not Mage Hand) and one prepared spell. Intelligence is your spellcasting ability; an Arcane Focus can be your focus.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "mage_hand_legerdemain",
+        "name": "Mage Hand Legerdemain",
+        "summary": "Your Mage Hand is invisible and can pick locks, disarm traps and pick pockets at range.",
+        "text": "When you cast Mage Hand, the hand is Invisible, and you can control it as a Bonus Action. Through it you can stow or retrieve an object in a container worn or carried by another creature, and use Thieves' Tools or Sleight of Hand to pick locks and disarm traps at range.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "magical_ambush",
+        "name": "Magical Ambush",
+        "summary": "While you're Invisible, a creature has Disadvantage on saves against your spells this turn.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "versatile_trickster",
+        "name": "Versatile Trickster",
+        "summary": "Use Trip through your Mage Hand on a creature within 5 feet of it.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "spell_thief",
+        "name": "Spell Thief",
+        "summary": "Reaction: stop a spell cast at you and steal it for 8 hours.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "arrow",
+  "name": "Arrow",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "ammunition",
+  "weight_lb": 0.05,
+  "cost_gp": 0.05,
+  "stackable": true,
+  "bundle": 20,
+  "summary": "Ammunition for Shortbows and Longbows; sold 20 at a time.",
+  "text": "One piece of ammunition for Shortbows and Longbows. A bundle of 20 costs 1 GP and weighs 1 lb.; it is usually kept in a Quiver, bought separately. Each attack with an Ammunition weapon uses one piece. After a fight, spending 1 minute lets you recover half of the pieces you used (round down); the rest are lost."
+}

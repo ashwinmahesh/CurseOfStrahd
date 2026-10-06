@@ -1,0 +1,14 @@
+{
+  "id": "basic_poison",
+  "name": "Basic Poison",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "stackable": true,
+  "summary": "Bonus Action: coat a weapon or 3 pieces of ammunition for +1d4 Poison damage.",
+  "text": "As a Bonus Action, you can use a vial of Basic Poison to coat one weapon or up to three pieces of ammunition. A creature that takes Piercing or Slashing damage from the coated weapon or ammunition takes an extra 1d4 Poison damage. The poison stays potent for 1 minute or until its damage is dealt, whichever happens first."
+}

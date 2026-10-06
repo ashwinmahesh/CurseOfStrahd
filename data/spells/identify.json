@@ -1,0 +1,41 @@
+{
+  "id": "identify",
+  "name": "Identify",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pearl worth 100+ GP",
+    "m_cost_gp": 100
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1
+  },
+  "tags": [
+    "utility",
+    "detection"
+  ],
+  "summary": "Learn a magic item's properties, Attunement, charges and the spells on it, or the spells affecting a creature.",
+  "text": "Touch an object for the whole casting. If it is a magic item or other magical object, you learn its properties and how to use them, whether it requires Attunement, how many charges it has (if any), which ongoing spells are affecting it, and, if a spell created it, that spell's name. If you touch a creature for the whole casting instead, you learn which ongoing spells, if any, are affecting it. Casting time 1 minute; can be cast as a Ritual. The pearl (100+ GP) is not consumed."
+}

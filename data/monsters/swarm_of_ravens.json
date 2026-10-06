@@ -1,0 +1,124 @@
+{
+  "id": "swarm_of_ravens",
+  "name": "Swarm of Ravens",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "beast",
+  "swarm_of": "tiny",
+  "tags": [
+    "swarm"
+  ],
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 11,
+    "dice": "2d8+2"
+  },
+  "speed": {
+    "walk": 10,
+    "fly": 50
+  },
+  "abilities": {
+    "str": 6,
+    "dex": 14,
+    "con": 12,
+    "int": 5,
+    "wis": 12,
+    "cha": 6
+  },
+  "skills": {
+    "perception": 5
+  },
+  "resistances": [
+    "bludgeoning",
+    "piercing",
+    "slashing"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "frightened",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "prone",
+    "restrained",
+    "stunned"
+  ],
+  "passive_perception": 15,
+  "languages": [],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "swarm",
+      "name": "Swarm",
+      "action": "passive",
+      "summary": "Shares spaces with other creatures, fits through any raven-sized gap; can't heal or gain Temporary Hit Points.",
+      "text": "The swarm can move into and stay in another creature's space, and other creatures can enter its space. It can pass through any opening wide enough for one Tiny raven. The swarm can't regain Hit Points and can't gain Temporary Hit Points.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "swarm"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "beaks",
+      "name": "Beaks",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "piercing",
+          "when": "while the swarm isn't Bloodied"
+        },
+        {
+          "average": 2,
+          "dice": "1d4",
+          "type": "piercing",
+          "when": "instead, while the swarm is Bloodied"
+        }
+      ],
+      "summary": "Many small bites; the damage drops once the swarm is Bloodied.",
+      "text": "Hit: 5 (1d6+2) Piercing damage, or only 2 (1d4) Piercing damage if the swarm is Bloodied."
+    },
+    {
+      "id": "cacophony",
+      "name": "Cacophony",
+      "kind": "save",
+      "recharge": "6",
+      "save": {
+        "ability": "wis",
+        "dc": 10,
+        "success": "none"
+      },
+      "area": {
+        "targets": 1,
+        "range": 0
+      },
+      "conditions": [
+        "deafened"
+      ],
+      "summary": "Recharge 6. DC 10 Wis save or Deafened, with Disadvantage on checks and attacks, for a round.",
+      "text": "Wisdom Saving Throw: DC 10, one creature in the swarm's space. Failure: the target has the Deafened condition until the start of the swarm's next turn, and while Deafened this way it also has Disadvantage on ability checks and attack rolls."
+    }
+  ],
+  "regions": [
+    "svalich_road"
+  ],
+  "ai_profile": "swarm",
+  "summary": "Engulfs a creature in pecking beaks and deafening caws; resists weapon damage."
+}

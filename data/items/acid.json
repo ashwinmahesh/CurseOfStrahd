@@ -1,0 +1,27 @@
+{
+  "id": "acid",
+  "name": "Acid",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 1,
+  "cost_gp": 25,
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "damage",
+      "params": {
+        "dice": "2d6",
+        "damage_type": "acid",
+        "save": "dex",
+        "dc": "8+mod:dex+pb",
+        "range": 20,
+        "target": "creature"
+      }
+    }
+  ],
+  "summary": "Thrown vial: a creature or object within 20 ft makes a Dex save or takes 2d6 Acid damage.",
+  "text": "When you take the Attack action, you can swap one of your attacks for throwing this vial at a creature or object you can see within 20 feet. The target makes a Dexterity saving throw against DC 8 + your Dexterity modifier + your Proficiency Bonus; on a failure it takes 2d6 Acid damage. The vial is used up."
+}

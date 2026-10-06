@@ -1,0 +1,20 @@
+{
+  "id": "exhaustion",
+  "name": "Exhaustion",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Each level: D20 Tests -2 and Speed -5 ft. Level 6 is death.",
+  "text": "Exhaustion is cumulative: each time you get it you gain a level. Every D20 Test you make is reduced by 2 times your Exhaustion level, and your Speed is reduced by 5 feet times your level. You die at level 6. A Long Rest removes one level; at level 0 the condition ends.",
+  "modifiers": [
+    {
+      "stat": "d20",
+      "value": "-2*exhaustion"
+    },
+    {
+      "stat": "speed",
+      "value": "-5*exhaustion"
+    }
+  ]
+}

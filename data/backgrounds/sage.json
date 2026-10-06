@@ -1,0 +1,57 @@
+{
+  "id": "sage",
+  "name": "Sage",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "You traded odd jobs for time in libraries, studying the lore of the multiverse and the basics of magic.",
+  "ability_scores": [
+    "con",
+    "int",
+    "wis"
+  ],
+  "feat": "magic_initiate",
+  "feat_params": {
+    "list": "wizard"
+  },
+  "skills": [
+    "arcana",
+    "history"
+  ],
+  "tool": {
+    "id": "calligraphers_supplies"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "quarterstaff",
+          "qty": 1
+        },
+        {
+          "id": "calligraphers_supplies",
+          "qty": 1
+        },
+        {
+          "id": "book",
+          "qty": 1
+        },
+        {
+          "id": "parchment",
+          "qty": 8
+        },
+        {
+          "id": "robe",
+          "qty": 1
+        }
+      ],
+      "gp": 8
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

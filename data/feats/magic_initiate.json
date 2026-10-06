@@ -1,0 +1,95 @@
+{
+  "id": "magic_initiate",
+  "name": "Magic Initiate",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "origin",
+  "repeatable": true,
+  "params": {
+    "lists": [
+      "cleric",
+      "druid",
+      "wizard"
+    ]
+  },
+  "summary": "Learn two cantrips and a level 1 spell from the Cleric, Druid or Wizard list; cast the spell free once per Long Rest.",
+  "benefits": [
+    {
+      "id": "two_cantrips",
+      "name": "Two Cantrips",
+      "summary": "Learn two cantrips from the chosen list; pick Int, Wis or Cha as this feat's spellcasting ability.",
+      "text": "Choose the Cleric, Druid or Wizard spell list for this feat and learn two cantrips from it. When you take the feat, also choose Intelligence, Wisdom or Charisma as the spellcasting ability for all of this feat's spells. You can take this feat more than once, but you must choose a different spell list each time.",
+      "action": "passive",
+      "choices": [
+        {
+          "id": "cantrips",
+          "kind": "cantrip",
+          "count": 2,
+          "filter": {
+            "list": "@list",
+            "level": 0
+          },
+          "replaceable": "level_up"
+        },
+        {
+          "id": "spellcasting_ability",
+          "kind": "spellcasting_ability",
+          "count": 1,
+          "from": [
+            "int",
+            "wis",
+            "cha"
+          ]
+        }
+      ],
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "@cantrips",
+          "ability": "@spellcasting_ability"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "level_1_spell",
+      "name": "Level 1 Spell",
+      "summary": "A level 1 spell from the same list is always prepared; cast it once without a slot per Long Rest.",
+      "text": "Choose a level 1 spell from the list you picked for this feat's cantrips. You always have it prepared. You can cast it once without expending a spell slot, regaining that free casting when you finish a Long Rest, and you can also cast it using any spell slots you have.",
+      "action": "passive",
+      "choice": {
+        "id": "level_1_spell",
+        "kind": "spell",
+        "count": 1,
+        "filter": {
+          "list": "@list",
+          "level": 1
+        },
+        "replaceable": "level_up"
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "@level_1_spell",
+          "ability": "@spellcasting_ability",
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          },
+          "always_prepared": true
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "spell_change",
+      "name": "Spell Change",
+      "summary": "Each time you gain a level, swap one of this feat's spells for another of the same level from that list.",
+      "text": "Whenever you gain a new level, you can replace one of the spells you chose for this feat with a different spell of the same level from the same spell list.",
+      "action": "special",
+      "implemented": "data"
+    }
+  ]
+}

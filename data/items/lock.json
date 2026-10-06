@@ -1,0 +1,13 @@
+{
+  "id": "lock",
+  "name": "Lock",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 1,
+  "cost_gp": 10,
+  "summary": "Comes with a key; picking it takes Thieves' Tools and a DC 15 Dexterity (Sleight of Hand) check.",
+  "text": "A Lock comes with its key. Without the key, a creature using Thieves' Tools can pick the Lock with a successful DC 15 Dexterity (Sleight of Hand) check."
+}

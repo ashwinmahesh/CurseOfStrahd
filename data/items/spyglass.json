@@ -1,0 +1,13 @@
+{
+  "id": "spyglass",
+  "name": "Spyglass",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 1,
+  "cost_gp": 1000,
+  "summary": "Makes things viewed through it appear twice their size.",
+  "text": "Anything you look at through a Spyglass appears magnified to twice its size."
+}

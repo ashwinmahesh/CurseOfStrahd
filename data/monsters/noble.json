@@ -1,0 +1,82 @@
+{
+  "id": "noble",
+  "name": "Noble",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "neutral",
+  "ac": 15,
+  "initiative": 1,
+  "hp": {
+    "average": 9,
+    "dice": "2d8"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 11,
+    "dex": 12,
+    "con": 11,
+    "int": 12,
+    "wis": 14,
+    "cha": 16
+  },
+  "skills": {
+    "deception": 5,
+    "insight": 4,
+    "persuasion": 5
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common",
+    "two other languages"
+  ],
+  "cr": 0.125,
+  "xp": 25,
+  "proficiency_bonus": 2,
+  "gear": [
+    "breastplate",
+    "rapier"
+  ],
+  "actions": [
+    {
+      "id": "rapier",
+      "name": "Rapier",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d8+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Thrusts with a rapier."
+    }
+  ],
+  "reactions": [
+    {
+      "id": "parry",
+      "name": "Parry",
+      "kind": "special",
+      "trigger": "The noble is hit by a melee attack roll while holding a weapon.",
+      "summary": "Reaction: +2 AC against one melee attack that hit it, possibly turning the hit into a miss.",
+      "text": "Trigger: the noble is hit by a melee attack roll while it holds a weapon. Response: the noble gains a +2 bonus to its AC against that one attack, which can make the attack miss."
+    }
+  ],
+  "regions": [
+    "village_of_barovia"
+  ],
+  "ai_profile": "cowardly",
+  "summary": "Prefers talk to steel; duels with a rapier and parries, but yields or flees when hurt."
+}

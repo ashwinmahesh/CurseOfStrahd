@@ -1,0 +1,42 @@
+{
+  "id": "medium_armor_master",
+  "name": "Medium Armor Master",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "proficiency": {
+      "kind": "armor",
+      "value": "medium"
+    },
+    "text": "Level 4+, Medium Armor Training"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; in Medium armor, add up to 3 from Dexterity to AC if your Dexterity is 16 or higher.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "dexterous_wearer",
+      "name": "Dexterous Wearer",
+      "summary": "In Medium armor, add 3 rather than 2 to AC when your Dexterity score is 16 or higher.",
+      "text": "While you are wearing Medium armor, you can add 3, rather than 2, to your AC if you have a Dexterity score of 16 or higher.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "dexterous_wearer"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

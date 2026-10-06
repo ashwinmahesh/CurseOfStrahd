@@ -1,0 +1,14 @@
+{
+  "id": "holy_symbol_emblem",
+  "name": "Holy Symbol (Emblem)",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "focus",
+  "weight_lb": 0,
+  "cost_gp": 5,
+  "focus": "holy",
+  "summary": "Spellcasting Focus for Clerics and Paladins.",
+  "text": "A Holy Symbol bejeweled or painted to channel divine magic. Clerics and Paladins can use it as a Spellcasting Focus. An emblem works while borne on fabric (such as a tabard or banner) or displayed on a Shield."
+}

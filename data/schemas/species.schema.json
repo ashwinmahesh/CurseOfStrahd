@@ -2,17 +2,35 @@
   "$id": "species.schema.json",
   "title": "Species",
   "type": "object",
-  "required": ["id", "name", "source", "creature_type", "sizes", "speed", "traits"],
+  "required": ["id", "name", "source", "creature_type", "sizes", "speed", "traits", "summary"],
   "additionalProperties": false,
   "properties": {
     "id": {"$ref": "common.schema.json#/$defs/id"},
     "name": {"type": "string"},
     "source": {"$ref": "common.schema.json#/$defs/source"},
+    "summary": {"type": "string"},
     "creature_type": {"type": "string", "enum": ["humanoid"]},
-    "sizes": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/size"}},
+    "sizes": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/size"}, "description": "More than one = the player chooses."},
     "speed": {"type": "integer", "minimum": 0},
     "darkvision": {"type": "integer", "minimum": 0},
     "traits": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}},
-    "lineages": {"type": "array", "description": "Sub-choices such as elf lineages, tiefling legacies, dragonborn ancestry.", "items": {"type": "object", "required": ["id", "name"], "properties": {"id": {"$ref": "common.schema.json#/$defs/id"}, "name": {"type": "string"}, "traits": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}}}}}
+    "lineage_label": {"type": "string", "description": "What the sub-choice is called: Elven Lineage, Fiendish Legacy, Draconic Ancestry, Giant Ancestry, Gnomish Lineage."},
+    "spellcasting_ability_choice": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/ability"}, "description": "Abilities the player may pick for spells this species grants."},
+    "lineages": {
+      "type": "array",
+      "description": "Sub-choices such as elf lineages, tiefling legacies, dragonborn ancestry.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"$ref": "common.schema.json#/$defs/id"},
+          "name": {"type": "string"},
+          "summary": {"type": "string"},
+          "damage_type": {"$ref": "common.schema.json#/$defs/damage_type"},
+          "traits": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}}
+        }
+      }
+    }
   }
 }

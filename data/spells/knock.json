@@ -1,0 +1,38 @@
+{
+  "id": "knock",
+  "name": "Knock",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a door, box, chest, manacles, padlock or other object barred by mundane or magical means"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Opens one lock, bar or stuck seal on an object, or suppresses Arcane Lock for 10 minutes. Loud.",
+  "text": "Choose an object you can see within range that is closed off by mundane or magical means, such as a door, box, chest, set of manacles or padlock. If it is held shut by a mundane lock or is stuck or barred, it becomes unlocked, unstuck or unbarred; if it has several locks, only one of them opens. If it is held shut by Arcane Lock, that spell is suppressed for 10 minutes, during which the object can be opened and closed. When you cast the spell, a loud knock that can be heard up to 300 feet away sounds from the object."
+}

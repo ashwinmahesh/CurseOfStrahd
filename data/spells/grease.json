@@ -1,0 +1,48 @@
+{
+  "id": "grease",
+  "name": "Grease",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "conjuration",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "cube",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bit of pork rind or butter"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a 10-foot square of ground centered on a point"
+  },
+  "save": "dex",
+  "save_success": "none",
+  "conditions": [
+    "prone"
+  ],
+  "tags": [
+    "control"
+  ],
+  "summary": "Grease makes a 10-foot square Difficult Terrain; creatures there fail a Dexterity save or fall Prone.",
+  "text": "Nonflammable grease covers a 10-foot square of ground centered on a point within range and makes it Difficult Terrain for 1 minute. Each creature standing in the area when the grease appears makes a Dexterity saving throw or has the Prone condition. A creature that enters the area or ends its turn there must also succeed on that save or fall Prone."
+}

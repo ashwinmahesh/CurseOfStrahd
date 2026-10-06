@@ -1,0 +1,57 @@
+{
+  "id": "skill_expert",
+  "name": "Skill Expert",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability; gain one skill proficiency and Expertise in one skill you are proficient in.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "skill_expert_proficiency",
+      "name": "Skill Proficiency",
+      "summary": "Gain proficiency in one skill of your choice.",
+      "text": "You gain proficiency in one skill of your choice.",
+      "action": "passive",
+      "choice": {
+        "id": "skill_expert_skill",
+        "kind": "skill",
+        "count": 1
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "skill_expert_expertise",
+      "name": "Expertise",
+      "summary": "Gain Expertise in one skill you are proficient in.",
+      "text": "Choose one skill in which you have proficiency but lack Expertise. You gain Expertise in that skill.",
+      "action": "passive",
+      "choice": {
+        "id": "skill_expert_expertise",
+        "kind": "expertise",
+        "count": 1,
+        "filter": {
+          "proficient": true
+        }
+      },
+      "implemented": "data"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "elemental_adept",
+  "name": "Elemental Adept",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "spellcasting": true,
+    "text": "Level 4+, Spellcasting or Pact Magic Feature"
+  },
+  "repeatable": true,
+  "summary": "+1 Int, Wis or Cha; your spells of one chosen element ignore Resistance and treat 1s on damage dice as 2s.",
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "energy_mastery",
+      "name": "Energy Mastery",
+      "summary": "Pick Acid, Cold, Fire, Lightning or Thunder: your spells ignore Resistance to it and its damage 1s become 2s.",
+      "text": "Choose Acid, Cold, Fire, Lightning or Thunder damage. Spells you cast ignore Resistance to damage of the chosen type. Also, when you roll damage for a spell you cast that deals that type, you can treat any 1 on a damage die as a 2. You can take this feat more than once, but you must choose a different damage type each time.",
+      "action": "passive",
+      "choice": {
+        "id": "energy_type",
+        "kind": "damage_type",
+        "count": 1,
+        "from": [
+          "acid",
+          "cold",
+          "fire",
+          "lightning",
+          "thunder"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "energy_mastery"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

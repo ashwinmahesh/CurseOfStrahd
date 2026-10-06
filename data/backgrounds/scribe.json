@@ -1,0 +1,53 @@
+{
+  "id": "scribe",
+  "name": "Scribe",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You copied texts and kept records in a scriptorium or office, training a careful eye for detail.",
+  "ability_scores": [
+    "dex",
+    "int",
+    "wis"
+  ],
+  "feat": "skilled",
+  "skills": [
+    "investigation",
+    "perception"
+  ],
+  "tool": {
+    "id": "calligraphers_supplies"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "calligraphers_supplies",
+          "qty": 1
+        },
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        },
+        {
+          "id": "lamp",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 3
+        },
+        {
+          "id": "parchment",
+          "qty": 12
+        }
+      ],
+      "gp": 23
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

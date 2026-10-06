@@ -1,0 +1,22 @@
+{
+  "id": "war_pick",
+  "name": "War Pick",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 2,
+  "cost_gp": 5,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d8",
+    "damage_type": "piercing",
+    "properties": [
+      "versatile"
+    ],
+    "versatile": "1d10",
+    "mastery": "sap"
+  },
+  "summary": "Martial melee weapon: 1d8 Piercing, Versatile (1d10); mastery Sap."
+}

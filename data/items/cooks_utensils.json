@@ -1,0 +1,20 @@
+{
+  "id": "cooks_utensils",
+  "name": "Cook's Utensils",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 8,
+  "cost_gp": 1,
+  "tool": {
+    "kind": "artisan",
+    "ability": "wis",
+    "utilize": "Make food taste better (DC 10), or spot food that is spoiled or poisoned (DC 15).",
+    "craft": [
+      "ration"
+    ]
+  },
+  "summary": "Artisan's Tools (Wisdom): make food taste better (DC 10), or spot food that is spoiled or poisoned (DC 15)."
+}

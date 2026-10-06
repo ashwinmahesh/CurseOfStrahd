@@ -1,0 +1,66 @@
+{
+  "id": "tashas_hideous_laughter",
+  "name": "Tasha's Hideous Laughter",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024",
+    "note": "BR2024 heading wrongly shows Evocation Cantrip, a Paladin class and no Concentration; level, school and Concentration taken from the BR class spell tables (Bard, Warlock) and the PHB."
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a tart and a feather"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "prone",
+    "incapacitated"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "prone"
+      }
+    },
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "incapacitated"
+      }
+    }
+  ],
+  "tags": [
+    "control"
+  ],
+  "summary": "A creature fails a Wisdom save and collapses laughing: Prone and Incapacitated, unable to stand up.",
+  "text": "A creature of your choice that you can see within range makes a Wisdom saving throw. On a failure it has the Prone and Incapacitated conditions for the duration, laughs uncontrollably if it can laugh, and can't end the Prone condition on itself. At the end of each of its turns, and each time it takes damage, it repeats the Wisdom save, with Advantage if the save was caused by damage; on a success the spell ends. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1."
+}

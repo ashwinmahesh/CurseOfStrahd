@@ -1,0 +1,57 @@
+{
+  "id": "guidance",
+  "name": "Guidance",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "divination",
+  "classes": [
+    "cleric",
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "One willing creature you touch."
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "bonus_die",
+            "dice": "1d4",
+            "on": [
+              "check:choice"
+            ],
+            "text": "Only ability checks that use the one skill chosen at casting."
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff"
+  ],
+  "summary": "A willing creature adds 1d4 to ability checks using one skill you choose.",
+  "text": "Touch a willing creature and choose a skill. Until the spell ends, the creature adds 1d4 to every ability check it makes using that skill."
+}

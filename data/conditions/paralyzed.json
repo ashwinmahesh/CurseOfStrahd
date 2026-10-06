@@ -1,0 +1,34 @@
+{
+  "id": "paralyzed",
+  "name": "Paralyzed",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Incapacitated, Speed 0, fails Str and Dex saves; hits from within 5 ft are Critical Hits.",
+  "text": "You have the Incapacitated condition and your Speed is 0 and can't increase. You automatically fail Strength and Dexterity saving throws. Attack rolls against you have Advantage, and any attack that hits you is a Critical Hit if the attacker is within 5 feet of you.",
+  "implies": [
+    "incapacitated"
+  ],
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "value": 0
+    },
+    {
+      "stat": "auto_fail",
+      "on": [
+        "save:str",
+        "save:dex"
+      ]
+    },
+    {
+      "stat": "attacked_with",
+      "value": "advantage"
+    },
+    {
+      "stat": "flag",
+      "value": "auto_crit_within_5ft"
+    }
+  ]
+}

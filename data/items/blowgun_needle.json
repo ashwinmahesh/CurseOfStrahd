@@ -1,0 +1,15 @@
+{
+  "id": "blowgun_needle",
+  "name": "Blowgun Needle",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "ammunition",
+  "weight_lb": 0.02,
+  "cost_gp": 0.02,
+  "stackable": true,
+  "bundle": 50,
+  "summary": "Ammunition for Blowguns; sold 50 at a time.",
+  "text": "One piece of ammunition for Blowguns. A bundle of 50 costs 1 GP and weighs 1 lb.; it is usually kept in a Pouch, bought separately. Each attack with an Ammunition weapon uses one piece. After a fight, spending 1 minute lets you recover half of the pieces you used (round down); the rest are lost."
+}

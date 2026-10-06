@@ -1,0 +1,52 @@
+{
+  "id": "mind_spike",
+  "name": "Mind Spike",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024",
+    "note": "The BR spell heading wrongly reads Evocation Cantrip and its Duration line omits Concentration; level 2 Divination with Concentration per the BR class spell tables and the D&D Beyond spell list."
+  },
+  "level": 2,
+  "school": "divination",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "wis",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d8",
+      "type": "psychic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "tags": [
+    "damage",
+    "detection"
+  ],
+  "summary": "A creature takes 3d8 Psychic (Wis save for half); on a failure you always know where it is.",
+  "text": "Choose one creature you can see within range. It makes a Wisdom saving throw, taking 3d8 Psychic damage on a failure or half as much on a success. On a failure you also always know where the target is until the spell ends, as long as you are both on the same plane of existence. While you know this, it can't become hidden from you, and if it has the Invisible condition, that condition gives it no benefit against you. The damage increases by 1d8 for each spell slot level above 2."
+}

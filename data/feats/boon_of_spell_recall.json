@@ -1,0 +1,41 @@
+{
+  "id": "boon_of_spell_recall",
+  "name": "Boon of Spell Recall",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "feature": "spellcasting",
+    "text": "Level 19+, Spellcasting Feature"
+  },
+  "repeatable": false,
+  "summary": "+1 Int, Wis or Cha (max 30); when you cast with a level 1-4 slot, roll 1d4 and keep the slot if it matches.",
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "free_casting",
+      "name": "Free Casting",
+      "summary": "Casting with a level 1-4 slot: roll 1d4; if it equals the slot's level, the slot isn't expended.",
+      "text": "Whenever you cast a spell using a level 1, 2, 3 or 4 spell slot, roll 1d4. If the number rolled equals the slot's level, the slot isn't expended.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "free_casting"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "poison_spray",
+  "name": "Poison Spray",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "necromancy",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "1d12",
+      "type": "poison"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d12"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Ranged spell attack against a creature within 30 feet for 1d12 Poison damage.",
+  "text": "Make a ranged spell attack against one creature within range. On a hit it takes 1d12 Poison damage. The damage becomes 2d12 at character level 5, 3d12 at level 11 and 4d12 at level 17."
+}

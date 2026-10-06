@@ -1,0 +1,13 @@
+{
+  "id": "mirror",
+  "name": "Mirror",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0.5,
+  "cost_gp": 5,
+  "summary": "A handheld steel mirror for grooming, peeking around corners or signaling.",
+  "text": "A handheld steel Mirror, handy for grooming, for looking around corners, and for reflecting light as a signal."
+}

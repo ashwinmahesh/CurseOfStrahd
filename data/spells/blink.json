@@ -1,0 +1,36 @@
+{
+  "id": "blink",
+  "name": "Blink",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "defense"
+  ],
+  "summary": "For 1 minute, roll 1d6 at the end of each turn; on 4-6 you slip into the Ethereal Plane until your next turn.",
+  "text": "For 1 minute, roll 1d6 at the end of each of your turns. On a 4, 5 or 6 you vanish from your plane and appear in the Ethereal Plane (if you are already there, the spell ends immediately). While on the Ethereal Plane you can see the plane you left in shades of gray, but no farther than 60 feet. You can affect and be affected only by creatures on the Ethereal Plane, and creatures on the other plane can't perceive you unless they have a special ability to perceive things on the Ethereal Plane. You return at the start of your next turn, and also when the spell ends if you are ethereal at that moment, appearing in an unoccupied space of your choice you can see within 10 feet of the space you left (or the nearest unoccupied space if none is free within 10 feet)."
+}

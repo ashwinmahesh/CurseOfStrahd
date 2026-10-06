@@ -1,0 +1,16 @@
+{
+  "id": "charmed",
+  "name": "Charmed",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "You can't attack the charmer; it has Advantage on social checks against you.",
+  "text": "You can't attack the creature that charmed you or target it with damaging abilities or magical effects. The charmer has Advantage on ability checks to interact with you socially.",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "charmed"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "light_crossbow",
+  "name": "Light Crossbow",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 5,
+  "cost_gp": 25,
+  "weapon": {
+    "kind": "simple_ranged",
+    "damage": "1d8",
+    "damage_type": "piercing",
+    "properties": [
+      "ammunition",
+      "range",
+      "loading",
+      "two_handed"
+    ],
+    "range": [
+      80,
+      320
+    ],
+    "ammunition": "bolt",
+    "mastery": "slow"
+  },
+  "summary": "Simple ranged weapon: 1d8 Piercing, Ammunition (80/320 ft, Bolt), Loading, Two-Handed; mastery Slow."
+}

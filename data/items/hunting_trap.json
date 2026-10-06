@@ -1,0 +1,13 @@
+{
+  "id": "hunting_trap",
+  "name": "Hunting Trap",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 25,
+  "cost_gp": 5,
+  "summary": "Set with Utilize; DC 13 Dex save or 1d4 Piercing damage and Speed 0, then held by its chain.",
+  "text": "As a Utilize action, you set the trap: a sawtooth steel ring that snaps shut when a creature steps on the pressure plate in its center, fastened by a heavy chain to something immobile such as a tree or a spike driven into the ground. A creature that steps on the plate must succeed on a DC 13 Dexterity saving throw or take 1d4 Piercing damage and have its Speed reduced to 0 until the start of its next turn. After that, until it breaks free, the creature can't move farther than the chain allows (usually 3 feet). A creature can use its action to make a DC 13 Strength (Athletics) check, freeing itself or another creature within its reach on a success; each failed check deals 1 Piercing damage to the trapped creature."
+}

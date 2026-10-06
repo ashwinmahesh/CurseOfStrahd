@@ -1,0 +1,13 @@
+{
+  "id": "sack",
+  "name": "Sack",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 0.5,
+  "cost_gp": 0.01,
+  "capacity": "30 lb. within 1 cubic foot",
+  "summary": "Holds up to 30 lb. within 1 cubic foot."
+}

@@ -1,0 +1,45 @@
+{
+  "id": "charlatan",
+  "name": "Charlatan",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You worked cons in taverns and markets, selling forged papers, fake cures and false hopes.",
+  "ability_scores": [
+    "dex",
+    "con",
+    "cha"
+  ],
+  "feat": "skilled",
+  "skills": [
+    "deception",
+    "sleight_of_hand"
+  ],
+  "tool": {
+    "id": "forgery_kit"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "forgery_kit",
+          "qty": 1
+        },
+        {
+          "id": "costume",
+          "qty": 1
+        },
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 15
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

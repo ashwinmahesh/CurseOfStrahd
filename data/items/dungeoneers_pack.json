@@ -1,0 +1,51 @@
+{
+  "id": "dungeoneers_pack",
+  "name": "Dungeoneer's Pack",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "pack",
+  "weight_lb": 55,
+  "cost_gp": 12,
+  "contents": [
+    {
+      "id": "backpack",
+      "qty": 1
+    },
+    {
+      "id": "caltrops",
+      "qty": 1
+    },
+    {
+      "id": "crowbar",
+      "qty": 1
+    },
+    {
+      "id": "oil",
+      "qty": 2
+    },
+    {
+      "id": "ration",
+      "qty": 10
+    },
+    {
+      "id": "rope",
+      "qty": 1
+    },
+    {
+      "id": "tinderbox",
+      "qty": 1
+    },
+    {
+      "id": "torch",
+      "qty": 10
+    },
+    {
+      "id": "waterskin",
+      "qty": 1
+    }
+  ],
+  "summary": "Equipment pack: Backpack, Caltrops, Crowbar, 2 x Oil, 10 x Ration, Rope, Tinderbox, 10 x Torch, Waterskin.",
+  "text": "Opens into its contents: Backpack, Caltrops, Crowbar, 2 x Oil, 10 x Ration, Rope, Tinderbox, 10 x Torch, Waterskin."
+}

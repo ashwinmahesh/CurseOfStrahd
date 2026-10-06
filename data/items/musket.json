@@ -1,0 +1,30 @@
+{
+  "id": "musket",
+  "name": "Musket",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 10,
+  "cost_gp": 500,
+  "weapon": {
+    "kind": "martial_ranged",
+    "damage": "1d12",
+    "damage_type": "piercing",
+    "properties": [
+      "ammunition",
+      "range",
+      "loading",
+      "two_handed"
+    ],
+    "range": [
+      40,
+      120
+    ],
+    "ammunition": "bullet",
+    "mastery": "slow"
+  },
+  "summary": "Martial ranged weapon: 1d12 Piercing, Ammunition (40/120 ft, Bullet), Loading, Two-Handed; mastery Slow.",
+  "text": "Fires Firearm Bullets (not Sling Bullets)."
+}

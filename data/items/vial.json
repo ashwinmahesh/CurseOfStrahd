@@ -1,0 +1,13 @@
+{
+  "id": "vial",
+  "name": "Vial",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 0,
+  "cost_gp": 1,
+  "capacity": "4 ounces",
+  "summary": "Holds up to 4 ounces."
+}

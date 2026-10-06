@@ -1,0 +1,27 @@
+{
+  "id": "savage_attacker",
+  "name": "Savage Attacker",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Once per turn when you hit with a weapon, roll its damage dice twice and use either result.",
+  "benefits": [
+    {
+      "id": "savage_attacker",
+      "name": "Savage Attacker",
+      "summary": "Once per turn on a weapon hit, roll the weapon's damage dice twice and use either roll.",
+      "text": "Once per turn, when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either of the two rolls against the target.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "savage_attacker"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

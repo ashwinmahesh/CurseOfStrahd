@@ -1,0 +1,48 @@
+{
+  "id": "great_weapon_master",
+  "name": "Great Weapon Master",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "abilities": {
+      "str": 13
+    },
+    "text": "Level 4+, Strength 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str; add your Proficiency Bonus to Heavy weapon hits, and attack again as a Bonus Action after a crit or kill.",
+  "ability_increase": {
+    "from": [
+      "str"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "heavy_weapon_mastery",
+      "name": "Heavy Weapon Mastery",
+      "summary": "Heavy weapon hits made as part of the Attack action can deal extra damage equal to your Proficiency Bonus.",
+      "text": "When you hit a creature with a weapon that has the Heavy property as part of the Attack action on your turn, you can have the weapon deal extra damage to the target equal to your Proficiency Bonus.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "heavy_weapon_mastery"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "hew",
+      "name": "Hew",
+      "summary": "After a melee Critical Hit or dropping a creature to 0 HP, make one attack with that weapon as a Bonus Action.",
+      "text": "Immediately after you score a Critical Hit with a Melee weapon or reduce a creature to 0 Hit Points with one, you can make one attack with the same weapon as a Bonus Action.",
+      "action": "bonus_action",
+      "implemented": "text"
+    }
+  ]
+}

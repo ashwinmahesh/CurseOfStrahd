@@ -1,0 +1,44 @@
+{
+  "id": "polearm_master",
+  "name": "Polearm Master",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "str": 13,
+      "dex": 13
+    },
+    "text": "Level 4+, Strength or Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; Bonus Action butt-end attack (d4 Bludgeoning) and a Reaction attack when foes enter your reach.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "pole_strike",
+      "name": "Pole Strike",
+      "summary": "After attacking with a Quarterstaff, Spear or Heavy Reach weapon, Bonus Action attack with the other end (d4).",
+      "text": "Immediately after you take the Attack action and attack with a Quarterstaff, a Spear or a weapon that has both the Heavy and Reach properties, you can use a Bonus Action to make a melee attack with the opposite end of the weapon. That attack deals Bludgeoning damage, and the weapon's damage die for it is a d4.",
+      "action": "bonus_action",
+      "implemented": "text"
+    },
+    {
+      "id": "reactive_strike",
+      "name": "Reactive Strike",
+      "summary": "Reaction: attack a creature that enters your reach while you hold a Quarterstaff, Spear or Heavy Reach weapon.",
+      "text": "While you are holding a Quarterstaff, a Spear or a weapon that has both the Heavy and Reach properties, you can take a Reaction to make one melee attack against a creature that enters the reach you have with that weapon.",
+      "action": "reaction",
+      "implemented": "text"
+    }
+  ]
+}

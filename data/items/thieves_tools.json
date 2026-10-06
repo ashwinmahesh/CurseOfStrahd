@@ -1,0 +1,17 @@
+{
+  "id": "thieves_tools",
+  "name": "Thieves' Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 1,
+  "cost_gp": 25,
+  "tool": {
+    "kind": "other",
+    "ability": "dex",
+    "utilize": "Open a lock without its key (DC 15), or disable a trap (DC 15)."
+  },
+  "summary": "Tool (Dexterity): open a lock without its key (DC 15), or disable a trap (DC 15)."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "masons_tools",
+  "name": "Mason's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 8,
+  "cost_gp": 10,
+  "tool": {
+    "kind": "artisan",
+    "ability": "str",
+    "utilize": "Carve a symbol or a hole into stone (DC 10).",
+    "craft": [
+      "block_and_tackle"
+    ]
+  },
+  "summary": "Artisan's Tools (Strength): carve a symbol or a hole into stone (DC 10)."
+}

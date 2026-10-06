@@ -1,0 +1,241 @@
+{
+  "id": "elf",
+  "name": "Elf",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Long-lived Feywild folk who trance instead of sleeping and gain lineage magic as they rise in level.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium"
+  ],
+  "speed": 30,
+  "darkvision": 60,
+  "lineage_label": "Elven Lineage",
+  "spellcasting_ability_choice": [
+    "int",
+    "wis",
+    "cha"
+  ],
+  "traits": [
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 60 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 60
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "elven_lineage",
+      "name": "Elven Lineage",
+      "summary": "Choose Drow, High Elf or Wood Elf: a level 1 benefit, then a free-cast spell at levels 3 and 5.",
+      "text": "Choose a lineage: Drow, High Elf or Wood Elf. You gain its level 1 benefit. At character levels 3 and 5 you learn the higher-level spell your lineage lists; you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level. Intelligence, Wisdom or Charisma is your spellcasting ability for spells you cast with this trait (choose it when you choose the lineage).",
+      "action": "passive",
+      "choice": {
+        "kind": "lineage",
+        "count": 1,
+        "from": [
+          "drow",
+          "high_elf",
+          "wood_elf"
+        ]
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "fey_ancestry",
+      "name": "Fey Ancestry",
+      "summary": "Advantage on saving throws to avoid or end the Charmed condition.",
+      "text": "You have Advantage on saving throws you make to avoid or end the Charmed condition.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:charmed"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "keen_senses",
+      "name": "Keen Senses",
+      "summary": "Gain proficiency in Insight, Perception or Survival (your choice).",
+      "text": "You have proficiency in one of these skills of your choice: Insight, Perception or Survival.",
+      "action": "passive",
+      "choice": {
+        "kind": "skill",
+        "count": 1,
+        "from": [
+          "insight",
+          "perception",
+          "survival"
+        ]
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "trance",
+      "name": "Trance",
+      "summary": "You don't sleep and magic can't put you to sleep; a Long Rest takes 4 hours of conscious meditation.",
+      "text": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 4 hours if you spend them in a trancelike meditation, during which you remain conscious.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "trance"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "lineages": [
+    {
+      "id": "drow",
+      "name": "Drow",
+      "summary": "Underdark-shaped elves: Darkvision 120 ft and Dancing Lights; Faerie Fire at 3, Darkness at 5.",
+      "traits": [
+        {
+          "id": "drow_lineage",
+          "name": "Drow Lineage",
+          "summary": "Darkvision 120 ft and Dancing Lights; Faerie Fire at level 3 and Darkness at level 5.",
+          "text": "Your Darkvision range increases to 120 feet, and you know the Dancing Lights cantrip. At character level 3 you learn Faerie Fire and at level 5 you learn Darkness; for each, you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "darkvision",
+              "value": 120
+            },
+            {
+              "stat": "spell",
+              "value": "dancing_lights",
+              "ability": "choice"
+            },
+            {
+              "stat": "spell",
+              "value": "faerie_fire",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 3
+            },
+            {
+              "stat": "spell",
+              "value": "darkness",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 5
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "high_elf",
+      "name": "High Elf",
+      "summary": "Fey-crossing elves: Prestidigitation (swappable each Long Rest); Detect Magic at 3, Misty Step at 5.",
+      "traits": [
+        {
+          "id": "high_elf_lineage",
+          "name": "High Elf Lineage",
+          "summary": "Prestidigitation (swap for another Wizard cantrip each Long Rest); Detect Magic at 3, Misty Step at 5.",
+          "text": "You know the Prestidigitation cantrip. Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Wizard spell list. At character level 3 you learn Detect Magic and at level 5 you learn Misty Step; for each, you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "prestidigitation",
+              "ability": "choice"
+            },
+            {
+              "stat": "spell",
+              "value": "detect_magic",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 3
+            },
+            {
+              "stat": "spell",
+              "value": "misty_step",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 5
+            }
+          ],
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "id": "wood_elf",
+      "name": "Wood Elf",
+      "summary": "Forest elves: Speed 35 ft and Druidcraft; Longstrider at 3, Pass without Trace at 5.",
+      "traits": [
+        {
+          "id": "wood_elf_lineage",
+          "name": "Wood Elf Lineage",
+          "summary": "Speed becomes 35 ft and you know Druidcraft; Longstrider at level 3, Pass without Trace at 5.",
+          "text": "Your Speed increases to 35 feet, and you know the Druidcraft cantrip. At character level 3 you learn Longstrider and at level 5 you learn Pass without Trace; for each, you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "speed",
+              "value": 5
+            },
+            {
+              "stat": "spell",
+              "value": "druidcraft",
+              "ability": "choice"
+            },
+            {
+              "stat": "spell",
+              "value": "longstrider",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 3
+            },
+            {
+              "stat": "spell",
+              "value": "pass_without_trace",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 5
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    }
+  ]
+}

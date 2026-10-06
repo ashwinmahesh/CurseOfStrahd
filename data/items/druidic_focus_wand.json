@@ -1,0 +1,14 @@
+{
+  "id": "druidic_focus_wand",
+  "name": "Druidic Focus (Yew Wand)",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "focus",
+  "weight_lb": 1,
+  "cost_gp": 10,
+  "focus": "druidic",
+  "summary": "Spellcasting Focus for Druids and Rangers.",
+  "text": "A Druidic Focus carved, tied with ribbon or painted to channel primal magic. Druids and Rangers can use it as a Spellcasting Focus."
+}

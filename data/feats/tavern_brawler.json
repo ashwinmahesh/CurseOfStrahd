@@ -1,0 +1,63 @@
+{
+  "id": "tavern_brawler",
+  "name": "Tavern Brawler",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Unarmed Strikes deal 1d4 + Strength and reroll 1s, push foes 5 feet; proficiency with improvised weapons.",
+  "benefits": [
+    {
+      "id": "enhanced_unarmed_strike",
+      "name": "Enhanced Unarmed Strike",
+      "summary": "Your Unarmed Strike can deal 1d4 + Strength modifier Bludgeoning damage.",
+      "text": "When you hit with your Unarmed Strike and deal damage, you can deal Bludgeoning damage equal to 1d4 plus your Strength modifier instead of the strike's normal damage.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "enhanced_unarmed_strike"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "tavern_brawler_damage_rerolls",
+      "name": "Damage Rerolls",
+      "summary": "Reroll any 1 on an Unarmed Strike damage die.",
+      "text": "Whenever you roll a damage die for your Unarmed Strike and it shows a 1, you can reroll it, and you must use the new result.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "tavern_brawler_damage_rerolls"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "improvised_weaponry",
+      "name": "Improvised Weaponry",
+      "summary": "You are proficient with improvised weapons.",
+      "text": "You have proficiency with improvised weapons.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "weapon",
+          "value": "improvised"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "tavern_brawler_push",
+      "name": "Push",
+      "summary": "Once per turn, an Unarmed Strike hit during the Attack action can both damage and push the target 5 feet.",
+      "text": "When you hit a creature with an Unarmed Strike as part of the Attack action on your turn, you can deal damage to it and also push it 5 feet away from you. You can use this benefit only once per turn.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

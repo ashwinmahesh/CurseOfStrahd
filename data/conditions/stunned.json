@@ -1,0 +1,26 @@
+{
+  "id": "stunned",
+  "name": "Stunned",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Incapacitated; fails Str and Dex saves; attacks against you have Advantage.",
+  "text": "You have the Incapacitated condition. You automatically fail Strength and Dexterity saving throws, and attack rolls against you have Advantage.",
+  "implies": [
+    "incapacitated"
+  ],
+  "modifiers": [
+    {
+      "stat": "auto_fail",
+      "on": [
+        "save:str",
+        "save:dex"
+      ]
+    },
+    {
+      "stat": "attacked_with",
+      "value": "advantage"
+    }
+  ]
+}

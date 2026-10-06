@@ -1,0 +1,13 @@
+{
+  "id": "caltrops",
+  "name": "Caltrops",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 2,
+  "cost_gp": 1,
+  "summary": "Utilize: cover a 5-ft square; DC 15 Dex save or 1 Piercing damage and Speed 0.",
+  "text": "As a Utilize action, you scatter the Caltrops from their bag over a 5-foot-square area within 5 feet of you. A creature that enters the area for the first time on a turn must succeed on a DC 15 Dexterity saving throw or take 1 Piercing damage and have its Speed reduced to 0 until the start of its next turn. Gathering the Caltrops back up takes 10 minutes."
+}

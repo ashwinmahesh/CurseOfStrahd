@@ -1,0 +1,52 @@
+{
+  "id": "mage_slayer",
+  "name": "Mage Slayer",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; foes you damage have Disadvantage to keep Concentration; once per rest, pass a failed mental save.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "concentration_breaker",
+      "name": "Concentration Breaker",
+      "summary": "A concentrating creature you damage has Disadvantage on its save to keep Concentration.",
+      "text": "When you damage a creature that is concentrating, it has Disadvantage on the saving throw it makes to maintain Concentration.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "concentration_breaker"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "guarded_mind",
+      "name": "Guarded Mind",
+      "summary": "Once per Short or Long Rest, turn a failed Int, Wis or Cha saving throw into a success.",
+      "text": "If you fail an Intelligence, a Wisdom or a Charisma saving throw, you can choose to succeed instead. Once you use this benefit, you can't use it again until you finish a Short or Long Rest.",
+      "action": "special",
+      "resource": {
+        "id": "guarded_mind",
+        "name": "Guarded Mind",
+        "max": 1,
+        "recharge": "short"
+      },
+      "implemented": "text"
+    }
+  ]
+}

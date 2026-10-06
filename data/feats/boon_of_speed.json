@@ -1,0 +1,50 @@
+{
+  "id": "boon_of_speed",
+  "name": "Boon of Speed",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); +30 feet of Speed, and Disengage as a Bonus Action that also frees you from grapples.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "escape_artist",
+      "name": "Escape Artist",
+      "summary": "Bonus Action: take the Disengage action, which also ends the Grappled condition on you.",
+      "text": "As a Bonus Action, you can take the Disengage action, which also ends the Grappled condition on you.",
+      "action": "bonus_action",
+      "implemented": "text"
+    },
+    {
+      "id": "quickness",
+      "name": "Quickness",
+      "summary": "Your Speed increases by 30 feet.",
+      "text": "Your Speed increases by 30 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "speed",
+          "value": 30
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

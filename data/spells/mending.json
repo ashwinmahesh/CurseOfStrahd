@@ -1,0 +1,41 @@
+{
+  "id": "mending",
+  "name": "Mending",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "two lodestones"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Repairs one break or tear up to 1 foot across in an object you touch; can't restore magic.",
+  "text": "Fix a single break or tear in an object you touch, such as a snapped chain link, a key broken in two, a ripped cloak or a leaking wineskin. If the damage is no larger than 1 foot in any dimension, it is mended without a trace. The spell can physically repair a magic item but can't restore its magic."
+}

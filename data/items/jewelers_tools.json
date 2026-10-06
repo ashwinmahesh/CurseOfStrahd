@@ -1,0 +1,27 @@
+{
+  "id": "jewelers_tools",
+  "name": "Jeweler's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 2,
+  "cost_gp": 25,
+  "tool": {
+    "kind": "artisan",
+    "ability": "int",
+    "utilize": "Judge what a gem is worth (DC 15).",
+    "craft": [
+      "arcane_focus_crystal",
+      "arcane_focus_orb",
+      "arcane_focus_rod",
+      "arcane_focus_staff",
+      "arcane_focus_wand",
+      "holy_symbol_amulet",
+      "holy_symbol_emblem",
+      "holy_symbol_reliquary"
+    ]
+  },
+  "summary": "Artisan's Tools (Intelligence): judge what a gem is worth (DC 15)."
+}

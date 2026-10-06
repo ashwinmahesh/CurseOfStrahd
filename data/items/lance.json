@@ -1,0 +1,24 @@
+{
+  "id": "lance",
+  "name": "Lance",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 6,
+  "cost_gp": 10,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d10",
+    "damage_type": "piercing",
+    "properties": [
+      "heavy",
+      "reach",
+      "two_handed"
+    ],
+    "mastery": "topple"
+  },
+  "summary": "Martial melee weapon: 1d10 Piercing, Heavy, Reach, Two-Handed (unless mounted); mastery Topple.",
+  "text": "Requires two hands only when you are not mounted; while riding a mount you can wield it in one hand."
+}

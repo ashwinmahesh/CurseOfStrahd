@@ -1,0 +1,50 @@
+{
+  "id": "toll_the_dead",
+  "name": "Toll the Dead",
+  "source": {
+    "book": "PHB2024"
+  },
+  "level": 0,
+  "school": "necromancy",
+  "classes": [
+    "cleric",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "One creature you can see within range."
+  },
+  "save": "wis",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "1d8",
+      "type": "necrotic"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d8",
+    "text": "If the target is missing any Hit Points the dice are d12s instead: 1d12, then 2d12 at level 5, 3d12 at level 11, 4d12 at level 17."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Wis save or 1d8 Necrotic damage, or 1d12 if the target is missing any Hit Points.",
+  "text": "Point at one creature you can see within range; a single mournful bell chime sounds, audible within 10 feet of it. The target makes a Wisdom saving throw. On a failure it takes 1d8 Necrotic damage, or 1d12 Necrotic damage instead if it is missing any of its Hit Points. The number of dice becomes two at character level 5 (2d8 or 2d12), three at level 11 and four at level 17."
+}

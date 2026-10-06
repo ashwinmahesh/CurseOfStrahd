@@ -1,0 +1,69 @@
+{
+  "id": "skulker",
+  "name": "Skulker",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "abilities": {
+      "dex": 13
+    },
+    "text": "Level 4+, Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Dex; Blindsight 10 feet, Advantage on Stealth to Hide in combat, and missed attacks don't give you away.",
+  "ability_increase": {
+    "from": [
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "skulker_blindsight",
+      "name": "Blindsight",
+      "summary": "You have Blindsight with a range of 10 feet.",
+      "text": "You have Blindsight with a range of 10 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "sense",
+          "kind": "blindsight",
+          "value": 10
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "fog_of_war",
+      "name": "Fog of War",
+      "summary": "In combat, Advantage on Dexterity (Stealth) checks made to Hide.",
+      "text": "During combat, you have Advantage on any Dexterity (Stealth) check you make as part of the Hide action.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "fog_of_war"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "skulker_sniper",
+      "name": "Sniper",
+      "summary": "Missing with an attack roll while hidden doesn't reveal your location.",
+      "text": "If you make an attack roll while hidden and the roll misses, making it doesn't reveal your location.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "skulker_sniper"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

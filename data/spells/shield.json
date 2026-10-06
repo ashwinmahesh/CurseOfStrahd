@@ -1,0 +1,51 @@
+{
+  "id": "shield",
+  "name": "Shield",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "abjuration",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "reaction",
+    "trigger": "you are hit by an attack roll or targeted by the Magic Missile spell"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "rounds",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "modifiers": [
+          {
+            "stat": "ac",
+            "value": 5
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "defense"
+  ],
+  "summary": "Reaction: +5 AC until the start of your next turn, even against the triggering attack, and Magic Missile can't hurt you.",
+  "text": "Reaction, taken when an attack roll hits you or you are targeted by Magic Missile. Until the start of your next turn you have a +5 bonus to AC, which counts against the triggering attack, and you take no damage from Magic Missile."
+}

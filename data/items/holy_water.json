@@ -1,0 +1,31 @@
+{
+  "id": "holy_water",
+  "name": "Holy Water",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 1,
+  "cost_gp": 25,
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "damage",
+      "params": {
+        "dice": "2d8",
+        "damage_type": "radiant",
+        "save": "dex",
+        "dc": "8+mod:dex+pb",
+        "range": 20,
+        "target": "creature",
+        "creature_types": [
+          "fiend",
+          "undead"
+        ]
+      }
+    }
+  ],
+  "summary": "Thrown flask: a Fiend or Undead within 20 ft makes a Dex save or takes 2d8 Radiant damage.",
+  "text": "When you take the Attack action, you can swap one of your attacks for throwing this flask at a creature you can see within 20 feet. The target makes a Dexterity saving throw against DC 8 + your Dexterity modifier + your Proficiency Bonus. On a failure, it takes 2d8 Radiant damage if it is a Fiend or an Undead; other creatures are unharmed. The flask is used up."
+}

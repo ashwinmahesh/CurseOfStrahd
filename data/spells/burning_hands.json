@@ -1,0 +1,50 @@
+{
+  "id": "burning_hands",
+  "name": "Burning Hands",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "cone",
+    "size": 15
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d6",
+      "type": "fire"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "15-foot Cone of flame: Dexterity save, 3d6 Fire damage, half on a success.",
+  "text": "Flames sweep out from you in a 15-foot Cone. Every creature in the Cone makes a Dexterity saving throw, taking 3d6 Fire damage on a failure or half as much on a success. Flammable objects in the Cone that nobody is wearing or carrying catch fire. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 1."
+}

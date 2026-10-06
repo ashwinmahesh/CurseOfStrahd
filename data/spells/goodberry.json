@@ -1,0 +1,38 @@
+{
+  "id": "goodberry",
+  "name": "Goodberry",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a sprig of mistletoe"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "healing",
+    "utility"
+  ],
+  "summary": "Ten magic berries; eating one (Bonus Action) restores 1 Hit Point and feeds a creature for a day.",
+  "text": "Ten magic berries appear in your hand and stay magical for 24 hours. A creature can take a Bonus Action to eat one berry, which restores 1 Hit Point and gives enough nourishment to sustain a creature for one day. Any berries not eaten disappear when the spell ends."
+}

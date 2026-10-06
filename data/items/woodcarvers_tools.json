@@ -1,0 +1,41 @@
+{
+  "id": "woodcarvers_tools",
+  "name": "Woodcarver's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 5,
+  "cost_gp": 1,
+  "tool": {
+    "kind": "artisan",
+    "ability": "dex",
+    "utilize": "Carve a pattern into wood (DC 10).",
+    "craft": [
+      "club",
+      "greatclub",
+      "quarterstaff",
+      "dart",
+      "light_crossbow",
+      "shortbow",
+      "blowgun",
+      "hand_crossbow",
+      "heavy_crossbow",
+      "longbow",
+      "arcane_focus_crystal",
+      "arcane_focus_orb",
+      "arcane_focus_rod",
+      "arcane_focus_staff",
+      "arcane_focus_wand",
+      "arrow",
+      "crossbow_bolt",
+      "druidic_focus_mistletoe",
+      "druidic_focus_staff",
+      "druidic_focus_wand",
+      "ink_pen",
+      "blowgun_needle"
+    ]
+  },
+  "summary": "Artisan's Tools (Dexterity): carve a pattern into wood (DC 10)."
+}

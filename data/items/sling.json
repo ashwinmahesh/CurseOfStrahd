@@ -1,0 +1,28 @@
+{
+  "id": "sling",
+  "name": "Sling",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 0.1,
+  "weapon": {
+    "kind": "simple_ranged",
+    "damage": "1d4",
+    "damage_type": "bludgeoning",
+    "properties": [
+      "ammunition",
+      "range"
+    ],
+    "range": [
+      30,
+      120
+    ],
+    "ammunition": "bullet",
+    "mastery": "slow"
+  },
+  "summary": "Simple ranged weapon: 1d4 Bludgeoning, Ammunition (30/120 ft, Bullet); mastery Slow.",
+  "text": "Fires Sling Bullets (not Firearm Bullets)."
+}

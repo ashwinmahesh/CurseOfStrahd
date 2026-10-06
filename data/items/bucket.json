@@ -1,0 +1,13 @@
+{
+  "id": "bucket",
+  "name": "Bucket",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 2,
+  "cost_gp": 0.05,
+  "capacity": "0.5 cubic foot",
+  "summary": "Holds up to half a cubic foot."
+}

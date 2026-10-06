@@ -1,0 +1,17 @@
+{
+  "id": "navigators_tools",
+  "name": "Navigator's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 2,
+  "cost_gp": 25,
+  "tool": {
+    "kind": "other",
+    "ability": "wis",
+    "utilize": "Chart a course (DC 10), or work out your position from the stars (DC 15)."
+  },
+  "summary": "Tool (Wisdom): chart a course (DC 10), or work out your position from the stars (DC 15)."
+}

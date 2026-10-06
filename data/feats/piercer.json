@@ -1,0 +1,52 @@
+{
+  "id": "piercer",
+  "name": "Piercer",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; reroll one Piercing damage die once per turn, and roll an extra die on Piercing Critical Hits.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "puncture",
+      "name": "Puncture",
+      "summary": "Once per turn, reroll one damage die of a Piercing hit; use the new roll.",
+      "text": "Once per turn, when you hit a creature with an attack that deals Piercing damage, you can reroll one of the attack's damage dice, and you must use the new roll.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "puncture"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "piercer_enhanced_critical",
+      "name": "Enhanced Critical",
+      "summary": "Piercing Critical Hits roll one additional damage die.",
+      "text": "When you score a Critical Hit that deals Piercing damage to a creature, you can roll one additional damage die when determining the extra Piercing damage the target takes.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "piercer_enhanced_critical"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "potion_of_healing",
+  "name": "Potion of Healing",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 50,
+  "stackable": true,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "effects": [
+    {
+      "effect": "heal",
+      "params": {
+        "dice": "2d4+2",
+        "target": "creature",
+        "range": 5
+      }
+    }
+  ],
+  "summary": "Bonus Action to drink or give to a creature within 5 ft: regain 2d4 + 2 Hit Points.",
+  "text": "A magic item. As a Bonus Action, you can drink it or give it to another creature within 5 feet of you. The creature that drinks this red liquid regains 2d4 + 2 Hit Points."
+}

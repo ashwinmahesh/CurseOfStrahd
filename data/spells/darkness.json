@@ -1,0 +1,45 @@
+{
+  "id": "darkness",
+  "name": "Darkness",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 15
+  },
+  "components": {
+    "v": true,
+    "m": "bat fur and a piece of coal"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "a point, or an object nobody is wearing or carrying (15-foot Emanation)"
+  },
+  "tags": [
+    "control",
+    "utility"
+  ],
+  "summary": "Magical Darkness fills a 15-ft-radius Sphere that Darkvision can't see through; dispels level 1-2 light spells.",
+  "text": "Magical Darkness fills a 15-foot-radius Sphere centered on a point within range for the duration. Darkvision can't see through it and nonmagical light can't illuminate it. Alternatively, you cast the spell on an object that nobody is wearing or carrying, and the Darkness fills a 15-foot Emanation from that object; covering the object with something opaque, such as a bowl or helm, blocks the Darkness. If any part of the area overlaps Bright Light or Dim Light created by a spell of level 2 or lower, that spell is dispelled."
+}

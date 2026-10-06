@@ -1,0 +1,45 @@
+{
+  "id": "musician",
+  "name": "Musician",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Proficiency with three Musical Instruments; a song after a rest gives allies Heroic Inspiration.",
+  "benefits": [
+    {
+      "id": "instrument_training",
+      "name": "Instrument Training",
+      "summary": "Gain proficiency with three Musical Instruments.",
+      "text": "You gain proficiency with three Musical Instruments of your choice.",
+      "action": "passive",
+      "choice": {
+        "id": "instruments",
+        "kind": "tool",
+        "count": 3,
+        "from": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan_flute",
+          "shawm",
+          "viol"
+        ]
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "encouraging_song",
+      "name": "Encouraging Song",
+      "summary": "As you finish a Short or Long Rest, a song gives Heroic Inspiration to allies up to your Proficiency Bonus.",
+      "text": "As you finish a Short or Long Rest, you can play a song on a Musical Instrument you are proficient with. Allies who hear it gain Heroic Inspiration; the number of allies you can affect this way equals your Proficiency Bonus.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

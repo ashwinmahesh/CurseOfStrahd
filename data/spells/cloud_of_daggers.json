@@ -1,0 +1,55 @@
+{
+  "id": "cloud_of_daggers",
+  "name": "Cloud of Daggers",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the Basic Rules spell chapter. Rule text from knowledge of the 2024 PHB; level, school, class list, casting time, range, area, components and Concentration match the BR class spell tables and the D&D Beyond spell list."
+  },
+  "level": 2,
+  "school": "conjuration",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "cube",
+    "size": 5
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a sliver of glass"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "damage": [
+    {
+      "dice": "4d4",
+      "type": "slashing"
+    }
+  ],
+  "upcast": {
+    "damage": "2d4"
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "Spinning daggers fill a 5-ft Cube: 4d4 Slashing to creatures there, once per turn; you can teleport it.",
+  "text": "You fill a 5-foot Cube centered on a point within range with whirling daggers. Each creature in the Cube takes 4d4 Slashing damage. A creature also takes that damage when it enters the Cube, when it ends its turn there, or when the Cube is moved into its space, but no creature takes this damage more than once per turn. On your later turns you can take a Magic action to teleport the Cube up to 30 feet. The damage increases by 2d4 for each spell slot level above 2."
+}

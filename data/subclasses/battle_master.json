@@ -1,0 +1,313 @@
+{
+  "id": "battle_master",
+  "name": "Battle Master",
+  "class": "fighter",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "A tactician who spends Superiority Dice on maneuvers that trip, disarm, rally and parry.",
+  "role_tags": [
+    "tactics",
+    "control"
+  ],
+  "table": {
+    "superiority_dice": {
+      "name": "Superiority Dice",
+      "values": [
+        0,
+        0,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    "superiority_die": {
+      "name": "Superiority Die",
+      "values": [
+        "",
+        "",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d12",
+        "d12",
+        "d12"
+      ]
+    },
+    "maneuvers_known": {
+      "name": "Maneuvers Known",
+      "values": [
+        0,
+        0,
+        3,
+        3,
+        3,
+        3,
+        5,
+        5,
+        5,
+        7,
+        7,
+        7,
+        7,
+        7,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "superiority_dice",
+      "name": "Superiority Dice",
+      "recharge": "short",
+      "table": "superiority_dice",
+      "die_table": "superiority_die",
+      "from_level": 3
+    }
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "combat_superiority",
+        "name": "Combat Superiority",
+        "summary": "Four d8 Superiority Dice (back on a rest) fuel three maneuvers you learn; save DC 8 + Str or Dex + PB.",
+        "text": "You learn three maneuvers (more at levels 7, 10 and 15) and can swap one whenever you gain a Fighter level. You have four Superiority Dice, d8s (five at 7, six at 15; d10 at 10, d12 at 18); a maneuver uses one, and you regain all of them on a Short or Long Rest. Maneuver saves use DC 8 + your Strength or Dexterity modifier (your choice) + Proficiency Bonus.",
+        "implemented": "engine",
+        "choice": {
+          "kind": "maneuver",
+          "count": 3,
+          "count_column": "maneuvers_known",
+          "replaceable": "level_up",
+          "options": [
+            {
+              "id": "ambush",
+              "name": "Ambush",
+              "summary": "Add a Superiority Die to a Dexterity (Stealth) check or an Initiative roll.",
+              "implemented": "engine"
+            },
+            {
+              "id": "bait_and_switch",
+              "name": "Bait and Switch",
+              "summary": "Swap places with a willing creature within 5 feet (costs 5 feet of movement); one of you adds the die to AC until the start of your next turn.",
+              "implemented": "engine"
+            },
+            {
+              "id": "commanders_strike",
+              "name": "Commander's Strike",
+              "summary": "Give up one attack of your Attack action so an ally can use its Reaction to make an attack, adding the die to its damage.",
+              "implemented": "engine"
+            },
+            {
+              "id": "commanding_presence",
+              "name": "Commanding Presence",
+              "summary": "Add a Superiority Die to a Charisma (Intimidation, Performance or Persuasion) check.",
+              "implemented": "engine"
+            },
+            {
+              "id": "disarming_attack",
+              "name": "Disarming Attack",
+              "summary": "On a hit, add the die to damage; the target makes a Strength save or drops one object it holds.",
+              "implemented": "engine"
+            },
+            {
+              "id": "distracting_strike",
+              "name": "Distracting Strike",
+              "summary": "On a hit, add the die to damage; the next attack roll by someone else against the target before your next turn has Advantage.",
+              "implemented": "engine"
+            },
+            {
+              "id": "evasive_footwork",
+              "name": "Evasive Footwork",
+              "summary": "Bonus Action: take the Disengage action and add the die to your AC until the start of your next turn.",
+              "implemented": "engine"
+            },
+            {
+              "id": "feinting_attack",
+              "name": "Feinting Attack",
+              "summary": "Bonus Action: feint a creature within 5 feet for Advantage on your next attack against it this turn; on a hit add the die to damage.",
+              "implemented": "engine"
+            },
+            {
+              "id": "goading_attack",
+              "name": "Goading Attack",
+              "summary": "On a hit, add the die to damage; the target makes a Wisdom save or has Disadvantage on attacks against anyone but you until the end of your next turn.",
+              "implemented": "engine"
+            },
+            {
+              "id": "lunging_attack",
+              "name": "Lunging Attack",
+              "summary": "Bonus Action: take the Dash action; if you move 5+ feet straight toward a target and hit it with a melee attack this turn, add the die to damage.",
+              "implemented": "engine"
+            },
+            {
+              "id": "maneuvering_attack",
+              "name": "Maneuvering Attack",
+              "summary": "On a hit, add the die to damage; an ally who can see or hear you can use its Reaction to move half its Speed without provoking Opportunity Attacks from the target.",
+              "implemented": "engine"
+            },
+            {
+              "id": "menacing_attack",
+              "name": "Menacing Attack",
+              "summary": "On a hit, add the die to damage; the target makes a Wisdom save or is Frightened of you until the end of your next turn.",
+              "implemented": "engine"
+            },
+            {
+              "id": "parry",
+              "name": "Parry",
+              "summary": "Reaction when a melee attack roll damages you: reduce the damage by the die plus your Strength or Dexterity modifier.",
+              "implemented": "engine"
+            },
+            {
+              "id": "precision_attack",
+              "name": "Precision Attack",
+              "summary": "When you miss with an attack roll, add the die to the roll, possibly turning it into a hit.",
+              "implemented": "engine"
+            },
+            {
+              "id": "pushing_attack",
+              "name": "Pushing Attack",
+              "summary": "On a hit, add the die to damage; a Large or smaller target makes a Strength save or is pushed up to 15 feet away.",
+              "implemented": "engine"
+            },
+            {
+              "id": "rally",
+              "name": "Rally",
+              "summary": "Bonus Action: an ally who can see or hear you gains Temporary Hit Points equal to the die roll plus half your Fighter level (round down).",
+              "implemented": "engine"
+            },
+            {
+              "id": "riposte",
+              "name": "Riposte",
+              "summary": "Reaction when a creature misses you with a melee attack: make a melee attack against it, adding the die to damage on a hit.",
+              "implemented": "engine"
+            },
+            {
+              "id": "sweeping_attack",
+              "name": "Sweeping Attack",
+              "summary": "When you hit with a melee attack, another creature within 5 feet of the target and within your reach takes damage equal to the die roll if your attack roll would hit it.",
+              "implemented": "engine"
+            },
+            {
+              "id": "tactical_assessment",
+              "name": "Tactical Assessment",
+              "summary": "Add a Superiority Die to an Intelligence (History or Investigation) or Wisdom (Insight) check.",
+              "implemented": "engine"
+            },
+            {
+              "id": "trip_attack",
+              "name": "Trip Attack",
+              "summary": "On a hit, add the die to damage; a Large or smaller target makes a Strength save or falls Prone.",
+              "implemented": "engine"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "student_of_war",
+        "name": "Student of War",
+        "summary": "Proficiency with one Artisan's Tool and one Fighter skill.",
+        "implemented": "data",
+        "choices": [
+          {
+            "id": "tool",
+            "kind": "tool",
+            "count": 1,
+            "filter": {
+              "tool_kind": "artisan"
+            }
+          },
+          {
+            "id": "skill",
+            "kind": "skill",
+            "count": 1,
+            "from": [
+              "acrobatics",
+              "animal_handling",
+              "athletics",
+              "history",
+              "insight",
+              "intimidation",
+              "persuasion",
+              "perception",
+              "survival"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "know_your_enemy",
+        "name": "Know Your Enemy",
+        "summary": "Bonus Action: learn a creature's Immunities, Resistances and Vulnerabilities.",
+        "text": "As a Bonus Action, study a creature within 30 feet to learn its damage and condition Immunities, Resistances and Vulnerabilities. Once per Long Rest, or spend a Superiority Die to do it again.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "improved_combat_superiority",
+        "name": "Improved Combat Superiority",
+        "summary": "Superiority Dice become d10s.",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "relentless",
+        "name": "Relentless",
+        "summary": "Once per turn, roll 1d8 for a maneuver instead of spending a Superiority Die.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "ultimate_combat_superiority",
+        "name": "Ultimate Combat Superiority",
+        "summary": "Superiority Dice become d12s.",
+        "implemented": "data"
+      }
+    }
+  ]
+}

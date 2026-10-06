@@ -1,0 +1,14 @@
+{
+  "id": "waterskin",
+  "name": "Waterskin",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 5,
+  "cost_gp": 0.2,
+  "capacity": "4 pints",
+  "summary": "Holds up to 4 pints; 5 lb. when full.",
+  "text": "Holds up to 4 pints of liquid and weighs 5 pounds when full. Not drinking enough water risks dehydration (see Dehydration in the Rules Glossary)."
+}

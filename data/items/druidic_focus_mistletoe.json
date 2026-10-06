@@ -1,0 +1,14 @@
+{
+  "id": "druidic_focus_mistletoe",
+  "name": "Druidic Focus (Sprig of Mistletoe)",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "focus",
+  "weight_lb": 0,
+  "cost_gp": 1,
+  "focus": "druidic",
+  "summary": "Spellcasting Focus for Druids and Rangers.",
+  "text": "A Druidic Focus carved, tied with ribbon or painted to channel primal magic. Druids and Rangers can use it as a Spellcasting Focus."
+}

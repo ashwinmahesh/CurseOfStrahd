@@ -1,0 +1,62 @@
+{
+  "id": "war_caster",
+  "name": "War Caster",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "spellcasting": true,
+    "text": "Level 4+, Spellcasting or Pact Magic Feature"
+  },
+  "repeatable": false,
+  "summary": "+1 Int, Wis or Cha; Advantage to keep Concentration, spells as Opportunity Attacks, Somatic components with full hands.",
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "war_caster_concentration",
+      "name": "Concentration",
+      "summary": "Advantage on Constitution saving throws to maintain Concentration.",
+      "text": "You have Advantage on Constitution saving throws that you make to maintain Concentration.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "concentration"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "reactive_spell",
+      "name": "Reactive Spell",
+      "summary": "When a creature provokes your Opportunity Attack, cast a 1-action spell targeting only it instead.",
+      "text": "When a creature provokes an Opportunity Attack from you by leaving your reach, you can take a Reaction to cast a spell at that creature instead of making the Opportunity Attack. The spell must have a casting time of one action and must target only that creature.",
+      "action": "reaction",
+      "implemented": "text"
+    },
+    {
+      "id": "war_caster_somatic_components",
+      "name": "Somatic Components",
+      "summary": "You can perform Somatic components while holding weapons or a Shield in one or both hands.",
+      "text": "You can perform the Somatic components of spells even when you have weapons or a Shield in one or both hands.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "war_caster_somatic_components"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

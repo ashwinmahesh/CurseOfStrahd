@@ -1,0 +1,20 @@
+{
+  "id": "brewers_supplies",
+  "name": "Brewer's Supplies",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 9,
+  "cost_gp": 20,
+  "tool": {
+    "kind": "artisan",
+    "ability": "int",
+    "utilize": "Tell whether a drink has been poisoned (DC 15), or name an alcoholic drink (DC 10).",
+    "craft": [
+      "antitoxin"
+    ]
+  },
+  "summary": "Artisan's Tools (Intelligence): tell whether a drink has been poisoned (DC 15), or name an alcoholic drink (DC 10)."
+}

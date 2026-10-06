@@ -1,0 +1,13 @@
+{
+  "id": "shovel",
+  "name": "Shovel",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 5,
+  "cost_gp": 2,
+  "summary": "An hour's digging makes a 5-ft cube hole in soil.",
+  "text": "Working for 1 hour with a Shovel, you can dig a hole 5 feet on each side in soil or similar material."
+}

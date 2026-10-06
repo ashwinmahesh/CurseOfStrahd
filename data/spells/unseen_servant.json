@@ -1,0 +1,42 @@
+{
+  "id": "unseen_servant",
+  "name": "Unseen Servant",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "conjuration",
+  "classes": [
+    "bard",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bit of string and of wood"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space on the ground"
+  },
+  "tags": [
+    "summon",
+    "utility"
+  ],
+  "summary": "An invisible, mindless force that does simple chores at your command for 1 hour.",
+  "text": "An Invisible, mindless, shapeless Medium force appears in an unoccupied space on the ground within range and does simple tasks for you for 1 hour. It has AC 10, 1 Hit Point and a Strength of 2, and it can't attack; the spell ends if it drops to 0 Hit Points. Once on each of your turns, as a Bonus Action, you can mentally command it to move up to 15 feet and interact with an object. It can do simple jobs a human could, such as fetching, cleaning, mending, folding clothes, lighting fires, serving food and pouring drinks; it keeps at a task as best it can until it is done, then waits for your next command. If you give it a task that would take it more than 60 feet away from you, the spell ends. Can be cast as a Ritual."
+}

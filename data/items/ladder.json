@@ -1,0 +1,13 @@
+{
+  "id": "ladder",
+  "name": "Ladder",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 25,
+  "cost_gp": 0.1,
+  "summary": "A 10-ft ladder; moving up or down it counts as climbing.",
+  "text": "The Ladder is 10 feet tall. Moving up or down it requires climbing."
+}

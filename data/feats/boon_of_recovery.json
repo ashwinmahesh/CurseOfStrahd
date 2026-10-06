@@ -1,0 +1,63 @@
+{
+  "id": "boon_of_recovery",
+  "name": "Boon of Recovery",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); drop to 1 HP instead of 0 and heal half once per Long Rest, plus a 10d10 healing pool.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "last_stand",
+      "name": "Last Stand",
+      "summary": "Once per Long Rest, when reduced to 0 HP, drop to 1 HP instead and regain half your Hit Point maximum.",
+      "text": "When you would be reduced to 0 Hit Points, you can drop to 1 Hit Point instead and regain a number of Hit Points equal to half your Hit Point maximum. Once you use this benefit, you can't use it again until you finish a Long Rest.",
+      "action": "special",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "last_stand"
+        }
+      ],
+      "resource": {
+        "id": "last_stand",
+        "name": "Last Stand",
+        "max": 1,
+        "recharge": "long"
+      },
+      "implemented": "engine"
+    },
+    {
+      "id": "recover_vitality",
+      "name": "Recover Vitality",
+      "summary": "A pool of ten d10s; as a Bonus Action spend and roll any number to regain that many Hit Points.",
+      "text": "You have a pool of ten d10s. As a Bonus Action, you can expend dice from the pool, roll them, and regain Hit Points equal to the total. You regain all the expended dice when you finish a Long Rest.",
+      "action": "bonus_action",
+      "resource": {
+        "id": "recover_vitality",
+        "name": "Recover Vitality",
+        "max": 10,
+        "die": "d10",
+        "recharge": "long"
+      },
+      "implemented": "text"
+    }
+  ]
+}

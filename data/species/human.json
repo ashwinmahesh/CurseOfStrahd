@@ -2,8 +2,10 @@
   "id": "human",
   "name": "Human",
   "source": {
-    "book": "SRD5.2"
+    "book": "PHB2024",
+    "checked_against": "BR2024"
   },
+  "summary": "Adaptable folk who gain Heroic Inspiration each Long Rest, an extra skill and an Origin feat.",
   "creature_type": "humanoid",
   "sizes": [
     "medium",
@@ -14,28 +16,43 @@
     {
       "id": "resourceful",
       "name": "Resourceful",
-      "summary": "Gain Heroic Inspiration whenever you finish a Long Rest."
+      "summary": "You gain Heroic Inspiration whenever you finish a Long Rest.",
+      "text": "Whenever you finish a Long Rest, you gain Heroic Inspiration.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "resourceful"
+        }
+      ],
+      "implemented": "engine"
     },
     {
       "id": "skillful",
       "name": "Skillful",
       "summary": "Gain proficiency in one skill of your choice.",
+      "text": "You gain proficiency in one skill of your choice.",
+      "action": "passive",
       "choice": {
         "kind": "skill",
         "count": 1
-      }
+      },
+      "implemented": "data"
     },
     {
       "id": "versatile",
       "name": "Versatile",
-      "summary": "Gain an Origin feat of your choice.",
+      "summary": "Gain an Origin feat of your choice (Skilled is recommended).",
+      "text": "You gain an Origin feat of your choice. Skilled is the recommended pick.",
+      "action": "passive",
       "choice": {
         "kind": "feat",
         "count": 1,
         "filter": {
           "category": "origin"
         }
-      }
+      },
+      "implemented": "data"
     }
   ]
 }

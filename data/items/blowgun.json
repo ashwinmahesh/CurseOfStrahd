@@ -1,0 +1,29 @@
+{
+  "id": "blowgun",
+  "name": "Blowgun",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 1,
+  "cost_gp": 10,
+  "weapon": {
+    "kind": "martial_ranged",
+    "damage": "1",
+    "damage_type": "piercing",
+    "properties": [
+      "ammunition",
+      "range",
+      "loading"
+    ],
+    "range": [
+      25,
+      100
+    ],
+    "ammunition": "needle",
+    "mastery": "vex"
+  },
+  "summary": "Martial ranged weapon: 1 Piercing, Ammunition (25/100 ft, Needle), Loading; mastery Vex.",
+  "text": "Its damage is a flat 1 Piercing rather than a die roll. Fires Blowgun Needles."
+}

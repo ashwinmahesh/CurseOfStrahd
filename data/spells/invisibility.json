@@ -1,0 +1,61 @@
+{
+  "id": "invisibility",
+  "name": "Invisibility",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "an eyelash in gum arabic"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "conditions": [
+    "invisible"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "invisible",
+        "ends_on": [
+          "attack_roll",
+          "deal_damage",
+          "cast_spell"
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "defense"
+  ],
+  "summary": "A creature you touch is Invisible until it attacks, deals damage or casts a spell (up to 1 hour).",
+  "text": "A creature you touch has the Invisible condition until the spell ends. The spell ends early right after the target makes an attack roll, deals damage or casts a spell. You can target one more creature for each spell slot level above 2."
+}

@@ -1,0 +1,38 @@
+{
+  "id": "expeditious_retreat",
+  "name": "Expeditious Retreat",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "Dash now, and Dash as a Bonus Action on later turns while the spell lasts.",
+  "text": "When you cast this spell you take the Dash action, and until the spell ends you can take the Dash action as a Bonus Action. Concentration, up to 10 minutes."
+}

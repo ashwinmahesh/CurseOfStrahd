@@ -1,0 +1,13 @@
+{
+  "id": "grappling_hook",
+  "name": "Grappling Hook",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 4,
+  "cost_gp": 2,
+  "summary": "Utilize: throw it at a catch within 50 ft; it holds on a DC 13 Dexterity (Acrobatics) check.",
+  "text": "As a Utilize action, you throw the hook at a railing, ledge, or other catch within 50 feet of you; it catches if you succeed on a DC 13 Dexterity (Acrobatics) check. If a Rope is tied to it, you can then climb the Rope."
+}

@@ -1,0 +1,47 @@
+{
+  "id": "shocking_grasp",
+  "name": "Shocking Grasp",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "attack": "melee",
+  "damage": [
+    {
+      "dice": "1d8",
+      "type": "lightning"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d8"
+  },
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "Melee spell attack for 1d8 Lightning damage; the target can't make Opportunity Attacks until its next turn.",
+  "text": "Make a melee spell attack against a creature you try to touch. On a hit it takes 1d8 Lightning damage and can't make Opportunity Attacks until the start of its next turn. The damage becomes 2d8 at character level 5, 3d8 at level 11 and 4d8 at level 17."
+}

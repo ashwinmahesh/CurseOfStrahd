@@ -1,0 +1,20 @@
+{
+  "id": "prone",
+  "name": "Prone",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Crawl or stand (half Speed); Disadvantage on attacks; melee attackers within 5 ft have Advantage, others Disadvantage.",
+  "text": "Your only movement options are crawling or spending half your Speed (rounded down) to stand up, which ends the condition; with Speed 0 you can't stand. You have Disadvantage on attack rolls. An attack roll against you has Advantage if the attacker is within 5 feet of you, and Disadvantage otherwise.",
+  "modifiers": [
+    {
+      "stat": "disadvantage",
+      "on": "attack"
+    },
+    {
+      "stat": "flag",
+      "value": "prone"
+    }
+  ]
+}

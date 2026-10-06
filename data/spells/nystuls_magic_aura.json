@@ -1,0 +1,38 @@
+{
+  "id": "nystuls_magic_aura",
+  "name": "Nystul's Magic Aura",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "illusion",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a small square of silk"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "a willing creature, or an object nobody is wearing or carrying"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Make magic read a creature as another creature type, or disguise an object's magical aura, for 24 hours.",
+  "text": "Touch a willing creature or an object that nobody is wearing or carrying and place an illusion on it for 24 hours. If you cast the spell on the same target every day for 30 days, the illusion lasts until dispelled. Mask (creature): choose a creature type other than its real one; spells and other magical effects treat it as that type. False Aura (object): you change how it appears to spells and magical effects that detect magical auras, such as Detect Magic. You can make a nonmagical object seem magical, make a magic item seem nonmagical, or make its aura seem to belong to a school of magic you choose."
+}

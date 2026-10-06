@@ -1,0 +1,28 @@
+{
+  "id": "light_hammer",
+  "name": "Light Hammer",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 2,
+  "cost_gp": 2,
+  "stackable": true,
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d4",
+    "damage_type": "bludgeoning",
+    "properties": [
+      "light",
+      "thrown",
+      "range"
+    ],
+    "range": [
+      20,
+      60
+    ],
+    "mastery": "nick"
+  },
+  "summary": "Simple melee weapon: 1d4 Bludgeoning, Light, Thrown (20/60 ft); mastery Nick."
+}

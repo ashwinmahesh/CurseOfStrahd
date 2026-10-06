@@ -1,0 +1,104 @@
+{
+  "id": "swarm_of_bats",
+  "name": "Swarm of Bats",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "large",
+  "type": "beast",
+  "swarm_of": "tiny",
+  "tags": [
+    "swarm"
+  ],
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 11,
+    "dice": "2d10"
+  },
+  "speed": {
+    "walk": 5,
+    "fly": 30
+  },
+  "abilities": {
+    "str": 5,
+    "dex": 15,
+    "con": 10,
+    "int": 2,
+    "wis": 12,
+    "cha": 4
+  },
+  "resistances": [
+    "bludgeoning",
+    "piercing",
+    "slashing"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "frightened",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "prone",
+    "restrained",
+    "stunned"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "swarm",
+      "name": "Swarm",
+      "action": "passive",
+      "summary": "Shares spaces with other creatures, fits through any bat-sized gap; can't heal or gain Temporary Hit Points.",
+      "text": "The swarm can move into and stay in another creature's space, and other creatures can enter its space. It can pass through any opening wide enough for one Tiny bat. The swarm can't regain Hit Points and can't gain Temporary Hit Points.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "swarm"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "bites",
+      "name": "Bites",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "2d4",
+          "type": "piercing",
+          "when": "while the swarm isn't Bloodied"
+        },
+        {
+          "average": 2,
+          "dice": "1d4",
+          "type": "piercing",
+          "when": "instead, while the swarm is Bloodied"
+        }
+      ],
+      "summary": "Many small bites; the damage drops once the swarm is Bloodied.",
+      "text": "Hit: 5 (2d4) Piercing damage, or only 2 (1d4) Piercing damage if the swarm is Bloodied."
+    }
+  ],
+  "regions": [
+    "svalich_road"
+  ],
+  "ai_profile": "swarm",
+  "summary": "A shrieking cloud that envelops a creature and bites; resists weapon damage, weakens once Bloodied."
+}

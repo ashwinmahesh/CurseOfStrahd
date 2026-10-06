@@ -1,0 +1,68 @@
+{
+  "id": "crossbow_expert",
+  "name": "Crossbow Expert",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "abilities": {
+      "dex": 13
+    },
+    "text": "Level 4+, Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Dex; ignore Loading on crossbows, no Disadvantage firing them up close, add modifier to Light crossbow extra attacks.",
+  "ability_increase": {
+    "from": [
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "ignore_loading",
+      "name": "Ignore Loading",
+      "summary": "Ignore the Loading property of crossbows, and load them without a free hand.",
+      "text": "You ignore the Loading property of the Hand Crossbow, Heavy Crossbow and Light Crossbow (called crossbows in this feat). While holding one, you can load a piece of ammunition into it even if you lack a free hand.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "ignore_loading"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "crossbow_expert_firing_in_melee",
+      "name": "Firing in Melee",
+      "summary": "An enemy within 5 feet doesn't give you Disadvantage on crossbow attack rolls.",
+      "text": "Being within 5 feet of an enemy doesn't impose Disadvantage on your attack rolls with crossbows.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "crossbow_expert_firing_in_melee"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "crossbow_expert_dual_wielding",
+      "name": "Dual Wielding",
+      "summary": "Add your ability modifier to the Light property's extra attack when it is made with a Light crossbow.",
+      "text": "When you make the extra attack granted by the Light property, you can add your ability modifier to its damage if that attack is made with a crossbow that has the Light property and you aren't already adding that modifier to the damage.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "crossbow_expert_dual_wielding"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

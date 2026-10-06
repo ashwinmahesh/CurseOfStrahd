@@ -2,7 +2,8 @@
   "id": "wolf",
   "name": "Wolf",
   "source": {
-    "book": "MM2025"
+    "book": "MM2025",
+    "checked_against": "BR2024"
   },
   "size": "medium",
   "type": "beast",
@@ -34,30 +35,50 @@
   "passive_perception": 15,
   "languages": [],
   "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
   "traits": [
     {
       "id": "pack_tactics",
       "name": "Pack Tactics",
-      "summary": "Advantage on an attack roll against a creature if an ally is within 5 feet of it and isn't Incapacitated."
+      "action": "passive",
+      "summary": "Advantage on attack rolls against a target that has a non-Incapacitated ally of this creature within 5 ft.",
+      "text": "The wolf has Advantage on an attack roll against a creature when at least one of the wolf's allies is within 5 feet of that creature and that ally doesn't have the Incapacitated condition.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "pack_tactics"
+        }
+      ],
+      "implemented": "engine"
     }
   ],
   "actions": [
     {
       "id": "bite",
       "name": "Bite",
+      "kind": "melee",
       "attack": {
-        "kind": "melee",
         "bonus": 4,
         "reach": 5
       },
       "damage": [
         {
+          "average": 5,
           "dice": "1d6+2",
           "type": "piercing"
         }
       ],
-      "summary": "If the target is Medium or smaller, it has the Prone condition."
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Bites a target; a Medium or smaller target is knocked Prone.",
+      "text": "Hit: 5 (1d6 + 2) Piercing damage. If the target is Medium or smaller, it has the Prone condition."
     }
   ],
-  "ai_profile": "pack_hunter"
+  "regions": [
+    "svalich_road"
+  ],
+  "ai_profile": "pack_hunter",
+  "summary": "Circles with its pack to gain Advantage, bites to knock prey Prone, then the pack piles on."
 }

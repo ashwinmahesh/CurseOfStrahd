@@ -1,0 +1,20 @@
+{
+  "id": "cobblers_tools",
+  "name": "Cobbler's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 5,
+  "cost_gp": 5,
+  "tool": {
+    "kind": "artisan",
+    "ability": "dex",
+    "utilize": "Adjust a creature's footwear so it has Advantage on its next Dexterity (Acrobatics) check (DC 10).",
+    "craft": [
+      "climbers_kit"
+    ]
+  },
+  "summary": "Artisan's Tools (Dexterity): adjust a creature's footwear so it has Advantage on its next Dexterity (Acrobatics) check (DC 10)."
+}

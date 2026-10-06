@@ -1,0 +1,44 @@
+{
+  "id": "lucky",
+  "name": "Lucky",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Luck Points equal to your Proficiency Bonus give you Advantage or attackers Disadvantage; refill on a Long Rest.",
+  "benefits": [
+    {
+      "id": "luck_points",
+      "name": "Luck Points",
+      "summary": "You have Luck Points equal to your Proficiency Bonus, regained on a Long Rest.",
+      "text": "You have a number of Luck Points equal to your Proficiency Bonus, which you spend on this feat's other benefits. You regain all expended Luck Points when you finish a Long Rest.",
+      "action": "passive",
+      "resource": {
+        "id": "luck_points",
+        "name": "Luck Points",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "lucky_advantage",
+      "name": "Advantage",
+      "summary": "Spend 1 Luck Point to give yourself Advantage on a D20 Test.",
+      "text": "When you roll a d20 for a D20 Test, you can spend 1 Luck Point to give yourself Advantage on that roll.",
+      "action": "special",
+      "uses_resource": "luck_points",
+      "implemented": "text"
+    },
+    {
+      "id": "lucky_disadvantage",
+      "name": "Disadvantage",
+      "summary": "Spend 1 Luck Point to give an attack roll against you Disadvantage.",
+      "text": "When a creature rolls a d20 for an attack roll against you, you can spend 1 Luck Point to give that roll Disadvantage.",
+      "action": "special",
+      "uses_resource": "luck_points",
+      "implemented": "text"
+    }
+  ]
+}

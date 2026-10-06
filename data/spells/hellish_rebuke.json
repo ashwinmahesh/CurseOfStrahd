@@ -1,0 +1,49 @@
+{
+  "id": "hellish_rebuke",
+  "name": "Hellish Rebuke",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "reaction",
+    "trigger": "you take damage from a creature you can see within 60 feet of you"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "the creature that damaged you"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "2d10",
+      "type": "fire"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Reaction when damaged: the attacker makes a Dexterity save, taking 2d10 Fire damage, half on a success.",
+  "text": "Reaction, taken when a creature you can see within 60 feet of you deals damage to you. Green flames engulf that creature, which makes a Dexterity saving throw, taking 2d10 Fire damage on a failure or half as much on a success. Using a Higher-Level Spell Slot: the damage increases by 1d10 for each slot level above 1."
+}

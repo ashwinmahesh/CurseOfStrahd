@@ -1,0 +1,41 @@
+{
+  "id": "spare_the_dying",
+  "name": "Spare the Dying",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "necromancy",
+  "classes": [
+    "cleric",
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 15
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "A creature with 0 Hit Points that isn't dead."
+  },
+  "cantrip_scaling": {
+    "text": "Range doubles: 30 feet at character level 5, 60 feet at level 11, 120 feet at level 17."
+  },
+  "tags": [
+    "healing"
+  ],
+  "summary": "A creature at 0 Hit Points within range becomes Stable; the range doubles at levels 5, 11 and 17.",
+  "text": "Choose a creature within range that has 0 Hit Points and isn't dead; it becomes Stable. The range doubles to 30 feet at character level 5, 60 feet at level 11 and 120 feet at level 17."
+}

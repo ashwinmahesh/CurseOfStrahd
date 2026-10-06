@@ -1,0 +1,40 @@
+{
+  "id": "meld_into_stone",
+  "name": "Meld into Stone",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "cleric",
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "self",
+    "description": "you, entering a stone object or surface large enough to hold your body"
+  },
+  "tags": [
+    "defense",
+    "utility"
+  ],
+  "summary": "Merge with your gear into a stone surface for up to 8 hours, hidden from nonmagical senses.",
+  "text": "Touch a stone object or surface big enough to hold your whole body and step into it, merging yourself and your equipment with the stone for 8 hours. Nothing of you remains visible or detectable by nonmagical senses. While merged, you can't see what happens outside, and Wisdom (Perception) checks you make to hear sounds outside have Disadvantage. You stay aware of the passage of time and can cast spells on yourself. You can't move, except to spend 5 feet of movement to leave the stone where you entered it, which ends the spell. Minor physical damage to the stone doesn't hurt you, but if it is partly destroyed or reshaped so you no longer fit, you are expelled and take 6d6 Force damage; if it is completely destroyed or transmuted into another substance, you are expelled and take 50 Force damage. If expelled, you move to the unoccupied space closest to where you first entered and have the Prone condition. Can be cast as a Ritual."
+}

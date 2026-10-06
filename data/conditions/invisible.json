@@ -1,0 +1,28 @@
+{
+  "id": "invisible",
+  "name": "Invisible",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Advantage on Initiative and attacks; attacks against you have Disadvantage.",
+  "text": "If you are Invisible when you roll Initiative, you have Advantage on the roll. Effects that need to see their target don't affect you unless their creator can see you, and neither does anything that targets your gear. Attack rolls against you have Disadvantage and your attack rolls have Advantage, except against a creature that can somehow see you.",
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "initiative"
+    },
+    {
+      "stat": "advantage",
+      "on": "attack"
+    },
+    {
+      "stat": "attacked_with",
+      "value": "disadvantage"
+    },
+    {
+      "stat": "flag",
+      "value": "concealed"
+    }
+  ]
+}

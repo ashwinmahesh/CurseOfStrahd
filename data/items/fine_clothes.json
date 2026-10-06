@@ -1,0 +1,13 @@
+{
+  "id": "fine_clothes",
+  "name": "Fine Clothes",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "clothing",
+  "weight_lb": 6,
+  "cost_gp": 15,
+  "summary": "Expensive, detailed clothing; some places and events admit only those wearing it.",
+  "text": "Garments of costly fabric with expertly made details. Some events and locations admit only people dressed in Fine Clothes."
+}

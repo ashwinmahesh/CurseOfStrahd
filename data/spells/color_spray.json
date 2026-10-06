@@ -1,0 +1,55 @@
+{
+  "id": "color_spray",
+  "name": "Color Spray",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "cone",
+    "size": 15
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of colorful sand"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "con",
+  "save_success": "none",
+  "conditions": [
+    "blinded"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "blinded"
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "debuff"
+  ],
+  "summary": "Creatures in a 15-foot Cone fail a Constitution save or are Blinded until the end of your next turn.",
+  "text": "A burst of flashing colored light fills a 15-foot Cone from you. Each creature in the Cone makes a Constitution saving throw; on a failure it has the Blinded condition until the end of your next turn."
+}

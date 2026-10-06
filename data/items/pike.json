@@ -1,0 +1,23 @@
+{
+  "id": "pike",
+  "name": "Pike",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 18,
+  "cost_gp": 5,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d10",
+    "damage_type": "piercing",
+    "properties": [
+      "heavy",
+      "reach",
+      "two_handed"
+    ],
+    "mastery": "push"
+  },
+  "summary": "Martial melee weapon: 1d10 Piercing, Heavy, Reach, Two-Handed; mastery Push."
+}

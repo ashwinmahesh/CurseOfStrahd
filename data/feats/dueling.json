@@ -1,0 +1,33 @@
+{
+  "id": "dueling",
+  "name": "Dueling",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "+2 damage with a melee weapon held in one hand when you wield no other weapons.",
+  "benefits": [
+    {
+      "id": "dueling",
+      "name": "Dueling",
+      "summary": "+2 damage with a one-handed melee weapon and no other weapons.",
+      "text": "When you are holding a Melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "damage",
+          "value": 2,
+          "when": {
+            "weapon": "one_handed_alone"
+          }
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "lesser_restoration",
+  "name": "Lesser Restoration",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "paladin",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "effects": [
+    {
+      "effect": "custom",
+      "params": {
+        "id": "end_condition",
+        "count": 1,
+        "conditions": [
+          "blinded",
+          "deafened",
+          "paralyzed",
+          "poisoned"
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "restoration"
+  ],
+  "summary": "Bonus Action: touch a creature to end one condition on it: Blinded, Deafened, Paralyzed or Poisoned.",
+  "text": "You touch a creature and end one of these conditions on it: Blinded, Deafened, Paralyzed or Poisoned."
+}

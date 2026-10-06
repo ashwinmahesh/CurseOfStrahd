@@ -1,0 +1,89 @@
+{
+  "id": "zombie",
+  "name": "Zombie",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "neutral evil",
+  "ac": 8,
+  "initiative": -2,
+  "hp": {
+    "average": 15,
+    "dice": "2d8+6"
+  },
+  "speed": {
+    "walk": 20
+  },
+  "abilities": {
+    "str": 13,
+    "dex": 6,
+    "con": 16,
+    "int": 3,
+    "wis": 6,
+    "cha": 5
+  },
+  "saves": {
+    "wis": 0
+  },
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 8,
+  "languages": [
+    "Common (understands but can't speak)",
+    "one other language (understands but can't speak)"
+  ],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "undead_fortitude",
+      "name": "Undead Fortitude",
+      "action": "passive",
+      "summary": "At 0 HP it makes a Con save (DC 5 + damage) to stay at 1 HP, unless hit by Radiant or a Critical Hit.",
+      "text": "When damage drops the zombie to 0 Hit Points, it makes a Constitution saving throw with a DC of 5 plus the damage taken. On a success it drops to 1 Hit Point instead. It can't make this save if the damage was Radiant or came from a Critical Hit.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "undead_fortitude"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "slam",
+      "name": "Slam",
+      "kind": "melee",
+      "attack": {
+        "bonus": 3,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d8+1",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Clubs a target with a rotting fist."
+    }
+  ],
+  "regions": [
+    "village_of_barovia"
+  ],
+  "ai_profile": "mindless",
+  "summary": "Shambles toward the closest living thing and slams it; hard to put down without radiant or crits."
+}

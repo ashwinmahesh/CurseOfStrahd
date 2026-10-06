@@ -1,0 +1,51 @@
+{
+  "id": "vampiric_touch",
+  "name": "Vampiric Touch",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "necromancy",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature within your reach"
+  },
+  "attack": "melee",
+  "damage": [
+    {
+      "dice": "3d6",
+      "type": "necrotic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage",
+    "healing"
+  ],
+  "summary": "Melee spell attack for 3d6 Necrotic damage; you heal half the damage. Repeat as a Magic action each turn.",
+  "text": "Make a melee spell attack against one creature within your reach. On a hit, it takes 3d6 Necrotic damage, and you regain Hit Points equal to half the Necrotic damage dealt. Until the spell ends, you can make this attack again on each of your turns as a Magic action, against the same creature or a different one. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 3."
+}

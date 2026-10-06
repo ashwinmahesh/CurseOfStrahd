@@ -1,0 +1,38 @@
+{
+  "id": "remove_curse",
+  "name": "Remove Curse",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "paladin",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1
+  },
+  "tags": [
+    "restoration"
+  ],
+  "summary": "End all curses on a creature or object; a cursed item keeps its curse but its Attunement breaks.",
+  "text": "Touch a creature or object: every curse affecting it ends. If the object is a cursed magic item, its curse stays, but the spell breaks its owner's Attunement to it so the item can be removed or thrown away."
+}

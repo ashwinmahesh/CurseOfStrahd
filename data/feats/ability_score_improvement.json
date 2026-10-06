@@ -1,0 +1,38 @@
+{
+  "id": "ability_score_improvement",
+  "name": "Ability Score Improvement",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": true,
+  "summary": "Increase one ability score by 2, or two ability scores by 1 each, to a maximum of 20.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 2,
+    "per_ability": 2,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "ability_score_improvement",
+      "name": "Ability Score Improvement",
+      "summary": "+2 to one ability score or +1 to two, to a maximum of 20.",
+      "text": "Increase one ability score of your choice by 2, or increase two different ability scores by 1 each. This feat can't raise a score above 20. You can take this feat more than once.",
+      "action": "passive",
+      "implemented": "data"
+    }
+  ]
+}

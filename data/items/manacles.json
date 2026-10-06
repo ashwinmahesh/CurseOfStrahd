@@ -1,0 +1,13 @@
+{
+  "id": "manacles",
+  "name": "Manacles",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 6,
+  "cost_gp": 2,
+  "summary": "Utilize: bind a Small or Medium creature (DC 13 Sleight of Hand); bound creatures attack with Disadvantage.",
+  "text": "As a Utilize action, you can bind an unwilling Small or Medium creature within 5 feet of you that has the Grappled, Incapacitated, or Restrained condition, if you succeed on a DC 13 Dexterity (Sleight of Hand) check. A bound creature has Disadvantage on attack rolls, and it has the Restrained condition if the Manacles are fastened to a fixed chain or hook. Escaping takes an action and a successful DC 20 Dexterity (Sleight of Hand) check; breaking them takes an action and a successful DC 25 Strength (Athletics) check. The Manacles come with a key; without it, a creature using Thieves' Tools can pick their lock with a DC 15 Dexterity (Sleight of Hand) check."
+}

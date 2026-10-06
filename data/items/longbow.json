@@ -1,0 +1,29 @@
+{
+  "id": "longbow",
+  "name": "Longbow",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 2,
+  "cost_gp": 50,
+  "weapon": {
+    "kind": "martial_ranged",
+    "damage": "1d8",
+    "damage_type": "piercing",
+    "properties": [
+      "ammunition",
+      "range",
+      "heavy",
+      "two_handed"
+    ],
+    "range": [
+      150,
+      600
+    ],
+    "ammunition": "arrow",
+    "mastery": "slow"
+  },
+  "summary": "Martial ranged weapon: 1d8 Piercing, Ammunition (150/600 ft, Arrow), Heavy, Two-Handed; mastery Slow."
+}

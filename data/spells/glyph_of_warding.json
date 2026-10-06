@@ -1,0 +1,65 @@
+{
+  "id": "glyph_of_warding",
+  "name": "Glyph of Warding",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "cleric",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "hour",
+    "amount": 1
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "powdered diamond worth 200+ GP, which the spell consumes",
+    "m_cost_gp": 200,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "until_dispelled",
+    "until_triggered": true
+  },
+  "targets": {
+    "kind": "object",
+    "description": "a surface or a closable object; the glyph covers an area up to 10 feet across"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "5d8",
+      "type_choice": [
+        "acid",
+        "cold",
+        "fire",
+        "lightning",
+        "thunder"
+      ]
+    }
+  ],
+  "upcast": {
+    "damage": "1d8",
+    "text": "An Explosive Rune deals 1d8 more damage per slot level above 3; a Spell Glyph can store a spell of any level up to the slot level used."
+  },
+  "tags": [
+    "damage",
+    "utility"
+  ],
+  "summary": "Hidden glyph that, when triggered, explodes for 5d8 damage (Dex save half) or releases a stored spell.",
+  "text": "Inscribe a glyph on a surface (such as a tabletop or a patch of floor) or inside an object that can be closed (such as a book or chest). The glyph covers an area no more than 10 feet across. If the surface or object is moved more than 10 feet from where you cast the spell, the glyph breaks and the spell ends without triggering. The glyph is almost invisible; noticing it takes a successful Wisdom (Perception) check against your spell save DC. Trigger: you set it when casting. Typical triggers on a surface are touching or stepping on the glyph, removing something covering it, or coming within a set distance of it; inside an object, opening the object or seeing the glyph. You can restrict the trigger to certain creature types (Aberrations, for example) and name creatures that won't set it off, such as those who say a password. The spell ends once the glyph triggers. Choose one kind of glyph. Explosive Rune: when triggered it erupts in a 20-foot-radius Sphere centered on the glyph; each creature there makes a Dexterity saving throw, taking 5d8 Acid, Cold, Fire, Lightning or Thunder damage (chosen when you create the glyph) on a failure or half as much on a success. Spell Glyph: as part of creating the glyph, cast a prepared spell of level 3 or lower that targets a single creature or an area; it has no effect yet. When the glyph triggers, the stored spell takes effect: a targeted spell targets the creature that triggered it, an area spell is centered on that creature, summoned Hostile creatures or harmful objects or traps appear as close to the intruder as possible and attack it, and a spell that needs Concentration lasts its full duration. Casting time 1 hour. Using a Higher-Level Spell Slot: an Explosive Rune deals 1d8 more damage for each slot level above 3, and a Spell Glyph can hold a spell of any level up to the slot level you use."
+}

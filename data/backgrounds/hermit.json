@@ -1,0 +1,61 @@
+{
+  "id": "hermit",
+  "name": "Hermit",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You lived in seclusion, tending to the sick and pondering the mysteries of existence.",
+  "ability_scores": [
+    "con",
+    "wis",
+    "cha"
+  ],
+  "feat": "healer",
+  "skills": [
+    "medicine",
+    "religion"
+  ],
+  "tool": {
+    "id": "herbalism_kit"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "quarterstaff",
+          "qty": 1
+        },
+        {
+          "id": "herbalism_kit",
+          "qty": 1
+        },
+        {
+          "id": "bedroll",
+          "qty": 1
+        },
+        {
+          "id": "book",
+          "qty": 1
+        },
+        {
+          "id": "lamp",
+          "qty": 1
+        },
+        {
+          "id": "oil",
+          "qty": 3
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 16
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

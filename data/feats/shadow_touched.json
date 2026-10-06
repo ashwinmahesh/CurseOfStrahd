@@ -1,0 +1,67 @@
+{
+  "id": "shadow_touched",
+  "name": "Shadow Touched",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Int, Wis or Cha; Invisibility and a level 1 Illusion or Necromancy spell, each free once per Long Rest.",
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "shadow_magic",
+      "name": "Shadow Magic",
+      "summary": "Invisibility and a level 1 Illusion or Necromancy spell are always prepared; each is free once per Long Rest.",
+      "text": "Choose one level 1 spell from the Illusion or Necromancy school. You always have that spell and Invisibility prepared. You can cast each of them once without a spell slot, regaining the free casting of each when you finish a Long Rest, and you can also cast them using spell slots of the appropriate level. Their spellcasting ability is the ability you increased with this feat.",
+      "action": "passive",
+      "choice": {
+        "id": "shadow_spell",
+        "kind": "spell",
+        "count": 1,
+        "filter": {
+          "level": 1,
+          "school": [
+            "illusion",
+            "necromancy"
+          ]
+        }
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "invisibility",
+          "ability": "@increased",
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          },
+          "always_prepared": true
+        },
+        {
+          "stat": "spell",
+          "value": "@shadow_spell",
+          "ability": "@increased",
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          },
+          "always_prepared": true
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

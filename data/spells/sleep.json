@@ -1,0 +1,65 @@
+{
+  "id": "sleep",
+  "name": "Sleep",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 5
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of sand or rose petals"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "creatures of your choice in the Sphere"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "incapacitated",
+    "unconscious"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "incapacitated"
+      }
+    },
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "unconscious"
+      }
+    }
+  ],
+  "tags": [
+    "control"
+  ],
+  "summary": "Creatures in a 5-foot-radius Sphere fail Wisdom saves to become Incapacitated, then Unconscious.",
+  "text": "Each creature of your choice in a 5-foot-radius Sphere centered on a point within range makes a Wisdom saving throw. On a failure it has the Incapacitated condition until the end of its next turn, when it repeats the save; if it fails again, it has the Unconscious condition for the rest of the duration. The spell ends on a creature if it takes damage or if someone within 5 feet of it takes an action to shake it awake. Creatures that don't sleep, such as elves, and creatures with Immunity to the Exhaustion condition automatically succeed on these saves. Concentration, up to 1 minute."
+}

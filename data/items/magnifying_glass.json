@@ -1,0 +1,13 @@
+{
+  "id": "magnifying_glass",
+  "name": "Magnifying Glass",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "summary": "Advantage on checks to appraise or inspect a highly detailed item.",
+  "text": "You have Advantage on ability checks made to appraise or inspect a highly detailed item. It can also start a fire, which needs light as bright as sunlight, tinder, and about 5 minutes."
+}

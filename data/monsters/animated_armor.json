@@ -1,0 +1,85 @@
+{
+  "id": "animated_armor",
+  "name": "Animated Armor",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "construct",
+  "alignment": "unaligned",
+  "ac": 18,
+  "initiative": 2,
+  "hp": {
+    "average": 33,
+    "dice": "6d8+6"
+  },
+  "speed": {
+    "walk": 25
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 11,
+    "con": 13,
+    "int": 1,
+    "wis": 3,
+    "cha": 1
+  },
+  "immunities": [
+    "poison",
+    "psychic"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "deafened",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 6,
+  "languages": [],
+  "cr": 1,
+  "xp": 200,
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "slam",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Slam attacks."
+    },
+    {
+      "id": "slam",
+      "name": "Slam",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Pounds a target with an armored fist."
+    }
+  ],
+  "regions": [
+    "death_house"
+  ],
+  "ai_profile": "mindless",
+  "summary": "Clanks straight at the nearest intruder and hammers it with two slams a turn; never retreats."
+}

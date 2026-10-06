@@ -1,0 +1,53 @@
+{
+  "id": "boon_of_irresistible_offense",
+  "name": "Boon of Irresistible Offense",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex (max 30); your physical damage ignores Resistance, and natural 20s add damage equal to that score.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "overcome_defenses",
+      "name": "Overcome Defenses",
+      "summary": "Bludgeoning, Piercing and Slashing damage you deal always ignores Resistance.",
+      "text": "The Bludgeoning, Piercing and Slashing damage you deal always ignores Resistance.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "overcome_defenses"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "overwhelming_strike",
+      "name": "Overwhelming Strike",
+      "summary": "On a natural 20 attack roll, deal extra damage equal to the ability score this feat increased.",
+      "text": "When you roll a 20 on the d20 for an attack roll, you can deal extra damage to the target equal to the ability score you increased with this feat. The extra damage is of the same type as the attack's damage.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "overwhelming_strike"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

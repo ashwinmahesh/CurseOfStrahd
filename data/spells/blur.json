@@ -1,0 +1,50 @@
+{
+  "id": "blur",
+  "name": "Blur",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "illusion",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "modifiers": [
+          {
+            "stat": "attacked_with",
+            "value": "disadvantage"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "defense"
+  ],
+  "summary": "Attack rolls against you have Disadvantage unless the attacker has Blindsight or Truesight.",
+  "text": "Your body becomes blurred. Until the spell ends, attack rolls against you have Disadvantage. An attacker that perceives you with Blindsight or Truesight is unaffected."
+}

@@ -1,0 +1,40 @@
+{
+  "id": "sanctuary",
+  "name": "Sanctuary",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "abjuration",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a shard of glass from a mirror"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "wis",
+  "save_success": "special",
+  "tags": [
+    "defense"
+  ],
+  "summary": "Ward a creature: anyone targeting it with an attack or damaging spell must pass a Wisdom save or pick another target.",
+  "text": "Ward one creature within range for 1 minute. Whenever a creature targets the warded creature with an attack roll or a damaging spell, the attacker makes a Wisdom saving throw; on a failure it must choose a new target or lose the attack or spell. The ward doesn't protect against areas of effect. The spell ends if the warded creature makes an attack roll, casts a spell or deals damage."
+}

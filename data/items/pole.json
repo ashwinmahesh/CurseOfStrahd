@@ -1,0 +1,13 @@
+{
+  "id": "pole",
+  "name": "Pole",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 7,
+  "cost_gp": 0.05,
+  "summary": "A 10-ft pole; touch things 10 ft away or vault for Advantage on jump checks.",
+  "text": "The Pole is 10 feet long, letting you touch something up to 10 feet away. When a High Jump or Long Jump calls for a Strength (Athletics) check, you can vault with the Pole to have Advantage on that check."
+}

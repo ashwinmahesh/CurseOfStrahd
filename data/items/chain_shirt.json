@@ -1,0 +1,21 @@
+{
+  "id": "chain_shirt",
+  "name": "Chain Shirt",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "armor",
+  "weight_lb": 20,
+  "cost_gp": 50,
+  "armor": {
+    "kind": "medium",
+    "base_ac": 13,
+    "dex_cap": 2,
+    "stealth_disadvantage": false,
+    "don_minutes": 5,
+    "doff_minutes": 1
+  },
+  "summary": "Medium armor: AC 13 + Dex modifier (max 2).",
+  "text": "Medium armor. While you wear it, your base Armor Class is 13 plus your Dexterity modifier, to a maximum of +2. Putting it on takes 5 minutes and taking it off takes 1 minute. Without training in Medium armor, you have Disadvantage on every D20 Test that uses Strength or Dexterity and you can't cast spells."
+}

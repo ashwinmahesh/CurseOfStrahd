@@ -1,0 +1,24 @@
+{
+  "id": "arcane_focus_staff",
+  "name": "Arcane Focus (Staff)",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "focus",
+  "weight_lb": 4,
+  "cost_gp": 5,
+  "focus": "arcane",
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d6",
+    "damage_type": "bludgeoning",
+    "properties": [
+      "versatile"
+    ],
+    "versatile": "1d8",
+    "mastery": "topple"
+  },
+  "summary": "Spellcasting Focus for Sorcerers, Warlocks and Wizards; also a Quarterstaff.",
+  "text": "An Arcane Focus bejeweled or carved to channel arcane magic. Sorcerers, Warlocks and Wizards can use it as a Spellcasting Focus. It also counts as a Quarterstaff (1d6 Bludgeoning, Versatile 1d8, mastery Topple)."
+}

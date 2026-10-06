@@ -1,0 +1,35 @@
+{
+  "id": "druidcraft",
+  "name": "Druidcraft",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "transmutation",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Small nature magic: forecast the weather, make a bud bloom, a harmless sensory effect, or light/snuff a flame.",
+  "text": "Choose one of these effects within range. Weather Sensor: a Tiny, harmless sensory display (for example a golden orb for clear skies, a little cloud for rain, or drifting snowflakes for snow) forecasts the weather at your location for the next 24 hours; it lasts 1 round. Bloom: a flower, seed pod or leaf bud instantly opens. Sensory Effect: a harmless sensation such as falling leaves, tiny phantom fairies, a soft breeze, an animal sound or a faint skunk smell, filling no more than a 5-foot Cube. Fire Play: light or put out a candle, a torch or a campfire."
+}

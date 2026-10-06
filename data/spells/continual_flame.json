@@ -1,0 +1,50 @@
+{
+  "id": "continual_flame",
+  "name": "Continual Flame",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "evocation",
+  "classes": [
+    "cleric",
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "ruby dust worth 50+ GP, consumed by the spell",
+    "m_cost_gp": 50,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "until_dispelled"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1
+  },
+  "effects": [
+    {
+      "effect": "light",
+      "params": {
+        "bright": 20,
+        "dim": 20
+      }
+    }
+  ],
+  "tags": [
+    "light",
+    "utility"
+  ],
+  "summary": "An object sheds a heatless, lasting flame: Bright Light in a 20-ft radius and Dim Light 20 ft beyond.",
+  "text": "A flame springs from an object you touch, shedding Bright Light in a 20-foot radius and Dim Light for another 20 feet. It looks like ordinary fire but gives off no heat and uses no fuel. It lasts until dispelled; it can be covered or hidden, but not smothered or put out."
+}

@@ -1,0 +1,47 @@
+{
+  "id": "noble",
+  "name": "Noble",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You were raised in wealth and privilege, schooled in history, etiquette and how to command others.",
+  "ability_scores": [
+    "str",
+    "int",
+    "cha"
+  ],
+  "feat": "skilled",
+  "skills": [
+    "history",
+    "persuasion"
+  ],
+  "tool": {
+    "id": "dice_set",
+    "choice": "gaming_set"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dice_set",
+          "qty": 1,
+          "choice": "gaming_set"
+        },
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "gp": 29
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

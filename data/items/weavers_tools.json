@@ -1,0 +1,31 @@
+{
+  "id": "weavers_tools",
+  "name": "Weaver's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 5,
+  "cost_gp": 1,
+  "tool": {
+    "kind": "artisan",
+    "ability": "dex",
+    "utilize": "Repair a tear in clothing (DC 10), or stitch a Tiny design (DC 10).",
+    "craft": [
+      "padded_armor",
+      "basket",
+      "bedroll",
+      "blanket",
+      "fine_clothes",
+      "net",
+      "robe",
+      "rope",
+      "sack",
+      "string",
+      "tent",
+      "travelers_clothes"
+    ]
+  },
+  "summary": "Artisan's Tools (Dexterity): repair a tear in clothing (DC 10), or stitch a Tiny design (DC 10)."
+}

@@ -1,0 +1,50 @@
+{
+  "id": "charger",
+  "name": "Charger",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "str": 13,
+      "dex": 13
+    },
+    "text": "Level 4+, Strength or Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; Dash grants +10 feet, and a 10-foot straight charge adds 1d8 damage or a 10-foot push.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "improved_dash",
+      "name": "Improved Dash",
+      "summary": "Your Speed increases by 10 feet when you take the Dash action.",
+      "text": "When you take the Dash action, your Speed increases by 10 feet for that action.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "improved_dash"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "charge_attack",
+      "name": "Charge Attack",
+      "summary": "Once per turn, after moving 10+ ft straight at a target and hitting in melee: +1d8 damage or push 10 ft.",
+      "text": "If you move at least 10 feet in a straight line toward a target immediately before hitting it with a melee attack roll as part of the Attack action, choose one effect: add 1d8 to the attack's damage roll, or push the target up to 10 feet away from you if it is no more than one size larger than you. You can use this benefit only once on each of your turns.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

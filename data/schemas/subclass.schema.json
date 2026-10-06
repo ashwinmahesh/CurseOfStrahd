@@ -10,12 +10,32 @@
     "class": {"$ref": "common.schema.json#/$defs/id"},
     "source": {"$ref": "common.schema.json#/$defs/source"},
     "summary": {"type": "string"},
-    "always_prepared_spells": {"type": "object", "description": "Class level -> array of spell ids."},
+    "role_tags": {"type": "array", "items": {"type": "string"}},
+    "always_prepared": {"type": "object", "description": "Class level -> spell ids always prepared from that level (domain spells).", "additionalProperties": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}}},
+    "spellcasting": {
+      "type": "object",
+      "description": "Subclasses that add spellcasting (Eldritch Knight, Arcane Trickster).",
+      "additionalProperties": false,
+      "required": ["ability", "progression", "list"],
+      "properties": {
+        "ability": {"$ref": "common.schema.json#/$defs/ability"},
+        "progression": {"type": "string", "enum": ["third"]},
+        "list": {"type": "string"},
+        "focus": {"type": "string"},
+        "cantrips": {"type": "array", "minItems": 20, "maxItems": 20, "items": {"type": "integer"}},
+        "prepared": {"type": "array", "minItems": 20, "maxItems": 20, "items": {"type": "integer"}},
+        "fixed_cantrips": {"type": "array", "items": {"type": "string"}, "description": "Cantrips always known (Arcane Trickster: Mage Hand)."},
+        "swap_prepared": {"type": "string", "enum": ["long_rest", "level_up"]}
+      }
+    },
+    "table": {"type": "object", "description": "Extra columns by class level, e.g. Superiority Dice, Psionic Energy Dice.", "additionalProperties": {"type": "object", "required": ["name", "values"], "properties": {"name": {"type": "string"}, "values": {"type": "array", "minItems": 20, "maxItems": 20}}}},
+    "resources": {"type": "array", "items": {"type": "object", "required": ["id", "name", "recharge"], "properties": {"id": {"type": "string"}, "name": {"type": "string"}, "recharge": {"$ref": "common.schema.json#/$defs/recharge"}, "table": {"type": "string"}, "max": {"$ref": "common.schema.json#/$defs/formula"}, "min": {"type": "integer"}, "die_table": {"type": "string"}, "from_level": {"type": "integer"}}}},
     "features": {
       "type": "array",
       "items": {
         "type": "object",
         "required": ["level", "feature"],
+        "additionalProperties": false,
         "properties": {"level": {"type": "integer", "minimum": 1, "maximum": 20}, "feature": {"$ref": "common.schema.json#/$defs/feature"}}
       }
     }

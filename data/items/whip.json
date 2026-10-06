@@ -1,0 +1,22 @@
+{
+  "id": "whip",
+  "name": "Whip",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 2,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d4",
+    "damage_type": "slashing",
+    "properties": [
+      "finesse",
+      "reach"
+    ],
+    "mastery": "slow"
+  },
+  "summary": "Martial melee weapon: 1d4 Slashing, Finesse, Reach; mastery Slow."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "glaive",
+  "name": "Glaive",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 6,
+  "cost_gp": 20,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d10",
+    "damage_type": "slashing",
+    "properties": [
+      "heavy",
+      "reach",
+      "two_handed"
+    ],
+    "mastery": "graze"
+  },
+  "summary": "Martial melee weapon: 1d10 Slashing, Heavy, Reach, Two-Handed; mastery Graze."
+}

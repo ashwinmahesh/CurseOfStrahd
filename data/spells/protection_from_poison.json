@@ -1,0 +1,68 @@
+{
+  "id": "protection_from_poison",
+  "name": "Protection from Poison",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "druid",
+    "paladin",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "effects": [
+    {
+      "effect": "custom",
+      "params": {
+        "id": "end_condition",
+        "count": 1,
+        "conditions": [
+          "poisoned"
+        ]
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "poison"
+          },
+          {
+            "stat": "advantage",
+            "on": "save_vs:poisoned"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "restoration",
+    "defense"
+  ],
+  "summary": "End Poisoned on a creature; for 1 hour it resists Poison damage and has Advantage on saves vs. Poisoned.",
+  "text": "Touch a creature to end the Poisoned condition on it. For 1 hour the target has Advantage on saving throws to avoid or end the Poisoned condition, and it has Resistance to Poison damage."
+}

@@ -1,0 +1,125 @@
+{
+  "id": "feign_death",
+  "name": "Feign Death",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry."
+  },
+  "level": 3,
+  "school": "necromancy",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of graveyard dirt"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a willing creature"
+  },
+  "conditions": [
+    "blinded",
+    "incapacitated"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "blinded"
+      }
+    },
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "incapacitated"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "value": 0
+          },
+          {
+            "stat": "resistance",
+            "value": "acid"
+          },
+          {
+            "stat": "resistance",
+            "value": "bludgeoning"
+          },
+          {
+            "stat": "resistance",
+            "value": "cold"
+          },
+          {
+            "stat": "resistance",
+            "value": "fire"
+          },
+          {
+            "stat": "resistance",
+            "value": "force"
+          },
+          {
+            "stat": "resistance",
+            "value": "lightning"
+          },
+          {
+            "stat": "resistance",
+            "value": "necrotic"
+          },
+          {
+            "stat": "resistance",
+            "value": "piercing"
+          },
+          {
+            "stat": "resistance",
+            "value": "poison"
+          },
+          {
+            "stat": "resistance",
+            "value": "radiant"
+          },
+          {
+            "stat": "resistance",
+            "value": "slashing"
+          },
+          {
+            "stat": "resistance",
+            "value": "thunder"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "poisoned"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "defense",
+    "utility"
+  ],
+  "summary": "A willing creature appears dead for 1 hour: Blinded, Incapacitated, Speed 0, resists all but Psychic damage.",
+  "text": "Touch a willing creature to put it into a deathlike trance for 1 hour. To outward inspection and to spells that check its status, the target looks dead. While the spell lasts, the target has the Blinded and Incapacitated conditions and a Speed of 0, it has Resistance to all damage except Psychic damage, and it has Immunity to the Poisoned condition. Can be cast as a Ritual."
+}

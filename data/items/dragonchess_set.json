@@ -1,0 +1,17 @@
+{
+  "id": "dragonchess_set",
+  "name": "Dragonchess Set",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 0,
+  "cost_gp": 1,
+  "tool": {
+    "kind": "gaming_set",
+    "ability": "wis",
+    "utilize": "Spot whether someone is cheating (DC 10), or win a game (DC 20)."
+  },
+  "summary": "Gaming Set (Wisdom): spot whether someone is cheating (DC 10), or win a game (DC 20)."
+}

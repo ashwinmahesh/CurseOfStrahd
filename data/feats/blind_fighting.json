@@ -1,0 +1,31 @@
+{
+  "id": "blind_fighting",
+  "name": "Blind Fighting",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "You have Blindsight with a range of 10 feet.",
+  "benefits": [
+    {
+      "id": "blind_fighting",
+      "name": "Blind Fighting",
+      "summary": "Blindsight out to 10 feet.",
+      "text": "You have Blindsight with a range of 10 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "sense",
+          "kind": "blindsight",
+          "value": 10
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

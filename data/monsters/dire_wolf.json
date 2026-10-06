@@ -1,0 +1,84 @@
+{
+  "id": "dire_wolf",
+  "name": "Dire Wolf",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "large",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 14,
+  "initiative": 2,
+  "hp": {
+    "average": 22,
+    "dice": "3d10+6"
+  },
+  "speed": {
+    "walk": 50
+  },
+  "abilities": {
+    "str": 17,
+    "dex": 15,
+    "con": 15,
+    "int": 3,
+    "wis": 12,
+    "cha": 7
+  },
+  "skills": {
+    "perception": 5,
+    "stealth": 4
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 15,
+  "languages": [],
+  "cr": 1,
+  "xp": 200,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "action": "passive",
+      "summary": "Advantage on attack rolls against a target that has a non-Incapacitated ally of this creature within 5 ft.",
+      "text": "The wolf has Advantage on an attack roll against a creature when at least one of the wolf's allies is within 5 feet of that creature and that ally doesn't have the Incapacitated condition.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "pack_tactics"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "1d10+3",
+          "type": "piercing"
+        }
+      ],
+      "conditions": [
+        "prone"
+      ],
+      "summary": "Bites a target; a Large or smaller target is knocked Prone.",
+      "text": "Hit: 8 (1d10 + 3) Piercing damage. If the target is Large or smaller, it has the Prone condition."
+    }
+  ],
+  "regions": [
+    "svalich_road"
+  ],
+  "ai_profile": "pack_hunter",
+  "summary": "A huge, fast wolf that hunts with its pack, dragging prey Prone so its packmates strike easily."
+}

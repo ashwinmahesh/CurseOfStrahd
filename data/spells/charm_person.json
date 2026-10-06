@@ -1,0 +1,59 @@
+{
+  "id": "charm_person",
+  "name": "Charm Person",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "druid",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a Humanoid you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed"
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "social"
+  ],
+  "summary": "A Humanoid fails a Wisdom save and is Charmed by you and Friendly for 1 hour, or until harmed.",
+  "text": "One Humanoid you can see within range makes a Wisdom saving throw, with Advantage if you or your allies are fighting it. On a failure it has the Charmed condition for 1 hour, ending early if you or your allies damage it, and it is Friendly toward you while Charmed. When the spell ends, the creature knows you charmed it. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1."
+}

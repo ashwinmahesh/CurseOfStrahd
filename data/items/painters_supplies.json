@@ -1,0 +1,25 @@
+{
+  "id": "painters_supplies",
+  "name": "Painter's Supplies",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 5,
+  "cost_gp": 10,
+  "tool": {
+    "kind": "artisan",
+    "ability": "wis",
+    "utilize": "Paint a recognizable picture of something you have seen (DC 10).",
+    "craft": [
+      "druidic_focus_mistletoe",
+      "druidic_focus_staff",
+      "druidic_focus_wand",
+      "holy_symbol_amulet",
+      "holy_symbol_emblem",
+      "holy_symbol_reliquary"
+    ]
+  },
+  "summary": "Artisan's Tools (Wisdom): paint a recognizable picture of something you have seen (DC 10)."
+}

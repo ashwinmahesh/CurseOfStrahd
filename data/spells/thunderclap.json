@@ -1,0 +1,52 @@
+{
+  "id": "thunderclap",
+  "name": "Thunderclap",
+  "source": {
+    "book": "PHB2024"
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "bard",
+    "druid",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 5
+  },
+  "components": {
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area",
+    "description": "Each creature in a 5-foot Emanation originating from you."
+  },
+  "save": "con",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "1d6",
+      "type": "thunder"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Each creature within 5 feet of you fails a Con save to take 1d6 Thunder damage; audible 100 feet away.",
+  "text": "Each creature in a 5-foot Emanation originating from you makes a Constitution saving throw, taking 1d6 Thunder damage on a failure. The thunderous boom can be heard up to 100 feet away. The damage becomes 2d6 at character level 5, 3d6 at level 11 and 4d6 at level 17."
+}

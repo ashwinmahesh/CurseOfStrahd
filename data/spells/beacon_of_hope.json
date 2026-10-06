@@ -1,0 +1,62 @@
+{
+  "id": "beacon_of_hope",
+  "name": "Beacon of Hope",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "abjuration",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "description": "any number of creatures within range"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "advantage",
+            "on": "save:wis"
+          },
+          {
+            "stat": "advantage",
+            "on": "death_save"
+          },
+          {
+            "stat": "flag",
+            "value": "max_healing_received",
+            "text": "Healing received restores the maximum possible Hit Points."
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "healing"
+  ],
+  "summary": "Any number of creatures gain Advantage on Wisdom and Death Saving Throws and get maximum healing.",
+  "text": "Choose any number of creatures within 30 feet. Until the spell ends, each of them has Advantage on Wisdom saving throws and Death Saving Throws, and whenever one of them regains Hit Points from healing, it regains the highest amount possible instead of rolling."
+}

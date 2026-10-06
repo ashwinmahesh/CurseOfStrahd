@@ -1,0 +1,90 @@
+{
+  "id": "life_domain",
+  "name": "Life Domain",
+  "class": "cleric",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "A master healer: every slot-powered heal restores extra Hit Points, and Preserve Life rescues the Bloodied.",
+  "role_tags": [
+    "healer"
+  ],
+  "always_prepared": {
+    "3": [
+      "aid",
+      "bless",
+      "cure_wounds",
+      "lesser_restoration"
+    ],
+    "5": [
+      "mass_healing_word",
+      "revivify"
+    ],
+    "7": [
+      "aura_of_life",
+      "death_ward"
+    ],
+    "9": [
+      "greater_restoration",
+      "mass_cure_wounds"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "disciple_of_life",
+        "name": "Disciple of Life",
+        "summary": "Spells cast with a slot heal an extra 2 + the slot's level.",
+        "text": "When a spell you cast with a spell slot restores Hit Points to a creature, it regains an extra 2 + the slot's level Hit Points that turn.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "healing_bonus",
+            "value": "2+slot_level"
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "life_domain_spells",
+        "name": "Life Domain Spells",
+        "summary": "Always prepared: Aid, Bless, Cure Wounds, Lesser Restoration; more at levels 5, 7 and 9.",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "preserve_life",
+        "name": "Preserve Life",
+        "summary": "Channel Divinity: divide 5 × Cleric level Hit Points among Bloodied creatures within 30 feet (up to half their maximum).",
+        "text": "As a Magic action, spend a Channel Divinity use to restore Hit Points equal to five times your Cleric level, divided as you like among Bloodied creatures within 30 feet (you included). A creature can't be raised above half its Hit Point maximum this way.",
+        "implemented": "engine",
+        "action": "action",
+        "uses_resource": "channel_divinity"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "blessed_healer",
+        "name": "Blessed Healer",
+        "summary": "When your slot-powered spell heals someone else, you regain 2 + the slot's level.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "supreme_healing",
+        "name": "Supreme Healing",
+        "summary": "Healing dice from your spells and Channel Divinity always roll their maximum.",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

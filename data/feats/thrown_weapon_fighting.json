@@ -1,0 +1,33 @@
+{
+  "id": "thrown_weapon_fighting",
+  "name": "Thrown Weapon Fighting",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "+2 damage when you hit with a ranged attack using a Thrown weapon.",
+  "benefits": [
+    {
+      "id": "thrown_weapon_fighting",
+      "name": "Thrown Weapon Fighting",
+      "summary": "+2 damage on ranged hits with Thrown weapons.",
+      "text": "When you hit with a ranged attack roll using a weapon that has the Thrown property, you gain a +2 bonus to the damage roll.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "damage",
+          "value": 2,
+          "when": {
+            "weapon": "thrown"
+          }
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "purify_food_and_drink",
+  "name": "Purify Food and Drink",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "transmutation",
+  "classes": [
+    "cleric",
+    "druid",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 10
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 5
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area",
+    "description": "nonmagical food and drink"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Removes poison and rot from nonmagical food and drink in a 5-foot-radius Sphere.",
+  "text": "All nonmagical food and drink in a 5-foot-radius Sphere centered on a point within range is cleansed of poison and rot. Can be cast as a Ritual."
+}

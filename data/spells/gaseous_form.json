@@ -1,0 +1,92 @@
+{
+  "id": "gaseous_form",
+  "name": "Gaseous Form",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bit of gauze"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a willing creature"
+  },
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "value": 0
+          },
+          {
+            "stat": "speed_set",
+            "kind": "fly",
+            "value": 10
+          },
+          {
+            "stat": "resistance",
+            "value": "bludgeoning"
+          },
+          {
+            "stat": "resistance",
+            "value": "piercing"
+          },
+          {
+            "stat": "resistance",
+            "value": "slashing"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "prone"
+          },
+          {
+            "stat": "advantage",
+            "on": "save:str"
+          },
+          {
+            "stat": "advantage",
+            "on": "save:dex"
+          },
+          {
+            "stat": "advantage",
+            "on": "save:con"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "defense",
+    "movement"
+  ],
+  "summary": "A willing creature becomes mist: 10-foot Fly Speed, resists weapon damage, can't attack or cast spells.",
+  "text": "A willing creature you touch turns into a misty cloud, along with everything it is wearing and carrying, until the spell ends. The spell ends for the target if it drops to 0 Hit Points or takes a Magic action to end it on itself. In this form its only way of moving is a Fly Speed of 10 feet, and it can hover. It can enter and occupy another creature's space and pass through narrow openings, but it treats liquids as solid surfaces. It has Resistance to Bludgeoning, Piercing and Slashing damage, Immunity to the Prone condition, and Advantage on Strength, Dexterity and Constitution saving throws. It can't talk, manipulate objects, attack or cast spells, and anything it was carrying or holding can't be dropped, used or otherwise interacted with. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 3."
+}

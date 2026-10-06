@@ -1,0 +1,40 @@
+{
+  "id": "tongues",
+  "name": "Tongues",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "cleric",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "m": "a miniature ziggurat"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "tags": [
+    "communication"
+  ],
+  "summary": "For 1 hour a creature understands any spoken or signed language, and anyone with a language understands it.",
+  "text": "For 1 hour, the creature you touch understands every spoken or signed language it hears or sees. In addition, when it speaks or signs, any creature that knows at least one language and can hear the speech or see the signing understands it."
+}

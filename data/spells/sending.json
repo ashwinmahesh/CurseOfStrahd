@@ -1,0 +1,39 @@
+{
+  "id": "sending",
+  "name": "Sending",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "cleric",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "unlimited"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a copper wire"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you have met, or one described to you by someone who has met it"
+  },
+  "tags": [
+    "communication"
+  ],
+  "summary": "Send a 25-word telepathic message to a known creature at any distance; it can reply at once.",
+  "text": "Send a message of 25 words or fewer to a creature you have met, or to one described to you by someone who has met it. The target hears it in its mind, knows you are the sender if it knows you, understands the meaning, and can answer the same way right away. Distance doesn't matter and the message can reach other planes, but if the target is on a different plane than you, there is a 5 percent chance the message doesn't arrive; you know if delivery fails. After receiving your message, a creature can block you from reaching it with this spell for 8 hours; if you try to send it another message during that time, you learn you are blocked and the spell fails."
+}

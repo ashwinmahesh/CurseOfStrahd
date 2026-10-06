@@ -1,0 +1,32 @@
+{
+  "id": "skilled",
+  "name": "Skilled",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "origin",
+  "repeatable": true,
+  "summary": "Gain proficiency in any combination of three skills or tools.",
+  "benefits": [
+    {
+      "id": "skilled_proficiencies",
+      "name": "Proficiencies",
+      "summary": "Gain proficiency in three skills or tools, in any mix.",
+      "text": "You gain proficiency in any combination of three skills or tools of your choice. You can take this feat more than once.",
+      "action": "passive",
+      "choice": {
+        "id": "skilled_picks",
+        "kind": "skill",
+        "count": 3,
+        "filter": {
+          "include": [
+            "skill",
+            "tool"
+          ]
+        }
+      },
+      "implemented": "data"
+    }
+  ]
+}

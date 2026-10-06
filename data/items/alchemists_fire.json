@@ -1,0 +1,33 @@
+{
+  "id": "alchemists_fire",
+  "name": "Alchemist's Fire",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 1,
+  "cost_gp": 50,
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "damage",
+      "params": {
+        "dice": "1d4",
+        "damage_type": "fire",
+        "save": "dex",
+        "dc": "8+mod:dex+pb",
+        "range": 20,
+        "target": "creature"
+      }
+    },
+    {
+      "effect": "custom",
+      "params": {
+        "id": "burning"
+      }
+    }
+  ],
+  "summary": "Thrown flask: Dex save or 1d4 Fire damage and the target starts burning.",
+  "text": "When you take the Attack action, you can swap one of your attacks for throwing this flask at a creature or object you can see within 20 feet. The target makes a Dexterity saving throw against DC 8 + your Dexterity modifier + your Proficiency Bonus. On a failure it takes 1d4 Fire damage and starts burning: a burning creature or object takes 1d4 Fire damage at the start of each of its turns. The fire goes out if it is doused, submerged or smothered, or if the burning creature uses an action to give itself the Prone condition and roll on the ground. The flask is used up."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "poisoners_kit",
+  "name": "Poisoner's Kit",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 2,
+  "cost_gp": 50,
+  "tool": {
+    "kind": "other",
+    "ability": "int",
+    "utilize": "Tell whether an object has been poisoned (DC 10).",
+    "craft": [
+      "basic_poison"
+    ]
+  },
+  "summary": "Tool (Intelligence): tell whether an object has been poisoned (DC 10)."
+}

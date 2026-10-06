@@ -1,0 +1,46 @@
+{
+  "id": "boon_of_fortitude",
+  "name": "Boon of Fortitude",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); +40 Hit Point maximum, and extra healing equal to your Constitution modifier.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "fortified_health",
+      "name": "Fortified Health",
+      "summary": "Hit Point maximum +40; once per turn, add your Con modifier to Hit Points you regain.",
+      "text": "Your Hit Point maximum increases by 40. In addition, whenever you regain Hit Points, you can regain extra Hit Points equal to your Constitution modifier. Once you have gained this extra healing, you can't do so again until the start of your next turn.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "hp_max",
+          "value": 40
+        },
+        {
+          "stat": "flag",
+          "value": "fortified_health"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

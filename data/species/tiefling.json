@@ -1,0 +1,219 @@
+{
+  "id": "tiefling",
+  "name": "Tiefling",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Folk with fiendish blood whose legacy grants a Resistance and spells, plus the Thaumaturgy cantrip.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium",
+    "small"
+  ],
+  "speed": 30,
+  "darkvision": 60,
+  "lineage_label": "Fiendish Legacy",
+  "spellcasting_ability_choice": [
+    "int",
+    "wis",
+    "cha"
+  ],
+  "traits": [
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 60 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 60
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "fiendish_legacy",
+      "name": "Fiendish Legacy",
+      "summary": "Choose Abyssal, Chthonic or Infernal: a Resistance and cantrip, then a free-cast spell at levels 3 and 5.",
+      "text": "Choose a legacy: Abyssal, Chthonic or Infernal. You gain its level 1 benefit. At character levels 3 and 5 you learn the higher-level spell your legacy lists; you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level. Intelligence, Wisdom or Charisma is your spellcasting ability for spells you cast with this trait (choose it when you choose the legacy).",
+      "action": "passive",
+      "choice": {
+        "kind": "lineage",
+        "count": 1,
+        "from": [
+          "abyssal",
+          "chthonic",
+          "infernal"
+        ]
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "otherworldly_presence",
+      "name": "Otherworldly Presence",
+      "summary": "You know Thaumaturgy, cast with the same ability as your Fiendish Legacy.",
+      "text": "You know the Thaumaturgy cantrip. When you cast it with this trait, it uses the same spellcasting ability you chose for your Fiendish Legacy.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "thaumaturgy",
+          "ability": "choice"
+        }
+      ],
+      "implemented": "data"
+    }
+  ],
+  "lineages": [
+    {
+      "id": "abyssal",
+      "name": "Abyssal",
+      "summary": "Demon-touched tieflings: Resistance to Poison and Poison Spray; Ray of Sickness at 3, Hold Person at 5.",
+      "damage_type": "poison",
+      "traits": [
+        {
+          "id": "abyssal_legacy",
+          "name": "Abyssal Legacy",
+          "summary": "Resistance to Poison damage and the Poison Spray cantrip; Ray of Sickness at level 3, Hold Person at 5.",
+          "text": "You have Resistance to Poison damage, and you know the Poison Spray cantrip. At character level 3 you learn Ray of Sickness and at level 5 you learn Hold Person; for each, you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "poison"
+            },
+            {
+              "stat": "spell",
+              "value": "poison_spray",
+              "ability": "choice"
+            },
+            {
+              "stat": "spell",
+              "value": "ray_of_sickness",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 3
+            },
+            {
+              "stat": "spell",
+              "value": "hold_person",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 5
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "chthonic",
+      "name": "Chthonic",
+      "summary": "Tieflings tied to Gehenna and Hades: Resistance to Necrotic and Chill Touch; False Life at 3, Ray of Enfeeblement at 5.",
+      "damage_type": "necrotic",
+      "traits": [
+        {
+          "id": "chthonic_legacy",
+          "name": "Chthonic Legacy",
+          "summary": "Resistance to Necrotic damage and the Chill Touch cantrip; False Life at level 3, Ray of Enfeeblement at 5.",
+          "text": "You have Resistance to Necrotic damage, and you know the Chill Touch cantrip. At character level 3 you learn False Life and at level 5 you learn Ray of Enfeeblement; for each, you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "necrotic"
+            },
+            {
+              "stat": "spell",
+              "value": "chill_touch",
+              "ability": "choice"
+            },
+            {
+              "stat": "spell",
+              "value": "false_life",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 3
+            },
+            {
+              "stat": "spell",
+              "value": "ray_of_enfeeblement",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 5
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "infernal",
+      "name": "Infernal",
+      "summary": "Devil-touched tieflings: Resistance to Fire and Fire Bolt; Hellish Rebuke at 3, Darkness at 5.",
+      "damage_type": "fire",
+      "traits": [
+        {
+          "id": "infernal_legacy",
+          "name": "Infernal Legacy",
+          "summary": "Resistance to Fire damage and the Fire Bolt cantrip; Hellish Rebuke at level 3, Darkness at 5.",
+          "text": "You have Resistance to Fire damage, and you know the Fire Bolt cantrip. At character level 3 you learn Hellish Rebuke and at level 5 you learn Darkness; for each, you always have that spell prepared, can cast it once without a spell slot (regaining that use when you finish a Long Rest), and can also cast it with any spell slots of the appropriate level.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "fire"
+            },
+            {
+              "stat": "spell",
+              "value": "fire_bolt",
+              "ability": "choice"
+            },
+            {
+              "stat": "spell",
+              "value": "hellish_rebuke",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 3
+            },
+            {
+              "stat": "spell",
+              "value": "darkness",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": 1,
+                "recharge": "long"
+              },
+              "at_level": 5
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    }
+  ]
+}

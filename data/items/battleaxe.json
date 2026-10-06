@@ -1,0 +1,22 @@
+{
+  "id": "battleaxe",
+  "name": "Battleaxe",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 4,
+  "cost_gp": 10,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d8",
+    "damage_type": "slashing",
+    "properties": [
+      "versatile"
+    ],
+    "versatile": "1d10",
+    "mastery": "topple"
+  },
+  "summary": "Martial melee weapon: 1d8 Slashing, Versatile (1d10); mastery Topple."
+}

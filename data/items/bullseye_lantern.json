@@ -1,0 +1,18 @@
+{
+  "id": "bullseye_lantern",
+  "name": "Bullseye Lantern",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "light",
+  "weight_lb": 2,
+  "cost_gp": 10,
+  "light": {
+    "bright": 60,
+    "dim": 60,
+    "hours": 6
+  },
+  "summary": "Burns Oil: Bright Light in a 60-ft Cone, Dim Light 60 ft beyond; 6 hours per flask.",
+  "text": "A Bullseye Lantern burns Oil to shed Bright Light in a 60-foot Cone and Dim Light for another 60 feet beyond that. One flask of Oil keeps it lit for 6 hours in total. Its light is a Cone, not a radius."
+}

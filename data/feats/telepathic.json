@@ -1,0 +1,53 @@
+{
+  "id": "telepathic",
+  "name": "Telepathic",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Int, Wis or Cha; speak telepathically to creatures within 60 feet, and cast Detect Thoughts free once per Long Rest.",
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "telepathic_utterance",
+      "name": "Telepathic Utterance",
+      "summary": "Speak telepathically to a creature you can see within 60 feet, in a language you know.",
+      "text": "You can speak telepathically to any creature you can see within 60 feet of you. You speak in a language you know, so the creature understands you only if it knows that language. This doesn't let the creature reply to you telepathically.",
+      "action": "free",
+      "implemented": "text"
+    },
+    {
+      "id": "telepathic_detect_thoughts",
+      "name": "Detect Thoughts",
+      "summary": "Detect Thoughts is always prepared; cast it without a slot or components once per Long Rest.",
+      "text": "You always have the Detect Thoughts spell prepared. You can cast it without a spell slot or spell components, and once you do so you can't cast it that way again until you finish a Long Rest. You can also cast it using spell slots of the appropriate level. Its spellcasting ability is the ability you increased with this feat.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "detect_thoughts",
+          "ability": "@increased",
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          },
+          "always_prepared": true
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

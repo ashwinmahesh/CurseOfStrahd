@@ -1,0 +1,49 @@
+{
+  "id": "word_of_radiance",
+  "name": "Word of Radiance",
+  "source": {
+    "book": "PHB2024"
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 5
+  },
+  "components": {
+    "v": true,
+    "m": "a sunburst token"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area",
+    "description": "Each creature of your choice that you can see in a 5-foot Emanation from you."
+  },
+  "save": "con",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "1d6",
+      "type": "radiant"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Chosen creatures you can see within 5 feet of you fail a Con save to take 1d6 Radiant damage.",
+  "text": "Burning radiance bursts from you in a 5-foot Emanation. Each creature of your choice that you can see in it makes a Constitution saving throw, taking 1d6 Radiant damage on a failure. The damage becomes 2d6 at character level 5, 3d6 at level 11 and 4d6 at level 17."
+}

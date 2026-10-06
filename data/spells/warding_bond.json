@@ -1,0 +1,71 @@
+{
+  "id": "warding_bond",
+  "name": "Warding Bond",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pair of platinum rings worth 50+ GP each, worn by you and the target for the duration",
+    "m_cost_gp": 100
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "another willing creature"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "ac",
+            "value": 1
+          },
+          {
+            "stat": "save",
+            "ability": "all",
+            "value": 1
+          },
+          {
+            "stat": "resistance",
+            "value": "all"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "custom",
+      "params": {
+        "id": "warding_bond",
+        "max_distance": 60
+      }
+    }
+  ],
+  "tags": [
+    "defense",
+    "buff"
+  ],
+  "summary": "A willing creature within 60 ft of you gets +1 AC and saves and Resistance to all damage; you share its damage.",
+  "text": "Touch another willing creature to create a mystic link between you until the spell ends. While the target is within 60 feet of you, it gains a +1 bonus to AC and saving throws and has Resistance to all damage, and each time it takes damage, you take the same amount of damage. The spell ends if you drop to 0 Hit Points, if you and the target become more than 60 feet apart, or if the spell is cast again on either of you. The material component is a pair of platinum rings worth at least 50 GP each, which you and the target must wear for the duration."
+}

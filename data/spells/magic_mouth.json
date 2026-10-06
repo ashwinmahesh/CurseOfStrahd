@@ -1,0 +1,44 @@
+{
+  "id": "magic_mouth",
+  "name": "Magic Mouth",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "jade dust worth 10+ GP, consumed by the spell",
+    "m_cost_gp": 10,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "until_dispelled"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "an object no other creature is wearing or carrying"
+  },
+  "tags": [
+    "communication",
+    "utility"
+  ],
+  "summary": "Ritual. Store a message of up to 25 words in an object, spoken aloud when a trigger you set occurs.",
+  "text": "Choose an object you can see within range that no other creature is wearing or carrying, and speak a message of 25 words or fewer into it (you can spread its delivery over as long as 10 minutes). Then set the trigger: something seen or heard within 30 feet of the object, as general or as detailed as you like (for example, any creature moving within 30 feet of it, or a silver bell ringing within 30 feet). When the trigger occurs, a magical mouth appears on the object (on its mouth, if it has one, such as a statue's) and recites the message in your voice at the volume you used. When you cast the spell, you decide whether it ends after delivering the message once or remains and repeats the message every time the trigger occurs."
+}

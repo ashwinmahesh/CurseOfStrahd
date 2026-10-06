@@ -1,0 +1,22 @@
+{
+  "id": "greatsword",
+  "name": "Greatsword",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 6,
+  "cost_gp": 50,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "2d6",
+    "damage_type": "slashing",
+    "properties": [
+      "heavy",
+      "two_handed"
+    ],
+    "mastery": "graze"
+  },
+  "summary": "Martial melee weapon: 2d6 Slashing, Heavy, Two-Handed; mastery Graze."
+}

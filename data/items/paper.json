@@ -1,0 +1,14 @@
+{
+  "id": "paper",
+  "name": "Paper",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 0.2,
+  "stackable": true,
+  "summary": "One sheet; holds about 250 handwritten words.",
+  "text": "One sheet of Paper, with room for about 250 handwritten words."
+}

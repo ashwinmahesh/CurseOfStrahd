@@ -1,0 +1,191 @@
+{
+  "id": "goliath",
+  "name": "Goliath",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Towering giant-descended folk with a giant's boon, Powerful Build, and Large Form from level 5.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium"
+  ],
+  "speed": 35,
+  "lineage_label": "Giant Ancestry",
+  "traits": [
+    {
+      "id": "giant_ancestry",
+      "name": "Giant Ancestry",
+      "summary": "Choose a giant's boon (cloud, fire, frost, hill, stone or storm); use it PB times per Long Rest.",
+      "text": "You descend from giants. Choose one supernatural boon from your ancestry: Cloud's Jaunt, Fire's Burn, Frost's Chill, Hill's Tumble, Stone's Endurance or Storm's Thunder. You can use the chosen boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+      "action": "passive",
+      "choice": {
+        "kind": "lineage",
+        "count": 1,
+        "from": [
+          "cloud_giant",
+          "fire_giant",
+          "frost_giant",
+          "hill_giant",
+          "stone_giant",
+          "storm_giant"
+        ]
+      },
+      "resource": {
+        "id": "giant_ancestry",
+        "name": "Giant Ancestry",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "large_form",
+      "name": "Large Form",
+      "summary": "From level 5, once per Long Rest: Bonus Action to become Large for 10 minutes (Adv. on Str checks, +10 ft Speed).",
+      "text": "Starting at character level 5, you can take a Bonus Action to change your size to Large, if there is enough space for you. The change lasts 10 minutes or until you end it (no action required). For that duration, you have Advantage on Strength checks and your Speed increases by 10 feet. Once you use this trait, you can't use it again until you finish a Long Rest.",
+      "action": "bonus_action",
+      "resource": {
+        "id": "large_form",
+        "name": "Large Form",
+        "max": 1,
+        "recharge": "long"
+      },
+      "effects": [
+        {
+          "effect": "modifiers",
+          "params": {
+            "modifiers": [
+              {
+                "stat": "advantage",
+                "on": "check:str"
+              },
+              {
+                "stat": "speed",
+                "value": 10
+              }
+            ],
+            "target": "self",
+            "duration": {
+              "kind": "minutes",
+              "amount": 10
+            }
+          }
+        }
+      ],
+      "implemented": "text"
+    },
+    {
+      "id": "powerful_build",
+      "name": "Powerful Build",
+      "summary": "Advantage on checks to end the Grappled condition; count as one size larger for carrying capacity.",
+      "text": "You have Advantage on any ability check you make to end the Grappled condition. You also count as one size larger when determining your carrying capacity.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "carry_size_step",
+          "value": 1
+        }
+      ],
+      "implemented": "text"
+    }
+  ],
+  "lineages": [
+    {
+      "id": "cloud_giant",
+      "name": "Cloud Giant",
+      "summary": "Bonus Action: teleport up to 30 feet to an unoccupied space you can see.",
+      "traits": [
+        {
+          "id": "clouds_jaunt",
+          "name": "Cloud's Jaunt",
+          "summary": "Bonus Action: teleport up to 30 feet to an unoccupied space you can see.",
+          "text": "As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+          "action": "bonus_action",
+          "uses_resource": "giant_ancestry",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "id": "fire_giant",
+      "name": "Fire Giant",
+      "summary": "When you hit with an attack roll and deal damage, deal an extra 1d10 Fire damage to the target.",
+      "traits": [
+        {
+          "id": "fires_burn",
+          "name": "Fire's Burn",
+          "summary": "When you hit with an attack roll and deal damage, deal an extra 1d10 Fire damage to the target.",
+          "text": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to that target. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+          "action": "free",
+          "uses_resource": "giant_ancestry",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "id": "frost_giant",
+      "name": "Frost Giant",
+      "summary": "When you hit with an attack roll and deal damage, add 1d6 Cold damage and cut its Speed by 10 ft.",
+      "traits": [
+        {
+          "id": "frosts_chill",
+          "name": "Frost's Chill",
+          "summary": "When you hit with an attack roll and deal damage, add 1d6 Cold damage and cut its Speed by 10 ft.",
+          "text": "When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to that target and reduce its Speed by 10 feet until the start of your next turn. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+          "action": "free",
+          "uses_resource": "giant_ancestry",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "id": "hill_giant",
+      "name": "Hill Giant",
+      "summary": "When you hit a Large or smaller creature with an attack roll and deal damage, knock it Prone.",
+      "traits": [
+        {
+          "id": "hills_tumble",
+          "name": "Hill's Tumble",
+          "summary": "When you hit a Large or smaller creature with an attack roll and deal damage, knock it Prone.",
+          "text": "When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+          "action": "free",
+          "uses_resource": "giant_ancestry",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "id": "stone_giant",
+      "name": "Stone Giant",
+      "summary": "Reaction when you take damage: reduce it by 1d12 + your Constitution modifier.",
+      "traits": [
+        {
+          "id": "stones_endurance",
+          "name": "Stone's Endurance",
+          "summary": "Reaction when you take damage: reduce it by 1d12 + your Constitution modifier.",
+          "text": "When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the roll and reduce the damage by that total. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+          "action": "reaction",
+          "uses_resource": "giant_ancestry",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "id": "storm_giant",
+      "name": "Storm Giant",
+      "summary": "Reaction when a creature within 60 ft damages you: deal 1d8 Thunder damage to it.",
+      "traits": [
+        {
+          "id": "storms_thunder",
+          "name": "Storm's Thunder",
+          "summary": "Reaction when a creature within 60 ft damages you: deal 1d8 Thunder damage to it.",
+          "text": "When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to that creature. You can use this boon a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+          "action": "reaction",
+          "uses_resource": "giant_ancestry",
+          "implemented": "text"
+        }
+      ]
+    }
+  ]
+}

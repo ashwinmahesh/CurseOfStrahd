@@ -1,0 +1,47 @@
+{
+  "id": "artisan",
+  "name": "Artisan",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You learned a craft in a master's workshop, along with the patience and salesmanship to sell your work.",
+  "ability_scores": [
+    "str",
+    "dex",
+    "int"
+  ],
+  "feat": "crafter",
+  "skills": [
+    "investigation",
+    "persuasion"
+  ],
+  "tool": {
+    "id": "smiths_tools",
+    "choice": "artisan"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "smiths_tools",
+          "qty": 1,
+          "choice": "artisan"
+        },
+        {
+          "id": "pouch",
+          "qty": 2
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 32
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

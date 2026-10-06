@@ -1,0 +1,60 @@
+{
+  "id": "mage_armor",
+  "name": "Mage Armor",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "abjuration",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a piece of cured leather"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a willing creature not wearing armor"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "ac_formula",
+            "base": 13,
+            "abilities": [
+              "dex"
+            ],
+            "when": {
+              "armor": "none"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "defense"
+  ],
+  "summary": "A willing creature without armor has a base AC of 13 + its Dexterity modifier for 8 hours.",
+  "text": "Touch a willing creature that isn't wearing armor. For 8 hours its base AC becomes 13 + its Dexterity modifier. The spell ends early if the creature puts on armor."
+}

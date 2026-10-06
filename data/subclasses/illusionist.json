@@ -1,0 +1,226 @@
+{
+  "id": "illusionist",
+  "name": "Illusionist",
+  "class": "wizard",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "Master of illusion: silent, longer-range illusions, phantasmal summons and illusions made real.",
+  "role_tags": [
+    "control",
+    "trickery"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "illusion_savant",
+        "name": "Illusion Savant",
+        "summary": "Add two Illusion spells of level 2 or lower to your spellbook for free.",
+        "text": "Choose two Wizard spells from the Illusion school, each level 2 or lower, and add them to your spellbook for free. Whenever you gain a new level of spell slots in this class, you can add one more Illusion Wizard spell of a level you can cast for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 2,
+          "filter": {
+            "list": "wizard",
+            "school": "illusion",
+            "max_level": 2,
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 5,
+      "feature": {
+        "id": "illusion_savant",
+        "name": "Illusion Savant (new spell level)",
+        "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "illusion",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "illusion_savant",
+        "name": "Illusion Savant (new spell level)",
+        "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "illusion",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "illusion_savant",
+        "name": "Illusion Savant (new spell level)",
+        "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "illusion",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "illusion_savant",
+        "name": "Illusion Savant (new spell level)",
+        "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "illusion",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "illusion_savant",
+        "name": "Illusion Savant (new spell level)",
+        "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "illusion",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "illusion_savant",
+        "name": "Illusion Savant (new spell level)",
+        "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "illusion",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "illusion_savant",
+        "name": "Illusion Savant (new spell level)",
+        "summary": "Add one Illusion spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "illusion",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "improved_illusions",
+        "name": "Improved Illusions",
+        "summary": "Illusion spells need no Verbal component and reach 60 feet farther; you know Minor Illusion and can cast it as a Bonus Action.",
+        "text": "You can cast Illusion spells without Verbal components, and an Illusion spell with a range of 10 feet or more gains 60 feet of range. You know Minor Illusion (if you already do, learn another Wizard cantrip); you can create both a sound and an image with one casting and cast it as a Bonus Action.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "minor_illusion",
+            "ability": "int"
+          }
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "phantasmal_creatures",
+        "name": "Phantasmal Creatures",
+        "summary": "Summon Beast and Summon Fey always prepared and castable as Illusions, once free per Long Rest at half HP.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "summon_beast",
+            "ability": "int"
+          },
+          {
+            "stat": "spell",
+            "value": "summon_fey",
+            "ability": "int"
+          }
+        ]
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "illusory_self",
+        "name": "Illusory Self",
+        "summary": "Reaction: an attack against you automatically misses; once per rest or spend a level 2+ slot.",
+        "implemented": "engine",
+        "action": "reaction"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "illusory_reality",
+        "name": "Illusory Reality",
+        "summary": "Make one nonmagical object in your illusion real for 1 minute.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "durable",
+  "name": "Durable",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Con; Advantage on Death Saving Throws, and spend a Hit Point Die as a Bonus Action to heal.",
+  "ability_increase": {
+    "from": [
+      "con"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "defy_death",
+      "name": "Defy Death",
+      "summary": "You have Advantage on Death Saving Throws.",
+      "text": "You have Advantage on Death Saving Throws.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "death_save"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "speedy_recovery",
+      "name": "Speedy Recovery",
+      "summary": "Bonus Action: expend one Hit Point Die, roll it, and regain that many Hit Points.",
+      "text": "As a Bonus Action, you can expend one of your Hit Point Dice, roll it, and regain Hit Points equal to the roll.",
+      "action": "bonus_action",
+      "implemented": "text"
+    }
+  ]
+}

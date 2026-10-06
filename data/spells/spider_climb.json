@@ -1,0 +1,59 @@
+{
+  "id": "spider_climb",
+  "name": "Spider Climb",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a drop of bitumen and a spider"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "one willing creature"
+  },
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "spider_climb"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "movement",
+    "buff"
+  ],
+  "summary": "A willing creature can climb walls and ceilings hands-free and gains a Climb Speed equal to its Speed.",
+  "text": "Until the spell ends, one willing creature you touch can move up, down and across vertical surfaces and along ceilings while leaving its hands free, and it gains a Climb Speed equal to its Speed. You can target one more creature for each spell slot level above 2."
+}

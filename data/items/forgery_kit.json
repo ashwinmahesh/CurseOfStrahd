@@ -1,0 +1,17 @@
+{
+  "id": "forgery_kit",
+  "name": "Forgery Kit",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 5,
+  "cost_gp": 15,
+  "tool": {
+    "kind": "other",
+    "ability": "dex",
+    "utilize": "Imitate up to 10 words of someone else's handwriting (DC 15), or copy a wax seal (DC 20)."
+  },
+  "summary": "Tool (Dexterity): imitate up to 10 words of someone else's handwriting (DC 15), or copy a wax seal (DC 20)."
+}

@@ -1,0 +1,50 @@
+{
+  "id": "sentinel",
+  "name": "Sentinel",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "str": 13,
+      "dex": 13
+    },
+    "text": "Level 4+, Strength or Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; Opportunity Attacks when nearby foes Disengage or hit others, and your hits with them stop foes.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "guardian",
+      "name": "Guardian",
+      "summary": "Opportunity Attack a creature within 5 ft right after it Disengages or hits a target other than you.",
+      "text": "Immediately after a creature within 5 feet of you takes the Disengage action or hits a target other than you with an attack, you can make an Opportunity Attack against that creature.",
+      "action": "reaction",
+      "implemented": "text"
+    },
+    {
+      "id": "halt",
+      "name": "Halt",
+      "summary": "A creature you hit with an Opportunity Attack has Speed 0 for the rest of the turn.",
+      "text": "When you hit a creature with an Opportunity Attack, its Speed becomes 0 for the rest of the current turn.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "halt"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

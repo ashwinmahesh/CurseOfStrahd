@@ -1,0 +1,41 @@
+{
+  "id": "speak_with_dead",
+  "name": "Speak with Dead",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "necromancy",
+  "classes": [
+    "bard",
+    "cleric",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "burning incense"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a corpse with a mouth"
+  },
+  "tags": [
+    "communication"
+  ],
+  "summary": "A corpse answers up to five questions within 10 minutes, knowing only what it knew in life.",
+  "text": "A corpse of your choice within 10 feet gains a semblance of life and can answer your questions. It must have a mouth. The spell fails if the creature was Undead when it died, or if the corpse was the target of this spell within the past 10 days. Until the spell ends, you can ask the corpse up to five questions. It knows only what it knew in life, including the languages it knew. Its answers are usually short, cryptic or repetitive, and it has no obligation to tell the truth if you are hostile toward it or it recognizes you as an enemy. The spell doesn't return the soul, only the animating spirit, so the corpse can't learn new information, doesn't understand anything that happened after its death, and can't speculate about the future."
+}

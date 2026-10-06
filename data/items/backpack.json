@@ -1,0 +1,14 @@
+{
+  "id": "backpack",
+  "name": "Backpack",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 5,
+  "cost_gp": 2,
+  "capacity": "30 lb. within 1 cubic foot",
+  "summary": "Holds up to 30 lb. of gear in 1 cubic foot; doubles as a saddlebag.",
+  "text": "Holds up to 30 pounds of gear within 1 cubic foot of space. It can also be used as a saddlebag."
+}

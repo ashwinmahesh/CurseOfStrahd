@@ -1,0 +1,57 @@
+{
+  "id": "stinking_cloud",
+  "name": "Stinking Cloud",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "conjuration",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a rotten egg"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "con",
+  "save_success": "none",
+  "conditions": [
+    "poisoned"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "poisoned"
+      }
+    }
+  ],
+  "tags": [
+    "control"
+  ],
+  "summary": "20-foot-radius gas: creatures starting a turn in it make a Con save or are Poisoned and lose their action.",
+  "text": "A 20-foot-radius Sphere of nauseating yellow gas forms, centered on a point within 90 feet. The cloud is Heavily Obscured and lasts for the duration unless a strong wind (such as the one from Gust of Wind) disperses it. Each creature that starts its turn in the Sphere makes a Constitution saving throw; on a failure it has the Poisoned condition until the end of that turn, and while Poisoned this way it can't take an action or a Bonus Action."
+}

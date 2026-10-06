@@ -1,0 +1,43 @@
+{
+  "id": "locate_object",
+  "name": "Locate Object",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "paladin",
+    "ranger",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a forked twig"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self",
+    "description": "an object within 1,000 feet"
+  },
+  "tags": [
+    "detection"
+  ],
+  "summary": "Sense the direction to a familiar object, or the nearest object of a kind, within 1,000 feet.",
+  "text": "Name or describe an object that is familiar to you. If it is within 1,000 feet of you, you sense the direction to it, and if it is moving you know the direction of its movement. You can seek a specific object you have seen up close (within 30 feet) at least once, or the nearest object of a particular kind, such as a certain sort of clothing, jewelry, furniture, tool or weapon. Any thickness of lead on the direct path between you and the object stops the spell from locating it."
+}

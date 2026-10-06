@@ -1,0 +1,13 @@
+{
+  "id": "healers_kit",
+  "name": "Healer's Kit",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 3,
+  "cost_gp": 5,
+  "summary": "10 uses. Utilize: stabilize a creature at 0 Hit Points without a Medicine check.",
+  "text": "A Healer's Kit has 10 uses. As a Utilize action, you can spend one use to stabilize an Unconscious creature that has 0 Hit Points, with no Wisdom (Medicine) check needed. The kit is used up when its last use is spent."
+}

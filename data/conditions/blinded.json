@@ -1,0 +1,24 @@
+{
+  "id": "blinded",
+  "name": "Blinded",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Can't see; attacks against you have Advantage, yours have Disadvantage.",
+  "text": "You can't see and automatically fail any ability check that needs sight. Attack rolls against you have Advantage, and your attack rolls have Disadvantage.",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "cant_see"
+    },
+    {
+      "stat": "disadvantage",
+      "on": "attack"
+    },
+    {
+      "stat": "attacked_with",
+      "value": "advantage"
+    }
+  ]
+}

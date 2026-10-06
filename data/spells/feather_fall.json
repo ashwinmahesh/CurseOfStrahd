@@ -1,0 +1,42 @@
+{
+  "id": "feather_fall",
+  "name": "Feather Fall",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "reaction",
+    "trigger": "you or a creature you can see within 60 feet of you falls"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "m": "a small feather or piece of down"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 5,
+    "description": "falling creatures"
+  },
+  "tags": [
+    "utility",
+    "movement"
+  ],
+  "summary": "Reaction: up to five falling creatures drop only 60 feet per round and take no falling damage.",
+  "text": "Reaction, taken when you or a creature you can see within 60 feet of you falls. Choose up to five falling creatures within range. For 1 minute each one falls at only 60 feet per round. A creature that lands before the spell ends takes no damage from the fall, and the spell ends for it."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "glass_bottle",
+  "name": "Glass Bottle",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 2,
+  "cost_gp": 2,
+  "capacity": "1.5 pints",
+  "summary": "Holds up to 1.5 pints."
+}

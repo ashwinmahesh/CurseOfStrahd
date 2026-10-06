@@ -1,0 +1,60 @@
+{
+  "id": "keen_mind",
+  "name": "Keen Mind",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "abilities": {
+      "int": 13
+    },
+    "text": "Level 4+, Intelligence 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Int; proficiency (or Expertise) in a knowledge skill, and take the Study action as a Bonus Action.",
+  "ability_increase": {
+    "from": [
+      "int"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "lore_knowledge",
+      "name": "Lore Knowledge",
+      "summary": "Arcana, History, Investigation, Nature or Religion: gain proficiency, or Expertise if already proficient.",
+      "text": "Choose Arcana, History, Investigation, Nature or Religion. If you aren't proficient in the chosen skill, you gain proficiency in it; if you already are, you gain Expertise in it instead.",
+      "action": "passive",
+      "choice": {
+        "id": "lore_skill",
+        "kind": "skill",
+        "count": 1,
+        "from": [
+          "arcana",
+          "history",
+          "investigation",
+          "nature",
+          "religion"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "lore_knowledge"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "quick_study",
+      "name": "Quick Study",
+      "summary": "You can take the Study action as a Bonus Action.",
+      "text": "You can take the Study action as a Bonus Action.",
+      "action": "bonus_action",
+      "implemented": "text"
+    }
+  ]
+}

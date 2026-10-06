@@ -1,0 +1,49 @@
+{
+  "id": "mirror_image",
+  "name": "Mirror Image",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "effects": [
+    {
+      "effect": "custom",
+      "params": {
+        "id": "mirror_image",
+        "duplicates": 3,
+        "die": "d6",
+        "hit_on": 3
+      }
+    }
+  ],
+  "tags": [
+    "defense"
+  ],
+  "summary": "Three illusory duplicates can take hits for you: roll a d6 per duplicate; any 3+ means a duplicate is hit.",
+  "text": "Three illusory copies of you appear in your space. Until the spell ends they move with you and mimic your actions, constantly shifting so nobody can tell which one is real. Each time a creature hits you with an attack roll during the spell, roll a d6 for each remaining duplicate. If any of them shows 3 or higher, one duplicate is hit and destroyed instead of you. The duplicates ignore all other damage and effects. The spell ends when all three are destroyed. A creature that has the Blinded condition, Blindsight or Truesight is unaffected by this spell."
+}

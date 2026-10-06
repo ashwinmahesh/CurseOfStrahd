@@ -1,0 +1,22 @@
+{
+  "id": "warhammer",
+  "name": "Warhammer",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 5,
+  "cost_gp": 15,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d8",
+    "damage_type": "bludgeoning",
+    "properties": [
+      "versatile"
+    ],
+    "versatile": "1d10",
+    "mastery": "push"
+  },
+  "summary": "Martial melee weapon: 1d8 Bludgeoning, Versatile (1d10); mastery Push."
+}

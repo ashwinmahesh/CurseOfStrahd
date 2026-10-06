@@ -1,0 +1,225 @@
+{
+  "id": "abjurer",
+  "name": "Abjurer",
+  "class": "wizard",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "A protective mage whose Arcane Ward soaks damage and whose counters shut down enemy spells.",
+  "role_tags": [
+    "defense",
+    "control"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "abjuration_savant",
+        "name": "Abjuration Savant",
+        "summary": "Add two Abjuration spells of level 2 or lower to your spellbook for free.",
+        "text": "Choose two Wizard spells from the Abjuration school, each level 2 or lower, and add them to your spellbook for free. Whenever you gain a new level of spell slots in this class, you can add one more Abjuration Wizard spell of a level you can cast for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 2,
+          "filter": {
+            "list": "wizard",
+            "school": "abjuration",
+            "max_level": 2,
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 5,
+      "feature": {
+        "id": "abjuration_savant",
+        "name": "Abjuration Savant (new spell level)",
+        "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "abjuration",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "abjuration_savant",
+        "name": "Abjuration Savant (new spell level)",
+        "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "abjuration",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "abjuration_savant",
+        "name": "Abjuration Savant (new spell level)",
+        "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "abjuration",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "abjuration_savant",
+        "name": "Abjuration Savant (new spell level)",
+        "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "abjuration",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "abjuration_savant",
+        "name": "Abjuration Savant (new spell level)",
+        "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "abjuration",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "abjuration_savant",
+        "name": "Abjuration Savant (new spell level)",
+        "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "abjuration",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "abjuration_savant",
+        "name": "Abjuration Savant (new spell level)",
+        "summary": "Add one Abjuration spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "abjuration",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "arcane_ward",
+        "name": "Arcane Ward",
+        "summary": "Casting an Abjuration spell with a slot raises a ward with 2 × Wizard level + Int modifier HP that absorbs damage.",
+        "text": "When you cast an Abjuration spell with a spell slot, you can create a magical ward on yourself that lasts until your next Long Rest. It has a Hit Point maximum of twice your Wizard level + your Intelligence modifier; damage you take hits the ward first. Casting further Abjuration spells with slots restores twice the slot's level to it, and as a Bonus Action you can spend a slot to restore twice its level.",
+        "implemented": "engine",
+        "resource": {
+          "id": "arcane_ward",
+          "name": "Arcane Ward HP",
+          "max": "2*class_level+mod:int",
+          "recharge": "long"
+        }
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "projected_ward",
+        "name": "Projected Ward",
+        "summary": "Reaction: your Arcane Ward absorbs damage dealt to a creature within 30 feet.",
+        "implemented": "engine",
+        "action": "reaction"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "spell_breaker",
+        "name": "Spell Breaker",
+        "summary": "Counterspell and Dispel Magic always prepared; add Proficiency Bonus to dispel checks.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "counterspell",
+            "ability": "int"
+          },
+          {
+            "stat": "spell",
+            "value": "dispel_magic",
+            "ability": "int"
+          }
+        ]
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "spell_resistance",
+        "name": "Spell Resistance",
+        "summary": "Advantage on saves against spells and Resistance to their damage.",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

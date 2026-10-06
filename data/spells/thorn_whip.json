@@ -1,0 +1,47 @@
+{
+  "id": "thorn_whip",
+  "name": "Thorn Whip",
+  "source": {
+    "book": "PHB2024"
+  },
+  "level": 0,
+  "school": "transmutation",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "the stem of a plant with thorns"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "attack": "melee",
+  "damage": [
+    {
+      "dice": "1d6",
+      "type": "piercing"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "Melee spell attack at 30 feet for 1d6 Piercing damage; pulls a Large or smaller target 10 feet closer.",
+  "text": "Make a melee spell attack against a creature within range. On a hit it takes 1d6 Piercing damage, and if it is Large or smaller you can pull it up to 10 feet closer to you. The damage becomes 2d6 at character level 5, 3d6 at level 11 and 4d6 at level 17."
+}

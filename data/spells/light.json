@@ -1,0 +1,51 @@
+{
+  "id": "light",
+  "name": "Light",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "bard",
+    "cleric",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "m": "a firefly or phosphorescent moss"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "One Large or smaller object not worn or carried by someone else."
+  },
+  "effects": [
+    {
+      "effect": "light",
+      "params": {
+        "target": "object",
+        "bright": 20,
+        "dim": 20
+      }
+    }
+  ],
+  "tags": [
+    "light",
+    "utility"
+  ],
+  "summary": "An object you touch sheds Bright Light in a 20-foot radius and Dim Light 20 feet beyond for 1 hour.",
+  "text": "Touch one object of Large size or smaller that no one else is wearing or carrying. For the duration it sheds Bright Light in a 20-foot radius and Dim Light for a further 20 feet, in any color you like. Covering the object with something opaque blocks the light. Casting the spell again ends it."
+}

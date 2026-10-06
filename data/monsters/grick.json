@@ -1,0 +1,101 @@
+{
+  "id": "grick",
+  "name": "Grick",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "aberration",
+  "alignment": "unaligned",
+  "ac": 14,
+  "initiative": 2,
+  "hp": {
+    "average": 54,
+    "dice": "12d8"
+  },
+  "speed": {
+    "walk": 30,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 14,
+    "con": 11,
+    "int": 3,
+    "wis": 14,
+    "cha": 5
+  },
+  "skills": {
+    "stealth": 4
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 12,
+  "languages": [],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "beak",
+          "count": 1
+        },
+        {
+          "action": "tentacles",
+          "count": 1
+        }
+      ],
+      "summary": "Makes one Beak attack and one Tentacles attack."
+    },
+    {
+      "id": "beak",
+      "name": "Beak",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 9,
+          "dice": "2d6+2",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Stabs a target with its hooked beak."
+    },
+    {
+      "id": "tentacles",
+      "name": "Tentacles",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d10+2",
+          "type": "slashing"
+        }
+      ],
+      "conditions": [
+        "grappled"
+      ],
+      "summary": "Lashes a target; a Medium or smaller target is Grappled (escape DC 12).",
+      "text": "Hit: 7 (1d10 + 2) Slashing damage. If the target is Medium or smaller, all four tentacles seize it and it has the Grappled condition (escape DC 12)."
+    }
+  ],
+  "regions": [
+    "death_house"
+  ],
+  "ai_profile": "brute",
+  "summary": "Ambushes from walls and ceilings, grabbing a victim with its tentacles and pecking it with its beak."
+}

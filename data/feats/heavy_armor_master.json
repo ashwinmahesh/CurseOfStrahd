@@ -1,0 +1,42 @@
+{
+  "id": "heavy_armor_master",
+  "name": "Heavy Armor Master",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "proficiency": {
+      "kind": "armor",
+      "value": "heavy"
+    },
+    "text": "Level 4+, Heavy Armor Training"
+  },
+  "repeatable": false,
+  "summary": "+1 Con or Str; in Heavy armor, reduce Bludgeoning, Piercing and Slashing damage from attacks by your PB.",
+  "ability_increase": {
+    "from": [
+      "con",
+      "str"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "heavy_armor_damage_reduction",
+      "name": "Damage Reduction",
+      "summary": "In Heavy armor, Bludgeoning, Piercing and Slashing damage from an attack is reduced by your Proficiency Bonus.",
+      "text": "When an attack hits you while you are wearing Heavy armor, any Bludgeoning, Piercing and Slashing damage that attack deals to you is reduced by an amount equal to your Proficiency Bonus.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "heavy_armor_damage_reduction"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

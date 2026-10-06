@@ -1,0 +1,69 @@
+{
+  "id": "silence",
+  "name": "Silence",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "cleric",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "conditions": [
+    "deafened"
+  ],
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "area",
+        "modifiers": [
+          {
+            "stat": "immunity",
+            "value": "thunder"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "deafened",
+        "target": "area"
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "defense"
+  ],
+  "summary": "Ritual. A silent 20-ft Sphere: those inside are Deafened and immune to Thunder; no Verbal spells there.",
+  "text": "For the duration, no sound can be created inside or pass through a 20-foot-radius Sphere centered on a point you choose within range. Any creature or object entirely inside the Sphere has Immunity to Thunder damage, and creatures entirely inside it have the Deafened condition. Casting a spell with a Verbal component is impossible there."
+}

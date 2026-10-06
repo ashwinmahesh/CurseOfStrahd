@@ -1,0 +1,36 @@
+{
+  "id": "thaumaturgy",
+  "name": "Thaumaturgy",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "transmutation",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "point"
+  },
+  "tags": [
+    "utility",
+    "social"
+  ],
+  "summary": "A minor wonder: altered eyes, a booming voice, flickering flames, a slamming door, a phantom sound or tremors.",
+  "text": "You produce one minor wonder within range (duration up to 1 minute, depending on the effect). If you cast the spell more than once, up to three of its 1-minute effects can be active at a time. Altered Eyes: your eyes change appearance for 1 minute. Booming Voice: for 1 minute your voice is up to three times as loud as normal, and you have Advantage on Charisma (Intimidation) checks. Fire Play: flames flicker, brighten, dim or change color for 1 minute. Invisible Hand: an unlocked door or window instantly flies open or slams shut. Phantom Sound: an instant sound, such as rolling thunder, a raven's cry or ominous whispers, comes from a point of your choice within range. Tremors: harmless tremors shake the ground for 1 minute."
+}

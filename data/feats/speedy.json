@@ -1,0 +1,70 @@
+{
+  "id": "speedy",
+  "name": "Speedy",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "dex": 13,
+      "con": 13
+    },
+    "text": "Level 4+, Dexterity or Constitution 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Dex or Con; +10 feet of Speed, Dash through Difficult Terrain, and Opportunity Attacks against you have Disadvantage.",
+  "ability_increase": {
+    "from": [
+      "dex",
+      "con"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "speedy_speed_increase",
+      "name": "Speed Increase",
+      "summary": "Your Speed increases by 10 feet.",
+      "text": "Your Speed increases by 10 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "speed",
+          "value": 10
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "dash_over_difficult_terrain",
+      "name": "Dash over Difficult Terrain",
+      "summary": "After you Dash on your turn, Difficult Terrain costs no extra movement for the rest of that turn.",
+      "text": "When you take the Dash action on your turn, Difficult Terrain doesn't cost you extra movement for the rest of that turn.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "dash_over_difficult_terrain"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "agile_movement",
+      "name": "Agile Movement",
+      "summary": "Opportunity Attacks against you have Disadvantage.",
+      "text": "Opportunity Attacks made against you have Disadvantage.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "agile_movement"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

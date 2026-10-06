@@ -1,0 +1,55 @@
+{
+  "id": "friends",
+  "name": "Friends",
+  "source": {
+    "book": "PHB2024"
+  },
+  "level": 0,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 10
+  },
+  "components": {
+    "s": true,
+    "m": "some makeup"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "One creature you can see within range."
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed"
+      }
+    }
+  ],
+  "tags": [
+    "social",
+    "control"
+  ],
+  "summary": "A creature you can see fails a Wis save and is Charmed; the spell breaks on any hostile act.",
+  "text": "Target one creature you can see within range. It must succeed on a Wisdom saving throw or have the Charmed condition for the duration. It succeeds automatically if it isn't a Humanoid, if you are fighting it, or if you have cast this spell on it within the past 24 hours. The spell ends early if the target takes damage or if you make an attack roll, deal damage, or force anyone to make a saving throw. When the spell ends, the target knows you Charmed it."
+}

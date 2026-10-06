@@ -1,0 +1,13 @@
+{
+  "id": "portable_ram",
+  "name": "Portable Ram",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 35,
+  "cost_gp": 4,
+  "summary": "+4 to Strength checks to break down doors; a helper grants Advantage.",
+  "text": "When you use a Portable Ram to break down a door, you gain a +4 bonus to the Strength check. One other character can help you use it, giving you Advantage on that check."
+}

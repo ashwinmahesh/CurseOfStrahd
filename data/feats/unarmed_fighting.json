@@ -1,0 +1,30 @@
+{
+  "id": "unarmed_fighting",
+  "name": "Unarmed Fighting",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "Unarmed Strikes deal 1d6 + Strength (1d8 empty-handed), and you deal 1d4 to a creature you grapple each turn.",
+  "benefits": [
+    {
+      "id": "unarmed_fighting",
+      "name": "Unarmed Fighting",
+      "summary": "Unarmed Strike: 1d6 + Str Bludgeoning (d8 with no weapon or Shield); 1d4 to your grappled foe each turn.",
+      "text": "When you hit with your Unarmed Strike and deal damage, you can deal Bludgeoning damage equal to 1d6 plus your Strength modifier instead of the strike's normal damage. If you aren't holding any weapons or a Shield when you make the attack roll, the d6 becomes a d8. At the start of each of your turns, you can deal 1d4 Bludgeoning damage to one creature you have Grappled.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "unarmed_fighting"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

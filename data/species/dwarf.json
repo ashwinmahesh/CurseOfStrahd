@@ -1,0 +1,96 @@
+{
+  "id": "dwarf",
+  "name": "Dwarf",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Stout folk of stone and forge with 120-ft Darkvision, poison resilience, extra Hit Points and Tremorsense.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium"
+  ],
+  "speed": 30,
+  "darkvision": 120,
+  "traits": [
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 120 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 120 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 120
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "dwarven_resilience",
+      "name": "Dwarven Resilience",
+      "summary": "Resistance to Poison damage and Advantage on saves to avoid or end the Poisoned condition.",
+      "text": "You have Resistance to Poison damage, and you have Advantage on saving throws you make to avoid or end the Poisoned condition.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "poison"
+        },
+        {
+          "stat": "advantage",
+          "on": "save_vs:poisoned"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "dwarven_toughness",
+      "name": "Dwarven Toughness",
+      "summary": "Your Hit Point maximum increases by 1 per character level.",
+      "text": "Your Hit Point maximum increases by 1, and it increases by 1 again every time you gain a level.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "hp_max",
+          "value": "level"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "stonecunning",
+      "name": "Stonecunning",
+      "summary": "Bonus Action, PB times per Long Rest: Tremorsense 60 ft for 10 minutes while on or touching stone.",
+      "text": "As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. The Tremorsense works only while you are on a stone surface or touching one; the stone can be natural or worked. You can use this Bonus Action a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+      "action": "bonus_action",
+      "resource": {
+        "id": "stonecunning",
+        "name": "Stonecunning",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "effects": [
+        {
+          "effect": "modifiers",
+          "params": {
+            "modifiers": [
+              {
+                "stat": "sense",
+                "kind": "tremorsense",
+                "value": 60
+              }
+            ],
+            "target": "self",
+            "duration": {
+              "kind": "minutes",
+              "amount": 10
+            }
+          }
+        }
+      ],
+      "implemented": "text"
+    }
+  ]
+}

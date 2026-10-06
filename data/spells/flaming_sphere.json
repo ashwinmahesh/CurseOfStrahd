@@ -1,0 +1,64 @@
+{
+  "id": "flaming_sphere",
+  "name": "Flaming Sphere",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024",
+    "note": "School: the BR spell heading and the D&D Beyond spell list say Conjuration, but the BR class spell tables list it as Evocation."
+  },
+  "level": 2,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a ball of wax"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space on the ground; affects creatures within 5 feet of the sphere"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "2d6",
+      "type": "fire"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "effects": [
+    {
+      "effect": "light",
+      "params": {
+        "bright": 20,
+        "dim": 20
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "control",
+    "light"
+  ],
+  "summary": "Roll a 5-ft ball of fire around; creatures ending a turn within 5 ft of it take 2d6 Fire (Dex half).",
+  "text": "A sphere of fire 5 feet across appears in an unoccupied space on the ground within range and lasts for the duration. Any creature that ends its turn within 5 feet of it makes a Dexterity saving throw, taking 2d6 Fire damage on a failure or half as much on a success. As a Bonus Action you can roll the sphere up to 30 feet along the ground; if you roll it into a creature's space, that creature makes the save against it and the sphere stops moving for the turn. You can roll it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. Flammable objects that nobody is wearing or carrying catch fire when it touches them, and it sheds Bright Light in a 20-foot radius and Dim Light for another 20 feet. The damage increases by 1d6 for each spell slot level above 2."
+}

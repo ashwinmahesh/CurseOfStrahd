@@ -1,0 +1,58 @@
+{
+  "id": "wayfarer",
+  "name": "Wayfarer",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You grew up poor on the streets, surviving on your wits, your luck and a few stolen tools.",
+  "ability_scores": [
+    "dex",
+    "wis",
+    "cha"
+  ],
+  "feat": "lucky",
+  "skills": [
+    "insight",
+    "stealth"
+  ],
+  "tool": {
+    "id": "thieves_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 2
+        },
+        {
+          "id": "thieves_tools",
+          "qty": 1
+        },
+        {
+          "id": "dice_set",
+          "qty": 1,
+          "choice": "gaming_set"
+        },
+        {
+          "id": "bedroll",
+          "qty": 1
+        },
+        {
+          "id": "pouch",
+          "qty": 2
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 16
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

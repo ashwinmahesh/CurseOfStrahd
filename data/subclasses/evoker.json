@@ -1,0 +1,221 @@
+{
+  "id": "evoker",
+  "name": "Evoker",
+  "class": "wizard",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Explosive elemental magic: free Evocation spells, cantrips that always bite and allies spared from blasts.",
+  "role_tags": [
+    "damage",
+    "area"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "evocation_savant",
+        "name": "Evocation Savant",
+        "summary": "Add two Evocation spells of level 2 or lower to your spellbook for free.",
+        "text": "Choose two Wizard spells from the Evocation school, each level 2 or lower, and add them to your spellbook for free. Whenever you gain a new level of spell slots in this class, you can add one more Evocation Wizard spell of a level you can cast for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 2,
+          "filter": {
+            "list": "wizard",
+            "school": "evocation",
+            "max_level": 2,
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 5,
+      "feature": {
+        "id": "evocation_savant",
+        "name": "Evocation Savant (new spell level)",
+        "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "evocation",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "evocation_savant",
+        "name": "Evocation Savant (new spell level)",
+        "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "evocation",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "evocation_savant",
+        "name": "Evocation Savant (new spell level)",
+        "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "evocation",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "evocation_savant",
+        "name": "Evocation Savant (new spell level)",
+        "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "evocation",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "evocation_savant",
+        "name": "Evocation Savant (new spell level)",
+        "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "evocation",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "evocation_savant",
+        "name": "Evocation Savant (new spell level)",
+        "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "evocation",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "evocation_savant",
+        "name": "Evocation Savant (new spell level)",
+        "summary": "Add one Evocation spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "evocation",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "potent_cantrip",
+        "name": "Potent Cantrip",
+        "summary": "Your damaging cantrips deal half damage on a miss or a successful save.",
+        "text": "When you cast a cantrip at a creature and miss with the attack roll or the target succeeds on its save, it still takes half the cantrip's damage but no other effect.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "potent_cantrip"
+          }
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "sculpt_spells",
+        "name": "Sculpt Spells",
+        "summary": "Choose 1 + spell level creatures to automatically succeed against your Evocation spell and take no damage.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "empowered_evocation",
+        "name": "Empowered Evocation",
+        "summary": "Add your Intelligence modifier to one damage roll of your Wizard Evocation spells.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "spell_damage",
+            "value": "mod:int",
+            "when": {
+              "school": "evocation"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "overchannel",
+        "name": "Overchannel",
+        "summary": "Deal maximum damage with a level 1-5 damaging spell; repeat uses before a Long Rest cost Necrotic damage.",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

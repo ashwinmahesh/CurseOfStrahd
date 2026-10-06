@@ -1,0 +1,21 @@
+{
+  "id": "ring_mail",
+  "name": "Ring Mail",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "armor",
+  "weight_lb": 40,
+  "cost_gp": 30,
+  "armor": {
+    "kind": "heavy",
+    "base_ac": 14,
+    "dex_cap": 0,
+    "stealth_disadvantage": true,
+    "don_minutes": 10,
+    "doff_minutes": 5
+  },
+  "summary": "Heavy armor: AC 14; Disadvantage on Stealth.",
+  "text": "Heavy armor. While you wear it, your base Armor Class is 14; your Dexterity modifier does not apply. You have Disadvantage on Dexterity (Stealth) checks while wearing it. Putting it on takes 10 minutes and taking it off takes 5 minutes. Without training in Heavy armor, you have Disadvantage on every D20 Test that uses Strength or Dexterity and you can't cast spells."
+}

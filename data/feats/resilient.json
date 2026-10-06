@@ -1,0 +1,43 @@
+{
+  "id": "resilient",
+  "name": "Resilient",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 to an ability whose saving throw you lack, and gain proficiency in that saving throw.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "resilient_save",
+      "name": "Saving Throw Proficiency",
+      "summary": "Gain saving throw proficiency with the ability this feat increased.",
+      "text": "Choose an ability in which you lack saving throw proficiency; this feat's Ability Score Increase must go to that ability (+1, to a maximum of 20). You gain saving throw proficiency with the chosen ability.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "save",
+          "value": "@increased"
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

@@ -2,40 +2,96 @@
   "$id": "class.schema.json",
   "title": "Character class",
   "type": "object",
-  "required": ["id", "name", "source", "hit_die", "primary_abilities", "saving_throws", "skill_choices", "proficiencies", "levels"],
+  "required": ["id", "name", "source", "summary", "hit_die", "primary_abilities", "saving_throws", "skill_choices", "proficiencies", "starting_equipment", "subclass_level", "levels"],
   "additionalProperties": false,
+  "$defs": {
+    "column": {
+      "type": "object",
+      "required": ["name", "values"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "values": {"type": "array", "minItems": 20, "maxItems": 20}
+      }
+    },
+    "class_resource": {
+      "type": "object",
+      "required": ["id", "name", "recharge"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "common.schema.json#/$defs/id"},
+        "name": {"type": "string"},
+        "recharge": {"$ref": "common.schema.json#/$defs/recharge"},
+        "table": {"type": "string", "description": "Class table column holding the maximum by level."},
+        "max": {"$ref": "common.schema.json#/$defs/formula"},
+        "min": {"type": "integer"},
+        "from_level": {"type": "integer"}
+      }
+    }
+  },
   "properties": {
     "id": {"$ref": "common.schema.json#/$defs/id"},
     "name": {"type": "string"},
     "source": {"$ref": "common.schema.json#/$defs/source"},
+    "summary": {"type": "string"},
     "role_tags": {"type": "array", "items": {"type": "string"}},
     "complexity": {"type": "string", "enum": ["low", "average", "high"]},
     "hit_die": {"type": "integer", "enum": [6, 8, 10, 12]},
-    "primary_abilities": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/ability"}},
+    "primary_abilities": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/ability"}, "description": "More than one = any of them (Fighter: Strength or Dexterity)."},
     "saving_throws": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "common.schema.json#/$defs/ability"}},
     "skill_choices": {"$ref": "common.schema.json#/$defs/choice"},
     "proficiencies": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "armor": {"type": "array", "items": {"type": "string", "enum": ["light", "medium", "heavy", "shields"]}},
-        "weapons": {"type": "array", "items": {"type": "string"}},
+        "weapons": {"type": "array", "items": {"type": "string", "description": "simple, martial, martial_finesse_or_light, or a weapon id"}},
         "tools": {"type": "array", "items": {"type": "string"}}
-      },
-      "additionalProperties": false
+      }
     },
-    "multiclass_prerequisites": {"type": "object", "description": "Ability -> minimum score. `any_of` lists alternatives.", "properties": {"all_of": {"type": "object"}, "any_of": {"type": "object"}}},
-    "multiclass_proficiencies": {"type": "object"},
+    "multiclass": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "all_of": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "any_of": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "proficiencies": {"type": "object", "description": "What a character gains when this is not their first class.", "properties": {"armor": {"type": "array"}, "weapons": {"type": "array"}, "tools": {"type": "array"}, "skills": {"type": "integer"}}}
+      }
+    },
+    "starting_equipment": {"type": "array", "minItems": 2, "items": {"$ref": "common.schema.json#/$defs/equipment_option"}},
     "spellcasting": {
       "type": "object",
+      "additionalProperties": false,
+      "required": ["ability", "progression", "list"],
       "properties": {
         "ability": {"$ref": "common.schema.json#/$defs/ability"},
         "progression": {"type": "string", "enum": ["full", "half", "third", "pact"]},
-        "prepared": {"type": "boolean"}
+        "list": {"type": "string"},
+        "focus": {"type": "string", "enum": ["arcane", "druidic", "holy"]},
+        "from_level": {"type": "integer"},
+        "cantrips_column": {"type": "string"},
+        "prepared_column": {"type": "string"},
+        "spellbook": {"type": "object", "properties": {"start": {"type": "integer"}, "per_level": {"type": "integer"}}, "description": "Wizard: spells in the book at level 1 and added each level."},
+        "ritual": {"type": "string", "enum": ["prepared", "spellbook", "none"]},
+        "swap_prepared": {"type": "string", "enum": ["long_rest", "level_up"]},
+        "swap_cantrip": {"type": "string", "enum": ["level_up", "long_rest", "none"]}
       }
     },
-    "starting_equipment": {"type": "array", "items": {"type": "object"}},
     "subclass_level": {"type": "integer", "minimum": 1, "maximum": 3},
-    "resources": {"type": "object", "description": "Resource id -> array of 20 values by level (uses, dice, etc.)."},
+    "subclass_feature_levels": {"type": "array", "items": {"type": "integer"}},
+    "table": {"type": "object", "description": "Class table columns by level (Sneak Attack, Cantrips, Prepared Spells ...).", "additionalProperties": {"$ref": "#/$defs/column"}},
+    "resources": {"type": "array", "items": {"$ref": "#/$defs/class_resource"}},
+    "recommended": {
+      "type": "object",
+      "description": "Used by the creator's Recommended button.",
+      "properties": {
+        "standard_array": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "background": {"type": "string"},
+        "species": {"type": "string"},
+        "skills": {"type": "array", "items": {"type": "string"}},
+        "note": {"type": "string"}
+      }
+    },
     "levels": {
       "type": "array",
       "minItems": 20,
@@ -43,6 +99,7 @@
       "items": {
         "type": "object",
         "required": ["level", "features"],
+        "additionalProperties": false,
         "properties": {
           "level": {"type": "integer", "minimum": 1, "maximum": 20},
           "features": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}}

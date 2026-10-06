@@ -1,0 +1,59 @@
+{
+  "id": "burglars_pack",
+  "name": "Burglar's Pack",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "pack",
+  "weight_lb": 42,
+  "cost_gp": 16,
+  "contents": [
+    {
+      "id": "backpack",
+      "qty": 1
+    },
+    {
+      "id": "ball_bearings",
+      "qty": 1
+    },
+    {
+      "id": "bell",
+      "qty": 1
+    },
+    {
+      "id": "candle",
+      "qty": 10
+    },
+    {
+      "id": "crowbar",
+      "qty": 1
+    },
+    {
+      "id": "hooded_lantern",
+      "qty": 1
+    },
+    {
+      "id": "oil",
+      "qty": 7
+    },
+    {
+      "id": "ration",
+      "qty": 5
+    },
+    {
+      "id": "rope",
+      "qty": 1
+    },
+    {
+      "id": "tinderbox",
+      "qty": 1
+    },
+    {
+      "id": "waterskin",
+      "qty": 1
+    }
+  ],
+  "summary": "Equipment pack: Backpack, Ball Bearings, Bell, 10 x Candle, Crowbar, Hooded Lantern, 7 x Oil, 5 x Ration, Rope, Tinderbox, Waterskin.",
+  "text": "Opens into its contents: Backpack, Ball Bearings, Bell, 10 x Candle, Crowbar, Hooded Lantern, 7 x Oil, 5 x Ration, Rope, Tinderbox, Waterskin."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "chest",
+  "name": "Chest",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 25,
+  "cost_gp": 5,
+  "capacity": "12 cubic feet",
+  "summary": "Holds up to 12 cubic feet."
+}

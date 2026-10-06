@@ -1,0 +1,60 @@
+{
+  "id": "ice_knife",
+  "name": "Ice Knife",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "conjuration",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 5
+  },
+  "components": {
+    "s": true,
+    "m": "a drop of water or a piece of ice"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "one creature; the burst also hits each creature within 5 feet of it"
+  },
+  "attack": "ranged",
+  "save": "dex",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "1d10",
+      "type": "piercing"
+    },
+    {
+      "dice": "2d6",
+      "type": "cold"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6",
+    "text": "Only the Cold damage increases."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Ranged spell attack for 1d10 Piercing; the shard then bursts for 2d6 Cold (Dexterity save) within 5 feet.",
+  "text": "Make a ranged spell attack against one creature within range; on a hit it takes 1d10 Piercing damage. Hit or miss, the shard then bursts: the target and every creature within 5 feet of it must succeed on a Dexterity saving throw or take 2d6 Cold damage (no damage on a success). Using a Higher-Level Spell Slot: the Cold damage increases by 1d6 for each slot level above 1."
+}

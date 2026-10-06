@@ -2,53 +2,525 @@
   "$id": "common.schema.json",
   "title": "Shared definitions",
   "$defs": {
-    "id": {"type": "string", "pattern": "^[a-z0-9_]+$", "description": "snake_case identifier, unique within its data type"},
-    "ability": {"type": "string", "enum": ["str", "dex", "con", "int", "wis", "cha"]},
-    "skill": {"type": "string", "enum": ["acrobatics", "animal_handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight_of_hand", "stealth", "survival"]},
-    "dice": {"type": "string", "pattern": "^(\\d*d\\d+)?([+-]\\d+)?$|^\\d+$"},
-    "damage_type": {"type": "string", "enum": ["acid", "bludgeoning", "cold", "fire", "force", "lightning", "necrotic", "piercing", "poison", "psychic", "radiant", "slashing", "thunder"]},
-    "condition": {"type": "string", "enum": ["blinded", "charmed", "deafened", "exhaustion", "frightened", "grappled", "incapacitated", "invisible", "paralyzed", "petrified", "poisoned", "prone", "restrained", "stunned", "unconscious"]},
-    "size": {"type": "string", "enum": ["tiny", "small", "medium", "large", "huge", "gargantuan"]},
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "snake_case identifier, unique within its data type"
+    },
+    "ability": {
+      "type": "string",
+      "enum": [
+        "str",
+        "dex",
+        "con",
+        "int",
+        "wis",
+        "cha"
+      ]
+    },
+    "skill": {
+      "type": "string",
+      "enum": [
+        "acrobatics",
+        "animal_handling",
+        "arcana",
+        "athletics",
+        "deception",
+        "history",
+        "insight",
+        "intimidation",
+        "investigation",
+        "medicine",
+        "nature",
+        "perception",
+        "performance",
+        "persuasion",
+        "religion",
+        "sleight_of_hand",
+        "stealth",
+        "survival"
+      ]
+    },
+    "dice": {
+      "type": "string",
+      "pattern": "^(\\d*d\\d+)?([+-]\\d+)?$|^\\d+$"
+    },
+    "damage_type": {
+      "type": "string",
+      "enum": [
+        "acid",
+        "bludgeoning",
+        "cold",
+        "fire",
+        "force",
+        "lightning",
+        "necrotic",
+        "piercing",
+        "poison",
+        "psychic",
+        "radiant",
+        "slashing",
+        "thunder"
+      ]
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "blinded",
+        "charmed",
+        "deafened",
+        "exhaustion",
+        "frightened",
+        "grappled",
+        "incapacitated",
+        "invisible",
+        "paralyzed",
+        "petrified",
+        "poisoned",
+        "prone",
+        "restrained",
+        "stunned",
+        "unconscious"
+      ]
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "tiny",
+        "small",
+        "medium",
+        "large",
+        "huge",
+        "gargantuan"
+      ]
+    },
+    "recharge": {
+      "type": "string",
+      "enum": [
+        "short",
+        "long",
+        "short_one",
+        "turn",
+        "round",
+        "dawn",
+        "none"
+      ],
+      "description": "When a resource refills. short = all uses on a Short or Long Rest; long = Long Rest only; short_one = one use back on a Short Rest, all on a Long Rest."
+    },
+    "formula": {
+      "description": "A number, or a tiny expression the engine evaluates: terms joined by + or -, each an integer, `pb`, `level` (character level), `class_level` (level in the class that grants it), `slot_level`, `exhaustion`, `mod:<ability>`, `score:<ability>`, optionally scaled as `N*term` or `term/N` (rounded down). Example: `2*class_level+mod:int`.",
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string",
+          "pattern": "^-?((\\d+\\*)?(\\d+|pb|level|class_level|slot_level|exhaustion|(mod|score):(str|dex|con|int|wis|cha))(/\\d+)?)([+-]((\\d+\\*)?(\\d+|pb|level|class_level|slot_level|exhaustion|(mod|score):(str|dex|con|int|wis|cha))(/\\d+)?))*$"
+        }
+      ]
+    },
     "source": {
       "type": "object",
-      "required": ["book"],
+      "required": [
+        "book"
+      ],
       "properties": {
-        "book": {"type": "string", "enum": ["SRD5.2", "PHB2024", "DMG2024", "MM2025", "CoS", "custom"]},
-        "page": {"type": "integer", "minimum": 1}
+        "book": {
+          "type": "string",
+          "enum": [
+            "SRD5.2",
+            "PHB2024",
+            "DMG2024",
+            "MM2025",
+            "CoS",
+            "custom"
+          ]
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "checked_against": {
+          "type": "string",
+          "enum": [
+            "BR2024",
+            "PHB2024",
+            "MM2025"
+          ],
+          "description": "Set only when the numbers were compared line by line with that source (BR2024 = the free 2024 Basic Rules on D&D Beyond). Absent means entered from knowledge and still needs a check against the book."
+        },
+        "note": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
+    },
+    "modifier": {
+      "type": "object",
+      "description": "A rule change a feature, feat, item, spell or condition applies while it is active. The engine reads these; the UI shows them as sources in every breakdown. See ADR 0003.",
+      "required": [
+        "stat"
+      ],
+      "properties": {
+        "stat": {
+          "type": "string",
+          "enum": [
+            "ac",
+            "ac_formula",
+            "ac_min",
+            "ability",
+            "ability_min",
+            "save",
+            "check",
+            "initiative",
+            "passive",
+            "attack",
+            "damage",
+            "spell_dc",
+            "spell_attack",
+            "speed",
+            "speed_set",
+            "hp_max",
+            "proficiency",
+            "expertise",
+            "auto_fail",
+            "d20",
+            "advantage",
+            "disadvantage",
+            "attacked_with",
+            "resistance",
+            "vulnerability",
+            "immunity",
+            "condition_immunity",
+            "darkvision",
+            "sense",
+            "crit_range",
+            "attacks_per_action",
+            "damage_die_min",
+            "bonus_die",
+            "penalty_die",
+            "cantrip_damage",
+            "spell_damage",
+            "healing_bonus",
+            "carry_size_step",
+            "reach",
+            "spell",
+            "resource",
+            "flag"
+          ]
+        },
+        "value": {
+          "description": "Amount (a formula), or an id such as a skill, damage type, condition, spell or flag name."
+        },
+        "min": {
+          "type": "integer",
+          "description": "Lowest value the formula can give (for example War Priest uses: Wisdom modifier, minimum 1)."
+        },
+        "max": {
+          "type": "integer"
+        },
+        "ability": {
+          "type": "string"
+        },
+        "skill": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "description": "proficiency: skill | save | armor | weapon | tool | language. sense: blindsight | tremorsense | truesight. speed: walk | fly | swim | climb | burrow."
+        },
+        "on": {
+          "description": "advantage / disadvantage / bonus_die: what it applies to, e.g. initiative, attack, save:dex, save:all, check:athletics, check:str, death_save, concentration."
+        },
+        "dice": {
+          "$ref": "#/$defs/dice"
+        },
+        "base": {
+          "type": "integer"
+        },
+        "abilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ability"
+          }
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "recharge": {
+          "$ref": "#/$defs/recharge"
+        },
+        "die": {
+          "type": "string"
+        },
+        "uses": {
+          "description": "spell: how often it can be cast without a slot, e.g. {\"count\": 1, \"recharge\": \"long\"}."
+        },
+        "at_level": {
+          "type": "integer",
+          "description": "Character level at which this modifier starts to apply (species spells at 3 and 5)."
+        },
+        "always_prepared": {
+          "type": "boolean"
+        },
+        "when": {
+          "type": "object",
+          "description": "Filters: armor (any|none|light|medium|heavy), shield (bool), weapon (melee|ranged|one_handed|two_handed|thrown|finesse), spell (bool), school, bloodied (bool), raging (bool)."
+        },
+        "text": {
+          "type": "string"
+        }
+      }
     },
     "effect_ref": {
       "type": "object",
       "description": "A reference to a reusable effect primitive in rules/ (see ADR 0003) with its parameters.",
-      "required": ["effect"],
+      "required": [
+        "effect"
+      ],
       "properties": {
-        "effect": {"$ref": "#/$defs/id"},
-        "params": {"type": "object"}
-      }
-    },
-    "feature": {
-      "type": "object",
-      "required": ["id", "name", "summary"],
-      "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "name": {"type": "string", "minLength": 1},
-        "summary": {"type": "string", "minLength": 1, "description": "Short paraphrase shown in tooltips; full text lives in the rules text field."},
-        "text": {"type": "string"},
-        "choice": {"$ref": "#/$defs/choice"},
-        "effects": {"type": "array", "items": {"$ref": "#/$defs/effect_ref"}}
+        "effect": {
+          "type": "string",
+          "enum": [
+            "modifiers",
+            "condition",
+            "temp_hp",
+            "heal",
+            "damage",
+            "light",
+            "summon",
+            "custom"
+          ]
+        },
+        "params": {
+          "type": "object"
+        }
       }
     },
     "choice": {
       "type": "object",
-      "description": "A choice the CharacterBuilder or LevelUpController presents. `kind` picks the reusable UI widget (plan §5.6).",
-      "required": ["kind", "count"],
+      "description": "A choice the CharacterBuilder or LevelUpController presents. `kind` picks the reusable UI widget (plan \u00a75.6).",
+      "required": [
+        "kind",
+        "count"
+      ],
       "properties": {
-        "kind": {"type": "string", "enum": ["skill", "expertise", "fighting_style", "weapon_mastery", "cantrip", "spell", "feat", "ability_increase", "subclass", "invocation", "metamagic", "maneuver", "language", "tool", "option"]},
-        "count": {"type": "integer", "minimum": 1},
-        "from": {"type": "array", "items": {"type": "string"}},
-        "filter": {"type": "object"}
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "skill",
+            "expertise",
+            "fighting_style",
+            "weapon_mastery",
+            "cantrip",
+            "spell",
+            "spellbook",
+            "feat",
+            "ability_increase",
+            "subclass",
+            "invocation",
+            "metamagic",
+            "maneuver",
+            "language",
+            "tool",
+            "option",
+            "damage_type",
+            "size",
+            "spellcasting_ability",
+            "lineage"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "from": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "filter": {
+          "type": "object",
+          "description": "Narrows the pool, e.g. {\"category\": \"origin\"} for feats, {\"list\": \"wizard\", \"level\": 1} for spells, {\"proficient\": true} for expertise."
+        },
+        "options": {
+          "type": "array",
+          "description": "For kind=option: the named options, each a feature.",
+          "items": {
+            "$ref": "#/$defs/feature"
+          }
+        },
+        "replaceable": {
+          "type": "string",
+          "description": "When an earlier pick may be swapped, e.g. long_rest or level_up."
+        },
+        "count_column": {
+          "type": "string",
+          "description": "Class table column whose value at the current class level is the count (Weapon Mastery 3 -> 4 -> 5 -> 6)."
+        }
       }
+    },
+    "resource": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "recharge"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "recharge": {
+          "$ref": "#/$defs/recharge"
+        },
+        "max": {
+          "$ref": "#/$defs/formula"
+        },
+        "min": {
+          "type": "integer"
+        },
+        "die": {
+          "type": "string",
+          "description": "Die size for dice pools such as Superiority Dice (d8)."
+        }
+      }
+    },
+    "feature": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "summary"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One-line paraphrase shown in lists and tooltips."
+        },
+        "text": {
+          "type": "string",
+          "description": "Full rule in our own words (never copied text). Shown on cards."
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "action",
+            "bonus_action",
+            "reaction",
+            "free",
+            "passive",
+            "special"
+          ]
+        },
+        "choice": {
+          "$ref": "#/$defs/choice"
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/choice"
+          }
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/modifier"
+          }
+        },
+        "resource": {
+          "$ref": "#/$defs/resource"
+        },
+        "uses_resource": {
+          "$ref": "#/$defs/id"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect_ref"
+          }
+        },
+        "implemented": {
+          "type": "string",
+          "enum": [
+            "data",
+            "engine",
+            "text"
+          ],
+          "description": "data = fully expressed by modifiers/choices; engine = bespoke code reads the id; text = shown to the player only until its system exists."
+        },
+        "at_level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "description": "Character level at which this feature starts (species traits that arrive at level 3 or 5)."
+        }
+      }
+    },
+    "item_qty": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "qty": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "choice": {
+          "type": "string",
+          "description": "When the item is a choice of kind (e.g. a gaming set), the category to choose from."
+        }
+      },
+      "additionalProperties": false
+    },
+    "equipment_option": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "a",
+            "b",
+            "c"
+          ]
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item_qty"
+          }
+        },
+        "gp": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

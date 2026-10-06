@@ -1,0 +1,44 @@
+{
+  "id": "jump",
+  "name": "Jump",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "ranger",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a grasshopper's hind leg"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a willing creature"
+  },
+  "upcast": {
+    "targets": 1
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "A willing creature can jump up to 30 feet once per turn by spending 10 feet of movement.",
+  "text": "Touch a willing creature. For 1 minute, once on each of its turns, it can jump up to 30 feet by spending 10 feet of movement. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1."
+}

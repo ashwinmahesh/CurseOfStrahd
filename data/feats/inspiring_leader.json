@@ -1,0 +1,36 @@
+{
+  "id": "inspiring_leader",
+  "name": "Inspiring Leader",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "wis": 13,
+      "cha": 13
+    },
+    "text": "Level 4+, Wisdom or Charisma 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Wis or Cha; after a rest, a performance gives up to six allies Temporary HP equal to your level + modifier.",
+  "ability_increase": {
+    "from": [
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "bolstering_performance",
+      "name": "Bolstering Performance",
+      "summary": "After a Short or Long Rest, up to six allies within 30 ft gain Temporary HP equal to level + feat ability mod.",
+      "text": "When you finish a Short or Long Rest, you can give an inspiring performance, such as a speech, song or dance. Choose up to six allies within 30 feet of you who witness it (you can include yourself). Each gains Temporary Hit Points equal to your character level plus the modifier of the ability you increased with this feat.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "merchant",
+  "name": "Merchant",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You apprenticed with a trader or caravan master, learning to haggle, handle pack animals and read charts.",
+  "ability_scores": [
+    "con",
+    "int",
+    "cha"
+  ],
+  "feat": "lucky",
+  "skills": [
+    "animal_handling",
+    "persuasion"
+  ],
+  "tool": {
+    "id": "navigators_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "navigators_tools",
+          "qty": 1
+        },
+        {
+          "id": "pouch",
+          "qty": 2
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 22
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

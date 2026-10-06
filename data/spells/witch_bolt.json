@@ -1,0 +1,57 @@
+{
+  "id": "witch_bolt",
+  "name": "Witch Bolt",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the 2024 Basic Rules spell descriptions; entered from knowledge of the PHB. Classes Sorcerer and Warlock confirmed by the BR class spell tables."
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a twig struck by lightning"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "2d12",
+      "type": "lightning"
+    },
+    {
+      "dice": "1d12",
+      "type": "lightning",
+      "per": "turn"
+    }
+  ],
+  "upcast": {
+    "damage": "1d12",
+    "text": "Only the initial damage increases."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Ranged spell attack for 2d12 Lightning; on later turns a Bonus Action deals 1d12 Lightning automatically.",
+  "text": "A sustained arc of lightning links you to a creature within range. Make a ranged spell attack against it; on a hit it takes 2d12 Lightning damage. On each of your later turns while the spell lasts, you can take a Bonus Action to deal 1d12 Lightning damage to the target automatically, even if the first attack missed. The spell ends if the target is ever out of the spell's range or has Total Cover from you. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: the initial damage increases by 1d12 for each slot level above 1."
+}

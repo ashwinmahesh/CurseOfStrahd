@@ -1,0 +1,22 @@
+{
+  "id": "splint_armor",
+  "name": "Splint Armor",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "armor",
+  "weight_lb": 60,
+  "cost_gp": 200,
+  "armor": {
+    "kind": "heavy",
+    "base_ac": 17,
+    "dex_cap": 0,
+    "strength": 15,
+    "stealth_disadvantage": true,
+    "don_minutes": 10,
+    "doff_minutes": 5
+  },
+  "summary": "Heavy armor: AC 17; needs Str 15; Disadvantage on Stealth.",
+  "text": "Heavy armor. While you wear it, your base Armor Class is 17; your Dexterity modifier does not apply. If your Strength score is lower than 15, your Speed drops by 10 feet while you wear it. You have Disadvantage on Dexterity (Stealth) checks while wearing it. Putting it on takes 10 minutes and taking it off takes 5 minutes. Without training in Heavy armor, you have Disadvantage on every D20 Test that uses Strength or Dexterity and you can't cast spells."
+}

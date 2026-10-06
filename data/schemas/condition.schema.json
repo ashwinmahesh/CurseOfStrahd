@@ -1,0 +1,44 @@
+{
+  "$id": "condition.schema.json",
+  "title": "Condition (2024 Rules Glossary)",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "source",
+    "summary",
+    "text",
+    "modifiers"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/condition"
+    },
+    "name": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "common.schema.json#/$defs/source"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "implies": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/condition"
+      },
+      "description": "Conditions this one also gives (Paralyzed gives Incapacitated)."
+    },
+    "modifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/modifier"
+      }
+    }
+  }
+}

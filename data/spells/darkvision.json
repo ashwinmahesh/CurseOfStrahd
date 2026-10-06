@@ -1,0 +1,55 @@
+{
+  "id": "darkvision",
+  "name": "Darkvision",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "ranger",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a dried carrot"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "one willing creature"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "darkvision",
+            "value": 150
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff"
+  ],
+  "summary": "A willing creature you touch gains Darkvision out to 150 feet for 8 hours.",
+  "text": "For 8 hours, one willing creature you touch has Darkvision with a range of 150 feet."
+}

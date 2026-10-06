@@ -1,0 +1,43 @@
+{
+  "id": "boon_of_fate",
+  "name": "Boon of Fate",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); add or subtract 2d4 on a D20 Test within 60 feet, recharging on Initiative or a rest.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "improve_fate",
+      "name": "Improve Fate",
+      "summary": "When a creature within 60 ft (or you) succeeds or fails a D20 Test, roll 2d4 as a bonus or penalty to it.",
+      "text": "When you or another creature within 60 feet of you succeeds or fails on a D20 Test, you can roll 2d4 and apply the total as a bonus or a penalty to that d20 roll. Once you use this benefit, you can't use it again until you roll Initiative or finish a Short or Long Rest.",
+      "action": "special",
+      "resource": {
+        "id": "improve_fate",
+        "name": "Improve Fate",
+        "max": 1,
+        "recharge": "short"
+      },
+      "implemented": "text"
+    }
+  ]
+}

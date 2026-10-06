@@ -1,0 +1,19 @@
+{
+  "id": "torch",
+  "name": "Torch",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "light",
+  "weight_lb": 1,
+  "cost_gp": 0.01,
+  "stackable": true,
+  "light": {
+    "bright": 20,
+    "dim": 20,
+    "hours": 1
+  },
+  "summary": "Burns 1 hour: Bright Light 20 ft, Dim Light 20 ft beyond; can hit for 1 Fire damage.",
+  "text": "Once lit, a Torch burns for 1 hour, shedding Bright Light in a 20-foot radius and Dim Light for another 20 feet beyond that. When you take the Attack action, you can attack with the Torch as a Simple Melee weapon; on a hit, the target takes 1 Fire damage."
+}

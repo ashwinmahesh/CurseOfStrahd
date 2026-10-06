@@ -1,0 +1,39 @@
+{
+  "id": "martial_weapon_training",
+  "name": "Martial Weapon Training",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; gain proficiency with Martial weapons.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "martial_weapon_proficiency",
+      "name": "Weapon Proficiency",
+      "summary": "You gain proficiency with Martial weapons.",
+      "text": "You gain proficiency with Martial weapons.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "weapon",
+          "value": "martial"
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

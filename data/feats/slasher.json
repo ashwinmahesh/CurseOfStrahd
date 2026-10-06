@@ -1,0 +1,52 @@
+{
+  "id": "slasher",
+  "name": "Slasher",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; Slashing hits cut Speed by 10 feet, and Slashing Critical Hits give the foe Disadvantage on attacks.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "hamstring",
+      "name": "Hamstring",
+      "summary": "Once per turn, a Slashing hit reduces the target's Speed by 10 feet until the start of your next turn.",
+      "text": "Once per turn, when you hit a creature with an attack that deals Slashing damage, you can reduce its Speed by 10 feet until the start of your next turn.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "hamstring"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "slasher_enhanced_critical",
+      "name": "Enhanced Critical",
+      "summary": "A Slashing Critical Hit gives the target Disadvantage on attack rolls until the start of your next turn.",
+      "text": "When you score a Critical Hit that deals Slashing damage to a creature, it has Disadvantage on attack rolls until the start of your next turn.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "slasher_enhanced_critical"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

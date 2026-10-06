@@ -1,0 +1,48 @@
+{
+  "id": "crusaders_mantle",
+  "name": "Crusader's Mantle",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry."
+  },
+  "level": 3,
+  "school": "evocation",
+  "classes": [
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 30
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "ally",
+    "description": "you and your allies while in the aura"
+  },
+  "damage": [
+    {
+      "dice": "1d4",
+      "type": "radiant",
+      "per": "hit"
+    }
+  ],
+  "tags": [
+    "buff",
+    "damage"
+  ],
+  "summary": "30-foot aura: you and allies in it deal an extra 1d4 Radiant damage on weapon and Unarmed Strike hits.",
+  "text": "You radiate a 30-foot Emanation until the spell ends. While inside it, you and each of your allies deal an extra 1d4 Radiant damage whenever you hit with a weapon or an Unarmed Strike."
+}

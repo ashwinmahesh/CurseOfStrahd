@@ -1,0 +1,29 @@
+{
+  "id": "net",
+  "name": "Net",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 3,
+  "cost_gp": 1,
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "restrained",
+        "save": "dex",
+        "dc": "8+mod:dex+pb",
+        "range": 15,
+        "target": "creature",
+        "escape": {
+          "check": "athletics",
+          "dc": 10
+        }
+      }
+    }
+  ],
+  "summary": "Thrown at a creature within 15 ft: Dex save or Restrained until it escapes.",
+  "text": "When you take the Attack action, you can swap one of your attacks for throwing the Net at a creature you can see within 15 feet. The target makes a Dexterity saving throw against DC 8 + your Dexterity modifier + your Proficiency Bonus or has the Restrained condition until it escapes; a Huge or larger target succeeds automatically. The target, or a creature within 5 feet of it, can take an action to make a DC 10 Strength (Athletics) check, freeing the target on a success. Destroying the Net (AC 10; 5 HP; Immunity to Bludgeoning, Poison, and Psychic damage) also frees it."
+}

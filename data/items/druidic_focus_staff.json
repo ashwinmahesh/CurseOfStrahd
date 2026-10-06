@@ -1,0 +1,24 @@
+{
+  "id": "druidic_focus_staff",
+  "name": "Druidic Focus (Wooden Staff)",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "focus",
+  "weight_lb": 4,
+  "cost_gp": 5,
+  "focus": "druidic",
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d6",
+    "damage_type": "bludgeoning",
+    "properties": [
+      "versatile"
+    ],
+    "versatile": "1d8",
+    "mastery": "topple"
+  },
+  "summary": "Spellcasting Focus for Druids and Rangers; also a Quarterstaff.",
+  "text": "A Druidic Focus carved, tied with ribbon or painted to channel primal magic. Druids and Rangers can use it as a Spellcasting Focus. It also counts as a Quarterstaff (1d6 Bludgeoning, Versatile 1d8, mastery Topple)."
+}

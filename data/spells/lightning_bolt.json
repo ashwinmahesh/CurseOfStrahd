@@ -1,0 +1,52 @@
+{
+  "id": "lightning_bolt",
+  "name": "Lightning Bolt",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "line",
+    "size": 100,
+    "width": 5
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bit of fur and a crystal rod"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "8d6",
+      "type": "lightning"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "100-foot Line of lightning: Dexterity save, 8d6 Lightning damage, half on a success.",
+  "text": "A bolt of lightning 100 feet long and 5 feet wide shoots out from you in a direction you choose. Each creature in the Line makes a Dexterity saving throw, taking 8d6 Lightning damage on a failure or half as much on a success. Using a Higher-Level Spell Slot: the damage increases by 1d6 for each slot level above 3."
+}

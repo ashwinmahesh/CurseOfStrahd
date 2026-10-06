@@ -1,0 +1,46 @@
+{
+  "id": "cure_wounds",
+  "name": "Cure Wounds",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "paladin",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "heal": {
+    "dice": "2d8",
+    "add_mod": true
+  },
+  "upcast": {
+    "heal": "2d8"
+  },
+  "tags": [
+    "healing"
+  ],
+  "summary": "A creature you touch regains 2d8 + your spellcasting modifier Hit Points.",
+  "text": "A creature you touch regains Hit Points equal to 2d8 + your spellcasting ability modifier. Using a Higher-Level Spell Slot: the healing increases by 2d8 for each slot level above 1."
+}

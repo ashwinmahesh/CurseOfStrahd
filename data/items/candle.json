@@ -1,0 +1,19 @@
+{
+  "id": "candle",
+  "name": "Candle",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "light",
+  "weight_lb": 0,
+  "cost_gp": 0.01,
+  "stackable": true,
+  "light": {
+    "bright": 5,
+    "dim": 5,
+    "hours": 1
+  },
+  "summary": "Burns 1 hour: Bright Light 5 ft, Dim Light 5 ft beyond.",
+  "text": "Once lit, a Candle burns for 1 hour, shedding Bright Light in a 5-foot radius and Dim Light for another 5 feet beyond that."
+}

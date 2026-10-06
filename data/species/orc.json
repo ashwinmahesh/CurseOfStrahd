@@ -1,0 +1,65 @@
+{
+  "id": "orc",
+  "name": "Orc",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Tireless wanderers with 120-ft Darkvision who dash with a rush of vigor and refuse to fall at 0 HP.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium"
+  ],
+  "speed": 30,
+  "darkvision": 120,
+  "traits": [
+    {
+      "id": "adrenaline_rush",
+      "name": "Adrenaline Rush",
+      "summary": "Bonus Action Dash and gain Temporary Hit Points equal to PB; PB uses per Short or Long Rest.",
+      "text": "You can take the Dash action as a Bonus Action. When you do, you gain Temporary Hit Points equal to your Proficiency Bonus. You can use this trait a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Short or Long Rest.",
+      "action": "bonus_action",
+      "resource": {
+        "id": "adrenaline_rush",
+        "name": "Adrenaline Rush",
+        "max": "pb",
+        "recharge": "short"
+      },
+      "implemented": "text"
+    },
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 120 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 120 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 120
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "relentless_endurance",
+      "name": "Relentless Endurance",
+      "summary": "Once per Long Rest, when reduced to 0 Hit Points but not killed outright, drop to 1 Hit Point instead.",
+      "text": "When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can't do so again until you finish a Long Rest.",
+      "action": "special",
+      "resource": {
+        "id": "relentless_endurance",
+        "name": "Relentless Endurance",
+        "max": 1,
+        "recharge": "long"
+      },
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "relentless_endurance"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

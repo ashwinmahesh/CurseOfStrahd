@@ -1,0 +1,13 @@
+{
+  "id": "quiver",
+  "name": "Quiver",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 1,
+  "cost_gp": 1,
+  "capacity": "20 Arrows",
+  "summary": "Holds up to 20 Arrows."
+}

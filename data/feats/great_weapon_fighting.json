@@ -1,0 +1,34 @@
+{
+  "id": "great_weapon_fighting",
+  "name": "Great Weapon Fighting",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "Treat 1s and 2s on damage dice as 3s with melee weapons held in two hands.",
+  "benefits": [
+    {
+      "id": "great_weapon_fighting",
+      "name": "Great Weapon Fighting",
+      "summary": "Damage dice of two-handed melee attacks count 1s and 2s as 3s.",
+      "text": "When you roll damage for an attack with a Melee weapon you are holding in two hands, you can treat any 1 or 2 on a damage die as a 3. The weapon must have the Two-Handed or Versatile property to gain this benefit.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "damage_die_min",
+          "value": 3,
+          "when": {
+            "weapon": "two_handed"
+          }
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

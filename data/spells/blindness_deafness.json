@@ -1,0 +1,61 @@
+{
+  "id": "blindness_deafness",
+  "name": "Blindness/Deafness",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "cleric",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "con",
+  "save_success": "none",
+  "conditions": [
+    "blinded",
+    "deafened"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "blinded",
+        "condition_choice": [
+          "blinded",
+          "deafened"
+        ],
+        "repeat_save": "end_of_turn"
+      }
+    }
+  ],
+  "tags": [
+    "debuff"
+  ],
+  "summary": "A creature you can see makes a Con save or is Blinded or Deafened (your choice) for 1 minute.",
+  "text": "Choose one creature you can see within range. It must succeed on a Constitution saving throw or have the Blinded or Deafened condition (you choose which) for 1 minute. At the end of each of its turns it repeats the save, ending the spell on itself on a success. You can target one more creature for each spell slot level above 2."
+}

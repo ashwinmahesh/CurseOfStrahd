@@ -1,0 +1,68 @@
+{
+  "id": "mind_sliver",
+  "name": "Mind Sliver",
+  "source": {
+    "book": "PHB2024"
+  },
+  "level": 0,
+  "school": "enchantment",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "rounds",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "One creature you can see within range."
+  },
+  "save": "int",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "1d6",
+      "type": "psychic"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d6"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "penalty_die",
+            "dice": "1d4",
+            "on": [
+              "save:all"
+            ],
+            "text": "Only the target's next saving throw before the end of your next turn; then it ends."
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "Int save or 1d6 Psychic damage, and the target subtracts 1d4 from its next saving throw.",
+  "text": "One creature you can see within range makes an Intelligence saving throw. On a failure it takes 1d6 Psychic damage, and the next saving throw it makes before the end of your next turn has 1d4 subtracted from it. The damage becomes 2d6 at character level 5, 3d6 at level 11 and 4d6 at level 17."
+}

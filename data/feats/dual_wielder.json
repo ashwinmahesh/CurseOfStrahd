@@ -1,0 +1,50 @@
+{
+  "id": "dual_wielder",
+  "name": "Dual Wielder",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "str": 13,
+      "dex": 13
+    },
+    "text": "Level 4+, Strength or Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; Bonus Action extra attack with any non-Two-Handed melee weapon, and draw or stow two weapons at once.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "enhanced_dual_wielding",
+      "name": "Enhanced Dual Wielding",
+      "summary": "After attacking with a Light weapon, make a Bonus Action attack with a different non-Two-Handed melee weapon.",
+      "text": "When you take the Attack action on your turn and attack with a weapon that has the Light property, you can make one extra attack as a Bonus Action later that turn with a different weapon, which must be a Melee weapon without the Two-Handed property. You don't add your ability modifier to this extra attack's damage unless the modifier is negative.",
+      "action": "bonus_action",
+      "implemented": "text"
+    },
+    {
+      "id": "quick_draw",
+      "name": "Quick Draw",
+      "summary": "Draw or stow two non-Two-Handed weapons when you could normally handle one.",
+      "text": "You can draw or stow two weapons that lack the Two-Handed property when you would normally be able to draw or stow only one.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "quick_draw"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

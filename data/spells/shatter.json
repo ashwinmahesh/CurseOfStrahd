@@ -1,0 +1,53 @@
+{
+  "id": "shatter",
+  "name": "Shatter",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "evocation",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a chip of mica"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d8",
+      "type": "thunder"
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "A 10-ft-radius Sphere of sound: 3d8 Thunder, Con save for half; Constructs save with Disadvantage.",
+  "text": "A loud noise erupts from a point you choose within range. Each creature in a 10-foot-radius Sphere centered there makes a Constitution saving throw, taking 3d8 Thunder damage on a failure or half as much on a success. A Construct has Disadvantage on this save. Nonmagical objects in the area that nobody is wearing or carrying also take the damage. The damage increases by 1d8 for each spell slot level above 2."
+}

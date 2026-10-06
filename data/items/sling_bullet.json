@@ -1,0 +1,15 @@
+{
+  "id": "sling_bullet",
+  "name": "Sling Bullet",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "ammunition",
+  "weight_lb": 0.075,
+  "cost_gp": 0.002,
+  "stackable": true,
+  "bundle": 20,
+  "summary": "Ammunition for Slings; sold 20 at a time.",
+  "text": "One piece of ammunition for Slings. A bundle of 20 costs 4 CP and weighs 1.5 lb.; it is usually kept in a Pouch, bought separately. Each attack with an Ammunition weapon uses one piece. After a fight, spending 1 minute lets you recover half of the pieces you used (round down); the rest are lost."
+}

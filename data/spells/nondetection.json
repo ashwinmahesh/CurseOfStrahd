@@ -1,0 +1,42 @@
+{
+  "id": "nondetection",
+  "name": "Nondetection",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "ranger",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of diamond dust worth 25+ GP, which the spell consumes",
+    "m_cost_gp": 25,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "a willing creature, or a place or object no larger than 10 feet in any dimension"
+  },
+  "tags": [
+    "defense"
+  ],
+  "summary": "For 8 hours a creature, place or object can't be targeted by Divination spells or seen by scrying sensors.",
+  "text": "For 8 hours, the target you touch is hidden from Divination magic. The target can be a willing creature, or a place or object no larger than 10 feet in any dimension. No Divination spell can target it, and magical scrying sensors can't perceive it."
+}

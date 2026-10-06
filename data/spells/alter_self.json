@@ -1,0 +1,38 @@
+{
+  "id": "alter_self",
+  "name": "Alter Self",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "buff",
+    "utility"
+  ],
+  "summary": "Reshape your body: breathe underwater and swim, change your look, or grow 1d6 natural weapons.",
+  "text": "For the duration you take on one of the forms below, and you can take a Magic action to switch to a different one. Aquatic Adaptation: you grow gills and webbed fingers, can breathe underwater, and gain a Swim Speed equal to your Speed. Change Appearance: you decide how you look (height, weight, face, voice, hair, coloring and other features), even appearing as a member of another species, but none of your statistics change, you can't appear as a different size, and your basic body shape stays the same (a biped can't become a quadruped); you can take a Magic action to change your look again. Natural Weapons: you grow claws (Slashing), fangs or horns (Piercing), or hooves (Bludgeoning); when you deal damage with them using your Unarmed Strike, they deal 1d6 damage of that type instead of the usual Unarmed Strike damage, and you use your spellcasting ability modifier instead of Strength for the attack and damage rolls."
+}

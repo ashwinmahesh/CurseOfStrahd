@@ -1,0 +1,13 @@
+{
+  "id": "crowbar",
+  "name": "Crowbar",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 5,
+  "cost_gp": 2,
+  "summary": "Advantage on Strength checks where its leverage helps.",
+  "text": "Using a Crowbar gives you Advantage on Strength checks in which its leverage can be applied."
+}

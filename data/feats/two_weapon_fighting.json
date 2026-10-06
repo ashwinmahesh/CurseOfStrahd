@@ -1,0 +1,31 @@
+{
+  "id": "two_weapon_fighting",
+  "name": "Two-Weapon Fighting",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "Add your ability modifier to the damage of the Light property's extra attack.",
+  "benefits": [
+    {
+      "id": "two_weapon_fighting",
+      "name": "Two-Weapon Fighting",
+      "summary": "The Light property's extra attack adds your ability modifier to damage.",
+      "text": "When you make the extra attack granted by using a weapon that has the Light property, you can add your ability modifier to that attack's damage if you aren't already adding it.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "two_weapon_fighting"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "greataxe",
+  "name": "Greataxe",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 7,
+  "cost_gp": 30,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d12",
+    "damage_type": "slashing",
+    "properties": [
+      "heavy",
+      "two_handed"
+    ],
+    "mastery": "cleave"
+  },
+  "summary": "Martial melee weapon: 1d12 Slashing, Heavy, Two-Handed; mastery Cleave."
+}

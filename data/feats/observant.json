@@ -1,0 +1,60 @@
+{
+  "id": "observant",
+  "name": "Observant",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "int": 13,
+      "wis": 13
+    },
+    "text": "Level 4+, Intelligence or Wisdom 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Int or Wis; proficiency (or Expertise) in Insight, Investigation or Perception, and Search as a Bonus Action.",
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "keen_observer",
+      "name": "Keen Observer",
+      "summary": "Insight, Investigation or Perception: gain proficiency, or Expertise if already proficient.",
+      "text": "Choose Insight, Investigation or Perception. If you aren't proficient in the chosen skill, you gain proficiency in it; if you already are, you gain Expertise in it instead.",
+      "action": "passive",
+      "choice": {
+        "id": "observant_skill",
+        "kind": "skill",
+        "count": 1,
+        "from": [
+          "insight",
+          "investigation",
+          "perception"
+        ]
+      },
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "keen_observer"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "quick_search",
+      "name": "Quick Search",
+      "summary": "You can take the Search action as a Bonus Action.",
+      "text": "You can take the Search action as a Bonus Action.",
+      "action": "bonus_action",
+      "implemented": "text"
+    }
+  ]
+}

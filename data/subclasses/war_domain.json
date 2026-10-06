@@ -1,0 +1,107 @@
+{
+  "id": "war_domain",
+  "name": "War Domain",
+  "class": "cleric",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "A battle priest: extra weapon attacks from War Priest, +10 to a missed attack, and free Spiritual Weapon.",
+  "role_tags": [
+    "front line",
+    "damage"
+  ],
+  "always_prepared": {
+    "3": [
+      "guiding_bolt",
+      "magic_weapon",
+      "shield_of_faith",
+      "spiritual_weapon"
+    ],
+    "5": [
+      "crusaders_mantle",
+      "spirit_guardians"
+    ],
+    "7": [
+      "fire_shield",
+      "freedom_of_movement"
+    ],
+    "9": [
+      "hold_monster",
+      "steel_wind_strike"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "guided_strike",
+        "name": "Guided Strike",
+        "summary": "Channel Divinity: add +10 to a missed attack roll by you or a creature within 30 feet.",
+        "text": "When you or a creature within 30 feet misses with an attack roll, you can spend a Channel Divinity use to give that roll a +10 bonus, possibly making it hit (a Reaction if it's someone else's attack).",
+        "implemented": "engine",
+        "uses_resource": "channel_divinity"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "war_domain_spells",
+        "name": "War Domain Spells",
+        "summary": "Always prepared: Guiding Bolt, Magic Weapon, Shield of Faith, Spiritual Weapon; more at 5, 7 and 9.",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "war_priest",
+        "name": "War Priest",
+        "summary": "Bonus Action weapon or Unarmed Strike attack; uses = Wis modifier per Short or Long Rest.",
+        "text": "As a Bonus Action you can make one attack with a weapon or an Unarmed Strike. You can do this a number of times equal to your Wisdom modifier (minimum once), regaining all uses on a Short or Long Rest.",
+        "implemented": "engine",
+        "action": "bonus_action",
+        "resource": {
+          "id": "war_priest",
+          "name": "War Priest",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "short"
+        }
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "war_gods_blessing",
+        "name": "War God's Blessing",
+        "summary": "Channel Divinity: cast Shield of Faith or Spiritual Weapon without a slot or Concentration (1 minute).",
+        "implemented": "engine",
+        "uses_resource": "channel_divinity"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "avatar_of_battle",
+        "name": "Avatar of Battle",
+        "summary": "Resistance to Bludgeoning, Piercing and Slashing damage.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "bludgeoning"
+          },
+          {
+            "stat": "resistance",
+            "value": "piercing"
+          },
+          {
+            "stat": "resistance",
+            "value": "slashing"
+          }
+        ]
+      }
+    }
+  ]
+}

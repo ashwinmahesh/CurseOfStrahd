@@ -1,0 +1,13 @@
+{
+  "id": "barrel",
+  "name": "Barrel",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 70,
+  "cost_gp": 2,
+  "capacity": "40 gallons of liquid or 4 cubic feet of dry goods",
+  "summary": "Holds up to 40 gallons of liquid or 4 cubic feet of dry goods."
+}

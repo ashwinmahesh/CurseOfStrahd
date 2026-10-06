@@ -1,0 +1,62 @@
+{
+  "id": "bless",
+  "name": "Bless",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a Holy Symbol worth 5+ GP",
+    "m_cost_gp": 5
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 3
+  },
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "bonus_die",
+            "dice": "1d4",
+            "on": [
+              "attack",
+              "save:all"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff"
+  ],
+  "summary": "Up to three creatures add 1d4 to their attack rolls and saving throws.",
+  "text": "Choose up to three creatures within range. Until the spell ends, each of them adds 1d4 to its attack rolls and saving throws. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1."
+}

@@ -1,0 +1,40 @@
+{
+  "id": "message",
+  "name": "Message",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "s": true,
+    "m": "a copper wire"
+  },
+  "duration": {
+    "kind": "rounds",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "tags": [
+    "communication"
+  ],
+  "summary": "Whisper a message to a creature within 120 feet that only it hears; it can whisper back to you.",
+  "text": "Point at a creature within range and whisper a message. Only that creature hears it, and it can whisper a reply that only you hear. You can cast the spell through solid objects if you are familiar with the target and know it is beyond the barrier. Magical silence, 1 foot of stone, metal or wood, or a thin sheet of lead blocks the spell."
+}

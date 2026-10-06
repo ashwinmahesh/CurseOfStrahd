@@ -1,0 +1,28 @@
+{
+  "id": "trident",
+  "name": "Trident",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 4,
+  "cost_gp": 5,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d8",
+    "damage_type": "piercing",
+    "properties": [
+      "thrown",
+      "range",
+      "versatile"
+    ],
+    "versatile": "1d10",
+    "range": [
+      20,
+      60
+    ],
+    "mastery": "topple"
+  },
+  "summary": "Martial melee weapon: 1d8 Piercing, Thrown (20/60 ft), Versatile (1d10); mastery Topple."
+}

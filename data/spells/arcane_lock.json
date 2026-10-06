@@ -1,0 +1,39 @@
+{
+  "id": "arcane_lock",
+  "name": "Arcane Lock",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "abjuration",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "gold dust worth 25+ GP, consumed by the spell",
+    "m_cost_gp": 25,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "until_dispelled"
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a closed door, window, gate, container or hatch"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Magically locks a closed door, window, gate, container or hatch until dispelled.",
+  "text": "Touch a closed door, window, gate, container or hatch to lock it until the spell is dispelled. No nonmagical means can unlock it. You and any creatures you name when you cast the spell can open and close it freely. You can also set a password; speaking it within 5 feet of the object unlocks it for 1 minute. (Knock suppresses this spell for 10 minutes.)"
+}

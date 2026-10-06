@@ -4,35 +4,109 @@
   "type": "object",
   "required": ["id", "name", "source", "size", "type", "ac", "hp", "speed", "abilities", "cr", "actions"],
   "additionalProperties": false,
+  "$defs": {
+    "action": {
+      "type": "object",
+      "required": ["id", "name", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "common.schema.json#/$defs/id"},
+        "name": {"type": "string"},
+        "kind": {"type": "string", "enum": ["melee", "ranged", "melee_or_ranged", "save", "multiattack", "spellcasting", "special"]},
+        "attack": {
+          "type": "object",
+          "required": ["bonus"],
+          "additionalProperties": false,
+          "properties": {
+            "bonus": {"type": "integer"},
+            "reach": {"type": "integer"},
+            "range": {"type": "array", "items": {"type": "integer"}, "minItems": 1, "maxItems": 2}
+          }
+        },
+        "save": {
+          "type": "object",
+          "required": ["ability", "dc"],
+          "additionalProperties": false,
+          "properties": {
+            "ability": {"$ref": "common.schema.json#/$defs/ability"},
+            "dc": {"type": "integer"},
+            "success": {"type": "string", "enum": ["half", "none", "special"]}
+          }
+        },
+        "area": {"type": "object"},
+        "damage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["average", "dice", "type"],
+            "additionalProperties": false,
+            "properties": {
+              "average": {"type": "integer", "minimum": 0},
+              "dice": {"$ref": "common.schema.json#/$defs/dice"},
+              "type": {"$ref": "common.schema.json#/$defs/damage_type"},
+              "when": {"type": "string", "description": "Extra damage only in some cases, e.g. two-handed, on a failed save, sunlight."}
+            }
+          }
+        },
+        "conditions": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/condition"}},
+        "multiattack": {"type": "array", "items": {"type": "object", "required": ["action", "count"], "additionalProperties": false, "properties": {"action": {"$ref": "common.schema.json#/$defs/id"}, "count": {"type": "integer", "minimum": 1}, "or": {"type": "array", "items": {"type": "string"}}}}},
+        "recharge": {"type": "string", "pattern": "^[1-6](-6)?$"},
+        "uses": {"type": "object", "properties": {"count": {"type": "integer"}, "per": {"type": "string", "enum": ["day", "short", "long", "turn"]}}},
+        "cost": {"type": "integer", "description": "Legendary action cost."},
+        "trigger": {"type": "string"},
+        "summary": {"type": "string", "minLength": 1},
+        "text": {"type": "string"}
+      }
+    }
+  },
   "properties": {
     "id": {"$ref": "common.schema.json#/$defs/id"},
     "name": {"type": "string"},
     "source": {"$ref": "common.schema.json#/$defs/source"},
     "size": {"$ref": "common.schema.json#/$defs/size"},
     "type": {"type": "string", "enum": ["aberration", "beast", "celestial", "construct", "dragon", "elemental", "fey", "fiend", "giant", "humanoid", "monstrosity", "ooze", "plant", "undead"]},
+    "swarm_of": {"$ref": "common.schema.json#/$defs/size", "description": "For swarms: the size of the individual creatures."},
     "tags": {"type": "array", "items": {"type": "string"}},
     "alignment": {"type": "string"},
     "ac": {"type": "integer", "minimum": 1},
-    "initiative": {"type": "integer"},
-    "hp": {"type": "object", "required": ["average", "dice"], "properties": {"average": {"type": "integer", "minimum": 1}, "dice": {"$ref": "common.schema.json#/$defs/dice"}}},
-    "speed": {"type": "object", "properties": {"walk": {"type": "integer"}, "climb": {"type": "integer"}, "fly": {"type": "integer"}, "swim": {"type": "integer"}, "burrow": {"type": "integer"}, "hover": {"type": "boolean"}}},
-    "abilities": {"type": "object", "required": ["str", "dex", "con", "int", "wis", "cha"], "properties": {"str": {"type": "integer"}, "dex": {"type": "integer"}, "con": {"type": "integer"}, "int": {"type": "integer"}, "wis": {"type": "integer"}, "cha": {"type": "integer"}}},
-    "saves": {"type": "object"},
-    "skills": {"type": "object"},
+    "ac_note": {"type": "string"},
+    "initiative": {"type": "integer", "description": "Initiative modifier as printed (the stat block also prints the passive score = 10 + this)."},
+    "hp": {"type": "object", "required": ["average", "dice"], "additionalProperties": false, "properties": {"average": {"type": "integer", "minimum": 1}, "dice": {"$ref": "common.schema.json#/$defs/dice"}}},
+    "speed": {"type": "object", "additionalProperties": false, "properties": {"walk": {"type": "integer"}, "climb": {"type": "integer"}, "fly": {"type": "integer"}, "swim": {"type": "integer"}, "burrow": {"type": "integer"}, "hover": {"type": "boolean"}}},
+    "abilities": {"type": "object", "required": ["str", "dex", "con", "int", "wis", "cha"], "additionalProperties": false, "properties": {"str": {"type": "integer"}, "dex": {"type": "integer"}, "con": {"type": "integer"}, "int": {"type": "integer"}, "wis": {"type": "integer"}, "cha": {"type": "integer"}}},
+    "saves": {"type": "object", "description": "Ability -> total save bonus, only where it differs from the plain modifier.", "additionalProperties": {"type": "integer"}},
+    "skills": {"type": "object", "description": "Skill -> total bonus.", "additionalProperties": {"type": "integer"}},
     "resistances": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}},
     "vulnerabilities": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}},
     "immunities": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/damage_type"}},
     "condition_immunities": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/condition"}},
-    "senses": {"type": "object"},
+    "senses": {"type": "object", "additionalProperties": false, "properties": {"darkvision": {"type": "integer"}, "blindsight": {"type": "integer"}, "tremorsense": {"type": "integer"}, "truesight": {"type": "integer"}}},
     "passive_perception": {"type": "integer"},
     "languages": {"type": "array", "items": {"type": "string"}},
+    "telepathy": {"type": "integer"},
     "cr": {"type": "number", "minimum": 0, "maximum": 30},
+    "xp": {"type": "integer", "minimum": 0},
+    "proficiency_bonus": {"type": "integer"},
+    "gear": {"type": "array", "items": {"type": "string"}},
     "traits": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}},
-    "actions": {"type": "array", "items": {"type": "object", "required": ["id", "name"], "properties": {"id": {"$ref": "common.schema.json#/$defs/id"}, "name": {"type": "string"}, "attack": {"type": "object"}, "save": {"type": "object"}, "damage": {"type": "array"}, "recharge": {"type": "string"}, "summary": {"type": "string"}}}},
-    "bonus_actions": {"type": "array"},
-    "reactions": {"type": "array"},
-    "legendary_actions": {"type": "object"},
-    "lair_actions": {"type": "array"},
-    "ai_profile": {"type": "string", "enum": ["brute", "cowardly", "pack_hunter", "spellcaster", "skirmisher", "strahd"]}
+    "actions": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+    "bonus_actions": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+    "reactions": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+    "legendary_actions": {"type": "object", "properties": {"uses": {"type": "integer"}, "uses_in_lair": {"type": "integer"}, "actions": {"type": "array", "items": {"$ref": "#/$defs/action"}}}},
+    "lair_actions": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+    "spellcasting": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ability": {"$ref": "common.schema.json#/$defs/ability"},
+        "dc": {"type": "integer"},
+        "attack": {"type": "integer"},
+        "at_will": {"type": "array", "items": {"type": "string"}},
+        "per_day": {"type": "object", "description": "\"1\", \"2\", \"3\" -> spell ids usable that many times a day each.", "additionalProperties": {"type": "array", "items": {"type": "string"}}}
+      }
+    },
+    "regions": {"type": "array", "items": {"type": "string"}, "description": "Where the game uses it, e.g. death_house, village_of_barovia."},
+    "ai_profile": {"type": "string", "enum": ["brute", "cowardly", "pack_hunter", "spellcaster", "skirmisher", "swarm", "mindless", "support", "strahd"]},
+    "summary": {"type": "string"}
   }
 }

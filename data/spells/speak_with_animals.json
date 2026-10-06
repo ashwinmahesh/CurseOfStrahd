@@ -1,0 +1,40 @@
+{
+  "id": "speak_with_animals",
+  "name": "Speak with Animals",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "druid",
+    "ranger",
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "communication",
+    "social"
+  ],
+  "summary": "For 10 minutes you can understand and talk with Beasts and use Influence action skills on them.",
+  "text": "For 10 minutes you can understand Beasts and speak with them, and you can use any of the Influence action's skill options with them. Most Beasts know little beyond survival and companionship, but any Beast can at least tell you about nearby places and monsters, including anything it has perceived in the past day. Can be cast as a Ritual."
+}

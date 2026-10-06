@@ -1,0 +1,117 @@
+{
+  "id": "scout",
+  "name": "Scout",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "neutral",
+  "ac": 13,
+  "initiative": 2,
+  "hp": {
+    "average": 16,
+    "dice": "3d8+3"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 11,
+    "dex": 14,
+    "con": 12,
+    "int": 11,
+    "wis": 13,
+    "cha": 11
+  },
+  "skills": {
+    "nature": 4,
+    "perception": 5,
+    "stealth": 6,
+    "survival": 5
+  },
+  "passive_perception": 15,
+  "languages": [
+    "Common",
+    "one other language"
+  ],
+  "cr": 0.5,
+  "xp": 100,
+  "proficiency_bonus": 2,
+  "gear": [
+    "leather_armor",
+    "longbow",
+    "shortsword"
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "shortsword",
+          "count": 1,
+          "or": [
+            "longbow"
+          ]
+        },
+        {
+          "action": "shortsword",
+          "count": 1,
+          "or": [
+            "longbow"
+          ]
+        }
+      ],
+      "summary": "Makes two attacks with Shortsword and Longbow in any combination."
+    },
+    {
+      "id": "shortsword",
+      "name": "Shortsword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Stabs with a shortsword."
+    },
+    {
+      "id": "longbow",
+      "name": "Longbow",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          150,
+          600
+        ]
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d8+2",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Shoots a longbow."
+    }
+  ],
+  "regions": [
+    "svalich_road",
+    "tser_pool"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "Keeps its distance and fires two arrows a turn from cover, drawing a shortsword only if cornered."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "antitoxin",
+  "name": "Antitoxin",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 0,
+  "cost_gp": 50,
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "duration": {
+          "kind": "hours",
+          "amount": 1
+        },
+        "modifiers": [
+          {
+            "stat": "advantage",
+            "on": "save_vs:poisoned"
+          }
+        ]
+      }
+    }
+  ],
+  "summary": "Bonus Action to drink: Advantage on saves against being Poisoned for 1 hour.",
+  "text": "Drinking a vial takes a Bonus Action. For the next hour you have Advantage on saving throws to avoid or end the Poisoned condition."
+}

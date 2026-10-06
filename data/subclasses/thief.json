@@ -1,0 +1,73 @@
+{
+  "id": "thief",
+  "name": "Thief",
+  "class": "rogue",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "The classic adventurer: quick hands, climbing and jumping, and a knack for magic items.",
+  "role_tags": [
+    "utility",
+    "exploration"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "fast_hands",
+        "name": "Fast Hands",
+        "summary": "Bonus Action: Sleight of Hand (locks, traps, pockets), Utilize, or use a magic item.",
+        "text": "As a Bonus Action you can make a Dexterity (Sleight of Hand) check to pick a lock, disarm a trap or pick a pocket, take the Utilize action, or take the Magic action to use a magic item.",
+        "implemented": "engine",
+        "action": "bonus_action"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "second_story_work",
+        "name": "Second-Story Work",
+        "summary": "Climb Speed equal to your Speed; jump distance uses Dexterity.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "climb_speed_equals_speed"
+          },
+          {
+            "stat": "flag",
+            "value": "jump_with_dex"
+          }
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "supreme_sneak",
+        "name": "Supreme Sneak",
+        "summary": "Stealth Attack Cunning Strike (1d6): stay Invisible from Hide if you end the turn behind cover.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "use_magic_device",
+        "name": "Use Magic Device",
+        "summary": "Attune to four items, maybe save charges, and use any Spell Scroll with Intelligence.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "thiefs_reflexes",
+        "name": "Thief's Reflexes",
+        "summary": "Take two turns in the first round of combat (second at Initiative - 10).",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

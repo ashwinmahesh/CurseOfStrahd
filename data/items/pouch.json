@@ -1,0 +1,13 @@
+{
+  "id": "pouch",
+  "name": "Pouch",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 1,
+  "cost_gp": 0.5,
+  "capacity": "6 lb. within 0.2 cubic foot",
+  "summary": "Holds up to 6 lb. within one-fifth of a cubic foot."
+}

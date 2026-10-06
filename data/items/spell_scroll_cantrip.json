@@ -1,0 +1,17 @@
+{
+  "id": "spell_scroll_cantrip",
+  "name": "Spell Scroll (Cantrip)",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "scroll",
+  "weight_lb": 0,
+  "cost_gp": 30,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "summary": "Magic scroll holding one cantrip; cast it if it is on your class's spell list (DC 13, +5).",
+  "text": "A magic item bearing one cantrip chosen by its creator. If the spell is on your class's spell list, you can read the scroll to cast the spell with its normal casting time and without Material components. If the spell needs a saving throw or attack roll, its save DC is 13 and its attack bonus is +5. The scroll crumbles away once the casting is complete."
+}

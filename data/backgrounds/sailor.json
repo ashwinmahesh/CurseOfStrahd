@@ -1,0 +1,49 @@
+{
+  "id": "sailor",
+  "name": "Sailor",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You crewed ships at sea, braving storms, hauling rigging and brawling in rough harbor taverns.",
+  "ability_scores": [
+    "str",
+    "dex",
+    "wis"
+  ],
+  "feat": "tavern_brawler",
+  "skills": [
+    "acrobatics",
+    "perception"
+  ],
+  "tool": {
+    "id": "navigators_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "navigators_tools",
+          "qty": 1
+        },
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 20
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

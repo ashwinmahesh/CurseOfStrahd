@@ -1,0 +1,71 @@
+{
+  "id": "grappler",
+  "name": "Grappler",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "str": 13,
+      "dex": 13
+    },
+    "text": "Level 4+, Strength or Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; damage and grapple with one Unarmed Strike, Advantage against foes you grapple, and drag them freely.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "punch_and_grab",
+      "name": "Punch and Grab",
+      "summary": "Once per turn, an Unarmed Strike hit during the Attack action can use both the Damage and Grapple options.",
+      "text": "When you hit a creature with an Unarmed Strike as part of the Attack action on your turn, you can use both the Damage and the Grapple option. You can use this benefit only once per turn.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "punch_and_grab"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "grappler_attack_advantage",
+      "name": "Attack Advantage",
+      "summary": "You have Advantage on attack rolls against a creature you have Grappled.",
+      "text": "You have Advantage on attack rolls against a creature that has the Grappled condition from you.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "grappler_attack_advantage"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "fast_wrestler",
+      "name": "Fast Wrestler",
+      "summary": "Moving a creature you have Grappled costs no extra movement if it is your size or smaller.",
+      "text": "You don't spend extra movement to move a creature you have Grappled if that creature is your size or smaller.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "fast_wrestler"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

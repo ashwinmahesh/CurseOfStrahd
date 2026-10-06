@@ -1,0 +1,13 @@
+{
+  "id": "travelers_clothes",
+  "name": "Traveler's Clothes",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "clothing",
+  "weight_lb": 4,
+  "cost_gp": 2,
+  "summary": "Hard-wearing garments made for travel.",
+  "text": "Tough clothing made to hold up while traveling through many kinds of environments."
+}

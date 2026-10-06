@@ -1,0 +1,52 @@
+{
+  "id": "acid_splash",
+  "name": "Acid Splash",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 5
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point",
+    "description": "Each creature in a 5-foot-radius Sphere centered on a point within range."
+  },
+  "save": "dex",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "1d6",
+      "type": "acid"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d6"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Acid bursts in a 5-foot-radius Sphere; each creature there fails a Dex save to take 1d6 Acid damage.",
+  "text": "Pick a point within range; a bubble of acid bursts there, filling a 5-foot-radius Sphere. Every creature in the Sphere makes a Dexterity saving throw, taking 1d6 Acid damage on a failure and no damage on a success. The damage becomes 2d6 at character level 5, 3d6 at level 11 and 4d6 at level 17."
+}

@@ -1,0 +1,57 @@
+{
+  "id": "crafter",
+  "name": "Crafter",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Proficiency with three Artisan's Tools, 20% off nonmagical purchases, and temporary gear made after a Long Rest.",
+  "benefits": [
+    {
+      "id": "crafter_tool_proficiency",
+      "name": "Tool Proficiency",
+      "summary": "Gain proficiency with three different Artisan's Tools from the Fast Crafting table.",
+      "text": "You gain proficiency with three different Artisan's Tools of your choice from those on the Fast Crafting table: Carpenter's Tools, Leatherworker's Tools, Mason's Tools, Potter's Tools, Smith's Tools, Tinker's Tools, Weaver's Tools or Woodcarver's Tools.",
+      "action": "passive",
+      "choice": {
+        "id": "crafter_tools",
+        "kind": "tool",
+        "count": 3,
+        "from": [
+          "carpenters_tools",
+          "leatherworkers_tools",
+          "masons_tools",
+          "potters_tools",
+          "smiths_tools",
+          "tinkers_tools",
+          "weavers_tools",
+          "woodcarvers_tools"
+        ]
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "crafter_discount",
+      "name": "Discount",
+      "summary": "Pay 20 percent less for any nonmagical item you buy.",
+      "text": "Whenever you buy a nonmagical item, you get a 20 percent discount on its price.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "crafter_discount"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "fast_crafting",
+      "name": "Fast Crafting",
+      "summary": "After a Long Rest, craft one item from the Fast Crafting table; it falls apart after your next Long Rest.",
+      "text": "When you finish a Long Rest, you can make one piece of gear from the Fast Crafting table, as long as you have the Artisan's Tools listed for it and are proficient with them. The item lasts until you finish your next Long Rest, when it falls apart. Fast Crafting table: Carpenter's Tools: Ladder, Torch. Leatherworker's Tools: Case, Pouch. Mason's Tools: Block and Tackle. Potter's Tools: Jug, Lamp. Smith's Tools: Ball Bearings, Bucket, Caltrops, Grappling Hook, Iron Pot. Tinker's Tools: Bell, Shovel, Tinderbox. Weaver's Tools: Basket, Rope, Net, Tent. Woodcarver's Tools: Club, Greatclub, Quarterstaff.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

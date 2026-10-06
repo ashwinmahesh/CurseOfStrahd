@@ -1,0 +1,64 @@
+{
+  "id": "haste",
+  "name": "Haste",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a shaving of licorice root"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a willing creature you can see"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "ac",
+            "value": 2
+          },
+          {
+            "stat": "advantage",
+            "on": "save:dex"
+          },
+          {
+            "stat": "flag",
+            "value": "hasted",
+            "text": "Speed doubled; one extra limited action each turn; lethargy when the spell ends."
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff"
+  ],
+  "summary": "Willing creature: doubled Speed, +2 AC, Advantage on Dex saves and an extra limited action each turn.",
+  "text": "Choose a willing creature you can see within 30 feet. Until the spell ends, its Speed is doubled, it gains a +2 bonus to Armor Class, it has Advantage on Dexterity saving throws, and it gets one additional action on each of its turns, which it can use only to take the Attack (one attack only), Dash, Disengage, Hide or Utilize action. When the spell ends, the target has the Incapacitated condition and a Speed of 0 until the end of its next turn."
+}

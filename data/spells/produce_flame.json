@@ -1,0 +1,58 @@
+{
+  "id": "produce_flame",
+  "name": "Produce Flame",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "conjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "Hurled flame: one creature or object within 60 feet, as a Magic action."
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "1d8",
+      "type": "fire"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d8"
+  },
+  "effects": [
+    {
+      "effect": "light",
+      "params": {
+        "target": "self",
+        "bright": 20,
+        "dim": 20
+      }
+    }
+  ],
+  "tags": [
+    "light",
+    "damage"
+  ],
+  "summary": "A flame in your hand gives light; as a Magic action, hurl fire 60 feet for 1d8 Fire damage.",
+  "text": "A flickering flame appears in your hand for the duration. It gives off no heat and ignites nothing, but it sheds Bright Light in a 20-foot radius and Dim Light for a further 20 feet. Casting the spell again ends it. Until the spell ends, you can take a Magic action to hurl fire at a creature or object within 60 feet of you: make a ranged spell attack, and on a hit the target takes 1d8 Fire damage. The damage becomes 2d8 at character level 5, 3d8 at level 11 and 4d8 at level 17."
+}

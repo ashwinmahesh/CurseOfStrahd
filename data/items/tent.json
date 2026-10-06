@@ -1,0 +1,13 @@
+{
+  "id": "tent",
+  "name": "Tent",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 20,
+  "cost_gp": 2,
+  "summary": "Sleeps up to two Small or Medium creatures.",
+  "text": "A Tent sleeps up to two Small or Medium creatures."
+}

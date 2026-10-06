@@ -1,0 +1,141 @@
+{
+  "id": "boon_of_skill",
+  "name": "Boon of Skill",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); proficiency in every skill and Expertise in one.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "all_around_adept",
+      "name": "All-Around Adept",
+      "summary": "You gain proficiency in all skills.",
+      "text": "You gain proficiency in all skills.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "acrobatics"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "animal_handling"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "arcana"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "athletics"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "deception"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "history"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "insight"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "intimidation"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "investigation"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "medicine"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "nature"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "perception"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "performance"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "persuasion"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "religion"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "sleight_of_hand"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "stealth"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "skill",
+          "value": "survival"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "boon_of_skill_expertise",
+      "name": "Expertise",
+      "summary": "Gain Expertise in one skill that lacks it.",
+      "text": "Choose one skill in which you lack Expertise. You gain Expertise in that skill.",
+      "action": "passive",
+      "choice": {
+        "id": "boon_of_skill_expertise",
+        "kind": "expertise",
+        "count": 1
+      },
+      "implemented": "data"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "healer",
+  "name": "Healer",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Spend a Healer's Kit use so a creature can roll a Hit Point Die plus your Proficiency Bonus; reroll healing 1s.",
+  "benefits": [
+    {
+      "id": "battle_medic",
+      "name": "Battle Medic",
+      "summary": "Utilize action: expend a Healer's Kit use; a creature within 5 ft spends a Hit Point Die and heals roll + PB.",
+      "text": "If you carry a Healer's Kit, you can take a Utilize action to expend one of its uses and tend a creature within 5 feet of you. That creature can expend one of its Hit Point Dice; you roll that die, and the creature regains Hit Points equal to the result plus your Proficiency Bonus.",
+      "action": "action",
+      "implemented": "text"
+    },
+    {
+      "id": "healing_rerolls",
+      "name": "Healing Rerolls",
+      "summary": "Reroll any 1 on a die that sets the Hit Points you restore with a spell or Battle Medic.",
+      "text": "Whenever you roll a die to determine how many Hit Points you restore with a spell or with this feat's Battle Medic benefit, you can reroll the die if it shows a 1, and you must keep the new result.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "healing_rerolls"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

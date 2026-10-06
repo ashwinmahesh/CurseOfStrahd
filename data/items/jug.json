@@ -1,0 +1,13 @@
+{
+  "id": "jug",
+  "name": "Jug",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 4,
+  "cost_gp": 0.02,
+  "capacity": "1 gallon",
+  "summary": "Holds up to 1 gallon."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "flail",
+  "name": "Flail",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 2,
+  "cost_gp": 10,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d8",
+    "damage_type": "bludgeoning",
+    "properties": [],
+    "mastery": "sap"
+  },
+  "summary": "Martial melee weapon: 1d8 Bludgeoning; mastery Sap."
+}

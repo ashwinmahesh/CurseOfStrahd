@@ -1,0 +1,64 @@
+{
+  "id": "guide",
+  "name": "Guide",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You led travelers through the wilds, moving quietly, living off the land and picking up some druid magic.",
+  "ability_scores": [
+    "dex",
+    "con",
+    "wis"
+  ],
+  "feat": "magic_initiate",
+  "feat_params": {
+    "list": "druid"
+  },
+  "skills": [
+    "stealth",
+    "survival"
+  ],
+  "tool": {
+    "id": "cartographers_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "shortbow",
+          "qty": 1
+        },
+        {
+          "id": "arrow",
+          "qty": 20
+        },
+        {
+          "id": "cartographers_tools",
+          "qty": 1
+        },
+        {
+          "id": "bedroll",
+          "qty": 1
+        },
+        {
+          "id": "quiver",
+          "qty": 1
+        },
+        {
+          "id": "tent",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 3
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

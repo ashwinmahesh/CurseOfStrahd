@@ -1,0 +1,45 @@
+{
+  "id": "prayer_of_healing",
+  "name": "Prayer of Healing",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 5,
+    "description": "creatures of your choice that stay within range for the whole casting"
+  },
+  "heal": {
+    "dice": "2d8"
+  },
+  "upcast": {
+    "heal": "1d8"
+  },
+  "tags": [
+    "healing",
+    "restoration"
+  ],
+  "summary": "Up to five creatures who stay near you for the 10-minute casting gain a Short Rest's benefits and 2d8 HP.",
+  "text": "Up to five creatures of your choice that stay within range for the entire 10-minute casting gain the benefits of a Short Rest and also regain 2d8 Hit Points. A creature can't be affected by this spell again until it finishes a Long Rest. The healing increases by 1d8 for each spell slot level above 2."
+}

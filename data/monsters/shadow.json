@@ -1,0 +1,128 @@
+{
+  "id": "shadow",
+  "name": "Shadow",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "undead",
+  "alignment": "chaotic evil",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 27,
+    "dice": "5d8+5"
+  },
+  "speed": {
+    "walk": 40
+  },
+  "abilities": {
+    "str": 6,
+    "dex": 14,
+    "con": 13,
+    "int": 6,
+    "wis": 10,
+    "cha": 8
+  },
+  "skills": {
+    "stealth": 6
+  },
+  "resistances": [
+    "acid",
+    "cold",
+    "fire",
+    "lightning",
+    "thunder"
+  ],
+  "vulnerabilities": [
+    "radiant"
+  ],
+  "immunities": [
+    "necrotic",
+    "poison"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "frightened",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained",
+    "unconscious"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [],
+  "cr": 0.5,
+  "xp": 100,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "amorphous",
+      "name": "Amorphous",
+      "action": "passive",
+      "summary": "Can pass through a gap as narrow as 1 inch without spending extra movement.",
+      "text": "The shadow can move through a space as narrow as 1 inch, and doing so costs it no extra movement.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "amorphous"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "sunlight_weakness",
+      "name": "Sunlight Weakness",
+      "action": "passive",
+      "summary": "Has Disadvantage on D20 Tests while in sunlight.",
+      "text": "While the shadow is in sunlight, it has Disadvantage on D20 Tests.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "sunlight_weakness"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "draining_swipe",
+      "name": "Draining Swipe",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "Necrotic touch that lowers the target's Strength by 1d4; at 0 Strength the target dies.",
+      "text": "Hit: 5 (1d6 + 2) Necrotic damage, and the target's Strength score is reduced by 1d4. If this brings the score to 0, the target dies. A Humanoid killed by this attack rises as a new Shadow 1d4 hours later."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "shadow_stealth",
+      "name": "Shadow Stealth",
+      "kind": "special",
+      "summary": "Takes the Hide action while in Dim Light or Darkness.",
+      "text": "If the shadow is in Dim Light or Darkness, it can take the Hide action as a Bonus Action."
+    }
+  ],
+  "regions": [
+    "death_house"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "Hides in darkness, slips through cracks and drains Strength; weak to radiant damage and sunlight."
+}

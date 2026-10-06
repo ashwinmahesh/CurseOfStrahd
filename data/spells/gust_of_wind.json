@@ -1,0 +1,47 @@
+{
+  "id": "gust_of_wind",
+  "name": "Gust of Wind",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "evocation",
+  "classes": [
+    "druid",
+    "ranger",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "line",
+    "size": 60,
+    "width": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a legume seed"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "str",
+  "save_success": "none",
+  "tags": [
+    "control"
+  ],
+  "summary": "A 60-ft-long, 10-ft-wide Line of wind pushes creatures 15 ft away (Str save) and slows movement toward you.",
+  "text": "A Line of strong wind 60 feet long and 10 feet wide blasts from you in a direction you choose for the duration. Each creature in the Line must succeed on a Strength saving throw or be pushed 15 feet away from you along the Line, and a creature that ends its turn in the Line must make the same save. Any creature in the Line spends 2 feet of movement for every 1 foot it moves closer to you. The wind disperses gas and vapor and puts out candles and similar unprotected flames in the area; protected flames such as lanterns flicker wildly and have a 50 percent chance to go out. As a Bonus Action on your later turns, you can change the Line's direction."
+}

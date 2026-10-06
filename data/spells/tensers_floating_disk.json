@@ -1,0 +1,40 @@
+{
+  "id": "tensers_floating_disk",
+  "name": "Tenser's Floating Disk",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024",
+    "note": "BR2024 body shows Casting Time: Action without Ritual; ritual set from knowledge of the PHB."
+  },
+  "level": 1,
+  "school": "conjuration",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a drop of mercury"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space you can see"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "A floating disk of force that carries up to 500 pounds and follows you.",
+  "text": "A flat, round disk of force, 3 feet across and 1 inch thick, appears floating 3 feet above the ground in an unoccupied space you can see within range, and lasts 1 hour. It can carry up to 500 pounds; if more weight is put on it, the spell ends and everything on it falls. The disk stays still while you are within 20 feet of it; if you move farther away, it follows to stay within 20 feet of you. It can travel over uneven ground, stairs and slopes, but it can't cross a change in elevation of 10 feet or more (it can't cross a 10-foot-deep pit, or leave one if created at the bottom). If you get more than 100 feet away from it, the spell ends."
+}

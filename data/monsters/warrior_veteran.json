@@ -1,0 +1,117 @@
+{
+  "id": "warrior_veteran",
+  "name": "Warrior Veteran",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "neutral",
+  "ac": 17,
+  "initiative": 3,
+  "hp": {
+    "average": 65,
+    "dice": "10d8+20"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 13,
+    "con": 14,
+    "int": 10,
+    "wis": 11,
+    "cha": 10
+  },
+  "skills": {
+    "athletics": 5,
+    "perception": 2
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common",
+    "one other language"
+  ],
+  "cr": 3,
+  "xp": 700,
+  "proficiency_bonus": 2,
+  "gear": [
+    "greatsword",
+    "heavy_crossbow",
+    "splint_armor"
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "greatsword",
+          "count": 2,
+          "or": [
+            "heavy_crossbow"
+          ]
+        }
+      ],
+      "summary": "Makes two Greatsword attacks or two Heavy Crossbow attacks."
+    },
+    {
+      "id": "greatsword",
+      "name": "Greatsword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "2d6+3",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Cleaves with a greatsword."
+    },
+    {
+      "id": "heavy_crossbow",
+      "name": "Heavy Crossbow",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 3,
+        "range": [
+          100,
+          400
+        ]
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "2d10+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Fires a heavy crossbow bolt."
+    }
+  ],
+  "reactions": [
+    {
+      "id": "parry",
+      "name": "Parry",
+      "kind": "special",
+      "trigger": "The warrior is hit by a melee attack roll while holding a weapon.",
+      "summary": "Reaction: +2 AC against one melee attack that hit it, possibly turning the hit into a miss.",
+      "text": "Trigger: the warrior is hit by a melee attack roll while it holds a weapon. Response: the warrior gains a +2 bonus to its AC against that one attack, which can make the attack miss."
+    }
+  ],
+  "regions": [
+    "village_of_barovia"
+  ],
+  "ai_profile": "brute",
+  "summary": "A seasoned soldier: shoots while foes close, then cleaves twice a turn and parries melee hits."
+}

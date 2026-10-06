@@ -1,0 +1,21 @@
+{
+  "id": "sickle",
+  "name": "Sickle",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 2,
+  "cost_gp": 1,
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d4",
+    "damage_type": "slashing",
+    "properties": [
+      "light"
+    ],
+    "mastery": "nick"
+  },
+  "summary": "Simple melee weapon: 1d4 Slashing, Light; mastery Nick."
+}

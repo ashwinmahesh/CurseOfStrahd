@@ -1,0 +1,47 @@
+{
+  "id": "scholars_pack",
+  "name": "Scholar's Pack",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "pack",
+  "weight_lb": 22,
+  "cost_gp": 40,
+  "contents": [
+    {
+      "id": "backpack",
+      "qty": 1
+    },
+    {
+      "id": "book",
+      "qty": 1
+    },
+    {
+      "id": "ink",
+      "qty": 1
+    },
+    {
+      "id": "ink_pen",
+      "qty": 1
+    },
+    {
+      "id": "lamp",
+      "qty": 1
+    },
+    {
+      "id": "oil",
+      "qty": 10
+    },
+    {
+      "id": "parchment",
+      "qty": 10
+    },
+    {
+      "id": "tinderbox",
+      "qty": 1
+    }
+  ],
+  "summary": "Equipment pack: Backpack, Book, Ink, Ink Pen, Lamp, 10 x Oil, 10 x Parchment, Tinderbox.",
+  "text": "Opens into its contents: Backpack, Book, Ink, Ink Pen, Lamp, 10 x Oil, 10 x Parchment, Tinderbox."
+}

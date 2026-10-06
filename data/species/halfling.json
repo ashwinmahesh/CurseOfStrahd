@@ -1,0 +1,72 @@
+{
+  "id": "halfling",
+  "name": "Halfling",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Small, lucky folk who resist fear, reroll natural 1s and slip past larger creatures.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "small"
+  ],
+  "speed": 30,
+  "traits": [
+    {
+      "id": "brave",
+      "name": "Brave",
+      "summary": "Advantage on saving throws to avoid or end the Frightened condition.",
+      "text": "You have Advantage on saving throws you make to avoid or end the Frightened condition.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:frightened"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "halfling_nimbleness",
+      "name": "Halfling Nimbleness",
+      "summary": "Move through the space of any creature a size larger than you, but you can't stop in that space.",
+      "text": "You can move through the space of any creature that is a size larger than you, but you can't end your move in the same space.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "halfling_nimbleness"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "luck",
+      "name": "Luck",
+      "summary": "When you roll a 1 on the d20 of a D20 Test, reroll it and use the new roll.",
+      "text": "When you roll a 1 on the d20 for a D20 Test, you can reroll the die, and you must use the new roll.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "luck"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "naturally_stealthy",
+      "name": "Naturally Stealthy",
+      "summary": "You can take the Hide action while obscured only by a creature at least one size larger than you.",
+      "text": "You can take the Hide action even when the only thing obscuring you is a creature that is at least one size larger than you.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "naturally_stealthy"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

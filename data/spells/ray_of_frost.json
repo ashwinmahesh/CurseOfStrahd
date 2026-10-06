@@ -1,0 +1,63 @@
+{
+  "id": "ray_of_frost",
+  "name": "Ray of Frost",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "1d8",
+      "type": "cold"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d8"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "speed",
+            "value": -10,
+            "text": "Until the start of your next turn."
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "Ranged spell attack for 1d8 Cold damage; the target's Speed drops by 10 feet until your next turn.",
+  "text": "Make a ranged spell attack against one creature within range. On a hit it takes 1d8 Cold damage and its Speed is reduced by 10 feet until the start of your next turn. The damage becomes 2d8 at character level 5, 3d8 at level 11 and 4d8 at level 17."
+}

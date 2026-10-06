@@ -1,0 +1,54 @@
+{
+  "id": "magic_circle",
+  "name": "Magic Circle",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "paladin",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 10
+  },
+  "area": {
+    "shape": "cylinder",
+    "size": 10,
+    "height": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "salt and powdered silver worth 100+ GP, which the spell consumes",
+    "m_cost_gp": 100,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "point",
+    "description": "a point on the ground you can see within range"
+  },
+  "save": "cha",
+  "save_success": "none",
+  "upcast": {
+    "text": "The duration increases by 1 hour for each slot level above 3."
+  },
+  "tags": [
+    "defense"
+  ],
+  "summary": "A 10-foot-radius Cylinder that keeps chosen Celestials, Elementals, Fey, Fiends or Undead out (or in).",
+  "text": "Create a Cylinder of magical energy 10 feet in radius and 20 feet tall, centered on a point on the ground you can see within 10 feet. Glowing runes appear wherever it meets the floor or another surface. Choose one or more creature types: Celestials, Elementals, Fey, Fiends or Undead. A creature of a chosen type is affected as follows: it can't willingly enter the Cylinder by nonmagical means, and if it tries to get in by teleportation or interplanar travel it must first succeed on a Charisma saving throw; it has Disadvantage on attack rolls against targets inside the Cylinder; and targets inside the Cylinder can't be possessed by it or given the Charmed or Frightened condition by it. When you cast the spell, you can make it work in reverse, stopping creatures of the chosen types from leaving the Cylinder and protecting targets outside it. Casting time 1 minute. Using a Higher-Level Spell Slot: the duration increases by 1 hour for each slot level above 3."
+}

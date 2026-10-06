@@ -1,0 +1,14 @@
+{
+  "id": "ink",
+  "name": "Ink",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 10,
+  "stackable": true,
+  "summary": "A 1-ounce bottle, enough to write about 500 pages.",
+  "text": "A 1-ounce bottle of ink, enough to write roughly 500 pages."
+}

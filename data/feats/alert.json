@@ -2,20 +2,34 @@
   "id": "alert",
   "name": "Alert",
   "source": {
-    "book": "SRD5.2"
+    "book": "PHB2024",
+    "checked_against": "BR2024"
   },
   "category": "origin",
-  "summary": "Add your Proficiency Bonus to Initiative, and you can swap Initiative with a willing ally after rolling.",
+  "repeatable": false,
+  "summary": "Add your Proficiency Bonus to Initiative, and swap Initiative with a willing ally right after rolling.",
   "benefits": [
     {
       "id": "initiative_proficiency",
       "name": "Initiative Proficiency",
-      "summary": "Add your Proficiency Bonus to Initiative rolls."
+      "summary": "Add your Proficiency Bonus to Initiative rolls.",
+      "text": "Whenever you roll Initiative, you add your Proficiency Bonus to the roll.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "initiative",
+          "value": "pb"
+        }
+      ],
+      "implemented": "data"
     },
     {
       "id": "initiative_swap",
       "name": "Initiative Swap",
-      "summary": "After rolling Initiative, swap results with a willing ally who isn't Incapacitated."
+      "summary": "Right after rolling Initiative, trade Initiative results with one willing ally in the same combat.",
+      "text": "Immediately after you roll Initiative, you may trade your Initiative with that of one willing ally taking part in the same combat. The swap isn't possible if you or that ally has the Incapacitated condition.",
+      "action": "special",
+      "implemented": "text"
     }
   ]
 }

@@ -1,0 +1,455 @@
+{
+  "id": "wizard",
+  "name": "Wizard",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "A scholar of arcane magic with the widest spell list, a spellbook that grows every level and rituals for free.",
+  "role_tags": [
+    "arcane magic",
+    "control",
+    "utility"
+  ],
+  "complexity": "high",
+  "hit_die": 6,
+  "primary_abilities": [
+    "int"
+  ],
+  "saving_throws": [
+    "int",
+    "wis"
+  ],
+  "skill_choices": {
+    "kind": "skill",
+    "count": 2,
+    "from": [
+      "arcana",
+      "history",
+      "insight",
+      "investigation",
+      "medicine",
+      "nature",
+      "religion"
+    ]
+  },
+  "proficiencies": {
+    "armor": [],
+    "weapons": [
+      "simple"
+    ],
+    "tools": []
+  },
+  "multiclass": {
+    "all_of": {
+      "int": 13
+    },
+    "proficiencies": {}
+  },
+  "starting_equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 2
+        },
+        {
+          "id": "arcane_focus_staff",
+          "qty": 1
+        },
+        {
+          "id": "robe",
+          "qty": 1
+        },
+        {
+          "id": "spellbook",
+          "qty": 1
+        },
+        {
+          "id": "scholars_pack",
+          "qty": 1
+        }
+      ],
+      "gp": 5
+    },
+    {
+      "id": "b",
+      "gp": 55
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "progression": "full",
+    "list": "wizard",
+    "focus": "arcane",
+    "cantrips_column": "cantrips",
+    "prepared_column": "prepared",
+    "spellbook": {
+      "start": 6,
+      "per_level": 2
+    },
+    "ritual": "spellbook",
+    "swap_prepared": "long_rest",
+    "swap_cantrip": "long_rest"
+  },
+  "subclass_level": 3,
+  "subclass_feature_levels": [
+    3,
+    6,
+    10,
+    14
+  ],
+  "table": {
+    "cantrips": {
+      "name": "Cantrips",
+      "values": [
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    "prepared": {
+      "name": "Prepared Spells",
+      "values": [
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        23,
+        24,
+        25
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "arcane_recovery",
+      "name": "Arcane Recovery",
+      "recharge": "long",
+      "max": 1
+    }
+  ],
+  "recommended": {
+    "standard_array": {
+      "str": 8,
+      "dex": 12,
+      "con": 13,
+      "int": 15,
+      "wis": 14,
+      "cha": 10
+    },
+    "background": "sage",
+    "skills": [
+      "arcana",
+      "investigation"
+    ],
+    "note": "Intelligence first, then Constitution for Concentration and Dexterity for AC."
+  },
+  "levels": [
+    {
+      "level": 1,
+      "features": [
+        {
+          "id": "spellcasting",
+          "name": "Spellcasting",
+          "summary": "Cast Wizard spells with Intelligence from a spellbook that starts with six level 1 spells.",
+          "text": "You know three Wizard cantrips (more at levels 4 and 10) and can swap one after a Long Rest. Your spellbook starts with six level 1 Wizard spells and gains two Wizard spells of levels you can cast each Wizard level. You prepare spells from your book (Prepared Spells column) and can change them after a Long Rest. Intelligence is your spellcasting ability; an Arcane Focus or your spellbook can be your focus.",
+          "implemented": "engine"
+        },
+        {
+          "id": "ritual_adept",
+          "name": "Ritual Adept",
+          "summary": "Cast any Ritual spell in your spellbook as a Ritual without preparing it.",
+          "implemented": "engine"
+        },
+        {
+          "id": "arcane_recovery",
+          "name": "Arcane Recovery",
+          "summary": "Once per Long Rest, after a Short Rest, recover slots totalling half your Wizard level (round up).",
+          "text": "When you finish a Short Rest you can recover expended spell slots whose levels add up to no more than half your Wizard level (round up), none of level 6 or higher. Once per Long Rest.",
+          "uses_resource": "arcane_recovery",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "features": [
+        {
+          "id": "scholar",
+          "name": "Scholar",
+          "summary": "Expertise in one of Arcana, History, Investigation, Medicine, Nature or Religion that you're proficient in.",
+          "choice": {
+            "kind": "expertise",
+            "count": 1,
+            "from": [
+              "arcana",
+              "history",
+              "investigation",
+              "medicine",
+              "nature",
+              "religion"
+            ],
+            "filter": {
+              "proficient": true
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "features": [
+        {
+          "id": "wizard_subclass",
+          "name": "Wizard Subclass",
+          "summary": "Choose a Wizard subclass.",
+          "text": "You choose a Wizard subclass. From now on you gain each subclass feature when you reach its Wizard level.",
+          "choice": {
+            "kind": "subclass",
+            "count": 1
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "features": [
+        {
+          "id": "memorize_spell",
+          "name": "Memorize Spell",
+          "summary": "After a Short Rest, swap one prepared spell for another in your spellbook.",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Wizard subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "features": []
+    },
+    {
+      "level": 8,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "features": []
+    },
+    {
+      "level": 10,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Wizard subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "features": []
+    },
+    {
+      "level": 12,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "features": []
+    },
+    {
+      "level": 14,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Wizard subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "features": []
+    },
+    {
+      "level": 16,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "features": []
+    },
+    {
+      "level": 18,
+      "features": [
+        {
+          "id": "spell_mastery",
+          "name": "Spell Mastery",
+          "summary": "Cast a chosen level 1 and level 2 spell at their lowest level without a slot.",
+          "implemented": "text"
+        }
+      ]
+    },
+    {
+      "level": 19,
+      "features": [
+        {
+          "id": "epic_boon",
+          "name": "Epic Boon",
+          "summary": "Gain an Epic Boon feat or another feat you qualify for.",
+          "text": "Take an Epic Boon feat or any other feat whose prerequisites you meet. Boon of Spell Recall is recommended.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "epic_boon",
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "features": [
+        {
+          "id": "signature_spells",
+          "name": "Signature Spells",
+          "summary": "Two level 3 spells always prepared, each cast once per rest without a slot.",
+          "implemented": "text"
+        }
+      ]
+    }
+  ]
+}

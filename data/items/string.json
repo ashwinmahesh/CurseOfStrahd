@@ -1,0 +1,13 @@
+{
+  "id": "string",
+  "name": "String",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 0.1,
+  "summary": "10 ft of string; tie a knot with a Utilize action.",
+  "text": "String is 10 feet long. Tying a knot in it takes a Utilize action."
+}

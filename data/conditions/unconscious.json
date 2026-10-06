@@ -1,0 +1,39 @@
+{
+  "id": "unconscious",
+  "name": "Unconscious",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Incapacitated and Prone, Speed 0, fails Str and Dex saves; hits from within 5 ft are Critical Hits.",
+  "text": "You have the Incapacitated and Prone conditions and drop whatever you are holding; when this ends you are still Prone. Your Speed is 0 and can't increase. Attack rolls against you have Advantage, you automatically fail Strength and Dexterity saving throws, any attack that hits you from within 5 feet is a Critical Hit, and you are unaware of your surroundings.",
+  "implies": [
+    "incapacitated",
+    "prone"
+  ],
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "value": 0
+    },
+    {
+      "stat": "attacked_with",
+      "value": "advantage"
+    },
+    {
+      "stat": "auto_fail",
+      "on": [
+        "save:str",
+        "save:dex"
+      ]
+    },
+    {
+      "stat": "flag",
+      "value": "auto_crit_within_5ft"
+    },
+    {
+      "stat": "flag",
+      "value": "unaware"
+    }
+  ]
+}

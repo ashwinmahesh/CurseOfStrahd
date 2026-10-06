@@ -1,0 +1,26 @@
+{
+  "id": "tough",
+  "name": "Tough",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "origin",
+  "repeatable": false,
+  "summary": "Your Hit Point maximum increases by twice your character level.",
+  "benefits": [
+    {
+      "id": "tough",
+      "name": "Tough",
+      "summary": "Hit Point maximum +2 per character level.",
+      "text": "When you take this feat, your Hit Point maximum increases by twice your character level, and it increases by 2 more each time you gain a character level afterward.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "hp_max",
+          "value": "2*level"
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

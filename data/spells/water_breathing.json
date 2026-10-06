@@ -1,0 +1,43 @@
+{
+  "id": "water_breathing",
+  "name": "Water Breathing",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "ranger",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a short reed"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 10,
+    "description": "up to ten willing creatures of your choice"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Up to ten willing creatures can breathe underwater for 24 hours.",
+  "text": "Up to ten willing creatures of your choice within 30 feet can breathe underwater for 24 hours. They can still breathe normally as well. Can be cast as a Ritual."
+}

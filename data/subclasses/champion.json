@@ -1,0 +1,104 @@
+{
+  "id": "champion",
+  "name": "Champion",
+  "class": "fighter",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Pure martial excellence: wider Critical Hit range, athletic edge and stubborn survival.",
+  "role_tags": [
+    "simple",
+    "damage"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "improved_critical",
+        "name": "Improved Critical",
+        "summary": "Weapon and Unarmed Strike attacks score a Critical Hit on a 19 or 20.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "crit_range",
+            "value": 19
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "remarkable_athlete",
+        "name": "Remarkable Athlete",
+        "summary": "Advantage on Initiative and Strength (Athletics) checks; move half your Speed after a Critical Hit.",
+        "text": "You have Advantage on Initiative rolls and Strength (Athletics) checks. Right after you score a Critical Hit, you can move up to half your Speed without provoking Opportunity Attacks.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "advantage",
+            "on": "initiative"
+          },
+          {
+            "stat": "advantage",
+            "on": "check:athletics"
+          }
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "additional_fighting_style",
+        "name": "Additional Fighting Style",
+        "summary": "Gain another Fighting Style feat.",
+        "implemented": "data",
+        "choice": {
+          "kind": "fighting_style",
+          "count": 1
+        }
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "heroic_warrior",
+        "name": "Heroic Warrior",
+        "summary": "In combat, gain Heroic Inspiration at the start of your turn if you have none.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "superior_critical",
+        "name": "Superior Critical",
+        "summary": "Weapon and Unarmed Strike attacks score a Critical Hit on 18-20.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "crit_range",
+            "value": 18
+          }
+        ]
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "survivor",
+        "name": "Survivor",
+        "summary": "Advantage on Death Saving Throws (18-20 counts as 20); regain 5 + Con modifier HP each turn while Bloodied.",
+        "text": "Defy Death: you have Advantage on Death Saving Throws, and a roll of 18-20 counts as a 20. Heroic Rally: at the start of each of your turns, if you are Bloodied and have at least 1 Hit Point, you regain 5 + your Constitution modifier Hit Points.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "advantage",
+            "on": "death_save"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "aura_of_vitality",
+  "name": "Aura of Vitality",
+  "source": {
+    "book": "PHB2024",
+    "note": "Not in the free 2024 Basic Rules; written from knowledge of the 2024 PHB and cross-checked against aidedd.org's 2024 entry."
+  },
+  "level": 3,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "druid",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 30
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "one creature in the aura (you included), when you cast it and at the start of each of your turns"
+  },
+  "heal": {
+    "dice": "2d6"
+  },
+  "tags": [
+    "healing"
+  ],
+  "summary": "30-foot Emanation: on casting and at the start of each of your turns, one creature in it regains 2d6 HP.",
+  "text": "Healing energy surrounds you in a 30-foot Emanation until the spell ends. When you cast the spell, and again at the start of each of your turns while it lasts, you can pick one creature in the aura (yourself included) to regain 2d6 Hit Points. The healing needs no action."
+}

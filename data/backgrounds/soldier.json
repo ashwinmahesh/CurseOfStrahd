@@ -2,8 +2,10 @@
   "id": "soldier",
   "name": "Soldier",
   "source": {
-    "book": "SRD5.2"
+    "book": "PHB2024",
+    "checked_against": "BR2024"
   },
+  "summary": "You trained for war from adulthood, and battle drills are still second nature to you.",
   "ability_scores": [
     "str",
     "dex",
@@ -14,20 +16,49 @@
     "athletics",
     "intimidation"
   ],
-  "tool": "gaming_set",
-  "equipment": {
-    "a": [
-      "spear",
-      "shortbow",
-      "arrows_20",
-      "gaming_set",
-      "healers_kit",
-      "quiver",
-      "travelers_clothes",
-      "gp_14"
-    ],
-    "b": [
-      "gp_50"
-    ]
-  }
+  "tool": {
+    "id": "dice_set",
+    "choice": "gaming_set"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "spear",
+          "qty": 1
+        },
+        {
+          "id": "shortbow",
+          "qty": 1
+        },
+        {
+          "id": "arrow",
+          "qty": 20
+        },
+        {
+          "id": "dice_set",
+          "qty": 1,
+          "choice": "gaming_set"
+        },
+        {
+          "id": "healers_kit",
+          "qty": 1
+        },
+        {
+          "id": "quiver",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 14
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
 }

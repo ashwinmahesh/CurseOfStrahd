@@ -1,0 +1,594 @@
+{
+  "id": "rogue",
+  "name": "Rogue",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "A precise, sneaky expert who wins with Sneak Attack, Expertise and quick Bonus Action moves.",
+  "role_tags": [
+    "skills",
+    "striker",
+    "stealth"
+  ],
+  "complexity": "average",
+  "hit_die": 8,
+  "primary_abilities": [
+    "dex"
+  ],
+  "saving_throws": [
+    "dex",
+    "int"
+  ],
+  "skill_choices": {
+    "kind": "skill",
+    "count": 4,
+    "from": [
+      "acrobatics",
+      "athletics",
+      "deception",
+      "insight",
+      "intimidation",
+      "investigation",
+      "perception",
+      "persuasion",
+      "sleight_of_hand",
+      "stealth"
+    ]
+  },
+  "proficiencies": {
+    "armor": [
+      "light"
+    ],
+    "weapons": [
+      "simple",
+      "martial_finesse_or_light"
+    ],
+    "tools": [
+      "thieves_tools"
+    ]
+  },
+  "multiclass": {
+    "all_of": {
+      "dex": 13
+    },
+    "proficiencies": {
+      "armor": [
+        "light"
+      ],
+      "tools": [
+        "thieves_tools"
+      ],
+      "skills": 1
+    }
+  },
+  "starting_equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "leather_armor",
+          "qty": 1
+        },
+        {
+          "id": "dagger",
+          "qty": 2
+        },
+        {
+          "id": "shortsword",
+          "qty": 1
+        },
+        {
+          "id": "shortbow",
+          "qty": 1
+        },
+        {
+          "id": "arrow",
+          "qty": 20
+        },
+        {
+          "id": "quiver",
+          "qty": 1
+        },
+        {
+          "id": "thieves_tools",
+          "qty": 1
+        },
+        {
+          "id": "burglars_pack",
+          "qty": 1
+        }
+      ],
+      "gp": 8
+    },
+    {
+      "id": "b",
+      "gp": 100
+    }
+  ],
+  "subclass_level": 3,
+  "subclass_feature_levels": [
+    3,
+    9,
+    13,
+    17
+  ],
+  "table": {
+    "sneak_attack": {
+      "name": "Sneak Attack",
+      "values": [
+        "1d6",
+        "1d6",
+        "2d6",
+        "2d6",
+        "3d6",
+        "3d6",
+        "4d6",
+        "4d6",
+        "5d6",
+        "5d6",
+        "6d6",
+        "6d6",
+        "7d6",
+        "7d6",
+        "8d6",
+        "8d6",
+        "9d6",
+        "9d6",
+        "10d6",
+        "10d6"
+      ]
+    },
+    "weapon_mastery": {
+      "name": "Weapon Mastery",
+      "values": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "stroke_of_luck",
+      "name": "Stroke of Luck",
+      "recharge": "short",
+      "max": 1,
+      "from_level": 20
+    }
+  ],
+  "recommended": {
+    "standard_array": {
+      "str": 12,
+      "dex": 15,
+      "con": 13,
+      "int": 14,
+      "wis": 10,
+      "cha": 8
+    },
+    "background": "criminal",
+    "skills": [
+      "stealth",
+      "sleight_of_hand",
+      "perception",
+      "investigation"
+    ],
+    "note": "Dexterity first; Expertise in Stealth and Sleight of Hand."
+  },
+  "levels": [
+    {
+      "level": 1,
+      "features": [
+        {
+          "id": "expertise",
+          "name": "Expertise",
+          "summary": "Expertise (double Proficiency Bonus) in two of your skill proficiencies.",
+          "text": "Choose two skills you're proficient in; your Proficiency Bonus is doubled for checks with them. Sleight of Hand and Stealth are good picks. Two more at Rogue level 6.",
+          "choice": {
+            "kind": "expertise",
+            "count": 2,
+            "filter": {
+              "proficient": true
+            }
+          },
+          "implemented": "data"
+        },
+        {
+          "id": "sneak_attack",
+          "name": "Sneak Attack",
+          "summary": "Once per turn, extra damage when you hit with a Finesse or Ranged weapon and have Advantage or an ally next to the target.",
+          "text": "Once per turn, when you hit a creature with an attack roll using a Finesse or Ranged weapon, you deal extra damage (1d6, growing with the Sneak Attack column) of the weapon's type, if you have Advantage on the roll. You don't need Advantage if an ally who isn't Incapacitated is within 5 feet of the target and you don't have Disadvantage.",
+          "implemented": "engine"
+        },
+        {
+          "id": "thieves_cant",
+          "name": "Thieves' Cant",
+          "summary": "You know Thieves' Cant and one other language.",
+          "text": "You know Thieves' Cant and one more language of your choice.",
+          "modifiers": [
+            {
+              "stat": "proficiency",
+              "kind": "language",
+              "value": "thieves_cant"
+            }
+          ],
+          "choice": {
+            "kind": "language",
+            "count": 1
+          },
+          "implemented": "data"
+        },
+        {
+          "id": "weapon_mastery",
+          "name": "Weapon Mastery",
+          "summary": "Use the mastery properties of two kinds of weapons you're proficient with.",
+          "text": "Choose two kinds of weapons you're proficient with, such as Daggers and Shortbows; you can use their mastery properties. You can change both choices after a Long Rest.",
+          "choice": {
+            "kind": "weapon_mastery",
+            "count": 2,
+            "count_column": "weapon_mastery",
+            "filter": {
+              "proficient": true
+            },
+            "replaceable": "long_rest"
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "features": [
+        {
+          "id": "cunning_action",
+          "name": "Cunning Action",
+          "summary": "Dash, Disengage or Hide as a Bonus Action.",
+          "text": "On your turn you can take the Dash, Disengage or Hide action as a Bonus Action.",
+          "action": "bonus_action",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "features": [
+        {
+          "id": "rogue_subclass",
+          "name": "Rogue Subclass",
+          "summary": "Choose a Rogue subclass.",
+          "text": "You choose a Rogue subclass. From now on you gain each subclass feature when you reach its Rogue level.",
+          "choice": {
+            "kind": "subclass",
+            "count": 1
+          },
+          "implemented": "data"
+        },
+        {
+          "id": "steady_aim",
+          "name": "Steady Aim",
+          "summary": "Bonus Action: Advantage on your next attack this turn if you haven't moved; your Speed becomes 0.",
+          "text": "If you haven't moved this turn, you can take a Bonus Action to give yourself Advantage on your next attack roll this turn. Your Speed is then 0 until the end of the turn.",
+          "action": "bonus_action",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "features": [
+        {
+          "id": "cunning_strike",
+          "name": "Cunning Strike",
+          "summary": "Trade Sneak Attack dice for Poison, Trip or Withdraw effects.",
+          "text": "When you deal Sneak Attack damage you can give up dice to add one effect (save DC = 8 + Dexterity modifier + Proficiency Bonus). Poison (1d6): Constitution save or Poisoned for 1 minute, repeating the save each turn; needs a Poisoner's Kit. Trip (1d6): a Large or smaller target makes a Dexterity save or falls Prone. Withdraw (1d6): after the attack you move up to half your Speed without provoking Opportunity Attacks.",
+          "implemented": "engine"
+        },
+        {
+          "id": "uncanny_dodge",
+          "name": "Uncanny Dodge",
+          "summary": "Reaction: halve the damage of an attack that hits you.",
+          "text": "When an attacker you can see hits you with an attack roll, you can take a Reaction to halve that attack's damage against you (round down).",
+          "action": "reaction",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "features": [
+        {
+          "id": "expertise",
+          "name": "Expertise",
+          "summary": "Expertise in two more of your skill proficiencies.",
+          "text": "Choose two more skills you're proficient in to gain Expertise.",
+          "choice": {
+            "kind": "expertise",
+            "count": 2,
+            "filter": {
+              "proficient": true
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 7,
+      "features": [
+        {
+          "id": "evasion",
+          "name": "Evasion",
+          "summary": "Dexterity saves for half damage: no damage on a success, half on a failure.",
+          "text": "When an effect lets you make a Dexterity saving throw to take half damage, you take none on a success and half on a failure. Not while Incapacitated.",
+          "implemented": "engine"
+        },
+        {
+          "id": "reliable_talent",
+          "name": "Reliable Talent",
+          "summary": "Treat a d20 of 9 or lower as 10 on checks with your skill or tool proficiencies.",
+          "text": "When you make an ability check using a skill or tool you're proficient with, a d20 roll of 9 or lower counts as 10.",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 8,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 9,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Rogue subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 10,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 11,
+      "features": [
+        {
+          "id": "improved_cunning_strike",
+          "name": "Improved Cunning Strike",
+          "summary": "Use up to two Cunning Strike effects at once.",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 12,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 13,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Rogue subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 14,
+      "features": [
+        {
+          "id": "devious_strikes",
+          "name": "Devious Strikes",
+          "summary": "New Cunning Strike options: Daze (2d6), Knock Out (6d6), Obscure (3d6).",
+          "text": "Daze (2d6): Constitution save or on its next turn the target can only move, or take an action, or take a Bonus Action. Knock Out (6d6): Constitution save or Unconscious for 1 minute or until it takes damage, repeating the save each turn. Obscure (3d6): Dexterity save or Blinded until the end of its next turn.",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "features": [
+        {
+          "id": "slippery_mind",
+          "name": "Slippery Mind",
+          "summary": "Proficiency in Wisdom and Charisma saving throws.",
+          "modifiers": [
+            {
+              "stat": "proficiency",
+              "kind": "save",
+              "value": "wis"
+            },
+            {
+              "stat": "proficiency",
+              "kind": "save",
+              "value": "cha"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 16,
+      "features": [
+        {
+          "id": "ability_score_improvement",
+          "name": "Ability Score Improvement",
+          "summary": "Gain the Ability Score Improvement feat or another feat you qualify for.",
+          "text": "Take the Ability Score Improvement feat (+2 to one ability or +1 to two, to a maximum of 20) or any other feat whose prerequisites you meet.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 17,
+      "features": [
+        {
+          "id": "subclass_feature",
+          "name": "Subclass Feature",
+          "summary": "Gain a feature from your Rogue subclass.",
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 18,
+      "features": [
+        {
+          "id": "elusive",
+          "name": "Elusive",
+          "summary": "No attack roll has Advantage against you unless you're Incapacitated.",
+          "implemented": "engine"
+        }
+      ]
+    },
+    {
+      "level": 19,
+      "features": [
+        {
+          "id": "epic_boon",
+          "name": "Epic Boon",
+          "summary": "Gain an Epic Boon feat or another feat you qualify for.",
+          "text": "Take an Epic Boon feat or any other feat whose prerequisites you meet. Boon of the Night Spirit is recommended.",
+          "choice": {
+            "kind": "feat",
+            "count": 1,
+            "filter": {
+              "category": [
+                "epic_boon",
+                "origin",
+                "general",
+                "fighting_style"
+              ]
+            }
+          },
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "features": [
+        {
+          "id": "stroke_of_luck",
+          "name": "Stroke of Luck",
+          "summary": "Once per rest, turn a failed D20 Test into a 20.",
+          "text": "If you fail a D20 Test you can turn the roll into a 20. Once per Short or Long Rest.",
+          "uses_resource": "stroke_of_luck",
+          "implemented": "engine"
+        }
+      ]
+    }
+  ]
+}

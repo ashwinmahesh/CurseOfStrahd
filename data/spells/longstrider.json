@@ -1,0 +1,58 @@
+{
+  "id": "longstrider",
+  "name": "Longstrider",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "druid",
+    "ranger",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of dirt"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "speed",
+            "value": 10
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "movement"
+  ],
+  "summary": "A creature you touch gains +10 feet of Speed for 1 hour.",
+  "text": "Touch a creature. Its Speed increases by 10 feet for 1 hour. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1."
+}

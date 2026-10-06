@@ -1,0 +1,44 @@
+{
+  "id": "illusory_script",
+  "name": "Illusory Script",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "s": true,
+    "m": "ink worth 10+ GP, which the spell consumes",
+    "m_cost_gp": 10,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "days",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "parchment, paper or another writing surface"
+  },
+  "tags": [
+    "utility",
+    "communication"
+  ],
+  "summary": "Writing that only creatures you choose can read; everyone else sees gibberish or a false message.",
+  "text": "You write on parchment, paper or another suitable surface and wrap the writing in an illusion for 10 days. To you and any creatures you designate when casting, it looks normal, appears to be in your handwriting and carries the meaning you intended. To everyone else it looks like an unknown or magical script that can't be understood. Alternatively, you can make the illusion show a different meaning, handwriting and language (a language you know). If the spell is dispelled, both the original writing and the illusion vanish. A creature with Truesight can read the hidden message. Casting time 1 minute; can be cast as a Ritual. The ink (10+ GP) is consumed."
+}

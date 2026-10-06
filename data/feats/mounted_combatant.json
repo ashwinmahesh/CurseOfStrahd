@@ -1,0 +1,49 @@
+{
+  "id": "mounted_combatant",
+  "name": "Mounted Combatant",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str, Dex or Wis; Advantage against smaller foes while mounted, shield your mount, and take hits meant for it.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "wis"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "mounted_strike",
+      "name": "Mounted Strike",
+      "summary": "While mounted, Advantage on attacks against unmounted creatures within 5 ft of your mount and smaller than it.",
+      "text": "While mounted, you have Advantage on attack rolls against any unmounted creature within 5 feet of your mount that is at least one size smaller than the mount.",
+      "action": "passive",
+      "implemented": "text"
+    },
+    {
+      "id": "leap_aside",
+      "name": "Leap Aside",
+      "summary": "Your mount takes no damage on a successful Dex save for half damage, and only half on a failed one.",
+      "text": "If your mount is subjected to an effect that allows a Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the save and only half damage if it fails. Your mount gets this benefit only while you are riding it and neither of you has the Incapacitated condition.",
+      "action": "passive",
+      "implemented": "text"
+    },
+    {
+      "id": "veer",
+      "name": "Veer",
+      "summary": "While mounted and not Incapacitated, make an attack that hits your mount hit you instead.",
+      "text": "While mounted, you can force an attack that hits your mount to hit you instead, provided you don't have the Incapacitated condition.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

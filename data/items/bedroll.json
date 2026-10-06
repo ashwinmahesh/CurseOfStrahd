@@ -1,0 +1,13 @@
+{
+  "id": "bedroll",
+  "name": "Bedroll",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 7,
+  "cost_gp": 1,
+  "summary": "Sleeps one Small or Medium creature; protects against extreme cold.",
+  "text": "Sleeps one Small or Medium creature. While you are in it, you automatically succeed on saving throws against extreme cold."
+}

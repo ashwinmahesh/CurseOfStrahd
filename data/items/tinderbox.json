@@ -1,0 +1,13 @@
+{
+  "id": "tinderbox",
+  "name": "Tinderbox",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 1,
+  "cost_gp": 0.5,
+  "summary": "Light a torch, candle, lamp or lantern as a Bonus Action; other fires take 1 minute.",
+  "text": "A small box of flint, fire steel, and tinder. Lighting a Candle, Lamp, Lantern, Torch, or anything else with exposed fuel takes a Bonus Action; lighting any other fire takes 1 minute."
+}

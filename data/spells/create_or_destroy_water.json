@@ -1,0 +1,45 @@
+{
+  "id": "create_or_destroy_water",
+  "name": "Create or Destroy Water",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "transmutation",
+  "classes": [
+    "cleric",
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "area": {
+    "shape": "cube",
+    "size": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a mix of water and sand"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area",
+    "description": "an open container, or a 30-foot Cube"
+  },
+  "upcast": {
+    "text": "Per slot level above 1: 10 more gallons, or the Cube grows by 5 feet."
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Create or destroy up to 10 gallons of water, or make rain or clear fog in a 30-foot Cube.",
+  "text": "Choose one effect. Create Water: up to 10 gallons of clean water appear in an open container within range, or the water falls as rain in a 30-foot Cube within range and puts out exposed flames there. Destroy Water: up to 10 gallons of water in an open container within range vanish, or fog in a 30-foot Cube within range is cleared away. Using a Higher-Level Spell Slot: for each slot level above 1, you create or destroy 10 more gallons, or the Cube grows by 5 feet."
+}

@@ -1,0 +1,34 @@
+{
+  "id": "defensive_duelist",
+  "name": "Defensive Duelist",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "abilities": {
+      "dex": 13
+    },
+    "text": "Level 4+, Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Dex; while holding a Finesse weapon, use a Reaction to add your Proficiency Bonus to AC against melee attacks.",
+  "ability_increase": {
+    "from": [
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "parry",
+      "name": "Parry",
+      "summary": "Reaction when hit in melee while holding a Finesse weapon: +PB to AC against melee attacks until your next turn.",
+      "text": "If you are holding a Finesse weapon and another creature hits you with a melee attack, you can take a Reaction to add your Proficiency Bonus to your Armor Class, possibly causing the attack to miss. The bonus applies against melee attacks until the start of your next turn.",
+      "action": "reaction",
+      "implemented": "text"
+    }
+  ]
+}

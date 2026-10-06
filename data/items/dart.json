@@ -1,0 +1,28 @@
+{
+  "id": "dart",
+  "name": "Dart",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 0.25,
+  "cost_gp": 0.05,
+  "stackable": true,
+  "weapon": {
+    "kind": "simple_ranged",
+    "damage": "1d4",
+    "damage_type": "piercing",
+    "properties": [
+      "finesse",
+      "thrown",
+      "range"
+    ],
+    "range": [
+      20,
+      60
+    ],
+    "mastery": "vex"
+  },
+  "summary": "Simple ranged weapon: 1d4 Piercing, Finesse, Thrown (20/60 ft); mastery Vex."
+}

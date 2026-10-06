@@ -1,0 +1,41 @@
+{
+  "id": "augury",
+  "name": "Augury",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "divination",
+  "classes": [
+    "cleric",
+    "druid",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "divinatory tokens such as marked sticks, bones or cards worth 25+ GP",
+    "m_cost_gp": 25
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "detection",
+    "utility"
+  ],
+  "summary": "Ritual. Ask about a plan for the next 30 minutes and receive an omen: weal, woe, both, or neither.",
+  "text": "You receive an omen from an otherworldly power about the outcome of a course of action you intend to take within the next 30 minutes. The DM picks the omen: Weal (good results), Woe (bad results), Weal and woe (both good and bad results), or Indifference (results neither good nor bad). The omen doesn't account for anything that might change the outcome later, such as other spells. Each casting after the first before you finish a Long Rest has a cumulative 25 percent chance of giving no answer."
+}

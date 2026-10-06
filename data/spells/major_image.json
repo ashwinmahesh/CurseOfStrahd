@@ -1,0 +1,49 @@
+{
+  "id": "major_image",
+  "name": "Major Image",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "cube",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bit of fleece"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "a spot you can see within range"
+  },
+  "upcast": {
+    "text": "With a level 4+ slot the spell lasts until dispelled and doesn't require Concentration."
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "A moving illusion up to a 20-foot Cube with sound, smell and temperature; it can't deal damage.",
+  "text": "Create the image of an object, a creature or another visible phenomenon that fits within a 20-foot Cube, at a spot you can see within 120 feet. It lasts for the duration and seems real, complete with suitable sounds, smells and temperature, but it can't deal damage or impose conditions. While you are within range of the illusion, you can take a Magic action to move the image to another spot within range, changing its appearance so the movement looks natural (an image of a creature can seem to walk), and you can make it produce different sounds at different times, even carry on a conversation. Things pass through the image, so physical interaction reveals it as an illusion. A creature that takes a Study action to examine it can recognize it as an illusion with a successful Intelligence (Investigation) check against your spell save DC; a creature that sees through it can see through the image, and its other sensory qualities become faint to that creature. Using a Higher-Level Spell Slot: with a level 4 or higher slot, the spell lasts until dispelled and doesn't require Concentration."
+}

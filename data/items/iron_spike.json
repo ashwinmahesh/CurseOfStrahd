@@ -1,0 +1,15 @@
+{
+  "id": "iron_spike",
+  "name": "Iron Spike",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0.5,
+  "cost_gp": 0.1,
+  "stackable": true,
+  "bundle": 10,
+  "summary": "Hammer into wood or earth to jam a door or anchor a Rope or Chain; sold in tens.",
+  "text": "Iron Spikes are sold in bundles of ten (1 GP and 5 lb. for the bundle). As a Utilize action, you can drive a spike into wood, earth, or similar material with a blunt object such as a Light Hammer, either to jam a door shut or to tie a Rope or Chain to it."
+}

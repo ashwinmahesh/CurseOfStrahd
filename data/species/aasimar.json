@@ -1,0 +1,92 @@
+{
+  "id": "aasimar",
+  "name": "Aasimar",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "Mortals touched by celestial power who heal with a touch and can reveal a heavenly or dreadful form.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium",
+    "small"
+  ],
+  "speed": 30,
+  "darkvision": 60,
+  "traits": [
+    {
+      "id": "celestial_resistance",
+      "name": "Celestial Resistance",
+      "summary": "Resistance to Necrotic and Radiant damage.",
+      "text": "You have Resistance to Necrotic damage and to Radiant damage.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "necrotic"
+        },
+        {
+          "stat": "resistance",
+          "value": "radiant"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 60 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 60
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "healing_hands",
+      "name": "Healing Hands",
+      "summary": "Magic action, once per Long Rest: touch a creature and it regains Hit Points equal to PB d4s rolled.",
+      "text": "As a Magic action, you touch a creature and roll a number of d4s equal to your Proficiency Bonus. The creature regains Hit Points equal to the total rolled. Once you use this trait, you can't use it again until you finish a Long Rest.",
+      "action": "action",
+      "resource": {
+        "id": "healing_hands",
+        "name": "Healing Hands",
+        "max": 1,
+        "recharge": "long"
+      },
+      "implemented": "text"
+    },
+    {
+      "id": "light_bearer",
+      "name": "Light Bearer",
+      "summary": "You know the Light cantrip; Charisma is your spellcasting ability for it.",
+      "text": "You know the Light cantrip, and Charisma is your spellcasting ability when you cast it.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "light",
+          "ability": "cha"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "celestial_revelation",
+      "name": "Celestial Revelation",
+      "summary": "From level 3, once per Long Rest: transform for 1 minute (wings, radiance or shroud) and add PB damage.",
+      "text": "Starting at character level 3, you can take a Bonus Action to transform, choosing one of the options below each time you do. The transformation lasts 1 minute or until you end it (no action required). Once you transform, you can't do so again until you finish a Long Rest. Until the transformation ends, once on each of your turns when you deal damage to a target with an attack or a spell, you can deal extra damage to that one target equal to your Proficiency Bonus. The extra damage is Necrotic for Necrotic Shroud and Radiant for Heavenly Wings or Inner Radiance.\nHeavenly Wings: spectral wings sprout from your back, and you have a Fly Speed equal to your Speed until the transformation ends.\nInner Radiance: you shed Bright Light in a 10-foot radius and Dim Light for an additional 10 feet for the duration, and at the end of each of your turns every creature within 10 feet of you takes Radiant damage equal to your Proficiency Bonus.\nNecrotic Shroud: your eyes become pools of darkness and flightless wings sprout from your back. Each creature within 10 feet of you that isn't your ally must succeed on a Charisma saving throw (DC 8 + your Charisma modifier + your Proficiency Bonus) or have the Frightened condition until the end of your next turn.",
+      "action": "bonus_action",
+      "resource": {
+        "id": "celestial_revelation",
+        "name": "Celestial Revelation",
+        "max": 1,
+        "recharge": "long"
+      },
+      "implemented": "text"
+    }
+  ]
+}

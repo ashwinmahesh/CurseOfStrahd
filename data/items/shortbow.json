@@ -1,0 +1,28 @@
+{
+  "id": "shortbow",
+  "name": "Shortbow",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 2,
+  "cost_gp": 25,
+  "weapon": {
+    "kind": "simple_ranged",
+    "damage": "1d6",
+    "damage_type": "piercing",
+    "properties": [
+      "ammunition",
+      "range",
+      "two_handed"
+    ],
+    "range": [
+      80,
+      320
+    ],
+    "ammunition": "arrow",
+    "mastery": "vex"
+  },
+  "summary": "Simple ranged weapon: 1d6 Piercing, Ammunition (80/320 ft, Arrow), Two-Handed; mastery Vex."
+}

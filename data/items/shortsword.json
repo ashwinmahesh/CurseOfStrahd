@@ -1,0 +1,22 @@
+{
+  "id": "shortsword",
+  "name": "Shortsword",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 2,
+  "cost_gp": 10,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d6",
+    "damage_type": "piercing",
+    "properties": [
+      "finesse",
+      "light"
+    ],
+    "mastery": "vex"
+  },
+  "summary": "Martial melee weapon: 1d6 Piercing, Finesse, Light; mastery Vex."
+}

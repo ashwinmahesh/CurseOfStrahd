@@ -1,0 +1,41 @@
+{
+  "id": "detect_poison_and_disease",
+  "name": "Detect Poison and Disease",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "divination",
+  "classes": [
+    "cleric",
+    "druid",
+    "paladin",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a yew leaf"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "detection"
+  ],
+  "summary": "Sense the location and kind of poisons, poisonous or venomous creatures, and magical contagions within 30 feet.",
+  "text": "For the duration you sense where poisons, poisonous or venomous creatures, and magical contagions are within 30 feet of you, and you know what kind of poison, creature or contagion each one is. The sense is blocked by 1 foot of stone, dirt or wood, 1 inch of metal, or a thin sheet of lead. Concentration, up to 10 minutes. Can be cast as a Ritual."
+}

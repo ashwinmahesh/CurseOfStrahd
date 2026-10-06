@@ -1,0 +1,18 @@
+{
+  "id": "lamp",
+  "name": "Lamp",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "light",
+  "weight_lb": 1,
+  "cost_gp": 0.5,
+  "light": {
+    "bright": 15,
+    "dim": 30,
+    "hours": 6
+  },
+  "summary": "Burns Oil: Bright Light 15 ft, Dim Light 30 ft beyond; 6 hours per flask.",
+  "text": "A Lamp burns Oil to shed Bright Light in a 15-foot radius and Dim Light for another 30 feet beyond that. One flask of Oil keeps it lit for 6 hours in total."
+}

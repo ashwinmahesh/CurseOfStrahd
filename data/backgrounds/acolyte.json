@@ -1,0 +1,58 @@
+{
+  "id": "acolyte",
+  "name": "Acolyte",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "You served a temple and its priests, studied religion and learned to channel a little divine power.",
+  "ability_scores": [
+    "int",
+    "wis",
+    "cha"
+  ],
+  "feat": "magic_initiate",
+  "feat_params": {
+    "list": "cleric"
+  },
+  "skills": [
+    "insight",
+    "religion"
+  ],
+  "tool": {
+    "id": "calligraphers_supplies"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "calligraphers_supplies",
+          "qty": 1
+        },
+        {
+          "id": "book",
+          "qty": 1
+        },
+        {
+          "id": "holy_symbol_amulet",
+          "qty": 1,
+          "choice": "holy_symbol"
+        },
+        {
+          "id": "parchment",
+          "qty": 10
+        },
+        {
+          "id": "robe",
+          "qty": 1
+        }
+      ],
+      "gp": 8
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

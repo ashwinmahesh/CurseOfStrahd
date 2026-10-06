@@ -1,0 +1,13 @@
+{
+  "id": "map",
+  "name": "Map",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 1,
+  "summary": "Consulting an accurate Map gives +5 to Wisdom (Survival) checks to navigate the place it shows.",
+  "text": "When you consult an accurate Map, you gain a +5 bonus to Wisdom (Survival) checks you make to find your way in the place it depicts."
+}

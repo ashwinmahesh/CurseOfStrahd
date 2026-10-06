@@ -1,0 +1,39 @@
+{
+  "id": "blade_ward",
+  "name": "Blade Ward",
+  "source": {
+    "book": "PHB2024"
+  },
+  "level": 0,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "defense",
+    "buff"
+  ],
+  "summary": "While you concentrate, every attack roll made against you takes a 1d4 penalty.",
+  "text": "Until the spell ends, whenever a creature makes an attack roll against you, it subtracts 1d4 from that roll."
+}

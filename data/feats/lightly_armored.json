@@ -1,0 +1,44 @@
+{
+  "id": "lightly_armored",
+  "name": "Lightly Armored",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; gain training with Light armor and Shields.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "lightly_armored_training",
+      "name": "Armor Training",
+      "summary": "You gain training with Light armor and Shields.",
+      "text": "You gain training with Light armor and Shields.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "armor",
+          "value": "light"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "armor",
+          "value": "shields"
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

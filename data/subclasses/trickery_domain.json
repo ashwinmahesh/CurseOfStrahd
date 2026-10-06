@@ -1,0 +1,85 @@
+{
+  "id": "trickery_domain",
+  "name": "Trickery Domain",
+  "class": "cleric",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "A divine trickster: blesses stealth, conjures an illusory double and slips between places.",
+  "role_tags": [
+    "trickery",
+    "support"
+  ],
+  "always_prepared": {
+    "3": [
+      "charm_person",
+      "disguise_self",
+      "invisibility",
+      "pass_without_trace"
+    ],
+    "5": [
+      "hypnotic_pattern",
+      "nondetection"
+    ],
+    "7": [
+      "confusion",
+      "dimension_door"
+    ],
+    "9": [
+      "dominate_person",
+      "modify_memory"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "blessing_of_the_trickster",
+        "name": "Blessing of the Trickster",
+        "summary": "Magic action: you or a willing creature within 30 feet has Advantage on Stealth checks until your next Long Rest.",
+        "implemented": "engine",
+        "action": "action"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "invoke_duplicity",
+        "name": "Invoke Duplicity",
+        "summary": "Channel Divinity: an illusory double for 1 minute; cast spells from its space and gain Advantage on foes next to both of you.",
+        "text": "As a Bonus Action, spend a Channel Divinity use to create an illusion of yourself in an unoccupied space within 30 feet for 1 minute. You can cast spells as though you were in its space, move it 30 feet as a Bonus Action, and while you and it are both within 5 feet of a creature that can see it, you have Advantage on attack rolls against that creature.",
+        "implemented": "engine",
+        "action": "bonus_action",
+        "uses_resource": "channel_divinity"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "trickery_domain_spells",
+        "name": "Trickery Domain Spells",
+        "summary": "Always prepared: Charm Person, Disguise Self, Invisibility, Pass without Trace; more at 5, 7 and 9.",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "tricksters_transposition",
+        "name": "Trickster's Transposition",
+        "summary": "When you create or move your duplicate, you can swap places with it.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "improved_duplicity",
+        "name": "Improved Duplicity",
+        "summary": "Allies share the duplicate's Advantage; when it ends, someone near it heals your Cleric level.",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

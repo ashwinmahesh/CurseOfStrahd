@@ -1,0 +1,34 @@
+{
+  "id": "archery",
+  "name": "Archery",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "+2 bonus to attack rolls with Ranged weapons.",
+  "benefits": [
+    {
+      "id": "archery",
+      "name": "Archery",
+      "summary": "+2 to attack rolls with Ranged weapons.",
+      "text": "You gain a +2 bonus to attack rolls you make with Ranged weapons.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "attack",
+          "value": 2,
+          "when": {
+            "weapon": "ranged"
+          }
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

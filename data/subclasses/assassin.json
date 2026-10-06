@@ -1,0 +1,80 @@
+{
+  "id": "assassin",
+  "name": "Assassin",
+  "class": "rogue",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "Strikes first and hardest: Advantage and extra damage in the first round, poisons and disguises.",
+  "role_tags": [
+    "burst damage",
+    "infiltration"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "assassinate",
+        "name": "Assassinate",
+        "summary": "Advantage on Initiative; first round, Advantage against creatures that haven't acted and Sneak Attack adds your Rogue level.",
+        "text": "Initiative: you have Advantage on Initiative rolls. Surprising Strikes: during the first round of a combat you have Advantage on attack rolls against any creature that hasn't taken a turn yet, and if your Sneak Attack hits during that round the target takes extra damage of the weapon's type equal to your Rogue level.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "advantage",
+            "on": "initiative"
+          }
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "assassins_tools",
+        "name": "Assassin's Tools",
+        "summary": "Proficiency with the Disguise Kit and Poisoner's Kit.",
+        "implemented": "data",
+        "modifiers": [
+          {
+            "stat": "proficiency",
+            "kind": "tool",
+            "value": "disguise_kit"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "tool",
+            "value": "poisoners_kit"
+          }
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "infiltration_expertise",
+        "name": "Infiltration Expertise",
+        "summary": "Mimic voices and handwriting; Steady Aim no longer drops your Speed to 0.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "envenom_weapons",
+        "name": "Envenom Weapons",
+        "summary": "Poison Cunning Strike also deals 2d6 Poison damage that ignores Resistance.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "death_strike",
+        "name": "Death Strike",
+        "summary": "First-round Sneak Attack: target makes a Con save (DC 8 + Dex + PB) or the attack's damage is doubled.",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

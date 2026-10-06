@@ -1,0 +1,41 @@
+{
+  "id": "comprehend_languages",
+  "name": "Comprehend Languages",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of soot and salt"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "utility",
+    "communication"
+  ],
+  "summary": "For 1 hour you understand any spoken or signed language, and written text you touch.",
+  "text": "For 1 hour you understand the literal meaning of any language you hear spoken or see signed. You also understand any written language you see, but only while touching the surface the words are written on, and reading takes about 1 minute per page. The spell doesn't decode symbols or secret messages. Can be cast as a Ritual."
+}

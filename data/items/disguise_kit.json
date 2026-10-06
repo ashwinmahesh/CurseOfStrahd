@@ -1,0 +1,20 @@
+{
+  "id": "disguise_kit",
+  "name": "Disguise Kit",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 3,
+  "cost_gp": 25,
+  "tool": {
+    "kind": "other",
+    "ability": "cha",
+    "utilize": "Put on makeup (DC 10).",
+    "craft": [
+      "costume"
+    ]
+  },
+  "summary": "Tool (Charisma): put on makeup (DC 10)."
+}

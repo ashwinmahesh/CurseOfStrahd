@@ -1,0 +1,46 @@
+{
+  "id": "enlarge_reduce",
+  "name": "Enlarge/Reduce",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of powdered iron"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "a creature, or an object nobody is wearing or carrying"
+  },
+  "save": "con",
+  "save_success": "none",
+  "tags": [
+    "buff",
+    "debuff"
+  ],
+  "summary": "Grow or shrink a creature or object one size: Strength Advantage or Disadvantage and +1d4 or -1d4 damage.",
+  "text": "Choose a creature, or an object that nobody is wearing or carrying, that you can see within range. An unwilling creature can make a Constitution saving throw; on a success the spell has no effect. Everything a creature wears and carries changes size with it; an item it drops returns to normal size at once, and a thrown weapon or piece of ammunition returns to normal size right after it hits or misses. Enlarge: the target grows by one size category (Medium to Large, for example), has Advantage on Strength checks and Strength saving throws, and its attacks with its enlarged weapons or Unarmed Strikes deal an extra 1d4 damage on a hit. Reduce: the target shrinks by one size category (Medium to Small, for example), has Disadvantage on Strength checks and Strength saving throws, and its attacks with its reduced weapons or Unarmed Strikes deal 1d4 less damage on a hit (to a minimum of 1)."
+}

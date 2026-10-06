@@ -1,0 +1,24 @@
+{
+  "id": "frightened",
+  "name": "Frightened",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Disadvantage on checks and attacks while the source is in sight; can't move closer to it.",
+  "text": "While the source of your fear is within line of sight, you have Disadvantage on ability checks and attack rolls. You can't willingly move closer to the source of your fear.",
+  "modifiers": [
+    {
+      "stat": "disadvantage",
+      "on": "attack"
+    },
+    {
+      "stat": "disadvantage",
+      "on": "check:all"
+    },
+    {
+      "stat": "flag",
+      "value": "cant_approach_fear_source"
+    }
+  ]
+}

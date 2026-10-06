@@ -1,0 +1,38 @@
+{
+  "id": "find_traps",
+  "name": "Find Traps",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "divination",
+  "classes": [
+    "cleric",
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area",
+    "description": "traps within range and line of sight"
+  },
+  "tags": [
+    "detection"
+  ],
+  "summary": "Learn whether any trap lies within 120 feet and line of sight, and its general nature, but not where.",
+  "text": "You sense whether any trap is within range and within your line of sight. For this spell, a trap is any object or mechanism made to cause damage or other danger, so it notices things like an Alarm or Glyph of Warding spell or a mechanical pit trap, but not natural hazards such as a weak floor, an unstable ceiling or a hidden sinkhole. You learn that a trap is present and the general nature of its danger, but not its location."
+}

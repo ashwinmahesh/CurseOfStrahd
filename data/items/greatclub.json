@@ -1,0 +1,21 @@
+{
+  "id": "greatclub",
+  "name": "Greatclub",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 10,
+  "cost_gp": 0.2,
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d8",
+    "damage_type": "bludgeoning",
+    "properties": [
+      "two_handed"
+    ],
+    "mastery": "push"
+  },
+  "summary": "Simple melee weapon: 1d8 Bludgeoning, Two-Handed; mastery Push."
+}

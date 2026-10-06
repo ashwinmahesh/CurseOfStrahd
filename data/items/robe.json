@@ -1,0 +1,13 @@
+{
+  "id": "robe",
+  "name": "Robe",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "clothing",
+  "weight_lb": 4,
+  "cost_gp": 1,
+  "summary": "Vocational or ceremonial garment; some places admit only those in the right Robe.",
+  "text": "A Robe carries vocational or ceremonial meaning. Some events and locations admit only people wearing a Robe with particular colors or symbols."
+}

@@ -1,0 +1,51 @@
+{
+  "id": "boon_of_the_night_spirit",
+  "name": "Boon of the Night Spirit",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); in Dim Light or Darkness, turn Invisible as a Bonus Action and resist most damage.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "merge_with_shadows",
+      "name": "Merge with Shadows",
+      "summary": "In Dim Light or Darkness, become Invisible as a Bonus Action until you take an action, Bonus Action or Reaction.",
+      "text": "While you are within Dim Light or Darkness, you can give yourself the Invisible condition as a Bonus Action. The condition ends on you immediately after you take an action, a Bonus Action or a Reaction.",
+      "action": "bonus_action",
+      "implemented": "text"
+    },
+    {
+      "id": "shadowy_form",
+      "name": "Shadowy Form",
+      "summary": "In Dim Light or Darkness, Resistance to all damage except Psychic and Radiant.",
+      "text": "While you are within Dim Light or Darkness, you have Resistance to all damage except Psychic and Radiant damage.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "shadowy_form"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

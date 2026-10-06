@@ -1,0 +1,59 @@
+{
+  "id": "aid",
+  "name": "Aid",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "paladin",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a strip of white cloth"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 3
+  },
+  "upcast": {
+    "text": "Hit Point maximum and current Hit Points rise by a further 5 for each slot level above 2."
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "hp_max",
+            "value": "5*slot_level-5"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff"
+  ],
+  "summary": "Up to three creatures gain 5 to their Hit Point maximum and current Hit Points for 8 hours.",
+  "text": "Pick up to three creatures within range. For 8 hours, each one's Hit Point maximum rises by 5 and its current Hit Points rise by the same amount. With a higher-level slot, both increases grow by another 5 for each slot level above 2."
+}

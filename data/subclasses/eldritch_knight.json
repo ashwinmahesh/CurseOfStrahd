@@ -1,0 +1,123 @@
+{
+  "id": "eldritch_knight",
+  "name": "Eldritch Knight",
+  "class": "fighter",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "A warrior who adds Wizard spells, a bonded weapon and spell-and-strike combinations.",
+  "role_tags": [
+    "arcane magic",
+    "defense"
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "progression": "third",
+    "list": "wizard",
+    "focus": "arcane",
+    "cantrips": [
+      0,
+      0,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "prepared": [
+      0,
+      0,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6,
+      7,
+      8,
+      8,
+      9,
+      10,
+      10,
+      11,
+      11,
+      11,
+      12,
+      13
+    ],
+    "swap_prepared": "level_up"
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "spellcasting",
+        "name": "Spellcasting",
+        "summary": "Cast Wizard spells with Intelligence: two cantrips and three prepared spells to start.",
+        "text": "You learn two Wizard cantrips (three at level 10) and prepare level 1+ Wizard spells as shown in your Eldritch Knight table; whenever you gain a Fighter level you can swap one cantrip and one prepared spell. Your slots follow the Eldritch Knight table. Intelligence is your spellcasting ability; an Arcane Focus can be your focus.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "war_bond",
+        "name": "War Bond",
+        "summary": "Bond with up to two weapons: you can't be disarmed of them and can summon one as a Bonus Action.",
+        "text": "Over a Short Rest you can bond with a weapon (up to two bonded weapons). You can't be disarmed of a bonded weapon unless you are Incapacitated, and if it is on the same plane you can summon it to your hand as a Bonus Action.",
+        "implemented": "text"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "war_magic",
+        "name": "War Magic",
+        "summary": "Replace one attack of your Attack action with a Wizard cantrip that takes an action.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "eldritch_strike",
+        "name": "Eldritch Strike",
+        "summary": "A creature you hit with a weapon has Disadvantage on its next save against your spell before the end of your next turn.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "arcane_charge",
+        "name": "Arcane Charge",
+        "summary": "When you use Action Surge, teleport up to 30 feet.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "improved_war_magic",
+        "name": "Improved War Magic",
+        "summary": "Replace two attacks with a level 1 or 2 Wizard spell that takes an action.",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

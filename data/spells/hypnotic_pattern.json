@@ -1,0 +1,77 @@
+{
+  "id": "hypnotic_pattern",
+  "name": "Hypnotic Pattern",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "cube",
+    "size": 30
+  },
+  "components": {
+    "s": true,
+    "m": "a pinch of confetti"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "each creature in the area that can see the pattern"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed",
+    "incapacitated"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed"
+      }
+    },
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "incapacitated"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "value": 0
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "control"
+  ],
+  "summary": "30-foot Cube: creatures that see it make a Wisdom save or are Charmed, Incapacitated and at Speed 0.",
+  "text": "A swirling pattern of colors flashes briefly in a 30-foot Cube within 120 feet, then vanishes. Each creature in the area that can see it makes a Wisdom saving throw; on a failure it has the Charmed condition for the duration, and while Charmed this way it has the Incapacitated condition and a Speed of 0. The spell ends for an affected creature if it takes any damage or if someone else uses an action to shake it out of its daze."
+}

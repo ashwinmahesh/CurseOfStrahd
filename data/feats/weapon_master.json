@@ -1,0 +1,41 @@
+{
+  "id": "weapon_master",
+  "name": "Weapon Master",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; use the mastery property of one Simple or Martial weapon kind, changeable after a Long Rest.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "weapon_master_mastery",
+      "name": "Mastery Property",
+      "summary": "Use the mastery property of one proficient Simple or Martial weapon kind; change it on a Long Rest.",
+      "text": "You can use the mastery property of one kind of Simple or Martial weapon of your choice, provided you have proficiency with it. Whenever you finish a Long Rest, you can switch to another eligible kind of weapon.",
+      "action": "passive",
+      "choice": {
+        "id": "weapon_master_weapon",
+        "kind": "weapon_mastery",
+        "count": 1,
+        "filter": {
+          "proficient": true
+        },
+        "replaceable": "long_rest"
+      },
+      "implemented": "data"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "heavily_armored",
+  "name": "Heavily Armored",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "proficiency": {
+      "kind": "armor",
+      "value": "medium"
+    },
+    "text": "Level 4+, Medium Armor Training"
+  },
+  "repeatable": false,
+  "summary": "+1 Con or Str; gain training with Heavy armor.",
+  "ability_increase": {
+    "from": [
+      "con",
+      "str"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "heavily_armored_training",
+      "name": "Armor Training",
+      "summary": "You gain training with Heavy armor.",
+      "text": "You gain training with Heavy armor.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "armor",
+          "value": "heavy"
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

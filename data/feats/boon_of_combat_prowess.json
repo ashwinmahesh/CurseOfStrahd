@@ -1,0 +1,43 @@
+{
+  "id": "boon_of_combat_prowess",
+  "name": "Boon of Combat Prowess",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); once per round, turn a missed attack roll into a hit.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "peerless_aim",
+      "name": "Peerless Aim",
+      "summary": "Turn a missed attack roll into a hit; usable again at the start of your next turn.",
+      "text": "When you miss with an attack roll, you can hit instead. Once you use this benefit, you can't use it again until the start of your next turn.",
+      "action": "special",
+      "resource": {
+        "id": "peerless_aim",
+        "name": "Peerless Aim",
+        "max": 1,
+        "recharge": "turn"
+      },
+      "implemented": "text"
+    }
+  ]
+}

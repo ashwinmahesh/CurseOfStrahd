@@ -1,0 +1,13 @@
+{
+  "id": "blanket",
+  "name": "Blanket",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 3,
+  "cost_gp": 0.5,
+  "summary": "While wrapped in it, you have Advantage on saves against extreme cold.",
+  "text": "While you are wrapped in the Blanket, you have Advantage on saving throws against extreme cold."
+}

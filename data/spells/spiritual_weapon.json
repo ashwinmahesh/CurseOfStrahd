@@ -1,0 +1,51 @@
+{
+  "id": "spiritual_weapon",
+  "name": "Spiritual Weapon",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "evocation",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature within 5 feet of the spectral weapon, each attack"
+  },
+  "attack": "melee",
+  "damage": [
+    {
+      "dice": "1d8",
+      "type": "force",
+      "add_mod": true
+    }
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "tags": [
+    "damage",
+    "summon"
+  ],
+  "summary": "A floating spectral weapon makes melee spell attacks for 1d8 + modifier Force; Bonus Action to move and attack.",
+  "text": "You create a floating spectral force shaped like a weapon of your choice in a space within range; it lasts for the duration. When it appears you can immediately make one melee spell attack against a creature within 5 feet of it, dealing Force damage equal to 1d8 plus your spellcasting ability modifier on a hit. As a Bonus Action on your later turns, you can move it up to 20 feet and repeat the attack against a creature within 5 feet of it. The damage increases by 1d8 for each spell slot level above 2."
+}

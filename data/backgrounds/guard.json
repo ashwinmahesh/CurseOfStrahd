@@ -1,0 +1,67 @@
+{
+  "id": "guard",
+  "name": "Guard",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You kept watch on a wall or gate, trained to spot trouble and to stay alert through long nights.",
+  "ability_scores": [
+    "str",
+    "int",
+    "wis"
+  ],
+  "feat": "alert",
+  "skills": [
+    "athletics",
+    "perception"
+  ],
+  "tool": {
+    "id": "dice_set",
+    "choice": "gaming_set"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "spear",
+          "qty": 1
+        },
+        {
+          "id": "light_crossbow",
+          "qty": 1
+        },
+        {
+          "id": "crossbow_bolt",
+          "qty": 20
+        },
+        {
+          "id": "dice_set",
+          "qty": 1,
+          "choice": "gaming_set"
+        },
+        {
+          "id": "hooded_lantern",
+          "qty": 1
+        },
+        {
+          "id": "manacles",
+          "qty": 1
+        },
+        {
+          "id": "quiver",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 12
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

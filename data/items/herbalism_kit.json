@@ -1,0 +1,23 @@
+{
+  "id": "herbalism_kit",
+  "name": "Herbalism Kit",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 3,
+  "cost_gp": 5,
+  "tool": {
+    "kind": "other",
+    "ability": "int",
+    "utilize": "Recognize a plant (DC 10).",
+    "craft": [
+      "antitoxin",
+      "candle",
+      "healers_kit",
+      "potion_of_healing"
+    ]
+  },
+  "summary": "Tool (Intelligence): recognize a plant (DC 10)."
+}

@@ -1,0 +1,46 @@
+{
+  "id": "alarm",
+  "name": "Alarm",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "abjuration",
+  "classes": [
+    "ranger",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "area": {
+    "shape": "cube",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bell and silver wire"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a door, a window, or an area no larger than a 20-foot Cube"
+  },
+  "tags": [
+    "utility",
+    "detection"
+  ],
+  "summary": "Wards a door, window or 20-foot Cube for 8 hours and alerts you when a creature touches or enters it.",
+  "text": "Ward a door, a window, or an area no bigger than a 20-foot Cube within range for 8 hours. Whenever a creature touches or enters the warded spot, an alarm goes off; creatures you name when you cast the spell don't trigger it. When casting, choose the kind of alarm. Audible: the sound of a handbell rings for 10 seconds and can be heard within 60 feet of the ward. Mental: you get a mental ping if you are within 1 mile of the ward, and it wakes you if you are asleep. Casting time 1 minute; can be cast as a Ritual."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "protection",
+  "name": "Protection",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "Reaction with a Shield: impose Disadvantage on attacks against an ally within 5 feet until your next turn.",
+  "benefits": [
+    {
+      "id": "protection",
+      "name": "Protection",
+      "summary": "Reaction with a Shield: Disadvantage on attacks against an adjacent ally until the start of your next turn.",
+      "text": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can take a Reaction to interpose your Shield if you are holding one. You impose Disadvantage on the triggering attack roll and on all other attack rolls against that target until the start of your next turn, as long as you stay within 5 feet of the target.",
+      "action": "reaction",
+      "implemented": "text"
+    }
+  ]
+}

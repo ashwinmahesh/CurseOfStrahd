@@ -1,0 +1,125 @@
+{
+  "id": "soulknife",
+  "name": "Soulknife",
+  "class": "rogue",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "Manifests psychic blades and uses psionic energy to bolster skills and talk mind to mind.",
+  "role_tags": [
+    "psionics",
+    "skills"
+  ],
+  "table": {
+    "psionic_energy_dice": {
+      "name": "Psionic Energy Dice",
+      "values": [
+        0,
+        0,
+        4,
+        4,
+        6,
+        6,
+        6,
+        6,
+        8,
+        8,
+        8,
+        8,
+        10,
+        10,
+        10,
+        10,
+        12,
+        12,
+        12,
+        12
+      ]
+    },
+    "psionic_energy_die": {
+      "name": "Psionic Energy Die",
+      "values": [
+        "",
+        "",
+        "d6",
+        "d6",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d12",
+        "d12",
+        "d12",
+        "d12"
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "psionic_energy",
+      "name": "Psionic Energy Dice",
+      "recharge": "short_one",
+      "table": "psionic_energy_dice",
+      "die_table": "psionic_energy_die",
+      "from_level": 3
+    }
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "psionic_power",
+        "name": "Psionic Power",
+        "summary": "Psionic Energy Dice fuel Psi-Bolstered Knack (add a die to a failed skill check) and Psychic Whispers (telepathy).",
+        "text": "You have Psionic Energy Dice (see the table; one back on a Short Rest, all on a Long Rest). Psi-Bolstered Knack: when you fail an ability check using a skill or tool you're proficient with, roll a die and add it; the die is spent only if that makes the check succeed. Psychic Whispers: as a Magic action, link telepathically with up to PB creatures you can see for hours equal to a die roll; the first use each Long Rest is free, later uses spend a die.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "psychic_blades",
+        "name": "Psychic Blades",
+        "summary": "Manifest a 1d6 Psychic Finesse/Thrown (60/120) blade with Vex; a second 1d4 blade as a Bonus Action.",
+        "text": "When you take the Attack action or make an Opportunity Attack, you can manifest a Psychic Blade: a Simple Melee weapon you're proficient with that has Finesse and Thrown (60/120 ft), deals 1d6 Psychic damage plus your ability modifier, and has the Vex mastery. It vanishes after the attack. After attacking with it, you can make a Bonus Action attack with a second blade that deals 1d4 Psychic damage.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "soul_blades",
+        "name": "Soul Blades",
+        "summary": "Homing Strikes (add a die to a missed blade attack) and Psychic Teleportation.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "psychic_veil",
+        "name": "Psychic Veil",
+        "summary": "Magic action: become Invisible for 1 hour; once per Long Rest or spend a die.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "rend_mind",
+        "name": "Rend Mind",
+        "summary": "Sneak Attack with a Psychic Blade can Stun the target for 1 minute (Wis save).",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

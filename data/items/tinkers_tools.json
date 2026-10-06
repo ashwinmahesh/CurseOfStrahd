@@ -1,0 +1,32 @@
+{
+  "id": "tinkers_tools",
+  "name": "Tinker's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 10,
+  "cost_gp": 50,
+  "tool": {
+    "kind": "artisan",
+    "ability": "dex",
+    "utilize": "Cobble together a Tiny item from scrap that falls apart after 1 minute (DC 20).",
+    "craft": [
+      "musket",
+      "pistol",
+      "bell",
+      "bullseye_lantern",
+      "flask",
+      "hooded_lantern",
+      "hunting_trap",
+      "lock",
+      "manacles",
+      "mirror",
+      "shovel",
+      "signal_whistle",
+      "tinderbox"
+    ]
+  },
+  "summary": "Artisan's Tools (Dexterity): cobble together a Tiny item from scrap that falls apart after 1 minute (DC 20)."
+}

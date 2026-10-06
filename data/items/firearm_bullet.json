@@ -1,0 +1,15 @@
+{
+  "id": "firearm_bullet",
+  "name": "Firearm Bullet",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "ammunition",
+  "weight_lb": 0.2,
+  "cost_gp": 0.3,
+  "stackable": true,
+  "bundle": 10,
+  "summary": "Ammunition for Muskets and Pistols; sold 10 at a time.",
+  "text": "One piece of ammunition for Muskets and Pistols. A bundle of 10 costs 3 GP and weighs 2 lb.; it is usually kept in a Pouch, bought separately. Each attack with an Ammunition weapon uses one piece. After a fight, spending 1 minute lets you recover half of the pieces you used (round down); the rest are lost."
+}

@@ -1,0 +1,59 @@
+{
+  "id": "faerie_fire",
+  "name": "Faerie Fire",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "bard",
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "cube",
+    "size": 20
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "dex",
+  "save_success": "none",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "attacked_with",
+            "value": "advantage",
+            "text": "only for attackers that can see it"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "debuff",
+    "light"
+  ],
+  "summary": "Outlines objects and creatures in a 20-foot Cube; attacks against them have Advantage and they can't be Invisible.",
+  "text": "Choose a 20-foot Cube within range and a color: blue, green or violet. Every object in the Cube is outlined in that light, and each creature in it is outlined too unless it succeeds on a Dexterity saving throw. For the duration, outlined creatures and objects shed Dim Light in a 10-foot radius, gain no benefit from the Invisible condition, and attack rolls against them have Advantage if the attacker can see them. Concentration, up to 1 minute."
+}

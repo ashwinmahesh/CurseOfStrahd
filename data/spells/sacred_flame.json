@@ -1,0 +1,48 @@
+{
+  "id": "sacred_flame",
+  "name": "Sacred Flame",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "evocation",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "One creature you can see within range."
+  },
+  "save": "dex",
+  "save_success": "none",
+  "damage": [
+    {
+      "dice": "1d8",
+      "type": "radiant"
+    }
+  ],
+  "cantrip_scaling": {
+    "damage": "1d8"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Dex save or 1d8 Radiant damage; Half and Three-Quarters Cover don't help the save.",
+  "text": "One creature you can see within range makes a Dexterity saving throw, taking 1d8 Radiant damage on a failure. Half Cover and Three-Quarters Cover give it no benefit on this save. The damage becomes 2d8 at character level 5, 3d8 at level 11 and 4d8 at level 17."
+}

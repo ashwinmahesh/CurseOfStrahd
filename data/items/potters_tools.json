@@ -1,0 +1,21 @@
+{
+  "id": "potters_tools",
+  "name": "Potter's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 3,
+  "cost_gp": 10,
+  "tool": {
+    "kind": "artisan",
+    "ability": "int",
+    "utilize": "Work out what a ceramic object contained within the last 24 hours (DC 15).",
+    "craft": [
+      "jug",
+      "lamp"
+    ]
+  },
+  "summary": "Artisan's Tools (Intelligence): work out what a ceramic object contained within the last 24 hours (DC 15)."
+}

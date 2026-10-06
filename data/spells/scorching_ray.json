@@ -1,0 +1,49 @@
+{
+  "id": "scorching_ray",
+  "name": "Scorching Ray",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 3,
+    "description": "three rays aimed at one target or split among several"
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "2d6",
+      "type": "fire",
+      "per": "ray"
+    }
+  ],
+  "upcast": {
+    "projectiles": 1
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Three fiery rays, each a ranged spell attack for 2d6 Fire. One more ray per slot level above 2.",
+  "text": "You hurl three rays of fire at one target within range or split them among several. Make a separate ranged spell attack for each ray; each hit deals 2d6 Fire damage. You create one more ray for each spell slot level above 2."
+}

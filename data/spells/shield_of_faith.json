@@ -1,0 +1,55 @@
+{
+  "id": "shield_of_faith",
+  "name": "Shield of Faith",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a prayer scroll"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "ac",
+            "value": 2
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff",
+    "defense"
+  ],
+  "summary": "Bonus Action: a creature within 60 feet gains +2 AC.",
+  "text": "A shimmering field surrounds a creature of your choice within range, giving it a +2 bonus to AC for the duration. Concentration, up to 10 minutes."
+}

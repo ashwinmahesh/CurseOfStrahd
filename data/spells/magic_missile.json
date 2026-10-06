@@ -2,7 +2,8 @@
   "id": "magic_missile",
   "name": "Magic Missile",
   "source": {
-    "book": "SRD5.2"
+    "book": "PHB2024",
+    "checked_against": "BR2024"
   },
   "level": 1,
   "school": "evocation",
@@ -24,14 +25,24 @@
   "duration": {
     "kind": "instantaneous"
   },
+  "targets": {
+    "kind": "creature",
+    "count": 3,
+    "description": "each dart hits a creature of your choice that you can see; darts can share a target"
+  },
   "damage": [
     {
       "dice": "1d4+1",
-      "type": "force"
+      "type": "force",
+      "per": "dart"
     }
   ],
   "upcast": {
-    "extra_darts_per_slot_level": 1
+    "projectiles": 1
   },
-  "summary": "Three glowing darts each hit a creature you can see for 1d4 + 1 Force damage. One more dart per slot level above 1."
+  "tags": [
+    "damage"
+  ],
+  "summary": "Three force darts that never miss, each dealing 1d4 + 1 Force damage to a creature you can see.",
+  "text": "You create three glowing darts of magical force. Each dart hits a creature of your choice that you can see within range and deals 1d4 + 1 Force damage. All the darts strike at the same time, and you can aim them at one creature or spread them among several. Using a Higher-Level Spell Slot: one more dart for each slot level above 1."
 }

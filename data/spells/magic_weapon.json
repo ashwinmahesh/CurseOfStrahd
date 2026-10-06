@@ -1,0 +1,63 @@
+{
+  "id": "magic_weapon",
+  "name": "Magic Weapon",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "transmutation",
+  "classes": [
+    "paladin",
+    "ranger",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a nonmagical weapon"
+  },
+  "upcast": {
+    "text": "The bonus becomes +2 with a level 3-5 slot and +3 with a level 6+ slot."
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "object",
+        "modifiers": [
+          {
+            "stat": "attack",
+            "value": "1+slot_level/3",
+            "max": 3
+          },
+          {
+            "stat": "damage",
+            "value": "1+slot_level/3",
+            "max": 3
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff"
+  ],
+  "summary": "A nonmagical weapon you touch becomes magic with +1 to attack and damage rolls (+2 or +3 at higher slots).",
+  "text": "Touch a nonmagical weapon. Until the spell ends it is a magic weapon with a +1 bonus to attack rolls and damage rolls. The spell ends early if you cast it again. With a level 3 to 5 spell slot the bonus is +2, and with a level 6 or higher slot it is +3."
+}

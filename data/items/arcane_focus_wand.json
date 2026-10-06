@@ -1,0 +1,14 @@
+{
+  "id": "arcane_focus_wand",
+  "name": "Arcane Focus (Wand)",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "focus",
+  "weight_lb": 1,
+  "cost_gp": 10,
+  "focus": "arcane",
+  "summary": "Spellcasting Focus for Sorcerers, Warlocks and Wizards.",
+  "text": "An Arcane Focus bejeweled or carved to channel arcane magic. Sorcerers, Warlocks and Wizards can use it as a Spellcasting Focus."
+}

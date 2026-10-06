@@ -1,0 +1,37 @@
+{
+  "id": "detect_evil_and_good",
+  "name": "Detect Evil and Good",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "divination",
+  "classes": [
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "detection"
+  ],
+  "summary": "Sense Aberrations, Celestials, Elementals, Fey, Fiends and Undead within 30 feet of you.",
+  "text": "For the duration you sense where any Aberration, Celestial, Elemental, Fey, Fiend or Undead is within 30 feet of you, and whether the Hallow spell is active there and where. The sense is blocked by 1 foot of stone, dirt or wood, 1 inch of metal, or a thin sheet of lead. Concentration, up to 10 minutes."
+}

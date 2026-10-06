@@ -1,0 +1,46 @@
+{
+  "id": "calm_emotions",
+  "name": "Calm Emotions",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "description": "each Humanoid in the Sphere"
+  },
+  "save": "cha",
+  "save_success": "none",
+  "tags": [
+    "control",
+    "social"
+  ],
+  "summary": "Humanoids in a 20-ft Sphere make a Cha save or are calmed: no Charmed/Frightened, or hostility set aside.",
+  "text": "Each Humanoid in a 20-foot-radius Sphere centered on a point within range makes a Charisma saving throw. For each creature that fails, you choose one effect. Either it has Immunity to the Charmed and Frightened conditions until the spell ends, and any such conditions already on it are suppressed for the duration; or it becomes Indifferent toward creatures of your choice that it is Hostile toward, an effect that ends if it takes damage or sees its allies take damage. When the spell ends, the creature's attitude returns to normal."
+}

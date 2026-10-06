@@ -1,0 +1,55 @@
+{
+  "id": "chef",
+  "name": "Chef",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Con or Wis; Cook's Utensils proficiency, rest meals that add 1d8 healing, and treats granting Temporary HP.",
+  "ability_increase": {
+    "from": [
+      "con",
+      "wis"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "chef_cooks_utensils",
+      "name": "Cook's Utensils",
+      "summary": "Gain proficiency with Cook's Utensils.",
+      "text": "You gain proficiency with Cook's Utensils if you don't already have it.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "tool",
+          "value": "cooks_utensils"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "replenishing_meal",
+      "name": "Replenishing Meal",
+      "summary": "During a Short Rest, feed 4 + PB creatures; those who spend Hit Point Dice regain an extra 1d8 HP.",
+      "text": "As part of a Short Rest, if you have ingredients and Cook's Utensils on hand, you can cook food for a number of creatures equal to 4 plus your Proficiency Bonus. At the end of the rest, each creature that ate the food and spends one or more Hit Point Dice to regain Hit Points regains an extra 1d8 Hit Points.",
+      "action": "special",
+      "implemented": "text"
+    },
+    {
+      "id": "bolstering_treats",
+      "name": "Bolstering Treats",
+      "summary": "Cook PB treats (1 hour or a Long Rest); eating one is a Bonus Action that grants Temporary HP equal to PB.",
+      "text": "With 1 hour of work, or when you finish a Long Rest, you can cook a number of treats equal to your Proficiency Bonus if you have ingredients and Cook's Utensils on hand. The treats stay good for 8 hours after being made. A creature can eat one as a Bonus Action to gain Temporary Hit Points equal to your Proficiency Bonus.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

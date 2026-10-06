@@ -1,0 +1,13 @@
+{
+  "id": "bell",
+  "name": "Bell",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 1,
+  "summary": "Ring it as a Utilize action to make a sound heard up to 60 ft away.",
+  "text": "Ringing the Bell takes a Utilize action and makes a sound that can be heard up to 60 feet away."
+}

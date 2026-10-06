@@ -1,0 +1,20 @@
+{
+  "id": "poisoned",
+  "name": "Poisoned",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Disadvantage on attack rolls and ability checks.",
+  "text": "You have Disadvantage on attack rolls and ability checks.",
+  "modifiers": [
+    {
+      "stat": "disadvantage",
+      "on": "attack"
+    },
+    {
+      "stat": "disadvantage",
+      "on": "check:all"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "hand_crossbow",
+  "name": "Hand Crossbow",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 75,
+  "weapon": {
+    "kind": "martial_ranged",
+    "damage": "1d6",
+    "damage_type": "piercing",
+    "properties": [
+      "ammunition",
+      "range",
+      "light",
+      "loading"
+    ],
+    "range": [
+      30,
+      120
+    ],
+    "ammunition": "bolt",
+    "mastery": "vex"
+  },
+  "summary": "Martial ranged weapon: 1d6 Piercing, Ammunition (30/120 ft, Bolt), Light, Loading; mastery Vex."
+}

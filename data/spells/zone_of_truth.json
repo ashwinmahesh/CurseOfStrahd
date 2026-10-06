@@ -1,0 +1,45 @@
+{
+  "id": "zone_of_truth",
+  "name": "Zone of Truth",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 15
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "cha",
+  "save_success": "none",
+  "tags": [
+    "social",
+    "control"
+  ],
+  "summary": "Creatures in a 15-ft-radius Sphere that fail a Cha save can't speak a deliberate lie for 10 minutes.",
+  "text": "You create a zone against deception in a 15-foot-radius Sphere centered on a point within range, lasting 10 minutes. A creature that enters the area for the first time on a turn or starts its turn there makes a Charisma saving throw; on a failure it can't speak a deliberate lie while in the area. You know whether each creature succeeds or fails. An affected creature is aware of the spell and can avoid answering questions it would normally answer with a lie; it may be evasive, but whatever it says must be true."
+}

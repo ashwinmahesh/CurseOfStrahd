@@ -1,0 +1,42 @@
+{
+  "id": "counterspell",
+  "name": "Counterspell",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "abjuration",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "reaction",
+    "trigger": "You see a creature within 60 feet of you casting a spell that has Verbal, Somatic, or Material components."
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "the creature casting the spell"
+  },
+  "save": "con",
+  "save_success": "none",
+  "tags": [
+    "defense",
+    "control"
+  ],
+  "summary": "Reaction: a spellcaster within 60 feet makes a Con save or its spell fails; a spent slot is kept.",
+  "text": "Take this Reaction when you see a creature within 60 feet cast a spell with Verbal, Somatic or Material components. The caster makes a Constitution saving throw. On a failure, the spell fizzles with no effect and the action, Bonus Action or Reaction used to cast it is wasted; if the spell was cast with a spell slot, that slot is not expended."
+}

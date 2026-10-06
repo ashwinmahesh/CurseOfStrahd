@@ -1,0 +1,37 @@
+{
+  "id": "boon_of_dimensional_travel",
+  "name": "Boon of Dimensional Travel",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); teleport up to 30 feet right after you take the Attack or Magic action.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "blink_steps",
+      "name": "Blink Steps",
+      "summary": "Right after taking the Attack or Magic action, teleport up to 30 ft to an unoccupied space you can see.",
+      "text": "Immediately after you take the Attack action or the Magic action, you can teleport up to 30 feet to an unoccupied space you can see.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

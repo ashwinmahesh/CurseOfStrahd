@@ -1,0 +1,17 @@
+{
+  "id": "viol",
+  "name": "Viol",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 1,
+  "cost_gp": 30,
+  "tool": {
+    "kind": "musical_instrument",
+    "ability": "cha",
+    "utilize": "Perform a tune you know (DC 10), or improvise a song (DC 15)."
+  },
+  "summary": "Musical Instrument (Charisma): perform a tune you know (DC 10), or improvise a song (DC 15)."
+}

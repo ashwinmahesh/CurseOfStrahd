@@ -1,0 +1,28 @@
+{
+  "id": "incapacitated",
+  "name": "Incapacitated",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "No actions, Bonus Actions or Reactions; Concentration breaks; can't speak.",
+  "text": "You can't take any action, Bonus Action or Reaction, and you can't speak. Your Concentration is broken. If you are Incapacitated when you roll Initiative, you have Disadvantage on the roll.",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "no_actions"
+    },
+    {
+      "stat": "flag",
+      "value": "no_concentration"
+    },
+    {
+      "stat": "flag",
+      "value": "speechless"
+    },
+    {
+      "stat": "disadvantage",
+      "on": "initiative"
+    }
+  ]
+}

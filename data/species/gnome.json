@@ -1,0 +1,136 @@
+{
+  "id": "gnome",
+  "name": "Gnome",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Small, clever folk with Advantage on mental saving throws and forest or rock gnome magic.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "small"
+  ],
+  "speed": 30,
+  "darkvision": 60,
+  "lineage_label": "Gnomish Lineage",
+  "spellcasting_ability_choice": [
+    "int",
+    "wis",
+    "cha"
+  ],
+  "traits": [
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 60 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 60
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "gnomish_cunning",
+      "name": "Gnomish Cunning",
+      "summary": "Advantage on Intelligence, Wisdom and Charisma saving throws.",
+      "text": "You have Advantage on Intelligence, Wisdom and Charisma saving throws.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save:int"
+        },
+        {
+          "stat": "advantage",
+          "on": "save:wis"
+        },
+        {
+          "stat": "advantage",
+          "on": "save:cha"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "gnomish_lineage",
+      "name": "Gnomish Lineage",
+      "summary": "Choose Forest Gnome or Rock Gnome magic; Int, Wis or Cha is the spellcasting ability for it.",
+      "text": "Choose one lineage: Forest Gnome or Rock Gnome. Whichever you choose, Intelligence, Wisdom or Charisma is your spellcasting ability for spells you cast with this trait (choose the ability when you choose the lineage).",
+      "action": "passive",
+      "choice": {
+        "kind": "lineage",
+        "count": 1,
+        "from": [
+          "forest_gnome",
+          "rock_gnome"
+        ]
+      },
+      "implemented": "data"
+    }
+  ],
+  "lineages": [
+    {
+      "id": "forest_gnome",
+      "name": "Forest Gnome",
+      "summary": "Minor Illusion, and Speak with Animals free PB times per Long Rest.",
+      "traits": [
+        {
+          "id": "forest_gnome_lineage",
+          "name": "Forest Gnome Lineage",
+          "summary": "You know Minor Illusion and always have Speak with Animals prepared, castable free PB times per Long Rest.",
+          "text": "You know the Minor Illusion cantrip. You also always have the Speak with Animals spell prepared. You can cast it without a spell slot a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest, and you can also cast it using any spell slots you have.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "minor_illusion",
+              "ability": "choice"
+            },
+            {
+              "stat": "spell",
+              "value": "speak_with_animals",
+              "ability": "choice",
+              "always_prepared": true,
+              "uses": {
+                "count": "pb",
+                "recharge": "long"
+              }
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "rock_gnome",
+      "name": "Rock Gnome",
+      "summary": "Mending and Prestidigitation, and you can build up to three Tiny clockwork devices.",
+      "traits": [
+        {
+          "id": "rock_gnome_lineage",
+          "name": "Rock Gnome Lineage",
+          "summary": "You know Mending and Prestidigitation and can spend 10 minutes building a Tiny clockwork device.",
+          "text": "You know the Mending and Prestidigitation cantrips. You can also spend 10 minutes casting Prestidigitation to build a Tiny clockwork device (AC 5, 1 HP), such as a toy, fire starter or music box. When you build it, choose one effect of Prestidigitation (and one option of that effect, if it has several, such as lighting or snuffing a flame but not both); the device produces that effect whenever you or another creature takes a Bonus Action to activate it with a touch. You can have up to three such devices at a time. Each falls apart 8 hours after you build it, or when you dismantle it with a touch as a Utilize action.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "spell",
+              "value": "mending",
+              "ability": "choice"
+            },
+            {
+              "stat": "spell",
+              "value": "prestidigitation",
+              "ability": "choice"
+            }
+          ],
+          "implemented": "text"
+        }
+      ]
+    }
+  ]
+}

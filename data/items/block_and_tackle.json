@@ -1,0 +1,13 @@
+{
+  "id": "block_and_tackle",
+  "name": "Block and Tackle",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 5,
+  "cost_gp": 1,
+  "summary": "Lets you hoist up to four times the weight you can normally lift.",
+  "text": "A pulley system that lets you hoist up to four times the weight you could normally lift."
+}

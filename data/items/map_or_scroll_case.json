@@ -1,0 +1,13 @@
+{
+  "id": "map_or_scroll_case",
+  "name": "Map or Scroll Case",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 1,
+  "cost_gp": 1,
+  "capacity": "10 sheets of paper or 5 sheets of parchment",
+  "summary": "Holds up to 10 sheets of paper or 5 sheets of parchment."
+}

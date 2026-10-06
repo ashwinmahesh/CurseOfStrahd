@@ -1,0 +1,57 @@
+{
+  "id": "farmer",
+  "name": "Farmer",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You grew up working fields and tending animals, which left you hardy, patient and close to nature.",
+  "ability_scores": [
+    "str",
+    "con",
+    "wis"
+  ],
+  "feat": "tough",
+  "skills": [
+    "animal_handling",
+    "nature"
+  ],
+  "tool": {
+    "id": "carpenters_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "sickle",
+          "qty": 1
+        },
+        {
+          "id": "carpenters_tools",
+          "qty": 1
+        },
+        {
+          "id": "healers_kit",
+          "qty": 1
+        },
+        {
+          "id": "iron_pot",
+          "qty": 1
+        },
+        {
+          "id": "shovel",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 30
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

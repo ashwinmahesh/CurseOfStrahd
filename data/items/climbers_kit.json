@@ -1,0 +1,13 @@
+{
+  "id": "climbers_kit",
+  "name": "Climber's Kit",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 12,
+  "cost_gp": 25,
+  "summary": "Utilize to anchor yourself: you can't fall or move more than 25 ft from the anchor.",
+  "text": "Contains boot tips, gloves, pitons and a harness. As a Utilize action, you can anchor yourself with it. While anchored, you can't fall more than 25 feet from the anchor point, and you can't move more than 25 feet away from it unless you undo the anchor as a Bonus Action."
+}

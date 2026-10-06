@@ -1,0 +1,100 @@
+{
+  "id": "light_domain",
+  "name": "Light Domain",
+  "class": "cleric",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "Wields radiance and fire: Radiance of the Dawn scorches foes, Warding Flare spoils attacks.",
+  "role_tags": [
+    "damage",
+    "defense"
+  ],
+  "always_prepared": {
+    "3": [
+      "burning_hands",
+      "faerie_fire",
+      "scorching_ray",
+      "see_invisibility"
+    ],
+    "5": [
+      "daylight",
+      "fireball"
+    ],
+    "7": [
+      "arcane_eye",
+      "wall_of_fire"
+    ],
+    "9": [
+      "flame_strike",
+      "scrying"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "light_domain_spells",
+        "name": "Light Domain Spells",
+        "summary": "Always prepared: Burning Hands, Faerie Fire, Scorching Ray, See Invisibility; more at 5, 7 and 9.",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "radiance_of_the_dawn",
+        "name": "Radiance of the Dawn",
+        "summary": "Channel Divinity: dispel magical Darkness within 30 feet; foes take 2d10 + Cleric level Radiant (Con save halves).",
+        "text": "As a Magic action, spend a Channel Divinity use: magical Darkness within 30 feet is dispelled, and each creature of your choice in that area makes a Constitution save, taking 2d10 + your Cleric level Radiant damage on a failure or half on a success.",
+        "implemented": "engine",
+        "action": "action",
+        "uses_resource": "channel_divinity"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "warding_flare",
+        "name": "Warding Flare",
+        "summary": "Reaction: impose Disadvantage on an attack roll within 30 feet; uses = Wis modifier per Long Rest.",
+        "text": "When a creature you can see within 30 feet makes an attack roll, you can take a Reaction to impose Disadvantage on it. You can do this a number of times equal to your Wisdom modifier (minimum once); all uses return on a Long Rest.",
+        "implemented": "engine",
+        "action": "reaction",
+        "resource": {
+          "id": "warding_flare",
+          "name": "Warding Flare",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "long"
+        }
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "improved_warding_flare",
+        "name": "Improved Warding Flare",
+        "summary": "Warding Flare returns on a Short Rest and grants 2d6 + Wis Temporary Hit Points.",
+        "implemented": "engine",
+        "resource": {
+          "id": "warding_flare",
+          "name": "Warding Flare",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "short"
+        }
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "corona_of_light",
+        "name": "Corona of Light",
+        "summary": "Shed 60 feet of sunlight for a minute; foes in it have Disadvantage on saves against your fire and radiance.",
+        "implemented": "text"
+      }
+    }
+  ]
+}

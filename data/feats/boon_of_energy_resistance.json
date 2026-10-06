@@ -1,0 +1,67 @@
+{
+  "id": "boon_of_energy_resistance",
+  "name": "Boon of Energy Resistance",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); Resistance to two damage types, and a Reaction to redirect that damage at a foe.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "energy_resistances",
+      "name": "Energy Resistances",
+      "summary": "Resistance to two chosen damage types; you can change them when you finish a Long Rest.",
+      "text": "You gain Resistance to two of these damage types of your choice: Acid, Cold, Fire, Lightning, Necrotic, Poison, Psychic, Radiant or Thunder. Whenever you finish a Long Rest, you can change your choices.",
+      "action": "passive",
+      "choice": {
+        "id": "energy_resistances",
+        "kind": "damage_type",
+        "count": 2,
+        "from": [
+          "acid",
+          "cold",
+          "fire",
+          "lightning",
+          "necrotic",
+          "poison",
+          "psychic",
+          "radiant",
+          "thunder"
+        ],
+        "replaceable": "long_rest"
+      },
+      "modifiers": [
+        {
+          "stat": "resistance",
+          "value": "@energy_resistances"
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "energy_redirection",
+      "name": "Energy Redirection",
+      "summary": "Reaction on taking a chosen type: a creature within 60 ft makes a Dex save or takes 2d12 + Con mod.",
+      "text": "When you take damage of one of the types chosen for Energy Resistances, you can take a Reaction to direct damage of the same type at another creature you can see within 60 feet of you that isn't behind Total Cover. That creature must succeed on a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus) or take damage equal to 2d12 plus your Constitution modifier.",
+      "action": "reaction",
+      "implemented": "text"
+    }
+  ]
+}

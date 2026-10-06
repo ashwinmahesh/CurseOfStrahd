@@ -1,0 +1,19 @@
+{
+  "id": "mace",
+  "name": "Mace",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 4,
+  "cost_gp": 5,
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d6",
+    "damage_type": "bludgeoning",
+    "properties": [],
+    "mastery": "sap"
+  },
+  "summary": "Simple melee weapon: 1d6 Bludgeoning; mastery Sap."
+}

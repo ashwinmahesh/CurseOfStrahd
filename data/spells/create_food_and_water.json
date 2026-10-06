@@ -1,0 +1,37 @@
+{
+  "id": "create_food_and_water",
+  "name": "Create Food and Water",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "conjuration",
+  "classes": [
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point",
+    "description": "the ground or containers within range"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Conjure 45 pounds of food and 30 gallons of fresh water; the food spoils after 24 hours.",
+  "text": "Create 45 pounds of food and 30 gallons of fresh water within 30 feet, on the ground or in containers, enough to ward off malnutrition and dehydration. The food is bland but nourishing and looks like any food you choose; the water is clean. Food that isn't eaten spoils after 24 hours."
+}

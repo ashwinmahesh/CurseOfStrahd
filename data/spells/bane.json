@@ -1,0 +1,65 @@
+{
+  "id": "bane",
+  "name": "Bane",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "cleric",
+    "warlock"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a drop of blood"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 3,
+    "description": "creatures of your choice that you can see"
+  },
+  "save": "cha",
+  "save_success": "none",
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "penalty_die",
+            "dice": "1d4",
+            "on": [
+              "attack",
+              "save:all"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "debuff"
+  ],
+  "summary": "Up to three creatures fail a Charisma save and subtract 1d4 from their attack rolls and saving throws.",
+  "text": "Up to three creatures of your choice that you can see within range each make a Charisma saving throw. Until the spell ends, each creature that failed subtracts 1d4 from every attack roll and saving throw it makes. Concentration, up to 1 minute. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 1."
+}

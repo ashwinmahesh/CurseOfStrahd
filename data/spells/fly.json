@@ -1,0 +1,60 @@
+{
+  "id": "fly",
+  "name": "Fly",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a feather"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a willing creature"
+  },
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "creature",
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "kind": "fly",
+            "value": 60
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "movement",
+    "buff"
+  ],
+  "summary": "A willing creature gains a 60-foot Fly Speed and can hover for up to 10 minutes.",
+  "text": "A willing creature you touch gains a Fly Speed of 60 feet and can hover until the spell ends. If it is still in the air when the spell ends, it falls unless it can stop the fall. Using a Higher-Level Spell Slot: you can target one more creature for each slot level above 3."
+}

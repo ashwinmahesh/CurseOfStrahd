@@ -1,0 +1,158 @@
+{
+  "id": "vampire_spawn",
+  "name": "Vampire Spawn",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "undead",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "neutral evil",
+  "ac": 16,
+  "initiative": 3,
+  "hp": {
+    "average": 90,
+    "dice": "12d8+36"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 16,
+    "con": 16,
+    "int": 11,
+    "wis": 10,
+    "cha": 12
+  },
+  "saves": {
+    "dex": 6,
+    "wis": 3
+  },
+  "skills": {
+    "perception": 3,
+    "stealth": 6
+  },
+  "resistances": [
+    "necrotic"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 13,
+  "languages": [
+    "Common",
+    "one other language"
+  ],
+  "cr": 5,
+  "xp": 1800,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "spider_climb",
+      "name": "Spider Climb",
+      "action": "passive",
+      "summary": "Climbs difficult surfaces, even upside down on ceilings, with no ability check.",
+      "text": "The vampire can climb difficult surfaces, including upside down along ceilings, without making an ability check.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "spider_climb"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "vampire_weakness",
+      "name": "Vampire Weakness",
+      "action": "passive",
+      "summary": "Needs an invitation to enter homes; harmed by running water and sunlight; a stake can destroy it.",
+      "text": "The vampire has these weaknesses. Forbiddance: it can't enter a residence unless an occupant invites it in. Running Water: it takes 20 Acid damage if it ends its turn in running water. Stake to the Heart: it is destroyed if a weapon that deals Piercing damage is driven into its heart while it has the Incapacitated condition. Sunlight: it takes 20 Radiant damage if it starts its turn in sunlight, and while in sunlight it has Disadvantage on attack rolls and ability checks.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "claw",
+          "count": 2
+        },
+        {
+          "action": "bite",
+          "count": 1
+        }
+      ],
+      "summary": "Makes two Claw attacks and uses Bite."
+    },
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "2d4+3",
+          "type": "slashing"
+        }
+      ],
+      "conditions": [
+        "grappled"
+      ],
+      "summary": "Slashes a target; a Medium or smaller target is Grappled (escape DC 13).",
+      "text": "Hit: 8 (2d4 + 3) Slashing damage. If the target is Medium or smaller, it has the Grappled condition (escape DC 13), held by one of the vampire's two claws."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 14,
+        "success": "none"
+      },
+      "area": {
+        "targets": 1,
+        "range": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d4+3",
+          "type": "piercing"
+        },
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "DC 14 Con save by a willing, Grappled, Incapacitated or Restrained target; drains life to heal.",
+      "text": "Constitution Saving Throw: DC 14, one creature within 5 feet that is willing or has the Grappled, Incapacitated or Restrained condition. Failure: 5 (1d4 + 3) Piercing damage plus 10 (3d6) Necrotic damage. The target's Hit Point maximum is reduced by the Necrotic damage it took, and the vampire regains that many Hit Points."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "deathless_agility",
+      "name": "Deathless Agility",
+      "kind": "special",
+      "summary": "Takes the Dash or Disengage action.",
+      "text": "The vampire takes the Dash action or the Disengage action."
+    }
+  ],
+  "regions": [
+    "village_of_barovia"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "Grabs a victim with its claws, bites to heal itself, and disengages freely; shuns sunlight."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "cartographers_tools",
+  "name": "Cartographer's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 6,
+  "cost_gp": 15,
+  "tool": {
+    "kind": "artisan",
+    "ability": "wis",
+    "utilize": "Sketch a map of a small area (DC 15).",
+    "craft": [
+      "map"
+    ]
+  },
+  "summary": "Artisan's Tools (Wisdom): sketch a map of a small area (DC 15)."
+}

@@ -1,0 +1,218 @@
+{
+  "id": "diviner",
+  "name": "Diviner",
+  "class": "wizard",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "Sees what's coming: Portent replaces rolls with foretold d20s, and divinations refund slots.",
+  "role_tags": [
+    "support",
+    "control"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "divination_savant",
+        "name": "Divination Savant",
+        "summary": "Add two Divination spells of level 2 or lower to your spellbook for free.",
+        "text": "Choose two Wizard spells from the Divination school, each level 2 or lower, and add them to your spellbook for free. Whenever you gain a new level of spell slots in this class, you can add one more Divination Wizard spell of a level you can cast for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 2,
+          "filter": {
+            "list": "wizard",
+            "school": "divination",
+            "max_level": 2,
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 5,
+      "feature": {
+        "id": "divination_savant",
+        "name": "Divination Savant (new spell level)",
+        "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "divination",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "divination_savant",
+        "name": "Divination Savant (new spell level)",
+        "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "divination",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 9,
+      "feature": {
+        "id": "divination_savant",
+        "name": "Divination Savant (new spell level)",
+        "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "divination",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "divination_savant",
+        "name": "Divination Savant (new spell level)",
+        "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "divination",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 13,
+      "feature": {
+        "id": "divination_savant",
+        "name": "Divination Savant (new spell level)",
+        "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "divination",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "divination_savant",
+        "name": "Divination Savant (new spell level)",
+        "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "divination",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 17,
+      "feature": {
+        "id": "divination_savant",
+        "name": "Divination Savant (new spell level)",
+        "summary": "Add one Divination spell of a level you can cast to your spellbook for free.",
+        "implemented": "data",
+        "choice": {
+          "kind": "spellbook",
+          "count": 1,
+          "filter": {
+            "list": "wizard",
+            "school": "divination",
+            "max_level": "slots",
+            "min_level": 1
+          }
+        }
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "portent",
+        "name": "Portent",
+        "summary": "After each Long Rest, roll two d20s; replace any D20 Test you can see with one of them.",
+        "text": "When you finish a Long Rest, roll two d20s and record them. You can replace any D20 Test made by you or a creature you can see with one of these rolls, once per turn, before the roll. Each foretold roll can be used once; unused ones are lost at your next Long Rest.",
+        "implemented": "engine",
+        "resource": {
+          "id": "portent",
+          "name": "Portent dice",
+          "max": 2,
+          "recharge": "long"
+        }
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "expert_divination",
+        "name": "Expert Divination",
+        "summary": "Casting a level 2+ Divination spell with a slot refunds a lower-level slot (level 5 or lower).",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "the_third_eye",
+        "name": "The Third Eye",
+        "summary": "Bonus Action: darkvision 120 ft, Ethereal sight, read any language or see the Invisible nearby.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "greater_portent",
+        "name": "Greater Portent",
+        "summary": "Portent rolls three d20s.",
+        "implemented": "engine",
+        "resource": {
+          "id": "portent",
+          "name": "Portent dice",
+          "max": 3,
+          "recharge": "long"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "prestidigitation",
+  "name": "Prestidigitation",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "transmutation",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 10
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "point"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Minor tricks: sparks, light or snuff a flame, clean or soil, chill or flavor, a mark, or a tiny trinket.",
+  "text": "Create one of these magical effects within range (duration up to 1 hour, depending on the effect). If you cast the spell more than once, up to three of its non-instantaneous effects can be active at a time. Sensory Effect: an instant, harmless sensation such as a shower of sparks, a puff of wind, faint music or an odd smell. Fire Play: instantly light or put out a candle, a torch or a small campfire. Clean or Soil: instantly clean or dirty an object no larger than 1 cubic foot. Minor Sensation: chill, warm or flavor up to 1 cubic foot of nonliving material for 1 hour. Magic Mark: a color, small mark or symbol appears on an object or surface for 1 hour. Minor Creation: a nonmagical trinket or an illusory image that fits in your hand appears and lasts until the end of your next turn; a trinket can't deal damage and has no monetary value."
+}

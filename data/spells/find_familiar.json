@@ -1,0 +1,42 @@
+{
+  "id": "find_familiar",
+  "name": "Find Familiar",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "conjuration",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "hour",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "burning incense worth 10+ GP, which the spell consumes",
+    "m_cost_gp": 10,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space within range"
+  },
+  "tags": [
+    "summon",
+    "utility"
+  ],
+  "summary": "Summon a spirit familiar in a CR 0 Beast form that scouts, shares its senses and delivers your touch spells.",
+  "text": "A spirit familiar appears in an unoccupied space within range in an animal form you choose: Bat, Cat, Frog, Hawk, Lizard, Octopus, Owl, Rat, Raven, Spider, Weasel, or any other Beast of Challenge Rating 0. It uses that form's stat block, but its creature type is Celestial, Fey or Fiend (your choice) instead of Beast. It acts independently but obeys your commands. Telepathy: while it is within 100 feet of you, you can communicate with it telepathically, and as a Bonus Action you can see through its eyes and hear what it hears, with any special senses it has, until the start of your next turn. Touch spells: when you cast a spell with a range of Touch, the familiar can deliver the touch by taking its Reaction, as long as it is within 100 feet of you. Combat: it is an ally to you and your allies, rolls its own Initiative and acts on its own turn; it can't attack but can take other actions. Disappearance: at 0 Hit Points it disappears and returns only when you cast this spell again. As a Magic action you can dismiss it to a pocket dimension temporarily, or dismiss it forever; while it is in the pocket dimension, a Magic action makes it reappear in an unoccupied space within 30 feet of you. When it drops to 0 Hit Points or goes to the pocket dimension, it leaves behind anything it was wearing or carrying. You can have only one familiar at a time; casting the spell while you have one instead lets it take a new eligible form. Casting time 1 hour; can be cast as a Ritual. The incense (10+ GP) is consumed."
+}

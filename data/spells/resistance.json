@@ -1,0 +1,40 @@
+{
+  "id": "resistance",
+  "name": "Resistance",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "abjuration",
+  "classes": [
+    "cleric",
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "One willing creature you touch."
+  },
+  "tags": [
+    "defense",
+    "buff"
+  ],
+  "summary": "A willing creature reduces damage of one chosen type by 1d4, once per turn.",
+  "text": "Touch a willing creature and choose one damage type: Acid, Bludgeoning, Cold, Fire, Lightning, Necrotic, Piercing, Poison, Radiant, Slashing or Thunder. Until the spell ends, whenever the creature takes damage of that type, it reduces the total damage by 1d4. A creature can gain this reduction only once per turn."
+}

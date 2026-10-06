@@ -1,0 +1,13 @@
+{
+  "id": "basket",
+  "name": "Basket",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 2,
+  "cost_gp": 0.4,
+  "capacity": "40 lb. within 2 cubic feet",
+  "summary": "Holds up to 40 lb. within 2 cubic feet."
+}

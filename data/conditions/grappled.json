@@ -1,0 +1,20 @@
+{
+  "id": "grappled",
+  "name": "Grappled",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Speed 0; Disadvantage on attacks against anyone but the grappler; can be dragged.",
+  "text": "Your Speed is 0 and can't increase. You have Disadvantage on attack rolls against any target other than the grappler. The grappler can drag or carry you, paying 1 extra foot per foot moved unless you are Tiny or two or more sizes smaller than it.",
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "value": 0
+    },
+    {
+      "stat": "flag",
+      "value": "disadvantage_vs_non_grappler"
+    }
+  ]
+}

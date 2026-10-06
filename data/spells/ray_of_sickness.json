@@ -1,0 +1,59 @@
+{
+  "id": "ray_of_sickness",
+  "name": "Ray of Sickness",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "necromancy",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "2d8",
+      "type": "poison"
+    }
+  ],
+  "conditions": [
+    "poisoned"
+  ],
+  "upcast": {
+    "damage": "1d8"
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "poisoned"
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "Ranged spell attack for 2d8 Poison damage; the target is Poisoned until the end of your next turn.",
+  "text": "Make a ranged spell attack against a creature within range. On a hit it takes 2d8 Poison damage and has the Poisoned condition until the end of your next turn. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 1."
+}

@@ -1,0 +1,61 @@
+{
+  "id": "bat",
+  "name": "Bat",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "tiny",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 12,
+  "initiative": 2,
+  "hp": {
+    "average": 1,
+    "dice": "1d4-1"
+  },
+  "speed": {
+    "walk": 5,
+    "fly": 30
+  },
+  "abilities": {
+    "str": 2,
+    "dex": 15,
+    "con": 8,
+    "int": 2,
+    "wis": 12,
+    "cha": 4
+  },
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 0,
+  "xp": 10,
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 1,
+          "dice": "1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Nips a target for 1 Piercing damage."
+    }
+  ],
+  "regions": [
+    "svalich_road"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "Flits in to nip a target and flutters away; a nuisance more than a threat."
+}

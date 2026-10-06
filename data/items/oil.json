@@ -1,0 +1,14 @@
+{
+  "id": "oil",
+  "name": "Oil",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 1,
+  "cost_gp": 0.1,
+  "stackable": true,
+  "summary": "Flask: throw to douse a target, pour as a burnable puddle, or fuel a lamp for 6 hours.",
+  "text": "A flask of Oil has three uses. Dousing a creature or object: when you take the Attack action, you can swap one of your attacks for throwing the flask at a creature or object within 20 feet. The target makes a Dexterity saving throw against DC 8 + your Dexterity modifier + your Proficiency Bonus or is covered in oil; if it takes Fire damage before the oil dries (after 1 minute), it takes an extra 5 Fire damage. Dousing a space: as a Utilize action, you pour the flask over a 5-foot-square area of level ground within 5 feet of you. Once lit, the oil burns until the end of the turn 2 rounds after it was lit (12 seconds), dealing 5 Fire damage to any creature that enters the area or ends its turn there, no more than once per turn. Fuel: a flask burns for 6 hours in a Lamp or Lantern; the hours need not be consecutive, since you can put it out (a Utilize action) and relight it later."
+}

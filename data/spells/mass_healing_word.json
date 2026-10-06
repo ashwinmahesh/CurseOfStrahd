@@ -1,0 +1,44 @@
+{
+  "id": "mass_healing_word",
+  "name": "Mass Healing Word",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 6,
+    "description": "up to six creatures of your choice that you can see"
+  },
+  "heal": {
+    "dice": "2d4",
+    "add_mod": true
+  },
+  "upcast": {
+    "heal": "1d4"
+  },
+  "tags": [
+    "healing"
+  ],
+  "summary": "Bonus Action: up to six creatures you can see regain 2d4 + your spellcasting modifier Hit Points.",
+  "text": "Up to six creatures of your choice that you can see within 60 feet each regain Hit Points equal to 2d4 plus your spellcasting ability modifier. Using a Higher-Level Spell Slot: the healing increases by 1d4 for each slot level above 3."
+}

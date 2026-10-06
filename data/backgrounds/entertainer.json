@@ -1,0 +1,55 @@
+{
+  "id": "entertainer",
+  "name": "Entertainer",
+  "source": {
+    "book": "PHB2024"
+  },
+  "summary": "You grew up on the road with performers, earning coin through music, tumbling and showmanship.",
+  "ability_scores": [
+    "str",
+    "dex",
+    "cha"
+  ],
+  "feat": "musician",
+  "skills": [
+    "acrobatics",
+    "performance"
+  ],
+  "tool": {
+    "id": "lute",
+    "choice": "musical_instrument"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "lute",
+          "qty": 1,
+          "choice": "musical_instrument"
+        },
+        {
+          "id": "costume",
+          "qty": 2
+        },
+        {
+          "id": "mirror",
+          "qty": 1
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 11
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "silent_image",
+  "name": "Silent Image",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "area": {
+    "shape": "cube",
+    "size": 15
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a bit of fleece"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "A purely visual illusion of an object, creature or phenomenon up to a 15-foot Cube that you can move.",
+  "text": "Create a purely visual image of an object, a creature or some other visible phenomenon, no larger than a 15-foot Cube, at a spot within range. It has no sound, smell or other sensory effects. As a Magic action you can move the image to any spot within range and change its appearance as it moves so the motion looks natural (for example, making a creature appear to walk). Things pass through the image, so physical contact reveals it as an illusion. A creature that takes the Study action to examine it can tell it is an illusion with a successful Intelligence (Investigation) check against your spell save DC; a creature that sees through it can see through the image. Concentration, up to 10 minutes."
+}

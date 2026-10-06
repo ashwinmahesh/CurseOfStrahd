@@ -1,0 +1,22 @@
+{
+  "id": "scimitar",
+  "name": "Scimitar",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 25,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "1d6",
+    "damage_type": "slashing",
+    "properties": [
+      "finesse",
+      "light"
+    ],
+    "mastery": "nick"
+  },
+  "summary": "Martial melee weapon: 1d6 Slashing, Finesse, Light; mastery Nick."
+}

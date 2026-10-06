@@ -1,0 +1,52 @@
+{
+  "id": "see_invisibility",
+  "name": "See Invisibility",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pinch of talc"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "self",
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "see_invisibility"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "detection"
+  ],
+  "summary": "For 1 hour you see Invisible creatures and objects as if visible, and you can see into the Ethereal Plane.",
+  "text": "For 1 hour you see creatures and objects that have the Invisible condition as if they were visible, and you can see into the Ethereal Plane, where creatures and objects look ghostly."
+}

@@ -1,0 +1,30 @@
+{
+  "id": "heavy_crossbow",
+  "name": "Heavy Crossbow",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 18,
+  "cost_gp": 50,
+  "weapon": {
+    "kind": "martial_ranged",
+    "damage": "1d10",
+    "damage_type": "piercing",
+    "properties": [
+      "ammunition",
+      "range",
+      "heavy",
+      "loading",
+      "two_handed"
+    ],
+    "range": [
+      100,
+      400
+    ],
+    "ammunition": "bolt",
+    "mastery": "push"
+  },
+  "summary": "Martial ranged weapon: 1d10 Piercing, Ammunition (100/400 ft, Bolt), Heavy, Loading, Two-Handed; mastery Push."
+}

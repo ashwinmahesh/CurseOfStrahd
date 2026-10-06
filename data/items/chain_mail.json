@@ -2,7 +2,8 @@
   "id": "chain_mail",
   "name": "Chain Mail",
   "source": {
-    "book": "SRD5.2"
+    "book": "PHB2024",
+    "checked_against": "BR2024"
   },
   "category": "armor",
   "weight_lb": 55,
@@ -12,6 +13,10 @@
     "base_ac": 16,
     "dex_cap": 0,
     "strength": 13,
-    "stealth_disadvantage": true
-  }
+    "stealth_disadvantage": true,
+    "don_minutes": 10,
+    "doff_minutes": 5
+  },
+  "summary": "Heavy armor: AC 16; needs Str 13; Disadvantage on Stealth.",
+  "text": "Heavy armor. While you wear it, your base Armor Class is 16; your Dexterity modifier does not apply. If your Strength score is lower than 13, your Speed drops by 10 feet while you wear it. You have Disadvantage on Dexterity (Stealth) checks while wearing it. Putting it on takes 10 minutes and taking it off takes 5 minutes. Without training in Heavy armor, you have Disadvantage on every D20 Test that uses Strength or Dexterity and you can't cast spells."
 }

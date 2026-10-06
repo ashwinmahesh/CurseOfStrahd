@@ -1,0 +1,39 @@
+{
+  "id": "minor_illusion",
+  "name": "Minor Illusion",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "s": true,
+    "m": "a bit of fleece"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "point"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Create an illusory sound or a still image of an object no larger than a 5-foot Cube for 1 minute.",
+  "text": "Create either a sound or an image of an object within range; it lasts for the duration and ends if you cast this spell again. Sound: anything from a whisper to a scream, such as your voice, someone else's voice, a roar or drumming; it can run continuously or as separate sounds at different moments during the duration. Image: an object such as a chair, muddy footprints or a small chest, no larger than a 5-foot Cube; it makes no sound, light, smell or other sensory effect, and physical contact reveals it as an illusion because things pass through it. A creature that takes the Study action to examine the illusion can make an Intelligence (Investigation) check against your spell save DC; on a success it knows the illusion for what it is, and the illusion becomes faint to that creature."
+}

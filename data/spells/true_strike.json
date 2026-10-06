@@ -1,0 +1,45 @@
+{
+  "id": "true_strike",
+  "name": "True Strike",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "s": true,
+    "m": "a weapon you have proficiency with, worth 1+ CP",
+    "m_cost_gp": 0.01
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature_or_object",
+    "count": 1,
+    "description": "The target of one attack with the component weapon, at that weapon's range."
+  },
+  "cantrip_scaling": {
+    "damage": "1d6",
+    "text": "Extra Radiant damage on the weapon attack, none before level 5: 1d6 at level 5, 2d6 at level 11, 3d6 at level 17."
+  },
+  "tags": [
+    "damage",
+    "buff"
+  ],
+  "summary": "Make one weapon attack using your spellcasting ability; it may deal Radiant damage, plus more at levels 5+.",
+  "text": "Make one attack with the weapon used as the spell's material component. The attack uses your spellcasting ability instead of Strength or Dexterity for its attack and damage rolls, and if it deals damage you choose whether that damage is Radiant or the weapon's normal type. From character level 5 the attack also deals extra Radiant damage (whichever type you chose): 1d6 at level 5, 2d6 at level 11 and 3d6 at level 17."
+}

@@ -1,0 +1,46 @@
+{
+  "id": "inflict_wounds",
+  "name": "Inflict Wounds",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "necromancy",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "2d10",
+      "type": "necrotic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10"
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "A creature you touch makes a Constitution save, taking 2d10 Necrotic damage, half on a success.",
+  "text": "A creature you touch makes a Constitution saving throw, taking 2d10 Necrotic damage on a failure or half as much on a success. Using a Higher-Level Spell Slot: the damage increases by 1d10 for each slot level above 1."
+}

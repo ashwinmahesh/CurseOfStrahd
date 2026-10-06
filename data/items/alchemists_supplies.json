@@ -1,0 +1,25 @@
+{
+  "id": "alchemists_supplies",
+  "name": "Alchemist's Supplies",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 8,
+  "cost_gp": 50,
+  "tool": {
+    "kind": "artisan",
+    "ability": "int",
+    "utilize": "Identify an unknown substance (DC 15), or kindle a fire (DC 15).",
+    "craft": [
+      "acid",
+      "alchemists_fire",
+      "component_pouch",
+      "oil",
+      "paper",
+      "perfume"
+    ]
+  },
+  "summary": "Artisan's Tools (Intelligence): identify an unknown substance (DC 15), or kindle a fire (DC 15)."
+}

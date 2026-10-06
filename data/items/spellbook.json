@@ -1,0 +1,12 @@
+{
+  "id": "spellbook",
+  "name": "Spellbook",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "gear",
+  "weight_lb": 3,
+  "cost_gp": 50,
+  "summary": "Leather-bound book of 100 blank vellum pages for recording spells.",
+  "text": "A leather-bound book with 100 blank vellum pages for recording spells. Wizards rely on one to hold the spells they know."
+}

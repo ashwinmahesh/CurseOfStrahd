@@ -2,8 +2,8 @@
 """Validates every data/<type>/*.json against data/schemas/<type>.schema.json.
 
 Stdlib only (no jsonschema install needed). Supports the subset of JSON Schema the project uses:
-type, enum, const, required, properties, additionalProperties (bool), items, minItems, maxItems,
-minimum, maximum, minLength, pattern, $ref (local '#/...' and sibling 'file.json#/...').
+type, enum, const, required, properties, additionalProperties (bool or schema), items, minItems,
+maxItems, minimum, maximum, minLength, pattern, anyOf, $ref (local '#/...' and sibling 'file.json#/...').
 Also checks that every file's `id` matches its filename and is unique. Exit 1 on any error.
 """
 import json
@@ -18,7 +18,7 @@ SCHEMAS = ROOT / "data" / "schemas"
 FOLDERS = {
     "classes": "class", "subclasses": "subclass", "species": "species",
     "backgrounds": "background", "feats": "feat", "spells": "spell",
-    "items": "item", "magic_items": "item", "monsters": "monster",
+    "items": "item", "magic_items": "item", "monsters": "monster", "conditions": "condition",
 }
 
 TYPES = {
@@ -56,6 +56,15 @@ def validate(value, schema, base, path, errors):
         target, target_base = resolve(schema["$ref"], base)
         validate(value, target, target_base, path, errors)
         return
+    if "anyOf" in schema:
+        for option in schema["anyOf"]:
+            trial = []
+            validate(value, option, base, path, trial)
+            if not trial:
+                break
+        else:
+            errors.append(f"{path}: {value!r} matches none of the allowed forms")
+            return
     if "type" in schema:
         types = schema["type"] if isinstance(schema["type"], list) else [schema["type"]]
         if not any(type_ok(value, t) for t in types):
@@ -88,11 +97,116 @@ def validate(value, schema, base, path, errors):
             if key not in value:
                 errors.append(f"{path}: missing required '{key}'")
         props = schema.get("properties", {})
+        extra = schema.get("additionalProperties")
         for key, sub in value.items():
             if key in props:
                 validate(sub, props[key], base, f"{path}.{key}", errors)
-            elif schema.get("additionalProperties") is False:
+            elif extra is False:
                 errors.append(f"{path}: unexpected property '{key}'")
+            elif isinstance(extra, dict):
+                validate(sub, extra, base, f"{path}.{key}", errors)
+
+
+# Content beyond this character level may reference data that later phases add (level 4+ spells).
+PHASE_MAX_LEVEL = 5
+
+
+def load_all():
+    data = {}
+    for folder in FOLDERS:
+        data[folder] = {}
+        for f in sorted((ROOT / "data" / folder).glob("*.json")):
+            try:
+                d = json.loads(f.read_text())
+            except json.JSONDecodeError:
+                continue
+            if isinstance(d, dict) and "id" in d:
+                data[folder][d["id"]] = d
+    return data
+
+
+def walk_features(features, level=0):
+    """Yields (feature, level) for features and their inline options."""
+    for f in features or []:
+        yield f, level
+        for c in [f.get("choice")] + list(f.get("choices", [])):
+            if c and c.get("options"):
+                yield from walk_features(c["options"], level)
+
+
+def semantic_checks(data):
+    """Cross-file checks: every id one file names must exist in its folder. Returns (errors, pending)."""
+    errors, pending = [], []
+    items, feats, spells = data["items"], data["feats"], data["spells"]
+    skills = set(json.loads((SCHEMAS / "common.schema.json").read_text())["$defs"]["skill"]["enum"])
+
+    def need(kind, table, ident, where, level=0):
+        if ident in table:
+            return
+        if kind == "spell" and level > PHASE_MAX_LEVEL:
+            pending.append(f"{where}: spell '{ident}' (level {level} content, added in a later phase)")
+        else:
+            errors.append(f"{where}: unknown {kind} '{ident}'")
+
+    def check_features(features, where, level=0):
+        for f, lv in walk_features(features, level):
+            at = max(lv, f.get("at_level", 0))
+            for m in f.get("modifiers", []):
+                if m.get("stat") == "spell" and not str(m.get("value", "")).startswith("@"):
+                    need("spell", spells, m["value"], f"{where} {f['id']}", max(at, m.get("at_level", 0)))
+            for c in [f.get("choice")] + list(f.get("choices", [])):
+                if not c:
+                    continue
+                if c.get("kind") == "skill":
+                    for sk in c.get("from", []):
+                        if sk not in skills and sk not in items:
+                            errors.append(f"{where} {f['id']}: unknown skill '{sk}'")
+
+    for cid, c in data["classes"].items():
+        for opt in c.get("starting_equipment", []):
+            for it in opt.get("items", []):
+                need("item", items, it["id"], f"classes/{cid} equipment")
+        for lvl in c["levels"]:
+            check_features(lvl["features"], f"classes/{cid} level {lvl['level']}", lvl["level"])
+        for sk in c["skill_choices"].get("from", []):
+            if sk not in skills:
+                errors.append(f"classes/{cid}: unknown skill '{sk}'")
+        if c.get("spellcasting") and not any(c["spellcasting"]["list"] in s["classes"] for s in spells.values()):
+            errors.append(f"classes/{cid}: no spells on the {c['spellcasting']['list']} list")
+    for sid, sc in data["subclasses"].items():
+        if sc["class"] not in data["classes"]:
+            errors.append(f"subclasses/{sid}: unknown class '{sc['class']}'")
+        for lv, ids in sc.get("always_prepared", {}).items():
+            for sp in ids:
+                need("spell", spells, sp, f"subclasses/{sid} always prepared at {lv}", int(lv))
+        for entry in sc["features"]:
+            check_features([entry["feature"]], f"subclasses/{sid} level {entry['level']}", entry["level"])
+    for bid, b in data["backgrounds"].items():
+        need("feat", feats, b["feat"], f"backgrounds/{bid}")
+        need("item", items, b["tool"]["id"], f"backgrounds/{bid} tool")
+        for opt in b["equipment"]:
+            for it in opt.get("items", []):
+                need("item", items, it["id"], f"backgrounds/{bid} equipment")
+    for spid, sp in data["species"].items():
+        check_features(sp["traits"], f"species/{spid}")
+        for lin in sp.get("lineages", []):
+            check_features(lin.get("traits", []), f"species/{spid} {lin['id']}")
+    for fid, f in feats.items():
+        check_features(f.get("benefits", []), f"feats/{fid}")
+    for iid, it in items.items():
+        for c in it.get("contents", []):
+            need("item", items, c["id"], f"items/{iid} contents")
+    for mid, m in data["monsters"].items():
+        ids = {a["id"] for key in ("actions", "bonus_actions", "reactions") for a in m.get(key, [])}
+        for a in m.get("actions", []):
+            for ma in a.get("multiattack", []):
+                if ma["action"] not in ids:
+                    errors.append(f"monsters/{mid}: multiattack names unknown action '{ma['action']}'")
+        sc = m.get("spellcasting", {})
+        for sp in sc.get("at_will", []) + [x for v in sc.get("per_day", {}).values() for x in v]:
+            if sp not in spells:
+                pending.append(f"monsters/{mid}: spell '{sp}' (not in Phase 1 spell data)")
+    return errors, pending
 
 
 def main():
@@ -123,9 +237,15 @@ def main():
                 seen[data.get("id")] = rel
             errors.extend(f"{rel}: {e}" for e in file_errors)
             checked += 1
+    sem_errors, pending = semantic_checks(load_all()) if not errors else ([], [])
+    errors.extend(sem_errors)
     for e in errors:
         print("  FAIL ", e)
-    print(f"{checked} data files checked, {len(errors)} errors")
+    if pending and "--pending" in sys.argv:
+        for p in pending:
+            print("  later", p)
+    print(f"{checked} data files checked, {len(errors)} errors"
+          + (f", {len(pending)} references to later-phase content (--pending lists them)" if pending else ""))
     return 1 if errors else 0
 
 

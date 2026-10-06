@@ -1,0 +1,45 @@
+{
+  "id": "leomunds_tiny_hut",
+  "name": "Leomund's Tiny Hut",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024",
+    "note": "The BR2024 page heading lists Bard, Cleric, Wizard and no Ritual tag; D&D Beyond's PHB2024 spell page and 2024 class spell lists give Bard, Wizard and 1 minute or Ritual, used here."
+  },
+  "level": 3,
+  "school": "evocation",
+  "classes": [
+    "bard",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "ritual": true,
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 10
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a crystal bead"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "tags": [
+    "defense",
+    "utility"
+  ],
+  "summary": "A stationary 10-foot dome for 8 hours that bars outsiders and blocks spells of level 3 or lower.",
+  "text": "A 10-foot Emanation appears around you and stays where it is for 8 hours. The casting fails if the Emanation isn't big enough to completely contain every creature in its area. Creatures and objects inside it when you cast the spell can move through it freely; all other creatures and objects can't pass through it. Spells of level 3 or lower can't be cast through it, and their effects can't reach into it. Inside, the air is comfortable and dry whatever the weather outside. Until the spell ends, you can set the interior to Dim Light or Darkness (no action required). From outside, the Emanation is opaque and any color you choose; from inside, it is transparent. The spell ends early if you leave the Emanation or cast the spell again. Casting time 1 minute; can be cast as a Ritual."
+}

@@ -1,0 +1,60 @@
+{
+  "id": "suggestion",
+  "name": "Suggestion",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "m": "a drop of honey"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 8,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see that can hear and understand you"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed",
+        "ends_on": [
+          "damaged_by_caster_or_allies",
+          "suggestion_completed"
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "social"
+  ],
+  "summary": "A creature that fails a Wis save is Charmed and follows a reasonable suggestion of 25 words or fewer.",
+  "text": "Suggest a course of activity, in 25 words or fewer, to one creature you can see within range that can hear and understand you. It must sound achievable and must not involve anything that would obviously harm the target or its allies. The target must succeed on a Wisdom saving throw or have the Charmed condition for the duration, or until you or your allies deal damage to it. While Charmed, it pursues the suggestion as best it can. The activity can last for the whole duration, but if it can be finished sooner, the spell ends for the target when it is done."
+}

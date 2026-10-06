@@ -1,0 +1,22 @@
+{
+  "id": "maul",
+  "name": "Maul",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 10,
+  "cost_gp": 10,
+  "weapon": {
+    "kind": "martial_melee",
+    "damage": "2d6",
+    "damage_type": "bludgeoning",
+    "properties": [
+      "heavy",
+      "two_handed"
+    ],
+    "mastery": "topple"
+  },
+  "summary": "Martial melee weapon: 2d6 Bludgeoning, Heavy, Two-Handed; mastery Topple."
+}

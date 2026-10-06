@@ -1,0 +1,63 @@
+{
+  "id": "hold_person",
+  "name": "Hold Person",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "cleric",
+    "druid",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a straight piece of iron"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a Humanoid you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "paralyzed"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "paralyzed",
+        "repeat_save": "end_of_turn"
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "debuff"
+  ],
+  "summary": "A Humanoid makes a Wis save or is Paralyzed; it repeats the save at the end of each of its turns.",
+  "text": "Choose a Humanoid you can see within range. It must succeed on a Wisdom saving throw or have the Paralyzed condition for the duration. At the end of each of its turns it repeats the save, ending the spell on itself on a success. You can target one more Humanoid for each spell slot level above 2."
+}

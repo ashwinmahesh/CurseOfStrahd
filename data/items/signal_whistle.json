@@ -1,0 +1,13 @@
+{
+  "id": "signal_whistle",
+  "name": "Signal Whistle",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 0,
+  "cost_gp": 0.05,
+  "summary": "Blow it as a Utilize action to make a sound heard up to 600 ft away.",
+  "text": "Blowing the whistle takes a Utilize action and makes a sound that can be heard up to 600 feet away."
+}

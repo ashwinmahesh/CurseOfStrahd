@@ -1,0 +1,116 @@
+{
+  "id": "broom_of_animated_attack",
+  "name": "Broom of Animated Attack",
+  "source": {
+    "book": "CoS",
+    "note": "converted to the 2024 stat block format"
+  },
+  "size": "small",
+  "type": "construct",
+  "alignment": "unaligned",
+  "ac": 15,
+  "initiative": 3,
+  "hp": {
+    "average": 17,
+    "dice": "5d6"
+  },
+  "speed": {
+    "walk": 0,
+    "fly": 50,
+    "hover": true
+  },
+  "abilities": {
+    "str": 10,
+    "dex": 17,
+    "con": 10,
+    "int": 1,
+    "wis": 5,
+    "cha": 1
+  },
+  "immunities": [
+    "poison",
+    "psychic"
+  ],
+  "condition_immunities": [
+    "blinded",
+    "charmed",
+    "deafened",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone"
+  ],
+  "senses": {
+    "blindsight": 30
+  },
+  "passive_perception": 7,
+  "languages": [],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "antimagic_susceptibility",
+      "name": "Antimagic Susceptibility",
+      "action": "passive",
+      "summary": "Incapacitated inside an antimagic field; Dispel Magic can knock it out for 1 minute.",
+      "text": "While the broom is in the area of an Antimagic Field it has the Incapacitated condition. When it is targeted by Dispel Magic, it must succeed on a Constitution saving throw against the caster's spell save DC or have the Unconscious condition for 1 minute.",
+      "implemented": "text"
+    },
+    {
+      "id": "false_appearance",
+      "name": "False Appearance",
+      "action": "passive",
+      "summary": "Looks exactly like an ordinary broom while it stays still and isn't flying.",
+      "text": "As long as the broom is motionless and not flying, nothing distinguishes it from a normal broom.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "broomstick",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Broomstick attacks."
+    },
+    {
+      "id": "broomstick",
+      "name": "Broomstick",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d4+3",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Whacks a target with its handle."
+    }
+  ],
+  "reactions": [
+    {
+      "id": "animated_attack",
+      "name": "Animated Attack",
+      "kind": "special",
+      "trigger": "While the broom is motionless, a creature grabs hold of it.",
+      "summary": "When grabbed while still, it may wrench free and strike the grabber with Advantage.",
+      "text": "Trigger: a creature takes hold of the broom while the broom is motionless. Response: the broom makes a Dexterity check opposed by the creature's Strength check. If the broom's total is higher, it flies free of the creature's grip and makes one melee attack against that creature with Advantage."
+    }
+  ],
+  "regions": [
+    "death_house"
+  ],
+  "ai_profile": "mindless",
+  "summary": "Lies still until touched, then lashes out and keeps flying around foes, striking twice a turn."
+}

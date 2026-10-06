@@ -1,0 +1,39 @@
+{
+  "id": "mage_hand",
+  "name": "Mage Hand",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "conjuration",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "point"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "A spectral hand within 30 feet manipulates objects, opens unlocked doors, and carries up to 10 pounds.",
+  "text": "A floating spectral hand appears at a point you choose within range and lasts for the duration. It vanishes if it is ever more than 30 feet from you or if you cast this spell again. When you cast the spell, you can use the hand to manipulate an object, open an unlocked door or container, put an item into or take an item out of an open container, or pour out the contents of a vial. On later turns you can do so again as a Magic action, which also lets you move the hand up to 30 feet. The hand can't attack, can't activate magic items, and can't carry more than 10 pounds."
+}

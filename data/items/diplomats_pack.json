@@ -1,0 +1,59 @@
+{
+  "id": "diplomats_pack",
+  "name": "Diplomat's Pack",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "pack",
+  "weight_lb": 39,
+  "cost_gp": 39,
+  "contents": [
+    {
+      "id": "chest",
+      "qty": 1
+    },
+    {
+      "id": "fine_clothes",
+      "qty": 1
+    },
+    {
+      "id": "ink",
+      "qty": 1
+    },
+    {
+      "id": "ink_pen",
+      "qty": 5
+    },
+    {
+      "id": "lamp",
+      "qty": 1
+    },
+    {
+      "id": "map_or_scroll_case",
+      "qty": 2
+    },
+    {
+      "id": "oil",
+      "qty": 4
+    },
+    {
+      "id": "paper",
+      "qty": 5
+    },
+    {
+      "id": "parchment",
+      "qty": 5
+    },
+    {
+      "id": "perfume",
+      "qty": 1
+    },
+    {
+      "id": "tinderbox",
+      "qty": 1
+    }
+  ],
+  "summary": "Equipment pack: Chest, Fine Clothes, Ink, 5 x Ink Pen, Lamp, 2 x Map or Scroll Case, 4 x Oil, 5 x Paper, 5 x Parchment, Perfume, Tinderbox.",
+  "text": "Opens into its contents: Chest, Fine Clothes, Ink, 5 x Ink Pen, Lamp, 2 x Map or Scroll Case, 4 x Oil, 5 x Paper, 5 x Parchment, Perfume, Tinderbox."
+}

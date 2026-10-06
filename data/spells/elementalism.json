@@ -1,0 +1,41 @@
+{
+  "id": "elementalism",
+  "name": "Elementalism",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 0,
+  "school": "transmutation",
+  "classes": [
+    "druid",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "area": {
+    "shape": "cube",
+    "size": 5
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Minor elemental tricks: a breeze, dust or a written word, embers and smoke, mist or water, or a shaped element.",
+  "text": "Choose one of these effects within range. Beckon Air: a breeze in a 5-foot Cube ripples cloth, stirs dust and leaves, and shuts open doors and shutters, unless someone or something is holding them open. Beckon Earth: a thin layer of dust or sand covers surfaces in a 5-foot square, or a single word appears in your handwriting in a patch of dirt or sand. Beckon Fire: harmless embers and smoke, in a color and scent you choose, fill a 5-foot Cube; the embers can light candles, torches or lamps there, and the scent lingers for 1 minute. Beckon Water: a cool mist lightly dampens creatures and objects in a 5-foot Cube, or 1 cup of clean water appears in an open container or on a surface and evaporates after 1 minute. Sculpt Element: dirt, sand, fire, smoke, mist or water that fits in a 1-foot Cube holds a crude shape you choose (such as a creature) for 1 hour."
+}

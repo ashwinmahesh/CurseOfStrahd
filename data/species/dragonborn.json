@@ -1,0 +1,314 @@
+{
+  "id": "dragonborn",
+  "name": "Dragonborn",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Wingless draconic folk with a breath weapon and resistance from their dragon ancestor; spectral wings at level 5.",
+  "creature_type": "humanoid",
+  "sizes": [
+    "medium"
+  ],
+  "speed": 30,
+  "darkvision": 60,
+  "lineage_label": "Draconic Ancestry",
+  "traits": [
+    {
+      "id": "draconic_ancestry",
+      "name": "Draconic Ancestry",
+      "summary": "Pick a dragon ancestor; it sets the damage type of your Breath Weapon and your Damage Resistance.",
+      "text": "Your bloodline traces back to a dragon. Choose one kind of dragon: Black (Acid), Blue (Lightning), Brass (Fire), Bronze (Lightning), Copper (Acid), Gold (Fire), Green (Poison), Red (Fire), Silver (Cold), White (Cold). The choice sets the damage type of your Breath Weapon and of your Damage Resistance, and colors your appearance.",
+      "action": "passive",
+      "choice": {
+        "kind": "lineage",
+        "count": 1,
+        "from": [
+          "black_dragon",
+          "blue_dragon",
+          "brass_dragon",
+          "bronze_dragon",
+          "copper_dragon",
+          "gold_dragon",
+          "green_dragon",
+          "red_dragon",
+          "silver_dragon",
+          "white_dragon"
+        ]
+      },
+      "implemented": "data"
+    },
+    {
+      "id": "breath_weapon",
+      "name": "Breath Weapon",
+      "summary": "Swap one attack of the Attack action for a 15-ft Cone or 30-ft Line: Dex save, 1d10 (scales). PB/Long Rest.",
+      "text": "When you take the Attack action on your turn, you can replace one of its attacks with an exhalation of magical energy, either a 15-foot Cone or a 30-foot Line 5 feet wide (choose the shape each time). Each creature in the area makes a Dexterity saving throw against DC 8 + your Constitution modifier + your Proficiency Bonus. On a failed save a creature takes 1d10 damage of your Draconic Ancestry's type; on a successful save it takes half as much. The damage rises to 2d10 at character level 5, 3d10 at level 11 and 4d10 at level 17. You can use this trait a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.",
+      "action": "special",
+      "resource": {
+        "id": "breath_weapon",
+        "name": "Breath Weapon",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "implemented": "text"
+    },
+    {
+      "id": "damage_resistance",
+      "name": "Damage Resistance",
+      "summary": "Resistance to the damage type of your Draconic Ancestry.",
+      "text": "You have Resistance to the damage type determined by your Draconic Ancestry.",
+      "action": "passive",
+      "implemented": "data"
+    },
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 60 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 60
+        }
+      ],
+      "implemented": "data"
+    },
+    {
+      "id": "draconic_flight",
+      "name": "Draconic Flight",
+      "summary": "From level 5, once per Long Rest: Bonus Action to grow spectral wings, Fly Speed = Speed for 10 minutes.",
+      "text": "Starting at character level 5, you can take a Bonus Action to sprout spectral wings made of the same energy as your Breath Weapon. They last 10 minutes, until you retract them (no action required), or until you have the Incapacitated condition. While they last, you have a Fly Speed equal to your Speed. Once you use this trait, you can't use it again until you finish a Long Rest.",
+      "action": "bonus_action",
+      "resource": {
+        "id": "draconic_flight",
+        "name": "Draconic Flight",
+        "max": 1,
+        "recharge": "long"
+      },
+      "implemented": "text"
+    }
+  ],
+  "lineages": [
+    {
+      "id": "black_dragon",
+      "name": "Black Dragon",
+      "summary": "Acid damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "acid",
+      "traits": [
+        {
+          "id": "black_dragon_ancestry",
+          "name": "Black Dragon Ancestry",
+          "summary": "Resistance to Acid damage; your Breath Weapon deals Acid damage.",
+          "text": "Your Breath Weapon deals Acid damage, and you have Resistance to Acid damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "acid"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "blue_dragon",
+      "name": "Blue Dragon",
+      "summary": "Lightning damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "lightning",
+      "traits": [
+        {
+          "id": "blue_dragon_ancestry",
+          "name": "Blue Dragon Ancestry",
+          "summary": "Resistance to Lightning damage; your Breath Weapon deals Lightning damage.",
+          "text": "Your Breath Weapon deals Lightning damage, and you have Resistance to Lightning damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "lightning"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "brass_dragon",
+      "name": "Brass Dragon",
+      "summary": "Fire damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "fire",
+      "traits": [
+        {
+          "id": "brass_dragon_ancestry",
+          "name": "Brass Dragon Ancestry",
+          "summary": "Resistance to Fire damage; your Breath Weapon deals Fire damage.",
+          "text": "Your Breath Weapon deals Fire damage, and you have Resistance to Fire damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "fire"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "bronze_dragon",
+      "name": "Bronze Dragon",
+      "summary": "Lightning damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "lightning",
+      "traits": [
+        {
+          "id": "bronze_dragon_ancestry",
+          "name": "Bronze Dragon Ancestry",
+          "summary": "Resistance to Lightning damage; your Breath Weapon deals Lightning damage.",
+          "text": "Your Breath Weapon deals Lightning damage, and you have Resistance to Lightning damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "lightning"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "copper_dragon",
+      "name": "Copper Dragon",
+      "summary": "Acid damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "acid",
+      "traits": [
+        {
+          "id": "copper_dragon_ancestry",
+          "name": "Copper Dragon Ancestry",
+          "summary": "Resistance to Acid damage; your Breath Weapon deals Acid damage.",
+          "text": "Your Breath Weapon deals Acid damage, and you have Resistance to Acid damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "acid"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "gold_dragon",
+      "name": "Gold Dragon",
+      "summary": "Fire damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "fire",
+      "traits": [
+        {
+          "id": "gold_dragon_ancestry",
+          "name": "Gold Dragon Ancestry",
+          "summary": "Resistance to Fire damage; your Breath Weapon deals Fire damage.",
+          "text": "Your Breath Weapon deals Fire damage, and you have Resistance to Fire damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "fire"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "green_dragon",
+      "name": "Green Dragon",
+      "summary": "Poison damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "poison",
+      "traits": [
+        {
+          "id": "green_dragon_ancestry",
+          "name": "Green Dragon Ancestry",
+          "summary": "Resistance to Poison damage; your Breath Weapon deals Poison damage.",
+          "text": "Your Breath Weapon deals Poison damage, and you have Resistance to Poison damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "poison"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "red_dragon",
+      "name": "Red Dragon",
+      "summary": "Fire damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "fire",
+      "traits": [
+        {
+          "id": "red_dragon_ancestry",
+          "name": "Red Dragon Ancestry",
+          "summary": "Resistance to Fire damage; your Breath Weapon deals Fire damage.",
+          "text": "Your Breath Weapon deals Fire damage, and you have Resistance to Fire damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "fire"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "silver_dragon",
+      "name": "Silver Dragon",
+      "summary": "Cold damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "cold",
+      "traits": [
+        {
+          "id": "silver_dragon_ancestry",
+          "name": "Silver Dragon Ancestry",
+          "summary": "Resistance to Cold damage; your Breath Weapon deals Cold damage.",
+          "text": "Your Breath Weapon deals Cold damage, and you have Resistance to Cold damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "cold"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    },
+    {
+      "id": "white_dragon",
+      "name": "White Dragon",
+      "summary": "Cold damage: your Breath Weapon deals it and you have Resistance to it.",
+      "damage_type": "cold",
+      "traits": [
+        {
+          "id": "white_dragon_ancestry",
+          "name": "White Dragon Ancestry",
+          "summary": "Resistance to Cold damage; your Breath Weapon deals Cold damage.",
+          "text": "Your Breath Weapon deals Cold damage, and you have Resistance to Cold damage.",
+          "action": "passive",
+          "modifiers": [
+            {
+              "stat": "resistance",
+              "value": "cold"
+            }
+          ],
+          "implemented": "data"
+        }
+      ]
+    }
+  ]
+}

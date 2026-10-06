@@ -2,17 +2,40 @@
   "$id": "feat.schema.json",
   "title": "Feat",
   "type": "object",
-  "required": ["id", "name", "source", "category", "summary"],
+  "required": ["id", "name", "source", "category", "summary", "benefits"],
   "additionalProperties": false,
   "properties": {
     "id": {"$ref": "common.schema.json#/$defs/id"},
     "name": {"type": "string"},
     "source": {"$ref": "common.schema.json#/$defs/source"},
     "category": {"type": "string", "enum": ["origin", "general", "fighting_style", "epic_boon"]},
-    "prerequisites": {"type": "object", "properties": {"level": {"type": "integer"}, "abilities": {"type": "object"}, "any_ability": {"type": "object"}, "feature": {"type": "string"}, "spellcasting": {"type": "boolean"}, "proficiency": {"type": "string"}}},
+    "prerequisites": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "level": {"type": "integer"},
+        "abilities": {"type": "object", "description": "All of: ability -> minimum score.", "additionalProperties": {"type": "integer"}},
+        "any_ability": {"type": "object", "description": "Any one of: ability -> minimum score.", "additionalProperties": {"type": "integer"}},
+        "feature": {"type": "string", "description": "Feature id the character must have, e.g. fighting_style."},
+        "spellcasting": {"type": "boolean", "description": "Spellcasting or Pact Magic feature."},
+        "proficiency": {"type": "object", "properties": {"kind": {"type": "string"}, "value": {"type": "string"}}},
+        "text": {"type": "string", "description": "The prerequisite as the player reads it."}
+      }
+    },
     "repeatable": {"type": "boolean"},
-    "summary": {"type": "string"},
-    "ability_increase": {"type": "object", "properties": {"from": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/ability"}}, "amount": {"type": "integer"}, "max": {"type": "integer"}}},
+    "params": {"type": "object", "description": "Variant parameters, e.g. Magic Initiate {\"list\": [\"cleric\", \"druid\", \"wizard\"]}."},
+    "summary": {"type": "string", "minLength": 1},
+    "ability_increase": {
+      "type": "object",
+      "description": "General feats: +1 to one listed ability (max 20). Ability Score Improvement: points 2, per_ability 2.",
+      "additionalProperties": false,
+      "properties": {
+        "from": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/ability"}},
+        "points": {"type": "integer", "minimum": 1},
+        "per_ability": {"type": "integer", "minimum": 1},
+        "max": {"type": "integer"}
+      }
+    },
     "benefits": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/feature"}}
   }
 }

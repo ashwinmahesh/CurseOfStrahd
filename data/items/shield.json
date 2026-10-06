@@ -1,0 +1,20 @@
+{
+  "id": "shield",
+  "name": "Shield",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "shield",
+  "weight_lb": 6,
+  "cost_gp": 10,
+  "armor": {
+    "kind": "shield",
+    "base_ac": 2,
+    "stealth_disadvantage": false,
+    "don_minutes": 0,
+    "doff_minutes": 0
+  },
+  "summary": "+2 Armor Class while carried in one hand; requires Shield training.",
+  "text": "Carried in one hand, a Shield adds 2 to your Armor Class, but only if you have training with Shields. Donning or doffing it takes the Utilize action rather than minutes. You can wield only one Shield at a time."
+}

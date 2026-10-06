@@ -1,0 +1,43 @@
+{
+  "id": "shield_master",
+  "name": "Shield Master",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "proficiency": {
+      "kind": "armor",
+      "value": "shields"
+    },
+    "text": "Level 4+, Shield Training"
+  },
+  "repeatable": false,
+  "summary": "+1 Str; bash foes with your Shield to push them or knock them Prone, and block area damage with it.",
+  "ability_increase": {
+    "from": [
+      "str"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "shield_bash",
+      "name": "Shield Bash",
+      "summary": "Once per turn after a melee weapon hit, Shield bash: Str save (DC 8 + Str mod + PB) or pushed 5 ft or Prone.",
+      "text": "If you attack a creature within 5 feet of you as part of the Attack action and hit it with a Melee weapon, you can immediately bash it with your equipped Shield. The target must succeed on a Strength saving throw (DC 8 plus your Strength modifier and Proficiency Bonus) or, your choice, be pushed 5 feet away from you or gain the Prone condition. You can use this benefit only once on each of your turns.",
+      "action": "special",
+      "implemented": "text"
+    },
+    {
+      "id": "interpose_shield",
+      "name": "Interpose Shield",
+      "summary": "Reaction while holding a Shield: take no damage on a successful Dex save against a half-damage effect.",
+      "text": "If an effect lets you make a Dexterity saving throw to take only half damage and you are holding a Shield, you can take a Reaction to take no damage if you succeed on the saving throw.",
+      "action": "reaction",
+      "implemented": "text"
+    }
+  ]
+}

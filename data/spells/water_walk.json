@@ -1,0 +1,43 @@
+{
+  "id": "water_walk",
+  "name": "Water Walk",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "transmutation",
+  "classes": [
+    "cleric",
+    "druid",
+    "ranger",
+    "sorcerer"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a piece of cork"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 10,
+    "description": "up to ten willing creatures of your choice"
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "Up to ten willing creatures can walk on water, mud, snow, quicksand or lava as if solid for 1 hour.",
+  "text": "For 1 hour, up to ten willing creatures of your choice within 30 feet can move across any liquid surface, such as water, acid, mud, snow, quicksand or lava, as though it were harmless solid ground (creatures crossing molten lava can still take damage from its heat). An affected creature must take a Bonus Action to pass from the surface down into the liquid or back up, but if it falls into the liquid it passes through the surface into the liquid below. Can be cast as a Ritual."
+}

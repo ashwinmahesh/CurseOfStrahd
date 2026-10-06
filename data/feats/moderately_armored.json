@@ -1,0 +1,48 @@
+{
+  "id": "moderately_armored",
+  "name": "Moderately Armored",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "proficiency": {
+      "kind": "armor",
+      "value": "light"
+    },
+    "text": "Level 4+, Light Armor Training"
+  },
+  "repeatable": false,
+  "summary": "+1 Str or Dex; gain training with Medium armor and Shields.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "moderately_armored_training",
+      "name": "Armor Training",
+      "summary": "You gain training with Medium armor and Shields.",
+      "text": "You gain training with Medium armor and Shields.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "armor",
+          "value": "medium"
+        },
+        {
+          "stat": "proficiency",
+          "kind": "armor",
+          "value": "shields"
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

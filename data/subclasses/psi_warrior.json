@@ -1,0 +1,141 @@
+{
+  "id": "psi_warrior",
+  "name": "Psi Warrior",
+  "class": "fighter",
+  "source": {
+    "book": "PHB2024",
+    "note": "PHB-only subclass entered from knowledge; check against the book."
+  },
+  "summary": "A fighter with psionic power: shield allies, add Force damage and move things with the mind.",
+  "role_tags": [
+    "psionics",
+    "defense"
+  ],
+  "table": {
+    "psionic_energy_dice": {
+      "name": "Psionic Energy Dice",
+      "values": [
+        0,
+        0,
+        4,
+        4,
+        6,
+        6,
+        6,
+        6,
+        8,
+        8,
+        8,
+        8,
+        10,
+        10,
+        10,
+        10,
+        12,
+        12,
+        12,
+        12
+      ]
+    },
+    "psionic_energy_die": {
+      "name": "Psionic Energy Die",
+      "values": [
+        "",
+        "",
+        "d6",
+        "d6",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d8",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d10",
+        "d12",
+        "d12",
+        "d12",
+        "d12"
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "psionic_energy",
+      "name": "Psionic Energy Dice",
+      "recharge": "short_one",
+      "table": "psionic_energy_dice",
+      "die_table": "psionic_energy_die",
+      "from_level": 3
+    }
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "psionic_power",
+        "name": "Psionic Power",
+        "summary": "Psionic Energy Dice (4d6 to start) fuel Protective Field, Psionic Strike and Telekinetic Movement.",
+        "text": "You have Psionic Energy Dice (see the table; one comes back on a Short Rest, all on a Long Rest). Protective Field: as a Reaction when you or a creature within 30 feet takes damage, spend a die to reduce it by the roll + your Intelligence modifier (minimum 1). Psionic Strike: once per turn after you hit a target within 30 feet with a weapon attack, spend a die to deal Force damage equal to the roll + your Intelligence modifier. Telekinetic Movement: as a Magic action, move a Large or smaller loose object or willing creature within 30 feet up to 30 feet; once per rest, or spend a die.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "telekinetic_adept",
+        "name": "Telekinetic Adept",
+        "summary": "Psi-Powered Leap (fly briefly) and Telekinetic Thrust (Psionic Strike can knock Prone or push 10 feet).",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 10,
+      "feature": {
+        "id": "guarded_mind",
+        "name": "Guarded Mind",
+        "summary": "Resistance to Psychic damage; spend a die to end Charmed or Frightened at the start of your turn.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "psychic"
+          }
+        ]
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "bulwark_of_force",
+        "name": "Bulwark of Force",
+        "summary": "Bonus Action: give up to Int modifier creatures Half Cover for 1 minute.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 18,
+      "feature": {
+        "id": "telekinetic_master",
+        "name": "Telekinetic Master",
+        "summary": "Cast Telekinesis without a slot once per Long Rest and attack as a Bonus Action while concentrating on it.",
+        "implemented": "engine",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "telekinesis",
+            "ability": "int",
+            "uses": {
+              "count": 1,
+              "recharge": "long"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

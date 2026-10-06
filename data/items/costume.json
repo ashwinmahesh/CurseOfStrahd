@@ -1,0 +1,13 @@
+{
+  "id": "costume",
+  "name": "Costume",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "clothing",
+  "weight_lb": 4,
+  "cost_gp": 5,
+  "summary": "Advantage on checks to impersonate the person or type of person it represents.",
+  "text": "While wearing a Costume, you have Advantage on ability checks you make to impersonate the person or kind of person it depicts."
+}

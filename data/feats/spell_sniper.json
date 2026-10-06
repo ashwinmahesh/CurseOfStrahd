@@ -1,0 +1,68 @@
+{
+  "id": "spell_sniper",
+  "name": "Spell Sniper",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "spellcasting": true,
+    "text": "Level 4+, Spellcasting or Pact Magic Feature"
+  },
+  "repeatable": false,
+  "summary": "+1 Int, Wis or Cha; spell attacks ignore partial cover and nearby enemies, and gain 60 feet of range.",
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "spell_sniper_bypass_cover",
+      "name": "Bypass Cover",
+      "summary": "Your spell attack rolls ignore Half Cover and Three-Quarters Cover.",
+      "text": "Your attack rolls for spells ignore Half Cover and Three-Quarters Cover.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "spell_sniper_bypass_cover"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "casting_in_melee",
+      "name": "Casting in Melee",
+      "summary": "An enemy within 5 feet doesn't give you Disadvantage on spell attack rolls.",
+      "text": "Being within 5 feet of an enemy doesn't impose Disadvantage on your attack rolls with spells.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "casting_in_melee"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "increased_range",
+      "name": "Increased Range",
+      "summary": "Spells with a range of 10+ feet that need an attack roll can gain 60 feet of range.",
+      "text": "When you cast a spell that has a range of at least 10 feet and requires you to make an attack roll, you can increase the spell's range by 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "increased_range"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}

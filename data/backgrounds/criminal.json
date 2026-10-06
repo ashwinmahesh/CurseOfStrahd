@@ -1,0 +1,54 @@
+{
+  "id": "criminal",
+  "name": "Criminal",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "You scraped by in back alleys picking pockets and burgling shops, alone or with a small gang.",
+  "ability_scores": [
+    "dex",
+    "con",
+    "int"
+  ],
+  "feat": "alert",
+  "skills": [
+    "sleight_of_hand",
+    "stealth"
+  ],
+  "tool": {
+    "id": "thieves_tools"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 2
+        },
+        {
+          "id": "thieves_tools",
+          "qty": 1
+        },
+        {
+          "id": "crowbar",
+          "qty": 1
+        },
+        {
+          "id": "pouch",
+          "qty": 2
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 16
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

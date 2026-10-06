@@ -1,0 +1,45 @@
+{
+  "id": "clairvoyance",
+  "name": "Clairvoyance",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "divination",
+  "classes": [
+    "bard",
+    "cleric",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 10
+  },
+  "range": {
+    "kind": "miles",
+    "miles": 1
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a focus worth 100+ GP: a jeweled horn for hearing or a glass eye for seeing",
+    "m_cost_gp": 100
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "a familiar location, or an obvious unfamiliar one, within 1 mile"
+  },
+  "tags": [
+    "detection",
+    "utility"
+  ],
+  "summary": "Place an Invisible sensor within 1 mile and see or hear through it for up to 10 minutes.",
+  "text": "Create an Invisible sensor within 1 mile, either at a place you know (somewhere you have visited or seen) or at an obvious spot you don't know, such as behind a door, around a corner or in a grove. The sensor is intangible and invulnerable and stays in place for the duration. When you cast the spell, choose seeing or hearing; you use that sense through the sensor as if you were standing in its space. You can switch between seeing and hearing as a Bonus Action. A creature that can see the sensor (for example with See Invisibility or Truesight) sees a glowing orb about the size of a fist. Casting time 10 minutes."
+}

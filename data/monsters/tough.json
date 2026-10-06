@@ -1,0 +1,104 @@
+{
+  "id": "tough",
+  "name": "Tough",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "neutral",
+  "ac": 12,
+  "initiative": 1,
+  "hp": {
+    "average": 32,
+    "dice": "5d8+10"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 15,
+    "dex": 12,
+    "con": 14,
+    "int": 10,
+    "wis": 10,
+    "cha": 11
+  },
+  "passive_perception": 10,
+  "languages": [
+    "Common"
+  ],
+  "cr": 0.5,
+  "xp": 100,
+  "proficiency_bonus": 2,
+  "gear": [
+    "heavy_crossbow",
+    "leather_armor",
+    "mace"
+  ],
+  "traits": [
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "action": "passive",
+      "summary": "Advantage on attack rolls against a target that has a non-Incapacitated ally of this creature within 5 ft.",
+      "text": "The tough has Advantage on an attack roll against a creature when at least one of the tough's allies is within 5 feet of that creature and that ally doesn't have the Incapacitated condition.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "pack_tactics"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "mace",
+      "name": "Mace",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Clubs a target with a mace."
+    },
+    {
+      "id": "heavy_crossbow",
+      "name": "Heavy Crossbow",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 3,
+        "range": [
+          100,
+          400
+        ]
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d10+1",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Fires a heavy crossbow bolt."
+    }
+  ],
+  "regions": [
+    "svalich_road",
+    "tser_pool"
+  ],
+  "ai_profile": "pack_hunter",
+  "summary": "A hired bruiser who gangs up with allies for Advantage and beats one target down with a mace."
+}

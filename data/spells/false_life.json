@@ -1,0 +1,42 @@
+{
+  "id": "false_life",
+  "name": "False Life",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "necromancy",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a drop of alcohol"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "temp_hp": {
+    "dice": "2d4+4"
+  },
+  "upcast": {
+    "temp_hp": 5
+  },
+  "tags": [
+    "defense"
+  ],
+  "summary": "You gain 2d4 + 4 Temporary Hit Points.",
+  "text": "You gain 2d4 + 4 Temporary Hit Points. Using a Higher-Level Spell Slot: you gain 5 more Temporary Hit Points for each slot level above 1."
+}

@@ -1,0 +1,58 @@
+{
+  "id": "pass_without_trace",
+  "name": "Pass without Trace",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "abjuration",
+  "classes": [
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "ashes from burned mistletoe"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "you and creatures you choose while in the aura"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "target": "area",
+        "modifiers": [
+          {
+            "stat": "check",
+            "skill": "stealth",
+            "value": 10
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "buff"
+  ],
+  "summary": "You and chosen creatures in a 30-ft Emanation get +10 to Dexterity (Stealth) checks and leave no tracks.",
+  "text": "A concealing aura fills a 30-foot Emanation around you for the duration. While in the aura, you and each creature you choose have a +10 bonus to Dexterity (Stealth) checks and leave no tracks."
+}

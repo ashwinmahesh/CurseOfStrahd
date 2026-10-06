@@ -1,0 +1,13 @@
+{
+  "id": "crossbow_bolt_case",
+  "name": "Crossbow Bolt Case",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 1,
+  "cost_gp": 1,
+  "capacity": "20 Crossbow Bolts",
+  "summary": "Holds up to 20 Crossbow Bolts."
+}

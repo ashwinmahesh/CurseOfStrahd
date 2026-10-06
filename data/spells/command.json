@@ -1,0 +1,46 @@
+{
+  "id": "command",
+  "name": "Command",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "cleric",
+    "paladin"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "prone"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "tags": [
+    "control"
+  ],
+  "summary": "A creature fails a Wisdom save and obeys a one-word command (Approach, Drop, Flee, Grovel, Halt) on its next turn.",
+  "text": "Speak a one-word command to a creature you can see within range. If it fails a Wisdom saving throw, it carries out the command on its next turn. Choose one: Approach (it moves toward you by the shortest, most direct route and ends its turn once it is within 5 feet of you); Drop (it drops whatever it is holding, then ends its turn); Flee (it spends its turn moving away from you by the fastest means it has); Grovel (it gains the Prone condition, then ends its turn); Halt (on that turn it doesn't move and takes no action or Bonus Action). Using a Higher-Level Spell Slot: you can affect one more creature for each slot level above 1."
+}

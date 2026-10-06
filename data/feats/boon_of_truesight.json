@@ -1,0 +1,44 @@
+{
+  "id": "boon_of_truesight",
+  "name": "Boon of Truesight",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "epic_boon",
+  "prerequisites": {
+    "level": 19,
+    "text": "Level 19+"
+  },
+  "repeatable": false,
+  "summary": "+1 to any ability (max 30); gain Truesight out to 60 feet.",
+  "ability_increase": {
+    "from": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 30
+  },
+  "benefits": [
+    {
+      "id": "truesight",
+      "name": "Truesight",
+      "summary": "You have Truesight with a range of 60 feet.",
+      "text": "You have Truesight with a range of 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "sense",
+          "kind": "truesight",
+          "value": 60
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

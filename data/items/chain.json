@@ -1,0 +1,13 @@
+{
+  "id": "chain",
+  "name": "Chain",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 10,
+  "cost_gp": 5,
+  "summary": "Utilize: bind a Grappled, Incapacitated or Restrained creature (DC 13 Strength (Athletics)).",
+  "text": "As a Utilize action, you can wrap the Chain around an unwilling creature within 5 feet of you that has the Grappled, Incapacitated, or Restrained condition, if you succeed on a DC 13 Strength (Athletics) check. If its legs are bound, the creature has the Restrained condition until it gets free. Slipping out of the Chain takes an action and a successful DC 18 Dexterity (Acrobatics) check; breaking it takes an action and a successful DC 20 Strength (Athletics) check."
+}

@@ -1,0 +1,42 @@
+{
+  "id": "actor",
+  "name": "Actor",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "abilities": {
+      "cha": 13
+    },
+    "text": "Level 4+, Charisma 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Cha; Advantage on Deception and Performance while disguised, and convincing mimicry of sounds and voices.",
+  "ability_increase": {
+    "from": [
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "impersonation",
+      "name": "Impersonation",
+      "summary": "While disguised, Advantage on Deception and Performance checks to pass as that person.",
+      "text": "While you are disguised as a real or fictional person, you have Advantage on Charisma (Deception or Performance) checks you make to convince others that you are that person.",
+      "action": "passive",
+      "implemented": "text"
+    },
+    {
+      "id": "mimicry",
+      "name": "Mimicry",
+      "summary": "Mimic creature sounds and speech; listeners need a Wisdom (Insight) check vs DC 8 + Cha mod + PB to tell.",
+      "text": "You can imitate the sounds other creatures make, including speech. A creature that hears the imitation must succeed on a Wisdom (Insight) check to recognize that it is fake; the DC equals 8 plus your Charisma modifier and Proficiency Bonus.",
+      "action": "special",
+      "implemented": "text"
+    }
+  ]
+}

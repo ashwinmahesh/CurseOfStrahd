@@ -1,0 +1,28 @@
+{
+  "id": "carpenters_tools",
+  "name": "Carpenter's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 6,
+  "cost_gp": 8,
+  "tool": {
+    "kind": "artisan",
+    "ability": "str",
+    "utilize": "Seal a door or container shut, or pry one open (DC 20).",
+    "craft": [
+      "club",
+      "greatclub",
+      "quarterstaff",
+      "barrel",
+      "chest",
+      "ladder",
+      "pole",
+      "portable_ram",
+      "torch"
+    ]
+  },
+  "summary": "Artisan's Tools (Strength): seal a door or container shut, or pry one open (DC 20)."
+}

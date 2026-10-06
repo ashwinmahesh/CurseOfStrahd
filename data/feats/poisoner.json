@@ -1,0 +1,53 @@
+{
+  "id": "poisoner",
+  "name": "Poisoner",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "text": "Level 4+"
+  },
+  "repeatable": false,
+  "summary": "+1 Dex or Int; your Poison damage ignores Resistance, and you brew doses that deal 2d8 Poison and poison foes.",
+  "ability_increase": {
+    "from": [
+      "dex",
+      "int"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "potent_poison",
+      "name": "Potent Poison",
+      "summary": "Damage rolls you make that deal Poison damage ignore Resistance to it.",
+      "text": "When you make a damage roll that deals Poison damage, it ignores Resistance to Poison damage.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "potent_poison"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "brew_poison",
+      "name": "Brew Poison",
+      "summary": "Poisoner's Kit proficiency; brew PB doses; a coated hit forces a Con save or 2d8 Poison and Poisoned.",
+      "text": "You gain proficiency with the Poisoner's Kit. With 1 hour of work using the kit and 50 GP of materials, you create a number of poison doses equal to your Proficiency Bonus. As a Bonus Action, you can apply a dose to a weapon or a piece of ammunition; it stays potent for 1 minute or until you deal damage with that item, whichever comes first. A creature that takes damage from the poisoned item must succeed on a Constitution saving throw (DC 8 plus the modifier of the ability you increased with this feat plus your Proficiency Bonus) or take 2d8 Poison damage and have the Poisoned condition until the end of your next turn.",
+      "action": "bonus_action",
+      "modifiers": [
+        {
+          "stat": "proficiency",
+          "kind": "tool",
+          "value": "poisoners_kit"
+        }
+      ],
+      "implemented": "text"
+    }
+  ]
+}

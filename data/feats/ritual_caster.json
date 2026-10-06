@@ -1,0 +1,73 @@
+{
+  "id": "ritual_caster",
+  "name": "Ritual Caster",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "any_ability": {
+      "int": 13,
+      "wis": 13,
+      "cha": 13
+    },
+    "text": "Level 4+, Intelligence, Wisdom, or Charisma 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Int, Wis or Cha; always have PB level 1 Ritual spells prepared, and cast one quickly once per Long Rest.",
+  "ability_increase": {
+    "from": [
+      "int",
+      "wis",
+      "cha"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "ritual_spells",
+      "name": "Ritual Spells",
+      "summary": "Choose level 1 Ritual spells equal to your PB; they are always prepared. Add one each time your PB rises.",
+      "text": "Choose a number of level 1 spells that have the Ritual tag equal to your Proficiency Bonus. You always have them prepared, and you can cast them with any spell slots you have. Their spellcasting ability is the ability you increased with this feat. Each time your Proficiency Bonus increases afterward, you can add one more level 1 Ritual spell to the spells this feature keeps prepared.",
+      "action": "passive",
+      "choice": {
+        "id": "ritual_spells",
+        "kind": "spell",
+        "count": 2,
+        "filter": {
+          "level": 1,
+          "ritual": true
+        }
+      },
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "@ritual_spells",
+          "ability": "@increased",
+          "always_prepared": true
+        },
+        {
+          "stat": "flag",
+          "value": "ritual_spells"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "quick_ritual",
+      "name": "Quick Ritual",
+      "summary": "Once per Long Rest, cast a prepared Ritual spell at its normal casting time without a spell slot.",
+      "text": "You can cast a Ritual spell you have prepared using its regular casting time rather than the extended time of a Ritual, and doing so doesn't require a spell slot. Once you do so, you can't use this benefit again until you finish a Long Rest.",
+      "action": "special",
+      "resource": {
+        "id": "quick_ritual",
+        "name": "Quick Ritual",
+        "max": 1,
+        "recharge": "long"
+      },
+      "implemented": "text"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "fear",
+  "name": "Fear",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 3,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "cone",
+    "size": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a white feather"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "frightened"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "frightened"
+      }
+    }
+  ],
+  "tags": [
+    "control"
+  ],
+  "summary": "30-foot Cone: Wisdom save or drop what it holds and flee from you, Frightened, for up to 1 minute.",
+  "text": "Each creature in a 30-foot Cone makes a Wisdom saving throw. On a failure, it drops whatever it is holding and has the Frightened condition for the duration. On each of its turns, a creature Frightened this way takes the Dash action and moves away from you by the safest route, unless it has nowhere to move. If it ends its turn in a space where it has no line of sight to you, it makes another Wisdom saving throw, and on a success the spell ends for it."
+}

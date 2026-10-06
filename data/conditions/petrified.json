@@ -1,0 +1,38 @@
+{
+  "id": "petrified",
+  "name": "Petrified",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "summary": "Turned to stone: Incapacitated, Speed 0, fails Str and Dex saves, Resistance to all damage.",
+  "text": "You and the nonmagical things you wear and carry turn into an inanimate substance, usually stone; your weight is multiplied by ten and you stop aging. You have the Incapacitated condition, your Speed is 0 and can't increase, attack rolls against you have Advantage, and you automatically fail Strength and Dexterity saving throws. You have Resistance to all damage and Immunity to the Poisoned condition.",
+  "implies": [
+    "incapacitated"
+  ],
+  "modifiers": [
+    {
+      "stat": "speed_set",
+      "value": 0
+    },
+    {
+      "stat": "attacked_with",
+      "value": "advantage"
+    },
+    {
+      "stat": "auto_fail",
+      "on": [
+        "save:str",
+        "save:dex"
+      ]
+    },
+    {
+      "stat": "resistance",
+      "value": "all"
+    },
+    {
+      "stat": "condition_immunity",
+      "value": "poisoned"
+    }
+  ]
+}

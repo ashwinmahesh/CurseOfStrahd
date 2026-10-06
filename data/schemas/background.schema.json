@@ -2,16 +2,18 @@
   "$id": "background.schema.json",
   "title": "Background (2024 origin)",
   "type": "object",
-  "required": ["id", "name", "source", "ability_scores", "feat", "skills", "tool", "equipment"],
+  "required": ["id", "name", "source", "ability_scores", "feat", "skills", "tool", "equipment", "summary"],
   "additionalProperties": false,
   "properties": {
     "id": {"$ref": "common.schema.json#/$defs/id"},
     "name": {"type": "string"},
     "source": {"$ref": "common.schema.json#/$defs/source"},
+    "summary": {"type": "string"},
     "ability_scores": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "common.schema.json#/$defs/ability"}, "description": "The three abilities this background can raise (+2/+1 or +1/+1/+1)."},
     "feat": {"$ref": "common.schema.json#/$defs/id"},
+    "feat_params": {"type": "object", "description": "Fixed parameters for the feat, e.g. Magic Initiate {\"list\": \"cleric\"}."},
     "skills": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "common.schema.json#/$defs/skill"}},
-    "tool": {"type": "string"},
-    "equipment": {"type": "object", "required": ["a", "b"], "properties": {"a": {"type": "array"}, "b": {"type": "array"}}}
+    "tool": {"type": "object", "required": ["id"], "additionalProperties": false, "properties": {"id": {"$ref": "common.schema.json#/$defs/id"}, "choice": {"type": "string", "enum": ["artisan", "gaming_set", "musical_instrument"], "description": "Set when the player picks one tool of this kind; id is then the default."}}},
+    "equipment": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "common.schema.json#/$defs/equipment_option"}}
   }
 }

@@ -1,0 +1,130 @@
+{
+  "id": "bandit_captain",
+  "name": "Bandit Captain",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small"
+  ],
+  "alignment": "neutral",
+  "ac": 15,
+  "initiative": 3,
+  "hp": {
+    "average": 52,
+    "dice": "8d8+16"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 15,
+    "dex": 16,
+    "con": 14,
+    "int": 14,
+    "wis": 11,
+    "cha": 14
+  },
+  "saves": {
+    "str": 4,
+    "dex": 5,
+    "wis": 2
+  },
+  "skills": {
+    "athletics": 4,
+    "deception": 4
+  },
+  "passive_perception": 10,
+  "languages": [
+    "Common",
+    "Thieves' Cant"
+  ],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "gear": [
+    "pistol",
+    "scimitar",
+    "studded_leather_armor"
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "scimitar",
+          "count": 1,
+          "or": [
+            "pistol"
+          ]
+        },
+        {
+          "action": "scimitar",
+          "count": 1,
+          "or": [
+            "pistol"
+          ]
+        }
+      ],
+      "summary": "Makes two attacks with Scimitar and Pistol in any combination."
+    },
+    {
+      "id": "scimitar",
+      "name": "Scimitar",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d6+3",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Slashes with a scimitar."
+    },
+    {
+      "id": "pistol",
+      "name": "Pistol",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 5,
+        "range": [
+          30,
+          90
+        ]
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "1d10+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Fires a pistol."
+    }
+  ],
+  "reactions": [
+    {
+      "id": "parry",
+      "name": "Parry",
+      "kind": "special",
+      "trigger": "The bandit is hit by a melee attack roll while holding a weapon.",
+      "summary": "Reaction: +2 AC against one melee attack that hit it, possibly turning the hit into a miss.",
+      "text": "Trigger: the bandit is hit by a melee attack roll while it holds a weapon. Response: the bandit gains a +2 bonus to its AC against that one attack, which can make the attack miss."
+    }
+  ],
+  "regions": [
+    "svalich_road",
+    "tser_pool"
+  ],
+  "ai_profile": "brute",
+  "summary": "Leads from the front, mixing pistol shots and scimitar cuts, parrying blows; bandits flee if it falls."
+}

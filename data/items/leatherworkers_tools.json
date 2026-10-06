@@ -1,0 +1,31 @@
+{
+  "id": "leatherworkers_tools",
+  "name": "Leatherworker's Tools",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "tool",
+  "weight_lb": 5,
+  "cost_gp": 5,
+  "tool": {
+    "kind": "artisan",
+    "ability": "dex",
+    "utilize": "Decorate a leather item with a design (DC 10).",
+    "craft": [
+      "sling",
+      "whip",
+      "hide_armor",
+      "leather_armor",
+      "studded_leather_armor",
+      "backpack",
+      "crossbow_bolt_case",
+      "map_or_scroll_case",
+      "parchment",
+      "pouch",
+      "quiver",
+      "waterskin"
+    ]
+  },
+  "summary": "Artisan's Tools (Dexterity): decorate a leather item with a design (DC 10)."
+}

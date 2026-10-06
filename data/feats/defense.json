@@ -1,0 +1,34 @@
+{
+  "id": "defense",
+  "name": "Defense",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "fighting_style",
+  "prerequisites": {
+    "feature": "fighting_style",
+    "text": "Fighting Style Feature"
+  },
+  "repeatable": false,
+  "summary": "+1 bonus to Armor Class while you wear Light, Medium or Heavy armor.",
+  "benefits": [
+    {
+      "id": "defense",
+      "name": "Defense",
+      "summary": "+1 AC while wearing armor.",
+      "text": "While you are wearing Light, Medium or Heavy armor, you gain a +1 bonus to Armor Class.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "ac",
+          "value": 1,
+          "when": {
+            "armor": "any"
+          }
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

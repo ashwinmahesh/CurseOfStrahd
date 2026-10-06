@@ -1,0 +1,58 @@
+{
+  "id": "animal_friendship",
+  "name": "Animal Friendship",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "druid",
+    "ranger"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a morsel of food"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a Beast you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "conditions": [
+    "charmed"
+  ],
+  "upcast": {
+    "targets": 1
+  },
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "charmed"
+      }
+    }
+  ],
+  "tags": [
+    "control",
+    "social"
+  ],
+  "summary": "A Beast you can see fails a Wisdom save or is Charmed by you for 24 hours.",
+  "text": "Pick a Beast you can see within range. It makes a Wisdom saving throw; on a failure it has the Charmed condition for 24 hours. The spell ends on it early if you or one of your allies deals damage to it. Using a Higher-Level Spell Slot: you can target one more Beast for each slot level above 1."
+}

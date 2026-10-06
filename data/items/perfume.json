@@ -1,0 +1,14 @@
+{
+  "id": "perfume",
+  "name": "Perfume",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 0,
+  "cost_gp": 5,
+  "stackable": true,
+  "summary": "For 1 hour, Advantage on Persuasion to influence an Indifferent Humanoid within 5 ft.",
+  "text": "Comes in a 4-ounce vial. For 1 hour after you put it on, you have Advantage on Charisma (Persuasion) checks made to influence an Indifferent Humanoid within 5 feet of you."
+}

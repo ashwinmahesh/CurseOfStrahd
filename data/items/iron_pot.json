@@ -1,0 +1,13 @@
+{
+  "id": "iron_pot",
+  "name": "Iron Pot",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "container",
+  "weight_lb": 10,
+  "cost_gp": 2,
+  "capacity": "1 gallon",
+  "summary": "Holds up to 1 gallon."
+}

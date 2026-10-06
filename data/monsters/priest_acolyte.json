@@ -1,0 +1,123 @@
+{
+  "id": "priest_acolyte",
+  "name": "Priest Acolyte",
+  "source": {
+    "book": "MM2025",
+    "checked_against": "BR2024"
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small",
+    "cleric"
+  ],
+  "alignment": "neutral",
+  "ac": 13,
+  "initiative": 0,
+  "hp": {
+    "average": 11,
+    "dice": "2d8+2"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 10,
+    "con": 12,
+    "int": 10,
+    "wis": 14,
+    "cha": 11
+  },
+  "skills": {
+    "medicine": 4,
+    "religion": 2
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common"
+  ],
+  "cr": 0.25,
+  "xp": 50,
+  "proficiency_bonus": 2,
+  "gear": [
+    "chain_shirt",
+    "holy_symbol_amulet",
+    "mace"
+  ],
+  "actions": [
+    {
+      "id": "mace",
+      "name": "Mace",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 2,
+          "dice": "1d4",
+          "type": "radiant"
+        }
+      ],
+      "summary": "Strikes with a mace for bludgeoning plus radiant damage."
+    },
+    {
+      "id": "radiant_flame",
+      "name": "Radiant Flame",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 4,
+        "range": [
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "radiant"
+        }
+      ],
+      "summary": "Hurls a bolt of holy fire up to 60 ft."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Casts Light or Thaumaturgy at will (Wisdom).",
+      "text": "The priest casts one of these spells, using Wisdom as its spellcasting ability. At will: Light, Thaumaturgy."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "divine_aid",
+      "name": "Divine Aid",
+      "kind": "spellcasting",
+      "uses": {
+        "count": 1,
+        "per": "day"
+      },
+      "summary": "Once a day: casts Bless, Healing Word or Sanctuary as a Bonus Action.",
+      "text": "Once per day, the priest casts one of Bless, Healing Word or Sanctuary, using Wisdom as its spellcasting ability as for its Spellcasting action. The one use covers all three spells."
+    }
+  ],
+  "spellcasting": {
+    "ability": "wis",
+    "at_will": [
+      "light",
+      "thaumaturgy"
+    ]
+  },
+  "regions": [
+    "village_of_barovia"
+  ],
+  "ai_profile": "support",
+  "summary": "Stays behind allies throwing Radiant Flame, spends Divine Aid to heal or bless, maces anyone close."
+}

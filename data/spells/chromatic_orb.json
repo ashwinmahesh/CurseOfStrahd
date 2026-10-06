@@ -1,0 +1,57 @@
+{
+  "id": "chromatic_orb",
+  "name": "Chromatic Orb",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 1,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a diamond worth 50+ GP",
+    "m_cost_gp": 50
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1
+  },
+  "attack": "ranged",
+  "damage": [
+    {
+      "dice": "3d8",
+      "type_choice": [
+        "acid",
+        "cold",
+        "fire",
+        "lightning",
+        "poison",
+        "thunder"
+      ]
+    }
+  ],
+  "upcast": {
+    "damage": "1d8",
+    "text": "The orb can leap a number of times up to the slot level; each creature can be targeted only once per casting."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "Ranged spell attack for 3d8 damage of a chosen type; on doubled dice the orb leaps to a new target.",
+  "text": "Choose Acid, Cold, Fire, Lightning, Poison or Thunder, then make a ranged spell attack against one target within range. On a hit it takes 3d8 damage of the chosen type. If two or more of the d8s roll the same number, the orb leaps to a different target of your choice within 30 feet of that target: make a new attack roll and a new damage roll against it. With a level 1 slot the orb leaps at most once. Using a Higher-Level Spell Slot: the damage increases by 1d8 for each slot level above 1, the orb can leap a number of times up to the slot level, and no creature can be targeted more than once by the same casting. The diamond is not consumed."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "padded_armor",
+  "name": "Padded Armor",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "armor",
+  "weight_lb": 8,
+  "cost_gp": 5,
+  "armor": {
+    "kind": "light",
+    "base_ac": 11,
+    "dex_cap": null,
+    "stealth_disadvantage": true,
+    "don_minutes": 1,
+    "doff_minutes": 1
+  },
+  "summary": "Light armor: AC 11 + Dex modifier; Disadvantage on Stealth.",
+  "text": "Light armor. While you wear it, your base Armor Class is 11 plus your Dexterity modifier. You have Disadvantage on Dexterity (Stealth) checks while wearing it. Putting it on or taking it off takes 1 minute. Without training in Light armor, you have Disadvantage on every D20 Test that uses Strength or Dexterity and you can't cast spells."
+}

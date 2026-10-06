@@ -1,0 +1,13 @@
+{
+  "id": "component_pouch",
+  "name": "Component Pouch",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 2,
+  "cost_gp": 25,
+  "summary": "Holds every Material component without a listed cost that your spells need.",
+  "text": "A watertight pouch full of compartments. It holds all the Material components your spells need that have no listed cost, so you can provide those components from it. Components with a cost, or that a spell consumes, must still be obtained separately."
+}

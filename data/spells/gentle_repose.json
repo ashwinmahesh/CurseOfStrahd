@@ -1,0 +1,43 @@
+{
+  "id": "gentle_repose",
+  "name": "Gentle Repose",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "necromancy",
+  "classes": [
+    "cleric",
+    "paladin",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "ritual": true,
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "2 Copper Pieces, consumed by the spell",
+    "m_cost_gp": 0.02,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "days",
+    "amount": 10
+  },
+  "targets": {
+    "kind": "object",
+    "count": 1,
+    "description": "a corpse or other remains"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "Ritual. Remains you touch can't decay or become Undead for 10 days, and those days don't count for raising.",
+  "text": "Touch a corpse or other remains. For 10 days it is protected from decay and can't become Undead. Days spent under this spell don't count against the time limit of spells such as Raise Dead, which effectively extends that limit."
+}

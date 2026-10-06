@@ -1,0 +1,27 @@
+{
+  "id": "javelin",
+  "name": "Javelin",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 2,
+  "cost_gp": 0.5,
+  "stackable": true,
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d6",
+    "damage_type": "piercing",
+    "properties": [
+      "thrown",
+      "range"
+    ],
+    "range": [
+      30,
+      120
+    ],
+    "mastery": "slow"
+  },
+  "summary": "Simple melee weapon: 1d6 Piercing, Thrown (30/120 ft); mastery Slow."
+}

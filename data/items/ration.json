@@ -1,0 +1,14 @@
+{
+  "id": "ration",
+  "name": "Ration",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "consumable",
+  "weight_lb": 2,
+  "cost_gp": 0.5,
+  "stackable": true,
+  "summary": "One day of travel food; going without food risks malnutrition.",
+  "text": "One day's worth of travel-ready food such as jerky, dried fruit, hardtack, and nuts. Not eating enough risks malnutrition (see Malnutrition in the Rules Glossary)."
+}

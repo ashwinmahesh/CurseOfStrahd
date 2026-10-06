@@ -1,0 +1,28 @@
+{
+  "id": "spear",
+  "name": "Spear",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 1,
+  "weapon": {
+    "kind": "simple_melee",
+    "damage": "1d6",
+    "damage_type": "piercing",
+    "properties": [
+      "thrown",
+      "range",
+      "versatile"
+    ],
+    "versatile": "1d8",
+    "range": [
+      20,
+      60
+    ],
+    "mastery": "sap"
+  },
+  "summary": "Simple melee weapon: 1d6 Piercing, Thrown (20/60 ft), Versatile (1d8); mastery Sap."
+}

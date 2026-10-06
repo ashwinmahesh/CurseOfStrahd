@@ -1,0 +1,35 @@
+{
+  "id": "misty_step",
+  "name": "Misty Step",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "level": 2,
+  "school": "conjuration",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "self"
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "Bonus Action: teleport up to 30 feet to an unoccupied space you can see.",
+  "text": "Briefly wrapped in silvery mist, you teleport up to 30 feet to an unoccupied space that you can see."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ball_bearings",
+  "name": "Ball Bearings",
+  "source": {
+    "book": "PHB2024",
+    "checked_against": "BR2024"
+  },
+  "category": "gear",
+  "weight_lb": 2,
+  "cost_gp": 1,
+  "summary": "Utilize: scatter in a 10-ft square; creatures entering make a DC 10 Dex save or fall Prone.",
+  "text": "As a Utilize action, you spill the bearings from their pouch across a level 10-foot-square area within 10 feet of you. A creature that enters the area for the first time on a turn must succeed on a DC 10 Dexterity saving throw or have the Prone condition. Gathering the bearings back up takes 10 minutes."
+}

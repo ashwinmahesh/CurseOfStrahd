@@ -1,0 +1,68 @@
+{
+  "id": "sharpshooter",
+  "name": "Sharpshooter",
+  "source": {
+    "book": "PHB2024"
+  },
+  "category": "general",
+  "prerequisites": {
+    "level": 4,
+    "abilities": {
+      "dex": 13
+    },
+    "text": "Level 4+, Dexterity 13+"
+  },
+  "repeatable": false,
+  "summary": "+1 Dex; ranged weapon attacks ignore Half and Three-Quarters Cover, nearby enemies and long range penalties.",
+  "ability_increase": {
+    "from": [
+      "dex"
+    ],
+    "points": 1,
+    "max": 20
+  },
+  "benefits": [
+    {
+      "id": "sharpshooter_bypass_cover",
+      "name": "Bypass Cover",
+      "summary": "Your ranged weapon attacks ignore Half Cover and Three-Quarters Cover.",
+      "text": "Your ranged attacks with weapons ignore Half Cover and Three-Quarters Cover.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "sharpshooter_bypass_cover"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "sharpshooter_firing_in_melee",
+      "name": "Firing in Melee",
+      "summary": "An enemy within 5 feet doesn't give you Disadvantage on Ranged weapon attack rolls.",
+      "text": "Being within 5 feet of an enemy doesn't impose Disadvantage on your attack rolls with Ranged weapons.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "sharpshooter_firing_in_melee"
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "long_shots",
+      "name": "Long Shots",
+      "summary": "Attacking at long range doesn't give Disadvantage with Ranged weapons.",
+      "text": "Attacking at long range doesn't impose Disadvantage on your attack rolls with Ranged weapons.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "long_shots"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ]
+}
