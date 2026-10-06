@@ -41,6 +41,16 @@ var stood_up: bool = false
 var hidden: bool = false
 var stealth_total: int = 0
 var death_save_rolled: bool = false
+## Riders the player armed for this turn's next hit (maneuvers, Cunning Strike, Giant Ancestry, Psionic Strike):
+## ids, in the order chosen. Cleared at the end of the turn.
+var armed: Array[String] = []
+## Movement that doesn't provoke Opportunity Attacks, granted by a feature (Tactical Shift, Cunning Strike's
+## Withdraw, Remarkable Athlete): feet left, used with Encounter.free_move().
+var free_move_ft: int = 0
+## A bonus-action attack a feature granted this turn (Great Weapon Master's Hew): the reason, or "".
+var bonus_attack: String = ""
+## Whether this creature has taken a turn yet in this fight (Assassinate).
+var has_acted: bool = false
 ## A readied attack waiting for its trigger: {option} (lasts until the start of this creature's next turn).
 var readied: Dictionary = {}
 
@@ -130,6 +140,8 @@ func reset_turn() -> void:
 	surged = false
 	magic_action_used = false
 	haste_action = false
+	free_move_ft = 0
+	bonus_attack = ""
 	moved = false
 	stood_up = false
 	death_save_rolled = false

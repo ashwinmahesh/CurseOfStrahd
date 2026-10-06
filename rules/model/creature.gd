@@ -23,6 +23,8 @@ var compendium: Compendium = null
 
 var hp: int = 1
 var temp_hp: int = 0
+## Hit Points of a ward that soaks damage first (Abjurer's Arcane Ward).
+var ward_hp: int = 0
 var exhaustion: int = 0
 var death_successes: int = 0
 var death_failures: int = 0
@@ -49,6 +51,11 @@ var base_label: String = "Base"
 
 ## Rules events since the caller last drained them (plan §4.3: the engine returns events).
 var events: Array[Dictionary] = []
+## Hooks the combat engine installs (features that change D20 Tests: Lucky, Portent, Indomitable, Reliable
+## Talent...). before(creature, kind, keys, target) -> {advantage: [], disadvantage: [], natural: int};
+## after(creature, test, keys) changes the finished test in place.
+var d20_before: Callable = Callable()
+var d20_after: Callable = Callable()
 
 
 func _init() -> void:
@@ -428,6 +435,14 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 	dis.assign(src["disadvantage"])
 	adv.append_array(extra_adv)
 	dis.append_array(extra_dis)
+	var forced := 0
+	if d20_before.is_valid():
+		var pre := d20_before.call(self, kind, keys, target) as Dictionary
+		for x: Variant in pre.get("advantage", []):
+			adv.append(str(x))
+		for x: Variant in pre.get("disadvantage", []):
+			dis.append(str(x))
+		forced = int(pre.get("natural", 0))
 	var extra := 0
 	var extra_text := ""
 	for m in modifiers_for(&"bonus_die"):
@@ -451,9 +466,13 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 		extra, extra_text.strip_edges())
 	if has_flag("luck"):
 		t.reroll_ones(dice, "Luck")
+	if forced > 0:
+		t.set_natural(forced, "Portent")
 	t.breakdown = bonus
 	t.advantage_sources = adv
 	t.disadvantage_sources = dis
+	if d20_after.is_valid():
+		d20_after.call(self, t, keys)
 	log_event({"type": "d20", "creature": id, "text": t.describe()})
 	consume_effects(keys)
 	return t
@@ -549,6 +568,9 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 				r.notes.append("Immunity to %s: %s" % [damage_type, imm])
 			continue
 		var res := resistance_source(damage_type)
+		if res != "" and bool(pd.get("ignore_resistance", false)):
+			r.notes.append("%s ignores Resistance" % pd.get("ignore_source", "The attack"))
+			res = ""
 		if res != "" and amount > 0:
 			amount = floori(amount / 2.0)
 			r.notes.append("Resistance to %s: %s" % [damage_type, res])
@@ -561,6 +583,16 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 	if dmg <= 0:
 		_log_damage(r)
 		return r
+	# A magical ward (the Abjurer's Arcane Ward) takes damage before anything else.
+	var warded := mini(ward_hp, dmg)
+	if warded > 0:
+		ward_hp -= warded
+		dmg -= warded
+		r.notes.append("Arcane Ward absorbs %d (%d left)" % [warded, ward_hp])
+		r.final = dmg
+		if dmg <= 0:
+			_log_damage(r)
+			return r
 	var absorbed := mini(temp_hp, dmg)
 	temp_hp -= absorbed
 	r.absorbed_by_temp = absorbed
@@ -672,8 +704,8 @@ func roll_death_save(dice: DiceRoller) -> D20Test:
 	_add_d20_modifiers(bonus, ctx)
 	var keys: Array[String] = ["save:all", "death_save"]
 	var t := roll_d20(dice, D20Test.Kind.SAVING_THROW, bonus, 10, keys, [], [], "Death save (%s)" % name)
-	if t.kept == 20:
-		heal(1, "natural 20 on a Death Saving Throw")
+	if t.kept == 20 or (t.kept >= 18 and has_flag("survivor")):
+		heal(1, "natural 20 on a Death Saving Throw" if t.kept == 20 else "Survivor: %d counts as a 20" % t.kept)
 	elif t.kept == 1:
 		death_failures += 2
 	elif t.success:

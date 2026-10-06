@@ -107,6 +107,28 @@ func reroll_ones(dice: DiceRoller, source: String) -> void:
 	_resolve()
 
 
+## Adds a bonus after the roll (Precision Attack's die, Guided Strike's +10, Boon of Fate) and re-resolves.
+func add_bonus(amount: int, source: String) -> void:
+	extra += amount
+	extra_label = ("%s %s %s %d" % [extra_label, "+" if amount >= 0 else "-", source, absi(amount)]).strip_edges() if extra_label != "" \
+		else "%s %d" % [source, amount]
+	_resolve()
+
+
+## The kept d20 becomes `natural` (Portent replaces the roll; Stroke of Luck turns a failure into a 20).
+func set_natural(natural: int, source: String) -> void:
+	reroll_note = ("%s; " % reroll_note if reroll_note != "" else "") + "%s: %d → %d" % [source, kept, natural]
+	kept = natural
+	auto_failed = false
+	_resolve()
+
+
+## A d20 below `floor` counts as `floor` (Reliable Talent: 9 or lower counts as 10).
+func floor_natural(floor: int, source: String) -> void:
+	if kept < floor:
+		set_natural(floor, source)
+
+
 func _resolve() -> void:
 	total = kept + modifier + extra
 	critical = kind == Kind.ATTACK_ROLL and kept >= crit_range
