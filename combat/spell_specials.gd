@@ -8,11 +8,13 @@ extends RefCounted
 
 var _enc: WeakRef
 var high: HighMagic
+var mid: MidMagic
 
 
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
 	high = HighMagic.new(encounter)
+	mid = MidMagic.new(encounter)
 
 
 func enc() -> Encounter:
@@ -31,7 +33,7 @@ const HANDLED := ["polymorph", "banishment", "otilukes_resilient_sphere", "dimen
 
 
 func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r: CombatResult) -> bool:
-	if high.resolve(ctx, tgt, _cells, r):
+	if high.resolve(ctx, tgt, _cells, r) or mid.resolve(ctx, tgt, _cells, r):
 		return true
 	var s := ctx["s"] as Dictionary
 	match str(s["id"]):
@@ -80,6 +82,11 @@ func _resists(ctx: Dictionary, t: Combatant, ab: StringName, extra_keys: Array[S
 		"%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], s["name"], t.name()])
 	e.log.add("info", "%s %s the %s save" % [t.name(), "succeeds on" if test.success else "fails", s["name"]], t.id, [test.describe()])
 	return test.success
+
+
+## A plain save against the spell with any ability (allies don't resist). True if it resisted.
+func _resists_ab(ctx: Dictionary, t: Combatant, ab: StringName) -> bool:
+	return _resists(ctx, t, ab)
 
 
 ## A marker effect on `t` kept by the spell's Concentration (or its duration) that runs `on_end` when the spell ends.

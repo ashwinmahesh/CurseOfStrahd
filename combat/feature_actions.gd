@@ -71,6 +71,11 @@ func list(c: Combatant) -> Array[Dictionary]:
 			"Movement from Tactical Shift, Cunning Strike or a maneuver: it doesn't provoke Opportunity Attacks.", c.free_move_ft))
 	if c.creature is Monster and c.is_player_controlled():
 		_creature_actions(c, out, aw, bw)
+	# Saves taken with an action (Otto's Irresistible Dance).
+	for i in e.spells.specials.mid.action_saves(c).size():
+		var afx := e.spells.specials.mid.action_saves(c)[i]
+		out.append(_entry("action_save:%d" % i, "Shake off %s" % afx.name, "%s save" % str(afx.repeat_save.get("ability", "wis")).capitalize(), "action", aw, "none",
+			"Use your action to repeat the save against %s." % afx.name))
 	# A druid in Wild Shape can leave the form as a Bonus Action.
 	if e.shapes.is_shaped(c) and e.shapes.original(c) is Character and c.is_player_controlled():
 		out.append(_entry("cf:revert_shape", "Leave Wild Shape", "true form", "bonus", bw, "none", "Bonus Action: return to your true form."))
@@ -310,6 +315,12 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2) -> CombatRe
 			return e.free_move(c, cell)
 		"creature":
 			return _perform_creature(c, id.substr(9), t, cell)
+		"action_save":
+			var saves := e.spells.specials.mid.action_saves(c)
+			var idx := int(id.get_slice(":", 1))
+			if idx >= saves.size():
+				return CombatResult.fail("Not available")
+			return e.spells.specials.mid.take_action_save(c, saves[idx])
 		"cf":
 			return e.class_features.perform(c, id.substr(3), t, cell, point)
 		"fast_hands_kit":

@@ -362,9 +362,11 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 				var cell := Vector2i(x, y)
 				if grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells) < now:
 					blocked[cell] = true
-	# Forcecage: no stepping out of a cage, or into one.
+	# Forcecage: no stepping out of a cage, or into one; Antilife Shell keeps most creatures out.
 	for cell3: Vector2i in spells.specials.high.cage_blocks(c):
 		blocked[cell3] = true
+	for cell4: Vector2i in spells.specials.mid.shell_blocks(c):
+		blocked[cell4] = true
 	# Compelled Duel: no square more than 30 ft from the duellist.
 	var anchor := spells.specials.duel_anchor(c)
 	if anchor != null:
@@ -436,6 +438,9 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		slowed[cell] = terrain[cell] if terrain[cell] is int else true
 	if c.creature.has_flag("pass_through_creatures"):
 		blocked = {}
+	# Wall of Force and Wall of Stone: no one walks through.
+	for wcell: Vector2i in spells.specials.mid.blocked_cells():
+		blocked[wcell] = true
 	return {"blocked": blocked, "slowed": slowed, "occupied": occupied}
 
 
@@ -1090,6 +1095,7 @@ func answer_reaction(use: bool) -> CombatResult:
 
 
 func _after_step(c: Combatant, from: Vector2i) -> void:
+	spells.specials.mid.shell_moved(c)
 	spells.on_enter_cell(c, from)
 
 
@@ -1674,8 +1680,10 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "Can't attack yourself"
 	if spells.specials.sphere_blocks(c, target):
 		return "A sphere of force is in the way"
-	if spells.specials.high.box_between(c, target):
-		return "A wall of force is in the way"
+	if spells.specials.high.box_between(c, target) or spells.specials.mid.wall_between(c, target):
+		return "A wall is in the way"
+	if bool(option["melee"]) and spells.specials.mid.shell_blocks_reach(c, target):
+		return "The Antilife Shell keeps you out of reach"
 	var dist := distance(c, target)
 	var p := option["profile"] as WeaponProfile
 	if bool(option["melee"]):
@@ -1959,7 +1967,7 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	var t := c.creature.roll_d20(dice, D20Test.Kind.ATTACK_ROLL, p.attack, ac, keys, sit["advantage"] as Array[String],
 		sit["disadvantage"] as Array[String], label, p.crit_range, attacked_dice(target))
 	target.creature.consume_attacked()
-	if not option.get("melee", true) and c.creature is Character:
+	if not option.get("melee", true) and c.creature is Character and not bool((st["opts"] as Dictionary).get("free_ammo", false)):
 		if str(option.get("kind", "")) == "thrown":
 			_spend_item(c, p.item_id)
 		elif str(option.get("kind", "")) != "blade":
@@ -2290,6 +2298,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 			target.remove_meta("mounted_on")
 			mt.remove_meta("ridden_by")
 	if target.creature.dead and was_up:
+		monster_actions.death_burst(target)
 		target.set_meta("died_round", round_no)
 		log.add("death", "%s dies" % target.name(), target.id)
 		events.append({"type": "death", "id": target.id})
@@ -2581,6 +2590,18 @@ func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: Da
 				events.append({"type": "condition", "id": target.id})
 		if act.has("on_hit"):
 			monster_actions.apply_riders(c, target, act["on_hit"] as Array, {str(p.damage_type): dr.final}, str(act.get("name", "")))
+		# Celestial Spirit (Defender): a creature within 10 ft gains Temporary Hit Points.
+		if act.has("ally_temp_hp"):
+			var ath := act["ally_temp_hp"] as Dictionary
+			var best: Combatant = null
+			for a2 in allies_of(c):
+				if a2 != c and a2.is_alive() and distance(c, a2) <= int(ath.get("range", 10)) and (best == null or a2.creature.temp_hp < best.creature.temp_hp):
+					best = a2
+			if best == null:
+				best = c
+			var amt := int(_roll_damage_dice(str(ath.get("dice", "1d10")), false, 0, "Radiant Mace")["total"])
+			if best.creature.add_temp_hp(amt, str(act.get("name", ""))):
+				log.add("heal", "%s gains %d Temporary Hit Points (%s)" % [best.name(), amt, act.get("name", "")], best.id)
 
 
 func _spend_ammo(c: Combatant, p: WeaponProfile) -> void:

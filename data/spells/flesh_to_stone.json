@@ -44,7 +44,8 @@
       "effect": "condition",
       "params": {
         "condition": "restrained",
-        "repeat_save": "end_of_turn"
+        "repeat_save": "end_of_turn",
+        "three_saves": "petrify"
       }
     }
   ],

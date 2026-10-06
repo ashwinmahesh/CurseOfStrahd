@@ -227,3 +227,117 @@ func test_conjure_celestial_heals_allies_and_burns_foes() -> void:
 	assert_true(_cast(e, c, "conjure_celestial", 7, [], Vector2(6.5, 3.5)).ok)
 	assert_true(a.creature.hp > 5)
 	assert_true(t.creature.hp < 300)
+
+
+# --- Levels 5 and 6 -----------------------------------------------------------------------------------
+
+func _summoned(e: Encounter, c: Combatant) -> Combatant:
+	for id: Variant in e.spells.summoned.get(c.id, []):
+		var s := e.get_c(str(id))
+		if s != null and s.is_alive():
+			return s
+	return null
+
+
+func test_summon_celestial_dragon_and_fiend() -> void:
+	var e := _field()
+	var c := _caster(e)
+	TestCombat.punching_bag(e, Vector2i(10, 7), 100)
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "summon_celestial", 5, [], Vector2(3.5, 3.5), {"choice": "defender"}).ok)
+	assert_eq(_summoned(e, c).creature.ac_value(), 18, "AC 11 + 5 + 2 for the Defender")
+	c.creature.concentration.end("test")
+	assert_true(_cast(e, c, "summon_dragon", 5, [], Vector2(3.5, 3.5), {"choice": "cold"}).ok)
+	var d := _summoned(e, c)
+	assert_true(d.creature.resistance_source(&"cold") != "")
+	c.creature.concentration.end("test")
+	assert_true(_cast(e, c, "summon_fiend", 6, [], Vector2(3.5, 3.5), {"choice": "demon"}).ok)
+	assert_eq(_summoned(e, c).creature.max_hp(), 50)
+
+
+func test_animate_objects_brings_several_objects() -> void:
+	var e := _field()
+	var c := _caster(e)
+	TestCombat.punching_bag(e, Vector2i(10, 7), 100)
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "animate_objects", 5).ok)
+	assert_eq((e.spells.summoned.get(c.id, []) as Array).size(), 5, "one per point of the spellcasting modifier")
+
+
+func test_harm_lowers_the_hit_point_maximum() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var t := TestCombat.punching_bag(e, Vector2i(5, 3), 200)
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "harm", 6, [t]).ok)
+	assert_eq(t.creature.max_hp(), t.creature.hp, "the maximum dropped with the damage")
+
+
+func test_heal_adds_ten_per_slot_level() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(10, 7), 100)
+	a.creature.add_effect(Effect.new("Big", &"effect", "t").with_modifier("hp_max", {"value": 200}))
+	a.creature.hp = 1
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "heal", 7, [a]).ok)
+	assert_eq(a.creature.hp, 81, "70 + 10 for one level above 6")
+
+
+func test_flesh_to_stone_petrifies_after_three_failures() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var t := TestCombat.punching_bag(e, Vector2i(5, 3), 200)
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "flesh_to_stone", 6, [t]).ok)
+	for i in 3:
+		e.end_turn()
+		while e.current() != c:
+			e.end_turn()
+	assert_true(t.creature.has_condition(&"petrified"))
+
+
+func test_ottos_dance_can_be_shaken_off_with_an_action() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(2, 3))
+	TestCombat.punching_bag(e, Vector2i(10, 7), 100)
+	TestCombat.start_with(e, c)
+	var fx := Effect.new("Dancing", &"spell", "ottos_irresistible_dance").with_condition(&"charmed")
+	fx.repeat_save = {"ability": "wis", "dc": 1, "when": "manual", "by_action": true}
+	a.creature.add_effect(fx)
+	e.end_turn()
+	while e.current() != a:
+		e.end_turn()
+	assert_true(e.feature_actions.perform(a, "action_save:0", null, Vector2.INF).ok)
+	assert_false(a.creature.has_condition(&"charmed"))
+
+
+func test_wall_of_force_blocks_movement_and_attacks() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var t := TestCombat.punching_bag(e, Vector2i(8, 3), 200)
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "wall_of_force", 5, [], Vector2(5.5, 3.5), {"direction": Vector2.DOWN}).ok)
+	assert_true(e.spells.specials.mid.wall_between(c, t))
+	assert_false(e.reachable_for(c, 60).has(Vector2i(5, 3)))
+
+
+func test_eyebite_puts_a_creature_to_sleep() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var t := TestCombat.punching_bag(e, Vector2i(6, 3), 200)
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "eyebite", 6, [t], Vector2.INF, {"choice": "asleep"}).ok)
+	assert_true(t.creature.has_condition(&"unconscious"))
+
+
+func test_jallarzis_storm_deals_both_damage_types() -> void:
+	var e := _field()
+	var c := _caster(e)
+	var t := TestCombat.punching_bag(e, Vector2i(6, 3), 300)
+	t.creature.add_effect(Effect.new("Thunderproof", &"effect", "t").with_modifier("immunity", {"value": "thunder"}))
+	TestCombat.start_with(e, c)
+	assert_true(_cast(e, c, "jallarzis_storm_of_radiance", 5, [], Vector2(6.5, 3.5)).ok)
+	assert_true(t.creature.hp < 300, "the Radiant half still lands")

@@ -687,6 +687,12 @@ func smite_dice(sctx: Dictionary, target: Combatant) -> Array[Dictionary]:
 func smite_follow_up(sctx: Dictionary, target: Combatant, alive: bool, r: CombatResult) -> void:
 	var e := enc()
 	var sd := sctx["s"] as Dictionary
+	# Banishing Smite: a target left at 50 Hit Points or fewer makes a Charisma save or is banished.
+	if sd.has("banish_at_hp"):
+		if alive and target.creature.hp <= int(sd["banish_at_hp"]):
+			e.spells.specials.banish(sctx, target, r)
+		e.spells._finish_concentration(sctx)
+		return
 	if sd.has("secondary"):
 		e.spells._secondary(sctx, target, r)
 	elif alive and sd.has("save"):

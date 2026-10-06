@@ -52,7 +52,8 @@
       "end_turn",
       "moved_into"
     ],
-    "obscured": "heavy"
+    "obscured": "heavy",
+    "drift_away": 10
   },
   "tags": [
     "damage",

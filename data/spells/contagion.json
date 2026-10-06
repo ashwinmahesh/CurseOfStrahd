@@ -58,7 +58,8 @@
       "effect": "condition",
       "params": {
         "condition": "poisoned",
-        "repeat_save": "end_of_turn"
+        "repeat_save": "end_of_turn",
+        "three_saves": "persist"
       }
     },
     {
@@ -70,7 +71,8 @@
             "stat": "disadvantage",
             "on": "save:choice"
           }
-        ]
+        ],
+        "three_saves": "persist"
       }
     }
   ],
