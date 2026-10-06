@@ -1,0 +1,739 @@
+{
+  "id": "wizard_of_wines",
+  "name": "The Wizard of Wines",
+  "region": "wizard_of_wines",
+  "summary": "The Martikov family's winery in the hills south-west of Vallaki: a lane up through withered vines, a yard between the house, the winery and the press house, and the family's camp under the trees, where they have hidden since the druids came.",
+  "text": "A painted sign over the yard gate shows a wizard in a starry hat pouring wine for a raven. Below it the vines stand in long rows, brown at the edges and curling, and nothing in the yard has moved in a while except the birds.",
+  "map": {
+    "rows": [
+      "##############################################",
+      "#..#######.....################...#########..#",
+      "#..#######.....################...#########..#",
+      "#..#######.....################...#########..#",
+      "#..#######.....################...#########..#",
+      "#..#######.....################...#########..#",
+      "#..............################...#########..#",
+      "#..............################..............#",
+      "#............................................#",
+      "#............................................#",
+      "#............................................#",
+      "#............................................#",
+      "#............................................#",
+      "#====================....====================#",
+      "#............................................#",
+      "#====================....====================#",
+      "#............................................#",
+      "#====================....====================#",
+      "#............................................#",
+      "#====================....====================#",
+      "#............................................#",
+      "#====================....====================#",
+      "#............................................#",
+      "#====================....====================#",
+      "#............................................#",
+      "#====================....====================#",
+      "#.~~.........................................#",
+      "#.......................................~~~..#",
+      "#.......................................~~~..#",
+      "#............................................#",
+      "#............................................#",
+      "#####################....#####################"
+    ],
+    "theme": "village",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "winery_yard",
+      "name": "The winery yard",
+      "cells": [
+        [
+          1,
+          6
+        ],
+        [
+          44,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "vine_lane",
+      "name": "The lane through the vines",
+      "cells": [
+        [
+          21,
+          13
+        ],
+        [
+          24,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "vineyard_west",
+      "name": "The west vineyard",
+      "cells": [
+        [
+          1,
+          13
+        ],
+        [
+          20,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "vineyard_east",
+      "name": "The east vineyard",
+      "cells": [
+        [
+          25,
+          13
+        ],
+        [
+          44,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "martikov_camp",
+      "name": "The Martikovs' camp",
+      "cells": [
+        [
+          1,
+          26
+        ],
+        [
+          12,
+          30
+        ]
+      ]
+    },
+    {
+      "id": "lane_foot",
+      "name": "The foot of the lane",
+      "cells": [
+        [
+          13,
+          26
+        ],
+        [
+          44,
+          30
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      22,
+      29
+    ],
+    "from_road": [
+      22,
+      29
+    ],
+    "from_winery": [
+      22,
+      8
+    ],
+    "from_press_house": [
+      38,
+      7
+    ]
+  },
+  "exits": [
+    {
+      "id": "lane_to_road",
+      "cell": [
+        22,
+        31
+      ],
+      "to": "travel",
+      "label": "Down the lane to the road"
+    },
+    {
+      "id": "winery_door",
+      "cell": [
+        22,
+        7
+      ],
+      "to": "wizard_of_wines_winery",
+      "spawn": "default",
+      "label": "The winery"
+    },
+    {
+      "id": "press_house_door",
+      "cell": [
+        38,
+        6
+      ],
+      "to": "wizard_of_wines_press_house",
+      "spawn": "default",
+      "label": "The press house"
+    }
+  ],
+  "props": [
+    {
+      "id": "winery_sign",
+      "cell": [
+        22,
+        9
+      ],
+      "kind": "examine",
+      "label": "The sign over the gate",
+      "model": "sign"
+    },
+    {
+      "id": "winery_broken_cart",
+      "cell": [
+        30,
+        10
+      ],
+      "kind": "examine",
+      "label": "A wine cart with a broken wheel",
+      "model": "cart_broken",
+      "when": "not flag.winery_wine_flows"
+    },
+    {
+      "id": "winery_loaded_cart",
+      "cell": [
+        30,
+        10
+      ],
+      "kind": "examine",
+      "label": "A cart loaded with casks",
+      "model": "cart",
+      "when": "flag.winery_wine_flows"
+    },
+    {
+      "id": "yard_well",
+      "cell": [
+        12,
+        9
+      ],
+      "kind": "examine",
+      "label": "The well",
+      "model": "well"
+    },
+    {
+      "id": "martikov_house",
+      "cell": [
+        6,
+        6
+      ],
+      "kind": "examine",
+      "label": "The Martikov house",
+      "model": "shutters"
+    },
+    {
+      "id": "withered_vines",
+      "cell": [
+        19,
+        12
+      ],
+      "kind": "examine",
+      "label": "Withered vines",
+      "model": "fence"
+    },
+    {
+      "id": "east_vines",
+      "cell": [
+        27,
+        26
+      ],
+      "kind": "examine",
+      "label": "The last green row",
+      "model": "fence"
+    },
+    {
+      "id": "martikov_fire",
+      "cell": [
+        6,
+        28
+      ],
+      "kind": "examine",
+      "label": "The camp fire",
+      "model": "campfire"
+    },
+    {
+      "id": "martikov_tents",
+      "cell": [
+        3,
+        28
+      ],
+      "kind": "examine",
+      "label": "Tents of sailcloth and blankets",
+      "model": "tent"
+    },
+    {
+      "id": "elvir_cairn",
+      "cell": [
+        11,
+        29
+      ],
+      "kind": "examine",
+      "label": "A cairn of river stones",
+      "model": "cairn",
+      "when": "not flag.elvir_buried"
+    },
+    {
+      "id": "elvir_grave",
+      "cell": [
+        11,
+        29
+      ],
+      "kind": "examine",
+      "label": "Elvir's grave",
+      "model": "grave_mound",
+      "when": "flag.elvir_buried"
+    },
+    {
+      "id": "raven_roost",
+      "cell": [
+        41,
+        29
+      ],
+      "kind": "examine",
+      "label": "A dead tree full of ravens",
+      "model": "dead_tree"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        6,
+        28
+      ],
+      "kind": "fire",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        21,
+        8
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        37,
+        7
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "adrian_martikov",
+      "cell": [
+        23,
+        27
+      ],
+      "dialogue": "wizard_of_wines/adrian:first_meeting",
+      "when": "not flag.adrian_met",
+      "facing": "south",
+      "approach": 6
+    },
+    {
+      "npc": "davian_martikov",
+      "cell": [
+        5,
+        27
+      ],
+      "dialogue": "wizard_of_wines/davian:start",
+      "when": "not flag.winery_reclaimed and not guest:davian_martikov",
+      "facing": "east",
+      "approach": 5
+    },
+    {
+      "npc": "stefania_martikov",
+      "cell": [
+        8,
+        29
+      ],
+      "dialogue": "wizard_of_wines/stefania:start",
+      "when": "not flag.winery_reclaimed",
+      "facing": "east"
+    },
+    {
+      "npc": "adrian_martikov",
+      "cell": [
+        10,
+        27
+      ],
+      "dialogue": "wizard_of_wines/adrian:start",
+      "when": "flag.adrian_met and not flag.winery_reclaimed and not guest:adrian_martikov",
+      "facing": "east"
+    },
+    {
+      "npc": "davian_martikov",
+      "cell": [
+        36,
+        9
+      ],
+      "dialogue": "wizard_of_wines/davian:start",
+      "when": "flag.winery_reclaimed and not guest:davian_martikov",
+      "facing": "south"
+    },
+    {
+      "npc": "stefania_martikov",
+      "cell": [
+        8,
+        7
+      ],
+      "dialogue": "wizard_of_wines/stefania:start",
+      "when": "flag.winery_reclaimed",
+      "facing": "south"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "vineyard_ambush",
+      "trigger": "enter_area:vine_lane",
+      "when": "not flag.vineyard_cleared and not flag.gulthias_tree_burned and level >= 7",
+      "text": "The vines on both sides of the lane shiver, though there's no wind. Then, row by row, they stand up.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            18,
+            18
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            20,
+            16
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            25,
+            20
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            20,
+            22
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            17,
+            14
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            27,
+            14
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            20
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            28,
+            18
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            26,
+            24
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            24
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            26,
+            16
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            22
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            25,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            20,
+            24
+          ]
+        }
+      ],
+      "surprise": "party",
+      "flag": "vineyard_cleared"
+    },
+    {
+      "id": "vineyard_ambush",
+      "trigger": "enter_area:vine_lane",
+      "when": "not flag.vineyard_cleared and not flag.gulthias_tree_burned and level >= 6",
+      "text": "The vines on both sides of the lane shiver, though there's no wind. Then, row by row, they stand up.",
+      "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            18,
+            18
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            20,
+            16
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            25,
+            20
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            17,
+            14
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            27,
+            14
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            20
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            28,
+            18
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            26,
+            24
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            24
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            26,
+            16
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            22
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            25,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            20,
+            24
+          ]
+        }
+      ],
+      "surprise": "party",
+      "flag": "vineyard_cleared"
+    },
+    {
+      "id": "vineyard_ambush",
+      "trigger": "enter_area:vine_lane",
+      "when": "not flag.vineyard_cleared and not flag.gulthias_tree_burned",
+      "text": "The vines on both sides of the lane shiver, though there's no wind. Then, row by row, they stand up.",
+      "monsters": [
+        {
+          "monster": "vine_blight",
+          "cell": [
+            20,
+            16
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            25,
+            20
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            17,
+            14
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            27,
+            14
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            20
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            28,
+            18
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            26,
+            16
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            22
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            25,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            20,
+            24
+          ]
+        }
+      ],
+      "surprise": "party",
+      "flag": "vineyard_cleared"
+    }
+  ],
+  "narration": {
+    "enter": "enter:wizard_of_wines"
+  },
+  "rest": "risky"
+}

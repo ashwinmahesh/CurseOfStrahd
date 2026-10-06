@@ -38,6 +38,7 @@
         "id": "light_domain_spells",
         "name": "Light Domain Spells",
         "summary": "Always prepared: Burning Hands, Faerie Fire, Scorching Ray, See Invisibility; more at 5, 7 and 9.",
+        "text": "Your domain keeps these spells prepared for you: Burning Hands, Faerie Fire, Scorching Ray and See Invisibility at Cleric level 3, Daylight and Fireball at 5, Arcane Eye and Wall of Fire at 7, Flame Strike and Scrying at 9.",
         "implemented": "data"
       }
     },
@@ -77,6 +78,7 @@
         "id": "improved_warding_flare",
         "name": "Improved Warding Flare",
         "summary": "Warding Flare returns on a Short Rest and grants 2d6 + Wis Temporary Hit Points.",
+        "text": "You regain every use of Warding Flare when you finish a Short or Long Rest. And whenever you use it, the creature the attack was aimed at gains Temporary Hit Points equal to 2d6 + your Wisdom modifier.",
         "implemented": "engine",
         "resource": {
           "id": "warding_flare",

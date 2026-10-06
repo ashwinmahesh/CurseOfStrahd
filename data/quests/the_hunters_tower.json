@@ -1,0 +1,53 @@
+{
+  "id": "the_hunters_tower",
+  "name": "The Hunter's Tower",
+  "summary": "A dead archmage's tower on an island in Lake Baratok, kept now by Rudolph van Richten and warded against one person in particular.",
+  "giver": "ezmerelda",
+  "region": "van_richtens_tower",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "A tower of black stone stands on an island in Lake Baratok. Its door has no handle and no keyhole, and it is waiting for a word.",
+      "objectives": [
+        "Find a way into the tower"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Ezmerelda d'Avenir, a Vistani monster hunter, is camped on the shore. Van Richten, her old teacher, keyed a ward on his tower to keep her out. She asked us to go in for her and find out where he has gone.",
+      "objectives": [
+        "Get into the tower",
+        "Find something in Van Richten's hand"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "inside",
+      "journal": "The door opened to the old wizard's name. We are inside Van Richten's tower.",
+      "objectives": [
+        "Search the tower",
+        "Decide what to tell Ezmerelda about her teacher"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "told",
+      "journal": "Rudolph van Richten is Rictavio, the loud showman at Vallaki's Blue Water Inn. We told Ezmerelda, and she has gone to find him.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "kept",
+      "journal": "We know Van Richten hides in Vallaki as the showman Rictavio, and we kept his secret from Ezmerelda. She is still waiting on his doorstep.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "reunited",
+      "journal": "Van Richten and Ezmerelda are under one roof again, shouting at each other, which is how they say they missed each other.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

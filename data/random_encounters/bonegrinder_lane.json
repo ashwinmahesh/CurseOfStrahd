@@ -1,0 +1,243 @@
+{
+  "id": "bonegrinder_lane",
+  "map": "old_bonegrinder_track",
+  "chance_day": 0.2,
+  "chance_night": 0.45,
+  "summary": "The miller's lane between the Old Svalich Road and Old Bonegrinder: close pines and deep ruts. Wolves and the dead, Morgantha on her rounds while the coven stands, and afterwards whichever daughter is still loose.",
+  "entries": [
+    {
+      "id": "lane_wolves",
+      "weight": 3,
+      "when": "day",
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            3
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            3,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            28,
+            8
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            2,
+            8
+          ]
+        }
+      ],
+      "text": "Wolves come down the lane from both ends at once, in no hurry, because there's nowhere for you to go."
+    },
+    {
+      "id": "lane_morgantha_cart",
+      "weight": 3,
+      "when": "day and not flag.morgantha_slain and not flag.morgantha_cart_met and not flag.bonegrinder_bargain",
+      "once": true,
+      "dialogue": "old_bonegrinder/road:morgantha_cart"
+    },
+    {
+      "id": "lane_bella_cart",
+      "weight": 2,
+      "when": "day and flag.bonegrinder_fate == \"bella\" and not flag.bella_slain",
+      "dialogue": "old_bonegrinder/road:bella_cart"
+    },
+    {
+      "id": "lane_offalia_hedge",
+      "weight": 2,
+      "when": "flag.offalia_at_large and not flag.offalia_slain",
+      "dialogue": "old_bonegrinder/road:offalia_hedge"
+    },
+    {
+      "id": "lane_raven_gift",
+      "weight": 1,
+      "when": "day and flag.ilinca_vouched",
+      "once": true,
+      "dialogue": "old_bonegrinder/road:raven_flight"
+    },
+    {
+      "id": "lane_wolves_night",
+      "weight": 3,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            26,
+            3
+          ],
+          "name": "Werewolf"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            3,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            2,
+            8
+          ]
+        }
+      ],
+      "text": "A howl from the pines ends in a word. Something tall comes down the lane on two legs, and the pack comes with it."
+    },
+    {
+      "id": "lane_dead",
+      "weight": 2,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            7
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            28,
+            8
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            3,
+            7
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            12
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            4,
+            8
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            24,
+            12
+          ]
+        }
+      ],
+      "text": "Figures stand in the lane ahead and behind, in the clothes of farmers and carters. One of them still has a pastry in its hand."
+    },
+    {
+      "id": "lane_bats",
+      "weight": 1,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            8,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            24,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            20,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            6,
+            12
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            8
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            3,
+            8
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            28,
+            3
+          ]
+        }
+      ],
+      "text": "The pines empty of bats all at once, and the dark comes down the lane like a flood."
+    }
+  ]
+}

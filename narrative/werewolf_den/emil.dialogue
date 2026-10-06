@@ -1,0 +1,140 @@
+# Emil Toranescu, the pack's old leader, in silver chains in the west alcove (docs/voice/emil_toranescu.md).
+# Freeing him joins him as a guest for the challenge (he stays only if the Tarokka names him: the Beast; see
+# aftermath.dialogue). `leader` is Emil after he has won the pack back and stayed in the den.
+
+~ start
+if not flag.emil_met
+set emil_met
+Narrator: In the alcove a big, grey-bearded man sits against the rock with his arms spread wide, chained by both wrists to iron rings. The chains are bright. Where they touch him, the skin has blistered black.
+Emil: Visitors. Kiril's? No. Kiril's visitors don't look at the chains like that.
+if flag.zuleika_vouched
+Emil: You smell of Zuleika's herbs. She sent you. That woman. I told her not to.
+endif
+if guest:ezmerelda
+Emil: And the huntress. You killed two of Kiril's on the Krezk road. Good shooting. I'd have done it myself, with my hands free.
+endif
+else
+Emil: Still here. Still chained. Neither of us is enjoying it.
+endif
+-> menu
+
+~ menu
+* Who are you? -> who
+* Why did Kiril chain you? -> why
+* [if flag.izek_story_heard or guest:ireena] Wolves took a girl by the lake, years ago, and a boy's arm. Was that your pack? -> lake_night
+* [if tarokka.ally.npc == emil_toranescu] Madam Eva's cards showed us a wolf at odds with his pack. -> cards
+* [if flag.emil_key_found] We have the key to your chains. -> free_key
+* [if not flag.emil_key_found and not flag.emil_force_tried] [Athletics DC 15] Tear the rings out of the rock. -> free_force | force_fail
+* [if not flag.emil_key_found and not flag.emil_pick_tried] [Sleight of Hand DC 14] Pick the cuffs. -> free_pick | pick_fail
+* [if not flag.emil_key_found] Where's the key? -> where_key
+* Goodbye. -> bye
+
+~ who
+Emil: Emil Toranescu. I led this pack nineteen winters. We hunted deer and the odd careless shepherd, kept to the high hills, and left the villages alone. The castle left us alone in return. Then Kiril came home.
+-> menu
+
+~ why
+Emil: Kiril went up to the castle and came back with a new law. The master wants an army that runs on four legs. And where do new wolves come from? He came back from the Krezk road with a sack of children.
+Emil: I told him the old law: we don't take pups that aren't ours. He said the old law was dead. Then his favourites held me down.
+interject class:cleric: There's a law older than both of yours about children.
+Emil: I know it. That's why I'm the one in chains.
+-> menu
+
+~ lake_night
+Emil: Not mine. I wasn't leader then. But I was in those woods that night, and so were wolves that weren't ours: the castle's, big and silent.
+Emil: There was a boy screaming and a girl with red hair, and a rider in black at the treeline. We ran. I've been ashamed of running for twenty years.
+if guest:ireena
+Narrator: Ireena has gone very still. Her hand has found her own sleeve and is gripping it hard.
+Ireena: A rider at the treeline. I don't remember that. I don't. Why does it feel like I do?
+endif
+-> menu
+
+~ cards
+Emil: The Vistani grandmother and her cards. She told me once I'd die in chains. Funny, how close she came.
+Emil: Get me out of these, and let's see what else she got wrong.
+-> menu
+
+~ where_key
+Emil: Zuleika has one; Kiril trusted her with it so she could watch. Kiril keeps the other on a peg in his lair, north of the great cave, because he likes to look at it.
+-> menu
+
+~ free_key
+Narrator: The key turns stiffly. The cuffs open with a sound like a held breath let out.
+-> freed
+
+~ free_force
+Narrator: The ring groans, cracks and comes out of the rock in a shower of grit, then the other. The silver goes slack.
+-> freed
+
+~ force_fail
+set emil_force_tried
+Narrator: The ring groans and holds. The chain rattles loud enough to wake the whole hill, and somewhere in the dark, something stirs in its straw and settles again.
+Emil: Quietly, if you would.
+-> menu
+
+~ free_pick
+Narrator: The cuffs are good work, but old, and the locks give to a patient hand. One, then the other.
+-> freed
+
+~ pick_fail
+set emil_pick_tried
+Narrator: The lock fights back. The pick slips and skates across the silver, and Emil hisses through his teeth.
+Emil: The key would be kinder. To both of us.
+-> menu
+
+~ freed
+set emil_freed
+if not quest.wolves_in_the_hills or quest.wolves_in_the_hills == heard or quest.wolves_in_the_hills == asked
+quest wolves_in_the_hills emil_freed
+endif
+join emil_toranescu
+Narrator: Emil gets up the way old men and old wolves do, in stages, and stands rubbing the black rings on his wrists.
+Emil: Thank you. Now I have to do something you won't like. A chained wolf who walks free without howling his challenge is a thief, and anyone may kill a thief.
+Emil: Kiril will hear it. He'll come. When he does, you'll want to be standing next to me.
+* Howl, then. -> howl
+* Can't we just walk out with the children? -> walk_out
+
+~ walk_out
+Emil: And be hunted through the hills by a pack that knows every stone, with five children who can't run? No. We do it the old way, here, with rock at our backs.
+-> howl
+
+~ howl
+Narrator: He tips his head back and howls. It starts as a man's voice and finishes as something else, and it goes on long after it should have run out of breath. The whole hill takes it up.
+if guest:ireena
+Ireena [afraid]: I know that sound. I know it from somewhere I've never been.
+endif
+interject name:ilse_varga: Count off. Four, and a wolf. Hold the line when he comes.
+interject tag:cheerful: Well. He definitely heard that.
+Emil: He's not far. He never was, from his supper. Wait for him in the great cave, where he can see us.
+-> END
+
+~ bye
+Emil: I'll be here. The jewellery makes sure of it.
+-> END
+
+# ---------------------------------------------------------------- Emil leading the pack again
+
+~ leader
+Emil: The pack is quieter without Kiril. Hungrier, too. Deer it is, for a while.
+if flag.kiril_hoard_opened
+Emil: You found Kiril's chest. Good. Half of it came off the Krezk road; if you pass anyone who looks robbed, you know what to do.
+endif
+-> leader_menu
+
+~ leader_menu
+* How are the wolves taking it? -> leader_pack
+* What will you do when the castle calls? -> leader_castle
+* Goodbye. -> leader_bye
+
+~ leader_pack
+Emil: The ones who loved Kiril are dead or gone down the Krezk road. The rest are tired and glad to be. Zuleika has them mending things. Wolves hate mending things.
+-> leader_menu
+
+~ leader_castle
+Emil: Not come. Let the old man on the hill whistle for his dogs. If it ever comes to the end with him, and you need teeth at his gates, send word up the hill.
+interject tag:veteran: Noted. Teeth at the gates.
+-> leader_menu
+
+~ leader_bye
+Emil: Go well. Keep to the trail; my wolves know your smell now.
+-> END

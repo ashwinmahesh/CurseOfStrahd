@@ -231,6 +231,299 @@
           "counterspell"
         ]
       }
+    },
+    {
+      "level": 6,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web",
+          "blur",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste"
+        ]
+      }
+    },
+    {
+      "level": 7,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "evoker.7.evocation_savant": [
+          "ice_storm"
+        ],
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web",
+          "blur",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "greater_invisibility",
+          "banishment"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "ice_storm"
+        ]
+      }
+    },
+    {
+      "level": 8,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web",
+          "blur",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "greater_invisibility",
+          "banishment",
+          "dimension_door",
+          "polymorph"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "ice_storm",
+          "greater_invisibility"
+        ],
+        "wizard.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "wizard.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "int",
+          "con"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "evoker.9.evocation_savant": [
+          "fire_shield"
+        ],
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web",
+          "blur",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "greater_invisibility",
+          "banishment",
+          "dimension_door",
+          "polymorph",
+          "slow",
+          "dispel_magic"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "ice_storm",
+          "greater_invisibility",
+          "dimension_door",
+          "dispel_magic"
+        ]
+      }
+    },
+    {
+      "level": 10,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web",
+          "blur",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "greater_invisibility",
+          "banishment",
+          "dimension_door",
+          "polymorph",
+          "slow",
+          "dispel_magic",
+          "wall_of_fire",
+          "otilukes_resilient_sphere"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "ice_storm",
+          "greater_invisibility",
+          "dimension_door",
+          "dispel_magic",
+          "wall_of_fire"
+        ],
+        "wizard.cantrips": [
+          "fire_bolt",
+          "mage_hand",
+          "light",
+          "ray_of_frost",
+          "toll_the_dead"
+        ]
+      }
+    },
+    {
+      "level": 11,
+      "class": "wizard",
+      "hp": 0,
+      "choices": {
+        "evoker.11.evocation_savant": [
+          "vitriolic_sphere"
+        ],
+        "wizard.spellbook": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "burning_hands",
+          "feather_fall",
+          "chromatic_orb",
+          "invisibility",
+          "web",
+          "blur",
+          "hold_person",
+          "fireball",
+          "counterspell",
+          "haste",
+          "fly",
+          "greater_invisibility",
+          "banishment",
+          "dimension_door",
+          "polymorph",
+          "slow",
+          "dispel_magic",
+          "wall_of_fire",
+          "otilukes_resilient_sphere",
+          "stoneskin",
+          "sleet_storm"
+        ],
+        "wizard.prepared": [
+          "magic_missile",
+          "shield",
+          "mage_armor",
+          "sleep",
+          "thunderwave",
+          "scorching_ray",
+          "web",
+          "fireball",
+          "counterspell",
+          "haste",
+          "ice_storm",
+          "greater_invisibility",
+          "dimension_door",
+          "dispel_magic",
+          "wall_of_fire",
+          "vitriolic_sphere"
+        ]
+      }
     }
   ]
 }

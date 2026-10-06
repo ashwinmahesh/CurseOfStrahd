@@ -1,0 +1,24 @@
+{
+  "id": "the_gate_of_krezk",
+  "name": "The Gate of Krezk",
+  "summary": "Krezk keeps its gate shut to strangers. It opens for a reason, and the burgomaster decides what a reason is.",
+  "giver": "krezk_guard",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "refused",
+      "journal": "Krezk's gate stays shut to strangers. The watchman said it opens only for a reason, and that the Abbot of St. Markovia, up the switchback track from the gate, takes in anyone. The burgomaster listens to what the Abbot says about people, much as he hates to.",
+      "objectives": [
+        "Give the burgomaster a reason to open the gate",
+        "Or climb to the Abbey of St. Markovia and ask the Abbot to vouch for us"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "opened",
+      "journal": "Dmitri Krezkov, the burgomaster, opened Krezk's gate to us. We are guests behind the last wall on the road.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

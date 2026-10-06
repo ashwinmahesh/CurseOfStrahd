@@ -1,0 +1,326 @@
+{
+  "region": "van_richtens_tower",
+  "summary": "Region 9a (P5-09): Van Richten's Tower on Lake Baratok, the werewolf den in the hills above Lake Zarovich, and the fishers' landing on Lake Zarovich. One registry for the three regions (van_richtens_tower, werewolf_den, lake_zarovich).",
+  "flags": [
+    {
+      "id": "lake_boat_ready",
+      "type": "bool",
+      "summary": "The party has a boat at the fishers' landing (Bluto's leave, his fate, or borrowed). Opens the boat roads to the den and to Lake Baratok (data/travel/van_richtens_tower.json)."
+    },
+    {
+      "id": "bluto_fate",
+      "type": "string",
+      "summary": "What became of Bluto Krogarov at the landing: saved (talked, grabbed or given a reason off the jetty), drowned (walked into the lake), vistani (handed to Luvash's camp), killed, or left (to live with it). Set only after Vallaki's Arabelle rescue resolved. Epilogue may read."
+    },
+    {
+      "id": "arabelle_ribbon_found",
+      "type": "bool",
+      "summary": "The party found Arabelle's ribbon on the jetty post before her rescue (Tarokka names her). Arabelle mentions it when she joins."
+    },
+    {
+      "id": "arabelle_sent_home",
+      "type": "bool",
+      "summary": "At the landing, the party sent Arabelle (the Tarokka's ally) home to her father; she waits at the Vistani camp, where Luvash still offers her."
+    },
+    {
+      "id": "tower_rumor",
+      "type": "bool",
+      "summary": "The party has heard of the tower on Lake Baratok (Bluto, or Ezmerelda's silver snare on the trail). Shows the tower on the travel map."
+    },
+    {
+      "id": "khazan_known",
+      "type": "bool",
+      "summary": "The party knows the tower door opens to the archmage's name, Khazan (Ezmerelda's note, Ezmerelda, the lintel, or Van Richten)."
+    },
+    {
+      "id": "tower_lintel_read",
+      "type": "bool",
+      "summary": "The party has made its one History attempt on the lintel."
+    },
+    {
+      "id": "tower_ward_known",
+      "type": "bool",
+      "summary": "Arcana at the door showed the two wards: an old one that wants a name, a new one keyed to one person."
+    },
+    {
+      "id": "tower_door_opened",
+      "type": "bool",
+      "summary": "The tower door has opened (the name spoken, or Van Richten with the party). Opens the exit into the tower."
+    },
+    {
+      "id": "tower_ward_lowered",
+      "type": "bool",
+      "summary": "The lightning ward on the lantern-room floor is off: the copper rod in the hearth was pulled, or Van Richten lowered it."
+    },
+    {
+      "id": "hearth_studied",
+      "type": "bool",
+      "summary": "The party has made its one Arcana or Investigation attempt on the hearth's copper rod."
+    },
+    {
+      "id": "van_richten_notes_read",
+      "type": "bool",
+      "summary": "The party read Van Richten's casebook in the workroom (Strahd's weaknesses, the wolves, the hearth rod). At night, the castle's servants wait on the causeway."
+    },
+    {
+      "id": "van_richten_identity_known",
+      "type": "bool",
+      "summary": "The party read the ledger of disguises: Rictavio at the Blue Water Inn is Van Richten. Ezmerelda can be told."
+    },
+    {
+      "id": "van_richten_letter_found",
+      "type": "bool",
+      "summary": "The party found Van Richten's unsent letter to Ezmerelda in the lantern room."
+    },
+    {
+      "id": "van_richten_strongbox_opened",
+      "type": "bool",
+      "summary": "The party opened Van Richten's strongbox in the lantern room (the Tarokka spot van_richtens_tower). He mentions it if he is home."
+    },
+    {
+      "id": "tower_visitors_beaten",
+      "type": "bool",
+      "summary": "The party beat the castle's servants waiting on the causeway at night after reading the casebook (encounter tower_night_visitors)."
+    },
+    {
+      "id": "van_richten_met_at_tower",
+      "type": "bool",
+      "summary": "The party found Van Richten at home in his workroom (he left Vallaki: rictavio_gone)."
+    },
+    {
+      "id": "van_richten_reunited",
+      "type": "bool",
+      "summary": "Van Richten and Ezmerelda are reconciled at the tower (he came with the party as a guest, or the party talked him down to her). Later regions, the castle and the epilogue may read."
+    },
+    {
+      "id": "ezmerelda_met_at_tower",
+      "type": "bool",
+      "summary": "The party met Ezmerelda at her camp on Lake Baratok (she is there when the Tarokka did not name her). The abbey's ezmerelda_met is set too."
+    },
+    {
+      "id": "ezmerelda_asked_in",
+      "type": "bool",
+      "summary": "Ezmerelda told the party about the wards and asked them to go into the tower for her."
+    },
+    {
+      "id": "ezmerelda_trust",
+      "type": "int",
+      "summary": "Ezmerelda's trust in the party: +1 the letter, +1 the truth about Rudolph, +2 the reunion, +1 Kiril dead, +1 the children freed; -1 a failed lie, -1 Kiril left on top, -2 her wagon robbed. At 2 she gives a gift and will hunt with the party. The abbey writer may read it."
+    },
+    {
+      "id": "ezmerelda_gift_given",
+      "type": "bool",
+      "summary": "Guard: Ezmerelda has given her gift (holy water, a potion, bolts)."
+    },
+    {
+      "id": "ezmerelda_given_letter",
+      "type": "bool",
+      "summary": "The party gave Ezmerelda Van Richten's letter."
+    },
+    {
+      "id": "ezmerelda_told_rictavio",
+      "type": "bool",
+      "summary": "The party told Ezmerelda that Van Richten is Rictavio of the Blue Water Inn. Unless he had already gone home to the tower, she leaves for Vallaki (ezmerelda_left_tower)."
+    },
+    {
+      "id": "ezmerelda_secret_kept",
+      "type": "bool",
+      "summary": "The party kept Van Richten's secret from Ezmerelda."
+    },
+    {
+      "id": "ezmerelda_lied",
+      "type": "bool",
+      "summary": "The party lied to Ezmerelda about Van Richten (a failed lie costs trust)."
+    },
+    {
+      "id": "ezmerelda_left_tower",
+      "type": "bool",
+      "summary": "Ezmerelda has left her camp on Lake Baratok for Vallaki to find Rictavio. Later regions (Vallaki's epilogue, the castle) may read."
+    },
+    {
+      "id": "ezmerelda_wagon_robbed",
+      "type": "bool",
+      "summary": "The party opened Ezmerelda's locked wagon (container flag). She notices: trust -2."
+    },
+    {
+      "id": "ezmerelda_robbery_noticed",
+      "type": "bool",
+      "summary": "Guard: Ezmerelda has confronted the party about her wagon."
+    },
+    {
+      "id": "ezmerelda_trap_found",
+      "type": "bool",
+      "summary": "The party found (or set off) the tripwire on Ezmerelda's wagon step (trap flag)."
+    },
+    {
+      "id": "ezmerelda_heard_den",
+      "type": "bool",
+      "summary": "Guard: Ezmerelda has reacted to how the werewolf pack was settled."
+    },
+    {
+      "id": "den_way_known",
+      "type": "bool",
+      "summary": "The party knows the way to the werewolves' den (Ezmerelda, Bluto, Van Richten's map, or the hill trails). Shows the den on the travel map."
+    },
+    {
+      "id": "den_doll_found",
+      "type": "bool",
+      "summary": "The party found Ana's rag doll on the slope below the den."
+    },
+    {
+      "id": "zuleika_met",
+      "type": "bool",
+      "summary": "The party has met Zuleika Toranescu (at the den mouth, or at the shrine after a fight)."
+    },
+    {
+      "id": "zuleika_asked",
+      "type": "bool",
+      "summary": "Zuleika asked the party to free Emil and stand with him against Kiril."
+    },
+    {
+      "id": "zuleika_children_told",
+      "type": "bool",
+      "summary": "Zuleika told the party about the five children from Krezk."
+    },
+    {
+      "id": "zuleika_vouched",
+      "type": "bool",
+      "summary": "The party agreed to free Emil; Zuleika walks them into the den and the guards stand aside (no den_guards fight)."
+    },
+    {
+      "id": "den_guards_cleared",
+      "type": "bool",
+      "summary": "The party fought its way into the den's mouth cave (encounter den_guards); Kiril's challenge comes with fewer loyalists."
+    },
+    {
+      "id": "emil_key_found",
+      "type": "bool",
+      "summary": "The party has the key to Emil's silver chains (from Zuleika, or the peg in Kiril's lair)."
+    },
+    {
+      "id": "emil_met",
+      "type": "bool",
+      "summary": "The party has spoken with Emil in his chains."
+    },
+    {
+      "id": "emil_force_tried",
+      "type": "bool",
+      "summary": "The party has made its one Athletics attempt on Emil's chains."
+    },
+    {
+      "id": "emil_pick_tried",
+      "type": "bool",
+      "summary": "The party has made its one Sleight of Hand attempt on Emil's cuffs."
+    },
+    {
+      "id": "emil_freed",
+      "type": "bool",
+      "summary": "Emil is out of his chains and joined the party as a guest; he howled his challenge and Kiril is coming home."
+    },
+    {
+      "id": "kiril_children_asked",
+      "type": "bool",
+      "summary": "The party asked Kiril about the children during the challenge (once)."
+    },
+    {
+      "id": "pack_challenge_begun",
+      "type": "bool",
+      "summary": "A fight over the pack has started (the challenge, the reckoning, or a broken truce); removes Kiril's and Zuleika's waiting NPCs."
+    },
+    {
+      "id": "kiril_defeated",
+      "type": "bool",
+      "summary": "Kiril died in the challenge fight (encounter pack_challenge), beside Emil or, after his truce was broken, without him."
+    },
+    {
+      "id": "den_broken",
+      "type": "bool",
+      "summary": "The party turned on both Kiril and Emil and destroyed the pack (encounter den_reckoning)."
+    },
+    {
+      "id": "emil_dead",
+      "type": "bool",
+      "summary": "Emil Toranescu is dead: Kiril killed him when the party stood aside or handed him back, or he died in the reckoning (set by the aftermath's outcome where relevant)."
+    },
+    {
+      "id": "emil_betrayed",
+      "type": "bool",
+      "summary": "The party handed Emil back to Kiril rather than merely standing aside."
+    },
+    {
+      "id": "kiril_bribed",
+      "type": "bool",
+      "summary": "The party bought the children from Kiril for a hundred gold."
+    },
+    {
+      "id": "kiril_hoard_opened",
+      "type": "bool",
+      "summary": "The party opened Kiril's iron chest in his lair (container flag). Emil mentions it if he leads the pack."
+    },
+    {
+      "id": "truce_broken",
+      "type": "bool",
+      "summary": "After letting Kiril lead, the party came back for the children by force (pack_challenge without Emil)."
+    },
+    {
+      "id": "wolf_pack_leader",
+      "type": "string",
+      "summary": "THE END STATE of the den: emil (Kiril dead; the pack keeps to the hills and won't answer the castle), kiril (Emil dead; the pack still hunts for the castle), none (Kiril and Emil dead; the pack is gone). Random tables, Ezmerelda, Krezk, the castle and the epilogue read it."
+    },
+    {
+      "id": "pack_resolved",
+      "type": "bool",
+      "summary": "The pack question is settled for now (Kiril's terms accepted, or the aftermath of a fight)."
+    },
+    {
+      "id": "pack_aftermath_done",
+      "type": "bool",
+      "summary": "Guard: the aftermath after a fight in the den has played (Zuleika with Emil, or Mirela without him)."
+    },
+    {
+      "id": "wolf_den_milestone_reached",
+      "type": "bool",
+      "summary": "Guard: the region's one milestone (the den's climax) has been given."
+    },
+    {
+      "id": "den_children_found",
+      "type": "bool",
+      "summary": "The party has spoken with the children in the pen."
+    },
+    {
+      "id": "ana_doll_returned",
+      "type": "bool",
+      "summary": "The party gave Ana her rag doll back through the pen gate."
+    },
+    {
+      "id": "den_children_freed",
+      "type": "bool",
+      "summary": "The five children from the farms below Krezk are out of the den and on their way home. Krezk should read it (their families, the burgomaster's thanks)."
+    },
+    {
+      "id": "den_children_left",
+      "type": "bool",
+      "summary": "The party accepted Kiril's terms and left the children in the pen. Krezk and the epilogue should read it (the moon comes in eleven days)."
+    },
+    {
+      "id": "mirela_bite_tried",
+      "type": "bool",
+      "summary": "The party has made its one Medicine attempt on Mirela's arm in the pen."
+    },
+    {
+      "id": "mirela_bite_seen",
+      "type": "bool",
+      "summary": "The party saw the werewolf bite on Mirela's arm."
+    },
+    {
+      "id": "mirela_cured",
+      "type": "bool",
+      "summary": "Mirela's bite was treated (Zuleika's wolfsbane in Emil's den, or a cleric's prayer). If the children went home and this is unset, Krezk may have a wolf at the next moon."
+    },
+    {
+      "id": "mother_night_studied",
+      "type": "bool",
+      "summary": "The party has made its one Religion attempt on the shrine of Mother Night."
+    }
+  ]
+}

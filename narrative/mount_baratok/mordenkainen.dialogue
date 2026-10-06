@@ -1,0 +1,188 @@
+# The Mad Mage of Mount Baratok, who is Mordenkainen (docs/regions/berez.md §2, §3.2). `mad_mage` speaks until his
+# memory comes back; `mordenkainen` speaks after, and is the one who can join as the Tarokka ally (the broken one).
+
+~ start
+if flag.mordenkainen_restored
+-> restored_greeting
+endif
+if not flag.mordenkainen_met
+set mordenkainen_met
+if not quest.the_mad_mage
+quest the_mad_mage met
+endif
+Narrator: An old man sits at a dragonchess board with frost on its pieces. His robe was magnificent forty years ago and is magnificent still, in the way a cathedral is after a fire. His beard has twigs in it. His eyes, when they lift to you, are very sharp and very lost.
+mad_mage: Ah. Are you real? Be honest. The last three visitors were birds, and one of them was extremely persuasive.
+interject tag:blunt: We're real.
+mad_mage [sly]: That is exactly what the persuasive one said.
+else
+mad_mage: You again. Or someone wearing you. Sit. Don't touch the black king; he bites.
+endif
+if guest:rictavio
+interject guest:rictavio: I know that face. Thirty years older and wild as a goat, but I know it. Good God. They told me he was dead.
+endif
+-> mad_menu
+
+~ mad_menu
+* Who are you? -> who
+* What happened to you? -> what_happened
+* [Insight DC 14] Watch where his eyes go when he loses a word. -> eyes_ok | eyes_fail
+* [Wizard] (Name the spell he keeps muttering.) -> spell_named
+* [if flag.mordenkainen_memory_jar_taken] Uncork the witch's jar for him. -> jar
+* [if level >= 9] [Cleric] (Cast Greater Restoration on him.) -> spell
+* [if level >= 9] [Druid] (Cast Greater Restoration on him.) -> spell
+* [if level >= 9] [Bard] (Cast Greater Restoration on him.) -> spell
+* [if flag.mordenkainen_spellbook_found and not flag.mordenkainen_name_back] Show him the spellbook from the cairn. -> book
+* [if flag.mordenkainen_name_back] Read him the last page. -> last_page
+* [if not flag.mordenkainen_name_back and not flag.mordenkainen_talked_back] [Arcana DC 16] Talk him back to himself, one spell at a time. -> talk_back | talk_back_fail
+* [if flag.lysaga_jar_heard and not flag.mordenkainen_memory_jar_taken] The witch of Berez says she keeps your memory in a jar. -> jar_rumor
+* [if tarokka.ally.npc == mordenkainen] Madam Eva's cards named you. -> mad_ally
+* Play him at dragonchess. -> chess
+* Goodbye. -> mad_bye
+
+~ who
+mad_mage: I am... Osric. No. Osric was a goat. I am Marvellous Something. I had a name like a staircase, long, with a landing in the middle. I have looked for it under every stone on this mountain.
+interject class:wizard: You've lost your name?
+mad_mage: Lost? It was taken. One doesn't simply lose a name like that. One would hear it fall.
+-> mad_menu
+
+~ what_happened
+mad_mage: I went down to the castle with a plan. The plan was excellent. I remember the plan was excellent. The plan went in, and I came out, and some time after that a little old woman with a jar said "hush now" and everything went quiet.
+if flag.baratok_storm_seen
+mad_mage: Did you see my storm on the ridge? I made it to tell me something every evening. I can't remember what. It's very punctual.
+endif
+-> mad_menu
+
+~ eyes_ok
+set mordenkainen_eyes_read
+Narrator: Each time a word slips away from him, his eyes go up and to the left, out of the window, to the summit where a cairn of stones stands against the sky. As if he left something there and can't remember why he keeps checking on it.
+-> mad_menu
+
+~ eyes_fail
+Narrator: His eyes go everywhere: the board, the window, your boots, the ceiling. They never settle long enough to tell you anything.
+-> mad_menu
+
+~ spell_named
+set mordenkainen_name_spoken
+interject class:wizard: That's a sword spell. A floating blade of force. It has a name in front of it, the way the great ones do. Mordenkainen's.
+Narrator: The old man flinches as if you'd thrown a cup of cold water in his face.
+mad_mage: Don't. Don't say it like that, as if it were somebody's. It hurts. Why does that hurt?
+-> mad_menu
+
+~ jar
+Narrator: The wax comes away. Something silver pours up out of the jar like smoke going the wrong way, hangs in the cold air between you, and then goes into him through the eyes.
+-> restored
+
+~ spell
+Narrator: The prayer is long, and it costs. Warmth goes out of the caster and into the old man, and for a moment the frost on the chessboard melts and runs. Somewhere inside him, a lock that a witch closed decades ago turns over.
+-> restored
+
+~ book
+set mordenkainen_name_back
+Narrator: He takes the book as if it might be a trick. Then he opens it, and reads the flyleaf, and his lips move.
+mad_mage: Mordenkainen. That's... that's my hand. That's how I make a capital M, with the little hook. Nobody else makes it like that. It's a terrible M. It's mine.
+if flag.mordenkainen_name_spoken
+mad_mage: You said it before, and it hurt. It doesn't hurt now. It fits, like an old boot.
+endif
+mad_mage: There's more. I can feel there's more. Read me the end. Not the spells. The last page. I wrote something there for myself, I'm sure of it.
+-> mad_menu
+
+~ last_page
+Narrator: The last page is not a spell. It is a note, in the same impatient hand: If you are reading this, you lost. Your name is Mordenkainen. You came to kill a vampire called Strahd. You hid this book so he couldn't have it. Get up.
+-> restored
+
+~ talk_back
+set mordenkainen_talked_back
+Narrator: You give him the first words of a cantrip and let him finish it. Then a harder one. Then harder. By the fifth spell he is correcting your pronunciation, and by the ninth he stops in the middle of a word and looks at his own hands.
+-> restored
+
+~ talk_back_fail
+set mordenkainen_talked_back
+Narrator: He follows you for three spells, then loses the thread and gets angry, and the room fills with a short, furious snowfall that settles on everybody.
+mad_mage [angry]: Stop it. Stop poking at the hole. It's MY hole.
+-> mad_menu
+
+~ jar_rumor
+mad_mage: A jar. Yes. A little woman with a jar, saying hush now. I remember the jar more than I remember anything else. Bring me the jar. No: don't. She'll want something for it. They always want something.
+-> mad_menu
+
+~ mad_ally
+mad_mage: Cards! I love cards. Yes, certainly, I'll come, where are we going? We'll need provisions, and a plan, and a...
+Narrator: He stops. He looks at you with polite interest, as if you had just walked in.
+mad_mage: I'm sorry. Have we met? Are you real?
+interject tag:devout: He can't come like this. Not with half of him still in a bottle somewhere.
+-> mad_menu
+
+~ chess
+Narrator: The board is set for a game already in progress, and every piece on it, both sides, is black. He plays both, quickly and brilliantly, and always lets the same side win.
+mad_mage: I play the other fellow every day. He's very good. He was always very good. I just can't remember who he is.
+interject class:fighter: You're losing on purpose.
+mad_mage: Am I? How interesting. I wonder what I'm practising for.
+-> mad_menu
+
+~ mad_bye
+mad_mage: Goodbye! Mind the birds. Don't believe a word they say.
+-> END
+
+# ---------------------------------------------------------------- Restored
+
+~ restored
+set mordenkainen_restored
+quest the_mad_mage restored
+Narrator: He sits very still. The snow stops. Something comes back into his face, one piece at a time, like furniture being carried into an empty house: a hard mouth, a scholar's frown, an old and specific anger.
+Mordenkainen: My name is Mordenkainen.
+Mordenkainen: I came to this valley to kill him, and he beat me, and then he had his witch take everything I was and put it on her shelf, so I would live up here forever and not even know enough to be ashamed. He thought that was funny. He was right.
+if flag.mordenkainen_memory_jar_taken
+Mordenkainen: The witch. Lysaga. She held my eyes open while she did it, and sang. I'll remember that now, too. Thank you, I suppose.
+endif
+interject name:silvain_aster: Mordenkainen. The Mordenkainen. I have copied your sword spell out by hand eleven times. I have... questions.
+Mordenkainen: Everyone has questions. Very few have the right ones. Ask later.
+-> restored_menu
+
+~ restored_greeting
+Mordenkainen: You again. Good. I've been rebuilding my spells from the bottom up; it's like learning to walk after a fall, if walking could set things on fire. What do you need?
+-> restored_menu
+
+~ restored_menu
+* [if tarokka.ally.npc == mordenkainen and not guest:mordenkainen] Madam Eva's cards named you. Will you come? -> ally
+* [if tarokka.ally.npc != mordenkainen and not flag.mordenkainen_promised_aid] Will you help us against him? -> promise
+* What do you know about Strahd? -> about_strahd
+* [if not flag.tsolenka_watchword_known] The gate in the Tsolenka Pass is held by dead men. -> watchword
+* What waits at the Amber Temple? -> temple
+* Goodbye. -> bye
+
+~ ally
+Mordenkainen: Eva. That woman read my cards forty years ago and told me I'd be broken, and here I am, with the pieces in a heap. If her cards say I mend in your company, I'm not going to argue with them. Not twice.
+Mordenkainen: I'll come. My spells are rusty and my pride is worse. Keep me away from mirrors and from anyone who says "hush".
+join mordenkainen
+quest find_the_ally found
+quest the_mad_mage joined
+interject class:wizard: You'll want notes. I take very good notes.
+Mordenkainen: Then try to keep up.
+-> END
+
+~ promise
+set mordenkainen_promised_aid
+quest the_mad_mage promised
+Mordenkainen: Not like this. If I go down that mountain today, I'll be a clever old man with half his spells and all his pride, which is exactly how I lost the first time.
+Mordenkainen: Give me time to mend. When you go up to the castle, send a raven to this mountain, and I will come. That's a promise, and I remember how to keep those now.
+-> restored_menu
+
+~ about_strahd
+Mordenkainen: He is not the strongest thing I've fought. He is the most patient. He doesn't win the battle; he wins the week after it, when you're tired and he isn't. Don't fight him on the day he chooses. He chooses every day.
+Mordenkainen: And he cheats. Not with magic. With people. He'll put somebody you care about between you and him, and smile.
+-> restored_menu
+
+~ watchword
+set tsolenka_watchword_known
+Mordenkainen: The Tsolenka watch. Dead sergeant, very correct, wants the word. I went up that road the year I came here, looking for a weapon in the temple. I didn't find one, and I'm glad.
+Mordenkainen: The word is "cold hearth, shut door". Their old officers' joke, I think: keep the fire out and the door shut. Say it like you're bored. Sergeants trust bored people.
+-> restored_menu
+
+~ temple
+Mordenkainen: Amber. Rooms of it, and things sleeping in the amber, very old and very hungry, that will offer you whatever you've always wanted for the small price of the rest of you.
+Mordenkainen: Take nothing that's offered. Anything they give you, they keep a hand on. I've seen what that looks like after forty years. It looks like him.
+-> restored_menu
+
+~ bye
+Mordenkainen: Go on. And stay out of jars.
+-> END

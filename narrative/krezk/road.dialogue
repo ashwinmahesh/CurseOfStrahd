@@ -1,0 +1,36 @@
+# Events on the Old Svalich Road west of Vallaki, toward Krezk (data/random_encounters/krezk_road.json).
+
+~ belview_cart
+set clovin_met_on_road
+Narrator: A handcart lies tipped in the ditch with one wheel off. Beside it, sitting on an empty wine cask, is a stooped figure in a monk's cast-off habit, with one ear like a hound's and a hand that is mostly feathers.
+Clovin Belview: Don't. Don't say it. I know what I look like. I look like a man who walked two days to a winery and found nobody to sell him wine. That's what I look like.
+* What happened at the winery? -> winery
+* [Athletics DC 10] Let us put your wheel back on. -> wheel_ok | wheel_fail
+* We'll leave you to it. -> END
+
+~ winery
+Clovin Belview: Trouble, they said. Didn't open the gate, didn't sell me a drop. Somebody shouted from a window to go home, there was trouble, and to tell everyone. So. I'm telling everyone. You're everyone.
+Clovin Belview: The Abbot will be disappointed. He doesn't shout when he's disappointed. He just gets very kind. You don't want him kind.
+-> END
+
+~ wheel_ok
+set clovin_befriended
+Narrator: The wheel goes back on its axle with a clunk, and the little cart rights itself. Clovin looks at it, and at you, as if nobody has ever done anything for him on purpose.
+Clovin Belview: Well. Well, now. Clovin Belview, of the Abbey of St. Markovia, up over Krezk. If you're ever that way, I'll pour you something. If there's ever anything to pour.
+-> END
+
+~ wheel_fail
+Narrator: The wheel slides off the axle twice, the second time onto a foot. Clovin watches with the air of a man whose day could not, in fact, get worse, and has just been proved wrong.
+Clovin Belview: Leave it. I'll carry it. I carry everything else.
+-> END
+
+~ waystone
+Narrator: At a bend stands a waist-high stone with a sunburst cut into it, so old the rays are just dents. A candle burns in a niche at its foot, though there's no one in sight.
+* Leave a coin for whoever keeps it lit. -> waystone_coin
+* Walk on. -> END
+
+~ waystone_coin
+gold -1
+Narrator: The coin clicks into the niche beside the candle. The flame doesn't move, but for a mile after, the wind seems to be at your backs.
+interject tag:devout: The White Sun's people. Krezk's not far, then.
+-> END

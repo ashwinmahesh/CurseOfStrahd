@@ -1,0 +1,154 @@
+# The fishers' landing on Lake Zarovich: Bluto Krogarov after the Vistani girl (docs/voice/bluto.md; Vallaki's
+# vistani_camp.dialogue holds the rescue), and his rowboat. If Arabelle was saved, Bluto has come to the end of the
+# jetty with stones in his pockets, as she said he would; if she was lost, his nets are full.
+
+~ bluto_pier
+Narrator: At the far end of the jetty stands Bluto, in the same sodden coat. His pockets hang heavy and lopsided. He has filled them with stones.
+if guest:arabelle
+Arabelle: I told you. He goes in the lake himself, in the end. Unless somebody stops him. I didn't see that part. I don't see everything.
+Bluto [afraid]: Don't look at me, little one. Please don't look at me.
+endif
+Bluto [sad]: You. You're the ones who took her back. The lake was so angry after. A whole year of empty nets, and then you took her supper away. So she told me in the dark that it's my turn instead.
+* [Persuasion DC 14] Nothing talked to you in the dark, Bluto. Hunger did. Come back from the edge. -> talk_ok | talk_fail
+* [Athletics DC 12] Get to him before he steps off. -> grab_ok | grab_fail
+* We need your boat, and a man who knows this water. Row for us. -> purpose
+* Let him go. It's his choice to make. -> let_go
+
+~ talk_ok
+Narrator: He listens. He doesn't want to, but he listens, and somewhere in the middle of it he sits down on the planks and starts taking the stones out of his pockets, one at a time, and dropping them in the water.
+-> saved
+
+~ grab_ok
+Narrator: You cover the jetty in four long strides and have him by the collar as his weight goes forward. For a moment you are both leaning out over the black water. Then you aren't.
+-> saved
+
+~ purpose
+Bluto: Row? For you? Where?
+Narrator: He looks at the boat, and at the far shore, and at his own hands, which know how to do this one thing. Slowly, he turns his back on the edge.
+Bluto: The north shore's a long pull. I'll want my coat lighter for it.
+Narrator: He starts emptying his pockets.
+-> saved
+
+~ talk_fail
+Bluto: No. No more talking. She's been talking for a year and I'm tired.
+Narrator: He steps off the end of the jetty, and the stones take him straight down.
+-> dive
+
+~ grab_fail
+Narrator: The planks are slick and you are a stride short. Your fingers close on the hem of his coat as it goes over, and the hem tears.
+-> dive
+
+~ dive
+* [Athletics DC 13] Go in after him. -> dive_ok | dive_fail
+* (Let the lake have him.) -> let_go
+
+~ dive_ok
+Narrator: The cold hits like a fist. You find him by touch, three fathoms down, already still, and you tear the coat off him and the stones go on down without him.
+Narrator: On the jetty he coughs up half the lake and lies there laughing and crying at once, which seems fair.
+-> saved
+
+~ dive_fail
+Narrator: Black water, weed and cold, and nothing in your hands. When you come up for the third time, the surface has closed and gone flat.
+-> drowned
+
+~ let_go
+Narrator: Bluto looks back once, as if he'd expected someone to argue. Then he walks off the end of the jetty, and the stones take him straight down.
+-> drowned
+
+~ saved
+set bluto_fate = "saved"
+set lake_boat_ready
+set den_way_known
+set tower_rumor
+Bluto: I haven't eaten in four days. Maybe that's what she was. Maybe she was only hunger, talking in my own voice.
+Bluto: The boat's yours whenever you want it. I'll row, if you'll have me. The north shore is where the wolves come down to drink; there's a trail up from there into the hills, to their den.
+Bluto: And west, up the stream, there's a little cold lake under the mountain with a tower in it. A lamp burns there some nights. A Vistani woman has her wagon by it, and she shoots at anything that moves.
+interject class:cleric: Eat something first. That's not advice, it's an order.
+Bluto: Yes. Yes, all right.
+-> END
+
+~ drowned
+set bluto_fate = "drowned"
+set lake_boat_ready
+if guest:arabelle
+Arabelle [sad]: I didn't want to be right. I'm right too much.
+endif
+interject class:cleric: Morninglord take him somewhere warmer than this. There must be somewhere warmer than this.
+Narrator: His boat is still tied at the foot of the jetty. Nobody will mind now if you take it.
+-> END
+
+# ---------------------------------------------------------------- If Arabelle was lost
+
+~ bluto_nets
+Narrator: Bluto stands among his drying racks up to the elbows in a net so full it has split, and silver fish flap all round his feet on the shingle. He is gutting them as fast as he can, and weeping while he does it.
+Bluto: She paid. You see? She paid. A whole year of nothing, and the morning after, this. The lake keeps her bargains.
+* [Insight DC 12] Is he mad, or is he right? -> nets_insight
+* We're taking you to the Vistani camp. Let her father decide what you're owed. -> to_vistani
+* (Draw steel.) You traded a child for a net of fish. -> kill
+* Live with it, Bluto. Every day of your life. -> left
+
+~ nets_insight
+Narrator: He believes every word. As for the fish: a shoal like this comes in when the water turns cold all at once. It could be the season. It could be anything. The lake isn't telling.
+-> bluto_nets_menu
+
+~ bluto_nets_menu
+* We're taking you to the Vistani camp. Let her father decide what you're owed. -> to_vistani
+* (Draw steel.) You traded a child for a net of fish. -> kill
+* Live with it, Bluto. Every day of your life. -> left
+
+~ to_vistani
+set bluto_fate = "vistani"
+set lake_boat_ready
+Narrator: He doesn't fight. He leaves the fish where they lie and walks ahead of you along the shore to the painted wagons, and when Luvash sees who you have brought, the whole camp goes silent.
+Narrator: You don't stay to see what the Vistani decide. You hear it, a little later, from the road.
+interject tag:blunt: It was theirs to decide. Not ours.
+-> END
+
+~ kill
+set bluto_fate = "killed"
+set lake_boat_ready
+Narrator: He sees it coming and doesn't run. It is quick. Afterwards the fish go on flapping on the shingle for a long time, and then they stop.
+interject class:cleric: That wasn't justice. That was only the end of something.
+-> END
+
+~ left
+set bluto_fate = "left"
+set lake_boat_ready
+Bluto: Every day. Yes. Every day. Take the boat, I can't look at it. Take it and go.
+-> END
+
+# ---------------------------------------------------------------- Bluto, later
+
+~ bluto_after
+if flag.bluto_fate == "saved"
+Bluto: Fed, dry and nobody's dinner. That's a better week than I've had in a year. The boat's ready when you are.
+if guest:arabelle
+Arabelle: You look better, fish-man. You'll catch a fish in the spring. A big one. It'll bite you.
+Bluto: ...Thank you, little one. I think.
+endif
+else
+Narrator: Bluto sits on an upturned bucket among fish he has stopped gutting. The racks around him are full, and starting to smell, and he doesn't seem to notice.
+Bluto: Take the boat. Go on. Take it.
+endif
+-> END
+
+# ---------------------------------------------------------------- The rowboat
+
+~ boat
+if flag.lake_boat_ready
+Narrator: The rowboat rides at the foot of the jetty, bailed and ready, oars shipped. The north shore is a long pull, and the wolf hills are waiting on the far side of it.
+-> END
+endif
+if (flag.arabelle_rescued or flag.arabelle_lost) and not flag.bluto_fate
+Narrator: A flat-bottomed rowboat, tarred and sound: the only boat on the landing that isn't rotting. It's Bluto's, and Bluto is right there, and in no state to lend anything.
+-> END
+endif
+Narrator: A flat-bottomed rowboat, tarred and sound: the only boat on the landing that isn't rotting. Somebody still cares for it. Somebody who hasn't been home in days.
+* Borrow it. Nobody has fished this lake in a year. -> take_boat
+* Leave it. -> END
+
+~ take_boat
+set lake_boat_ready
+Narrator: You bail it out and ship the oars. It sits low and steady in the water: a good boat. Across the lake, the hills wait.
+interject tag:curious: Borrowing. This is borrowing. We'll bring it back. Probably.
+-> END

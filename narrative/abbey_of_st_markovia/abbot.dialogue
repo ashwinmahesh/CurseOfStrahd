@@ -1,0 +1,217 @@
+# The Abbot of St. Markovia, in his chapel (docs/voice/abbot.md). A celestial sent long ago to keep the valley's faith,
+# bent by four centuries of watching it suffer: he means to cure the devil with a bride. He vouches for the party at
+# Krezk's gate, asks for a wedding dress (offering to heal Ilya), and hands over to the unveiling when it arrives.
+# The Abbey is one of the scariest places in the game: his humour is the dreadful calm of the very sure.
+
+~ start
+if flag.abbot_fate == "wedding"
+-> after_wedding
+elif flag.abbot_fate == "broken"
+-> after_broken
+endif
+if not flag.abbot_met
+-> first
+endif
+if flag.wards_cells_freed and not flag.abbot_cells_noted
+-> cells
+endif
+Abbot: Children. You came back. Sit, if you like. The pews are hard, but they are honest about it.
+-> menu
+
+~ first
+set abbot_met
+quest the_abbots_bride met
+Narrator: A young monk in a plain brown habit is lighting the candles along the altar rail. He doesn't use a taper. He touches each wick with a fingertip, and each one lights.
+Narrator: He turns. Golden hair, a face like a saint carved by someone who had only heard saints described. For a moment the light in the chapel seems to arrange itself around him, and then it remembers itself.
+Abbot: Welcome. I hoped you would come today. I am the Abbot of this house. You are cold, and tired, and a little afraid of me. All three are sensible. Two of them I can help with.
+if flag.krezk_abbey_directed and not flag.krezk_gate_open
+Abbot: Krezk shut its gate on you and pointed up the mountain. They do that. I am where Krezk sends what it would rather not decide about.
+endif
+if guest:ireena
+set abbot_saw_ireena
+Narrator: His eyes find Ireena, and every candle in the chapel leans toward her, all at once, as if a door had opened behind her. Then they straighten.
+Abbot: Forgive me. For a moment you were someone I have prayed for for a very long time. Welcome, child. Welcome.
+interject guest:ireena: I've had warmer welcomes from wolves. They at least looked at the rest of me.
+endif
+if guest:ezmerelda
+interject guest:ezmerelda: That's no monk. Look at his feet. He's standing a finger's breadth off the floor.
+Abbot: Hunters always notice the feet. Welcome, Ezmerelda d'Avenir. Your teacher noticed them too, once.
+endif
+-> menu
+
+~ menu
+* Who are you? -> who
+* What is this place? -> place
+* Who was St. Markovia? -> markovia
+* Who are the Belviews to you? -> belviews
+* [if not flag.abbot_nature_known] [Religion DC 15] (Something about him is holy, and wrong. What is he?) -> nature_ok | nature_fail
+* [Cleric] (Open yourself to the holy in this room. What stands in front of you?) -> divine
+* [Paladin] (Let your Divine Sense reach for him.) -> divine
+* [if flag.abbot_saw_ireena and guest:ireena] [Insight DC 13] (Watch how he looks at Ireena.) -> ireena_ok | ireena_fail
+* [if not flag.abbot_bride_revealed] Clovin says you have work in the wards. What is it? -> bride
+* [if flag.abbot_bride_revealed and not flag.abbot_dress_asked and not flag.abbot_dress_refused] What does your bride still need? -> dress_ask
+* [if flag.abbot_dress_refused and not flag.abbot_dress_asked] We've reconsidered. We'll find her a dress. -> dress_yes
+* [if flag.abbot_dress_asked and not flag.wedding_dress_found and not flag.wards_dress_found] We're still looking for a dress. -> still_looking
+* [if not flag.krezk_gate_open and not flag.abbot_vouched] Krezk won't open its gate to us. -> vouch
+* [if flag.ilya_heard and not flag.ilya_fate and not flag.abbot_dress_asked] The burgomaster's son is dying. Will you help him? -> ilya
+* [if (flag.wedding_dress_found or flag.wards_dress_found) and not flag.wedding_dress_delivered] We've brought a dress for your bride. -> abbey_of_st_markovia/unveiling:deliver
+* Attack the Abbot. -> attack
+* Goodbye. -> bye
+
+~ who
+Abbot: The Abbot. There was a name, once. Names are for those who expect to be called, and no one has called me in a very long while.
+Abbot: I keep this house. I heal who comes to it. I mend what can be mended, and I am learning, slowly, that almost everything can.
+-> menu
+
+~ place
+Abbot: A holy woman built it, long ago, for the sick, the mad and the motherless. When she died, her sisters stayed for a time, and then they did not. When I came there was only the snow and the sick.
+Abbot: I have kept it open. Anyone who climbs the mountain finds the door unbarred. Few climb it now. Krezk prefers its wall.
+-> menu
+
+~ markovia
+set markovia_story_heard
+Abbot: Markovia. She went up the road to the castle with a handful of the faithful, and she did not come back. Brave. Very brave, and mistaken.
+Abbot: One does not cure a fever by killing the patient. One sits with him. One brings him water. One is patient.
+if flag.markovia_letter_read
+interject tag:blunt: That's not what her letter says.
+Abbot: Letters say many things, child. Clovin keeps a great deal of paper. It comforts him.
+Narrator: He says it gently, and a little too quickly, and doesn't look at you while he does.
+endif
+-> menu
+
+~ belviews
+Abbot: My family. They came to me dying, all of them, one winter. Now they live, and every year they are a little more than they were. A bird's lightness. A hound's faithfulness. I give them gifts.
+Narrator: Across the courtyard, in the wards, something howls with a voice that is nearly a woman's.
+Abbot: Not every gift takes. That is the nature of gifts.
+-> menu
+
+~ nature_ok
+set abbot_nature_known
+Narrator: The light around him bends toward him the way water bends toward a drain. He is no man: something sent from far above, of the kind that stands behind the saints in old paintings. Something that has stood here far too long.
+-> menu
+
+~ nature_fail
+Narrator: He's handsome, and calm, and very still. If there's more to it than that, the chapel isn't telling you.
+-> menu
+
+~ divine
+set abbot_nature_known
+Narrator: You reach for the holy in the room and find it at once, blinding, like the sun through a keyhole. It is in him. It is him. And at the bottom of it, like silt in a well, something has gone sour.
+interject class:cleric: He's celestial. An angel, or the next thing to one. And something in him has turned, the way milk turns.
+Abbot: You see clearly, child. Most people only see the face. It is a good face. I was given it to be trusted.
+-> menu
+
+~ ireena_ok
+Narrator: His eyes keep going back to her. Her hair, her hands, the line of her throat. Not hunger. Worse: the look of a collector at the one piece missing from a set he has spent his whole life completing.
+interject tag:loyal: Stay close to us, Ireena. Closer than that.
+-> menu
+
+~ ireena_fail
+Narrator: He's kind to her. Kind to everyone. If there's anything else in it, it's buried too deep for you to see.
+-> menu
+
+~ bride
+set abbot_bride_revealed
+Abbot: This valley has a sickness, and the sickness has a name. Loneliness. Its lord has been alone for four hundred years. A lonely man does terrible things. A loved man does not.
+Abbot: So I am making him a wife.
+Narrator: He says it the way a carpenter says he is making a chair.
+Abbot: Vasilka. She waits in the wards, across the courtyard. Go and see her, if you wish. Be gentle. She is not awake.
+interject tag:blunt: Made from what?
+Abbot: From what Krezk was finished with. Nothing is wasted in this house.
+if guest:ezmerelda
+interject guest:ezmerelda: You're stitching a corpse a wedding for Strahd. I've hunted a lot of madmen. You're the calmest.
+endif
+* He won't love her. -> wont_love
+* That's monstrous. -> monstrous
+* Go on. -> dress_ask
+
+~ wont_love
+Abbot: Not at first. Love is a habit, child. One forms it the way one forms any other. He will have centuries to practise.
+-> dress_ask
+
+~ monstrous
+Abbot: Everything is, the first time. The first surgeon was a monster. The first priest who said the dead might rise was a madman. I have learned not to mind what things look like at first.
+-> dress_ask
+
+~ dress_ask
+if flag.abbot_dress_asked
+-> menu
+endif
+Abbot: She lacks one thing. A bride cannot be married in a shroud, and this house has nothing white in it that is fit for her.
+if flag.ilya_fate
+Abbot: Bring me a wedding dress, and you will have my thanks, and my prayers, which are worth more than you imagine.
+else
+Abbot: Bring me a wedding dress. In return: the burgomaster's son is dying in Krezk. Dmitri will not ask me. If you bring me what I need, I will go down the mountain and lay my hands on the boy.
+set ilya_heard
+quest the_burgomasters_son abbot_offer
+endif
+* We'll find her a dress. -> dress_yes
+* No. We won't help you dress a corpse for the devil. -> dress_no
+
+~ dress_yes
+set abbot_dress_asked
+quest the_abbots_bride asked
+Abbot [smile]: Thank you. Look in Krezk. Every village keeps a dress in a chest somewhere, waiting for a girl who did not live to wear it.
+if not flag.krezk_gate_open and not flag.abbot_vouched
+-> vouch
+endif
+-> menu
+
+~ dress_no
+set abbot_dress_refused
+Abbot: Then not yet. You will change your minds, or you will not. I am patient. Ask the snow how patient I am.
+-> menu
+
+~ still_looking
+Abbot: Look in Krezk. Look in the chests at the feet of the beds of the women who have buried daughters. I am sorry to say it so plainly. Plain things are quickest.
+-> menu
+
+~ vouch
+set abbot_vouched
+Abbot: Dmitri. He fears me. He is right to; fear is a kind of respect. Tell him I vouch for you. He will hate it. He will open the gate.
+-> menu
+
+~ ilya
+Abbot: I have offered. Dmitri would rather bury the boy than owe me, and Anna would rather owe me than bury him, and so nobody climbs the mountain and the boy burns.
+Abbot: But I will make you a bargain, if you will carry it.
+if flag.abbot_bride_revealed
+-> dress_ask
+endif
+-> bride
+
+~ cells
+set abbot_cells_noted
+Abbot [sad]: You opened my wards. They were not ready. They have gone out into the snow, and the snow will keep them, the way it keeps everything up here.
+Abbot: That was not mercy, children. That was impatience wearing mercy's coat. I know the difference. I have worn both.
+-> menu
+
+~ attack
+Narrator: He watches you reach for your weapons, and for the first time something crosses his face that isn't kindness. It looks very like grief.
+Abbot: In my own chapel. Very well. I will not let you undo my work.
+if guest:ezmerelda
+interject guest:ezmerelda: Finally. Silver first, questions never.
+endif
+combat abbot_wrath
+
+~ bye
+if flag.abbot_dress_asked and not flag.wedding_dress_delivered
+Abbot: Go with light, children. Come back with something white.
+else
+Abbot: Go with light. Come back whenever you are hurt. The door is never barred.
+endif
+-> END
+
+~ after_wedding
+Abbot [smile]: She has gone down to him. Clovin drove her. She sat up very straight and asked whether there would be music. There will be. There must be.
+if flag.abbot_told_strahd
+Abbot: I wrote to him about your red-haired friend, as well. Do not look at me so. He would have found her. I have only saved him the searching.
+endif
+Abbot: He will love her. Give it time. I have.
+-> END
+
+~ after_broken
+Narrator: He sits on the altar step with his hands open on his knees, looking at nothing. The candles along the rail are unlit. He doesn't look up, or speak, or seem to know you're here.
+if flag.ilya_fate == "healed"
+Narrator: The Belviews say he went down the mountain once, at dawn, laid a hand on the burgomaster's boy, and climbed back up without a word. That was the last thing he did.
+endif
+-> END

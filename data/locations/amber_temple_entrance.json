@@ -1,0 +1,624 @@
+{
+  "id": "amber_temple_entrance",
+  "name": "The Amber Temple: the Doors",
+  "region": "amber_temple",
+  "summary": "A shelf of wind-scoured snow high above the Tsolenka Pass, where a temple's doors are cut into the mountain between two colossi of amber, one split and dead, one watching. Inside: a frozen vestibule and the wardens' two guardrooms.",
+  "text": "The air is thin enough to make the head swim. Below, the whole valley lies under its lid of cloud.",
+  "map": {
+    "rows": [
+      "################################",
+      "###############..###############",
+      "##########............##########",
+      "#......###............###......#",
+      "#.=..=.###..=......=..###.=..=.#",
+      "#..............................#",
+      "#......###............###......#",
+      "#.=..=.###..=......=..###.=..=.#",
+      "##########............##########",
+      "###############..###############",
+      "##..........=.................##",
+      "#.............................##",
+      "#..~~.......................~..#",
+      "#...~~~...........~~.......~~..#",
+      " ....~...........~~~...........#",
+      "  ......................~......#",
+      "   ......~~...........~~~......#",
+      "    ..........................##",
+      "      ...........  ...........##",
+      "         ......       ........##",
+      "                       .......##",
+      "                       ##.....##",
+      "                        #.....##",
+      "                        ##....##",
+      "                         #....##",
+      "                         ##.####"
+    ],
+    "theme": "dungeon",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "snow_ledge",
+      "name": "The snow ledge",
+      "cells": [
+        [
+          0,
+          10
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "ice_stair",
+      "name": "The ice stair",
+      "cells": [
+        [
+          23,
+          20
+        ],
+        [
+          31,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "vestibule",
+      "name": "The vestibule",
+      "cells": [
+        [
+          10,
+          1
+        ],
+        [
+          21,
+          8
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "west_guardroom",
+      "name": "The west guardroom",
+      "cells": [
+        [
+          1,
+          3
+        ],
+        [
+          9,
+          7
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "east_guardroom",
+      "name": "The east guardroom",
+      "cells": [
+        [
+          22,
+          3
+        ],
+        [
+          30,
+          7
+        ]
+      ],
+      "light": "dark"
+    }
+  ],
+  "spawns": {
+    "default": [
+      27,
+      22
+    ],
+    "from_pass": [
+      27,
+      22
+    ],
+    "from_halls": [
+      15,
+      3
+    ]
+  },
+  "exits": [
+    {
+      "id": "down_to_the_pass",
+      "cell": [
+        27,
+        25
+      ],
+      "to": "travel",
+      "label": "Down to the Tsolenka Pass"
+    },
+    {
+      "id": "up_to_the_great_hall",
+      "cell": [
+        15,
+        1
+      ],
+      "to": "amber_temple_faceless_god",
+      "spawn": "from_doors",
+      "label": "Up the stairs to the great hall"
+    }
+  ],
+  "doors": [
+    {
+      "id": "great_doors_west",
+      "cell": [
+        15,
+        9
+      ],
+      "label": "The great doors"
+    },
+    {
+      "id": "great_doors_east",
+      "cell": [
+        16,
+        9
+      ],
+      "label": "The great doors"
+    },
+    {
+      "id": "west_guardroom_door",
+      "cell": [
+        8,
+        5
+      ],
+      "label": "Guardroom door"
+    },
+    {
+      "id": "east_guardroom_door",
+      "cell": [
+        23,
+        5
+      ],
+      "label": "Guardroom door"
+    }
+  ],
+  "props": [
+    {
+      "id": "cracked_colossus",
+      "cell": [
+        12,
+        10
+      ],
+      "kind": "examine",
+      "label": "The split colossus",
+      "model": "statue_knight"
+    },
+    {
+      "id": "doors_lintel",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "examine",
+      "label": "Carving over the doors",
+      "model": "relief"
+    },
+    {
+      "id": "name_cairn",
+      "cell": [
+        6,
+        11
+      ],
+      "kind": "examine",
+      "label": "A cairn of stones",
+      "model": "cairn"
+    },
+    {
+      "id": "valley_view",
+      "cell": [
+        4,
+        17
+      ],
+      "kind": "examine",
+      "label": "The edge",
+      "model": "ledge"
+    },
+    {
+      "id": "frozen_pilgrim",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "examine",
+      "label": "A frozen traveller",
+      "model": "bones"
+    },
+    {
+      "id": "vestibule_reliefs",
+      "cell": [
+        11,
+        2
+      ],
+      "kind": "examine",
+      "label": "Carved warning",
+      "model": "relief"
+    },
+    {
+      "id": "west_bunks",
+      "cell": [
+        2,
+        4
+      ],
+      "kind": "decor",
+      "label": "Bunks",
+      "model": "bed_small"
+    },
+    {
+      "id": "west_rack",
+      "cell": [
+        6,
+        3
+      ],
+      "kind": "examine",
+      "label": "A rack of halberds",
+      "model": "armor_stand"
+    },
+    {
+      "id": "east_bunks",
+      "cell": [
+        29,
+        4
+      ],
+      "kind": "decor",
+      "label": "Bunks",
+      "model": "bed_small"
+    },
+    {
+      "id": "east_ice_figures",
+      "cell": [
+        26,
+        7
+      ],
+      "kind": "examine",
+      "label": "Figures in the frost",
+      "model": "statue_head",
+      "when": "not flag.frozen_watch_cleared"
+    }
+  ],
+  "containers": [
+    {
+      "id": "pilgrims_pack",
+      "cell": [
+        19,
+        8
+      ],
+      "label": "The traveller's pack",
+      "model": "satchel",
+      "items": [
+        {
+          "id": "blanket",
+          "qty": 1
+        },
+        {
+          "id": "ration",
+          "qty": 2
+        },
+        {
+          "id": "climbers_kit",
+          "qty": 1
+        }
+      ],
+      "gold": 12
+    },
+    {
+      "id": "west_footlocker",
+      "cell": [
+        1,
+        6
+      ],
+      "label": "A guard's footlocker",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        },
+        {
+          "id": "candle",
+          "qty": 4
+        }
+      ],
+      "gold": 8
+    },
+    {
+      "id": "watch_chest",
+      "cell": [
+        30,
+        6
+      ],
+      "label": "The watch's strongbox",
+      "model": "chest_iron",
+      "lock_dc": 15,
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        },
+        {
+          "id": "holy_water",
+          "qty": 1
+        }
+      ],
+      "gold": 85
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        15,
+        5
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        16,
+        9
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        18,
+        11
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "traps": [
+    {
+      "id": "snow_cornice",
+      "label": "An overhang of snow",
+      "cells": [
+        [
+          2,
+          15
+        ],
+        [
+          3,
+          15
+        ],
+        [
+          3,
+          16
+        ],
+        [
+          4,
+          16
+        ]
+      ],
+      "detect_dc": 14,
+      "disarm_dc": 0,
+      "save": {
+        "ability": "dex",
+        "dc": 14
+      },
+      "damage": "4d10",
+      "damage_type": "bludgeoning",
+      "condition": "prone",
+      "text": "The snow underfoot was never ground at all, only an overhang. It gives, and you slide toward the drop before your fingers find rock."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "amber_sentinel",
+      "cell": [
+        18,
+        10
+      ],
+      "dialogue": "amber_temple/sentinel:departure",
+      "when": "flag.amber_temple_arrived and flag.dark_gifts_taken >= 1 and not flag.sentinel_stilled and not flag.sentinel_destroyed",
+      "approach": 3
+    },
+    {
+      "npc": "amber_sentinel",
+      "cell": [
+        18,
+        10
+      ],
+      "dialogue": "amber_temple/sentinel:arrival",
+      "when": "not flag.amber_temple_arrived and not flag.sentinel_destroyed",
+      "approach": 5
+    },
+    {
+      "npc": "amber_sentinel",
+      "cell": [
+        18,
+        10
+      ],
+      "dialogue": "amber_temple/sentinel:talk",
+      "when": "not flag.sentinel_destroyed"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "sentinel_wakes",
+      "trigger": "dialogue",
+      "when": "level >= 10",
+      "text": "The colossus steps down off its plinth, and the ledge shakes. High on the facade, two stone shapes unfold their wings.",
+      "monsters": [
+        {
+          "monster": "amber_golem",
+          "cell": [
+            18,
+            10
+          ],
+          "name": "The Amber Sentinel"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            10,
+            12
+          ],
+          "name": "Facade gargoyle"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            24,
+            12
+          ],
+          "name": "Facade gargoyle"
+        }
+      ],
+      "surprise": "",
+      "flag": "sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_wakes",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The colossus steps down off its plinth, and the whole ledge shakes.",
+      "monsters": [
+        {
+          "monster": "amber_golem",
+          "cell": [
+            18,
+            10
+          ],
+          "name": "The Amber Sentinel"
+        }
+      ],
+      "surprise": "",
+      "flag": "sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_wakes",
+      "trigger": "dialogue",
+      "text": "The colossus steps down off its plinth, slow and stiff with ice.",
+      "monsters": [
+        {
+          "monster": "amber_golem",
+          "cell": [
+            18,
+            10
+          ],
+          "name": "The Amber Sentinel",
+          "hp": 130
+        }
+      ],
+      "surprise": "",
+      "flag": "sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_stops_you",
+      "trigger": "enter_area:snow_ledge",
+      "when": "flag.amber_temple_arrived and flag.dark_gifts_taken >= 1 and not flag.sentinel_stilled and not flag.sentinel_destroyed",
+      "text": "NOTHING LEAVES, says the colossus, and steps down to make sure of it.",
+      "monsters": [
+        {
+          "monster": "amber_golem",
+          "cell": [
+            18,
+            10
+          ],
+          "name": "The Amber Sentinel"
+        }
+      ],
+      "surprise": "",
+      "flag": "sentinel_destroyed"
+    },
+    {
+      "id": "frozen_watch",
+      "trigger": "enter_area:east_guardroom",
+      "when": "not flag.frozen_watch_cleared and level >= 10",
+      "text": "The figures in the frost turn their heads. Ice cracks off their mail as they stand.",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            27,
+            3
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            29,
+            3
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            28,
+            6
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            26,
+            6
+          ],
+          "name": "Frozen warden-guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "frozen_watch_cleared"
+    },
+    {
+      "id": "frozen_watch",
+      "trigger": "enter_area:east_guardroom",
+      "when": "not flag.frozen_watch_cleared",
+      "text": "The figures in the frost turn their heads. Ice cracks off their mail as they stand.",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            27,
+            3
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            29,
+            3
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            28,
+            6
+          ],
+          "name": "Frozen warden-guard"
+        }
+      ],
+      "surprise": "",
+      "flag": "frozen_watch_cleared"
+    }
+  ],
+  "narration": {
+    "enter": "enter:amber_temple_entrance"
+  },
+  "rest": "no",
+  "rest_text": "Not out here. The wind takes the warmth out of you faster than sleep could put it back, and the colossus never stops watching.",
+  "treasure_spots": {
+    "amber_temple_entrance": {
+      "container": "pilgrims_pack"
+    }
+  }
+}

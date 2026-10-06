@@ -1,0 +1,202 @@
+# Sir Godfrey Gwilym, the dead Order's second and the Tarokka's ghost card (docs/voice/sir_godfrey_gwilym.md).
+# start: on the front steps the first time the party comes up the drive (approach); afterwards in his room upstairs.
+# cards: the ally scene (join sir_godfrey_gwilym). doubt: helping him remember, which opens the muster.
+
+~ start
+if guest:sir_godfrey_gwilym
+-> companion
+endif
+if not flag.godfrey_met
+-> first
+endif
+if flag.order_fate == "ride"
+Sir Godfrey Gwilym: The horses are four hundred years dead, so we'll walk to war. We've walked further for worse reasons. Say the word when you go up to the castle.
+elif flag.order_fate == "grudge"
+Sir Godfrey Gwilym [sad]: You swore his oath. I heard you. I'm not angry. I swore it too, once, and it took me four hundred years to hear what I'd said.
+elif flag.godfrey_remembers
+Sir Godfrey Gwilym: The oath's still there. I checked this morning, the way you'd pat a pocket for your purse. Still there.
+else
+Sir Godfrey Gwilym: Back again. Good. The house is better with somebody breathing in it.
+endif
+-> menu
+
+~ first
+set godfrey_met
+quest the_order_of_the_silver_dragon met
+Narrator: A knight in dented plate waits on the broken front steps with his helmet under his arm. His face is grey and quite plainly dead, and he is doing his best to smile with it.
+Sir Godfrey Gwilym: Welcome to Argynvostholt. Mind the steps. The third one's gone, and the fourth, and honestly most of the house.
+Sir Godfrey Gwilym: Sir Godfrey Gwilym, of the Order of the Silver Dragon, or what's left of it. You'll want the commander. Everyone does, eventually. Then they wish they hadn't.
+if flag.order_patrol_met
+Sir Godfrey Gwilym: The road patrol said you'd be coming. They said you were polite. That's rare enough that they mentioned it twice.
+endif
+interject class:cleric: Forgive me, sir knight. You're dead.
+Sir Godfrey Gwilym: I am. It comes and goes, how much I mind.
+Sir Godfrey Gwilym: One thing, and then I'll stop fussing. Don't cross the courtyard after dark. Our men-at-arms are still fighting the last battle out there, and they don't stop to ask whose side you're on.
+-> menu
+
+~ menu
+* [if tarokka.ally.npc == sir_godfrey_gwilym and not guest:sir_godfrey_gwilym and flag.order_fate != "rest"] Madam Eva's cards named you, Sir Godfrey. -> cards
+* Who are you? All of you? -> order
+* [if not flag.vladimir_met] Where do we find your commander? -> commander
+* [if flag.vladimir_met and not flag.order_fate and not flag.godfrey_remembers] Your commander won't fight to end Strahd. Will you? -> doubt
+* [if not flag.argynvost_beacon_lit] Why is the beacon dark? -> beacon
+* [if flag.phantom_ride_seen] We saw riders on the road at night. Grey ones. -> ride_seen
+* [if flag.vallaki_backed] We've come from Vallaki. -> vallaki
+* What do you remember of being alive? -> alive
+* Goodbye, Sir Godfrey. -> bye
+
+~ order
+Sir Godfrey Gwilym: The Order of the Silver Dragon. Lord Argynvost founded us: a silver dragon who liked people enough to look like one at dinner. We kept a watch over the valley. Farms, roads, the passes.
+Sir Godfrey Gwilym: Then a young lord came over the mountains with an army. We lost. We died. We got up again. That last part wasn't in the oath.
+interject background:sage: A dragon who founded a knightly order. There's nothing about it in any library I know.
+Sir Godfrey Gwilym: There wouldn't be. The young lord kept the libraries, after.
+-> menu
+
+~ commander
+Sir Godfrey Gwilym: The great hall, straight through. He sits at the head of the table, where he's sat since... I stopped counting at three hundred years. Be courteous. He isn't dangerous unless you mention the castle.
+Sir Godfrey Gwilym: You'll mention the castle. Everyone does.
+-> menu
+
+~ beacon
+if not flag.argynvost_echo_met and not flag.dragon_fire_kindled and not flag.order_fate
+quest the_dark_beacon seen
+endif
+Sir Godfrey Gwilym: Lord Argynvost lit it every night with his own breath. Silver fire, no heat in it. You could see it from every farm in the valley. It meant somebody was awake.
+Sir Godfrey Gwilym: It went out when he died. The commander won't hear it spoken of. If you want the rest, try the chapel. Something there still answers, some nights.
+-> menu
+
+~ ride_seen
+Sir Godfrey Gwilym: The Lantern Company. Twenty men we sent over the passes for help, the week before the end. They came back too late, and the young lord's archers were waiting on our own road.
+Sir Godfrey Gwilym [sad]: They ride home every night. They never get here. I go down to the gate sometimes, to see if tonight's the night.
+-> menu
+
+~ vallaki
+if flag.vallaki_backed == "wachter"
+Sir Godfrey Gwilym: Our patrol saw a black carriage at Vallaki's gate, bold as you like, by daylight. So the town bends the knee to him now. We'd have ridden out about that, once.
+elif flag.vallaki_backed == "baron"
+Sir Godfrey Gwilym: The town with the festivals? The patrol says the singing carries all the way up the ridge. It isn't happy singing. It's very loud singing.
+else
+Sir Godfrey Gwilym: The patrol says Vallaki's quieter these days. Not frightened-quiet. Busy-quiet. I'd forgotten towns could sound like that.
+endif
+if flag.bones_returned
+Sir Godfrey Gwilym: And St. Andral's has its saint back, I hear. Good. I was christened under that roof, I think. Or one very like it.
+endif
+-> menu
+
+~ alive
+Sir Godfrey Gwilym: Pears. I remember pears very clearly. And a grey mare who bit everyone but me. And my sister Gwenllian, who laughed like a goose. I've lost her face. I've still got the laugh.
+interject tag:cheerful: That's the better half to keep, honestly.
+Sir Godfrey Gwilym: Do you think so? I've wondered.
+-> menu
+
+# ---------------------------------------------------------------- Remembering (opens the muster)
+
+~ doubt
+Sir Godfrey Gwilym: I follow the commander. I have since we were boys with wooden swords. And he's not wrong about Strahd. He's never once been wrong about Strahd.
+Sir Godfrey Gwilym [sad]: But some nights I can't remember why we swore what we swore. I remember that it mattered. I've lost the words for the rest.
+-> remember_menu
+
+~ remember_menu
+* [if flag.order_oath_learned] (Say the Order's oath to him, from the stone in the chapel.) -> remember_oath
+* [if flag.godfrey_list_read] (Read him the bottom of his own wall.) -> remember_list
+* [if flag.vladimir_last_words_known] The dragon's last words were "let them go home." -> remember_words
+* [if not flag.godfrey_doubt_pressed] [Persuasion DC 15] You don't need the words. You remember that it mattered. That is the oath. -> remember_persuaded | remember_fail
+* We'll find what you've lost. -> menu
+
+~ remember_oath
+Narrator: You say it the way it's cut in the stone: keep the watch, shield the sleeper and the stranger, lift the fallen, take nothing not given, and when the light goes out, be the light. Halfway through, his lips start moving with yours.
+Sir Godfrey Gwilym: Be the light. Not "hate the dark". We swore to be the light, and we've been sitting in the dark for four hundred years keeping score.
+-> remembered
+
+~ remember_list
+Narrator: You read it to him from the bottom up: his own name, a sister who laughed like a goose, the light, the oath.
+Sir Godfrey Gwilym: Teodor. The pears were Teodor's. I've been remembering his pears for years and thinking they were mine.
+Sir Godfrey Gwilym: "Remember the oath." I wrote that for tonight, I think. I just didn't know it.
+-> remembered
+
+~ remember_words
+Sir Godfrey Gwilym: Let them go home. ...I heard that. I was lying beside them in the courtyard. I heard him say it, and Vladimir told me I'd heard wrong, and I let him tell me.
+Sir Godfrey Gwilym [sad]: Four hundred years. I let him tell me.
+-> remembered
+
+~ remember_persuaded
+Sir Godfrey Gwilym: That it mattered. Yes. I can hold on to that. The rest will come back or it won't, and either way I'll know which side of the door I'm standing on.
+-> remembered
+
+~ remember_fail
+set godfrey_doubt_pressed
+Sir Godfrey Gwilym: It's kind of you. It isn't enough, not yet. Find me the words, if you can. They're carved somewhere in this house. I used to know where.
+-> menu
+
+~ remembered
+set godfrey_remembers
+quest the_order_of_the_silver_dragon remembering
+attitude sir_godfrey_gwilym friendly
+Sir Godfrey Gwilym: Ask the commander to call the muster. All of us at the table, the way it was. Say your piece to the Order, not to him. I'll stand up when you do. I promise, and I'll remember promising.
+-> menu
+
+# ---------------------------------------------------------------- The ally (Madam Eva's ghost card)
+
+~ cards
+Sir Godfrey Gwilym: Me? The old woman's cards wanted me? I'm the one who loses his boots. Some mornings I lose which foot they go on.
+if flag.godfrey_remembers
+-> ally_join
+endif
+Sir Godfrey Gwilym: I'd go. I'd go tonight. But I'd be half a knight. I've lost the oath, and a knight without his oath is a man standing in a great deal of tin.
+* [if flag.order_oath_learned] Then say it with us. We read it in your chapel. -> ally_oath
+* [if flag.godfrey_list_read] Your own wall remembers for you. Let's read the bottom of it. -> ally_list
+* We can't give you back what you've lost. We can give you something new to remember. -> ally_new
+* Then we'll find your oath first. -> menu
+
+~ ally_oath
+set godfrey_remembers
+Narrator: You say the oath, and he says it with you, slowly, and on the last line he says it alone.
+-> ally_join
+
+~ ally_list
+set godfrey_remembers
+Narrator: You read him the bottom of his wall. At "laughed like a goose" he laughs, and the sound is so alive that everyone flinches.
+-> ally_join
+
+~ ally_new
+Sir Godfrey Gwilym: Something new. I haven't had anything new since... well. Since.
+-> ally_join
+
+~ ally_join
+Sir Godfrey Gwilym: Then I'll come. I'll tell the commander myself, so he hears it from me and not from the hall. He'll say I'm a fool. He's said it before. It has never once stopped me.
+join sir_godfrey_gwilym
+quest find_the_ally found
+attitude sir_godfrey_gwilym friendly
+interject name:ilse_varga: Welcome to the line, Sir Godfrey. We count off before every fight. Learn your number.
+Sir Godfrey Gwilym: I'll write it on the inside of my gauntlet. I write everything down now.
+-> END
+
+# ---------------------------------------------------------------- Travelling with the party
+
+~ companion
+Sir Godfrey Gwilym: Still here. Still me, mostly. What do you need?
+* How are you holding up? -> companion_how
+* [if flag.vladimir_met and not flag.order_fate] What will the commander do about you leaving? -> companion_vladimir
+* [if flag.order_fate != "rest"] Wait for us at Argynvostholt for now. -> companion_wait
+* Nothing. Let's go. -> END
+
+~ companion_how
+if flag.argynvost_beacon_lit
+Sir Godfrey Gwilym: The light's still pulling at me, very gently, like a child at a sleeve. I don't mind. It means it'll be there when I'm done.
+else
+Sir Godfrey Gwilym: Cold. You lot are warm, though. I'd forgotten people were warm. I keep standing too close; tell me if I do.
+endif
+-> companion
+
+~ companion_vladimir
+Sir Godfrey Gwilym: Sit in his chair and add my name to the roster as absent. It'll be the first absence in four hundred years. He'll take it harder than a sword.
+-> companion
+
+~ companion_wait
+leave sir_godfrey_gwilym
+Sir Godfrey Gwilym: I'll be in my room with the wall. Come and fetch me when you need a big man in a lot of tin.
+-> END
+
+~ bye
+Sir Godfrey Gwilym: Go carefully. And if you hear singing in the chapel at night, don't worry. It's only the house, remembering.
+-> END

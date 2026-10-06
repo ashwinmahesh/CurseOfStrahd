@@ -1,0 +1,130 @@
+# Bella Sunbane, Morgantha's elder daughter (voice: docs/regions/old_bonegrinder.md §3): a night hag who wears a
+# lovely young miller's daughter and is bored of being one. She wants her mother dead and her mother's soul bags.
+# Her pact splits the coven; keeping or breaking it decides who holds the mill afterwards.
+
+~ start
+if flag.bella_met
+-> again
+endif
+set bella_met
+if at:old_bonegrinder
+Narrator: Someone has come halfway down the stair to see what the noise was: a lovely young woman with flour-white hands and a red ribbon in her hair, who looks over the wreck of the bakery with mild interest.
+else
+Narrator: In the corner a lovely young woman sits at a dressing table, turning her face this way and that in a cracked mirror. She watches you in the glass rather than turn round.
+endif
+Bella [sly]: Well. Aren't you interesting. I'm Bella, the pretty one. I'd shake hands, but you'd want yours back.
+-> offer
+
+~ again
+Bella [sly]: Back for another look? I don't blame you. Have you thought about my little proposal?
+-> offer_menu
+
+~ offer
+if flag.offalia_slain
+Bella: You've killed my sister. Don't make that face. I've wanted to for a hundred years. She chews with her mouth open.
+elif flag.offalia_asleep
+Bella: You put Offalia to sleep with Mother's own baking. I'd have paid to see her face. Well, I've seen it now. It's drooling.
+elif flag.offalia_lured
+Bella: You sent Offalia trotting down the hill after nobody. She'll be gone till she finds something to eat, so: a week.
+endif
+Bella: Here's the thing, darlings. Mother has had this mill since before the castle had a roof, and she will not die and she will not share. I'd like a turn.
+-> offer_menu
+
+~ offer_menu
+* Deal. Stay out of it, and the mill is yours. -> pact
+* What exactly are you offering? -> terms
+* [Insight DC 13] What does she really want? -> read_ok | read_fail
+* [Deception DC 14] Your mother means to leave the mill to Offalia. -> turn_ok | turn_fail
+* No deals with hags. -> refuse
+
+~ terms
+Bella: I go and sit somewhere very quietly. You go up and do whatever it is heroes do to old women. Afterwards the mill is mine. The brats are yours. I don't eat children. Terrible for the figure.
+if not flag.offalia_slain and not flag.offalia_asleep and not flag.offalia_lured
+Bella: Offalia will fight for Mother, of course. She'd fight for a ham. That's your trouble, not mine.
+endif
+if class:cleric
+interject class:cleric: She's offering to sell us her own mother.
+Bella [smile]: Give, darling. Selling is Mother's line.
+endif
+-> offer_menu
+
+~ read_ok
+Narrator: Every time she says "Mother", her eyes flick upward, toward something in the loft. Whatever she wants, it isn't the mill. It's up there, and she wants it badly enough to lie about it.
+-> offer_menu
+
+~ read_fail
+Narrator: She smiles. You learn that she has very good teeth, and nothing else.
+-> offer_menu
+
+~ turn_ok
+set bella_fled
+Narrator: For a moment the pretty face forgets to be pretty. Then it remembers, and smiles, and that is worse.
+Bella [angry]: Offalia. The mill. To Offalia. After three hundred years of wrapping. Then the old crust can choke on her oven, and you with her.
+Narrator: She takes one step toward you and the next step into nothing, and she's gone. Far down the hill, a little later, something shrieks, and every raven in the oak goes up at once.
+-> END
+
+~ turn_fail
+Bella [smile]: Mother can't leave anything to anyone, darling. She means to live forever. That's the whole trouble.
+-> offer_menu
+
+~ refuse
+Bella: Then you'll meet the whole family together, and I'll have to help, and I'll ladder my stockings. Pity.
+-> END
+
+~ pact
+set bella_pact
+Bella [smile]: Lovely. I'll be on the stair with my feet up. Do be quick; she screams dreadfully when she's losing.
+interject tag:devout: We've just struck a bargain with a fiend. I want that said aloud, so none of us forgets it.
+interject tag:blunt: Said. And there's one fewer of them to fight.
+-> END
+
+~ waiting
+Bella [sly]: Still breathing? Up you go. She's in her chair. She's always in her chair.
+-> END
+
+# --- After Morgantha falls, if the pact holds ---
+
+~ inheritance
+Narrator: Bella climbs the stair humming, steps over what is left of her mother without looking down, and settles into the rocking chair as if it had been made for her.
+Bella [smile]: Well. That's that. Thank you, darlings, truly. The mill is mine, as agreed. And I'll have Mother's little bags off the hooks, if you'd be so kind.
+if class:cleric
+interject class:cleric: Those bags hold souls. People. She means to keep them.
+Bella: I mean to look after them. Somebody has to.
+endif
+-> inheritance_menu
+
+~ inheritance_menu
+* A deal's a deal. The mill and the bags are yours. -> keep_word
+* [Persuasion DC 14] The mill is yours. The bags are not; we're cutting them open. -> bags_ok | bags_fail
+* Our deal ends here, Bella. So do you. -> betray
+
+~ keep_word
+set soul_bag_given
+Narrator: She takes the bags down herself, one at a time, and counts them, and her lips move as she counts.
+Bella [smile]: Honest heroes. How very rare. I'll send you a pastry at midwinter. Don't eat it.
+-> old_bonegrinder/aftermath:reckon
+
+~ bags_ok
+set soul_bag_freed
+Narrator: She weighs it, and you, and decides a mill in the hand is worth more than a fight she might lose. The bags split under the knife like ripe plums, and something goes out past you, many somethings, all in a hurry to be elsewhere.
+Bella [angry]: Fine. Keep your conscience. It'll be the only warm thing you own by winter.
+-> old_bonegrinder/aftermath:reckon
+
+~ bags_fail
+Bella [angry]: No. A bargain is a bargain, darlings, and you've just broken yours.
+-> betray_fight
+
+~ betray
+Bella [smile]: Oh, I did wonder. Heroes. You always swear you're different.
+-> betray_fight
+
+~ betray_fight
+set bella_slain
+if flag.offalia_slain
+set bonegrinder_fate = "destroyed"
+set pastry_trade = "ended"
+else
+set bonegrinder_fate = "broken"
+set pastry_trade = "dwindling"
+endif
+combat bella_betrayed

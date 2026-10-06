@@ -1,0 +1,53 @@
+# The knights' road between the Svalich Woods and Argynvostholt (table argynvostholt_road): the Order's night patrol,
+# the Lantern Company riding home, the knights hunting once the Order marches, and the lit beacon seen from the road.
+
+~ patrol
+set order_patrol_met
+Narrator: Two figures in black plate stand in the middle of the track ahead with drawn swords, quite still, as if they have been standing there since before the trees. Their faces are grey. Neither of them is breathing.
+Dead Knight: Halt. This is the Order's road. State your business.
+* We're bound for Argynvostholt. -> patrol_house
+* [if tarokka.drawn] Madam Eva sent us. -> patrol_eva
+* Whose order? -> patrol_whose
+* We're going after the lord of the castle. -> patrol_strahd
+
+~ patrol_house
+Dead Knight: Then go carefully. The commander does not care for guests. Sir Godfrey does. Ask for Sir Godfrey.
+-> patrol_end
+
+~ patrol_eva
+Dead Knight: The old woman. She passed this way once, before these trees were tall. She asked us the time. We did not know it.
+-> patrol_end
+
+~ patrol_whose
+Dead Knight: The Order of the Silver Dragon. We keep the watch. Ask at the house.
+-> patrol_end
+
+~ patrol_strahd
+Narrator: Both helmets turn south toward the castle together, like two compass needles.
+Dead Knight: The commander will wish to speak with you. He will not like what you say.
+-> patrol_end
+
+~ patrol_end
+Narrator: They step aside, one to each verge, and let you pass. When you look back, the road is empty.
+-> END
+
+~ phantom_ride
+set phantom_ride_seen
+Narrator: Hooves on the road behind you, a great many of them, coming fast. You get off the track just in time.
+Narrator: Twenty riders go past in a column, grey as fog, lances up, every face turned toward the ridge. Not one of them looks at you.
+Narrator: They go round the bend, and the sound of them stops all at once, like a door shut on it.
+interject name:ilse_varga: Twenty. Column of twos. Riding hard for home, and late. I know that ride.
+-> END
+
+~ knights_hunting
+set knights_hunt_seen
+Narrator: Torchlight on the track ahead: a dozen dead knights of the Order on foot, swords out, standing around something that is still smoking on the ground.
+Dead Knight: One of his. It came down the road toward Vallaki carrying a message. It does not carry messages now.
+Dead Knight: The Order marches when you march. Until then we walk the roads. Go safely.
+-> END
+
+~ beacon_light
+set beacon_light_seen
+Narrator: The track crests a rise, and there it is on its ridge to the north: the beacon of Argynvostholt, burning silver, laying a pale road of light across the treetops toward the castle.
+Narrator: Somewhere in a farmhouse below the road, a shutter opens, and stays open.
+-> END

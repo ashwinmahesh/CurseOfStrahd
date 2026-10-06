@@ -51,7 +51,7 @@
         "name": "Circle of the Moon Spells",
         "summary": "Cure Wounds, Moonbeam and Starry Wisp always prepared; more at levels 5, 7 and 9.",
         "text": "When you reach a Druid level shown, you always have these spells prepared; they don't count against your Prepared Spells: Cure Wounds, Moonbeam and Starry Wisp (3); Conjure Animals (5); Fount of Moonlight (7); Mass Cure Wounds (9). You can cast these spells while in a Wild Shape form.",
-        "implemented": "text"
+        "implemented": "data"
       }
     },
     {
@@ -70,7 +70,16 @@
         "id": "moonlight_step",
         "name": "Moonlight Step",
         "summary": "Bonus Action: teleport 30 feet and gain Advantage on your next attack; Wis-modifier uses per Long Rest or spend a level 2+ slot.",
+        "text": "As a Bonus Action you teleport up to 30 feet to an unoccupied space you can see, in a flash of moonlight, and you have Advantage on the next attack roll you make before the end of this turn. You can do this a number of times equal to your Wisdom modifier (minimum once), regaining every use on a Long Rest; you can also restore a use by expending a level 2+ spell slot (no action required).",
         "action": "bonus_action",
+        "resource": {
+          "id": "moonlight_step",
+          "name": "Moonlight Step",
+          "max": "mod:wis",
+          "min": 1,
+          "recharge": "long"
+        },
+        "uses_resource": "moonlight_step",
         "implemented": "text"
       }
     },

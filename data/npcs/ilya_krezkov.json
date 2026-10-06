@@ -1,0 +1,19 @@
+{
+  "id": "ilya_krezkov",
+  "name": "Ilya Krezkov",
+  "title": "The Burgomaster's Son",
+  "summary": "Dmitri and Anna's last child, eight years old and a month into a fever that won't break. When he's awake he wants to know what's on the other side of the wall.",
+  "portrait": "ilya_krezkov",
+  "sprite": "ilya_krezkov",
+  "attitude": "friendly",
+  "voice": "docs/voice/ilya_krezkov.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "krezk",
+    "child"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

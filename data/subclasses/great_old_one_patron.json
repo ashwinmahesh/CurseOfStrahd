@@ -82,6 +82,7 @@
         "id": "eldritch_hex",
         "name": "Eldritch Hex",
         "summary": "Hex is always prepared, and its target has Disadvantage on saves of the ability you chose.",
+        "text": "You always have Hex prepared. When you cast it and choose an ability, the target also has Disadvantage on saving throws with that ability for the spell's duration.",
         "implemented": "text"
       }
     },
@@ -91,6 +92,13 @@
         "id": "thought_shield",
         "name": "Thought Shield",
         "summary": "Your thoughts can't be read, you resist Psychic damage, and a creature that deals Psychic damage to you takes the same amount.",
+        "text": "Telepathy and other magic can't read your thoughts unless you allow it. You have Resistance to Psychic damage, and whenever a creature deals Psychic damage to you, it takes the same amount of damage you take.",
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "psychic"
+          }
+        ],
         "implemented": "text"
       }
     },

@@ -1,0 +1,19 @@
+{
+  "id": "krezk_guard",
+  "name": "Krezk Watchman",
+  "title": "Gate Watch of Krezk",
+  "summary": "One of the villagers who take turns standing before Krezk's gate with a spear. Paid to say one word to strangers, and that word is no.",
+  "portrait": "krezk_guard",
+  "sprite": "krezk_guard",
+  "attitude": "indifferent",
+  "voice": "docs/voice/krezk_guard.md",
+  "monster": "vallaki_guard",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "guard",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,531 @@
+{
+  "id": "argynvostholt_upper",
+  "name": "Argynvostholt, Upper Floor",
+  "region": "argynvostholt",
+  "summary": "The upper floor of the dragon's house: the knights' dormitory, the dragon's study and the Order's chronicle, the hall of heroes, Sir Godfrey's room, Vladimir's bare quarters, and the door to the beacon tower.",
+  "text": "A landing at the head of the great stair. North, the dragon's study, its shelves half burned; west, a dormitory of beds nobody sleeps in; east, a long gallery of statues ending at the tower door. Two smaller rooms south: one bare, one covered in writing.",
+  "map": {
+    "rows": [
+      "####################################",
+      "#..........#............#..........#",
+      "#..........#............#..........#",
+      "#..........#............#..........#",
+      "#..........#............#..........#",
+      "#..........#............#..........#",
+      "#..................................#",
+      "#..........#............#..........#",
+      "#..........#............#..........#",
+      "#..........#............#..........#",
+      "#.........~#............#..........#",
+      "#..........#............#..........#",
+      "#################..#################",
+      "#..........#11..........#..........#",
+      "#..........#11..........#..........#",
+      "#..........#............#..........#",
+      "#..................................#",
+      "#..........#............#..........#",
+      "#..........#............#..........#",
+      "#..........#..........~.#..........#",
+      "#..........#............#~.........#",
+      "####################################"
+    ],
+    "theme": "manor",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "holt_dormitory",
+      "name": "The knights' dormitory",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          10,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "holt_study",
+      "name": "The dragon's study",
+      "cells": [
+        [
+          12,
+          1
+        ],
+        [
+          23,
+          11
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "holt_hall_of_heroes",
+      "name": "The hall of heroes",
+      "cells": [
+        [
+          25,
+          1
+        ],
+        [
+          34,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "holt_godfrey_quarters",
+      "name": "Sir Godfrey's room",
+      "cells": [
+        [
+          1,
+          13
+        ],
+        [
+          10,
+          20
+        ]
+      ]
+    },
+    {
+      "id": "holt_landing",
+      "name": "The landing",
+      "cells": [
+        [
+          12,
+          13
+        ],
+        [
+          23,
+          20
+        ]
+      ]
+    },
+    {
+      "id": "holt_commanders_room",
+      "name": "The commander's room",
+      "cells": [
+        [
+          25,
+          13
+        ],
+        [
+          34,
+          20
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      15,
+      16
+    ],
+    "from_stairs": [
+      14,
+      15
+    ],
+    "from_tower": [
+      33,
+      2
+    ]
+  },
+  "exits": [
+    {
+      "id": "stairs_down",
+      "cell": [
+        12,
+        13
+      ],
+      "to": "argynvostholt_hall",
+      "spawn": "from_stairs",
+      "label": "Down to the great hall"
+    },
+    {
+      "id": "tower_door",
+      "cell": [
+        34,
+        1
+      ],
+      "to": "argynvostholt_beacon",
+      "spawn": "stair_foot",
+      "label": "Up the beacon tower stair"
+    }
+  ],
+  "doors": [
+    {
+      "id": "holt_godfrey_door",
+      "cell": [
+        11,
+        16
+      ],
+      "label": "Sir Godfrey's door"
+    },
+    {
+      "id": "holt_commander_door",
+      "cell": [
+        24,
+        16
+      ],
+      "label": "The commander's door"
+    }
+  ],
+  "props": [
+    {
+      "id": "holt_knights_beds",
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "examine",
+      "label": "Made beds",
+      "model": "bed"
+    },
+    {
+      "id": "holt_knights_bed_2",
+      "cell": [
+        2,
+        5
+      ],
+      "kind": "decor",
+      "label": "Bed",
+      "model": "bed"
+    },
+    {
+      "id": "holt_knights_bed_3",
+      "cell": [
+        2,
+        8
+      ],
+      "kind": "decor",
+      "label": "Bed",
+      "model": "bed"
+    },
+    {
+      "id": "holt_knights_bed_4",
+      "cell": [
+        8,
+        2
+      ],
+      "kind": "decor",
+      "label": "Bed",
+      "model": "bed"
+    },
+    {
+      "id": "holt_knights_bed_5",
+      "cell": [
+        8,
+        5
+      ],
+      "kind": "decor",
+      "label": "Bed",
+      "model": "bed"
+    },
+    {
+      "id": "holt_dragon_bookcases",
+      "cell": [
+        13,
+        0
+      ],
+      "kind": "examine",
+      "label": "Burned bookcases",
+      "model": "bookcase"
+    },
+    {
+      "id": "holt_dragon_bookcase_2",
+      "cell": [
+        21,
+        0
+      ],
+      "kind": "decor",
+      "label": "Bookcase",
+      "model": "bookcase"
+    },
+    {
+      "id": "holt_order_chronicle",
+      "cell": [
+        19,
+        4
+      ],
+      "kind": "book",
+      "label": "The Order's chronicle",
+      "model": "book",
+      "codex": "order_chronicle",
+      "flag": "argynvost_skull_known",
+      "text": "The chronicle of the Order of the Silver Dragon, in many hands. Its founding by the Lord Argynvost, who kept a lamp burning in his tower so that the valley would know it was watched. Tournaments, a flood, a wolf winter. Then the army over the mountains, the passes lost one by one, the house besieged. The last page is in a heavy, careful hand: The house fell tonight. My lord died in the courtyard. They have taken his head to the castle to hang on a wall. The Order will not rest. V.H."
+    },
+    {
+      "id": "holt_valley_map",
+      "cell": [
+        20,
+        8
+      ],
+      "kind": "examine",
+      "label": "A map of the valley",
+      "model": "table_round"
+    },
+    {
+      "id": "holt_hero_portraits",
+      "cell": [
+        29,
+        0
+      ],
+      "kind": "examine",
+      "label": "Portraits of knights",
+      "model": "painting_row"
+    },
+    {
+      "id": "holt_vladimir_portrait",
+      "cell": [
+        32,
+        0
+      ],
+      "kind": "examine",
+      "label": "A portrait of a young knight",
+      "model": "painting"
+    },
+    {
+      "id": "holt_empty_plinth",
+      "cell": [
+        30,
+        9
+      ],
+      "kind": "examine",
+      "label": "An empty plinth",
+      "model": "altar_stone"
+    },
+    {
+      "id": "holt_hero_statue_1",
+      "cell": [
+        27,
+        3
+      ],
+      "kind": "decor",
+      "label": "A knight's statue",
+      "model": "statue_knight"
+    },
+    {
+      "id": "holt_hero_statue_2",
+      "cell": [
+        30,
+        3
+      ],
+      "kind": "decor",
+      "label": "A knight's statue",
+      "model": "statue_knight"
+    },
+    {
+      "id": "holt_hero_statue_3",
+      "cell": [
+        33,
+        3
+      ],
+      "kind": "decor",
+      "label": "A knight's statue",
+      "model": "statue_knight"
+    },
+    {
+      "id": "holt_hero_statue_4",
+      "cell": [
+        27,
+        9
+      ],
+      "kind": "decor",
+      "label": "A knight's statue",
+      "model": "statue_knight"
+    },
+    {
+      "id": "holt_hero_statue_5",
+      "cell": [
+        33,
+        9
+      ],
+      "kind": "decor",
+      "label": "A knight's statue",
+      "model": "statue_knight"
+    },
+    {
+      "id": "holt_godfrey_wall",
+      "cell": [
+        0,
+        16
+      ],
+      "kind": "book",
+      "label": "Writing on the wall",
+      "model": "drawings",
+      "codex": "godfrey_list",
+      "flag": "godfrey_list_read",
+      "text": "The whole wall is covered in charcoal, floor to as high as a tall man can reach, in a big careful hand. Names, and after each one a few words. Sir Teodor: pears, and his grey mare. Sir Bastian: arguing. Dame Ilona: her son, who lived. Sir Mattias: songs he got wrong on purpose. Hundreds more. Near the bottom, smudged and gone over many times: Godfrey: Gwenllian, who laughed like a goose. The light. The oath. Remember the oath."
+    },
+    {
+      "id": "holt_godfrey_cot",
+      "cell": [
+        2,
+        14
+      ],
+      "kind": "examine",
+      "label": "A cot",
+      "model": "bed_small"
+    },
+    {
+      "id": "holt_vladimir_roster",
+      "cell": [
+        28,
+        17
+      ],
+      "kind": "book",
+      "label": "The duty roster",
+      "model": "ledger",
+      "codex": "vladimir_roster",
+      "text": "A duty roster, kept every night in the same square hand for longer than anyone should keep anything. Gate: Teodor, Bastian. Wall: Ilona, Mattias. Beacon: none. Beacon: none. Beacon: none. Every night the same, and under each night one line: All present. None dismissed."
+    },
+    {
+      "id": "holt_commander_cot",
+      "cell": [
+        33,
+        14
+      ],
+      "kind": "examine",
+      "label": "A cot that was never slept in",
+      "model": "bed_small"
+    }
+  ],
+  "containers": [
+    {
+      "id": "holt_dormitory_footlocker",
+      "cell": [
+        8,
+        9
+      ],
+      "label": "Footlocker",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "playing_card_set",
+          "qty": 1
+        },
+        {
+          "id": "dice_set",
+          "qty": 1
+        }
+      ],
+      "gold": 24
+    },
+    {
+      "id": "holt_dragon_desk",
+      "cell": [
+        17,
+        4
+      ],
+      "label": "The dragon's desk",
+      "model": "desk",
+      "items": [
+        {
+          "id": "ink",
+          "qty": 1
+        },
+        {
+          "id": "ink_pen",
+          "qty": 1
+        },
+        {
+          "id": "parchment",
+          "qty": 3
+        }
+      ],
+      "gold": 35
+    },
+    {
+      "id": "holt_godfrey_chest",
+      "cell": [
+        9,
+        19
+      ],
+      "label": "A plain chest",
+      "model": "chest",
+      "items": [
+        {
+          "id": "book",
+          "qty": 1
+        }
+      ],
+      "gold": 9
+    },
+    {
+      "id": "holt_commanders_chest",
+      "cell": [
+        34,
+        19
+      ],
+      "label": "The commander's strongbox",
+      "model": "strongbox",
+      "items": [
+        {
+          "id": "spell_scroll_level_1",
+          "qty": 1
+        }
+      ],
+      "gold": 120,
+      "lock_dc": 18
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        18,
+        0
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ],
+  "traps": [
+    {
+      "id": "holt_weak_floor",
+      "cells": [
+        [
+          28,
+          6
+        ],
+        [
+          29,
+          6
+        ],
+        [
+          30,
+          6
+        ]
+      ],
+      "label": "Rotten boards",
+      "detect_dc": 13,
+      "disarm_dc": 12,
+      "save": {
+        "ability": "dex",
+        "dc": 13
+      },
+      "damage": "2d6",
+      "damage_type": "bludgeoning",
+      "text": "The boards of the gallery give way under you with a long tearing groan."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "sir_godfrey_gwilym",
+      "cell": [
+        5,
+        16
+      ],
+      "dialogue": "argynvostholt/godfrey:start",
+      "when": "flag.godfrey_met and not guest:sir_godfrey_gwilym and flag.order_fate != \"rest\"",
+      "facing": "west"
+    }
+  ],
+  "narration": {
+    "enter": "enter:argynvostholt_upper"
+  },
+  "rest": "risky"
+}

@@ -1,0 +1,40 @@
+# Mount Baratok: the cairn on the summit (prop) and the lightning ridge (random event, data/random_encounters/baratok_slopes.json).
+
+~ cairn
+Narrator: A cairn of flat grey stones, waist-high, stacked with a care nobody spends on a trail marker. The stones are warm. Snow melts on them as it lands.
+if flag.mordenkainen_eyes_read
+Narrator: This is what the old man's eyes kept going to, every time a word got away from him.
+endif
+if flag.baratok_ward_found
+Narrator: The ward is still there, coiled in its ring of frost, but now you know where its edges are, and so does it.
+else
+interject class:wizard: Somebody warded this, and not for show. Look at the frost around it. It's in a perfect ring.
+endif
+* Unstack the stones. -> cairn_open
+* Leave it standing. -> END
+
+~ cairn_open
+set mordenkainen_spellbook_found
+if not quest.the_mad_mage >= book_found
+quest the_mad_mage book_found
+endif
+Narrator: Under the last stone, wrapped in oilcloth gone stiff with cold, lies a fat spellbook bound in grey leather, and tucked inside its cover two loose scrolls, written fast. The hand is strong and impatient. The capital letters all have a little hook.
+give spell_scroll_level_1 2
+interject name:silvain_aster: That is a master's book. I don't mean an expert's. I mean the sort of book other books are written about.
+-> END
+
+~ lightning_ridge
+set baratok_storm_seen
+Narrator: The trail crosses a bare ridge as the light goes, and a single cloud, no bigger than a barn, slides up over Mount Baratok on its own and stops overhead.
+Narrator: Lightning comes down, once, into a ring of black glass on the ridge where it has plainly come down every evening for years. The thunder rolls off down the valley and doesn't come back.
+* [Arcana DC 14] What made that cloud? -> ridge_arcana | ridge_arcana_fail
+* Keep walking, quickly. -> END
+
+~ ridge_arcana
+Narrator: It's a spell, not weather: a great one, cast once and left running, like a clock somebody wound and forgot. Whoever told the sky to strike here every evening never told it to stop, and the work is so good it hasn't faltered once.
+interject class:wizard: That's not a storm. That's a reminder. Somebody set it to go off every night, like a bell.
+-> END
+
+~ ridge_arcana_fail
+Narrator: It looks like weather. It smells like weather. It is far too punctual to be weather.
+-> END

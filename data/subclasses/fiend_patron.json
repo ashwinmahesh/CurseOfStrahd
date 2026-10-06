@@ -75,8 +75,35 @@
       "feature": {
         "id": "fiendish_resilience",
         "name": "Fiendish Resilience",
-        "summary": "After a Short or Long Rest, choose a damage type other than Force to have Resistance to.",
-        "implemented": "text"
+        "summary": "Choose a damage type other than Force after each Short or Long Rest; you have Resistance to it.",
+        "text": "Whenever you finish a Short or Long Rest, choose one damage type other than Force. You have Resistance to that type until you choose a different one with this feature.",
+        "choice": {
+          "id": "damage_type",
+          "kind": "damage_type",
+          "count": 1,
+          "from": [
+            "acid",
+            "bludgeoning",
+            "cold",
+            "fire",
+            "lightning",
+            "necrotic",
+            "piercing",
+            "poison",
+            "psychic",
+            "radiant",
+            "slashing",
+            "thunder"
+          ],
+          "replaceable": "short_rest"
+        },
+        "modifiers": [
+          {
+            "stat": "resistance",
+            "value": "@damage_type"
+          }
+        ],
+        "implemented": "data"
       }
     },
     {

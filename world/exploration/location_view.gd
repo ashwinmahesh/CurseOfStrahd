@@ -62,6 +62,8 @@ var input_locked := false
 var _queue: Array[Vector2i] = []     ## the leader's remaining path
 var _on_arrive: Callable = Callable()
 var _step_t := 0.0
+## Counts down to the party standing still: the walk cycle plays until the last step's glide has finished.
+var _walk_stop_t := -1.0
 var _areas_in: Dictionary = {}
 
 
@@ -576,6 +578,10 @@ func _process(delta: float) -> void:
 		var focus := (tokens[leader().id] as Node3D).global_position if tokens.has(leader().id) else Vector3.ZERO
 		board.fade_occluders(rig.camera.global_position, focus, delta)
 		board.cut_buildings(rig.camera.global_position, focus, delta)
+	if _walk_stop_t >= 0.0 and not in_combat:
+		_walk_stop_t -= delta
+		if _walk_stop_t < 0.0 and _queue.is_empty():
+			_stand_still()
 	if in_combat or _queue.is_empty():
 		return
 	_step_t -= delta
@@ -592,18 +598,25 @@ func _process(delta: float) -> void:
 			_on_arrive = Callable()
 			return
 	_advance_party(next)
+	# Walking until this step's glide ends (a step right after it keeps the cycle going; a walk cut short stops too).
+	_walk_stop_t = _step_t
 	if _check_cell_events():
 		_queue.clear()
 		_on_arrive = Callable()
 		return
 	if _queue.is_empty():
-		for m in members:
-			(tokens[m.id] as CombatToken).face(Vector2.ZERO, false)
 		_save_positions()
 		if _on_arrive.is_valid():
 			var cb := _on_arrive
 			_on_arrive = Callable()
 			cb.call()
+
+
+## The party (and guests) stop walking in place once they've arrived.
+func _stand_still() -> void:
+	for m: Combatant in members + guest_members:
+		if tokens.has(m.id):
+			(tokens[m.id] as CombatToken).face(Vector2.ZERO, false)
 
 
 ## The leader steps to `next`; each follower steps into the square the one ahead of it just left.

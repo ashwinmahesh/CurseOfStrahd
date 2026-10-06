@@ -1,7 +1,7 @@
 extends TestCase
 ## Phase 1 exit test (plan §10): build the four pregenerated characters through CharacterBuilder, level them
-## to 5 with LevelUpController, and compare every number with the hand-worked sheets in
-## docs/rules/reference_party.md (tests/fixtures/reference_party.json).
+## with LevelUpController, and compare every number with the hand-worked sheets in docs/rules/reference_party.md
+## (tests/fixtures/reference_party.json). Levels 1 to 5 since Phase 1; 6 to 11 (the Phase 5 level cap) since P5-01.
 
 const FIXTURE := "res://tests/fixtures/reference_party.json"
 const PARTY: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
@@ -13,19 +13,19 @@ func before_each() -> void:
 	reference = JSON.parse_string(FileAccess.get_file_as_string(FIXTURE)) as Dictionary
 
 
-func test_fighter_levels_1_to_5_match_the_hand_worked_sheet() -> void:
+func test_fighter_levels_1_to_11_match_the_hand_worked_sheet() -> void:
 	_check_character("ilse_varga")
 
 
-func test_rogue_levels_1_to_5_match_the_hand_worked_sheet() -> void:
+func test_rogue_levels_1_to_11_match_the_hand_worked_sheet() -> void:
 	_check_character("tamsin_tealeaf")
 
 
-func test_cleric_levels_1_to_5_match_the_hand_worked_sheet() -> void:
+func test_cleric_levels_1_to_11_match_the_hand_worked_sheet() -> void:
 	_check_character("hedda_ironvow")
 
 
-func test_wizard_levels_1_to_5_match_the_hand_worked_sheet() -> void:
+func test_wizard_levels_1_to_11_match_the_hand_worked_sheet() -> void:
 	_check_character("silvain_aster")
 
 
@@ -51,6 +51,17 @@ func test_cleric_multiclass_options_at_level_5() -> void:
 	assert_true(after.has_proficiency("weapons", "martial"), "multiclass Paladin: Martial weapons")
 	assert_eq(after.save_proficiency(&"str"), "", "no Paladin saving throws")
 	assert_eq(after.spell_slots(), [4, 3, 3, 0, 0, 0, 0, 0, 0] as Array[int], "Cleric 5 + Paladin 1 halved, rounded up = caster level 6")
+
+
+func test_pregens_level_to_the_cap_of_11() -> void:
+	for id in PARTY:
+		var errors: Array[String] = []
+		var ch := Pregens.build(id, 11, errors)
+		assert_eq(errors, [] as Array[String], "%s level plan" % id)
+		assert_eq(ch.character_level() if ch != null else 0, 11, "%s reaches 11" % id)
+		var past: Array[String] = []
+		Pregens.build(id, 12, past)
+		assert_eq(past.size(), 1, "%s: asking past the plan says where it stops" % id)
 
 
 func test_party_builds_without_errors_or_unexpected_warnings() -> void:
@@ -106,7 +117,7 @@ func _level_to(id: String, level: int) -> Character:
 
 func _check_character(id: String) -> void:
 	var sheets := reference[id] as Dictionary
-	for level in range(1, 6):
+	for level in range(1, 12):
 		var ch := _level_to(id, level)
 		if ch == null:
 			return

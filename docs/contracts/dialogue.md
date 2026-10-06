@@ -27,6 +27,12 @@ Speaker [mood]: Text               Picks a portrait expression (neutral, smile, 
                                    bonus (Advantage and Heroic Inspiration apply). Skills: any of the 18, or an
                                    ability (Strength ... Charisma). "| fail_node" may be left out (then failure
                                    goes to ok_node with check.last = false).
+                                   A failed Persuasion, Intimidation, Deception, Performance or Insight option is
+                                   spent (owner rule, 2026-10-06): it never shows again, in this conversation or
+                                   later (saved). So a menu must never depend on one such check: give another way
+                                   on (another skill, an offer, a price, a fight, or simply moving on). Where it
+                                   fits the scene, failure should cost something: a cooler `attitude`, a flag that
+                                   closes a door or raises a price, a fight, an alarm, lost time or gold.
 * [if <condition>] Text -> node    Shown only when the condition holds.
 * [Cleric] Text -> node            Shown only if a party member is a Cleric; that character speaks it. Also
                                    [Elf], [Criminal] (background) and [tag:blunt].

@@ -1,0 +1,195 @@
+{
+  "id": "mount_baratok_hut",
+  "name": "The Mad Mage's Hut",
+  "region": "mount_baratok",
+  "summary": "A stone hut colder inside than out: a dragonchess board with frost on the pieces, a mirror turned to the wall, shelves of blank books, and an old man in a magnificent ruin of a robe.",
+  "text": "One room with a sleeping corner and a study divided off by a half wall. The hearth has never been lit; the cold doesn't seem to bother him.",
+  "map": {
+    "rows": [
+      "##############",
+      "#......#.....#",
+      "#.=....#..=..#",
+      "#............#",
+      "#.==...#.....#",
+      "#......#.....#",
+      "#......#..=..#",
+      "#......#.....#",
+      "#......#.....#",
+      "######.#######"
+    ],
+    "theme": "house",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "baratok_hut_room",
+      "name": "The hut",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          6,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "baratok_hut_study",
+      "name": "The study",
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          12,
+          8
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      6,
+      8
+    ],
+    "from_mountain": [
+      6,
+      8
+    ]
+  },
+  "exits": [
+    {
+      "id": "baratok_hut_out",
+      "cell": [
+        6,
+        9
+      ],
+      "to": "mount_baratok",
+      "spawn": "from_hut",
+      "label": "Out into the cold"
+    }
+  ],
+  "props": [
+    {
+      "id": "baratok_chessboard",
+      "cell": [
+        2,
+        4
+      ],
+      "kind": "examine",
+      "label": "A dragonchess board",
+      "model": "table_set"
+    },
+    {
+      "id": "baratok_mirror",
+      "cell": [
+        1,
+        1
+      ],
+      "kind": "examine",
+      "label": "A mirror turned to the wall",
+      "model": "mirror"
+    },
+    {
+      "id": "baratok_chalk_wall",
+      "cell": [
+        13,
+        3
+      ],
+      "kind": "examine",
+      "label": "Chalk on the wall",
+      "model": "drawings"
+    },
+    {
+      "id": "baratok_blank_books",
+      "cell": [
+        10,
+        2
+      ],
+      "kind": "examine",
+      "label": "Shelves of books",
+      "model": "book_shelf"
+    },
+    {
+      "id": "baratok_cold_hearth",
+      "cell": [
+        4,
+        0
+      ],
+      "kind": "examine",
+      "label": "A hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "baratok_bed",
+      "cell": [
+        10,
+        6
+      ],
+      "kind": "examine",
+      "label": "A bed of furs",
+      "model": "bed"
+    }
+  ],
+  "containers": [
+    {
+      "id": "baratok_hut_pack",
+      "cell": [
+        12,
+        8
+      ],
+      "label": "A travelling satchel",
+      "model": "satchel",
+      "items": [
+        {
+          "id": "ration",
+          "qty": 2
+        },
+        {
+          "id": "component_pouch",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        11,
+        4
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "mad_mage",
+      "cell": [
+        4,
+        6
+      ],
+      "dialogue": "mount_baratok/mordenkainen:start",
+      "when": "not flag.mordenkainen_restored",
+      "approach": 5
+    },
+    {
+      "npc": "mordenkainen",
+      "cell": [
+        4,
+        6
+      ],
+      "dialogue": "mount_baratok/mordenkainen:start",
+      "when": "flag.mordenkainen_restored and not guest:mordenkainen"
+    }
+  ],
+  "narration": {
+    "enter": "enter:mount_baratok_hut"
+  },
+  "rest": "safe"
+}

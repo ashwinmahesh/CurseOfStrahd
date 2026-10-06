@@ -1,0 +1,450 @@
+{
+  "id": "amber_temple_library",
+  "name": "The Amber Temple: the Library",
+  "region": "amber_temple",
+  "summary": "The wardens' library: long stacks furred with frost, a reading room of lecterns, a barred alcove of books the wardens did not want read, and the study where Exethanter, the last warden, tries to remember what he is for. A scholar named Vosk reads here too.",
+  "text": "It is very quiet, and very cold, and the books smell of ice instead of dust.",
+  "map": {
+    "rows": [
+      "##############################",
+      "#...........#.....#..........#",
+      "#.=..=..=...#.....#..........#",
+      "#...........#.....#....=.....#",
+      "#...........#..=..#..........#",
+      "#.=..=..=...#.....#..........#",
+      "#...........#.....#..........#",
+      "#...........#.....#..........#",
+      "#####.#########.###.....######",
+      "#............................#",
+      "#..####..####..#..####..####.#",
+      "#............................#",
+      "#..####..####.....####..####.#",
+      "#.....=......................#",
+      "#..####..####.....####..####.#",
+      "#............................#",
+      "#..####..####..#..####..####.#",
+      "#............................#",
+      "#............................#",
+      "#############..###############"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "library_stacks",
+      "name": "The stacks",
+      "cells": [
+        [
+          1,
+          9
+        ],
+        [
+          28,
+          18
+        ]
+      ]
+    },
+    {
+      "id": "reading_room",
+      "name": "The reading room",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          11,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "restricted_stacks",
+      "name": "The barred alcove",
+      "cells": [
+        [
+          13,
+          1
+        ],
+        [
+          17,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "exethanter_study",
+      "name": "The warden's study",
+      "cells": [
+        [
+          19,
+          1
+        ],
+        [
+          28,
+          7
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      14,
+      18
+    ],
+    "from_hall": [
+      14,
+      18
+    ]
+  },
+  "exits": [
+    {
+      "id": "back_to_the_hall",
+      "cell": [
+        14,
+        19
+      ],
+      "to": "amber_temple_faceless_god",
+      "spawn": "from_library",
+      "label": "The passage back to the great hall"
+    }
+  ],
+  "doors": [
+    {
+      "id": "restricted_grille",
+      "cell": [
+        15,
+        8
+      ],
+      "label": "An iron gate",
+      "locked": true,
+      "lock_dc": 18
+    }
+  ],
+  "props": [
+    {
+      "id": "wardens_charter",
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "book",
+      "label": "The wardens' charter",
+      "model": "book",
+      "codex": "amber_wardens_charter",
+      "text": "We who keep this house have gathered here what the world was right to forget: the last embers of dead powers, each sealed in amber, which alone will hold them. We do not worship them. We do not bargain with them. We do not answer when they call our names. We are wardens, and the door we guard opens inward only. Whoever reads this after us: keep the rule, or burn the house down around you. There is no third way."
+    },
+    {
+      "id": "visitors_ledger",
+      "cell": [
+        5,
+        5
+      ],
+      "kind": "book",
+      "label": "The visitors' ledger",
+      "model": "ledger",
+      "codex": "amber_visitors_ledger",
+      "flag": "visitors_ledger_read",
+      "text": "A ledger of everyone the wardens admitted, in a dozen hands over three centuries. The entries grow rarer and stranger. Near the end: 'A prince of the western wars, on foot, alone, very courteous. Asked to read. Admitted.' Below it, in a different ink: 'He asked for the deep vault. God help us, I showed him.' Both entries are signed with the same name: Exethanter."
+    },
+    {
+      "id": "treatise_on_amber",
+      "cell": [
+        8,
+        2
+      ],
+      "kind": "book",
+      "label": "A treatise on amber",
+      "model": "book",
+      "codex": "amber_treatise",
+      "text": "Notes on why amber holds what iron, salt and silver cannot. Amber was once alive, the author argues, and remembers it: a living cage for a thing that wishes it were. The last page is a list of sarcophagi, each with a name, and a column headed 'Speaks?' Every answer is yes."
+    },
+    {
+      "id": "exethanter_notes",
+      "cell": [
+        23,
+        3
+      ],
+      "kind": "examine",
+      "label": "Hundreds of pinned notes",
+      "model": "letters",
+      "dialogue": "amber_temple/library:notes"
+    },
+    {
+      "id": "exethanter_jar",
+      "cell": [
+        27,
+        1
+      ],
+      "kind": "search",
+      "label": "A jar on the high shelf",
+      "model": "jars",
+      "search_dc": 13,
+      "flag": "phylactery_found",
+      "dialogue": "amber_temple/library:jar"
+    },
+    {
+      "id": "vosk_table",
+      "cell": [
+        6,
+        13
+      ],
+      "kind": "examine",
+      "label": "A reading table stacked with books",
+      "model": "table_round"
+    },
+    {
+      "id": "stacks_shelves",
+      "cell": [
+        3,
+        10
+      ],
+      "kind": "decor",
+      "label": "Shelves",
+      "model": "bookcase"
+    },
+    {
+      "id": "restricted_shelves",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "examine",
+      "label": "Books in chains",
+      "model": "bookcase"
+    }
+  ],
+  "containers": [
+    {
+      "id": "restricted_case",
+      "cell": [
+        13,
+        2
+      ],
+      "label": "A chained case",
+      "model": "case",
+      "items": [
+        {
+          "id": "spell_scroll_level_1",
+          "qty": 2
+        },
+        {
+          "id": "book",
+          "qty": 1
+        }
+      ],
+      "gold": 150
+    },
+    {
+      "id": "study_cabinet",
+      "cell": [
+        28,
+        6
+      ],
+      "label": "The warden's cabinet",
+      "model": "cupboard",
+      "items": [
+        {
+          "id": "ink",
+          "qty": 2
+        },
+        {
+          "id": "paper",
+          "qty": 10
+        },
+        {
+          "id": "candle",
+          "qty": 5
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "reading_room_chest",
+      "cell": [
+        10,
+        6
+      ],
+      "label": "A lectern cupboard",
+      "model": "drawer",
+      "items": [
+        {
+          "id": "map_or_scroll_case",
+          "qty": 1
+        },
+        {
+          "id": "parchment",
+          "qty": 5
+        }
+      ],
+      "gold": 15
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        6,
+        13
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        23,
+        4
+      ],
+      "kind": "magic",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        4,
+        4
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ],
+  "traps": [],
+  "npcs": [
+    {
+      "npc": "exethanter",
+      "cell": [
+        23,
+        4
+      ],
+      "dialogue": "amber_temple/exethanter:start",
+      "when": "not flag.exethanter_destroyed and not flag.exethanter_hostile and not ((flag.vosk_fate or flag.vosk_destroyed) and not flag.amber_seal_decided and flag.exethanter_met and flag.exethanter_phylactery != \"smashed\")"
+    },
+    {
+      "npc": "vosk",
+      "cell": [
+        7,
+        13
+      ],
+      "dialogue": "amber_temple/vosk:start",
+      "when": "not flag.vosk_met",
+      "approach": 4
+    }
+  ],
+  "encounters": [
+    {
+      "id": "library_wardens",
+      "trigger": "open:restricted_case",
+      "when": "not flag.library_wardens_cleared and level >= 10",
+      "text": "Four skulls rise from the top shelves, each wearing a crown of green fire. They were wardens once, and they still are.",
+      "monsters": [
+        {
+          "monster": "flameskull",
+          "cell": [
+            14,
+            6
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            16,
+            6
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            13,
+            11
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            17,
+            11
+          ],
+          "name": "Warden's skull"
+        }
+      ],
+      "surprise": "",
+      "flag": "library_wardens_cleared"
+    },
+    {
+      "id": "library_wardens",
+      "trigger": "open:restricted_case",
+      "when": "not flag.library_wardens_cleared",
+      "text": "Three skulls rise from the top shelves, each wearing a crown of green fire. They were wardens once, and they still are.",
+      "monsters": [
+        {
+          "monster": "flameskull",
+          "cell": [
+            14,
+            6
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            16,
+            6
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            15,
+            11
+          ],
+          "name": "Warden's skull"
+        }
+      ],
+      "surprise": "",
+      "flag": "library_wardens_cleared"
+    },
+    {
+      "id": "exethanter_wrath",
+      "trigger": "dialogue",
+      "text": "The sparks in Exethanter's eyes go from candle to forge. Somewhere in the shelves, two skulls catch fire.",
+      "monsters": [
+        {
+          "monster": "exethanter",
+          "cell": [
+            23,
+            4
+          ],
+          "name": "Exethanter"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            21,
+            2
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            26,
+            6
+          ],
+          "name": "Warden's skull"
+        }
+      ],
+      "surprise": "",
+      "flag": "exethanter_destroyed"
+    }
+  ],
+  "narration": {
+    "enter": "enter:amber_temple_library"
+  },
+  "rest": "risky"
+}

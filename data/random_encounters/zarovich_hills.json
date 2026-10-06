@@ -1,0 +1,195 @@
+{
+  "id": "zarovich_hills",
+  "map": "lake_zarovich_trail",
+  "chance_day": 0.2,
+  "chance_night": 0.45,
+  "summary": "The trails through the hills between Vallaki, Lake Zarovich, the werewolves' den and Lake Baratok: pines, boulders and long views. Kiril's wolves by day and night until the pack question is settled; the hungry dead by night.",
+  "entries": [
+    {
+      "id": "pack_hunt",
+      "weight": 3,
+      "when": "night and flag.wolf_pack_leader != \"emil\" and flag.wolf_pack_leader != \"none\"",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            5
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            25,
+            9
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
+            6
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            12
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            27,
+            11
+          ]
+        }
+      ],
+      "text": "A howl goes up close by, then another, and then grey shapes are pouring through the pines on both sides of the trail. Kiril's wolves are hunting, and tonight they've found something better than deer."
+    },
+    {
+      "id": "dire_wolves",
+      "weight": 2,
+      "when": "day and flag.wolf_pack_leader != \"emil\"",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            25,
+            10
+          ],
+          "name": "Pack leader"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            13
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            17,
+            12
+          ]
+        }
+      ],
+      "text": "Dire wolves, five of them, big as ponies, fanning out across the slope ahead. Behind them a man steps out from the trees, smiling, and starts to change."
+    },
+    {
+      "id": "hill_ghouls",
+      "weight": 2,
+      "when": "night",
+      "monsters": [
+        {
+          "monster": "ghoul",
+          "cell": [
+            20,
+            5
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            24,
+            8
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            22,
+            11
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            26,
+            14
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            28,
+            10
+          ]
+        }
+      ],
+      "text": "The smell reaches you first, sweet and wrong. Then the things that died on these hills and didn't stay down come crawling out of the bracken, grinning."
+    },
+    {
+      "id": "howl_call",
+      "weight": 2,
+      "when": "night and not flag.den_way_known and not flag.pack_resolved",
+      "once": true,
+      "dialogue": "lake_zarovich/events:howl_call"
+    },
+    {
+      "id": "krezk_cart",
+      "weight": 1,
+      "when": "day and not flag.den_way_known",
+      "once": true,
+      "dialogue": "lake_zarovich/events:krezk_cart"
+    },
+    {
+      "id": "ridge_watcher",
+      "weight": 1,
+      "when": "day and not flag.den_way_known and not flag.pack_resolved",
+      "once": true,
+      "dialogue": "lake_zarovich/events:ridge_watcher"
+    },
+    {
+      "id": "silver_snare",
+      "weight": 1,
+      "when": "not flag.tower_rumor and not flag.van_richten_reunited",
+      "once": true,
+      "dialogue": "lake_zarovich/events:silver_snare"
+    },
+    {
+      "id": "emil_wolves",
+      "weight": 2,
+      "when": "flag.wolf_pack_leader == \"emil\"",
+      "once": true,
+      "dialogue": "lake_zarovich/events:emil_wolves"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+# Mother Ruxandra, archdruid of Yester Hill (docs/voice/ruxandra.md).
+# summit: on the crown before the fight (approach). Every branch ends in the summit fight; how the party gets there
+# decides who is in it (encounter summit_ritual's variants). fallen: after the fight, her fate.
+
+~ summit
+if flag.yester_sneaked and not flag.yester_struck_first
+Narrator: The whole crown lies before you: druids swaying in a ring round the black tree, an old woman with both hands pressed to the effigy's chest, and nobody, nobody at all, looking your way.
+* Strike now, while they chant. -> strike_first
+* Step out and speak to her. -> speak
+endif
+-> speak
+
+~ strike_first
+set yester_struck_first
+Narrator: You're across the ring before the first druid turns her head.
+combat summit_ritual
+
+~ speak
+if not flag.ruxandra_met
+set ruxandra_met
+Narrator: The old woman straightens slowly from the effigy, wiping earth off her hands. Her face is kind. It's the kindest face you've seen in Barovia, and it doesn't change in the least when she looks at your weapons.
+endif
+if flag.kostin_fled and not flag.kostin_doubts
+Ruxandra: Kostin told us you'd come. He was ashamed. I told him shame is only fear that has been taught manners.
+elif flag.yester_heard
+Ruxandra: We heard you in the gully, children. The hill hears everything. It's mostly ears.
+else
+Ruxandra: Guests. The hill gets so few guests. Mostly it gets offerings.
+endif
+Ruxandra: You've come for the bird-man's stone. It isn't his now. It's the heart of something better. Listen: you can almost hear it beating.
+-> summit_menu
+
+~ summit_menu
+* We're taking the stone. Stand aside or don't. -> fight
+* [Intimidation DC 17] Your lord isn't coming, and your circle can count. Run. -> rux_flee | rux_scorn
+* [Religion DC 15] Your lord is a man in a castle. The land never needed his permission to grow. -> rux_religion | rux_scorn
+* [if flag.elvir_story_heard and not flag.elvir_truth_known] A raven-man died on this hill last spring. -> rux_elvir
+* [if not flag.ruxandra_asked_tree] What is that tree? -> rux_tree
+
+~ rux_tree
+set ruxandra_asked_tree
+Ruxandra: Older than the castle. It grew from a stake pulled out of something that should have stayed dead, far away and long ago, and the mists carried the seed here, as they carry everything. It drinks. We give it to drink.
+interject class:cleric: That isn't a tree. That's a grave that learned to stand up.
+-> summit_menu
+
+~ rux_elvir
+set elvir_truth_known
+if not flag.martikovs_reconciled
+quest elvir_martikov truth_found
+endif
+Ruxandra: The black-eyed boy. Yes. He told his brother to fly, and the brother flew, and the boy laughed at us all the way up the hill. He stopped laughing, in the end. The tree is very thorough.
+interject tag:blunt: Noted. All of it.
+-> summit_menu
+
+~ fight
+Ruxandra: Then come and take it, children. Sing, all of you. Sing him awake.
+combat summit_ritual
+
+~ rux_scorn
+Ruxandra: No. I don't think so. Sing, children. Louder.
+combat summit_ritual
+
+~ rux_flee
+set yester_druids_fate = "fled"
+Narrator: It isn't you they fear; it's the doubt, arriving all at once in a circle that never had any. One druid runs, then three. Ruxandra shrieks after them, gives you a look of perfectly polite hatred, and follows.
+Ruxandra: The tree remembers faces!
+Narrator: The chant stops half sung. In the silence, the effigy's chest cracks open anyway.
+combat summit_ritual
+
+~ rux_religion
+set yester_circle_broken
+Ruxandra: Clever. Unkind, but clever.
+Narrator: Around the ring the humming falters. One druid lowers her hands, then another; they back away from the tree as if it had spoken their names, and go stumbling down the slope. Only Ruxandra stays, both hands on the effigy.
+Ruxandra: Cowards. It doesn't matter. He has heart enough for all of us.
+combat summit_ritual
+
+# ---------------------------------------------------------------- After the fight
+
+~ fallen
+Narrator: Ruxandra lies among the roots of the black tree, breathing in small hitches. The roots have crept toward her while she lay there. She doesn't seem to mind.
+Ruxandra: You broke him. You broke the heart. ...Well. The land will grow another. It always does.
+-> fallen_menu
+
+~ fallen_menu
+* [if flag.elvir_story_heard and not flag.elvir_truth_known] Tell us about the raven-man you caged. -> fallen_elvir
+* Go. Crawl off this hill and don't come back. -> spare
+* End it. -> finish
+
+~ fallen_elvir
+set elvir_truth_known
+if not flag.martikovs_reconciled
+quest elvir_martikov truth_found
+endif
+Ruxandra: The bird-man's son? He sent his brother away. Ordered him off like a dog. He was proud of it; he told the tree so at the end. The tree didn't care. Trees don't.
+-> fallen_menu
+
+~ spare
+set yester_druids_fate = "spared"
+Ruxandra: Mercy. How like strangers. ...I'll go. The tree will call me back. It always calls us back.
+Narrator: She gets up the way the very old do, in stages, and goes down the far side of the hill without once looking round.
+-> END
+
+~ finish
+set yester_druids_fate = "killed"
+Narrator: It's quick. The roots that were reaching toward her draw back, as if they'd lost interest.
+interject class:cleric: Go to whatever's waiting, mother. I hope it's kinder than your god.
+-> END

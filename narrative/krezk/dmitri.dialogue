@@ -1,0 +1,124 @@
+# Dmitri Krezkov, burgomaster of Krezk, in the hall of his house (docs/voice/dmitri_krezkov.md).
+# His son Ilya is dying upstairs; his wife Anna wants the Abbot's help; Dmitri would rather bury a sixth child than
+# owe the Abbot one. After the Abbey's climax he reacts to abbot_fate and ilya_fate.
+
+~ start
+if not flag.dmitri_met
+set dmitri_met
+Narrator: A broad, grey-bearded man sits at the long table with a ledger he isn't reading. He stands when you come in, because a burgomaster stands.
+Dmitri Krezkov: Dmitri Krezkov. This is my house, and that's my table, and you're welcome at both while you mind the wall's rules.
+-> menu
+endif
+if flag.ilya_fate == "healed" and flag.abbot_fate != "slain"
+Dmitri Krezkov: He's out at the well, shouting at goats. My son. I keep going to the window to check it's true.
+if flag.abbot_fate == "repentant" or flag.abbot_fate == "broken" or flag.abbot_fate == "wedding"
+Dmitri Krezkov: The Abbot came down at dawn and put his hand on the boy's head, and walked back up without a word. I owe him. I hate owing him. Both of those are true.
+endif
+elif flag.ilya_fate == "healed"
+Dmitri Krezkov: My son is well, and the thing on the mountain is dead, and I didn't have to choose which I wanted more. You did that. Krezk keeps its debts.
+elif flag.ilya_fate == "frail"
+Dmitri Krezkov: He's out of bed. Thin as a candle, but out of bed. Anna says the White Sun did it. I say you did. We've agreed to both be right.
+elif flag.krezk_reason == "cowed"
+Dmitri Krezkov [angry]: You. The ones who threatened my watchman. Say your business and don't get comfortable.
+else
+Dmitri Krezkov: Back again. Sit, if you like. The chairs are older than the both of us and they've held worse.
+endif
+-> menu
+
+~ menu
+* Why does Krezk keep its gate shut? -> wall
+* [if not flag.ilya_heard] Forgive me, but you look like a man carrying something heavy. -> son
+* [if flag.ilya_heard and not flag.ilya_fate] Your son. Is there nothing to be done for him? -> nothing_done
+* What do you make of the Abbot? -> abbot
+* [if flag.wizard_of_wines_hook or flag.wine_shortage_heard] About the wine that stopped coming. -> wine
+* [if guest:ireena and not flag.krezk_refuge_offered] Could Ireena find refuge in Krezk? -> refuge
+* [if guest:ireena and flag.krezk_refuge_offered] Ireena, Dmitri's offered you a place here. -> krezk/ireena:stay_offer
+* [if flag.abbot_fate] About the Abbot. It's done. -> after
+* Can we rest here? -> rest
+* Goodbye. -> END
+
+~ wall
+Dmitri Krezkov: The road ends here. The mountains don't. Everything that comes down out of them, or up the road at us, meets the wall first. That's what a wall is for.
+Dmitri Krezkov: Every stranger who knocked in my lifetime wanted something. Twice, it was him, wearing a stranger's face, asking nicely. So now we ask for a reason, and we decide what a reason is.
+interject tag:blunt: And we were a reason.
+Dmitri Krezkov: You were. Don't spend it all at once.
+-> menu
+
+~ son
+set ilya_heard
+quest the_burgomasters_son heard
+Narrator: For a moment you think he won't answer. Then he looks at the stair, as if he can see through it.
+Dmitri Krezkov: My son Ilya. Eight years old. A fever came up the road in the autumn with the last carter, and it found him. It's been burning a month.
+Dmitri Krezkov: Five of our children are in the churchyard by the pool. I can walk to their stones with my eyes shut. I am not going to learn the way to a sixth.
+-> nothing_done
+
+~ nothing_done
+Dmitri Krezkov: Our healer died two winters back. Anna sits with him. She sings. When she stops singing, I go up and check he's breathing.
+Dmitri Krezkov: And she wants me to go up the mountain and ask the Abbot. On my knees, I expect, the way the Belviews asked.
+* What happened to the Belviews? -> belviews
+* The Abbot might truly help him. -> might_help
+* [Cleric] Let me see the boy. -> cleric_offer
+* We'll see what we can do. -> END
+
+~ belviews
+Dmitri Krezkov: The Belviews were a Krezk family. Farmers, two doors from here. A sickness took the whole house, and they went up to the abbey for the cure.
+Dmitri Krezkov: The Abbot cured them. He keeps them up there still, and he's been improving them ever since. That's his word for it. Go and look at them, and then tell me what word you'd use.
+-> menu
+
+~ might_help
+Dmitri Krezkov: Might. He might. And then I'd owe him my son, and he'd come down for the debt one day with that kind face of his, asking nicely.
+Narrator: His hand is flat on the table, pressing, as if the table might get up and leave.
+Dmitri Krezkov: If he comes to my door on his own, I won't bar it. That's as far as I can bend. Don't ask me to bend further. I'll break, and Anna needs one of us whole.
+-> menu
+
+~ cleric_offer
+Dmitri Krezkov: Upstairs. Anna won't let go of his hand, so you'll have to work around her.
+-> menu
+
+~ abbot
+if flag.abbot_fate == "slain"
+Dmitri Krezkov: I made nothing of him while he lived, because I was afraid. Now he's dead and I find I'm still afraid. Perhaps that was never about him.
+-> menu
+endif
+Dmitri Krezkov: He looks like a boy carved out of honey and he talks like your grandmother. Folk go up that mountain sick and come down well. Or they don't come down.
+Dmitri Krezkov: He's never once raised his voice, or a hand, to anyone in Krezk. That frightens me more than if he had.
+if flag.abbot_nature_known
+interject class:cleric: He isn't a man, Dmitri. He's something sent. Something that's been here too long.
+Dmitri Krezkov: Sent by who? No. Don't answer that. I'd rather not have to pray to whoever it was.
+endif
+-> menu
+
+~ wine
+Dmitri Krezkov: The Martikovs. Their cart came up every autumn since my grandfather's time. Wine for the shrine, wine for weddings, wine for the long nights. This year nothing.
+Dmitri Krezkov: If you pass that way, find out what's become of them. Krezk would owe you, and Krezk pays in things you can't buy anywhere else. Goat cheese, mostly. And honesty.
+-> menu
+
+~ refuge
+if flag.krezk_reason == "cowed"
+Dmitri Krezkov [angry]: You came to my gate with threats, and now you want me to take in the one woman in the valley he'd burn a village to reach? No. Find her another wall.
+interject guest:ireena: He isn't wrong to say it. I'd say the same, in his chair.
+-> menu
+endif
+Narrator: He looks at Ireena for a long time. She looks back and doesn't help him.
+Dmitri Krezkov: Our wall, our roof, our bread. It's not much and he'll know where it is within a week. But it's yours, Ireena Kolyana. Your father sent us salt once.
+set krezk_refuge_offered
+-> krezk/ireena:stay_offer
+
+~ rest
+Dmitri Krezkov: The little room off the hall. It was my eldest's. It's had nobody in it for six years, and it'll be glad of the company. Lock the shutters. Krezk does.
+-> menu
+
+~ after
+if flag.abbot_fate == "repentant"
+Dmitri Krezkov: The Belviews say he walked up the mountain and didn't stop at the top. I've hated him for twenty years. I find I'm not sure who to hate now. It's restful.
+elif flag.abbot_fate == "broken"
+Dmitri Krezkov: He sits in his chapel, the Belviews say, and won't speak. A thing like that, broken. I thought I'd be glad. I'm only tired.
+elif flag.abbot_fate == "wedding"
+Dmitri Krezkov [angry]: You gave him his bride. A dead girl sewn out of our dead girls, sent down the road to the castle in a wedding dress. Krezk will pray about that for a long time.
+if flag.wedding_dress_source == "anna"
+Dmitri Krezkov [sad]: In Anna's dress. I haven't told her yet what it was for. I don't know if I will.
+endif
+else
+Dmitri Krezkov: Dead. An angel, or whatever he was, dead in his own chapel. I'll have the bell rung. Somebody should, and nobody up there will.
+endif
+-> menu

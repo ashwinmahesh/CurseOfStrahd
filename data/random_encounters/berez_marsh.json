@@ -1,0 +1,171 @@
+{
+  "id": "berez_marsh",
+  "map": "berez_marsh_track",
+  "chance_day": 0.2,
+  "chance_night": 0.45,
+  "summary": "The marsh track between Vallaki and the drowned village of Berez: Baba Lysaga's scarecrows walk it, insects rise off it in clouds, and lights wander it at night.",
+  "entries": [
+    {
+      "id": "insect_cloud",
+      "weight": 3,
+      "when": "day",
+      "text": "The reeds on both sides start to whine, and then the whine stands up and comes for you in a cloud.",
+      "monsters": [
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            10,
+            9
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            26,
+            9
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            4,
+            10
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            25,
+            5
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            5,
+            14
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            19,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scarecrow_walk",
+      "weight": 3,
+      "text": "Scarecrows step off the poles along the track, one after another, as if somebody had called them in for supper.",
+      "monsters": [
+        {
+          "monster": "scarecrow",
+          "cell": [
+            25,
+            5
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            26,
+            4
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            5,
+            14
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            19,
+            14
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            12,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "marsh_lights",
+      "weight": 3,
+      "when": "night",
+      "text": "Lights rise out of the reeds, pale and friendly, and drift toward the track. The nearest one is humming.",
+      "monsters": [
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            10,
+            2
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            26,
+            5
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            18,
+            17
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            4,
+            13
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            28,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drowned_bell",
+      "weight": 1,
+      "once": true,
+      "dialogue": "berez/events:drowned_bell"
+    },
+    {
+      "id": "raven_guide",
+      "weight": 1,
+      "when": "day",
+      "once": true,
+      "dialogue": "berez/events:raven_guide"
+    }
+  ]
+}

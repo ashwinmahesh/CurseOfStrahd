@@ -1,0 +1,38 @@
+# Party banter at Van Richten's Tower on Lake Baratok. Each node opens with an `if` gate.
+
+~ banter_the_rumor
+if flag.tower_rumor and not flag.tower_door_opened
+interject tag:curious: A tower in a lake with a lamp in the window and a Vistani with a crossbow on the doorstep. That's either a love story or a siege.
+interject tag:blunt: Both. It's usually both.
+endif
+-> END
+
+~ banter_khazan
+if flag.khazan_known and not flag.tower_door_opened
+interject class:wizard: A door that opens to a dead man's name. Elegant. Old-fashioned. It assumes nobody would ever be rude enough to say it.
+interject class:rogue: I'd have said it on the first day. I say everything on the first day.
+endif
+-> END
+
+~ banter_ward_for_one
+if flag.tower_ward_known and flag.ezmerelda_met_at_tower
+interject class:wizard: A ward keyed to one person. You'd have to know her very well. Her voice, her stride, her temper. Months of work, out of love.
+interject tag:blunt: Locking someone out isn't love.
+interject class:wizard: No. It's what fear does when it's been in love too long.
+endif
+-> END
+
+~ banter_rictavio
+if flag.van_richten_identity_known and not flag.rictavio_unmasked
+interject name:silvain_aster: Rictavio. The man in the feathers. That was Rudolph van Richten, and I watched him juggle. I may never recover.
+interject name:tamsin_tealeaf: He juggled badly, if that helps.
+interject name:silvain_aster: It does not.
+endif
+-> END
+
+~ banter_reunited
+if flag.van_richten_reunited
+interject tag:cheerful: They were shouting at each other for an hour. I think that's the happiest I've seen anyone in this valley.
+interject tag:veteran: Old soldiers and their sergeants. You don't shout at people you've stopped caring about.
+endif
+-> END

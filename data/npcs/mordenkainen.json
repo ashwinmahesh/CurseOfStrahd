@@ -1,0 +1,24 @@
+{
+  "id": "mordenkainen",
+  "name": "Mordenkainen",
+  "title": "Archmage",
+  "summary": "A legendary archwizard from beyond the mists who came to Barovia to destroy Strahd, lost, and had his memory taken. Restored, he is sharp, proud, ashamed and very dangerous. The Tarokka can name him as the party's ally.",
+  "portrait": "mordenkainen",
+  "sprite": "mordenkainen",
+  "attitude": "indifferent",
+  "voice": "docs/regions/berez.md",
+  "monster": "mordenkainen",
+  "guest": true,
+  "guest_build": {
+    "monster": "mordenkainen",
+    "note": "His own stat block; joins only once his memory is restored, and only if the Tarokka names him (the broken one)."
+  },
+  "tags": [
+    "wizard",
+    "archmage",
+    "tarokka_ally",
+    "mount_baratok"
+  ],
+  "region": "mount_baratok",
+  "pronouns": "he/him"
+}

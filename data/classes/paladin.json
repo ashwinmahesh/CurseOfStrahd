@@ -458,7 +458,8 @@
         {
           "id": "abjure_foes",
           "name": "Abjure Foes",
-          "summary": "Channel Divinity: creatures of your choice within 60 feet make a Wisdom save or are Frightened and slowed for 1 minute.",
+          "summary": "Channel Divinity, Magic action: up to Charisma-modifier creatures within 60 feet make a Wisdom save or are Frightened and can only move, act or take a Bonus Action each turn.",
+          "text": "As a Magic action you spend a use of Channel Divinity and raise your Holy Symbol or weapon. Choose up to a number of creatures equal to your Charisma modifier (at least one) that you can see within 60 feet. Each must succeed on a Wisdom saving throw or be Frightened for 1 minute or until it takes any damage. While Frightened this way, on each of its turns it can do only one of these: move, take an action, or take a Bonus Action.",
           "action": "action",
           "uses_resource": "paladin_channel_divinity",
           "implemented": "text"
@@ -472,6 +473,13 @@
           "id": "aura_of_courage",
           "name": "Aura of Courage",
           "summary": "You and allies in your aura are immune to Frightened.",
+          "text": "You and your allies have Immunity to the Frightened condition while in your Aura of Protection. A Frightened ally who enters the aura is unaffected by that condition while there.",
+          "modifiers": [
+            {
+              "stat": "condition_immunity",
+              "value": "frightened"
+            }
+          ],
           "implemented": "engine"
         }
       ]
@@ -483,6 +491,7 @@
           "id": "radiant_strikes",
           "name": "Radiant Strikes",
           "summary": "Melee weapon and Unarmed Strike hits deal an extra 1d8 Radiant damage.",
+          "text": "Your blows carry holy light: when you hit a target with an attack roll using a Melee weapon or an Unarmed Strike, it takes an extra 1d8 Radiant damage.",
           "implemented": "engine"
         }
       ]

@@ -1,0 +1,16 @@
+# Old Bonegrinder's end state (docs/regions/old_bonegrinder.md §6). Conversations that change who is left at the
+# mill after Morgantha falls end here, so `bonegrinder_fate` and `pastry_trade` always say what later regions should
+# see. (Fights set them just before `combat`, since a lost fight ends the game.) A bargain sets them in morgantha.
+
+~ reckon
+if flag.morgantha_slain and flag.offalia_slain and flag.bella_slain
+set bonegrinder_fate = "destroyed"
+set pastry_trade = "ended"
+elif flag.morgantha_slain and flag.bella_pact and not flag.bella_slain and not flag.bella_fled
+set bonegrinder_fate = "bella"
+set pastry_trade = "dwindling"
+elif flag.morgantha_slain
+set bonegrinder_fate = "broken"
+set pastry_trade = "dwindling"
+endif
+-> END

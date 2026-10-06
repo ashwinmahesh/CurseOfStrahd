@@ -29,7 +29,7 @@
             {
               "id": "arid",
               "name": "Arid Land",
-              "summary": "Blur, Burning Hands and Fire Bolt; Fireball at 5, Blight at 7, Wall of Stone at 9.",
+              "summary": "Blur, Burning Hands and Fire Bolt; Fireball at 5, Blight at 7, Wall of Stone at 9. Nature's Ward resists Fire at 10.",
               "modifiers": [
                 {
                   "stat": "spell",
@@ -63,6 +63,11 @@
                   "value": "wall_of_stone",
                   "always_prepared": true,
                   "at_class_level": 9
+                },
+                {
+                  "stat": "resistance",
+                  "value": "fire",
+                  "at_class_level": 10
                 }
               ],
               "implemented": "data"
@@ -70,7 +75,7 @@
             {
               "id": "polar",
               "name": "Polar Land",
-              "summary": "Fog Cloud, Hold Person and Ray of Frost; Sleet Storm at 5, Ice Storm at 7, Cone of Cold at 9.",
+              "summary": "Fog Cloud, Hold Person and Ray of Frost; Sleet Storm at 5, Ice Storm at 7, Cone of Cold at 9. Nature's Ward resists Cold at 10.",
               "modifiers": [
                 {
                   "stat": "spell",
@@ -104,6 +109,11 @@
                   "value": "cone_of_cold",
                   "always_prepared": true,
                   "at_class_level": 9
+                },
+                {
+                  "stat": "resistance",
+                  "value": "cold",
+                  "at_class_level": 10
                 }
               ],
               "implemented": "data"
@@ -111,7 +121,7 @@
             {
               "id": "temperate",
               "name": "Temperate Land",
-              "summary": "Misty Step, Shocking Grasp and Sleep; Lightning Bolt at 5, Freedom of Movement at 7, Tree Stride at 9.",
+              "summary": "Misty Step, Shocking Grasp and Sleep; Lightning Bolt at 5, Freedom of Movement at 7, Tree Stride at 9. Nature's Ward resists Lightning at 10.",
               "modifiers": [
                 {
                   "stat": "spell",
@@ -145,6 +155,11 @@
                   "value": "tree_stride",
                   "always_prepared": true,
                   "at_class_level": 9
+                },
+                {
+                  "stat": "resistance",
+                  "value": "lightning",
+                  "at_class_level": 10
                 }
               ],
               "implemented": "data"
@@ -152,7 +167,7 @@
             {
               "id": "tropical",
               "name": "Tropical Land",
-              "summary": "Acid Splash, Ray of Sickness and Web; Stinking Cloud at 5, Polymorph at 7, Insect Plague at 9.",
+              "summary": "Acid Splash, Ray of Sickness and Web; Stinking Cloud at 5, Polymorph at 7, Insect Plague at 9. Nature's Ward resists Poison at 10.",
               "modifiers": [
                 {
                   "stat": "spell",
@@ -186,6 +201,11 @@
                   "value": "insect_plague",
                   "always_prepared": true,
                   "at_class_level": 9
+                },
+                {
+                  "stat": "resistance",
+                  "value": "poison",
+                  "at_class_level": 10
                 }
               ],
               "implemented": "data"
@@ -222,8 +242,15 @@
       "feature": {
         "id": "natures_ward",
         "name": "Nature's Ward",
-        "summary": "Immunity to the Poisoned condition and Resistance to a damage type tied to your current land.",
-        "implemented": "text"
+        "summary": "Immunity to the Poisoned condition and Resistance to your current land's damage type (Fire, Cold, Lightning or Poison).",
+        "text": "You can't be Poisoned, and you have Resistance to a damage type tied to the land you currently have chosen for your Circle Spells: Fire for arid, Cold for polar, Lightning for temperate, Poison for tropical.",
+        "modifiers": [
+          {
+            "stat": "condition_immunity",
+            "value": "poisoned"
+          }
+        ],
+        "implemented": "data"
       }
     },
     {

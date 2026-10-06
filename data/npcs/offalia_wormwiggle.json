@@ -1,0 +1,20 @@
+{
+  "id": "offalia_wormwiggle",
+  "name": "Offalia Wormwiggle",
+  "title": "Morgantha's Younger Daughter",
+  "summary": "A round, rosy baker's wife who minds the great oven at Old Bonegrinder and is always eating. Under the face, a simple, cheerful night hag who loves her mother and the millstone, in that order.",
+  "portrait": "offalia_wormwiggle",
+  "sprite": "offalia_wormwiggle",
+  "attitude": "friendly",
+  "voice": "docs/regions/old_bonegrinder.md",
+  "monster": "night_hag",
+  "guest": false,
+  "tags": [
+    "hag",
+    "disguised",
+    "coven",
+    "old_bonegrinder"
+  ],
+  "region": "old_bonegrinder",
+  "pronouns": "she/her"
+}

@@ -1,0 +1,356 @@
+# Davian Martikov, master of the Wizard of Wines (docs/voice/davian_martikov.md). The Tarokka's Raven ally.
+# start: the first meeting at the camp (approach), then his menu wherever he stands. The menu is where the party
+# reports (winery cleared, stones, Yester Hill, Elvir); check_done gives the region's one milestone.
+# When Davian travels as a guest, Stefania opens this menu instead (stefania:news).
+
+~ start
+if not flag.davian_met
+-> first_meeting
+endif
+if flag.winery_strongbox_opened and not flag.davian_strongbox_noticed and flag.winery_reclaimed
+-> strongbox
+endif
+if flag.winery_reclaimed
+Davian: My house smells of druid. It will smell of wine again by spring or I'll know the reason. Speak.
+else
+Davian: Still alive. Good. Speak.
+endif
+-> menu
+
+~ first_meeting
+set davian_met
+Narrator: An old man sits on an upturned cask by the fire with a blanket over his knees: white beard, black eyes, and the bearing of a king who has mislaid his kingdom and expects it returned by supper.
+if flag.raven_harmed and not flag.adrian_apology_heard
+Davian [angry]: You're the ones who struck my son out of the air on the Svalich road. Sit down. I can't afford to throw you out, and I hate that more than I hate you.
+elif flag.keepers_of_the_feather_met
+Davian: Urwin's friends. The birds have talked of nothing else for a week. Sit. You're shorter than they said.
+elif flag.ilinca_vouched
+Davian: Ilinca Vrana says you pulled two children out of a hag's oven. Ilinca doesn't say good things about anyone, so I expect it's true. Sit.
+elif flag.wizard_of_wines_hook
+Davian: Someone in Vallaki misses my wine, then. Good. So do I. Sit.
+else
+Davian: Strangers, at my fire. Either you've come to rob me, and you're three months late, or you've come to help, and you're very welcome. Sit.
+endif
+Davian: I am Davian Martikov. That was my winery up there until the druids of Yester Hill walked up my lane with the forest at their backs. Now my family lives under the trees like birds. Which, in fairness, we are.
+interject guest:ireena: My father bought your wine for every feast day. He said it was the only honest thing that ever came up the road.
+-> stones
+
+~ stones
+Davian: No vine should live in this valley; there's no sun worth the name. Ours do because three stones lie in their soil, green as new leaves, each the size of a plum. A wizard paid them to my family, long ago, for a winter's lodging.
+Davian: One was stolen last autumn. The ravens followed the thief to Berez, the drowned village by the river, to the witch who lives there. One the druids carried off to their hill. The last I hid the night we fled.
+Davian: They're tearing my house apart to find it. So far my house is winning.
+-> stones_menu
+
+~ stones_menu
+* [if not flag.winery_stone_hiding_told] Where did you hide it? -> hiding
+* [if not flag.yester_hill_known] What do the druids want with a stone? -> druids_want
+* [if not flag.davian_why_asked] Why did the druids come for you? -> why_us
+* We'll clear your house. -> pledge
+
+~ hiding
+set winery_stone_hiding_told
+Davian: Hm. You have honest faces, or faces that have practised. In the cellar, at the foot of the stair, stands the founder's cask, older than the house. It has a false end. Turn the third hoop and pull.
+-> stones_menu
+
+~ druids_want
+set yester_hill_known
+Davian: To starve us, first. A winery without wine is a farm with airs. And on Yester Hill, west of here, they're building a great figure of earth shaped like the lord in the castle. They mean to wake it with my stone for a heart.
+Davian: My son Elvir went to watch that hill last spring. Don't ask me about it.
+-> stones_menu
+
+~ why_us
+set davian_why_asked
+Davian: Because a raven sees a great deal and repeats it in the right ears. My family has watched the lord in the castle for longer than he has known he was being watched. He knows now. This is his answer.
+-> stones_menu
+
+~ pledge
+set winery_stone_hiding_told
+set yester_hill_known
+quest wizard_of_wines asked
+quest the_third_stone told
+if not flag.raven_harmed or flag.adrian_apology_heard
+attitude davian_martikov friendly
+endif
+Davian: Then here are the terms. Drive them out of the winery and out of the press house. Bring up my stone from the founder's cask: cellar, foot of the stair, third hoop, pull. Then we'll talk about the hill.
+Davian: I'll pay in the only coin I trust. Wine, when there's wine again. Until then, my gratitude, which is rarer.
+interject tag:blunt: How many druids?
+Davian: Fewer than yesterday, if you start now.
+-> menu
+
+# ---------------------------------------------------------------- The menu
+
+~ menu
+* [if flag.winery_hall_cleared and flag.press_house_cleared and not flag.winery_reclaimed] The druids are out of your house. -> reclaim
+* [if flag.winery_stone_recovered and not flag.winery_stone_returned] Your stone, from the founder's cask. -> return_cellar
+* [if flag.yester_stone_recovered and not flag.yester_stone_returned] The stone from Yester Hill. -> return_hill
+* [if flag.yester_hill_resolved and not flag.yester_hill_reported] Yester Hill is finished. -> hill_report
+* [if quest.the_third_stone == found and not flag.berez_stone_returned] The witch's stone, from Berez. -> return_berez
+* [if flag.elvir_remains_recovered and not flag.elvir_buried] We brought Elvir home. -> burial
+* [if flag.elvir_truth_known and not flag.martikovs_reconciled] Elvir sent Adrian away. He wrote it on his cage. -> reconcile_proof
+* [if flag.adrian_told_order and not flag.elvir_truth_known and not flag.martikovs_reconciled and not flag.davian_refused_once] Adrian says Elvir ordered him to fly. -> adrian_word
+* [if flag.elvir_story_heard and not flag.martikovs_reconciled and not flag.davian_insight_tried] [Insight DC 14] It isn't Adrian you're angry with. -> insight_ok | insight_fail
+* [if tarokka.ally.npc == davian_martikov and not guest:davian_martikov] Madam Eva's cards named you. -> ally
+* [if not flag.winery_reclaimed] What's waiting for us in the winery? -> intel
+* Tell us about the winery. -> lore
+* Goodbye. -> bye
+
+~ intel
+Davian: The druids sleep in the fermenting hall and feed my vats to their creatures. Their leader, a boy called Kostin, keeps to the press house with something he grew in my best vat. Some nights it sings to him.
+if treasure_at:wizard_of_wines_press_house or treasure_at:wizard_of_wines_cellar
+Davian: And one thing I can't account for. The ravens say a cold light shows in my house some nights, where no lamp is. If you find it, it isn't mine.
+endif
+-> menu
+
+~ lore
+Davian: My family pressed wine on this hill before the valley had its lord. The man on the sign is the wizard who paid us in stones. We set by a cask for him every year. He's never come for it. Wizards are poor at visiting.
+interject class:wizard: A wizard who never collects a debt is either very generous or very dead.
+Davian: I've drunk to both, in alternate years.
+-> menu
+
+~ bye
+if flag.winery_reclaimed
+Davian: Go carefully. Come back thirsty.
+else
+Davian: Go on. The house won't empty itself.
+endif
+-> END
+
+# ---------------------------------------------------------------- Reports
+
+~ reclaim
+set winery_reclaimed
+quest wizard_of_wines reclaimed
+Narrator: Davian lets the blanket fall and walks up the lane without a word. At the top he lays a hand flat on the winery door, the way you'd lay a hand on a horse that came home without its rider.
+Davian: Hm. They've scratched the paint.
+Davian: Stefania! Bring the children. We're going home.
+if flag.kostin_doubts
+Davian: The ravens saw the boy Kostin walk west, slowly, like a man who isn't sure where he's going anymore. Interesting.
+elif flag.kostin_fled
+Davian: The boy Kostin ran west, the ravens say, toward the hill. He'll warn them you're coming. Expect to be expected.
+endif
+-> check_done
+
+~ return_cellar
+set winery_stone_returned
+set winery_stones_returned += 1
+Narrator: Davian takes the stone in both hands. Green light comes up between his fingers, the way sun comes through a leaf.
+Davian: Hello, old friend. You hid well. Better than I did.
+Narrator: He carries it to the nearest row and presses it into the soil with his thumb. For a moment nothing happens. Then the vine above it makes a small sound, like a cork easing out of a bottle.
+-> first_wine
+
+~ return_hill
+set yester_stone_returned
+set winery_stones_returned += 1
+if flag.gulthias_tree_burned
+Narrator: The second stone is warm and smells faintly of smoke. Davian turns it over twice, looking for the tree in it, and doesn't find any.
+else
+Narrator: The second stone has a dark thread through it now, fine as a hair. Davian holds it up to the light for a long moment.
+Davian: It's been near that tree. Good soil will draw it out, in time. Most things wash out, in time.
+endif
+Davian: Two. Two in the ground. My grandfather had only two for a while, when he was a boy, and he swore the wine was better for having to try.
+-> first_wine
+
+~ return_berez
+set berez_stone_returned
+set winery_stones_returned += 1
+quest the_third_stone returned
+Narrator: Davian doesn't take the third stone at once. He looks at it in your hand, then at you, and his face does something it hasn't done since you met him.
+Davian: From the witch. From Berez. You went into that drowned place for my vines. ...Three. I didn't think I'd see three again before I died. I find I'm in less of a hurry now.
+-> first_wine
+
+~ first_wine
+if flag.winery_reclaimed and flag.winery_stones_returned >= 1 and not flag.winery_wine_flows
+set winery_wine_flows
+Davian: Then the press runs again. Not this week; the grapes need a month to remember themselves. But the cellar still holds what we pressed before they came, and the cart in the yard has three good wheels.
+Davian: The first cart goes where you say. You've earned that much.
+* To Vallaki. Urwin's inn has been pouring the last cask for weeks. -> cart_vallaki
+* To the village under the castle. They have less than anyone. -> cart_village
+* To Krezk. A town behind walls that high needs something to keep its spirits up. -> cart_krezk
+endif
+-> check_done
+
+~ cart_vallaki
+set winery_first_cart = "vallaki"
+Davian: To Urwin, then. He'll pretend he isn't pleased. He gets that from me.
+-> check_done
+
+~ cart_village
+set winery_first_cart = "village"
+Davian: To the village. The shopkeeper there will try to charge them double for it. The ravens will see that he doesn't.
+-> check_done
+
+~ cart_krezk
+set winery_first_cart = "krezk"
+Davian: To Krezk. They keep their gate shut to strangers and open it for my carts. If you're going that way, walk beside the casks. A gate that opens for wine might open for you.
+-> check_done
+
+~ hill_report
+set yester_hill_reported
+if guest:adrian_martikov
+leave adrian_martikov
+Narrator: Adrian walks into the yard ahead of you and stops in front of his father. Neither of them says a word. Then Davian takes his son by the shoulder, once, hard, and lets go.
+elif flag.adrian_went_to_hill
+Davian: You took my son up that hill and brought him back down it. I'll not forget that.
+endif
+if flag.gulthias_tree_burned
+Davian: The ravens saw the smoke from here: one black column, straight up, as if the hill were being emptied. Good. Let it burn to the roots.
+else
+Davian: The figure broken and the druids scattered. And the tree? Still standing, the ravens say. Hm. Trees are patient. So are ravens.
+endif
+if flag.yester_druids_fate == "killed"
+Davian: And Ruxandra is dead. I knew her when she was a girl who picked my grapes for a copper a basket. I'll drink to who she was. Not to what she became.
+elif flag.yester_druids_fate == "spared" or flag.yester_druids_fate == "fled"
+Davian: And Ruxandra lives, somewhere out there. Mercy's a fine thing. Remember that you chose it, if she comes back.
+endif
+if not flag.winery_reclaimed
+quest wizard_of_wines hill_broken
+Davian: Now come and do the same to the ones sleeping in my house.
+endif
+-> check_done
+
+~ check_done
+if flag.winery_reclaimed and flag.yester_hill_resolved and not flag.wizard_of_wines_milestone_reached
+-> milestone
+endif
+if flag.winery_reclaimed and flag.winery_stones_returned >= 2 and not flag.keepers_allied
+-> keepers_oath
+endif
+-> menu
+
+~ milestone
+set wizard_of_wines_milestone_reached
+quest wizard_of_wines saved
+xp milestone
+Narrator: That night the Martikovs broach a cask from before the druids came, and the whole family drinks in the yard under a sky with no stars in it, and for an hour nobody looks up.
+Davian: To the hill, broken. To the house, ours. And to strangers, who it turns out are good for something.
+interject tag:cheerful: That's the nicest thing anyone's said about me in this whole valley.
+interject tag:devout: Mm. Good wine. Dawn comes slower to some places than others. It comes.
+-> check_done
+
+~ keepers_oath
+set keepers_allied
+Narrator: Davian whistles two notes. Ravens come down out of the trees, off the eaves, off the roof of the press house, until the yard is black with them and every one is looking at you.
+Davian: The Keepers of the Feather owe you two stones and a house, and ravens don't forget a debt. Wherever you go in this valley, look up. If you need word carried or eyes on a place, say so out loud.
+if flag.raven_harmed
+Davian: Even you. My son says you're not as bad as your aim. Ravens have long memories, but we're not unreasonable.
+endif
+-> menu
+
+# ---------------------------------------------------------------- Elvir
+
+~ burial
+set elvir_buried
+Narrator: They bury Elvir at the end of the last green row, under the cairn they raised for him when there was nothing to put beneath it. Stefania sings. Davian doesn't. Adrian digs, and won't let anyone else hold the spade.
+Davian: He's home. That's the thing. Whatever else is true, he's home.
+if flag.elvir_truth_known and not flag.martikovs_reconciled
+Narrator: At the graveside Davian keeps looking at Adrian, like a man who has something to say and has forgotten the language it's in.
+endif
+-> check_done
+
+~ reconcile_proof
+Narrator: You tell him what was scratched into the post of the last cage. Davian listens without moving, the way old men listen to weather coming.
+Davian: "I sent him." ...Elvir. You stubborn, stupid boy. You always did think you were the eldest.
+-> reconcile
+
+~ adrian_word
+Davian: Then why didn't he say so? He's had a year. A year of me looking through him at supper.
+* [Persuasion DC 14] Because he knew you'd call it an excuse. Are you going to prove him right? -> adrian_word_ok | adrian_word_fail
+* We don't know. -> adrian_word_drop
+
+~ adrian_word_ok
+Narrator: Davian opens his mouth to answer, and doesn't. He looks across to where Adrian is scrubbing a cask he has already scrubbed twice.
+-> reconcile
+
+~ adrian_word_fail
+set davian_refused_once
+Davian [angry]: Don't tell me what my son meant. I know what my son meant. I knew him before you knew this valley had a name.
+-> menu
+
+~ adrian_word_drop
+set davian_refused_once
+Davian: No. You don't. Neither do I.
+-> menu
+
+~ insight_ok
+set davian_insight_tried
+Narrator: He holds his hands like a man holding something that isn't there anymore. It isn't his son he can't forgive. He sent two boys to watch that hill, and one came back.
+Davian: ...I sent them. I sent them to that hill. And I couldn't look at the one who came home, because then I'd have to look at the one who sent them.
+-> reconcile
+
+~ insight_fail
+set davian_insight_tried
+Narrator: His face is a shut door with good locks. Whatever is behind it, you won't have it today, and perhaps neither will he.
+-> menu
+
+~ reconcile
+set martikovs_reconciled
+quest elvir_martikov reconciled
+Narrator: He gets up. He's an old man, and it takes a while. He goes to where his son is working, and they stand there, two men with the same black eyes, and neither of them is any good at this.
+Davian: Adrian. The press is yours. My knees are finished with it.
+Adrian: Your knees are fine.
+Davian: Then take it anyway.
+interject tag:loyal: Good. That's good.
+interject guest:ireena: My father and my brother never said it either. Not once, before the end. I'm glad somebody did.
+-> check_done
+
+# ---------------------------------------------------------------- The strongbox in the office
+
+~ strongbox
+set davian_strongbox_noticed
+Davian: Someone has been in my strongbox. It was a good lock. It was a good lock for forty years.
+* [if gold >= 60] We took what was in it. Here it is, all of it. -> strongbox_return
+* We opened it to see if the druids had. We took nothing. -> strongbox_claim
+* Call it our fee. -> strongbox_fee
+* [Deception DC 14] The druids, surely. -> strongbox_lie | strongbox_lie_caught
+
+~ strongbox_return
+gold -60
+attitude davian_martikov friendly
+Davian: Hm. A thief who brings it back is either a fool or an honest man having a bad week. I'll assume the second. Keep ten for the lock.
+gold +10
+-> menu
+
+~ strongbox_claim
+Davian: Then we'll find out when I count it, won't we. I'll count it later, alone, like a miser. It's a family tradition.
+-> menu
+
+~ strongbox_fee
+set winery_strongbox_kept
+Davian: Your fee. My father paid men to clear wolves from these rows, and they charged less, and they were also thieves. Fine. It's paid.
+-> menu
+
+~ strongbox_lie
+Davian: The druids. Of course. Filthy creatures, druids. No respect for a good lock.
+Narrator: He frowns at the lock for a long while afterwards, and then lets it be.
+-> menu
+
+~ strongbox_lie_caught
+set winery_strongbox_kept
+Davian: Druids don't pick locks. They don't need to; they grow through them. Don't lie to me in my own house. You're not good enough at it yet.
+-> menu
+
+# ---------------------------------------------------------------- The Tarokka's Raven
+
+~ ally
+if not flag.winery_reclaimed
+set davian_ally_asked
+Davian: A Vistani crone shuffled her deck and my name fell out. Hm. I'll go where her cards say, and gladly, once there are no druids asleep in my bed. Not before. A man doesn't leave his house to squatters.
+-> menu
+endif
+if flag.davian_ally_asked
+Davian: You asked before. My house is mine again. Ask me now.
+endif
+Davian: Eva. Of course it was Eva. She bought wine from my father and haggled him to tears. If her cards say the old raven flies with you, then the old raven flies with you.
+if flag.martikovs_reconciled
+Davian: Adrian has the press. Stefania has the house. I have nothing left to do here but get in the way. Better I get in his way.
+else
+Davian: Stefania will mind the house. Adrian will mind the vines. He's good at being left behind.
+endif
+if flag.winery_strongbox_kept
+Davian: I'll be counting the spoons, mind.
+endif
+join davian_martikov
+quest find_the_ally found
+interject class:wizard: Will you fly with us, or above us?
+Davian: Whichever annoys the enemy more.
+-> END

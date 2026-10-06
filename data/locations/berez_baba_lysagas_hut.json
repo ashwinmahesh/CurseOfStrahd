@@ -1,0 +1,388 @@
+{
+  "id": "berez_baba_lysagas_hut",
+  "name": "Baba Lysaga's Hut",
+  "region": "berez",
+  "summary": "One crooked room on top of a giant stump, warmer than it should be: a hearth, a rocking chair, a cradle, jars that hum, and drawings of the same handsome boy pinned to every wall.",
+  "text": "The hearth room takes most of the hut; the kitchen and the nursery corner open off it. The floor tilts a little when the hut shifts its weight.",
+  "map": {
+    "rows": [
+      "################",
+      "#......#.......#",
+      "#.=....#.......#",
+      "#......#..==...#",
+      "#..............#",
+      "#......#.......#",
+      "#......#.......#",
+      "###.####.......#",
+      "#......#.......#",
+      "#..=...#.......#",
+      "#..............#",
+      "########.#######"
+    ],
+    "theme": "house",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "lysaga_hearth_room",
+      "name": "The hearth room",
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          14,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "lysaga_kitchen",
+      "name": "The kitchen",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          6,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "lysaga_nursery",
+      "name": "The nursery corner",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          6,
+          10
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      8,
+      10
+    ],
+    "from_stump": [
+      8,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "lysaga_hut_out",
+      "cell": [
+        8,
+        11
+      ],
+      "to": "berez",
+      "spawn": "from_hut",
+      "label": "Down the root ladder"
+    }
+  ],
+  "props": [
+    {
+      "id": "lysaga_hearth",
+      "cell": [
+        11,
+        0
+      ],
+      "kind": "examine",
+      "label": "The hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "lysaga_poppet",
+      "cell": [
+        13,
+        1
+      ],
+      "kind": "examine",
+      "label": "A doll over the hearth",
+      "model": "doll",
+      "dialogue": "berez/hut:poppet"
+    },
+    {
+      "id": "lysaga_rocking_chair",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "examine",
+      "label": "A rocking chair",
+      "model": "rocking_chair"
+    },
+    {
+      "id": "lysaga_drawings",
+      "cell": [
+        15,
+        5
+      ],
+      "kind": "examine",
+      "label": "Drawings of a boy",
+      "model": "drawings"
+    },
+    {
+      "id": "lysaga_oven",
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "examine",
+      "label": "The oven",
+      "model": "stove"
+    },
+    {
+      "id": "lysaga_tub",
+      "cell": [
+        3,
+        9
+      ],
+      "kind": "examine",
+      "label": "A copper tub",
+      "model": "bathtub"
+    },
+    {
+      "id": "lysaga_cradle",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "examine",
+      "label": "A cradle",
+      "model": "crib",
+      "dialogue": "berez/hut:cradle"
+    },
+    {
+      "id": "lysaga_skull_bowl",
+      "cell": [
+        13,
+        9
+      ],
+      "kind": "examine",
+      "label": "A great bowl of bone",
+      "model": "bones"
+    },
+    {
+      "id": "lysaga_charms",
+      "cell": [
+        4,
+        1
+      ],
+      "kind": "examine",
+      "label": "Bundles hanging from the beams",
+      "model": "charms"
+    },
+    {
+      "id": "lysaga_labelled_jar",
+      "cell": [
+        3,
+        1
+      ],
+      "kind": "examine",
+      "label": "A jar with a label",
+      "model": "jars",
+      "dialogue": "berez/hut:jar",
+      "when": "(flag.lysaga_dead or flag.lysaga_left_broken) and not flag.mordenkainen_memory_jar_taken"
+    }
+  ],
+  "containers": [
+    {
+      "id": "lysagas_pantry",
+      "cell": [
+        1,
+        5
+      ],
+      "label": "Her pantry",
+      "model": "cupboard",
+      "items": [
+        {
+          "id": "ration",
+          "qty": 3
+        }
+      ],
+      "gold": 12,
+      "when": "flag.lysaga_dead or flag.lysaga_bargained or flag.lysaga_left_broken"
+    },
+    {
+      "id": "lysagas_jar_shelf",
+      "cell": [
+        1,
+        1
+      ],
+      "label": "A shelf of humming jars",
+      "model": "jars",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 2
+        },
+        {
+          "id": "antitoxin",
+          "qty": 1
+        }
+      ],
+      "gold": 0,
+      "when": "flag.lysaga_dead or flag.lysaga_bargained or flag.lysaga_left_broken"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        11,
+        1
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        3,
+        4
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        10,
+        6
+      ],
+      "dialogue": "berez/lysaga:last_words",
+      "when": "flag.lysaga_slain_in_hut and not flag.lysaga_dead",
+      "approach": 10
+    },
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        11,
+        4
+      ],
+      "dialogue": "berez/lysaga:bargained_after",
+      "when": "flag.lysaga_bargained and not flag.lysaga_dead and not flag.strahd_knows_marina_truth and not flag.lysaga_slain_in_hut"
+    },
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        11,
+        4
+      ],
+      "dialogue": "berez/lysaga:hearth",
+      "when": "flag.lysaga_guests and not flag.lysaga_dead and not flag.lysaga_lured and not flag.strahd_knows_marina_truth and not flag.lysaga_slain_in_hut",
+      "approach": 5
+    }
+  ],
+  "encounters": [
+    {
+      "id": "lysaga_in_hut",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The door of the hut slams itself. The fire in the hearth stands up tall and green, and the jars on the shelf begin to hum.",
+      "monsters": [
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            12,
+            2
+          ],
+          "hp": 120
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            9,
+            6
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            13,
+            8
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_in_hut"
+    },
+    {
+      "id": "lysaga_in_hut",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The door of the hut slams itself. The fire in the hearth stands up tall and green, and the jars on the shelf begin to hum.",
+      "monsters": [
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            12,
+            2
+          ],
+          "hp": 105
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            9,
+            6
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            13,
+            8
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_in_hut"
+    },
+    {
+      "id": "lysaga_in_hut",
+      "trigger": "dialogue",
+      "text": "The door of the hut slams itself. The fire in the hearth stands up tall and green, and the jars on the shelf begin to hum.",
+      "monsters": [
+        {
+          "monster": "baba_lysaga",
+          "cell": [
+            12,
+            2
+          ],
+          "hp": 85
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            9,
+            6
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "lysaga_slain_in_hut"
+    }
+  ],
+  "narration": {
+    "enter": "enter:berez_baba_lysagas_hut"
+  },
+  "rest": "no",
+  "rest_text": "Not under her roof. The hut is listening for your breathing to slow.",
+  "treasure_spots": {
+    "berez_baba_lysagas_hut": {
+      "container": "lysagas_pantry"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "the_third_stone",
+  "name": "The Third Stone",
+  "summary": "The third of the Martikovs' vine stones, the winery's magic gems, was stolen last autumn and carried to Berez, the drowned village, where a witch lives.",
+  "giver": "davian_martikov",
+  "region": "wizard_of_wines",
+  "stages": [
+    {
+      "id": "told",
+      "journal": "Davian Martikov says the first of his three stones was stolen last autumn. His ravens followed the thief to Berez, the drowned village by the river, to the witch who lives in its ruins.",
+      "objectives": [
+        "Find the Martikovs' stone in Berez",
+        "Bring it home to Davian"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "We have the third stone, taken back from the witch of Berez. Davian will want it in his soil.",
+      "objectives": [
+        "Bring the stone to Davian at the Wizard of Wines"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "returned",
+      "journal": "All three stones lie in the Martikov vineyard again. Davian looked at us as if we'd done something impossible, which in this valley we may have.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

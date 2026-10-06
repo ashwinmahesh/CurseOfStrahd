@@ -77,6 +77,7 @@
         "id": "twinkling_constellations",
         "name": "Twinkling Constellations",
         "summary": "Archer and Chalice dice become 2d8, Dragon form grants a 20-foot Fly Speed, and you can switch constellation each turn.",
+        "text": "Your Starry Form grows brighter. The Archer's and the Chalice's 1d8 become 2d8, and while the Dragon shines on you, you have a Fly Speed of 20 feet and can hover. At the start of each of your turns in Starry Form you can change which constellation shines.",
         "implemented": "engine"
       }
     },

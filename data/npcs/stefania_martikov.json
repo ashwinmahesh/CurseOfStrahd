@@ -1,0 +1,20 @@
+{
+  "id": "stefania_martikov",
+  "name": "Stefania Martikov",
+  "title": "Davian's Daughter",
+  "summary": "Davian's daughter, who keeps the family's camp, its three children and its peace, more or less in that order. Practical, sharp-tongued, and tired of standing between her father and her brother.",
+  "portrait": "stefania_martikov",
+  "sprite": "stefania_martikov",
+  "attitude": "friendly",
+  "voice": "docs/voice/stefania_martikov.md",
+  "monster": "wereraven",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "wereraven",
+    "keepers_of_the_feather",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "she/her"
+}

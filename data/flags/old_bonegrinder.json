@@ -1,0 +1,170 @@
+{
+  "region": "old_bonegrinder",
+  "flags": [
+    {
+      "id": "ilinca_met",
+      "type": "bool",
+      "summary": "The party met Ilinca Vrana, the Keeper of the Feather who watches the mill from the dead oak (ilinca; children sets it if she first appears at the end)."
+    },
+    {
+      "id": "ilinca_joined",
+      "type": "bool",
+      "summary": "Ilinca flies into the mill with the party as a guest (join ilinca_vrana); she leaves with the children."
+    },
+    {
+      "id": "ilinca_refused",
+      "type": "bool",
+      "summary": "The party had struck the Keepers' raven on the Svalich road and failed to talk Ilinca round; she won't fly with them."
+    },
+    {
+      "id": "ilinca_vouched",
+      "type": "bool",
+      "summary": "Ilinca vouched for the party to the Keepers of the Feather after the children were freed. Vallaki (Urwin) and the Wizard of Wines (the Martikovs) may read it; the lane's ravens leave a gift."
+    },
+    {
+      "id": "coven_explained",
+      "type": "bool",
+      "summary": "Ilinca explained that three hags together are a coven and how to split them (Offalia's appetite, Bella's grudge)."
+    },
+    {
+      "id": "bone_heap_searched",
+      "type": "bool",
+      "summary": "The party found Brother Kesten's holy symbol in the bone heap behind the mill."
+    },
+    {
+      "id": "bonegrinder_recipe_read",
+      "type": "bool",
+      "summary": "The party read Morgantha's receipt book in the bakery (the special flour, the ledger of who owes)."
+    },
+    {
+      "id": "pastry_cart_raided",
+      "type": "bool",
+      "summary": "The party opened Morgantha's pastry cart in the shed; she notices."
+    },
+    {
+      "id": "offalia_met",
+      "type": "bool",
+      "summary": "The party met Offalia Wormwiggle at the oven."
+    },
+    {
+      "id": "offalia_asleep",
+      "type": "bool",
+      "summary": "Offalia ate one of her mother's dream pastries and fell asleep on the bakery floor; she sits out the last stand."
+    },
+    {
+      "id": "offalia_lured",
+      "type": "bool",
+      "summary": "The party tricked Offalia into running down the hill to find her mother; she sits out the last stand. Sending her home from the lane clears it."
+    },
+    {
+      "id": "offalia_at_large",
+      "type": "bool",
+      "summary": "Offalia is loose in the valley (lured away, or left asleep after Morgantha fell); she may be met on the lane."
+    },
+    {
+      "id": "offalia_slain",
+      "type": "bool",
+      "summary": "Offalia is dead: the bakery fight, the last stand (set as it begins), killed asleep, or the lane."
+    },
+    {
+      "id": "bella_met",
+      "type": "bool",
+      "summary": "The party met Bella Sunbane (on the stair after Offalia, or at her mirror in the loft)."
+    },
+    {
+      "id": "bella_pact",
+      "type": "bool",
+      "summary": "The party promised Bella the mill if she stayed out of the fight; she sits out the last stand and claims the mill and the soul bags after."
+    },
+    {
+      "id": "bella_fled",
+      "type": "bool",
+      "summary": "The party tricked Bella into believing the mill would go to Offalia; she left the coven in a fury and is loose in the valley."
+    },
+    {
+      "id": "bella_slain",
+      "type": "bool",
+      "summary": "Bella is dead: the last stand (set as it begins), broken faith in the loft, or the lane."
+    },
+    {
+      "id": "soul_bag_freed",
+      "type": "bool",
+      "summary": "The party cut the coven's soul bags open and freed the souls inside (also returns a dream taken in Morgantha's bargain)."
+    },
+    {
+      "id": "soul_bag_given",
+      "type": "bool",
+      "summary": "The party kept faith with Bella and let her take the soul bags with the mill."
+    },
+    {
+      "id": "morgantha_home_met",
+      "type": "bool",
+      "summary": "The party spoke with Morgantha in the loft of her mill."
+    },
+    {
+      "id": "offalia_in_last_stand",
+      "type": "bool",
+      "summary": "Set as the last stand begins: Offalia comes up the stair to fight beside her mother (picks the coven_last_stand variant)."
+    },
+    {
+      "id": "bella_in_last_stand",
+      "type": "bool",
+      "summary": "Set as the last stand begins: Bella fights beside her mother (picks the coven_last_stand variant)."
+    },
+    {
+      "id": "morgantha_slain",
+      "type": "bool",
+      "summary": "Morgantha is dead and the coven broken (coven_last_stand won). Later regions: no more pastry cart with her at it; the village and Vallaki may hear."
+    },
+    {
+      "id": "bonegrinder_bargain",
+      "type": "string",
+      "summary": "How the party bought the children back without a fight: gold (150 gp), dream (one party member's sweetest dream; she visits their sleep), truce (their word to leave the mill alone), or abandoned (they left the children). Later regions may read it."
+    },
+    {
+      "id": "sarnov_children_met",
+      "type": "bool",
+      "summary": "The party spoke with Ilka and Toma Sarnov in their cages."
+    },
+    {
+      "id": "children_rescued",
+      "type": "bool",
+      "summary": "Ilka and Toma Sarnov are out of the cages and safe (the region's milestone). The village and Vallaki may read it: the children came home, or came to the Blue Water Inn."
+    },
+    {
+      "id": "sarnov_truth_told",
+      "type": "bool",
+      "summary": "The party told Ilka that her mother sold them, rather than lying to her."
+    },
+    {
+      "id": "bonegrinder_children_fate",
+      "type": "string",
+      "summary": "Where the Sarnov children went: home (to their mother in the Village of Barovia) or vallaki (to Urwin Martikov at the Blue Water Inn). For the village and Vallaki to read."
+    },
+    {
+      "id": "bonegrinder_fate",
+      "type": "string",
+      "summary": "THE END STATE of Old Bonegrinder: destroyed (all three hags dead), broken (Morgantha dead, a daughter loose), bella (Bella holds the mill by the party's pact), bargain (the coven stands; the children were bought back), abandoned (the party left the children). Later regions and the epilogue read it."
+    },
+    {
+      "id": "pastry_trade",
+      "type": "string",
+      "summary": "What became of the dream-pastry trade: ended (no hags left), dwindling (one daughter sells a few, badly), thriving (the coven goes on). Unset means unchanged. Village of Barovia and Vallaki pastry sellers should read it."
+    },
+    {
+      "id": "bonegrinder_burned",
+      "type": "bool",
+      "summary": "The party burned the mill down after the children were out."
+    },
+    {
+      "id": "mill_sails_freed",
+      "type": "bool",
+      "summary": "The party knocked the brake out of the great gear; the sails turn again."
+    },
+    {
+      "id": "morgantha_cart_met",
+      "type": "bool",
+      "summary": "The party met Morgantha with her cart on the miller's lane (road event)."
+    }
+  ]
+}

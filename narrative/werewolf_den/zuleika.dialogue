@@ -1,0 +1,134 @@
+# Zuleika Toranescu, Emil's mate (docs/voice/zuleika_toranescu.md). She meets the party at the den mouth (start)
+# and, once they are inside, waits by the shrine of Mother Night (inside). The aftermath is in aftermath.dialogue.
+
+~ start
+if not flag.zuleika_met
+set zuleika_met
+if not quest.wolves_in_the_hills
+quest wolves_in_the_hills heard
+endif
+Narrator: A woman in a patched wool coat straightens up from a patch of purple flowers by the cave mouth, a knife in one hand and a fistful of stalks in the other. Her eyes catch what little light there is, the way a dog's do.
+Zuleika: That's far enough. You've walked a long way uphill to be eaten. Most people only manage it once.
+if guest:ezmerelda
+Zuleika [angry]: And you've brought the Vistani butcher. She has killed two of ours this month. Tell her to keep her silver in its sheath, or this ends here.
+Ezmerelda: Two of Kiril's. Tell me I chose badly.
+Zuleika: ...Keep it sheathed anyway.
+endif
+if flag.falls_werewolf_slain
+Zuleika: You smell of Dragan, too. Dragan liked to wait at the falls for travellers. He was one of Kiril's. I won't pretend to miss him.
+endif
+if flag.den_way_known and not flag.werewolf_rumor
+Zuleika: Somebody drew you a map. I'd like to know who, one day, so I can thank them properly.
+endif
+else
+Zuleika: Back again. Have you decided, or did you climb all this way to admire the view?
+endif
+-> menu
+
+~ menu
+* Who are you? -> who
+* What do you want from strangers? -> ask
+* [if not flag.zuleika_children_told] We heard the wolves up here take children. -> children
+* [Insight DC 13] She isn't guarding the cave. She's waiting for something. -> read_ok | read_fail
+* [if flag.zuleika_asked] We'll free Emil. -> pact
+* [if flag.zuleika_asked] We won't do your killing for you. -> refuse
+* Goodbye. -> bye
+
+~ who
+Zuleika: Zuleika. Wife to Emil Toranescu, who led this pack for nineteen winters, and who is hanging in the back of that cave in silver chains because he said no to the wrong wolf.
+interject class:cleric: Silver. On one of your own.
+Zuleika: Kiril finds it funny. Kiril finds most things funny, until they bite him.
+-> menu
+
+~ ask
+set zuleika_asked
+if quest.wolves_in_the_hills == heard
+quest wolves_in_the_hills asked
+endif
+Zuleika: Kiril Stoyanovich runs the pack now, and Kiril runs it for the castle. The castle wants more wolves. So Kiril has started bringing home children.
+Zuleika: Emil said no, in front of everyone. Kiril's favourites held him down. Kiril and those favourites are out on the Krezk road now, hunting. They'll be back.
+Zuleika: Free my husband. Let him howl his challenge, and when Kiril comes home to answer it, stand beside Emil. Do that, and the children go home.
+interject tag:blunt: And the wolves that aren't Kiril's favourites?
+Zuleika: Are tired, and frightened, and they listen to me. Mostly.
+-> menu
+
+~ children
+set zuleika_children_told
+Zuleika: Five, from the farms under Krezk. The ones who live through their first moon will be wolves. The others will be supper. That's Kiril's arithmetic, not mine.
+Zuleika: I feed them when he isn't looking. It won't be enough. The moon comes in eleven days.
+if guest:ireena
+Ireena [afraid]: Wolves, and children, by a lake. I've had this dream. I never liked how it ended.
+endif
+-> menu
+
+~ read_ok
+Narrator: She stands between you and the cave mouth, but her eyes keep sliding past you, down the slope, west toward the Krezk road. She is listening for something coming home, and dreading it.
+-> menu
+
+~ read_fail
+Narrator: Her hands never stop working, stripping leaves from stalks, and her face gives you exactly as much as her hands do.
+-> menu
+
+~ pact
+set zuleika_vouched
+set emil_key_found
+attitude zuleika_toranescu friendly
+Zuleika: Then come. Walk behind me, keep your hands away from your weapons, and don't look anyone in the eye for long. The ones inside are mine, or near enough. They'll let you pass if I say so.
+Zuleika: Emil is in the alcove off the great cave, to the west. Here: the key to his chains. Kiril trusted me with it so I could watch him suffer. He has never once understood me.
+Narrator: She presses a small iron key into your hand. It is warm from her pocket, and the bow is wrapped in rag where it would touch the silver.
+interject tag:blunt: And if we change our minds once we're inside?
+Zuleika: Then you'll have six wolves between you and the sky. Don't.
+-> END
+
+~ refuse
+Zuleika: Then go back down the hill and don't come up again. The ones inside won't be as polite as me, and Kiril won't be polite at all.
+-> END
+
+~ bye
+Zuleika: Go carefully. These hills are full of people who used to be people.
+-> END
+
+# ---------------------------------------------------------------- Inside, at the shrine
+
+~ inside
+if flag.emil_freed
+Zuleika: He's out. I heard him howl; the whole hill heard him. Go to the great cave and stand where Kiril can see you. Don't make him come looking.
+-> END
+endif
+if not flag.zuleika_met
+set zuleika_met
+set zuleika_asked
+if not quest.wolves_in_the_hills or quest.wolves_in_the_hills == heard
+quest wolves_in_the_hills asked
+endif
+Narrator: At the shrine, a woman in a patched coat is relighting candles that your fight has blown out. She does not turn round.
+Zuleika: Those were Kiril's favourites, most of them. You've saved me a job. I'm Zuleika. My husband Emil hangs in chains in the west alcove because he told Kiril no.
+Zuleika: Free him. Let him howl. Stand beside him when Kiril comes home. Then the children go home too.
+else
+Zuleika: Still here? Emil is in the west alcove. He isn't going anywhere, which is rather the problem.
+endif
+-> inside_menu
+
+~ inside_menu
+* [if not flag.emil_key_found] Do you have the key to his chains? -> key
+* Tell us about the shrine. -> shrine
+* Why help us? You're one of them. -> why
+* Goodbye. -> END
+
+~ key
+set emil_key_found
+Zuleika: I do. Kiril gave it to me so I could watch him suffer. Here. Wrap the bow in something; the silver runs right up the chain.
+-> inside_menu
+
+~ shrine
+Zuleika: Mother Night. The Barovians call her the Morninglord's dark sister and lock their doors on her nights. We just call her Mother. She keeps the dark kind to things that live in it.
+interject class:cleric: The Morninglord has no sister in any book I've read.
+Zuleika: Then your books were written by day.
+if treasure_at:werewolf_den_shrine
+Zuleika: Someone left a thing at her feet last winter, wrapped in oilcloth. Not one of us. We don't touch what's given to Mother. You aren't one of us.
+endif
+-> inside_menu
+
+~ why
+Zuleika: I am one of them. That's why. I know exactly what Kiril will turn those children into, because he turned the pack into it first.
+-> inside_menu

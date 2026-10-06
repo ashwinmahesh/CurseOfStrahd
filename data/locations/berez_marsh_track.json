@@ -1,0 +1,79 @@
+{
+  "id": "berez_marsh_track",
+  "name": "The Marsh Track",
+  "region": "berez",
+  "summary": "A raised track of old logs across the marsh between Vallaki's lake and the drowned village, with reeds higher than a man on both sides.",
+  "map": {
+    "rows": [
+      "################################",
+      "#~~~~~~~~....~~~~~~~~~~~~~~~~~~#",
+      "#~~~wwww~....~~~~~~wwww~~~~~~#~#",
+      "#~~~wwww~....~~~~~~wwww~~~~~~~~#",
+      "#~~~wwww~~~~~~ww~~~~~~~~.....~~#",
+      "#...~~~~~~~~~~ww~~~~~~~~.....~~#",
+      "#...~~~~~~#~~~~~~~~~~~~~.....~~#",
+      "#...~~~~~~~~~~~~~~~~~~~~~~~~~~~#",
+      "................................",
+      "........==......................",
+      ".......................==.......",
+      "................................",
+      "#~~~~~~~~~~~~~~~~~~~~~~~~~~~...#",
+      "#~......~~~~~~~~~.....#~~~~~...#",
+      "#~......~~wwww~~~.....~~~~~~~~~#",
+      "#~......~~wwww~~~.....~~wwww~~~#",
+      "#~~~~~~~~~wwww~......~~~wwww~~~#",
+      "#~~~~#~~~~~~~~~......~~~wwww~~~#",
+      "#~~~~~~~~~~~~~~......~~~~~~~~~~#",
+      "################################"
+    ],
+    "theme": "riverside",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "berez_track",
+      "name": "The marsh track",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          30,
+          18
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      15,
+      9
+    ]
+  },
+  "exits": [
+    {
+      "id": "track_west",
+      "cell": [
+        0,
+        9
+      ],
+      "to": "travel",
+      "label": "On along the track, west"
+    },
+    {
+      "id": "track_east",
+      "cell": [
+        31,
+        9
+      ],
+      "to": "travel",
+      "label": "On along the track, east"
+    }
+  ],
+  "narration": {
+    "enter": "enter:berez_marsh_track"
+  },
+  "rest": "risky"
+}

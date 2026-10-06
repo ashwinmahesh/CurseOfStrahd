@@ -1,0 +1,20 @@
+{
+  "id": "kostin",
+  "name": "Kostin",
+  "title": "Druid of Yester Hill",
+  "summary": "A young druid of the Yester Hill circle, sent to hold the winery and find the last stone. Earnest, gaunt and very sure, the way people are sure when they have never been allowed to doubt.",
+  "portrait": "kostin",
+  "sprite": "kostin",
+  "attitude": "hostile",
+  "voice": "docs/voice/kostin.md",
+  "monster": "druid",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "druid",
+    "yester_hill",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "he/him"
+}

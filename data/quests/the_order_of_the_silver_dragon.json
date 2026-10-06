@@ -1,0 +1,53 @@
+{
+  "id": "the_order_of_the_silver_dragon",
+  "name": "The Order of the Silver Dragon",
+  "summary": "The dead knights of Argynvostholt still keep their watch for a dragon four hundred years gone. Their commander hates Strahd too much to let him die.",
+  "giver": "sir_godfrey_gwilym",
+  "region": "argynvostholt",
+  "stages": [
+    {
+      "id": "met",
+      "journal": "At Argynvostholt, the burned house of the silver dragon Argynvost, his knights are still at their posts, dead and courteous. Sir Godfrey Gwilym met us on the steps and sent us to their commander in the great hall.",
+      "objectives": [
+        "Speak with the commander, Vladimir Horngaard"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "commander",
+      "journal": "Vladimir Horngaard commands the dead Order. He hates Strahd more than anything left in the valley, and that is exactly why he won't help end him: death would let Strahd go. He wants him alive and imprisoned forever, and his knights kept at their posts to watch.",
+      "objectives": [
+        "Win the Order to the fight against Strahd",
+        "Or give the knights their rest",
+        "Or accept the commander's terms"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "remembering",
+      "journal": "Sir Godfrey has been forgetting the oath the Order swore, and why it mattered. We helped him remember. He'll stand with us if we ask the commander to call the Order together and let the knights choose.",
+      "objectives": [
+        "Ask Vladimir to call the muster"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "ride",
+      "journal": "The Order of the Silver Dragon will march with us when we go up to Castle Ravenloft. They'll rest when he falls, and not before.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "rest",
+      "journal": "The beacon burns over Argynvostholt again, and the dead knights have laid down their watch at last.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "grudge",
+      "journal": "We swore the commander's oath: when we reach Strahd, we break him and leave him alive in the prison he made. The Order will watch to see the oath kept, and it will not raise a sword to end him.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

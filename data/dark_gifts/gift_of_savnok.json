@@ -1,0 +1,39 @@
+{
+  "id": "gift_of_savnok",
+  "name": "The Locked Mouth",
+  "vestige": "Savnok, the locked mouth",
+  "summary": "You can't be Charmed, and Advantage on Deception. The price: Disadvantage on Persuasion, -5 to passive Perception, and never again a true word about yourself.",
+  "source": {
+    "book": "CoS",
+    "note": "A vestige of the Amber Temple (Curse of Strahd chapter 13 in spirit). The vestige's name is the book's; the gift, its benefit, its price and every word here are ours, designed for this game. Found in amber_temple_vault (the hall of vestiges)."
+  },
+  "benefit": {
+    "modifiers": [
+      {
+        "stat": "condition_immunity",
+        "value": "charmed"
+      },
+      {
+        "stat": "advantage",
+        "on": "check:deception"
+      }
+    ],
+    "text": "Your mind becomes a locked box. Nothing gets in to bend it, and nothing gets out you don't allow."
+  },
+  "cost": {
+    "modifiers": [
+      {
+        "stat": "disadvantage",
+        "on": "check:persuasion"
+      },
+      {
+        "stat": "passive",
+        "skill": "perception",
+        "value": -5
+      }
+    ],
+    "flaw": "You cannot say a true thing about yourself out loud. You can write it down, and then you must burn the page.",
+    "text": "A locked box hears very little. You stop listening to the world, and people stop believing you."
+  },
+  "implemented": "data"
+}

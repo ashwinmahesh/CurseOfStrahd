@@ -1,0 +1,32 @@
+{
+  "id": "the_tsolenka_gate",
+  "name": "The Tsolenka Gate",
+  "summary": "The road to the Amber Temple crosses the Tsolenka Pass, through a guard tower whose portcullis has been down for centuries.",
+  "giver": "tsolenka_sergeant",
+  "region": "tsolenka_pass",
+  "stages": [
+    {
+      "id": "reached",
+      "journal": "High in the Tsolenka Pass, a guard tower straddles the road to the Amber Temple with its portcullis down. The watch is still on duty. The watch has been dead for a very long time.",
+      "objectives": [
+        "Get past the watch",
+        "Raise the gate from the winch room"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "watch_passed",
+      "journal": "The Tsolenka watch no longer stands between us and the gate.",
+      "objectives": [
+        "Raise the gate from the winch room"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "open",
+      "journal": "The Tsolenka portcullis is up. The road climbs on into the cloud, toward the Amber Temple.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

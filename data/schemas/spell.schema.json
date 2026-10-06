@@ -957,6 +957,11 @@
     "reduce_max_hp": {
       "type": "boolean",
       "description": "Harm: a failed save lowers the Hit Point maximum by the damage taken."
+    },
+    "icon": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "Key of its icon in art/icons.json when it isn't the spell's own id."
     }
   }
 }

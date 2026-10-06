@@ -38,6 +38,7 @@
         "id": "bestial_fury",
         "name": "Bestial Fury",
         "summary": "Your beast's Beast's Strike attacks twice, and its first hit each turn on your Hunter's Mark target adds the mark's damage.",
+        "text": "When you command your beast to take the Beast's Strike action, it can make that attack twice. The first time each turn it hits a creature marked by your Hunter's Mark, it deals extra Force damage equal to the spell's bonus damage.",
         "implemented": "text"
       }
     },

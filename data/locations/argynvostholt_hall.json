@@ -1,0 +1,625 @@
+{
+  "id": "argynvostholt_hall",
+  "name": "Argynvostholt, Ground Floor",
+  "region": "argynvostholt",
+  "summary": "The ground floor of the dragon's house: the great hall where Vladimir Horngaard keeps court over a table of dead knights, the chapel with its dragon window, the armory, a ruined gallery and the servants' hall.",
+  "text": "A burned entry hall with a broken statue at its heart; through tall doors north, a great hall where armoured figures sit along a long table; a chapel to the west under a window of coloured glass; an armory, a gallery of fallen banners, and the cold servants' hall.",
+  "map": {
+    "rows": [
+      "####################################",
+      "#.......#.......1111.......#.......#",
+      "#.......#.......1111.......#.......#",
+      "#.......#..................#.......#",
+      "#.......#..................#.......#",
+      "#.......#..........................#",
+      "#...........============...#.......#",
+      "#.......#..................#.......#",
+      "#.......#..................#.......#",
+      "#.......#..................#.......#",
+      "#.......#..................#.......#",
+      "#.......#..................#.......#",
+      "####.############..############.####",
+      "#..........#11...........#.........#",
+      "#..........#11...........#.........#",
+      "#..........#.............#.........#",
+      "#..........#.............#.........#",
+      "#..........#.............#..=====..#",
+      "#..................................#",
+      "#..........#.............#.........#",
+      "#..........#.............#.........#",
+      "#..........#............~#.........#",
+      "#..........#..~........~.#.......~.#",
+      "#.~........#.............#.........#",
+      "#################..#################"
+    ],
+    "theme": "manor",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "holt_chapel",
+      "name": "The chapel",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          7,
+          11
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "holt_great_hall",
+      "name": "The great hall",
+      "cells": [
+        [
+          9,
+          1
+        ],
+        [
+          26,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "holt_armory",
+      "name": "The armory",
+      "cells": [
+        [
+          28,
+          1
+        ],
+        [
+          34,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "holt_west_gallery",
+      "name": "The west gallery",
+      "cells": [
+        [
+          1,
+          13
+        ],
+        [
+          10,
+          23
+        ]
+      ]
+    },
+    {
+      "id": "holt_entry_hall",
+      "name": "The entry hall",
+      "cells": [
+        [
+          12,
+          13
+        ],
+        [
+          24,
+          23
+        ]
+      ]
+    },
+    {
+      "id": "holt_servants_hall",
+      "name": "The servants' hall",
+      "cells": [
+        [
+          26,
+          13
+        ],
+        [
+          34,
+          23
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      17,
+      22
+    ],
+    "from_grounds": [
+      18,
+      22
+    ],
+    "from_stairs": [
+      14,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "front_doors_out",
+      "cell": [
+        17,
+        24
+      ],
+      "to": "argynvostholt",
+      "spawn": "from_hall",
+      "label": "Out to the courtyard"
+    },
+    {
+      "id": "front_doors_out_east",
+      "cell": [
+        18,
+        24
+      ],
+      "to": "argynvostholt",
+      "spawn": "from_hall",
+      "label": "Out to the courtyard"
+    },
+    {
+      "id": "stairs_up",
+      "cell": [
+        12,
+        13
+      ],
+      "to": "argynvostholt_upper",
+      "spawn": "from_stairs",
+      "label": "Up the great stair"
+    }
+  ],
+  "doors": [
+    {
+      "id": "holt_armory_door",
+      "cell": [
+        27,
+        5
+      ],
+      "label": "Armory door"
+    }
+  ],
+  "props": [
+    {
+      "id": "holt_dragon_window",
+      "cell": [
+        4,
+        0
+      ],
+      "kind": "examine",
+      "label": "The dragon window",
+      "model": "window_tall"
+    },
+    {
+      "id": "holt_chapel_altar",
+      "cell": [
+        4,
+        2
+      ],
+      "kind": "examine",
+      "label": "The chapel altar",
+      "model": "altar"
+    },
+    {
+      "id": "holt_oath_stone",
+      "cell": [
+        0,
+        5
+      ],
+      "kind": "book",
+      "label": "The oath stone",
+      "model": "relief",
+      "codex": "order_oath",
+      "flag": "order_oath_learned",
+      "text": "Letters cut deep into a slab of grey stone, their edges worn smooth by hands. THE OATH OF THE ORDER OF THE SILVER DRAGON. I will keep the watch while others sleep. I will shield the sleeper and the stranger alike. I will lift up the fallen and ask no price. I will take nothing that is not given. And when the light goes out, I will be the light."
+    },
+    {
+      "id": "holt_chapel_pews",
+      "cell": [
+        2,
+        7
+      ],
+      "kind": "examine",
+      "label": "Pews",
+      "model": "pew"
+    },
+    {
+      "id": "holt_chapel_pew_2",
+      "cell": [
+        5,
+        7
+      ],
+      "kind": "decor",
+      "label": "Pew",
+      "model": "pew"
+    },
+    {
+      "id": "holt_chapel_pew_3",
+      "cell": [
+        2,
+        9
+      ],
+      "kind": "decor",
+      "label": "Pew",
+      "model": "pew"
+    },
+    {
+      "id": "holt_chapel_pew_4",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "decor",
+      "label": "Pew",
+      "model": "pew"
+    },
+    {
+      "id": "holt_vladimir_chair",
+      "cell": [
+        17,
+        1
+      ],
+      "kind": "examine",
+      "label": "The winged chair",
+      "model": "armchair"
+    },
+    {
+      "id": "holt_long_table",
+      "cell": [
+        11,
+        6
+      ],
+      "kind": "examine",
+      "label": "The long table",
+      "model": "candelabra"
+    },
+    {
+      "id": "holt_cold_hearth",
+      "cell": [
+        10,
+        0
+      ],
+      "kind": "examine",
+      "label": "The great hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "holt_hall_banners",
+      "cell": [
+        22,
+        0
+      ],
+      "kind": "examine",
+      "label": "Rotted banners",
+      "model": "tapestry"
+    },
+    {
+      "id": "holt_resting_knights",
+      "cell": [
+        16,
+        5
+      ],
+      "kind": "examine",
+      "label": "The knights at the table",
+      "model": "armor_stand",
+      "when": "flag.argynvost_beacon_lit"
+    },
+    {
+      "id": "holt_armory_dummies",
+      "cell": [
+        34,
+        6
+      ],
+      "kind": "examine",
+      "label": "Armour stands",
+      "model": "armor_stand"
+    },
+    {
+      "id": "holt_armory_stand_2",
+      "cell": [
+        34,
+        8
+      ],
+      "kind": "decor",
+      "label": "Armour stand",
+      "model": "armor_stand"
+    },
+    {
+      "id": "holt_gallery_frames",
+      "cell": [
+        2,
+        12
+      ],
+      "kind": "examine",
+      "label": "Fallen frames",
+      "model": "painting_row"
+    },
+    {
+      "id": "holt_roll_of_honour",
+      "cell": [
+        9,
+        22
+      ],
+      "kind": "book",
+      "label": "The roll of honour",
+      "model": "ledger",
+      "codex": "order_roll_of_honour",
+      "text": "A great book chained to a lectern, its pages swollen with damp. Names in a hundred hands, each with the year that knight took the oath. The last forty names share one date, written in a single hand that pressed so hard it tore the page."
+    },
+    {
+      "id": "holt_broken_statue",
+      "cell": [
+        17,
+        17
+      ],
+      "kind": "examine",
+      "label": "A broken statue",
+      "model": "statue_knight"
+    },
+    {
+      "id": "holt_servants_table",
+      "cell": [
+        30,
+        16
+      ],
+      "kind": "examine",
+      "label": "The servants' table",
+      "model": "candelabra"
+    },
+    {
+      "id": "holt_servants_hearth",
+      "cell": [
+        35,
+        14
+      ],
+      "kind": "decor",
+      "label": "The servants' hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "holt_loose_hearthstone",
+      "cell": [
+        34,
+        14
+      ],
+      "kind": "search",
+      "label": "A loose hearthstone",
+      "model": "rubble",
+      "search_dc": 14,
+      "item": "potion_of_healing"
+    }
+  ],
+  "containers": [
+    {
+      "id": "holt_armory_rack",
+      "cell": [
+        34,
+        2
+      ],
+      "label": "Weapon rack",
+      "model": "shelf",
+      "items": [
+        {
+          "id": "longsword",
+          "qty": 1
+        },
+        {
+          "id": "shield",
+          "qty": 1
+        },
+        {
+          "id": "lance",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "holt_armory_chest",
+      "cell": [
+        29,
+        1
+      ],
+      "label": "Iron-bound chest",
+      "model": "chest_iron",
+      "items": [
+        {
+          "id": "holy_water",
+          "qty": 2
+        }
+      ],
+      "gold": 60,
+      "lock_dc": 15
+    },
+    {
+      "id": "holt_pantry_cupboard",
+      "cell": [
+        26,
+        13
+      ],
+      "label": "Pantry cupboard",
+      "model": "cupboard",
+      "items": [
+        {
+          "id": "candle",
+          "qty": 6
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        },
+        {
+          "id": "lamp",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        4,
+        1
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "argynvost",
+      "cell": [
+        4,
+        1
+      ],
+      "dialogue": "argynvostholt/argynvost:start",
+      "when": "not flag.argynvost_beacon_lit",
+      "facing": "south"
+    },
+    {
+      "npc": "vladimir_horngaard",
+      "cell": [
+        17,
+        2
+      ],
+      "dialogue": "argynvostholt/vladimir:yield",
+      "when": "flag.vladimir_duel_won and not flag.vladimir_yielded",
+      "facing": "south",
+      "approach": 8
+    },
+    {
+      "npc": "vladimir_horngaard",
+      "cell": [
+        17,
+        2
+      ],
+      "dialogue": "argynvostholt/vladimir:start",
+      "when": "flag.order_fate != \"rest\" and not flag.beacon_stand_begun",
+      "facing": "south"
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        13,
+        5
+      ],
+      "dialogue": "argynvostholt/knights:table",
+      "when": "flag.order_fate != \"rest\" and not flag.beacon_stand_begun",
+      "facing": "south"
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        16,
+        5
+      ],
+      "dialogue": "argynvostholt/knights:table",
+      "when": "flag.order_fate != \"rest\" and not flag.beacon_stand_begun",
+      "facing": "south"
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        20,
+        5
+      ],
+      "dialogue": "argynvostholt/knights:table",
+      "when": "flag.order_fate != \"rest\" and not flag.beacon_stand_begun",
+      "facing": "south"
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        22,
+        7
+      ],
+      "dialogue": "argynvostholt/knights:table",
+      "when": "flag.order_fate != \"rest\" and not flag.beacon_stand_begun",
+      "facing": "north"
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        15,
+        7
+      ],
+      "dialogue": "argynvostholt/knights:table",
+      "when": "flag.order_fate != \"rest\" and not flag.beacon_stand_begun",
+      "facing": "north"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "vladimir_duel",
+      "trigger": "dialogue",
+      "text": "Vladimir rises from the winged chair for the first time, and all down the table dead heads turn to watch. He draws a greatsword as long as a man is tall and salutes you with it, properly, as if there were a crowd.",
+      "surprise": "",
+      "flag": "vladimir_duel_won",
+      "when": "level >= 8",
+      "monsters": [
+        {
+          "monster": "vladimir_horngaard",
+          "cell": [
+            18,
+            3
+          ],
+          "name": "Vladimir Horngaard"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            21,
+            3
+          ],
+          "name": "Vladimir's second"
+        }
+      ]
+    },
+    {
+      "id": "vladimir_duel",
+      "trigger": "dialogue",
+      "text": "Vladimir rises from the winged chair for the first time, and all down the table dead heads turn to watch. He draws a greatsword as long as a man is tall and salutes you with it, properly, as if there were a crowd.",
+      "surprise": "",
+      "flag": "vladimir_duel_won",
+      "when": "level >= 7",
+      "monsters": [
+        {
+          "monster": "vladimir_horngaard",
+          "cell": [
+            18,
+            3
+          ],
+          "name": "Vladimir Horngaard"
+        }
+      ]
+    },
+    {
+      "id": "vladimir_duel",
+      "trigger": "dialogue",
+      "text": "Vladimir rises from the winged chair for the first time, and all down the table dead heads turn to watch. He draws a greatsword as long as a man is tall and salutes you with it, properly, as if there were a crowd.",
+      "surprise": "",
+      "flag": "vladimir_duel_won",
+      "monsters": [
+        {
+          "monster": "vladimir_horngaard",
+          "cell": [
+            18,
+            3
+          ],
+          "name": "Vladimir Horngaard",
+          "hp": 140
+        }
+      ]
+    }
+  ],
+  "treasure_spots": {
+    "argynvostholt_vladimir": {
+      "dialogue": "argynvostholt/vladimir:keeping"
+    }
+  },
+  "narration": {
+    "enter": "enter:argynvostholt_hall"
+  },
+  "rest": "risky"
+}

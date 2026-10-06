@@ -1,0 +1,86 @@
+class_name Icons
+extends RefCounted
+## Spell and item icons: framed tiles in art/icons/<spells|items>/<key>.png (make icons, from art/icons.json; the
+## silhouettes are game-icons.net, CC BY 3.0). A spell or item names its key with "icon" in its data, or is keyed by
+## its own id. A magic item built on a mundane one ("+1 Longsword") takes its template's icon, else its base item's.
+## The tiles carry their own colours, so they're drawn untinted (the theme tints plain button icons gilt).
+
+const DIR := "res://art/icons/"
+
+static var _cache: Dictionary = {}
+
+
+static func spell(id: String) -> Texture2D:
+	return _load("spells", spell_key(id))
+
+
+static func item(id: String) -> Texture2D:
+	return _load("items", item_key(id))
+
+
+static func spell_key(id: String) -> String:
+	return str(Compendium.shared().spell_data(id).get("icon", id))
+
+
+static func item_key(id: String) -> String:
+	var comp := Compendium.shared()
+	var d := comp.item_data(id)
+	if d.has("icon"):
+		return str(d["icon"])
+	var template := comp.item_data(str(d.get("template_id", "")))
+	if template.has("icon"):
+		return str(template["icon"])
+	var base := str(d.get("base_item", ""))
+	if base != "":
+		return str(comp.item_data(base).get("icon", base))
+	return id
+
+
+## The icon for a hotbar entry (combat/action_catalog.gd): its spell, the weapon it attacks with, or the item it
+## uses. null for plain actions (Dash, Grapple, class features).
+static func for_action(action: Dictionary) -> Texture2D:
+	var sid := str(action.get("spell_id", ""))
+	if sid != "":
+		return spell(sid)
+	var id := str(action.get("id", ""))
+	match id.get_slice(":", 0):
+		"item":
+			return item(id.get_slice(":", 1))
+		"attack", "offhand":
+			var option := id.substr(id.find(":") + 1)
+			if option.begins_with("weapon:") or option.begins_with("thrown:"):
+				return item(option.get_slice(":", 1))
+		"healers_kit":
+			return item("healers_kit")
+	return null
+
+
+## A square icon to start a list row with.
+static func rect(tex: Texture2D, side: int = 32) -> TextureRect:
+	var t := TextureRect.new()
+	t.texture = tex
+	t.custom_minimum_size = Vector2(side, side)
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	t.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	t.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return t
+
+
+## Puts `tex` on a button at `side` pixels, in its own colours (dimmed while the button is disabled).
+static func on_button(b: Button, tex: Texture2D, side: int = 32) -> void:
+	b.icon = tex
+	b.expand_icon = false
+	b.add_theme_constant_override("icon_max_width", side)
+	b.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	for state: String in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color", "icon_hover_pressed_color"]:
+		b.add_theme_color_override(state, Color.WHITE)
+	b.add_theme_color_override("icon_disabled_color", Color(0.55, 0.55, 0.55))
+
+
+static func _load(kind: String, key: String) -> Texture2D:
+	var path := DIR + "%s/%s.png" % [kind, key]
+	if not _cache.has(path):
+		_cache[path] = load(path) as Texture2D if ResourceLoader.exists(path) else null
+	return _cache[path] as Texture2D

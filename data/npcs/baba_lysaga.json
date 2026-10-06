@@ -1,0 +1,20 @@
+{
+  "id": "baba_lysaga",
+  "name": "Baba Lysaga",
+  "title": "Witch of Berez",
+  "summary": "Strahd's ancient nurse, a tiny, quick, terrible old woman who believes she is his true mother. She keeps house in a walking hut on the wreck of Berez, with scarecrows for guards, swarms in her jars and a cradle she sings to.",
+  "portrait": "baba_lysaga",
+  "sprite": "baba_lysaga",
+  "attitude": "indifferent",
+  "voice": "docs/regions/berez.md",
+  "monster": "baba_lysaga",
+  "guest": false,
+  "tags": [
+    "witch",
+    "hag_like",
+    "strahd_servant",
+    "berez"
+  ],
+  "region": "berez",
+  "pronouns": "she/her"
+}

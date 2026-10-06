@@ -1,0 +1,24 @@
+{
+  "id": "emil_toranescu",
+  "name": "Emil Toranescu",
+  "title": "The Pack's Rightful Leader",
+  "summary": "The grey old werewolf who led the hill pack for nineteen winters and kept it away from the villages, until Kiril came home from the castle with a new law. He said no to stealing children, and Kiril hung him in silver chains for it.",
+  "portrait": "emil_toranescu",
+  "sprite": "emil_toranescu",
+  "attitude": "indifferent",
+  "voice": "docs/voice/emil_toranescu.md",
+  "monster": "emil_toranescu",
+  "guest": true,
+  "guest_build": {
+    "monster": "emil_toranescu",
+    "note": "His own stat block (a werewolf). Joins for the challenge against Kiril; stays only if the Tarokka names him (the Beast)."
+  },
+  "tags": [
+    "werewolf",
+    "lycanthrope",
+    "tarokka_ally",
+    "werewolf_den"
+  ],
+  "region": "werewolf_den",
+  "pronouns": "he/him"
+}

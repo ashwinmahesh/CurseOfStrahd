@@ -1,0 +1,117 @@
+# Adrian Martikov, Davian's eldest son (docs/voice/adrian_martikov.md). He was the raven that walked beside the party
+# on the Svalich road (svalich_road/events:ravens).
+# first_meeting: at the foot of the lane, once (approach). start: at the camp, then in the fermenting hall once the
+# winery is the family's again.
+
+~ first_meeting
+set adrian_met
+Narrator: A raven drops out of the dead vines onto the lane ahead of you, hops twice, and unfolds into a lean, black-eyed man who brushes feathers off his sleeves as if they were crumbs.
+if flag.raven_fed
+Adrian: You fed me a crust on the Svalich road. It was stale. I've had worse from family. Adrian Martikov. That's twice now you haven't shot me, which in this valley is practically a friendship.
+elif flag.raven_harmed
+Adrian [angry]: You knocked me into a ditch on the Svalich road. The wing still clicks when I fly. Adrian Martikov. I'm only talking to you because we're short of choices.
+else
+Adrian: Strangers on our lane, upright and armed. Either you're lost or you're the help. Adrian Martikov. Please be the help.
+endif
+if flag.keepers_of_the_feather_met
+Adrian: My brother Urwin sent word ahead of you from Vallaki. The bird arrived exhausted and full of your names. Urwin never could write a short letter.
+endif
+Adrian: Don't walk up the lane yet. The vines are awake, and they're not ours anymore. My father's at our camp under the trees. He'll want to look at you before you get yourselves killed on his property.
+* Take us to your father. -> to_father
+* What do you mean, the vines are awake? -> vines
+* [if flag.raven_harmed] About the raven. We're sorry. -> apology
+
+~ vines
+Adrian: The druids from Yester Hill grow things. Blights, they call them: brush and thorn that walks about and has opinions. They've planted them all down the rows. Go up the lane and the vineyard stands up to meet you.
+-> first_menu
+
+~ first_menu
+* Take us to your father. -> to_father
+* [if flag.raven_harmed and not flag.adrian_apology_heard] About the raven. We're sorry. -> apology
+
+~ apology
+set adrian_apology_heard
+Adrian: Sorry. Well. It was dark, I was a bird, and this valley teaches people to hit birds. I'll take sorry. My father won't, so don't spend all of it on me.
+-> first_menu
+
+~ to_father
+Adrian: This way, round by the trees. Mind the brambles. They're only brambles. Probably.
+interject tag:curious: You were the raven. On the road. You walked beside us for a mile.
+Adrian: A mile and a half. You walk slowly.
+-> END
+
+# ---------------------------------------------------------------- At the camp, later in the hall
+
+~ start
+if flag.winery_reclaimed
+Adrian: Back in my own hall, scrubbing druid out of my own vats. You'd be amazed what they left in the mash. No, you wouldn't. You met it.
+else
+Adrian: Father's by the fire, Stefania's everywhere at once, and I'm here, being useful at a distance. What do you need?
+endif
+-> menu
+
+~ menu
+* What happened here? -> what_happened
+* [if flag.elvir_story_heard and not flag.adrian_side_heard] Stefania told us about Elvir. -> elvir
+* [if flag.adrian_side_heard and not flag.adrian_told_order and not flag.elvir_truth_known] [Insight DC 13] There's more to it than "I flew." -> elvir_insight | elvir_insight_fail
+* [if flag.elvir_truth_known and not flag.adrian_truth_shared] We found what Elvir scratched into his cage. -> elvir_truth
+* [if flag.davian_met and not flag.yester_hill_resolved] Come with us to Yester Hill. -> come_along
+* [if flag.winery_reclaimed] How's the wine? -> wine
+* Goodbye. -> END
+
+~ what_happened
+Adrian: Three months ago the druids came up the lane at dusk with half the forest walking behind them. We fought a while. Then Father said fly, so we flew. They've been pulling up our floors ever since.
+Adrian: Looking for the last stone. Father hid it the night we ran, and he won't tell me where. He tells Stefania things. Ask her why; I've stopped.
+-> menu
+
+~ elvir
+set adrian_side_heard
+Adrian: Then you know what Father thinks. Last spring he sent Elvir and me to watch the hill. The druids' things caught us in the bracken. I flew. Elvir didn't. That's all there is.
+interject tag:blunt: That isn't all there is. That's the part you say out loud.
+Adrian: It's the part that's true.
+-> menu
+
+~ elvir_insight
+set adrian_told_order
+Narrator: He's looking at his hands. Not the way a man looks at hands that ran away; the way a man looks at hands that did as they were told.
+Adrian: ...A root had him round the leg and a thorn right through it. He couldn't change. He told me to fly for Father, in Father's own voice. So I went. When we came back there was only blood on the bracken.
+Adrian: I've never told Father. It sounds like an excuse. Maybe it is one.
+-> menu
+
+~ elvir_insight_fail
+Narrator: He meets your eye, shrugs, and goes back to the cask he's scraping. Whatever else there is, he has kept it a year, and he's had the practice.
+-> menu
+
+~ elvir_truth
+set adrian_truth_shared
+Adrian [sad]: "I sent him." He wrote that? With what, his fingernails? ...Of course he did. He was the stubborn one. Everyone else in this family thinks it was me who decides things.
+Adrian: Tell Father. Not me; he won't hear it from me. From you he might.
+-> menu
+
+~ come_along
+if flag.raven_harmed and not flag.adrian_apology_heard
+Adrian: With the people who put me in a ditch? ...Yes. Fine. I've wanted to see that hill burn for a year, and you're the only ones going.
+else
+Adrian: I've wanted to go back up that hill for a year. I kept waiting for someone to ask so I could say no. It turns out I can't.
+endif
+if not flag.winery_reclaimed
+Adrian: Father will say the house comes first. Father is usually right about houses. He's wrong about other things.
+endif
+join adrian_martikov
+set adrian_went_to_hill
+interject class:cleric: You know there may be... remains. Up there.
+Adrian: That's why I'm going.
+-> END
+
+~ wine
+if flag.winery_stones_returned >= 2
+Adrian: The vines put out new leaves overnight. Green ones. I stood in the rows at dawn and wept like a child, and if you tell anyone I'll seal you in a cask.
+elif flag.winery_stones_returned >= 1
+Adrian: One stone in the soil and the vines remember what they're for. It'll be thin this year. Thin is better than dead.
+else
+Adrian: Without the stones it's grape juice with ambitions. We need them back in the ground.
+endif
+if flag.martikovs_reconciled
+Adrian: Father's given me the press. He says his knees are finished with it. His knees are fine. It's the kindest lie he's ever told.
+endif
+-> menu

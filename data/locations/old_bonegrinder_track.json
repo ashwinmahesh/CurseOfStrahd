@@ -1,0 +1,173 @@
+{
+  "id": "old_bonegrinder_track",
+  "name": "The Miller's Lane",
+  "region": "old_bonegrinder",
+  "summary": "The rutted lane between the Old Svalich Road and the windmill on the crag: pines, ditches, and the cart tracks of someone who comes this way every week. Where the lane's random fights and meetings play out.",
+  "map": {
+    "rows": [
+      "################################",
+      "#..............................#",
+      "#..==..........##.....=........#",
+      "#...............#..............#",
+      "#..............................#",
+      "#.~~~..~~~~~.~~~~~..~~~~~.~~~~.#",
+      "#..............................#",
+      "................................",
+      "................................",
+      "#..............................#",
+      "#.~~~..~~~~~.~~~~~..~~~~~.~~~~.#",
+      "#..............................#",
+      "#...................##.........#",
+      "#......#.==................==..#",
+      "#..............................#",
+      "################################"
+    ],
+    "theme": "road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "millers_lane",
+      "name": "The miller's lane",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          15
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      15,
+      8
+    ]
+  },
+  "exits": [
+    {
+      "id": "lane_west",
+      "cell": [
+        0,
+        7
+      ],
+      "to": "travel",
+      "label": "On along the lane"
+    },
+    {
+      "id": "lane_east",
+      "cell": [
+        31,
+        7
+      ],
+      "to": "travel",
+      "label": "On along the lane"
+    }
+  ],
+  "props": [
+    {
+      "id": "bonegrinder_lane_ruts",
+      "cell": [
+        9,
+        8
+      ],
+      "kind": "examine",
+      "label": "Deep cart ruts",
+      "model": "drag_marks"
+    },
+    {
+      "id": "bonegrinder_lane_shrine",
+      "cell": [
+        22,
+        3
+      ],
+      "kind": "examine",
+      "label": "A wayside shrine",
+      "model": "shrine_small"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "bella_on_the_road",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "The pretty face slides off Bella like dough off a board.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            21,
+            7
+          ],
+          "name": "Bella Sunbane",
+          "hp": 100
+        }
+      ],
+      "surprise": "",
+      "flag": "bella_slain"
+    },
+    {
+      "id": "bella_on_the_road",
+      "trigger": "dialogue",
+      "text": "The pretty face slides off Bella like dough off a board.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            21,
+            7
+          ],
+          "name": "Bella Sunbane",
+          "hp": 80
+        }
+      ],
+      "surprise": "",
+      "flag": "bella_slain"
+    },
+    {
+      "id": "offalia_on_the_road",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Offalia drops the berries. Her hands are already longer than they were.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            20,
+            8
+          ],
+          "name": "Offalia Wormwiggle",
+          "hp": 100
+        }
+      ],
+      "surprise": "",
+      "flag": "offalia_slain"
+    },
+    {
+      "id": "offalia_on_the_road",
+      "trigger": "dialogue",
+      "text": "Offalia drops the berries. Her hands are already longer than they were.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            20,
+            8
+          ],
+          "name": "Offalia Wormwiggle",
+          "hp": 80
+        }
+      ],
+      "surprise": "",
+      "flag": "offalia_slain"
+    }
+  ],
+  "narration": {
+    "enter": "enter:old_bonegrinder_track"
+  },
+  "rest": "risky"
+}

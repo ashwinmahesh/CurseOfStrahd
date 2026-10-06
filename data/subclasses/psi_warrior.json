@@ -96,6 +96,7 @@
         "id": "telekinetic_adept",
         "name": "Telekinetic Adept",
         "summary": "Psi-Powered Leap (fly briefly) and Telekinetic Thrust (Psionic Strike can knock Prone or push 10 feet).",
+        "text": "Psi-Powered Leap: as a Bonus Action you gain a Fly Speed equal to twice your Speed until the end of the turn; you can do this once per Short or Long Rest, or again by expending a Psionic Energy Die. Telekinetic Thrust: when your Psionic Strike damages a target, you can force it to make a Strength saving throw (DC 8 + your Intelligence modifier + Proficiency Bonus); on a failure it falls Prone or you move it up to 10 feet horizontally.",
         "implemented": "engine",
         "resource": {
           "id": "psi_leap",
@@ -111,13 +112,14 @@
         "id": "guarded_mind",
         "name": "Guarded Mind",
         "summary": "Resistance to Psychic damage; spend a die to end Charmed or Frightened at the start of your turn.",
-        "implemented": "engine",
+        "text": "You have Resistance to Psychic damage. And if you start your turn Charmed or Frightened, you can expend a Psionic Energy Die (no action required) to end every effect on you that causes those conditions.",
         "modifiers": [
           {
             "stat": "resistance",
             "value": "psychic"
           }
-        ]
+        ],
+        "implemented": "engine"
       }
     },
     {

@@ -1,0 +1,37 @@
+# The dead knights of the Order: at Vladimir's table, and in the courtyard once the Order has chosen
+# (docs/voice/order_knight.md).
+
+~ table
+if flag.order_fate == "ride"
+Dead Knight: We march when you march.
+-> END
+endif
+if flag.order_fate == "grudge"
+Dead Knight: He lives. We watch.
+-> END
+endif
+Narrator: The knight's head turns toward you with a sound like a door on a cold morning. Behind the visor, nothing blinks.
+Dead Knight: Speak to the commander.
+* What's your name? -> name
+* How long have you been sitting here? -> how_long
+* (Leave him to his watch.) -> END
+
+~ name
+Dead Knight: I had one. It was a good one.
+interject tag:cheerful: We'll find it for you. There's a wall upstairs with hundreds on it.
+Dead Knight: ...Ask Godfrey. Godfrey keeps them.
+-> END
+
+~ how_long
+Dead Knight: All present. None dismissed.
+-> END
+
+~ yard
+if flag.order_fate == "ride"
+Narrator: A dead knight in the courtyard is going through the motions of saddling a horse that isn't there, buckle by buckle, very carefully.
+Dead Knight: We march when you march. Tell Godfrey his grey mare is ready.
+else
+Narrator: A dead knight stands where the gate used to be, facing down the drive toward the castle, as still as the trees.
+Dead Knight: He lives. We watch. Pass, oath-sworn.
+endif
+-> END

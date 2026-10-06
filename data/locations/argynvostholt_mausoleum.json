@@ -1,0 +1,320 @@
+{
+  "id": "argynvostholt_mausoleum",
+  "name": "The Dragon's Mausoleum",
+  "region": "argynvostholt",
+  "summary": "The stone tomb the Order's squires raised for the silver dragon Argynvost: his bones laid out on a long bier, all but the skull, guarded by the ghost of the man who kept the gate.",
+  "text": "A low vestibule, its floor worn by kneeling. One narrow doorway leads on into a long vault where a skeleton far too big for any tomb lies along a raised stone bier, wings folded, neck ending in nothing.",
+  "map": {
+    "rows": [
+      "################",
+      "#..............#",
+      "#..............#",
+      "#...11111111...#",
+      "#...11111111...#",
+      "#...11111111...#",
+      "#...11111111...#",
+      "#...11111111...#",
+      "#..............#",
+      "#..............#",
+      "#..............#",
+      "#######.########",
+      "#..............#",
+      "#............~.#",
+      "#..............#",
+      "#.~............#",
+      "#..............#",
+      "#######..#######"
+    ],
+    "theme": "church",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "holt_vestibule",
+      "name": "The vestibule",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          14,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "holt_bone_hall",
+      "name": "The dragon's rest",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          14,
+          10
+        ]
+      ],
+      "light": "dim"
+    }
+  ],
+  "spawns": {
+    "default": [
+      7,
+      15
+    ],
+    "from_grounds": [
+      8,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "mausoleum_out",
+      "cell": [
+        7,
+        17
+      ],
+      "to": "argynvostholt",
+      "spawn": "from_mausoleum",
+      "label": "Out to the yard"
+    },
+    {
+      "id": "mausoleum_out_east",
+      "cell": [
+        8,
+        17
+      ],
+      "to": "argynvostholt",
+      "spawn": "from_mausoleum",
+      "label": "Out to the yard"
+    }
+  ],
+  "props": [
+    {
+      "id": "holt_dragon_bones",
+      "cell": [
+        7,
+        5
+      ],
+      "kind": "examine",
+      "label": "The dragon's bones",
+      "model": "bones",
+      "dialogue": "argynvostholt/mausoleum:bones"
+    },
+    {
+      "id": "holt_empty_skull_place",
+      "cell": [
+        7,
+        2
+      ],
+      "kind": "examine",
+      "label": "The head of the bier",
+      "model": "crypt"
+    },
+    {
+      "id": "holt_niche_1",
+      "cell": [
+        1,
+        2
+      ],
+      "kind": "decor",
+      "label": "Burial niche",
+      "model": "crypt_small"
+    },
+    {
+      "id": "holt_niche_2",
+      "cell": [
+        1,
+        8
+      ],
+      "kind": "decor",
+      "label": "Burial niche",
+      "model": "crypt_small"
+    },
+    {
+      "id": "holt_niche_3",
+      "cell": [
+        14,
+        2
+      ],
+      "kind": "decor",
+      "label": "Burial niche",
+      "model": "crypt_small"
+    },
+    {
+      "id": "holt_niche_4",
+      "cell": [
+        14,
+        8
+      ],
+      "kind": "decor",
+      "label": "Burial niche",
+      "model": "crypt_small"
+    },
+    {
+      "id": "holt_kneeling_marks",
+      "cell": [
+        10,
+        14
+      ],
+      "kind": "examine",
+      "label": "Candle stubs and a worn floor",
+      "model": "candelabra"
+    },
+    {
+      "id": "holt_vestibule_carving",
+      "cell": [
+        6,
+        11
+      ],
+      "kind": "examine",
+      "label": "The lintel",
+      "model": "arch_carved"
+    }
+  ],
+  "containers": [
+    {
+      "id": "holt_offering_niches",
+      "cell": [
+        14,
+        5
+      ],
+      "label": "Offering niches",
+      "model": "shrine_small",
+      "items": [
+        {
+          "id": "candle",
+          "qty": 4
+        }
+      ],
+      "gold": 30
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        7,
+        5
+      ],
+      "kind": "magic",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "phantom_warden",
+      "cell": [
+        7,
+        11
+      ],
+      "dialogue": "argynvostholt/mausoleum:warden",
+      "when": "not flag.mausoleum_opened and not flag.bone_watch_defeated",
+      "facing": "south",
+      "approach": 4
+    }
+  ],
+  "encounters": [
+    {
+      "id": "bone_watch",
+      "trigger": "dialogue",
+      "text": "The warden's spear comes down, and the walls of the vault answer: grey men-at-arms step out of the stone on either side, shields locked, between you and the bones.",
+      "surprise": "",
+      "flag": "bone_watch_defeated",
+      "when": "level >= 8",
+      "monsters": [
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            10
+          ],
+          "name": "Phantom Warden"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            3,
+            13
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bone_watch",
+      "trigger": "dialogue",
+      "text": "The warden's spear comes down, and the walls of the vault answer: grey men-at-arms step out of the stone on either side, shields locked, between you and the bones.",
+      "surprise": "",
+      "flag": "bone_watch_defeated",
+      "when": "level >= 7",
+      "monsters": [
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            10
+          ],
+          "name": "Phantom Warden"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            3,
+            13
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bone_watch",
+      "trigger": "dialogue",
+      "text": "The warden's spear comes down, and the walls of the vault answer: grey men-at-arms step out of the stone on either side, shields locked, between you and the bones.",
+      "surprise": "",
+      "flag": "bone_watch_defeated",
+      "monsters": [
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            10
+          ],
+          "name": "Phantom Warden"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            13
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:argynvostholt_mausoleum"
+  },
+  "rest": "risky"
+}

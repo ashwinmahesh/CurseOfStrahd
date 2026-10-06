@@ -30,4 +30,7 @@ static func build(id: String, level: int = 1, errors: Array[String] = []) -> Cha
 		if not up.confirm():
 			errors.append("%s level %d: %s" % [id, plan["level"], up.errors()])
 			return null
+	# The level plans reach the campaign's cap (11, ADR 0011); past it the pregen stays at its plan's last level.
+	if ch.character_level() < level:
+		errors.append("%s's level plan stops at level %d" % [id, ch.character_level()])
 	return ch

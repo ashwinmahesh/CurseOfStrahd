@@ -100,6 +100,7 @@
         "id": "soul_blades",
         "name": "Soul Blades",
         "summary": "Homing Strikes (add a die to a missed blade attack) and Psychic Teleportation.",
+        "text": "Homing Strikes: when an attack with your Psychic Blades misses, you can roll a Psionic Energy Die and add it to the roll; if that makes it hit, the die is expended. Psychic Teleportation: as a Bonus Action, expend a Psionic Energy Die, roll it and throw a Psychic Blade at an unoccupied space you can see up to 10 times the roll in feet away; you teleport there and the blade vanishes.",
         "implemented": "engine"
       }
     },

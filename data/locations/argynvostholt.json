@@ -1,0 +1,575 @@
+{
+  "id": "argynvostholt",
+  "name": "Argynvostholt",
+  "region": "argynvostholt",
+  "summary": "The ruined house of the silver dragon Argynvost on its wooded ridge: a burned mansion, a dark beacon tower, a courtyard where the dragon fell, and the mausoleum where his headless bones lie. The dead knights of his Order still keep it.",
+  "text": "A drive between dead trees climbs past the footings of a gatehouse into a courtyard of cracked flagstones. The mansion's black front fills the north side, its beacon tower above the east wing. A stone mausoleum stands apart to the east; the stables and the squires' graves are going back to the forest on the west.",
+  "map": {
+    "rows": [
+      "##########################################",
+      "#.......##########################.......#",
+      "#.......##########################.......#",
+      "#.~~....##########################..~....#",
+      "#...~...##########################...~~..#",
+      "#.......############..############.......#",
+      "#........................................#",
+      "#........#......................#........#",
+      "#.######.#...............................#",
+      "#......#.#...............................#",
+      "#......#.#......................#........#",
+      "#...............................#........#",
+      "#......#........................#........#",
+      "#......#.#......................#..~.....#",
+      "#.######.#...~~~~~~.............#...~....#",
+      "#........#......................#........#",
+      "#........#......................#........#",
+      "#....~...##########....##########........#",
+      "#.....~...........................######.#",
+      "#..............####....####.......######.#",
+      "#.................................######.#",
+      "#..................................#####.#",
+      "#.................................######.#",
+      "#.................................######.#",
+      "#.................................######.#",
+      "#..........~.............................#",
+      "#...........~................~...........#",
+      "#.............................~..........#",
+      "#.~..................................~...#",
+      "#..~..................................~..#",
+      "#........................................#",
+      "####################..####################"
+    ],
+    "theme": "village",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "holt_north_woods",
+      "name": "The ridge woods",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          7,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "holt_courtyard",
+      "name": "The courtyard",
+      "cells": [
+        [
+          10,
+          6
+        ],
+        [
+          31,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "holt_stable_ruin",
+      "name": "The stable ruin",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          8,
+          15
+        ]
+      ]
+    },
+    {
+      "id": "holt_approach",
+      "name": "The drive",
+      "cells": [
+        [
+          10,
+          18
+        ],
+        [
+          31,
+          30
+        ]
+      ]
+    },
+    {
+      "id": "holt_squires_graves",
+      "name": "The squires' graves",
+      "cells": [
+        [
+          1,
+          19
+        ],
+        [
+          9,
+          30
+        ]
+      ]
+    },
+    {
+      "id": "holt_mausoleum_yard",
+      "name": "The mausoleum yard",
+      "cells": [
+        [
+          32,
+          15
+        ],
+        [
+          40,
+          30
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      20,
+      29
+    ],
+    "from_road": [
+      21,
+      29
+    ],
+    "from_hall": [
+      20,
+      7
+    ],
+    "from_mausoleum": [
+      33,
+      21
+    ]
+  },
+  "exits": [
+    {
+      "id": "road_out",
+      "cell": [
+        20,
+        31
+      ],
+      "to": "travel",
+      "label": "The knights' road, down through the woods"
+    },
+    {
+      "id": "road_out_east",
+      "cell": [
+        21,
+        31
+      ],
+      "to": "travel",
+      "label": "The knights' road, down through the woods"
+    },
+    {
+      "id": "front_doors",
+      "cell": [
+        20,
+        5
+      ],
+      "to": "argynvostholt_hall",
+      "spawn": "from_grounds",
+      "label": "The mansion's front doors"
+    },
+    {
+      "id": "front_doors_east",
+      "cell": [
+        21,
+        5
+      ],
+      "to": "argynvostholt_hall",
+      "spawn": "from_grounds",
+      "label": "The mansion's front doors"
+    },
+    {
+      "id": "mausoleum_door",
+      "cell": [
+        34,
+        21
+      ],
+      "to": "argynvostholt_mausoleum",
+      "spawn": "from_grounds",
+      "label": "The mausoleum"
+    }
+  ],
+  "props": [
+    {
+      "id": "holt_mansion_front",
+      "cell": [
+        15,
+        5
+      ],
+      "kind": "examine",
+      "label": "The mansion",
+      "model": "window_shuttered"
+    },
+    {
+      "id": "holt_beacon_tower",
+      "cell": [
+        32,
+        5
+      ],
+      "kind": "examine",
+      "label": "The beacon tower",
+      "model": "window_tall",
+      "burning": "flag.argynvost_beacon_lit"
+    },
+    {
+      "id": "holt_order_banners",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "examine",
+      "label": "Rotted banners",
+      "model": "tapestry"
+    },
+    {
+      "id": "holt_fallen_statue",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "examine",
+      "label": "Toppled dragon statue",
+      "model": "statue_head"
+    },
+    {
+      "id": "holt_dragon_scar",
+      "cell": [
+        15,
+        14
+      ],
+      "kind": "examine",
+      "label": "The frost scar",
+      "model": "scorch"
+    },
+    {
+      "id": "holt_gatehouse_ruin",
+      "cell": [
+        18,
+        19
+      ],
+      "kind": "examine",
+      "label": "The gatehouse footings",
+      "model": "gate_pillar"
+    },
+    {
+      "id": "holt_gate_pillar_east",
+      "cell": [
+        23,
+        19
+      ],
+      "kind": "decor",
+      "label": "Gatehouse footings",
+      "model": "gate_pillar"
+    },
+    {
+      "id": "holt_dead_avenue",
+      "cell": [
+        17,
+        25
+      ],
+      "kind": "examine",
+      "label": "Dead avenue",
+      "model": "dead_tree"
+    },
+    {
+      "id": "holt_dead_tree_1",
+      "cell": [
+        17,
+        22
+      ],
+      "kind": "decor",
+      "label": "Dead tree",
+      "model": "dead_tree"
+    },
+    {
+      "id": "holt_dead_tree_2",
+      "cell": [
+        24,
+        22
+      ],
+      "kind": "decor",
+      "label": "Dead tree",
+      "model": "dead_tree"
+    },
+    {
+      "id": "holt_dead_tree_3",
+      "cell": [
+        24,
+        25
+      ],
+      "kind": "decor",
+      "label": "Dead tree",
+      "model": "dead_tree"
+    },
+    {
+      "id": "holt_dead_tree_4",
+      "cell": [
+        17,
+        28
+      ],
+      "kind": "decor",
+      "label": "Dead tree",
+      "model": "dead_tree"
+    },
+    {
+      "id": "holt_dead_tree_5",
+      "cell": [
+        24,
+        28
+      ],
+      "kind": "decor",
+      "label": "Dead tree",
+      "model": "dead_tree"
+    },
+    {
+      "id": "holt_warhorse_bones",
+      "cell": [
+        4,
+        11
+      ],
+      "kind": "examine",
+      "label": "Bones in the stalls",
+      "model": "bones"
+    },
+    {
+      "id": "holt_squires_headstones",
+      "cell": [
+        5,
+        22
+      ],
+      "kind": "examine",
+      "label": "Small headstones",
+      "model": "gravestone"
+    },
+    {
+      "id": "holt_headstone_1",
+      "cell": [
+        3,
+        22
+      ],
+      "kind": "decor",
+      "label": "Headstone",
+      "model": "gravestone"
+    },
+    {
+      "id": "holt_headstone_2",
+      "cell": [
+        7,
+        22
+      ],
+      "kind": "decor",
+      "label": "Headstone",
+      "model": "gravestone"
+    },
+    {
+      "id": "holt_headstone_3",
+      "cell": [
+        3,
+        25
+      ],
+      "kind": "decor",
+      "label": "Headstone",
+      "model": "gravestone"
+    },
+    {
+      "id": "holt_headstone_4",
+      "cell": [
+        5,
+        25
+      ],
+      "kind": "decor",
+      "label": "Headstone",
+      "model": "gravestone"
+    },
+    {
+      "id": "holt_headstone_5",
+      "cell": [
+        7,
+        25
+      ],
+      "kind": "decor",
+      "label": "Headstone",
+      "model": "gravestone"
+    },
+    {
+      "id": "holt_mausoleum_front",
+      "cell": [
+        34,
+        19
+      ],
+      "kind": "examine",
+      "label": "The mausoleum's carved front",
+      "model": "relief"
+    },
+    {
+      "id": "holt_ridge_well",
+      "cell": [
+        36,
+        9
+      ],
+      "kind": "examine",
+      "label": "A well",
+      "model": "well"
+    },
+    {
+      "id": "holt_resting_sentry",
+      "cell": [
+        23,
+        6
+      ],
+      "kind": "examine",
+      "label": "A seated knight",
+      "model": "armor_stand",
+      "when": "flag.argynvost_beacon_lit"
+    }
+  ],
+  "containers": [
+    {
+      "id": "holt_stable_saddlebags",
+      "cell": [
+        3,
+        12
+      ],
+      "label": "Rotted saddlebags",
+      "model": "satchel",
+      "items": [
+        {
+          "id": "lance",
+          "qty": 1
+        }
+      ],
+      "gold": 18
+    }
+  ],
+  "lights": [],
+  "npcs": [
+    {
+      "npc": "sir_godfrey_gwilym",
+      "cell": [
+        21,
+        7
+      ],
+      "dialogue": "argynvostholt/godfrey:start",
+      "when": "not flag.godfrey_met",
+      "facing": "south",
+      "approach": 6
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        26,
+        9
+      ],
+      "dialogue": "argynvostholt/knights:yard",
+      "when": "flag.order_fate == \"ride\" or flag.order_fate == \"grudge\"",
+      "facing": "south"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "courtyard_phantoms",
+      "trigger": "enter_area:holt_courtyard",
+      "when": "night and flag.godfrey_met and not flag.courtyard_phantoms_defeated and not flag.order_fate and level >= 8",
+      "text": "Grey light pours through the broken gate: men-at-arms, translucent, shields up, charging a line that broke four hundred years ago. You are standing where the line was.",
+      "surprise": "",
+      "flag": "courtyard_phantoms_defeated",
+      "monsters": [
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            9
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            27,
+            9
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            13,
+            15
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            28,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "courtyard_phantoms",
+      "trigger": "enter_area:holt_courtyard",
+      "when": "night and flag.godfrey_met and not flag.courtyard_phantoms_defeated and not flag.order_fate and level >= 7",
+      "text": "Grey light pours through the broken gate: men-at-arms, translucent, shields up, charging a line that broke four hundred years ago. You are standing where the line was.",
+      "surprise": "",
+      "flag": "courtyard_phantoms_defeated",
+      "monsters": [
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            9
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            27,
+            9
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            20,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "courtyard_phantoms",
+      "trigger": "enter_area:holt_courtyard",
+      "when": "night and flag.godfrey_met and not flag.courtyard_phantoms_defeated and not flag.order_fate",
+      "text": "Grey light pours through the broken gate: men-at-arms, translucent, shields up, charging a line that broke four hundred years ago. You are standing where the line was.",
+      "surprise": "",
+      "flag": "courtyard_phantoms_defeated",
+      "monsters": [
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            9
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            27,
+            9
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:argynvostholt"
+  },
+  "rest": "risky"
+}

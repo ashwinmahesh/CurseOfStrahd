@@ -1,0 +1,274 @@
+# The unveiling: the region's climax (docs/regions/krezk.md §4.5). The dress is delivered, Vasilka wakes, and the
+# party settles the Abbot's fate: the wedding goes ahead ("wedding"), he repents and unmakes his work ("repentant"),
+# Vasilka is destroyed and he is left with his grief ("broken"), or he dies ("slain"). If Ireena stands in the chapel
+# when Vasilka wakes, he wants her instead. Every ending reaches `the_end`, which holds the region's one milestone.
+
+~ deliver
+if flag.wedding_dress_found and flag.wards_dress_found
+Narrator: You have two dresses: the one from the matron's trunk, and the one you brought up the mountain.
+* Give him the dress from the abbey's own wards. -> give_wards
+* [if flag.wedding_dress_source == "anna"] Give him Anna's dress. -> given
+* [if flag.wedding_dress_source != "anna"] Give him the dress you brought. -> given
+endif
+if flag.wedding_dress_found
+-> given
+endif
+-> give_wards
+
+~ give_wards
+set wedding_dress_source = "wards"
+-> given
+
+~ given
+set wedding_dress_delivered
+quest the_abbots_bride delivered
+Narrator: He takes the dress the way a priest takes a relic, in both hands, and holds it up to the candles. For a moment his face is so happy that it's hard to look at.
+if flag.wedding_dress_source == "anna"
+Abbot: Lavender. Someone loved this, and folded it with care, and waited. Thank you, Anna Krezkova. You will not be forgotten in this house.
+elif flag.wedding_dress_source == "wards"
+Abbot: The matron's. I had forgotten it. I had forgotten I locked that door. How strange, to forget a thing on purpose for so long that it becomes an accident.
+else
+Abbot: New cloth, and a stranger's careful needle. Someone made this for a girl they will never meet. That is the purest kind of gift.
+endif
+if guest:ireena and flag.abbot_saw_ireena
+Narrator: Over the dress, his eyes go to Ireena, and stay there a heartbeat too long.
+* Ireena, wait for us in the courtyard. -> ireena_out
+* (Let her stay.) -> rite
+endif
+-> rite
+
+~ ireena_out
+set ireena_waits_in_courtyard
+leave ireena
+Ireena: I'm not made of glass. But I'm not a fool either. I'll be by the well. Shout if you need a sword.
+-> rite
+
+~ rite
+Narrator: He doesn't wait for dusk. He says the dark up here is close enough. The Belviews carry her in on a bier, a dozen of them in their best rags, humming something with no words in it.
+Narrator: Vasilka. She is beautiful, the way a thing made very carefully is beautiful, and the seams at her wrists and throat are so fine you could take them for lace. The dress fits her as though it had always been waiting.
+Narrator: The Abbot lays his palms on her brow. The candles go white. When they go yellow again, her eyes are open.
+Vasilka: Good evening. I am Vasilka. I am to be married. Have I kept anyone waiting?
+interject tag:curious: She's... polite.
+Abbot [smile]: She is perfect. Tomorrow Clovin will drive her down the road to the castle, and the lord of this valley will have a wife, and the valley will have peace by spring.
+if guest:ezmerelda
+interject guest:ezmerelda: Peace. From him. I've heard monsters plan a great many things. That's the first time one's planned a honeymoon.
+endif
+if guest:ireena and flag.abbot_saw_ireena
+-> demand
+endif
+-> choice
+
+~ choice
+* [if flag.markovia_letter_read] Read him Markovia's letter. -> letter
+* [if flag.ireena_pool_vision] Tell him what Ireena saw in the Pool of the White Sun. -> pool_truth
+* [if (flag.wachter_evidence or flag.death_house_read_strahd_letter) and not flag.abbot_persuade_tried] [Persuasion DC 12] We've read his letters. He writes to tools, never to people. He'll use her and throw her away. -> persuade_ok | persuade_fail
+* [if not flag.abbot_persuade_tried] [Persuasion DC 16] He won't love her. He doesn't love. He keeps. -> persuade_ok | persuade_fail
+* [if flag.abbot_nature_known and not flag.abbot_religion_tried] [Religion DC 14] You were sent to keep this valley's faith, not to feed its devil. -> religion_ok | religion_fail
+* It's your abbey. We won't stand in your way. -> wedding
+* Stop this. She isn't yours to give away. -> stop
+* Kill him. -> kill_now
+
+~ letter
+Narrator: You unfold Markovia's letter and read it to him, all of it, slowly, in the candlelight. The Belviews stop humming. Clovin, at the back, mouths the words he knows.
+Narrator: At "patience is how he feeds", the Abbot sits down on the altar step, as if someone has cut a string.
+Abbot: She wrote that. She knew. She went up that road knowing, and I have spent four hundred years telling her children she was wrong.
+if flag.markovia_story_heard
+interject tag:blunt: You told us she was brave and mistaken. She wasn't mistaken. She knew exactly what he was.
+Abbot [sad]: I knew it the way you know the floor is there in the dark. I simply never put my weight on it.
+endif
+-> repent_unmake
+
+~ pool_truth
+Narrator: You tell him about the pool, the young man in the water, and what Ireena remembered: the bride his lord truly wants ran from him once to her death, and given a second life, chose a dead man over him again.
+Abbot: She chose... the brother.
+Narrator: He looks at Vasilka for a long time. She looks back, politely, waiting to be told what to feel.
+Abbot: Then it was never loneliness. It was never love he lacked. It was the word no. And I have been sewing him a girl who cannot say it.
+-> repent_unmake
+
+~ persuade_ok
+set abbot_persuade_tried
+Narrator: He starts to answer, and stops. You watch the argument go into him like a splinter, and watch him try to close round it, and fail.
+Abbot: Keeps. Yes. I have watched him keep things. Wolves, and villages, and the dead. He has never once let anything go.
+-> repent_unmake
+
+~ persuade_fail
+set abbot_persuade_tried
+Abbot: You have known him a season. I have known him four hundred years. Forgive me if I trust my own long patience over your short certainty.
+-> choice
+
+~ religion_ok
+set abbot_religion_tried
+Narrator: At the words "sent to keep", something old moves in his face, like a sleeper hearing his name in another room.
+Abbot: Sent. Yes. I was sent with a sword, once. I put it down because it was unkind. I put it down and I picked up a needle, and I told myself the needle was kinder.
+-> repent_unmake
+
+~ religion_fail
+set abbot_religion_tried
+Abbot: Faith. I have kept more faith than you have ever been offered, child. I kept it until it starved. Then I fed it what I had.
+-> choice
+
+~ repent_unmake
+Abbot [sad]: Forgive me, child.
+Narrator: He lays his palm on Vasilka's brow again. She lies back on the bier, smooths the dress over her knees with great care, and closes her eyes. The seams at her wrists are only seams now.
+set vasilka_fate = "laid_to_rest"
+-> repent
+
+~ repent
+set abbot_fate = "repentant"
+quest the_abbots_bride repented
+Abbot: Bury her by the pool, with the others she was made from. Let Kasha sing over her. She sings badly, and with love, which is the right way.
+if not flag.ilya_fate or flag.ilya_fate == "frail"
+Abbot: I owe Krezk a boy. I will go down at dawn and pay it. Then I will go up the mountain, as far as it goes, and a little further, and wait to be judged. Someone should have judged me a long time ago.
+set ilya_fate = "healed"
+quest the_burgomasters_son healed
+else
+Abbot: Then I will go up the mountain, as far as it goes, and a little further, and wait to be judged. Someone should have judged me a long time ago.
+endif
+if guest:ezmerelda
+interject guest:ezmerelda: I came up here to kill you. I'm still not sure I shouldn't.
+Abbot: Nor am I, hunter. Let us both live with not being sure.
+endif
+Abbot: Take what is in the sacristy. Keep this house open for the Belviews, if you can. They did not ask for any of it.
+give potion_of_healing 2
+-> the_end
+
+~ wedding
+set abbot_fate = "wedding"
+set vasilka_fate = "sent"
+quest the_abbots_bride wedding
+Abbot [smile]: Thank you. You have done a holy thing tonight, whether you believe it or not.
+if not flag.ilya_fate or flag.ilya_fate == "frail"
+Abbot: And a bargain is a bargain. I will go down to Krezk at dawn and lay my hands on the boy.
+set ilya_fate = "healed"
+quest the_burgomasters_son healed
+endif
+give potion_of_healing 2
+if class:cleric
+interject class:cleric: We just helped dress a corpse for the devil and called it a wedding. I'll be praying about this for the rest of my life. However long that is.
+endif
+if guest:ezmerelda
+interject guest:ezmerelda: I'm going to pretend I didn't watch that. I'm a very good pretender.
+endif
+Vasilka: Thank you for coming to my wedding. I am told I will be very happy. I will try.
+-> the_end
+
+~ stop
+Abbot: I will not raise a hand in this house. I have done enough with my hands.
+Narrator: He steps back from the bier. He doesn't look at you. He looks at her.
+Abbot: Vasilka. Child. Defend your wedding.
+Narrator: She rises from the bier in one smooth movement, like a dancer, and the Belviews reach under their rags for cleavers and pruning hooks.
+Vasilka: I am sorry. I am told this is important.
+combat bride_defends
+
+~ kneeling
+set vasilka_fate = "destroyed"
+Narrator: Vasilka lies in the ruin of her wedding with the dress torn and her careful seams undone. The Abbot kneels beside her. He hasn't moved since she fell. He is holding her hand.
+Abbot: She asked me, this morning, what being married was like. I told her it was like being kept warm. I had never been married. I had never been warm.
+* [if flag.markovia_letter_read] Read him Markovia's letter. -> letter_after
+* [Religion DC 14] Remind him what he was sent here to do. -> remind_ok | remind_fail
+* Leave him with what he's done. -> broken
+* Kill him. -> kill_kneeling
+
+~ letter_after
+Narrator: You read him Markovia's letter, kneeling there, every word. He listens with his eyes shut.
+Abbot: Patience is how he feeds. She knew. She went up that road knowing.
+-> repent
+
+~ remind_ok
+Narrator: He listens. Halfway through, he lets go of Vasilka's hand.
+Abbot: Sent. I was sent. I remember the sending. I had forgotten I was supposed to come back.
+-> repent
+
+~ remind_fail
+Abbot: Sent. Sent, and forgotten. Go away, children. There is nothing left in this house for you to save.
+-> broken
+
+~ broken
+set abbot_fate = "broken"
+quest the_abbots_bride broken
+Narrator: He doesn't answer. He doesn't look up. The candles along the rail go out one by one, though nobody touches them, until there's only the grey light from the door.
+if not flag.ilya_fate or flag.ilya_fate == "frail"
+Narrator: Days later, the Belviews will say he went down the mountain once, at dawn, laid a hand on the burgomaster's boy, and climbed back up without a word. You'll never know if anyone asked him to.
+set ilya_fate = "healed"
+quest the_burgomasters_son healed
+endif
+-> the_end
+
+~ kill_kneeling
+set abbot_fate = "slain"
+quest the_abbots_bride slain
+Narrator: He doesn't lift a hand. He only turns his face up, the way a flower turns to the window.
+Abbot: Yes. I have wondered for a long time what judgement would feel like.
+Narrator: When the blow falls there's no blood, only light, pouring out of him like water from a cracked jar. Then nothing on the altar step but a brown habit and the smell of a summer long over.
+if guest:ezmerelda
+interject guest:ezmerelda: That's done, then. I thought it would feel like more.
+endif
+-> the_end
+
+~ kill_now
+Abbot: So. You would rather fight a thing than understand it. Most of the world would. I had hoped you were not most of the world.
+combat abbot_wrath
+
+~ demand
+Narrator: The Abbot isn't looking at his bride. He's looking past her. At Ireena.
+Abbot: ...Why send him a copy?
+Narrator: The candles all lean toward her, every one, the flames lying almost flat. Vasilka, forgotten on her bier, turns her head to see what everyone is looking at.
+Abbot: Give her to me. I will take her down to him myself. He will be gentled by spring, and this valley will sleep. One woman, for every soul in Barovia. You must see the arithmetic.
+Ireena [angry]: I can count. I'm not going.
+* [if flag.ireena_pool_vision] At the pool she chose a dead man over him. She'll choose that every time. -> pool_truth_demand
+* Never. If you want her, you'll have to go through us. -> kill_now
+* We're leaving. All of us. Now. -> fled
+
+~ pool_truth_demand
+Narrator: You tell him about the pool. Ireena tells him the rest herself, in a flat, steady voice, about a wall, and a stair, and a morning full of white flowers.
+Abbot: She chose the brother. Twice. Then it was never loneliness he suffered from. It was the word no. And I have been sewing him a girl who cannot say it.
+-> repent_unmake
+
+~ fled
+set abbot_fate = "wedding"
+set vasilka_fate = "sent"
+set abbot_told_strahd
+quest the_abbots_bride fled
+Narrator: He doesn't stop you. He doesn't need to. As you go, he calls after you, gently, the way you'd call after children leaving a party early.
+Abbot: Go, then. He will come for her himself. I will write to him tonight and tell him where she sleeps. He will be grateful; he so rarely is.
+interject guest:ireena: Let him write. I've had his letters before. I burn them.
+-> the_end
+
+~ after_wrath
+Narrator: The chapel is very quiet. Where the Abbot fell there's only a brown habit, and a smell of summer, and light still settling out of the air like dust.
+Clovin Belview: He's gone. He's gone. Mother, he's gone.
+set abbot_fate = "slain"
+quest the_abbots_bride slain
+if flag.wedding_dress_delivered
+Narrator: Vasilka is still standing by her bier in her wedding dress, hands folded, waiting very patiently for someone to tell her what happens next.
+Vasilka: Is the wedding cancelled? Nobody has said.
+* Lie down, Vasilka. Rest. -> vasilka_rest
+* (Leave her standing there.) -> vasilka_left
+endif
+set vasilka_fate = "never_woke"
+Narrator: Across the courtyard in the wards, the stitched bride he never finished lies under her linen. She will not wake now. There's nobody left who knows how.
+-> the_end
+
+~ vasilka_rest
+set vasilka_fate = "laid_to_rest"
+Vasilka: Rest. Yes. I can do that. I was very good at it, before.
+Narrator: She lies down on the bier and smooths her dress and closes her eyes, and does not open them again.
+-> the_end
+
+~ vasilka_left
+set vasilka_fate = "abandoned"
+Narrator: You leave her there. When you look back from the door she's still standing, hands folded, turned toward the empty altar step, waiting.
+-> the_end
+
+~ ireena_waiting
+Ireena: Well? No, don't tell me. Your faces are telling me. Can we leave this place? Now, preferably.
+set ireena_waits_in_courtyard = false
+join ireena
+-> END
+
+~ the_end
+if not flag.krezk_milestone_reached
+set krezk_milestone_reached
+xp milestone
+endif
+-> END

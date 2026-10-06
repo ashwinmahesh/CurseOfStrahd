@@ -1,0 +1,20 @@
+{
+  "id": "kiril_stoyanovich",
+  "name": "Kiril Stoyanovich",
+  "title": "Leader of the Hill Pack",
+  "summary": "A huge, grinning werewolf who went to the castle, came back with its blessing and took the hill pack for himself. He is building an army for his master out of stolen children.",
+  "portrait": "kiril_stoyanovich",
+  "sprite": "kiril_stoyanovich",
+  "attitude": "hostile",
+  "voice": "docs/voice/kiril_stoyanovich.md",
+  "monster": "kiril_stoyanovich",
+  "guest": false,
+  "tags": [
+    "werewolf",
+    "lycanthrope",
+    "strahd_servant",
+    "werewolf_den"
+  ],
+  "region": "werewolf_den",
+  "pronouns": "he/him"
+}

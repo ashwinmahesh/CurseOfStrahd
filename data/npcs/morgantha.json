@@ -2,7 +2,7 @@
   "id": "morgantha",
   "name": "Morgantha",
   "title": "The Pastry Seller",
-  "summary": "A sweet old woman who pushes a cart of dream pastries through the village. Her smile never moves.",
+  "summary": "A sweet old woman who pushes a cart of dream pastries through the village and along the Vallaki road. Her smile never moves. She keeps the old windmill called Bonegrinder with her two daughters, and the children her customers can't pay for.",
   "portrait": "morgantha",
   "sprite": "morgantha",
   "attitude": "friendly",
@@ -12,6 +12,7 @@
   "tags": [
     "hag",
     "disguised",
+    "coven",
     "old_bonegrinder",
     "village_of_barovia"
   ],

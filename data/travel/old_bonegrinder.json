@@ -1,0 +1,37 @@
+{
+  "id": "old_bonegrinder",
+  "name": "Old Bonegrinder",
+  "places": [
+    {
+      "id": "old_bonegrinder",
+      "name": "Old Bonegrinder",
+      "location": "old_bonegrinder_hill",
+      "spawn": "from_road",
+      "pos": [
+        0.69,
+        0.24
+      ],
+      "region": "old_bonegrinder",
+      "when": "flag.bonegrinder_rumor or flag.morgantha_cart_met or tarokka.tome.region == old_bonegrinder or tarokka.symbol.region == old_bonegrinder or tarokka.sword.region == old_bonegrinder",
+      "summary": "A windmill on a bald crag above the Old Svalich Road, its sails tied still and its chimney always smoking, where the pastry seller bakes."
+    }
+  ],
+  "roads": [
+    {
+      "id": "village_to_bonegrinder",
+      "from": "village_of_barovia",
+      "to": "old_bonegrinder",
+      "hours": 2,
+      "table": "bonegrinder_lane",
+      "name": "The miller's lane"
+    },
+    {
+      "id": "crossroads_to_bonegrinder",
+      "from": "svalich_crossroads",
+      "to": "old_bonegrinder",
+      "hours": 2,
+      "table": "bonegrinder_lane",
+      "name": "The miller's lane, over the ridge"
+    }
+  ]
+}

@@ -1,0 +1,482 @@
+{
+  "id": "yester_hill",
+  "name": "Yester Hill",
+  "region": "yester_hill",
+  "summary": "A bald hill west of the vineyards, heaped over old graves, that the druids have made their holy place: a camp of painted wild men on its shoulder, wicker cages, a hidden gully up the west flank, and a path to the crown where the tree grows.",
+  "text": "The hill rises out of the moor with almost nothing growing on it, as if the grass knew better. Low mounds ring its foot, old graves with no stones. Smoke rises from a camp on its shoulder, and from the crown comes a sound like many people humming one long note.",
+  "map": {
+    "rows": [
+      "#444###############444##################",
+      "#44444444444444444444444444444444444444#",
+      "#44444444444444444444444444444444444444#",
+      "#44444444444444444444444444444444444444#",
+      "#444#4444444444444444444444444##4444444#",
+      "#444#4444444444444444444444444444444444#",
+      "#444#4444444444444444444444444444444444#",
+      "#333#333##33333333333333333333333333333#",
+      "#333#333#333333333333333333333333333333#",
+      "#333#3333333333333333333333333333##3333#",
+      "#333#33333333333333333333333333333#3333#",
+      "#333#3333333333333333333333333333333333#",
+      "#333#3333333333333333333333333333333333#",
+      "#222#2222222222222222222222222222222222#",
+      "#222#22222222222222222222222222222222#2#",
+      "#222#222222222222222222222##222222222#2#",
+      "#222#222222222222222222222#222222222222#",
+      "#222#2222222222222222222222222222222222#",
+      "#222#2222222222222222222222222222222222#",
+      "#111#1111111111111111111111111111111111#",
+      "#111#1111111111111111111111111111111111#",
+      "#111#111111111111111111111111111111##11#",
+      "#111#1111111111111111111111111111111#11#",
+      "#111#1111111111111111111111111111111111#",
+      "#11111111111##1111111111111111111111111#",
+      "#......................................#",
+      "#.....#..........................#.....#",
+      "#......#........................#......#",
+      "#......................................#",
+      "###################...##################"
+    ],
+    "theme": "wilderness",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "hill_foot",
+      "name": "The foot of the hill",
+      "cells": [
+        [
+          1,
+          25
+        ],
+        [
+          38,
+          28
+        ]
+      ]
+    },
+    {
+      "id": "back_gully",
+      "name": "The back gully",
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "wardens_camp",
+      "name": "The wardens' camp",
+      "cells": [
+        [
+          6,
+          13
+        ],
+        [
+          17,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "barrow_slope",
+      "name": "The barrow slope",
+      "cells": [
+        [
+          18,
+          5
+        ],
+        [
+          38,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "hill_crest",
+      "name": "The crest",
+      "cells": [
+        [
+          5,
+          1
+        ],
+        [
+          38,
+          4
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      20,
+      27
+    ],
+    "from_road": [
+      20,
+      27
+    ],
+    "from_summit": [
+      20,
+      1
+    ]
+  },
+  "exits": [
+    {
+      "id": "hill_track_out",
+      "cell": [
+        20,
+        29
+      ],
+      "to": "travel",
+      "label": "The barrow track, back toward the vineyards"
+    },
+    {
+      "id": "summit_path",
+      "cell": [
+        20,
+        0
+      ],
+      "to": "yester_hill_gulthias_tree",
+      "spawn": "from_path",
+      "label": "Up to the crown of the hill"
+    },
+    {
+      "id": "gully_head",
+      "cell": [
+        2,
+        0
+      ],
+      "to": "yester_hill_gulthias_tree",
+      "spawn": "from_gully",
+      "label": "The head of the gully"
+    }
+  ],
+  "props": [
+    {
+      "id": "barrow_mounds",
+      "cell": [
+        30,
+        20
+      ],
+      "kind": "examine",
+      "label": "Old grave mounds",
+      "model": "grave_mound"
+    },
+    {
+      "id": "wicker_cages",
+      "cell": [
+        8,
+        14
+      ],
+      "kind": "examine",
+      "label": "Wicker cages",
+      "model": "cage"
+    },
+    {
+      "id": "cage_post",
+      "cell": [
+        9,
+        13
+      ],
+      "kind": "examine",
+      "label": "The post of the last cage",
+      "model": "cage",
+      "dialogue": "yester_hill/approach:cage_post"
+    },
+    {
+      "id": "wardens_fire",
+      "cell": [
+        12,
+        17
+      ],
+      "kind": "examine",
+      "label": "The wardens' fire",
+      "model": "campfire"
+    },
+    {
+      "id": "gully_mouth",
+      "cell": [
+        2,
+        24
+      ],
+      "kind": "examine",
+      "label": "The mouth of a gully",
+      "model": "rocks",
+      "dialogue": "yester_hill/approach:gully"
+    },
+    {
+      "id": "hill_view",
+      "cell": [
+        28,
+        2
+      ],
+      "kind": "examine",
+      "label": "The view east",
+      "model": "rocks"
+    },
+    {
+      "id": "bone_cairn",
+      "cell": [
+        24,
+        12
+      ],
+      "kind": "examine",
+      "label": "A cairn of bones",
+      "model": "cairn"
+    }
+  ],
+  "containers": [
+    {
+      "id": "wardens_hoard",
+      "cell": [
+        7,
+        20
+      ],
+      "label": "The wardens' hoard",
+      "model": "chest",
+      "items": [
+        {
+          "id": "greataxe",
+          "qty": 1
+        },
+        {
+          "id": "handaxe",
+          "qty": 2
+        },
+        {
+          "id": "ration",
+          "qty": 4
+        },
+        {
+          "id": "hide_armor",
+          "qty": 1
+        }
+      ],
+      "gold": 34
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        12,
+        17
+      ],
+      "kind": "fire",
+      "bright_ft": 20,
+      "dim_ft": 40
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "kostin",
+      "cell": [
+        24,
+        26
+      ],
+      "dialogue": "yester_hill/approach:kostin",
+      "when": "flag.kostin_doubts and not flag.kostin_hill_met and not flag.yester_hill_resolved",
+      "facing": "west",
+      "approach": 6
+    }
+  ],
+  "encounters": [
+    {
+      "id": "wardens_camp_fight",
+      "trigger": "enter_area:wardens_camp",
+      "when": "not flag.wardens_camp_cleared and not flag.yester_hill_resolved and level >= 7",
+      "text": "The men round the fire are big, bearded and painted green to the eyebrows. They see you, grin, and reach for their axes with something like relief.",
+      "monsters": [
+        {
+          "monster": "berserker",
+          "cell": [
+            11,
+            15
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            10,
+            19
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            15,
+            19
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            16
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            16,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            20
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            9,
+            18
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wardens_camp_cleared"
+    },
+    {
+      "id": "wardens_camp_fight",
+      "trigger": "enter_area:wardens_camp",
+      "when": "not flag.wardens_camp_cleared and not flag.yester_hill_resolved and level >= 6",
+      "text": "The men round the fire are big, bearded and painted green to the eyebrows. They see you, grin, and reach for their axes with something like relief.",
+      "monsters": [
+        {
+          "monster": "berserker",
+          "cell": [
+            11,
+            15
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            10,
+            19
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            16
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            16,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            20
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            9,
+            18
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wardens_camp_cleared"
+    },
+    {
+      "id": "wardens_camp_fight",
+      "trigger": "enter_area:wardens_camp",
+      "when": "not flag.wardens_camp_cleared and not flag.yester_hill_resolved",
+      "text": "The men round the fire are big, bearded and painted green to the eyebrows. They see you, grin, and reach for their axes with something like relief.",
+      "monsters": [
+        {
+          "monster": "berserker",
+          "cell": [
+            11,
+            15
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "Warden of the hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            16
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            16,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            20
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            9,
+            18
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wardens_camp_cleared"
+    }
+  ],
+  "narration": {
+    "enter": "enter:yester_hill"
+  },
+  "rest": "no",
+  "rest_text": "Not on this hill. The ground hums under you, and something on the crown is listening for sleepers."
+}

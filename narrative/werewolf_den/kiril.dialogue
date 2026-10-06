@@ -1,0 +1,162 @@
+# Kiril Stoyanovich comes home to answer Emil's challenge (docs/voice/kiril_stoyanovich.md). THE CHOICE of the
+# region: stand with Emil (pack_challenge, Emil fights beside the party), stand aside or hand Emil back (Kiril leads),
+# or turn on both (den_reckoning). `after` is Kiril ruling the den, if the party let him.
+
+~ challenge
+Narrator: Kiril comes up the passage from the cave mouth without hurrying: a huge, bare-chested man with a wolf pelt worn like a cloak and a grin full of long teeth. Behind him, in the dark, eyes. A great many eyes.
+Kiril [smile]: Emil! Out of your jewellery. And you've made friends. Meat with swords. The master's guests, if I'm not mistaken.
+Emil: I howled the challenge, Kiril. By the old law, you answer it.
+Kiril: The old law kept us thin and hiding in the rocks. The new law eats.
+Kiril: Here's the new law, guests. Stand aside, and you walk out of my hills alive. The master likes his guests unchewed. I'd hate to disappoint him.
+if guest:ireena
+Kiril [smile]: And the master's red-haired lady, in my den. Oh, he'll want to hear about this. He'll want to hear about it from me.
+Ireena [angry]: Then tell him I said no. He's heard it before.
+endif
+if guest:ezmerelda
+Kiril [smile]: And the Vistani huntress. How's the leg? I kept the boot. It's on my wall.
+Ezmerelda: Then I'll come and fetch it, dog.
+endif
+-> choice
+
+~ choice
+* We stand with Emil. -> stand
+* [if not flag.kiril_children_asked] And the children? -> children_q
+* This is pack business. Settle it between the two of you. -> aside
+* Take him back, Kiril. We want no quarrel with you. -> betray
+* Neither of you leads anything. This den ends tonight. -> neither
+
+~ children_q
+set kiril_children_asked
+Kiril: The pups? They're pack now, or they will be after the moon. Don't fret. I'll raise them right. Strong and hungry, like me.
+interject tag:devout: Children aren't yours to raise, wolf.
+Kiril: Everything in these hills is mine to raise. Ask the deer.
+-> choice
+
+~ stand
+set pack_challenge_begun
+Emil: Then stand close, and don't let them get behind you.
+Kiril: Pity. You'd have made good company at the master's table. As the dinner.
+interject class:wizard: Everyone stand somewhere I can see you. I'm about to be very loud.
+combat pack_challenge
+
+~ aside
+Emil: So. That's how it is.
+leave emil_toranescu
+set emil_dead
+Narrator: Pack law has rules, and Kiril keeps them to the letter. A ring of wolves; two men stripping off their shirts; then two wolves, one grey and slow from a month in silver, one black and fresh from the hunt.
+Narrator: It is quick, which is the only kind thing about it. Afterwards Kiril stands up a man again, licking his teeth, and nobody in the cave looks at you.
+-> kiril_wins
+
+~ betray
+set emil_betrayed
+Emil [angry]: I misjudged you. That's my fault, not yours. I always was too quick to like people.
+leave emil_toranescu
+set emil_dead
+Narrator: Kiril's favourites take Emil by the arms and walk him back toward the dark. Kiril doesn't watch. He's looking at you, and grinning.
+Kiril: Sensible meat. I like sensible meat. The silver's too good for him now. He'll go to the moon at dawn.
+-> kiril_wins
+
+~ kiril_wins
+set wolf_pack_leader = "kiril"
+Narrator: Somewhere back toward the shrine, a woman's voice begins to keen, and keeps on, and then stops all at once, the way a door shuts.
+if tarokka.ally.npc == emil_toranescu
+quest find_the_ally lost
+endif
+if guest:ezmerelda
+Ezmerelda [angry]: You let that happen. I'll remember who let that happen.
+endif
+Kiril: Now. Get out of my hills, guests, and give the master my regards.
+* The children come with us. -> kids
+* We're leaving. -> kids_left
+
+~ kids
+Kiril: The pups stay.
+* [Persuasion DC 15] Five half-starved children won't make you an army. They'll make you a headache. -> kids_won | kids_refused
+* [Intimidation DC 15] Look at us, Kiril. Count us. Then count your wolves. -> kids_won | kids_refused
+* [if gold >= 100] (Toss him a purse.) A hundred gold buys a lot of deer. -> kids_bought
+* [if gold < 100] We have nothing to trade. -> kids_refused
+* Then we'll take them. -> kids_fight
+
+~ kids_won
+Kiril: ...Ha. You've got some wolf in you. Fine. Take the pups. They whine all night anyway, and the master can wait for his army till next moon.
+-> kids_freed
+
+~ kids_bought
+gold -100
+set kiril_bribed
+Narrator: Kiril weighs the purse in one big hand, then tosses it to the nearest of his wolves without looking.
+Kiril: A wolf can be bought. A wolf just can't stay bought. Take the pups before I remember I'm hungry.
+-> kids_freed
+
+~ kids_freed
+set den_children_freed
+quest the_stolen_children freed
+Narrator: Somebody unbars the pen. Five children come out holding hands in a line, the eldest at the front, and walk past the wolves with their eyes on the floor and their chins up.
+-> kiril_resolve
+
+~ kids_refused
+Kiril: No. You've had my generosity. Don't push your luck up my hill.
+* Then we'll take them. -> kids_fight
+* We're leaving. -> kids_left
+
+~ kids_fight
+set pack_challenge_begun
+set truce_broken
+Kiril [smile]: There it is. I knew there was a wolf in you somewhere.
+combat pack_challenge
+
+~ kids_left
+set den_children_left
+quest the_stolen_children left
+Narrator: Behind the pole gate at the back of the den, a girl's voice says something you don't quite catch, and then nothing.
+-> kiril_resolve
+
+~ kiril_resolve
+set pack_resolved
+quest wolves_in_the_hills kiril_leads
+if not flag.wolf_den_milestone_reached
+set wolf_den_milestone_reached
+xp milestone
+endif
+Kiril: Run along. Tell the valley Kiril Stoyanovich keeps his word. Tell them what else I keep, too.
+interject tag:veteran: We walked away from a fight we could have won. I'll be counting that one for a while.
+-> END
+
+~ neither
+set pack_challenge_begun
+leave emil_toranescu
+Emil [angry]: You freed me to kill me? Zuleika said you were honest. She was right. You're honest butchers.
+Kiril [smile]: Ha! I like these ones. Shame.
+interject class:cleric: Wolves that hunt people, and wolves that only hunt deer for now. I won't gamble the next twenty winters on which is which.
+combat den_reckoning
+
+# ---------------------------------------------------------------- Kiril ruling the den
+
+~ after
+if flag.den_children_left and not flag.den_children_freed
+Kiril [smile]: Back for the pups? They're getting fat. Not fat enough. Eleven days.
+elif flag.kiril_bribed
+Kiril [smile]: My favourite customers. Brought another purse? The pups were cheap. Everything else costs more.
+else
+Kiril: Back again? You're starting to smell like the den. Careful. It sticks.
+endif
+-> after_menu
+
+~ after_menu
+* Why serve the castle? -> after_castle
+* [if flag.den_children_left and not flag.den_children_freed] We've changed our minds about the children. -> after_kids
+* Goodbye. -> after_bye
+
+~ after_castle
+Kiril: Serve? The old man on the hill feeds us and looks the other way. One day he'll look the other way for too long.
+interject class:rogue: That's what every dog says about the man with the leash.
+Kiril: Mind your tongue, meat. I've a good memory for tongues.
+-> after_menu
+
+~ after_kids
+Kiril: Have you. Have you, now.
+-> kids
+
+~ after_bye
+Kiril: Don't come back without a present.
+-> END

@@ -18,6 +18,7 @@
         "id": "improved_critical",
         "name": "Improved Critical",
         "summary": "Weapon and Unarmed Strike attacks score a Critical Hit on a 19 or 20.",
+        "text": "Your attack rolls with weapons and Unarmed Strikes score a Critical Hit on a 19 or a 20 on the d20.",
         "implemented": "data",
         "modifiers": [
           {
@@ -53,6 +54,7 @@
         "id": "additional_fighting_style",
         "name": "Additional Fighting Style",
         "summary": "Gain another Fighting Style feat.",
+        "text": "You gain another Fighting Style feat of your choice.",
         "implemented": "data",
         "choice": {
           "kind": "fighting_style",
@@ -66,6 +68,7 @@
         "id": "heroic_warrior",
         "name": "Heroic Warrior",
         "summary": "In combat, gain Heroic Inspiration at the start of your turn if you have none.",
+        "text": "The thrill of battle drives you: during combat, at the start of each of your turns you gain Heroic Inspiration if you don't already have it.",
         "implemented": "engine"
       }
     },

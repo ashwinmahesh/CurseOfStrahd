@@ -1,0 +1,211 @@
+# Narrator: Old Bonegrinder (docs/voice/narrator.md). Second person, present tense, one or two sentences.
+# The receipt book is a book prop: its own text shows, so it has no examine: line here.
+
+# ---------------------------------------------------------------- The hill
+
+~ enter:old_bonegrinder_hill
+| The track comes out of the pines onto bare rock, and there it is: a windmill on the crag, its sails lashed still, its chimney smoking. The whole hill smells of fresh bread, and under the bread, of something else.
+| [flag.bonegrinder_burned] A black stump of a mill on a black crag. The ravens have the hill to themselves now, and they seem to like it that way.
+| [flag.mill_sails_freed and not flag.bonegrinder_burned] The sails are turning, slow and creaking, for the first time in years. The ravens ride the blades round and drop off at the top, shouting.
+| [flag.bonegrinder_fate == "bella" and not flag.bella_slain] The mill smokes away on its crag. Someone has hung a red ribbon on the door, and the smell of baking is lighter than it was. Sweeter, too.
+| [night and not flag.morgantha_slain] The windmill is a black shape against a blacker sky, with one window lit low down where the oven is. Somebody inside is singing to the dough.
+cooldown 30
+
+~ enter:hill_track
+| Cart ruts climb the hill between scree and bramble, worn deep by somebody who comes and goes every week, in all weathers, pushing something heavy.
+once
+
+~ enter:hill_oak
+| A dead oak leans out over the slope, and every branch of it is full of ravens. None of them make a sound. All of them are watching you.
+| [flag.raven_harmed] A dead oak full of ravens. They watch you the way a jury watches a defendant who has already been mentioned in evidence.
+once
+
+~ enter:hill_yard
+| The yard is trampled mud and flour. The mill door stands ajar, letting out warmth and a long, slow creak from somewhere upstairs, like a chair rocking.
+once
+
+~ enter:hill_bone_heap
+| Behind the mill, out of sight of the road, a heap of bones is half sunk into the nettles. Sheep, mostly. Mostly.
+once
+
+~ enter:hill_lookout
+| From the crag's edge the whole valley lies open under the cloud: the road, the dark pines, and far off on its pillar of rock, the castle, which you could swear is looking back.
+once
+
+~ enter:hill_shed
+| A lean-to shed for the cart and the firewood. Everything in it is neat, swept and labelled in a careful hand. Whoever lives here is very, very tidy.
+once
+
+~ examine:bonegrinder_sails
+| Four long sails, their canvas grey with flour and age, lashed to a stop in a cross. Whatever this mill grinds now, it isn't grain, and it isn't the wind that turns the stone.
+| [flag.mill_sails_freed] The sails turn in the wind, creaking at every pass. A mill doing a mill's honest work, for once, even if there is nothing in it to grind.
+| [flag.bonegrinder_burned] Charred spars, all that's left of the sails. One still turns, a little, when the wind gusts.
+
+~ examine:bonegrinder_dead_oak
+| A dead oak with a hundred ravens in it. When you look up, they look down, all at once, with the air of a committee that has already voted.
+| [flag.ilinca_vouched] The ravens in the oak shuffle along their branches to make room, as if they'd like you to sit.
+
+~ examine:bonegrinder_hag_garden
+| Neat rows of nightshade, poppy, henbane and something with grey, furred leaves you don't recognise. A kitchen garden for a kitchen you would not want to eat in.
+| [class:druid] {name} knows every plant in these rows by its uses. None of the uses are kind.
+
+~ examine:bonegrinder_lookout
+| You can see the whole Svalich road from here, and the village, and the lane to the mill. Anyone sitting up here would know who was coming long before they knocked.
+
+~ examine:bonegrinder_track_marks
+| The ruts are deep and the cart that made them was heavy going down the hill and heavier coming back. Small footprints run beside them, once, going up.
+
+~ search:bonegrinder_bone_heap
+| Down among the bones, where the rain hasn't reached, your hand closes on a chain, and on the chain a holy symbol, and on the symbol a name scratched small: Kesten.
+
+# ---------------------------------------------------------------- The mill
+
+~ enter:old_bonegrinder
+| Warm, floury and close. Everything is dusted white: the tables, the sacks, the floor, the great millstone in the middle. The oven on the far wall breathes like something asleep.
+| [flag.offalia_asleep and not flag.offalia_slain and not flag.offalia_at_large] The bakery is warm and quiet except for the snoring. Offalia lies where she sat down, smiling at the rafters.
+| [flag.morgantha_slain and not flag.bonegrinder_burned] The oven is going cold. Without anyone to tend it, the bakery smells only of flour and old ash, and it is very quiet upstairs.
+cooldown 20
+
+~ enter:mill_bakery
+| Kneading tables, cooling racks, and an oven big enough to walk into. There are no small shoes by the door. You check.
+once
+
+~ enter:mill_grindstone
+| The millstone sits in the middle of the floor under its hopper, and the floor around it is swept very clean. Nothing else in the mill is swept that clean.
+once
+
+~ enter:mill_pantry
+| Shelves to the ceiling, every jar labelled in the same spiky hand. Most of the labels are words you know. Some of them are names.
+once
+
+~ enter:mill_stair_foot
+| A steep stair climbs into the loft. From the top of it comes the creak of a rocking chair and, under that, a child humming the same three notes over and over.
+once
+
+~ enter:mill_stair
+| The stair is worn hollow in the middle by three hundred years of the same feet. Or so it feels. The creaking above you stops while you climb, and starts again when you stop.
+once
+
+~ examine:bonegrinder_millstone
+| A great round stone, white with dust. You run a finger through the dust and it isn't all flour: there's grit in it, and the grit is the wrong colour.
+| [class:cleric] {name} can tell bone meal from flour by touch. {name} wishes that weren't so.
+
+~ examine:bonegrinder_hopper
+| The hopper over the stone is fed from a chute in the loft floor. Whatever goes in up there comes out down here, very fine.
+
+~ examine:bonegrinder_kneading_table
+| A long table scarred by knives, with three stools pulled up to it: one tall and narrow, one wide and sagging, one with a cushion on it.
+
+~ examine:bonegrinder_flour_sacks
+| Sacks of flour, stacked neatly, each stamped with a little drawing of a smiling old woman. Some are flour. Some are labelled SPECIAL, and you leave those alone.
+
+~ examine:bonegrinder_oven_fire
+| A brick oven as big as a cottage hearth, its door black with soot. The heat coming off it makes your eyes water, and the smell makes something worse happen.
+| [treasure_at:old_bonegrinder] A brick oven as big as a cottage hearth. Far at the back, through the glow of the coals, something catches the light in a way that ash and bone never do.
+
+~ open:hag_oven
+| [(flag.offalia_slain or flag.offalia_asleep or flag.offalia_lured) and not treasure_at:old_bonegrinder] The oven door swings open on a breath of heat that smells of bread and of bone. You rake through the ashes at arm's length, and try not to recognise anything.
+| [(flag.offalia_slain or flag.offalia_asleep or flag.offalia_lured) and treasure_at:old_bonegrinder] The oven door swings open on a gust of heat. At the very back, untouched by the coals, lies something no hag would ever have baked.
+
+~ search:bonegrinder_pantry_jars
+| Behind the jars of things you'd rather not name, someone has hidden a stoppered bottle of something honest: a remedy against poisons. Perhaps one of the hags is careful about her own cooking.
+
+# ---------------------------------------------------------------- The loft
+
+~ enter:old_bonegrinder_loft
+| Low rafters, warm air rising through the floor from the oven, and overhead the great gear of the sails, locked still. It smells of straw and sugar and something kept too long.
+| [flag.morgantha_slain] The rocking chair has stopped. The loft is only a loft now: straw, rafters, a gear and two empty cages, and a smell that will take a long time to leave.
+cooldown 20
+
+~ enter:loft_landing
+| The stair comes up into the loft between the rafters. Every board you step on announces you.
+once
+
+~ enter:loft_nest
+| Three hollows in a heap of straw and rags, each the shape of a sleeper. One is very large. Above them, little bags hang from hooks in the beam.
+once
+
+~ enter:loft_gears
+| The great wooden gear of the sails fills this end of the loft, its teeth as long as your forearm, braked still with a timber wedge. In the floor beside it, the chute down to the millstone.
+once
+
+~ enter:loft_hearth
+| A rocking chair worn smooth, a bowl, a basket of knitting, and a footstool placed exactly where a child in a cage could see it.
+once
+
+~ enter:loft_cages
+| Two cages hang from the rafters on chains, each big enough for a child to sit in if the child doesn't stretch. There are scratches on one of the bars, in neat rows.
+| [flag.children_rescued] Two empty cages, swinging a little. Someone has left the doors wide open, on purpose, so nobody can ever shut them again.
+once
+
+~ examine:bonegrinder_soul_bags_sealed
+| Little bags of greasy leather hang from hooks in the beam, each tied with a hair ribbon. When the chair stops rocking for a moment, you could swear you hear them whispering.
+
+~ examine:bonegrinder_mirror
+| A dressing table with a cracked mirror, a powder pot and a dozen red ribbons. In the glass, for a moment, your own face looks very much older.
+| [flag.bella_fled] The mirror is cracked clean across now, and a ribbon has been left tied round the crack like a bandage.
+
+~ examine:bonegrinder_rocking_chair
+| A rocking chair polished by long use. The bowl beside it is full of something small, white and shelled. You decide they are almonds.
+| [flag.morgantha_slain] The chair stands still. It looks smaller than it did when someone was sitting in it.
+
+~ examine:bonegrinder_tally
+| Scratches in rows of five on the inside of a cage bar, made with a fingernail. Two full rows and one more. Under them, smaller, a single scratch on its own, scratched out.
+
+~ examine:bonegrinder_brake
+| You knock the wedge out of the great gear. It groans, and turns, and somewhere above the roof the sails begin to move, slowly, the way a man stretches after a long sleep.
+
+~ trap:bonegrinder_chute:found
+| One board by the gear sits a fingernail higher than the rest, with no nail in it. Under it is the chute to the millstone.
+
+~ trap:bonegrinder_chute:triggered
+| The board tips, and so do you, down the chute and onto the millstone with a sound the whole mill hears.
+
+# ---------------------------------------------------------------- The lane
+
+~ enter:old_bonegrinder_track
+| A rutted lane under dripping pines, the trees so close on either side that the sky is a grey stripe overhead. Cart tracks, footprints, and nobody.
+| [flag.pastry_trade == "ended"] The lane is already greening over. Nobody pushes a cart up here any more, and the ruts are filling with rain.
+cooldown 30
+
+~ examine:bonegrinder_lane_ruts
+| Deep ruts from a cart that comes this way every week, regular as a heartbeat.
+| [flag.pastry_trade == "ended"] Old ruts, full of rainwater. Frogs have moved in.
+
+~ examine:bonegrinder_lane_shrine
+| A little wayside shrine to the Morninglord, its paint long gone. Someone has left a dream pastry on the ledge as an offering, still wrapped. Nothing has touched it, not even the crows.
+
+# ---------------------------------------------------------------- Rests and dreams
+
+~ rest:short:old_bonegrinder
+| You rest among the flour sacks. Overhead, the rocking chair creaks and creaks, and never once stops.
+| [flag.morgantha_slain] You rest by the cooling oven. Upstairs, nothing creaks at all, which takes some getting used to.
+
+~ rest:long:old_bonegrinder
+| [at:old_bonegrinder and not flag.morgantha_slain] Nobody comes down the stair all night. You can hear her up there, rocking, and once, very softly, laughing.
+| [at:old_bonegrinder and flag.morgantha_slain] You sleep on the warm bakery floor. In the morning the oven is cold for the first time in living memory.
+| The ravens keep watch in the oak all night, and twice they all shout at once, at something you never see.
+
+~ rest:long:old_bonegrinder_hill
+| You sleep in the lee of the crag. The ravens keep watch in the oak above you, and twice in the night they all shout at once, at something you never see.
+| [not flag.morgantha_slain and not flag.bonegrinder_bargain] You sleep in shifts on the hillside. All night the mill's one window glows, and the smell of baking drifts down the slope.
+
+~ rest:long
+| [flag.bonegrinder_bargain == "dream" and not flag.morgantha_slain] Somebody wakes in the night certain that a little old woman was sitting at the foot of their bedroll, counting on her fingers. There's flour on the blanket.
+| [flag.bonegrinder_bargain == "dream" and not flag.morgantha_slain] One of you dreams of a warm kitchen, and an old woman at the table with her hands folded, watching you eat, and smiling, and smiling.
+
+~ dream:old_bonegrinder
+| You dream of a long table laid with pastries, and everyone you have ever lost sitting round it, eating, too busy to look up.
+| [flag.children_rescued] You dream of two children walking down a hill in the rain, holding an old woman's hands. They don't look back. You decide that's a good sign.
+| [flag.bonegrinder_burned] You dream of sails turning in fire, and wake with the smell of smoke in your hair.
+once
+
+# ---------------------------------------------------------------- Combat
+
+~ combat:start
+| [at:old_bonegrinder_loft and not flag.morgantha_slain] The chair stops rocking.
+| [at:old_bonegrinder and not flag.offalia_slain] The oven roars as if somebody had thrown open its door.
+
+~ combat:victory
+| [at:old_bonegrinder_loft and flag.morgantha_slain] Whatever is left of her goes into the grey between worlds, and it won't come back whole. Under the floor, the oven ticks as it cools.
+| [at:old_bonegrinder and flag.offalia_slain and not flag.morgantha_slain] Upstairs, the rocking chair creaks once, and stops, and starts again. Nobody comes down.

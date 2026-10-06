@@ -1,0 +1,20 @@
+{
+  "id": "vosk",
+  "name": "Master Vosk",
+  "title": "A Scholar of the Temple",
+  "summary": "A mild, bespectacled scholar who has been reading in the temple library 'a little longer than you'. In truth an arcanaloth, the fiend who brokers the vestiges' bargains and takes a commission on every soul that signs.",
+  "portrait": "vosk",
+  "sprite": "vosk",
+  "attitude": "friendly",
+  "voice": "docs/voice/vosk.md",
+  "monster": "arcanaloth",
+  "guest": false,
+  "tags": [
+    "fiend",
+    "arcanaloth",
+    "broker",
+    "amber_temple"
+  ],
+  "pronouns": "he/him",
+  "region": "amber_temple"
+}

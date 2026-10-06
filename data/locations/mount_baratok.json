@@ -1,0 +1,290 @@
+{
+  "id": "mount_baratok",
+  "name": "Mount Baratok",
+  "region": "mount_baratok",
+  "summary": "A steep, pine-dark mountain above Van Richten's lake, with frost where frost shouldn't be, a ring of glass where lightning lands every evening, and a stone hut whose owner has forgotten who he is.",
+  "text": "The goat track comes up from the south through switchbacks of pine. The hut stands in a yard to the east; the summit, with its cairn, rises to the north-west; a lookout to the west shows the lake below.",
+  "map": {
+    "rows": [
+      "####################################",
+      "#######333##########################",
+      "#######333##########################",
+      "#####2222222########################",
+      "#####2222222########################",
+      "#####2222222########################",
+      "###11111111111######################",
+      "###11111111111######################",
+      "###11111111111######################",
+      "###...................~~.......#####",
+      "###..........~~~~~....~~.......#####",
+      "#............~~~~~.............#####",
+      "#..............................#####",
+      "#.......####...~~~~................#",
+      "#.......####...~~~~................#",
+      "#.......####.......................#",
+      "#..................########........#",
+      "#..................................#",
+      "#......~~~~..............~~~.......#",
+      "#......~~~~..............~~~.......#",
+      "#######~~~~..............~~~########",
+      "#######........##.###.......########",
+      "#######.....................########",
+      "#######.....###......####...########",
+      "#######.....###......####...########",
+      "#######.....###......####...########",
+      "#######.....###......####...########",
+      "#################..#################"
+    ],
+    "theme": "wilderness",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "baratok_trail",
+      "name": "The goat track",
+      "cells": [
+        [
+          7,
+          17
+        ],
+        [
+          28,
+          26
+        ]
+      ]
+    },
+    {
+      "id": "baratok_hut_yard",
+      "name": "The frost garden",
+      "cells": [
+        [
+          19,
+          8
+        ],
+        [
+          30,
+          15
+        ]
+      ]
+    },
+    {
+      "id": "baratok_summit",
+      "name": "The summit",
+      "cells": [
+        [
+          3,
+          1
+        ],
+        [
+          13,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "baratok_lookout",
+      "name": "The lookout",
+      "cells": [
+        [
+          1,
+          11
+        ],
+        [
+          5,
+          17
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      17,
+      25
+    ],
+    "from_road": [
+      17,
+      25
+    ],
+    "from_hut": [
+      25,
+      11
+    ]
+  },
+  "exits": [
+    {
+      "id": "baratok_trail_down",
+      "cell": [
+        17,
+        27
+      ],
+      "to": "travel",
+      "label": "The goat track down the mountain"
+    },
+    {
+      "id": "baratok_trail_down_2",
+      "cell": [
+        18,
+        27
+      ],
+      "to": "travel",
+      "label": "The goat track down the mountain"
+    },
+    {
+      "id": "baratok_hut_door",
+      "cell": [
+        25,
+        10
+      ],
+      "to": "mount_baratok_hut",
+      "spawn": "from_mountain",
+      "label": "The stone hut's door"
+    }
+  ],
+  "props": [
+    {
+      "id": "baratok_hut",
+      "cell": [
+        25,
+        9
+      ],
+      "kind": "examine",
+      "label": "A stone hut",
+      "model": "cottage"
+    },
+    {
+      "id": "baratok_frozen_birds",
+      "cell": [
+        21,
+        13
+      ],
+      "kind": "examine",
+      "label": "Frozen birds",
+      "model": "bird_case"
+    },
+    {
+      "id": "baratok_glass_ring",
+      "cell": [
+        13,
+        18
+      ],
+      "kind": "examine",
+      "label": "A ring of glass",
+      "model": "rune_circle"
+    },
+    {
+      "id": "baratok_overlook",
+      "cell": [
+        2,
+        14
+      ],
+      "kind": "examine",
+      "label": "The view west",
+      "model": "ledge"
+    },
+    {
+      "id": "baratok_carved_post",
+      "cell": [
+        18,
+        22
+      ],
+      "kind": "examine",
+      "label": "A carved post",
+      "model": "signpost_broken"
+    },
+    {
+      "id": "baratok_cairn",
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "examine",
+      "label": "A cairn on the summit",
+      "model": "cairn",
+      "dialogue": "mount_baratok/events:cairn",
+      "when": "not flag.mordenkainen_spellbook_found"
+    },
+    {
+      "id": "baratok_cairn_opened",
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "examine",
+      "label": "The opened cairn",
+      "model": "rocks",
+      "when": "flag.mordenkainen_spellbook_found"
+    }
+  ],
+  "containers": [
+    {
+      "id": "baratok_summit_cache",
+      "cell": [
+        5,
+        3
+      ],
+      "label": "A cleft in the rock",
+      "model": "sack",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "gold": 15
+    }
+  ],
+  "traps": [
+    {
+      "id": "baratok_ward",
+      "cells": [
+        [
+          7,
+          2
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      "label": "A ward around the cairn",
+      "detect_dc": 15,
+      "disarm_dc": 15,
+      "save": {
+        "ability": "dex",
+        "dc": 15
+      },
+      "damage": "4d6",
+      "damage_type": "thunder",
+      "flag": "baratok_ward_found",
+      "text": "The air around the cairn claps shut like two great hands."
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        25,
+        9
+      ],
+      "kind": "window",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "narration": {
+    "enter": "enter:mount_baratok"
+  },
+  "rest": "risky"
+}

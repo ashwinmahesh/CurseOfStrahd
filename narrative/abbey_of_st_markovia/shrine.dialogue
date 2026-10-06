@@ -1,0 +1,44 @@
+# The great sunburst on the chapel's north wall (docs/regions/krezk.md §6). sunburst: the prop's conversation and the
+# Tarokka treasure spot for abbey_of_st_markovia_shrine ("Look behind the light.").
+
+~ sunburst
+Narrator: Above the altar hangs a sunburst of gilded oak as wide as a cart wheel, the brightest thing in the abbey. It hangs a little away from the wall, on two iron hooks.
+if treasure_at:abbey_of_st_markovia_shrine
+Narrator: When the candles below it gutter, a thin line of light shows round its edge from behind, as if there were a second sun back there, smaller and closer.
+endif
+* Lift it down from its hooks and look behind it. -> behind
+* [Religion DC 12] (What do the rays mean?) -> rays_ok | rays_fail
+* Leave it hanging. -> END
+
+~ behind
+if flag.abbot_met and not flag.abbot_fate
+Narrator: The Abbot watches you climb the altar step and doesn't stop you. He only folds his hands.
+Abbot: Markovia hung that. I have never moved it. Mind the hooks, children; they are older than Krezk.
+endif
+Narrator: It's heavy, and it groans on its hooks, and it comes down into your arms in a sift of gilt dust. Behind it, the wall has been hollowed into a niche the size of a bread oven.
+if treasure_at:abbey_of_st_markovia_shrine
+Narrator: Something lies in the niche, wrapped in a nun's grey veil gone soft as moss. Whoever put it there meant it to wait. It has waited.
+if tarokka.tome.place == abbey_of_st_markovia_shrine
+quest find_the_tome found
+endif
+if tarokka.symbol.place == abbey_of_st_markovia_shrine
+quest find_the_holy_symbol found
+endif
+if tarokka.sword.place == abbey_of_st_markovia_shrine
+quest find_the_sunsword found
+endif
+tarokka give abbey_of_st_markovia_shrine
+interject tag:bookish: "Look behind the light." Madam Eva, you magnificent old fraud. You were exactly right.
+else
+Narrator: The niche is empty except for a stub of white candle and a few grains of incense, gone to dust. Someone used to pray back here, out of sight, where only the sun could see them.
+endif
+Narrator: You hang the sunburst back on its hooks. It settles with a sigh.
+-> END
+
+~ rays_ok
+Narrator: Twelve rays, for the twelve who marched with Markovia. One ray is shorter than the others, cut down later with a knife: for the one who turned back.
+-> END
+
+~ rays_fail
+Narrator: Rays. A sun. Gilt. If it means more, it's keeping the meaning to itself.
+-> END
