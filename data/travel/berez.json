@@ -65,14 +65,6 @@
       "name": "The lake shore and the goat track up Mount Baratok"
     },
     {
-      "id": "van_richtens_tower_to_mount_baratok",
-      "from": "van_richtens_tower",
-      "to": "mount_baratok",
-      "hours": 2,
-      "table": "baratok_slopes",
-      "name": "The path up from the tower's lake"
-    },
-    {
       "id": "vallaki_to_tsolenka_pass",
       "from": "vallaki",
       "to": "tsolenka_pass",
