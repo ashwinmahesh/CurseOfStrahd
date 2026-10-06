@@ -92,6 +92,9 @@ def generate(job):
         r = subprocess.run([sys.executable, str(ROOT / "tools" / "art" / "generate_gemini.py"), f"{kind}_{view}",
                             f"anim/{asset_id}", text, "--model", model(), "--aspect", "21:9", "--ref", str(ref)],
                            capture_output=True, text=True)
+        if "per_day" in (r.stderr + r.stdout) or "credits are depleted" in (r.stderr + r.stdout):
+            print(f"STOP {asset_id} {kind}_{view}: Gemini's daily quota or credits are used up", flush=True)
+            return False
         limited = "rate limit" in (r.stderr + r.stdout) or "(429)" in (r.stderr + r.stdout)
         if r.returncode == 0 or not limited or wait is None:
             break
