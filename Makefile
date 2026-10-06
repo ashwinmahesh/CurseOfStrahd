@@ -7,7 +7,7 @@ G       := $(GODOT) --path .
 ## A Godot window an agent opens never takes focus: started from a tool, Godot forces itself to the front unless the
 ## bundle id matches and no standard stream is a terminal (from the owner's terminal it still comes to the front).
 NOFOCUS := env __CFBundleIdentifier=org.godotengine.godot $(G)
-UNSEEN  := $(NOFOCUS) --resolution 64x64 --position 100000,100000 --max-fps 60 --audio-driver Dummy
+UNSEEN  := $(NOFOCUS) --resolution 1x1 --position 100000,100000 --max-fps 60 --audio-driver Dummy
 LOGCHK  := tools/logcheck.sh
 STAMP   := .godot/.last_import
 FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./captures -o -path ./builds \) -prune -o \
@@ -16,7 +16,7 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(G) --headless --import > /dev/null 2>&1; \
              touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci palette capture standin sprite sprites anims portrait wireframes textures prop props ui_art icons voice
+.PHONY: run arena smoke import test lint validate ci check palette capture standin sprite sprites anims portrait wireframes textures prop props ui_art icons voice
 
 ## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
 ## the editor cache doesn't know yet, and the game then stops at a parse error).
@@ -39,7 +39,7 @@ import:
 	@touch $(STAMP)
 
 test: import
-	$(G) --headless --quit-after 100000 res://tests/test_runner.tscn $(if $(ONLY),-- --only=$(ONLY),) 2>&1 | $(LOGCHK)
+	$(G) --headless --quit-after 100000 res://tests/test_runner.tscn -- $(if $(ONLY),--only=$(ONLY),) $(if $(FILES),--files=$(FILES),) 2>&1 | $(LOGCHK)
 
 validate:
 	python3 tools/data/validate_data.py
@@ -52,6 +52,12 @@ lint: import
 ## Local CI: everything main must pass before a merge (plan §4, ADR 0001).
 ci: validate lint test
 
+## The quick check while working (CLAUDE.md says when it is enough): only what covers the files changed since main,
+## from validate to the tests that use them (tools/check.py). make check [BASE=<branch>] [DRY=1]
+check:
+	@$(FRESH)
+	python3 tools/check.py $(if $(BASE),--base $(BASE),) $(if $(DRY),--dry-run,)
+
 palette:
 	python3 tools/art/build_palette.py
 
@@ -61,7 +67,7 @@ voice:
 	python3 tools/audio/generate_voice.py $(if $(SPEAKER),--speaker $(SPEAKER),) $(if $(LIMIT),--limit $(LIMIT),) $(if $(DRY),--dry-run,) $(if $(MAX_USD),--max-usd $(MAX_USD),) $(if $(RECAST),--recast,) $(if $(PRUNE),--prune,)
 	$(if $(DRY),,$(G) --headless --import 2>&1 | $(LOGCHK) > /dev/null)
 
-## Writes screenshots to captures/ from a window that never takes focus or shows: it opens small in a corner, moves
+## Writes screenshots to captures/ from a window that never takes focus or shows: it opens 1 px wide in a corner, moves
 ## off screen and is drawn by tools/capture (silent, 60 fps). LOCATION=<id> starts the story game there.
 capture:
 	$(UNSEEN) res://tools/capture/capture.tscn -- --scene=$(or $(SCENE),res://scenes/test/graybox_room.tscn) --out=$(CURDIR)/captures/$(or $(NAME),capture) --frames=$(or $(FRAMES),90) $(if $(FOCUS),--focus=$(FOCUS),) $(if $(LOCATION),--location=$(LOCATION),) $(if $(ENCOUNTER),--encounter=$(ENCOUNTER),) $(if $(LOAD),--load=$(LOAD),) $(if $(DIALOGUE),--dialogue=$(DIALOGUE),) $(if $(BEATS),--beats=$(BEATS),) $(if $(MAP),--map,) $(if $(SHOP),--shop=$(SHOP),) $(ARGS) < /dev/null

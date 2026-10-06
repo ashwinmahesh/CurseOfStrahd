@@ -1,0 +1,24 @@
+{
+  "id": "pidlwick_ii",
+  "name": "Pidlwick II",
+  "title": "Clockwork Jester",
+  "summary": "A child-sized clockwork jester in faded motley, built long ago to amuse the children of the castle in place of their jester, Pidlwick. He cannot speak; he mimes and chalks words on a little slate. He wanders the high tower stair, lonely, with a secret about how the first Pidlwick died. The Tarokka can name him as the party's ally.",
+  "portrait": "pidlwick_ii",
+  "sprite": "pidlwick_ii",
+  "attitude": "friendly",
+  "voice": "docs/voice/pidlwick_ii.md",
+  "monster": "pidlwick_ii",
+  "guest": true,
+  "guest_build": {
+    "monster": "pidlwick_ii",
+    "note": "His own stat block (a small clockwork construct). Joins on the high tower stair if the Tarokka's marionette card names him, or when the party brings back his wind-up key from the ravens' roost."
+  },
+  "tags": [
+    "construct",
+    "jester",
+    "tarokka_ally",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

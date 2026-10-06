@@ -5,7 +5,7 @@
     "book": "MM2025",
     "checked_against": "MM2025",
     "edition": "2024",
-    "note": "The 2025 Monster Manual's Revenant, read on D&D Beyond (owner's account). Regeneration's pause after Fire or Radiant damage waits for Phase 6's shared regeneration field; Undead Restoration is text only."
+    "note": "The 2025 Monster Manual's Revenant, read on D&D Beyond (owner's account). Undead Restoration is text only."
   },
   "size": "medium",
   "type": "undead",
@@ -66,9 +66,8 @@
       "id": "regeneration",
       "name": "Regeneration",
       "action": "passive",
-      "summary": "Regains 10 HP at the start of its turn; Fire or Radiant damage stops that for its next turn (the pause is pending Phase 6).",
+      "summary": "Regains 10 HP at the start of its turn; Fire or Radiant damage stops that for its next turn.",
       "text": "The revenant regains 10 Hit Points at the start of its turn. If it took Fire or Radiant damage, this doesn't work at the start of its next turn. Its body is destroyed only if it starts its turn at 0 Hit Points and doesn't regenerate.",
-      "regenerate": 10,
       "implemented": "engine"
     },
     {
@@ -161,5 +160,12 @@
       },
       "summary": "Once a day: curses a creature within 30 ft as its sworn foe, always knowing where it is."
     }
-  ]
+  ],
+  "regenerates": {
+    "hp": 10,
+    "stopped_by": [
+      "fire",
+      "radiant"
+    ]
+  }
 }

@@ -138,7 +138,26 @@
     {
       "npc": "mad_mary",
       "cell": [4, 5],
+      "dialogue": "castle_ravenloft/court_gertruda:homecoming",
+      "when": "guest:gertruda",
+      "approach": 6
+    },
+    {
+      "npc": "mad_mary",
+      "cell": [4, 5],
+      "dialogue": "castle_ravenloft/court_gertruda:mary_after",
+      "when": "flag.gertruda_home"
+    },
+    {
+      "npc": "mad_mary",
+      "cell": [4, 5],
       "dialogue": "village_of_barovia/mad_mary:start"
+    },
+    {
+      "npc": "gertruda",
+      "cell": [11, 4],
+      "dialogue": "castle_ravenloft/court_gertruda:at_home",
+      "when": "flag.gertruda_home"
     }
   ],
   "narration": {

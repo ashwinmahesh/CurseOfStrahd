@@ -1,0 +1,33 @@
+{
+  "id": "ireena_given_up",
+  "title": "The Bride of Ravenloft",
+  "summary": "You gave Ireena to Strahd, and bought your lives with hers.",
+  "priority": 15,
+  "when": "flag.strahd_parley == ireena and not flag.strahd_destroyed",
+  "narration": "endings/ireena_given_up:start",
+  "tone": "blood",
+  "music": "ending",
+  "epilogue_from": "strahd_triumphant",
+  "epilogue": [
+    {
+      "topic": "ireena",
+      "title": "Ireena Kolyana",
+      "portrait": "ireena",
+      "when": "",
+      "text": "Ireena is wed in the castle chapel by candlelight. On clear nights she stands at a high window and looks down at a valley she will never leave."
+    },
+    {
+      "topic": "party",
+      "title": "The Price Paid",
+      "when": "",
+      "text": "You are free to go anywhere in Barovia. That is the trouble with Barovia."
+    },
+    {
+      "topic": "ismark",
+      "title": "Ismark",
+      "portrait": "ismark",
+      "when": "",
+      "text": "Ismark never forgives you. He leaves a candle in his sister's window every night, in case she finds her way home."
+    }
+  ]
+}

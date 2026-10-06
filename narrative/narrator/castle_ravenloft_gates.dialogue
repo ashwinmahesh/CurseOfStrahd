@@ -1,0 +1,220 @@
+# Narrator: Castle Ravenloft, the gates part (docs/regions/castle_ravenloft_gates.md; docs/voice/narrator.md).
+# Second person, present tense, one or two sentences. Props that open conversations (the hearth, the carriage) have
+# no examine: line here.
+
+# ---------------------------------------------------------------- The gates
+
+~ enter:castle_ravenloft_gates
+| The road ends at the edge of a chasm, and the castle stands on the far side as if it grew there. The drawbridge is already down.
+| [flag.strahd_invitation == "accepted"] The carriage rolls over the drawbridge without slowing and stops before the keep. The doors are waiting for you.
+| [night] Every window in the castle is dark but one. It is directly over the great doors, and it is lit for you.
+cooldown 30
+
+~ enter:crg_cliff_road
+| Dead pines lean over the road's last stretch. Beyond them is nothing at all, and then the castle.
+once
+
+~ enter:crg_drawbridge
+| The planks of the drawbridge are old and black and sound under your boots. Below them the chasm goes down into mist.
+| Wind comes up out of the chasm and smells of wet stone. You don't hear anything land.
+cooldown 20
+
+~ enter:crg_gatehouse
+| The portcullis hangs in its slot above you, teeth down. Nobody is at the winch.
+once
+
+~ enter:crg_front_courtyard
+| A courtyard of cracked flagstones and weeds, and the keep rising over it so high you have to lean back to see the top.
+| [flag.crg_gargoyles_broken] Broken stone wings lie where the gargoyles fell. Nobody has swept them up.
+| [flag.strahd_invitation == "accepted"] Two iron lamps burn by the great doors. They were lit for you.
+cooldown 20
+
+~ enter:crg_overlook_walk
+| A narrow walk runs between the keep and the outer wall. The wind comes over the wall with nothing to stop it.
+once
+
+~ enter:crg_servants_court
+| The servants' courtyard is tidy in a way that has nothing to do with servants. There are no footprints in the dust.
+once
+
+~ enter:crg_carriage_house
+| A carriage house with one carriage in it, black and polished, and two black horses that do not look round.
+once
+
+~ open:crg_portcullis
+| The portcullis rises before your hand touches it, smooth and quiet, and stays up.
+once
+
+~ open:crg_portcullis_east
+| The portcullis rises before your hand touches it, smooth and quiet, and stays up.
+once
+
+~ examine:crg_drawbridge_chains
+| Great chains run up from the bridge into the gatehouse. They are oiled.
+
+~ examine:crg_chasm_edge
+| You look over. The chasm has walls and mist, and no bottom you can see.
+
+~ examine:crg_keep_face
+| The keep is black stone, tall and narrow-windowed, and it looks down on you the way a cat looks down at a mouse it is in no hurry for.
+
+~ examine:crg_keep_crest
+| A crest is carved over the doors: a beast and a crown, worn soft by centuries of weather. Someone keeps the moss off it.
+
+~ examine:crg_dry_well
+| A dry well. A stone dropped in takes a long time to hit anything.
+
+~ examine:crg_wall_drop
+| Over the outer wall there is no ground, only air, and far below the tops of pines.
+
+# ---------------------------------------------------------------- The main floor
+
+~ enter:castle_ravenloft_main_floor
+| The great doors swing inward before you touch them, and close behind you just as quietly.
+| [flag.castle_dinner] The house is quiet now. Somewhere far above, someone is walking about.
+cooldown 30
+
+~ enter:crg_entry
+| An entry hall of cold marble. Ahead, through an archway, the dark opens out into something much bigger.
+once
+
+~ enter:crg_great_entry
+| A vaulted hall so high the candles don't reach the ceiling. Grand stairs climb into the dark, and somewhere an organ is playing.
+| [flag.castle_dinner] The great entry is silent. The stairs climb into the dark as if they were going somewhere important.
+cooldown 20
+
+~ enter:crg_guests_hall
+| A long hall hung with portraits of guests. None of the faces in the frames look happy to have stayed.
+once
+
+~ enter:crg_dining_hall
+| [flag.strahd_invitation == "accepted" and not flag.castle_dinner] Candlelight, a long table laid for guests, and organ music filling the room to the rafters.
+| [flag.strahd_invitation != "accepted"] A long table laid for a feast, the candles lit, the food steaming. There is a place set for each of you, and no host.
+| [flag.crg_dinner_fight_over] Chairs lie overturned. Wax has run across the cloth. The food is still hot.
+| [flag.castle_dinner == "dined"] The table has been cleared. Nobody cleared it.
+cooldown 15
+
+~ enter:crg_servery
+| A narrow servery with a stair going down. Warm air rises from below, and the smell of bread.
+once
+
+~ enter:crg_turret_post_west
+| A guard post with arrow slits and an empty weapon stand. Whoever stood here left a long time ago.
+once
+
+~ enter:crg_turret_post_east
+| A guard post with arrow slits, and two suits of black armour on their stands, facing the door.
+| [flag.crg_turret_guard_broken] Black armour lies in pieces on the floor of the guard post.
+cooldown 20
+
+~ enter:crg_tower_stair_foot
+| A stone stair turns up out of sight in the wall. Cold air comes down it, and the sound of wind.
+once
+
+~ enter:crg_hall_of_faces
+| A long gallery lined with carved stone faces, and at the far end a fire burning in a great hearth.
+| [treasure_at:castle_ravenloft_hidden_hearth] At the gallery's end a fire burns that nobody has fed in a very long time. The faces all look toward it.
+| [flag.crg_ever_hearth_out] The hearth at the end of the gallery is cold now, and the carved faces look at the floor.
+cooldown 20
+
+~ enter:crg_hidden_hoard
+| A small vault behind the hearth, close and dry, with coin sacks against the walls and an iron box in the corner.
+once
+
+~ enter:crg_chapel_access
+| A stone passage with a saint in a niche and a stair going down into colder air. Ahead, a pair of chapel doors.
+once
+
+~ examine:crg_dining_organ
+| An organ with pipes up into the dark. The keys are worn smooth in the middle, where someone plays the same tunes.
+
+~ examine:crg_dining_hearth
+| A broad hearth with a real fire in it, the only warm thing on this floor.
+
+~ examine:crg_dining_places
+| [flag.strahd_invitation != "accepted"] The places are laid for exactly as many of you as there are. Not one more.
+| The silver is real, the plates are old, and the food is very good. Nobody carries it in, and nobody takes it out.
+
+~ examine:crg_dining_portrait
+| A portrait of a young woman with dark hair, looking away out of the frame. You have seen her face before, or one very like it.
+
+~ examine:crg_guests_portraits
+| Guests of the house, painted one by one. The newest frames are empty, and the brass plates under them are blank.
+
+~ examine:crg_great_entry_pillar
+| A pillar carved with dragons climbing toward the dark. Their eyes have been picked out with something that catches the light.
+
+~ examine:crg_entry_crest
+| A long rug with the family crest woven into it, worn through where the boots go.
+
+~ examine:crg_faces_relief_1
+| Stone faces, dozens of them, men and women, all carved with their eyes open. Some have been chiselled away.
+
+~ examine:crg_faces_portrait
+| A portrait of a stern man in armour. Its eyes are not painted on. They follow you.
+
+~ examine:crg_chapel_access_saint
+| A saint in a niche with her hands raised. Someone has hung a black cloth over her face.
+
+~ open:crg_hearth_hoard
+| Old coin, stacked and sorted and never spent: crowns of a kingdom nobody remembers.
+
+# ---------------------------------------------------------------- The chapel
+
+~ enter:castle_ravenloft_chapel
+| A chapel porch, and through its doors a darkness that smells of cold wax and old stone.
+| [final_room:castle_ravenloft_chapel] Through the chapel doors comes a low voice, praying, or saying something that sounds like prayer.
+cooldown 30
+
+~ enter:crg_chapel_nave
+| Pews in rows, some split, some fallen. A tall window of coloured glass, black now, and an altar under a thick grey quilt of dust.
+| [treasure_at:castle_ravenloft_chapel] The dust on the altar lies thick and even, except in one place, where it has been heaped over something.
+| [flag.crg_altar_opened] The altar is bare now, the dust brushed into the corners.
+cooldown 20
+
+~ enter:crg_chapel_chancel
+| You stand before the altar. The cold is worse here, as if the stone remembers being prayed at and resents it.
+once
+
+~ examine:crg_chapel_window
+| A tall window of coloured glass. Whatever it showed, it shows nothing now. No morning has come through it in centuries.
+
+~ examine:crg_chapel_saint
+| A saint carved in white stone, hands open. Her face has been cut away with care, the way you'd peel fruit.
+
+~ examine:crg_chapel_pews
+| Old pews of black wood. On one of them, the dust has been disturbed where someone sat recently.
+
+~ examine:crg_chapel_lectern
+| An empty lectern. The book it held is gone; the chain that held the book is still here.
+
+~ open:crg_chapel_altar
+| You push the dust aside with your sleeve. Under it the altar cloth is still white.
+
+# ---------------------------------------------------------------- The overlook
+
+~ enter:castle_ravenloft_overlook
+| The walk opens onto a long balcony on the castle's flank, and past its parapet there is nothing for a thousand feet.
+| [final_room:castle_ravenloft_overlook] Someone is standing at the far end of the balcony, at the parapet, looking out.
+cooldown 30
+
+~ enter:crg_overlook
+| The whole valley lies below you: forest, river, the village, all of it small. From here it looks like something you could own.
+once
+
+~ examine:crg_overlook_view
+| You can see the village, the river, the dark of the woods and the lake beyond them. Every road in the valley leads here.
+
+~ examine:crg_overlook_bench
+| A stone bench facing the view, its seat worn hollow by someone who sat here a great deal.
+
+# ---------------------------------------------------------------- Rest
+
+~ rest:long:castle_ravenloft_main_floor
+| You sleep in shifts with your backs to the wall. The organ plays, very softly, until dawn.
+
+~ rest:long:castle_ravenloft_chapel
+| You sleep in the pews. Twice in the night someone walks the length of the aisle, and both times there is no one there.
+
+~ rest:long:castle_ravenloft_gates
+| You sleep in the lee of the gatehouse. The castle's one lit window never goes out.

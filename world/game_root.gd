@@ -18,6 +18,7 @@ var _move_repeat := 0.0
 var _dialogue_ref := ""
 var menu: ContextMenu                ## the right-click menu on things in the world
 var _menu_cell := Vector2i(-1, -1)
+var ending: EndingScreen = null      ## the campaign's last screen, once the game has ended (ADR 0014)
 
 
 func _ready() -> void:
@@ -61,6 +62,9 @@ func _ready() -> void:
 	var snap := GameState.combat_snapshot
 	if not snap.is_empty() and str(snap.get("location", "")) == where:
 		view.resume_encounter.call_deferred(snap)
+	# A finished game's save plays its ending again.
+	if Endings.reached(st) != "":
+		show_ending.call_deferred()
 
 
 ## A quick start: the four pregens at level 1 (plan §5.6 Start step). The full creator replaces this in the menu.
@@ -110,6 +114,8 @@ func enter_location(location_id: String, spawn: String) -> void:
 	add_child(view)
 	hud.show_location(view)
 	_refresh()
+	if spawn != "":
+		_strahd.call_deferred("arrive")   # Strahd's presence (ADR 0014): a visit on arriving somewhere
 
 
 func _refresh() -> void:
@@ -122,7 +128,7 @@ func _refresh() -> void:
 # --- Input ----------------------------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
-	if view == null or view.in_combat or dialogue != null:
+	if view == null or view.in_combat or dialogue != null or ending != null:
 		return
 	if screen != null:
 		if event.is_action_pressed(&"combat_cancel"):
@@ -198,7 +204,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	if view == null or view.in_combat or dialogue != null or screen != null or loot != null:
+	if view == null or view.in_combat or dialogue != null or screen != null or loot != null or ending != null:
 		return
 	var v := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
 	if v.length() < 0.3:
@@ -343,12 +349,20 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 
 func _dialogue_ended(combat: String) -> void:
 	dialogue = null
+	# `end_game`, or the parley's yield or ireena, ends the campaign (ADR 0014).
+	if Endings.reached(st) != "" or (Endings.parley_ends(st) and Endings.request(st) != ""):
+		show_ending()
+		return
 	hud.visible = true
 	if view.guest_members.size() != st.guests.size():
 		view.place_guests()
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view.refresh_npcs()
 	_refresh()
+	var strahd_next := StrahdPresence.after_dialogue(st, _dialogue_ref)
+	if not strahd_next.is_empty():
+		_strahd_step(strahd_next)
+		return
 	if combat != "":
 		view.hide_npcs_of(_dialogue_ref)
 		view.start_encounter(combat)
@@ -369,14 +383,37 @@ func _after_combat(outcome: String) -> void:
 	LayerFade.fade(self, hud, true, 0.45, 0.2)   # as the combat HUD fades out
 	Audio.sting("defeat" if outcome == "defeat" else "victory")
 	Audio.play_music(_place_mood())
+	# A wipe in a final battle is no load screen, and a fight that destroys Strahd is the last (ADR 0014).
+	if Endings.after_fight(st, view.last_encounter, outcome) != "":
+		show_ending()
+		return
 	if outcome == "defeat":
 		open_screen("game_over", 0)
 		return
 	view.refresh_npcs()
 	_refresh()
+	var strahd_after := StrahdPresence.after_encounter(st, outcome)
+	if not strahd_after.is_empty():
+		_strahd_step(strahd_after)   # his parting words; the journey goes on when they're done
+		return
 	if not st.travel_resume.is_empty():
 		hud.toast("The road is clear. You go on.")
 		_continue_journey.call_deferred()
+
+
+## The campaign's end (ADR 0014): the ending reached plays on the ending screen, which marks the save finished and
+## goes back to the title.
+func show_ending() -> void:
+	var id := Endings.request(st)
+	if id == "" or ending != null:
+		return
+	close_screen()
+	hud.visible = false
+	ModeController.force(ModeController.Mode.CUTSCENE)
+	ending = EndingScreen.new()
+	ending.closed.connect(func() -> void: ending = null)
+	add_child(ending)
+	ending.play(st, Endings.get_ending(id))
 
 
 # --- Travel (ADR 0010) ----------------------------------------------------------------------------
@@ -406,6 +443,8 @@ func travel(from: String, to: String) -> void:
 	for leg in Travel.route(from, to, st):
 		st.advance_minutes(roundi(float(leg["hours"]) * 60.0))
 		st.miles_since_long_rest += float(leg["hours"]) * 3.0
+		if _strahd_on_road(leg, to):
+			return
 		var ev := Travel.roll(leg["road"] as Dictionary, st, Dice.roller)
 		if ev.is_empty():
 			continue
@@ -437,6 +476,59 @@ func _arrive(place_id: String) -> void:
 	var loc_ref := str(pl.get("location", ""))
 	enter_location(loc_ref.get_slice(":", 0), str(pl.get("spawn", "default")))
 	hud.toast("%s · %02d:%02d" % [pl.get("name", place_id), st.minute_of_day / 60, st.minute_of_day % 60])
+
+
+# --- Strahd's presence (ADR 0014, story/strahd_presence.gd) -----------------------------------------
+
+## A visit from Strahd at `on` (arrive, rest) if one is due here and now and nothing else is going on.
+func _strahd(on: String, ctx: Dictionary = {}) -> bool:
+	if view == null or view.in_combat or dialogue != null or loot != null:
+		return false
+	var visit := StrahdPresence.due(st, on, ctx)
+	if visit.is_empty():
+		return false
+	close_screen()
+	_strahd_step(StrahdPresence.begin(st, visit))
+	return true
+
+
+## A leg of a journey is over: a visit on the road stops it on the road's map, like a road event; the journey goes
+## on when the visit is done (StoryState.travel_resume).
+func _strahd_on_road(leg: Dictionary, to: String) -> bool:
+	var visit := StrahdPresence.due(st, "travel", {"location": "", "outdoors": true})
+	if visit.is_empty():
+		return false
+	st.travel_resume = {"to": to, "at": str(leg["to"])}
+	enter_location(StrahdPresence.road_map(visit, leg["road"] as Dictionary), "default")
+	_strahd_step(StrahdPresence.begin(st, visit))
+	return true
+
+
+## The rest screen's Long Rest is over (ui/screens/rest_screen.gd): he may have come in the night.
+func strahd_after_rest(minutes: int) -> void:
+	_strahd("rest", {"night": StrahdPresence.night_between(st.total_minutes() - minutes, st.total_minutes())})
+
+
+## Plays a visit's step: the carriage ride (go), a Narrator line, then a conversation or a fight he leaves.
+func _strahd_step(step: Dictionary) -> void:
+	var go := str(step.get("go", ""))
+	if go != "":
+		enter_location(go.get_slice(":", 0), go.get_slice(":", 1) if go.contains(":") else "default")
+	if str(step.get("narration", "")) != "":
+		hud.narrate(str(step["narration"]))
+	if step.has("encounter"):
+		var taken: Array[Vector2i] = []
+		for m: Combatant in view.members + view.guest_members:
+			taken.append(m.cell)
+		for t: Variant in (view.loc.get("doors", []) as Array) + (view.loc.get("exits", []) as Array):
+			var c := (t as Dictionary)["cell"] as Array
+			taken.append(Vector2i(int(c[0]), int(c[1])))
+		for npc: String in view.npc_tokens:
+			taken.append((view.npc_tokens[npc] as CombatToken).combatant.cell)
+		view.start_custom_encounter(StrahdPresence.placed(step["encounter"] as Dictionary, view.loc["map"]["rows"] as Array,
+			taken, view.leader().cell))
+	elif str(step.get("dialogue", "")) != "":
+		start_dialogue(str(step["dialogue"]), "strahd")
 
 
 # --- Time passing ---------------------------------------------------------------------------------
@@ -562,6 +654,11 @@ func _quick_load() -> void:
 ## The capture tool's sequence (make capture SCENE=res://scenes/game.tscn): exploring, a conversation at its first
 ## choice, then each party screen.
 func capture_shots(tool: Node, out: String) -> void:
+	# --ending=<id>: the ending screen, card by card (ui/screens/ending_screen.gd).
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--ending="):
+			await EndingScreen.capture(self, tool, out, a.get_slice("=", 1))
+			return
 	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_1_explore.png")
 	# The right-click menu on the nearest door, person or thing.

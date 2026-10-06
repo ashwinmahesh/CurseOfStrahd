@@ -1,0 +1,112 @@
+# Sergei's tomb (K85), in castle_ravenloft_catacombs_tombs (docs/regions/castle_ravenloft_catacombs.md §3, §6).
+# sarcophagus: the prop cat_sergei_sarcophagus; take_treasure is the Tarokka spot for castle_ravenloft_sergeis_tomb.
+# font: the basin of still water at the tomb's foot (cat_sergei_font). Sergei is seen only in still water, and only
+# beside Ireena; her scene plays once, from either prop, when she travels with the party.
+
+~ sarcophagus
+if guest:ireena and not flag.cat_ireena_at_tomb
+-> ireena_arrives
+endif
+-> tomb_look
+
+~ tomb_look
+Narrator: A long sarcophagus of white stone. On the lid a young man lies at rest in an old-fashioned coat, a sunburst on his breast and his hands folded on the hilt of a sword. Someone has kept the stone clean.
+if treasure_at:castle_ravenloft_sergeis_tomb
+Narrator: Between the stone hands, laid across the sunburst, is something that was never carved.
+endif
+-> tomb_menu
+
+~ tomb_menu
+* [if treasure_at:castle_ravenloft_sergeis_tomb] Take what lies in his hands. -> take_treasure
+* Read the words on the lid. -> inscription
+* [if not flag.cat_sergei_rites_said] [Religion DC 13] Say the rites for the dead over him. -> rites | rites_lost
+* Leave him in peace. -> END
+
+~ take_treasure
+Narrator: It comes away easily, as if the hands had only been holding it until somebody asked.
+tarokka give castle_ravenloft_sergeis_tomb
+interject tag:devout: He kept it for us. Four hundred years in the ground and still on the right side.
+-> tomb_menu
+
+~ inscription
+Narrator: SERGEI VON ZAROVICH, and under the name, smaller: BELOVED. Under that, scratched much later by a less steady hand: FORGIVE ME.
+interject tag:curious: That last line isn't the mason's. Somebody came down here with a knife and did it himself.
+interject class:wizard: One can guess who. One would rather not.
+-> tomb_menu
+
+~ rites
+set cat_sergei_rites_said
+Narrator: The old words, said properly, in a room that has heard only one man's apologies for a very long time. The candle flames lean toward the tomb, and then stand up straight again.
+-> tomb_menu
+
+~ rites_lost
+set cat_sergei_rites_said
+Narrator: The words come out in the wrong order, the way they do at a stranger's grave. Nothing answers. Nothing seems to mind, either.
+-> tomb_menu
+
+~ font
+if guest:ireena and not flag.cat_ireena_at_tomb
+-> ireena_arrives
+endif
+Narrator: A round basin cut into the floor at the foot of the tomb, filled to the brim with water so still it looks like a sheet of black glass.
+if flag.cat_ireena_at_tomb
+Narrator: Since Ireena knelt here, there is a little light low down in the water, like a coal under ash.
+endif
+-> END
+
+# ---------------------------------------------------------------- Ireena
+
+~ ireena_arrives
+Narrator: Ireena stops in the doorway. She reads the name on the lid, and then she walks past it without a word and kneels by the basin at its foot.
+if flag.ireena_pool_vision
+-> ireena_knows
+endif
+-> ireena_first_sight
+
+~ ireena_first_sight
+set cat_ireena_at_tomb = "remembered"
+Narrator: In the still water, beside her reflection, there is a second face: a young man with kind eyes and a sunburst at his throat. You look up. Nobody kneels beside her.
+Sergei von Zarovich: Tatyana.
+Ireena [afraid]: No. My name is Ireena.
+Sergei von Zarovich: Not this time. I know. Forgive me. I only ever had the one name for you.
+Ireena: You're the brother. The one on the lid. I've dreamed your face for years and never known whose it was.
+Sergei von Zarovich: There is a pool at the top of the valley where the sun stays in the water. I can say more there. Here I am mostly bones.
+if flag.eva_recognized_ireena
+interject tag:curious: Madam Eva said she'd come round again. I thought it was the sort of thing fortune-tellers say.
+endif
+* Ask her what she wants to do. -> ireena_wants
+* (Wait. Let her have this.) -> ireena_fade
+
+~ ireena_wants
+Ireena: First, he dies. The one upstairs. After that I'll find that pool, and I'll decide there. Not in a cellar, with all of you watching.
+-> ireena_fade
+
+~ ireena_knows
+if flag.ireena_pool_choice == "promised"
+-> ireena_promised
+endif
+-> ireena_farewell
+
+~ ireena_promised
+set cat_ireena_at_tomb = "promised"
+Narrator: The water shivers and settles, and he is there beside her, the way he was at the pool.
+Sergei von Zarovich: You came the long way round.
+Ireena: I said I'd come back to you when he's dead. I'm close now. He's somewhere under our feet.
+Sergei von Zarovich: I know where he is. I have always known where he is.
+Ireena: Then wait a little longer.
+Sergei von Zarovich: I have had practice.
+-> ireena_fade
+
+~ ireena_farewell
+set cat_ireena_at_tomb = "farewell"
+Narrator: The water shivers and settles, and he is there beside her.
+Ireena: I said goodbye to you at the pool. I'm saying it again here, to your bones, so that it's done properly. Father would want it done properly.
+Narrator: She takes the ribbon out of her hair and lays it on the lid, over the stone sunburst.
+Sergei von Zarovich: Go and live, Ireena.
+Ireena [sad]: That's the first time you've called me that.
+-> ireena_fade
+
+~ ireena_fade
+Narrator: The second face is gone. The water is only water, and Ireena gets up off her knees and brushes the dust from them, and is herself again, mostly.
+interject guest:ireena: Don't. Whatever it is. Later, when we're out in the air.
+-> tomb_look

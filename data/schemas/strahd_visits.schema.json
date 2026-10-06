@@ -1,0 +1,281 @@
+{
+  "$id": "strahd_visits.schema.json",
+  "title": "Strahd's visits across the campaign (ADR 0014; docs/regions/strahd_presence.md)",
+  "type": "object",
+  "required": [
+    "id",
+    "summary",
+    "visits"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "const": "visits"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "gap_hours": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Least game time between two visits (a visit marked urgent ignores it)."
+    },
+    "quiet_regions": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/id"
+      },
+      "description": "Regions where no visit happens (the castle's own parts give him his lines there)."
+    },
+    "quiet_at": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/id"
+      },
+      "description": "Locations (holy ground) where no visit happens unless the visit's trigger names the location in `at`."
+    },
+    "visits": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/visit"
+      }
+    }
+  },
+  "$defs": {
+    "event": {
+      "type": "string",
+      "enum": [
+        "arrive",
+        "rest",
+        "travel",
+        "days"
+      ],
+      "description": "arrive: the party enters a location; rest: a Long Rest ends; travel: a leg of a journey ends; days: any of those, once enough days have passed."
+    },
+    "trigger": {
+      "type": "object",
+      "required": [
+        "on"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "on": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/event"
+          }
+        },
+        "days": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Whole days since the party entered Barovia (StoryState.day - 1) before it can happen."
+        },
+        "night": {
+          "type": "boolean",
+          "description": "Only at night (true) or by day (false). For a rest: whether the rest ran through any of the night."
+        },
+        "outdoors": {
+          "type": "boolean",
+          "description": "Only where the map is outdoors (true) or indoors (false)."
+        },
+        "at": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "description": "Location ids where it can happen (empty: anywhere not quiet)."
+        },
+        "region": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "description": "Regions where it can happen (empty: any)."
+        }
+      }
+    },
+    "withdraw": {
+      "type": "object",
+      "required": [
+        "who"
+      ],
+      "additionalProperties": false,
+      "description": "ADR 0014: when a foe leaves the fight (no loot, no Misty Escape).",
+      "properties": {
+        "who": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "at_hp_below": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "after_rounds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "flag": {
+          "$ref": "common.schema.json#/$defs/id"
+        }
+      }
+    },
+    "encounter": {
+      "type": "object",
+      "required": [
+        "id",
+        "monsters"
+      ],
+      "additionalProperties": false,
+      "description": "A fight where the party stands (a road map for a visit on the road). Monsters without a cell are placed by StrahdPresence.placed() on open floor a few squares from the leader.",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "text": {
+          "type": "string"
+        },
+        "monsters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "monster"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "monster": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "cell": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "name": {
+                "type": "string"
+              },
+              "hp": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "surprise": {
+          "type": "string",
+          "enum": [
+            "",
+            "party",
+            "enemies"
+          ]
+        },
+        "withdraw": {
+          "$ref": "#/$defs/withdraw"
+        },
+        "flag": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "after": {
+          "type": "string",
+          "pattern": "^[a-z0-9_/]+:[a-z0-9_]+$",
+          "description": "A conversation (file:node) played when the fight is over and not lost."
+        }
+      }
+    },
+    "then": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What follows the visit's conversation: the first entry whose `when` holds.",
+      "properties": {
+        "when": {
+          "type": "string"
+        },
+        "narration": {
+          "type": "string"
+        },
+        "dialogue": {
+          "type": "string",
+          "pattern": "^[a-z0-9_/]+:[a-z0-9_]+$"
+        },
+        "encounter": {
+          "$ref": "#/$defs/encounter"
+        },
+        "go": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+(:[a-z0-9_]+)?$",
+          "description": "location_id[:spawn]: the party is taken there (the black carriage)."
+        }
+      }
+    },
+    "visit": {
+      "type": "object",
+      "required": [
+        "id",
+        "summary",
+        "trigger"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "trigger": {
+          "$ref": "#/$defs/trigger"
+        },
+        "when": {
+          "type": "string",
+          "description": "A story condition (docs/contracts/dialogue.md)."
+        },
+        "once": {
+          "type": "boolean"
+        },
+        "cooldown_hours": {
+          "type": "number",
+          "minimum": 0
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many times it can happen in a playthrough."
+        },
+        "urgent": {
+          "type": "boolean",
+          "description": "Ignores gap_hours."
+        },
+        "map": {
+          "$ref": "common.schema.json#/$defs/id",
+          "description": "For a visit on the road: the location it plays on (default: the road's random encounter map)."
+        },
+        "narration": {
+          "type": "string"
+        },
+        "dialogue": {
+          "type": "string",
+          "pattern": "^[a-z0-9_/]+:[a-z0-9_]+$"
+        },
+        "encounter": {
+          "$ref": "#/$defs/encounter"
+        },
+        "go": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+(:[a-z0-9_]+)?$"
+        },
+        "then": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/then"
+          }
+        }
+      }
+    }
+  }
+}

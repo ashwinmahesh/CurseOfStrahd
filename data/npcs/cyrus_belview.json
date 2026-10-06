@@ -1,0 +1,20 @@
+{
+  "id": "cyrus_belview",
+  "name": "Cyrus Belview",
+  "title": "Cook to the Master",
+  "summary": "A big, stooped mongrelfolk with a boar's tusk, a hare's ear and a goat's hoof: a Belview the Abbot of Krezk gave the castle long ago. He keeps the kitchen fire lit below the main floor and cooks for his Master's guests, the prisoners in the cells.",
+  "portrait": "cyrus_belview",
+  "sprite": "cyrus_belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/cyrus_belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

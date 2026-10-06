@@ -1,0 +1,127 @@
+{
+  "id": "black_pudding",
+  "name": "Black Pudding",
+  "source": {
+    "book": "MM2025",
+    "edition": "2024",
+    "note": "The 2024 Black Pudding (2025 Monster Manual, also in SRD 5.2.1), entered from knowledge; not yet compared line by line with SRD 5.2.1. Its Hit Points (68, 8d10 + 24) and the Dissolving Pseudopod's reach and damage especially need the check. Blind beyond its blindsight. Corrosive Form, the armor penalty and Separate are text only (the engine can't wear down gear or split a creature yet)."
+  },
+  "size": "large",
+  "type": "ooze",
+  "alignment": "unaligned",
+  "ac": 7,
+  "initiative": -3,
+  "hp": {
+    "average": 68,
+    "dice": "8d10+24"
+  },
+  "speed": {
+    "walk": 20,
+    "climb": 20
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 5,
+    "con": 16,
+    "int": 1,
+    "wis": 6,
+    "cha": 1
+  },
+  "immunities": [
+    "acid",
+    "cold",
+    "lightning",
+    "slashing"
+  ],
+  "condition_immunities": [
+    "blinded",
+    "charmed",
+    "deafened",
+    "exhaustion",
+    "frightened",
+    "grappled",
+    "prone",
+    "restrained"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 8,
+  "languages": [],
+  "cr": 4,
+  "xp": 1100,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "amorphous",
+      "name": "Amorphous",
+      "action": "passive",
+      "summary": "Squeezes through a gap an inch wide at no extra cost.",
+      "text": "The pudding can move through a space as narrow as 1 inch without spending extra movement.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "amorphous"
+        }
+      ],
+      "implemented": "text"
+    },
+    {
+      "id": "corrosive_form",
+      "name": "Corrosive Form",
+      "action": "passive",
+      "summary": "Touching or striking it burns with acid; ordinary weapons and ammunition that hit it corrode.",
+      "text": "A creature that touches the pudding, or hits it with a melee attack from within 5 feet, takes 4 (1d8) Acid damage. Nonmagical ammunition that hits it is destroyed, and a nonmagical metal or wooden weapon that hits it takes a lasting -1 penalty to attack rolls, crumbling away at -5.",
+      "implemented": "text"
+    },
+    {
+      "id": "spider_climb",
+      "name": "Spider Climb",
+      "action": "passive",
+      "summary": "Climbs walls and ceilings with no ability check.",
+      "text": "The pudding can climb difficult surfaces, ceilings included, without an ability check.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "spider_climb"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "dissolving_pseudopod",
+      "name": "Dissolving Pseudopod",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 18,
+          "dice": "4d8",
+          "type": "acid"
+        }
+      ],
+      "summary": "A lashing limb of acid; ordinary armor on the target loses 1 AC.",
+      "text": "Hit: 18 (4d8) Acid damage. Nonmagical armor the target wears takes a lasting -1 penalty to the AC it gives, and is ruined once that brings it down to AC 10."
+    }
+  ],
+  "reactions": [
+    {
+      "id": "separate",
+      "name": "Separate",
+      "kind": "special",
+      "trigger": "While Medium or larger, it takes Lightning or Slashing damage.",
+      "summary": "Lightning or a blade splits it into two smaller puddings, each with half its Hit Points.",
+      "text": "Trigger: the pudding is Medium or larger and is struck by Lightning or Slashing damage. Response: it splits into two Black Puddings, each one size smaller with half the original's Hit Points (rounded down). Text only for the engine."
+    }
+  ],
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "mindless",
+  "summary": "A slow, blind mass of black acid that eats armor and weapons; blades and lightning only make more of it."
+}

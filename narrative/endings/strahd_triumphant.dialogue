@@ -1,0 +1,30 @@
+# Ending: Strahd triumphant (data/endings/strahd_triumphant.json, ADR 0014): the party yields at the parley
+# (strahd_parley is yield) or falls in the final battle.
+
+~ start
+if flag.strahd_parley == yield
+-> yielded
+endif
+-> fallen
+
+~ yielded
+Narrator: You lower your weapons. In the quiet that follows, the castle settles around you like a cat that has decided not to bother.
+Strahd: Wise. So few of my guests are. Go down into my valley and live there, for as long as you keep me amused.
+Narrator: The road down from the castle is shorter than the road up. The mist closes behind you, and it does not open again.
+if guest:ireena
+Narrator: Ireena does not come down the road with you. You do not look back to see who stands beside her at the gate.
+endif
+-> after
+
+~ fallen
+Narrator: The last of you falls on the cold stone, and the castle goes quiet, as if it is listening for a heartbeat.
+Strahd: Brave. They are always brave. It never changes how the story ends.
+if guest:ireena
+Narrator: He steps over you to reach her. Ireena does not run. There is nowhere left in Barovia to run to.
+endif
+Narrator: By the next nightfall there are new faces in the castle's halls. They are pale, and they do not remember the sun.
+-> after
+
+~ after
+Narrator: The valley's bells ring at dusk, as they always have. The mist rolls down the mountain, patient as ever, and waits for the next carriage of strangers.
+-> END

@@ -212,7 +212,7 @@
         },
         "targets": {
           "type": "object",
-          "description": "Who a save action targets: range, count, max_size, in_space, requires (conditions, or willing)."
+          "description": "Who a save action targets: range, count, max_size, in_space, types, not_types, requires (conditions, or willing). On an attack action, `requires` limits its targets too (a vampire's Bite: grappled, incapacitated or restrained)."
         },
         "weapon": {
           "type": "boolean",
@@ -306,6 +306,79 @@
         "dc": {
           "type": "integer",
           "description": "A bonus action's save DC when it has no `save` block (Consume Life)."
+        },
+        "summon": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "choices"
+          ],
+          "description": "Calls creatures into the fight (Children of the Night): one of `choices` (the first allowed where the fight is), arriving after `arrive` rounds.",
+          "properties": {
+            "choices": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "monster",
+                  "count"
+                ],
+                "properties": {
+                  "monster": {
+                    "$ref": "common.schema.json#/$defs/id"
+                  },
+                  "count": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      {
+                        "$ref": "common.schema.json#/$defs/dice"
+                      }
+                    ]
+                  },
+                  "max": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "At most this many, whatever the dice say."
+                  },
+                  "where": {
+                    "type": "string",
+                    "enum": [
+                      "any",
+                      "outdoors",
+                      "indoors"
+                    ]
+                  }
+                }
+              }
+            },
+            "arrive": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "$ref": "common.schema.json#/$defs/dice"
+                }
+              ],
+              "description": "Rounds until they arrive (0: at once)."
+            },
+            "not_in": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "sunlight",
+                  "running_water"
+                ]
+              }
+            }
+          }
         },
         "drop_at_hp": {
           "type": "integer",
@@ -458,7 +531,35 @@
         },
         "repeat_save": {
           "type": "object",
-          "description": "condition: the target repeats the save at the end of each of its turns ({ability, dc, when, bind_after})."
+          "additionalProperties": false,
+          "required": [
+            "ability",
+            "dc"
+          ],
+          "description": "condition: the target repeats the save to end it (`when`: end or start of its turns, or manual), and each time it takes damage when `on_damage` (Strahd's Charm).",
+          "properties": {
+            "ability": {
+              "$ref": "common.schema.json#/$defs/ability"
+            },
+            "dc": {
+              "type": "integer"
+            },
+            "when": {
+              "type": "string",
+              "enum": [
+                "end",
+                "start",
+                "manual"
+              ]
+            },
+            "on_damage": {
+              "type": "boolean"
+            },
+            "bind_after": {
+              "type": "integer",
+              "description": "After this many failed saves the effect can't be shaken off (an arcanaloth's Soul Tome)."
+            }
+          }
         },
         "also_if_vowed": {
           "$ref": "common.schema.json#/$defs/condition",
@@ -480,6 +581,188 @@
             }
           },
           "description": "grapple: damage to the held creature at the start of each of its own turns."
+        }
+      }
+    },
+    "form": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "size",
+        "speed"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "$ref": "common.schema.json#/$defs/size"
+        },
+        "speed": {
+          "$ref": "#/properties/speed"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Action ids usable in this shape; [] = none (it can't attack or cast)."
+        },
+        "immunities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/damage_type"
+          }
+        },
+        "resistances": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/damage_type"
+          }
+        },
+        "vulnerabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/damage_type"
+          }
+        },
+        "condition_immunities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/condition"
+          }
+        },
+        "save_advantage": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/ability"
+          }
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Flags while in this shape (enters_spaces, pass_through_creatures, spider_climb...)."
+        },
+        "art": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$",
+          "description": "Sprite id for this shape (art/sprites/<art>/)."
+        },
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "lair_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "summary",
+        "kind"
+      ],
+      "description": "self: modifiers on the lair's master until the next lair turn; attack: an attack roll at a foe it can see; save: foes in range save (damage, riders, a summon on a failure); summon: creatures appear; text: told only.",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "self",
+            "attack",
+            "save",
+            "summon",
+            "text"
+          ]
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/modifier"
+          }
+        },
+        "attack": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "bonus"
+          ],
+          "properties": {
+            "bonus": {
+              "type": "integer"
+            },
+            "range": {
+              "type": "integer"
+            }
+          }
+        },
+        "damage": {
+          "$ref": "#/$defs/action/properties/damage"
+        },
+        "on_hit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rider"
+          }
+        },
+        "save": {
+          "$ref": "#/$defs/action/properties/save"
+        },
+        "targets": {
+          "type": "object",
+          "description": "range (from the master, default 120), count (default 1), max_size, types, not_types."
+        },
+        "on_fail": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rider"
+          }
+        },
+        "summon": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "monster"
+          ],
+          "properties": {
+            "monster": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "count": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "$ref": "common.schema.json#/$defs/dice"
+                }
+              ]
+            },
+            "max": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
         }
       }
     }
@@ -725,26 +1008,67 @@
     },
     "legendary_actions": {
       "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "per_round",
+        "options"
+      ],
+      "description": "ADR 0014: `per_round` actions, spent at the end of another creature's turn and refreshed at the start of the monster's own (combat/legendary.gd).",
       "properties": {
-        "uses": {
-          "type": "integer"
+        "per_round": {
+          "type": "integer",
+          "minimum": 1
         },
-        "uses_in_lair": {
-          "type": "integer"
-        },
-        "actions": {
+        "options": {
           "type": "array",
+          "minItems": 1,
           "items": {
-            "$ref": "#/$defs/action"
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "name",
+              "summary"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "name": {
+                "type": "string"
+              },
+              "cost": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Legendary actions it spends (default 1)."
+              },
+              "action": {
+                "$ref": "common.schema.json#/$defs/id",
+                "description": "One use of this stat-block action (an attack or a save action)."
+              },
+              "move": {
+                "type": "boolean",
+                "description": "Moves up to its Speed without provoking Opportunity Attacks."
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string"
+              }
+            }
           }
         }
       }
     },
     "lair_actions": {
       "type": "array",
+      "minItems": 1,
       "items": {
-        "$ref": "#/$defs/action"
-      }
+        "$ref": "#/$defs/lair_action"
+      },
+      "description": "ADR 0014: one on initiative count 20 (losing ties) each round when the encounter has `lair: true`; never the same one twice in a row."
     },
     "spellcasting": {
       "type": "object",
@@ -812,6 +1136,151 @@
       "type": "string",
       "pattern": "^[a-z0-9_]+$",
       "description": "Sprite and portrait id when it isn't the block's own id (art/sprites/<art>/), e.g. a named NPC's block."
+    },
+    "legendary_resistance": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Legendary Resistance uses per day (per fight in the game): a failed save becomes a success."
+    },
+    "regenerates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hp"
+      ],
+      "description": "Regeneration for any monster: `hp` back at the start of its turn while it has at least 1 Hit Point; taking any `stopped_by` damage type stops it at the start of its next turn; `running_water` / `sunlight` true: it doesn't work while the creature is there.",
+      "properties": {
+        "hp": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stopped_by": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/damage_type"
+          }
+        },
+        "running_water": {
+          "type": "boolean"
+        },
+        "sunlight": {
+          "type": "boolean"
+        }
+      }
+    },
+    "forms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "shapes"
+      ],
+      "description": "Shapechanger: shapes it can take (each swaps size, speeds, usable actions and defenses and keeps its Hit Points). Actions' own `forms` lists name `base` for its true form.",
+      "properties": {
+        "base": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$",
+          "description": "The true form's name (default humanoid)."
+        },
+        "change": {
+          "type": "string",
+          "enum": [
+            "action",
+            "bonus_action"
+          ],
+          "description": "What changing shape costs (default action)."
+        },
+        "blocked_in": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "sunlight",
+              "running_water"
+            ]
+          }
+        },
+        "shapes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/form"
+          }
+        }
+      }
+    },
+    "misty_escape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resting_place",
+        "flag"
+      ],
+      "description": "ADR 0014: dropping to 0 Hit Points anywhere but `resting_place` (a location id) turns it to mist and it leaves the fight, setting `flag`; there it is destroyed (`destroyed_flag`, `quest` stage). Sunlight or running water (`blocked_in`) destroy it outright.",
+      "properties": {
+        "resting_place": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "flag": {
+          "type": "string"
+        },
+        "form": {
+          "type": "string",
+          "description": "The shape it flees in (default mist)."
+        },
+        "destroyed_flag": {
+          "type": "string"
+        },
+        "quest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "stage"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "stage": {
+              "$ref": "common.schema.json#/$defs/id"
+            }
+          }
+        },
+        "blocked_in": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "sunlight",
+              "running_water"
+            ]
+          }
+        },
+        "narration": {
+          "type": "string",
+          "description": "Narrator key played as it flees (narrative/narrator/*.dialogue), telling the party where it went."
+        }
+      }
+    },
+    "ward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hp"
+      ],
+      "description": "A ward of `hp` taken before its Hit Points in a fight (the Heart of Sorrow shielding Strahd), unless the story condition `unless` holds; only in locations of `region` when given.",
+      "properties": {
+        "hp": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unless": {
+          "type": "string"
+        },
+        "region": {
+          "$ref": "common.schema.json#/$defs/id"
+        }
+      }
     }
   }
 }

@@ -1,0 +1,155 @@
+{
+  "region": "castle_ravenloft",
+  "flags": [
+    {
+      "id": "pidlwick_met",
+      "type": "bool",
+      "summary": "Pidlwick II, the clockwork jester, came down the high tower stair to greet the party (spires_pidlwick:first)."
+    },
+    {
+      "id": "pidlwick_played",
+      "type": "bool",
+      "summary": "The party played catch with Pidlwick II on the stair (spires_pidlwick:play)."
+    },
+    {
+      "id": "pidlwick_wary",
+      "type": "bool",
+      "summary": "A failed Insight check on Pidlwick II: he won't talk about the first Pidlwick again (the portrait or Escher still lead to the truth)."
+    },
+    {
+      "id": "pidlwick_truth_known",
+      "type": "bool",
+      "summary": "The party knows Pidlwick II pushed the first Pidlwick, the jester he was built to copy, down the high tower stair."
+    },
+    {
+      "id": "pidlwick_promised",
+      "type": "bool",
+      "summary": "Pidlwick II promised to walk behind the party on stairs, always (spires_pidlwick:cards_truth)."
+    },
+    {
+      "id": "pidlwick_refused",
+      "type": "bool",
+      "summary": "The party refused to take Pidlwick II along. If the cards named him, find_the_ally is lost."
+    },
+    {
+      "id": "pidlwick_key_found",
+      "type": "bool",
+      "summary": "The party found Pidlwick II's brass wind-up key in a ravens' nest under the roofs (spires_roost:brass)."
+    },
+    {
+      "id": "pidlwick_wound",
+      "type": "bool",
+      "summary": "The party wound Pidlwick II with his own key (spires_pidlwick:key_back); he asks to come along."
+    },
+    {
+      "id": "jester_portrait_seen",
+      "type": "bool",
+      "summary": "The party looked at the portrait of the first Pidlwick on the grand landing (prop spires_jester_portrait)."
+    },
+    {
+      "id": "escher_met",
+      "type": "bool",
+      "summary": "The party met Escher, Strahd's cast-off consort, in his locked suite (spires_escher:first)."
+    },
+    {
+      "id": "escher_bargain",
+      "type": "bool",
+      "summary": "The party promised Escher to leave his door open once Strahd is gone; he paid with his ring and told them about the heart."
+    },
+    {
+      "id": "escher_paid",
+      "type": "bool",
+      "summary": "The party paid Escher in gold for what he knows about the heart."
+    },
+    {
+      "id": "escher_slighted",
+      "type": "bool",
+      "summary": "A failed Persuasion on Escher: his price for the heart doubles to 200 gp."
+    },
+    {
+      "id": "escher_threatened",
+      "type": "bool",
+      "summary": "The party frightened Escher into talking (Intimidation). He turns them away afterwards."
+    },
+    {
+      "id": "escher_heart_told",
+      "type": "bool",
+      "summary": "Escher told the party what the heart at the top of the high tower is."
+    },
+    {
+      "id": "escher_told_jester",
+      "type": "bool",
+      "summary": "Escher told the party how the first Pidlwick died and who stood at the top of the stair."
+    },
+    {
+      "id": "escher_fight_won",
+      "type": "bool",
+      "summary": "The party destroyed Escher (encounter escher_fight)."
+    },
+    {
+      "id": "heart_of_sorrow_known",
+      "type": "bool",
+      "summary": "The party knows the crystal heart at the top of the high tower takes Strahd's wounds before he does (Escher, Pidlwick, Arcana or a cleric)."
+    },
+    {
+      "id": "heart_of_sorrow_seen",
+      "type": "bool",
+      "summary": "The party has stood before the Heart of Sorrow (spires_heart:heart)."
+    },
+    {
+      "id": "heart_guardians_beaten",
+      "type": "bool",
+      "summary": "The high tower's guardians that came to defend the heart are destroyed (encounter heart_guardians); the next blow breaks it."
+    },
+    {
+      "id": "heart_of_sorrow_shattered",
+      "type": "bool",
+      "summary": "THE HEART OF SORROW IS BROKEN (spires_heart:shatter). Strahd loses the heart's ward: the final battles and the coffin fight should read it (no 50 extra hit points). Strahd's parley and the epilogue may read it too."
+    },
+    {
+      "id": "strahd_heart_tested",
+      "type": "bool",
+      "summary": "Strahd came up the high tower as mist after the heart broke, fought one round and withdrew (encounter heart_strahd_test, its withdraw flag)."
+    },
+    {
+      "id": "spires_final_battle_fought",
+      "type": "bool",
+      "summary": "The marionette card's final battle at the Heart of Sorrow was fought (encounter heart_of_sorrow_final)."
+    },
+    {
+      "id": "spires_stair_watch_cleared",
+      "type": "bool",
+      "summary": "The stair's sentries on the upper turns of the high tower are destroyed (encounter spires_stair_watch)."
+    },
+    {
+      "id": "spires_back_stair_found",
+      "type": "bool",
+      "summary": "The party found the narrow stair behind Escher's wardrobe (search prop spires_wardrobe_seam)."
+    },
+    {
+      "id": "spires_back_stair_told",
+      "type": "bool",
+      "summary": "Escher or Pidlwick II told the party about the narrow stair behind Escher's wardrobe; the way to the roost opens."
+    },
+    {
+      "id": "cauldron_coven_cleared",
+      "type": "bool",
+      "summary": "The witches at the cauldron in the tower rooms are dead (encounter cauldron_coven)."
+    },
+    {
+      "id": "peak_guardians_cleared",
+      "type": "bool",
+      "summary": "The stone guardians of the north tower peak are destroyed (encounter peak_guardians)."
+    },
+    {
+      "id": "roost_ravens_calm",
+      "type": "bool",
+      "summary": "The ravens in the roost accept the party (friendship, food or Animal Handling); opening the great nest no longer starts a fight."
+    },
+    {
+      "id": "roost_swarm_cleared",
+      "type": "bool",
+      "summary": "The party fought the ravens of the roost (roost_swarm or roost_swarm_roused)."
+    }
+  ]
+}

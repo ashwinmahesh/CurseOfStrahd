@@ -1,0 +1,19 @@
+{
+  "id": "escher",
+  "name": "Escher",
+  "title": "A Cast-Off Consort",
+  "summary": "A young nobleman Strahd made into a vampire spawn and kept as a favourite, then set aside. Vain, bored and bitter, he lounges locked in his suite high in the towers. He knows what the heart at the top of the high tower is, and he will sell it.",
+  "portrait": "escher",
+  "sprite": "escher",
+  "attitude": "indifferent",
+  "voice": "docs/voice/escher.md",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "vampire_spawn",
+    "noble",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,188 @@
+# Strahd's coffin (K86), the prop cat_strahds_coffin in castle_ravenloft_catacombs_strahd
+# (docs/regions/castle_ravenloft_catacombs.md §5). ADR 0014: Strahd is destroyed only here.
+# empty: night, never beaten, he is out. asleep: day, never beaten; the stake wakes him (cat_daylight_waking), and
+# beaten he mists into the coffin (strahd_in_coffin, the engine). resting: strahd_in_coffin; the keepers' fight has
+# already happened on entering the tomb. the_end sets strahd_destroyed, moves strahds_lair and ends the game.
+# vladimir: the pact sworn at Argynvostholt (vladimir_pact) brings him down the stair to stop the killing blow.
+
+~ coffin
+if flag.strahd_destroyed
+-> ashes
+endif
+if flag.strahd_in_coffin
+-> resting
+endif
+if day
+-> asleep
+endif
+-> empty
+
+~ ashes
+Narrator: The coffin holds a long drift of grey ash in the shape of a man, and a stake standing upright in it.
+end_game
+
+# ---------------------------------------------------------------- He is out
+
+~ empty
+Narrator: The coffin is empty. A bed of dark earth lies in it, pressed into the shape of a tall man, and cold.
+Narrator: He is out. Somewhere far above you it is night, and the night is his.
+if treasure_at:castle_ravenloft_strahds_tomb
+interject tag:curious: Nobody guards an empty bed this hard unless something else in the room matters. That chest, for one.
+endif
+* [if item:holy_water and not flag.cat_coffin_hallowed] Pour holy water into his earth. -> hallow
+* Close the lid and leave it. -> END
+
+~ hallow
+take holy_water 1
+set cat_coffin_hallowed
+Narrator: The water goes into the earth with a hiss like a cat, a curl of steam and a smell of struck matches. The earth will remember.
+interject class:cleric: It won't keep him from coming home. It will make sure he hates the bed when he gets here.
+-> END
+
+# ---------------------------------------------------------------- He sleeps by day
+
+~ asleep
+Narrator: He is here. He lies in the coffin with his hands folded on his chest, as neat as a body laid out by good servants. His eyes are shut. He does not breathe; he has never needed to.
+if guest:ireena
+interject guest:ireena: Don't talk. Don't wake him. Just do it.
+endif
+interject tag:blunt: He's asleep. We won't get a better chance than this.
+interject class:wizard: Unless he isn't asleep. Unless he's lying still to see what we'll do.
+* Drive the stake into his heart while he sleeps. -> wake
+* [if item:sunsword] Draw the Sunsword over him. -> wake_sun
+* Back away and let him sleep. -> END
+
+~ wake
+Narrator: The point touches his shirt, and his eyes are open. He was never as deep asleep as that.
+Strahd: In my own bedroom, at this hour. You might at least have knocked.
+combat cat_daylight_waking
+
+~ wake_sun
+Narrator: The blade wakes in your hand, and so does he: the light finds his face and his eyes snap open, burning.
+Strahd [angry]: My brother's sword. I threw that sword as far as a man can throw anything.
+combat cat_daylight_waking
+
+# ---------------------------------------------------------------- He rests, beaten
+
+~ resting
+if flag.vladimir_pact and not flag.vladimir_pact_broken and not flag.cat_vladimir_stood_aside
+-> vladimir
+endif
+Narrator: The mist has gone back into him. He lies in the coffin grey and still, and only his eyes move. They are perfectly clear.
+if flag.cat_coffin_hallowed
+Narrator: The earth you blessed smokes under him. He came home to a bed that burns and lay down in it anyway, because there was nowhere else to go.
+endif
+Strahd: Well. Here we are. I confess I had imagined this room with more candles.
+if guest:ireena
+Strahd: Ireena. You came all the way down. You always did come, in the end.
+interject guest:ireena: Not for you. Never once for you.
+endif
+-> resting_menu
+
+~ resting_menu
+* Drive the stake through his heart. -> stake
+* [if guest:ireena] Give Ireena the stake. -> ireena_stake
+* [if item:sunsword] End it with the Sunsword's light. -> sunsword
+* [if item:holy_symbol_of_ravenkind] Raise the Holy Symbol and call up the dawn. -> symbol
+* [if not flag.cat_last_words_heard] Let him speak. -> last_words
+* Not yet. Close the lid. -> not_yet
+
+~ last_words
+set cat_last_words_heard
+Strahd: You will find the valley very quiet without me. Very small. You will go home, and nothing there will ever be as large as I was.
+Strahd: Close the lid. Walk away. Come back in a hundred years and we will do this again. It will be the most interesting thing that ever happens to any of you.
+if name:ilse_varga
+interject name:ilse_varga: You sent my company a letter. Forty of them answered it. No.
+endif
+if name:silvain_aster and item:tome_of_strahd
+interject name:silvain_aster: I have read your book. I know exactly how large you were. No.
+endif
+interject class:rogue: He's stalling. Every word is another minute for him to mend.
+-> resting_menu
+
+~ not_yet
+Narrator: The lid comes down over his eyes. They stay open the whole way. He will not lie here for ever.
+-> END
+
+~ stake
+set cat_staked_by = "party"
+Narrator: You set the point over his heart and lean on it with all your weight. For a moment the wood will not go in. Then it does.
+-> the_end
+
+~ ireena_stake
+set cat_staked_by = "ireena"
+Ireena: Give it here.
+Narrator: She takes the stake in both hands and kneels on the edge of the coffin.
+Strahd: Tatyana.
+Ireena: No.
+Narrator: She doesn't say anything else. She doesn't need to.
+-> the_end
+
+~ sunsword
+set cat_staked_by = "sun"
+Narrator: The blade blazes up like a shutter thrown open on a summer noon, and the light falls straight down into the coffin.
+Strahd: Ah. There it is. I had forgotten what it looked like.
+-> the_end
+
+~ symbol
+set cat_staked_by = "sun"
+Narrator: The silver raven flares in your fist, and the tomb fills with morning, real morning, the first this room has ever held.
+-> the_end
+
+~ the_end
+set strahd_destroyed
+quest strahds_lair destroyed
+Narrator: He comes apart the way old paper does in a fire: all at once, quietly, edges first. What is left in the coffin is ash, and a smell of dust and cold iron.
+if flag.cat_staked_by == "ireena"
+Narrator: Ireena stays on her knees a long moment. Then she stands, and wipes her hands on her skirt, and doesn't look back at it.
+endif
+if flag.cat_ireena_at_tomb == "promised"
+interject guest:ireena: Sergei. I promised him. When we're out of here, there's a pool I have to go back to.
+elif flag.cat_ireena_at_tomb == "farewell"
+interject guest:ireena: It's done. It's actually done. I'm going to sleep with the window open.
+endif
+if flag.cat_oathbreakers_beaten
+Narrator: Vladimir Horngaard lies at the foot of the stair where he fell. For the first time in four hundred years his face is not angry.
+elif flag.cat_vladimir_stood_aside
+Narrator: At the foot of the stair Vladimir Horngaard lowers his head, and his knights behind him do the same.
+elif flag.order_fate == "ride"
+Narrator: On the black stair the dead knights of the Order raise their swords together in salute.
+endif
+interject class:cleric: Morninglord. If you're still up there somewhere, look at this.
+Narrator: Far above you, through all the stone of the castle, something lets go, like a breath held for four hundred years.
+end_game
+
+# ---------------------------------------------------------------- Vladimir's pact
+
+~ vladimir
+Narrator: Armour on the black stair. Vladimir Horngaard comes down into the tomb with his knights at his back and stops at the foot of the dais.
+Vladimir Horngaard: You swore an oath at my table. Break him. Do not end him.
+Vladimir Horngaard: Death is a door for him. I will not hold it open.
+* [if flag.vladimir_last_words_known] The dragon told you to let them go home, Vladimir. Let them go. -> vladimir_released
+* [Persuasion DC 18] He has had four hundred years of punishment, and it has made him worse. End it with us. -> vladimir_moved | vladimir_unmoved
+* We break our oath. Stand aside or fall. -> vladimir_fight
+* Not yet. (Close the lid.) -> not_yet
+
+~ vladimir_released
+set cat_vladimir_stood_aside
+Narrator: For a long time Vladimir says nothing at all.
+Vladimir Horngaard: Let them go home. He said it with his last breath, and I took them to war instead.
+Vladimir Horngaard: Do it, then. And afterwards I will take my knights home.
+Narrator: He steps back from the dais, and his knights step back with him.
+-> resting
+
+~ vladimir_moved
+set cat_vladimir_stood_aside
+Vladimir Horngaard: Worse. Yes. So am I.
+Narrator: He steps back from the dais, and his knights step back with him.
+-> resting
+
+~ vladimir_unmoved
+set vladimir_pact_broken
+Vladimir Horngaard: Words. I have heard four hundred years of words. Draw.
+combat cat_oathbreakers
+
+~ vladimir_fight
+set vladimir_pact_broken
+Vladimir Horngaard: Then you are what he is. Oathbreakers.
+combat cat_oathbreakers

@@ -11,8 +11,8 @@ can show where it came from.
 It's built in Godot 4 with typed GDScript, for personal use only. It isn't distributed, and it's an unofficial fan
 project: *Curse of Strahd* and *Dungeons & Dragons* belong to Wizards of the Coast.
 
-Most of the valley is playable, from the road where the story begins to the Amber Temple. Castle Ravenloft, where the
-campaign ends, is not built yet.
+The whole campaign is playable, from the road where the story begins to Castle Ravenloft, where it ends: Strahd's
+castle in five parts, his parley and final battle in the room the Tarokka names, and five endings.
 
 ## Screenshots
 

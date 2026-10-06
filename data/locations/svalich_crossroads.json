@@ -178,9 +178,7 @@
         25
       ],
       "to": "travel",
-      "label": "The road south, to Castle Ravenloft",
-      "when": "false",
-      "locked_text": "The road climbs south through dead pines toward the castle on its cliff. Every sensible part of you says: not yet, and not like this."
+      "label": "The road south, to Castle Ravenloft"
     }
   ],
   "props": [

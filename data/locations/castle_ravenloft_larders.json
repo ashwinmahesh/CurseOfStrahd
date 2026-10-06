@@ -1,0 +1,1196 @@
+{
+  "id": "castle_ravenloft_larders",
+  "name": "Castle Ravenloft, the Larders of Ill Omen",
+  "region": "castle_ravenloft",
+  "summary": "Below the main floor: the servants' hall, the kitchen where Cyrus Belview still cooks for his Master's guests, the larder, the wine cellar with one bricked-over rack, the guardroom of a watch nobody relieved, the lift winch, and the jailers' stair down to the dungeon and on to the crypts.",
+  "text": "Low vaulted passages smelling of smoke, onions and something under the onions. A kitchen fire is the only warm thing for a hundred feet in any direction.",
+  "map": {
+    "rows": [
+      "########################################",
+      "#....#............#...........#........#",
+      "#....#............#....................#",
+      "#....#............#...........#........#",
+      "#........======.......===.....##########",
+      "#....#............#........=..#........#",
+      "#....#............#...........#........#",
+      "#....#............#...........#........#",
+      "##.#########.###########.##########.####",
+      "#......................................#",
+      "#......................................#",
+      "#######.############.#######.######.####",
+      "#..............#..........#....#.......#",
+      "#..............#..........#....#.......#",
+      "#..............#..........#....#.......#",
+      "#..====..====..#..........#....#.......#",
+      "#..............#..........#....#.......#",
+      "#..............#....==....######.......#",
+      "#..====..====..#..........######.......#",
+      "#..............#..........######.......#",
+      "#..............#..........######.......#",
+      "#..............#..........######.......#",
+      "#..............#..........######.......#",
+      "########################################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "larders_servants_stair",
+      "name": "Foot of the servants' stair",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    },
+    {
+      "id": "larders_servants_hall",
+      "name": "The servants' hall",
+      "cells": [
+        [
+          6,
+          1
+        ],
+        [
+          17,
+          7
+        ]
+      ],
+      "floor": "interior/wood_planks",
+      "walls": "interior/damp_plaster"
+    },
+    {
+      "id": "larders_kitchen",
+      "name": "The kitchen",
+      "cells": [
+        [
+          19,
+          1
+        ],
+        [
+          29,
+          7
+        ]
+      ],
+      "light": "dim"
+    },
+    {
+      "id": "larders_pantry",
+      "name": "The larder",
+      "cells": [
+        [
+          31,
+          1
+        ],
+        [
+          38,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "larders_cooks_room",
+      "name": "The cook's quarters",
+      "cells": [
+        [
+          31,
+          5
+        ],
+        [
+          38,
+          7
+        ]
+      ],
+      "floor": "dungeon/packed_earth",
+      "walls": "interior/kitchen_wall"
+    },
+    {
+      "id": "larders_guards_run",
+      "name": "The guards' run",
+      "cells": [
+        [
+          1,
+          9
+        ],
+        [
+          38,
+          10
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
+    },
+    {
+      "id": "larders_wine_cellar",
+      "name": "The wine cellar",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          14,
+          22
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/damp_brick"
+    },
+    {
+      "id": "larders_guardroom",
+      "name": "The guardroom",
+      "cells": [
+        [
+          16,
+          12
+        ],
+        [
+          25,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "larders_winch_room",
+      "name": "The winch room",
+      "cells": [
+        [
+          27,
+          12
+        ],
+        [
+          30,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "larders_jailers_stair",
+      "name": "The jailers' stair",
+      "cells": [
+        [
+          32,
+          12
+        ],
+        [
+          38,
+          22
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall"
+    }
+  ],
+  "spawns": {
+    "default": [
+      2,
+      3
+    ],
+    "from_gates": [
+      2,
+      3
+    ],
+    "from_dungeon": [
+      33,
+      20
+    ],
+    "from_catacombs": [
+      37,
+      20
+    ],
+    "from_lift": [
+      28,
+      14
+    ]
+  },
+  "exits": [
+    {
+      "id": "larders_stair_up",
+      "cell": [
+        2,
+        1
+      ],
+      "to": "castle_ravenloft_main_floor",
+      "spawn": "from_larders",
+      "label": "Stairs up to the main floor"
+    },
+    {
+      "id": "larders_stair_down",
+      "cell": [
+        33,
+        22
+      ],
+      "to": "castle_ravenloft_larders_dungeon",
+      "spawn": "from_larders",
+      "label": "Stairs down to the dungeon"
+    },
+    {
+      "id": "larders_long_stair",
+      "cell": [
+        37,
+        22
+      ],
+      "to": "castle_ravenloft_catacombs",
+      "spawn": "from_larders",
+      "label": "The long stair, down to the crypts"
+    },
+    {
+      "id": "larders_lift_down",
+      "cell": [
+        28,
+        16
+      ],
+      "to": "castle_ravenloft_larders_dungeon",
+      "spawn": "from_lift",
+      "label": "The lift cage, down to the cells",
+      "when": "flag.larders_lift_ready",
+      "locked_text": "The cage hangs a foot below the landing, swaying on its chain, and the winch's brake is off. Nobody steps into that."
+    }
+  ],
+  "doors": [
+    {
+      "id": "larders_stair_hall_door",
+      "cell": [
+        5,
+        4
+      ],
+      "label": "a plain servants' door"
+    },
+    {
+      "id": "larders_stair_run_door",
+      "cell": [
+        2,
+        8
+      ],
+      "label": "a low door to the guards' run"
+    },
+    {
+      "id": "larders_hall_run_door",
+      "cell": [
+        12,
+        8
+      ],
+      "label": "a door to the guards' run"
+    },
+    {
+      "id": "larders_kitchen_door",
+      "cell": [
+        18,
+        4
+      ],
+      "label": "the kitchen door, greasy at hand height"
+    },
+    {
+      "id": "larders_kitchen_run_door",
+      "cell": [
+        24,
+        8
+      ],
+      "label": "the kitchen's back door"
+    },
+    {
+      "id": "larders_pantry_door",
+      "cell": [
+        30,
+        2
+      ],
+      "label": "the larder door"
+    },
+    {
+      "id": "larders_cooks_door",
+      "cell": [
+        35,
+        8
+      ],
+      "label": "a narrow door with a hoof print burned into it"
+    },
+    {
+      "id": "larders_cellar_door",
+      "cell": [
+        7,
+        11
+      ],
+      "label": "the cellar door"
+    },
+    {
+      "id": "larders_guardroom_door",
+      "cell": [
+        20,
+        11
+      ],
+      "label": "the guardroom door"
+    },
+    {
+      "id": "larders_winch_door",
+      "cell": [
+        28,
+        11
+      ],
+      "label": "an iron-bound door"
+    },
+    {
+      "id": "larders_jailers_door",
+      "cell": [
+        35,
+        11
+      ],
+      "label": "a door studded with nails"
+    }
+  ],
+  "props": [
+    {
+      "id": "larders_livery_pegs",
+      "cell": [
+        1,
+        5
+      ],
+      "kind": "decor",
+      "label": "livery on pegs, grey with dust",
+      "model": "uniforms"
+    },
+    {
+      "id": "larders_lost_shawl",
+      "cell": [
+        3,
+        6
+      ],
+      "kind": "examine",
+      "label": "a folded shawl on the bottom step",
+      "model": "refuse_mound",
+      "when": "flag.larders_nadia_fate == \"sent_alone\"",
+      "dialogue": "castle_ravenloft/larders_cells:shawl"
+    },
+    {
+      "id": "larders_bell_board",
+      "cell": [
+        11,
+        0
+      ],
+      "kind": "examine",
+      "label": "a board of servants' bells",
+      "model": "tally_board"
+    },
+    {
+      "id": "larders_staff_table_1",
+      "cell": [
+        9,
+        4
+      ],
+      "kind": "decor",
+      "label": "the staff's long table, still laid",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_staff_table_2",
+      "cell": [
+        10,
+        4
+      ],
+      "kind": "decor",
+      "label": "the staff's long table, still laid",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_staff_table_3",
+      "cell": [
+        11,
+        4
+      ],
+      "kind": "examine",
+      "label": "the staff's long table, still laid",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_staff_table_4",
+      "cell": [
+        12,
+        4
+      ],
+      "kind": "decor",
+      "label": "the staff's long table, still laid",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_staff_table_5",
+      "cell": [
+        13,
+        4
+      ],
+      "kind": "decor",
+      "label": "the staff's long table, still laid",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_staff_table_6",
+      "cell": [
+        14,
+        4
+      ],
+      "kind": "decor",
+      "label": "the staff's long table, still laid",
+      "model": "table_set"
+    },
+    {
+      "id": "larders_oven",
+      "cell": [
+        21,
+        0
+      ],
+      "kind": "examine",
+      "label": "the great oven",
+      "model": "oven_brick"
+    },
+    {
+      "id": "larders_stove",
+      "cell": [
+        25,
+        0
+      ],
+      "kind": "decor",
+      "label": "an iron stove",
+      "model": "stove"
+    },
+    {
+      "id": "larders_dumbwaiter",
+      "cell": [
+        28,
+        0
+      ],
+      "kind": "examine",
+      "label": "the dumbwaiter",
+      "model": "dumbwaiter"
+    },
+    {
+      "id": "larders_worktable_1",
+      "cell": [
+        22,
+        4
+      ],
+      "kind": "decor",
+      "label": "a worktable scored by cleavers",
+      "model": "workbench"
+    },
+    {
+      "id": "larders_worktable_2",
+      "cell": [
+        23,
+        4
+      ],
+      "kind": "examine",
+      "label": "a worktable scored by cleavers",
+      "model": "workbench"
+    },
+    {
+      "id": "larders_worktable_3",
+      "cell": [
+        24,
+        4
+      ],
+      "kind": "decor",
+      "label": "a worktable scored by cleavers",
+      "model": "workbench"
+    },
+    {
+      "id": "larders_cauldron",
+      "cell": [
+        27,
+        5
+      ],
+      "kind": "examine",
+      "label": "the cauldron",
+      "model": "tub_wooden"
+    },
+    {
+      "id": "larders_kitchen_jars",
+      "cell": [
+        19,
+        7
+      ],
+      "kind": "decor",
+      "label": "jars of things in brine",
+      "model": "jars"
+    },
+    {
+      "id": "larders_hanging_meat",
+      "cell": [
+        32,
+        1
+      ],
+      "kind": "examine",
+      "label": "a carcass laid out for the cleaver",
+      "model": "carcass"
+    },
+    {
+      "id": "larders_hanging_meat_b",
+      "cell": [
+        34,
+        1
+      ],
+      "kind": "decor",
+      "label": "a carcass laid out for the cleaver",
+      "model": "carcass"
+    },
+    {
+      "id": "larders_sacks",
+      "cell": [
+        36,
+        1
+      ],
+      "kind": "decor",
+      "label": "sacks of meal",
+      "model": "sack"
+    },
+    {
+      "id": "larders_cooks_bed",
+      "cell": [
+        37,
+        6
+      ],
+      "kind": "examine",
+      "label": "a straw bed with a patched quilt",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "larders_cask_rack_1",
+      "cell": [
+        3,
+        15
+      ],
+      "kind": "examine",
+      "label": "racks of casks",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_cask_rack_2",
+      "cell": [
+        4,
+        15
+      ],
+      "kind": "decor",
+      "label": "a cask on its side",
+      "model": "barrel"
+    },
+    {
+      "id": "larders_cask_rack_3",
+      "cell": [
+        5,
+        15
+      ],
+      "kind": "decor",
+      "label": "racks of casks",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_cask_rack_4",
+      "cell": [
+        6,
+        15
+      ],
+      "kind": "decor",
+      "label": "a cask on its side",
+      "model": "barrel"
+    },
+    {
+      "id": "larders_cask_rack_5",
+      "cell": [
+        9,
+        15
+      ],
+      "kind": "decor",
+      "label": "racks of casks",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_cask_rack_6",
+      "cell": [
+        10,
+        15
+      ],
+      "kind": "decor",
+      "label": "a cask on its side",
+      "model": "barrel"
+    },
+    {
+      "id": "larders_cask_rack_7",
+      "cell": [
+        11,
+        15
+      ],
+      "kind": "decor",
+      "label": "racks of casks",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_cask_rack_8",
+      "cell": [
+        12,
+        15
+      ],
+      "kind": "decor",
+      "label": "a cask on its side",
+      "model": "barrel"
+    },
+    {
+      "id": "larders_cask_rack_9",
+      "cell": [
+        3,
+        18
+      ],
+      "kind": "decor",
+      "label": "racks of casks",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_cask_rack_10",
+      "cell": [
+        4,
+        18
+      ],
+      "kind": "decor",
+      "label": "a cask on its side",
+      "model": "barrel"
+    },
+    {
+      "id": "larders_cask_rack_11",
+      "cell": [
+        5,
+        18
+      ],
+      "kind": "decor",
+      "label": "racks of casks",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_cask_rack_12",
+      "cell": [
+        6,
+        18
+      ],
+      "kind": "decor",
+      "label": "a cask on its side",
+      "model": "barrel"
+    },
+    {
+      "id": "larders_cask_rack_13",
+      "cell": [
+        9,
+        18
+      ],
+      "kind": "decor",
+      "label": "racks of casks",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_cask_rack_14",
+      "cell": [
+        10,
+        18
+      ],
+      "kind": "decor",
+      "label": "a cask on its side",
+      "model": "barrel"
+    },
+    {
+      "id": "larders_cask_rack_15",
+      "cell": [
+        11,
+        18
+      ],
+      "kind": "decor",
+      "label": "racks of casks",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_cask_rack_16",
+      "cell": [
+        12,
+        18
+      ],
+      "kind": "decor",
+      "label": "a cask on its side",
+      "model": "barrel"
+    },
+    {
+      "id": "larders_wall_racks",
+      "cell": [
+        1,
+        13
+      ],
+      "kind": "examine",
+      "label": "bottles racked to the ceiling",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_wall_racks_b",
+      "cell": [
+        14,
+        20
+      ],
+      "kind": "decor",
+      "label": "bottles racked to the ceiling",
+      "model": "cask_rack"
+    },
+    {
+      "id": "larders_martikov_casks",
+      "cell": [
+        13,
+        13
+      ],
+      "kind": "examine",
+      "label": "new casks with a raven branded on them",
+      "model": "barrel_spigot",
+      "when": "flag.winery_wine_flows"
+    },
+    {
+      "id": "larders_bricked_rack",
+      "cell": [
+        7,
+        23
+      ],
+      "kind": "examine",
+      "label": "a bricked-over rack",
+      "model": "brick_wall",
+      "when": "not flag.larders_niche_opened",
+      "dialogue": "castle_ravenloft/larders_cellar:niche"
+    },
+    {
+      "id": "larders_open_niche",
+      "cell": [
+        7,
+        23
+      ],
+      "kind": "examine",
+      "label": "the wine merchant's niche",
+      "model": "wall_alcoves",
+      "when": "flag.larders_niche_opened",
+      "dialogue": "castle_ravenloft/larders_cellar:niche"
+    },
+    {
+      "id": "larders_watch_pallet_1",
+      "cell": [
+        16,
+        13
+      ],
+      "kind": "decor",
+      "label": "a guard's pallet",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "larders_watch_pallet_2",
+      "cell": [
+        16,
+        16
+      ],
+      "kind": "decor",
+      "label": "a guard's pallet",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "larders_watch_pallet_3",
+      "cell": [
+        16,
+        19
+      ],
+      "kind": "decor",
+      "label": "a guard's pallet",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "larders_watch_pallet_4",
+      "cell": [
+        25,
+        19
+      ],
+      "kind": "decor",
+      "label": "a guard's pallet",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "larders_watch_cards",
+      "cell": [
+        20,
+        17
+      ],
+      "kind": "examine",
+      "label": "a card game, abandoned mid-hand",
+      "model": "table_chairs"
+    },
+    {
+      "id": "larders_watch_table_b",
+      "cell": [
+        21,
+        17
+      ],
+      "kind": "decor",
+      "label": "a card table",
+      "model": "table"
+    },
+    {
+      "id": "larders_watch_armor",
+      "cell": [
+        24,
+        12
+      ],
+      "kind": "decor",
+      "label": "an empty armour stand",
+      "model": "armor_stand"
+    },
+    {
+      "id": "larders_lift_winch",
+      "cell": [
+        27,
+        13
+      ],
+      "kind": "examine",
+      "label": "the lift winch",
+      "model": "winch",
+      "dialogue": "castle_ravenloft/larders_machinery:winch"
+    },
+    {
+      "id": "larders_lift_gears",
+      "cell": [
+        30,
+        13
+      ],
+      "kind": "decor",
+      "label": "gears and a brake band",
+      "model": "gear_brake"
+    },
+    {
+      "id": "larders_lift_cage",
+      "cell": [
+        29,
+        16
+      ],
+      "kind": "examine",
+      "label": "the lift cage",
+      "model": "cage_hanging"
+    },
+    {
+      "id": "larders_manacle_rack",
+      "cell": [
+        38,
+        14
+      ],
+      "kind": "decor",
+      "label": "manacles on hooks",
+      "model": "wall_chains"
+    },
+    {
+      "id": "larders_long_stair_mark",
+      "cell": [
+        37,
+        19
+      ],
+      "kind": "examine",
+      "label": "a stair worn into a trough",
+      "model": "bone_scatter"
+    }
+  ],
+  "containers": [
+    {
+      "id": "larders_pantry_shelves",
+      "cell": [
+        38,
+        2
+      ],
+      "label": "the larder shelves",
+      "model": "shelves",
+      "items": [
+        {
+          "id": "ration",
+          "qty": 6
+        },
+        {
+          "id": "oil",
+          "qty": 2
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "larders_cyrus_box",
+      "cell": [
+        32,
+        5
+      ],
+      "label": "a painted box under the bed",
+      "model": "chest_painted",
+      "items": [
+        {
+          "id": "candle",
+          "qty": 3
+        }
+      ],
+      "gold": 7,
+      "flag": "larders_cyrus_box_opened"
+    },
+    {
+      "id": "larders_watch_lockers",
+      "cell": [
+        25,
+        21
+      ],
+      "label": "the watch's lockers",
+      "model": "footlocker",
+      "items": [
+        {
+          "id": "longsword",
+          "qty": 2
+        },
+        {
+          "id": "chain_shirt",
+          "qty": 1
+        },
+        {
+          "id": "shield",
+          "qty": 1
+        }
+      ],
+      "gold": 40
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        21,
+        1
+      ],
+      "kind": "fire",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        27,
+        6
+      ],
+      "kind": "fire",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        33,
+        6
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        10,
+        9
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        30,
+        10
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        35,
+        13
+      ],
+      "kind": "torch",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "traps": [],
+  "npcs": [
+    {
+      "npc": "cyrus_belview",
+      "cell": [
+        26,
+        5
+      ],
+      "dialogue": "castle_ravenloft/larders_cyrus:start",
+      "when": "not flag.larders_cyrus_slain",
+      "facing": "west",
+      "approach": 5
+    }
+  ],
+  "encounters": [
+    {
+      "id": "larders_guardroom",
+      "trigger": "enter_area:larders_guardroom",
+      "when": "not flag.larders_watch_beaten",
+      "text": "Dead men in the castle's livery sit up on their pallets. Two suits of armour by the door turn their empty helms toward you. The watch was never relieved.",
+      "surprise": "",
+      "flag": "larders_watch_beaten",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            15
+          ],
+          "name": "Sergeant of the Watch"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            22,
+            19
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            18,
+            14
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            23,
+            14
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            17,
+            18
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            21,
+            20
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            24,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "id": "larders_watch_alarm",
+      "trigger": "dialogue",
+      "when": "not flag.larders_watch_beaten",
+      "text": "Cyrus's shriek goes down the guards' run like a bell. Boots answer it, and some of them are not boots.",
+      "surprise": "",
+      "flag": "larders_watch_beaten",
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            2
+          ],
+          "name": "Sergeant of the Watch"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            6
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            21,
+            2
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            26,
+            2
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            19,
+            6
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            22,
+            6
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            25,
+            7
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            28,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "larders_cyrus_fight",
+      "trigger": "dialogue",
+      "flag": "larders_cyrus_slain",
+      "text": "Cyrus snatches up a cleaver in one hand and a ladle in the other, weeping.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            26,
+            5
+          ],
+          "name": "Cyrus Belview"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:castle_ravenloft_larders"
+  },
+  "rest": "risky",
+  "treasure_spots": {
+    "castle_ravenloft_wine_cellar": {
+      "dialogue": "castle_ravenloft/larders_cellar:niche"
+    }
+  }
+}
