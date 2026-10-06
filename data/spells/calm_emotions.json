@@ -38,12 +38,6 @@
   },
   "save": "cha",
   "save_success": "none",
-  "tags": [
-    "control",
-    "social"
-  ],
-  "summary": "Humanoids in a 20-ft Sphere make a Cha save or are calmed: no Charmed/Frightened, or hostility set aside.",
-  "text": "Each Humanoid in a 20-foot-radius Sphere centered on a point within range makes a Charisma saving throw. For each creature that fails, you choose one effect. Either it has Immunity to the Charmed and Frightened conditions until the spell ends, and any such conditions already on it are suppressed for the duration; or it becomes Indifferent toward creatures of your choice that it is Hostile toward, an effect that ends if it takes damage or sees its allies take damage. When the spell ends, the creature's attitude returns to normal.",
   "area_targets": "enemies",
   "effects": [
     {
@@ -57,8 +51,53 @@
             "stat": "flag",
             "value": "indifferent"
           }
+        ],
+        "only_choice": "indifferent"
+      }
+    },
+    {
+      "effect": "modifiers",
+      "params": {
+        "only_choice": "suppress",
+        "modifiers": [
+          {
+            "stat": "condition_immunity",
+            "value": "charmed"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "frightened"
+          }
+        ]
+      }
+    },
+    {
+      "effect": "end_condition",
+      "params": {
+        "only_choice": "suppress",
+        "conditions": [
+          "charmed",
+          "frightened"
         ]
       }
     }
-  ]
+  ],
+  "choice": {
+    "kind": "option",
+    "label": "Calm",
+    "from": [
+      "indifferent",
+      "suppress"
+    ]
+  },
+  "area_targets_by_choice": {
+    "suppress": "allies"
+  },
+  "willing_skip_save": true,
+  "tags": [
+    "control",
+    "social"
+  ],
+  "summary": "Humanoids in a 20-ft Sphere make a Cha save or are calmed: no Charmed/Frightened, or hostility set aside.",
+  "text": "Each Humanoid in a 20-foot-radius Sphere centered on a point within range makes a Charisma saving throw. For each creature that fails, you choose one effect. Either it has Immunity to the Charmed and Frightened conditions until the spell ends, and any such conditions already on it are suppressed for the duration; or it becomes Indifferent toward creatures of your choice that it is Hostile toward, an effect that ends if it takes damage or sees its allies take damage. When the spell ends, the creature's attitude returns to normal."
 }

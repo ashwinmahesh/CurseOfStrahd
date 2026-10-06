@@ -422,9 +422,10 @@ func creatures_in(cells: Array[Vector2i]) -> Array[Combatant]:
 
 ## Who an area spell affects among the creatures in it: everyone (default for a point), everyone but the caster
 ## (default for areas from yourself), or "creatures of your choice" (`area_targets`: enemies / allies).
-func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i]) -> Array[Combatant]:
+func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: String = "") -> Array[Combatant]:
 	var self_area := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
 	var mode := str(s.get("area_targets", "others" if self_area else "all"))
+	mode = str((s.get("area_targets_by_choice", {}) as Dictionary).get(choice, mode))
 	var out: Array[Combatant] = []
 	for v in creatures_in(cells):
 		match mode:
@@ -924,7 +925,7 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 	var s := ctx["s"] as Dictionary
 	var victims: Array[Combatant] = tgt
 	if not cells.is_empty() and not s.has("attack"):
-		victims = _area_victims(c, s, cells)
+		victims = _area_victims(c, s, cells, str(ctx.get("choice", "")))
 	if s.has("attack"):
 		var count := 1
 		var dmg := s.get("damage", []) as Array

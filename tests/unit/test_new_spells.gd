@@ -638,3 +638,23 @@ func test_wall_of_fire_can_be_a_ring_that_burns_inside() -> void:
 	e.end_turn()
 	e.end_turn()
 	assert_true(t.creature.hp < 300, "ending a turn inside the ring burns")
+
+
+func test_bestow_curse_can_curse_any_ability() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["bestow_curse"], Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(3, 3), 200)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "bestow_curse", 3, [t], Vector2.INF, Vector2.ZERO, {"choice": "ability_str"}).ok)
+	assert_true(t.creature.modifiers_for(&"disadvantage").any(func(m: Modifier) -> bool: return m.text("on") == "save:str"))
+
+
+func test_calm_emotions_can_free_allies_from_fear() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["calm_emotions"], Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3))
+	TestCombat.punching_bag(e, Vector2i(9, 7), 200)
+	a.creature.add_condition(&"frightened", "test")
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "calm_emotions", 2, [], Vector2(5.5, 3.5), Vector2.ZERO, {"choice": "suppress"}).ok)
+	assert_false(a.creature.has_condition(&"frightened"))

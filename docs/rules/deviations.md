@@ -32,8 +32,6 @@ started" in coverage.md, not a deviation.
 | Cast-time choices | The first option is the default; the hotbar's right-click menu picks another | Keeps one click for the common case | — |
 | Commander's Strike, Crown of Madness, Maneuvering Attack | The ally's attack target, the crowned creature's victim and the maneuvering ally are picked automatically (the best target in reach; the nearest ally) | Saves a second targeting step | With the targeting polish |
 | Charger, Lunging Attack | "Moved this turn" stands in for "moved 5 (10) ft in a straight line toward the target" | The grid path isn't tracked as straight lines | — |
-| Calm Emotions | Only the "indifferent" option; the Charmed/Frightened suppression option isn't offered | The enemy-pacifying option is the combat use | Phase 3 |
-| Bestow Curse | The ability-check curse always picks Wisdom | One fewer choice | With the cast-time choice UI |
 | Disarming Attack | The dropped weapon is picked up at the start of the creature's next turn (its free object interaction) | Items on the ground aren't modelled | Phase 4 inventory |
 | Levitate, Fly | No altitude on the grid: Levitate puts the target out of melee reach and stops its walking; flyers ignore ground terrain | The grid is flat | Phase 3 levels |
 | Blink, Etherealness, Plane Shift | Blinking back lands on the same square; a monster that escapes this way leaves the fight | Saves a placement step; the escape is what matters in a fight | — |
