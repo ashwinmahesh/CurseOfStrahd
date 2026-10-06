@@ -3,7 +3,8 @@
   "name": "Needle Blight",
   "source": {
     "book": "MM2025",
-    "note": "Numbers follow the 2014 Monster Manual block (the one Curse of Strahd uses); the 2024 changes are not entered yet. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight."
+    "edition": "2014",
+    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual block (the one Curse of Strahd uses); the 2024 changes are not entered yet. Entered from knowledge, not yet checked against the book. Blind beyond its blindsight."
   },
   "size": "medium",
   "type": "plant",

@@ -3,6 +3,7 @@
   "name": "Strahd Zombie",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "converted to the 2024 stat block format"
   },
   "size": "medium",

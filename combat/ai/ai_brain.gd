@@ -114,6 +114,9 @@ func play_turn(c: Combatant) -> CombatResult:
 			if aid.is_paused():
 				return aid
 		ma.bonus_action(c, "fey_step")
+		var control := ma.bonus_action(c, "control")
+		if control.is_paused():
+			return control
 		var spell_plan := _spell_plan(c, prof)
 		if not spell_plan.is_empty():
 			last_plan = spell_plan

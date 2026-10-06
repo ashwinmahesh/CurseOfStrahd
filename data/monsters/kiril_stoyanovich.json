@@ -3,6 +3,7 @@
   "name": "Kiril Stoyanovich",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd's pack leader: the 2024 Werewolf (data/monsters/werewolf.json) with the book's change as remembered, 90 Hit Points (Constitution 16 here to fit 12d8 + 36). Challenge 4 is our estimate for the extra Hit Points. Entered from knowledge, not yet checked against the book."
   },
   "size": "medium",

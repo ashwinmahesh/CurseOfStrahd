@@ -3,6 +3,7 @@
   "name": "Exethanter",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd's failing lich, built from the 2014 Monster Manual lich with the book's changes as remembered: 99 Hit Points (entered as a fixed number), challenge 10, and most spells forgotten; the proficiency-based numbers are recomputed for challenge 10. Entered from knowledge, not yet checked against the book. The Hit Points, the challenge rating and the spells he keeps need the book; the lich's Legendary Actions and Legendary Resistance are left out (check whether the book keeps them). The lich's immunity to nonmagical weapons is left out. Paralyzing Touch's paralysis is text only (the engine can't repeat the save each turn)."
   },
   "size": "medium",

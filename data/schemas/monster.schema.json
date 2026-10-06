@@ -236,7 +236,8 @@
             "trample",
             "rampage",
             "consume_life",
-            "vanish"
+            "vanish",
+            "cast_control"
           ],
           "description": "What a special bonus action does."
         },

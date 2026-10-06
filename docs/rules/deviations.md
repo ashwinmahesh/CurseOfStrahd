@@ -100,4 +100,9 @@ started" in coverage.md, not a deviation.
 | Antimagic Field | Spells, spell effects and Magic actions are stopped or suppressed; magic items' own bonuses aren't suppressed yet | Item suppression needs the magic-item system | With magic items |
 | Wish, Gate, Teleport, Clone and other out-of-combat high-level spells | Not in fights | They do their work outside combat | Phase 5 exploration |
 | Sundering Blow, Battering Roots | Sundering's +5 goes to the next attack by anyone else; Battering Roots adds a Topple (not Push) | The common case | — |
-
+| Monster charges ("moved 20+ feet straight toward it") | Counted as the distance the monster closed on the target since its turn began | The grid doesn't record the path's shape | — |
+| Giant spider's Web | The Restrained creature breaks free with an action and a DC 13 Strength (Athletics) check | Webs aren't objects with AC and Hit Points on the grid | With attackable objects |
+| Ghost's Possession | The possessed body fights for the ghost's side with its own attacks; the ghost leaves only when the body drops | The ghost-in-a-body stat swap needs a combined stat block | — |
+| Water elemental's Whelm; will-o'-wisp's Vanish | No suffocation inside Whelm (it holds two creatures up to Large); Vanish ends on an attack or Consume Life, not when the wisp's Concentration breaks | Suffocation and monster Concentration aren't tracked | — |
+| Roc's Swoop | The dropped creature falls 60 ft (half the roc's Fly Speed) | The grid has no altitude | — |
+| Djinni's Create Whirlwind, nightmare's Ethereal Stride and Confer Fire Resistance | Text only | Monster-made moving zones and planar travel aren't built | With monster zones |

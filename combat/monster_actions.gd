@@ -848,6 +848,9 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 			"cast":
 				if plan == "support":
 					return _divine_aid(c, act)
+			"cast_control":
+				if plan == "control":
+					return _control_spell(c, act)
 			"fey_step":
 				if plan == "fey_step":
 					return _fey_step(c, act)
@@ -892,6 +895,28 @@ func _divine_aid(c: Combatant, act: Dictionary) -> CombatResult:
 		spend(c, act)
 		return cast(c, "healing_word", [hurt])
 	return CombatResult.new()
+
+
+## A control spell cast as a Bonus Action (a stone golem's Slow): aimed at the nearest foe it can see and up to five
+## more foes within 20 ft of it (the spell's 40-ft cube), when at least two would be caught.
+func _control_spell(c: Combatant, act: Dictionary) -> CombatResult:
+	var e := enc()
+	var spell_id := str((act.get("cast", []) as Array)[0]) if not (act.get("cast", []) as Array).is_empty() else ""
+	var anchor: Combatant = null
+	for h in e.hostiles_of(c):
+		if not h.is_down() and e.can_see(c, h) and e.distance(c, h) <= 120 and (anchor == null or e.distance(c, h) < e.distance(c, anchor)):
+			anchor = h
+	if spell_id == "" or anchor == null:
+		return CombatResult.new()
+	var group: Array = []
+	for h2 in e.hostiles_of(c):
+		if not h2.is_down() and e.distance(anchor, h2) <= 20 and group.size() < 6:
+			group.append(h2)
+	if group.size() < 2:
+		return CombatResult.new()
+	c.bonus_available = false
+	spend(c, act)
+	return cast(c, spell_id, group)
 
 
 ## Rampage (giant hyena): right after it damages a creature that was already Bloodied, it moves up to half its

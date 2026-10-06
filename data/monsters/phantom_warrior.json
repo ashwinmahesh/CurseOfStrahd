@@ -3,6 +3,7 @@
   "name": "Phantom Warrior",
   "source": {
     "book": "CoS",
+    "edition": "2014",
     "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. Its Armor Class, the sword's damage type and its resistances need the book. Resistance to nonmagical weapons is entered as plain Bludgeoning, Piercing and Slashing resistance."
   },
   "size": "medium",

@@ -3,16 +3,17 @@
   "name": "Amber Golem",
   "source": {
     "book": "custom",
-    "note": "An amber guardian for the Amber Temple on the 2014 Monster Manual stone golem's numbers. Entered from knowledge, not yet checked against the book. Its immunity to nonmagical, non-adamantine weapons is left out, as the 2024 golems drop it. Slow and Immutable Form are text only (the engine's save actions can't apply a hindrance without a condition, or repeat the save, yet)."
+    "edition": "2024",
+    "note": "An amber guardian for the Amber Temple on the 2024 Stone Golem's numbers (SRD 5.2.1), under its own name."
   },
   "size": "large",
   "type": "construct",
   "alignment": "unaligned",
-  "ac": 17,
-  "initiative": -1,
+  "ac": 18,
+  "initiative": 3,
   "hp": {
-    "average": 178,
-    "dice": "17d10+85"
+    "average": 220,
+    "dice": "21d10+105"
   },
   "speed": {
     "walk": 30
@@ -67,13 +68,6 @@
         }
       ],
       "implemented": "engine"
-    },
-    {
-      "id": "magic_weapons",
-      "name": "Magic Weapons",
-      "action": "passive",
-      "summary": "Its weapon attacks count as magical.",
-      "implemented": "text"
     }
   ],
   "actions": [
@@ -84,10 +78,13 @@
       "multiattack": [
         {
           "action": "slam",
-          "count": 2
+          "count": 2,
+          "or": [
+            "force_bolt"
+          ]
         }
       ],
-      "summary": "Makes two Slam attacks."
+      "summary": "Two attacks, Slam or Force Bolt in any mix."
     },
     {
       "id": "slam",
@@ -99,25 +96,58 @@
       },
       "damage": [
         {
-          "average": 19,
-          "dice": "3d8+6",
+          "average": 15,
+          "dice": "2d8+6",
           "type": "bludgeoning"
+        },
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "force"
         }
       ],
-      "summary": "A crushing amber fist."
+      "summary": "A crushing amber fist humming with force."
     },
     {
-      "id": "slow",
-      "name": "Slow",
-      "kind": "special",
-      "summary": "Recharge 5-6. Creatures within 10 ft that see it: DC 17 Wis save or slowed for 1 minute (half Speed, no Reactions, one attack, an action or a Bonus Action).",
-      "text": "An affected creature repeats the save at the end of each of its turns. Text only for the engine.",
-      "recharge": "5-6"
+      "id": "force_bolt",
+      "name": "Force Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 9,
+        "range": [
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "4d10",
+          "type": "force"
+        }
+      ],
+      "summary": "A bolt of force up to 120 ft."
     }
   ],
   "regions": [
     "amber_temple"
   ],
   "ai_profile": "brute",
-  "summary": "A towering construct of polished amber: two crushing fists and a pulse of magic that slows everyone near."
+  "summary": "A towering construct of polished amber: two crushing fists and a pulse of magic that slows everyone near.",
+  "bonus_actions": [
+    {
+      "id": "slow",
+      "name": "Slow",
+      "kind": "spellcasting",
+      "recharge": "5-6",
+      "do": "cast_control",
+      "cast": [
+        "slow"
+      ],
+      "summary": "Recharge 5-6. Casts Slow (Con, DC 17) as a Bonus Action."
+    }
+  ],
+  "spellcasting": {
+    "ability": "con",
+    "dc": 17
+  }
 }
