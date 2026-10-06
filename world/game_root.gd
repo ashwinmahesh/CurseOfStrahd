@@ -296,6 +296,8 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 func _dialogue_ended(combat: String) -> void:
 	dialogue = null
 	hud.visible = true
+	if view.guest_members.size() != st.guests.size():
+		view.place_guests()
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view.refresh_npcs()
 	_refresh()

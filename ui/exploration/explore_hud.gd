@@ -180,6 +180,29 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 					sheet_requested.emit(idx))
 		card.add_child(btn)
 		_party_box.add_child(card)
+	# Guests (story allies the player commands, ADR 0010): a smaller frame, marked as a guest.
+	for gi in st.guests.size():
+		var g := st.guests[gi]
+		var gcard := PanelContainer.new()
+		var gs := StyleBoxFlat.new()
+		gs.bg_color = Color(Look.color("ink"), 0.85)
+		gs.border_color = Look.color("moonlight")
+		gs.set_border_width_all(2)
+		gs.set_corner_radius_all(4)
+		gs.set_content_margin_all(5)
+		gcard.add_theme_stylebox_override("panel", gs)
+		var grow := HBoxContainer.new()
+		gcard.add_child(grow)
+		var npc := Compendium.shared().get_entry("npcs", st.guest_ids[gi])
+		var gtex := TextureRect.new()
+		var gpath := "res://art/portraits/%s.png" % str(npc.get("portrait", st.guest_ids[gi]))
+		gtex.texture = load(gpath) as Texture2D if ResourceLoader.exists(gpath) else null
+		gtex.custom_minimum_size = Vector2(40, 40)
+		gtex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		gtex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		grow.add_child(gtex)
+		grow.add_child(_label("%s (guest)\n%d/%d" % [g.name, g.hp, g.max_hp()], 12, "moonlight"))
+		_party_box.add_child(gcard)
 	if location_name != "":
 		_where.text = location_name
 	var hours := st.minute_of_day / 60

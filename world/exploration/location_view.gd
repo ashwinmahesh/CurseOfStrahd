@@ -39,6 +39,7 @@ var _last_banter := -1000
 var members: Array[Combatant] = []
 var tokens: Dictionary = {}          ## combatant id -> CombatToken
 var npc_tokens: Dictionary = {}      ## npc id -> CombatToken
+var guest_members: Array[Combatant] = []   ## story allies following the party (StoryState.guests)
 var _npc_shown: Array[Dictionary] = []   ## [{spec, token, cell, low_before}] for the NPC entries standing here now
 var door_nodes: Dictionary = {}      ## door id -> Node3D
 var container_nodes: Dictionary = {}
@@ -255,8 +256,38 @@ func _place_party() -> void:
 		add_child(tok)
 		tokens[cb.id] = tok
 	_save_positions()
+	place_guests()
 	if lantern != null and not members.is_empty():
 		(tokens[members[0].id] as Node3D).add_child(lantern)
+
+
+## Puts the party's guests behind the last member (called again when someone joins or leaves).
+func place_guests() -> void:
+	for g in guest_members:
+		if tokens.has(g.id):
+			(tokens[g.id] as Node).queue_free()
+			tokens.erase(g.id)
+	guest_members.clear()
+	if st.guests.is_empty() or members.is_empty():
+		return
+	var tail := members[members.size() - 1].cell
+	var taken := {}
+	for m in members:
+		taken[m.cell] = true
+	var spots := _cells_around(tail, members.size() + st.guests.size() + 4)
+	var k := 0
+	for i in st.guests.size():
+		while k < spots.size() and taken.has(spots[k]):
+			k += 1
+		var cell := spots[k] if k < spots.size() else tail
+		taken[cell] = true
+		var cb := Combatant.new(st.guests[i], &"guest", cell)
+		guest_members.append(cb)
+		var npc := Compendium.shared().get_entry("npcs", st.guest_ids[i])
+		var tok := CombatToken.create(cb, str(npc.get("sprite", st.guest_ids[i])))
+		tok.position = board.cell_center(cell)
+		add_child(tok)
+		tokens[cb.id] = tok
 
 
 func _cells_around(start: Vector2i, n: int) -> Array[Vector2i]:
@@ -432,6 +463,17 @@ func _advance_party(next: Vector2i) -> void:
 			continue
 		if old[i - 1] != members[i].cell:
 			_move_member(i, old[i - 1])
+	# Guests walk at the back of the line.
+	var ahead := old[old.size() - 1] if not old.is_empty() else next
+	for g in guest_members:
+		if g.creature.hp <= 0 or g.cell == ahead:
+			continue
+		var was := g.cell
+		g.cell = ahead
+		var gt := tokens[g.id] as CombatToken
+		gt.face(Vector2(ahead - was), true)
+		create_tween().tween_property(gt, "position", board.cell_center(ahead), (SNEAK_STEP_TIME if sneaking else STEP_TIME) * 0.95)
+		ahead = was
 
 
 func _move_member(i: int, to: Vector2i) -> void:
@@ -1167,6 +1209,9 @@ func start_encounter(encounter_id: String) -> bool:
 		if m.creature.dead:
 			continue
 		party_cbs.append(e.add(m.creature, &"party", m.cell))
+	for g in guest_members:
+		if not g.creature.dead:
+			e.add(g.creature, &"guest", g.cell).controller = &"player"
 	var counts := {}
 	for mo: Variant in spec["monsters"]:
 		var mid := str((mo as Dictionary)["monster"])
@@ -1194,11 +1239,11 @@ func start_encounter(encounter_id: String) -> bool:
 	if sneaking and who == "":
 		surprised.append_array(_stealth_surprise(e))
 	(st.loc_state(loc_id)["encounters"] as Dictionary)[encounter_id] = "started"
-	for m in members:
+	for m in members + guest_members:
 		(tokens[m.id] as Node3D).visible = false
 	var ctokens := {}
 	for c in e.combatants:
-		var t := CombatToken.create(c)
+		var t := _combat_token(c)
 		t.position = board.cell_center(c.cell, c.size_cells)
 		add_child(t)
 		ctokens[c.id] = t
@@ -1240,11 +1285,11 @@ func resume_encounter(snapshot: Dictionary) -> bool:
 	in_combat = true
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, dice, st.party)
-	for m in members:
+	for m in members + guest_members:
 		(tokens[m.id] as Node3D).visible = false
 	var ctokens := {}
 	for c in e.combatants:
-		var t := CombatToken.create(c)
+		var t := _combat_token(c)
 		t.position = board.cell_center(c.cell, c.size_cells)
 		add_child(t)
 		ctokens[c.id] = t
@@ -1256,6 +1301,15 @@ func resume_encounter(snapshot: Dictionary) -> bool:
 	var none: Array[String] = []
 	_run_combat(encounter_id, spec, e, ctokens, none)
 	return true
+
+
+## A fight's token: guests wear their NPC sprite rather than their stat block's.
+func _combat_token(c: Combatant) -> CombatToken:
+	if c.side == &"guest":
+		var npc := Compendium.shared().get_entry("npcs", c.id.trim_prefix("guest_"))
+		if not npc.is_empty():
+			return CombatToken.create(c, str(npc.get("sprite", npc["id"])))
+	return CombatToken.create(c)
 
 
 func _stealth_surprise(e: Encounter) -> Array[String]:
@@ -1286,8 +1340,8 @@ func _combat_grid() -> CombatGrid:
 
 func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, outcome: String) -> void:
 	for c in e.combatants:
-		if c.side == &"party":
-			for m in members:
+		if c.side in [&"party", &"guest"]:
+			for m in members + guest_members:
 				if m.creature == c.creature:
 					m.cell = c.cell
 		elif c.creature.dead:
@@ -1298,7 +1352,7 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 	if combat_view != null:
 		combat_view.queue_free()
 		combat_view = null
-	for m in members:
+	for m in members + guest_members:
 		var tok := tokens[m.id] as CombatToken
 		tok.position = board.cell_center(m.cell)
 		tok.visible = true

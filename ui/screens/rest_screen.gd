@@ -74,6 +74,9 @@ func _finish_short() -> void:
 	for ch in st.party:
 		if not ch.dead:
 			ch.finish_short_rest()
+	for g in st.guests:
+		if not g.dead:
+			g.finish_short_rest()
 	st.advance_minutes(60)
 	_log.text = "An hour passes. Short-rest features are back."
 	_narrate("rest:short")
@@ -95,6 +98,9 @@ func _long_rest(rule: String) -> void:
 		for ch in st.party:
 			if not ch.dead:
 				ch.finish_long_rest()
+		for g in st.guests:
+			if not g.dead:
+				g.finish_long_rest()
 		_log.text = "Eight hours pass. Everyone wakes rested, if not refreshed."
 		_narrate("rest:long")
 		var region := str(Compendium.shared().get_entry("locations", st.location).get("region", ""))

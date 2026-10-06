@@ -237,3 +237,24 @@ func test_right_click_menus_offer_the_right_actions() -> void:
 	root.call("world_action", v.leader().cell, "spells:2")
 	await _frames(1)
 	assert_true(root.get("screen") is CharacterSheetScreen)
+
+
+func test_a_guest_follows_and_fights_on_our_side() -> void:
+	assert_true(GameState.story.add_guest("ireena"))
+	var v := _view()
+	v.place_guests()
+	await _frames(1)
+	assert_eq(v.guest_members.size(), 1)
+	var g := v.guest_members[0]
+	v.walk_to(Vector2i(2, 1))
+	await _walk_until_idle()
+	assert_true(v.grid.distance_ft(g.cell, 1, v.members[v.members.size() - 1].cell, 1) <= 10, "the guest keeps up")
+	assert_true(v.start_encounter("wolves"))
+	await _frames(5)
+	var sides := v.combat_view.e.combatants.map(func(c: Combatant) -> String: return str(c.side))
+	assert_true("guest" in sides, str(sides))
+	for c in v.combat_view.e.combatants:
+		if c.side == &"guest":
+			assert_true(c.is_player_controlled(), "the player commands guests")
+	root.call("_refresh")
+	GameState.story.remove_guest("ireena")
