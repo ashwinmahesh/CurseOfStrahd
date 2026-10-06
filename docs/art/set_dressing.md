@@ -76,7 +76,7 @@ about 256 texels per world unit (512 max, never upscaled), palette snap, despeck
     make props                                  # re-cut every sheet from its source
     make import && python3 tools/art/set_import.py art/sprites/props/*.png && make import
 
-This pass made 47 sheets (178 pieces) and one texture (`wild/water`) in 48 calls.
+This pass made 43 sheets (157 pieces) and one texture (`wild/water`) in 45 Gemini calls (one sheet was redrawn).
 
 ## Checking it
 
