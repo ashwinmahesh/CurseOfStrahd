@@ -174,6 +174,8 @@ func test_a_natural_one_wakes_a_dark_gift() -> void:
 	TestCombat.start_with(e, c)
 	TestCombat.next_d20(e, 1)
 	e.attack(c, t, _melee(e, c))
+	if e.pending != null:
+		e.answer_reaction(false)
 	assert_true(_logged(e, "dark gift (Aberrant Anatomy)"), "the natural 1 calls for the drawback's save")
 
 
