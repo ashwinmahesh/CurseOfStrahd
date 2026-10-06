@@ -160,8 +160,14 @@ func test_a_looted_desk_dims() -> void:
 	await _frames(1)
 	var desk := v.container_nodes["library_desk"] as Node3D
 	var mi := desk.find_children("*", "MeshInstance3D", true, false)[0] as MeshInstance3D
-	var before := (mi.get_surface_override_material(0) as ShaderMaterial).get_shader_parameter("albedo") as Color
+	var before: Array[Material] = []
+	for i in mi.mesh.get_surface_count():
+		before.append(mi.get_surface_override_material(i))
 	SetDressing.mark_looted(desk)
-	var after := (mi.get_surface_override_material(0) as ShaderMaterial).get_shader_parameter("albedo") as Color
-	assert_true(after.v < before.v, "darker once looted")
+	for i in mi.mesh.get_surface_count():
+		var m := mi.get_surface_override_material(i) as ShaderMaterial
+		var key := "albedo" if m.shader == Look.CEL_SHADER else "tint"
+		var a := ModelPiece.colour_of((before[i] as ShaderMaterial).get_shader_parameter(key))
+		var b := ModelPiece.colour_of(m.get_shader_parameter(key))
+		assert_true(b.v < a.v, "surface %d is darker once looted" % i)
 	v.queue_free()

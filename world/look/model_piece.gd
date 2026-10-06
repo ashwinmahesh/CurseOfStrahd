@@ -277,11 +277,25 @@ static func dim(node: Node3D) -> void:
 		var mi := n as MeshInstance3D
 		for i in mi.mesh.get_surface_count():
 			var m := mi.get_surface_override_material(i) as ShaderMaterial
-			if m == null or m.shader != Look.CEL_SHADER:
+			if m == null:
+				continue
+			# A flat colour's albedo, or a texture's tint, darkened.
+			var key := "albedo" if m.shader == Look.CEL_SHADER else ("tint" if m.shader == Look.CEL_WORLD_SHADER else "")
+			if key == "":
 				continue
 			var d := m.duplicate() as ShaderMaterial
-			d.set_shader_parameter("albedo", (m.get_shader_parameter("albedo") as Color) * Color(0.55, 0.5, 0.55))
+			d.set_shader_parameter(key, colour_of(m.get_shader_parameter(key)) * Color(0.55, 0.5, 0.55))
 			mi.set_surface_override_material(i, d)
+
+
+## A shader colour parameter as a Color (a vec3 may come back as a Vector3; unset is white).
+static func colour_of(v: Variant) -> Color:
+	if v is Color:
+		return v as Color
+	if v is Vector3:
+		var w := v as Vector3
+		return Color(w.x, w.y, w.z)
+	return Color.WHITE
 
 
 ## Distance along a ray to the nearest model surface under `node` (itself and its children), or INF, so pointing at
