@@ -22,11 +22,26 @@ Expertise starred), from `PartyCoverage`.
 ## Character sheet (`pm_02_sheet`)
 ![Character sheet](wireframes/pm_02_sheet.svg)
 
-Tabs: Overview · Abilities & Skills · Features & Traits · Spells · Inventory · Active Effects · Notes.
-- **Overview**: AC, HP, Speed, Initiative, Proficiency Bonus, spell DC and attack, slots, resources; each opens its
-  breakdown (`Breakdown.describe()`).
-- **Features & Traits**: every feature with its source (class level, subclass, species, background, feat) and full
-  text; `implemented: text` features are marked "rules text only for now" until their system exists.
+Laid out like Baldur's Gate 3's sheet (owner request 2026-10-06: "just a wall of text, really unreadable"), in three
+columns so the numbers that matter are always on screen:
+- **Hero** (left): portrait chips for the party along the top; the portrait in a gilt frame, name, class and origin;
+  the Hit Points bar (Bloodied, Unconscious, Stable or Dead in words, temporary HP in moonlight, death saves when down);
+  the Armor Class shield and plaques for Initiative, Speed and Proficiency Bonus; then Hit Point Dice, passive
+  Perception, Insight and Investigation, senses, load, size, Heroic Inspiration and Exhaustion.
+- **Abilities** (middle): six medallions (modifier large, score on a plaque) with each saving throw under it, and the
+  18 skills in two columns with marks for proficient, Expertise and untrained.
+- **Tabs** (right): Actions (attacks, spellcasting DC and attack, slots as lozenges, resources with their recharge),
+  Features · Spells · Equipment · Effects · Notes. Q/E switch tabs, ←/→ switch character.
+- Every number's tooltip lays its `Breakdown` out line by line; long rules text (features, spells, items, conditions)
+  lives in tooltips, and the page keeps to names, one-line summaries and tags (Action, Bonus Action, Reaction,
+  Concentration, Ritual, Always prepared). Drawn pieces are in `ui/character/sheet_parts.gd`.
+- **Features**: grouped by class (with subclass), species, background and feats; each with how it's used, its level
+  or source, its summary, and the full text on hover; `implemented: text` features are tagged "Rules text only".
+  Below them, armor, weapon, tool and language training and Weapon Mastery.
+- **Spells**: per level, with slots as lozenges in the header; each spell shows casting time, range and what it does
+  ("120 ft · 2d10 Fire · Dex save"), and a Cast control when it can be cast outside a fight (`FieldCasting`).
+- **Equipment**: worn and wielded slots with their AC or damage, attunement, the pack, load and the purse, and a way
+  to the full inventory screen.
 - **Active Effects**: every condition, spell and item effect with its source, what it does and its remaining
   duration (`Effect.describe_duration()`), including ended Concentration effects greyed for a turn so the player
   sees what just dropped.
