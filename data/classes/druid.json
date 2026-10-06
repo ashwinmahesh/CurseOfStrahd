@@ -394,6 +394,7 @@
             "count": 4,
             "count_column": "known_forms",
             "replaceable": "long_rest",
+            "replace_max": 1,
             "filter": {
               "cr_column": "max_form_cr",
               "fly_column": "forms_fly"

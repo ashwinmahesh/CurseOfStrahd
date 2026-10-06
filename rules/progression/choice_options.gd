@@ -224,6 +224,8 @@ static func _swap_noun(c: Choice) -> String:
 			return "Metamagic option"
 		"fighting_style":
 			return "Fighting Style"
+		"beast_form":
+			return "Beast form"
 	return "choice"
 
 
