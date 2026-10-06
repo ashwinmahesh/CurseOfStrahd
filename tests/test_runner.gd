@@ -48,6 +48,8 @@ func _ready() -> void:
 					failed.append(tc.current_test)
 				tc.queue_free()
 				await get_tree().process_frame
+	Creature.clear_caches()
+	Compendium.release()
 	print("")
 	print("%d tests, %d passed, %d failed" % [total, total - failed.size(), failed.size()])
 	get_tree().quit(1 if not failed.is_empty() or total == 0 else 0)

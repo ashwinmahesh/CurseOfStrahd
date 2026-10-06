@@ -21,6 +21,11 @@ static func shared() -> Compendium:
 	return _shared
 
 
+## Drops the shared compendium (tests and shutdown), so nothing outlives the scene tree.
+static func release() -> void:
+	_shared = null
+
+
 func load_all(root_path: String) -> void:
 	root = root_path
 	for folder in FOLDERS:

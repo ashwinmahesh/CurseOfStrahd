@@ -291,7 +291,7 @@ static func _spells(c: Choice, ch: Character, comp: Compendium) -> void:
 		elif c.kind == "spellbook" and in_book.has(str(s["id"])) and not str(s["id"]) in c.picks:
 			o.block("Already in your spellbook")
 		elif c.kind != "spellbook" and known.has(str(s["id"])) and not str(s["id"]) in c.picks:
-			o.block("You already know this spell (%s)" % known[str(s["id"])])
+			o.warn("You already have this spell from %s; picking it here adds nothing new." % known[str(s["id"])])
 		c.options.append(o)
 
 

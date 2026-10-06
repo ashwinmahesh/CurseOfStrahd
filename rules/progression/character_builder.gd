@@ -42,6 +42,14 @@ func set_class(id: String) -> void:
 	if not compendium.has("classes", id) or id == class_id():
 		return
 	build["levels"] = [{"class": id, "hp": 0}]
+	# Untouched scores start at the class's recommended Standard Array, so the live sheet is meaningful.
+	var scores := build.get("base_scores", {}) as Dictionary
+	var untouched := true
+	for ab: StringName in Abilities.ALL:
+		if int(scores.get(str(ab), 10)) != 10:
+			untouched = false
+	if untouched and str(build.get("ability_method", "standard_array")) == "standard_array":
+		build["base_scores"] = AbilityScores.recommended(compendium.class_data(id))
 	_changed()
 
 

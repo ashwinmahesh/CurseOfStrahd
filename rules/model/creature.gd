@@ -55,6 +55,11 @@ func _init() -> void:
 	compendium = Compendium.shared()
 
 
+## Clears static caches (tests and shutdown).
+static func clear_caches() -> void:
+	_condition_mods.clear()
+
+
 # --- What subclasses provide ---------------------------------------------------------------------
 
 func proficiency_bonus() -> int:

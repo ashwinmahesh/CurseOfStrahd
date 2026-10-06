@@ -31,7 +31,13 @@ var rounds_left: int = 0
 var minutes_left: int = 0
 ## Whose turn start/end the duration counts on. Defaults to the caster.
 var turn_owner_id: String = ""
-var concentration: Concentration = null
+## The Concentration keeping this effect alive, held weakly (Concentration already holds the effect).
+var concentration: Concentration:
+	get:
+		return _concentration.get_ref() as Concentration if _concentration != null else null
+	set(value):
+		_concentration = weakref(value) if value != null else null
+var _concentration: WeakRef = null
 ## Effects with the same key don't stack (2024 "Combining Game Effects"): only the most potent applies,
 ## and between equals the most recent. Defaults to source_kind:source_id.
 var stack_key: String = ""
