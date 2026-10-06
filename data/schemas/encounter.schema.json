@@ -52,7 +52,7 @@
           "minItems": 1,
           "items": {
             "type": "string",
-            "pattern": "^[.#=~ 1-4]+$"
+            "pattern": "^[.#=~w 1-4]+$"
           },
           "description": "'.' floor, '#' wall, '=' low cover (blocks movement, Half Cover), '~' Difficult Terrain, ' ' void, '1'-'4' floor raised 5 ft per step."
         },

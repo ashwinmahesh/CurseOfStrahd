@@ -149,3 +149,19 @@ func test_guest_interjections_time_and_options() -> void:
 	var b := r.next()
 	assert_eq(str(b["speaker_id"]), "ireena")
 	assert_eq(str(b["text"]), "I know this place.")
+
+
+func test_waiting_until_an_hour_and_where_the_party_is() -> void:
+	var st := _party()
+	st.minute_of_day = 9 * 60
+	st.location = "vallaki"
+	DialogueFile.register(DialogueFile.parse("~ wait\ntime until 12\n-> END\n", "test/wait"))
+	var r := DialogueRunner.new(st, DiceRoller.new(1))
+	r.start("test/wait:wait")
+	r.next()
+	assert_eq(st.minute_of_day, 12 * 60)
+	var day := st.day
+	r.start("test/wait:wait")
+	r.next()
+	assert_eq(st.day, day + 1, "noon has passed: the next noon")
+	assert_true(StoryConditions.check("at:vallaki", st))

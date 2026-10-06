@@ -38,7 +38,7 @@
           "minItems": 1,
           "items": {
             "type": "string",
-            "pattern": "^[.#=~ 1-4]+$"
+            "pattern": "^[.#=~w 1-4]+$"
           }
         },
         "theme": {
@@ -230,6 +230,10 @@
           },
           "text": {
             "type": "string"
+          },
+          "burning": {
+            "type": "string",
+            "description": "A condition: while it holds, the prop burns (a big flame and light)."
           }
         }
       }

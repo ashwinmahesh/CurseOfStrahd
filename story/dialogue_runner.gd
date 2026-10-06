@@ -182,6 +182,13 @@ func next() -> Dictionary:
 			"time":
 				pc += 1
 				st.advance_minutes(int(s["minutes"]))
+			"time_until":
+				pc += 1
+				var target := int(s["hour"]) * 60
+				var wait := target - st.minute_of_day
+				if wait <= 0:
+					wait += 24 * 60
+				st.advance_minutes(wait)
 			"tarokka_draw":
 				pc += 1
 				Tarokka.ensure_drawn(st)

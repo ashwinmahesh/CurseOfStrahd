@@ -140,6 +140,8 @@ func _term() -> bool:
 		return t.substr(6) in st.guest_ids
 	if t.begins_with("spell:"):
 		return st.spell_active(t.substr(6))
+	if t.begins_with("at:"):
+		return st.location == t.substr(3)
 	if t.begins_with("option:"):
 		return bool(st.options.get(t.substr(7), false))
 	if t == "check.last":

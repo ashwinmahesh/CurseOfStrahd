@@ -43,7 +43,7 @@
       "#................................................#",
       "##################################################"
     ],
-    "theme": "village",
+    "theme": "vallaki",
     "light": "dim",
     "outdoors": true
   },
@@ -414,7 +414,8 @@
       "kind": "examine",
       "label": "The wicker sun",
       "model": "wicker_sun",
-      "dialogue": "vallaki/festival:wicker_sun"
+      "dialogue": "vallaki/festival:wicker_sun",
+      "burning": "flag.festival_climax and not flag.festival_sun_soaked"
     },
     {
       "id": "town_stocks",

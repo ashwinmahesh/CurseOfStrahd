@@ -36,7 +36,7 @@ func cell_center(cell: Vector2i, size_cells: int = 1) -> Vector3:
 
 
 const INTERIORS := ["manor", "tavern", "shop", "townhouse", "church", "attic", "inn", "house", "tent"]
-const WILD := ["svalich_road", "forest", "road", "camp", "tser_pool", "riverside", "wilderness"]
+const WILD := ["svalich_road", "forest", "road", "camp", "tser_pool", "riverside", "wilderness"]   ## (camp: wagons too)
 const TOWNS := ["village", "vallaki", "town"]
 const PROPS_JSON := "res://art/sprites/props/manifest.json"
 static var _props: Dictionary = {}
@@ -110,6 +110,8 @@ func _build() -> void:
 		mud = Look.cel_checker("bog_deep", "peat", "ink")
 	elif theme in TOWNS:
 		stone = Look.cel_checker("stone", "slate", "stone_deep")
+	if theme == "camp":
+		_find_wagons()
 	if theme != "shrine_yard":
 		_load_textures()
 		if _floor_tex != null:
@@ -146,6 +148,53 @@ func _build() -> void:
 		_lanterns()
 
 
+var _wagon_cells := {}      ## camp: '#' blocks inside the map are wagons, cell -> the block's center
+var _wagon_drawn := {}
+
+
+## In a camp, small blocks of '#' away from the map's edge are the Vistani's wagons.
+func _find_wagons() -> void:
+	var seen := {}
+	for z in grid.depth:
+		for x in grid.width:
+			var start := Vector2i(x, z)
+			if seen.has(start) or not grid.has_flag(start, CombatGrid.WALL) or _on_border(start):
+				continue
+			var block: Array[Vector2i] = []
+			var open: Array[Vector2i] = [start]
+			seen[start] = true
+			while not open.is_empty():
+				var c: Vector2i = open.pop_back()
+				block.append(c)
+				for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+					var n := c + d
+					if not seen.has(n) and grid.in_bounds(n) and grid.has_flag(n, CombatGrid.WALL) and not _on_border(n):
+						seen[n] = true
+						open.append(n)
+			if block.size() > 24:
+				continue
+			var sum := Vector2.ZERO
+			for c in block:
+				sum += Vector2(c)
+			var center := sum / float(block.size())
+			for c in block:
+				_wagon_cells[c] = center
+
+
+func _on_border(c: Vector2i) -> bool:
+	return c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
+
+
+## A Vistani wagon: a low painted body on each of its squares, and the wagon's picture once, at its middle.
+func _wagon(c: Vector2i) -> void:
+	_box("WagonBed", Vector3(1, 0.9, 1), Vector3(c.x + 0.5, 0.45, c.y + 0.5), Look.cel("walnut"))
+	var center := _wagon_cells[c] as Vector2
+	var key := "%.1f,%.1f" % [center.x, center.y]
+	if not _wagon_drawn.has(key):
+		_wagon_drawn[key] = true
+		prop_sprite("wagon", Vector3(center.x + 0.5, 0.9, center.y + 0.5), 1.3)
+
+
 ## Deep water: a dark surface a little below the floor.
 func _water(c: Vector2i) -> void:
 	var m := Look.cel_checker("night", "night_deep", "night_deep")
@@ -153,6 +202,9 @@ func _water(c: Vector2i) -> void:
 
 
 func _wall(c: Vector2i) -> void:
+	if theme == "camp" and _wagon_cells.has(c):
+		_wagon(c)
+		return
 	if theme in WILD:
 		_tree(c)
 		return
@@ -166,6 +218,9 @@ func _wall(c: Vector2i) -> void:
 		return
 	if theme in TOWNS:
 		var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
+		if border and theme == "village":
+			_tree(c)   # the village thins into forest at the map's edge
+			return
 		if border and _outer_tex != null:
 			# A town's palisade.
 			var ph := 2.2

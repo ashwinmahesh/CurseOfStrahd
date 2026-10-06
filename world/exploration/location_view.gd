@@ -218,6 +218,8 @@ func _build_props() -> void:
 		if kind == "search" and not bool((st.loc_state(loc_id)["found"] as Dictionary).get(id, false)):
 			continue
 		var colour := {"examine": "parchment", "book": "ember", "search": "bone", "lever": "pewter", "decor": "stone"}.get(kind, "bone") as String
+		if str(prop.get("burning", "")) != "" and StoryConditions.check(str(prop["burning"]), st):
+			prop_nodes[id + "#fire"] = _flame(_cell(prop["cell"]), 1.6)
 		var sprite := _prop_art(prop)
 		var node: Node3D = null
 		if sprite != "":
@@ -256,6 +258,37 @@ func _build_lights() -> void:
 		omni.base_energy = 1.4 if str(li["kind"]) in ["candle", "lamp"] else 2.2
 		omni.position = board.cell_center(_cell(li["cell"])) + Vector3(0, 1.2, 0)
 		add_child(omni)
+		if str(li.get("kind", "")) in ["fire", "bonfire", "brazier", "torch"]:
+			_flame(_cell(li["cell"]), 0.6 if str(li["kind"]) != "torch" else 0.35)
+
+
+## A flame: a small emissive cone with a flicker of its own (watch fires, braziers, the burning wicker sun).
+func _flame(cell: Vector2i, size: float) -> Node3D:
+	var root := Node3D.new()
+	root.position = board.cell_center(cell)
+	add_child(root)
+	for i in 3:
+		var mi := MeshInstance3D.new()
+		var cm := CylinderMesh.new()
+		cm.top_radius = 0.0
+		cm.bottom_radius = size * (0.45 - i * 0.12)
+		cm.height = size * (1.2 - i * 0.25)
+		mi.mesh = cm
+		mi.position = Vector3(0, cm.height / 2.0, 0)
+		var mat := StandardMaterial3D.new()
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mat.albedo_color = Look.color(["ember", "flame", "wick"][i])
+		mat.emission_enabled = true
+		mat.emission = mat.albedo_color
+		mi.material_override = mat
+		root.add_child(mi)
+	var light := CandleFlicker.new()
+	light.light_color = Look.color("flame")
+	light.omni_range = 4.0 + size * 4.0
+	light.base_energy = 1.8 + size
+	light.position = Vector3(0, size, 0)
+	root.add_child(light)
+	return root
 
 
 ## Re-reads which NPCs, props and containers are here (their `when` conditions) after a conversation or a fight
