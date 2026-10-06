@@ -25,7 +25,7 @@ func sp() -> SpellCaster:
 const BANISHED_CELL := Vector2i(-1000, -1000)
 
 ## Spells handled here.
-const HANDLED := ["polymorph", "banishment", "otilukes_resilient_sphere", "dimension_door"]
+const HANDLED := ["polymorph", "banishment", "otilukes_resilient_sphere", "dimension_door", "heat_metal"]
 
 
 func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r: CombatResult) -> bool:
@@ -45,6 +45,11 @@ func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r:
 			return true
 		"dimension_door":
 			dimension_door(ctx, ctx["cell"] as Vector2i, r)
+			return true
+		"heat_metal":
+			for t in tgt:
+				heat_metal(ctx, t, r)
+			sp()._grant_sustained(ctx, tgt)
 			return true
 	return false
 
@@ -362,15 +367,19 @@ func dominate(ctx: Dictionary, t: Combatant) -> void:
 	var e := enc()
 	if t.has_meta("dominated_from"):
 		return
+	var fx := _marker(ctx, t, "Dominated", ["dominated"], "undominate")
+	fx.conditions.append(&"charmed")
+	# Each time it takes damage it repeats the save, ending the spell on itself on a success.
+	fx.repeat_save = {"ability": "wis", "dc": (ctx["nums"]["dc"] as Breakdown).total(), "when": "manual", "on_damage": true}
+	if not _attach(ctx, t, fx):
+		return
 	t.set_meta("dominated_from", [str(t.side), str(t.controller)])
 	t.side = &"guest" if c.side == &"party" else c.side
 	t.controller = c.controller
+	var tid := t.id
+	fx.on_end = func() -> void: undominate(tid)
 	e.log.add("condition", "%s bends to %s's will" % [t.name(), c.name()], t.id)
-	for fx: Effect in t.creature.effects:
-		if fx.source_id == "dominate_beast":
-			var tid := t.id
-			fx.data["on_end"] = {"kind": "undominate", "target": tid}
-			fx.on_end = func() -> void: undominate(tid)
+	e.events.append({"type": "condition", "id": t.id})
 
 
 func undominate(tid: String) -> void:

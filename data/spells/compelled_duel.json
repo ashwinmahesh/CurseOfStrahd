@@ -32,6 +32,19 @@
   },
   "save": "wis",
   "save_success": "none",
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "compelled_duel"
+          }
+        ]
+      }
+    }
+  ],
   "tags": [
     "control",
     "debuff"

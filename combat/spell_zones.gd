@@ -409,6 +409,28 @@ func obscured(cell: Vector2i) -> String:
 	return best
 
 
+## A Wind Wall between two creatures: ordinary missiles shot across it are deflected and miss.
+func deflects_between(a: Combatant, b: Combatant) -> bool:
+	var walls: Array[FieldObject] = []
+	for o in objects:
+		if not o.expired() and bool(o.rule("deflects_missiles", false)):
+			walls.append(o)
+	if walls.is_empty():
+		return false
+	var from := Vector2(a.cell) + Vector2(a.size_cells / 2.0, a.size_cells / 2.0)
+	var to := Vector2(b.cell) + Vector2(b.size_cells / 2.0, b.size_cells / 2.0)
+	var steps := maxi(1, ceili(from.distance_to(to) * 2.0))
+	for i in steps + 1:
+		var p := from.lerp(to, float(i) / steps)
+		var cell := Vector2i(floori(p.x), floori(p.y))
+		if cell in a.footprint():
+			continue
+		for w in walls:
+			if cell in w.cells:
+				return true
+	return false
+
+
 ## Magical Darkness covers this square (Darkvision can't see through it).
 func magical_darkness(cell: Vector2i) -> bool:
 	for o in objects:

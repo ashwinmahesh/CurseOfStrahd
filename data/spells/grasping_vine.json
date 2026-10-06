@@ -65,13 +65,20 @@
     {
       "do": "attack",
       "cost": "bonus_action",
-      "range": 60,
       "attack": "melee",
+      "move": 0,
+      "reach": 30,
       "label": "Grasping Vine: lash",
       "sub": "4d8 bludgeoning",
-      "help": "A Bonus Action: the vine attacks a creature within 30 feet of it again."
+      "help": "A Bonus Action: the vine attacks a creature within 30 ft of it, pulling it in and grappling it."
     }
   ],
+  "object": {
+    "kind": "vine",
+    "range": 60,
+    "on_appear": "attack",
+    "reach": 30
+  },
   "tags": [
     "damage",
     "control"

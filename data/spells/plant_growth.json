@@ -34,6 +34,12 @@
     "kind": "point",
     "description": "Overgrowth: plants in a 100-foot-radius Sphere; Enrichment (8-hour casting): plants within half a mile"
   },
+  "zone": {
+    "triggers": [],
+    "terrain": "difficult",
+    "terrain_cost": 4,
+    "rounds": 14400
+  },
   "tags": [
     "control",
     "utility"

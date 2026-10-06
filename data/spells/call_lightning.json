@@ -46,6 +46,35 @@
     "damage": "1d10",
     "text": "Cast outdoors in a storm, the spell controls that storm and its damage is 1d10 higher."
   },
+  "zone": {
+    "triggers": [],
+    "resolve_on_cast": true,
+    "storm_radius": 60,
+    "uses_spell_damage": false
+  },
+  "sustain": [
+    {
+      "do": "area",
+      "cost": "magic",
+      "at_point": true,
+      "within_object": 60,
+      "area": {
+        "shape": "sphere",
+        "size": 5
+      },
+      "save": "dex",
+      "save_success": "half",
+      "damage": [
+        {
+          "dice": "3d10",
+          "type": "lightning"
+        }
+      ],
+      "label": "Call Lightning: bolt",
+      "sub": "3d10 lightning",
+      "help": "A Magic action: call another bolt down on a point under the storm cloud."
+    }
+  ],
   "tags": [
     "damage"
   ],

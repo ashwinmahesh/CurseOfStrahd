@@ -47,6 +47,10 @@
             "when": {
               "weapon": "melee"
             }
+          },
+          {
+            "stat": "flag",
+            "value": "fount_of_moonlight"
           }
         ]
       }

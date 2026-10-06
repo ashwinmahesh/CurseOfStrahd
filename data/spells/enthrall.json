@@ -53,6 +53,7 @@
       }
     }
   ],
+  "fighting_auto_success": true,
   "tags": [
     "debuff",
     "social"

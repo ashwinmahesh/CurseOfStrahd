@@ -384,6 +384,8 @@ func _spell_targeting(data: Dictionary) -> String:
 			return "none" if str((data["area"] as Dictionary).get("shape", "")) == "emanation" else "direction"
 		return "point"
 	var t := data.get("targets", {}) as Dictionary
+	if str(data.get("id", "")) in ["misty_step", "dimension_door"]:
+		return "place"
 	if str(t.get("kind", "creature")) == "self":
 		return "none"
 	if str(t.get("kind", "")) == "enemy":

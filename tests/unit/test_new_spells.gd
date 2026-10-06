@@ -393,3 +393,229 @@ func test_dimension_door_takes_an_ally_along() -> void:
 	assert_true(dd.ok, dd.reason)
 	assert_eq(c.cell, Vector2i(10, 6))
 	assert_true(e.distance(c, a) <= 5, "the ally arrives beside")
+
+
+# --- Areas and objects ------------------------------------------------------------------------------------
+
+func test_spike_growth_hurts_for_every_square_walked() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["spike_growth"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(2, 4), 200)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "spike_growth", 2, [], Vector2(6.0, 4.0)).ok)
+	var hp := t.creature.hp
+	e.end_turn()
+	assert_eq(e.current(), t)
+	assert_true(e.move(t, Vector2i(5, 4)).ok)
+	assert_true(e.log.entries.filter(func(x: Dictionary) -> bool: return str(x["text"]).contains("Spike Growth")).size() >= 2, "hurt more than once")
+	assert_true(t.creature.hp < hp)
+
+
+func test_hunger_of_hadar_chills_at_the_start_and_burns_at_the_end() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["hunger_of_hadar"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 4), 200)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "hunger_of_hadar", 3, [], Vector2(6.5, 4.5)).ok)
+	assert_true(t.creature.has_condition(&"blinded"))
+	e.end_turn()
+	assert_true(t.creature.hp < 200, "cold at the start of its turn")
+	var hp := t.creature.hp
+	e.end_turn()
+	assert_true(t.creature.hp < hp, "acid at the end of its turn")
+
+
+func test_wall_of_fire_covers_a_line_and_burns_its_chosen_side() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["wall_of_fire"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 5), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "wall_of_fire", 4, [], Vector2(6.5, 3.5), Vector2.RIGHT).ok)
+	var wall := e.spells.zones.object_of(c.id, "wall_of_fire")
+	assert_true(wall.cells.size() >= 10, "a 60 ft wall")
+	e.end_turn()
+	e.end_turn()
+	assert_true(t.creature.hp < 300, "ending a turn on the burning side")
+
+
+func test_wind_wall_turns_aside_arrows() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["wind_wall"], Vector2i(0, 4))
+	var t := TestCombat.punching_bag(e, Vector2i(9, 4), 200)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "wind_wall", 3, [], Vector2(5.5, 4.5), Vector2.DOWN).ok)
+	var opt := _ranged(e, c)
+	assert_true(e.attack_legal(c, t, e.option_by_id(c, opt)).contains("Wind Wall"))
+
+
+func test_call_lightning_strikes_now_and_again_later() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["call_lightning"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 4), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "call_lightning", 3, [], Vector2(6.5, 4.5)).ok)
+	var hp := t.creature.hp
+	assert_true(hp < 300)
+	e.end_turn()
+	while e.current() != c:
+		e.end_turn()
+	var bolt := e.spells.sustained_for(c, "call_lightning")
+	assert_true(bool(bolt["legal"]), str(bolt["reason"]))
+	assert_true(e.spells.use_sustained(c, str(bolt["id"]), [], Vector2(6.5, 4.5)).ok)
+	assert_true(t.creature.hp < hp)
+
+
+func test_cordon_of_arrows_runs_out_of_ammunition() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["cordon_of_arrows"], Vector2i(0, 0))
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "cordon_of_arrows", 2, [], Vector2(1.0, 1.0)).ok)
+	var o := e.spells.zones.object_of(c.id, "cordon_of_arrows")
+	assert_eq(int(o.rules["charges"]), 4)
+	var t := TestCombat.punching_bag(e, Vector2i(3, 3), 200)
+	for i in 4:
+		o.hit_on_turn.clear()
+		e.spells.zones._affect(o, t, "enter", CombatResult.new(), {})
+	assert_true(o.expired(), "no ammunition left")
+
+
+func test_guardian_of_faith_vanishes_after_60_damage() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["guardian_of_faith"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 4), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "guardian_of_faith", 4, [], Vector2(5.5, 4.5)).ok)
+	var o := e.spells.zones.object_of(c.id, "guardian_of_faith")
+	for i in 3:
+		o.hit_on_turn.clear()
+		e.spells.zones._affect(o, t, "start_turn", CombatResult.new(), {})
+	assert_eq(t.creature.hp, 240, "20 a time")
+	assert_true(o.expired())
+
+
+func test_faithful_hound_bites_at_the_start_of_its_casters_turn() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["mordenkainens_faithful_hound"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(4, 1), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "mordenkainens_faithful_hound", 4, [], Vector2(3.5, 1.5)).ok)
+	e.end_turn()
+	while e.current() != c:
+		e.end_turn()
+	assert_true(t.creature.hp < 300)
+
+
+func test_grasping_vine_pulls_its_victim_in() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["grasping_vine"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(10, 4), 300)
+	TestCombat.start_with(e, c)
+	TestCombat.next_d20(e, 19)
+	assert_true(e.spells.cast(c, "grasping_vine", 4, [], Vector2(5.5, 4.5)).ok)
+	assert_true(t.creature.hp < 300, "lashed as the vine appears")
+	assert_true(t.cell.x <= 7, "pulled toward the vine: %s" % t.cell)
+	assert_true(t.creature.has_condition(&"grappled"))
+
+
+func test_conjure_animals_pack_savages_foes_and_moves_with_its_caster() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["conjure_animals"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(9, 4), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "conjure_animals", 3, [], Vector2(4.0, 4.0)).ok)
+	assert_eq(t.creature.hp, 300, "out of reach of the pack")
+	var mv := e.spells.sustained_for(c, "conjure_animals")
+	assert_true(bool(mv["legal"]), str(mv["reason"]))
+	assert_true(e.spells.use_sustained(c, str(mv["id"]), [], Vector2(7.5, 4.5)).ok)
+	assert_true(t.creature.hp < 300, "the pack moves within 10 ft")
+
+
+func test_plant_growth_costs_four_feet_per_foot() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["plant_growth"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 4), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "plant_growth", 3, [], Vector2(6.5, 4.5)).ok)
+	e.end_turn()
+	var reach := e.reachable_for(t)
+	assert_false(reach.has(Vector2i(8, 4)), "30 ft of Speed covers less than 10 ft")
+	assert_true(reach.has(Vector2i(7, 4)))
+
+
+# --- Minds ---------------------------------------------------------------------------------------------
+
+func test_confusion_takes_away_bonus_actions_and_reactions() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["confusion"], Vector2i(0, 0))
+	var t := TestCombat.punching_bag(e, Vector2i(6, 4), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "confusion", 4, [], Vector2(6.5, 4.5)).ok)
+	assert_true(t.creature.has_flag("confused"))
+	e.end_turn()
+	assert_false(t.bonus_available)
+	assert_true(e.log.entries.any(func(x: Dictionary) -> bool: return str(x["text"]).begins_with("Confusion (d10")))
+
+
+func test_compelled_duel_hinders_attacks_on_others_and_ends_when_the_caster_turns_away() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["compelled_duel"], Vector2i(2, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(2, 5))
+	var t := TestCombat.punching_bag(e, Vector2i(3, 4), 300)
+	var other := TestCombat.punching_bag(e, Vector2i(1, 3), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "compelled_duel", 1, [t]).ok)
+	var sit := e.attack_situation(t, a, e.attack_options(t)[0] if not e.attack_options(t).is_empty() else e.attack_options(c)[0])
+	assert_true("Compelled Duel" in (sit["disadvantage"] as Array))
+	assert_false(e.reachable_for(t, 60).has(Vector2i(11, 7)), "can't wander more than 30 ft away")
+	TestCombat.next_d20(e, 19)
+	e.attack(c, other, _melee(e, c))
+	assert_true(c.creature.concentration == null, "the duel ends when the caster attacks someone else")
+
+
+func test_dominate_beast_turns_a_beast_to_the_casters_side_until_it_breaks_free() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["dominate_beast"], Vector2i(2, 3))
+	var w := TestCombat.punching_bag(e, Vector2i(4, 3), 100, "beast")
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "dominate_beast", 4, [w]).ok)
+	assert_true(w.is_player_controlled(), "under the player's command")
+	assert_false(c.hostile_to(w))
+	c.creature.concentration.end("test")
+	assert_false(w.is_player_controlled())
+	assert_true(c.hostile_to(w))
+
+
+func test_dissonant_whispers_makes_its_victim_flee() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["dissonant_whispers"], Vector2i(2, 3))
+	var t := TestCombat.punching_bag(e, Vector2i(3, 3), 300)
+	e.default_player_reaction = "never"
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "dissonant_whispers", 1, [t]).ok)
+	assert_false(t.reaction_available)
+	assert_true(e.distance(c, t) > 5, "ran away")
+
+
+func test_heat_metal_sears_an_armoured_foe_each_turn() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["heat_metal"], Vector2i(2, 3))
+	var t := TestCombat.foe(e, "bandit", Vector2i(5, 3))
+	t.creature.hp = 100
+	TestCombat.start_with(e, c)
+	var r := e.spells.cast(c, "heat_metal", 2, [t])
+	assert_true(r.ok, r.reason)
+	assert_true(t.creature.hp < 100 or e.spells.specials.metal_of(t) == "")
+	assert_false(e.spells.sustained_for(c, "heat_metal").is_empty())
+
+
+# --- Cantrips -----------------------------------------------------------------------------------------
+
+func test_eldritch_blast_fires_more_beams_with_level() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["eldritch_blast"], Vector2i(2, 3))
+	var a := TestCombat.punching_bag(e, Vector2i(6, 3), 300)
+	var b := TestCombat.punching_bag(e, Vector2i(6, 5), 300)
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "eldritch_blast", 0, [a, b]).ok)
+	var shots := e.drain_events().filter(func(x: Dictionary) -> bool: return str(x["type"]) == "attack" and str(x["attacker"]) == c.id)
+	assert_eq(shots.size(), 2, "two beams at level 7")

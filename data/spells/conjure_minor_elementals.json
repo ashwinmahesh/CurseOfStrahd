@@ -51,7 +51,30 @@
     "affects": "enemies",
     "triggers": [],
     "terrain": "difficult",
-    "terrain_affected_only": true
+    "terrain_affected_only": true,
+    "caster_effects": [
+      {
+        "effect": "modifiers",
+        "params": {
+          "target": "self",
+          "modifiers": [
+            {
+              "stat": "extra_damage",
+              "dice": "2d8",
+              "types": [
+                "acid",
+                "cold",
+                "fire",
+                "lightning"
+              ],
+              "on": "attack",
+              "in_zone": "conjure_minor_elementals",
+              "upcast_dice": "1d8"
+            }
+          ]
+        }
+      }
+    ]
   },
   "tags": [
     "damage",

@@ -18,7 +18,7 @@
     "feet": 30
   },
   "area": {
-    "shape": "sphere",
+    "shape": "emanation",
     "size": 10
   },
   "components": {
@@ -45,7 +45,8 @@
       "enter",
       "start_turn"
     ],
-    "affects": "enemies"
+    "affects": "enemies",
+    "damage_cap": 60
   },
   "tags": [
     "damage",

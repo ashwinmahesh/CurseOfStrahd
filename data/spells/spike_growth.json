@@ -44,9 +44,10 @@
   ],
   "zone": {
     "triggers": [
-      "enter"
+      "per_square"
     ],
-    "terrain": "difficult"
+    "terrain": "difficult",
+    "once_per_turn": false
   },
   "tags": [
     "damage",

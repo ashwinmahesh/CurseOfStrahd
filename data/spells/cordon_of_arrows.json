@@ -26,14 +26,33 @@
     "amount": 8
   },
   "targets": {
-    "kind": "object",
-    "count": 4,
+    "kind": "point",
     "description": "up to four nonmagical arrows or bolts, planted in the ground"
   },
   "save": "dex",
   "save_success": "none",
   "upcast": {
     "text": "You can plant two more pieces of ammunition for each slot level above 2."
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 30
+  },
+  "damage": [
+    {
+      "dice": "2d4",
+      "type": "piercing"
+    }
+  ],
+  "zone": {
+    "triggers": [
+      "enter",
+      "end_turn"
+    ],
+    "affects": "others",
+    "spare_allies": true,
+    "charges": 4,
+    "charges_per_slot": 2
   },
   "tags": [
     "damage",

@@ -224,6 +224,10 @@ func release_engulf(t: Combatant) -> void:
 ## Hit Point maximum reduction (Life Drain, the Spawn's Bite): lasts until a Long Rest; 0 means death.
 func drain_max_hp(t: Combatant, amount: int, label: String) -> void:
 	var e := enc()
+	# Aura of Life: Hit Point maximums can't be reduced inside it.
+	if t.creature.has_flag("no_max_hp_reduction"):
+		e.log.add("info", "%s's Hit Point maximum holds (%s)" % [t.name(), label], t.id)
+		return
 	var fx := Effect.new("%s (drained)" % label, &"monster", "drain_max_hp")
 	fx.stack_key = "drain_max_hp:%d" % fx.id
 	fx.ends = Effect.Ends.LONG_REST

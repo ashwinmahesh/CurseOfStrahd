@@ -352,6 +352,14 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 				var cell := Vector2i(x, y)
 				if grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells) < now:
 					blocked[cell] = true
+	# Compelled Duel: no square more than 30 ft from the duellist.
+	var anchor := spells.specials.duel_anchor(c)
+	if anchor != null:
+		for x2 in grid.width:
+			for y2 in grid.depth:
+				var cell2 := Vector2i(x2, y2)
+				if grid.distance_ft(cell2, c.size_cells, anchor.cell, anchor.size_cells) > 30:
+					blocked[cell2] = true
 	return grid.reachable(c.cell, c.size_cells, feet, _has_fn(blocked),
 		_value_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
 
@@ -600,6 +608,14 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail(why)
 	if c.creature.hp <= 0:
 		return CombatResult.fail("%s is down" % c.name())
+	# Freedom of Movement: 5 ft of movement slips any grapple.
+	if c.creature.has_flag("freedom_of_movement") and grapples.has(c.id) and c.movement_left >= 5:
+		grapples.erase(c.id)
+		c.creature.remove_condition(&"grappled")
+		c.remove_meta("escape_dc")
+		monster_actions.release_engulf(c)
+		c.movement_left -= 5
+		log.add("info", "%s slips free (Freedom of Movement)" % c.name(), c.id)
 	if c.speed() <= 0:
 		return CombatResult.fail("Speed 0")
 	if c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2:
@@ -1505,6 +1521,8 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "Can't attack yourself"
 	if spells.specials.sphere_blocks(c, target):
 		return "A sphere of force is in the way"
+	if not bool(option["melee"]) and str(option.get("kind", "")) in ["weapon", "thrown", "monster"] and spells.zones.deflects_between(c, target):
+		return "A Wind Wall would deflect the shot"
 	var dist := distance(c, target)
 	var p := option["profile"] as WeaponProfile
 	if bool(option["melee"]):
@@ -1580,6 +1598,9 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	var p := option["profile"] as WeaponProfile
 	var dist := distance(c, target)
 	var melee := bool(option["melee"])
+	var duel := spells.specials.duel_disadvantage(c, target)
+	if duel != "":
+		dis.append(duel)
 	for m in target.creature.modifiers_for(&"attacked_with"):
 		if m.source_name == "Dodging" and (not can_see(target, c) or target.speed() <= 0):
 			continue
@@ -1750,6 +1771,7 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 	var r := CombatResult.new()
 	var sit := attack_situation(c, target, option)
 	_consume_marks(c, target)
+	spells.specials.duel_check_attack(c, target)
 	spells.end_sanctuary(c, "attacked")
 	spells.trigger_ends(c, "attack_roll")
 	if c.hidden and not features.has_feat(c, "skulker"):
@@ -1894,7 +1916,10 @@ func _after_hit(st: Dictionary) -> CombatResult:
 	for m in c.creature.modifiers_for(&"extra_damage"):
 		if m.data.has("vs") and str(m.data["vs"]) != target.id:
 			continue
-		dice_list.append({"dice": m.text("dice", "1d4"), "type": m.text("type", str(p.damage_type)), "label": m.source_name,
+		var xt := spells.extra_damage_type(c, target, m, str(p.damage_type))
+		if xt == "":
+			continue
+		dice_list.append({"dice": m.text("dice", "1d4"), "type": xt, "label": m.source_name,
 			"penalty": bool(m.data.get("penalty", false))})
 	var turn_key := "%d:%d" % [round_no, turn_index]
 	var savage := c.creature.has_flag("savage_attacker") and str(_savage_turn.get(c.id, "")) != turn_key and c.creature is Character
@@ -2103,6 +2128,8 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	if source != null and source != target and dr.final > 0:
 		spells.end_sanctuary(source, "dealt damage")
 	spells.on_damaged(source, target, dr.final, parts)
+	if dr.final > 0:
+		spells.specials.duel_check_damage(source, target)
 	if dr.final > 0 and target.is_alive():
 		monster_actions.loathsome_limbs(target, parts)
 	if target.is_down():
@@ -2146,6 +2173,9 @@ func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
 		return
 	if not target.creature is Character or target.creature.hp <= 0 or distance(target, source) > 60 or not can_see(target, source):
 		return
+	if target.creature.has_flag("fount_of_moonlight") and spells.can_react(target):
+		reaction_queue.append({"kind": "fount_of_moonlight", "reactor": target.id, "trigger": source.id})
+		return
 	for q in reaction_queue:
 		if str(q["reactor"]) == target.id:
 			return
@@ -2173,6 +2203,8 @@ func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 			return spells.can_react(reactor) and not best_melee_option(reactor, null).is_empty()
 		"berserk_lashing":
 			return spells.can_react(reactor) and reactor.creature.hp > 0
+		"fount_of_moonlight":
+			return spells.can_react(reactor) and reactor.creature.has_flag("fount_of_moonlight")
 	return false
 
 
@@ -2190,6 +2222,22 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 			if distance(reactor, trigger) > reactor.reach_ft():
 				return CombatResult.new()
 			return _opportunity_attack(reactor, trigger)
+		"fount_of_moonlight":
+			reactor.reaction_available = false
+			var dc := (spells.numbers(reactor, spells._entry_any(reactor, "fount_of_moonlight"))["dc"] as Breakdown).total()
+			var sv := trigger.creature.roll_save(dice, &"con", dc, [], [], "Constitution save vs Fount of Moonlight (%s)" % trigger.name())
+			if sv.success:
+				log.add("info", "%s shrugs off the flare of moonlight" % trigger.name(), trigger.id, [sv.describe()])
+			else:
+				var fx := Effect.new("Blinded (Fount of Moonlight)", &"spell", "fount_of_moonlight").with_condition(&"blinded")
+				fx.caster_id = reactor.id
+				fx.ends = Effect.Ends.END_OF_TURN
+				fx.turn_owner_id = reactor.id
+				fx.skip_turn_ends = own_turn_skip(reactor)
+				trigger.creature.add_effect(fx)
+				log.add("condition", "%s is Blinded by moonlight" % trigger.name(), trigger.id, [sv.describe()])
+				events.append({"type": "condition", "id": trigger.id})
+			return CombatResult.new()
 		"berserk_lashing":
 			var near: Array[Combatant] = []
 			for o in living():
@@ -2209,6 +2257,7 @@ const _QUEUED_TEXT := {
 	"hellish_rebuke": ["Reaction: Hellish Rebuke?", "%s hurt %s. Answer with Hellish Rebuke: a Dex save or Fire damage.", "Reaction and a spell slot"],
 	"storms_thunder": ["Reaction: Storm's Thunder?", "%s hurt %s. Answer with 1d8 Thunder damage.", "Reaction and a use of Giant Ancestry"],
 	"sentinel": ["Reaction: Sentinel?", "%s attacks someone beside %s. Make an Opportunity Attack against it?", "Reaction"],
+	"fount_of_moonlight": ["Reaction: Fount of Moonlight?", "%s hurt %s. Flare moonlight at it: a Constitution save or Blinded?", "Reaction"],
 	"berserk_lashing": ["Reaction: Berserk Lashing?", "%s hurt %s. Lash out with a Slam at a random creature within 5 ft?", "Reaction"],
 }
 

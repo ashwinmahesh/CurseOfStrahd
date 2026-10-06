@@ -40,8 +40,19 @@
     {
       "effect": "condition",
       "params": {
-        "condition": "charmed"
+        "condition": "charmed",
+        "repeat_save": "manual"
       }
+    }
+  ],
+  "sustain": [
+    {
+      "do": "compel",
+      "cost": "bonus_action",
+      "not_this_turn": false,
+      "label": "Compulsion: name a direction",
+      "sub": "Bonus Action",
+      "help": "A Bonus Action: name a direction. Each creature charmed by the spell must spend its movement going that way on its next turn, then repeats the save."
     }
   ],
   "tags": [

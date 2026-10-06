@@ -43,6 +43,9 @@
   "upcast": {
     "damage": "1d8"
   },
+  "auto_fail_types": [
+    "plant"
+  ],
   "tags": [
     "damage"
   ],

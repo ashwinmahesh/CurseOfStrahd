@@ -1,8 +1,8 @@
 extends TestCase
 ## Every spell the combat engine offers does something when cast in a fight: no spell may spend a slot and an
 ## action and change nothing (the owner's report: Thunderwave and Spiritual Weapon missing their secondary
-## effects). Each spell is cast by a level 9 caster that knows it, at feeble foes, with up to six seeds so a lucky
-## save can't hide a no-op.
+## effects). Each spell is cast by a caster that knows it (a level 7 wizard for level 4 spells), at feeble foes, with
+## up to six seeds so a lucky save can't hide a no-op. Smite spells are armed and go off on a weapon hit.
 
 
 ## Everything about the fight a spell could change.
@@ -27,11 +27,14 @@ func _snapshot(e: Encounter) -> String:
 
 func _try(spell_id: String, seed_value: int) -> Dictionary:
 	var e := TestCombat.open_field(seed_value)
-	var c := TestCombat.caster_with(e, [spell_id], Vector2i(2, 3))
-	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(2, 4))
 	var data0 := Compendium.shared().spell_data(spell_id)
+	var c := TestCombat.caster_with(e, [spell_id], Vector2i(2, 3)) if int(data0.get("level", 0)) < 4 else TestCombat.high_caster(e, [spell_id], Vector2i(2, 3))
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(2, 4))
 	var kind := str((data0.get("targets", {}) as Dictionary).get("creature_type", "humanoid"))
 	var f1 := TestCombat.punching_bag(e, Vector2i(3, 3), 80, kind)
+	if spell_id == "heat_metal":
+		f1.creature.dead = true
+		f1 = TestCombat.foe(e, "bandit", Vector2i(3, 2))
 	TestCombat.punching_bag(e, Vector2i(4, 2), 80, kind)
 	c.creature.hp = maxi(1, c.creature.max_hp() / 2)
 	ally.creature.hp = 5
@@ -47,6 +50,29 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 	TestCombat.start_with(e, c)
 	var data := Compendium.shared().spell_data(spell_id)
 	var cat := ActionCatalog.new(e)
+	# A smite: armed, then a weapon hit sets it off.
+	if bool(data.get("on_hit_spell", false)):
+		var ch := c.creature as Character
+		var ranged := bool(data.get("on_hit_ranged_only", false))
+		if ranged:
+			ch.add_item("shortbow")
+			ch.add_item("arrow", 20)
+			ch.equip("shortbow", "main_hand")
+		var before0 := _snapshot(e)
+		var armed := e.features.toggle_rider(c, "smite:" + spell_id)
+		if not armed.ok:
+			return {"fail": armed.reason}
+		var opt := ""
+		for o in e.attack_options(c):
+			if bool(o["melee"]) != ranged and str(o["kind"]) in ["weapon", "unarmed"]:
+				opt = str(o["id"])
+		TestCombat.next_d20(e, 19)
+		var hr := e.attack(c, f1, opt)
+		while e.pending != null:
+			hr = e.answer_reaction(true)
+		if not hr.ok:
+			return {"fail": hr.reason}
+		return {"changed": before0 != _snapshot(e) and not (spell_id in c.armed)}
 	var action := cat.find(c, "spell:" + spell_id)
 	if action.is_empty():
 		action = cat.find(c, "spell:%s:grovel" % spell_id)
@@ -74,7 +100,8 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 		"point":
 			point = Vector2(3.5, 3.5)
 		"place":
-			point = Vector2(5.5, 3.5) if spell_id in ["misty_step", "summon_fey", "summon_undead", "flaming_sphere", "dancing_lights", "mage_hand"] else Vector2.INF
+			point = Vector2(5.5, 3.5) if spell_id in ["misty_step", "dimension_door", "flaming_sphere", "dancing_lights", "mage_hand", "mordenkainens_faithful_hound", "grasping_vine"] \
+				or spell_id in SpellCaster.SUMMON_SPELLS else Vector2.INF
 			if point == Vector2.INF:
 				targets = [f1]
 		"direction":
@@ -89,6 +116,11 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 	return {"changed": before != after}
 
 
+## Spells that rightly do nothing to the foes of a fight: Enthrall's targets succeed automatically if you're
+## fighting them.
+const NO_EFFECT_ON_FOES := ["enthrall"]
+
+
 func test_every_combat_spell_changes_something() -> void:
 	var none: Array[String] = []
 	var failed: Array[String] = []
@@ -98,11 +130,13 @@ func test_every_combat_spell_changes_something() -> void:
 		var probe := TestCombat.open_field(1)
 		if not probe.spells.has_combat_rules(s):
 			continue
+		if id in NO_EFFECT_ON_FOES:
+			continue
 		var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 		if unit in ["reaction", "minute", "hour"]:
 			continue
-		if int(s.get("level", 0)) > 3:
-			continue   # the pregen caster tops out at level 3 spells; higher ones are tested where they're used
+		if int(s.get("level", 0)) > 4:
+			continue   # the class data reaches level 7, so level 4 slots are the highest
 		checked += 1
 		var changed := false
 		var last := {}

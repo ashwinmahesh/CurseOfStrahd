@@ -11,7 +11,7 @@ extends RefCounted
 ## A few spells keep handlers of their own (Magic Missile, Sleep, Command, Sanctuary, Misty Step, Mirror Image...).
 
 ## Spells whose combat rules are in code here, beyond the data recipe.
-const SPECIAL := ["magic_missile", "shield", "sleep", "command", "sanctuary", "spiritual_weapon", "toll_the_dead",
+const SPECIAL := ["heat_metal", "eldritch_blast", "sorcerous_burst", "magic_missile", "shield", "sleep", "command", "sanctuary", "spiritual_weapon", "toll_the_dead",
 	"spare_the_dying", "chromatic_orb", "sacred_flame", "mage_armor", "aid", "misty_step", "mirror_image", "blink",
 	"haste", "dispel_magic", "revivify", "arcane_vigor", "warding_bond", "counterspell", "hellish_rebuke",
 	"true_strike", "shillelagh", "enlarge_reduce", "vampiric_touch", "lesser_restoration", "protection_from_poison",
@@ -526,6 +526,9 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		e.reveal(c, "cast a spell aloud")
 	end_sanctuary(c, "cast a spell")
 	trigger_ends(c, "cast_spell")
+	for tt in tgt:
+		if c.hostile_to(tt) and spell_id != "compelled_duel":
+			specials.duel_check_attack(c, tt)
 	var nums := numbers(c, entry)
 	var conc: Concentration = null
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
@@ -742,7 +745,7 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 	if tgt.is_empty():
 		out["why"] = "Choose a target"
 		return out
-	if tgt.size() > target_count(s, slot) and not id in ["magic_missile", "scorching_ray"]:
+	if tgt.size() > target_count(s, slot) and not id in ["magic_missile", "scorching_ray", "eldritch_blast"]:
 		out["why"] = "Too many targets (%d max)" % target_count(s, slot)
 		return out
 	for t in tgt:
@@ -865,6 +868,7 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		return
 	if s.has("zone"):
 		_place_zone(ctx, cells, r)
+		apply_effect_entries(ctx, c, (s["zone"] as Dictionary).get("caster_effects", []) as Array, "cast", r)
 		# The spell resolves as usual and leaves an area behind (Ice Storm's hail on the ground).
 		if bool((s["zone"] as Dictionary).get("resolve_on_cast", false)):
 			_generic(ctx, tgt, cells, r)
@@ -885,6 +889,8 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 		var dmg := s.get("damage", []) as Array
 		if not dmg.is_empty() and str((dmg[0] as Dictionary).get("per", "")) == "ray":
 			count = target_count(s, int(ctx["slot"]))
+		elif not dmg.is_empty() and str((dmg[0] as Dictionary).get("per", "")) == "beam":
+			count = specials.beams(c)
 		var shots: Array[Combatant] = []
 		if count > 1:
 			for i in count:
@@ -967,6 +973,11 @@ func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictio
 	var bonus := _damage_bonus(ctx)
 	var total := int(rolled["total"]) + bonus.total()
 	var text := "%s %s%s: %s" % [(ctx["s"] as Dictionary)["name"], dice, " ×2 (Critical Hit)" if critical else "", rolled["text"]]
+	if str(sp["id"]) == "sorcerous_burst":
+		var burst := specials.sorcerous_burst_extra(ctx, str(rolled["text"]))
+		total += int(burst["total"])
+		if str(burst["text"]) != "":
+			text += " · " + str(burst["text"])
 	if not bonus.parts.is_empty():
 		text += " · " + bonus.describe()
 	return {"total": maxi(0, total), "text": text, "dice": dice, "rolls": rolled.get("rolls", [])}
@@ -1022,6 +1033,7 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	if str(s["id"]) == "sacred_flame":
 		sit["cover_bonus"] = 0
 	e._consume_marks(c, t)
+	specials.duel_check_attack(c, t)
 	trigger_ends(c, "attack_roll")
 	var ac := t.creature.ac_value() + int(sit["cover_bonus"])
 	var atk := ctx["nums"]["attack"] as Breakdown
@@ -1059,8 +1071,11 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 		for m in c.creature.modifiers_for(&"extra_damage"):
 			if m.text("on", "weapon") != "attack" or (m.data.has("vs") and str(m.data["vs"]) != t.id):
 				continue
+			var xt := extra_damage_type(c, t, m, _damage_type(ctx))
+			if xt == "":
+				continue
 			var xr := e._roll_damage_dice(m.text("dice", "1d6"), critical, 0, m.source_name)
-			parts.append({"amount": int(xr["total"]), "type": m.text("type", _damage_type(ctx)), "spell": true})
+			parts.append({"amount": int(xr["total"]), "type": xt, "spell": true})
 			details.append("%s %s: %s" % [m.source_name, m.text("dice"), xr["text"]])
 		var dr := e.deal_damage(c, t, parts, critical, str(s["name"]), details)
 		r.damage += dr.final
@@ -1077,6 +1092,34 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 		_on_spell_hit(ctx, t, r)
 	_secondary(ctx, t, r)
 	return test
+
+
+## The damage type of an `extra_damage` modifier against `t`, or "" if it doesn't apply: `in_zone` limits it to
+## targets inside the caster's area of that spell, and `types` lets the attacker pick the best of several each time
+## (Conjure Minor Elementals: whichever the target doesn't resist).
+func extra_damage_type(c: Combatant, t: Combatant, m: Modifier, fallback: String) -> String:
+	if m.data.has("in_zone"):
+		var o := zones.object_of(c.id, str(m.data["in_zone"]))
+		if o == null or not o.covers(t):
+			return ""
+	var options := m.data.get("types", []) as Array
+	if not options.is_empty():
+		var best := str(options[0])
+		var best_score := -9
+		for ty: Variant in options:
+			var tn := StringName(str(ty))
+			var score := 0
+			if t.creature.immunity_source(tn) != "":
+				score = -2
+			elif t.creature.resistance_source(tn) != "":
+				score = -1
+			elif t.creature.vulnerability_source(tn) != "":
+				score = 1
+			if score > best_score:
+				best_score = score
+				best = str(ty)
+		return best
+	return m.text("type", fallback)
 
 
 ## Riders on a hit that need code: everything else is in the spell's effects data (`on: hit`).
@@ -1229,13 +1272,20 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			r.lines.append(e.log.add("info", "%s doesn't sleep: unaffected" % t.name(), t.id))
 			continue
 		var willing := bool(s.get("willing_skip_save", false)) and c.allied_with(t)
+		# Enthrall: a creature you or your companions are fighting succeeds automatically.
+		if bool(s.get("fighting_auto_success", false)) and c.hostile_to(t):
+			r.lines.append(e.log.add("info", "%s is too caught up in the fight to be enthralled" % t.name(), t.id))
+			continue
+		var auto_fail := str(t.creature.creature_type) in (s.get("auto_fail_types", []) as Array)
 		if sculpted:
 			r.lines.append(e.log.add("info", "%s is sculpted out of %s" % [t.name(), s["name"]], t.id))
 			continue
 		var test: D20Test = null
 		var success := false
 		var details: Array[String] = []
-		if not willing:
+		if auto_fail:
+			details.append("%s fails automatically (%s)" % [t.name(), str(t.creature.creature_type).capitalize()])
+		elif not willing:
 			test = t.creature.roll_d20(e.dice, D20Test.Kind.SAVING_THROW, save_bd, dc, keys, adv, dis,
 				"%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], s["name"], t.name()])
 			success = test.success
@@ -1619,6 +1669,11 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 					_substitute_casting(d, ctx)
 					if str(d.get("vs", "")) == "target":
 						d["vs"] = str(ctx.get("vs_target", ""))
+					# Extra dice per slot level above the spell's (Conjure Minor Elementals).
+					if d.has("upcast_dice") and slot > int(s.get("level", 0)):
+						var bd := DiceRoller.parse_expr(str(d.get("dice", "1d4")))
+						var ud := DiceRoller.parse_expr(str(d["upcast_dice"]))
+						d["dice"] = "%dd%d" % [int(bd["count"]) + int(ud["count"]) * (slot - int(s.get("level", 0))), int(bd["sides"])]
 					var v: Variant = d.get("value", 0)
 					if v is String and (str(v).contains("slot_level") or str(v).contains("mod:")):
 						d["value"] = Formula.evaluate(v, ctx2)
@@ -1635,7 +1690,7 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 	var rs := str(params.get("repeat_save", ""))
 	if rs != "":
 		fxo.repeat_save = {"ability": str(params.get("repeat_ability", s.get("save", "wis"))), "dc": (ctx["nums"]["dc"] as Breakdown).total(),
-			"when": "start" if rs == "start_of_turn" else "end", "on_damage": bool(params.get("repeat_on_damage", false)),
+			"when": "start" if rs == "start_of_turn" else ("manual" if rs == "manual" else "end"), "on_damage": bool(params.get("repeat_on_damage", false)),
 			"damage_advantage": bool(params.get("damage_advantage", false))}
 		if params.has("repeat_if"):
 			fxo.repeat_save["if"] = str(params["repeat_if"])
@@ -1930,6 +1985,17 @@ func _custom(ctx: Dictionary, t: Combatant, params: Dictionary, r: CombatResult)
 			fx.modifiers.append(Modifier.of("flag", {"value": "mirror_image"}, "Mirror Image", &"spell"))
 			t.creature.add_effect(fx)
 			r.lines.append(e.log.add("condition", "Three illusory duplicates surround %s" % t.name(), t.id))
+		"dominate":
+			specials.dominate(ctx, t)
+		"flee_reaction":
+			specials.flee_with_reaction(ctx, t, r)
+		"revert_shape":
+			# Moonbeam: a shape-shifted creature reverts to its true form.
+			if e.shapes.is_shaped(t):
+				e.shapes.revert(t, s["name"])
+			elif t.has_meta("form") and str(t.get_meta("form")) != "humanoid":
+				t.set_meta("form", "humanoid")
+				r.lines.append(e.log.add("info", "%s is forced back into its true form (%s)" % [t.name(), s["name"]], t.id))
 		"goodberry":
 			if c.creature is Character:
 				(c.creature as Character).add_item("goodberry", int(params.get("count", 10)))
@@ -2227,7 +2293,7 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 		z["save"] = s["save"]
 	if not z.has("half") and str(s.get("save_success", "")) == "half":
 		z["half"] = true
-	if not z.has("effects") and s.has("effects"):
+	if not z.has("effects") and s.has("effects") and not bool(z.get("resolve_on_cast", false)):
 		z["effects"] = s["effects"]
 	z["choice"] = str(ctx.get("choice", ""))
 	if str(z.get("damage_type_choice", "")) != "" and z.has("damage"):
@@ -2262,6 +2328,8 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 	# Lasts until the end of the caster's next turn (Ice Storm's hail): counted down at the end of the caster's turns.
 	if z.has("caster_turn_ends"):
 		o.rounds_left = -1
+	if z.has("rounds") and ctx["conc"] == null:
+		o.rounds_left = int(z["rounds"])
 	_light_vs_darkness(o, int(ctx["slot"]))
 	zones.add(o, r)
 	r.lines.append(enc().log.add("spell", "%s fills %d squares" % [s["name"], cells.size()], c.id))
@@ -2539,6 +2607,12 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 			var tt := e.get_c(str(a["target_id"]))
 			if tt == null or not tt.is_alive():
 				return CombatResult.fail("The target is gone")
+			if str(a["spell_id"]) == "heat_metal":
+				e.log.add("spell", "%s: %s" % [c.name(), a["label"]], c.id)
+				specials.heat_metal(ctx, tt, r)
+				zones.prune()
+				e._check_over()
+				return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r))
 			var rolled := roll_damage_parts(ctx, d.get("damage", []) as Array, false, tt)
 			e.log.add("spell", "%s: %s" % [c.name(), a["label"]], c.id)
 			var dr := e.deal_damage(c, tt, [{"amount": int(rolled["total"]), "type": str(rolled["type"]), "spell": true}], false, str(s["name"]), [str(rolled["text"])])
@@ -2839,6 +2913,9 @@ func rehook_effects() -> void:
 					var ubid := str(oe["target"])
 					var ub_round := int(oe.get("round", 0))
 					fx.on_end = func() -> void: specials.unbanish(ubid, ub_round)
+				"undominate":
+					var udid := str(oe["target"])
+					fx.on_end = func() -> void: specials.undominate(udid)
 				"revert_shape":
 					var shid := str(oe["target"])
 					fx.on_end = func() -> void: _revert_shape(shid, str(oe.get("why", "the spell ended")))
@@ -2923,6 +3000,7 @@ func turn_start(c: Combatant) -> void:
 	_prune_sustained()
 	_turn_start_effects(c)
 	_repeat_saves(c, "start")
+	specials.turn_start(c)
 	# Bestow Curse (Dodge): a Wisdom save at the start of its turn or it must take the Dodge action.
 	if c.creature.has_flag("cursed_dodge") and c.can_act():
 		for fx: Effect in c.creature.effects:
@@ -2967,6 +3045,7 @@ func _turn_start_effects(c: Combatant) -> void:
 func turn_end(c: Combatant) -> void:
 	var e := enc()
 	zones.turn_end(c)
+	specials.turn_end(c)
 	_repeat_saves(c, "end")
 	_sustained_turn_end(c)
 	if c.creature.has_flag("blink") and c.can_act():
