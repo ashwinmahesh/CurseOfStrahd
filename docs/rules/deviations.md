@@ -34,7 +34,6 @@ started" in coverage.md, not a deviation.
 | Charger, Lunging Attack | "Moved this turn" stands in for "moved 5 (10) ft in a straight line toward the target" | The grid path isn't tracked as straight lines | — |
 | Calm Emotions | Only the "indifferent" option; the Charmed/Frightened suppression option isn't offered | The enemy-pacifying option is the combat use | Phase 3 |
 | Bestow Curse | The ability-check curse always picks Wisdom | One fewer choice | With the cast-time choice UI |
-| Aura of Vitality | A Bonus Action on each of your turns (as the 2014 and, we believe, 2024 text); the data text said "no action" | Unsure of the 2024 wording; needs the owner's book | Check against the PHB |
 | Disarming Attack | The dropped weapon is picked up at the start of the creature's next turn (its free object interaction) | Items on the ground aren't modelled | Phase 4 inventory |
 | Levitate, Fly | No altitude on the grid: Levitate puts the target out of melee reach and stops its walking; flyers ignore ground terrain | The grid is flat | Phase 3 levels |
 | Blink, Etherealness, Plane Shift | Blinking back lands on the same square; a monster that escapes this way leaves the fight | Saves a placement step; the escape is what matters in a fight | — |
