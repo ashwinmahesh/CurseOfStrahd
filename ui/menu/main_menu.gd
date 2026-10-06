@@ -21,6 +21,10 @@ func _ready() -> void:
 	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	art.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(art)
+	# Bats, mist, the moon's glow, the coach lamp and far lightning over the art (owner: "there's movement").
+	var ambience := TitleAmbience.new()
+	ambience.art = art
+	add_child(ambience)
 	var shade := TextureRect.new()
 	var grad := Gradient.new()
 	grad.set_color(0, Color(Look.color("void"), 0.92))
