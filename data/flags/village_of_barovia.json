@@ -1,0 +1,340 @@
+{
+  "region": "village_of_barovia",
+  "flags": [
+    {
+      "id": "ismark_met",
+      "type": "bool",
+      "summary": "The party has met Ismark at the Blood of the Vine; he moves to the mansion."
+    },
+    {
+      "id": "ismark_the_lesser_heard",
+      "type": "bool",
+      "summary": "Someone (Arik or the Vistani) told the party Ismark's nickname, 'the Lesser'."
+    },
+    {
+      "id": "ismark_offered_strongbox",
+      "type": "bool",
+      "summary": "Ismark, pressed for payment, offered the burgomaster's strongbox."
+    },
+    {
+      "id": "mansion_strongbox_opened",
+      "type": "bool",
+      "summary": "The burgomaster's strongbox in the mansion study has been opened."
+    },
+    {
+      "id": "strongbox_theft_noticed",
+      "type": "bool",
+      "summary": "Ismark or Ireena has remarked on the strongbox being opened without leave."
+    },
+    {
+      "id": "ireena_met",
+      "type": "bool",
+      "summary": "The party has spoken with Ireena in the mansion."
+    },
+    {
+      "id": "ireena_door_opened",
+      "type": "bool",
+      "summary": "Ireena opened the barred mansion door to the party before Ismark vouched for them."
+    },
+    {
+      "id": "ireena_bite_seen",
+      "type": "bool",
+      "summary": "A party member saw the two bite marks on Ireena's neck (Phase 4 reads)."
+    },
+    {
+      "id": "tamsin_locket_recognized",
+      "type": "bool",
+      "summary": "Tamsin showed Ireena the locket: the portrait has her face (Phase 4+ reads; Tatyana)."
+    },
+    {
+      "id": "ilse_invitation_shown",
+      "type": "bool",
+      "summary": "Ilse showed Ismark the letter signed with an S; Strahd remarks on it at the burial."
+    },
+    {
+      "id": "burial_agreed",
+      "type": "bool",
+      "summary": "The party agreed to help bury the burgomaster."
+    },
+    {
+      "id": "donavich_met",
+      "type": "bool",
+      "summary": "The party has spoken with Father Donavich."
+    },
+    {
+      "id": "donavich_will_officiate",
+      "type": "bool",
+      "summary": "Father Donavich agreed to say the burial rites."
+    },
+    {
+      "id": "donavich_refused_rites",
+      "type": "bool",
+      "summary": "Father Donavich refuses to bury the burgomaster (Doru was destroyed against his wishes)."
+    },
+    {
+      "id": "donavich_knows_fate",
+      "type": "bool",
+      "summary": "Donavich has reacted to Doru being destroyed or freed."
+    },
+    {
+      "id": "donavich_mercy_blessing",
+      "type": "bool",
+      "summary": "Donavich gave the party leave to destroy Doru as a mercy (Phase 5 reads)."
+    },
+    {
+      "id": "donavich_mercy_refused",
+      "type": "bool",
+      "summary": "Donavich refused the party's plea to end Doru's suffering."
+    },
+    {
+      "id": "donavich_gave_holy_water",
+      "type": "bool",
+      "summary": "Donavich gave the party two flasks of holy water."
+    },
+    {
+      "id": "vestry_chest_opened",
+      "type": "bool",
+      "summary": "The church vestry chest (holy water, candles) has been opened."
+    },
+    {
+      "id": "undercroft_unbarred",
+      "type": "bool",
+      "summary": "Donavich lifted the bar on the undercroft door."
+    },
+    {
+      "id": "doru_revealed",
+      "type": "bool",
+      "summary": "Donavich admitted the voice under the church is his son Doru."
+    },
+    {
+      "id": "doru_spoken_to",
+      "type": "bool",
+      "summary": "The party spoke with Doru in the undercroft."
+    },
+    {
+      "id": "doru_destroyed",
+      "type": "bool",
+      "summary": "Doru the vampire spawn was destroyed (encounter doru_undercroft) (Phase 5 reads)."
+    },
+    {
+      "id": "doru_freed",
+      "type": "bool",
+      "summary": "The party let Doru out of the undercroft; he fled toward the castle (Phase 4 reads)."
+    },
+    {
+      "id": "doru_left_locked",
+      "type": "bool",
+      "summary": "The party chose to leave Doru locked in the undercroft (Phase 5 reads)."
+    },
+    {
+      "id": "doru_cure_promised",
+      "type": "bool",
+      "summary": "The party promised Donavich to look for a way to save Doru (Phase 5 reads)."
+    },
+    {
+      "id": "holy_symbol_rumor",
+      "type": "bool",
+      "summary": "Donavich told Hedda of the Holy Symbol of Ravenkind (Phase 4 reads)."
+    },
+    {
+      "id": "burial_procession",
+      "type": "bool",
+      "summary": "The coffin has left the mansion for the churchyard; NPCs move to the grave."
+    },
+    {
+      "id": "parriwimple_pallbearer",
+      "type": "bool",
+      "summary": "Parriwimple (hired or befriended) carries the coffin and digs the grave."
+    },
+    {
+      "id": "parriwimple_befriended",
+      "type": "bool",
+      "summary": "The party was kind to Parriwimple; he'll help for free."
+    },
+    {
+      "id": "burial_method",
+      "type": "string",
+      "summary": "How the burgomaster was buried: church_rites, cleric_rites, lay_rites or hasty (Phase 4 reads)."
+    },
+    {
+      "id": "burgomaster_buried",
+      "type": "bool",
+      "summary": "Kolyan Indirovich is buried in the churchyard (Phase 4 reads)."
+    },
+    {
+      "id": "strahd_met",
+      "type": "bool",
+      "summary": "Strahd appeared in person at the burial (Phase 4 reads)."
+    },
+    {
+      "id": "strahd_first_impression",
+      "type": "string",
+      "summary": "The party's answer to Strahd at the grave: defiant, courteous, violent or silent; unset if Doru carried the message (Phase 4+ reads)."
+    },
+    {
+      "id": "churchyard_dead_cleared",
+      "type": "bool",
+      "summary": "The party defeated the churchyard dead (encounter churchyard_dead)."
+    },
+    {
+      "id": "mansion_vigil",
+      "type": "bool",
+      "summary": "The party chose to stand watch at the mansion; triggers encounter mansion_siege."
+    },
+    {
+      "id": "mansion_siege_survived",
+      "type": "bool",
+      "summary": "The party held the mansion through the night (encounter mansion_siege)."
+    },
+    {
+      "id": "ireena_escort",
+      "type": "string",
+      "summary": "Ireena's escort decision: accepted, later or declined (Phase 4 reads)."
+    },
+    {
+      "id": "ireena_destination",
+      "type": "string",
+      "summary": "Where the party agreed to take Ireena: vallaki or krezk (Phase 4 reads)."
+    },
+    {
+      "id": "ireena_in_party",
+      "type": "bool",
+      "summary": "Ireena travels with the party as a guest (Phase 4 reads; the engine adds the guest)."
+    },
+    {
+      "id": "ismark_joins_escort",
+      "type": "bool",
+      "summary": "Ismark travels with the party and Ireena as a guest (Phase 4 reads)."
+    },
+    {
+      "id": "village_departed",
+      "type": "bool",
+      "summary": "The party set out west from the village (Phase 4 reads)."
+    },
+    {
+      "id": "vistani_met",
+      "type": "bool",
+      "summary": "The party has spoken with the Vistani women in the tavern."
+    },
+    {
+      "id": "madam_eva_rumor",
+      "type": "bool",
+      "summary": "The Vistani women told the party about Madam Eva at Tser Pool (Phase 4 reads)."
+    },
+    {
+      "id": "vistani_wine_bought",
+      "type": "bool",
+      "summary": "The party bought the Vistani women a bottle."
+    },
+    {
+      "id": "vistani_spies_suspected",
+      "type": "bool",
+      "summary": "The party noticed the Vistani women are watching them for someone (Phase 4 reads)."
+    },
+    {
+      "id": "wine_shortage_heard",
+      "type": "bool",
+      "summary": "Arik said the Wizard of Wines deliveries have stopped (Phase 5 reads)."
+    },
+    {
+      "id": "arik_hollow_noticed",
+      "type": "bool",
+      "summary": "An Insight check showed there is nobody behind Arik's eyes."
+    },
+    {
+      "id": "scholar_notes_found",
+      "type": "bool",
+      "summary": "The party read Aurel Mirescu's last note in the tavern's back room (Phase 4 reads)."
+    },
+    {
+      "id": "morgantha_met",
+      "type": "bool",
+      "summary": "The party met Morgantha and her pastry cart."
+    },
+    {
+      "id": "dream_pastries_bought",
+      "type": "int",
+      "summary": "How many dream pastries the party bought from Morgantha (Phase 5 reads)."
+    },
+    {
+      "id": "dream_pastry_eaten",
+      "type": "bool",
+      "summary": "A party member ate Morgantha's sample and dreamed (Phase 5 reads)."
+    },
+    {
+      "id": "morgantha_suspected",
+      "type": "bool",
+      "summary": "The party saw through Morgantha (Insight or Medicine) (Phase 5 reads)."
+    },
+    {
+      "id": "morgantha_driven_off",
+      "type": "bool",
+      "summary": "The party intimidated Morgantha out of the village; she remembers (Phase 5 reads)."
+    },
+    {
+      "id": "bonegrinder_rumor",
+      "type": "bool",
+      "summary": "The party learned Morgantha bakes at the old windmill on the Vallaki road (Phase 5 reads)."
+    },
+    {
+      "id": "mad_mary_met",
+      "type": "bool",
+      "summary": "The party has spoken with Mad Mary."
+    },
+    {
+      "id": "gertruda_search_promised",
+      "type": "bool",
+      "summary": "The party promised Mary to look for Gertruda (Phase 6 reads)."
+    },
+    {
+      "id": "gertruda_window_clue",
+      "type": "bool",
+      "summary": "The party found that Gertruda's window latch was opened from the inside."
+    },
+    {
+      "id": "bildrath_met",
+      "type": "bool",
+      "summary": "The party has been into Bildrath's Mercantile."
+    },
+    {
+      "id": "bildrath_discount",
+      "type": "bool",
+      "summary": "The party out-haggled Bildrath: ten percent off the kit and the potion."
+    },
+    {
+      "id": "bildrath_haggle_failed",
+      "type": "bool",
+      "summary": "Bildrath refused to haggle; he won't entertain it again."
+    },
+    {
+      "id": "bildrath_potion_sold",
+      "type": "bool",
+      "summary": "The party bought Bildrath's one potion of healing."
+    },
+    {
+      "id": "bildrath_robbed",
+      "type": "bool",
+      "summary": "The mercantile strongbox was opened (Phase 4 can read for reputation)."
+    },
+    {
+      "id": "bildrath_accused",
+      "type": "bool",
+      "summary": "Bildrath has confronted the party about the strongbox."
+    },
+    {
+      "id": "bildrath_banned",
+      "type": "bool",
+      "summary": "Bildrath threw the party out for theft."
+    },
+    {
+      "id": "bildrath_repaid",
+      "type": "bool",
+      "summary": "The party repaid Bildrath's thirty gold."
+    },
+    {
+      "id": "night_dead_cleared",
+      "type": "bool",
+      "summary": "The party cleared the dead from the square at night (encounter night_streets_dead)."
+    }
+  ]
+}

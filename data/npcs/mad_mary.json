@@ -1,0 +1,18 @@
+{
+  "id": "mad_mary",
+  "name": "Mad Mary",
+  "title": "Mother of Gertruda",
+  "summary": "A seamstress whose daughter Gertruda slipped out of a barred window and hasn't come home. The village hears her weeping and calls her mad.",
+  "portrait": "mad_mary",
+  "sprite": "mad_mary",
+  "attitude": "indifferent",
+  "voice": "docs/voice/mad_mary.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

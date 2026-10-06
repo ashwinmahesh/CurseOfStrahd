@@ -1,0 +1,19 @@
+{
+  "id": "thorn",
+  "name": "Thorn",
+  "title": "Thornboldt Durst",
+  "summary": "Rose's seven-year-old brother, who hugs a stuffed wolf and says the true thing at the worst moment. His ghost does not want to be left alone again, and will climb inside someone rather than be.",
+  "portrait": "thorn",
+  "sprite": "thorn",
+  "attitude": "friendly",
+  "voice": "docs/voice/thorn.md",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "child",
+    "durst",
+    "death_house"
+  ],
+  "region": "death_house",
+  "pronouns": "he/him"
+}

@@ -156,6 +156,698 @@
       "sprites": "art/portraits/zombie.png",
       "model": "gemini-3.1-flash-image",
       "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: vacant, hungry. One expression only so far."
+    },
+    {
+      "id": "ismark",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/ismark_turnaround.png",
+      "sprites": "art/sprites/ismark/walk.tres",
+      "portrait": "art/portraits/ismark.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Ismark Kolyanovich, a tall, broad-shouldered young human nobleman in his mid-twenties with short dark-brown hair, a short dark beard and tired, shadowed eyes, wearing worn, once-fine clothes: a faded wine-red doublet with tarnished brass buttons over a bone-coloured shirt, dark brown breeches, scuffed tall leather boots and a short dark grey cloak, a longsword in a plain scabbard hanging at his left hip. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ismark Kolyanovich (named NPC). The wine-red doublet snaps to rust under the palette (like Ilse's tabard); the longsword at his hip swings with the near leg in front views. Needs art QA before final."
+    },
+    {
+      "id": "ismark_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ismark_portrait.png",
+      "sprites": "art/portraits/ismark.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ismark Kolyanovich, a tall young human nobleman in his mid-twenties with short dark-brown hair, a short dark beard and tired, shadowed eyes, in a worn faded wine-red doublet with tarnished brass buttons over a bone-coloured shirt and a dark grey cloak, three-quarter view, steady, earnest expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/ismark_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: steady, earnest."
+    },
+    {
+      "id": "ismark_weary_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ismark_weary_portrait.png",
+      "sprites": "art/portraits/ismark_weary.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ismark Kolyanovich, the same character as in the reference image, now with a weary, exhausted expression: heavy-lidded, shadowed eyes, a tired frown and slightly slumped shoulders. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/ismark_portrait.png"
+      ],
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/ismark_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: weary, exhausted."
+    },
+    {
+      "id": "ismark_angry_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ismark_angry_portrait.png",
+      "sprites": "art/portraits/ismark_angry.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ismark Kolyanovich, the same character as in the reference image, now with a angry expression: jaw clenched, brows drawn down hard, glaring. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/ismark_portrait.png"
+      ],
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/ismark_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: angry, glaring."
+    },
+    {
+      "id": "ireena",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/ireena_turnaround.png",
+      "sprites": "art/sprites/ireena/walk.tres",
+      "portrait": "art/portraits/ireena.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Ireena Kolyana, a young human noblewoman in her early twenties with long wavy auburn hair, a pale, resolute face, wearing a simple dusky-blue noble dress with a laced bodice and long sleeves, a dark plum cloak hanging from her shoulders, and a cream scarf wrapped high around her neck, plain brown boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ireena Kolyana (named NPC). Dusky-blue dress, plum cloak and a cream scarf worn high on the neck (it hides the bite marks). Needs art QA before final."
+    },
+    {
+      "id": "ireena_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ireena_portrait.png",
+      "sprites": "art/portraits/ireena.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ireena Kolyana, a young human noblewoman with long wavy auburn hair and a pale face, in a dusky-blue dress and a dark plum cloak, a cream scarf wrapped high around her neck, three-quarter view, calm, resolute expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/ireena_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: calm, resolute."
+    },
+    {
+      "id": "ireena_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ireena_afraid_portrait.png",
+      "sprites": "art/portraits/ireena_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ireena Kolyana, the same character as in the reference image, now with a afraid expression: wide eyes, raised brows, lips parted, pale. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/ireena_portrait.png"
+      ],
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/ireena_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: afraid, wide-eyed (background came out a little darker and the cloak lining red: art review)."
+    },
+    {
+      "id": "ireena_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ireena_smile_portrait.png",
+      "sprites": "art/portraits/ireena_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Ireena Kolyana, the same character as in the reference image, now with a gentle, warm smiling expression, eyes softened. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/ireena_portrait.png"
+      ],
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/ireena_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: gentle, warm smile."
+    },
+    {
+      "id": "rose",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/rose_turnaround.png",
+      "sprites": "art/sprites/rose/walk.tres",
+      "portrait": "art/portraits/rose.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Rose, a ghost girl about ten years old, slight and child-sized (not chibi), with long hair in old-fashioned ringlets tied with a ribbon, wearing an old-fashioned high-collared dress with a pinafore and buttoned ankle boots; she is a ghost, so her whole body, hair and clothes are drawn in pale spectral moonlit-blue and lilac tones (no pure white areas, no warm colours), with sad dark hollow eyes, fully opaque flat colours. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Rose, ghost girl of Death House. Her pale moonlit-blue/lilac snaps to frost, silver and pewter: reads spectral but is fully opaque, so any translucency has to come from the game (modulate alpha). Drawn alone, she fills the cell like an adult: use about 0.7 of a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "rose_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/rose_portrait.png",
+      "sprites": "art/portraits/rose.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Rose, a ghost girl about ten years old with long hair in old-fashioned ringlets tied with a ribbon and a high-collared old-fashioned dress with a pinafore, her whole figure drawn in pale spectral moonlit-blue and lilac tones with dark hollow eyes, three-quarter view, sad, wistful expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/rose_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: sad, wistful."
+    },
+    {
+      "id": "rose_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/rose_afraid_portrait.png",
+      "sprites": "art/portraits/rose_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Rose, the ghost girl, the same character as in the reference image, now with a afraid expression: wide hollow eyes, brows raised, mouth open in a small gasp. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/rose_portrait.png"
+      ],
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/rose_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: afraid, gasping (background slightly textured)."
+    },
+    {
+      "id": "thorn",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/thorn_turnaround.png",
+      "sprites": "art/sprites/thorn/walk.tres",
+      "portrait": "art/portraits/thorn.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Thorn, a ghost boy about seven years old, small and child-sized (not chibi), with short tousled hair, wearing an old-fashioned short jacket with a round collar, knee breeches, long socks and buckled shoes; he is a ghost, so his whole body, hair and clothes are drawn in pale spectral moonlit-blue and lilac tones (no pure white areas, no warm colours), with frightened dark hollow eyes, fully opaque flat colours. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Thorn, ghost boy of Death House. Same ghost palette as Rose (frost/silver/pewter, opaque). Drawn alone, he fills the cell like an adult: use about 0.6 of a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "thorn_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/thorn_portrait.png",
+      "sprites": "art/portraits/thorn.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Thorn, a ghost boy about seven years old with short tousled hair and an old-fashioned short jacket with a round collar, his whole figure (hair, skin and clothes) drawn in pale spectral moonlit-blue and lilac tones with dark hollow eyes, three-quarter view, sad, shy expression, lit softly from the side, flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. The first reference image is his turnaround sheet: draw the same boy (same face, hair and clothes) as one single bust portrait. The second reference image is the portrait of his sister Rose: match its framing, lighting, line work and its solid flat dark purple background exactly (not grey, no texture, no glow); no props, candles or scenery.",
+      "reference": [
+        "art/generated/characters/thorn_turnaround.png",
+        "art/generated/portraits/rose_portrait.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: sad, shy. Third generation: the first had a warm peach airbrushed gradient on his clothes, the second a grey background; the final also sends Rose's portrait as a second reference so the siblings match."
+    },
+    {
+      "id": "thorn_afraid_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/thorn_afraid_portrait.png",
+      "sprites": "art/portraits/thorn_afraid.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Thorn, the ghost boy, the same character as in the reference image, now with a terrified expression: wide hollow eyes, brows raised, trembling mouth, on the verge of tears. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/thorn_portrait.png"
+      ],
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/thorn_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: terrified, in tears (background slightly textured)."
+    },
+    {
+      "id": "donavich",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/donavich_turnaround.png",
+      "sprites": "art/sprites/donavich/walk.tres",
+      "portrait": "art/portraits/donavich.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Father Donavich, a haggard, gaunt old human priest with thinning grey hair, sunken bloodshot eyes and grey stubble, wearing a threadbare, patched charcoal-black cassock with a frayed hem, a wooden sunburst holy symbol on a cord around his neck, and worn sandals. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Father Donavich (named NPC). Cassock hem swings with the legs. Needs art QA before final."
+    },
+    {
+      "id": "donavich_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/donavich_portrait.png",
+      "sprites": "art/portraits/donavich.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Father Donavich, a haggard, gaunt old human priest with thinning grey hair, sunken bloodshot eyes and grey stubble, in a threadbare charcoal-black cassock with a wooden sunburst holy symbol on a cord, three-quarter view, haunted, guilt-ridden expression, lit from below by candlelight from a candle that is out of frame (no candle or flame visible), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/donavich_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: haunted, guilt-ridden. Second generation: the first showed a lit candle in the frame."
+    },
+    {
+      "id": "bildrath",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/bildrath_turnaround.png",
+      "sprites": "art/sprites/bildrath/walk.tres",
+      "portrait": "art/portraits/bildrath.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Bildrath Cantemir, a burly, heavyset middle-aged human shopkeeper with a thick neck, a balding head with a dark fringe of hair and a bushy moustache, a sour, miserly scowl, wearing a stained brown leather apron over a tan shirt with rolled-up sleeves, dark trousers, a ring of keys and a fat coin purse on his belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Bildrath Cantemir (named NPC), burly shopkeeper with keys and a coin purse. The back three-quarter view is closer to a back-side profile. Needs art QA before final."
+    },
+    {
+      "id": "bildrath_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/bildrath_portrait.png",
+      "sprites": "art/portraits/bildrath.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Bildrath Cantemir, a burly, heavyset middle-aged human shopkeeper with a thick neck, a balding head with a dark fringe of hair and a bushy moustache, in a stained brown leather apron over a tan shirt, three-quarter view, sour, miserly scowling expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/bildrath_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: sour, miserly scowl."
+    },
+    {
+      "id": "parriwimple",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/parriwimple_turnaround.png",
+      "sprites": "art/sprites/parriwimple/walk.tres",
+      "portrait": "art/portraits/parriwimple.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Parriwimple, a very tall, lanky but strong young human man, a gentle giant about seven feet tall with long limbs, a simple, kind, slightly vacant smile and shaggy straw-coloured hair, wearing a too-small patched tan shirt with rolled sleeves, brown suspenders, dark brown trousers and big worn boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Parriwimple (named NPC), Bildrath's very tall nephew. Drawn alone at normal cell height: use about 1.25x a human's height_units so he towers over the party. Needs art QA before final."
+    },
+    {
+      "id": "parriwimple_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/parriwimple_portrait.png",
+      "sprites": "art/portraits/parriwimple.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Parriwimple, a very tall, gentle young human man with shaggy dirty-blond hair drawn in light brown and tan tones (not yellow, not green), in a too-small patched tan shirt and brown suspenders, three-quarter view, simple, friendly smiling expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/parriwimple_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: simple, friendly smile. Second generation: in the first his straw-yellow hair snapped to bile green under the palette; now light brown."
+    },
+    {
+      "id": "mad_mary",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/mad_mary_turnaround.png",
+      "sprites": "art/sprites/mad_mary/walk.tres",
+      "portrait": "art/portraits/mad_mary.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Mad Mary, a disheveled, distraught middle-aged human woman with wild, tangled greying dark hair and red-rimmed staring eyes, wearing a long, stained, yellowed parchment-coloured nightgown and a moth-eaten dark purple knitted shawl around her shoulders, barefoot. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Mad Mary (named NPC): nightgown and shawl, barefoot. Needs art QA before final."
+    },
+    {
+      "id": "mad_mary_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/mad_mary_portrait.png",
+      "sprites": "art/portraits/mad_mary.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Mad Mary, a disheveled middle-aged human woman with wild, tangled greying dark hair and red-rimmed eyes, in a stained yellowed nightgown and a moth-eaten dark purple knitted shawl, three-quarter view, distraught, wild-eyed expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/mad_mary_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: distraught, wild-eyed. Second generation (the first had a grey background); the final background is purple but slightly grungy: art review."
+    },
+    {
+      "id": "morgantha",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/morgantha_turnaround.png",
+      "sprites": "art/sprites/morgantha/walk.tres",
+      "portrait": "art/portraits/morgantha.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Morgantha, a stooped, kindly-looking old human woman with a grandmotherly smile that does not reach her cold, glinting eyes, grey hair in a bun under a dark headscarf, wearing a patched dark green peasant dress with a stained apron, a small wicker basket of meat pies covered with a red checked cloth held in her right hand at her side. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Morgantha (named NPC, night hag in disguise) with a basket of meat pies at her side. Her green dress snaps to dark umber. The back three-quarter view (NE/NW) shows a second basket, a generator slip: art review. Needs art QA before final."
+    },
+    {
+      "id": "morgantha_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/morgantha_portrait.png",
+      "sprites": "art/portraits/morgantha.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Morgantha, a stooped old human woman with grey hair in a bun under a dark headscarf, in a patched dark green peasant dress, three-quarter view, sweet grandmotherly smiling, with a cold, sinister glint in the eyes, expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/morgantha_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: sweet grandmotherly smile with a sinister glint."
+    },
+    {
+      "id": "strahd",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/strahd_turnaround.png",
+      "sprites": "art/sprites/strahd/walk.tres",
+      "portrait": "art/portraits/strahd.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Strahd von Zarovich, a tall, gaunt, elegant vampire nobleman with slicked-back black hair, a sharp widow's peak, a long pale face and red eyes, wearing an aristocratic black high-collared doublet with silver buttons, black trousers, tall black riding boots and a long black cape with a blood-red lining and a high stiff collar. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Strahd von Zarovich. From behind he is almost all black cape (the red lining shows front and back). Tall: use a slightly larger height_units than the party's humans. Needs art QA before final."
+    },
+    {
+      "id": "strahd_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/strahd_portrait.png",
+      "sprites": "art/portraits/strahd.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Strahd von Zarovich, a gaunt, elegant vampire nobleman with slicked-back black hair, a sharp widow's peak, a long pale face and red eyes, in a black high-collared doublet and a black cape with a blood-red lining and a high stiff collar, three-quarter view, cold, aristocratic, menacing expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/strahd_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: cold, aristocratic, menacing."
+    },
+    {
+      "id": "strahd_smile_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/strahd_smile_portrait.png",
+      "sprites": "art/portraits/strahd_smile.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Strahd von Zarovich, the same character as in the reference image, now with a cold, cruel smiling expression: a thin smirk showing the tips of his fangs, eyes narrowed. Keep everything else identical to the reference image: the same face, hair, clothes, colours, three-quarter view, framing, lighting and plain flat dark purple background with no texture or glow; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/portraits/strahd_portrait.png"
+      ],
+      "notes": "Expression variant: the neutral portrait (art/generated/portraits/strahd_portrait.png) sent as the reference image (--ref) with only the expression changed, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: cold, cruel smile showing the fang tips (eyes came out amber rather than red: art review)."
+    },
+    {
+      "id": "ghoul",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/ghoul_turnaround.png",
+      "sprites": "art/sprites/ghoul/walk.tres",
+      "portrait": "art/portraits/ghoul.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a ghoul, a hunched, emaciated undead humanoid with hairless, sickly pale bone-grey skin tinged green stretched over its bones, long black claws, a long purple tongue, jagged teeth and wild pale eyes, wearing only a tattered dark loincloth and rags. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ghoul (enemy): hairless, bone-grey, long purple tongue, loincloth. Needs art QA before final."
+    },
+    {
+      "id": "ghoul_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ghoul_portrait.png",
+      "sprites": "art/portraits/ghoul.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a ghoul, an emaciated hairless undead with sickly pale bone-grey skin tinged green, jagged teeth, a long purple tongue and wild pale eyes, three-quarter view, ravenous, snarling expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/ghoul_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: ravenous, snarling."
+    },
+    {
+      "id": "ghast",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/ghast_turnaround.png",
+      "sprites": "art/sprites/ghast/walk.tres",
+      "portrait": "art/portraits/ghast.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a ghast, a larger and more rotten ghoul: a hunched undead humanoid with mottled bile-green and bruise-purple rotting skin, long black claws, jagged teeth and glowing red eyes, wearing the torn, filthy remains of a once-fine dark purple coat. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Ghast (enemy): drawn as the ghoul's bigger, rottener cousin (green/purple rot, red eyes, torn dark coat) so the two read apart. Needs art QA before final."
+    },
+    {
+      "id": "ghast_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/ghast_portrait.png",
+      "sprites": "art/portraits/ghast.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a ghast, a rotting undead with mottled bile-green and bruise-purple skin, jagged teeth and glowing red eyes, in the torn remains of a once-fine dark coat, three-quarter view, hungry, snarling expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/ghast_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: hungry, snarling."
+    },
+    {
+      "id": "specter",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/specter_turnaround.png",
+      "sprites": "art/sprites/specter/walk.tres",
+      "portrait": "art/portraits/specter.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a specter, a floating ghost of a dead person with no legs: a tattered hooded shroud whose lower half tapers into a single ragged wisp a little above the ground, long thin reaching hands and a gaunt skull-like face with hollow glowing eyes. The specter is pale and cold: its shroud, hands and face are all pale frost-blue and moonlit-blue with lilac shadows (no red, no crimson, no dark robes, no pure white areas), fully opaque flat colours. Exactly five full views of the same ghost in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating upright in a neutral pose, arms at the sides, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Specter (enemy). Rendered STATIC although the brief grouped it with the walkers: it has no legs (the shroud tapers into a wisp), so the game's bob reads better than a leg cycle. Second generation: the first came out in crimson robes, too close to the cultist. Needs art QA before final."
+    },
+    {
+      "id": "specter_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/specter_portrait.png",
+      "sprites": "art/portraits/specter.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a specter, the hooded ghost of a dead person with a gaunt skull-like face and hollow glowing eyes, its face, hood and tattered shroud all pale frost-blue and moonlit-blue with lilac shadows (no red, no yellow, no bone colours), three-quarter view, hateful, wailing expression, lit by cold moonlight from the side (no warm light, no orange, peach or yellow tones), flat cel shading with hard-edged tones and no gradients, against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/specter_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: hateful, wailing. Second generation: the first had a grey background and warm pastel bands; the final is lit by cold moonlight from the side."
+    },
+    {
+      "id": "shadow",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/shadow_turnaround.png",
+      "sprites": "art/sprites/shadow/walk.tres",
+      "portrait": "art/portraits/shadow.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a shadow, a gaunt humanoid figure made entirely of living darkness: a solid deep violet-black body with slightly lighter purple inner shading so its shape reads, long thin limbs, clawed fingers and two pale glowing lilac eyes, its edges slightly ragged like smoke but clean-shaped. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Shadow (enemy): a humanoid of living darkness. Almost all void/ink after quantization (only the eyes and a faint purple inner line read): deliberately hard to see, but check it against dark ground at night (art review). Needs art QA before final."
+    },
+    {
+      "id": "shadow_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/shadow_portrait.png",
+      "sprites": "art/portraits/shadow.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a shadow, a gaunt humanoid figure made of living darkness: its whole head and body solid deep violet-black with slightly lighter purple inner shading (no brown, orange or skin tones), outlined by a thin cold lilac rim light so it reads against the background, two pale glowing lilac eyes, three-quarter view, silent, menacing expression, lit only by a cold lilac rim light from behind (no warm or candle light), against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. The background is one solid flat dark purple colour with no texture, no glow and no visible light source; no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/shadow_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: silent, menacing. Second generation: under candlelight the first read as brown skin; the final is lit only by a cold lilac rim light."
+    },
+    {
+      "id": "cultist",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/cultist_turnaround.png",
+      "sprites": "art/sprites/cultist/walk.tres",
+      "portrait": "art/portraits/cultist.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Barovian cultist, a gaunt human in a long dark crimson hooded robe with the hood up, his pale face half in shadow, a rope belt with a curved ritual dagger in a sheath, and dark boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian cultist (enemy): crimson hooded robe, ritual dagger; the robe hem swings with the legs. Needs art QA before final."
+    },
+    {
+      "id": "cultist_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/cultist_portrait.png",
+      "sprites": "art/portraits/cultist.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a Barovian cultist, a gaunt pale human in a dark crimson hooded robe with the hood up, his face half in shadow, three-quarter view, fanatical, cold expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/cultist_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: fanatical, cold."
+    },
+    {
+      "id": "animated_armor",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/animated_armor_turnaround.png",
+      "sprites": "art/sprites/animated_armor/walk.tres",
+      "portrait": "art/portraits/animated_armor.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an animated suit of armor: an empty, dented, tarnished steel-grey full plate armor with a closed great helm (a dark empty eye slit with two faint red points), tarnished brass trim and a torn dark red tabard, standing on its own with no person inside. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Animated armor (enemy): empty tarnished plate with red points in the visor and a torn red tabard. Needs art QA before final."
+    },
+    {
+      "id": "animated_armor_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/animated_armor_portrait.png",
+      "sprites": "art/portraits/animated_armor.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of an empty animated suit of dented, tarnished steel-grey plate armor with a closed great helm, two faint red points in the dark eye slit, tarnished brass trim and a torn dark red tabard, three-quarter view, blank, implacable expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/animated_armor_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: blank, implacable."
+    },
+    {
+      "id": "animated_flying_sword",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/animated_flying_sword_turnaround.png",
+      "sprites": "art/sprites/animated_flying_sword/walk.tres",
+      "portrait": "art/portraits/animated_flying_sword.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an animated flying longsword: a single steel longsword floating on its own, point down and upright, with a dark leather-wrapped grip, a crossguard and a round pommel, no one holding it. Exactly five full views of the same sword in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Hovering upright, point down, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Flying sword (enemy). The blade is tinted dark red (bloodied) rather than clean steel. Drawn as tall as a person: use about 0.5 of a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "animated_flying_sword_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/animated_flying_sword_portrait.png",
+      "sprites": "art/portraits/animated_flying_sword.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of an animated flying longsword floating on its own, hilt and upper blade shown close up, a dark leather-wrapped grip, a crossguard, a round pommel and a steel blade tinted with dark red, three-quarter view, eerie, poised to strike (an object, no face) expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/animated_flying_sword_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: eerie, poised to strike. The portrait has a faint banded glow at the lower right: art review."
+    },
+    {
+      "id": "broom_of_animated_attack",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/broom_of_animated_attack_turnaround.png",
+      "sprites": "art/sprites/broom_of_animated_attack/walk.tres",
+      "portrait": "art/portraits/broom_of_animated_attack.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of an animated broom: an old twig broom with a gnarled wooden handle, standing upright on its bristles by itself, its bristle head bent forward menacingly like a body, bound with rusty wire, no one holding it. Exactly five full views of the same broom in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing upright on its bristles, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (static wording, 16:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Broom of animated attack (enemy): twig broom with its bristle head bent forward like a body. Use about 0.7 of a human's height_units. Needs art QA before final."
+    },
+    {
+      "id": "broom_of_animated_attack_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/broom_of_animated_attack_portrait.png",
+      "sprites": "art/portraits/broom_of_animated_attack.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of an animated old twig broom with a gnarled wooden handle, its bristle head bent forward menacingly and bound with rusty wire, shown close up, three-quarter view, menacing (an object, no face) expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/broom_of_animated_attack_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: menacing. The portrait has a banded glow at the lower left: art review."
+    },
+    {
+      "id": "grick",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/grick_turnaround.png",
+      "sprites": "art/sprites/grick/walk.tres",
+      "portrait": "art/portraits/grick.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a grick, a monster like a giant worm: a thick, rubbery olive-grey snake-like body coiled on the ground with its front third rearing up, its head a sharp dark beak surrounded by four barbed tentacles spread open like a flower, no eyes. Exactly five full views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Coiled on the ground with its front rearing up, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Grick (enemy): reared worm body with a beak and four barbed tentacles. The olive-grey body snaps to tan/bone under the palette. Needs art QA before final."
+    },
+    {
+      "id": "grick_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/grick_portrait.png",
+      "sprites": "art/portraits/grick.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a grick, a worm-like monster with a thick rubbery olive-grey body, its head a sharp dark beak surrounded by four barbed dark red tentacles spread open like a flower, three-quarter view, hungry, beak open expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/grick_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: hungry, beak open."
+    },
+    {
+      "id": "shambling_mound",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/shambling_mound_turnaround.png",
+      "sprites": "art/sprites/shambling_mound/walk.tres",
+      "portrait": "art/portraits/shambling_mound.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a shambling mound, a huge hulking heap of rotting vegetation in a hunched, vaguely humanoid shape with two thick trailing arm-masses: tangled bog-green vines, dark moss, peat-brown mud and roots, with a few old bones and dead leaves caught in it, no visible face. Exactly five full views of the same creature in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Standing hunched in a neutral pose, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 1.00. Shambling mound (enemy, Large): use about 2x a human's height_units (2x2 footprint). Needs art QA before final."
+    },
+    {
+      "id": "shambling_mound_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/shambling_mound_portrait.png",
+      "sprites": "art/portraits/shambling_mound.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a shambling mound, a huge heap of rotting vegetation: tangled bog-green vines, dark moss, peat-brown mud and roots with old bones and dead leaves caught in it, a dark hollow where a face would be, three-quarter view, looming, menacing expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/shambling_mound_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: looming, menacing."
+    },
+    {
+      "id": "swarm_of_rats",
+      "kind": "creature",
+      "status": "generated",
+      "source": "art/generated/characters/swarm_of_rats_turnaround.png",
+      "sprites": "art/sprites/swarm_of_rats/walk.tres",
+      "portrait": "art/portraits/swarm_of_rats.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a swarm of rats: about a dozen scrawny grey-brown rats with red eyes and long pink tails crowded together into one low, dome-shaped writhing heap on the ground, about twice as wide as it is tall, all the rats touching. Exactly three views of the same swarm in one single row, left to right: front (rats facing the viewer), side profile (rats facing right), back (seen from behind). A low heap on the ground, same scale, evenly spaced with wide clear gaps so no view touches another, nothing above or below the row, on a plain flat white background, no ground shadow.",
+      "notes": "3-view (front, side, back) turnaround (static wording, 21:9) -> make sprite STATIC=1 -> 8 directions x 1 still frame, 384 px cells, imported as VRAM (BPTC) with mipmaps; same walk_<dir>/idle_<dir> names as walk sheets (the game adds the bob). Height fill 0.72. Swarm of rats (enemy): a low heap of rats. Third generation: the first stacked the rats into a tower, the second drew six views in two rows. blender/render_walk.py now detects 3-view sheets (it used to cut the wide side view in two); diagonals reuse front/back turned 25 degrees. Use a small height_units (about half a human's). Needs art QA before final."
+    },
+    {
+      "id": "swarm_of_rats_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/swarm_of_rats_portrait.png",
+      "sprites": "art/portraits/swarm_of_rats.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a swarm of scrawny grey-brown rats with red eyes and long pink tails piled together, several heads in front, three-quarter view, vicious, squealing expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/swarm_of_rats_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: vicious, squealing."
+    },
+    {
+      "id": "vampire_spawn",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/vampire_spawn_turnaround.png",
+      "sprites": "art/sprites/vampire_spawn/walk.tres",
+      "portrait": "art/portraits/vampire_spawn.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Doru, a young human man turned vampire spawn: gaunt and feral, with deathly pale grey skin, wild unkempt dark hair, red eyes, bared fangs and long dirty claw-like fingernails, in a hunched predatory posture, wearing a torn, filthy bone-coloured linen shirt and ragged dark trousers, barefoot. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Doru, vampire spawn (enemy): gaunt, feral, hunched, red eyes and fangs. Needs art QA before final."
+    },
+    {
+      "id": "vampire_spawn_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/vampire_spawn_portrait.png",
+      "sprites": "art/portraits/vampire_spawn.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of Doru, a young human man turned vampire spawn, gaunt and feral, with deathly pale grey skin, wild unkempt dark hair, red eyes and bared fangs, in a torn, filthy bone-coloured linen shirt, three-quarter view, feral, hissing expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/vampire_spawn_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: feral, hissing."
+    },
+    {
+      "id": "strahd_zombie",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/strahd_zombie_turnaround.png",
+      "sprites": "art/sprites/strahd_zombie/walk.tres",
+      "portrait": "art/portraits/strahd_zombie.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Strahd zombie, a rotting undead castle guard of Castle Ravenloft with grey-green rotting skin and missing chunks of flesh, a stiff, upright soldierly posture, wearing a dented old-fashioned steel breastplate over a faded blood-red tabard, a tarnished open-faced helmet and torn dark trousers. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Strahd zombie (enemy): Ravenloft guard in a dented breastplate, helmet and a crested blood-red tabard, stiffer than the villager zombie. Needs art QA before final."
+    },
+    {
+      "id": "strahd_zombie_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/strahd_zombie_portrait.png",
+      "sprites": "art/portraits/strahd_zombie.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a Strahd zombie, a rotting undead castle guard with grey-green rotting skin, a skull-like face, a tarnished open-faced helmet and a dented steel breastplate over a faded blood-red tabard, three-quarter view, vacant, relentless expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/strahd_zombie_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: vacant, relentless."
+    },
+    {
+      "id": "commoner",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/commoner_turnaround.png",
+      "sprites": "art/sprites/commoner/walk.tres",
+      "portrait": "art/portraits/commoner.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Barovian commoner, a gaunt, weary peasant woman in a patched brown wool dress, a grey shawl, a stained apron and a dark headscarf, worn shoes. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian commoner (generic NPC/enemy stat block): a gaunt peasant woman, so she can alternate with the Phase 0 villager man (art/sprites/villager). Needs art QA before final."
+    },
+    {
+      "id": "commoner_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/commoner_portrait.png",
+      "sprites": "art/portraits/commoner.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a Barovian commoner, a gaunt, weary peasant woman in a dark blue headscarf, a grey shawl and a patched brown wool dress, three-quarter view, weary, fearful expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/commoner_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: weary, fearful."
+    },
+    {
+      "id": "noble",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/noble_turnaround.png",
+      "sprites": "art/sprites/noble/walk.tres",
+      "portrait": "art/portraits/noble.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a Barovian noble, a haughty, pale middle-aged human nobleman with a pointed dark beard, wearing a rich but faded dark-purple velvet doublet with a white ruffled collar, a short black cape, a gold chain across his chest, dark breeches, tall black boots and a slim rapier at his hip. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells, imported as VRAM (BPTC) with mipmaps like ilse_varga. The rig normalises every figure to the same cell height: size it in game with DirectionalSprite height_units. Barovian noble (generic NPC stat block): ruff, velvet doublet, short cape, gold chain; the rapier below the hips is kept rigid by the prop pass. Needs art QA before final."
+    },
+    {
+      "id": "noble_portrait",
+      "kind": "portrait",
+      "status": "generated",
+      "source": "art/generated/portraits/noble_portrait.png",
+      "sprites": "art/portraits/noble.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Bust portrait of a Barovian noble, a haughty, pale middle-aged human nobleman with a pointed dark beard, a white ruffled collar, a faded dark-purple and wine-red velvet doublet, a short black cape and a gold chain, three-quarter view, haughty, disdainful expression, lit by candlelight from below against a plain dark purple background. The reference image is this character's turnaround sheet: draw the same character (same face, hair, colours and clothes) as one single bust portrait, not a sheet. Plain dark purple background, no props, candles or scenery in the frame.",
+      "reference": [
+        "art/generated/characters/noble_turnaround.png"
+      ],
+      "notes": "Bust portrait (art/prompts/portrait.txt + 'no props, candles or scenery'), the character's turnaround sent as a reference image (tools/art/generate_gemini.py --ref) so face and clothes match the sprite, 1024 -> 512 px, palette-snapped by blender/portrait.py. Expression: haughty, disdainful."
     }
   ],
   "image_provider": "gemini"

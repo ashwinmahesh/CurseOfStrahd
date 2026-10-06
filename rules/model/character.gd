@@ -897,7 +897,7 @@ func max_hp_breakdown() -> Breakdown:
 func hit_dice() -> Dictionary:
 	var out := {}
 	for lv: Variant in build.get("levels", []):
-		var die := str(compendium.class_data(str((lv as Dictionary)["class"])).get("hit_die", 8))
+		var die := str(int(compendium.class_data(str((lv as Dictionary)["class"])).get("hit_die", 8)))
 		if not out.has(die):
 			out[die] = {"total": 0, "spent": int(hit_dice_spent.get(die, 0))}
 		(out[die] as Dictionary)["total"] = int((out[die] as Dictionary)["total"]) + 1

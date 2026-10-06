@@ -1,0 +1,18 @@
+{
+  "id": "strahd",
+  "name": "Strahd von Zarovich",
+  "title": "Lord of Barovia",
+  "summary": "The vampire lord of the valley, courteous and patient, who wants Ireena and is delighted by his new guests.",
+  "portrait": "strahd",
+  "sprite": "strahd",
+  "attitude": "indifferent",
+  "voice": "docs/voice/strahd.md",
+  "guest": false,
+  "tags": [
+    "vampire",
+    "noble",
+    "castle_ravenloft"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

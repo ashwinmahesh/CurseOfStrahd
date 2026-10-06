@@ -1,0 +1,19 @@
+{
+  "id": "durst_nursemaid",
+  "name": "The Nursemaid",
+  "title": "Specter of the Nursery",
+  "summary": "The household's nursemaid, who bore Gustav Durst a son and followed the cult when they carried the baby below. They killed her for it. Her specter guards the nursery door and asks every stranger for her child.",
+  "portrait": "durst_nursemaid",
+  "sprite": "durst_nursemaid",
+  "attitude": "hostile",
+  "voice": "docs/voice/durst_nursemaid.md",
+  "monster": "specter",
+  "guest": false,
+  "tags": [
+    "undead",
+    "ghost",
+    "death_house"
+  ],
+  "region": "death_house",
+  "pronouns": "she/her"
+}

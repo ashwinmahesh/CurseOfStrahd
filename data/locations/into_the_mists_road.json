@@ -1,0 +1,344 @@
+{
+  "id": "into_the_mists_road",
+  "name": "The Old Svalich Road",
+  "region": "into_the_mists",
+  "summary": "The party's arrival in Barovia: out of the mists onto the Old Svalich Road, through the Svalich Woods where a wolf pack bars the narrows, past the headless guardians of the Gates of Barovia, to the first cottages of the Village of Barovia, where two children are waiting in the road.",
+  "map": {
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true,
+    "rows": [
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "#######################......###",
+      "#######################...~~.###",
+      "####==....#############..~...###",
+      "####......#############.~....###",
+      "####......########...##......###",
+      "#................#.~.#.........#",
+      "#.~..............#...#.~....~~.#",
+      "............................~...",
+      "#....~........~..#...#....~....#",
+      "#................#..~#.......~.#",
+      "########..########...####.....##",
+      "########..###############...~.##",
+      "########..###############..~..##",
+      "################################",
+      "################################",
+      "################################"
+    ]
+  },
+  "areas": [
+    {
+      "id": "mists_svalich_woods",
+      "name": "The Svalich Woods",
+      "cells": [
+        [
+          21,
+          0
+        ],
+        [
+          31,
+          23
+        ]
+      ]
+    },
+    {
+      "id": "mists_gates",
+      "name": "The Gates of Barovia",
+      "cells": [
+        [
+          17,
+          0
+        ],
+        [
+          20,
+          23
+        ]
+      ]
+    },
+    {
+      "id": "mists_village_edge",
+      "name": "The Village Edge",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          16,
+          23
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      30,
+      15
+    ],
+    "from_village": [
+      1,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "into_the_village",
+      "cell": [
+        0,
+        15
+      ],
+      "to": "village_of_barovia",
+      "spawn": "from_east_road",
+      "label": "Into the village"
+    }
+  ],
+  "doors": [
+    {
+      "id": "barovia_gates",
+      "cell": [
+        17,
+        15
+      ],
+      "label": "the Gates of Barovia",
+      "flag": "mists_gates_opened"
+    }
+  ],
+  "props": [
+    {
+      "id": "mists_wall",
+      "cell": [
+        31,
+        14
+      ],
+      "kind": "examine",
+      "label": "the mist behind you",
+      "model": "fog_bank",
+      "dialogue": "into_the_mists/arrival:mist_wall"
+    },
+    {
+      "id": "mists_signpost",
+      "cell": [
+        22,
+        12
+      ],
+      "kind": "examine",
+      "label": "a leaning signpost",
+      "model": "signpost"
+    },
+    {
+      "id": "mists_deer_carcass",
+      "cell": [
+        26,
+        10
+      ],
+      "kind": "examine",
+      "label": "a torn carcass",
+      "model": "carcass",
+      "dialogue": "into_the_mists/arrival:carcass"
+    },
+    {
+      "id": "mists_wayside_shrine",
+      "cell": [
+        20,
+        12
+      ],
+      "kind": "examine",
+      "label": "a wayside shrine",
+      "model": "shrine_small"
+    },
+    {
+      "id": "gate_statues",
+      "cell": [
+        17,
+        14
+      ],
+      "kind": "examine",
+      "label": "the headless statues",
+      "model": "statue_headless"
+    },
+    {
+      "id": "gate_heads",
+      "cell": [
+        19,
+        17
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "label": "stone heads in the weeds",
+      "model": "statue_head"
+    },
+    {
+      "id": "edge_cottage_shutters",
+      "cell": [
+        6,
+        9
+      ],
+      "kind": "examine",
+      "label": "shuttered windows",
+      "model": "shutters"
+    },
+    {
+      "id": "edge_alley_crow",
+      "cell": [
+        9,
+        20
+      ],
+      "kind": "decor",
+      "label": "a crow on a barrel",
+      "model": "crow"
+    }
+  ],
+  "containers": [
+    {
+      "id": "abandoned_cart",
+      "cell": [
+        28,
+        18
+      ],
+      "label": "an abandoned cart",
+      "model": "cart_broken",
+      "items": [
+        {
+          "id": "rope",
+          "qty": 1
+        },
+        {
+          "id": "torch",
+          "qty": 3
+        },
+        {
+          "id": "ration",
+          "qty": 2
+        }
+      ],
+      "gold": 2
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        6,
+        9
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "traps": [
+    {
+      "id": "mists_wolf_trap",
+      "cells": [
+        [
+          25,
+          15
+        ]
+      ],
+      "label": "a hunter's wolf trap",
+      "detect_dc": 11,
+      "disarm_dc": 11,
+      "save": {
+        "ability": "dex",
+        "dc": 11
+      },
+      "damage": "1d6",
+      "damage_type": "piercing",
+      "text": "Iron jaws snap shut in the fog."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "mists_wolves",
+      "cell": [
+        21,
+        15
+      ],
+      "dialogue": "into_the_mists/wolves:start",
+      "when": "not flag.mists_wolves_resolved",
+      "facing": "east"
+    },
+    {
+      "npc": "rose",
+      "cell": [
+        6,
+        14
+      ],
+      "dialogue": "death_house/rose_thorn:start",
+      "when": "not visited:death_house_ground",
+      "facing": "east"
+    },
+    {
+      "npc": "thorn",
+      "cell": [
+        6,
+        16
+      ],
+      "dialogue": "death_house/rose_thorn:start",
+      "when": "not visited:death_house_ground",
+      "facing": "east"
+    },
+    {
+      "npc": "rose",
+      "cell": [
+        6,
+        14
+      ],
+      "dialogue": "death_house/rose_thorn:return",
+      "when": "flag.death_house_completed and not flag.death_house_children_at_rest",
+      "facing": "east"
+    },
+    {
+      "npc": "thorn",
+      "cell": [
+        6,
+        16
+      ],
+      "dialogue": "death_house/rose_thorn:return",
+      "when": "flag.death_house_completed and not flag.death_house_children_at_rest",
+      "facing": "east"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "mists_wolves",
+      "trigger": "dialogue",
+      "flag": "mists_wolves_fought",
+      "monsters": [
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            14
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            16
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            26,
+            17
+          ]
+        }
+      ],
+      "text": "The pack stops pretending."
+    }
+  ],
+  "narration": {
+    "enter": "enter:into_the_mists_road"
+  },
+  "rest": "risky"
+}

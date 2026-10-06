@@ -11,6 +11,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dialogue_lint  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMAS = ROOT / "data" / "schemas"
 
@@ -19,7 +22,9 @@ FOLDERS = {
     "classes": "class", "subclasses": "subclass", "species": "species",
     "backgrounds": "background", "feats": "feat", "spells": "spell",
     "items": "item", "magic_items": "item", "monsters": "monster", "conditions": "condition", "pregens": "pregen",
-    "encounters": "encounter",
+    "encounters": "encounter", "locations": "location", "npcs": "npc", "quests": "quest",
+    "tarokka": {"cards": "tarokka_cards", "outcomes": "tarokka_outcomes"}, "travel": "travel",
+    "random_encounters": "random_table",
 }
 
 TYPES = {
@@ -246,7 +251,271 @@ def semantic_checks(data):
             band = "high" if xp >= high else ("moderate" if xp >= mod else "low")
             if band != enc["difficulty"]:
                 errors.append(f"encounters/{eid}: {xp} XP is a {band} encounter for {len(enc['party'])} level {level} characters, not {enc['difficulty']}")
+    story_checks(data, errors, need)
+    campaign_checks(data, errors, pending)
     return errors, pending
+
+
+# Regions later phases build (plan §6). References into them are pending, not errors.
+LATER_REGIONS = {"old_bonegrinder", "wizard_of_wines", "yester_hill", "krezk", "abbey_of_st_markovia", "argynvostholt",
+                 "van_richtens_tower", "werewolf_den", "berez", "lake_zarovich", "tsolenka_pass", "amber_temple",
+                 "castle_ravenloft", "ravenloft"}
+
+
+def campaign_checks(data, errors, pending):
+    """The Tarokka, travel maps, random encounter tables, shops and guests (ADR 0010)."""
+    locations, npcs, monsters, items = data["locations"], data["npcs"], data["monsters"], data["items"]
+
+    def place_ok(ref, region, where, kind="place"):
+        loc = ref.split(":")[0]
+        if loc in locations:
+            return
+        if region in LATER_REGIONS or any(loc.startswith(r) for r in LATER_REGIONS):
+            pending.append(f"{where}: {kind} '{ref}' (region {region}, a later phase)")
+        else:
+            errors.append(f"{where}: unknown {kind} '{ref}'")
+
+    tk = data.get("tarokka", {})
+    cards = {c["id"]: c for c in tk.get("cards", {}).get("cards", [])}
+    if cards:
+        high = {i for i, c in cards.items() if c["deck"] == "high"}
+        common = {i for i, c in cards.items() if c["deck"] == "common"}
+        if len(high) != 14 or len(common) != 40:
+            errors.append(f"data/tarokka/cards.json: expected 14 high and 40 common cards, got {len(high)} and {len(common)}")
+        out = tk.get("outcomes")
+        if out is None:
+            errors.append("data/tarokka/outcomes.json: missing")
+        else:
+            for slot, deck in (("tome", common), ("symbol", common), ("sword", common), ("ally", high), ("enemy", high)):
+                table = out.get(slot, {})
+                for cid in deck - set(table):
+                    errors.append(f"data/tarokka/outcomes.json: {slot} has no outcome for card '{cid}'")
+                for cid, o in table.items():
+                    w = f"data/tarokka/outcomes.json {slot}.{cid}"
+                    if cid not in deck:
+                        errors.append(f"{w}: not a {'high' if deck is high else 'common'} card")
+                    if slot in ("tome", "symbol", "sword"):
+                        place_ok(o["place"], o["region"], w)
+                    elif slot == "ally":
+                        if o["npc"] not in npcs:
+                            (pending if o["region"] in LATER_REGIONS else errors).append(f"{w}: npc '{o['npc']}'" + (" (a later phase)" if o["region"] in LATER_REGIONS else " unknown"))
+                    else:
+                        place_ok(o["room"], "castle_ravenloft", w, "room")
+    tables = data.get("random_encounters", {})
+    for tid, t in tables.items():
+        w = f"random_encounters/{tid}"
+        if t["map"] not in locations:
+            errors.append(f"{w}: unknown map location '{t['map']}'")
+        for e in t["entries"]:
+            if not e.get("monsters") and not e.get("dialogue"):
+                errors.append(f"{w}: an entry needs monsters or a dialogue")
+            for m in e.get("monsters", []):
+                if m["monster"] not in monsters:
+                    errors.append(f"{w}: unknown monster '{m['monster']}'")
+    for mid, tm in data.get("travel", {}).items():
+        w = f"travel/{mid}"
+        ids = {p["id"] for p in tm["places"]}
+        for p in tm["places"]:
+            place_ok(p["location"], p["region"], f"{w} place {p['id']}", "location")
+        for r in tm["roads"]:
+            for end in (r["from"], r["to"]):
+                if end not in ids:
+                    errors.append(f"{w} road {r['id']}: unknown place '{end}'")
+            if r.get("table") and r["table"] not in tables:
+                errors.append(f"{w} road {r['id']}: unknown random encounter table '{r['table']}'")
+    for nid, n in npcs.items():
+        for e in n.get("shop", {}).get("sells", []):
+            if e["id"] not in items and e["id"] not in data.get("magic_items", {}):
+                errors.append(f"npcs/{nid}: shop sells unknown item '{e['id']}'")
+        gb = n.get("guest_build", {})
+        if gb.get("monster") and gb["monster"] not in monsters:
+            errors.append(f"npcs/{nid}: guest_build monster '{gb['monster']}' unknown")
+        if gb.get("pregen") and gb["pregen"] not in data["pregens"]:
+            errors.append(f"npcs/{nid}: guest_build pregen '{gb['pregen']}' unknown")
+
+
+OPEN_FLOOR = ".~1234"
+
+
+def story_checks(data, errors, need):
+    """Locations, NPCs, quests, the flag registry and every .dialogue file (ADR 0008, ADR 0009)."""
+    flags = {}
+    for f in sorted((ROOT / "data" / "flags").glob("*.json")) if (ROOT / "data" / "flags").exists() else []:
+        try:
+            reg = json.loads(f.read_text())
+        except json.JSONDecodeError as e:
+            errors.append(f"data/flags/{f.name}: invalid JSON: {e}")
+            continue
+        for fl in reg.get("flags", []):
+            if not isinstance(fl, dict) or "id" not in fl or fl.get("type") not in ("bool", "int", "string"):
+                errors.append(f"data/flags/{f.name}: each flag needs an id and a type (bool, int, string): {fl}")
+                continue
+            if fl["id"] in flags:
+                errors.append(f"data/flags/{f.name}: flag '{fl['id']}' also registered in {flags[fl['id']]}")
+            flags[fl["id"]] = f.name
+    flags_read, flags_set = {}, {}
+
+    def read(flag_ids, where):
+        for fid in flag_ids:
+            flags_read.setdefault(fid, []).append(where)
+
+    def cond(expr, where):
+        if expr:
+            read(dialogue_lint.conditions_flags(expr), where)
+
+    npcs, quests, locations = data["npcs"], data["quests"], data["locations"]
+    encounter_ids = set()
+    dialogue_refs = []
+    for lid, loc in locations.items():
+        rows = loc["map"]["rows"]
+        w = f"locations/{lid}"
+
+        def on_floor(cell, what, allow_wall=False):
+            x, z = cell
+            if z >= len(rows) or x >= len(rows[z]):
+                errors.append(f"{w}: {what} at {cell} is outside the map")
+                return
+            if rows[z][x] not in OPEN_FLOOR and not (allow_wall and rows[z][x] in "#="):
+                errors.append(f"{w}: {what} at {cell} isn't on open floor ('{rows[z][x]}')")
+
+        area_ids = set()
+        for a in loc.get("areas", []):
+            area_ids.add(a["id"])
+            for c in a["cells"]:
+                if c[1] >= len(rows) or c[0] >= len(rows[0]):
+                    errors.append(f"{w}: area {a['id']} corner {c} is outside the map")
+        for name, c in loc.get("spawns", {}).items():
+            on_floor(c, f"spawn '{name}'")
+        if "default" not in loc.get("spawns", {}):
+            errors.append(f"{w}: needs a 'default' spawn")
+        for ex in loc.get("exits", []):
+            on_floor(ex["cell"], f"exit {ex['id']}", allow_wall=True)
+            if ex["to"] not in locations:
+                errors.append(f"{w}: exit {ex['id']} leads to unknown location '{ex['to']}'")
+            elif ex.get("spawn") and ex["spawn"] not in locations[ex["to"]].get("spawns", {}):
+                errors.append(f"{w}: exit {ex['id']} uses spawn '{ex['spawn']}' that {ex['to']} doesn't have")
+            cond(ex.get("when", ""), w)
+        for d in loc.get("doors", []):
+            on_floor(d["cell"], f"door {d['id']}")
+            cond(d.get("when", ""), w)
+            if d.get("key"):
+                need("item", data["items"], d["key"], f"{w} door {d['id']} key")
+            if d.get("flag"):
+                flags_set.setdefault(d["flag"], []).append(w)
+        for pr in loc.get("props", []):
+            cond(pr.get("when", ""), w)
+            if pr.get("item"):
+                need("item", data["items"], pr["item"], f"{w} prop {pr['id']}")
+            if pr.get("flag"):
+                flags_set.setdefault(pr["flag"], []).append(w)
+            if pr.get("dialogue"):
+                dialogue_refs.append((pr["dialogue"], w))
+        for ct in loc.get("containers", []):
+            on_floor(ct["cell"], f"container {ct['id']}", allow_wall=True)
+            for it in ct.get("items", []):
+                need("item", data["items"], it["id"], f"{w} container {ct['id']}")
+            if ct.get("key"):
+                need("item", data["items"], ct["key"], f"{w} container {ct['id']} key")
+            cond(ct.get("when", ""), w)
+            if ct.get("flag"):
+                flags_set.setdefault(ct["flag"], []).append(w)
+        for tr in loc.get("traps", []):
+            for c in tr["cells"]:
+                on_floor(c, f"trap {tr['id']}")
+            cond(tr.get("when", ""), w)
+            if tr.get("flag"):
+                flags_set.setdefault(tr["flag"], []).append(w)
+        for n in loc.get("npcs", []):
+            on_floor(n["cell"], f"npc {n['npc']}")
+            if n["npc"] not in npcs:
+                errors.append(f"{w}: unknown npc '{n['npc']}'")
+            if n.get("dialogue"):
+                dialogue_refs.append((n["dialogue"], w))
+            cond(n.get("when", ""), w)
+        for en in loc.get("encounters", []):
+            encounter_ids.add(en["id"])
+            cond(en.get("when", ""), w)
+            trig = en["trigger"]
+            if trig.startswith("enter_area:") and trig.split(":", 1)[1] not in area_ids:
+                errors.append(f"{w}: encounter {en['id']} triggers on unknown area '{trig.split(':', 1)[1]}'")
+            if trig.startswith("flag:"):
+                read([trig.split(":", 1)[1]], w)
+            if en.get("flag"):
+                flags_set.setdefault(en["flag"], []).append(w)
+            if en.get("quest"):
+                q = en["quest"]
+                if q["id"] not in quests:
+                    errors.append(f"{w}: encounter {en['id']} moves unknown quest '{q['id']}'")
+                elif q["stage"] not in {st["id"] for st in quests[q["id"]]["stages"]}:
+                    errors.append(f"{w}: encounter {en['id']}: quest {q['id']} has no stage '{q['stage']}'")
+            for m in en["monsters"]:
+                if m["monster"] not in data["monsters"]:
+                    errors.append(f"{w}: encounter {en['id']} uses unknown monster '{m['monster']}'")
+                else:
+                    on_floor(m["cell"], f"encounter {en['id']} monster")
+    for nid, n in npcs.items():
+        if n.get("monster") and n["monster"] not in data["monsters"]:
+            errors.append(f"npcs/{nid}: unknown monster '{n['monster']}'")
+    # Dialogue files.
+    narrative = ROOT / "narrative"
+    parsed = {}
+    for f in sorted(narrative.rglob("*.dialogue")) if narrative.exists() else []:
+        key = str(f.relative_to(narrative).with_suffix(""))
+        parsed[key] = dialogue_lint.parse_file(f)
+    names = {"narrator", "player"}
+    for nid, n in npcs.items():
+        names.add(nid)
+        names.add(n["name"].lower())
+        names.add(n["name"].split()[0].lower())
+    for pid, pg in data["pregens"].items():
+        names.add(pid)
+        names.add(pg["name"].split()[0].lower())
+    for key, p in parsed.items():
+        w = f"narrative/{key}.dialogue"
+        errors.extend(f"narrative/{e}" if not e.startswith("narrative") else e for e in
+                      [f"{key.rsplit('/', 1)[0]}/{e}" for e in p["errors"]])
+        for target, where in p["jumps"]:
+            if target == "END":
+                continue
+            fkey, _, node = target.rpartition(":") if ":" in target and "/" in target else ("", "", target)
+            if fkey:
+                if fkey not in parsed or node not in parsed[fkey]["nodes"]:
+                    errors.append(f"narrative/{where}: jump to unknown '{target}'")
+            elif node not in p["nodes"]:
+                errors.append(f"narrative/{where}: jump to unknown node '{node}'")
+        for sp, where in p["speakers"]:
+            if sp.lower() not in names:
+                errors.append(f"narrative/{where}: unknown speaker '{sp}' (an npc id or name, Narrator or Player)")
+        for it, where in p["items"]:
+            need("item", data["items"], it, f"narrative/{where}")
+        for qid, stage, where in p["quests"]:
+            if qid not in quests:
+                errors.append(f"narrative/{where}: unknown quest '{qid}'")
+            elif stage not in {s["id"] for s in quests[qid]["stages"]}:
+                errors.append(f"narrative/{where}: quest {qid} has no stage '{stage}'")
+        for enc, where in p["encounters"]:
+            if enc not in encounter_ids:
+                errors.append(f"narrative/{where}: combat '{enc}' isn't an encounter in any location")
+        for fid, wh in p["flags_read"].items():
+            flags_read.setdefault(fid, []).extend(wh)
+        for fid, wh in p["flags_set"].items():
+            flags_set.setdefault(fid, []).extend(wh)
+    for ref, w in dialogue_refs:
+        fkey, _, node = ref.rpartition(":")
+        if fkey not in parsed:
+            errors.append(f"{w}: dialogue file '{fkey}' doesn't exist")
+        elif node not in parsed[fkey]["nodes"]:
+            errors.append(f"{w}: dialogue {fkey} has no node '{node}'")
+    for fid, wh in sorted(flags_read.items()):
+        if fid not in flags:
+            errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")
+        if fid not in flags_set:
+            errors.append(f"{wh[0]}: flag '{fid}' is read but never set")
+    for fid, wh in sorted(flags_set.items()):
+        if fid not in flags:
+            errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")
+        if fid not in flags_read:
+            errors.append(f"{wh[0]}: flag '{fid}' is set but never read")
 
 
 def main():
@@ -258,10 +527,15 @@ def main():
         except json.JSONDecodeError as e:
             errors.append(f"{schema_file.name}: invalid JSON: {e}")
     for folder, schema_name in FOLDERS.items():
-        schema_file = f"{schema_name}.schema.json"
+        schema_file = f"{schema_name}.schema.json" if isinstance(schema_name, str) else ""
         seen = {}
         for data_file in sorted((ROOT / "data" / folder).glob("*.json")):
             rel = data_file.relative_to(ROOT)
+            if isinstance(schema_name, dict):
+                if data_file.stem not in schema_name:
+                    errors.append(f"{rel}: unexpected file (expected {', '.join(schema_name)})")
+                    continue
+                schema_file = f"{schema_name[data_file.stem]}.schema.json"
             try:
                 data = json.loads(data_file.read_text())
             except json.JSONDecodeError as e:

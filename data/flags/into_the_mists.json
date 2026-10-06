@@ -1,0 +1,39 @@
+{
+  "flags": [
+    {
+      "id": "mists_arrived",
+      "type": "bool",
+      "summary": "The party has tried the mist wall at the road's east edge and heard each other's reasons for coming (arrival.dialogue). Guards the hook scene."
+    },
+    {
+      "id": "mists_carcass_studied",
+      "type": "bool",
+      "summary": "The party has studied the wolf-killed deer once (one Survival attempt only)."
+    },
+    {
+      "id": "mists_read_the_pack",
+      "type": "bool",
+      "summary": "Survival at the carcass showed the wolves are a patrol, not hunters. Unlocks an easy Insight option at the wolf standoff."
+    },
+    {
+      "id": "mists_wolves_resolved",
+      "type": "bool",
+      "summary": "The wolf standoff in the narrows is over (talked down or fought). Removes the wolf NPC that blocks the road."
+    },
+    {
+      "id": "mists_wolves_cowed",
+      "type": "bool",
+      "summary": "The party faced the wolves down without a fight. Read by narration and banter; Strahd's wolves have reported a party that doesn't scare (Village/Phase 4 may read)."
+    },
+    {
+      "id": "mists_wolves_fought",
+      "type": "bool",
+      "summary": "The party killed the wolf pack on the road (encounter mists_wolves). Read by narration and banter; Phase 4 may read."
+    },
+    {
+      "id": "mists_gates_opened",
+      "type": "bool",
+      "summary": "The Gates of Barovia have opened for the party (door flag). Read by the gate statues' narration."
+    }
+  ]
+}

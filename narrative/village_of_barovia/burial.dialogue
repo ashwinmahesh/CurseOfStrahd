@@ -1,0 +1,210 @@
+# The burgomaster's burial, at the open grave in the churchyard (started from Ismark, Ireena or Donavich at the
+# grave, or from Parriwimple's graveside line). Ends with Strahd at the lych-gate, or Doru if he was freed.
+# Defying or attacking Strahd, or a hasty burial, starts churchyard_dead. The escort choice follows in
+# ireena.dialogue (after_burial).
+
+~ start
+Narrator: The coffin rests on two trestles beside the open grave. Behind every shutter on the lane, someone is watching. None of them came.
+if flag.parriwimple_pallbearer
+Parriwimple: I dug it deep. Six feet. I measured with my arm, twice. Then I made it a little deeper, for the wolves.
+endif
+Ireena: Let's begin. Before the light goes.
+if flag.donavich_will_officiate and not flag.donavich_refused_rites and not (flag.doru_destroyed and not flag.donavich_mercy_blessing)
+-> priest_rites
+endif
+-> no_priest
+
+~ priest_rites
+set burial_method = "church_rites"
+Donavich: We give Kolyan Indirovich to the earth he kept, in the light he trusted. Morninglord, you who come back every morning though no one thanks you for it, come back for him.
+if flag.doru_destroyed or flag.doru_freed
+-> rites_done
+endif
+Narrator: From under the church, faint through the stone, a voice howls for its father. Donavich's prayer breaks in half.
+Donavich [afraid]: Forgive me. Forgive... I've lost the words.
+* [Religion DC 12] Take up the prayer where he lost it. -> rites_steadied | rites_stumble
+* [Cleric] Pray with him, one voice under his. -> rites_steadied
+* Wait for him to find his voice. -> rites_stumble
+
+~ rites_steadied
+attitude donavich friendly
+Narrator: Your voice catches his and carries it. He finds the next line, and the next, and the howling below fades under the two of you.
+-> rites_done
+
+~ rites_stumble
+Narrator: He stands silent a long moment while the howling goes on. Then he finishes the prayer in a whisper, very fast, as if afraid it won't let him.
+-> rites_done
+
+~ rites_done
+Donavich: Rest, Kolyan. Nobody will call you up again. Not while I have breath to forbid it.
+-> lowered
+
+~ no_priest
+if flag.donavich_will_officiate
+Ismark [weary]: Donavich isn't coming. After what happened under his church, I can't say I blame him.
+endif
+Ismark [weary]: No priest, then. Someone say something. Father would hate a silent funeral; he never let a silence pass without a speech.
+* [Cleric] Speak the rites of your own faith over him. -> cleric_rites
+* [Religion DC 12] Recite the Morninglord's burial prayer, as best you can. -> lay_rites_ok | lay_rites_fail
+* Say a few honest words of your own. -> lay_rites_honest
+* Fill in the grave. There's no time for words. -> hasty
+
+~ cleric_rites
+set burial_method = "cleric_rites"
+attitude ireena friendly
+interject class:cleric: Earth to earth, and the dark to the dawn. Rest, Kolyan Indirovich. Let no voice call you up again.
+interject name:hedda_ironvow: Stone remembers. So will I.
+Narrator: The words aren't the ones this village uses, but they're said with care, and the earth seems to accept them.
+-> lowered
+
+~ lay_rites_ok
+set burial_method = "lay_rites"
+Narrator: You stumble through the old prayer, half-remembered from church doors in other countries. Ireena mouths the parts you miss. Between you, it's whole.
+-> lowered
+
+~ lay_rites_fail
+set burial_method = "lay_rites"
+Narrator: The prayer comes out in the wrong order, and the last verse leaves you entirely. Ireena finishes it, quietly, without looking up.
+-> lowered
+
+~ lay_rites_honest
+set burial_method = "lay_rites"
+Narrator: You say what you can about a man you never met: that he held his door every night until his heart gave out. It's short. Ismark nods as if it were the right length.
+-> lowered
+
+~ hasty
+set burial_method = "hasty"
+attitude ireena indifferent
+Ireena [angry]: No words. Fine. Fill it in, then. Quickly, since that's how you like it.
+Narrator: The earth goes in fast and badly. Nobody speaks. Somewhere beyond the wall, something laughs, softly.
+-> lowered
+
+~ lowered
+set burgomaster_buried
+quest bury_the_burgomaster buried
+quest escort_ireena ready
+if flag.doru_destroyed
+quest the_priests_son doru_destroyed
+endif
+Ireena [sad]: Goodbye, Father. You found me on a road. I'm going back to one. I'll try to be worth the finding.
+Ismark: Rest, old man. I'll look after her. I'll do better than I did.
+xp milestone
+if flag.doru_freed
+-> doru_messenger
+endif
+-> strahd_arrives
+
+~ strahd_arrives
+set strahd_met
+Narrator: The air turns cold enough to fog your breath. At the lych-gate, where nobody stood a moment ago, a tall man in a fine black coat waits, hat in hand, like a mourner who came late.
+Strahd: Do not stop on my account. It is so rare that I attend a funeral I did not arrange. Well. Not directly.
+Ireena [angry]: Get out of here.
+Strahd [smile]: I am not in, my dear. Observe: the gate. I keep my manners even where others have forgotten theirs. Ireena. You look tired. You need not be.
+if flag.ireena_bite_seen
+Narrator: Ireena's hand goes to the scarf at her throat before she can stop it. He sees. He smiles wider.
+endif
+if flag.ilse_invitation_shown
+Strahd: And the soldier who kept my invitation. I am touched. Your company asked after you, you know. Near the end.
+interject name:ilse_varga: Where are they.
+endif
+if flag.tamsin_locket_recognized
+Strahd [sly]: The little thief carries her portrait. Keep it close. It cost more than you can imagine.
+endif
+if class:wizard
+Strahd: And a scholar. My library would delight you. You must come up and see it. Everyone does, eventually.
+endif
+if flag.vistani_spies_suspected
+interject tag:curious: So that's who the Vistani tell their stories to.
+endif
+Strahd: I came to welcome you to my land, all of you. You have been so busy since you arrived. I do hope you will stay. I have arranged for it to be a long visit.
+-> strahd_menu
+
+~ strahd_menu
+* Ireena is under our protection. Leave. -> defiant
+* [Intimidation DC 20] Come one step closer and find out what we're capable of. -> threat_ok | threat_fail
+* What do you want with her? -> what_want
+* Bow, and answer him with courtesy. -> courteous
+* Attack him. -> violent
+* Say nothing. -> silent
+
+~ what_want
+Strahd: What every man wants, in the end. To be welcomed home. Ireena knows the way. She has always known it; she has only forgotten.
+Ireena [afraid]: I don't know what he means. I don't. Don't look at me like that.
+-> strahd_menu
+
+~ defiant
+set strahd_first_impression = "defiant"
+Strahd [smile]: Under your protection. How splendid. Then let us see what your protection is worth. Do try to keep her alive. I should hate for this to be short.
+Narrator: He lifts one gloved hand, as if to summon a waiter. All around the churchyard, the earth begins to split.
+-> rise
+
+~ threat_ok
+set strahd_first_impression = "defiant"
+Narrator: For the barest instant something flickers behind his courtesy. Not fear: attention. He looks at you as if you have just become interesting.
+if flag.death_house_completed
+Strahd: Yes. You did well in that house. Let us see you do well here.
+else
+Strahd: Perhaps you are. Let us find out.
+endif
+Narrator: He lifts one hand, and the churchyard earth begins to split.
+-> rise
+
+~ threat_fail
+set strahd_first_impression = "defiant"
+Strahd [smile]: Oh, well said. Truly. I have been threatened by better, but rarely with such conviction. Allow me to return the courtesy.
+Narrator: He lifts one hand, and the churchyard earth begins to split.
+-> rise
+
+~ courteous
+set strahd_first_impression = "courteous"
+Strahd [smile]: Manners. In Barovia. You have made an old man very happy. We will speak again, my guests, at my table, I hope. Ireena. Sleep well.
+Narrator: The mist thickens at the gate, and then he isn't there.
+Ireena [angry]: You bowed to him. Over my father's grave.
+-> after_strahd
+
+~ violent
+set strahd_first_impression = "violent"
+Narrator: Steel and spell reach the lych-gate together and pass through cold mist. His laughter comes from everywhere at once.
+Strahd: Rude. But spirited. Here, then: something you are allowed to kill.
+Narrator: All around the churchyard, the earth begins to split.
+-> rise
+
+~ silent
+set strahd_first_impression = "silent"
+Strahd: Silence. The wise answer, and the dull one. We will speak again when you have found your tongues. Ireena. Do keep the window latched. Or don't.
+Narrator: The mist thickens at the gate, and he is gone.
+-> after_strahd
+
+~ after_strahd
+if flag.burial_method == "hasty"
+Narrator: The quiet lasts a breath. Then the hasty grave shifts, and every old grave around it answers. Unblessed earth, it seems, is an open door.
+-> rise
+endif
+-> village_of_barovia/ireena:after_burial
+
+~ rise
+Ismark: Ireena, behind me! Into the church porch, go!
+combat churchyard_dead
+
+~ doru_messenger
+Narrator: Something perches on the churchyard wall, crouched like a crow. Doru. His cheeks are full now, his lips are red, and he is smiling.
+Doru [smile]: Don't stop. I like funerals now. My master sends his regrets; he's dining elsewhere tonight. He says Ireena should leave her window open. It's stuffy, waiting.
+Ireena [afraid]: Doru? Oh, Doru. No.
+* Tell your master the answer is no. -> doru_defy
+* Doru. Your father is still praying for you. -> doru_father
+* Attack him. -> doru_attack
+
+~ doru_defy
+set strahd_first_impression = "defiant"
+Doru [sly]: I'll tell him. He'll be delighted; he loves being told no. He sent a gift, in case you said it.
+Narrator: Doru drops backward off the wall and is gone. Behind you, the old graves begin to split.
+-> rise
+
+~ doru_father
+Doru [sad]: Is he. Is he still. Tell him... no. Tell him nothing. Tell him I was never here.
+Narrator: For a moment he's only a young man on a wall. Then he isn't there at all.
+-> after_strahd
+
+~ doru_attack
+Narrator: He's off the wall before your weapons clear, laughing, and the laughter comes from the dark between the graves, where the earth has started to move.
+-> rise

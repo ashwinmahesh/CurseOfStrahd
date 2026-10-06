@@ -1,0 +1,20 @@
+{
+  "id": "ireena",
+  "name": "Ireena Kolyana",
+  "title": "Daughter of the Burgomaster",
+  "summary": "The burgomaster's adopted daughter, red-haired, proud and twice bitten by Strahd. She won't leave until her father is buried properly.",
+  "portrait": "ireena",
+  "sprite": "ireena",
+  "attitude": "indifferent",
+  "voice": "docs/voice/ireena.md",
+  "monster": "noble",
+  "guest": true,
+  "tags": [
+    "barovian",
+    "noble",
+    "strahd_target",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}

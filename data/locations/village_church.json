@@ -1,0 +1,408 @@
+{
+  "id": "village_church",
+  "name": "Village Church",
+  "region": "village_of_barovia",
+  "summary": "A failing church of the Morninglord: cracked windows, cold candles, a priest praying at the altar, and a barred door to the undercroft where his son screams for blood.",
+  "text": "The nave and the undercroft below it share this map as two walled regions; the stair is an exit to a spawn on the same map.",
+  "map": {
+    "rows": [
+      "######################",
+      "#....#..11==11..#....#",
+      "#.=.....111111..#....#",
+      "#....#..111111..#....#",
+      "######..........##.###",
+      "#....................#",
+      "#..======....======..#",
+      "#....................#",
+      "#..======....======..#",
+      "#....................#",
+      "#..======....======..#",
+      "#....................#",
+      "#....................#",
+      "##########..##########",
+      "                      ",
+      "######################",
+      "#=..............#1111#",
+      "#=...............1111#",
+      "#=...#....#.....#....#",
+      "#=...................#",
+      "#=...................#",
+      "#=...................#",
+      "#=...#....#....#.....#",
+      "#=...................#",
+      "#=~~~.......~~~......#",
+      "#=~~~.......~~~....=.#",
+      "######################"
+    ],
+    "theme": "church",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "church_vestry",
+      "name": "Vestry",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          4,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "church_altar",
+      "name": "Altar",
+      "cells": [
+        [
+          6,
+          1
+        ],
+        [
+          15,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "undercroft_stairwell",
+      "name": "Undercroft stair",
+      "cells": [
+        [
+          17,
+          1
+        ],
+        [
+          20,
+          3
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "church_nave",
+      "name": "Nave",
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          20,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "undercroft",
+      "name": "Undercroft",
+      "cells": [
+        [
+          1,
+          16
+        ],
+        [
+          20,
+          25
+        ]
+      ],
+      "light": "dark"
+    }
+  ],
+  "spawns": {
+    "default": [
+      10,
+      12
+    ],
+    "nave_stairs": [
+      18,
+      2
+    ],
+    "undercroft_landing": [
+      18,
+      17
+    ]
+  },
+  "exits": [
+    {
+      "id": "church_front_door",
+      "cell": [
+        10,
+        13
+      ],
+      "to": "village_of_barovia",
+      "spawn": "from_church",
+      "label": "Out to the churchyard"
+    },
+    {
+      "id": "church_front_door_east",
+      "cell": [
+        11,
+        13
+      ],
+      "to": "village_of_barovia",
+      "spawn": "from_church",
+      "label": "Out to the churchyard"
+    },
+    {
+      "id": "stairs_down",
+      "cell": [
+        19,
+        1
+      ],
+      "to": "village_church",
+      "spawn": "undercroft_landing",
+      "label": "Down to the undercroft"
+    },
+    {
+      "id": "stairs_up",
+      "cell": [
+        20,
+        16
+      ],
+      "to": "village_church",
+      "spawn": "nave_stairs",
+      "label": "Up to the church"
+    }
+  ],
+  "doors": [
+    {
+      "id": "vestry_door",
+      "cell": [
+        5,
+        2
+      ],
+      "label": "Vestry door"
+    },
+    {
+      "id": "undercroft_door",
+      "cell": [
+        18,
+        4
+      ],
+      "locked": true,
+      "lock_dc": 15,
+      "label": "Barred undercroft door",
+      "when": "not flag.undercroft_unbarred"
+    }
+  ],
+  "props": [
+    {
+      "id": "church_altar_stone",
+      "cell": [
+        10,
+        1
+      ],
+      "kind": "examine",
+      "label": "Altar",
+      "model": "altar"
+    },
+    {
+      "id": "morninglord_window",
+      "cell": [
+        13,
+        0
+      ],
+      "kind": "examine",
+      "label": "Sunburst window",
+      "model": "window"
+    },
+    {
+      "id": "church_pews",
+      "cell": [
+        5,
+        6
+      ],
+      "kind": "examine",
+      "label": "Pews",
+      "model": "pew"
+    },
+    {
+      "id": "undercroft_door_gouges",
+      "cell": [
+        17,
+        5
+      ],
+      "kind": "examine",
+      "label": "Gouged doorframe"
+    },
+    {
+      "id": "church_register",
+      "cell": [
+        3,
+        1
+      ],
+      "kind": "book",
+      "label": "Burial register",
+      "model": "book",
+      "codex": "church_burial_register",
+      "text": "The village burial register, kept in a careful hand that grows less careful toward the end. The last entries are a widow, an infant and a woodcutter, each with the words 'buried in daylight'. On the newest line someone has written DORU, son of Donavich, then scored it out so hard the nib tore the page. Under it, smaller: not yet. Not yet. Not yet."
+    },
+    {
+      "id": "undercroft_niches",
+      "cell": [
+        1,
+        20
+      ],
+      "kind": "examine",
+      "label": "Burial niches"
+    },
+    {
+      "id": "undercroft_bones",
+      "cell": [
+        13,
+        24
+      ],
+      "kind": "examine",
+      "label": "Small bones"
+    },
+    {
+      "id": "ceiling_marks",
+      "cell": [
+        8,
+        16
+      ],
+      "kind": "examine",
+      "label": "Marks on the ceiling"
+    }
+  ],
+  "containers": [
+    {
+      "id": "vestry_chest",
+      "cell": [
+        2,
+        2
+      ],
+      "label": "Vestry chest",
+      "model": "chest",
+      "items": [
+        {
+          "id": "holy_water",
+          "qty": 2
+        },
+        {
+          "id": "candle",
+          "qty": 6
+        }
+      ],
+      "gold": 0,
+      "lock_dc": 0,
+      "flag": "vestry_chest_opened"
+    },
+    {
+      "id": "doru_nest",
+      "cell": [
+        19,
+        25
+      ],
+      "label": "Heap of rags",
+      "model": "rags",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "holy_symbol_amulet",
+          "qty": 1
+        }
+      ],
+      "gold": 3,
+      "lock_dc": 0
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        9,
+        1
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        12,
+        1
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        13,
+        0
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "donavich",
+      "cell": [
+        10,
+        2
+      ],
+      "dialogue": "village_of_barovia/donavich:start",
+      "when": "not (flag.burial_procession and flag.donavich_will_officiate and not flag.donavich_refused_rites and not (flag.doru_destroyed and not flag.donavich_mercy_blessing) and not flag.burgomaster_buried)"
+    },
+    {
+      "npc": "doru",
+      "cell": [
+        18,
+        24
+      ],
+      "dialogue": "village_of_barovia/doru:start",
+      "when": "not flag.doru_destroyed and not flag.doru_freed"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "doru_undercroft",
+      "trigger": "dialogue",
+      "when": "not flag.doru_destroyed and not flag.doru_freed and level >= 3",
+      "text": "Doru drops from the ceiling without a sound. Whatever was left of the priest's son is gone behind his eyes.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            18,
+            24
+          ],
+          "name": "Doru"
+        }
+      ],
+      "surprise": "",
+      "flag": "doru_destroyed"
+    },
+    {
+      "id": "doru_undercroft",
+      "trigger": "dialogue",
+      "when": "not flag.doru_destroyed and not flag.doru_freed",
+      "text": "Doru drops from the ceiling without a sound. Whatever was left of the priest's son is gone behind his eyes.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            18,
+            24
+          ],
+          "name": "Doru",
+          "hp": 45
+        }
+      ],
+      "surprise": "",
+      "flag": "doru_destroyed"
+    }
+  ],
+  "narration": {
+    "enter": "enter:village_church"
+  },
+  "rest": "risky"
+}

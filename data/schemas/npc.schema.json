@@ -1,0 +1,130 @@
+{
+  "$id": "npc.schema.json",
+  "title": "Named NPC",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "summary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "portrait": {
+      "type": "string"
+    },
+    "sprite": {
+      "type": "string"
+    },
+    "attitude": {
+      "type": "string",
+      "enum": [
+        "hostile",
+        "indifferent",
+        "friendly"
+      ]
+    },
+    "voice": {
+      "type": "string"
+    },
+    "monster": {
+      "type": "string"
+    },
+    "guest": {
+      "type": "boolean"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "region": {
+      "type": "string"
+    },
+    "pronouns": {
+      "type": "string"
+    },
+    "shop": {
+      "type": "object",
+      "required": [
+        "sells"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "sells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "qty": {
+                "type": "integer",
+                "minimum": -1
+              },
+              "price": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "buys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "markup": {
+          "type": "number",
+          "minimum": 0
+        },
+        "sell_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "closed": {
+          "type": "string"
+        }
+      }
+    },
+    "guest_build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "monster": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "pregen": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

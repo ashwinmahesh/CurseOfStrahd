@@ -177,6 +177,44 @@ func advance_minutes(minutes: int) -> bool:
 	return false
 
 
+## For saves: everything about the effect, with its Concentration named by caster and source (relinked on load).
+func to_dict() -> Dictionary:
+	var mods: Array = []
+	for m in modifiers:
+		mods.append({"data": m.data.duplicate(true), "name": m.source_name, "kind": str(m.source_kind), "id": m.source_id, "class_id": m.class_id})
+	var conds: Array = []
+	for c in conditions:
+		conds.append(str(c))
+	var conc := concentration
+	return {"name": name, "source_kind": str(source_kind), "source_id": source_id, "caster_id": caster_id, "modifiers": mods,
+		"conditions": conds, "ends": int(ends), "rounds_left": rounds_left, "minutes_left": minutes_left,
+		"turn_owner_id": turn_owner_id, "stack_key": stack_key, "ends_on_damage": ends_on_damage,
+		"ends_when_incapacitated": ends_when_incapacitated, "repeat_save": repeat_save.duplicate(true),
+		"skip_turn_ends": skip_turn_ends,
+		"concentration": {"caster": conc.caster().id if conc != null and conc.caster() != null else "", "source": conc.source_id if conc != null else ""}}
+
+
+static func from_dict(d: Dictionary) -> Effect:
+	var e := Effect.new(str(d.get("name", "")), StringName(str(d.get("source_kind", "effect"))), str(d.get("source_id", "")))
+	e.caster_id = str(d.get("caster_id", ""))
+	for md: Variant in d.get("modifiers", []):
+		var m := md as Dictionary
+		e.modifiers.append(Modifier.make((m["data"] as Dictionary).duplicate(true), str(m.get("name", e.name)),
+			StringName(str(m.get("kind", "effect"))), str(m.get("id", "")), str(m.get("class_id", ""))))
+	for c: Variant in d.get("conditions", []):
+		e.conditions.append(StringName(str(c)))
+	e.ends = int(d.get("ends", 0)) as Ends
+	e.rounds_left = int(d.get("rounds_left", 0))
+	e.minutes_left = int(d.get("minutes_left", 0))
+	e.turn_owner_id = str(d.get("turn_owner_id", ""))
+	e.stack_key = str(d.get("stack_key", ""))
+	e.ends_on_damage = bool(d.get("ends_on_damage", false))
+	e.ends_when_incapacitated = bool(d.get("ends_when_incapacitated", false))
+	e.repeat_save = (d.get("repeat_save", {}) as Dictionary).duplicate(true)
+	e.skip_turn_ends = int(d.get("skip_turn_ends", 0))
+	return e
+
+
 func describe_duration() -> String:
 	match ends:
 		Ends.ROUNDS:

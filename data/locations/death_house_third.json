@@ -1,0 +1,495 @@
+{
+  "id": "death_house_third",
+  "name": "Death House, Third Floor",
+  "region": "death_house",
+  "summary": "The family's private floor: the master suite and bathroom, the nursemaid's room and the nursery where her specter waits for a baby who is never coming back, and the narrow stair to the attic, guarded by a suit of armor.",
+  "map": {
+    "theme": "manor",
+    "light": "dim",
+    "rows": [
+      "############################",
+      "#....==..#......###.=....==#",
+      "#.==.....#......###........#",
+      "#.==....=##.#######........#",
+      "#........#.................#",
+      "#........#........#........#",
+      "#........#........####.#####",
+      "#........#........####.#####",
+      "#.................#........#",
+      "####.#####........#........#",
+      "#.......=#........#........#",
+      "#.==.....#........#...==...#",
+      "#.==.....#.....==.#........#",
+      "#........#.....####........#",
+      "##########.....####.......=#",
+      "############################",
+      "############################"
+    ]
+  },
+  "areas": [
+    {
+      "id": "dh_attic_stair",
+      "name": "Attic Stair",
+      "cells": [
+        [
+          10,
+          1
+        ],
+        [
+          15,
+          2
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "dh_attic_landing",
+      "name": "Third Floor Landing",
+      "cells": [
+        [
+          10,
+          3
+        ],
+        [
+          17,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "dh_third_hall",
+      "name": "Third Floor Hall",
+      "cells": [
+        [
+          10,
+          7
+        ],
+        [
+          17,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "dh_master_suite",
+      "name": "Master Suite",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          8,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "dh_bathroom",
+      "name": "Bathroom",
+      "cells": [
+        [
+          1,
+          10
+        ],
+        [
+          8,
+          13
+        ]
+      ]
+    },
+    {
+      "id": "dh_nursemaid_room",
+      "name": "Nursemaid's Room",
+      "cells": [
+        [
+          19,
+          1
+        ],
+        [
+          26,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "dh_nursery",
+      "name": "Nursery",
+      "cells": [
+        [
+          19,
+          7
+        ],
+        [
+          26,
+          14
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      16,
+      11
+    ],
+    "from_downstairs": [
+      16,
+      11
+    ],
+    "from_attic": [
+      14,
+      2
+    ]
+  },
+  "exits": [
+    {
+      "id": "stairs_down",
+      "cell": [
+        17,
+        12
+      ],
+      "to": "death_house_upper",
+      "spawn": "from_upstairs",
+      "label": "Stairs down"
+    },
+    {
+      "id": "attic_stairs",
+      "cell": [
+        15,
+        1
+      ],
+      "to": "death_house_attic",
+      "spawn": "from_downstairs",
+      "label": "Attic stairs"
+    }
+  ],
+  "doors": [
+    {
+      "id": "attic_stair_door",
+      "cell": [
+        11,
+        3
+      ],
+      "label": "a narrow door"
+    },
+    {
+      "id": "master_suite_door",
+      "cell": [
+        9,
+        8
+      ],
+      "label": "the master suite door"
+    },
+    {
+      "id": "bathroom_door",
+      "cell": [
+        4,
+        9
+      ],
+      "label": "the bathroom door"
+    },
+    {
+      "id": "nursemaid_door",
+      "cell": [
+        18,
+        4
+      ],
+      "label": "the nursemaid's door"
+    },
+    {
+      "id": "nursery_door",
+      "cell": [
+        22,
+        6
+      ],
+      "label": "the nursery door"
+    }
+  ],
+  "props": [
+    {
+      "id": "armor_stand",
+      "cell": [
+        17,
+        4
+      ],
+      "kind": "examine",
+      "label": "an empty armor stand",
+      "model": "armor_stand"
+    },
+    {
+      "id": "master_bed",
+      "cell": [
+        2,
+        2
+      ],
+      "kind": "examine",
+      "label": "the canopy bed",
+      "model": "bed_canopy"
+    },
+    {
+      "id": "dressing_table",
+      "cell": [
+        5,
+        1
+      ],
+      "kind": "examine",
+      "label": "the dressing table",
+      "model": "dressing_table"
+    },
+    {
+      "id": "master_hearth",
+      "cell": [
+        0,
+        5
+      ],
+      "kind": "examine",
+      "label": "the bedroom hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "clawfoot_tub",
+      "cell": [
+        2,
+        11
+      ],
+      "kind": "examine",
+      "label": "the clawfoot tub",
+      "model": "bathtub"
+    },
+    {
+      "id": "bath_mirror",
+      "cell": [
+        0,
+        12
+      ],
+      "kind": "examine",
+      "label": "the mirror",
+      "model": "mirror"
+    },
+    {
+      "id": "nursemaid_letters",
+      "cell": [
+        20,
+        1
+      ],
+      "kind": "book",
+      "label": "letters tied with ribbon",
+      "model": "letters",
+      "codex": "death_house_nursemaid_letters",
+      "dialogue": "death_house/house:nursemaid_letters",
+      "text": "Letters from Gustav Durst to the household's nursemaid, kept tied with a blue ribbon. They begin politely and stop being polite. The last is short: the mistress knows, the child must be kept quiet, and he will see that both of them are cared for. Under it, in the nursemaid's own hand, someone has written the name Walter and drawn a small, careful sun."
+    },
+    {
+      "id": "nursery_crib",
+      "cell": [
+        22,
+        11
+      ],
+      "kind": "examine",
+      "label": "the crib",
+      "model": "crib",
+      "dialogue": "death_house/house:crib"
+    },
+    {
+      "id": "nursery_mobile",
+      "cell": [
+        24,
+        8
+      ],
+      "kind": "decor",
+      "label": "a mobile of tin birds",
+      "model": "mobile"
+    }
+  ],
+  "containers": [
+    {
+      "id": "master_wardrobe",
+      "cell": [
+        8,
+        3
+      ],
+      "label": "the wardrobe",
+      "model": "wardrobe",
+      "items": [
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "jewel_box",
+      "cell": [
+        6,
+        1
+      ],
+      "label": "a jewel box",
+      "model": "jewel_box",
+      "lock_dc": 12,
+      "gold": 35
+    },
+    {
+      "id": "bath_cabinet",
+      "cell": [
+        8,
+        10
+      ],
+      "label": "a medicine cabinet",
+      "model": "cabinet_small",
+      "items": [
+        {
+          "id": "antitoxin",
+          "qty": 1
+        },
+        {
+          "id": "healers_kit",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "nursery_chest",
+      "cell": [
+        26,
+        14
+      ],
+      "label": "a painted chest",
+      "model": "chest_painted",
+      "items": [
+        {
+          "id": "blanket",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        23,
+        12
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        1,
+        7
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 10
+    }
+  ],
+  "traps": [
+    {
+      "id": "soot_cloud",
+      "cells": [
+        [
+          15,
+          9
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      "label": "a breath of soot",
+      "detect_dc": 12,
+      "save": {
+        "ability": "con",
+        "dc": 12
+      },
+      "damage": "1d6",
+      "damage_type": "poison",
+      "condition": "poisoned",
+      "when": "flag.death_house_refused",
+      "text": "Every hearth on the floor exhales at once."
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "durst_nursemaid",
+      "cell": [
+        22,
+        7
+      ],
+      "dialogue": "death_house/nursemaid:start",
+      "when": "not flag.death_house_nursemaid_calmed and not flag.death_house_nursemaid_destroyed",
+      "facing": "north"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "armor_guardian",
+      "trigger": "enter_area:dh_attic_landing",
+      "when": "not flag.death_house_armor_destroyed",
+      "flag": "death_house_armor_destroyed",
+      "monsters": [
+        {
+          "monster": "animated_armor",
+          "cell": [
+            16,
+            5
+          ],
+          "name": "Black Armor"
+        }
+      ],
+      "text": "The armor on the landing steps down off its stand."
+    },
+    {
+      "id": "nursery_specter",
+      "trigger": "dialogue",
+      "flag": "death_house_nursemaid_destroyed",
+      "monsters": [
+        {
+          "monster": "specter",
+          "cell": [
+            22,
+            9
+          ],
+          "name": "The Nursemaid"
+        }
+      ],
+      "text": "She wants her baby back."
+    },
+    {
+      "id": "third_escape_swords",
+      "trigger": "enter_area:dh_third_hall",
+      "when": "flag.death_house_refused",
+      "monsters": [
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            11,
+            13
+          ],
+          "name": "Ceremonial Blade"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            12,
+            10
+          ],
+          "name": "Dress Sword"
+        }
+      ],
+      "text": "Every blade on the floor has woken up."
+    }
+  ],
+  "narration": {
+    "enter": "enter:death_house_third"
+  },
+  "rest": "risky"
+}

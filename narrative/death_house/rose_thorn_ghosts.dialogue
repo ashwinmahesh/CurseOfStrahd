@@ -1,0 +1,142 @@
+# Rose and Thorn's ghosts in the attic children's room (death_house_attic). They don't know they are dead.
+# Choices: tell them gently or plainly, let them ride along inside the party, or promise to carry their bones to
+# the family crypt. Leaving them, or a hard truth, makes Thorn try to climb inside someone.
+
+~ start
+if flag.death_house_children_met
+  -> again
+endif
+set death_house_children_met
+quest rose_and_thorn met
+Narrator: Two children sit on the floor beside a dollhouse, pale as frost on a window. The girl looks up first, with a hope that has had a long time to get thin.
+if flag.death_house_heard_plea
+  Narrator: You know these faces. An hour ago they were begging you in the road. These ones have been here much longer.
+endif
+Rose [afraid]: Is it over? Is the noise over? Mother said she'd unlock the door when the noise downstairs stopped.
+Thorn: You're not Mother.
+interject name:tamsin_tealeaf: No. No, we're... friends. Of the family. Sort of. Hello.
+if not name:tamsin_tealeaf
+  interject tag:cheerful: Hello there. No, we're not your mother. We're the next best thing. Probably.
+endif
+-> ask
+
+~ ask
+* Who locked you in? -> locked
+* [if flag.death_house_heard_plea] You asked us to save Walter. Outside, in the road. -> outside
+* Where is Walter? -> walter
+* [Insight DC 12] Do they know what's happened to them? -> know_ok | know_fail
+* [if not flag.death_house_children_truth] Tell them the truth: they died in this room. -> truth
+* [if flag.death_house_children_truth] Come with us, then. Stay close. -> ride_along
+* [if flag.death_house_children_truth and not flag.death_house_children_remains_taken] We'll carry your bones to your crypt. -> promise_bones
+* We have to go. Stay here. -> leaving
+
+~ locked
+Rose: Mother and Father. They said the people in robes mustn't see us, and we mustn't see them. They said they'd come back up when it was over.
+Thorn: They didn't.
+Rose [angry]: They will. Mother promised.
+-> ask
+
+~ outside
+Rose [afraid]: Outside? We haven't been outside since the leaves were green. Mother won't let us.
+Thorn: Was it us? Was it really us?
+Narrator: Somewhere in the walls a board creaks, slow and satisfied, like a fisherman reeling in a line.
+if not flag.death_house_saw_through_lure
+  set death_house_saw_through_lure
+  set death_house_lore += 1
+endif
+-> ask
+
+~ walter
+Rose: He was with Nurse. Then he wasn't, and Nurse cried, and then Nurse stopped crying.
+Thorn: Downstairs. Everybody goes downstairs.
+-> ask
+
+~ know_ok
+Narrator: They don't know. They are still waiting for a door to open, the way you wait for morning. Telling them will hurt. Not telling them will hurt longer.
+-> ask
+
+~ know_fail
+Narrator: Two stubborn, frightened faces. {name} can't read past that.
+-> ask
+
+~ truth
+Narrator: How do you tell a child she is dead?
+* [Persuasion DC 12] Gently. Kneel, take your time, let them ask questions. -> truth_gentle | truth_hard
+* [Cleric] [Religion DC 10] With the prayer for the dead, as you would for any family. -> truth_gentle | truth_hard
+* Plainly. They deserve the truth. -> truth_hard
+* Not yet. -> ask
+
+~ truth_gentle
+Narrator: Rose listens all the way through. When it's over she looks down at her hands, as if she has only now noticed she can see the floor through them.
+Rose [sad]: Oh. That's why we're never hungry anymore.
+Thorn: Are we in trouble?
+Rose: No, Thorn. I think everyone else is.
+-> truth_learned
+
+~ truth_learned
+if not flag.death_house_children_truth
+  set death_house_children_truth
+  set death_house_lore += 1
+endif
+Rose: We hid in the toy chest when it got cold. Our bones are still in there. There's a crypt for us downstairs, next to Grandmother's. Mother showed us once.
+Rose [sad]: Will you take us?
+interject name:hedda_ironvow: We will, little one. That's what we're for.
+if not name:hedda_ironvow
+  interject class:cleric: Yes. That much, at least, we can do properly.
+endif
+-> ask
+
+~ truth_hard
+Narrator: Thorn hears the word and doesn't understand it. Then he does.
+Thorn [angry]: No! You're lying! You're going to leave us, like they did!
+Narrator: The room drops cold enough to hurt, and the boy flings himself at the nearest of you.
+check Charisma DC 12 -> thorn_resisted | thorn_rides
+
+~ thorn_resisted
+Narrator: He breaks against a will that won't let him in and falls back, sobbing, into his sister's arms.
+Rose [afraid]: He's frightened. We both are. Please don't leave us.
+-> truth_learned
+
+~ thorn_rides
+Narrator: He goes into one of you like breath into a cold mirror. For a moment two sets of eyes look out of the same face. Then only one. Somewhere inside, a small boy stops crying.
+Rose [angry]: Thorn! Come out of there! ...Fine. Then I'm coming too.
+Narrator: She steps into another of you, apologizing as she goes. Someone in the party is humming a nursery tune now. None of you started it.
+set death_house_children_riding
+if not flag.death_house_children_truth
+  set death_house_children_truth
+  set death_house_lore += 1
+endif
+interject name:silvain_aster: Someone in this party now has a child in their head. I'd like that noted, and then I'd like it fixed.
+-> END
+
+~ ride_along
+Rose: Hold still. It doesn't hurt. Thorn, say sorry first.
+Thorn: Sorry first.
+Narrator: Two cold presences step inside two of you and settle, the way children settle in the back of a cart. Someone is humming now. None of you started it.
+set death_house_children_riding
+interject name:ilse_varga: Two more to count, then. Fine. Nobody gets left.
+-> END
+
+~ promise_bones
+Rose [smile]: You'll have to undo the knot. Thorn tied it. It's a bad knot.
+Thorn: It's a good knot.
+-> END
+
+~ leaving
+if flag.death_house_children_truth
+  Rose [sad]: Everyone says that. Come back. Please come back.
+  -> END
+endif
+Thorn [angry]: Don't go! Everybody goes!
+Narrator: The boy flings himself at the nearest of you before anyone can move.
+check Charisma DC 12 -> leave_resisted | thorn_rides
+
+~ leave_resisted
+Narrator: He bounces off a will like a bird off a window and sits down hard, wailing. Rose holds him and glares at you over his head.
+Rose [angry]: Go on, then. Everybody does.
+-> END
+
+~ again
+Rose [smile]: You came back!
+Thorn: Told you.
+-> ask

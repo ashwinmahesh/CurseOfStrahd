@@ -2,11 +2,12 @@
 (plan §7 steps 4-6).
 
 blender -b --python blender/render_walk.py -- --turnaround <png> --id <asset_id>
-        [--side-faces left] [--cell 384] [--frames 8] [--static]
+        [--side-faces left] [--cell 384] [--frames 8] [--static] [--views 3|5]
 
 The sheet shows views left to right: either 5 (front, front three-quarter, side, back three-quarter,
 back — best, gives true diagonals) or 3 (front, side, back; diagonals reuse front/back turned 25
-degrees). Background is removed if opaque; colours are snapped to the Strahd palette.
+degrees; detected when the sheet holds three similar-width figures, or pass --views). Background is
+removed if opaque; colours are snapped to the Strahd palette.
 
 Rig (v1): each view is cut into head, torso and legs by body proportion, and every part becomes a
 textured plane pivoting at its joint (neck, hips). West-facing directions mirror the east ones.
@@ -20,7 +21,9 @@ of the band DirectionalSprite maps to height_units (1.0 for walk sheets).
 """
 import argparse
 import math
+import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 import bpy
@@ -58,6 +61,7 @@ def args():
     p.add_argument("--cell", type=int, default=384)
     p.add_argument("--frames", type=int, default=8)
     p.add_argument("--static", action="store_true", help="one still frame per direction, no rig")
+    p.add_argument("--views", type=int, choices=[3, 5], help="views on the sheet (default: detect)")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
 
@@ -160,13 +164,27 @@ def pose(parts, view, frame, frames, height):
     parts["torso"].rotation_euler = (0, math.radians(1.5) * s, 0)
 
 
+def view_count(sheet):
+    """5 unless the sheet is clearly three separate figures of similar width: wide bodies on a 3-view sheet
+    (a rat swarm) would otherwise be cut into five by the touching-figure split in find_figures."""
+    runs = cutout.column_runs(sheet[..., 3].max(axis=0) > 0.5)
+    merged = []
+    for r in runs:
+        if merged and r[0] - merged[-1][1] < 6:
+            merged[-1] = (merged[-1][0], r[1])
+        else:
+            merged.append(r)
+    widths = [b - a for a, b in merged if b - a >= 0.03 * sheet.shape[1]]
+    return 3 if len(widths) == 3 and max(widths) < 1.6 * min(widths) else 5
+
+
 def main():
     a = args()
     out_dir = cutout.ROOT / "art" / "sprites" / a.id
     out_dir.mkdir(parents=True, exist_ok=True)
     sheet = cutout.load_rgba(a.turnaround)
     sheet = cutout.binarize_alpha(cutout.remove_background(sheet))
-    figures = cutout.find_figures(sheet, 5)
+    figures = cutout.find_figures(sheet, a.views or view_count(sheet))
     if len(figures) == 5:
         names, dir_view = VIEWS5, DIR_VIEW5
     elif len(figures) == 3:
@@ -194,7 +212,8 @@ def main():
     build = build_static_view if a.static else build_view
     views = {name: build(name, fig, ppu) for name, fig in zip(names, figures)}
 
-    tmp = out_dir / "_frames"
+    # Frames go outside the project so an open Godot editor doesn't import them (and leave .import files).
+    tmp = Path(tempfile.mkdtemp(prefix=f"walk_{a.id}_"))
     frames = []
     for d in DIRECTIONS:
         view, mirrored, turn = dir_view[d]
@@ -217,9 +236,7 @@ def main():
     cutout.save_rgba(walk, out_dir / "walk.png")
     cutout.write_sprite_frames(out_dir / "walk.tres", f"res://art/sprites/{a.id}/walk.png",
                                (a.cell, a.cell), DIRECTIONS, frames_per_dir)
-    for f in tmp.glob("*.png"):
-        f.unlink()
-    tmp.rmdir()
+    shutil.rmtree(tmp, ignore_errors=True)
     print(f"walk sheet: {out_dir / 'walk.png'} ({len(names)} views, {len(DIRECTIONS)} directions x "
           f"{frames_per_dir} frames{', static' if a.static else ''}, height fill {height_fill:.2f})")
 

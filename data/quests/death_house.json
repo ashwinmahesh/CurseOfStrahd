@@ -1,0 +1,47 @@
+{
+  "id": "death_house",
+  "name": "Death House",
+  "summary": "Two children begged us to save their baby brother from a monster in the basement of their house. The house had other plans.",
+  "giver": "rose",
+  "region": "death_house",
+  "stages": [
+    {
+      "id": "plea",
+      "journal": "Rose and Thorn Durst, two children in the road at the village edge, say a monster lives in the basement of their house and has their baby brother, Walter. They will not go back inside. Their house is the tall one by the dead tree, behind the iron fence.",
+      "objectives": [
+        "Enter the Durst house",
+        "Find the basement and Walter"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "secret_stair",
+      "journal": "The house has no cellar door. It has something better hidden: a stair that winds down inside the walls from the attic, past every floor, to somewhere under the foundations.",
+      "objectives": [
+        "Follow the hidden stair down",
+        "Find out what happened to Walter"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_altar",
+      "journal": "Under the house, the cult that the Dursts led still gathers in shadow around its altar. They demand a death. One must die, they say, and they do not mean themselves.",
+      "objectives": [
+        "Get out of the house alive"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "escaped_refused",
+      "journal": "We refused the altar. The thing in the refuse woke, the house turned on us room by room, and we broke out through a window as the bricks closed over it. We are alive. The house is still hungry.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "escaped_sacrificed",
+      "journal": "We gave the altar what it wanted. The house let us walk out of its front door like guests. We are alive, most of us, and it is very quiet.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

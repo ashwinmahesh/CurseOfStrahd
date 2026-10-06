@@ -1,0 +1,58 @@
+# The nursemaid's specter in the nursery doorway (death_house_third). She can be calmed with the lullaby from the
+# conservatory harpsichord, talked or prayed to rest, or fought (nursery_specter: one specter, 200 XP, level 1).
+
+~ start
+Narrator: A woman made of mist and cold hangs in the nursery doorway, her apron grey, her face worn down to the shape of worry. Her hands are cupped as if around a sleeping child.
+durst_nursemaid [sad]: Have you brought him? Have you brought my Walter back up?
+interject name:hedda_ironvow: Easy, sister. Easy. We're not the ones who took him.
+-> choose
+
+~ choose
+* [if flag.death_house_knows_lullaby] Hum her the lullaby from the harpsichord. -> lullaby
+* [Persuasion DC 14] Walter is gone. Tell her it's time to rest. -> rest_ok | rest_fail
+* [Cleric] [Religion DC 13] Pray her to her rest, as you would for any mother. -> rest_ok | rest_fail
+* [Insight DC 12] What does she want, really? -> insight | insight_fail
+* Strike first, before she does. -> fight
+* Back away. -> END
+
+~ insight
+Narrator: She doesn't want revenge. She wants to hear him once more. She would know his song anywhere.
+-> choose
+
+~ insight_fail
+Narrator: Grief, and cold, and something sharper under it. {name} can't tell which will win.
+-> choose
+
+~ lullaby
+Narrator: {name} hums the first bar, a little off key. The nursemaid goes very still. By the second bar she is humming too, and her cupped hands rock, and rock.
+durst_nursemaid [sad]: He was mine. The master's and mine. The mistress gave him to the robed ones the night he was born, and they carried him down, and I followed them.
+durst_nursemaid [sad]: He's under the house. He's been under the house so long. If you go down, sing it to him. Someone should.
+Narrator: She rocks the empty air one last time and is gone, the way breath goes from a window.
+-> calmed
+
+~ rest_ok
+Narrator: The words reach her slowly, like warmth into frozen hands. Her cupped hands open, and there is nothing in them, and she looks at the nothing for a long time.
+durst_nursemaid [sad]: Gone. Yes. I knew. I knew when they stopped him crying. They stopped me too, at the bottom of the stairs.
+Narrator: She fades from the doorway like a word you meant to say and didn't.
+-> calmed
+
+~ calmed
+set death_house_nursemaid_calmed
+if not flag.death_house_learned_walter
+  set death_house_learned_walter
+  set death_house_lore += 1
+endif
+interject name:hedda_ironvow: Go on, sister. Dawn comes. Even for you. Especially for you.
+interject name:tamsin_tealeaf: I don't like this house. I want that written down somewhere official.
+if not name:hedda_ironvow
+  interject class:cleric: Rest. You've earned it more than anyone in this house.
+endif
+-> END
+
+~ rest_fail
+durst_nursemaid [angry]: Liars. You're with them. You're wearing their faces!
+-> fight
+
+~ fight
+Narrator: The cold comes off her like a slammed door.
+combat nursery_specter

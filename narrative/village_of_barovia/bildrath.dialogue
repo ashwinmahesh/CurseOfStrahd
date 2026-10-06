@@ -1,0 +1,233 @@
+# Bildrath Cantemir, Bildrath's Mercantile (docs/voice/bildrath.md)
+# Buying and selling are lines plus give/take/gold until the merchant screen exists. Prices are ten times the PHB.
+
+~ start
+if flag.bildrath_banned and not flag.bildrath_repaid
+-> banned
+endif
+if flag.bildrath_robbed and not flag.bildrath_accused
+-> robbed
+endif
+if flag.bildrath_met
+Bildrath: Back again. The prices haven't changed. They never change. That's what makes them prices.
+-> menu
+endif
+set bildrath_met
+Narrator: Everything in the shop is dusted, labelled and squared to the edge of its shelf. Behind the counter, a narrow man in a spotless apron is already reaching for a pencil.
+Bildrath: Welcome to Bildrath's Mercantile. Prices are posted. They are ten times what you're used to. You are used to the wrong place.
+interject background:criminal: What a lovely, sturdy counter. Very... sturdy.
+-> menu
+
+~ menu
+* Show us what you have. -> buy
+* We have things to sell. -> sell
+* [if not flag.bildrath_discount and not flag.bildrath_haggle_failed] Surely we can come to a better arrangement. -> haggle
+* Any news in the village? -> news
+* [if flag.burial_agreed and not flag.parriwimple_pallbearer and not flag.burgomaster_buried] We need help carrying a coffin. -> hire
+* Goodbye. -> END
+
+~ buy
+if flag.bildrath_discount
+Bildrath [weary]: For you, the special price. Nine times. I'll never recover. Rope ten, torches one for five, rations five a day, oil one a flask. Healer's kit forty-five. The potion, four hundred and fifty.
+else
+Bildrath: Rope, ten gold. Torches, one gold for five. Rations, five gold a day. Lamp oil, one gold a flask. A healer's kit, fifty. And the potion in the case, five hundred.
+endif
+interject class:rogue: Five hundred? For one potion? I've stolen less. In theory. Hypothetically. Never mind.
+* Fifty feet of rope. (10 gp) -> buy_rope
+* Five torches. (1 gp) -> buy_torches
+* Three days of rations. (15 gp) -> buy_rations
+* A flask of oil. (1 gp) -> buy_oil
+* [if not flag.bildrath_discount] A healer's kit. (50 gp) -> buy_kit
+* [if flag.bildrath_discount] A healer's kit. (45 gp) -> buy_kit_discount
+* [if not flag.bildrath_discount and not flag.bildrath_potion_sold] The potion. (500 gp) -> buy_potion
+* [if flag.bildrath_discount and not flag.bildrath_potion_sold] The potion. (450 gp) -> buy_potion_discount
+* That's all. -> menu
+
+~ buy_rope
+gold -10
+give rope 1
+Bildrath: Ten gold. Hempen, fifty feet, guaranteed to hold anything you can afford to hang from it.
+-> buy
+
+~ buy_torches
+gold -1
+give torch 5
+Bildrath: One gold. They burn an hour apiece, which is more than most things here manage.
+-> buy
+
+~ buy_rations
+gold -15
+give ration 3
+Bildrath: Fifteen gold. Hard bread, harder cheese, and a sausage of no fixed species.
+-> buy
+
+~ buy_oil
+gold -1
+give oil 1
+Bildrath: One gold. Lamp oil. Also burns other things, which I mention for no reason at all.
+-> buy
+
+~ buy_kit
+gold -50
+give healers_kit 1
+Bildrath: Fifty gold. Bandages, splints, salve. The burgomaster used one up in a month, before the end.
+-> buy
+
+~ buy_kit_discount
+gold -45
+give healers_kit 1
+Bildrath [weary]: Forty-five. I want you to know this hurts me more than it hurts you.
+-> buy
+
+~ buy_potion
+gold -500
+give potion_of_healing 1
+set bildrath_potion_sold
+Bildrath [smile]: Five hundred gold. In twenty years nobody has bought it. I'd come to think of it as family. Goodbye, little bottle.
+-> buy
+
+~ buy_potion_discount
+gold -450
+give potion_of_healing 1
+set bildrath_potion_sold
+Bildrath [weary]: Four hundred and fifty. Take it before I change my mind. Take it. Go on.
+-> buy
+
+~ sell
+Bildrath: I pay a tenth of what a thing is worth. That is not greed; that is arithmetic. Everyone in this valley already owns a sword, and none of them helped.
+* [if item:shortsword] Sell a shortsword. (1 gp) -> sell_shortsword
+* [if item:longsword] Sell a longsword. (1 gp) -> sell_longsword
+* [if item:shield] Sell a shield. (1 gp) -> sell_shield
+* [if item:chain_mail] Sell a coat of chain mail. (7 gp) -> sell_chain
+* Never mind. -> menu
+
+~ sell_shortsword
+take shortsword 1
+gold +1
+Bildrath: One gold. I'll put it with the others.
+-> sell
+
+~ sell_longsword
+take longsword 1
+gold +1
+Bildrath: One gold, and that's generous. It has a nick in it. Everything does, here.
+-> sell
+
+~ sell_shield
+take shield 1
+gold +1
+Bildrath: One gold. Somebody will want to hide behind it. Everybody does, eventually.
+-> sell
+
+~ sell_chain
+take chain_mail 1
+gold +7
+Bildrath: Seven gold. Heavy. I'll have Parriwimple carry it. I'll have Parriwimple carry everything.
+-> sell
+
+~ haggle
+Bildrath: Haggling is a form of theft that takes longer.
+* [Persuasion DC 18] A loyal customer is worth more than one sale. -> haggle_ok | haggle_fail
+* [Intimidation DC 18] Lower the prices. -> haggle_ok | haggle_fail
+* Never mind. -> menu
+
+~ haggle_ok
+set bildrath_discount
+Bildrath [angry]: Ten percent. Ten! You have robbed me in broad daylight, and I let you. Parriwimple, write it down. No. Don't. I don't want a record of this.
+Narrator: For all his outrage, he looks at you with something new: respect, the kind one shark has for another.
+-> menu
+
+~ haggle_fail
+set bildrath_haggle_failed
+Bildrath: No. The prices are posted. They will stay posted. You may look at them as long as you like; looking is free, for now.
+-> menu
+
+~ news
+Bildrath: News costs nothing, which is what it's worth. Ask.
+* The old woman with the pastry cart. -> news_morgantha
+* Ismark. -> news_ismark
+* The church. -> news_church
+* The woman weeping down the lane. -> news_mary
+* Enough news. -> menu
+
+~ news_morgantha
+Bildrath: Morgantha. Comes through every few weeks with that cart. I don't sell pastries; I have standards, and she undercuts me. Folk who can't pay her settle up some other way. I don't ask how. I don't give credit, and I suspect neither does she.
+-> news
+
+~ news_ismark
+Bildrath: Ismark Kolyanovich owes this shop eleven gold and four silver. I mention it only because you appear to be his friends.
+-> news
+
+~ news_church
+Bildrath: Father Donavich stopped buying candles. A priest who prays in the dark is either very holy or very ashamed. I don't extend credit to either.
+-> news
+
+~ news_mary
+Bildrath: Mary bought three locks from me this year. Good locks. Her daughter went out of the window. You can't sell a lock for a window. Believe me, I've tried.
+-> news
+
+~ hire
+Bildrath: Parriwimple's time is five gold an hour. A coffin takes an hour. A grave takes two. Fifteen gold, and he brings his own shovel, which is also mine.
+* Fifteen gold. Done. (15 gp) -> hire_paid
+* [if flag.parriwimple_befriended] Parriwimple already offered. For free. -> hire_free
+* Too dear. -> menu
+
+~ hire_paid
+gold -15
+set parriwimple_pallbearer
+Bildrath: Parriwimple! The customers have purchased three hours of you. Take the good shovel. Bring it back clean.
+Parriwimple [smile]: I can carry that.
+-> menu
+
+~ hire_free
+set parriwimple_pallbearer
+Bildrath [angry]: He offered. For free. Parriwimple, we will be having a talk about the concept of value. Go, then. Go! Bring the shovel back clean.
+-> menu
+
+~ robbed
+set bildrath_accused
+Bildrath [angry]: My strongbox is thirty gold lighter than it was this morning, and you are the only new faces in the valley. Parriwimple! Stand by the door.
+* [Deception DC 15] We've no idea what you're talking about. -> lie_ok | lie_fail
+* Fine. Here's your money back. (30 gp) -> repay
+* [Intimidation DC 14] Call your nephew off, or else. -> threat_ok | threat_fail
+
+~ lie_ok
+attitude bildrath indifferent
+Bildrath: Hm. Perhaps. Perhaps it was the wolves. I shall be counting the spoons when you leave.
+-> menu
+
+~ lie_fail
+set bildrath_banned
+attitude bildrath hostile
+Bildrath [angry]: You have coin in your purse that has my thumbprint on it. Out. Come back with thirty gold and an apology, in that order, or don't come back.
+-> END
+
+~ repay
+gold -30
+set bildrath_repaid
+Bildrath: Thirty gold. I'll note that you returned it. I'll also note that you took it. My ledger has two columns for a reason.
+-> menu
+
+~ threat_ok
+attitude bildrath hostile
+Bildrath [afraid]: Parriwimple, sit down. Sit. They're... customers. Valued customers. Buy something, and then leave.
+-> menu
+
+~ threat_fail
+set bildrath_banned
+attitude bildrath hostile
+Narrator: Parriwimple steps between you and his uncle, very gently, like a wall that has decided to be polite.
+Bildrath: Out. Thieves aren't customers. They're weather.
+-> END
+
+~ banned
+Bildrath [angry]: No. Out. You know the price of coming back in.
+* Thirty gold, and an apology. We're sorry. (30 gp) -> unban
+* We'll go. -> END
+
+~ unban
+gold -30
+set bildrath_repaid
+attitude bildrath indifferent
+Bildrath: Thirty gold, and an apology. The gold, I accept. The apology I'll take under advisement. Browse. Touch nothing you haven't paid for.
+-> menu

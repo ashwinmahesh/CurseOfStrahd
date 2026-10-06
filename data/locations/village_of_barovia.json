@@ -1,0 +1,835 @@
+{
+  "id": "village_of_barovia",
+  "name": "Village of Barovia",
+  "region": "village_of_barovia",
+  "summary": "A shuttered village in a mist-choked valley: muddy streets, boarded houses, a tavern with almost no wine, a mansion under siege, and a church on the hill where something screams at night.",
+  "text": "The Old Svalich Road runs through the village, from the Gates of Barovia and the mists in the east toward the crossroads, Tser Pool and Vallaki in the west. Most doors are nailed shut. The burgomaster's mansion sits behind an iron fence to the north-west, the church and its churchyard on the rise to the north-east, and Death House at the south-east edge, behind its own rusted fence.",
+  "map": {
+    "rows": [
+      "########################################",
+      "##..########..#.####.###.#....#######..#",
+      "##=.########.=#.####.###.#.=.=#######=.#",
+      "##..########..#.####.###.#....#######..#",
+      "##..########..#.####.....#.=..#######=.#",
+      "##..########..#..........#.............#",
+      "##............#.###..==..#.=...~.....=.#",
+      "##=~........~=#.###......#...=...=.=...#",
+      "##............#..........#.............#",
+      "########.######..........###.###########",
+      "#......................................#",
+      "#...~~............................~~...#",
+      ".....~.....................~~......~....",
+      "#..........~...........................#",
+      "#...................==.................#",
+      "######.######..............#######.....#",
+      "######.######..............#######=....#",
+      "######.######..............#######=....#",
+      "######.######..########....#######.....#",
+      "#......######..########................#",
+      "#..............########.......####.#####",
+      "######.........########.#####.#........#",
+      "######..#####..########.#####.#=.......#",
+      "######..#####..########.#####.#........#",
+      "######..#####.~.........#####.#..#######",
+      "######..#####.~.........#####.#..#######",
+      "######..#####...######..#####.#~~#######",
+      "######..#####...######.~......#~~#######",
+      "#...............######........#~~#######",
+      "########################################"
+    ],
+    "theme": "village",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "mansion_yard",
+      "name": "Burgomaster's yard",
+      "cells": [
+        [
+          1,
+          0
+        ],
+        [
+          14,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "north_lane",
+      "name": "North lane",
+      "cells": [
+        [
+          15,
+          0
+        ],
+        [
+          24,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "churchyard",
+      "name": "Churchyard",
+      "cells": [
+        [
+          25,
+          0
+        ],
+        [
+          39,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "village_road_west",
+      "name": "West road",
+      "cells": [
+        [
+          0,
+          10
+        ],
+        [
+          14,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "village_square",
+      "name": "Village square",
+      "cells": [
+        [
+          15,
+          9
+        ],
+        [
+          26,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "village_road_east",
+      "name": "East road",
+      "cells": [
+        [
+          27,
+          10
+        ],
+        [
+          39,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "mary_lane",
+      "name": "Mary's lane",
+      "cells": [
+        [
+          0,
+          15
+        ],
+        [
+          14,
+          28
+        ]
+      ]
+    },
+    {
+      "id": "mercantile_front",
+      "name": "Before the mercantile",
+      "cells": [
+        [
+          27,
+          15
+        ],
+        [
+          39,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "back_lanes",
+      "name": "Back lanes",
+      "cells": [
+        [
+          15,
+          20
+        ],
+        [
+          29,
+          28
+        ]
+      ]
+    },
+    {
+      "id": "death_house_lot",
+      "name": "Death House lot",
+      "cells": [
+        [
+          30,
+          20
+        ],
+        [
+          39,
+          28
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      20,
+      12
+    ],
+    "from_death_house": [
+      35,
+      23
+    ],
+    "from_tavern": [
+      18,
+      17
+    ],
+    "from_mansion": [
+      8,
+      7
+    ],
+    "from_church": [
+      33,
+      5
+    ],
+    "from_mercantile": [
+      30,
+      14
+    ],
+    "from_mad_marys": [
+      9,
+      14
+    ],
+    "from_east_road": [
+      37,
+      12
+    ],
+    "from_west_road": [
+      2,
+      12
+    ]
+  },
+  "exits": [
+    {
+      "id": "mansion_door",
+      "cell": [
+        8,
+        5
+      ],
+      "to": "burgomaster_mansion",
+      "spawn": "default",
+      "label": "Burgomaster's mansion",
+      "when": "flag.ismark_met or flag.ireena_door_opened",
+      "locked_text": "The door is barred from inside. The wood around the latch has been clawed to splinters, and it is not old damage."
+    },
+    {
+      "id": "church_door",
+      "cell": [
+        33,
+        4
+      ],
+      "to": "village_church",
+      "spawn": "default",
+      "label": "Church"
+    },
+    {
+      "id": "tavern_door",
+      "cell": [
+        18,
+        18
+      ],
+      "to": "blood_of_the_vine",
+      "spawn": "default",
+      "label": "Blood of the Vine"
+    },
+    {
+      "id": "mercantile_door",
+      "cell": [
+        30,
+        15
+      ],
+      "to": "bildraths_mercantile",
+      "spawn": "default",
+      "label": "Bildrath's Mercantile",
+      "when": "not night",
+      "locked_text": "Shut for the night. A slate on the door reads, in a neat hand: OPEN AT DAWN. BRING COIN."
+    },
+    {
+      "id": "mary_door",
+      "cell": [
+        9,
+        15
+      ],
+      "to": "mad_marys_house",
+      "spawn": "default",
+      "label": "Shuttered townhouse"
+    },
+    {
+      "id": "death_house_door",
+      "cell": [
+        35,
+        24
+      ],
+      "to": "death_house_ground",
+      "spawn": "from_village",
+      "label": "Death House"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        39,
+        12
+      ],
+      "to": "into_the_mists_road",
+      "spawn": "from_village",
+      "label": "The Old Svalich Road, east"
+    }
+  ],
+  "doors": [
+    {
+      "id": "mansion_gate",
+      "cell": [
+        8,
+        9
+      ],
+      "label": "Iron gate"
+    },
+    {
+      "id": "lych_gate",
+      "cell": [
+        28,
+        9
+      ],
+      "label": "Lych-gate"
+    },
+    {
+      "id": "death_house_gate",
+      "cell": [
+        34,
+        20
+      ],
+      "label": "Rusted gate"
+    }
+  ],
+  "props": [
+    {
+      "id": "village_well",
+      "cell": [
+        20,
+        14
+      ],
+      "kind": "examine",
+      "label": "Village well",
+      "model": "well"
+    },
+    {
+      "id": "well_rope",
+      "cell": [
+        21,
+        14
+      ],
+      "kind": "search",
+      "label": "Well rope",
+      "model": "rope",
+      "search_dc": 12,
+      "item": "potion_of_healing"
+    },
+    {
+      "id": "village_notice",
+      "cell": [
+        17,
+        10
+      ],
+      "kind": "book",
+      "label": "Notice board",
+      "model": "notice_board",
+      "codex": "village_curfew_notice",
+      "text": "By order of the burgomaster, Kolyan Indirovich: no one is to be abroad after dusk. Doors barred, shutters closed, lamps out by the second bell. Do not answer a knock you were not expecting, whoever it claims to be. Do not go to the castle. Do not go to the mists. Do not go into the house at the end of the lane. Below, in another hand, smaller: he is not coming back to read this."
+    },
+    {
+      "id": "castle_glimpse",
+      "cell": [
+        3,
+        10
+      ],
+      "kind": "examine",
+      "label": "Castle on the cliff"
+    },
+    {
+      "id": "road_west_gates",
+      "cell": [
+        1,
+        12
+      ],
+      "kind": "examine",
+      "label": "The road west",
+      "model": "signpost",
+      "dialogue": "village_of_barovia/road_west:start"
+    },
+    {
+      "id": "road_east_mists",
+      "cell": [
+        38,
+        12
+      ],
+      "kind": "examine",
+      "label": "The road east"
+    },
+    {
+      "id": "mansion_front_door",
+      "cell": [
+        8,
+        6
+      ],
+      "kind": "examine",
+      "label": "Barred front door",
+      "model": "door",
+      "dialogue": "village_of_barovia/ireena:door",
+      "when": "not flag.ismark_met and not flag.ireena_door_opened"
+    },
+    {
+      "id": "mansion_claw_marks",
+      "cell": [
+        5,
+        5
+      ],
+      "kind": "examine",
+      "label": "Clawed walls"
+    },
+    {
+      "id": "boarded_houses",
+      "cell": [
+        18,
+        5
+      ],
+      "kind": "examine",
+      "label": "Boarded houses"
+    },
+    {
+      "id": "abandoned_handcart",
+      "cell": [
+        21,
+        6
+      ],
+      "kind": "examine",
+      "label": "Abandoned handcart",
+      "model": "cart"
+    },
+    {
+      "id": "church_facade",
+      "cell": [
+        32,
+        5
+      ],
+      "kind": "examine",
+      "label": "The church"
+    },
+    {
+      "id": "old_graves",
+      "cell": [
+        27,
+        4
+      ],
+      "kind": "examine",
+      "label": "Old graves",
+      "model": "gravestone"
+    },
+    {
+      "id": "open_grave",
+      "cell": [
+        31,
+        6
+      ],
+      "kind": "examine",
+      "label": "Open grave",
+      "model": "grave",
+      "when": "not flag.burgomaster_buried"
+    },
+    {
+      "id": "kolyan_grave",
+      "cell": [
+        31,
+        6
+      ],
+      "kind": "examine",
+      "label": "The burgomaster's grave",
+      "model": "grave",
+      "when": "flag.burgomaster_buried"
+    },
+    {
+      "id": "tavern_sign",
+      "cell": [
+        17,
+        17
+      ],
+      "kind": "examine",
+      "label": "Tavern sign",
+      "model": "sign"
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        31,
+        14
+      ],
+      "kind": "book",
+      "label": "Price board",
+      "model": "sign",
+      "codex": "bildrath_prices",
+      "text": "BILDRATH'S MERCANTILE. Rope, fifty feet: 10 gold. Torches, a bundle of five: 1 gold. Rations, per day: 5 gold. Lamp oil, per flask: 1 gold. Healer's kit: 50 gold. Crowbar: 20 gold. Potion of healing (one only): 500 gold. NO CREDIT. NO HAGGLING. NO RETURNS. Browsing: free, for now."
+    },
+    {
+      "id": "mary_window",
+      "cell": [
+        11,
+        14
+      ],
+      "kind": "examine",
+      "label": "Shuttered window"
+    },
+    {
+      "id": "morgantha_cart",
+      "cell": [
+        24,
+        15
+      ],
+      "kind": "examine",
+      "label": "Pastry cart",
+      "model": "cart",
+      "when": "not flag.burgomaster_buried and not flag.morgantha_driven_off"
+    },
+    {
+      "id": "collapsed_barn",
+      "cell": [
+        19,
+        25
+      ],
+      "kind": "examine",
+      "label": "Collapsed barn"
+    },
+    {
+      "id": "death_house_facade",
+      "cell": [
+        36,
+        23
+      ],
+      "kind": "examine",
+      "label": "Death House"
+    },
+    {
+      "id": "death_house_dead_tree",
+      "cell": [
+        31,
+        22
+      ],
+      "kind": "examine",
+      "label": "Dead tree",
+      "model": "dead_tree"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        17,
+        17
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        20,
+        17
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        33,
+        5
+      ],
+      "kind": "window",
+      "bright_ft": 0,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        30,
+        14
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        8,
+        6
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        11,
+        14
+      ],
+      "kind": "candle",
+      "bright_ft": 0,
+      "dim_ft": 5
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "morgantha",
+      "cell": [
+        23,
+        15
+      ],
+      "dialogue": "village_of_barovia/morgantha:start",
+      "when": "not flag.burgomaster_buried and not flag.morgantha_driven_off"
+    },
+    {
+      "npc": "ismark",
+      "cell": [
+        30,
+        6
+      ],
+      "dialogue": "village_of_barovia/burial:start",
+      "when": "flag.burial_procession and not flag.burgomaster_buried"
+    },
+    {
+      "npc": "ireena",
+      "cell": [
+        32,
+        6
+      ],
+      "dialogue": "village_of_barovia/burial:start",
+      "when": "flag.burial_procession and not flag.burgomaster_buried"
+    },
+    {
+      "npc": "donavich",
+      "cell": [
+        31,
+        5
+      ],
+      "dialogue": "village_of_barovia/burial:start",
+      "when": "flag.burial_procession and flag.donavich_will_officiate and not flag.donavich_refused_rites and not (flag.doru_destroyed and not flag.donavich_mercy_blessing) and not flag.burgomaster_buried"
+    },
+    {
+      "npc": "parriwimple",
+      "cell": [
+        31,
+        7
+      ],
+      "dialogue": "village_of_barovia/parriwimple:graveside",
+      "when": "flag.burial_procession and flag.parriwimple_pallbearer and not flag.burgomaster_buried"
+    },
+    {
+      "npc": "ireena",
+      "cell": [
+        32,
+        7
+      ],
+      "dialogue": "village_of_barovia/ireena:after_burial",
+      "when": "flag.burgomaster_buried and not flag.ireena_escort"
+    },
+    {
+      "npc": "ismark",
+      "cell": [
+        30,
+        7
+      ],
+      "dialogue": "village_of_barovia/ismark:after_burial",
+      "when": "flag.burgomaster_buried and not flag.ireena_escort"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "churchyard_dead",
+      "trigger": "dialogue",
+      "when": "not flag.churchyard_dead_cleared and level >= 3",
+      "text": "The churchyard earth heaves. Old graves split along their seams, and the village's dead climb out to finish the funeral their own way.",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            3
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            38,
+            3
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            7
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            38,
+            7
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            34,
+            8
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            28,
+            8
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "churchyard_dead_cleared"
+    },
+    {
+      "id": "churchyard_dead",
+      "trigger": "dialogue",
+      "when": "not flag.churchyard_dead_cleared",
+      "text": "The churchyard earth heaves. Old graves split along their seams, and the village's dead climb out to finish the funeral their own way.",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            3
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            34,
+            8
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            28,
+            8
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "churchyard_dead_cleared"
+    },
+    {
+      "id": "night_streets_dead",
+      "trigger": "enter_area:village_square",
+      "when": "night and flag.ismark_met and not flag.night_dead_cleared and level >= 3",
+      "text": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once.",
+      "monsters": [
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            16,
+            10
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            25,
+            16
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            15,
+            15
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            26,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            19,
+            9
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            24,
+            17
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "night_dead_cleared"
+    },
+    {
+      "id": "night_streets_dead",
+      "trigger": "enter_area:village_square",
+      "when": "night and flag.ismark_met and not flag.night_dead_cleared",
+      "text": "Shapes stand in the square, swaying like washing on a line. They turn toward you all at once.",
+      "monsters": [
+        {
+          "monster": "zombie",
+          "cell": [
+            15,
+            15
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            26,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            19,
+            9
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "night_dead_cleared"
+    }
+  ],
+  "narration": {
+    "enter": "enter:village_of_barovia"
+  },
+  "rest": "risky"
+}

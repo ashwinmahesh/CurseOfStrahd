@@ -1,0 +1,19 @@
+{
+  "id": "doru",
+  "name": "Doru",
+  "title": "The Priest's Son",
+  "summary": "Father Donavich's son, who went to storm Castle Ravenloft and came back a vampire spawn. Locked in the undercroft and starving.",
+  "portrait": "doru",
+  "sprite": "doru",
+  "attitude": "hostile",
+  "voice": "docs/voice/doru.md",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "undead",
+    "vampire_spawn",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

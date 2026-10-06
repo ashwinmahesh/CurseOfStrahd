@@ -11,13 +11,17 @@ const OUTER_H := 1.4
 const LOW_H := 0.75
 
 var grid: CombatGrid
+## shrine_yard (the arena), svalich_road / forest (trees), village (houses), manor, tavern, shop, townhouse, church,
+## attic (cut-away interiors), dungeon.
+var theme := "shrine_yard"
 var _rng := RandomNumberGenerator.new()
 
 
-static func build(grid_: CombatGrid) -> ArenaBoard:
+static func build(grid_: CombatGrid, theme_: String = "shrine_yard") -> ArenaBoard:
 	var b := ArenaBoard.new()
 	b.name = "ArenaBoard"
 	b.grid = grid_
+	b.theme = theme_
 	b._rng.seed = 7   # cosmetic only (dressing placement), never rules
 	b._build()
 	return b
@@ -31,11 +35,28 @@ func cell_center(cell: Vector2i, size_cells: int = 1) -> Vector3:
 	return grid.world_center(cell, size_cells)
 
 
+const INTERIORS := ["manor", "tavern", "shop", "townhouse", "church", "attic"]
+const WILD := ["svalich_road", "forest", "road"]
+
+
 func _build() -> void:
 	var grass := Look.cel_checker("bog", "bog_deep", "ink")
 	var stone := Look.cel_checker("stone", "stone_deep", "ink")
 	var mud := Look.cel_checker("umber", "peat", "ink")
 	var dais := Look.cel_checker("slate", "stone", "ink")
+	if theme in INTERIORS:
+		grass = Look.cel_checker("walnut", "umber", "peat") if theme != "church" else Look.cel_checker("stone", "slate", "stone_deep")
+		stone = grass
+		if theme == "attic":
+			grass = Look.cel_checker("umber", "peat", "ink")
+			stone = grass
+		mud = Look.cel_checker("bone_dark", "umber", "peat")
+	elif theme == "dungeon":
+		grass = Look.cel_checker("stone_deep", "grave", "ink")
+		stone = Look.cel_checker("stone", "stone_deep", "ink")
+		mud = Look.cel_checker("bog_deep", "peat", "ink")
+	elif theme == "village":
+		stone = Look.cel_checker("stone", "slate", "stone_deep")
 	for z in grid.depth:
 		for x in grid.width:
 			var c := Vector2i(x, z)
@@ -58,10 +79,29 @@ func _build() -> void:
 				_brambles(c)
 			if (f & CombatGrid.LOW) != 0:
 				_low_cover(c)
-	_lanterns()
+	if theme == "shrine_yard":
+		_lanterns()
 
 
 func _wall(c: Vector2i) -> void:
+	if theme in WILD:
+		_tree(c)
+		return
+	if theme in INTERIORS or theme == "dungeon":
+		# Cut-away walls (low enough to see over from the camera), capped with a darker band.
+		var colour := {"manor": "umber", "tavern": "walnut", "shop": "walnut", "townhouse": "umber", "church": "slate",
+			"attic": "peat"}.get(theme, "stone_deep") as String
+		var h := 1.15
+		_box("Wall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), Look.cel(colour))
+		_box("WallCap", Vector3(1.02, 0.1, 1.02), Vector3(c.x + 0.5, h + 0.05, c.y + 0.5), Look.cel("bone_dark"))
+		return
+	if theme == "village":
+		# Houses: plaster walls and dark timber.
+		var hh := 2.0
+		_box("House", Vector3(1, hh, 1), Vector3(c.x + 0.5, hh / 2.0, c.y + 0.5), Look.cel("bone_dark"))
+		_box("Timber", Vector3(1.02, 0.16, 1.02), Vector3(c.x + 0.5, hh * 0.55, c.y + 0.5), Look.cel("peat"))
+		_box("Roof", Vector3(1.05, 0.2, 1.05), Vector3(c.x + 0.5, hh + 0.1, c.y + 0.5), Look.cel("blood_deep"))
+		return
 	var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
 	if border:
 		# The churchyard's outer wall: low, mossy, uneven.
@@ -75,7 +115,38 @@ func _wall(c: Vector2i) -> void:
 		_box("PillarCap", Vector3(1.0, 0.18, 1.0), Vector3(c.x + 0.5, WALL_H + 0.09, c.y + 0.5), Look.cel("slate"))
 
 
+## A Barovian pine: a dark trunk and a tall cone of needles.
+func _tree(c: Vector2i) -> void:
+	var trunk := MeshInstance3D.new()
+	var tm := CylinderMesh.new()
+	tm.top_radius = 0.1
+	tm.bottom_radius = 0.16
+	tm.height = 0.8
+	trunk.mesh = tm
+	trunk.position = Vector3(c.x + 0.5, 0.4, c.y + 0.5)
+	trunk.material_override = Look.cel("peat")
+	add_child(trunk)
+	var crown := MeshInstance3D.new()
+	var cm := CylinderMesh.new()
+	cm.top_radius = 0.0
+	cm.bottom_radius = _rng.randf_range(0.5, 0.65)
+	cm.height = _rng.randf_range(1.8, 2.6)
+	crown.mesh = cm
+	crown.position = Vector3(c.x + 0.5 + _rng.randf_range(-0.1, 0.1), 0.7 + cm.height / 2.0, c.y + 0.5 + _rng.randf_range(-0.1, 0.1))
+	crown.material_override = Look.cel("bog_deep" if _rng.randf() < 0.6 else "bog")
+	add_child(crown)
+	_box("Ground", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), Look.cel("bog_deep"))
+
+
 func _low_cover(c: Vector2i) -> void:
+	if theme in INTERIORS:
+		# Furniture: a table, a bed, a pew.
+		var base := floor_y(c)
+		_box("Furniture", Vector3(0.92, 0.6, 0.92), Vector3(c.x + 0.5, base + 0.3, c.y + 0.5), Look.cel("leather" if theme != "church" else "walnut"))
+		return
+	if theme == "dungeon":
+		_box("Rubble", Vector3(0.85, 0.55, 0.85), Vector3(c.x + 0.5, floor_y(c) + 0.27, c.y + 0.5), Look.cel("stone"))
+		return
 	var left := grid.has_flag(c + Vector2i(-1, 0), CombatGrid.LOW)
 	var right := grid.has_flag(c + Vector2i(1, 0), CombatGrid.LOW)
 	var up := grid.has_flag(c + Vector2i(0, -1), CombatGrid.LOW)

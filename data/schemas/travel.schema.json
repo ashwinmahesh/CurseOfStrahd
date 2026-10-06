@@ -1,0 +1,107 @@
+{
+  "$id": "travel.schema.json",
+  "title": "A travel map: places and roads",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "places",
+    "roads"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "name": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "places": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "location",
+          "pos",
+          "region"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "spawn": {
+            "type": "string"
+          },
+          "pos": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "region": {
+            "type": "string"
+          },
+          "when": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "roads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "from",
+          "to",
+          "hours"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "hours": {
+            "type": "number",
+            "minimum": 0.25
+          },
+          "table": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "when": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

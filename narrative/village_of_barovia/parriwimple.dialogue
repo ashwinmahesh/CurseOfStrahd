@@ -1,0 +1,63 @@
+# Parriwimple, Bildrath's nephew (docs/voice/parriwimple.md)
+
+~ start
+if flag.parriwimple_befriended
+Parriwimple [smile]: Hello again. I remembered you. I don't remember everybody.
+else
+Narrator: A very large young man is stacking sacks of flour into a perfect pyramid, counting under his breath. He stops at forty-one and looks down at you, pleased.
+Parriwimple: Hello. Uncle says to say welcome. Welcome.
+endif
+-> menu
+
+~ menu
+* What are you counting? -> counting
+* What's the pastry woman like? -> pie_lady
+* [if flag.burial_agreed and not flag.parriwimple_pallbearer and not flag.burgomaster_buried] Could you help carry the burgomaster's coffin? -> coffin
+* [if not flag.parriwimple_befriended] Say something kind to him. -> befriend
+* Goodbye. -> END
+
+~ counting
+Parriwimple: Days. Since the burgomaster died. Three. Nobody else counted, I think. Somebody should.
+interject tag:veteran: Somebody should. Good man.
+-> menu
+
+~ pie_lady
+set bonegrinder_rumor
+Parriwimple: The pie lady. Uncle won't let me eat them; he says they cost money. She lives in the old windmill on the Vallaki road. I carried sacks there once. It smelled like bread. And like not bread.
+interject tag:curious: Not bread? What does "not bread" smell like?
+Parriwimple: I didn't like it. I carried the sacks fast.
+-> menu
+
+~ coffin
+if flag.parriwimple_befriended
+set parriwimple_pallbearer
+Parriwimple [smile]: I can carry that. I'll bring the shovel too, and dig. Uncle won't mind. Uncle will mind. I'll go anyway.
+else
+Parriwimple: Uncle says my time costs money. Five gold an hour. You'd have to ask Uncle. He likes being asked.
+endif
+-> menu
+
+~ befriend
+* [Persuasion DC 10] You're good at this, Parriwimple. Your uncle's lucky to have you. -> befriend_ok | befriend_fail
+* [Wizard] Show him a little magic. -> befriend_magic
+* Never mind. -> menu
+
+~ befriend_ok
+set parriwimple_befriended
+Parriwimple [smile]: Nobody says that. Uncle says I'm a good lifter. That's nearly the same. Thank you. I'll remember you.
+-> menu
+
+~ befriend_fail
+Parriwimple: Thank you? I think? Uncle says people say nice things when they want a discount. There's no discount.
+-> menu
+
+~ befriend_magic
+set parriwimple_befriended
+Narrator: A spark, a puff of coloured light, a floating flour-dust star. Parriwimple watches it with his whole face.
+Parriwimple [smile]: Again. No. Don't, Uncle will charge you for the flour. But that was the best thing I ever saw. I'll remember you.
+-> menu
+
+~ graveside
+Parriwimple: The grave's ready. I put the dirt in a neat pile, so it goes back in neat. Uncle says neat is respect.
+* Thank you, Parriwimple. Let's begin. -> village_of_barovia/burial:start
+* Not yet. -> END

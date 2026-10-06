@@ -1,0 +1,128 @@
+{
+  "id": "bildraths_mercantile",
+  "name": "Bildrath's Mercantile",
+  "region": "village_of_barovia",
+  "summary": "The only shop in the village, immaculate and overpriced: rope, oil, rations and one dusty potion, at ten times what they cost anywhere else.",
+  "map": {
+    "rows": [
+      "##################",
+      "#===========#....#",
+      "#...........#==..#",
+      "#...........#==..#",
+      "#..=======..#....#",
+      "#...........#..==#",
+      "#..........=#..==#",
+      "#=.........=#....#",
+      "#=...............#",
+      "#=..........#.===#",
+      "#...........#.===#",
+      "######.###########"
+    ],
+    "theme": "shop",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "mercantile_shop",
+      "name": "Shop floor",
+      "cells": [[1, 1], [11, 10]]
+    },
+    {
+      "id": "mercantile_storeroom",
+      "name": "Storeroom",
+      "cells": [[13, 1], [16, 10]],
+      "light": "dark"
+    }
+  ],
+  "spawns": {
+    "default": [6, 10]
+  },
+  "exits": [
+    {
+      "id": "shop_door",
+      "cell": [6, 11],
+      "to": "village_of_barovia",
+      "spawn": "from_mercantile",
+      "label": "Out to the road"
+    }
+  ],
+  "doors": [
+    {
+      "id": "storeroom_door",
+      "cell": [12, 8],
+      "locked": true,
+      "lock_dc": 13,
+      "label": "Storeroom door"
+    }
+  ],
+  "props": [
+    {
+      "id": "bildrath_shelves",
+      "cell": [6, 1],
+      "kind": "examine",
+      "label": "Shelves",
+      "model": "shelf"
+    },
+    {
+      "id": "last_potion",
+      "cell": [10, 1],
+      "kind": "examine",
+      "label": "Glass case",
+      "model": "case"
+    },
+    {
+      "id": "storeroom_crates",
+      "cell": [15, 5],
+      "kind": "examine",
+      "label": "Crates",
+      "model": "crate"
+    },
+    {
+      "id": "bildrath_ledger",
+      "cell": [4, 4],
+      "kind": "book",
+      "label": "Ledger",
+      "model": "book",
+      "codex": "bildrath_ledger",
+      "text": "Bildrath's ledger, ruled in red ink. Sales this month: rope, one length (the burgomaster, for the coffin, unpaid). Candles, none. Lamp oil: one flask, every evening, to the shop's own account. Under 'Debts owed': Ismark Kolyanovich, a long column. Under 'Debts forgiven': nothing, underlined twice."
+    }
+  ],
+  "containers": [
+    {
+      "id": "bildrath_strongbox",
+      "cell": [16, 1],
+      "label": "Strongbox",
+      "model": "strongbox",
+      "items": [],
+      "gold": 30,
+      "lock_dc": 15,
+      "flag": "bildrath_robbed"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [6, 3],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "bildrath",
+      "cell": [6, 3],
+      "dialogue": "village_of_barovia/bildrath:start"
+    },
+    {
+      "npc": "parriwimple",
+      "cell": [10, 8],
+      "dialogue": "village_of_barovia/parriwimple:start",
+      "when": "not (flag.burial_procession and flag.parriwimple_pallbearer and not flag.burgomaster_buried)"
+    }
+  ],
+  "narration": {
+    "enter": "enter:bildraths_mercantile"
+  },
+  "rest": "no",
+  "rest_text": "Bildrath charges for floor space by the hour, and he is watching the clock."
+}

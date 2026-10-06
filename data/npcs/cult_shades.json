@@ -1,0 +1,18 @@
+{
+  "id": "cult_shades",
+  "name": "The Shades",
+  "title": "The Cult Below",
+  "summary": "The robed shadows of the cult that fed the house, still gathered at their altar. They want one thing from visitors, and they say so over and over.",
+  "portrait": "cult_shades",
+  "sprite": "cult_shades",
+  "attitude": "hostile",
+  "voice": "docs/voice/cult_shades.md",
+  "guest": false,
+  "tags": [
+    "undead",
+    "cult",
+    "death_house"
+  ],
+  "region": "death_house",
+  "pronouns": "they/them"
+}

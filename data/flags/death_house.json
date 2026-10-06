@@ -1,0 +1,189 @@
+{
+  "flags": [
+    {
+      "id": "death_house_heard_plea",
+      "type": "bool",
+      "summary": "The party listened to Rose and Thorn's plea in the road (the house's lure). Read by the ghosts, the family portrait and the house's first narration."
+    },
+    {
+      "id": "death_house_promised_walter",
+      "type": "bool",
+      "summary": "The party promised the children outside that they would save Walter. The cult's shades throw it back at them at the altar. Village may read."
+    },
+    {
+      "id": "death_house_lure_tested",
+      "type": "bool",
+      "summary": "The party has made its one Insight or Arcana attempt to see through the children in the road."
+    },
+    {
+      "id": "death_house_saw_through_lure",
+      "type": "bool",
+      "summary": "The party realised the children in the road were an illusion of long-dead children (Insight/Arcana outside, the portrait, or the ghosts). Lore."
+    },
+    {
+      "id": "death_house_read_strahd_letter",
+      "type": "bool",
+      "summary": "The party read Strahd's letter to Gustav Durst in the secret study. Lore. Village/Phase 4 may read (Ilse's letter, Strahd scenes)."
+    },
+    {
+      "id": "death_house_found_deeds",
+      "type": "bool",
+      "summary": "The party found the Durst deeds, including a windmill on the Old Svalich Road (Old Bonegrinder). Phase 5 may read."
+    },
+    {
+      "id": "death_house_harpsichord_played",
+      "type": "bool",
+      "summary": "The party has made its one attempt at the conservatory harpsichord's lullaby."
+    },
+    {
+      "id": "death_house_knows_lullaby",
+      "type": "bool",
+      "summary": "The party learned the nursemaid's lullaby from the harpsichord. Calms her specter without a fight; can be hummed at Walter's crypt."
+    },
+    {
+      "id": "death_house_nursemaid_calmed",
+      "type": "bool",
+      "summary": "The nursemaid's specter was laid to rest by song, persuasion or prayer instead of being fought."
+    },
+    {
+      "id": "death_house_nursemaid_destroyed",
+      "type": "bool",
+      "summary": "The party destroyed the nursemaid's specter (encounter nursery_specter)."
+    },
+    {
+      "id": "death_house_learned_walter",
+      "type": "bool",
+      "summary": "The party learned that Walter was Gustav's son by the nursemaid, given to the cult's altar at birth. Lore."
+    },
+    {
+      "id": "death_house_armor_destroyed",
+      "type": "bool",
+      "summary": "The animated armor on the third-floor landing is destroyed (encounter armor_guardian)."
+    },
+    {
+      "id": "death_house_broom_destroyed",
+      "type": "bool",
+      "summary": "The animated broom in the attic storage room is destroyed (encounter storage_broom)."
+    },
+    {
+      "id": "death_house_children_met",
+      "type": "bool",
+      "summary": "The party met Rose and Thorn's ghosts in the attic. Starts the rose_and_thorn quest."
+    },
+    {
+      "id": "death_house_children_truth",
+      "type": "bool",
+      "summary": "The party knows how the children died (told them, or examined their bones). Lore."
+    },
+    {
+      "id": "death_house_children_riding",
+      "type": "bool",
+      "summary": "Rose and Thorn's ghosts are travelling inside two party members (by invitation or Thorn's possession). Cleared when they are laid to rest, or when the party's Death House story ends (the house reclaims them), so it is always false once the party is outside."
+    },
+    {
+      "id": "death_house_children_remains_taken",
+      "type": "bool",
+      "summary": "The party carries the children's bones from the toy chest."
+    },
+    {
+      "id": "death_house_children_at_rest",
+      "type": "bool",
+      "summary": "The party laid Rose and Thorn's bones in their crypts; the ghosts are at peace and the lure in the road is gone. Village/epilogue should read."
+    },
+    {
+      "id": "death_house_secret_stair_found",
+      "type": "bool",
+      "summary": "The party found the stair hidden in the walls (dollhouse, Rose, or the seam by the chimney). Opens the alcove exit to the dungeon."
+    },
+    {
+      "id": "death_house_milestone_dungeon",
+      "type": "bool",
+      "summary": "Guard: the level 2 milestone for finding the way down has been given."
+    },
+    {
+      "id": "death_house_dollhouse_altar_seen",
+      "type": "bool",
+      "summary": "Close study of the dollhouse revealed the altar and the sleeping heap below the house. Lore."
+    },
+    {
+      "id": "death_house_read_cult_ledger",
+      "type": "bool",
+      "summary": "The party read the cult's ledger of victims in the refectory. Lore."
+    },
+    {
+      "id": "death_house_dursts_confessed",
+      "type": "bool",
+      "summary": "Gustav and Elisabeth Durst confessed the cult's purpose before the fight. Lore."
+    },
+    {
+      "id": "death_house_dursts_destroyed",
+      "type": "bool",
+      "summary": "Gustav and Elisabeth Durst are destroyed (encounter durst_reunion or durst_reunion_shaken)."
+    },
+    {
+      "id": "death_house_ghouls_destroyed",
+      "type": "bool",
+      "summary": "The ghoul cultists in the dormitory are destroyed (encounter dormitory_ghouls)."
+    },
+    {
+      "id": "death_house_grick_slain",
+      "type": "bool",
+      "summary": "The grick in the well chamber is dead (encounter well_grick)."
+    },
+    {
+      "id": "death_house_shadows_destroyed",
+      "type": "bool",
+      "summary": "The shadows in the reliquary are destroyed (encounter reliquary_shadows)."
+    },
+    {
+      "id": "death_house_rats_scattered",
+      "type": "bool",
+      "summary": "The rat swarms in the flooded passage are destroyed (encounter drowned_rats)."
+    },
+    {
+      "id": "death_house_lore",
+      "type": "int",
+      "summary": "How much of the house's story the party uncovered (0-7: the lure, Strahd's letter, Walter, the children's deaths, the dollhouse altar, the ledger, the Dursts' confession). 4+ gives a head start against Lorghoth. Village/epilogue may read."
+    },
+    {
+      "id": "death_house_portcullis_raised",
+      "type": "bool",
+      "summary": "The winch in the lower dungeon has raised the portcullis to the antechamber (lever; toggles)."
+    },
+    {
+      "id": "death_house_altar_denounced",
+      "type": "bool",
+      "summary": "The party made its one attempt to denounce the shades' creed (Religion) at the altar."
+    },
+    {
+      "id": "death_house_head_start",
+      "type": "bool",
+      "summary": "The party saw Lorghoth coming (lore 4+ or a successful denunciation): running needs no check, and a fight starts with the mound farther away."
+    },
+    {
+      "id": "death_house_refused",
+      "type": "bool",
+      "summary": "THE CHOICE: the party refused the altar. Lorghoth woke and the house turned on them. Village, Strahd and the epilogue should read."
+    },
+    {
+      "id": "death_house_sacrificed",
+      "type": "bool",
+      "summary": "THE CHOICE: the party laid one of their own on the altar; that character died and the house let the rest go. Village, Strahd and the epilogue should read."
+    },
+    {
+      "id": "death_house_lorghoth_slain",
+      "type": "bool",
+      "summary": "The party stood and killed Lorghoth the Decayer (encounter lorghoth_rises or lorghoth_rises_late). Village/Phase 4 may read."
+    },
+    {
+      "id": "death_house_window_attempted",
+      "type": "bool",
+      "summary": "The party has tried the closing dining-room window once (a failure brings the silverware down on them first)."
+    },
+    {
+      "id": "death_house_completed",
+      "type": "bool",
+      "summary": "Death House is over: the party broke out after refusing, or walked out after the sacrifice. The house will not let them back in. Village should read."
+    }
+  ]
+}

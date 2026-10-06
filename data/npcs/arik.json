@@ -1,0 +1,19 @@
+{
+  "id": "arik",
+  "name": "Arik",
+  "title": "Barkeep, Blood of the Vine",
+  "summary": "The barkeep of the Blood of the Vine, a man of very few words and, a careful look suggests, nothing behind them.",
+  "portrait": "arik",
+  "sprite": "arik",
+  "attitude": "indifferent",
+  "voice": "docs/voice/arik.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "soulless",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

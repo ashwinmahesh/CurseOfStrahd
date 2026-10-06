@@ -1,0 +1,184 @@
+{
+  "id": "blood_of_the_vine",
+  "name": "Blood of the Vine",
+  "region": "village_of_barovia",
+  "summary": "The village's last tavern: a smoky common room, a bar with nearly empty casks, Ismark drinking alone and three Vistani women in the corner.",
+  "text": "The only room in Barovia where people still talk, if quietly. The wine is Purple Grapemash No. 3, and there isn't much of it left.",
+  "map": {
+    "rows": [
+      "####################",
+      "#==...#.====.....==#",
+      "#.....#..........==#",
+      "#.......=======....#",
+      "#.....#............#",
+      "#######............#",
+      "#..................#",
+      "#........==........#",
+      "#...==..........==.#",
+      "#............=..==.#",
+      "#........==..=.....#",
+      "#..................#",
+      "##########.#########"
+    ],
+    "theme": "tavern",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "tavern_back_room",
+      "name": "Back room",
+      "cells": [[1, 1], [5, 4]],
+      "light": "dark"
+    },
+    {
+      "id": "tavern_bar",
+      "name": "Behind the bar",
+      "cells": [[7, 1], [18, 4]]
+    },
+    {
+      "id": "tavern_common_room",
+      "name": "Common room",
+      "cells": [[1, 5], [18, 11]]
+    }
+  ],
+  "spawns": {
+    "default": [10, 11]
+  },
+  "exits": [
+    {
+      "id": "tavern_front_door",
+      "cell": [10, 12],
+      "to": "village_of_barovia",
+      "spawn": "from_tavern",
+      "label": "Out to the square"
+    }
+  ],
+  "doors": [
+    {
+      "id": "back_room_door",
+      "cell": [6, 3],
+      "label": "Back room door"
+    }
+  ],
+  "props": [
+    {
+      "id": "tavern_casks",
+      "cell": [9, 1],
+      "kind": "examine",
+      "label": "Wine casks",
+      "model": "barrel"
+    },
+    {
+      "id": "tavern_hearth",
+      "cell": [0, 8],
+      "kind": "examine",
+      "label": "Hearth",
+      "model": "hearth"
+    },
+    {
+      "id": "tavern_stairs",
+      "cell": [17, 1],
+      "kind": "examine",
+      "label": "Stairs to the rooms",
+      "model": "stairs"
+    },
+    {
+      "id": "tavern_tally_board",
+      "cell": [12, 0],
+      "kind": "examine",
+      "label": "Chalk tally board"
+    },
+    {
+      "id": "aurel_last_note",
+      "cell": [3, 2],
+      "kind": "book",
+      "label": "A scholar's note",
+      "model": "letter",
+      "codex": "aurel_last_note",
+      "flag": "scholar_notes_found",
+      "text": "Third night in the village. The barkeep has said eleven words to me, four of them 'wine'. I have the castle's outline drawn from three sides now, and a list of the windows that are lit. One is lit every night: high in the east tower, a library or I am no judge of shelving. Tomorrow I go up the road. If anyone finds this, send it to Silvain Aster, who lent me the pen. Tell them I was right. Tell them he knows I am reading. A. M."
+    }
+  ],
+  "containers": [
+    {
+      "id": "aurel_satchel",
+      "cell": [2, 1],
+      "label": "Scholar's satchel",
+      "model": "satchel",
+      "items": [
+        {
+          "id": "paper",
+          "qty": 3
+        },
+        {
+          "id": "ink",
+          "qty": 1
+        },
+        {
+          "id": "ink_pen",
+          "qty": 1
+        }
+      ],
+      "gold": 4,
+      "lock_dc": 0
+    }
+  ],
+  "lights": [
+    {
+      "cell": [1, 8],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [11, 2],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [16, 8],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [9, 7],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "ismark",
+      "cell": [5, 9],
+      "dialogue": "village_of_barovia/ismark:start",
+      "when": "not flag.ismark_met"
+    },
+    {
+      "npc": "arik",
+      "cell": [11, 2],
+      "dialogue": "village_of_barovia/arik:start"
+    },
+    {
+      "npc": "alenka",
+      "cell": [15, 8],
+      "dialogue": "village_of_barovia/vistani:start"
+    },
+    {
+      "npc": "mirabel",
+      "cell": [18, 9],
+      "dialogue": "village_of_barovia/vistani:start"
+    },
+    {
+      "npc": "sorvia",
+      "cell": [16, 10],
+      "dialogue": "village_of_barovia/vistani:start"
+    }
+  ],
+  "narration": {
+    "enter": "enter:blood_of_the_vine"
+  },
+  "rest": "safe"
+}

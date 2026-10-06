@@ -161,7 +161,28 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Encounter XP budget (2024 DMG) | tools/data/validate_data.py | tested by make validate | — |
 | Light, darkness and obscurement in combat | encounter.gd can_see / light_at, spell_zones.gd | implemented: map light (bright/dim/dark), Darkvision, Blindsight and Truesight, light from spells, magical Darkness, Heavily Obscured areas, sunlight | test_spell_recipes |
 
+## Exploration and rests (Phase 3: world/exploration, story/, ADR 0008, ADR 0009)
+
+| Rule | Code | Status | Test |
+|---|---|---|---|
+| Passive Perception notices traps (within 10 ft) | location_view.gd _check_traps | tested | test_exploration |
+| Search (Wisdom (Perception)) finds traps, hidden objects and secret doors | location_view.gd search | tested | test_exploration |
+| Thieves' Tools (2024): Dexterity check + Proficiency Bonus with the tools, Advantage with Sleight of Hand too; pick a lock or disarm a trap | location_view.gd _unlock, _disarm | implemented | test_exploration |
+| Forcing a lock: Strength (Athletics) | location_view.gd _unlock | deviated (DC + 2, see deviations) | test_exploration |
+| Traps: save, damage (half on a success), condition | location_view.gd _spring_trap | implemented | — |
+| Stealth and surprise: a sneaking party's lowest Stealth against each enemy's passive Perception | location_view.gd _stealth_surprise | implemented | — |
+| Short Rest: spend Hit Point Dice (roll + Con, minimum 1), short-rest features | rest_screen.gd, character.gd | tested | test_party_screens |
+| Long Rest: all Hit Points, Hit Point Dice, slots and features; interruption | rest_screen.gd | implemented (interruption: deviations) | — |
+| Ability checks in conversation (any skill or ability, the speaking character's bonus, Advantage sources) | story/dialogue_runner.gd | tested | test_story |
+| Milestone levelling | story/story_state.gd, level_up_screen.gd | tested | test_story, test_party_screens |
+| Saves outside combat and at the start of each round; effects and Concentration saved | core/save_system.gd, combat/encounter_snapshot.gd | tested | test_exploration, test_story |
+| Casting outside combat: healing and helpful spells, slots, lasting effects and Concentration | story/field_casting.gd (through SpellCaster) | tested | test_party_screens |
+| Frightened: can't willingly move closer to a visible source | encounter.gd reachable_for | tested (strict reading, deviations) | test_combat_encounter |
+| Flying creatures move at their Fly Speed | combatant.gd speed | implemented (no altitude, deviations) | test_phase3_exit |
+| Heroic Inspiration on saves and checks | — | not started | [Phase 4] |
+| Light, Darkvision and obscurement affecting checks and attacks | — | spell and ability audit | — |
+
 ## Not started (later phases)
 
-Exploration, social interaction and Influence, travel, light and vision, hiding outside combat (Phase 3); the other
-eight classes, magic items and attunement (Phases 4-5).
+Influence and NPC attitudes as a rule (attitudes exist in the story; checks against them arrive with merchants),
+travel, day and night effects (Phase 4); the other eight classes, magic items and attunement (Phases 4-5).

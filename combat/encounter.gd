@@ -340,7 +340,17 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 	if c.creature.has_condition(&"prone") and not standing:
 		feet = feet / 2   # crawling: every foot costs 1 extra
 	var occ := _occupancy_for(c)
-	return grid.reachable(c.cell, c.size_cells, feet, _has_fn(occ["blocked"] as Dictionary),
+	var blocked := occ["blocked"] as Dictionary
+	# Frightened: no square closer to a source of fear the creature can see (a stricter, per-square reading of
+	# "can't willingly move closer", see deviations.md).
+	for src in fear_sources(c):
+		var now := grid.distance_ft(c.cell, c.size_cells, src.cell, src.size_cells)
+		for x in grid.width:
+			for y in grid.depth:
+				var cell := Vector2i(x, y)
+				if grid.distance_ft(cell, c.size_cells, src.cell, src.size_cells) < now:
+					blocked[cell] = true
+	return grid.reachable(c.cell, c.size_cells, feet, _has_fn(blocked),
 		_has_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
 
 
@@ -354,6 +364,20 @@ func move_mode(c: Combatant) -> int:
 	if c.creature.has_flag("incorporeal_movement"):
 		mode |= CombatGrid.MOVE_INCORPOREAL
 	return mode
+
+
+## The creatures `c` is Frightened of and can see.
+func fear_sources(c: Combatant) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	if not c.creature.has_condition(&"frightened"):
+		return out
+	for fx in c.creature.effects:
+		if not &"frightened" in fx.conditions or fx.caster_id == "":
+			continue
+		var src := get_c(fx.caster_id)
+		if src != null and src != c and src.is_alive() and not src in out and can_see(c, src):
+			out.append(src)
+	return out
 
 
 ## How other creatures' squares affect `c`'s movement: {blocked, slowed, occupied}, each a set of cells.

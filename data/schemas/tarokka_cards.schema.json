@@ -1,0 +1,63 @@
+{
+  "$id": "tarokka_cards.schema.json",
+  "title": "The Tarokka deck",
+  "type": "object",
+  "required": [
+    "id",
+    "cards"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "const": "cards"
+    },
+    "cards": {
+      "type": "array",
+      "minItems": 54,
+      "maxItems": 54,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "deck",
+          "summary"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "deck": {
+            "enum": [
+              "high",
+              "common"
+            ]
+          },
+          "suit": {
+            "enum": [
+              "swords",
+              "stars",
+              "coins",
+              "glyphs"
+            ]
+          },
+          "value": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "summary": {
+            "type": "string"
+          },
+          "art": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "into_the_mists",
+  "name": "Into the Mists",
+  "summary": "The road you were on is gone. The mist has delivered you somewhere else: a dark valley, a wolf-haunted road and a village at the end of it.",
+  "region": "into_the_mists",
+  "stages": [
+    {
+      "id": "lost_in_mist",
+      "journal": "Fog rolled over the road and did not roll back. When it thinned, the road behind us had become a wall of white that turns us around whenever we walk into it. The only way is forward.",
+      "objectives": [
+        "Follow the road"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_pack",
+      "journal": "A wolf pack held the narrows of the road and watched us like sentries, not hunters. We got past them. Someone, somewhere, now knows we are here.",
+      "objectives": [
+        "Follow the road to the village"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "village_edge",
+      "journal": "Past the headless statues of a stone gate, the road brought us to the edge of a village. Two children were waiting in the road, as if for us.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

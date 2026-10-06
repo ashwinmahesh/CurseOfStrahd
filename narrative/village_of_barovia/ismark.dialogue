@@ -1,0 +1,182 @@
+# Ismark Kolyanovich (docs/voice/ismark.md)
+# start: first meeting at the Blood of the Vine. mansion: at the burgomaster's mansion. after_burial: at the grave.
+
+~ start
+Narrator: The man at the table by the hearth has a sword across his knees and a cup he isn't drinking. He watches you cross the room the way a sentry watches a road.
+if flag.ireena_met
+Ismark [weary]: You're the ones my sister let in. She doesn't let anyone in. Sit down, before I decide that's suspicious.
+elif flag.death_house_completed
+Ismark [weary]: Strangers. In Barovia. And you came out of the house at the end of the lane; you've still got its dust on you. Sit. I'm buying. It won't help, but I'm buying.
+else
+Ismark [weary]: Strangers. In Barovia. Either a miracle or a mistake, and I've stopped believing in miracles. Sit. I'm buying. It won't help, but I'm buying.
+endif
+if flag.death_house_refused
+Ismark: The whole lane heard that house last night: bricks grinding, glass going. People don't get out of it at all. You got out through a window, by the look of your sleeves.
+elif flag.death_house_sacrificed
+Narrator: His eyes go over you once, slowly, and stop at your hands. Whatever he sees there, he decides not to ask about it.
+endif
+if flag.death_house_children_at_rest
+Ismark [sad]: The Durst children used to stand in the road outside that house. Folk saw them for years. If they're gone now, if you did that, then thank you. I think.
+endif
+-> menu
+
+~ menu
+* Who are you? -> who
+* [if flag.ismark_the_lesser_heard] They call you Ismark the Lesser. -> lesser
+* What happened to your father? -> father
+* Tell us about your sister. -> sister
+* Who is this devil everyone whispers about? -> devil
+* [Insight DC 12] Read him: what is he not saying? -> read_ok | read_fail
+* [name:ilse_varga] Show him the letter signed with an S. -> letter
+* What do you want from us? -> ask
+* Goodbye. -> leave
+
+~ who
+Ismark: Ismark Kolyanovich. My father was burgomaster here until three nights ago. Now I'm the burgomaster's son with no burgomaster: all of the work, none of the chair.
+-> menu
+
+~ lesser
+Ismark [weary]: Do they. Good. It means they still talk about me.
+Narrator: He raises his cup to you, drinks from it for the first time, and winces.
+Ismark: My father was the Greater, and his heart burst at his own front door. I'll take the Lesser, and breathing.
+-> menu
+
+~ father
+Ismark [sad]: For a month, things have come at our house every night. Wolves. Worse than wolves. Father stood at the door with a lamp and his old sword, shouting at them. Three nights ago his heart stopped mid-shout.
+Ismark: He's lying in his coffin at the house, and not one man in this village will help me carry him to the church. They think the devil is watching. They're right. He is.
+-> menu
+
+~ sister
+Ismark: Ireena. Father took her in when she was a girl; she's my sister in every way that counts. The devil has been at her window. Twice. You'll see the marks on her neck, and she'll hate you for looking.
+Ismark [weary]: He wants her. I don't know why her. I don't think he'd tell me if I asked nicely, which I haven't.
+-> menu
+
+~ devil
+Ismark: Strahd von Zarovich. Our lord. Our landlord. The thing in the castle on the cliff. He collects his rent at night, and the coin he likes best is us.
+interject class:wizard: A vampire, then. The literature is unanimous on the name, if on very little else.
+Ismark: Call him what you like. He answers to all of it.
+-> menu
+
+~ read_ok
+Narrator: His smile holds, but his eyes keep sliding to the door. He isn't afraid of you. He's ashamed in front of you, which is harder.
+Ismark [weary]: Stop that. I can feel you reading me. Yes, I should have saved him. No, I couldn't have. I have that argument with myself every night. I'm winning on points.
+-> menu
+
+~ read_fail
+Narrator: He gives you nothing but a tired man's face. It is a very good tired man's face; he has had practice.
+-> menu
+
+~ letter
+set ilse_invitation_shown
+Narrator: The sealed letter goes down on the table between the cups. Ismark looks at the ornate S, and the colour leaves his face.
+Ismark [afraid]: That's not my father's hand. Father wrote letters too, begging for help. The Vistani carried them out of the valley. Nobody ever answered. Except, it seems, him.
+interject name:ilse_varga: Same flourish on the tail. He writes to people he means to keep.
+Ismark: Then he invited you. You're his guests, or his game. Let's make you the third thing: his problem.
+-> menu
+
+~ ask
+Ismark: Two things. First: help me carry my father to the church and see him buried properly, with Father Donavich's words over him. Ireena won't leave until it's done.
+Ismark: Second: once he's in the ground, take Ireena west to Vallaki. It has walls, a church with old relics under the altar, and a baron who's a fool, but a careful fool. And it's further from the castle.
+* We'll help you. -> agree
+* [Persuasion DC 12] We don't work for gratitude. What can you pay? -> pay_ok | pay_fail
+* Tell us about Vallaki. -> vallaki
+* We can't. Not now. -> refuse
+
+~ ask_again
+* We'll help you. -> agree
+* Tell us about Vallaki. -> vallaki
+* We can't. Not now. -> refuse
+
+~ pay_ok
+set ismark_offered_strongbox
+if flag.mansion_strongbox_opened
+Ismark [sly]: Father kept a strongbox in his study. Take what's in it. Oh. You've already found it. Efficient. Call it payment in advance, then, and don't make me regret the bookkeeping.
+else
+Ismark: Fair. Father kept a strongbox in his study. Whatever's left in it is yours once he's in the ground. It isn't much. Nothing is, here.
+endif
+-> ask_again
+
+~ pay_fail
+Ismark [weary]: What can I pay? My gratitude, which in this valley is a figure of speech, and my company, which you've seen. I have nothing. That's why I'm asking.
+-> ask_again
+
+~ vallaki
+Ismark: A long day west on the old road, past the crossroads and Tser Pool. A stockade, and a baron who throws festivals to prove everyone's happy. The devil goes where he likes, but there, at least, he has to knock.
+interject tag:blunt: Walls. Good. Walls I understand.
+-> ask_again
+
+~ agree
+set ismark_met
+set burial_agreed
+quest bury_the_burgomaster asked
+quest escort_ireena asked
+attitude ismark friendly
+Ismark [smile]: Thank you. I mean that, and I don't say it often, mostly because nobody gives me cause.
+Ismark: The house with the iron fence, north-west of the square. Follow the claw marks. I'll go ahead and tell Ireena not to stab you.
+if night
+  Ismark [weary]: One more thing. After dark the square isn't ours. If you can wait for morning, wait. If you can't, keep together.
+endif
+interject class:cleric: We'll see him buried right. You have my word on it.
+-> END
+
+~ refuse
+set ismark_met
+quest escort_ireena asked
+Ismark [weary]: No. Of course not. Why would you. If you change your minds, I'll be at the house, waiting for something to come through the door. It may as well be you.
+-> END
+
+~ leave
+Ismark: Go carefully. Be indoors by dark. And if something knocks on your door and says it's me, it isn't.
+-> END
+
+# --- At the mansion ---
+
+~ mansion
+if flag.mansion_strongbox_opened and not flag.ismark_offered_strongbox and not flag.strongbox_theft_noticed
+set strongbox_theft_noticed
+Ismark [sly]: Someone's been in Father's strongbox. I'll assume it was the wolves. Wolves with remarkably good fingers.
+endif
+if flag.ireena_escort == "declined"
+Ismark [weary]: Still here, then. Still not taking her. I don't blame you. I blame the valley. It's easier.
+elif flag.ireena_escort == "later"
+Ismark: She's packed. She's been packed since the funeral. Every hour she sits by that window is an hour I don't sleep.
+else
+Ismark: You found the place. Ireena hasn't stabbed anyone yet today; you're in luck.
+endif
+-> mansion_menu
+
+~ mansion_menu
+* [if not flag.burial_agreed] We'll help bury your father after all. -> late_agree
+* [if flag.burial_agreed and not flag.burial_procession] We're ready to carry him to the church. -> village_of_barovia/ireena:procession_check
+* [if not flag.mansion_vigil] We'll keep watch with you tonight. -> village_of_barovia/ireena:vigil
+* [if flag.mansion_siege_survived] About last night. -> siege_after
+* [if flag.burgomaster_buried] About Ireena leaving. -> village_of_barovia/ireena:escort_ask
+* What's been coming at the house? -> attacks
+* Goodbye. -> END
+
+~ late_agree
+set burial_agreed
+quest bury_the_burgomaster asked
+Ismark [smile]: Changed your minds. Good. I'd stopped hoping, which in Barovia is usually when things happen. Talk to Ireena; she has opinions about how it's done.
+-> mansion_menu
+
+~ attacks
+Ismark: Wolves, most nights, big ones. Some nights, the dead: people we buried, back to scratch at the boards. Once, the devil himself, knocking politely. Father answered with a lamp in his face. That was the last good night.
+-> mansion_menu
+
+~ siege_after
+attitude ismark friendly
+Ismark [smile]: Last night. You held the door and the windows, and nobody ran. I've been the only one not running for a month. It was good to have company.
+-> mansion_menu
+
+# --- At the grave, after the burial ---
+
+~ after_burial
+Ismark [weary]: He's in the ground. Properly or not, he's in it, and nobody's digging him up tonight. Now there's only her.
+* Talk to Ireena about leaving. -> village_of_barovia/ireena:escort_ask
+* [if flag.parriwimple_pallbearer] Parriwimple dug a fine grave. -> parri
+* Goodbye for now. -> END
+
+~ parri
+Ismark: He did. He made it deeper "for the wolves". Bildrath will charge me for every inch. Worth it.
+-> after_burial

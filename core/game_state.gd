@@ -2,7 +2,7 @@ extends Node
 ## The single source of truth for a playthrough (plan §4.3). Everything that matters lives here and
 ## serializes to one save file; scenes only read and display it.
 
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
 
 var party: Array[Dictionary] = []
 var leader_index: int = 0
@@ -15,6 +15,10 @@ var day: int = 1
 var minute_of_day: int = 8 * 60
 var current_scene: String = ""
 var party_positions: Array[Vector3] = []
+## The playthrough: party characters, flags, quests, places (story/story_state.gd). Phase 3 onward.
+var story := StoryState.new()
+## Where the game should start when a save is loaded (a location id, or a combat-round snapshot).
+var combat_snapshot: Dictionary = {}
 
 
 func reset() -> void:
@@ -28,6 +32,8 @@ func reset() -> void:
 	minute_of_day = 8 * 60
 	current_scene = ""
 	party_positions.clear()
+	story = StoryState.new()
+	combat_snapshot = {}
 
 
 func set_flag(flag: String, value: Variant = true) -> void:
@@ -74,6 +80,9 @@ func to_dict() -> Dictionary:
 		"current_scene": current_scene,
 		"party_positions": positions,
 		"dice": Dice.roller.get_state(),
+		"story": story.to_dict(),
+		"combat": combat_snapshot.duplicate(true),
+		"saved_at": Time.get_datetime_string_from_system(),
 	}
 
 
@@ -94,3 +103,6 @@ func from_dict(data: Dictionary) -> void:
 		party_positions.append(Vector3(float(a[0]), float(a[1]), float(a[2])))
 	if data.has("dice"):
 		Dice.roller.set_state(data["dice"] as Dictionary)
+	if data.has("story"):
+		story = StoryState.from_dict(data["story"] as Dictionary)
+	combat_snapshot = (data.get("combat", {}) as Dictionary).duplicate(true)

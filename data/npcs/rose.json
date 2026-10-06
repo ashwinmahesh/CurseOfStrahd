@@ -1,0 +1,19 @@
+{
+  "id": "rose",
+  "name": "Rose",
+  "title": "Rosavalda Durst",
+  "summary": "The Dursts' ten-year-old daughter. Outside, the house shows her as a frightened girl begging strangers to save her baby brother; in the attic her ghost still waits for her mother to unlock the door.",
+  "portrait": "rose",
+  "sprite": "rose",
+  "attitude": "friendly",
+  "voice": "docs/voice/rose.md",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "child",
+    "durst",
+    "death_house"
+  ],
+  "region": "death_house",
+  "pronouns": "she/her"
+}

@@ -1,0 +1,106 @@
+# Morgantha and her dream pastries (docs/voice/morgantha.md)
+# Pastries bought go in the pack (dream_pastry) and are also counted in dream_pastries_bought for later scenes.
+
+~ start
+if flag.morgantha_met
+-> again
+endif
+set morgantha_met
+Narrator: An old woman in a flour-dusted shawl leans on a handcart heaped with glazed pastries under a cloth. Her smile arrives well before she does.
+Morgantha [smile]: Pastries! Fresh dream pastries! Oh, look at you. New faces. Lovely, plump new faces. Come, come, my ducklings. One bite and all your troubles go to sleep.
+interject species:halfling: She's looking at me the way my aunt looks at a ham.
+interject species:dwarf: Mm. She's eyeing me the way a mason eyes good stone.
+-> menu
+
+~ again
+if flag.dream_pastries_bought >= 1
+Morgantha [smile]: Back again, my ducklings! And how were the dreams? Sweet? Of course they were. Morgantha's dreams always are.
+else
+Morgantha [smile]: Back again, dearies. I knew you would be. They always come back to Morgantha.
+endif
+-> menu
+
+~ menu
+* What's in them? -> whats_in
+* What do they do? -> what_do
+* We'll take one. (1 gp) -> buy_one
+* We'll take three. (3 gp) -> buy_three
+* [if not flag.dream_pastry_eaten] Try the free sample. -> sample
+* [if not flag.morgantha_suspected] Look closer at her. -> look_closer
+* Where do you bake? -> where
+* [Intimidation DC 13] Take your cart out of this village. -> threat_ok | threat_fail
+* No, thank you. -> refuse
+
+~ whats_in
+Morgantha: Flour, honey, butter, a pinch of this and a pinch of that. Family recipe, dearie. Very old family.
+-> menu
+
+~ what_do
+Morgantha: Sweet dreams, pet. Dreams of whoever you've lost: mothers, sweethearts, little brothers. One bite, and you're with them all night. Two bites, and you're with them all week.
+interject class:cleric: That isn't a pastry. That's a sleeping draught with a crust on it.
+Morgantha [smile]: And who doesn't need a good night's sleep, in a place like this?
+-> menu
+
+~ buy_one
+gold -1
+give dream_pastry 1
+set dream_pastries_bought += 1
+Morgantha [smile]: A wise choice. Wrap it up warm, dearie. And remember: Morgantha remembers every customer. Every one.
+-> menu
+
+~ buy_three
+gold -3
+give dream_pastry 3
+set dream_pastries_bought += 3
+Morgantha [smile]: Three! Oh, you've a family to feed, I can tell. Do bring them by sometime. Bring the little ones especially.
+-> menu
+
+~ sample
+set dream_pastry_eaten
+Narrator: The pastry is warm, though the cart is cold. It tastes of honey and something underneath the honey, and then you aren't tasting anything at all.
+narrate dream:dream_pastry
+Morgantha [smile]: There. Wasn't that lovely? You'll want another one tonight. Morgantha will be back. You'll be waiting.
+-> menu
+
+~ look_closer
+* [Insight DC 15] Something about her is wrong. -> insight_ok | insight_fail
+* [Medicine DC 15] Break a pastry open and study the crust. -> medicine_ok | medicine_fail
+* Never mind. -> menu
+
+~ insight_ok
+set morgantha_suspected
+Narrator: Her smile doesn't move when she talks. And she isn't looking at your faces at all. She's weighing you, one at a time, like flour.
+-> menu
+
+~ insight_fail
+Narrator: A sweet old woman with flour on her sleeves. You find nothing else, and she watches you look.
+-> menu
+
+~ medicine_ok
+set morgantha_suspected
+Narrator: The crust is threaded with a fine white powder that isn't flour, and under the honey is a bitter, sleepy smell. Bone, ground very fine. And something to make you dream.
+Morgantha [sly]: Secret ingredient, dearie. Every family has one.
+-> menu
+
+~ medicine_fail
+Narrator: It's a pastry: flaky, golden, and smelling better than anything you've eaten since the mists closed behind you.
+-> menu
+
+~ where
+set bonegrinder_rumor
+Morgantha: My windmill, pet, on the road to Vallaki. Me and my two daughters, baking day and night. Do visit. Bring the little ones. Bring everyone you love.
+-> menu
+
+~ threat_ok
+set morgantha_driven_off
+Narrator: For one breath the sweetness drains out of her face, and what's under it is older than the village.
+Morgantha [sly]: Well. Aren't you brave. Morgantha's going, duckling. But Morgantha remembers every face. Every single one.
+-> END
+
+~ threat_fail
+Morgantha [smile]: Out? Oh, I'll go when I've sold out, my plump little hero. Mind your manners. Manners keep you fresh.
+-> menu
+
+~ refuse
+Morgantha [smile]: No? Ah, well. Everyone comes round to Morgantha eventually. Everyone.
+-> END

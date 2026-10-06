@@ -1,0 +1,79 @@
+# Doru, the priest's son, in the undercroft (docs/voice/doru.md)
+
+~ start
+set doru_spoken_to
+if flag.donavich_mercy_blessing
+-> blessed
+endif
+Narrator: Something crosses the ceiling, quick and flat as a spider, and settles above you. A young man's face hangs upside down in the dark, smiling.
+Doru [sly]: Father? No. You smell like outside. Like rain and roads. I'd forgotten roads. Come closer; I can't see you properly.
+interject class:cleric: Stay back from him. He's starving, and he's looking at our throats.
+-> menu
+
+~ menu
+* Who are you? -> who
+* What happened to you at the castle? -> castle
+* [Insight DC 13] What does he really want? -> insight_ok | insight_fail
+* [Cleric] Pray for him. -> pray
+* We'll let you out. -> free_warn
+* This ends now. -> fight
+* We'll leave you here. -> leave
+
+~ who
+Doru: Doru. The priest's son. I rang the bell on holy days, before. I was going to be a hero. Everyone was going to sing about it.
+-> menu
+
+~ castle
+Doru [sad]: We went up the road with torches, singing. The gates were open. He met us in the hall in a beautiful coat and said we must be hungry after such a climb.
+Doru [afraid]: He fed us. He let us talk about killing him all through the meal, smiling. Then the candles went out. I was dessert, he said. The others weren't so lucky. Or they were.
+-> menu
+
+~ insight_ok
+Narrator: He's counting your throats. Every plea comes with a glance at the stair behind you, measuring the distance.
+-> menu
+
+~ insight_fail
+Narrator: He looks like a frightened young man, and nothing in his face says otherwise.
+-> menu
+
+~ pray
+Doru [angry]: Stop. Stop it, it burns. No, keep going. Father used to... stop! Stop!
+Narrator: For a heartbeat the hunger leaves his face, and a scared boy looks down at you. Then it comes back.
+-> menu
+
+~ free_warn
+Doru [smile]: You would? Oh, you would. I'll go far away. To the castle; he'll take me in. I'll never trouble Father again. I swear it on the Morninglord. On my mother. On anything.
+interject tag:blunt: He's a hungry wolf asking us to open the pen.
+* Go, then. The way is open. -> free
+* On second thought, no. -> menu
+
+~ free
+set doru_freed
+quest the_priests_son doru_freed
+Narrator: He's past you before the words are finished, a rush of cold air up the stair. Somewhere above, a door bangs, and the bell rope thrums once, as if something brushed it going over the wall.
+-> END
+
+~ fight
+Doru [angry]: Then come up here and do it.
+combat doru_undercroft
+
+~ leave
+set doru_left_locked
+quest the_priests_son doru_left
+Doru [angry]: Go, then! Go! I'll be here. I'm always here. Tell Father I'm hungry. Tell him every night!
+Narrator: You back up the stair. The voice follows you, pleading, then cursing, then pleading again.
+-> END
+
+~ blessed
+Narrator: The young face on the ceiling looks at the holy water in your hands, then at the open door above, and understands.
+Doru [sad]: He sent you. Didn't he. He finally said yes. Tell him I'm sorry about the cake on his name day. Tell him... quickly. Before I stop being sorry.
+* Rest now, Doru. -> blessed_fight
+* [Cleric] We'll pray for you while we do it. -> blessed_prayer
+
+~ blessed_prayer
+Narrator: The prayer begins. Doru closes his eyes, and for one breath his lips move with it.
+-> blessed_fight
+
+~ blessed_fight
+Narrator: The boy is gone between one breath and the next. What drops from the ceiling is only hunger.
+combat doru_undercroft

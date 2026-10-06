@@ -1,0 +1,62 @@
+# The wolf pack in the narrows of the Old Svalich Road. NPC mists_wolves blocks the road until this resolves.
+# Talking them down sets mists_wolves_cowed; a fight is the mists_wolves encounter (3 wolves, 150 XP, level 1).
+
+~ start
+Narrator: A grey wolf stands square in the narrows, head low, eyes steady. More shapes wait in the fog beyond it, and something moves in the trees behind you. None of them growl. They are waiting to see what you do.
+interject name:tamsin_tealeaf: Good dog. Nice dog. Large, organized dog.
+if not name:tamsin_tealeaf
+  interject species:halfling: I'd like it noted that I'm the bite-sized one.
+endif
+-> choose
+
+~ choose
+* [Intimidation DC 13] Stand tall, shout, and make them give way. -> cowed_shout | attack
+* [Animal Handling DC 12] Move slowly, eyes down, and walk through. -> cowed_gentle | attack
+* [if flag.mists_read_the_pack] [Insight DC 10] They're sentries, not hunters. Let them see you've seen them, and walk on. -> cowed_sentries | attack
+* [Wizard] [Arcana DC 12] A flash of harmless light and thunder should do it. -> cowed_magic | attack
+* Draw steel and kill the leader before it calls the rest. -> fight_first
+* Wait for them to leave. -> wait
+
+~ wait
+Narrator: You wait. The wolves wait longer. When you finally look up, every one of them is still looking at you.
+interject name:ilse_varga: They're not leaving. They're holding a line. Ours to cross or not.
+-> choose
+
+~ cowed_shout
+Narrator: {name}'s voice cracks across the narrows like a whip. The lead wolf holds its ground for one long breath, then turns and trots into the fog, and the pack goes with it, unhurried, as if it had somewhere to report.
+-> resolved
+
+~ cowed_gentle
+Narrator: {name} walks into the narrows with eyes lowered and hands open. The lead wolf sniffs once, steps aside like a doorman, and the pack melts into the trees.
+-> resolved
+
+~ cowed_sentries
+Narrator: {name} meets the lead wolf's eyes and nods, the way you nod to a guard at a gate. It considers this. Then it lets you pass, and the fog fills up with wolves going somewhere to tell someone.
+-> resolved
+
+~ cowed_magic
+Narrator: Light flares white and a clap of thunder rolls down the road. The wolves scatter into the fog, and from somewhere further off, a single long howl answers, as if passing on the news.
+-> resolved
+
+~ resolved
+set mists_wolves_resolved
+set mists_wolves_cowed
+quest into_the_mists the_pack
+interject name:ilse_varga: They withdrew in order. Somebody trained them.
+interject name:hedda_ironvow: Mm. Wolves that do as they're told. I'd like to meet whoever tells them. Briefly.
+if not name:hedda_ironvow
+  interject class:cleric: Wolves don't keep ranks. Not on their own.
+endif
+-> END
+
+~ attack
+Narrator: The lead wolf's lips peel back from its teeth. Behind you, in the trees, something answers it.
+set mists_wolves_resolved
+quest into_the_mists the_pack
+combat mists_wolves
+
+~ fight_first
+Narrator: Steel clears leather. The wolves were waiting for exactly that.
+set mists_wolves_resolved
+quest into_the_mists the_pack
+combat mists_wolves

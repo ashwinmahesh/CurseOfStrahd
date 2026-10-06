@@ -1,0 +1,83 @@
+# Mad Mary (docs/voice/mad_mary.md)
+
+~ start
+if flag.mad_mary_met
+-> again
+endif
+set mad_mary_met
+quest find_gertruda heard
+Narrator: A woman in a black shawl rocks in a chair by a cold stove, a girl's dress folded in her lap. She looks up at you with sudden, terrible hope.
+Mad Mary [afraid]: Gertruda? Gertruda, is that... no. No, you're not her. Forgive me. You're taller. She's not so tall. She's a good girl.
+-> menu
+
+~ again
+if flag.gertruda_search_promised
+Mad Mary: Have you found her? No. No, you'd have said. You'd have said first thing. Sit, sit. Your sleeve's torn at the seam; leave it with me. I mend things. Everything but the one thing.
+else
+Mad Mary [sad]: You came back. Nobody comes back. Have you come to look at the mad woman?
+endif
+-> menu
+
+~ menu
+* Who is Gertruda? -> who
+* How did she disappear? -> how
+* [Insight DC 12] Is she as mad as the village says? -> insight_ok | insight_fail
+* [if flag.gertruda_window_clue] Mary, her window latch was opened from the inside. -> window
+* [if not flag.gertruda_search_promised] We'll look for her. -> promise
+* [if not flag.gertruda_search_promised] We can't help you. I'm sorry. -> refuse
+* [Cleric] Pray with her for Gertruda. -> pray
+* Goodbye. -> END
+
+~ who
+Mad Mary: My daughter. Sixteen this spring. Dark hair, like her father. She hums when she's frightened. I kept her in, you see. Sixteen years safe. She never saw the woods, or the castle. She never saw anything.
+interject tag:loyal: Sixteen years indoors. That's not a home, that's a garrison.
+-> menu
+
+~ how
+Mad Mary [sad]: Four nights ago. I went to wake her, and the bed was cold, and the window was open. No blood. The wolves didn't take her; I'd have heard wolves.
+Mad Mary [afraid]: There was singing, some nights. Under her window. A man's voice, old songs. I told myself it was the wind. I pulled my own shutters closed.
+-> menu
+
+~ insight_ok
+Narrator: Under the weeping she is perfectly clear-headed. She isn't mad. She's guilty, and grief is the only thing loud enough to drown it out.
+Mad Mary: They call me mad because mad is easier to walk past.
+-> menu
+
+~ insight_fail
+Narrator: She rocks, and weeps, and rocks. Whatever is under it, the weeping keeps covered.
+-> menu
+
+~ window
+quest find_gertruda window_clue
+Mad Mary [sad]: From the inside. Then nobody took her. She went to him. Whoever he was, with his old songs. I made a house so safe that a girl had to escape it.
+* [Persuasion DC 12] You kept her alive for sixteen years, Mary. That isn't a crime. -> comfort_ok | comfort_fail
+* We'll find her. -> menu
+
+~ comfort_ok
+attitude mad_mary friendly
+Narrator: The rocking slows. For the first time since you came in, she looks at you and not past you.
+Mad Mary: Sixteen years. Yes. That's something. That's something, isn't it. Thank you.
+-> menu
+
+~ comfort_fail
+Mad Mary [sad]: Kind of you. It's not true, but it's kind. She'd have said the same. She was always kinder than me.
+-> menu
+
+~ promise
+set gertruda_search_promised
+quest find_gertruda promised
+attitude mad_mary friendly
+Mad Mary [afraid]: You will? You'll look? Dark hair, a blue dress with a mended hem, she hums when she's afraid. She'll be afraid. Tell her I'm not angry. Tell her the door is unlocked now. All three locks.
+interject name:ilse_varga: We'll look. I don't make promises I can't count.
+-> menu
+
+~ refuse
+quest find_gertruda refused
+Mad Mary: Of course. Of course you can't. Thank you for listening. Nobody listens. Mind the step on your way out; it sticks.
+Narrator: Before you reach the door, the weeping starts again, exactly where it left off.
+-> END
+
+~ pray
+Narrator: You pray aloud for a girl you have never met. Mary doesn't close her eyes; she watches your lips, as if checking the words.
+Mad Mary: Do they work, here? Prayers? No, don't answer. Say another one.
+-> menu

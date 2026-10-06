@@ -1,0 +1,128 @@
+# Rose and Thorn in the road at the village edge (into_the_mists_road). They are the house's lure: an illusion of
+# the Durst children, who died in the attic long ago. They vanish once the party enters Death House and come back,
+# unchanged and unknowing, after the house is done with the party (unless the real ghosts were laid to rest).
+
+~ start
+if flag.death_house_heard_plea
+  -> again
+endif
+Narrator: Two children stand in the road where the cottages begin: a girl of ten with her chin up, and a small boy holding a stuffed wolf by one ear. Neither is dressed for the cold. Neither seems to feel it.
+Rose [afraid]: Please, you have to help us. There's a monster in our house. In the basement.
+Thorn [sad]: It's got Walter.
+Rose: Our baby brother. He's down there crying, and we can't go back in. We can't. Please.
+interject name:ilse_varga: Easy, little one. Nobody's going back in there alone. Which house?
+if not name:ilse_varga
+  interject tag:loyal: Nobody's leaving you out here. Tell us which house.
+endif
+set death_house_heard_plea
+quest death_house plea
+-> questions
+
+~ questions
+* Where is your house? -> house
+* Where are your mother and father? -> parents
+* What does the monster look like? -> monster
+* [if not flag.death_house_lure_tested] [Insight DC 13] Something about them is wrong. Watch them closely. -> insight_ok | insight_fail
+* [if not flag.death_house_lure_tested] [Arcana DC 14] Is there magic on them? -> arcana_ok | arcana_fail
+* [Cleric] Offer to say a prayer with them. -> pray
+* We'll find Walter. I promise. -> promise
+* We can't help you. -> refuse
+
+~ house
+Rose: The tall one just inside the village, by the dead tree, with the iron gate. Mother says it's the finest house in Barovia.
+Thorn: Mother says don't tell people it eats them.
+Rose [angry]: Thorn!
+-> questions
+
+~ parents
+Rose [sad]: They went downstairs with their friends and they didn't come back up.
+Thorn: They had their robes on. The black ones.
+interject name:hedda_ironvow: Robes. Mm. Families don't wear robes to supper.
+-> questions
+
+~ monster
+Rose: We never saw it. We hear it, at night, through the floor. Like something heavy being dragged.
+Thorn: And the singing. Lots of voices, all the same words.
+Rose [afraid]: We don't say the words.
+-> questions
+
+~ insight_ok
+set death_house_lure_tested
+Narrator: {name} watches closely. Your breath fogs in the cold; theirs doesn't. The wind tugs your cloaks and leaves the girl's hair perfectly still. Her fear is real, but it is old fear, worn smooth, like a story told many times.
+-> saw_through
+
+~ insight_fail
+set death_house_lure_tested
+Narrator: Two frightened children in the cold. That's all {name} can see. Perhaps that's all there is.
+-> questions
+
+~ arcana_ok
+set death_house_lure_tested
+Narrator: {name} feels it like a draft from an open door: an illusion, beautifully made and very old. Someone wants you to see two children here. Someone wants you to go inside.
+-> saw_through
+
+~ arcana_fail
+set death_house_lure_tested
+Narrator: If there is magic here, it is subtler than anything {name} was taught to look for.
+-> questions
+
+~ saw_through
+if not flag.death_house_saw_through_lure
+  set death_house_saw_through_lure
+  set death_house_lore += 1
+endif
+interject name:silvain_aster: They're not entirely here. Fascinating. Horrible, but fascinating.
+interject name:tamsin_tealeaf: They're still scared, though. Whatever they are. That part's real.
+if not name:silvain_aster
+  interject class:wizard: An image, not a person. Whoever made it wanted us moved, not fooled.
+endif
+-> questions
+
+~ pray
+Narrator: Rose folds her hands at once, the way she was taught. Thorn copies her a beat late. Halfway through, they both look up, puzzled, as if they have forgotten the words.
+Rose: Mother doesn't pray to the Morninglord anymore. She says he never answers, and the other one does.
+interject name:hedda_ironvow: The other one. Mm. I'd like to know his name, and then I'd like to forget it.
+-> questions
+
+~ promise
+set death_house_promised_walter
+Rose [smile]: Thank you. Thank you. We'll wait here. We're very good at waiting.
+Thorn: Don't let it eat you.
+interject name:tamsin_tealeaf: Wouldn't dream of it. I'm terrible to eat. All gristle and opinions.
+quest into_the_mists village_edge
+-> END
+
+~ refuse
+Rose [sad]: Then who will?
+Narrator: Thorn starts to cry without making a sound. When you look back down the road a little later, the two of them are still standing exactly where you left them. They have not moved at all.
+quest into_the_mists village_edge
+-> END
+
+~ again
+Rose [afraid]: Did you find him? Did you find Walter?
+* Not yet. -> again_not_yet
+* [if flag.death_house_saw_through_lure] You're not really here, are you? -> again_not_here
+* Goodbye. -> END
+
+~ again_not_yet
+Thorn: Hurry. It's hungry today.
+-> END
+
+~ again_not_here
+Rose: We're always here. We're always waiting. Mother said to wait.
+Narrator: She says it the way a music box plays its tune: exactly the same, every time it's wound.
+-> END
+
+~ return
+Narrator: Two children stand in the road where the cottages begin, as if they have never moved. The girl lifts her chin. The boy holds his wolf by one ear.
+Rose [afraid]: Please, you have to help us. There's a monster in our house. In the basement.
+Thorn [sad]: It's got Walter.
+Narrator: They don't know you. They never will. The house is fishing again.
+interject name:hedda_ironvow: That is the cruelest thing I've seen in this valley, and the valley has been trying.
+if not name:hedda_ironvow
+  interject class:cleric: Their bones are still up in that attic. That's why. We left them there.
+endif
+if flag.death_house_children_met
+  quest rose_and_thorn left_behind
+endif
+-> END

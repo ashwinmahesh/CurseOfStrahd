@@ -275,12 +275,15 @@ func plan_turn(c: Combatant) -> Dictionary:
 	var threats := _threats(c)
 	var best := {"kind": "wait", "score": -1e9, "why": "nothing to do"}
 	var visible: Array[Combatant] = []
+	var heard: Array[Combatant] = []     ## out of sight but not Hidden: a fight is loud, so their squares are known
 	var hidden_any := false
 	for t in e.hostiles_of(c):
 		if t.is_down():
 			continue
 		if not e.can_see(c, t):
 			hidden_any = hidden_any or t.hidden
+			if not t.hidden:
+				heard.append(t)
 			continue
 		visible.append(t)
 	for t in visible:
@@ -297,6 +300,8 @@ func plan_turn(c: Combatant) -> Dictionary:
 		return best
 	if not visible.is_empty():
 		return _approach_plan(c, visible, prof)
+	if not heard.is_empty():
+		return _approach_plan(c, heard, prof)
 	if hidden_any and c.action_available:
 		return {"kind": "search", "score": 0.0, "why": "enemies are hidden"}
 	return best
@@ -444,8 +449,17 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	if bool(plan.get("dash", false)) and c.action_available and c.speed() > 0:
 		e.dash(c)
 	var reach := e.reachable_for(c)
+	# Walking distance to the target (around walls), not the straight line: a creature on the far side of a wall
+	# heads for the door rather than pressing its face to the stones.
+	var walk := e.grid.reachable(target.cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
+		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
+	var dist := func(cell: Vector2i) -> int:
+		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells)
+		if straight <= 5 or not walk.has(cell):
+			return straight if walk.has(cell) or straight <= 5 else straight + 1000
+		return int((walk[cell] as Dictionary)["cost"])
 	var best_cell := c.cell
-	var best_d := e.grid.distance_ft(c.cell, c.size_cells, target.cell, target.size_cells)
+	var best_d := int(dist.call(c.cell))
 	var best_cost := 0
 	var prof := profile(c)
 	var threats := _threats(c) if float(prof["oa_fear"]) > 0.0 else ([] as Array[Dictionary])
@@ -453,7 +467,7 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]):
 			continue
-		var d := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells)
+		var d := int(dist.call(cell))
 		var cost := int(info["cost"])
 		if not threats.is_empty() and _oa_risk(c, CombatGrid.path_to(reach, cell), threats) > 0.0:
 			d += 15

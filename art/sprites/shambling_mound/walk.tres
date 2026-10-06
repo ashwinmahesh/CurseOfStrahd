@@ -1,0 +1,118 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://art/sprites/shambling_mound/walk.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="s_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 384, 384)
+
+[sub_resource type="AtlasTexture" id="se_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 384, 384, 384)
+
+[sub_resource type="AtlasTexture" id="e_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 768, 384, 384)
+
+[sub_resource type="AtlasTexture" id="ne_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 1152, 384, 384)
+
+[sub_resource type="AtlasTexture" id="n_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 1536, 384, 384)
+
+[sub_resource type="AtlasTexture" id="nw_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 1920, 384, 384)
+
+[sub_resource type="AtlasTexture" id="w_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 2304, 384, 384)
+
+[sub_resource type="AtlasTexture" id="sw_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 2688, 384, 384)
+
+[resource]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("s_0")}],
+"loop": true,
+"name": &"walk_s",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("s_0")}],
+"loop": true,
+"name": &"idle_s",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("se_0")}],
+"loop": true,
+"name": &"walk_se",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("se_0")}],
+"loop": true,
+"name": &"idle_se",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("e_0")}],
+"loop": true,
+"name": &"walk_e",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("e_0")}],
+"loop": true,
+"name": &"idle_e",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("ne_0")}],
+"loop": true,
+"name": &"walk_ne",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("ne_0")}],
+"loop": true,
+"name": &"idle_ne",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("n_0")}],
+"loop": true,
+"name": &"walk_n",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("n_0")}],
+"loop": true,
+"name": &"idle_n",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("nw_0")}],
+"loop": true,
+"name": &"walk_nw",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("nw_0")}],
+"loop": true,
+"name": &"idle_nw",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("w_0")}],
+"loop": true,
+"name": &"walk_w",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("w_0")}],
+"loop": true,
+"name": &"idle_w",
+"speed": 1.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("sw_0")}],
+"loop": true,
+"name": &"walk_sw",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("sw_0")}],
+"loop": true,
+"name": &"idle_sw",
+"speed": 1.0
+}]

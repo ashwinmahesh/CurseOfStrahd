@@ -1,0 +1,51 @@
+{
+  "id": "escort_ireena",
+  "name": "Ireena's Escort",
+  "summary": "Strahd has fed on Ireena Kolyana twice. Her brother Ismark believes she'll be safer behind the walls of Vallaki, to the west.",
+  "giver": "ismark",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Ismark begged us to take his sister Ireena away from the village, west along the Old Svalich Road to the walled town of Vallaki. She won't leave until their father is buried.",
+      "objectives": [
+        "Help bury the burgomaster",
+        "Speak with Ireena about leaving"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "ready",
+      "journal": "The burgomaster is buried. Ireena is ready to leave the village, if we'll take her.",
+      "objectives": [
+        "Give Ireena your answer"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "accepted",
+      "journal": "We agreed to take Ireena out of the village. Keep her alive on the road west, and don't let her out of sight after dark.",
+      "objectives": [
+        "Take the road west out of the village",
+        "Keep Ireena alive"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "declined",
+      "journal": "We refused to take Ireena from the village. She stays behind barred shutters with her brother, and the nights aren't getting shorter.",
+      "objectives": [
+        "Return to the mansion if you change your mind"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "departed",
+      "journal": "We left the village of Barovia by the western road with Ireena. Ahead are the crossroads, the Vistani camp at Tser Pool and, at the end of the road, the walls of Vallaki.",
+      "objectives": [
+        "Follow the Old Svalich Road west"
+      ],
+      "ends": ""
+    }
+  ]
+}

@@ -386,3 +386,18 @@ func test_heroic_inspiration_offers_a_reroll_on_a_miss() -> void:
 	assert_false((ilse.creature as Character).heroic_inspiration, "spent")
 	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("spends Heroic Inspiration to reroll")))
 
+
+
+func test_frightened_creatures_cannot_move_closer_to_what_they_fear() -> void:
+	var e := TestCombat.open_field()
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2))
+	var z := TestCombat.foe(e, "zombie", Vector2i(8, 2))
+	var fx := Effect.new("Frightened", &"spell", "test").with_condition(&"frightened")
+	fx.caster_id = z.id
+	ilse.creature.add_effect(fx)
+	TestCombat.start_with(e, ilse)
+	assert_eq(e.fear_sources(ilse).size(), 1)
+	assert_false(e.move(ilse, Vector2i(4, 2)).ok, "closer to the zombie")
+	assert_true(e.move(ilse, Vector2i(1, 2)).ok, "away is fine")
+	ilse.creature.remove_effect(fx)
+	assert_true(e.move(ilse, Vector2i(3, 2)).ok, "no longer Frightened")
