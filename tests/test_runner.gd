@@ -1,6 +1,6 @@
 extends Node
 ## Runs every tests/unit/test_*.gd and tests/integration/test_*.gd headless. Exits non-zero on any
-## failure or if no tests ran. Use: make test   (optionally -- --only=<substring>)
+## failure or if no tests ran. Use: make test   (optionally -- --only=<substring> --files=test_a.gd,test_b.gd)
 
 const DIRS := ["res://tests/unit/", "res://tests/integration/"]
 
@@ -8,9 +8,12 @@ const DIRS := ["res://tests/unit/", "res://tests/integration/"]
 func _ready() -> void:
 	SaveSystem.save_dir = "user://test_saves/"
 	var only := ""
+	var files_only := PackedStringArray()
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--only="):
 			only = arg.get_slice("=", 1)
+		elif arg.begins_with("--files="):
+			files_only = arg.get_slice("=", 1).split(",", false)
 	var total := 0
 	var failed: Array[String] = []
 	for dir_path: String in DIRS:
@@ -21,6 +24,8 @@ func _ready() -> void:
 		files.sort()
 		for f in files:
 			if not f.begins_with("test_") or not f.ends_with(".gd"):
+				continue
+			if not files_only.is_empty() and not files_only.has(f):
 				continue
 			var script := load(dir_path + f) as GDScript
 			if script == null or not script.can_instantiate():
