@@ -40,7 +40,8 @@
     {
       "effect": "condition",
       "params": {
-        "condition": "charmed"
+        "condition": "charmed",
+        "repeat_save": "action"
       }
     },
     {
@@ -63,7 +64,8 @@
             "stat": "attacked_with",
             "value": "advantage"
           }
-        ]
+        ],
+        "repeat_save": "action"
       }
     },
     {

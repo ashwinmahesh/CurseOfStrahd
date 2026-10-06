@@ -95,7 +95,7 @@
           "recharge": "long"
         },
         "uses_resource": "zealous_presence",
-        "implemented": "text"
+        "implemented": "engine"
       }
     },
     {

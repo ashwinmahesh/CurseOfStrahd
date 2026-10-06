@@ -97,7 +97,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.check_rolled.connect(func(t: String) -> void: hud.roll(t))
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
-		hud.visible = false
+		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
 		Audio.play_music("combat")
 		cv.menu_requested.connect(func() -> void:
 			if screen is PauseMenu:
@@ -364,7 +364,7 @@ func _open_loot(container_id: String, items: Array, gold: float) -> void:
 
 
 func _after_combat(outcome: String) -> void:
-	hud.visible = true
+	LayerFade.fade(self, hud, true, 0.45, 0.2)   # as the combat HUD fades out
 	Audio.sting("defeat" if outcome == "defeat" else "victory")
 	Audio.play_music(_place_mood())
 	if outcome == "defeat":
@@ -543,12 +543,13 @@ func rebuild() -> void:
 
 
 func _quick_save() -> void:
-	var err := SaveSystem.save("quick")
+	var err := SaveSystem.quick_save()
 	hud.toast("Saved." if err == OK else "Can't save now.")
 
 
+## F9: back to the game's own slot as last saved.
 func _quick_load() -> void:
-	if SaveSystem.load_slot("quick") == OK:
+	if SaveSystem.current_slot != "" and SaveSystem.load_slot(SaveSystem.current_slot) == OK:
 		get_tree().reload_current_scene()
 	else:
 		hud.toast("No quick save yet.")

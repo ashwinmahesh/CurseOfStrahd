@@ -58,6 +58,40 @@
       "label": "Bigby's Hand: fist",
       "sub": "move 60 ft + attack",
       "help": "A Bonus Action: the hand moves up to 60 ft and punches a creature within 5 ft of it (melee spell attack, 5d8 Force)."
+    },
+    {
+      "do": "bigby",
+      "mode": "push",
+      "cost": "bonus_action",
+      "move": 60,
+      "label": "Bigby's Hand: shove",
+      "sub": "Str save, push",
+      "help": "A Bonus Action: the hand moves and shoves a Huge or smaller creature within 5 ft of it (Strength save)."
+    },
+    {
+      "do": "bigby",
+      "mode": "grasp",
+      "cost": "bonus_action",
+      "move": 60,
+      "label": "Bigby's Hand: grasp",
+      "sub": "Dex save, Grappled",
+      "help": "A Bonus Action: the hand moves and tries to grab a Huge or smaller creature within 5 ft of it (Dexterity save)."
+    },
+    {
+      "do": "bigby",
+      "mode": "crush",
+      "cost": "bonus_action",
+      "label": "Bigby's Hand: crush",
+      "sub": "4d6 + mod",
+      "help": "A Bonus Action: the hand crushes the creature it holds."
+    },
+    {
+      "do": "bigby",
+      "mode": "interpose",
+      "cost": "bonus_action",
+      "label": "Bigby's Hand: shield",
+      "sub": "Half Cover",
+      "help": "A Bonus Action: the hand shields you (Half Cover until your next turn)."
     }
   ],
   "tags": [

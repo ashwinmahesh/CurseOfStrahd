@@ -37,6 +37,20 @@
     "dice": "4d8",
     "flat": 15
   },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "turn_heal": 1,
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "regenerating"
+          }
+        ]
+      }
+    }
+  ],
   "tags": [
     "healing",
     "restoration"

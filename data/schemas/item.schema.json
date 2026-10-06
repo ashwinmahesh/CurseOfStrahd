@@ -841,6 +841,23 @@
     "icon_fallback": {
       "type": "boolean",
       "description": "A template's icon is only its default base item's, for lists; the finished item uses its base item's icon."
+    },
+    "codex": {
+      "type": "object",
+      "required": [
+        "title",
+        "text"
+      ],
+      "additionalProperties": false,
+      "description": "A codex entry the item adds when read (our words).",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
     }
   }
 }

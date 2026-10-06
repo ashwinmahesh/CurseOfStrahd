@@ -93,3 +93,13 @@ started" in coverage.md, not a deviation.
 | Magical Secrets (Bard 10) | From Bard 10 any of the Bard's prepared spells may come from the Bard, Cleric, Druid or Wizard list | The rule lets each new prepared spell and each replacement come from those lists, which reaches the same place one level at a time; the game already lets a Bard rework its list at a level up | — |
 | Mystic Arcanum | The number of arcana is capped by the level 6-9 Warlock spells the game's data has, like Wild Shape's forms, so a Warlock 11 never dead-ends while those spells are being written | Spells of levels 5-9 arrive as data in Phase 5 | Nothing to revisit once every level 6-9 Warlock spell is data |
 | Aura of Courage, Aura of Devotion (the paladin's own immunity) | The paladin's own Frightened (Charmed) immunity holds even while Incapacitated; the allies' share follows the aura in a fight | The rule turns the aura off while the paladin is Incapacitated; the own-immunity is a plain modifier on the sheet | If an Incapacitated paladin is ever frightened in play |
+| Bigby's Hand | The hand can't be attacked or damaged; the Interposing Hand gives the caster +2 AC and Dexterity saves (Half Cover) against everyone until its next turn | The hand isn't a creature on the grid | — |
+| Summon Dragon's Breath Weapon | Breathes on one creature in the Cone, through the monster save action | Monster save actions pick one target | With area monster actions |
+| Animate Objects, Pact of the Chain familiars | Stat-block numbers from memory of the 2024 books, not yet checked; the animated objects act on their own turns like the other summons | Built in code from the casting | Check against the books |
+| True Polymorph, Shapechange | Creature forms only (no objects); a shapechanged caster can't cast spells, since the form is a stat block | The shape system swaps the creature for a monster | — |
+| Prismatic Wall | Its layers can't be destroyed one by one; passing through applies every layer | Layer-breaking needs targeted counters | — |
+| Earthquake | The tremor and Prone saves only: no fissures or collapsing structures | The maps have no structures to collapse | With destructible maps |
+| Antimagic Field | Spells, spell effects and Magic actions are stopped or suppressed; magic items' own bonuses aren't suppressed yet | Item suppression needs the magic-item system | With magic items |
+| Wish, Gate, Teleport, Clone and other out-of-combat high-level spells | Not in fights | They do their work outside combat | Phase 5 exploration |
+| Sundering Blow, Battering Roots | Sundering's +5 goes to the next attack by anyone else; Battering Roots adds a Topple (not Push) | The common case | — |
+

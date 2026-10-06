@@ -159,3 +159,93 @@ func test_pointing_at_a_tall_piece_picks_it() -> void:
 	assert_eq(v.pick_cell(cam, screen), Vector2i(1, 9), "pointing at the cabinet's top picks the cabinet")
 	assert_eq(str(v.thing_at(v.pick_cell(cam, screen)).get("kind", "")), "container")
 	v.queue_free()
+
+
+## Owner report (2026-10-06): some pieces overlapped walls or each other. In every location, no two standing pieces
+## on different squares overlap, a piece wider than its square has open floor all round it, and no two pieces hang on
+## the same wall face.
+func test_no_piece_overlaps_another_or_a_wall() -> void:
+	var problems: Array[String] = []
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		var v := _view(loc_id)
+		await _frames(1)
+		var board := v.board
+		var standing: Array[Sprite3D] = []
+		var hung := {}
+		for n in board.find_children("*", "Sprite3D", true, false):
+			var sp := n as Sprite3D
+			if not sp.is_visible_in_tree() or sp.has_meta("ground_cover") or sp in board.occluders or sp.axis != Vector3.AXIS_Z:
+				continue
+			if sp.billboard == BaseMaterial3D.BILLBOARD_DISABLED:
+				if sp.get_parent().name.begins_with("AgainstWall") or sp.get_parent().name.begins_with("Door") or sp.name == "Leaf":
+					continue
+				var key := "%.2f,%.2f,%.2f" % [sp.global_position.x, sp.global_position.z, sp.global_rotation.y]
+				if hung.has(key):
+					problems.append("%s: two pieces hung at %s" % [loc_id, key])
+				hung[key] = true
+				continue
+			standing.append(sp)
+		for i in standing.size():
+			var a := standing[i]
+			var ra := a.texture.get_width() * a.pixel_size / 2.0
+			var ca := board.grid.cell_at(a.global_position)
+			if board.grid.has_flag(ca, CombatGrid.WALL):
+				continue   # it stands in for the wall block itself (a camp's wagons)
+			if ra > 0.55:
+				for dx: int in [-1, 0, 1]:
+					for dy: int in [-1, 0, 1]:
+						var nb := ca + Vector2i(dx, dy)
+						if (dx != 0 or dy != 0) and board.grid.in_bounds(nb) and board.grid.has_flag(nb, CombatGrid.WALL) \
+								and not board.house_cells.has(nb):
+							var msg := "%s: %s at %s is %.2f wide beside a wall" % [loc_id, a.texture.resource_path.get_file(), ca, ra * 2.0]
+							if not msg in problems:
+								problems.append(msg)
+			for j in range(i + 1, standing.size()):
+				var b := standing[j]
+				var cb := board.grid.cell_at(b.global_position)
+				if ca == cb or board.grid.has_flag(cb, CombatGrid.WALL):
+					continue
+				var rb := b.texture.get_width() * b.pixel_size / 2.0
+				var d := Vector2(a.global_position.x - b.global_position.x, a.global_position.z - b.global_position.z).length()
+				if d < ra + rb - 0.15:
+					problems.append("%s: %s at %s overlaps %s at %s" % [loc_id, a.texture.resource_path.get_file(), ca,
+						b.texture.resource_path.get_file(), cb])
+		v.queue_free()
+		await _frames(1)
+	assert_eq(problems, [] as Array[String], "overlaps")
+
+
+## Rooms have their own surfaces (owner request 2026-10-06): every surface the catalog's room rules and place looks
+## name, and every area's own `floor` and `walls`, is a texture that exists.
+func test_room_and_place_surfaces_exist() -> void:
+	var cat := SetDressing.catalog()
+	var named: Array[String] = []
+	for rule: Variant in cat.get("rooms", []):
+		for v: Variant in ((rule as Array)[1] as Dictionary).values():
+			named.append(str(v))
+	for look: Variant in (cat.get("place_looks", {}) as Dictionary).values():
+		for v: Variant in (look as Dictionary).values():
+			named.append(str(v))
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		for a: Variant in (locs[loc_id] as Dictionary).get("areas", []):
+			for key: String in ["floor", "walls"]:
+				if (a as Dictionary).has(key):
+					named.append(str((a as Dictionary)[key]))
+	for s in named:
+		assert_true(Look.cel_textured(s) != null, "texture exists: " + s)
+
+
+## A bathroom reads as a bathroom: its tiles come from the room rules by the area's name.
+func test_a_bathroom_has_tiles() -> void:
+	var v := _view("death_house_third")
+	await _frames(2)
+	var tiles := Look.cel_textured("interior/tile_floor", 0.22)
+	var found := false
+	for n in v.board.get_children():
+		if n is MeshInstance3D and (n as MeshInstance3D).material_override == tiles:
+			found = true
+			break
+	assert_true(found, "the bathroom's floor is tiled")
+	v.queue_free()
