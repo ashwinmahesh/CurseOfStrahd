@@ -1,0 +1,85 @@
+# Ireena Kolyana (and Ismark) in Vallaki, when the party leaves her at the Blue Water Inn or at St. Andral's
+# (docs/voice/ireena.md, docs/voice/ismark.md). While she travels as a guest she speaks inside other conversations.
+
+~ at_inn
+if flag.bones_returned
+Ireena: Father Lucian sent word. His saint is home and his church is holy ground again. He says there's a bed in the vestry with my name on it.
+else
+Ireena: The Martikovs are kind. Urwin sits up all night watching the windows. I've never met a man so interested in birds.
+endif
+-> inn_menu
+
+~ inn_menu
+* [if flag.bones_returned] Then go to St. Andral's. You'll be safest there. -> to_church
+* Come with us again. -> rejoin
+* [if flag.ireena_met and flag.izek_story_heard and flag.izek_dolls_seen and not flag.izek_sister_truth] Ireena, what do you remember from before Kolyan found you? -> remember
+* [if flag.izek_sister_truth and not flag.izek_told_truth] Ireena, it's about Izek. -> tell_her
+* Rest well. -> END
+
+~ at_church
+if flag.vallaki_backed == "baron" and not flag.izek_dead and not flag.izek_told_truth
+Ireena [afraid]: Izek comes to the church door at dusk. He doesn't come in. He can't, or he won't. He just stands there.
+elif flag.vallaki_backed == "neither"
+Ireena [smile]: Father Lucian's teaching me the long prayers. I'm terrible at them. He says the saint doesn't mind. I slept through the night again.
+else
+Ireena: I slept through the night. The whole night. I'd forgotten that was a thing people did.
+endif
+-> church_menu
+
+~ church_menu
+* Come with us again. -> rejoin
+* [if flag.ireena_met and flag.izek_story_heard and flag.izek_dolls_seen and not flag.izek_sister_truth] Ireena, what do you remember from before Kolyan found you? -> remember
+* [if flag.izek_sister_truth and not flag.izek_told_truth] Ireena, it's about Izek. -> tell_her
+* Rest well. -> END
+
+~ to_church
+set ireena_sanctuary = "st_andrals"
+quest sanctuary_for_ireena sanctuary
+Ireena: Holy ground. Father would have liked that. I'll go tonight, before the light goes.
+if flag.ismark_guards_ireena
+Ismark: And I'll go and sit by a different door. I'm getting very good at doors.
+endif
+-> END
+
+~ rejoin
+join ireena
+set ireena_sanctuary = "with_party"
+quest sanctuary_for_ireena travels_on
+Ireena: Good. I was going mad sitting still. Walls didn't keep him out of my father's house; I'd rather take my chances with you.
+if flag.ismark_guards_ireena
+join ismark
+set ismark_guards_ireena = false
+Ismark: Where she goes, I go. Don't make me say anything sentimental about it.
+endif
+-> END
+
+~ remember
+Ireena: Before Kolyan? Nothing. Trees. Being cold. A boy shouting a name through the trees, over and over. I always thought the name must have been mine.
+Narrator: A boy in the woods by the lake. Wolves. A little sister who was never found, and an arm that was never found either. Izek's story fits Ireena's like a key in a lock.
+set izek_sister_truth
+quest izek_obsession truth_guessed
+Ireena [afraid]: Why are you all looking at me like that?
+-> tell_her
+
+~ tell_her
+Narrator: You tell her what you think: that the man who carves her face into dolls is the boy who lost his sister in the woods.
+Ireena [afraid]: Izek? That brute with the arm? He's my brother?
+Ireena: I don't remember him. I don't remember anything. And he's dreamed of me every night since he was nine.
+Ireena [sad]: I'd rather he knew. If he's going to look at me like that, I'd rather he knew why. Tell him, if you can make him listen.
+-> END
+
+~ ismark_at_inn
+Ismark: I'm guarding. This is what guarding looks like. It involves a great deal of wine and a lot of looking at doors.
+* Come with us again, Ismark. -> ismark_rejoin
+* Keep guarding. -> END
+
+~ ismark_at_church
+Ismark: Holy ground. I keep feeling I should take my boots off. Lucian says I needn't. I've taken them off anyway.
+* Come with us again, Ismark. -> ismark_rejoin
+* Keep guarding. -> END
+
+~ ismark_rejoin
+join ismark
+set ismark_guards_ireena = false
+Ismark: About time. She's safe here, and I'm going soft. Lead on.
+-> END

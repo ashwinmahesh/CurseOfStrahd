@@ -1,0 +1,19 @@
+{
+  "id": "milivoj",
+  "name": "Milivoj",
+  "title": "Gravedigger of St. Andral's",
+  "summary": "The young gravedigger at St. Andral's, strong, sullen and broke, with three younger siblings to feed and a secret buried shallower than he'd like.",
+  "portrait": "milivoj",
+  "sprite": "milivoj",
+  "attitude": "indifferent",
+  "voice": "docs/voice/milivoj.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "laborer",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

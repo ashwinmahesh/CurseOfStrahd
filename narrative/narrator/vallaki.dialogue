@@ -1,0 +1,472 @@
+# Narrator: Vallaki (docs/voice/narrator.md). Second person, present tense, one or two sentences.
+# Book props (notices, ledgers, letters, journals) have no examine: line here, so their own text is shown.
+
+# ---------------------------------------------------------------- The town
+
+~ enter:vallaki
+| Inside the palisade, Vallaki is all steep roofs, swept streets and festival bunting in a yellow that nobody here would choose for themselves. Every face you pass is smiling. None of the smiles reach the eyes, and several of them are watching you.
+| [flag.festival_begun and not flag.festival_over] The whole town is crowded into the square, and the streets around it are as empty as a held breath.
+| [flag.vallaki_backed == "baron"] The bunting is fresher than ever and the smiles are wider. In the square, a woman sits in the stocks with her back very straight, and the townsfolk walk wide around her.
+| [flag.vallaki_backed == "wachter"] The bunting is gone. Black ribbons hang from the watch's spears now, and the town is very quiet, the way a house goes quiet when someone important is asleep upstairs.
+| [flag.vallaki_backed == "neither"] Somebody is chopping up the stocks for firewood, and somebody else is arguing about the price of lamp oil, loudly, in public, without looking over a shoulder. It sounds like a town.
+| [guest:ireena and not flag.festival_over] People turn to look at Ireena as she passes, and then look quickly away, as if her red hair were a lamp left burning after curfew.
+cooldown 30
+
+~ enter:east_gate
+| The gate is a pair of iron-strapped log doors under a walkway where the watch stamps its feet. Every face on the walkway is turned outward, toward the road. One or two turn back to look at you.
+once
+
+~ enter:main_street
+| Main street runs straight through town from gate to gate, its mud raked smooth. Bunting hangs between the eaves on both sides, so low you have to duck the sodden ends.
+once
+
+~ enter:town_square
+| The town square is swept, garlanded and full of people pretending to be in no hurry. In the middle stands a wooden dais, a pair of stocks, and a great wicker sun on a pole, as tall as a house and painted a desperate yellow.
+| [flag.festival_begun and not flag.festival_over] The square is packed shoulder to shoulder. The watch walks through the crowd with clubs, listening.
+| [flag.vallaki_backed == "neither"] The dais has a trestle table on it now, with a jug, some cups and a ledger, and the stocks are half gone for kindling.
+| [flag.vallaki_backed == "wachter"] The black, sodden sun still stands on its pole over an empty dais. Nobody lingers in the square now. Nobody needs to.
+cooldown 15
+
+~ enter:market_row
+| A row of narrow shops with painted signs. In the toymaker's window, a hundred wooden faces watch the street with perfect patience.
+once
+
+~ enter:east_row
+| Tall, close-set houses with their shutters open exactly the width the law requires. Behind one of them, a child is practising a festival song, and keeps stopping at the same note.
+once
+
+~ enter:mansion_grounds
+| The burgomaster's mansion takes up the whole north side of the square: three storeys of timber and plaster with a portrait of the Baron painted over the door, smiling down at everyone who knocks.
+once
+
+~ enter:wachter_lane
+| Wachterhaus stands behind its own iron fence, older and better kept than its neighbours. The curtains are drawn on every window but one, and in that one, the curtain moves.
+| [night and not flag.wachter_cult_broken and not flag.festival_over] Wachterhaus is dark, except for a grate low in its wall, where candlelight flickers from somewhere under the ground.
+cooldown 20
+
+~ enter:st_andrals_yard
+| St. Andral's stands on its rise at the north-east corner of the town, its bell tower leaning very slightly toward the castle, as if listening. Gravestones crowd its yard, and a fresh grave is being dug beside them.
+| [flag.bones_returned] St. Andral's stands on its rise, and the bell rings for the evening office as you come into the yard. It rings clean.
+cooldown 20
+
+~ enter:west_gate
+| The west gate opens onto the lake road and a ring of painted wagons outside the walls. Music comes from the wagons, and the watch on this gate pretends very hard not to hear it.
+once
+
+~ enter:lower_town
+| The lower town is where the smiles get thinner: leaning houses, a coffin maker's sign, and a hovel by the palisade with three small faces in its one window.
+once
+
+~ enter:inn_street
+| The Blue Water Inn sits at the bottom of the town with its lamps lit and its door open, which in Barovia is the bravest thing a building can do.
+once
+
+~ enter:stockade
+| The palisade's south-east corner: a watch fire, a squat log lockup with one barred window, and a walkway where the watch can look out over the dark and see nothing at all.
+once
+
+# ---------------------------------------------------------------- Interiors
+
+~ enter:vallaki_blue_water_inn
+| Warmth, at last: a real fire, a long bar, and a taproom that smells of stew and woodsmoke. Above the door, a carved raven watches everyone who comes in, and seems to approve of you.
+| [flag.vallaki_backed == "wachter"] The fire's lit and the stew's on, but the Martikovs look at you across the taproom the way you'd look at someone who tracked mud through a church.
+cooldown 20
+
+~ enter:vallaki_burgomaster_mansion
+| The mansion is a festival that never ends: bunting on every banister, ribbons on every lamp, and on every wall a portrait of the Baron, beaming, in a different hat.
+| [flag.vallaki_backed == "wachter"] The bunting is gone, and the portraits are stacked face to the wall. The house smells of someone else's tea.
+| [flag.vallaki_backed == "neither"] The bunting sags. Somebody has turned half the Baron's portraits to the wall and then, out of kindness, turned a few of them back.
+cooldown 20
+
+~ enter:vallaki_st_andrals
+| A long nave under a sunburst window, cold candles and a bare altar. The church feels like a room that has been holding its breath for days.
+| [flag.bones_returned] A long nave under a sunburst window, every candle lit, the altar dressed in white. The air in here is warmer than outside, and it isn't the candles.
+| [flag.vallaki_backed == "wachter"] The pews are fuller than they were. People have started coming to church in Vallaki, now that it's the only place nobody bows to the castle.
+cooldown 20
+
+~ enter:vallaki_wachter_house
+| Polished floors, good candles, and the particular hush of a house whose servants have been trained not to hear things. Somewhere upstairs, slow and patient, something is scratching at a door.
+cooldown 20
+
+~ enter:vallaki_coffin_maker
+| Pine shavings, varnish and fear, in that order. Coffins stand on trestles all through the workshop, and most of them are small.
+| [flag.coffin_spawn_destroyed or flag.church_siege_survived] The workshop smells of pine and varnish and nothing else. Henrik is whistling. Badly, but whistling.
+cooldown 20
+
+~ enter:vallaki_blinsky_toys
+| Every shelf in the shop is full of toys, and every toy is turned to face the door. When it closes behind you, a music box somewhere starts to play, all by itself, and stops.
+cooldown 20
+
+~ enter:vallaki_vistani_camp
+| Painted wagons stand in a ring around a fire between the road and the black water of Lake Zarovich. Somebody is playing a fiddle very well, and nobody is dancing.
+| [flag.arabelle_rescued] The fiddle is playing something fast tonight, and somebody is dancing to it: a small girl with black hair, solemn as a judge, on her father's feet.
+cooldown 20
+
+# ---------------------------------------------------------------- Inn rooms
+
+~ enter:taproom
+| A long bar, a crackling hearth and a dozen tables, most of them occupied by people who stop talking for exactly as long as it takes to look at you.
+once
+
+~ enter:inn_kitchen
+| A kitchen with a cauldron big enough to bathe in, and two small boys underfoot who vanish the moment you look straight at them.
+once
+
+~ enter:guest_rooms
+| Narrow rooms with clean beds and shutters that lock from the inside, which is the first thing anyone checks.
+once
+
+~ enter:rictavio_room
+| A rented room turned into a travelling showman's dressing room: costumes, a lute, a stage moustache on the washstand. Under the bed, the corner of an iron-bound sea chest.
+once
+
+~ enter:wagon_yard
+| The stable yard, where a carnival wagon painted red and gold takes up most of the space. Every horse in the stable stands at the far end of its stall, away from it.
+once
+
+~ enter:rictavio_wagon
+| It smells of straw and something big and alive. A shape breathes under a tarpaulin at the far end of the wagon, slow and deep, and doesn't wake. Yet.
+once
+
+# ---------------------------------------------------------------- Mansion rooms
+
+~ enter:great_hall
+| A great hall hung with yellow bunting. The Baron's chair stands on a little platform of its own, so that even indoors he can be looked up to.
+once
+
+~ enter:mansion_foyer
+| A foyer with a boot scraper, a coat stand and a sign in a round, hopeful hand: SMILE, YOU ARE A GUEST.
+once
+
+~ enter:izek_quarters
+| A bare room: a cot, a basin, a sword on a peg, and a chest at the foot of the bed. It smells of oil and smoke, and faintly of a hot stove, though there isn't one.
+once
+
+~ enter:dining_hall
+| A long table laid for twenty with the best plate, every chair empty. It has been laid with great care for guests who are not coming.
+once
+
+~ enter:baron_study
+| The Baron's study: a desk, a strongbox, and shelf after shelf of festival ledgers, each one labelled with the year and the word SUCCESS.
+once
+
+~ enter:lydia_parlor
+| A parlour drowned in yellow cloth. Half-sewn suns, swallows and sashes cover every chair. It's the happiest room in Vallaki, and the most frantic.
+once
+
+~ enter:attic
+| The attic is lit by candles and by a chalk circle on the boards, which glows faintly with a light of its own. The air tastes of struck iron.
+once
+
+~ trap:victor_circle_trap:found
+| The chalk glows a little brighter as you near it, the way a dog's ears go up. Whatever this circle does, it's still awake.
+
+~ trap:victor_circle_trap:triggered
+| The lines flare white and you're torn loose from everywhere at once, and then slammed back, with a sound like a door blown shut in your bones.
+
+# ---------------------------------------------------------------- Church rooms
+
+~ enter:vestry
+| A narrow vestry: robes on pegs, a chest, a cot where the priest has clearly been sleeping since the theft.
+once
+
+~ enter:chancel
+| The altar stands bare on its step, its cloth folded on a chair beside it as if for a funeral.
+| [flag.bones_returned] The altar is dressed in white again, and candles burn along its step in a row as neat as teeth.
+cooldown 15
+
+~ enter:crypt_stair
+| A narrow stair winds down into the dark under the altar. The steps are worn into hollows by two centuries of priests going down to pray.
+once
+
+~ enter:nave
+| Rows of pews under a sunburst window gone grey with soot. Your footsteps carry all the way to the altar and come back slower.
+once
+
+~ enter:crypt
+| The crypt is low and cold, lined with burial niches. In the middle, on a stone plinth, stands the sarcophagus of St. Andral, its lid pushed a hand's breadth crooked.
+| [flag.bones_returned] The crypt is cold and quiet, the sarcophagus lid set square again. Someone has left a candle on it, and it burns perfectly straight, though there's a draught.
+cooldown 15
+
+# ---------------------------------------------------------------- Wachterhaus rooms
+
+~ enter:wachter_hall
+| A hall of family portraits, every Wachter for two hundred years, all of them with the same patient smile.
+once
+
+~ enter:wachter_parlor
+| A parlour with a ring of chairs facing inward, as if for a reading. There isn't a book in the room.
+once
+
+~ enter:wachter_study
+| A tidy study: a desk, an inkstand, a bookcase of very old and very unread books. One of the shelves has no dust at its edge.
+once
+
+~ enter:stella_room
+| A girl's bedroom with the bed pushed against the wall and scratches on the inside of the door, low down, at about the height of a cat.
+once
+
+~ enter:cellar
+| A cellar made into a chapel: benches, candles, and a shrine at the far end draped in black, with a silver S worked into the cloth.
+| [night and flag.vallaki_pledge != "wachter" and not flag.wachter_cult_broken] Candles, benches, and a dozen people in their good clothes kneeling before a black-draped shrine, chanting softly. The chanting stops.
+once
+
+~ open:stella_door
+| The door gives. Inside, a young woman crouches on the bed with her knees drawn up and looks at you with enormous, unblinking eyes. Then she hisses.
+
+~ open:cellar_panel
+| The bookcase swings inward on oiled hinges, and a breath of cold candle smoke comes up the stair behind it.
+
+# ---------------------------------------------------------------- Coffin maker and toyshop
+
+~ enter:workshop
+| A workshop of coffins on trestles, lids leaning against the walls like doors to nowhere.
+once
+
+~ enter:henrik_rooms
+| A narrow bedroom with a crucifix nailed over the bed and another nailed over the door, facing the storeroom.
+once
+
+~ enter:storeroom
+| Crates, stacked to the beams, and the smell of cold earth. The crates are too heavy to be empty, and too quiet to be anything you want.
+once
+
+~ enter:toy_shop
+| Dolls, puppets, tops and music boxes, every one of them carved with care and every one of them faintly wrong: a smile too wide, a bear with too many teeth.
+once
+
+~ enter:toy_workshop
+| A workbench covered in wooden heads waiting for faces. One of them already has a face, and it's a red-haired woman's.
+once
+
+# ---------------------------------------------------------------- The Vistani camp
+
+~ enter:camp_edge
+| Horses stamp on their line and the road runs back east to the gate. Somebody at the fire has noticed you, and gone to tell somebody else.
+once
+
+~ enter:camp_fire
+| A big fire, a cauldron, a fiddler, and a ring of faces that look at you with interest and no welcome at all.
+once
+
+~ enter:luvash_wagon
+| The biggest wagon in the camp has its door hanging open and its lamp unlit. Empty bottles lie in the mud by the steps.
+once
+
+~ enter:arrigal_wagon
+| A black wagon with silver trim, very neat, very quiet. A black horse is tethered beside it, saddled, as if for a journey at short notice.
+once
+
+~ enter:lakeshore
+| The lake lies black and flat to the far shore, reeds rattling at its edge. The jetty has rotted halfway out, and there are footprints in the mud going down to the water and none coming back.
+once
+
+# ---------------------------------------------------------------- Examining things in town
+
+~ examine:town_stocks
+| A double set of stocks with a little roof over them, so that nobody in them gets rained on. The Baron is not a cruel man. He would want you to know that.
+| [flag.wachter_fate == "stocks" or flag.baron_fate == "stocks"] The stocks hold someone who used to matter in this town. Passers-by have been very careful not to throw anything, in case it's held against them later.
+
+~ examine:broken_stocks
+| What's left of the stocks: two posts and a pile of slats, half of them already gone for firewood.
+
+~ examine:festival_dais
+| A dais of new planks, painted yellow, with a carpet nailed down at the front where the Baron stands. The carpet is worn through in one spot, from turning to face the crowd.
+
+~ examine:lake_gate
+| The north gate, barred, its walkway empty. Beyond it the lake road runs down to the water, and the castle stands across the lake on its cliff, near enough to wave at.
+
+~ examine:st_andrals_facade
+| An old church of dark timber and grey stone, with a sunburst carved over the door. Someone has hung a bundle of garlic from the knocker, which is either devotion or doubt.
+
+~ examine:st_andrals_graves
+| Old graves, tidy and close-set. The newest have little bells tied to them on strings that run down into the earth, just in case.
+
+~ examine:open_grave
+| A grave half dug, neatly squared. The spoil heap beside it is still damp, and the spade has been left standing in it like a flag.
+
+~ examine:mansion_facade
+| Above the mansion door, the Baron's painted face beams at the square with his arms spread wide, as if about to embrace the whole town, whether or not it wants to be embraced.
+
+~ examine:wachterhaus_facade
+| The Wachter arms are carved over the door: a tower and a key. The key has been gilded recently. The tower has not.
+
+~ examine:blinsky_window
+| A shop window full of toys. A jack-in-the-box. A wooden wolf on wheels. A doll with red hair, in pride of place, with a little card that says NOT FOR SALE.
+
+~ examine:coffin_sign
+| HENRIK VAN DER VOORT, COFFINS, ALL SIZES. Underneath, newer and smaller: CLOSED AFTER DARK.
+
+~ examine:inn_sign
+| A painted sign of blue water under a black bird. Somebody has repainted the bird recently, with real care.
+
+~ examine:lockup
+| A squat log house with one barred window and a heavy door. A tin cup hangs by the window on a string, for passers-by to give the prisoners water if they're feeling disloyal.
+
+~ examine:milivoj_hovel
+| A hovel leaning against the palisade as though it's tired. A loaf on the sill, a big one, newly bought.
+
+~ examine:palisade
+| Sharpened logs, chest-thick, twice a man's height. Here and there a log has been replaced, recently, where something on the other side clawed it through.
+
+~ examine:arasek_stall
+| Blades, mail shirts, rope, lamp oil and grain sacks, each with a price chalked on a slate in a hand that has clearly done this for years and has stopped apologising.
+
+~ examine:watch_fire
+| A brazier of coals where the watch warms its hands. Somebody has written CHEER UP on the wall above it in charcoal, and somebody else has drawn a face beside it that isn't cheering.
+
+# ---------------------------------------------------------------- Examining things indoors
+
+~ examine:inn_hearth
+| A real fire, banked high, with a kettle on the hook. It's the first fire in Barovia you've seen that someone made for comfort rather than defence.
+
+~ examine:inn_bar
+| The bar is polished dark by hands and elbows. Behind it, a row of casks, and above them, three black feathers pinned to the beam in a row.
+
+~ examine:raven_carving
+| A raven carved over the door, wings half open, done with real skill. Its eye is a polished black stone that catches the firelight from wherever you stand.
+
+~ examine:inn_wine_casks
+| The casks ring hollow when you knock on them, all but one. The brand on their ends reads WIZARD OF WINES, and the newest is months old.
+
+~ examine:rictavio_trunk_marks
+| An iron-bound sea chest with three locks, scratched all over as if something has tried to open it from outside, more than once, with claws.
+
+~ examine:rictavio_wagon_outside
+| A carnival wagon in red and gold, with RICTAVIO'S WONDERS painted along the side and a padlock the size of a fist. From inside comes the slow, heavy breathing of something very large.
+
+~ examine:wagon_cage
+| Under the tarpaulin, iron bars, and behind them a striped flank rising and falling. A golden eye opens, regards you, and decides not to bother yet.
+
+~ examine:baron_portraits
+| The Baron as a hunter. The Baron as a scholar. The Baron as a general, which he has never been. In every one he is smiling, and in every one the painter has given him very anxious eyes.
+
+~ examine:festival_bunting
+| Yellow bunting by the furlong, every pennant hemmed by hand. On the back of one, very small, someone has embroidered: please.
+
+~ examine:dining_table
+| Twenty places, laid with silver and polished to a shine. On one plate, at the far end, sits a single roll, untouched and gone hard.
+
+~ examine:izek_dolls
+| Inside the chest, wrapped in cloth, lie eleven dolls with red hair: one in a green dress, one in a grey cloak, one smiling. Every face is the same face, carved with terrible love.
+| [guest:ireena] Inside the chest lie eleven dolls with red hair, every one carved with terrible love. Every one of them has Ireena's face.
+
+~ examine:izek_cot
+| A soldier's cot, tightly made. Under the pillow, a child's hair ribbon, faded to no colour at all.
+
+~ examine:lydia_sewing
+| A half-finished sash in yellow silk, with MARSHAL picked out in gold thread. The needle is still in it, and the thread trails off the table like a fuse.
+
+~ examine:victor_circle
+| A teleportation circle chalked with great care: rings within rings, glyphs at the quarters, a destination sigil at the heart. The chalk is warm, and slightly sticky, like a wound.
+| [class:wizard] The work is excellent and the destination sigil is wrong. {name} can see it from here: it names nowhere at all, and does so very precisely.
+
+~ examine:ash_marks
+| Two dark shapes scorched into the boards beside the circle, each about the length of a person lying down. Someone has tried to scrub them out, and failed.
+
+~ examine:victor_spellbook
+| A thick spellbook with somebody else's name scraped off the cover. Most of its pages are beyond a boy's reach. The ones he's read are worn soft.
+
+~ examine:st_andrals_altar
+| A plain altar of oak on a stone step. The sunburst on its front has been touched so often by so many hands that the rays have worn smooth.
+
+~ examine:sunburst_window
+| A great round window of yellow glass, grey with soot, that would fill the nave with light if there were ever any light to fill it with.
+
+~ examine:st_andrals_pews
+| Plain pews, worn smooth. Somebody has carved small names into the back of each, generations of them, so the dead can still sit with their families.
+
+~ examine:empty_reliquary
+| Inside the sarcophagus, a long oak box with its lid off, lined with old silk, and nothing in it but the dent where something lay for two hundred years.
+| [flag.bones_returned] The lid is set square again, and the stone under your hand is faintly, stubbornly warm.
+
+~ examine:crypt_niches
+| Burial niches, row on row, each with a little carved sunburst. The oldest names are worn away entirely, but someone still dusts them.
+
+~ search:lid_scrapes
+| On the lid's edge, two clean scrapes where it was lifted with a lever, carefully, in exactly the two places that wouldn't crack the stone. Whoever did this knew the trick of it.
+
+~ examine:wachter_portraits
+| Two centuries of Wachters, each in the fashion of their day, each with a small silver S somewhere in the painting: on a ring, a brooch, the clasp of a book.
+
+~ examine:book_club_chairs
+| A ring of good chairs, facing inward. The cushions are worn, but there isn't a book on any of them, and the candle stubs on the side tables are black ones.
+
+~ examine:tea_service
+| A silver tea service, very fine, polished to a mirror. In the curve of the pot your reflection looks back at you. Hers, you suspect, would not.
+
+~ examine:wachter_desk
+| A lady's writing desk: good paper, a silver inkstand, a drawer with a lock. The blotter has been used so often that the backwards words on it have run into each other.
+| [flag.wachter_panel_hint] The desk faces the bookcase squarely, the way a guard faces a door. Now you know why.
+
+~ search:study_bookcase
+| Behind the third shelf of unread sermons, your fingers find a catch that the dust has been politely ignoring.
+
+~ examine:stella_bed
+| A young woman curls on the bed with her chin on her knees, licking the back of one hand and smoothing her hair with it. She watches you without blinking, and purrs when you come no closer.
+
+~ examine:dark_shrine
+| A shrine draped in black velvet, with a silver S worked into the cloth and a crystal goblet at its foot, rinsed clean. There is a faint red ring inside it anyway.
+
+~ examine:coffins
+| Coffins in every size, all well made. On the smallest, someone has carved a little sun, and then a little moon over it, as if unsure which would be kinder.
+
+~ examine:storeroom_crates
+| Long crates with the lids nailed down from inside. Pressing your ear to one, you hear nothing at all: no breath, no heartbeat, the silence of something that doesn't need either.
+| [flag.coffin_spawn_destroyed or flag.church_siege_survived] Empty crates, lids pried off, bottoms lined with grave earth. Somebody should burn them. Somebody will.
+| [flag.bones_recovered and not flag.bones_returned] The small crate by the back wall is empty now. The altar cloth that was in it smelled faintly of incense, even down here.
+
+~ examine:henrik_bed
+| A narrow bed with a crucifix over it, another under the pillow, and a third, small one, clutched in the shape of a fist in the blanket.
+
+~ examine:toy_shelves
+| Wooden soldiers with hollow eyes. Rag dolls with button smiles. A carved wolf that, when you press its back, opens its mouth and keeps it open.
+
+~ examine:gallows_puppet
+| A puppet theatre with a little castle at the back and a little village at the front. All the villagers are on strings. So is the castle.
+
+~ examine:music_box
+| A music box with a dancer who turns, and turns, and slowly comes to face you, though the tune has stopped.
+
+~ examine:red_haired_doll
+| A doll with red hair, a green dress and a painted face carved with unusual care. A card reads NOT FOR SALE in a gloomy hand.
+| [guest:ireena] A doll with red hair, a green dress and Ireena's face, exactly. Ireena looks at it for a long moment and says nothing at all.
+
+~ examine:piccolo_perch
+| A little perch with a little cushion and a little cup of nuts. Piccolo the monkey sits on it and watches you shell one, with the expression of a moneylender.
+
+~ examine:workbench_heads
+| Wooden heads waiting for faces, in rows. Blinsky carves the mouths last, he'd tell you, so the toys can't complain about the rest.
+
+~ examine:camp_fire_pit
+| A fire of old wagon wood with a cauldron over it, something with paprika bubbling. Nobody offers you any. Nobody stops you looking, either.
+
+~ examine:luvash_wagon_door
+| The headman's wagon: painted horses gallop round the sides. Inside, a child's bed, empty, its blanket thrown back.
+
+~ examine:arrigal_wagon_door
+| A neat black wagon with silver trim and a small locked strongbox under the step. The window has a black curtain drawn tight.
+
+~ examine:jetty
+| A rotten jetty with half its planks gone. At the end, a mooring post, and a fresh rope tied to it with nothing on the other end.
+
+~ examine:lake_view
+| Lake Zarovich, black and flat to the far shore. Fishermen's boats lie hauled up on the bank, all of them dry, all of them for a long time.
+
+~ examine:horse_line
+| Good horses, well kept, every one of them facing the lake with its ears back.
+
+~ search:drag_marks
+| In the mud, the marks of a man's boots going down to the water, and between them a long smear where something was dragged, small and kicking.
+
+# ---------------------------------------------------------------- Fights in Vallaki
+
+~ combat:start
+| [flag.festival_climax and not flag.festival_over] The crowd scatters like pigeons, and the square is suddenly very large.
+| [flag.church_vigil and not flag.church_siege_survived and not flag.bones_returned] The candles lean all one way, toward the broken windows.
+cooldown 10
+
+~ combat:victory
+| [flag.festival_climax and not flag.festival_over] The square goes quiet. Somewhere at the back of the crowd, very hesitantly, somebody claps.
+| [flag.church_siege_survived and not flag.bones_returned and not flag.festival_climax] The candles stand up straight again, one by one, as if they'd been hiding.
+cooldown 10

@@ -1,0 +1,153 @@
+# The Baron's watch (docs/voice/vallaki_guard.md): the east gate on arrival (start), the gate afterwards (guard),
+# the lockup by the stockade (jailer) and the watchman in the mansion foyer (mansion_guard).
+
+~ start
+# Ireena and Ismark travel with the party from the Village of Barovia (ireena_in_party, ismark_joins_escort).
+# If the road did not already add them as guests, they join here, at the gate they set out for.
+if flag.ireena_in_party and not guest:ireena
+join ireena
+endif
+if flag.ismark_joins_escort and flag.ireena_in_party and not guest:ismark
+join ismark
+endif
+Narrator: The road ends at a palisade of sharpened logs twice a man's height. Most of the points face outward. A few, you notice, face in. Two watchmen with festival ribbons on their spears step into the gateway.
+Town Guard: Halt. Names, business, and how long you mean to stay. And smile, please. It's the law this week.
+if night
+Town Guard: Gate shuts at dusk, by rights. But the Baron says travellers are good for morale, and you'd be very bad for it lying dead in the road.
+endif
+* We're travellers. We want a roof and a hot meal. -> honest
+* [if guest:ireena] This is Ireena Kolyana, daughter of the late burgomaster of Barovia. -> ireena
+* [Deception DC 12] We've come for the festival, naturally. -> festival_ok | festival_fail
+* [Intimidation DC 14] We're coming in. Stand aside. -> bully_ok | bully_fail
+
+~ honest
+Town Guard: Roof and meal: the Blue Water Inn, south of the square. Ask for Urwin; don't ask him anything else. Avoid the coffin maker's. He's jumpy lately, and so's his door.
+-> rules
+
+~ ireena
+set vallaki_ireena_announced
+Town Guard [afraid]: Kolyan's girl? From the village? We heard he'd died. Sorry, miss. The Baron will want to know you're here. He likes visiting dignitaries; they make a crowd look bigger.
+Ireena: I'm not visiting. I'm hiding. Tell him that, if you have to tell him anything.
+if guest:ismark
+Ismark: And I'm her brother, before anyone in this town gets ideas.
+endif
+-> rules
+
+~ festival_ok
+Town Guard [smile]: For the festival! You hear that, Pyotr? They came for the festival. On purpose. Write that down; the Baron will want it for the speech.
+-> rules
+
+~ festival_fail
+Town Guard: Nobody comes for the festival. Nobody comes here for anything, these days. Some weeks I'm not sure the Baron comes for the festival. Don't tell him I said that.
+-> rules
+
+~ bully_ok
+Town Guard: Fine. Fine! In you go. But you'll smile when the Baron passes, or it's the stocks, and then I have to stand there watching you all day.
+-> rules
+
+~ bully_fail
+Town Guard: I've eleven more like me on that wall and a Baron who enjoys a punishment more than a festival. Let's both be cheerful about this, shall we?
+interject tag:blunt: He's right. Twelve spears. Bad odds for a doorway.
+-> rules
+
+~ rules
+set vallaki_arrived
+quest festival_of_the_blazing_sun announced
+if guest:ireena
+quest sanctuary_for_ireena arrived
+endif
+Town Guard: The rules, quick. The Festival of the Blazing Sun is in the square; the Baron lights the sun at noon and everyone attends. Lamps out at the second bell. Nobody frowns at the Baron.
+Town Guard: If you've a grievance, keep it indoors. If you've a dead relative, Father Lucian at St. Andral's. If you've a live one who frowns, keep them indoors as well.
+interject tag:cheerful: I can smile. I'm smiling now. Look.
+interject tag:blunt: Laws about faces. Noted.
+Town Guard: Lovely. Hold it like that until you're out of sight. All will be well.
+-> END
+
+~ guard
+if flag.vallaki_backed == "baron"
+Town Guard [smile]: Marshals! The Baron says you're to be saluted. Consider yourselves saluted. All is well. It's official now; there was a proclamation.
+elif flag.vallaki_backed == "wachter"
+Town Guard: New ribbons. Black ones. Lady Wachter's orders. Nobody has to smile any more. Funny thing is, nobody does.
+elif flag.vallaki_backed == "neither"
+Town Guard: The council says I can stop smiling at people. I keep doing it anyway. Habit. Father Lucian says that's allowed.
+elif flag.festival_begun
+Town Guard: Shouldn't you be in the square? Everyone's in the square. I'm in the square in spirit, and also in a lot of trouble if the sergeant counts.
+elif night
+Town Guard: Gate's shut. If you're going out, I didn't see you. If you're coming back, knock twice and say something cheerful.
+else
+Town Guard: Still here? Good. The Baron counts heads at the festival. More heads, better festival.
+endif
+* What's the news in town? -> news
+* Who should we know in Vallaki? -> whos_who
+* Goodbye. -> END
+
+~ news
+if flag.festival_over
+Town Guard: News? You are the news. Has been for days.
+-> END
+endif
+if not flag.bones_returned
+Town Guard: Something's wrong up at St. Andral's. Father Lucian stripped the altar cloth two days back and hasn't put it back. Priests don't do that for nothing.
+endif
+if not flag.arabelle_rescued and not flag.arabelle_lost
+Town Guard: The Vistani outside the west gate are in an uproar. The headman's little girl's gone missing. Their brother Arrigal says she wandered. Arrigal says a lot of things.
+endif
+if not flag.wachter_cult_broken
+Town Guard: Lady Wachter's book club met again last night. Lamps lit in her cellar till dawn. That's a lot of reading.
+endif
+Town Guard: And the festival, of course. Always the festival.
+-> END
+
+~ whos_who
+Town Guard: The Baron, Vargas Vallakovich. Festivals, decrees, happiness. Lives in the big house on the square. Izek Strazni's his right hand. Don't shake it; it isn't a hand.
+Town Guard: Lady Wachter at Wachterhaus, who the Baron says is plotting, which she probably is. Father Lucian at the church. The Martikovs at the inn. Blinsky the toymaker, who's sad. Henrik the coffin maker, who's busy.
+-> END
+
+~ jailer
+if flag.vallaki_backed == "baron"
+Lockup Warden: Lockup's full of Wachter's hired men. The lady herself is in the stocks, in front of everyone. The Baron visits twice a day to see if she's cheered up.
+-> END
+elif flag.vallaki_backed == "wachter"
+Lockup Warden: The lockup's full of the Baron's sergeants now. Same lockup, same key, different people. I'm still here. Somebody has to hold the key.
+-> END
+elif flag.vallaki_backed == "neither"
+if flag.wachter_fate == "exposed"
+Lockup Warden: The council let everyone out. Everyone but her. Lady Wachter's in the back cell with a candle and a book, and she's the calmest prisoner I've ever had. I don't like it.
+else
+Lockup Warden: The council let everyone out. The lockup's empty. I sit here anyway. It's a good chair.
+endif
+-> END
+endif
+Narrator: The lockup is a squat log house with one barred window. Three faces look out of it at you, without much hope.
+if flag.malcontents_freed
+Lockup Warden: Empty. Somebody let them out. Somebody I'm not going to remember, if anyone asks.
+-> END
+endif
+Lockup Warden: The Baron's malcontents. A cobbler who said it might rain. A widow who laughed at the wrong part of a speech. A boy who drew the Baron. Badly. Until the next festival.
+* [Persuasion DC 14] They've done nothing. Let them go home. -> free_ok | free_fail
+* [if gold >= 15] (Press fifteen gold into his hand.) Let them go home. -> free_bribe
+* Goodbye. -> END
+
+~ free_ok
+set malcontents_freed
+Lockup Warden: Nothing. No. They haven't, have they. Go on, the three of you. Out. If anyone asks, the lock rusted.
+Narrator: The cobbler shakes your hand on the way past, very hard, without a word.
+-> END
+
+~ free_fail
+Lockup Warden: And then I go in the stocks instead, and who lets me out? No. Sorry. Truly.
+-> END
+
+~ free_bribe
+gold -15
+set malcontents_freed
+Lockup Warden: Well. That's a sum. That's a rusted lock, that is. Off you go, all three. Quickly.
+-> END
+
+~ mansion_guard
+if flag.vallaki_backed == "wachter"
+Town Guard: Lady Wachter receives in the hall now. The Baron's portraits are coming down this afternoon. I'm helping.
+-> END
+endif
+Town Guard: The Baron receives visitors in the great hall. Wipe your boots. Smile on the way in; he notices.
+-> END

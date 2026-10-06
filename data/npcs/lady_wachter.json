@@ -1,0 +1,20 @@
+{
+  "id": "lady_wachter",
+  "name": "Lady Wachter",
+  "title": "Fiona Wachter, widow of Wachterhaus",
+  "summary": "A widowed noblewoman who pours excellent tea, holds a book club that is not a book club, and intends to take Vallaki from the Baron and hand it, politely, to its true lord.",
+  "portrait": "lady_wachter",
+  "sprite": "lady_wachter",
+  "attitude": "indifferent",
+  "voice": "docs/voice/lady_wachter.md",
+  "monster": "noble",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "noble",
+    "strahd_ally",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

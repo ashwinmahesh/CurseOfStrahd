@@ -1,0 +1,260 @@
+# After the festival fight: whoever won holds the dais. Each ending records vallaki_backed ("baron", "wachter",
+# "neither"), festival_over and the fates of the Baron, Lady Wachter, Izek, Victor and Ireena's refuge
+# (docs/regions/vallaki.md §5). The big beat of the region: the Vallaki milestone, if the bones didn't give it.
+
+# ---------------------------------------------------------------- The Baron's triumph
+
+~ baron
+if flag.izek_claim_made
+-> baron_after_claim
+endif
+if flag.festival_over or not flag.wachter_coup_crushed
+-> END
+endif
+Narrator: The last of Lady Wachter's people are down or running. The watch hauls Lady Wachter to the foot of the dais by the elbows. She walks between them as if they were seeing her in to dinner.
+Baron [smile]: My friends! My saviours! My MARSHALS! Did you see that, Vallaki? The traitor taken, the festival saved! Was I not right? Is all not well?
+Narrator: The crowd cheers. It's the first cheer of the day that nobody had to be prodded into, and the Baron very nearly weeps.
+Lady Wachter: Enjoy it, Vargas. He won't let you keep it.
+Baron: Put her in the stocks. Let the whole town come and look at what a frown gets you.
+set wachter_fate = "stocks"
+set baron_fate = "rules"
+if flag.wachter_cult_broken
+Baron: And her wicked sons already seen to in her own cellar! Efficient! I do love efficiency at a festival.
+endif
+Lydia Petrovna [smile]: I'll sew you sashes. Proper ones. With your names on.
+Baron: A hundred gold, as promised, and the freedom of the town, and a place on the dais at every festival forever. Every week. Forever!
+gold +100
+interject tag:cheerful: Every week?
+interject tag:blunt: Forever.
+-> izek_claim
+
+~ izek_claim
+if flag.izek_dead or flag.izek_told_truth
+-> baron_close
+endif
+if not guest:ireena and flag.ireena_sanctuary != "inn" and flag.ireena_sanctuary != "st_andrals"
+-> baron_close
+endif
+set izek_claim_made
+Izek: My lord. I want my reward.
+Baron: Of course, my boy, of course! Name it!
+Izek: Her. The red-haired one. Ireena. Give her to me.
+Baron [afraid]: Ah. Well. Izek. My boy. She's a guest of the town, she's Kolyan's daughter, and these are our marshals, and... we could discuss it?
+if guest:ireena
+Ireena [angry]: I am standing right here, and I am not a sack of flour to be handed over a counter.
+endif
+* [Persuasion DC 14] Baron. Refuse him. Here, in front of everyone. -> refuse_ok | refuse_fail
+* [if flag.izek_sister_truth] Tell Izek who Ireena really is. -> truth
+* He can try to take her. He'll have to go through us. -> duel
+
+~ refuse_ok
+set izek_spurned
+quest izek_obsession spurned
+Baron: No. No, Izek. The town has rules, and I am the rules. She is not a reward. Go and... stand somewhere.
+Narrator: For a long moment Izek's arm smokes at the knuckles. Then he turns his back on all of you and goes to stand somewhere.
+interject tag:blunt: He'll come back to it. Men like that always do.
+-> baron_close
+
+~ refuse_fail
+Baron [afraid]: I... perhaps after the next festival, Izek? We'll see how everyone feels?
+Izek: I feel the same. I've felt the same since I was nine. I'll take her myself.
+-> duel
+
+~ truth
+set izek_told_truth
+quest izek_obsession truth_told
+Narrator: You tell him: the woods, the wolves, the little sister who was never found, the girl Kolyan Indirovich took in, wandering, with no memory of where she came from. The red hair. The year.
+Izek: No.
+Narrator: He looks at Ireena. He looks for a long time. The smoke goes out of his arm the way breath goes out of a body.
+if guest:ireena
+Ireena [sad]: I don't remember you. I'm sorry. I don't remember anything from before.
+Izek: I do. I remember all of it.
+endif
+Izek: I'm done, my lord. I'm done.
+Narrator: Izek Strazni walks down off the dais and out of the square, and nobody, not even the Baron, tells him to come back.
+-> baron_close
+
+~ duel
+set izek_claim_made
+Baron [afraid]: Not on the dais! Not on the dais, I've only just had it painted!
+interject tag:blunt: Down, then. Here.
+combat izek_duel
+
+~ baron_after_claim
+if flag.izek_dead
+Narrator: Izek lies at the foot of the dais. The fire in his arm goes out last, ember by ember, like a lamp being turned down.
+Baron [sad]: My Izek. My good, terrible Izek. Well. Well! All will be well. I shall need a new Izek. Not as good. Somebody who smiles.
+endif
+-> baron_close
+
+~ baron_close
+set vallaki_backed = "baron"
+set festival_over
+quest festival_of_the_blazing_sun baron_triumph
+Baron: The next festival is on the seventh day! The Festival of Loyalty! In your honour, marshals! Every citizen will attend, and every citizen will be grateful, and anyone who isn't will go in the stocks next to Fiona!
+Narrator: The crowd cheers again, slightly less than before. Vallaki is saved, and it is going to be very, very happy about it.
+if not flag.vallaki_milestone_reached
+set vallaki_milestone_reached
+xp milestone
+endif
+-> END
+
+# ---------------------------------------------------------------- Lady Wachter's triumph
+
+~ wachter
+if flag.festival_over or not flag.baron_overthrown
+-> END
+endif
+Narrator: The Baron's watch throws down its spears one by one. Vargas Vallakovich stands alone on his dais with his sash crooked, until two of Lady Wachter's men take him by the arms.
+if not flag.izek_dead and not flag.izek_told_truth
+set izek_dead
+quest izek_obsession izek_slain
+Narrator: Izek lies at the foot of the dais. The fire in his arm goes out last.
+endif
+Lady Wachter [smile]: People of Vallaki. You may stop smiling now.
+Narrator: Nobody cheers. But nobody stops her, either, and a few faces in the crowd look as if they've put down something heavy.
+Lydia Petrovna [afraid]: Please. Please, Fiona. He's a silly man. He only wanted everyone to be happy. Don't hurt him.
+Lady Wachter: You've earned a say in it, my friends. What shall we do with our Baron?
+* Exile him. Let him and his family leave town tonight. -> baron_exiled
+* The stocks. Let the town have its turn. -> baron_stocks
+* Do as you like with him, my lady. -> baron_executed
+
+~ baron_exiled
+set baron_fate = "exiled"
+Lady Wachter: Merciful. How unfashionable. Very well: he leaves at dawn with what he can carry, which, knowing Vargas, will be bunting.
+Baron [sad]: All will be... well, it will be something.
+-> wachter_close
+
+~ baron_stocks
+set baron_fate = "stocks"
+Lady Wachter: The stocks, then. He built them. It seems only fair that he should try them.
+Narrator: The crowd parts to let him through. A few people don't look away. Most do.
+-> wachter_close
+
+~ baron_executed
+set baron_fate = "executed"
+Lady Wachter: Then I shall do as I like. Take him to the lockup. Tonight, quietly. There's no need to spoil the afternoon.
+Lydia Petrovna [afraid]: No! No, please...
+interject class:cleric: That is not a choice I will carry for her. Remember that I said so.
+interject tag:devout: Morninglord forgive us. I don't think he will.
+-> wachter_close
+
+~ wachter_close
+set wachter_fate = "ruler"
+set vallaki_backed = "wachter"
+set festival_over
+quest festival_of_the_blazing_sun wachter_triumph
+gold +150
+Lady Wachter: A hundred and fifty, as agreed, and the thanks of the burgomistress of Vallaki. My lord will have heard by nightfall; he hears everything in this valley sooner or later. I expect he'll be very pleased with you.
+if flag.victor_circle != "broken" and flag.victor_circle != "persuaded" and flag.victor_circle != "reported"
+set victor_vanished
+quest victors_circle vanished
+Narrator: Behind the dais, an attic window in the Baron's mansion flashes white, once, like lightning that forgot the thunder. Lady Lydia turns toward it and screams her son's name.
+if tarokka.ally.npc == victor_vallakovich
+quest find_the_ally lost
+endif
+endif
+if guest:ireena or flag.ireena_sanctuary == "inn" or flag.ireena_sanctuary == "st_andrals"
+-> ireena_leaves
+endif
+-> wachter_end
+
+~ ireena_leaves
+if not guest:ireena
+join ireena
+Narrator: Ireena pushes through the crowd to you with her sword already belted on and her bag over her shoulder.
+endif
+set ireena_sanctuary = "moving_on"
+set ireena_destination = "krezk"
+quest sanctuary_for_ireena leaving_vallaki
+Ireena [angry]: I heard. The whole town heard. I won't sleep one night in a town that sends its compliments to the castle.
+Ireena: Krezk, then. It's farther, and it has an abbey, and nobody in it has ever served him tea. Take me there, or I'll walk it alone.
+if flag.ismark_guards_ireena and not guest:ismark
+join ismark
+set ismark_guards_ireena = false
+Ismark: Where she goes, I go. I'd rather argue with wolves than drink to his health.
+endif
+Lady Wachter [sly]: Such a shame. Do give my regards to the abbot.
+-> wachter_end
+
+~ wachter_end
+Narrator: That evening the festival bunting comes down all over Vallaki, and nothing goes up in its place. The town is quieter than it has been in years. It is not the same thing as peace.
+if not flag.vallaki_milestone_reached
+set vallaki_milestone_reached
+xp milestone
+endif
+-> END
+
+# ---------------------------------------------------------------- The town's triumph
+
+~ town
+if flag.festival_over or not flag.izek_stopped
+-> END
+endif
+Narrator: The last of the Baron's loyal sergeants is down, and the rest of the watch has quietly put its spears on the ground. The crowd comes up onto the dais. Nobody lays a hand on the Baron; they simply stand around him until he sits down on the edge of the boards like a tired child.
+if not flag.izek_dead and not flag.izek_told_truth
+set izek_dead
+quest izek_obsession izek_slain
+Narrator: Izek lies at the foot of the dais where he fell, his strange arm cooling in the drizzle.
+endif
+Father Lucian: Vargas. It's over. Go home to Lydia. Nobody is going to hurt you.
+Baron [sad]: But the festival. The sun. All will... it was all going to be...
+Urwin: Quiet, Vargas. Go home.
+set baron_fate = "deposed"
+Narrator: Lady Wachter steps up onto the dais the moment he steps down, smoothing her gloves, as if she had been waiting in the wings.
+Lady Wachter: Well. The town needs a steady hand, now that it has shaken off a foolish one. I am happy to offer...
+if flag.wachter_exposed
+-> wachter_read_out
+endif
+* [if flag.wachter_evidence] Read the crowd the letter from her cellar. -> wachter_read_out
+* [Persuasion DC 15] Ask her, in front of everyone, whose hand she means to rule with. -> wachter_shamed | wachter_slips
+* Let her talk. The council will deal with her. -> wachter_slips
+
+~ wachter_read_out
+set wachter_exposed
+set wachter_fate = "exposed"
+quest wachter_plot exposed
+Narrator: The letter is read aloud in the middle of the square, every courteous word of it, down to the single initial at the bottom. When it's finished, nobody is looking at Lady Wachter. Everyone is looking at the castle on its cliff, and then at her.
+Lady Wachter: You have no idea what you've done. He was going to be kind to you.
+Father Lucian: Take her to the lockup. Gently. Lock it well.
+-> town_close
+
+~ wachter_shamed
+set wachter_fate = "exposed"
+quest wachter_plot exposed
+Narrator: She opens her mouth to answer, and the answer is in her face before she can stop it: pride, and something like devotion. The crowd sees it. A woman spits at her feet. Then another.
+Lady Wachter: Fools. Very well. Lock me up, if it makes you feel brave. He'll be along.
+Father Lucian: Take her to the lockup. Gently. Lock it well.
+-> town_close
+
+~ wachter_slips
+set wachter_fate = "free"
+quest wachter_plot slipped_away
+Lady Wachter: No? Another time, then. There's always another festival.
+Narrator: She steps down, smiling, and the crowd lets her through, because nobody can say exactly what she has done. Yet.
+-> town_close
+
+~ town_close
+set vallaki_backed = "neither"
+set festival_over
+quest festival_of_the_blazing_sun town_triumph
+Urwin: So. Somebody has to keep the gates and the lamps and the grain. Not a baron. A council. Householders. Lucian to talk, because he's good at it. Me to listen, because I'm better at it.
+Father Lucian: And you, my friends, if you'll stay a while. There's a bed at the church and a seat on any bench in this town.
+Narrator: Somebody starts pulling down the bunting. Somebody else starts taking the stocks apart, slat by slat, for firewood. Nobody tells anybody to smile.
+if not flag.vallaki_milestone_reached
+set vallaki_milestone_reached
+xp milestone
+endif
+-> END
+
+# ---------------------------------------------------------------- Lady Lydia, in every ending
+
+~ lydia
+if flag.vallaki_pledge == "baron"
+Lydia Petrovna [smile]: Oh, you were marvellous. Vargas was so frightened. He's always frightened. He's never once been right before.
+elif flag.vallaki_pledge == "wachter"
+Lydia Petrovna [afraid]: Please don't let her hurt him. He isn't clever and he isn't kind, but he's mine, and he only wanted everyone to be happy.
+else
+Lydia Petrovna [sad]: They say he's not the Baron any more. He was so proud of being the Baron. I'll have to find him something else to be.
+endif
+-> END

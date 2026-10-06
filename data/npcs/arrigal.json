@@ -1,0 +1,19 @@
+{
+  "id": "arrigal",
+  "name": "Arrigal",
+  "title": "Vistana of the Lakeside Camp",
+  "summary": "A lean, cool-eyed Vistana who runs the camp outside Vallaki's walls while his brother Luvash drinks. Courteous to strangers, and very attentive to what they carry and who they travel with.",
+  "portrait": "arrigal",
+  "sprite": "arrigal",
+  "attitude": "indifferent",
+  "voice": "docs/voice/arrigal.md",
+  "monster": "bandit_captain",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "strahd_spy",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

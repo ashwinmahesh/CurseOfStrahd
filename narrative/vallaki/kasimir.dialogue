@@ -1,0 +1,61 @@
+# Kasimir Velikov, the dusk elf who lodges with the Vistani outside Vallaki (docs/voice/kasimir_velikov.md).
+# The Tarokka can name him as the party's ally (the Seer).
+
+~ start
+if not flag.kasimir_met
+set kasimir_met
+Narrator: Away from the fire, on a stool by a wagon with its shutters closed, sits an elf with ash-dark skin and white hair, mending a net he will never cast. He doesn't look up until you are close enough to touch.
+Kasimir: The strangers. The camp talks of nothing else. Sit, if you like. I am poor company. I have been poor company for a very long time.
+else
+Kasimir: Back again, to the saddest wagon in the camp. People will start to talk.
+endif
+-> menu
+
+~ menu
+* Who are you? -> who
+* Why do the Vistani shelter an elf? -> vistani
+* [Insight DC 13] What is he grieving for? -> grief_ok | grief_fail
+* [if flag.kasimir_sister_told] Tell us about the temple in the mountains. -> temple
+* [if tarokka.ally.npc == kasimir_velikov and not guest:kasimir_velikov] Madam Eva's cards named you as our ally. -> ally
+* Goodbye. -> bye
+
+~ who
+Kasimir: Kasimir Velikov. My people came to this valley long ago, the elves of the dusk, as guests of its lord. We stayed as his tenants. Now there are only a handful of us, none of us young, and there will never be another. That was his doing. And, I am afraid, a little of ours.
+interject species:elf: I have heard songs about the dusk elves. None of them end like that.
+Kasimir: The songs were written before the ending. They usually are.
+-> menu
+
+~ vistani
+Kasimir: Long ago a Vistana I had never met fell sick with a fever on the road, and I sat with her three nights until it broke. Her grandchildren still bring me soup. The Vistani forget nothing: not a kindness, not an insult.
+if flag.tser_pool_brawl_won
+Kasimir: Which is why, if I were you, I would not linger by their fire. They have heard what happened at Tser Pool.
+endif
+-> menu
+
+~ grief_ok
+set kasimir_sister_told
+Narrator: Grief, yes, but older and sharper than grief: the kind of guilt that has had centuries to settle into the bones.
+Kasimir: My sister, Patrina. Cleverer than me, prouder than me. She went up to the castle of her own will, to learn what its lord knew. Our own people stoned her for it, and I stood at the back and did not stop them.
+Kasimir: Her bones lie under his castle now. They say there is a temple high in the mountains, sealed in amber, where death itself can be argued with. One day I will go there and argue.
+interject class:cleric: Some doors are shut for a reason.
+Kasimir: I know. I have stood behind one for a very long time.
+-> menu
+
+~ grief_fail
+Narrator: He looks at the net in his hands, and his hands keep working. Whatever he is mourning, he has worn it smooth.
+-> menu
+
+~ temple
+Kasimir: Beyond the pass to the north, in the ice. I have read of it, and dreamed of it, and been too much of a coward to climb to it. If ever you go that way, I would like very much to go with you.
+-> menu
+
+~ ally
+Kasimir: Eva named me? Then the cards have a sense of humour, or a sense of justice. I have never been able to tell those apart.
+Kasimir: I will come. Somewhere along your road is the castle, and beneath it, my sister. And past it, perhaps, the temple. It is time I stopped mending nets.
+join kasimir_velikov
+quest find_the_ally found
+-> END
+
+~ bye
+Kasimir: Walk in the light while there is any. It goes quickly here.
+-> END

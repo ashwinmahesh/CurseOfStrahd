@@ -1,0 +1,18 @@
+{
+  "id": "luvash",
+  "name": "Luvash",
+  "title": "Headman of the Lakeside Camp",
+  "summary": "The headman of the Vistani camp outside Vallaki, a big, loud, grieving man drinking himself blind because his daughter Arabelle has vanished.",
+  "portrait": "luvash",
+  "sprite": "luvash",
+  "attitude": "indifferent",
+  "voice": "docs/voice/luvash.md",
+  "monster": "bandit_captain",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "arabelle",
+  "name": "Arabelle",
+  "title": "Daughter of Luvash",
+  "summary": "Luvash's seven-year-old daughter, solemn and unsettling, who sometimes says things that have not happened yet.",
+  "portrait": "arabelle",
+  "sprite": "arabelle",
+  "attitude": "indifferent",
+  "voice": "docs/voice/arabelle.md",
+  "monster": "commoner",
+  "guest": true,
+  "tags": [
+    "vistani",
+    "child",
+    "seer",
+    "tarokka_ally",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her",
+  "guest_build": {
+    "monster": "commoner",
+    "note": "A child; joins only if the Tarokka names her. Her gift is foresight, not fighting."
+  }
+}

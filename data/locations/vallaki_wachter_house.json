@@ -1,0 +1,531 @@
+{
+  "id": "vallaki_wachter_house",
+  "name": "Wachterhaus",
+  "region": "vallaki",
+  "summary": "Lady Fiona Wachter's townhouse: a hall of family portraits, a parlour set for a book club, a locked bedroom that something scratches at from inside, and, behind the study bookcase, a stair down.",
+  "text": "Polished floors, good candles, and the hush of a house where servants are trained not to hear things.",
+  "map": {
+    "rows": [
+      "########################",
+      "#.1.....#..............#",
+      "#.1.....#....=..=....=.#",
+      "#...........=....=.....#",
+      "#.......#.....=........#",
+      "#.......#...=...=......#",
+      "#.......#..............#",
+      "#.......###########.####",
+      "#.......#......#.......#",
+      "#.......#.==...#.....=.#",
+      "#..............#.....=.#",
+      "#.......#......#.......#",
+      "#.......#=.....#.......#",
+      "####.######.############",
+      "###########.############",
+      "#######.......==.......#",
+      "#######................#",
+      "#######................#",
+      "#######..=..=....=..=..#",
+      "########################"
+    ],
+    "theme": "townhouse",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "wachter_hall",
+      "name": "Hall",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          7,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "wachter_parlor",
+      "name": "Parlour",
+      "cells": [
+        [
+          9,
+          1
+        ],
+        [
+          22,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "wachter_study",
+      "name": "Study",
+      "cells": [
+        [
+          9,
+          8
+        ],
+        [
+          14,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "stella_room",
+      "name": "Locked bedroom",
+      "cells": [
+        [
+          16,
+          8
+        ],
+        [
+          22,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "cellar",
+      "name": "The cellar",
+      "cells": [
+        [
+          7,
+          14
+        ],
+        [
+          22,
+          18
+        ]
+      ],
+      "light": "dark"
+    }
+  ],
+  "spawns": {
+    "default": [
+      4,
+      12
+    ]
+  },
+  "exits": [
+    {
+      "id": "wachter_front_door",
+      "cell": [
+        4,
+        13
+      ],
+      "to": "vallaki",
+      "spawn": "from_wachter_house",
+      "label": "Out to the lane"
+    }
+  ],
+  "doors": [
+    {
+      "id": "wachter_parlor_door",
+      "cell": [
+        8,
+        3
+      ],
+      "label": "Parlour door"
+    },
+    {
+      "id": "wachter_study_door",
+      "cell": [
+        8,
+        10
+      ],
+      "label": "Study door"
+    },
+    {
+      "id": "stella_door",
+      "cell": [
+        19,
+        7
+      ],
+      "label": "Locked bedroom door",
+      "locked": true,
+      "lock_dc": 13
+    },
+    {
+      "id": "cellar_panel",
+      "cell": [
+        11,
+        13
+      ],
+      "label": "Panel behind the bookcase",
+      "secret_dc": 15
+    }
+  ],
+  "props": [
+    {
+      "id": "wachter_portraits",
+      "cell": [
+        1,
+        6
+      ],
+      "kind": "examine",
+      "label": "Family portraits",
+      "model": "painting_row"
+    },
+    {
+      "id": "book_club_chairs",
+      "cell": [
+        14,
+        4
+      ],
+      "kind": "examine",
+      "label": "A ring of chairs",
+      "model": "chairs"
+    },
+    {
+      "id": "tea_service",
+      "cell": [
+        21,
+        2
+      ],
+      "kind": "examine",
+      "label": "Tea service",
+      "model": "table_set"
+    },
+    {
+      "id": "wachter_desk",
+      "cell": [
+        10,
+        9
+      ],
+      "kind": "examine",
+      "label": "Lady Wachter's desk",
+      "model": "desk"
+    },
+    {
+      "id": "study_bookcase",
+      "cell": [
+        9,
+        12
+      ],
+      "kind": "search",
+      "label": "Bookcase",
+      "model": "shelves",
+      "search_dc": 13,
+      "flag": "wachter_panel_hint"
+    },
+    {
+      "id": "stella_bed",
+      "cell": [
+        21,
+        9
+      ],
+      "kind": "examine",
+      "label": "The girl on the bed",
+      "model": "bed"
+    },
+    {
+      "id": "dark_shrine",
+      "cell": [
+        14,
+        15
+      ],
+      "kind": "examine",
+      "label": "A shrine",
+      "model": "shrine_small"
+    },
+    {
+      "id": "strahd_letter",
+      "cell": [
+        15,
+        15
+      ],
+      "kind": "book",
+      "label": "A letter on the shrine",
+      "model": "letter",
+      "codex": "strahd_letter_to_wachter",
+      "flag": "wachter_evidence",
+      "text": "Dear Lady Wachter: Your last letter pleased me, as your letters always do. The Baron's festivals amuse me less each year; I leave the timing of his retirement in your capable hands. When the town is yours, keep the church's priest alive. I enjoy his sermons. With the warmest regard of your lord and neighbour, S."
+    }
+  ],
+  "containers": [
+    {
+      "id": "wachter_strongbox",
+      "cell": [
+        11,
+        9
+      ],
+      "label": "Desk drawer",
+      "model": "drawer",
+      "lock_dc": 14,
+      "gold": 45,
+      "items": [
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "flag": "wachter_desk_robbed"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        21,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        4,
+        6
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        10,
+        9
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        14,
+        15
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "lady_wachter",
+      "cell": [
+        14,
+        3
+      ],
+      "dialogue": "vallaki/lady_wachter:start",
+      "when": "not (flag.festival_begun and not flag.festival_over) and flag.vallaki_backed != \"wachter\" and flag.wachter_fate != \"stocks\" and flag.wachter_fate != \"exposed\" and flag.wachter_fate != \"exiled\""
+    }
+  ],
+  "encounters": [
+    {
+      "id": "wachter_cellar_cult",
+      "trigger": "enter_area:cellar",
+      "when": "night and flag.vallaki_pledge != \"wachter\" and not flag.wachter_cult_broken and not flag.festival_climax and level >= 5",
+      "text": "Seven heads turn from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
+      "monsters": [
+        {
+          "monster": "tough",
+          "cell": [
+            13,
+            16
+          ],
+          "name": "Nikolai Wachter"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            16
+          ],
+          "name": "Karl Wachter"
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            12,
+            17
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            17,
+            17
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            20,
+            17
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            16
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            8,
+            16
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            18,
+            15
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            15,
+            17
+          ],
+          "name": "Something from the shrine"
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_cult_broken",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "cult_broken"
+      }
+    },
+    {
+      "id": "wachter_cellar_cult",
+      "trigger": "enter_area:cellar",
+      "when": "night and flag.vallaki_pledge != \"wachter\" and not flag.wachter_cult_broken and not flag.festival_climax and level >= 4",
+      "text": "Seven heads turn from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
+      "monsters": [
+        {
+          "monster": "tough",
+          "cell": [
+            13,
+            16
+          ],
+          "name": "Nikolai Wachter"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            16
+          ],
+          "name": "Karl Wachter"
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            12,
+            17
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            17,
+            17
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            20,
+            17
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            16
+          ],
+          "name": "Hired sword"
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_cult_broken",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "cult_broken"
+      }
+    },
+    {
+      "id": "wachter_cellar_cult",
+      "trigger": "enter_area:cellar",
+      "when": "night and flag.vallaki_pledge != \"wachter\" and not flag.wachter_cult_broken and not flag.festival_climax",
+      "text": "Seven heads turn from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
+      "monsters": [
+        {
+          "monster": "tough",
+          "cell": [
+            13,
+            16
+          ],
+          "name": "Nikolai Wachter"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            16
+          ],
+          "name": "Karl Wachter"
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            12,
+            17
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            17,
+            17
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "wachter_cult_broken",
+      "quest": {
+        "id": "wachter_plot",
+        "stage": "cult_broken"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:vallaki_wachter_house"
+  },
+  "rest": "no",
+  "rest_text": "Not under this roof. Somewhere above you, slow and patient, something is scratching at a door."
+}

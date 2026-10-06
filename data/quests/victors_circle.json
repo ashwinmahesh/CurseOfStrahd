@@ -1,0 +1,49 @@
+{
+  "id": "victors_circle",
+  "name": "The Attic Circle",
+  "summary": "The Baron's son Victor is trying to leave Barovia by magic, and it is not going well for the servants.",
+  "giver": "lydia_petrovna",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Lady Lydia Petrovna says her son Victor hasn't come down from the attic in days, and two maids who carried up his meals have not come down at all.",
+      "objectives": [
+        "Look in on Victor in the mansion attic"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "Victor has drawn a teleportation circle on the attic floor, copied out of a stolen spellbook. He means to leave Barovia through it. Two servants already tried it for him.",
+      "objectives": [
+        "Talk Victor out of it, break the circle, or tell his father"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "persuaded",
+      "journal": "Victor agreed to leave the circle alone. He hasn't forgiven us, but he's alive to hold the grudge.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "broken",
+      "journal": "We scuffed the circle's runes past mending. Victor will need years to draw another, if he can find the nerve.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "reported",
+      "journal": "We told the Baron about his son's attic. Victor's spellbook is locked in his father's study, and Victor hates us very precisely.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "vanished",
+      "journal": "Victor stepped into his circle the day his father fell. There was a flash and a smell of hot iron. There is no Victor now.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+# The Festival of the Blazing Sun (docs/regions/vallaki.md §4): the herald by the dais, the wicker sun (the night
+# before: soak it for Lady Wachter or guard it for the Baron), the crowd, and the Baron's speech, which turns into
+# the fight that decides who rules Vallaki. The winner speaks next (aftermath.dialogue).
+
+~ herald
+if flag.festival_over
+-> herald_after
+endif
+if flag.festival_begun
+Festival Herald: Stand where the Baron can see you, please! He likes to see faces. Smiling ones, ideally.
+-> END
+endif
+Festival Herald [smile]: Hear ye! The Festival of the Blazing Sun! Here, at noon, by order of the Baron! A sun of wicker taller than a house, set alight to remind the sky what it's for!
+if night
+Festival Herald: Not now, obviously. Noon. It's very dark to be announcing things in. Come back when there's a sky.
+-> END
+endif
+-> herald_menu
+
+~ herald_menu
+* What happens at a festival? -> what
+* How often does the Baron hold these? -> how_often
+* [if flag.baron_met or flag.lady_wachter_met or flag.lucian_met] We're ready. Let the festival begin. -> begin
+* [if not flag.baron_met and not flag.lady_wachter_met and not flag.lucian_met] We're ready. Let the festival begin. -> not_yet
+* Not yet. -> END
+
+~ what
+Festival Herald: The Baron speaks. The sun is lit. Everyone cheers. Then everyone goes home and is happy until the next one, by order.
+interject tag:curious: And if somebody doesn't cheer?
+Festival Herald: Then they cheer in the stocks, where we can all hear them better.
+-> herald_menu
+
+~ how_often
+Festival Herald: Every week, sir, or madam. Last week was the Festival of the Returning Swallows. No swallows came. It was still a great success; the Baron said so.
+-> herald_menu
+
+~ not_yet
+Festival Herald: Ah. You haven't paid your respects to the Baron yet. He'll want to know who's cheering. The big house on the north side of the square; you can't miss it, it has his face on it.
+-> END
+
+~ begin
+set festival_begun
+quest festival_of_the_blazing_sun begun
+Narrator: Bells. The watch goes door to door with clubs and ribbons, and Vallaki comes out to be happy. Within the hour the square is full, shoulder to shoulder, nobody speaking much above a murmur.
+if guest:ireena
+Ireena: Father used to call the Baron's festivals the bravest thing in Barovia. He meant it as a joke. I think he meant it as a joke.
+endif
+Festival Herald: Make way! Make way for the Baron!
+-> END
+
+~ herald_after
+if flag.vallaki_backed == "baron"
+Festival Herald [smile]: Next festival on the seventh day! The Festival of Loyalty! Attendance even more required than usual!
+elif flag.vallaki_backed == "wachter"
+Festival Herald: No more festivals, Lady Wachter says. I'm to announce the curfew instead. It doesn't need much announcing. It's dark.
+else
+Festival Herald: The council's asked me to announce the market days now. Turns out people like hearing those. Nobody's ever thanked me for a festival.
+endif
+-> END
+
+# ---------------------------------------------------------------- The wicker sun (a prop in the square)
+
+~ wicker_sun
+if flag.festival_over
+-> sun_after
+endif
+if flag.festival_begun
+Narrator: The wicker sun towers over the crowd on its pole, waiting for its torch.
+-> END
+endif
+Narrator: A great sun woven of willow and straw, taller than a house, lashed to a pole in the middle of the square and ringed with paper rays. Somebody has painted it a very hopeful yellow.
+if flag.festival_sun_soaked
+Narrator: The straw is dark with water to the heart. It will not burn at noon, whatever the Baron shouts at it.
+-> END
+endif
+if flag.festival_sun_guarded
+Narrator: You've done what you can for it. It will burn, if anything in Barovia still does.
+-> END
+endif
+if flag.vallaki_pledge == "wachter" and not night
+Narrator: Lady Wachter wants it wet. Not now, in daylight, with the watch walking past it. Tonight.
+endif
+if flag.vallaki_pledge == "baron" and not night
+Narrator: The Baron wants it to burn. If anyone means to spoil it, they'll come in the dark. So should you.
+endif
+* [if flag.vallaki_pledge == "wachter" and night] Soak the straw, as Lady Wachter asked. -> soak
+* [if flag.vallaki_pledge == "baron" and night] Keep watch over the sun until morning. -> keep_watch
+* Leave it be. -> END
+
+~ soak
+set festival_sun_soaked
+Narrator: A bucket from the well, then another, then forty. The watchman posted in the square is asleep in a doorway with a festival ribbon over his eyes, exactly as Lady Wachter promised. By the time the sky greys, the straw is soaked to the core.
+interject tag:cheerful: We drowned a sun. I've never said that sentence before. I don't think anyone has.
+interject tag:devout: I have stood on hills to watch the sun come up. I have not felt this before about putting one out.
+-> END
+
+~ keep_watch
+Narrator: You take the watch in turns beside the pole. Past midnight two figures cross the square with buckets, hoods up, livery buttons catching the lamplight. Wachterhaus livery.
+* [Intimidation DC 12] Step out where they can see your blades. -> scare_ok | scare_fail
+* Seize them for the Baron. -> seize
+
+~ scare_ok
+set festival_sun_guarded
+Narrator: The buckets go down. The servants go back the way they came, a good deal faster. The sun sleeps dry.
+-> END
+
+~ scare_fail
+Narrator: They hesitate, then come on regardless; somebody is paying them more than you frighten them. You meet them at the pole.
+-> seize
+
+~ seize
+set festival_sun_guarded
+set wachter_saboteur_caught
+Narrator: One servant bolts. The other is slower, and fat with Lady Wachter's dinners. He sits in the mud, bucket in his lap, and tells you everything he knows, which is that he was told to make the sun wet and not to ask why.
+interject tag:blunt: Witness. The Baron will want him.
+Narrator: The watch takes him at dawn. The sun sleeps dry.
+-> END
+
+~ sun_after
+if flag.vallaki_backed == "baron"
+Narrator: The sun's ashes have been swept into a tidy pile with a sign on a stick: KEEP FOR THE NEXT FESTIVAL.
+elif flag.vallaki_backed == "wachter"
+Narrator: The black, sodden sun still stands on its pole. Lady Wachter has ordered it left where it is, as a reminder of what the Baron's light was worth.
+else
+Narrator: The council has taken the half-burnt sun down and split it for kindling. Three families will be warm tonight on the Baron's festival, which is more than any festival did before.
+endif
+-> END
+
+# ---------------------------------------------------------------- The crowd during the festival
+
+~ crowd_lydia
+Lydia Petrovna [smile]: Isn't it wonderful? I stitched every ray myself. Vargas says it's the best sun yet. He says that every week, but this week I believe him.
+-> END
+
+~ crowd_izek
+Izek: Stand back from the Baron.
+-> END
+
+~ crowd_wachter
+Lady Wachter: Watch closely, my dears. The best part of any festival is the end.
+-> END
+
+~ crowd_lucian
+Father Lucian: Stay near me, if you would. When Vargas is frightened, he shouts. When he shouts, Izek moves. I would like someone between Izek and the crowd.
+-> END
+
+~ crowd_urwin
+Urwin: Eyes open. I've seen this festival before. It ends the same way every time.
+-> END
+
+# ---------------------------------------------------------------- The speech and the turn
+
+~ speech
+Narrator: The Baron climbs onto the dais in a sash and a gold chain, Lady Lydia beside him in a dress she certainly sewed herself. Behind them the wicker sun stands on its pole: straw, willow and hope.
+if not flag.izek_dead and not flag.izek_told_truth
+Narrator: Izek Strazni stands at the Baron's shoulder with his scaled arm folded under the ordinary one, watching the crowd the way a dog watches sheep.
+endif
+Baron [smile]: People of Vallaki! Another week, and here we stand! Safe! Together! Behind our walls the night can only knock, and we do not answer!
+Baron: Today we light the Blazing Sun, so that the sky remembers what it's for. And when it burns, you will cheer, because you are happy. All will be well!
+Narrator: The crowd cheers on cue. The watch walks among them, listening for anyone cheering too quietly.
+if guest:ireena and not flag.izek_dead and not flag.izek_told_truth
+Narrator: Izek's eyes stop on Ireena and stay there, through the whole of the cheer and after it.
+endif
+if flag.baron_betrayed
+Baron: And my marshals, there in the front! My loyal... where are your sashes? Why aren't you wearing your sashes?
+endif
+Baron: Light the sun!
+if flag.festival_sun_guarded
+-> sun_blazes
+elif flag.festival_sun_soaked
+-> sun_dies
+endif
+-> sun_smoulders
+
+~ sun_blazes
+Narrator: Torches go to the straw. You kept it dry through the night, and it shows: the wicker catches with a roar, and for a few heartbeats there is a sun in Vallaki, gold and enormous, and the faces in the square are lit with something very close to joy.
+Baron [smile]: You see? You SEE! All is well!
+interject tag:devout: Oh. Oh, look at that.
+-> turn
+
+~ sun_dies
+Narrator: Torches go to the straw. The straw hisses, steams and sulks. Somebody soaked it to the heart in the night, and it shows. The sun sits on its pole, black and dripping, and the cheer dies in a thousand throats.
+Baron [angry]: Light it! Light it, I said! More torches! Why is it WET?
+-> turn
+
+~ sun_smoulders
+Narrator: Torches go to the straw. A drizzle has been falling since dawn; the sun catches at one edge, smokes, goes out, catches, goes out. Somebody in the crowd laughs, and then very badly wishes they hadn't.
+Baron [angry]: Who laughed? Izek! Who laughed?
+-> turn
+
+~ turn
+if flag.vallaki_pledge == "baron"
+-> baron_side
+elif flag.vallaki_pledge == "wachter"
+-> wachter_side
+elif flag.vallaki_pledge == "town"
+-> town_side
+endif
+-> crossroads
+
+~ crossroads
+Narrator: It happens all at once. The Baron is shouting for the watch. Lady Wachter steps out of the crowd with her chin up and armed men behind her. Father Lucian pushes toward the dais from the other side, hands raised, calling for calm.
+Lady Wachter: Vargas. Enough. Look at them. Look at your happy town.
+Baron [angry]: Treason! At the festival! Izek, seize her!
+Father Lucian: Nobody seize anybody! Please! These are your neighbours!
+Narrator: Every eye in the square that isn't on the Baron is on you: the armed strangers. Whatever you do now, Vallaki will remember it.
+* Stand with the Baron. -> pick_baron
+* Stand with Lady Wachter. -> pick_wachter
+* Stand with the people, against both of them. -> pick_town
+
+~ pick_baron
+set vallaki_pledge = "baron"
+quest festival_of_the_blazing_sun baron_side
+-> baron_side
+
+~ pick_wachter
+set vallaki_pledge = "wachter"
+quest festival_of_the_blazing_sun wachter_side
+-> wachter_side
+
+~ pick_town
+set vallaki_pledge = "town"
+quest festival_of_the_blazing_sun town_side
+-> town_side
+
+# The Baron's side: Lady Wachter's coup comes out of the crowd.
+~ baron_side
+if flag.wachter_exposed
+Baron: And now, my people, a gift! A festival needs a villain, and we have one! Fiona Wachter, your letters to the castle have been read!
+Lady Wachter [sly]: By a fat man who moves his lips. Very well, Vargas. We'll do it now, then.
+elif flag.wachter_saboteur_caught
+Baron: And I know who tried to drown my sun! Your servant sang like a lark, Fiona!
+Lady Wachter: Then let him sing at your funeral.
+else
+Lady Wachter: Vargas, you sad little man. Your people don't love you, they fear your watch, and your watch is very small. Now, my dears.
+endif
+if flag.wachter_cult_broken
+Lady Wachter: You took my sons from me in my own cellar. My purse you left alone. Gentlemen, you have been paid.
+else
+Narrator: Nikolai and Karl Wachter draw at their mother's side, and all through the crowd men who were cheering a moment ago are drawing too.
+endif
+if flag.wachter_betrayed
+Lady Wachter [angry]: And my new friends at his side. You drank my tea. I hope he gave you something better than biscuits.
+endif
+interject tag:blunt: Her people. Count them as they come.
+interject tag:loyal: Behind me, Baron.
+set festival_climax
+combat festival_coup
+
+# Lady Wachter's side: she calls the Baron down, and the Baron calls the watch.
+~ wachter_side
+if flag.festival_sun_guarded
+Lady Wachter: Your sun burns, Vargas. Look around you. Is anyone warmer?
+else
+Lady Wachter: Vargas. Enough. Your sun won't burn and your people won't smile. They're done pretending, and so am I.
+endif
+Lady Wachter: People of Vallaki: no more festivals. No more stocks for a sour face. Peace, with the lord who has always really ruled us, and an end to this fool's shouting.
+Baron [angry]: Izek! Sergeants! The stocks for her! For all of them!
+if not flag.izek_dead and not flag.izek_told_truth
+Narrator: Izek comes down off the dais, and his strange arm is already smoking at the knuckles.
+endif
+Lady Wachter: My friends. I believe this is where you come in.
+interject class:cleric: Let it be quick, then, and let nobody in the crowd be hurt.
+set festival_climax
+combat festival_loyalists
+
+# The town's side: the Baron turns on the crowd and the priest stands in the way.
+~ town_side
+Baron [angry]: Gloom! Gloom in my square, on my festival! Warden! Bring out the malcontents! If my people won't cheer for the sun, they can cheer for the lash!
+if flag.malcontents_freed
+Narrator: The lockup warden spreads his hands. The lockup's empty, he calls, and somehow does not sound sorry.
+endif
+Father Lucian: No. No, Vargas. Not today, and not again.
+if flag.bones_returned
+Narrator: The crowd parts for the priest without being asked. They know who brought St. Andral home, and who stood beside him when he did.
+endif
+Urwin: You heard him. Go home, Vargas.
+if not flag.izek_dead and not flag.izek_told_truth
+Baron: Izek! Teach the priest to cheer!
+Narrator: Izek comes down off the dais. His arm catches fire to the elbow, a real fire, and the crowd falls back from him. He walks straight at Father Lucian.
+else
+Baron: Sergeants! Clear my square!
+endif
+interject class:cleric: Behind me, Father. You've done your part.
+interject tag:blunt: Hold the line here. Nobody gets past to the crowd.
+set festival_climax
+combat festival_izek_rampage

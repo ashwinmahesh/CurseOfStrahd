@@ -1,0 +1,44 @@
+# Gunther Arasek of the Arasek Stockyard, at his stall in the square (docs/voice/gunther_arasek.md).
+
+~ start
+if not flag.arasek_met
+set arasek_met
+Narrator: A broad man in a leather apron stands behind a stall of blades, mail and coils of rope, with a ledger chained to the counter so nobody can walk off with the prices.
+Gunther: Arasek Stockyard. Steel, leather, rope, grain. Everything that comes into Vallaki on a cart comes past me first, and the wolves get a look at it on the way.
+else
+Gunther: Back for more? Good. Steel doesn't sell itself. It mostly sits there being heavy.
+endif
+* Show us what you have. -> trade
+* Why are your prices so steep? -> prices
+* What's the news on the roads? -> roads
+* Goodbye. -> END
+
+~ trade
+shop
+Gunther: Pleasure. Bring it back dented and I'll buy it for half. Bring it back bloody and I'll buy it for less.
+-> END
+
+~ prices
+Gunther: Twice what you'd pay over the mountains. Every cart that reaches us loses a horse or a driver on the way, some months both. My sister Yelena keeps the books, and the books say twice.
+interject tag:curious: Could the books say once and a half?
+Gunther: You can ask Yelena. I'd sell you a helmet first.
+if flag.bildrath_robbed
+Gunther: You've come from the village, eh? Bildrath's prices? Ten times. And I hear somebody helped themselves to his strongbox. Not that I'd ever think it of you.
+endif
+-> start_menu
+
+~ start_menu
+* Show us what you have. -> trade
+* What's the news on the roads? -> roads
+* Goodbye. -> END
+
+~ roads
+Gunther: West road to Krezk: wolves, and worse past the river. The lake road: fishermen who've stopped catching anything and gone strange with it. East road, the way you came: an old windmill nobody sane stops at.
+if flag.bonegrinder_rumor
+interject tag:blunt: The windmill. We heard the old pastry woman bakes there.
+Gunther: Then you heard right. My carters won't water their horses within sight of it. Horses go in. Horses don't come out.
+endif
+if flag.mists_wolves_cowed
+Gunther: You came over the pass and the wolves let you by? Huh. They don't let my carts by.
+endif
+-> start_menu

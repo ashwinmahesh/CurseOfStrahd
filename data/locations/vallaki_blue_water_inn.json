@@ -1,0 +1,396 @@
+{
+  "id": "vallaki_blue_water_inn",
+  "name": "The Blue Water Inn",
+  "region": "vallaki",
+  "summary": "Vallaki's inn: a warm taproom, a careful kitchen, rooms upstairs, and in the stable yard a gaudy carnival wagon its owner lets nobody near.",
+  "text": "A taproom with a long bar and a fire that is actually lit. Through the kitchen, the guest rooms; through the back door, the stable yard and a painted wagon.",
+  "map": {
+    "rows": [
+      "##########################",
+      "#...........#............#",
+      "#.=====.....#..........==#",
+      "#................==......#",
+      "#...........#............#",
+      "...==...==..####.#########",
+      "#...........#=.....#....=#",
+      "#...........#=.....#....=#",
+      "#..==...==...............#",
+      "#...........#......#.....#",
+      "#...........#=.....#.=...#",
+      "######.###################",
+      "#........................#",
+      "#........==....#######...#",
+      "#....................#...#",
+      "#.==...........#######...#",
+      "#........................#",
+      "##########################"
+    ],
+    "theme": "tavern",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "taproom",
+      "name": "Taproom",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          11,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "inn_kitchen",
+      "name": "Kitchen",
+      "cells": [
+        [
+          13,
+          1
+        ],
+        [
+          24,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "guest_rooms",
+      "name": "Guest rooms",
+      "cells": [
+        [
+          13,
+          6
+        ],
+        [
+          18,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "rictavio_room",
+      "name": "Rictavio's room",
+      "cells": [
+        [
+          20,
+          6
+        ],
+        [
+          24,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "wagon_yard",
+      "name": "Stable yard",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          24,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "rictavio_wagon",
+      "name": "Inside the wagon",
+      "cells": [
+        [
+          16,
+          14
+        ],
+        [
+          20,
+          14
+        ]
+      ],
+      "light": "dark"
+    }
+  ],
+  "spawns": {
+    "default": [
+      1,
+      5
+    ]
+  },
+  "exits": [
+    {
+      "id": "inn_front_door",
+      "cell": [
+        0,
+        5
+      ],
+      "to": "vallaki",
+      "spawn": "from_inn",
+      "label": "Out to the street"
+    }
+  ],
+  "doors": [
+    {
+      "id": "kitchen_door",
+      "cell": [
+        12,
+        3
+      ],
+      "label": "Kitchen door"
+    },
+    {
+      "id": "guest_hall_door",
+      "cell": [
+        12,
+        8
+      ],
+      "label": "To the guest rooms"
+    },
+    {
+      "id": "kitchen_back_door",
+      "cell": [
+        16,
+        5
+      ],
+      "label": "Kitchen passage"
+    },
+    {
+      "id": "rictavio_door",
+      "cell": [
+        19,
+        8
+      ],
+      "label": "Rictavio's door",
+      "locked": true,
+      "lock_dc": 15
+    },
+    {
+      "id": "yard_door",
+      "cell": [
+        6,
+        11
+      ],
+      "label": "Back door to the yard"
+    },
+    {
+      "id": "wagon_door",
+      "cell": [
+        15,
+        14
+      ],
+      "label": "Wagon door",
+      "locked": true,
+      "lock_dc": 20,
+      "flag": "rictavio_wagon_opened"
+    }
+  ],
+  "props": [
+    {
+      "id": "inn_hearth",
+      "cell": [
+        11,
+        6
+      ],
+      "kind": "examine",
+      "label": "The hearth",
+      "model": "hearth"
+    },
+    {
+      "id": "inn_bar",
+      "cell": [
+        4,
+        2
+      ],
+      "kind": "examine",
+      "label": "The bar",
+      "model": "bar"
+    },
+    {
+      "id": "raven_carving",
+      "cell": [
+        0,
+        2
+      ],
+      "kind": "examine",
+      "label": "Carving over the door",
+      "model": "relief"
+    },
+    {
+      "id": "inn_wine_casks",
+      "cell": [
+        23,
+        4
+      ],
+      "kind": "examine",
+      "label": "Wine casks",
+      "model": "barrel"
+    },
+    {
+      "id": "rictavio_trunk_marks",
+      "cell": [
+        21,
+        10
+      ],
+      "kind": "examine",
+      "label": "Rictavio's sea chest",
+      "model": "trunk"
+    },
+    {
+      "id": "rictavio_wagon_outside",
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "examine",
+      "label": "Rictavio's carnival wagon",
+      "model": "wagon"
+    },
+    {
+      "id": "wagon_cage",
+      "cell": [
+        20,
+        14
+      ],
+      "kind": "examine",
+      "label": "A covered cage",
+      "model": "cage"
+    },
+    {
+      "id": "van_richten_notes",
+      "cell": [
+        18,
+        14
+      ],
+      "kind": "book",
+      "label": "A battered journal",
+      "model": "book",
+      "codex": "rictavio_journal",
+      "flag": "rictavio_journal_read",
+      "text": "A hunter's journal, in a small, exact hand. Lists of weaknesses: running water, a threshold not crossed without leave, sunlight, a stake through the heart. A page of notes on 'the lord of this valley' that stops halfway down. Inside the cover, a bookplate: from the library of Dr. R. van Richten. Below it, in fresher ink: Never again by that name. Never again."
+    }
+  ],
+  "containers": [
+    {
+      "id": "wagon_lockbox",
+      "cell": [
+        16,
+        14
+      ],
+      "label": "Iron-bound lockbox",
+      "model": "strongbox",
+      "lock_dc": 18,
+      "items": [
+        {
+          "id": "holy_water",
+          "qty": 3
+        },
+        {
+          "id": "dagger",
+          "qty": 2
+        }
+      ],
+      "gold": 25
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        11,
+        6
+      ],
+      "kind": "fire",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        4,
+        2
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        23,
+        2
+      ],
+      "kind": "fire",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        22,
+        8
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "urwin_martikov",
+      "cell": [
+        4,
+        1
+      ],
+      "dialogue": "vallaki/martikovs:urwin",
+      "when": "not (flag.festival_begun and not flag.festival_over)"
+    },
+    {
+      "npc": "danika_martikov",
+      "cell": [
+        20,
+        3
+      ],
+      "dialogue": "vallaki/martikovs:danika"
+    },
+    {
+      "npc": "rictavio",
+      "cell": [
+        9,
+        6
+      ],
+      "dialogue": "vallaki/rictavio:start",
+      "when": "day and not flag.rictavio_gone and not guest:rictavio and (flag.vallaki_backed != \"wachter\" or tarokka.ally.npc == rictavio)"
+    },
+    {
+      "npc": "rictavio",
+      "cell": [
+        22,
+        8
+      ],
+      "dialogue": "vallaki/rictavio:start",
+      "when": "not flag.rictavio_gone and not guest:rictavio and (flag.vallaki_backed != \"wachter\" or tarokka.ally.npc == rictavio)"
+    },
+    {
+      "npc": "ireena",
+      "cell": [
+        15,
+        8
+      ],
+      "dialogue": "vallaki/ireena:at_inn",
+      "when": "flag.ireena_sanctuary == \"inn\" and not guest:ireena"
+    },
+    {
+      "npc": "ismark",
+      "cell": [
+        16,
+        9
+      ],
+      "dialogue": "vallaki/ireena:ismark_at_inn",
+      "when": "flag.ismark_guards_ireena and flag.ireena_sanctuary == \"inn\" and not guest:ismark"
+    }
+  ],
+  "narration": {
+    "enter": "enter:vallaki_blue_water_inn"
+  },
+  "rest": "safe"
+}

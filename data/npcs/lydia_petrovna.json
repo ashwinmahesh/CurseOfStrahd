@@ -1,0 +1,19 @@
+{
+  "id": "lydia_petrovna",
+  "name": "Lydia Petrovna",
+  "title": "Lady of Vallaki, the Baron's wife",
+  "summary": "The Baron's wife, a bright, nervous woman who sews every festival banner herself and has decided that if she smiles hard enough, nothing bad can happen.",
+  "portrait": "lydia_petrovna",
+  "sprite": "lydia_petrovna",
+  "attitude": "indifferent",
+  "voice": "docs/voice/lydia_petrovna.md",
+  "monster": "noble",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "noble",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

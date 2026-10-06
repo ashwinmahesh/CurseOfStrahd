@@ -1,0 +1,97 @@
+# Milivoj, gravedigger of St. Andral's (docs/voice/milivoj.md). He sold the saint's bones to Henrik.
+
+~ start
+if flag.milivoj_confessed
+-> after
+endif
+if not flag.milivoj_met
+set milivoj_met
+Narrator: A big young man in a sheepskin is digging a grave with a good deal more force than the earth requires. He doesn't look up.
+Milivoj: Grave's not for you. Unless you keep standing on the edge of it.
+else
+Milivoj: You again. Still digging. Still not for you.
+endif
+* Who's the grave for? -> grave
+* [if flag.bones_theft_known] The saint's bones. You know where they went. -> accuse
+* Goodbye. -> END
+
+~ grave
+Milivoj: Old Bogdana, from the lane by the lockup. Fever. That's what the priest wrote down, anyway. It's always fever, or wolves, or nobody knows. I dig the same size hole for all three.
+interject tag:curious: Do you like the work?
+Milivoj: It pays. Barely. Nothing else in this town pays at all.
+-> start_menu
+
+~ start_menu
+* [if flag.bones_theft_known] The saint's bones. You know where they went. -> accuse
+* Goodbye. -> END
+
+~ accuse
+Milivoj [angry]: Says who? The priest? He'd never say that. He wouldn't.
+* [Insight DC 12] He's lying, and he's ashamed of it. -> insight_ok | insight_fail
+* [Intimidation DC 13] Take him by the collar. -> scare_ok | scare_fail
+* [Persuasion DC 13] Nobody's going to hang you. Just tell us the truth. -> plead_ok | plead_fail
+* [if flag.lid_scrapes_found] Only someone who knew the trick of the lid could open it without breaking it. -> confess
+* We'll be back. -> END
+
+~ insight_ok
+Narrator: He can't hold your eyes. His hands go white on the spade handle, and there's dirt under his nails that didn't come from this grave: it's pale and dry, like dust from a stone box.
+Narrator: You say so. The fight goes out of him all at once.
+-> confess
+
+~ insight_fail
+Narrator: He glares at you over the spade, and either he's honest or he's angrier than he is guilty. You can't tell which.
+-> accuse
+
+~ scare_ok
+Milivoj [afraid]: All right! All right. Let go. I'll tell you.
+-> confess
+
+~ scare_fail
+Milivoj [angry]: Go on, then. Hit me. You'll have to dig your own hole after; I'm not doing it for free.
+-> accuse
+
+~ plead_ok
+Narrator: He looks at you a long while. Then he sits down on the edge of the grave and puts the spade across his knees.
+-> confess
+
+~ plead_fail
+Milivoj: Nobody hangs in Vallaki. They go in the stocks and then they go hungry. I've done hungry. I'm not going back.
+-> accuse
+
+~ confess
+set milivoj_confessed
+quest bones_of_st_andral milivoj_confessed
+Milivoj [sad]: I sold them. Henrik. The coffin maker. Twenty gold. He came to me at night, shaking all over, and asked for the saint by name. Said someone made him ask. I didn't ask who.
+Milivoj: Twenty gold is a winter. I've got two brothers and a sister and a roof that leaks onto all of them. The saint's dead. They're not. That's how I did the sum.
+interject class:cleric: That's a hard sum. I won't pretend it isn't.
+* We won't tell Father Lucian it was you. -> shield
+* Father Lucian deserves to know. -> no_shield
+* [if gold >= 10] (Give him ten gold.) For your brothers and sister. -> kindness
+
+~ shield
+set milivoj_shielded
+attitude milivoj friendly
+Milivoj: You'd do that? Why?
+interject tag:cheerful: Because you'll put it right yourself, one day. Won't you?
+Milivoj: ...Yeah. Yeah, I will.
+-> END
+
+~ no_shield
+Milivoj [sad]: He does. He always does. Tell him I'm sorry. Tell him I'll dig for nothing till it's paid back.
+-> END
+
+~ kindness
+gold -10
+attitude milivoj friendly
+Milivoj: I don't... nobody gives anybody anything here. Thanks. Go and see Henrik. Go in daylight. Whatever's in his shop, it doesn't like daylight.
+-> END
+
+~ after
+if flag.bones_returned
+Milivoj: The saint's home, they say. I went down and looked. I put a candle by him. I didn't know what else to do.
+elif flag.vallaki_backed == "neither"
+Milivoj: Council's paying me to dig a ditch for the new latrines. First honest money in a year. Smells worse, pays better.
+else
+Milivoj: Did you go to Henrik's? Go in daylight.
+endif
+-> END

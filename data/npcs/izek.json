@@ -1,0 +1,19 @@
+{
+  "id": "izek",
+  "name": "Izek Strazni",
+  "title": "The Baron's Enforcer",
+  "summary": "The Baron's bailiff and fist, a scarred brute with one ordinary arm and one that is scaled, clawed and hot to the touch. He has dreamed of a red-haired woman since he was a boy.",
+  "portrait": "izek",
+  "sprite": "izek",
+  "attitude": "indifferent",
+  "voice": "docs/voice/izek.md",
+  "monster": "warrior_veteran",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "enforcer",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

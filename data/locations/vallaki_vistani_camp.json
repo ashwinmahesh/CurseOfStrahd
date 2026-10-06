@@ -1,0 +1,320 @@
+{
+  "id": "vallaki_vistani_camp",
+  "name": "The Vistani Camp",
+  "region": "vallaki",
+  "summary": "A ring of painted Vistani wagons outside Vallaki's west gate, between the road and the black water of Lake Zarovich. Music by night, horses by day, and one wagon with its lamp unlit.",
+  "text": "Wagons in a ring around a fire, horses on a line, the lake at the camp's back with a rotten jetty and reeds. The road runs back east to Vallaki's gate.",
+  "map": {
+    "rows": [
+      "################################",
+      "#                 11           #",
+      "#                 11           #",
+      "#                 11           #",
+      "#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#",
+      "#.~~~~~~~~~~~~~~~~~~~~~~~~~~~~.#",
+      "#..............................#",
+      "#..............................#",
+      "#..#####................#####..#",
+      "#..#####................#####..#",
+      "#..#####................#####..#",
+      "#.............................##",
+      "##.............==.............##",
+      "##.............................#",
+      "#..#####................#####..#",
+      "#..#####................#####..#",
+      "#..#####................#####..#",
+      "#..............................#",
+      "#..........===.................#",
+      "#..............................#",
+      "#..............................#",
+      "###############..###############"
+    ],
+    "theme": "forest",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "lakeshore",
+      "name": "Lakeshore",
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          30,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "luvash_wagon",
+      "name": "Luvash's wagon",
+      "cells": [
+        [
+          1,
+          7
+        ],
+        [
+          9,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "camp_fire",
+      "name": "Campfire",
+      "cells": [
+        [
+          10,
+          7
+        ],
+        [
+          21,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "arrigal_wagon",
+      "name": "Arrigal's wagon",
+      "cells": [
+        [
+          22,
+          7
+        ],
+        [
+          30,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "camp_edge",
+      "name": "Camp edge",
+      "cells": [
+        [
+          1,
+          18
+        ],
+        [
+          30,
+          21
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      15,
+      20
+    ],
+    "from_town": [
+      15,
+      20
+    ]
+  },
+  "exits": [
+    {
+      "id": "camp_road",
+      "cell": [
+        15,
+        21
+      ],
+      "to": "vallaki",
+      "spawn": "from_camp",
+      "label": "Back to Vallaki's west gate"
+    },
+    {
+      "id": "camp_road_2",
+      "cell": [
+        16,
+        21
+      ],
+      "to": "vallaki",
+      "spawn": "from_camp",
+      "label": "Back to Vallaki's west gate"
+    }
+  ],
+  "props": [
+    {
+      "id": "camp_fire_pit",
+      "cell": [
+        15,
+        12
+      ],
+      "kind": "examine",
+      "label": "The campfire",
+      "model": "campfire"
+    },
+    {
+      "id": "luvash_wagon_door",
+      "cell": [
+        5,
+        10
+      ],
+      "kind": "examine",
+      "label": "Luvash's wagon",
+      "model": "wagon"
+    },
+    {
+      "id": "arrigal_wagon_door",
+      "cell": [
+        26,
+        10
+      ],
+      "kind": "examine",
+      "label": "Arrigal's wagon",
+      "model": "wagon"
+    },
+    {
+      "id": "jetty",
+      "cell": [
+        18,
+        3
+      ],
+      "kind": "examine",
+      "label": "Rotten jetty",
+      "model": "jetty"
+    },
+    {
+      "id": "lake_view",
+      "cell": [
+        10,
+        3
+      ],
+      "kind": "examine",
+      "label": "Lake Zarovich"
+    },
+    {
+      "id": "horse_line",
+      "cell": [
+        12,
+        18
+      ],
+      "kind": "examine",
+      "label": "Horse line",
+      "model": "fence"
+    },
+    {
+      "id": "drag_marks",
+      "cell": [
+        9,
+        6
+      ],
+      "kind": "search",
+      "label": "Marks in the mud",
+      "search_dc": 12,
+      "flag": "arabelle_tracks_found"
+    }
+  ],
+  "containers": [
+    {
+      "id": "arrigal_chest",
+      "cell": [
+        26,
+        9
+      ],
+      "label": "Arrigal's strongbox",
+      "model": "strongbox",
+      "lock_dc": 18,
+      "gold": 40,
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        }
+      ],
+      "flag": "arrigal_chest_opened"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        15,
+        12
+      ],
+      "kind": "fire",
+      "bright_ft": 20,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        5,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 5,
+      "dim_ft": 10
+    },
+    {
+      "cell": [
+        26,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "arrigal",
+      "cell": [
+        24,
+        12
+      ],
+      "dialogue": "vallaki/vistani_camp:arrigal",
+      "approach": 9
+    },
+    {
+      "npc": "luvash",
+      "cell": [
+        8,
+        12
+      ],
+      "dialogue": "vallaki/vistani_camp:luvash"
+    },
+    {
+      "npc": "vistana",
+      "cell": [
+        14,
+        13
+      ],
+      "dialogue": "vallaki/vistani_camp:vistana"
+    },
+    {
+      "npc": "arabelle",
+      "cell": [
+        9,
+        13
+      ],
+      "dialogue": "vallaki/vistani_camp:arabelle",
+      "when": "flag.arabelle_rescued and not guest:arabelle"
+    },
+    {
+      "npc": "kasimir_velikov",
+      "cell": [
+        25,
+        18
+      ],
+      "dialogue": "vallaki/kasimir:start",
+      "when": "not guest:kasimir_velikov"
+    },
+    {
+      "npc": "bluto",
+      "cell": [
+        8,
+        5
+      ],
+      "dialogue": "vallaki/vistani_camp:bluto",
+      "approach": 6,
+      "when": "quest.missing_arabelle == clue or (quest.missing_arabelle == asked and flag.arabelle_tracks_found)"
+    }
+  ],
+  "narration": {
+    "enter": "enter:vallaki_vistani_camp"
+  },
+  "rest": "risky"
+}

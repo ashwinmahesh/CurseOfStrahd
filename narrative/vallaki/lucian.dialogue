@@ -1,0 +1,218 @@
+# Father Lucian Petrovich of St. Andral's (docs/voice/father_lucian.md).
+# start: in his chancel. The bones of St. Andral, the vigil, sanctuary for Ireena, and the town's side.
+
+~ start
+if not flag.lucian_met
+-> first
+endif
+if flag.vallaki_backed == "wachter"
+Father Lucian [sad]: You've come to church. Good. I've been preaching to Lydia and Victor and a great many empty pews. Lady Wachter's men sit at the back and take notes.
+elif flag.vallaki_backed == "neither"
+Father Lucian: Councillor work. I have spent the whole morning settling a dispute about a goat. It was wonderful. Nobody was put in the stocks.
+elif flag.vallaki_backed == "baron"
+Father Lucian: Vargas has asked me to preach on gratitude at the next festival. I'm going to preach on mercy instead. We'll see whether he notices.
+elif quest.bones_of_st_andral == vigil_kept
+Father Lucian: You held. All night, you held. I've lit a candle for each of you, and one for the windows, which did not.
+elif flag.bones_returned
+Father Lucian [smile]: Welcome back to St. Andral's. It feels like a church again. I keep stopping in the doorway just to feel it.
+else
+Father Lucian: Welcome back. Any word?
+endif
+-> menu
+
+~ first
+set lucian_met
+Narrator: A priest kneels before an altar stripped of its cloth, as though the church were in mourning. He rises when he hears you, and his face rearranges itself into something welcoming, with effort.
+Father Lucian: Welcome to St. Andral's. Forgive the bare altar; we've had a loss. I'm Father Lucian. Are you hurt, or hungry, or in trouble? Those are the three reasons people come here now.
+if flag.donavich_met
+Father Lucian: You've come from the village of Barovia? Then you've met Donavich. We were novices together. How is he?
+if flag.doru_destroyed and flag.donavich_mercy_blessing
+Narrator: You tell him about Doru, and the undercroft, and the blessing Donavich gave before the end. Lucian closes his eyes.
+Father Lucian [sad]: He let his son go. That's the hardest prayer there is. Thank you for being there to say amen.
+elif flag.doru_destroyed
+Father Lucian [sad]: Doru, destroyed, and against his father's wishes. I understand why. I'll pray that Donavich comes to, one day.
+elif flag.doru_freed
+Father Lucian [afraid]: You let Doru out? Then Donavich has lost him twice. And something hungry is walking the roads with a priest's son's face.
+elif flag.doru_left_locked
+Father Lucian [sad]: Still locked under the church, still screaming. And Donavich still feeding him. God help them both.
+else
+Father Lucian: Never mind. I can see in your faces it isn't a happy answer.
+endif
+endif
+if name:hedda_ironvow and flag.holy_symbol_rumor
+interject name:hedda_ironvow: A raven and a sunburst, Father. Donavich said it was lost. Did St. Andral's ever have word of it?
+Father Lucian: Only stories. That it was carried against the castle once, and didn't come back. Stories are what we have instead of relics, these days.
+endif
+-> theft
+
+~ theft
+set bones_theft_known
+quest bones_of_st_andral asked
+Father Lucian: Three nights ago, someone opened the saint's sarcophagus in the crypt and took his bones. St. Andral has lain under this altar for two hundred years. While he did, nothing dead could set foot in this church.
+Father Lucian: Only two people knew where the bones lay and how the lid comes away: myself, and my gravedigger, Milivoj. I haven't accused him. I would very much like never to have to.
+if guest:ireena
+quest sanctuary_for_ireena church_unsafe
+Ireena: My brother sent me to you. He said this church was the one place in the valley the devil can't walk into.
+Father Lucian [sad]: It was, my dear. Until three nights ago. I'd take you in tonight if I could promise you anything. I can't. Not until the saint is home.
+endif
+interject class:cleric: Bones don't walk off on their own. Not a saint's, anyway.
+* We'll find the bones. -> promise
+* Who would want a saint's bones? -> who_wants
+* [Religion DC 12] What made St. Andral's bones holy? -> lore_ok | lore_fail
+
+~ promise
+attitude father_lucian friendly
+Father Lucian: Thank you. I mean it more than I can say without sounding like a sermon. Start with Milivoj, if you must. He digs in the churchyard most days. Be gentle with him. He has three young ones at home and no parents for them.
+-> menu
+
+~ who_wants
+Father Lucian: Someone who wants this church to be ordinary ground again. And there's only one creature in this valley who'd want that, and he has many hands.
+-> menu
+
+~ lore_ok
+Father Lucian: You know your saints. Andral stood in a doorway here against the dead, the old stories say, until they stopped coming. Whatever was in him stayed in his bones. While they rest under the altar, this whole building is a doorway he's still standing in.
+-> menu
+
+~ lore_fail
+Father Lucian: He was a holy man, and he died here, and his bones kept the dead away. That's all most of us know. It was always enough.
+-> menu
+
+~ menu
+* [if item:st_andrals_bones and not flag.bones_returned] We've brought St. Andral home. -> return
+* [if night and flag.bones_theft_known and not flag.bones_returned and not flag.church_siege_survived and not flag.coffin_spawn_destroyed] We'll keep vigil here with you tonight. -> vigil
+* [if not night and flag.bones_theft_known and not flag.bones_returned and not flag.church_siege_survived and not flag.coffin_spawn_destroyed] Is the church in danger? -> danger
+* [if guest:ireena and flag.bones_returned] Ireena needs sanctuary. -> sanctuary
+* [if guest:ireena and not flag.bones_returned] Could Ireena shelter here meanwhile? -> no_sanctuary
+* [if flag.vallaki_pledge != "town" and not flag.festival_begun] What should we make of the Baron and Lady Wachter? -> politics
+* [if flag.wachter_evidence and flag.vallaki_pledge == "town" and not flag.wachter_exposed] We found a letter in Lady Wachter's cellar. -> evidence
+* [if flag.vallaki_pledge == "town" and not flag.festival_begun] What should we do at the festival? -> festival_plan
+* [if gold >= 25] Might we have holy water? We'll make a donation. -> holy_water
+* Goodbye, Father. -> bye
+
+~ danger
+Father Lucian: Tonight, or any night now. If whoever took the saint means the church harm, they'll come after dark, when the doors are shut and I'm alone with a few candles. Come back at dusk, if you're willing, and keep the vigil with me.
+-> menu
+
+~ vigil
+set church_vigil
+Narrator: Lucian bars the doors and lights every candle he owns. You take your places in the nave. For hours there is nothing but the wax burning down and the priest's voice saying the long prayers under his breath.
+Father Lucian: Whatever happens, they don't reach the altar. Not while I'm breathing.
+-> END
+
+~ return
+take st_andrals_bones
+set bones_returned
+quest bones_of_st_andral bones_returned
+attitude father_lucian friendly
+Narrator: Lucian carries the bundle down to the crypt himself, holding it the way you would hold a sleeping child. You hear the lid of the sarcophagus grind home, and then his voice, saying the old words. Something in the air of the church settles, like a held breath let out.
+Father Lucian [smile]: Welcome home. Welcome home, old man.
+if flag.milivoj_confessed and not flag.milivoj_shielded
+Father Lucian: And Milivoj. I'll speak to him. Hunger is a sin, they tell me, but I don't think it was his.
+elif flag.milivoj_shielded
+Father Lucian: I won't ask who took them. I find I don't want to know. I've decided that's a mercy, and not cowardice.
+endif
+Father Lucian: Take these, and my blessing with them. It's not much, but it's what the church has.
+give holy_water 2
+interject class:cleric: Holy ground again. You can feel it in your teeth.
+if not flag.vallaki_milestone_reached
+set vallaki_milestone_reached
+xp milestone
+endif
+if guest:ireena
+-> sanctuary
+endif
+-> menu
+
+~ no_sanctuary
+Father Lucian: Not yet. Without the saint this is only a big wooden room, and he knows where it is. Try the Blue Water Inn. The Martikovs keep a very good door, and Urwin sleeps less than any man I know.
+-> menu
+
+~ sanctuary
+Father Lucian: My dear, this is holy ground again. You may stay as long as you like. Nothing dead comes through those doors now, and nothing living will while I'm here.
+Ireena: Ismark would want me to stay. Father would have. And I'm very tired of sleeping with a sword in the bed.
+* Stay here, Ireena. You'll be safe. -> ireena_stays
+* Come with us. We'll keep you safer than walls. -> ireena_comes
+
+~ ireena_stays
+leave ireena
+set ireena_sanctuary = "st_andrals"
+quest sanctuary_for_ireena sanctuary
+attitude ireena friendly
+Ireena: Then I'll stay. But you'll come back. I'm not a parcel to be left at the church door and forgotten.
+if guest:ismark
+Ismark: And I'll... well. Somebody should stay with her. Somebody should also keep you lot alive. I can't do both.
+-> ismark_choice
+endif
+-> menu
+
+~ ismark_choice
+* Stay with your sister, Ismark. -> ismark_stays
+* We need your sword, Ismark. -> ismark_goes
+
+~ ismark_stays
+leave ismark
+set ismark_guards_ireena
+Ismark: Then I'll sit by the door and glare at it. I'm good at that. Ask any door in Barovia.
+-> menu
+
+~ ismark_goes
+Ismark: Right. She's safer here than she's been in a month, and I've never been much use sitting still. I'm with you.
+Ireena: Bring him back in one piece. He's the only brother I have.
+-> menu
+
+~ ireena_comes
+set ireena_sanctuary = "with_party"
+quest sanctuary_for_ireena travels_on
+Ireena: Walls didn't keep him out of my father's house. You might do better. I'll come.
+Father Lucian: Then go with God, my dear. The door is open if you ever need it.
+-> menu
+
+~ politics
+Father Lucian: Vargas is a frightened child with a whip. Fiona is a patient woman with a much worse master. If you're asking me to choose between them, I won't. I'll choose the people in the pews.
+* Then we'll stand with the town, not with either of them. -> pledge_town
+* That's not much of a plan, Father. -> no_plan
+* We'll think about it. -> menu
+
+~ no_plan
+Father Lucian: No. It's a hope. I'm a priest in Barovia; hope is the only tool they let me keep.
+-> menu
+
+~ pledge_town
+if flag.vallaki_pledge == "baron"
+set baron_betrayed
+elif flag.vallaki_pledge == "wachter"
+set wachter_betrayed
+endif
+set vallaki_pledge = "town"
+quest festival_of_the_blazing_sun town_side
+attitude father_lucian friendly
+Father Lucian: Then God bless you, and God help us. Urwin Martikov feels the same, and he's quieter about it than I am, which is wiser.
+-> festival_plan
+
+~ festival_plan
+Father Lucian: Vargas loses his temper when the sun won't burn. It rains, it always rains. When he does, he'll want someone punished, and Izek will want to do it. Stand near me. If someone has to be between Izek and the crowd, I'd rather it were people who can hit back.
+if not flag.wachter_exposed
+Father Lucian: And Fiona will try to step into his shoes the moment they're empty. If there's proof of what she is, the town should hear it.
+endif
+if not flag.malcontents_freed
+Father Lucian: The poor souls in the lockup, too. Every festival he drags them out to make an example. I'd sleep better if there were nobody in there to drag.
+endif
+-> menu
+
+~ evidence
+set wachter_exposed
+quest wachter_plot evidence_found
+Narrator: Lucian reads the letter once, slowly, and folds it along its creases as if it might break.
+Father Lucian [sad]: Fiona. I baptised her children. She sat in the third pew every holy day for twenty years. And she was writing to him the whole time.
+Father Lucian: The town should hear this, from my mouth, in the square. Not as a weapon. As a warning.
+-> menu
+
+~ holy_water
+gold -25
+give holy_water 2
+Father Lucian: Blessed this morning. Throw it, don't drink it, and don't miss.
+-> menu
+
+~ bye
+Father Lucian: Go with God, and come back to us. People keep forgetting that second part.
+-> END

@@ -1,0 +1,82 @@
+{
+  "id": "urwin_martikov",
+  "name": "Urwin Martikov",
+  "title": "Keeper of the Blue Water Inn",
+  "summary": "The innkeeper of the Blue Water Inn, a quiet, watchful man with black hair and blacker eyes, who listens more than he serves and serves more than he says.",
+  "portrait": "urwin_martikov",
+  "sprite": "urwin_martikov",
+  "attitude": "indifferent",
+  "voice": "docs/voice/urwin_martikov.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "innkeeper",
+    "merchant",
+    "keepers_of_the_feather",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him",
+  "shop": {
+    "sells": [
+      {
+        "id": "ration",
+        "qty": -1
+      },
+      {
+        "id": "waterskin",
+        "qty": -1
+      },
+      {
+        "id": "torch",
+        "qty": -1
+      },
+      {
+        "id": "candle",
+        "qty": -1
+      },
+      {
+        "id": "oil",
+        "qty": -1
+      },
+      {
+        "id": "tinderbox",
+        "qty": -1
+      },
+      {
+        "id": "bedroll",
+        "qty": -1
+      },
+      {
+        "id": "blanket",
+        "qty": -1
+      },
+      {
+        "id": "rope",
+        "qty": 2
+      },
+      {
+        "id": "jug",
+        "qty": -1
+      },
+      {
+        "id": "healers_kit",
+        "qty": 2
+      },
+      {
+        "id": "potion_of_healing",
+        "qty": 1,
+        "price": 75
+      }
+    ],
+    "buys": [
+      "gear",
+      "consumable",
+      "treasure"
+    ],
+    "markup": 1.5,
+    "sell_rate": 0.4,
+    "closed": "flag.vallaki_backed == \"wachter\""
+  }
+}

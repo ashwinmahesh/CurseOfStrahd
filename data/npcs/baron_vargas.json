@@ -1,0 +1,20 @@
+{
+  "id": "baron_vargas",
+  "name": "Baron Vargas Vallakovich",
+  "title": "Burgomaster of Vallaki",
+  "summary": "The burgomaster of Vallaki, a round, florid man who believes a happy town is a town the devil can't touch, and who orders happiness by decree. His festivals are mandatory and his stocks are never empty.",
+  "portrait": "baron_vargas",
+  "sprite": "baron_vargas",
+  "attitude": "indifferent",
+  "voice": "docs/voice/baron_vargas.md",
+  "monster": "noble",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "noble",
+    "burgomaster",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

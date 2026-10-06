@@ -1,0 +1,26 @@
+{
+  "id": "rictavio",
+  "name": "Rictavio",
+  "title": "Showman and Bard",
+  "summary": "A loud half-elf showman in loud clothes, lodging at the Blue Water Inn with a carnival wagon he lets no one near. The tunes are cheerful; the eyes are a hunter's.",
+  "portrait": "rictavio",
+  "sprite": "rictavio",
+  "attitude": "indifferent",
+  "voice": "docs/voice/rictavio.md",
+  "monster": "scout",
+  "guest": true,
+  "tags": [
+    "traveler",
+    "bard",
+    "vampire_hunter",
+    "secret_identity",
+    "tarokka_ally",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him",
+  "guest_build": {
+    "monster": "warrior_veteran",
+    "note": "Stand-in until Rudolph van Richten has his own stat block; joins only if the Tarokka names him."
+  }
+}

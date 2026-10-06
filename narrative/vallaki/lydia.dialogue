@@ -1,0 +1,70 @@
+# Lady Lydia Petrovna, the Baron's wife (docs/voice/lydia_petrovna.md).
+# start: her parlour in the mansion. sanctuary: Lady Wachter won, and Lydia sits in St. Andral's.
+
+~ start
+if not flag.lydia_met
+set lydia_met
+Narrator: A small woman sits in a nest of yellow cloth, sewing so fast the needle blurs. She leaps up when she sees you and drops three bobbins and a thimble.
+Lydia Petrovna [smile]: Oh! Guests! Vargas didn't say. Vargas never says. Do you like the bunting? I did the bunting. I did all of it.
+elif flag.vallaki_backed == "neither"
+Lydia Petrovna: We're to grow turnips, Vargas and I. He doesn't know yet. I'm going to tell him it's a festival.
+elif flag.vallaki_backed == "baron"
+Lydia Petrovna [smile]: My marshals! I've started your sashes. Gold thread. It's taking forever, but forever is what we've got, Vargas says.
+else
+Lydia Petrovna [smile]: Back again! Sit, sit. Mind the pins.
+endif
+if flag.izek_dead
+Lydia Petrovna [afraid]: Izek is dead. I know I should be sad. I'm trying very hard to be sad. It's like sewing in the dark.
+endif
+-> menu
+
+~ menu
+* The bunting is lovely. -> bunting
+* Tell us about the festival. -> festival
+* How is your son? -> victor
+* [Insight DC 12] Is she as happy as she looks? -> read_ok | read_fail
+* Goodbye, my lady. -> bye
+
+~ bunting
+attitude lydia_petrovna friendly
+Lydia Petrovna [smile]: Isn't it? Forty yards for the Blazing Sun. Sixty for the Swallows, but the swallows didn't come, so I've unpicked it for the sun. Nothing's ever wasted in this house. Except the swallows.
+-> menu
+
+~ festival
+Lydia Petrovna: Vargas says if we're happy enough, nothing bad can get in. I used to think that was silly. Then I thought: what if it isn't? What if we stopped and that's the night it gets in? So I sew.
+-> menu
+
+~ victor
+if not quest.victors_circle
+quest victors_circle heard
+endif
+Lydia Petrovna: Victor? He's studying. In the attic. He's terribly clever; he gets it from me, Vargas says, which is the kindest thing Vargas says.
+Lydia Petrovna [afraid]: Only he hasn't come down in four days. And the maids who took up his trays haven't come down either. Vargas says they went to Krezk. Would you look in on him? He won't let me up.
+-> menu
+
+~ read_ok
+Narrator: The smile is real, and it's held in place with both hands. Under it she's been afraid for so long that she's stopped noticing. She is the only person in this house who isn't afraid of the Baron, and the only one who's afraid for him.
+-> menu
+
+~ read_fail
+Narrator: She beams at you and offers you a pincushion shaped like a sun. Whatever's behind the smile, the smile is winning.
+-> menu
+
+~ bye
+Lydia Petrovna: Come to the festival! Wear something yellow, if you have it. If you haven't, I've got bunting.
+-> END
+
+~ sanctuary
+if flag.baron_fate == "executed"
+Narrator: Lady Lydia sits in a pew with a half-sewn sash across her knees. She hasn't put a stitch in it for hours, and she doesn't look up when you come near.
+Lydia Petrovna [sad]: He only wanted everyone to be happy.
+interject tag:devout: Dawn comes, my lady. Even here. I'll sit with you until it does.
+elif flag.baron_fate == "exiled"
+Lydia Petrovna [sad]: We leave at dawn. Lucian has found us a cart. I've packed the bunting. I don't know why. Habit.
+else
+Lydia Petrovna [sad]: I take him soup in the stocks twice a day. He tells everyone who passes that it's a new festival. Some of them laugh. I'm glad. Someone should.
+endif
+if flag.victor_vanished
+Lydia Petrovna [afraid]: And Victor's gone. There was a light in the attic, and then there wasn't any Victor. I keep laying a place for him.
+endif
+-> END

@@ -1,0 +1,25 @@
+{
+  "id": "victor_vallakovich",
+  "name": "Victor Vallakovich",
+  "title": "The Baron's Son",
+  "summary": "The Baron's sullen teenage son, who lives in the mansion's attic with a stolen spellbook and a teleportation circle that has already cost two servants their lives.",
+  "portrait": "victor_vallakovich",
+  "sprite": "victor_vallakovich",
+  "attitude": "indifferent",
+  "voice": "docs/voice/victor_vallakovich.md",
+  "monster": "noble",
+  "guest": true,
+  "tags": [
+    "barovian",
+    "noble",
+    "wizard",
+    "tarokka_ally",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him",
+  "guest_build": {
+    "monster": "noble",
+    "note": "Stand-in until an apprentice wizard stat block exists; joins only if the Tarokka names him."
+  }
+}

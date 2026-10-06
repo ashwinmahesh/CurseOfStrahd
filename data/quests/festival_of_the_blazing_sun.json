@@ -1,0 +1,72 @@
+{
+  "id": "festival_of_the_blazing_sun",
+  "name": "The Festival of the Blazing Sun",
+  "summary": "Baron Vallakovich holds a festival every week to prove Vallaki is happy. This one, with its great wicker sun, will decide who rules the town.",
+  "giver": "baron_vargas",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "announced",
+      "journal": "The watch at Vallaki's gate told us the Baron is holding the Festival of the Blazing Sun in the town square. Attendance is required. So is cheering.",
+      "objectives": [
+        "Attend the festival in the town square"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "baron_side",
+      "journal": "We agreed to stand with Baron Vallakovich at the festival. He wants his wicker sun to burn and his enemies to be seen to fail.",
+      "objectives": [
+        "Keep watch over the wicker sun the night before (optional)",
+        "Find proof against Lady Wachter (optional)",
+        "Stand by the Baron at the festival"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "wachter_side",
+      "journal": "We agreed to stand with Lady Wachter. When the Baron's festival goes wrong, she means to take the town from him in front of everyone.",
+      "objectives": [
+        "Make sure the wicker sun won't burn (optional)",
+        "Stand with Lady Wachter at the festival"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "town_side",
+      "journal": "We told Father Lucian we would back neither the Baron nor Lady Wachter, and stand with the people of Vallaki when the festival comes.",
+      "objectives": [
+        "Find proof of what Lady Wachter is (optional)",
+        "Return St. Andral's bones (optional)",
+        "Protect the townsfolk at the festival"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "begun",
+      "journal": "The Festival of the Blazing Sun has begun. The whole town is in the square, and so are we.",
+      "objectives": [
+        "See the festival through"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "baron_triumph",
+      "journal": "The festival ended with Lady Wachter's coup broken and the Baron still in his chair. Vallaki keeps its festivals, its curfew and its stocks. All, the Baron insists, is well.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "wachter_triumph",
+      "journal": "The festival ended with the Baron dragged from his dais. Lady Wachter rules Vallaki now, and she makes no secret of whose favour she rules it by.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "town_triumph",
+      "journal": "The festival ended with the town on its feet. Neither the Baron nor Lady Wachter rules Vallaki now; Father Lucian and Urwin Martikov speak for a council of its people.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "vallaki_guard",
+  "name": "Town Guard",
+  "title": "Watchman of Vallaki",
+  "summary": "One of the Baron's watchmen: a spear, a festival ribbon pinned to the breastplate, and orders to report anyone who frowns.",
+  "portrait": "vallaki_guard",
+  "sprite": "vallaki_guard",
+  "attitude": "indifferent",
+  "voice": "docs/voice/vallaki_guard.md",
+  "monster": "bandit",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "guard",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

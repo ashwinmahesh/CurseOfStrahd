@@ -1,0 +1,69 @@
+{
+  "id": "wachter_plot",
+  "name": "Lady Wachter's Book Club",
+  "summary": "Lady Fiona Wachter wants the Baron's chair, and she is not shy about who she would rule for.",
+  "giver": "lady_wachter",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Lady Fiona Wachter's book club meets late and reads nothing. The Baron is sure she is plotting against him. He may even be right.",
+      "objectives": [
+        "Pay a call on Wachterhaus"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "offer",
+      "journal": "Lady Wachter told us plainly that she means to unseat the Baron at the festival, and that she would like our help. She would like it very much.",
+      "objectives": [
+        "Decide whether to stand with her"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "evidence_found",
+      "journal": "Beneath Wachterhaus we found a shrine to the lord of Barovia and a letter in his hand, thanking Lady Wachter for her loyalty. Whoever reads it will know what she is.",
+      "objectives": [
+        "Decide who should see the letter"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "cult_broken",
+      "journal": "We broke up the midnight circle in Lady Wachter's cellar. Her sons and her hired swords are finished, whatever she still plans.",
+      "objectives": [],
+      "ends": ""
+    },
+    {
+      "id": "joined",
+      "journal": "We pledged ourselves to Lady Wachter's cause. She wants the Baron's wicker sun to fail, and us beside her when it does.",
+      "objectives": [],
+      "ends": ""
+    },
+    {
+      "id": "coup_crushed",
+      "journal": "Lady Wachter's coup failed at the festival. She has been dragged to the Baron's stocks to wait for his justice.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "coup_won",
+      "journal": "Lady Wachter's coup succeeded. She sits in the burgomaster's chair, and Vallaki belongs to her and, through her, to someone else.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "exposed",
+      "journal": "Lady Wachter's devotion to the lord of Barovia was read out before the whole town. The new council has locked her in the Baron's lockup.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "slipped_away",
+      "journal": "Lady Wachter lost her chance at the festival, but nobody could prove what she is. She has gone home to Wachterhaus to wait for another.",
+      "objectives": [],
+      "ends": ""
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+# Party banter while exploring Vallaki. Each node opens with an `if` gate: the node is eligible only while its
+# condition holds. Party members speak only through interjections; a line plays if a matching member is present.
+
+~ banter_smiles
+if flag.vallaki_arrived and not flag.festival_over
+interject tag:blunt: Count the smiles on this street. Fourteen. Count the ones that mean it. None.
+interject tag:cheerful: I mean mine.
+interject class:wizard: Yours is the one that worries them most.
+endif
+-> END
+
+~ banter_morale
+if flag.baron_met and not flag.festival_over
+interject name:ilse_varga: Morale by order. I served under a captain who flogged men for looking tired. He was very well defended, right up until the night nobody woke him.
+interject tag:devout: Joy isn't a wall. It's a window. You can't board it up and still call it one.
+endif
+-> END
+
+~ banter_saint
+if flag.bones_theft_known and not flag.bones_returned
+interject name:tamsin_tealeaf: Somebody stole a saint. A whole saint. I've never stolen a saint. You'd never fence him. Who'd you even sell a saint to?
+interject class:cleric: Someone who wants a church to be just a room. Which tells you who.
+endif
+-> END
+
+~ banter_crates
+if flag.henrik_confessed and not flag.coffin_spawn_destroyed and not flag.church_siege_survived
+interject class:wizard: Vampire spawn rest by day in the earth they were buried in, or near enough. Inert. Defenceless, the treatises say.
+interject tag:blunt: The treatises weren't standing in the storeroom. We go at noon, all together, and we don't open a crate alone.
+endif
+-> END
+
+~ banter_two_dreamers
+if flag.izek_dolls_seen and flag.tamsin_locket_recognized
+interject name:tamsin_tealeaf: Izek dreams of her. I dream of her. The lord of the castle has her portrait in a locket. That's three of us now, and I'm the only one who isn't frightening.
+interject name:silvain_aster: You stole the locket. You're a little frightening.
+interject name:tamsin_tealeaf: I borrowed it. Somebody wanted me to.
+endif
+-> END
+
+~ banter_book_club
+if flag.lady_wachter_met and not flag.festival_over
+interject name:silvain_aster: A book club with no books. I've been to academic societies like that. Generally they're worshipping something.
+interject name:hedda_ironvow: Mm. She poured my tea before I asked how I took it. Some people learn your habits because they like you. Some learn them the way a butcher learns the weight of a pig.
+endif
+-> END
+
+~ banter_letter
+if flag.wachter_evidence and flag.death_house_read_strahd_letter
+interject name:silvain_aster: The hand in Lady Wachter's letter is the same as the one in the letter under the Durst house. The same loops. The same patience. He writes to everybody, doesn't he?
+interject tag:blunt: He writes to his tools.
+endif
+-> END
+
+~ banter_pledge_baron
+if flag.vallaki_pledge == "baron" and not flag.festival_begun
+interject class:cleric: We've sworn ourselves to a man who jails widows for laughing. I'd like that noted somewhere.
+interject tag:loyal: Noted. The other one writes to the castle.
+interject class:cleric: That's why I'm still here. It isn't why I'm comfortable.
+endif
+-> END
+
+~ banter_pledge_wachter
+if flag.vallaki_pledge == "wachter" and not flag.festival_begun
+interject name:hedda_ironvow: She keeps a shrine to the thing in the castle under her own floor. And we have taken her coin. I want it said out loud, so that none of us can pretend later that we didn't know.
+interject name:ilse_varga: Said. Heard. We gave our word. I've kept worse words to worse captains.
+interject name:hedda_ironvow: That is not the comfort you think it is, sergeant.
+endif
+-> END
+
+~ banter_pledge_town
+if flag.vallaki_pledge == "town" and not flag.festival_begun
+interject tag:curious: So we're siding with the priest, the innkeeper, and everyone who isn't in charge?
+interject tag:blunt: Biggest side in any town. Usually the one that loses.
+interject tag:devout: Usually. Not always. Dawn comes.
+endif
+-> END
+
+~ banter_rictavio
+if flag.rictavio_unmasked
+interject name:silvain_aster: Van Richten. Rudolph van Richten. In a feathered hat, in a taproom. I have read every word that man ever published, twice, and he made me play the lute.
+interject tag:cheerful: You were quite good.
+interject name:silvain_aster: I was abysmal, and he knew it, and he let me finish. I don't know how to feel about any of this.
+endif
+-> END
+
+~ banter_secret
+if flag.rictavio_secret_kept
+interject tag:curious: We're keeping a vampire hunter's secret, in a valley where the vampire reads everyone's letters.
+interject tag:blunt: Then nobody writes it down.
+endif
+-> END
+
+~ banter_victor
+if flag.victor_met and not flag.victor_vanished
+interject class:wizard: The boy is genuinely gifted. His circle is the finest piece of work I've seen in this valley, and it is a beautifully drawn door into nothing.
+interject tag:blunt: Two maids walked through it.
+interject class:wizard: Yes. I know. That's the part I can't get past either.
+endif
+-> END
+
+~ banter_vanished
+if flag.victor_vanished
+interject class:wizard: A flash in the attic window. That was the circle. He stepped into it the day his father fell.
+interject class:cleric: Sixteen years old. We could have broken that circle with our boots.
+endif
+-> END
+
+~ banter_arabelle
+if flag.arabelle_rescued
+interject tag:cheerful: She said one of us is going to lie to the man in the castle, and he's going to like it.
+interject tag:blunt: Then nobody lie to him.
+interject tag:cheerful: I don't think it's that kind of prophecy.
+endif
+-> END
+
+~ banter_arrigal
+if flag.arrigal_suspected and guest:ireena
+interject tag:loyal: The Vistani brother. Arrigal. If he comes near her again, I want to know before she does.
+interject tag:curious: He had a saddled horse by his wagon. Night and day. Who keeps a saddled horse for nothing?
+endif
+-> END
+
+~ banter_vistani
+if flag.vistani_friends
+interject tag:curious: Every Vistani wagon in Barovia is our wagon now. Do you think that includes the cooking?
+interject class:cleric: It includes the gratitude of a father. That's worth more than stew, and harder to come by.
+endif
+-> END
+
+~ banter_ravens
+if flag.keepers_of_the_feather_met
+interject tag:curious: There's a raven on the roof again. It's the same one. I'm sure it's the same one.
+interject tag:blunt: Then it's on our side. Count it.
+endif
+-> END
+
+~ banter_wine
+if flag.wizard_of_wines_hook and not flag.keepers_of_the_feather_met
+interject tag:curious: No wine coming from the vineyard, no word from the vintner. In Barovia, that's not a supply problem. That's a story nobody's finished telling.
+endif
+-> END
+
+~ banter_izek_truth
+if flag.izek_told_truth
+interject class:cleric: He walked out of the square like a man going to bury someone. I suppose he was. Himself, the one he'd been.
+interject tag:blunt: Better than burying anyone else.
+endif
+-> END
+
+~ banter_sanctuary
+if flag.ireena_sanctuary == "st_andrals"
+interject tag:devout: Holy ground, a good priest, a brother on the door. It's the best we could do for her. I hope it's the best anyone could.
+interject tag:blunt: It's walls. She's lived behind walls before. It's what's outside them that worries me.
+endif
+-> END
+
+~ banter_after_baron
+if flag.vallaki_backed == "baron"
+interject tag:cheerful: We're Festival Marshals. For life. Every week.
+interject tag:blunt: Then we leave town before Thursday.
+endif
+-> END
+
+~ banter_after_wachter
+if flag.vallaki_backed == "wachter"
+interject class:cleric: She thanked us. In his name. I can still hear it.
+interject tag:loyal: We kept our word. That has to count for something.
+interject class:cleric: It counts. I'm only not sure which side of the ledger.
+endif
+-> END
+
+~ banter_after_town
+if flag.vallaki_backed == "neither"
+interject tag:cheerful: A council. Arguing about lamp oil. Out loud. I think that might be the happiest thing I've seen in Barovia.
+interject tag:devout: Mm. Not a sunrise. But it's facing the right way.
+endif
+-> END
