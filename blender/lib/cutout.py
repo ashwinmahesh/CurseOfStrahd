@@ -119,6 +119,18 @@ def find_figures(arr, count=3, min_gap=6):
             merged[-1][1] = r[1]
         else:
             merged.append(r)
+    # Figures that touch (a boot overlapping the next figure) form one wide run. While we have one
+    # fewer than asked for and a run is clearly wider than the rest, split it at its thinnest column.
+    coverage = (arr[..., 3] > 0.5).sum(axis=0)
+    if len(merged) == count - 1:
+        widths = [r[1] - r[0] for r in merged]
+        i = int(np.argmax(widths))
+        others = [w for j, w in enumerate(widths) if j != i]
+        if others and widths[i] > 1.5 * np.median(others):
+            x0, x1 = merged[i]
+            lo, hi = x0 + (x1 - x0) // 5, x1 - (x1 - x0) // 5
+            cut = lo + int(np.argmin(coverage[lo:hi]))
+            merged[i:i + 1] = [[x0, cut], [cut, x1]]
     merged = sorted(sorted(merged, key=lambda r: r[1] - r[0], reverse=True)[:count])
     crops = []
     for x0, x1 in merged:
