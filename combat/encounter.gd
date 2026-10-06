@@ -38,7 +38,7 @@ var monster_actions: MonsterActions
 var ai: AiBrain
 var shapes: ShapeChange
 var class_features: ClassFeatures
-## Magic items: the Items tab, item powers and the hooks below (combat/combat_items.gd, ADR 0011).
+## Magic items: the Items tab, item powers and the hooks below (combat/combat_items.gd, ADR 0012).
 var items: CombatItems
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.

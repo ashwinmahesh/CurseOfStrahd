@@ -92,7 +92,7 @@ func _target() -> Character:
 func _take(i: int, n: int) -> void:
 	var it := items[i] as Dictionary
 	var qty := int(it.get("qty", 1))
-	_target().add_item(str(it["id"]), mini(n, qty))
+	_target().add_item(str(it["id"]), mini(n, qty), it)
 	if qty - n <= 0:
 		items.remove_at(i)
 	else:
@@ -104,7 +104,7 @@ func _take(i: int, n: int) -> void:
 func _take_all() -> void:
 	for it: Variant in items:
 		var d := it as Dictionary
-		_target().add_item(str(d["id"]), int(d.get("qty", 1)))
+		_target().add_item(str(d["id"]), int(d.get("qty", 1)), d)
 	items.clear()
 	_take_gold()
 	_close()
@@ -121,11 +121,11 @@ func _send_all() -> void:
 		var placed := false
 		for ch in st.party:
 			if ch.carried_weight() + weight <= ch.carrying_capacity().total():
-				ch.add_item(str(d["id"]), int(d.get("qty", 1)))
+				ch.add_item(str(d["id"]), int(d.get("qty", 1)), d)
 				placed = true
 				break
 		if not placed:
-			_target().add_item(str(d["id"]), int(d.get("qty", 1)))
+			_target().add_item(str(d["id"]), int(d.get("qty", 1)), d)
 			notes.append("%s is overloaded with %s" % [_target().name, data.get("name", d["id"])])
 	items.clear()
 	_take_gold()

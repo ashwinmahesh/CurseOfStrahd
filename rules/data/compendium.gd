@@ -52,7 +52,7 @@ func load_all(root_path: String) -> void:
 
 
 ## Magic items' own powers that work like spells (a Wand of Paralysis's ray, a Necklace of Fireballs' bead) are
-## spell recipes inside the item (`recipes`); they're looked up as spells by "<item id>__<recipe>" (ADR 0011).
+## spell recipes inside the item (`recipes`); they're looked up as spells by "<item id>__<recipe>" (ADR 0012).
 func _register_item_recipes() -> void:
 	var recipes := {}
 	var all_items: Array = table("magic_items").values()

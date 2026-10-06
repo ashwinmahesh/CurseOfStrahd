@@ -181,7 +181,7 @@ func gift_modifiers() -> Array[Modifier]:
 	return out
 
 
-# --- Magic items and attunement (2024 DMG "Magic Items", ADR 0011) ----------------------------------
+# --- Magic items and attunement (2024 DMG "Magic Items", ADR 0012) ----------------------------------
 
 const MAX_ATTUNED := 3
 ## Item ids this character is attuned to (a creature can't attune to two copies of one item).
@@ -417,6 +417,31 @@ func _reset_budgets(e: Dictionary, data: Dictionary, when: String) -> void:
 		if when == "dawn" and reset == "long" and str(data.get("template_id", data.get("id", ""))) == "boots_of_speed":
 			continue
 		(e["budget_used"] as Dictionary).erase(str(pw.get("id", "")))
+
+
+## Dusk: items that regain charges at dusk (the Robe of Stars' stars).
+func on_dusk(dice: DiceRoller) -> void:
+	for e in inventory:
+		var data := compendium.item_data(str(e["id"]))
+		var spec := MagicItems.charges(data)
+		if spec.is_empty() or str(spec.get("when", "")) != "dusk" or not spec.has("regain"):
+			continue
+		var cap := MagicItems.max_charges(data, e)
+		e["charges"] = mini(cap, int(e.get("charges", 0)) + int(dice.roll_expr(str(spec["regain"]), "%s at dusk" % data.get("name", ""))["total"]))
+
+
+## Time passing with items that heal (Ring of Regeneration: 1d6 every 10 minutes; Ioun Stone of Regeneration: 15 an
+## hour), only while the bearer has at least 1 Hit Point.
+func items_passage(minutes: int, dice: DiceRoller) -> void:
+	if dead or hp < 1:
+		return
+	if has_flag("regeneration_ring"):
+		for i in mini(minutes / 10, 30):
+			if hp >= max_hp():
+				break
+			heal(dice.roll_one(6, "Ring of Regeneration"), "Ring of Regeneration")
+	if has_flag("ioun_regeneration"):
+		heal(15 * (minutes / 60), "Ioun Stone of Regeneration")
 
 
 ## Long and Short Rests bring back powers used "per long rest" or "per short rest".
@@ -1483,6 +1508,11 @@ func _take_option(options: Array, pick: String) -> void:
 ## Adds `qty` of an item. `state` carries an item's own state when it moves (charges, uses, a lifted curse, what a
 ## Bag of Holding holds); a new magic item with charges starts with its full count (MagicItems.starting_charges).
 func add_item(item_id: String, qty: int = 1, state: Dictionary = {}) -> void:
+	# A scroll that only says its level becomes a particular spell (each one picked on its own).
+	if MagicItems.GENERIC_SCROLLS.has(item_id):
+		for i in qty:
+			add_item(MagicItems.specific_scroll(item_id, "%s:%s:%d:%d" % [id, name, inventory.size(), i], compendium), 1, state)
+		return
 	var data := compendium.item_data(item_id)
 	if bool(data.get("stackable", false)):
 		for entry in inventory:
@@ -1861,7 +1891,12 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 	c.state_from_dict(d.get("state", {}) as Dictionary)
 	c.inventory.clear()
 	for e: Variant in d.get("inventory", []):
-		c.inventory.append((e as Dictionary).duplicate())
+		var ed := (e as Dictionary).duplicate()
+		# Saves from before magic items: generic scrolls become particular ones.
+		if MagicItems.GENERIC_SCROLLS.has(str(ed.get("id", ""))):
+			c.add_item(str(ed["id"]), int(ed.get("qty", 1)))
+			continue
+		c.inventory.append(ed)
 	c.currency = (d.get("currency", c.currency) as Dictionary).duplicate()
 	c.hit_dice_spent = (d.get("hit_dice_spent", {}) as Dictionary).duplicate()
 	var used := d.get("slots_used", []) as Array

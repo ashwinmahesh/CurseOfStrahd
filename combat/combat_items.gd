@@ -1,6 +1,6 @@
 class_name CombatItems
 extends RefCounted
-## Magic items in a fight (ADR 0011, docs/contracts/magic_items.md): the Items tab of the hotbar (potions, scrolls,
+## Magic items in a fight (ADR 0012, docs/contracts/magic_items.md): the Items tab of the hotbar (potions, scrolls,
 ## oils and every item power: a wand's Fireball, Boots of Speed clicked on, a Flame Tongue set ablaze), casting spells
 ## from items through the spell engine with the item's own DC or the wielder's, charges and daily uses, and the hooks
 ## the Encounter calls so weapons, armor and wondrous items do their part (extra damage on a hit, a Vorpal Sword's

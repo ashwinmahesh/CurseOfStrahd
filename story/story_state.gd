@@ -148,6 +148,10 @@ func give_item(item_id: String, qty: int, ch: Character = null) -> void:
 	if ch != null:
 		ch.add_item(item_id, qty)
 		return
+	if MagicItems.GENERIC_SCROLLS.has(item_id):
+		for i in qty:
+			give_item(MagicItems.specific_scroll(item_id, "%d:stash:%d:%d" % [playthrough_seed, stash.size(), i], Compendium.shared()), 1)
+		return
 	for e in stash:
 		if str(e["id"]) == item_id:
 			e["qty"] = int(e["qty"]) + qty
@@ -232,12 +236,37 @@ signal time_passed(minutes: int)
 func advance_minutes(minutes: int) -> void:
 	if minutes >= 30:
 		time_passed.emit(minutes)
+	var start := total_minutes()
 	minute_of_day += minutes
 	while minute_of_day >= 24 * 60:
 		minute_of_day -= 24 * 60
 		day += 1
 	for ch in party:
 		ch.advance_minutes(minutes)
+	_item_time(start, minutes)
+
+
+## Magic items and the clock (ADR 0012): charges come back at dawn (or dusk), regeneration heals as time passes. The
+## dice are seeded from the playthrough and the hour, so the same rest gives the same result.
+func _item_time(start: int, minutes: int) -> void:
+	if minutes <= 0:
+		return
+	var dice := DiceRoller.new(hash("%d:%d:items" % [playthrough_seed, start]))
+	for t in range(start + 1, start + minutes + 1):
+		var m := t % (24 * 60)
+		if m == 6 * 60:
+			for ch in party:
+				for line in ch.on_dawn(dice):
+					item_news.append(line)
+		elif m == 18 * 60:
+			for ch in party:
+				ch.on_dusk(dice)
+	for ch in party:
+		ch.items_passage(minutes, dice)
+
+
+## Things items did while time passed (charges back at dawn), for the world to show; drained by whoever shows them.
+var item_news: Array[String] = []
 
 
 ## Whether an exploring spell is still running (`spell:light` in conditions).
@@ -295,15 +324,17 @@ func shop_wares(npc_id: String) -> Array[Dictionary]:
 	var stock := shops.get(npc_id, {}) as Dictionary
 	for e: Variant in shop.get("sells", []):
 		var w := e as Dictionary
-		var id := str(w["id"])
+		var stock_id := str(w["id"])
+		# A shop's "level 1 spell scroll" is a particular spell, the same one each visit this playthrough.
+		var id := MagicItems.specific_scroll(stock_id, "%d:shop:%s" % [playthrough_seed, npc_id], Compendium.shared())
 		var data := Compendium.shared().item_data(id)
 		var qty := int(w.get("qty", -1))
 		if qty >= 0:
-			qty = int(stock.get(id, qty))
+			qty = int(stock.get(stock_id, qty))
 		if qty == 0:
 			continue
 		var price := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * float(shop.get("markup", 1.0))
-		out.append({"id": id, "name": str(data.get("name", id)), "price": price, "qty": qty})
+		out.append({"id": id, "name": str(data.get("name", id)), "price": price, "qty": qty, "stock_id": stock_id})
 	return out
 
 
@@ -331,7 +362,7 @@ func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
 		if int(w["qty"]) > 0:
 			if not shops.has(npc_id):
 				shops[npc_id] = {}
-			(shops[npc_id] as Dictionary)[item_id] = int(w["qty"]) - 1
+			(shops[npc_id] as Dictionary)[str(w.get("stock_id", item_id))] = int(w["qty"]) - 1
 		return ""
 	return "Not for sale"
 

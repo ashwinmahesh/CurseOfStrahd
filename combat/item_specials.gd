@@ -1,6 +1,6 @@
 class_name ItemSpecials
 extends RefCounted
-## Bespoke magic item rules (ADR 0011): powers a recipe can't say (`"custom": "<id>"` on a power) and the passive
+## Bespoke magic item rules (ADR 0012): powers a recipe can't say (`"custom": "<id>"` on a power) and the passive
 ## rules of particular items that need code at a moment of the fight (a Vorpal Sword's 20, a Ring of Evasion's
 ## Reaction, Boots of Speed making Opportunity Attacks harder, a Sword of Wounding's wounds). CombatItems calls in.
 

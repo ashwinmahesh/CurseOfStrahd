@@ -72,6 +72,15 @@ func _draw() -> void:
 	doll.add_child(UiParts.section("Equipped"))
 	for slot in Character.EQUIP_SLOTS:
 		doll.add_child(_slot_row(ch, slot))
+	# Worn magic items (2024 DMG: one cloak, one pair of boots..., two rings, any number of Ioun Stones).
+	var worn: Array[Dictionary] = []
+	for e0 in ch.inventory:
+		if str(e0.get("slot", "")) in MagicItems.WORN_SLOTS and int(e0.get("qty", 0)) > 0:
+			worn.append(e0)
+	if not worn.is_empty():
+		doll.add_child(UiParts.section("Worn"))
+		for e1 in worn:
+			doll.add_child(_worn_row(ch, e1))
 	doll.add_child(UiParts.section("Load"))
 	var cap := ch.carrying_capacity().total()
 	var carried := ch.carried_weight()
@@ -134,7 +143,7 @@ func _draw() -> void:
 		var line := HBoxContainer.new()
 		line.add_theme_constant_override("separation", 10)
 		UiParts.add_icon(line, "item", id)
-		var nm := UiKit.label(str(data.get("name", id)) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""), 15, "gilt_light" if id == selected else "vellum")
+		var nm := UiKit.label(MagicItems.display_name(data, e) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""), 15, "gilt_light" if id == selected else "vellum")
 		nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		line.add_child(nm)
 		if slot != "":
@@ -142,7 +151,9 @@ func _draw() -> void:
 		if bool(data.get("quest", false)):
 			line.add_child(UiParts.pill("Quest", "flame"))
 		if not (data.get("magic", {}) as Dictionary).is_empty():
-			line.add_child(UiParts.pill("Magic", "lilac"))
+			line.add_child(UiParts.pill("Attuned" if id in ch.attuned else "Magic", "lilac"))
+		if MagicItems.has_charges(data):
+			line.add_child(UiParts.pill("%d/%d" % [int(e.get("charges", 0)), MagicItems.max_charges(data, e)], "moonlight"))
 		var wt := UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment")
 		wt.custom_minimum_size = Vector2(52, 0)
 		wt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -244,7 +255,7 @@ func _draw_card() -> void:
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 10)
 	UiParts.add_icon(head, "item", selected, 48.0)
-	var t := UiKit.title(str(data.get("name", selected)))
+	var t := UiKit.title(MagicItems.display_name(data, _entry(selected)))
 	t.add_theme_font_size_override("font_size", 26)
 	head.add_child(t)
 	_card.add_child(head)
@@ -299,9 +310,13 @@ func _draw_card() -> void:
 		_card.add_child(UiKit.label("%s magic item%s" % [str(magic.get("rarity", "")).replace("_", " ").capitalize(), req], 14, "moonlight", 420))
 		if req != "":
 			if selected in ch.attuned:
-				_card.add_child(UiKit.button("End attunement", func() -> void:
+				var end_why := ch.end_attunement_blocker(selected)
+				var end := UiKit.button("End attunement", func() -> void:
 					ch.end_attunement(selected)
-					_draw(), 14))
+					_draw(), 14)
+				end.disabled = end_why != ""
+				end.tooltip_text = end_why
+				_card.add_child(end)
 			else:
 				var why := ch.attune_blocker(selected)
 				var att := UiKit.button("Attune (a Short Rest: 1 hour)", func() -> void:
@@ -312,6 +327,7 @@ func _draw_card() -> void:
 				att.tooltip_text = why
 				_card.add_child(att)
 			_card.add_child(UiKit.label("Attuned: %d of %d" % [ch.attuned.size(), Character.MAX_ATTUNED], 13, "parchment"))
+		_magic_card(ch, data)
 	# Actions
 	_card.add_child(UiParts.section("Actions"))
 	var acts := HFlowContainer.new()
@@ -338,8 +354,34 @@ func _draw_card() -> void:
 		acts.add_child(UiKit.button("Equip (off hand)", func() -> void:
 			ch.equip(selected, "off_hand")
 			_draw(), 14))
-	if (data.get("effects", []) as Array).size() > 0 and str(data.get("category", "")) == "potion":
-		acts.add_child(UiKit.button("Drink", _drink, 14))
+	elif MagicItems.worn_slot(data) != "":
+		acts.add_child(UiKit.button("Wear (%s)" % MagicItems.SLOT_NAMES.get(MagicItems.worn_slot(data), ""), func() -> void:
+			ch.wear(selected)
+			_draw(), 14))
+	elif MagicItems.is_held(data):
+		acts.add_child(UiKit.button("Hold (main hand)", func() -> void:
+			ch.equip(selected, "main_hand")
+			_draw(), 14))
+		acts.add_child(UiKit.button("Hold (off hand)", func() -> void:
+			ch.equip(selected, "off_hand")
+			_draw(), 14))
+	# Using it outside a fight: a potion's drink, a wand's Detect Magic, a manual's study (story/field_items.gd).
+	for opt in FieldItems.options(st.party, ch, selected, Dice.roller):
+		var label := "Use: %s" % str(opt["label"]) if str(opt["label"]) != "Drink" else "Drink"
+		var choices := opt.get("choices", []) as Array
+		var pid := str(opt["power_id"])
+		if choices.is_empty():
+			var ub := UiKit.button(label, func() -> void: _use_power(pid, {}), 14)
+			ub.disabled = not bool(opt["legal"])
+			ub.tooltip_text = str(opt["reason"]) if not bool(opt["legal"]) else str(opt.get("text", ""))
+			acts.add_child(ub)
+		else:
+			for chv: Variant in choices:
+				var cv := str(chv)
+				var cb := UiKit.button("%s: %s" % [label, cv.replace("_", " ").capitalize()], func() -> void: _use_power(pid, {"choice": cv}), 13)
+				cb.disabled = not bool(opt["legal"])
+				cb.tooltip_text = str(opt["reason"]) if not bool(opt["legal"]) else str(opt.get("text", ""))
+				acts.add_child(cb)
 	acts.add_theme_constant_override("h_separation", 6)
 	acts.add_theme_constant_override("v_separation", 6)
 	_card.add_child(acts)
@@ -402,8 +444,10 @@ func _give(other: Character) -> void:
 		return
 	if str(e.get("slot", "")) != "":
 		ch.unequip(str(e["slot"]))
-	_remove_one(ch, selected)
-	other.add_item(str(e["id"]), 1)
+	var state := ch.remove_one(selected)
+	if _entry(selected).is_empty():
+		selected = ""
+	other.add_item(str(e["id"]), 1, state)
 	_draw()
 
 
@@ -419,3 +463,103 @@ func _drink() -> void:
 		root.call("_refresh")
 	_draw()
 	_card.add_child(UiKit.label("%s regains %d Hit Points." % [ch.name, healed], 15, "bile"))
+
+
+## A worn magic item as a row you can click: where it's worn, the item, and whether it's working.
+func _worn_row(ch: Character, e: Dictionary) -> Control:
+	var data := Compendium.shared().item_data(str(e["id"]))
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 10)
+	UiParts.add_icon(line, "item", str(e["id"]))
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 0)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(UiParts.caption(str(MagicItems.SLOT_NAMES.get(str(e["slot"]), e["slot"])), 10))
+	col.add_child(UiKit.label(MagicItems.display_name(data, e), 15, "vellum"))
+	line.add_child(col)
+	if not ch.item_active(e):
+		line.add_child(UiParts.pill("Needs attunement", "flame"))
+	var id := str(e["id"])
+	return UiParts.click_row(line, func() -> void:
+		selected = id
+		_draw(), id == selected)
+
+
+## The rest of a magic item's card: charges, where it must be worn or held, a known curse, what a container holds.
+func _magic_card(ch: Character, data: Dictionary) -> void:
+	var e := _entry(selected)
+	if MagicItems.has_charges(data):
+		var spec := MagicItems.charges(data)
+		var regain := str(spec.get("regain", ""))
+		_card.add_child(UiKit.label("Charges: %d of %d%s" % [int(e.get("charges", 0)), MagicItems.max_charges(data, e),
+			(" · regains %s at %s" % [regain, spec.get("when", "dawn")]) if regain != "" else ""], 14, "moonlight", 420))
+	if MagicItems.worn_slot(data) != "":
+		_card.add_child(UiKit.label("Worn: %s%s" % [MagicItems.SLOT_NAMES.get(MagicItems.worn_slot(data), ""),
+			" (working)" if ch.item_active(e) else ""], 13, "parchment", 420))
+	elif MagicItems.is_held(data) and not Gear.is_weapon(data):
+		_card.add_child(UiKit.label("Works while held in a hand%s" % (" (held)" if ch.item_active(e) else ""), 13, "parchment", 420))
+	if MagicItems.is_cursed(data) and selected in ch.attuned and str((data.get("magic", {}) as Dictionary).get("curse", "")) != "":
+		_card.add_child(UiKit.label("Cursed: %s" % (data["magic"] as Dictionary)["curse"], 14, "vampire_red", 420))
+	for prop: Variant in e.get("artifact_properties", []):
+		_card.add_child(UiKit.label("• %s" % (prop as Dictionary).get("text", ""), 13, "lilac", 420))
+	if (e.get("gems", {}) as Dictionary).size() > 0:
+		var g := e["gems"] as Dictionary
+		_card.add_child(UiKit.label("Gems: %s" % ", ".join((g.keys() as Array).map(func(k: Variant) -> String: return "%d %s" % [int(g[k]), str(k).replace("_", " ")])), 13, "lilac", 420))
+	if (e.get("beads", []) as Array).size() > 0:
+		_card.add_child(UiKit.label("Beads: %s" % ", ".join((e["beads"] as Array).map(func(b: Variant) -> String: return str(b).replace("_", " "))), 13, "lilac", 420))
+	if (e.get("patches", []) as Array).size() > 0:
+		_card.add_child(UiKit.label("%d patches left" % (e["patches"] as Array).size(), 13, "lilac", 420))
+	if (e.get("stored", []) as Array).size() > 0:
+		_card.add_child(UiKit.label("Stored: %s" % ", ".join((e["stored"] as Array).map(func(s: Variant) -> String: return Compendium.shared().spell_data(str((s as Dictionary)["spell"])).get("name", "?"))), 13, "lilac", 420))
+	# Containers: what's inside, and putting things in.
+	if data.has("container"):
+		_card.add_child(UiParts.section("Inside"))
+		var inside := ch.contents_of(selected)
+		if inside.is_empty():
+			_card.add_child(UiKit.label("Empty.", 13, "bone"))
+		for i in inside.size():
+			var it := inside[i] as Dictionary
+			var r := HBoxContainer.new()
+			r.add_theme_constant_override("separation", 8)
+			UiParts.add_icon(r, "item", str(it["id"]), 24.0)
+			var lbl := UiKit.label(Compendium.shared().display_name("items", str(it["id"])), 14, "vellum")
+			lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			r.add_child(lbl)
+			var idx := i
+			r.add_child(UiParts.small_button("Take out", func() -> void:
+				ch.take_out(selected, idx)
+				_draw()))
+			_card.add_child(UiParts.row(r))
+	else:
+		for c0 in ch.inventory:
+			var cd := Compendium.shared().item_data(str(c0["id"]))
+			if not cd.has("container") or str(c0["id"]) == selected:
+				continue
+			var cid := str(c0["id"])
+			_card.add_child(UiParts.small_button("Put in the %s" % cd.get("name", cid), func() -> void:
+				var res := ch.put_in(cid, selected)
+				if _entry(selected).is_empty():
+					selected = ""
+				_draw()
+				match res:
+					"":
+						pass
+					"rift":
+						_card.add_child(UiKit.label("The two extradimensional spaces tear each other open: both are destroyed with everything inside.", 15, "vampire_red", 420))
+					"devoured":
+						_card.add_child(UiKit.label("Something inside the bag eats it.", 15, "vampire_red", 420))
+					_:
+						_card.add_child(UiKit.label(res, 14, "flame", 420))))
+
+
+## Uses a magic item's power outside a fight (story/field_items.gd) and shows what happened.
+func _use_power(power_id: String, opts: Dictionary) -> void:
+	var ch := _ch()
+	var res := FieldItems.use(st, ch, selected, power_id, ch, Dice.roller, opts)
+	if _entry(selected).is_empty():
+		selected = ""
+	if root.has_method("_refresh"):
+		root.call("_refresh")
+	_draw()
+	_card.add_child(UiKit.label(str(res.get("text", "")) if bool(res.get("ok", false)) else "Can't: %s" % res.get("text", ""), 15,
+		"bile" if bool(res.get("ok", false)) else "flame", 420))

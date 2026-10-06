@@ -1,6 +1,6 @@
 class_name FieldItems
 extends RefCounted
-## Using magic items outside a fight (ADR 0011): from the inventory's item card. Powers that work like spells go through
+## Using magic items outside a fight (ADR 0012): from the inventory's item card. Powers that work like spells go through
 ## the combat engine on FieldCasting's peaceful board, so charges, DCs and lasting effects behave as in a fight;
 ## exploring spells (Detect Magic from a wand, Comprehend Languages from a helm) are recorded like FieldCasting's
 ## utility spells; the rest are the exploring and story powers only items have: a Manual's study, a Bag of Beans, an
@@ -78,7 +78,8 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 	# An exploring spell (no effect in a fight): recorded for its duration, as FieldCasting does.
 	if not spell.is_empty() and not e.spells.has_combat_rules(spell) and not FieldCasting.EXPLORING_TOO.has(spell_id):
 		var dur := spell.get("duration", {}) as Dictionary
-		var lasting := int(dur.get("amount", 1)) * {"minutes": 1, "hours": 60, "days": 1440}.get(str(dur.get("kind", "")), 0)
+		var unit_minutes := {"minutes": 1, "hours": 60, "days": 1440}
+		var lasting: int = int(dur.get("amount", 1)) * int(unit_minutes.get(str(dur.get("kind", "")), 0))
 		if lasting > 0:
 			st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": ch.id}
 		e.items._after_use(c, p, spell, int(power.get("level", spell.get("level", 0))))

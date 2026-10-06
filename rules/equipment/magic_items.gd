@@ -1,6 +1,6 @@
 class_name MagicItems
 extends RefCounted
-## Magic item rules shared by characters, combat, the UI and treasure (2024 DMG "Magic Items", ADR 0011):
+## Magic item rules shared by characters, combat, the UI and treasure (2024 DMG "Magic Items", ADR 0012):
 ## rarity and price, attunement requirements, where an item has to be worn or held to work, charges, and the
 ## items built on a base weapon or armor ("+1 Longsword" is the "weapon_plus_1" template on "longsword", id
 ## "weapon_plus_1__longsword"; Compendium.item_data builds it on first use).
@@ -400,3 +400,35 @@ static func combine_scroll(t: Dictionary, spell: Dictionary, id: String) -> Dict
 	out["summary"] = "A level %d spell, %s: read it to cast it if it's on your class's spell list (DC %d, %+d)." % [lvl,
 		spell.get("name", ""), SCROLL_DC[lvl], SCROLL_DC[lvl] - 8] if lvl > 0 else "The %s cantrip: read it to cast it if it's on your class's spell list (DC 13, +5)." % spell.get("name", "")
 	return out
+
+
+# --- Generic scrolls -------------------------------------------------------------------------------------
+
+## Scrolls placed before magic items existed say only their level; each becomes a particular spell when it's found.
+const GENERIC_SCROLLS := {"spell_scroll_cantrip": 0, "spell_scroll_level_1": 1}
+
+
+## A Spell Scroll of a spell of `lvl`, picked with `rng` ("spell_scroll__<spell>").
+static func scroll_of_level(rng: DiceRoller, lvl: int, comp: Compendium) -> String:
+	var pool := comp.spells_for("", lvl)
+	if pool.is_empty():
+		return "spell_scroll_level_1"
+	return "spell_scroll%s%s" % [SEP, pool[rng.roll_one(pool.size(), "Scroll spell") - 1]["id"]]
+
+
+## A generic scroll id as a particular scroll, the same for the same `seed_key`; any other id unchanged.
+static func specific_scroll(item_id: String, seed_key: String, comp: Compendium) -> String:
+	if not GENERIC_SCROLLS.has(item_id):
+		return item_id
+	return scroll_of_level(DiceRoller.new(hash(seed_key)), int(GENERIC_SCROLLS[item_id]), comp)
+
+
+
+## The name a player sees: a disguised item (a Potion of Poison, Dust of Sneezing and Choking, a cursed armor) passes for
+## what it imitates until it's used, attuned to or identified (`identified` on its entry).
+static func display_name(item: Dictionary, entry: Dictionary = {}) -> String:
+	if item.has("appears_as") and not bool(entry.get("identified", false)):
+		var other := Compendium.shared().item_data(str(item["appears_as"]))
+		if not other.is_empty():
+			return str(other.get("name", item.get("name", "")))
+	return str(item.get("name", item.get("id", "")))

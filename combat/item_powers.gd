@@ -1,6 +1,6 @@
 class_name ItemPowers
 extends RefCounted
-## Bespoke powers of wondrous items and artifacts in a fight (ADR 0011): Cube of Force's barriers, the Iron Flask and
+## Bespoke powers of wondrous items and artifacts in a fight (ADR 0012): Cube of Force's barriers, the Iron Flask and
 ## Mirror of Life Trapping, an Efreeti Bottle, Deck of Illusions, Bag of Tricks, Feather Token whip, Pearl of Power and
 ## the rest. ItemSpecials hands over the custom powers it doesn't know; outside a fight story/field_items.gd does the rest.
 
