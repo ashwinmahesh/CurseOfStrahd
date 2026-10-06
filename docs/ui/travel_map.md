@@ -5,10 +5,11 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 
 ## Travel map (`ui/screens/travel_screen.gd`)
 
-- The art is one illustrated sheet of the whole valley in the game's gothic tone (dark blood-stained vellum,
-  near-black pines, grey-green mist, the castle in a red glow, after the title art), `art/ui/map/barovia.png`
-  (2528×1696, 3:2, generated at 2K; manifest id `travel_map_barovia`). It has no roads and no text: the game draws
-  the known roads and the place names on top, so they stay sharp at any zoom and only show what the party knows.
+- The art is the whole valley painted as the land itself in the game's gothic tone (dark moorland, near-black pines,
+  grey-green mist rolling in from the edges, the castle in a red glow, after the title art; no paper or parchment),
+  `art/ui/map/barovia.png` (2528×1696, 3:2, generated at 2K; manifest id `travel_map_barovia`). It has no roads and no
+  text: the game draws the known roads and the place names on top, so they stay sharp at any zoom and only show
+  what the party knows.
   Overlay colours follow the rest of the UI: names in vellum with a dark outline, roads as bone dashes, the route in
   bright red on a dark halo, hours on black tags with a gilt edge.
 - The map panel is 1152×768 at zoom 1 (the whole valley). It opens zoomed in on the known places (at most 1.6×);
@@ -41,8 +42,9 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 
 - Top right of the exploration HUD, above the location's name and the clock; hidden with the HUD in combat and
   conversations, so it never covers the combat HUD.
-- Drawn from the location's grid rows (16 px a square, mipmapped, shown at 9 px a square) in gothic tones: dark
-  sepia ground, `#` as dark pines in the wilds, blood-dark roofs in towns and black walls with a gilt edge indoors;
+- Drawn from the location's grid rows (16 px a square, mipmapped, shown at 9 px a square) in gothic tones: grey
+  ground outdoors with `#` as dark pines in the wilds and blood-dark roofs in towns, dark planks and black walls with a
+  gilt edge indoors;
   low cover, rough ground and water.
   Doors are drawn as they stand now; a secret door nobody has found shows as wall.
 - North up, centred on the leader's token. Marks: the party (the leader in gold), guests, people here, doors into

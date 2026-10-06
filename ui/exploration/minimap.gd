@@ -58,17 +58,17 @@ func show_location(v: LocationView) -> void:
 	_rim.queue_redraw()
 
 
-## Map colours by the kind of place, in the game's gothic tones: dark sepia ground; pines in the wilds, blood-dark
-## roofs in a town and black walls with a gilt edge indoors.
+## Map colours by the kind of place, in the game's gothic tones: grey ground outdoors with dark pines in the wilds and
+## blood-dark roofs in a town; dark planks and black walls with a gilt edge indoors.
 static func colours_for(theme: String) -> Dictionary:
-	var c := {"floor": "bone", "raised": "parchment", "wall": "void", "edge": "gilt_dark", "low": "walnut", "rough": "bone_dark",
+	var c := {"floor": "walnut", "raised": "leather", "wall": "void", "edge": "gilt_dark", "low": "umber", "rough": "peat",
 		"water": "moon_blue", "water_edge": "night_deep"}
 	if theme in ArenaBoard.WILD:
-		c.merge({"wall": "bog", "edge": "bog_deep", "low": "umber"}, true)
+		c.merge({"floor": "slate", "raised": "pewter", "wall": "bog", "edge": "bog_deep", "low": "umber", "rough": "stone"}, true)
 	elif theme in ArenaBoard.TOWNS or theme == "shrine_yard":
-		c.merge({"wall": "blood_deep", "edge": "void", "low": "umber"}, true)
+		c.merge({"floor": "slate", "raised": "pewter", "wall": "blood_deep", "edge": "void", "low": "umber", "rough": "stone"}, true)
 	elif theme == "dungeon":
-		c.merge({"floor": "slate", "raised": "pewter", "rough": "stone"}, true)
+		c.merge({"floor": "stone", "raised": "slate", "rough": "stone_deep"}, true)
 	var out := {}
 	for k: String in c:
 		out[k] = Look.color(str(c[k]))
