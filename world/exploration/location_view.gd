@@ -48,6 +48,7 @@ var _npc_shown: Array[Dictionary] = []   ## [{spec, token, cell, low_before}] fo
 var door_nodes: Dictionary = {}      ## door id -> Node3D
 var container_nodes: Dictionary = {}
 var prop_nodes: Dictionary = {}
+var exit_nodes: Dictionary = {}       ## exit id -> its door or stairs piece (SetDressing.exit_piece)
 var trap_marks: Dictionary = {}
 var lantern: OmniLight3D
 
@@ -86,7 +87,7 @@ var _spawn_name := ""
 func _ready() -> void:
 	assert(not loc.is_empty(), "No location %s" % loc_id)
 	grid = CombatGrid.from_rows(loc["map"]["rows"] as Array)
-	board = ArenaBoard.build(grid, ArenaBoard.theme_for(loc["map"] as Dictionary))
+	board = ArenaBoard.build(grid, ArenaBoard.theme_for(loc["map"] as Dictionary), loc_id)
 	add_child(board)
 	_build_environment()
 	_build_doors()
@@ -199,7 +200,9 @@ func _door_state(id: String) -> String:
 
 func _build_doors() -> void:
 	for ex: Variant in loc.get("exits", []):
-		SetDressing.exit_piece(board, ex as Dictionary)
+		var piece := SetDressing.exit_piece(board, ex as Dictionary)
+		if piece != null:
+			exit_nodes[str((ex as Dictionary)["id"])] = piece
 	for d: Variant in loc.get("doors", []):
 		var door := d as Dictionary
 		var cell := _cell(door["cell"])
@@ -1004,6 +1007,39 @@ func _look(cell: Vector2i, thing: Dictionary) -> void:
 				narration.emit(str(spec.get("label", "Something")).capitalize() + ".")
 
 
+## The square the mouse points at (owner report 2026-10-06): a person, prop, chest, door or way out drawn there
+## first, nearest the camera, since the top of a tall piece lies over the squares behind it; else the floor.
+func pick_cell(camera: Camera3D, screen: Vector2) -> Vector2i:
+	var origin := camera.project_ray_origin(screen)
+	var dir := camera.project_ray_normal(screen)
+	var best := INF
+	var cell := Vector2i(-1, -1)
+	for entry: Array in _pickables():
+		var t := SpritePick.hit(entry[0] as Node3D, camera, origin, dir)
+		if t < best:
+			best = t
+			cell = entry[1] as Vector2i
+	return cell if cell.x >= 0 else GridPick.cell_under(camera, grid, screen)
+
+
+## [node, cell] for everything drawn that the mouse can point at.
+func _pickables() -> Array:
+	var out: Array = []
+	for m: Combatant in members + guest_members:
+		if tokens.has(m.id):
+			out.append([tokens[m.id], m.cell])
+	for shown in _npc_shown:
+		out.append([shown["token"], shown["cell"]])
+	for key: String in ["props", "containers", "doors", "exits"]:
+		var nodes := {"props": prop_nodes, "containers": container_nodes, "doors": door_nodes, "exits": exit_nodes}[key] as Dictionary
+		for t: Variant in loc.get(key, []):
+			var spec := t as Dictionary
+			var node := nodes.get(str(spec.get("id", "")), null) as Node3D
+			if node != null and is_instance_valid(node):
+				out.append([node, _cell(spec["cell"])])
+	return out
+
+
 ## What's at a square for the hover hint and clicks: {kind, id, label} or {}.
 func thing_at(cell: Vector2i) -> Dictionary:
 	for shown in _npc_shown:
@@ -1472,7 +1508,7 @@ func start_encounter(encounter_id: String) -> bool:
 	if sneaking and who == "":
 		surprised.append_array(_stealth_surprise(e))
 	(st.loc_state(loc_id)["encounters"] as Dictionary)[encounter_id] = "started"
-	for m in members + guest_members:
+	for m: Combatant in members + guest_members:
 		(tokens[m.id] as Node3D).visible = false
 	var ctokens := {}
 	for c in e.combatants:
@@ -1518,7 +1554,7 @@ func resume_encounter(snapshot: Dictionary) -> bool:
 	in_combat = true
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, dice, st.party)
-	for m in members + guest_members:
+	for m: Combatant in members + guest_members:
 		(tokens[m.id] as Node3D).visible = false
 	var ctokens := {}
 	for c in e.combatants:
@@ -1596,7 +1632,7 @@ func _combat_grid() -> CombatGrid:
 func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, outcome: String) -> void:
 	for c in e.combatants:
 		if c.side in [&"party", &"guest"]:
-			for m in members + guest_members:
+			for m: Combatant in members + guest_members:
 				if m.creature == c.creature:
 					m.cell = c.cell
 		elif c.creature.dead:
@@ -1607,7 +1643,7 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 	if combat_view != null:
 		combat_view.queue_free()
 		combat_view = null
-	for m in members + guest_members:
+	for m: Combatant in members + guest_members:
 		var tok := tokens[m.id] as CombatToken
 		tok.position = board.cell_center(m.cell)
 		tok.visible = true

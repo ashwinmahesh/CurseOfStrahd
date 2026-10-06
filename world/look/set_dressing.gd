@@ -103,16 +103,40 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				_take_square(board, root, cell)
 			_lay(board, root, art, cell, scale_)
 		_:
-			if on_wall_square and board.house_cells.has(cell):
-				# On a house: hung on its wall (a notice board's papers, a shop's sign).
-				if _hang(board, root, art, cell, scale_):
+			if on_wall_square and board.house_cells.has(cell) and bool(look.get("building", false)):
+				# The whole building is this piece (Old Bonegrinder's windmill, the Abbey's bell tower): the house
+				# hides while it exists and the art stands over its ground.
+				var at := board.hide_building(cell)
+				root.tree_exiting.connect(func() -> void:
+					if is_instance_valid(board):
+						board.show_building(cell))
+				var tower := _sprite(art)
+				tower.pixel_size *= scale_
+				tower.position = at
+				root.add_child(tower)
+				_fade_with_trees(board, tower)
+				return root
+			var front := str(look.get("front", "")) if has_art(str(look.get("front", ""))) else front_of(art)
+			if on_wall_square and (board.house_cells.has(cell) or front != ""):
+				# On a house, or furniture set into a wall (a bookcase on a wall square): its front, hung on the wall.
+				if _hang(board, root, front if front != "" else art, cell, scale_):
 					return root
 			if on_wall_square:
 				_take_square(board, root, cell)
 			elif board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT):
 				_take_square(board, root, cell)   # its own art replaces the board's furniture or brambles there
-			_stand(board, root, art, cell, scale_)
+			var piece := stand_piece(board, root, art, cell, scale_, null, front)
+			if bool(look.get("fade", false)) and piece is Sprite3D:
+				_fade_with_trees(board, piece as Sprite3D)
 	return root
+
+
+## A tall piece (the Gulthias Tree, a windmill) fades like the trees when it stands between the camera and the party.
+static func _fade_with_trees(board: ArenaBoard, sp: Sprite3D) -> void:
+	board.occluders.append(sp)
+	sp.tree_exiting.connect(func() -> void:
+		if is_instance_valid(board):
+			board.occluders.erase(sp))
 
 
 ## A container that's been emptied looks dimmer.
@@ -120,9 +144,8 @@ static func mark_looted(node: Node3D) -> void:
 	if node is MeshInstance3D:
 		(node as MeshInstance3D).material_override = Look.cel("peat")
 		return
-	for c: Node in node.get_children():
-		if c is SpriteBase3D:
-			(c as SpriteBase3D).modulate = Color(0.55, 0.5, 0.55)
+	for c: Node in node.find_children("*", "SpriteBase3D", true, false):
+		(c as SpriteBase3D).modulate = Color(0.55, 0.5, 0.55)
 
 
 # --- Doors ----------------------------------------------------------------------------------------
@@ -343,10 +366,84 @@ static func _sprite(art: String) -> Sprite3D:
 
 
 static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i, scale_: float) -> void:
-	var sp := _sprite(art)
-	sp.pixel_size *= scale_
-	sp.position = board.cell_center(cell)
+	stand_piece(board, root, art, cell, scale_)
+
+
+## A standing piece on `cell` with a fixed place and facing (owner request 2026-10-06: environment pieces show the
+## side that faces the camera rather than turning with it). Furniture with a front view stands flat against a wall
+## beside it; a piece drawn from the front and from behind is a PropView facing away from that wall (or south, toward
+## the opening camera); anything else looks the same from every side (a barrel, a tree) and is a plain billboard.
+## Added to `parent`; returns the piece.
+static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
+		at_override: Variant = null, front_override: String = "") -> Node3D:
+	scale_ *= float((catalog().get("scales", {}) as Dictionary).get(art, 1.0))
+	var at: Vector3 = board.cell_center(cell) if at_override == null else at_override as Vector3
+	var wall := wall_side(board, cell)
+	var front := front_override if front_override != "" else front_of(art)
+	if front != "" and wall != Vector2i.ZERO:
+		return _against_wall(board, parent, art, front, cell, wall, scale_)
+	var info := manifest()[art] as Dictionary
+	var back := str(info.get("back", ""))
+	var piece: Sprite3D
+	if back != "" and has_art(back):
+		var binfo := manifest()[back] as Dictionary
+		var faces := Vector3(-wall.x, 0, -wall.y) if wall != Vector2i.ZERO else Vector3(0, 0, 1)
+		piece = PropView.create(load("res://" + str(info["file"])) as Texture2D, float(info.get("pixel_size", 0.01)) * scale_,
+			load("res://" + str(binfo["file"])) as Texture2D, float(binfo.get("pixel_size", 0.01)) * scale_, faces)
+	else:
+		piece = _sprite(art)
+		piece.pixel_size *= scale_
+	piece.position = at
+	parent.add_child(piece)
+	return piece
+
+
+## The front view of furniture that stands against a wall (catalog "fronts"), or "".
+static func front_of(art: String) -> String:
+	var f: Variant = (catalog().get("fronts", {}) as Dictionary).get(art, "")
+	var front := str(f) if f is String else str((f as Dictionary).get("art", ""))
+	return front if has_art(front) else ""
+
+
+## The side of `cell` with a wall next to it, the one furniture would stand against (Vector2i.ZERO if none). Walls to
+## the north come first, so a piece faces south toward the opening camera when it can.
+static func wall_side(board: ArenaBoard, cell: Vector2i) -> Vector2i:
+	for d: Vector2i in [Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1)]:
+		if _wall_at(board, cell + d):
+			return d
+	return Vector2i.ZERO
+
+
+## Furniture against a wall: its front view stands flat, parallel to the wall and facing into the room, with a body
+## of wood behind it back to the wall (catalog "fronts": depth, body), so from the side it has thickness.
+static func _against_wall(board: ArenaBoard, parent: Node3D, art: String, front: String, cell: Vector2i, wall: Vector2i, scale_: float) -> Node3D:
+	var spec: Variant = (catalog().get("fronts", {}) as Dictionary).get(art, "")
+	var depth := float((spec as Dictionary).get("depth", 0.35)) if spec is Dictionary else 0.35
+	var body := bool((spec as Dictionary).get("body", true)) if spec is Dictionary else true
+	var info := manifest()[front] as Dictionary
+	var w := float(info.get("world_width", 1.0)) * scale_
+	var h := float(info.get("world_height", 1.0)) * scale_
+	var fit := minf(1.0, 1.25 / w)   # about a square wide (a little over, as furniture is), never shrunk more
+	var root := Node3D.new()
+	root.name = "AgainstWall_" + art
+	var n := Vector3(-wall.x, 0, -wall.y)   # into the room
+	var c := board.cell_center(cell)
+	root.position = c + Vector3(wall.x, 0, wall.y) * 0.5
+	root.rotation.y = atan2(n.x, n.z)
+	parent.add_child(root)
+	var sp := wall_sprite(front)
+	sp.pixel_size *= scale_ * fit
+	sp.position = Vector3(0, 0, depth)
 	root.add_child(sp)
+	if body:
+		var mi := MeshInstance3D.new()
+		var bm := BoxMesh.new()
+		bm.size = Vector3(w * fit * 0.9, h * fit * 0.86, depth - 0.02)
+		mi.mesh = bm
+		mi.position = Vector3(0, bm.size.y / 2.0, depth / 2.0)
+		mi.material_override = Look.cel("walnut")
+		root.add_child(mi)
+	return root
 
 
 ## A floor piece lying flat, centred on its node (rotate the node about y to turn it).

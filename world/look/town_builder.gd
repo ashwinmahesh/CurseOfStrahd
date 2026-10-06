@@ -33,6 +33,21 @@ static func plan(board: ArenaBoard) -> Dictionary:
 	for c: Vector2i in walls:
 		if not block.has(c):
 			lines[c] = true
+	# Which block of wall each square belongs to (an L-shaped block is split into several houses below).
+	var group := {}
+	var groups := 0
+	for c: Vector2i in block:
+		if group.has(c):
+			continue
+		var open: Array[Vector2i] = [c]
+		group[c] = groups
+		while not open.is_empty():
+			var at: Vector2i = open.pop_back()
+			for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				if block.has(at + d) and not group.has(at + d):
+					group[at + d] = groups
+					open.append(at + d)
+		groups += 1
 	var taken := {}
 	var cells: Array = block.keys()
 	cells.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return a.y < b.y or (a.y == b.y and a.x < b.x))
@@ -57,7 +72,7 @@ static func plan(board: ArenaBoard) -> Dictionary:
 		for i in w:
 			for j in d:
 				taken[c + Vector2i(i, j)] = true
-		_house(board, Rect2i(c, Vector2i(w, d)))
+		_house(board, Rect2i(c, Vector2i(w, d)), int(group[c]))
 	return lines
 
 
@@ -68,7 +83,8 @@ static func _border(board: ArenaBoard, c: Vector2i) -> bool:
 ## A low stone yard wall on one square: a post in the middle and an arm toward each neighbouring wall.
 static func yard_wall(board: ArenaBoard, c: Vector2i, stone: Material) -> void:
 	var base := Vector3(c.x + 0.5, 0, c.y + 0.5)
-	var h := YARD_WALL_H
+	# A walled town's wall is tall (catalog "town_walls": Krezk); elsewhere a yard wall is waist high.
+	var h := float((SetDressing.catalog().get("town_walls", {}) as Dictionary).get(board.place, YARD_WALL_H))
 	board.add_box("YardWall", Vector3(0.5, h, 0.5), base + Vector3(0, h / 2.0, 0), stone)
 	board.add_box("YardCap", Vector3(0.6, 0.1, 0.6), base + Vector3(0, h + 0.05, 0), Look.cel("stone_deep"))
 	for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
@@ -81,7 +97,7 @@ static func yard_wall(board: ArenaBoard, c: Vector2i, stone: Material) -> void:
 		board.add_box("YardCap", Vector3(0.6, 0.1, 0.6), base + off + Vector3(0, h + 0.05, 0), Look.cel("stone_deep"))
 
 
-static func _house(board: ArenaBoard, r: Rect2i) -> void:
+static func _house(board: ArenaBoard, r: Rect2i, group: int) -> void:
 	var seed := absi(r.position.x * 73856093 ^ r.position.y * 19349663 ^ r.size.x * 83492791)
 	var area := r.size.x * r.size.y
 	var h := HOUSE_H + (0.4 if area >= 16 else 0.0) + float(seed % 3) * 0.15
@@ -121,7 +137,7 @@ static func _house(board: ArenaBoard, r: Rect2i) -> void:
 	var idx := board.buildings.size()
 	board.buildings.append({"root": root, "walls": walls, "upper": upper, "height": h, "extras": [],
 		"aabb": AABB(Vector3(r.position.x - EAVE, 0, r.position.y - EAVE), Vector3(r.size.x + 2 * EAVE, h + rise + 0.2, r.size.y + 2 * EAVE)),
-		"cut": false, "rect": r})
+		"cut": false, "rect": r, "group": group})
 	for i in r.size.x:
 		for j in r.size.y:
 			board.house_cells[r.position + Vector2i(i, j)] = idx
@@ -218,6 +234,8 @@ static func _tri(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, n: Vector3
 static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 	var target := focus + Vector3(0, 0.8, 0)
 	for b: Dictionary in board.buildings:
+		if bool(b.get("hidden", false)):
+			continue
 		var aabb := b["aabb"] as AABB
 		var hides: bool = aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target)
 		var walls := b["walls"] as MeshInstance3D

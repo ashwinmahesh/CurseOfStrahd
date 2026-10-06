@@ -71,23 +71,37 @@ def keep_main(arr, min_frac=0.02):
     return out
 
 
-def clear_grid_lines(arr, cols, rows, band=0.12, cover=0.6):
-    """Gemini sometimes rules the sheet into quarters despite the prompt. A column (row) near a dividing line that is
-    opaque over most of the image's height (width) is such a rule: it's cleared, so it neither joins the objects it
-    touches nor becomes a shape of its own."""
+def clear_grid_lines(arr, cols, rows, band=0.12, cover=0.92, thin=8):
+    """Gemini sometimes rules the sheet into quarters despite the prompt. A thin run (at most `thin` px) of columns
+    (rows) near a dividing line, each opaque over nearly the whole image's height (width), is such a rule: it's
+    cleared, so it neither joins the objects it touches nor becomes a shape of its own. Objects are never that long
+    and thin, so a big object near the middle is left alone."""
     out = arr.copy()
     h, w = arr.shape[:2]
     opaque = arr[..., 3] > 0.5
+
+    def runs(flags):
+        idx = np.nonzero(flags)[0]
+        groups, start = [], None
+        for i, v in enumerate(idx):
+            if start is None:
+                start = prev = v
+            elif v != prev + 1:
+                groups.append((start, prev))
+                start = v
+            prev = v
+        if start is not None:
+            groups.append((start, prev))
+        return [g for g in groups if g[1] - g[0] + 1 <= thin]
+
     for k in range(1, cols):
         x0, x1 = int((k / cols - band) * w), int((k / cols + band) * w)
-        frac = opaque[:, x0:x1].mean(axis=0)
-        for x in np.nonzero(frac > cover)[0]:
-            out[:, x0 + x] = 0.0
+        for a, b in runs(opaque[:, x0:x1].mean(axis=0) > cover):
+            out[:, x0 + a:x0 + b + 1] = 0.0
     for k in range(1, rows):
         y0, y1 = int((k / rows - band) * h), int((k / rows + band) * h)
-        frac = opaque[y0:y1, :].mean(axis=1)
-        for y in np.nonzero(frac > cover)[0]:
-            out[y0 + y, :] = 0.0
+        for a, b in runs(opaque[y0:y1, :].mean(axis=1) > cover):
+            out[y0 + a:y0 + b + 1, :] = 0.0
     return out
 
 
