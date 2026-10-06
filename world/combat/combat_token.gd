@@ -46,7 +46,16 @@ static func art_for(cr: Creature) -> String:
 		var look := str(((cr as Character).build.get("appearance", {}) as Dictionary).get("art", ""))
 		if look != "":
 			return look
+		return default_look(cr as Character)
 	return cr.name.to_snake_case()
+
+
+## A character who never picked a look borrows the pregen look of their class (until the art pass adds more).
+static func default_look(ch: Character) -> String:
+	for cls: String in ["fighter", "rogue", "cleric", "wizard"]:
+		if ch.class_level_of(cls) > 0:
+			return {"fighter": "ilse_varga", "rogue": "tamsin_tealeaf", "cleric": "hedda_ironvow", "wizard": "silvain_aster"}[cls] as String
+	return "ilse_varga"
 
 
 ## `art` overrides which sprite to use (NPCs whose stat block is generic, like a commoner).

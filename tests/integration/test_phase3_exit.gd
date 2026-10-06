@@ -183,6 +183,9 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 	if not _ok(bool(GameState.story.get_flag("ireena_met")), "flag ireena_met"):
 		return
 
+	# EXIT_KEEP=1 keeps the end state as the save "exit_showcase" (make capture LOAD=exit_showcase).
+	if OS.get_environment("EXIT_KEEP") == "1":
+		print("  kept exit_showcase: ", error_string(SaveSystem.save("exit_showcase")))
 	# The run, for the build log.
 	var alive := GameState.story.party.filter(func(c: Character) -> bool: return not c.dead).size()
 	if not _ok(alive == 4, "everyone made it"):

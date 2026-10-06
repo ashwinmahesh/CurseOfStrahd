@@ -397,6 +397,10 @@ func _finish() -> void:
 		var ch := bb.build_character()
 		if ch == null:
 			return
+		if str((ch.build.get("appearance", {}) as Dictionary).get("art", "")) == "":
+			var app := (ch.build.get("appearance", {}) as Dictionary).duplicate()
+			app["art"] = CombatToken.default_look(ch)
+			ch.build["appearance"] = app
 		ch.finish_long_rest()
 		party.append(ch)
 	finished.emit(party)

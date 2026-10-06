@@ -1304,6 +1304,11 @@ func _end_encounter(encounter_id: String, spec: Dictionary, e: Encounter, ctoken
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	rig.follow = tokens[leader().id] as Node3D
 	st.advance_minutes(1)
+	# With the fight over, nobody is still held by a dead grappler, and the fallen-over get up.
+	for m in members:
+		if m.creature.hp > 0:
+			m.creature.remove_condition(&"grappled")
+			m.creature.remove_condition(&"prone")
 	if outcome == "victory":
 		(st.loc_state(loc_id)["encounters"] as Dictionary)[encounter_id] = true
 		if spec.has("flag"):

@@ -23,6 +23,9 @@ var _menu_cell := Vector2i(-1, -1)
 func _ready() -> void:
 	InputActions.ensure()
 	GameState.current_scene = "res://scenes/game.tscn"
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--load="):
+			SaveSystem.load_slot(a.get_slice("=", 1))   # captures: start from a save
 	st = GameState.story
 	narrator = Narrator.new()
 	banter = Banter.new()
@@ -404,6 +407,8 @@ func capture_shots(tool: Node, out: String) -> void:
 		if dialogue != null:
 			dialogue.queue_free()
 			dialogue = null
+		hud.visible = true
+		ModeController.force(ModeController.Mode.EXPLORATION)
 	# --encounter=<id>: the fight in place, a few turns in.
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--encounter=") and view.start_encounter(a.get_slice("=", 1)):
