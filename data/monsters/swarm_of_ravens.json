@@ -138,7 +138,8 @@
     }
   ],
   "regions": [
-    "svalich_road"
+    "svalich_road",
+    "wizard_of_wines"
   ],
   "ai_profile": "swarm",
   "summary": "Engulfs a creature in pecking beaks and deafening caws; resists weapon damage."

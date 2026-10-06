@@ -1,9 +1,9 @@
 {
-  "id": "werewolf",
-  "name": "Werewolf",
+  "id": "kiril_stoyanovich",
+  "name": "Kiril Stoyanovich",
   "source": {
-    "book": "MM2025",
-    "checked_against": "BR2024"
+    "book": "CoS",
+    "note": "Curse of Strahd's pack leader: the 2024 Werewolf (data/monsters/werewolf.json) with the book's change as remembered, 90 Hit Points (Constitution 16 here to fit 12d8 + 36). Challenge 4 is our estimate for the extra Hit Points. Entered from knowledge, not yet checked against the book."
   },
   "size": "medium",
   "type": "monstrosity",
@@ -15,8 +15,8 @@
   "ac": 15,
   "initiative": 4,
   "hp": {
-    "average": 71,
-    "dice": "11d8+22"
+    "average": 90,
+    "dice": "12d8+36"
   },
   "speed": {
     "walk": 30
@@ -24,7 +24,7 @@
   "abilities": {
     "str": 16,
     "dex": 14,
-    "con": 14,
+    "con": 16,
     "int": 10,
     "wis": 11,
     "cha": 10
@@ -40,8 +40,8 @@
   "languages": [
     "Common (can't speak in wolf form)"
   ],
-  "cr": 3,
-  "xp": 700,
+  "cr": 4,
+  "xp": 1100,
   "proficiency_bonus": 2,
   "gear": [
     "longbow"
@@ -177,9 +177,8 @@
     }
   ],
   "regions": [
-    "svalich_road",
     "werewolf_den"
   ],
   "ai_profile": "pack_hunter",
-  "summary": "Shoots from cover, then shifts to hybrid form to scratch and bite with its pack; the bite curses."
+  "summary": "The werewolf pack's brutal leader: tougher than his followers, he shoots, then shifts to tear and curse with his bite."
 }

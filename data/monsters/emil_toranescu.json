@@ -1,9 +1,9 @@
 {
-  "id": "werewolf",
-  "name": "Werewolf",
+  "id": "emil_toranescu",
+  "name": "Emil Toranescu",
   "source": {
-    "book": "MM2025",
-    "checked_against": "BR2024"
+    "book": "CoS",
+    "note": "Curse of Strahd gives Emil the Werewolf's statistics; these are the 2024 Werewolf's numbers (data/monsters/werewolf.json, checked against BR2024) under his name, so he can join the party as a guest. Not checked against the book."
   },
   "size": "medium",
   "type": "monstrosity",
@@ -11,7 +11,7 @@
     "medium_or_small",
     "lycanthrope"
   ],
-  "alignment": "chaotic evil",
+  "alignment": "neutral",
   "ac": 15,
   "initiative": 4,
   "hp": {
@@ -177,9 +177,8 @@
     }
   ],
   "regions": [
-    "svalich_road",
     "werewolf_den"
   ],
   "ai_profile": "pack_hunter",
-  "summary": "Shoots from cover, then shifts to hybrid form to scratch and bite with its pack; the bite curses."
+  "summary": "A captive werewolf who wants the pack's leadership: longbow and claws as a man, a cursing bite as a wolf."
 }

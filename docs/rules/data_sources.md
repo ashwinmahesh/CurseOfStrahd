@@ -13,7 +13,7 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 | feats | 75 | 17 | 58 |
 | spells | 309 | 216 | 93 |
 | items | 186 | 183 | 3 |
-| monsters | 56 | 28 | 28 |
+| monsters | 76 | 28 | 48 |
 | conditions | 15 | 15 | 0 |
 
 ## Entries to check against the books
@@ -26,6 +26,6 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 - **spells** (PHB2024, 93): Animal Shapes, Antimagic Field, Antipathy/Sympathy, Arcane Vigor, Armor of Agathys, Arms of Hadar, Astral Projection, Aura of Purity, Aura of Vitality, Beast Sense, Befuddlement, Blade Ward, Blinding Smite, Clone, Cloud of Daggers, Compelled Duel, Conjure Barrage, Conjure Celestial, Control Weather, Cordon of Arrows, Crown of Madness, Crusader's Mantle, Delayed Blast Fireball, Demiplane, Divine Word, Dominate Monster, Earthquake, Elemental Weapon, Etherealness, Feign Death, Finger of Death, Fire Storm, Forcecage, Foresight, Fount of Moonlight, Friends, Gate, Glibness, Grasping Vine, Hail of Thorns, Holy Aura, Hunger of Hadar, Imprisonment, Incendiary Cloud, Lightning Arrow, Mass Heal, Maze, Meteor Swarm, Mind Blank, Mind Sliver, Mirage Arcane, Mordenkainen's Magnificent Mansion, Mordenkainen's Sword, Phantasmal Killer, Plane Shift, Power Word Fortify, Power Word Heal, Power Word Kill, Power Word Stun, Prismatic Spray, Prismatic Wall, Project Image, Regenerate, Resurrection, Reverse Gravity, Sequester, Shapechange, Simulacrum, Staggering Smite, Storm of Vengeance, Summon Aberration, Summon Beast, Summon Construct, Summon Elemental, Summon Fey, Summon Undead, Sunburst, Symbol, Telepathy, Teleport, Thorn Whip, Thunderclap, Thunderous Smite, Time Stop, Toll the Dead, True Polymorph, True Resurrection, Tsunami, Weird, Wish, Witch Bolt, Word of Radiance, Wrathful Smite
 - **items** (CoS, 2): Bones of St. Andral, Dream Pastry
 - **items** (PHB2024, 1): Spellbook
-- **monsters** (custom, 1): Apprentice Wizard
-- **monsters** (MM2025, 20): Berserker, Deva, Druid, Flesh Golem, Ghost, Giant Spider, Knight, Mage, Mummy, Needle Blight, Ogre, Priest, Revenant, Saber-Toothed Tiger, Town Guard, Twig Blight, Vine Blight, Wight, Will-o'-Wisp, Wraith
-- **monsters** (CoS, 7): Broom of Animated Attack, Izek Strazni, Kasimir Velikov, Mongrelfolk, Rictavio, Strahd Zombie, Wereraven
+- **monsters** (custom, 2): Amber Golem, Apprentice Wizard
+- **monsters** (MM2025, 28): Arcanaloth, Banshee, Berserker, Deva, Druid, Flameskull, Flesh Golem, Gargoyle, Ghost, Giant Spider, Knight, Mage, Mummy, Needle Blight, Nothic, Ogre, Priest, Revenant, Roc, Saber-Toothed Tiger, Scarecrow, Swarm of Insects, Town Guard, Twig Blight, Vine Blight, Wight, Will-o'-Wisp, Wraith
+- **monsters** (CoS, 18): Baba Lysaga, Baba Lysaga's Creeping Hut, Broom of Animated Attack, Emil Toranescu, Exethanter, Ezmerelda d'Avenir, Izek Strazni, Kasimir Velikov, Kiril Stoyanovich, Mongrelfolk, Mordenkainen, Phantom Warrior, Rictavio, Sir Godfrey Gwilym, Strahd Zombie, Tree Blight, Vladimir Horngaard, Wereraven

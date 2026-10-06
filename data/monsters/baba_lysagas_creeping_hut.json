@@ -1,0 +1,102 @@
+{
+  "id": "baba_lysagas_creeping_hut",
+  "name": "Baba Lysaga's Creeping Hut",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. The Roots' reach (60 ft as remembered) and the attack list especially need the book."
+  },
+  "size": "gargantuan",
+  "type": "construct",
+  "alignment": "unaligned",
+  "ac": 16,
+  "ac_note": "natural armor",
+  "initiative": -2,
+  "hp": {
+    "average": 263,
+    "dice": "17d20+85"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 26,
+    "dex": 7,
+    "con": 20,
+    "int": 1,
+    "wis": 3,
+    "cha": 3
+  },
+  "saves": {
+    "con": 9,
+    "wis": 0,
+    "cha": 0
+  },
+  "immunities": [
+    "poison",
+    "psychic"
+  ],
+  "condition_immunities": [
+    "blinded",
+    "charmed",
+    "deafened",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone"
+  ],
+  "senses": {
+    "blindsight": 120
+  },
+  "passive_perception": 6,
+  "languages": [],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "siege_monster",
+      "name": "Siege Monster",
+      "action": "passive",
+      "summary": "Deals double damage to objects and structures.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "roots",
+          "count": 3
+        }
+      ],
+      "summary": "Makes three Roots attacks."
+    },
+    {
+      "id": "roots",
+      "name": "Roots",
+      "kind": "melee",
+      "attack": {
+        "bonus": 12,
+        "reach": 60
+      },
+      "damage": [
+        {
+          "average": 30,
+          "dice": "4d10+8",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Lashes out with a long, gnarled root."
+    }
+  ],
+  "regions": [
+    "berez"
+  ],
+  "ai_profile": "brute",
+  "summary": "A hut on a great mound of roots that walks, and lashes anything nearby with crushing roots."
+}

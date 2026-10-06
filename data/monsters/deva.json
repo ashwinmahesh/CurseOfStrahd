@@ -1,0 +1,170 @@
+{
+  "id": "deva",
+  "name": "Deva",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Deva. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the Hit Points, Divine Aid (its uses and spells) and the Shape-Shift details. Shape-Shift and Exalted Restoration are text only. The Abbot of Krezk uses this block under his own name."
+  },
+  "size": "medium",
+  "type": "celestial",
+  "tags": [
+    "angel"
+  ],
+  "alignment": "lawful good",
+  "ac": 17,
+  "initiative": 4,
+  "hp": {
+    "average": 229,
+    "dice": "27d8+108"
+  },
+  "speed": {
+    "walk": 30,
+    "fly": 90,
+    "hover": true
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 18,
+    "con": 18,
+    "int": 17,
+    "wis": 20,
+    "cha": 20
+  },
+  "saves": {
+    "wis": 9,
+    "cha": 9
+  },
+  "skills": {
+    "insight": 9,
+    "perception": 9
+  },
+  "resistances": [
+    "radiant"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 19,
+  "languages": [
+    "all"
+  ],
+  "telepathy": 120,
+  "cr": 10,
+  "xp": 5900,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "exalted_restoration",
+      "name": "Exalted Restoration",
+      "action": "passive",
+      "summary": "If it dies away from its home plane, its body vanishes and it re-forms there with all its Hit Points.",
+      "implemented": "text"
+    },
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "implemented": "engine"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "holy_mace",
+          "count": 2
+        }
+      ],
+      "summary": "Makes two Holy Mace attacks."
+    },
+    {
+      "id": "holy_mace",
+      "name": "Holy Mace",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d6+4",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 18,
+          "dice": "4d8",
+          "type": "radiant"
+        }
+      ],
+      "summary": "A mace blow carrying a burst of radiant power.",
+      "weapon": true
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Casts Detect Evil and Good at will; Commune and Raise Dead once a day each (Wis, DC 17).",
+      "text": "Wisdom is its spellcasting ability (spell save DC 17); it needs no Material components. At will: Detect Evil and Good. 1/day each: Commune, Raise Dead."
+    },
+    {
+      "id": "shape_shift",
+      "name": "Shape-Shift",
+      "kind": "special",
+      "summary": "Takes the form of a Humanoid or Beast, or returns to its true form.",
+      "text": "It keeps its mind and its ability to speak; the new form's body replaces its own until it changes back. Text only for the engine."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "divine_aid",
+      "name": "Divine Aid",
+      "kind": "spellcasting",
+      "summary": "Twice a day: casts Cure Wounds, Lesser Restoration or Remove Curse.",
+      "text": "Uses the same spellcasting ability as its Spellcasting action. The two uses cover all three spells.",
+      "uses": {
+        "count": 2,
+        "per": "day"
+      },
+      "cast": [
+        "cure_wounds",
+        "lesser_restoration",
+        "remove_curse"
+      ]
+    }
+  ],
+  "spellcasting": {
+    "ability": "wis",
+    "dc": 17,
+    "attack": 9,
+    "at_will": [
+      "detect_evil_and_good"
+    ],
+    "per_day": {
+      "1": [
+        "commune",
+        "raise_dead"
+      ]
+    }
+  },
+  "regions": [
+    "abbey_of_st_markovia"
+  ],
+  "ai_profile": "brute",
+  "summary": "A radiant warrior angel: two holy mace blows, healing magic for allies, and resistance to magic."
+}

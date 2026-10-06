@@ -1,0 +1,185 @@
+{
+  "id": "baba_lysaga",
+  "name": "Baba Lysaga",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd appendix block (2016) in the 2024 layout. Entered from knowledge, not yet checked against the book. The prepared spells especially need the book. Her swarm form and Summon Swarms are text only; Fire Bolt runs as an attack; spell slots are listed per spell."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "shapechanger"
+  ],
+  "alignment": "chaotic evil",
+  "ac": 15,
+  "ac_note": "natural armor",
+  "initiative": 0,
+  "hp": {
+    "average": 120,
+    "dice": "16d8+48"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 10,
+    "con": 16,
+    "int": 20,
+    "wis": 17,
+    "cha": 13
+  },
+  "saves": {
+    "wis": 7
+  },
+  "skills": {
+    "arcana": 13,
+    "religion": 13
+  },
+  "passive_perception": 13,
+  "languages": [
+    "Abyssal",
+    "Common",
+    "Draconic",
+    "Dwarvish",
+    "Giant"
+  ],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "gear": [
+    "quarterstaff"
+  ],
+  "traits": [
+    {
+      "id": "hidden_from_divination",
+      "name": "Hidden from Divination",
+      "action": "passive",
+      "summary": "Divination magic can't find her, as if she were under Nondetection.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "quarterstaff",
+          "count": 3
+        }
+      ],
+      "summary": "Makes three Quarterstaff attacks."
+    },
+    {
+      "id": "quarterstaff",
+      "name": "Quarterstaff",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "1d6+4",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "Cracks a staff; 8 (1d8 + 4) two-handed.",
+      "weapon": true
+    },
+    {
+      "id": "fire_bolt",
+      "name": "Fire Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 9,
+        "range": [
+          120
+        ]
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "3d10",
+          "type": "fire"
+        }
+      ],
+      "summary": "Casts Fire Bolt up to 120 ft."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Int, DC 17, +9: a 16th-level wizard's spells up to Power Word Stun.",
+      "text": "A 16th-level spellcaster using Intelligence (spell save DC 17, +9 to hit). Cantrips: Acid Splash, Fire Bolt, Light, Mage Hand, Prestidigitation. 1st level (4 slots): Detect Magic, Magic Missile, Sleep, Witch Bolt. 2nd level (3 slots): Crown of Madness, Enlarge/Reduce, Misty Step. 3rd level (3 slots): Dispel Magic, Fireball, Lightning Bolt. 4th level (3 slots): Blight, Evard's Black Tentacles, Polymorph. 5th level (2 slots): Cloudkill, Geas, Scrying. 6th level (1 slot): Programmed Illusion, True Seeing. 7th level (1 slot): Finger of Death, Mirage Arcane. 8th level (1 slot): Power Word Stun."
+    },
+    {
+      "id": "shapechange",
+      "name": "Shapechange",
+      "kind": "special",
+      "summary": "Turns into a swarm of insects (walk 5 ft, fly 30 ft) or back; what she wears changes with her.",
+      "text": "Text only for the engine."
+    },
+    {
+      "id": "summon_swarms",
+      "name": "Summon Swarms of Insects",
+      "kind": "special",
+      "summary": "Once per Short or Long Rest: calls 1d4 swarms of insects into free spaces within 60 ft to fight for her.",
+      "text": "They stay until killed or until she dismisses them as an action. Text only for the engine.",
+      "uses": {
+        "count": 1,
+        "per": "short"
+      }
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 17,
+    "attack": 9,
+    "at_will": [
+      "acid_splash",
+      "light",
+      "mage_hand",
+      "prestidigitation"
+    ],
+    "per_day": {
+      "4": [
+        "detect_magic",
+        "magic_missile",
+        "sleep",
+        "witch_bolt"
+      ],
+      "3": [
+        "crown_of_madness",
+        "enlarge_reduce",
+        "misty_step",
+        "dispel_magic",
+        "fireball",
+        "lightning_bolt",
+        "blight",
+        "evards_black_tentacles",
+        "polymorph"
+      ],
+      "2": [
+        "cloudkill",
+        "geas",
+        "scrying"
+      ],
+      "1": [
+        "programmed_illusion",
+        "true_seeing",
+        "finger_of_death",
+        "mirage_arcane",
+        "power_word_stun"
+      ]
+    }
+  },
+  "regions": [
+    "berez"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "An ancient witch: three staff blows, a 16th-level wizard's spells, swarms of insects at her call."
+}

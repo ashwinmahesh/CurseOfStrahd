@@ -1,0 +1,118 @@
+{
+  "id": "gargoyle",
+  "name": "Gargoyle",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual gargoyle; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Its resistance to nonmagical, non-adamantine weapons is entered as plain resistance."
+  },
+  "size": "medium",
+  "type": "elemental",
+  "alignment": "chaotic evil",
+  "ac": 15,
+  "initiative": 0,
+  "hp": {
+    "average": 52,
+    "dice": "7d8+21"
+  },
+  "speed": {
+    "walk": 30,
+    "fly": 60
+  },
+  "abilities": {
+    "str": 15,
+    "dex": 11,
+    "con": 16,
+    "int": 6,
+    "wis": 11,
+    "cha": 7
+  },
+  "resistances": [
+    "bludgeoning",
+    "piercing",
+    "slashing"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "petrified",
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "Primordial (Terran)"
+  ],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "false_appearance",
+      "name": "False Appearance",
+      "action": "passive",
+      "summary": "Looks like an ordinary statue while it stays still.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bite",
+          "count": 1
+        },
+        {
+          "action": "claws",
+          "count": 1
+        }
+      ],
+      "summary": "Makes one Bite attack and one Claws attack."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "piercing"
+        }
+      ],
+      "summary": "A stony bite."
+    },
+    {
+      "id": "claws",
+      "name": "Claws",
+      "kind": "melee",
+      "attack": {
+        "bonus": 4,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d6+2",
+          "type": "slashing"
+        }
+      ],
+      "summary": "A rake of stone claws."
+    }
+  ],
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A living statue that swoops down to bite and claw; hard to hurt with weapons."
+}

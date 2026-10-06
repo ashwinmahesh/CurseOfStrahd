@@ -1,0 +1,155 @@
+{
+  "id": "priest",
+  "name": "Priest",
+  "source": {
+    "book": "MM2025",
+    "note": "The 2024 Priest. Entered from knowledge, not yet checked against SRD 5.2.1 or the book. Unsure: the skill bonuses, the spell list and Divine Aid's uses and spells."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "medium_or_small",
+    "cleric"
+  ],
+  "alignment": "neutral",
+  "ac": 13,
+  "initiative": 0,
+  "hp": {
+    "average": 38,
+    "dice": "7d8+7"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 16,
+    "dex": 10,
+    "con": 12,
+    "int": 13,
+    "wis": 16,
+    "cha": 13
+  },
+  "skills": {
+    "medicine": 7,
+    "perception": 5,
+    "religion": 5
+  },
+  "passive_perception": 15,
+  "languages": [
+    "Common plus one other language"
+  ],
+  "cr": 2,
+  "xp": 450,
+  "proficiency_bonus": 2,
+  "gear": [
+    "chain_shirt",
+    "holy_symbol_amulet",
+    "mace"
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "mace",
+          "count": 2,
+          "or": [
+            "radiant_flame"
+          ]
+        }
+      ],
+      "summary": "Makes two attacks with Mace or Radiant Flame in any mix."
+    },
+    {
+      "id": "mace",
+      "name": "Mace",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 6,
+          "dice": "1d6+3",
+          "type": "bludgeoning"
+        },
+        {
+          "average": 5,
+          "dice": "2d4",
+          "type": "radiant"
+        }
+      ],
+      "summary": "A mace blow with holy radiance.",
+      "weapon": true
+    },
+    {
+      "id": "radiant_flame",
+      "name": "Radiant Flame",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 5,
+        "range": [
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d10",
+          "type": "radiant"
+        }
+      ],
+      "summary": "Hurls holy fire up to 60 ft."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Wis, DC 13: Light and Thaumaturgy at will; Spirit Guardians once a day.",
+      "text": "Wisdom is its spellcasting ability (spell save DC 13). At will: Light, Thaumaturgy. 1/day: Spirit Guardians."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "id": "divine_aid",
+      "name": "Divine Aid",
+      "kind": "spellcasting",
+      "summary": "Three times a day: casts Bless, Dispel Magic, Healing Word or Lesser Restoration as a Bonus Action.",
+      "text": "Uses Wisdom as for its Spellcasting action; the three uses cover all four spells.",
+      "uses": {
+        "count": 3,
+        "per": "day"
+      },
+      "do": "cast",
+      "cast": [
+        "bless",
+        "dispel_magic",
+        "healing_word",
+        "lesser_restoration"
+      ]
+    }
+  ],
+  "spellcasting": {
+    "ability": "wis",
+    "dc": 13,
+    "attack": 5,
+    "at_will": [
+      "light",
+      "thaumaturgy"
+    ],
+    "per_day": {
+      "1": [
+        "spirit_guardians"
+      ]
+    }
+  },
+  "regions": [
+    "krezk",
+    "abbey_of_st_markovia"
+  ],
+  "ai_profile": "support",
+  "summary": "A seasoned cleric: holy fire and mace, Spirit Guardians, and Divine Aid to heal or bless allies."
+}

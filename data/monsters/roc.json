@@ -1,0 +1,117 @@
+{
+  "id": "roc",
+  "name": "Roc",
+  "source": {
+    "book": "MM2025",
+    "note": "Numbers follow the 2014 Monster Manual roc; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. The Restrained condition that comes with the Talons' grab is text only (the engine can't end it with the grapple)."
+  },
+  "size": "gargantuan",
+  "type": "monstrosity",
+  "alignment": "unaligned",
+  "ac": 15,
+  "initiative": 0,
+  "hp": {
+    "average": 248,
+    "dice": "16d20+80"
+  },
+  "speed": {
+    "walk": 20,
+    "fly": 120
+  },
+  "abilities": {
+    "str": 28,
+    "dex": 10,
+    "con": 20,
+    "int": 3,
+    "wis": 10,
+    "cha": 9
+  },
+  "saves": {
+    "dex": 4,
+    "con": 9,
+    "wis": 4,
+    "cha": 3
+  },
+  "skills": {
+    "perception": 4
+  },
+  "passive_perception": 14,
+  "languages": [],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "keen_sight",
+      "name": "Keen Sight",
+      "action": "passive",
+      "summary": "Advantage on Wisdom (Perception) checks that rely on sight.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "beak",
+          "count": 1
+        },
+        {
+          "action": "talons",
+          "count": 1
+        }
+      ],
+      "summary": "Makes one Beak attack and one Talons attack."
+    },
+    {
+      "id": "beak",
+      "name": "Beak",
+      "kind": "melee",
+      "attack": {
+        "bonus": 13,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 27,
+          "dice": "4d8+9",
+          "type": "piercing"
+        }
+      ],
+      "summary": "A tearing beak strike with 10 ft reach."
+    },
+    {
+      "id": "talons",
+      "name": "Talons",
+      "kind": "melee",
+      "attack": {
+        "bonus": 13,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 23,
+          "dice": "4d6+9",
+          "type": "slashing"
+        }
+      ],
+      "summary": "Rakes and seizes a target (escape DC 19).",
+      "text": "The grabbed target is also Restrained while held, and the roc can't use its talons on anyone else.",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 19,
+          "limit": 1
+        }
+      ]
+    }
+  ],
+  "regions": [
+    "tsolenka_pass"
+  ],
+  "ai_profile": "brute",
+  "summary": "A bird the size of a ship: a tearing beak and talons that snatch prey away."
+}

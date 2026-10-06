@@ -1,0 +1,133 @@
+{
+  "id": "exethanter",
+  "name": "Exethanter",
+  "source": {
+    "book": "CoS",
+    "note": "Curse of Strahd's failing lich, built from the 2014 Monster Manual lich with the book's changes as remembered: 99 Hit Points (entered as a fixed number), challenge 10, and most spells forgotten; the proficiency-based numbers are recomputed for challenge 10. Entered from knowledge, not yet checked against the book. The Hit Points, the challenge rating and the spells he keeps need the book; the lich's Legendary Actions and Legendary Resistance are left out (check whether the book keeps them). The lich's immunity to nonmagical weapons is left out. Paralyzing Touch's paralysis is text only (the engine can't repeat the save each turn)."
+  },
+  "size": "medium",
+  "type": "undead",
+  "tags": [
+    "lich"
+  ],
+  "alignment": "neutral evil",
+  "ac": 17,
+  "ac_note": "natural armor",
+  "initiative": 3,
+  "hp": {
+    "average": 99,
+    "dice": "99"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 11,
+    "dex": 16,
+    "con": 16,
+    "int": 20,
+    "wis": 14,
+    "cha": 16
+  },
+  "saves": {
+    "con": 7,
+    "int": 9,
+    "wis": 6
+  },
+  "skills": {
+    "arcana": 13,
+    "history": 9,
+    "insight": 6,
+    "perception": 6
+  },
+  "resistances": [
+    "cold",
+    "lightning",
+    "necrotic"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "poisoned"
+  ],
+  "senses": {
+    "truesight": 120
+  },
+  "passive_perception": 16,
+  "languages": [
+    "Common plus up to five other languages"
+  ],
+  "cr": 10,
+  "xp": 5900,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "rejuvenation",
+      "name": "Rejuvenation",
+      "action": "passive",
+      "summary": "While his phylactery survives, a destroyed body re-forms near it in 1d10 days.",
+      "implemented": "text"
+    },
+    {
+      "id": "turn_resistance",
+      "name": "Turn Resistance",
+      "action": "passive",
+      "summary": "Advantage on saving throws against effects that turn Undead.",
+      "implemented": "text"
+    },
+    {
+      "id": "failing_memory",
+      "name": "Failing Memory",
+      "action": "passive",
+      "summary": "He has forgotten most of his magic and much of his past.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "paralyzing_touch",
+      "name": "Paralyzing Touch",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "cold"
+        }
+      ],
+      "summary": "A freezing touch; DC 15 Con save or Paralyzed for 1 minute.",
+      "text": "The target repeats the save at the end of each of its turns, ending the paralysis on a success. Text only for the engine."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Int, DC 17, +9: only a few cantrips remain to him.",
+      "text": "Intelligence is his spellcasting ability (spell save DC 17, +9 to hit). Cantrips: Mage Hand, Prestidigitation, Ray of Frost. Whatever leveled spells he still recalls are not entered yet."
+    }
+  ],
+  "spellcasting": {
+    "ability": "int",
+    "dc": 17,
+    "attack": 9,
+    "at_will": [
+      "mage_hand",
+      "prestidigitation",
+      "ray_of_frost"
+    ]
+  },
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "An ancient lich whose mind is failing: a paralyzing touch and a few cantrips, and a phylactery that brings him back."
+}
