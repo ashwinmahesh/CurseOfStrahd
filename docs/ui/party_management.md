@@ -34,7 +34,7 @@ columns so the numbers that matter are always on screen:
   Features · Spells · Equipment · Effects · Notes. Q/E switch tabs, ←/→ switch character.
 - Every number's tooltip lays its `Breakdown` out line by line; long rules text (features, spells, items, conditions)
   lives in tooltips, and the page keeps to names, one-line summaries and tags (Action, Bonus Action, Reaction,
-  Concentration, Ritual, Always prepared). Drawn pieces are in `ui/character/sheet_parts.gd`.
+  Concentration, Ritual, Always prepared). Drawn pieces are in `UiParts` (ui/common/ui_parts.gd).
 - **Features**: grouped by class (with subclass), species, background and feats; each with how it's used, its level
   or source, its summary, and the full text on hover; `implemented: text` features are tagged "Rules text only".
   Below them, armor, weapon, tool and language training and Weapon Mastery.

@@ -12,6 +12,8 @@ signal cancelled
 const TAGS: Array[String] = ["blunt", "loyal", "veteran", "pious", "curious", "sly", "kind", "haunted", "brave",
 	"cautious", "scholarly", "cynical", "cheerful", "proud", "greedy", "gentle"]
 const LOOKS: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
+## Text width inside the step panel.
+const BODY_W := 820.0
 
 var builders: Array[CharacterBuilder] = []
 var confirmed: Array[bool] = []
@@ -36,21 +38,29 @@ func open_with(starting: Array[Dictionary], count: int = 4) -> void:
 		var b := CharacterBuilder.new(null, starting[i] if i < starting.size() else {})
 		builders.append(b)
 		confirmed.append(false)
-	var frame := UiKit.screen_frame(self, "Create your party", Vector2(1580, 880))
+	var frame := UiKit.screen_frame(self, "Create your party", Vector2(1540, 830))
 	_strip = HBoxContainer.new()
 	_strip.add_theme_constant_override("separation", 8)
 	frame.add_child(_strip)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	frame.add_child(row)
 	_rail = VBoxContainer.new()
 	_rail.custom_minimum_size = Vector2(200, 0)
+	_rail.add_theme_constant_override("separation", 5)
 	row.add_child(_rail)
 	_body = VBoxContainer.new()
 	_body.add_theme_constant_override("separation", 10)
-	row.add_child(UiKit.scroll(_body, Vector2(930, 740)))
+	var pane := UiParts.pane(14)
+	pane.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	pane.add_child(UiParts.fill_scroll(_body))
+	row.add_child(pane)
 	_sheet = VBoxContainer.new()
-	row.add_child(UiKit.scroll(_sheet, Vector2(360, 740)))
+	var side := UiParts.fill_scroll(_sheet)
+	side.custom_minimum_size = Vector2(360, 0)
+	side.size_flags_horizontal = Control.SIZE_FILL
+	row.add_child(side)
 	_draw()
 
 
@@ -63,28 +73,48 @@ func _draw() -> void:
 		c.queue_free()
 	for i in builders.size():
 		var name_text := str(builders[i].build.get("name", ""))
-		var mark := "✓ " if confirmed[i] else ("▸ " if i == slot else "")
-		_strip.add_child(UiKit.button("%s%s" % [mark, name_text if name_text != "" else "Character %d" % (i + 1)], func() -> void:
+		var chip := UiKit.button("%s%s" % ["✓ " if confirmed[i] else "", name_text if name_text != "" else "Character %d" % (i + 1)], func() -> void:
 			slot = i
-			_draw(), 15))
+			_draw(), 16)
+		var art := str((builders[i].build.get("appearance", {}) as Dictionary).get("art", ""))
+		var path := "res://art/portraits/%s.png" % art
+		if art != "" and ResourceLoader.exists(path):
+			chip.icon = load(path) as Texture2D
+			chip.expand_icon = true
+			chip.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			for k: String in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
+				chip.add_theme_color_override(k, Color.WHITE)
+		chip.custom_minimum_size = Vector2(150, 46)
+		if confirmed[i]:
+			chip.add_theme_color_override("font_color", Look.color("bile"))
+		if i == slot:
+			UiParts.light_up(chip)
+		_strip.add_child(chip)
+	_strip.add_child(UiParts.gap())
+	_strip.add_child(UiParts.small_button("Back to title", func() -> void: cancelled.emit()))
 	var all_done := not confirmed.has(false)
-	var go := UiKit.button("Begin the adventure" if builders.size() > 1 else "Done", _finish, 16)
+	var go := UiParts.primary_button("Begin the adventure" if builders.size() > 1 else "Done", _finish)
 	go.disabled = not all_done
 	go.tooltip_text = "" if all_done else "Confirm every character on their Review step first."
 	_strip.add_child(go)
-	_strip.add_child(UiKit.button("Back to title", func() -> void: cancelled.emit(), 14))
 	for c in _rail.get_children():
 		c.queue_free()
+	_rail.add_child(UiParts.caption("Steps", 12))
 	for i in CharacterBuilder.STEP_NAMES.size():
 		var status := b().step_status(i as CharacterBuilder.Step)
-		var mark := "✓" if bool(status["complete"]) else "!"
-		if i == CharacterBuilder.Step.APPEARANCE:
-			mark = "✓"
-		var btn := UiKit.button("%s %s%s" % [mark, CharacterBuilder.STEP_NAMES[i], " ◂" if i == step else ""], func() -> void:
+		var done := bool(status["complete"]) or i == CharacterBuilder.Step.APPEARANCE
+		var errors := "\n".join(status["errors"] as Array)
+		var step_name := str(CharacterBuilder.STEP_NAMES[i])
+		var btn := UiParts.tip_button("%s  %s" % ["✓" if done else "!", step_name], func() -> void:
 			step = i
-			_draw(), 15)
+			_draw(), func() -> Control:
+				return UiParts.rules_tip(step_name, "Done" if done else "Needs attention", errors), i == step, 16)
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.tooltip_text = "\n".join(status["errors"] as Array)
+		if i != step:
+			btn.add_theme_color_override("font_color", Look.color("vellum" if done else "flame"))
+		if errors == "":
+			btn.tip = Callable()
+			btn.tooltip_text = ""
 		_rail.add_child(btn)
 	for c in _body.get_children():
 		c.queue_free()
@@ -110,15 +140,18 @@ func _draw() -> void:
 			_review_step()
 	var nav := HBoxContainer.new()
 	nav.add_theme_constant_override("separation", 10)
+	nav.add_child(UiParts.gap())
 	var back := UiKit.button("Back", func() -> void:
 		step = maxi(0, step - 1)
 		_draw())
 	back.disabled = step == 0
 	nav.add_child(back)
 	if step < CharacterBuilder.Step.REVIEW:
-		nav.add_child(UiKit.button("Next", func() -> void:
+		var next := UiKit.button("Next", func() -> void:
 			step += 1
-			_draw()))
+			_draw())
+		UiParts.light_up(next)
+		nav.add_child(next)
 	_body.add_child(nav)
 
 
@@ -128,61 +161,97 @@ func _changed() -> void:
 
 
 func _class_step() -> void:
-	_body.add_child(UiKit.header("Class"))
-	var row := HBoxContainer.new()
+	_body.add_child(UiParts.section("Class"))
+	var grid := GridContainer.new()
+	grid.columns = 6
+	grid.add_theme_constant_override("h_separation", 6)
+	grid.add_theme_constant_override("v_separation", 6)
 	for o in b().available_classes():
-		var btn := UiKit.button(("▸ " if o.id == b().class_id() else "") + o.label, func() -> void:
+		var label := o.label
+		var summary := o.summary
+		var btn := UiParts.tip_button(o.label, func() -> void:
 			b().set_class(o.id)
-			_changed(), 16)
-		btn.tooltip_text = o.summary
-		row.add_child(btn)
-	_body.add_child(row)
+			_changed(), func() -> Control: return UiParts.rules_tip(label, "", summary), o.id == b().class_id(), 16)
+		btn.custom_minimum_size = Vector2(130, 40)
+		grid.add_child(btn)
+	_body.add_child(grid)
 	var cid := b().class_id()
 	if cid == "":
-		_body.add_child(UiKit.label("Pick a class. Phase 3 has the Fighter, Rogue, Cleric and Wizard with all their subclasses.", 15, "parchment", 880))
+		_body.add_child(UiKit.label("Pick a class to see what it does at levels 1 to 5 and the subclasses it can take.", 15, "parchment", BODY_W))
 		return
 	var p := b().class_preview(cid)
-	_body.add_child(UiKit.label(str(p["summary"]), 15, "vellum", 880))
-	_body.add_child(UiKit.label("Hit Die d%d · Primary %s · Saves %s · Complexity %s" % [int(p["hit_die"]), ", ".join(p["primary"] as Array),
-		", ".join(p["saves"] as Array), p["complexity"]], 14, "parchment", 880))
-	_body.add_child(UiKit.header("Levels 1-5"))
+	var head := VBoxContainer.new()
+	head.add_theme_constant_override("separation", 8)
+	var t := UiKit.title(str(p["name"]))
+	t.add_theme_font_size_override("font_size", 26)
+	head.add_child(t)
+	head.add_child(UiKit.label(str(p["summary"]), 15, "vellum", BODY_W))
+	var facts := HBoxContainer.new()
+	facts.add_theme_constant_override("separation", 8)
+	for f: Array in [["Hit Die", "d%d" % int(p["hit_die"])], ["Primary", ", ".join(p["primary"] as Array).capitalize()],
+			["Saves", ", ".join(p["saves"] as Array).to_upper()], ["Complexity", str(p["complexity"]).capitalize()]]:
+		var box := VBoxContainer.new()
+		box.add_theme_constant_override("separation", -2)
+		box.add_child(UiParts.caption(str(f[0]), 10))
+		box.add_child(UiParts.figure(str(f[1]), 18))
+		var tile := UiParts.card("ui_black", "gilt_dark", 0.8, 6)
+		tile.custom_minimum_size = Vector2(150, 0)
+		tile.add_child(box)
+		facts.add_child(tile)
+	head.add_child(facts)
+	_body.add_child(UiParts.row(head, Callable(), false, 12))
+	_body.add_child(UiParts.section("Levels 1 to 5"))
 	for f: Dictionary in p["features_1_to_5"]:
-		_body.add_child(UiKit.label("%d · %s: %s" % [int(f["level"]), f["name"], f["summary"]], 14, "vellum", 880))
-	_body.add_child(UiKit.header("Subclasses (chosen at level %d)" % int(p["subclass_level"])))
-	for s: Dictionary in p["subclasses"]:
-		_body.add_child(UiKit.label("%s: %s" % [s["name"], s["summary"]], 14, "vellum", 880))
+		_body.add_child(UiParts.feature_row(f, "Level %d" % int(f["level"]), BODY_W))
+	_body.add_child(UiParts.section("Subclasses (chosen at level %d)" % int(p["subclass_level"])))
+	for sub: Dictionary in p["subclasses"]:
+		_body.add_child(UiParts.feature_row(sub, "", BODY_W))
 
 
 func _origin_step() -> void:
-	_body.add_child(UiKit.header("Background"))
+	_body.add_child(UiParts.section("Background"))
 	var grid := GridContainer.new()
 	grid.columns = 4
+	grid.add_theme_constant_override("h_separation", 6)
+	grid.add_theme_constant_override("v_separation", 6)
 	for o in b().available_backgrounds():
-		var btn := UiKit.button(("▸ " if o.id == str(b().build.get("background", "")) else "") + o.label, func() -> void:
+		var label := o.label
+		var summary := o.summary
+		var facts := [["Abilities", ", ".join(o.data["abilities"] as Array).to_upper()], ["Feat", str(o.data["feat"])],
+			["Skills", ", ".join(o.data["skills"] as Array).replace("_", " ").capitalize()]]
+		var btn := UiParts.tip_button(o.label, func() -> void:
 			b().set_background(o.id)
-			_changed(), 14)
-		btn.tooltip_text = "%s\nAbilities: %s · Feat: %s · Skills: %s" % [o.summary, ", ".join(o.data["abilities"] as Array), o.data["feat"], ", ".join(o.data["skills"] as Array)]
+			_changed(), func() -> Control: return UiParts.rules_tip(label, "Background", summary, facts),
+			o.id == str(b().build.get("background", "")), 15)
+		btn.custom_minimum_size = Vector2(196, 36)
 		grid.add_child(btn)
 	_body.add_child(grid)
-	_body.add_child(UiKit.header("Species"))
+	_body.add_child(UiParts.section("Species"))
 	var grid2 := GridContainer.new()
 	grid2.columns = 5
+	grid2.add_theme_constant_override("h_separation", 6)
+	grid2.add_theme_constant_override("v_separation", 6)
 	for o in b().available_species():
-		var btn := UiKit.button(("▸ " if o.id == str(b().build.get("species", "")) else "") + o.label, func() -> void:
+		var label := o.label
+		var summary := o.summary
+		var facts := [["Speed", "%s ft" % str(o.data["speed"])], ["Darkvision", "%s ft" % str(o.data["darkvision"]) if int(o.data["darkvision"]) > 0 else "none"]]
+		var btn := UiParts.tip_button(o.label, func() -> void:
 			b().set_species(o.id)
-			_changed(), 14)
-		btn.tooltip_text = "%s\nSpeed %s · Darkvision %s" % [o.summary, str(o.data["speed"]), str(o.data["darkvision"])]
+			_changed(), func() -> Control: return UiParts.rules_tip(label, "Species", summary, facts),
+			o.id == str(b().build.get("species", "")), 15)
+		btn.custom_minimum_size = Vector2(156, 36)
 		grid2.add_child(btn)
 	_body.add_child(grid2)
 	_choices_step(CharacterBuilder.Step.ORIGIN)
 
 
 func _ability_step() -> void:
-	_body.add_child(UiKit.header("Ability scores"))
+	_body.add_child(UiParts.section("Ability scores"))
 	var method := str(b().build.get("ability_method", "standard_array"))
 	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
 	for m: Array in [["standard_array", "Standard Array"], ["point_buy", "Point Cost (27)"], ["roll", "Random (4d6 drop lowest)"]]:
-		row.add_child(UiKit.button(("▸ " if method == str(m[0]) else "") + str(m[1]), func() -> void:
+		var mb := UiKit.button(str(m[1]), func() -> void:
 			if str(m[0]) == "roll":
 				var rolled := b().roll_scores(Dice.roller)
 				var parts: Array[String] = []
@@ -191,13 +260,17 @@ func _ability_step() -> void:
 				_rolled_text = "Rolled: " + " · ".join(parts)
 			else:
 				b().set_ability_method(str(m[0]))
-			_changed(), 14))
+			_changed(), 15)
+		if method == str(m[0]):
+			UiParts.light_up(mb)
+		row.add_child(mb)
+	row.add_child(UiParts.gap())
 	row.add_child(UiKit.button("Recommended", func() -> void:
 		b().apply_recommended_scores()
-		_changed(), 14))
+		_changed(), 15))
 	_body.add_child(row)
 	if method == "roll" and _rolled_text != "":
-		_body.add_child(UiKit.label(_rolled_text, 13, "parchment", 880))
+		_body.add_child(UiKit.label(_rolled_text, 13, "parchment", BODY_W))
 	var scores := b().build.get("base_scores", {}) as Dictionary
 	var pool: Array[int] = []
 	if method == "standard_array":
@@ -206,24 +279,36 @@ func _ability_step() -> void:
 		for v: Variant in b().build.get("rolled_scores", []):
 			pool.append(int(v))
 	var ch := b().preview()
+	var cols := HBoxContainer.new()
+	cols.add_theme_constant_override("separation", 10)
+	cols.alignment = BoxContainer.ALIGNMENT_CENTER
 	for ab: StringName in Abilities.ALL:
-		var r := HBoxContainer.new()
-		r.add_theme_constant_override("separation", 10)
+		var col := VBoxContainer.new()
+		col.add_theme_constant_override("separation", 4)
 		var base := int(scores.get(str(ab), 8))
-		r.add_child(UiKit.label(str(Creature.ABILITY_NAMES[ab]), 16, "vellum"))
+		var full := str(Creature.ABILITY_NAMES[ab])
+		col.add_child(UiParts.medallion(full, ch.ability_mod(ab), ch.ability_score(ab), func() -> Control:
+			return UiParts.breakdown_tip(ch.ability_breakdown(ab), full, "%d (%s)" % [ch.ability_score(ab), UiKit.signed(ch.ability_mod(ab))])))
+		var cap := UiParts.caption("Base score", 10)
+		cap.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		col.add_child(cap)
+		var r := HBoxContainer.new()
+		r.add_theme_constant_override("separation", 4)
+		r.alignment = BoxContainer.ALIGNMENT_CENTER
 		if method == "point_buy":
-			r.add_child(UiKit.button("−", func() -> void:
+			r.add_child(UiParts.small_button("−", func() -> void:
 				b().set_score(ab, maxi(8, base - 1))
-				_changed(), 14))
-			r.add_child(UiKit.label(str(base), 16, "gilt_light"))
-			r.add_child(UiKit.button("+", func() -> void:
+				_changed()))
+			r.add_child(UiParts.figure(str(base), 18, "gilt_light"))
+			r.add_child(UiParts.small_button("+", func() -> void:
 				b().set_score(ab, mini(15, base + 1))
-				_changed(), 14))
+				_changed()))
 		else:
 			var pick := OptionButton.new()
 			for v in pool:
 				pick.add_item(str(v), v)
 			pick.select(maxi(0, pool.find(base)))
+			pick.custom_minimum_size = Vector2(80, 0)
 			pick.item_selected.connect(func(idx: int) -> void:
 				var v2 := pool[idx]
 				# Swap with the ability that had this value, so the array stays a permutation.
@@ -236,22 +321,24 @@ func _ability_step() -> void:
 				b().set_base_scores(s2)
 				_changed())
 			r.add_child(pick)
-		var bd := ch.ability_breakdown(ab)
-		var total := UiKit.label("→ %d (%s)" % [bd.total(), UiKit.signed(ch.ability_mod(ab))], 16, "gilt_light")
-		total.tooltip_text = bd.describe()
-		total.mouse_filter = Control.MOUSE_FILTER_PASS
-		r.add_child(total)
-		_body.add_child(r)
+		col.add_child(r)
+		var bonus := ch.ability_score(ab) - base
+		if bonus != 0:
+			var from := UiKit.label("%s from bonuses" % UiKit.signed(bonus), 12, "bile")
+			from.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			col.add_child(from)
+		cols.add_child(col)
+	_body.add_child(UiParts.row(cols, Callable(), false, 12))
 	if method == "point_buy":
 		_body.add_child(UiKit.label("Points left: %d of 27" % b().point_buy_remaining(), 15, "gilt_light"))
 	for p in b().ability_problems():
-		_body.add_child(UiKit.label("! " + p, 14, "vampire_red", 880))
+		_body.add_child(UiKit.label("! " + p, 14, "vampire_red", BODY_W))
 
 
 func _choices_step(which: int) -> void:
 	var list := b().choices_for_step(which as CharacterBuilder.Step)
 	if which == CharacterBuilder.Step.CHOICES:
-		_body.add_child(UiKit.header("Class choices"))
+		_body.add_child(UiParts.section("Class choices"))
 	if list.is_empty() and which == CharacterBuilder.Step.CHOICES:
 		_body.add_child(UiKit.label("Nothing to choose yet: pick a class first.", 15, "parchment"))
 	for c in list:
@@ -263,12 +350,10 @@ func _choices_step(which: int) -> void:
 
 
 func _equipment_step() -> void:
-	_body.add_child(UiKit.header("Starting equipment"))
 	var opts := b().equipment_options()
 	var chosen := b().build.get("equipment", {}) as Dictionary
 	for source: String in ["class", "background"]:
-		_body.add_child(UiKit.label(source.capitalize(), 16, "gilt"))
-		var row := HBoxContainer.new()
+		_body.add_child(UiParts.section("%s equipment" % source.capitalize()))
 		for o: Variant in opts[source]:
 			var opt := o as Dictionary
 			var names: Array[String] = []
@@ -278,39 +363,65 @@ func _equipment_step() -> void:
 			if opt.has("gold"):
 				names.append("%s gp" % str(opt["gold"]))
 			var oid := str(opt.get("id", ""))
-			var btn := UiKit.button(("▸ " if str(chosen.get(source, "")) == oid else "") + "Option %s" % oid.to_upper(), func() -> void:
+			var picked := str(chosen.get(source, "")) == oid
+			var row := HBoxContainer.new()
+			row.add_theme_constant_override("separation", 12)
+			var btn := UiKit.button("Option %s" % oid.to_upper(), func() -> void:
 				b().set_equipment(source, oid)
-				_changed(), 14)
-			btn.tooltip_text = ", ".join(names)
+				_changed(), 15)
+			btn.custom_minimum_size = Vector2(120, 0)
+			if picked:
+				UiParts.light_up(btn)
 			row.add_child(btn)
-			row.add_child(UiKit.label(", ".join(names), 13, "vellum", 380))
-		_body.add_child(row)
-	_body.add_child(UiKit.header("What it does for this character"))
-	for a in b().preview().attacks():
-		_body.add_child(UiKit.label(a.describe(), 14, "vellum", 880))
-	_body.add_child(UiKit.label("AC with this gear: %d" % b().preview().ac_value(), 15, "gilt_light"))
+			row.add_child(UiKit.label(", ".join(names), 14, "vellum" if picked else "parchment", 660))
+			_body.add_child(UiParts.row(row, Callable(), picked))
+	_body.add_child(UiParts.section("What it does for this character"))
+	var pv := b().preview()
+	for a in pv.attacks():
+		var row2 := HBoxContainer.new()
+		row2.add_theme_constant_override("separation", 10)
+		var n := UiKit.label(a.name, 16, "vellum")
+		n.custom_minimum_size = Vector2(220, 0)
+		row2.add_child(n)
+		row2.add_child(UiParts.figure(a.attack.signed(), 18, "gilt_light"))
+		row2.add_child(UiKit.label("to hit", 12, "parchment"))
+		var bonus := a.damage_bonus.total()
+		row2.add_child(UiParts.figure(str(int(a.damage_dice) + bonus) if a.damage_dice.is_valid_int() else a.damage_dice + ("%+d" % bonus if bonus != 0 else ""), 18))
+		row2.add_child(UiKit.label(str(a.damage_type).capitalize(), 13, "parchment"))
+		if a.mastery != "":
+			row2.add_child(UiParts.pill(a.mastery.capitalize(), "moonlight"))
+		_body.add_child(UiParts.row(row2, func() -> Control: return UiParts.breakdown_tip(a.attack, a.name, "%s to hit" % a.attack.signed())))
+	var ac_row := HBoxContainer.new()
+	ac_row.add_theme_constant_override("separation", 10)
+	ac_row.add_child(UiKit.label("Armor Class with this gear", 15, "parchment"))
+	ac_row.add_child(UiParts.figure(str(pv.ac_value()), 20, "gilt_light"))
+	_body.add_child(UiParts.row(ac_row, func() -> Control: return UiParts.breakdown_tip(pv.armor_class(), "Armor Class")))
 
 
 func _appearance_step() -> void:
-	_body.add_child(UiKit.header("Appearance"))
-	_body.add_child(UiKit.label("Pick a look from the generated sprite library (more looks and palette swaps arrive with the art pass).", 14, "parchment", 880))
+	_body.add_child(UiParts.section("Appearance"))
+	_body.add_child(UiKit.label("Pick a look from the generated sprite library (more looks and palette swaps arrive with the art pass).", 14, "parchment", BODY_W))
 	var app := b().build.get("appearance", {}) as Dictionary
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
+	row.add_theme_constant_override("separation", 16)
 	for look in LOOKS:
 		var col := VBoxContainer.new()
-		col.add_child(UiKit.portrait(look, 140))
-		col.add_child(UiKit.button(("▸ " if str(app.get("art", "")) == look else "") + look.replace("_", " ").capitalize(), func() -> void:
+		col.add_theme_constant_override("separation", 6)
+		col.add_child(UiParts.framed_portrait(look, 170.0))
+		var btn := UiKit.button(look.replace("_", " ").capitalize(), func() -> void:
 			var a := (b().build.get("appearance", {}) as Dictionary).duplicate()
 			a["art"] = look
 			b().set_appearance(a)
-			_changed(), 13))
+			_changed(), 14)
+		if str(app.get("art", "")) == look:
+			UiParts.light_up(btn)
+		col.add_child(btn)
 		row.add_child(col)
 	_body.add_child(row)
 
 
 func _identity_step() -> void:
-	_body.add_child(UiKit.header("Identity"))
+	_body.add_child(UiParts.section("Identity"))
 	var name_edit := LineEdit.new()
 	name_edit.placeholder_text = "Name"
 	name_edit.text = str(b().build.get("name", ""))
@@ -333,7 +444,7 @@ func _identity_step() -> void:
 		idn["pronouns"] = t
 		b().set_identity(idn))
 	_body.add_child(pron)
-	_body.add_child(UiKit.label("Personality tags (two or three): the story reads these for party interjections.", 14, "parchment", 880))
+	_body.add_child(UiKit.label("Personality tags (two or three): the story reads these for party interjections.", 14, "parchment", BODY_W))
 	var tags := identity.get("tags", []) as Array
 	var grid := GridContainer.new()
 	grid.columns = 6
@@ -355,26 +466,25 @@ func _identity_step() -> void:
 
 
 func _review_step() -> void:
-	_body.add_child(UiKit.header("Review"))
+	_body.add_child(UiParts.section("Review"))
 	var errs := b().errors()
 	if errs.is_empty():
-		_body.add_child(UiKit.label("✓ Nothing blocks this character.", 15, "bile"))
+		_body.add_child(UiParts.row(UiKit.label("✓ Nothing blocks this character.", 16, "bile")))
 	else:
-		_body.add_child(UiKit.label("Blocking", 16, "vampire_red"))
 		for e in errs:
-			_body.add_child(UiKit.label("! " + e, 14, "vampire_red", 880))
+			_body.add_child(UiParts.row(UiKit.label("! " + e, 15, "vampire_red", BODY_W)))
 	var warns := b().warnings()
 	if not warns.is_empty():
-		_body.add_child(UiKit.label("Warnings (never blocking)", 16, "gilt"))
+		_body.add_child(UiParts.caption("Warnings (never blocking)", 12, "gilt"))
 		for w in warns:
-			_body.add_child(UiKit.label("~ " + w, 14, "gilt", 880))
-	var confirm := UiKit.button("Confirm %s" % str(b().build.get("name", "this character")), func() -> void:
+			_body.add_child(UiParts.row(UiKit.label("~ " + w, 14, "gilt", BODY_W)))
+	var confirm := UiParts.primary_button("Confirm %s" % str(b().build.get("name", "this character")), func() -> void:
 		confirmed[slot] = true
 		var next := confirmed.find(false)
 		if next >= 0:
 			slot = next
 			step = 0
-		_draw(), 16)
+		_draw())
 	confirm.disabled = not errs.is_empty()
 	_body.add_child(confirm)
 	var built: Array[Character] = []
@@ -383,13 +493,18 @@ func _review_step() -> void:
 			built.append(builders[i].preview())
 	if built.size() >= 2:
 		var cov := PartyCoverage.analyze(built)
-		_body.add_child(UiKit.header("Party composition"))
+		_body.add_child(UiParts.section("Party composition"))
+		var grid := GridContainer.new()
+		grid.columns = 2
+		grid.add_theme_constant_override("h_separation", 18)
 		var roles := cov["roles"] as Dictionary
 		for r: String in roles:
 			var who := roles[r] as Array
-			_body.add_child(UiKit.label("%s: %s" % [r.replace("_", " ").capitalize(), ", ".join(who) if not who.is_empty() else "nobody"], 14, "vellum", 880))
+			grid.add_child(UiParts.caption(r.replace("_", " "), 11))
+			grid.add_child(UiKit.label(", ".join(who) if not who.is_empty() else "nobody", 14, "vellum" if not who.is_empty() else "rose"))
+		_body.add_child(UiParts.row(grid))
 		for g: String in cov["gaps"]:
-			_body.add_child(UiKit.label("· " + g, 13, "gilt", 880))
+			_body.add_child(UiKit.label("◇ " + g, 13, "gilt", BODY_W))
 
 
 func _finish() -> void:
