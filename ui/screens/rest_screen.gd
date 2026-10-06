@@ -10,6 +10,7 @@ var st: StoryState
 var _box: VBoxContainer
 var _log: Label
 var _short_done := false   ## Arcane Recovery comes after a finished Short Rest
+var _long_done := false    ## after a Long Rest, casters may change their prepared spells
 
 
 func _init() -> void:
@@ -45,6 +46,11 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 func _draw() -> void:
 	for c in _box.get_children():
 		c.queue_free()
+	if _long_done and not PrepareScreen.preparable(st).is_empty():
+		_box.add_child(UiKit.button("Change prepared spells", func() -> void:
+			var ps := PrepareScreen.new()
+			add_child(ps)
+			ps.open(root, st, 0), 15))
 	for ch in st.party:
 		_arcane_recovery_row(ch)
 		var row := HBoxContainer.new()
@@ -108,6 +114,7 @@ func _long_rest(rule: String) -> void:
 		_narrate("rest:long")
 		var region := str(Compendium.shared().get_entry("locations", st.location).get("region", ""))
 		_narrate("dream:" + region)
+		_long_done = true
 	_draw()
 	root.call("_refresh")
 
