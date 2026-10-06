@@ -198,3 +198,21 @@ func test_preparing_spells_after_a_long_rest() -> void:
 	(btn[0] as Button).pressed.emit()
 	await _frames(2)
 	assert_eq(rest.find_children("*", "PrepareScreen", true, false).size(), 1)
+
+
+func test_quicksave_from_the_pause_menu() -> void:
+	DirAccess.remove_absolute(SaveSystem.slot_path("quick"))
+	root.call("open_screen", "menu", 0)
+	await _frames(1)
+	var menu := root.get("screen") as PauseMenu
+	var quick := menu.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text.begins_with("Quicksave"))
+	assert_eq(quick.size(), 1, "a Quicksave button")
+	(quick[0] as Button).pressed.emit()
+	assert_true(FileAccess.file_exists(SaveSystem.slot_path("quick")), "saved to the quicksave slot F9 loads")
+	var ev := InputEventKey.new()
+	ev.physical_keycode = KEY_F5
+	ev.pressed = true
+	DirAccess.remove_absolute(SaveSystem.slot_path("quick"))
+	menu.call("_unhandled_input", ev)
+	assert_true(FileAccess.file_exists(SaveSystem.slot_path("quick")), "F5 quicksaves with the menu open")
+	root.call("close_screen")
