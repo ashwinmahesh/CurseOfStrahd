@@ -76,7 +76,8 @@
           "type": "slashing"
         }
       ],
-      "summary": "Cleaves with a greatsword."
+      "summary": "Cleaves with a greatsword.",
+      "weapon": true
     },
     {
       "id": "heavy_crossbow",
@@ -96,7 +97,8 @@
           "type": "piercing"
         }
       ],
-      "summary": "Fires a heavy crossbow bolt."
+      "summary": "Fires a heavy crossbow bolt.",
+      "weapon": true
     }
   ],
   "reactions": [
@@ -106,7 +108,8 @@
       "kind": "special",
       "trigger": "The warrior is hit by a melee attack roll while holding a weapon.",
       "summary": "Reaction: +2 AC against one melee attack that hit it, possibly turning the hit into a miss.",
-      "text": "Trigger: the warrior is hit by a melee attack roll while it holds a weapon. Response: the warrior gains a +2 bonus to its AC against that one attack, which can make the attack miss."
+      "text": "Trigger: the warrior is hit by a melee attack roll while it holds a weapon. Response: the warrior gains a +2 bonus to its AC against that one attack, which can make the attack miss.",
+      "ac_bonus": 2
     }
   ],
   "regions": [

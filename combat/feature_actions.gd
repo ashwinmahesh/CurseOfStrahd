@@ -732,6 +732,12 @@ func before_d20(cr: Creature, kind: D20Test.Kind, keys: Array[String], _target: 
 		c.armed.erase("lucky")
 		(cr as Character).spend_resource("luck_points")
 		out["advantage"] = ["Lucky"]
+	# Sunlight Sensitivity (attacks and checks), Weakness and Hypersensitivity (attacks and checks; Weakness: every
+	# D20 Test) for creatures standing in sunlight.
+	var sun := e.monster_actions.sunlight(c)
+	if sun != "" and e.in_sunlight(c):
+		if sun == "weakness" or kind != D20Test.Kind.SAVING_THROW:
+			out["disadvantage"] = ["Sunlight"]
 	if c.has_meta("portent_next"):
 		out["natural"] = int(c.get_meta("portent_next"))
 		c.remove_meta("portent_next")

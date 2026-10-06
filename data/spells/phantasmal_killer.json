@@ -1,0 +1,75 @@
+{
+  "id": "phantasmal_killer",
+  "name": "Phantasmal Killer",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered for the Night Hag's spellcasting; check against the book."
+  },
+  "level": 4,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "one creature you can see"
+  },
+  "save": "wis",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "4d10",
+      "type": "psychic"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "on": "fail",
+        "modifiers": [
+          {
+            "stat": "disadvantage",
+            "on": "check:all"
+          },
+          {
+            "stat": "disadvantage",
+            "on": "attack"
+          }
+        ],
+        "repeat_save": "end_of_turn",
+        "repeat_fail_damage": {
+          "dice": "4d10",
+          "type": "psychic"
+        }
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "Wis save or 4d10 Psychic and Disadvantage on checks and attacks; 4d10 again on each failed save at the end of its turns (half on the first success).",
+  "text": "You reach into the nightmares of a creature you can see within range. It makes a Wisdom saving throw. On a failure it takes 4d10 Psychic damage and has Disadvantage on ability checks and attack rolls for the duration; on a success it takes half as much damage and the spell ends. A target that failed repeats the save at the end of each of its turns, taking 4d10 Psychic damage on a failure and ending the spell on a success. Using a Higher-Level Spell Slot: the damage increases by 1d10 for each slot level above 4."
+}

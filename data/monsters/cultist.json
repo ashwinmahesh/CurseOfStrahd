@@ -67,7 +67,8 @@
           "type": "necrotic"
         }
       ],
-      "summary": "Slashes with a consecrated sickle for slashing plus 1 necrotic damage."
+      "summary": "Slashes with a consecrated sickle for slashing plus 1 necrotic damage.",
+      "weapon": true
     }
   ],
   "regions": [

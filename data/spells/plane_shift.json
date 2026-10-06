@@ -1,0 +1,41 @@
+{
+  "id": "plane_shift",
+  "name": "Plane Shift",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered for the Night Hag's spellcasting; check against the book."
+  },
+  "level": 7,
+  "school": "conjuration",
+  "classes": [
+    "cleric",
+    "druid",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a forked metal rod attuned to a plane",
+    "m_cost_gp": 250
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "self",
+    "description": "you and up to eight willing creatures holding hands, or one creature you touch (Charisma save)"
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "You and up to eight willing companions travel to another plane, or you banish a creature you touch (Charisma save).",
+  "text": "You and up to eight willing creatures who link hands in a circle are transported to a different plane of existence, arriving at a destination of your choice there or a random spot if you lack a destination. Alternatively, you can make a melee spell attack against an unwilling creature; on a hit it makes a Charisma saving throw or is sent to a random spot on a plane you name. In a fight, the caster (and its companions) leave the battle."
+}

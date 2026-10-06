@@ -98,11 +98,25 @@
         "dc": 10,
         "success": "none"
       },
-      "conditions": [
-        "paralyzed"
-      ],
       "summary": "Rakes a target; a non-Undead, non-elf creature makes a DC 10 Con save or is Paralyzed.",
-      "text": "Hit: 4 (1d4 + 2) Slashing damage. If the target is a creature that is neither Undead nor an elf, it makes a DC 10 Constitution saving throw. On a failure it has the Paralyzed condition until the end of its next turn."
+      "text": "Hit: 4 (1d4 + 2) Slashing damage. If the target is a creature that is neither Undead nor an elf, it makes a DC 10 Constitution saving throw. On a failure it has the Paralyzed condition until the end of its next turn.",
+      "on_hit": [
+        {
+          "do": "condition",
+          "condition": "paralyzed",
+          "save": {
+            "ability": "con",
+            "dc": 10
+          },
+          "until": "target_turn_end",
+          "not_types": [
+            "undead"
+          ],
+          "not_species": [
+            "elf"
+          ]
+        }
+      ]
     }
   ],
   "regions": [

@@ -71,7 +71,8 @@
       "action": "passive",
       "summary": "Needs an invitation to enter homes; harmed by running water and sunlight; a stake can destroy it.",
       "text": "The vampire has these weaknesses. Forbiddance: it can't enter a residence unless an occupant invites it in. Running Water: it takes 20 Acid damage if it ends its turn in running water. Stake to the Heart: it is destroyed if a weapon that deals Piercing damage is driven into its heart while it has the Incapacitated condition. Sunlight: it takes 20 Radiant damage if it starts its turn in sunlight, and while in sunlight it has Disadvantage on attack rolls and ability checks.",
-      "implemented": "text"
+      "implemented": "engine",
+      "sunlight": "hypersensitivity"
     }
   ],
   "actions": [
@@ -106,11 +107,16 @@
           "type": "slashing"
         }
       ],
-      "conditions": [
-        "grappled"
-      ],
       "summary": "Slashes a target; a Medium or smaller target is Grappled (escape DC 13).",
-      "text": "Hit: 8 (2d4 + 3) Slashing damage. If the target is Medium or smaller, it has the Grappled condition (escape DC 13), held by one of the vampire's two claws."
+      "text": "Hit: 8 (2d4 + 3) Slashing damage. If the target is Medium or smaller, it has the Grappled condition (escape DC 13), held by one of the vampire's two claws.",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 13,
+          "max_size": "medium",
+          "limit": 2
+        }
+      ]
     },
     {
       "id": "bite",
@@ -138,7 +144,27 @@
         }
       ],
       "summary": "DC 14 Con save by a willing, Grappled, Incapacitated or Restrained target; drains life to heal.",
-      "text": "Constitution Saving Throw: DC 14, one creature within 5 feet that is willing or has the Grappled, Incapacitated or Restrained condition. Failure: 5 (1d4 + 3) Piercing damage plus 10 (3d6) Necrotic damage. The target's Hit Point maximum is reduced by the Necrotic damage it took, and the vampire regains that many Hit Points."
+      "text": "Constitution Saving Throw: DC 14, one creature within 5 feet that is willing or has the Grappled, Incapacitated or Restrained condition. Failure: 5 (1d4 + 3) Piercing damage plus 10 (3d6) Necrotic damage. The target's Hit Point maximum is reduced by the Necrotic damage it took, and the vampire regains that many Hit Points.",
+      "targets": {
+        "range": 5,
+        "count": 1,
+        "requires": [
+          "willing",
+          "grappled",
+          "incapacitated",
+          "restrained"
+        ]
+      },
+      "on_fail": [
+        {
+          "do": "drain_max_hp",
+          "type": "necrotic"
+        },
+        {
+          "do": "heal_self",
+          "type": "necrotic"
+        }
+      ]
     }
   ],
   "bonus_actions": [
@@ -147,7 +173,8 @@
       "name": "Deathless Agility",
       "kind": "special",
       "summary": "Takes the Dash or Disengage action.",
-      "text": "The vampire takes the Dash action or the Disengage action."
+      "text": "The vampire takes the Dash action or the Disengage action.",
+      "do": "dash_or_disengage"
     }
   ],
   "regions": [

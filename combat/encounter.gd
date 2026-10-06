@@ -34,6 +34,7 @@ var spells: SpellCaster
 var features: CombatFeatures
 var reactions: Reactions
 var feature_actions: FeatureActions
+var monster_actions: MonsterActions
 var ai: AiBrain
 var _cover_cache: Dictionary = {}
 ## Savage Attacker is once per turn, any creature's turn: creature id -> the turn it was used on.
@@ -57,6 +58,7 @@ func _init(grid_: CombatGrid, dice_: DiceRoller) -> void:
 	features = CombatFeatures.new(self)
 	reactions = Reactions.new(self)
 	feature_actions = FeatureActions.new(self)
+	monster_actions = MonsterActions.new(self)
 	ai = AiBrain.new(self)
 
 
@@ -349,6 +351,8 @@ func move_mode(c: Combatant) -> int:
 		mode |= CombatGrid.MOVE_FLY
 	if c.creature.has_flag("spider_climb") or c.creature.speed("climb").total() > 0:
 		mode |= CombatGrid.MOVE_CLIMB
+	if c.creature.has_flag("incorporeal_movement"):
+		mode |= CombatGrid.MOVE_INCORPOREAL
 	return mode
 
 
@@ -365,6 +369,9 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		if o == c or not o.is_alive():
 			continue
 		var o_size := Creature.SIZES.find(o.creature.size)
+		var swarmy := o.creature.has_flag("swarm") or c.creature.has_flag("swarm")
+		if swarmy:
+			continue
 		var passable := c.allied_with(o) or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
 			or absi(o_size - my_size) >= 2 or (c.creature.has_flag("halfling_nimbleness") and o_size > my_size)
 		var slows := not c.allied_with(o) and o.creature.size != &"tiny"
@@ -407,6 +414,7 @@ func _begin_turn() -> void:
 	events.append({"type": "turn", "id": c.id, "round": round_no})
 	spells.turn_start(c)
 	feature_actions.turn_start(c)
+	monster_actions.turn_start(c)
 	if c.creature.has_flag("dazed"):
 		c.bonus_available = false
 		log.add("info", "%s is Dazed: it can move or act this turn, not both" % c.name(), c.id)
@@ -437,6 +445,7 @@ func end_turn() -> CombatResult:
 	_expire_marks(c.id, "end")
 	c.armed.clear()
 	feature_actions.turn_end(c)
+	monster_actions.turn_end(c)
 	spells.turn_end(c)
 	spells.zones.prune()
 	_check_over()
@@ -1555,8 +1564,10 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 		adv.append("target can't see you")
 	if not can_see(c, target):
 		dis.append("you can't see the target")
-	if in_sunlight(c) and c.creature.has_flag("sunlight_sensitivity"):
-		dis.append("Sunlight Sensitivity")
+	if in_sunlight(c) and monster_actions.sunlight(c) != "":
+		dis.append("Sunlight")
+	if c.has_meta("attack_disadvantage"):
+		dis.append("a severed part")
 	for m in marks:
 		if not _mark_applies(m, c, target):
 			continue
@@ -1741,7 +1752,9 @@ func _attack_outcome(st: Dictionary) -> CombatResult:
 		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": false, "critical": false})
 		features.after_miss(c, target, option, r)
 		return r
-	return reactions.offer(reactions.after_hit_target(st, miss), func() -> CombatResult:
+	var hit_offers := reactions.after_hit_target(st, miss)
+	hit_offers.append_array(monster_actions.parry_offer(st, miss))
+	return reactions.offer(hit_offers, func() -> CombatResult:
 		events.append({"type": "attack", "attacker": c.id, "target": target.id, "hit": true, "critical": critical})
 		return _after_hit(st), r)
 
@@ -1890,6 +1903,8 @@ func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: Strin
 ## damage, death and the log. Returns the DamageResult.
 func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: bool, label: String,
 		details: Array = [], log_it: bool = true) -> DamageResult:
+	target = monster_actions.redirect_shared(target)
+	parts = monster_actions.absorb(target, parts)
 	var was_up := not target.is_down()
 	if source != null and target.creature.has_flag("cursed_necrotic:%s" % source.id):
 		var extra := _roll_damage_dice("1d8", false, 0, "Bestow Curse")
@@ -1944,18 +1959,24 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		events.append({"type": "death", "id": target.id})
 		if target.has_meta("vanishes"):
 			events.append({"type": "vanish", "id": target.id})
+	elif dr.dropped_to_zero and not target.creature.dead and monster_actions.lycanthrope(target):
+		pass
 	elif dr.dropped_to_zero and not target.creature.dead and feature_actions.on_zero(target):
 		events.append({"type": "heal", "id": target.id, "amount": 1})
 	elif dr.dropped_to_zero and not target.creature.dead:
 		log.add("death", "%s falls unconscious" % target.name(), target.id)
 		events.append({"type": "down", "id": target.id})
-	if grapples.values().has(target.id) and target.creature.has_flag("no_actions"):
+	if grapples.values().has(target.id) and (target.creature.has_flag("no_actions") or target.is_down()):
 		_release_grapples_by(target)
 	if target.is_down() or target.creature.has_flag("no_actions"):
 		features.end_turning_from(target)
 	if source != null and source != target and dr.final > 0:
 		spells.end_sanctuary(source, "dealt damage")
 	spells.on_damaged(source, target, dr.final, parts)
+	if dr.final > 0 and target.is_alive():
+		monster_actions.loathsome_limbs(target, parts)
+	if target.is_down():
+		monster_actions.body_dropped(target)
 	if dr.final > 0 and source != null and source != target and target.is_alive():
 		_queue_damage_reactions(source, target)
 	spells.zones.prune()
@@ -2148,6 +2169,8 @@ func _on_hit_effects(c: Combatant, target: Combatant, option: Dictionary, dr: Da
 			if target.creature.add_condition(StringName(str(cond)), str(act.get("name", ""))):
 				log.add("condition", "%s has the %s condition" % [target.name(), str(cond).capitalize()], target.id)
 				events.append({"type": "condition", "id": target.id})
+		if act.has("on_hit"):
+			monster_actions.apply_riders(c, target, act["on_hit"] as Array, {str(p.damage_type): dr.final}, str(act.get("name", "")))
 
 
 func _spend_ammo(c: Combatant, p: WeaponProfile) -> void:
@@ -2428,11 +2451,15 @@ func escape_grapple(c: Combatant) -> CombatResult:
 	spend_action(c)
 	var grappler := get_c(str(grapples[c.id]))
 	var dc := 8 + grappler.creature.ability_mod(&"str") + grappler.creature.proficiency_bonus() if grappler != null else 10
+	if c.has_meta("escape_dc"):
+		dc = int(c.get_meta("escape_dc"))
 	var skill := &"athletics" if c.creature.skill_bonus(&"athletics").total() >= c.creature.skill_bonus(&"acrobatics").total() else &"acrobatics"
 	var t := c.creature.roll_check(dice, skill, dc)
 	if t.success:
 		grapples.erase(c.id)
 		c.creature.remove_condition(&"grappled")
+		c.remove_meta("escape_dc")
+		monster_actions.release_engulf(c)
 		log.add("info", "%s breaks free" % c.name(), c.id, [t.describe()])
 	else:
 		log.add("info", "%s struggles but stays Grappled" % c.name(), c.id, [t.describe()])
@@ -2446,6 +2473,9 @@ func _release_grapples_by(grappler: Combatant) -> void:
 			var t := get_c(k)
 			if t != null:
 				t.creature.remove_condition(&"grappled")
+				if t.has_meta("escape_dc"):
+					t.remove_meta("escape_dc")
+				monster_actions.release_engulf(t)
 
 
 ## Drains scene events (moves, attacks, damage, turns) for animation.

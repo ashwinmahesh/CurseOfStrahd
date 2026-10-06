@@ -164,6 +164,8 @@ static func _axis_gap(a: int, a_size: int, b: int, b_size: int) -> int:
 ## pays nothing extra to go up.
 const MOVE_FLY := 1
 const MOVE_CLIMB := 2
+## Incorporeal Movement: through walls and creatures, as Difficult Terrain.
+const MOVE_INCORPOREAL := 4
 
 
 func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable, slowed: Callable, mode: int = 0) -> int:
@@ -172,11 +174,17 @@ func step_cost(from: Vector2i, to: Vector2i, size_cells: int, blocked: Callable,
 		return -1
 	var difficult := false
 	for c in footprint(to, size_cells):
+		if (mode & MOVE_INCORPOREAL) != 0:
+			if not in_bounds(c) or has_flag(c, VOID):
+				return -1
+			if is_solid(c) or bool(blocked.call(c)):
+				difficult = true
+			continue
 		if is_solid(c) or bool(blocked.call(c)):
 			return -1
 		if (has_flag(c, DIFFICULT) and (mode & MOVE_FLY) == 0) or bool(slowed.call(c)):
 			difficult = true
-	if d.x != 0 and d.y != 0:
+	if d.x != 0 and d.y != 0 and (mode & MOVE_INCORPOREAL) == 0:
 		# Diagonals can't cut the corner of a wall or other square-filling feature.
 		for c: Vector2i in [from + Vector2i(d.x, 0), from + Vector2i(0, d.y)]:
 			for fc in footprint(c, size_cells):

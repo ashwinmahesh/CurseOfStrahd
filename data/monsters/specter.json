@@ -90,7 +90,8 @@
           "value": "sunlight_sensitivity"
         }
       ],
-      "implemented": "engine"
+      "implemented": "engine",
+      "sunlight": "sensitivity"
     }
   ],
   "actions": [
@@ -110,7 +111,13 @@
         }
       ],
       "summary": "Necrotic touch that also lowers the target's Hit Point maximum by the damage taken.",
-      "text": "Hit: 7 (2d6) Necrotic damage. If the target is a creature, its Hit Point maximum is reduced by the amount of damage it took."
+      "text": "Hit: 7 (2d6) Necrotic damage. If the target is a creature, its Hit Point maximum is reduced by the amount of damage it took.",
+      "on_hit": [
+        {
+          "do": "drain_max_hp",
+          "type": "necrotic"
+        }
+      ]
     }
   ],
   "regions": [

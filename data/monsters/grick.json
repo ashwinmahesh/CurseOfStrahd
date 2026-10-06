@@ -86,11 +86,15 @@
           "type": "slashing"
         }
       ],
-      "conditions": [
-        "grappled"
-      ],
       "summary": "Lashes a target; a Medium or smaller target is Grappled (escape DC 12).",
-      "text": "Hit: 7 (1d10 + 2) Slashing damage. If the target is Medium or smaller, all four tentacles seize it and it has the Grappled condition (escape DC 12)."
+      "text": "Hit: 7 (1d10 + 2) Slashing damage. If the target is Medium or smaller, all four tentacles seize it and it has the Grappled condition (escape DC 12).",
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 12,
+          "max_size": "medium"
+        }
+      ]
     }
   ],
   "regions": [

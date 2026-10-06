@@ -85,7 +85,8 @@
           "type": "piercing"
         }
       ],
-      "summary": "Stabs with a shortsword."
+      "summary": "Stabs with a shortsword.",
+      "weapon": true
     },
     {
       "id": "longbow",
@@ -105,7 +106,8 @@
           "type": "piercing"
         }
       ],
-      "summary": "Shoots a longbow."
+      "summary": "Shoots a longbow.",
+      "weapon": true
     }
   ],
   "regions": [

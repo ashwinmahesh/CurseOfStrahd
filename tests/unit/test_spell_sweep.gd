@@ -97,6 +97,8 @@ func test_every_combat_spell_changes_something() -> void:
 		var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 		if unit in ["reaction", "minute", "hour"]:
 			continue
+		if int(s.get("level", 0)) > 3:
+			continue   # the pregen caster tops out at level 3 spells; higher ones are tested where they're used
 		checked += 1
 		var changed := false
 		var last := {}

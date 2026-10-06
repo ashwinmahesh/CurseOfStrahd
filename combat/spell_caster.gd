@@ -17,7 +17,7 @@ const SPECIAL := ["magic_missile", "shield", "sleep", "command", "sanctuary", "s
 	"true_strike", "shillelagh", "enlarge_reduce", "vampiric_touch", "lesser_restoration", "protection_from_poison",
 	"expeditious_retreat", "summon_fey", "summon_undead", "goodberry", "jump", "alter_self", "beacon_of_hope",
 	"resistance", "blade_ward", "protection_from_evil_and_good", "crown_of_madness", "bestow_curse", "fear",
-	"calm_emotions", "fly", "levitate", "gaseous_form", "spider_climb", "animate_dead", "find_familiar"]
+	"calm_emotions", "fly", "levitate", "gaseous_form", "spider_climb", "animate_dead", "find_familiar", "etherealness", "plane_shift"]
 ## Command's words (2024): all five.
 const COMMAND_WORDS := ["approach", "drop", "flee", "grovel", "halt"]
 ## Effect kinds the engine resolves in a fight (anything else is narrative or exploration).
@@ -559,6 +559,45 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 				break
 
 
+## A monster casting from its stat block (combat/monster_actions.gd): the action economy as usual, no slots, the
+## stat block's DC and attack bonus in `nums`, at `level`.
+func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Array, point: Vector2, nums: Dictionary) -> CombatResult:
+	var e := enc()
+	var s := _comp().spell_data(spell_id)
+	var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
+	var why := economy_block(c, unit)
+	if why != "":
+		return CombatResult.fail(why)
+	var check := _check_targets(c, s, level, targets, point, {})
+	if str(check["why"]) != "":
+		return CombatResult.fail(str(check["why"]))
+	if unit == "bonus_action":
+		c.bonus_available = false
+	else:
+		e.spend_action(c)
+		c.magic_action_used = true
+	var tgt := check["targets"] as Array[Combatant]
+	var conc: Concentration = null
+	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
+		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
+	e.log.add("spell", "%s casts %s%s" % [c.name(), s["name"], " (level %d)" % level if level > int(s.get("level", 0)) else ""], c.id)
+	var cells: Array[Vector2i] = []
+	if s.has("area"):
+		var dir := Vector2.ZERO
+		if not tgt.is_empty():
+			dir = (e.center_of(tgt[0]) - e.center_of(c)).normalized()
+		cells = area_for(c, s, point, dir, level)
+	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells, "targets": tgt.map(func(t: Combatant) -> String: return t.id)})
+	var ctx := {"c": c, "s": s, "slot": level, "nums": nums, "conc": conc, "opts": {}, "point": point, "cells": cells,
+		"choice": choice_of(s, {}), "direction": Vector2.ZERO, "cell": check["cell"]}
+	var r := CombatResult.new()
+	_resolve(ctx, tgt, cells, r)
+	_finish_concentration(ctx)
+	zones.prune()
+	e._check_over()
+	return e.then(r, func() -> CombatResult: return e.run_reaction_queue(r))
+
+
 ## Casts a spell without a slot or the usual action (War God's Blessing, features that cast spells): opts may say
 ## no_concentration (it lasts its `minutes` instead).
 func cast_free(c: Combatant, spell_id: String, targets: Array, point: Vector2, opts: Dictionary = {}) -> CombatResult:
@@ -744,6 +783,11 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			return
 		"true_strike":
 			_true_strike(ctx, tgt[0], r)
+			return
+		"etherealness", "plane_shift":
+			c.creature.dead = true
+			enc().events.append({"type": "vanish", "id": c.id})
+			r.lines.append(enc().log.add("info", "%s slips away (%s)" % [c.name(), s["name"]], c.id))
 			return
 		"expeditious_retreat":
 			c.movement_left += c.speed()
@@ -1184,10 +1228,14 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	if t.creature.creature_type in [&"undead", &"construct"] and bool(s.get("living_only", false)):
 		r.lines.append(e.log.add("info", "%s has no effect on %s" % [s["name"], t.name()], t.id))
 		return
-	var ch := c.creature as Character
-	var preview := ch.spell_preview(str(s["id"]), int(ctx["slot"]))
-	var dice := str(preview.get("heal_dice", ""))
-	var bonus := preview.get("heal_bonus", Breakdown.new("")) as Breakdown
+	var dice := Spellcasting.heal_dice(s, int(ctx["slot"]))
+	var bonus := Breakdown.new("Healing bonus")
+	if c.creature is Character:
+		var preview := (c.creature as Character).spell_preview(str(s["id"]), int(ctx["slot"]))
+		dice = str(preview.get("heal_dice", ""))
+		bonus = preview.get("heal_bonus", Breakdown.new("")) as Breakdown
+	elif bool((s.get("heal", {}) as Dictionary).get("add_mod", false)):
+		bonus.add("Spellcasting modifier", int((ctx["nums"] as Dictionary).get("mod", 0)))
 	var heal_reroll := {"count": 99, "at_most": 1, "source": "Healer"} if e.features.has_feat(c, "healer") else {}
 	var rolled := e._roll_damage_dice(dice, false, 0, "%s healing" % s["name"], heal_reroll) if dice != "" else {"total": 0, "text": ""}
 	var total := int(rolled["total"])
@@ -1377,6 +1425,8 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 			"damage_advantage": bool(params.get("damage_advantage", false))}
 		if params.has("repeat_if"):
 			fxo.repeat_save["if"] = str(params["repeat_if"])
+		if params.has("repeat_fail_damage"):
+			fxo.repeat_save["fail_damage"] = params["repeat_fail_damage"]
 	var esc := str(params.get("escape", ""))
 	if esc.begins_with("check:"):
 		fxo.escape = {"skill": esc.substr(6), "dc": (ctx["nums"]["dc"] as Breakdown).total()}
@@ -2497,6 +2547,10 @@ func _repeat_save(c: Combatant, fx: Effect, adv: Array[String]) -> void:
 		e.events.append({"type": "condition", "id": c.id})
 	else:
 		e.log.add("info", "%s is still affected by %s" % [c.name(), fx.name], c.id, [test.describe()])
+		var fd := fx.repeat_save.get("fail_damage", {}) as Dictionary
+		if not fd.is_empty():
+			var rolled := e._roll_damage_dice(str(fd["dice"]), false, 0, fx.name)
+			e.deal_damage(e.get_c(fx.caster_id), c, [{"amount": int(rolled["total"]), "type": str(fd["type"]), "spell": true}], false, fx.name, [str(rolled["text"])])
 
 
 ## After `target` took damage: effects that end when the caster's side hurts it (Charm Person), repeated saves on
