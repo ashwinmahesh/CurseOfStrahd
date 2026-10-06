@@ -27,7 +27,8 @@ var speaker: Character = null
 var _options: Array[Dictionary] = []
 var _pending_jump: String = ""
 var _guard: int = 0
-var _picking := false       ## waiting for the player to choose a party member (the `sacrifice` statement)
+var _picking := false       ## waiting for the player to choose a party member (`sacrifice`, `respec`)
+var _pick_purpose := "sacrifice"
 var _last_check: Dictionary = {}        ## {who, test, skill, said} of the last check rolled
 var _check_jumps: Array[String] = []    ## [ok, fail] targets of the last check
 var _queued: Array[Dictionary] = []   ## beats a statement produced beyond its first (a Tarokka card, then the verse)
@@ -202,6 +203,13 @@ func next() -> Dictionary:
 				pc += 1
 				if _living().size() >= 2:
 					_picking = true
+					_pick_purpose = "sacrifice"
+					return _pick_beat()
+			"respec":
+				pc += 1
+				if bool(st.options.get("respec", true)) and not _living().is_empty():
+					_picking = true
+					_pick_purpose = "respec"
 					return _pick_beat()
 			"narrate":
 				pc += 1
@@ -226,7 +234,9 @@ func _pick_beat() -> Dictionary:
 	var names: Array[String] = []
 	for ch in _living():
 		names.append(ch.name)
-	return {"kind": "pick_member", "text": "Choose who it will be. They will not come back.", "members": names}
+	var text := "Choose who it will be. They will not come back." if _pick_purpose == "sacrifice" \
+		else "Whose fate will the cards read anew? (They return to level 1 and are built again; they keep their belongings.)"
+	return {"kind": "pick_member", "text": text, "members": names, "purpose": _pick_purpose}
 
 
 ## Answers a `sacrifice` beat: the `i`th living party member dies for good and leaves the party.
@@ -236,6 +246,8 @@ func pick_member(i: int) -> Dictionary:
 		return next()
 	_picking = false
 	var ch := living[i]
+	if _pick_purpose == "respec":
+		return {"kind": "respec", "index": st.party.find(ch), "name": ch.name}
 	st.lose_member(ch, "gave their life on the altar beneath Death House")
 	speaker = st.leader_character()
 	return {"kind": "notice", "text": "%s is gone." % ch.name}

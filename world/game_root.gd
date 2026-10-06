@@ -280,6 +280,29 @@ func open_shop(npc_id: String, from_dialogue: bool = false) -> void:
 			dialogue.resume())
 
 
+## Madam Eva's respec (plan §5.6): party member `index` is built again from level 1 in the creator (name, look and
+## personality kept), keeps their belongings, and levels back up with the party's milestones.
+func respec(index: int) -> void:
+	var old := st.party[index]
+	var start := {"name": old.name, "identity": (old.build.get("identity", {}) as Dictionary).duplicate(true),
+		"appearance": (old.build.get("appearance", {}) as Dictionary).duplicate(true)}
+	var starting: Array[Dictionary] = [start]
+	var cs := CreationScreen.new()
+	add_child(cs)
+	cs.open_with(starting, 1)
+	cs.finished.connect(func(made: Array[Character]) -> void:
+		st.respec_member(old, made[0])
+		cs.queue_free()
+		view.rebuild_party()
+		_refresh()
+		if dialogue != null:
+			dialogue.resume())
+	cs.cancelled.connect(func() -> void:
+		cs.queue_free()
+		if dialogue != null:
+			dialogue.resume())
+
+
 func start_dialogue(ref: String, _npc_id: String) -> void:
 	if ref == "" or dialogue != null:
 		return
@@ -290,6 +313,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	add_child(dialogue)
 	dialogue.ended.connect(_dialogue_ended)
 	dialogue.shop_requested.connect(func(npc: String) -> void: open_shop(npc, true))
+	dialogue.respec_requested.connect(respec)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
 	if not dialogue.play(runner, ref):

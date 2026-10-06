@@ -339,3 +339,29 @@ func test_failed_checks_offer_heroic_inspiration_and_tactical_mind() -> void:
 	assert_false("heroic_inspiration" in after)
 	assert_eq(str(r.next()["kind"]), "end")
 	assert_false(bool(st.get_flag("forced")))
+
+
+func test_respec_rebuilds_a_member_who_keeps_their_belongings() -> void:
+	var f := DialogueFile.parse("~ eva\nrespec\nset read_again\n-> END\n", "test/respec")
+	DialogueFile.register(f)
+	var st := _party()
+	st.milestones = 1
+	var hedda := st.party[0]
+	var r := DialogueRunner.new(st, DiceRoller.new(1))
+	r.start("test/respec:eva")
+	var b := r.next()
+	assert_eq(str(b["kind"]), "pick_member")
+	assert_eq(str(b["purpose"]), "respec")
+	b = r.pick_member(0)
+	assert_eq(str(b["kind"]), "respec")
+	assert_eq(int(b["index"]), 0)
+	var fresh := TestChars.pregen("silvain_aster", 1)
+	var items := hedda.inventory.size()
+	st.respec_member(hedda, fresh)
+	assert_true(st.party[0] == fresh)
+	assert_eq(fresh.inventory.size(), items, "belongings kept")
+	assert_eq(fresh.id, hedda.id)
+	assert_true(st.can_level_up(fresh), "milestones bring them back up")
+	st.options["respec"] = false
+	r.start("test/respec:eva")
+	assert_eq(str(r.next()["kind"]), "end", "the owner can switch respec off")

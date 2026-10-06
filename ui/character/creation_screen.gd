@@ -29,9 +29,10 @@ func _init() -> void:
 	layer = 30
 
 
-## `starting` builds (from pregens being edited) or empty builds for the four slots.
-func open_with(starting: Array[Dictionary]) -> void:
-	for i in 4:
+## `starting` builds (from pregens being edited) or empty builds for the four slots. `count` 1 rebuilds a single
+## character (Madam Eva's respec).
+func open_with(starting: Array[Dictionary], count: int = 4) -> void:
+	for i in count:
 		var b := CharacterBuilder.new(null, starting[i] if i < starting.size() else {})
 		builders.append(b)
 		confirmed.append(false)
@@ -60,16 +61,16 @@ func b() -> CharacterBuilder:
 func _draw() -> void:
 	for c in _strip.get_children():
 		c.queue_free()
-	for i in 4:
+	for i in builders.size():
 		var name_text := str(builders[i].build.get("name", ""))
 		var mark := "✓ " if confirmed[i] else ("▸ " if i == slot else "")
 		_strip.add_child(UiKit.button("%s%s" % [mark, name_text if name_text != "" else "Character %d" % (i + 1)], func() -> void:
 			slot = i
 			_draw(), 15))
 	var all_done := not confirmed.has(false)
-	var go := UiKit.button("Begin the adventure", _finish, 16)
+	var go := UiKit.button("Begin the adventure" if builders.size() > 1 else "Done", _finish, 16)
 	go.disabled = not all_done
-	go.tooltip_text = "" if all_done else "Confirm all four characters on their Review step first."
+	go.tooltip_text = "" if all_done else "Confirm every character on their Review step first."
 	_strip.add_child(go)
 	_strip.add_child(UiKit.button("Back to title", func() -> void: cancelled.emit(), 14))
 	for c in _rail.get_children():
@@ -377,7 +378,7 @@ func _review_step() -> void:
 	confirm.disabled = not errs.is_empty()
 	_body.add_child(confirm)
 	var built: Array[Character] = []
-	for i in 4:
+	for i in builders.size():
 		if builders[i].errors().is_empty():
 			built.append(builders[i].preview())
 	if built.size() >= 2:

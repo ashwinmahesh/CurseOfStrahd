@@ -8,6 +8,8 @@ extends CanvasLayer
 signal ended(combat: String)
 ## A `shop` line: the game opens the shop for `npc` and calls resume() when it closes.
 signal shop_requested(npc: String)
+## A `respec` pick: the game rebuilds party member `index` and calls resume() when it's done.
+signal respec_requested(index: int)
 
 var runner: DialogueRunner
 var _panel: PanelContainer
@@ -201,6 +203,10 @@ func _show(beat: Dictionary) -> void:
 		"shop":
 			visible = false
 			shop_requested.emit(str(beat["npc"]))
+			return
+		"respec":
+			visible = false
+			respec_requested.emit(int(beat["index"]))
 			return
 		"pick_member":
 			_portrait.texture = null

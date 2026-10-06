@@ -47,6 +47,9 @@ tarokka read tome [speaker]        Turns the card for a slot (tome, symbol, swor
                                    the card, then the verse spoken by `speaker` (default madam_eva).
 shop                               Opens the shop of the NPC being spoken to; the conversation resumes after.
 join ireena / leave ireena         A story ally joins or leaves the party as a guest (ADR 0010).
+respec                             The player picks a party member to rebuild from level 1 in the creator (they
+                                   keep their belongings and level back up with milestones). Skipped when the
+                                   owner switched respec off (pause menu).
 check Skill DC n -> ok | fail      A check with no choice (e.g. a passive moment). Uses the best party member.
 interject <selector>: Text         A party member matching the selector says Text, if one is present (the first
                                    match in marching order): class:rogue, species:elf, background:criminal,

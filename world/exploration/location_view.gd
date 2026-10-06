@@ -312,6 +312,29 @@ func _place_party() -> void:
 		(tokens[members[0].id] as Node3D).add_child(lantern)
 
 
+## Swaps in party members whose character changed (Madam Eva's respec) where the old ones stood.
+func rebuild_party() -> void:
+	for i in mini(members.size(), st.party.size()):
+		if members[i].creature == st.party[i]:
+			continue
+		var old := members[i]
+		var tok := tokens[old.id] as CombatToken
+		if lantern != null and lantern.get_parent() == tok:
+			tok.remove_child(lantern)
+		tok.queue_free()
+		tokens.erase(old.id)
+		var cb := Combatant.new(st.party[i], &"party", old.cell)
+		members[i] = cb
+		var fresh := CombatToken.create(cb)
+		fresh.position = board.cell_center(cb.cell)
+		add_child(fresh)
+		tokens[cb.id] = fresh
+		if i == 0:
+			rig.follow = fresh
+			if lantern != null and lantern.get_parent() == null:
+				fresh.add_child(lantern)
+
+
 ## Puts the party's guests behind the last member (called again when someone joins or leaves).
 func place_guests() -> void:
 	for g in guest_members:
