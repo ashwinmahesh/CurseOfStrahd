@@ -237,7 +237,9 @@
             "rampage",
             "consume_life",
             "vanish",
-            "cast_control"
+            "cast_control",
+            "vow",
+            "bonus_save"
           ],
           "description": "What a special bonus action does."
         },
@@ -377,6 +379,14 @@
               }
             }
           }
+        },
+        "drop_at_hp": {
+          "type": "integer",
+          "description": "save action: a creature that fails with this many Hit Points or fewer (before the damage) drops to 0 (Deathly Wail)."
+        },
+        "not_while_grappling": {
+          "type": "boolean",
+          "description": "Can't be used while the monster holds a creature (a vine blight's Constricting Vine)."
         }
       }
     },
@@ -544,8 +554,33 @@
             },
             "on_damage": {
               "type": "boolean"
+            },
+            "bind_after": {
+              "type": "integer",
+              "description": "After this many failed saves the effect can't be shaken off (an arcanaloth's Soul Tome)."
             }
           }
+        },
+        "also_if_vowed": {
+          "$ref": "common.schema.json#/$defs/condition",
+          "description": "condition: a second condition when the target is the monster's sworn foe (Vow of Revenge)."
+        },
+        "grip_damage": {
+          "type": "object",
+          "required": [
+            "dice",
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "dice": {
+              "$ref": "common.schema.json#/$defs/dice"
+            },
+            "type": {
+              "$ref": "common.schema.json#/$defs/damage_type"
+            }
+          },
+          "description": "grapple: damage to the held creature at the start of each of its own turns."
         }
       }
     },

@@ -601,7 +601,8 @@
             19,
             22
           ],
-          "name": "Vosk, unmasked"
+          "name": "Vosk, unmasked",
+          "hp": 104
         },
         {
           "monster": "flameskull",
@@ -639,7 +640,8 @@
             19,
             22
           ],
-          "name": "Vosk, unmasked"
+          "name": "Vosk, unmasked",
+          "hp": 104
         },
         {
           "monster": "flameskull",

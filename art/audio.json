@@ -30,7 +30,24 @@
     "burgomaster_mansion": "village",
     "mad_marys_house": "village",
     "bildraths_mercantile": "village",
-    "vallaki_burgomaster_mansion": "town"
+    "vallaki_burgomaster_mansion": "town",
+    "castle_ravenloft_catacombs": "castle",
+    "castle_ravenloft_catacombs_strahd": "castle",
+    "castle_ravenloft_catacombs_tombs": "castle",
+    "castle_ravenloft_chapel": "castle",
+    "castle_ravenloft_court": "castle",
+    "castle_ravenloft_court_treasury": "castle",
+    "castle_ravenloft_court_weeping": "castle",
+    "castle_ravenloft_gates": "castle",
+    "castle_ravenloft_larders": "castle",
+    "castle_ravenloft_larders_dungeon": "castle",
+    "castle_ravenloft_main_floor": "castle",
+    "castle_ravenloft_overlook": "castle",
+    "castle_ravenloft_spires": "castle",
+    "castle_ravenloft_spires_heart": "castle",
+    "castle_ravenloft_spires_roofs": "castle",
+    "castle_ravenloft_spires_rooms": "castle",
+    "castle_ravenloft_spires_roost": "castle"
   },
   "levels": {
     "title": -2.0,
@@ -81,6 +98,12 @@
     ],
     "boss": [
       "res://art/sourced/kevin_macleod/Unholy Knight.mp3"
+    ],
+    "castle": [
+      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
+    ],
+    "ending": [
+      "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3"
     ]
   },
   "sfx": {
@@ -200,6 +223,10 @@
       "crow"
     ],
     "haunted": [
+      "thunder",
+      "wind"
+    ],
+    "castle": [
       "thunder",
       "wind"
     ]

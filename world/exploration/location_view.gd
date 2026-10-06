@@ -455,11 +455,7 @@ func _mark_found_traps() -> void:
 func _show_trap(trap: Dictionary) -> void:
 	if trap_marks.has(str(trap["id"])):
 		return
-	var nodes: Array[Node3D] = []
-	for c: Variant in trap["cells"]:
-		var mark := _box(Vector3(0.8, 0.02, 0.8), board.cell_center(_cell(c)) + Vector3(0, 0.02, 0), "vampire_red")
-		nodes.append(mark)
-	trap_marks[str(trap["id"])] = nodes
+	trap_marks[str(trap["id"])] = TrapSight.dress(self, trap)   # its own piece and a red border that doesn't cover it
 
 
 func _box(size: Vector3, pos: Vector3, colour: String) -> MeshInstance3D:
@@ -779,7 +775,7 @@ func _maybe_banter() -> void:
 		banter.emit(lines)
 
 
-## Passive Perception notices traps within 10 ft; a member stepping on an unnoticed trap springs it.
+## Passive Perception notices traps in sight (TrapSight); a member stepping on an unnoticed trap springs it.
 func _check_traps() -> bool:
 	var states := st.loc_state(loc_id)["traps"] as Dictionary
 	for t: Variant in loc.get("traps", []):
@@ -793,22 +789,8 @@ func _check_traps() -> bool:
 		var cells: Array[Vector2i] = []
 		for c: Variant in trap["cells"]:
 			cells.append(_cell(c))
-		if state == "":
-			for m in members:
-				if m.creature.hp <= 0:
-					continue
-				var near := false
-				for c in cells:
-					if grid.distance_ft(m.cell, 1, c, 1) <= 10:
-						near = true
-				var passive := m.creature.passive_score(&"perception").total()
-				if near and passive >= int(trap["detect_dc"]):
-					states[id] = "found"
-					_show_trap(trap)
-					if trap.has("flag"):
-						st.set_flag(str(trap["flag"]))
-					_say("trap:%s:found" % id, m.creature as Character, "%s spots something: %s (passive Perception %d)." % [m.name().get_slice(" ", 0), str(trap.get("label", "a trap")), passive])
-					return true
+		if state == "" and TrapSight.notice(self, trap):
+			return true
 		if str(states.get(id, "")) == "":
 			for m in members:
 				if m.cell in cells:
@@ -1412,6 +1394,7 @@ func search() -> void:
 		who.spend_resource("sharp_eye")
 		adv.append("Sharp Eye")
 	var t := who.roll_check(dice, &"perception", 0, adv, [], "%s searches" % who.name, ["search"])
+	var sharp_eye := not adv.is_empty()
 	check_rolled.emit(t.describe())
 	st.advance_minutes(1)
 	var found: Array[String] = []
@@ -1446,6 +1429,8 @@ func search() -> void:
 			SetDressing.reveal_door(door_nodes[str(door["id"])] as Node3D)
 			found.append(str(door.get("label", "a hidden door")))
 	st.last_check = not found.is_empty()
+	if found.is_empty() and sharp_eye:
+		who.restore_resource("sharp_eye")
 	if found.is_empty():
 		_say("check:perception:failure", who, "Nothing you can find.")
 	else:

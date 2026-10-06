@@ -1,0 +1,76 @@
+{
+  "id": "spirit_medium",
+  "name": "Spirit Medium",
+  "source": {
+    "book": "RtHW",
+    "checked_against": "RtHW"
+  },
+  "summary": "Rituals and strange meetings taught you that the dead speak through you; their insight is real, and so is the price.",
+  "ability_scores": [
+    "con",
+    "int",
+    "wis"
+  ],
+  "feat": "gathered_whispers",
+  "skills": [
+    "insight",
+    "religion"
+  ],
+  "tool": {
+    "id": "dice_set",
+    "choice": "gaming_set"
+  },
+  "equipment": [
+    {
+      "id": "a",
+      "items": [
+        {
+          "id": "dagger",
+          "qty": 1
+        },
+        {
+          "id": "dice_set",
+          "qty": 1,
+          "choice": "gaming_set"
+        },
+        {
+          "id": "basket",
+          "qty": 1
+        },
+        {
+          "id": "bell",
+          "qty": 1
+        },
+        {
+          "id": "candle",
+          "qty": 8
+        },
+        {
+          "id": "ink",
+          "qty": 1
+        },
+        {
+          "id": "ink_pen",
+          "qty": 1
+        },
+        {
+          "id": "paper",
+          "qty": 5
+        },
+        {
+          "id": "tinderbox",
+          "qty": 1
+        },
+        {
+          "id": "travelers_clothes",
+          "qty": 1
+        }
+      ],
+      "gp": 32
+    },
+    {
+      "id": "b",
+      "gp": 50
+    }
+  ]
+}

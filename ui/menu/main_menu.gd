@@ -7,6 +7,8 @@ var _box: VBoxContainer
 
 
 func _ready() -> void:
+	# The title never starts paused: a menu opened in a fight pauses the tree, and a scene change keeps it paused.
+	get_tree().paused = false
 	InputActions.ensure()
 	Audio.play_music("title")
 	set_anchors_preset(Control.PRESET_FULL_RECT)

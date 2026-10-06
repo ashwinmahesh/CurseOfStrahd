@@ -1,0 +1,75 @@
+# Ilse Varga's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays
+# once. Quest: Count Off (narrative/companions/kestrel.dialogue).
+
+~ talk_fever
+if name:ilse_varga and quest.kestrel_company >= the_host and flag.eva_truth_teller != "ilse_varga" and not flag.kestrel_fever_shared
+-> fever
+endif
+-> END
+
+~ fever
+Narrator: Ilse has the watch. She also has the letter out again, turning it over and over in the firelight, as if the seal might have changed since the last time.
+interject name:ilse_varga: Can't sleep. Don't make a thing of it.
+* (Sit with her and say nothing.) -> fever_sit
+* Ask about the company. -> fever_ask
+* (Leave her to her watch.) -> fever_leave
+
+~ fever_sit
+Narrator: You sit. The fire does the talking for a while. Eventually, without looking up, Ilse says the thing she came out here not to say.
+-> fever_ask
+
+~ fever_ask
+interject name:ilse_varga: I was meant to be with them. Fever. Three days at an inn called the Crooked Mile, a bowl of soup and a great deal of ceiling.
+interject name:ilse_varga: I could have ridden on the second day. I didn't want to. Eleven years of other people's wars. I was tired. I let the fever be the reason.
+interject name:ilse_varga: They marched. I lay there listening to the rain and feeling lucky. That's the report.
+* It wasn't your fault. -> fever_fault
+* If you'd gone, you'd be at that table with them. -> fever_died
+* Thank you for telling us. -> fever_end
+
+~ fever_fault
+interject name:ilse_varga: Didn't say it was. Said it was mine.
+interject name:ilse_varga: A sergeant counts heads. Morning and night. I wasn't there to count, and in the morning there was nobody left to count. So. Mine.
+-> fever_end
+
+~ fever_died
+interject name:ilse_varga: Probably. Forty-one instead of forty. The captain always did like a round number.
+interject name:ilse_varga: That was a joke. Don't laugh at it. I'm not ready for that.
+-> fever_end
+
+~ fever_end
+set kestrel_fever_shared
+interject name:tamsin_tealeaf: For the record, I'd have stayed in bed too. I'd have stayed a week and complained about the soup.
+interject name:hedda_ironvow: Mm. Tired is not a sin, Ilse. Not even here.
+interject name:silvain_aster: Technically, three days of fever with a measurable temperature is an illness, not a decision. I'd like that noted. Also, I'm glad you were in bed.
+interject name:ilse_varga: Noted. All of it. Go to sleep. I've got the watch.
+Narrator: She puts the letter away. It's the first time tonight her hands have been still.
+-> END
+
+~ fever_leave
+Narrator: You leave her to it. Behind you, the letter crackles in her hands for a long time before the fire is the only sound.
+-> END
+
+~ talk_count_off
+if name:ilse_varga and flag.kestrel_vell_rests
+-> count_off
+endif
+-> END
+
+~ count_off
+Narrator: Ilse doesn't sit at the fire tonight. She stands at the edge of the light, the way she stands at the head of a column, and waits until everyone looks up.
+interject name:ilse_varga: Count off.
+interject name:tamsin_tealeaf: Tamsin. Present, alive, slightly cold.
+interject name:hedda_ironvow: Hedda. Present.
+interject name:silvain_aster: Silvain Aster, present, and I'd like to know what this is in aid of.
+* (Answer to your name.) -> count_answer
+
+~ count_answer
+Player: Present.
+interject name:ilse_varga: Good. Everyone here is present. I'd like to keep it that way. That's all.
+if flag.kestrel_roll_kept
+Narrator: She opens the captain's roll, finds a name near the middle of the page, and draws a small, neat line through it. Next to it she writes a number: 1.
+else
+Narrator: She takes out her knife and cuts a small mark into the stock of her sword, beside the hilt, where she'll see it every time she draws. One.
+endif
+interject name:ilse_varga: One. Thirty-nine to go. As you were.
+-> END

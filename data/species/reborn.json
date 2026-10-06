@@ -3,7 +3,7 @@
   "name": "Reborn",
   "source": {
     "book": "RtHW",
-    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+    "checked_against": "RtHW"
   },
   "summary": "People who died and came back (stitched together, raised or simply unwilling to stay dead) with flashes of memories from a life before.",
   "creature_type": "humanoid",

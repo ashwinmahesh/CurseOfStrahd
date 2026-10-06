@@ -3,8 +3,9 @@
   "name": "Flameskull",
   "source": {
     "book": "MM2025",
-    "edition": "2014",
-    "note": "The 2025 Monster Manual has a newer block that isn't in SRD 5.2.1; this one keeps the 2014 numbers until it can be checked against the book. Numbers follow the 2014 Monster Manual flameskull; the 2024 block isn't entered yet. Entered from knowledge, not yet checked against the book. Rejuvenation and Illumination are text only; spell slots are listed per spell."
+    "checked_against": "MM2025",
+    "edition": "2024",
+    "note": "The 2025 Monster Manual's Flameskull, read on D&D Beyond (owner's account). Undead Restoration and Illumination are text only."
   },
   "size": "tiny",
   "type": "undead",
@@ -16,7 +17,7 @@
     "dice": "9d4+18"
   },
   "speed": {
-    "walk": 0,
+    "walk": 5,
     "fly": 40,
     "hover": true
   },
@@ -32,18 +33,14 @@
     "arcana": 5,
     "perception": 2
   },
-  "resistances": [
-    "lightning",
-    "necrotic",
-    "piercing"
-  ],
   "immunities": [
-    "cold",
     "fire",
+    "necrotic",
     "poison"
   ],
   "condition_immunities": [
     "charmed",
+    "exhaustion",
     "frightened",
     "paralyzed",
     "poisoned",
@@ -64,27 +61,27 @@
       "id": "illumination",
       "name": "Illumination",
       "action": "passive",
-      "summary": "Sheds light; it can switch between dim light and bright light with an action.",
+      "summary": "Sheds Bright Light 15 ft and Dim Light 15 ft more.",
       "implemented": "text"
     },
     {
       "id": "magic_resistance",
       "name": "Magic Resistance",
       "action": "passive",
-      "summary": "Advantage on saving throws against spells and other magical effects.",
       "modifiers": [
         {
           "stat": "advantage",
           "on": "save_vs:spell"
         }
       ],
+      "summary": "Advantage on saving throws against spells and other magical effects.",
       "implemented": "engine"
     },
     {
-      "id": "rejuvenation",
-      "name": "Rejuvenation",
+      "id": "undead_restoration",
+      "name": "Undead Restoration",
       "action": "passive",
-      "summary": "Destroyed, it re-forms after an hour with all its Hit Points, unless holy water, Dispel Magic or Remove Curse is used on its remains.",
+      "summary": "Destroyed, it re-forms in an hour unless Holy Water or Dispel Evil and Good is used on its remains.",
       "implemented": "text"
     }
   ],
@@ -99,33 +96,33 @@
           "count": 2
         }
       ],
-      "summary": "Makes two Fire Ray attacks."
+      "summary": "Two Fire Rays."
     },
     {
       "id": "fire_ray",
       "name": "Fire Ray",
-      "kind": "ranged",
+      "kind": "melee_or_ranged",
       "attack": {
         "bonus": 5,
+        "reach": 5,
         "range": [
-          30
+          60
         ]
       },
       "damage": [
         {
-          "average": 10,
-          "dice": "3d6",
+          "average": 13,
+          "dice": "3d6+3",
           "type": "fire"
         }
       ],
-      "summary": "Shoots a ray of fire up to 30 ft."
+      "summary": "A jet of green fire, close up or up to 60 ft."
     },
     {
       "id": "spellcasting",
       "name": "Spellcasting",
       "kind": "spellcasting",
-      "summary": "Int, DC 13, +5: Mage Hand at will; Magic Missile, Shield, Blur, Flaming Sphere and one Fireball.",
-      "text": "A 5th-level spellcaster using Intelligence (spell save DC 13, +5 to hit). Cantrip: Mage Hand. 1st level (3 slots): Magic Missile, Shield. 2nd level (2 slots): Blur, Flaming Sphere. 3rd level (1 slot): Fireball."
+      "summary": "Intelligence, DC 13: Mage Hand at will; Magic Missile (2nd level) twice a day; Fireball once."
     }
   ],
   "spellcasting": {
@@ -136,17 +133,15 @@
       "mage_hand"
     ],
     "per_day": {
-      "3": [
-        "magic_missile",
-        "shield"
-      ],
       "2": [
-        "blur",
-        "flaming_sphere"
+        "magic_missile"
       ],
       "1": [
         "fireball"
       ]
+    },
+    "levels": {
+      "magic_missile": 2
     }
   },
   "regions": [

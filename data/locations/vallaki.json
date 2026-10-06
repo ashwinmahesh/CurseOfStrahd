@@ -964,6 +964,27 @@
         26
       ],
       "dialogue": "vallaki/gate:jailer"
+    },
+    {
+      "npc": "jory_fenn",
+      "cell": [
+        44,
+        32
+      ],
+      "dialogue": "companions/kestrel:jory",
+      "when": "name:ilse_varga and not flag.kestrel_jory_met",
+      "facing": "east",
+      "approach": 4
+    },
+    {
+      "npc": "jory_fenn",
+      "cell": [
+        44,
+        32
+      ],
+      "dialogue": "companions/kestrel:jory",
+      "when": "name:ilse_varga and flag.kestrel_jory_met",
+      "facing": "east"
     }
   ],
   "encounters": [

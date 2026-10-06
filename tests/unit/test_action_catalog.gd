@@ -160,3 +160,25 @@ func test_slot_pips() -> void:
 	assert_eq(int(pips[0]["total"]), 4)
 	assert_true(cat.slot_pips(i).is_empty(), "no slots for a Fighter")
 
+
+
+func test_attacks_cant_target_their_own_user_but_self_spells_can() -> void:
+	var e := TestCombat.open_field()
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2))
+	var silvain := TestCombat.hero(e, "silvain_aster", Vector2i(4, 2))
+	var hedda := TestCombat.hero(e, "hedda_ironvow", Vector2i(5, 2))
+	TestCombat.foe(e, "zombie", Vector2i(9, 2))
+	TestCombat.start_with(e, ilse)
+	var cat := ActionCatalog.new(e)
+	assert_eq(cat.target_why(ilse, cat.find(ilse, "attack:weapon:greatsword"), ilse), "Can't attack yourself", "no swinging at yourself")
+	var bolt := {}
+	var heal := {}
+	for a in cat.actions_for(silvain):
+		if str(a.get("spell_id", "")) == "fire_bolt":
+			bolt = a
+	for a2 in cat.actions_for(hedda):
+		if str(a2.get("spell_id", "")) == "healing_word":
+			heal = a2
+	assert_false(bolt.is_empty() or heal.is_empty())
+	assert_eq(cat.target_why(silvain, bolt, silvain), "Can't attack yourself", "an attack-roll spell can't target its caster")
+	assert_eq(cat.target_why(hedda, heal, hedda), "", "a spell for a creature you can see can still be cast on yourself")

@@ -217,6 +217,14 @@ def semantic_checks(data):
             for ma in a.get("multiattack", []):
                 if ma["action"] not in ids:
                     errors.append(f"monsters/{mid}: multiattack names unknown action '{ma['action']}'")
+            sm = a.get("summon", {})
+            for ch in sm.get("choices", []) if isinstance(sm, dict) else []:
+                if ch.get("monster") not in data["monsters"]:
+                    errors.append(f"monsters/{mid}: {a['id']} summons unknown monster '{ch.get('monster')}'")
+        la = m.get("legendary_actions", {})
+        for opt in la.get("options", []) if isinstance(la, dict) else []:
+            if "action" in opt and opt["action"] not in ids:
+                errors.append(f"monsters/{mid}: legendary action '{opt['id']}' names unknown action '{opt['action']}'")
         sc = m.get("spellcasting", {})
         for sp in sc.get("at_will", []) + [x for v in sc.get("per_day", {}).values() for x in v]:
             if sp not in spells:

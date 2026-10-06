@@ -129,6 +129,9 @@ static func member_matches(ch: Character, selector: String) -> bool:
 			var identity := ch.build.get("identity", {}) as Dictionary
 			return value in (identity.get("tags", []) as Array)
 		"name":
+			# A custom hero never answers for a pregenerated companion it replaced or shares a name with.
+			if bool((ch.build.get("appearance", {}) as Dictionary).get("custom", false)):
+				return false
 			return ch.id == value or ch.name.to_snake_case() == value
 		"item":
 			if ch.carries(value):

@@ -1,0 +1,185 @@
+# Ilse Varga's personal quest, Count Off (data/quests/kestrel_company.json, docs/story/personal_quests.md).
+# Every scene needs Ilse in the party: the tallies and Corporal Vell's patrol are hidden by their map `when`, and Jory
+# Fenn only stands his watch while she's with you, so when a custom hero takes her place none of this ever shows.
+# Started from into_the_mists/arrival:hooks; the Host stage from village_of_barovia/ismark:letter and burial:strahd.
+# Castle beats (Phase 6) are hooks only: see the doc.
+
+# --- Night 1: the milestone at the crossroads (prop kestrel_tally_crossroads) ---------------------------------
+
+~ tally_crossroads
+if flag.kestrel_tally_crossroads
+Narrator: The little bird, the forty strokes, the careful letters. Nothing on the stone has changed. Ilse checks anyway.
+-> END
+endif
+set kestrel_tally_crossroads
+Narrator: Low on the milestone, under a year of lichen, someone has cut a small bird with its wings swept back, and beside it four neat rows of ten strokes.
+interject name:ilse_varga: That's ours. Company tally. Corporal on watch cuts it every night on the march: the bird, and a stroke a head.
+Narrator: Under the strokes, smaller, in the careful capitals of someone who learned his letters late: NIGHT 1. ALL PRESENT. GUIDES SAY THE CASTLE IS TWO DAYS.
+interject name:ilse_varga: Vell's hand. Teodor Vell. I taught him his letters one winter so he could cut a tally properly.
+interject name:tamsin_tealeaf: Forty's good, though. Forty's everybody.
+interject name:ilse_varga: Forty was everybody on night one.
+interject name:hedda_ironvow: Mm. Then we find night two.
+if not (quest.kestrel_company >= the_tally)
+quest kestrel_company the_tally
+endif
+-> END
+
+# --- Night 2: the ash tree at Tser Pool (prop kestrel_tally_tser) ---------------------------------------------
+
+~ tally_tser
+if flag.kestrel_tally_tser
+Narrator: Thirty-one strokes, and the line under them. The bark has grown a little further over the J since you last looked.
+-> END
+endif
+set kestrel_tally_tser
+Narrator: On the side of an old ash facing away from the fire, at the height of a soldier's shoulder: the swept-wing bird again, and three rows of ten strokes, and one more.
+interject name:ilse_varga: Thirty-one. Night two.
+Narrator: Beneath it, in Vell's capitals, cut deeper, as if the knife had been angry: NIGHT 2. NINE GONE IN THE NIGHT. GUIDES SAY WOLVES. THERE WERE NO WOLVES.
+Narrator: And under that, in a different hand, so shallow the bark has nearly healed over it: J.F. I'M SORRY.
+interject name:ilse_varga: Jory Fenn. Drummer's boy when I signed him. Quartermaster's runner by the end. Seventeen.
+interject name:ilse_varga: Nobody in my company writes "sorry" on a tally. You don't apologise to a count. You apologise to a person.
+interject name:silvain_aster: Then he expected someone to read it. Someone in particular.
+if not (quest.kestrel_company >= the_count)
+quest kestrel_company the_count
+endif
+-> END
+
+# --- Stanimir remembers the soldiers (svalich_road/stanimir:menu) ---------------------------------------------
+
+~ stanimir
+set kestrel_jory_told
+Stanimir: Soldiers. Grey coats, a little bird on the shoulder, forty of them, singing songs I would not sing in front of my mother. Yes. We camped them here.
+Stanimir [sad]: The castle paid in gold that was very cold to hold. I won't tell you we didn't take it. We took it. We always take it. That is what he keeps us for.
+interject name:ilse_varga: Nine went missing from this camp. Where.
+Stanimir: Into the trees at night, following what they took for a woman singing. My people sat by the fire with their hands over their ears. That is what we are good at.
+Stanimir: One came back. Half a moon later, down the castle road, alone, barefoot, a drum on his back and no sticks for it. He wouldn't sit by our fire. He asked the way to the town with walls.
+interject name:ilse_varga: Vallaki.
+Stanimir: He wears the Baron's ribbon now, I hear, and somebody else's name. Be kind to him, sergeant, or be quick. He has been both to himself already.
+-> svalich_road/stanimir:menu
+
+# --- Jory Fenn on Vallaki's wall (npc jory_fenn) ---------------------------------------------------------------
+
+~ jory
+if flag.kestrel_jory_met
+-> jory_again
+endif
+set kestrel_jory_met
+Narrator: The watchman at the fire looks up, sees Ilse, and drops his spear. He doesn't pick it up. He has dreamed this moment every night for a year, and he still isn't ready for it.
+Jory Fenn [afraid]: Sergeant.
+interject name:ilse_varga: Fenn.
+Jory Fenn: It's Jori here. Jori Fenner. The Baron's particular about names, and he never asked for my real one. He gave me a ribbon. I'm on the wall six nights in seven. I like the wall. You can see what's coming.
+interject name:ilse_varga: Report.
+Narrator: It's the oldest word between them, and it still works. His back straightens before he can stop it.
+Jory Fenn: Night three, at the castle gate, Sergeant. Captain went in with the contract and the officers. The rest of us camped in the courtyard. Nobody came to feed us. Nobody came at all, until dark.
+Jory Fenn: Then Captain Merrow came out on the battlements with his collar open and called us in to dinner. One at a time. By name. He'd always known our names. He said them like he'd only just found out what they tasted of.
+Jory Fenn [sad]: Some went in. Vell went in. I was two down the roll, and I ran. Down the road in the dark with the drum still on my back. I didn't even drop the drum. I don't know why.
+-> jory_choice
+
+~ jory_choice
+* [name:ilse_varga] You ran. Good. Somebody had to come back. -> jory_forgive
+* [name:ilse_varga] You left them. -> jory_condemn
+* [if not flag.kestrel_jory_asked] Is anyone from the company still alive? -> jory_who
+
+~ jory_who
+set kestrel_jory_asked
+Jory Fenn: Alive? I don't know that anyone is. I see some of them, nights, on the castle road, in red coats that don't fit. They don't sing any more. They walk like they're listening for orders.
+interject name:ilse_varga: Vell?
+Jory Fenn: Vell's the one who stops at the bend and looks down at the town. Every time. Like he's counting the lamps.
+-> jory_choice
+
+~ jory_forgive
+set kestrel_jory_forgiven
+if flag.kestrel_fever_shared
+interject name:ilse_varga: I've told this lot already, so you may as well hear it. I had a fever, Fenn. Not a bad one.
+else
+interject name:ilse_varga: I had a fever, Fenn. Not a bad one.
+endif
+interject name:ilse_varga: I stayed in bed and let you march. You ran from a monster. I ran from a long walk. Pick up your spear.
+Narrator: He picks it up. His hands have stopped shaking. Ilse's haven't, quite, and he pretends not to see, which is the kindest thing a soldier knows how to do.
+-> jory_roll
+
+~ jory_condemn
+interject name:ilse_varga: You were on the roll. You heard your name coming and you ran.
+Jory Fenn: Yes, Sergeant.
+interject name:ilse_varga: ...So did I. A year earlier, from further off, with a better excuse. That's all the difference there is between us. It isn't much.
+Narrator: He doesn't pick the spear up. He looks at it as if it belongs to somebody braver.
+-> jory_roll
+
+~ jory_roll
+set kestrel_roll_kept
+if not (quest.kestrel_company >= the_deserter)
+quest kestrel_company the_deserter
+endif
+Jory Fenn: The roll. I kept the roll. Captain's book, forty names in his hand. It was in the drum. I've put a mark by every one I've seen on the road since.
+Narrator: He presses a cracked leather book into Ilse's hands. Some of the names have a little cross beside them, pressed hard enough to tear the page.
+interject name:ilse_varga: Keep your wall, Fenn. When the count's done, I'll bring it to you.
+interject name:tamsin_tealeaf: He means that kindly. It's hard to tell. You get used to it.
+-> END
+
+~ jory_again
+if flag.kestrel_vell_rests
+Jory Fenn: You found Vell. I can see it on you. Thank you, Sergeant.
+if flag.kestrel_vell_reached
+interject name:ilse_varga: He counted off. Fourteen. Then I counted him. One.
+else
+interject name:ilse_varga: He couldn't count off. I did it for him. One.
+endif
+Jory Fenn [sad]: One. Right. I'll remember the number.
+elif flag.kestrel_jory_forgiven
+Jory Fenn: Wall's quiet tonight, Sergeant. I'm counting the lamps.
+else
+Jory Fenn: Sergeant. Wall's quiet.
+endif
+-> END
+
+# --- Corporal Vell on the castle road, at night (npc kestrel_vell; encounters kestrel_patrol*) -----------------
+
+~ vell
+if flag.kestrel_vell_met
+Narrator: The three of them are back on the castle road, exactly where you left them, as if they've been standing there ever since.
+Corporal Vell: Still late, Sergeant. He's still waiting. So am I.
+-> vell_menu
+endif
+set kestrel_vell_met
+if not (quest.kestrel_company >= vell_met)
+quest kestrel_company vell_met
+endif
+Narrator: Three figures stand on the castle road, just inside the light: grey coats under crimson ones cut for bigger men. The one in the middle has a little bird on his shoulder, stitched in thread that used to be white.
+Corporal Vell: Sergeant. You're late.
+if flag.kestrel_fever_shared
+interject name:ilse_varga: Fever. You know that. Report, corporal.
+else
+interject name:ilse_varga: Report, corporal.
+endif
+Corporal Vell [sad]: Thirty-one at the gate. Captain called the roll from the wall, and we answered. That's what you do when he calls the roll. You answer.
+Corporal Vell: I'm to bring you up the road. He'd like you at the table, Sergeant. He's kept your chair.
+Narrator: His lips have drawn back from his teeth, and he doesn't seem to know. The two behind him stopped breathing some time ago and haven't missed it.
+interject name:silvain_aster: Vampire spawn and two of his dead. Ilse. I'm sorry.
+-> vell_menu
+
+~ vell_menu
+* [name:ilse_varga] [Persuasion DC 15] Count off, corporal. Name and number. -> vell_reached | vell_lost
+* [name:ilse_varga] I'm not coming to the table, Teodor. -> vell_refuse
+* (Draw steel.) -> vell_fight
+
+~ vell_reached
+set kestrel_vell_reached
+Corporal Vell: ...Vell, Teodor. Corporal. Fourteen.
+Narrator: For a moment the thing wearing his face is only him: a tired young man who learned his letters one winter so he could cut a tally properly.
+Corporal Vell [sad]: I can't not come at you, Sergeant. He's in my ears. When the hunger turns over I'll go for your throat and I'll be glad of it. Don't let me be glad. Be quick, and count me.
+interject name:ilse_varga: I'll count you. Hold still for it, if you can.
+interject name:hedda_ironvow: Quick, then, and merciful. Dawn comes, corporal. I'll walk you to it.
+Narrator: He tries to hold still. He almost manages it. It is the bravest thing you will see on this road.
+combat kestrel_patrol_reached
+
+~ vell_lost
+Corporal Vell: Fourteen? No. No, the captain keeps the numbers now. We don't count off any more. We're counted.
+-> vell_fight
+
+~ vell_refuse
+Corporal Vell: Then he'll be sad. He's terrible when he's sad.
+-> vell_fight
+
+~ vell_fight
+Narrator: The hunger turns over in all three of them at once, and they come down the road the way wolves do, without a word.
+combat kestrel_patrol
