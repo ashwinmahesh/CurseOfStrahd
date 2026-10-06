@@ -37,10 +37,33 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 		respec.button_pressed = bool(st.options.get("respec", true))
 		respec.toggled.connect(func(on: bool) -> void: st.options["respec"] = on)
 		frame.add_child(respec)
+	frame.add_child(PauseMenu.volume_row("Music", Audio.music_volume, func(v: float) -> void: Audio.set_volumes(v, Audio.sfx_volume)))
+	frame.add_child(PauseMenu.volume_row("Effects", Audio.sfx_volume, func(v: float) -> void:
+		Audio.set_volumes(Audio.music_volume, v)
+		Audio.sfx("click")))
 	frame.add_child(UiKit.header("Saves"))
 	_box = VBoxContainer.new()
-	frame.add_child(UiKit.scroll(_box, Vector2(720, 420)))
+	frame.add_child(UiKit.scroll(_box, Vector2(720, 340)))
 	_list()
+
+
+## A labelled volume slider (0-100%), saved with the player's settings as it moves.
+static func volume_row(text: String, value: float, on_change: Callable) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	var l := UiKit.label(text, 16, "parchment")
+	l.custom_minimum_size = Vector2(110, 0)
+	row.add_child(l)
+	var slider := HSlider.new()
+	slider.name = text
+	slider.min_value = 0.0
+	slider.max_value = 1.0
+	slider.step = 0.05
+	slider.value = value
+	slider.custom_minimum_size = Vector2(320, 24)
+	slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	slider.drag_ended.connect(func(_changed: bool) -> void: on_change.call(slider.value))
+	row.add_child(slider)
+	return row
 
 
 func _list() -> void:

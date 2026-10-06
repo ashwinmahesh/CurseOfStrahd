@@ -68,7 +68,29 @@ func _title() -> void:
 	load.disabled = slots.is_empty()
 	_box.add_child(load)
 	_box.add_child(UiKit.button("Combat arena (Phase 2)", func() -> void: get_tree().change_scene_to_file("res://scenes/combat/arena.tscn"), 18))
+	_box.add_child(UiKit.button("Credits", _credits, 18))
 	_box.add_child(UiKit.button("Quit", func() -> void: get_tree().quit(), 18))
+
+
+## Who made what (art/credits.json): the SRD's attribution, the art, and every credited track and sound.
+func _credits() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 30
+	layer.name = "Credits"
+	add_child(layer)
+	var frame := UiKit.screen_frame(layer, "Credits", Vector2(1100, 760))
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 8)
+	var data := JSON.parse_string(FileAccess.get_file_as_string("res://art/credits.json")) as Dictionary
+	for sec: Variant in data["sections"]:
+		var lines := (sec as Dictionary)["lines"] as Array
+		if lines.is_empty():
+			continue
+		body.add_child(UiKit.header(str((sec as Dictionary)["title"])))
+		for line: Variant in lines:
+			body.add_child(UiKit.label(str(line), 15, "vellum", 1000))
+	frame.add_child(UiKit.scroll(body, Vector2(1040, 600)))
+	frame.add_child(UiKit.button("Close", func() -> void: layer.queue_free(), 16))
 
 
 func _gap(h: float) -> Control:

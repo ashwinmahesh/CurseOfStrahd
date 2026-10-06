@@ -1,0 +1,25 @@
+{
+  "_note": "The credits screen (title screen > Credits). Every CC-BY work gets its exact credit line here and in docs/assets/LICENSES.md.",
+  "sections": [
+    {
+      "title": "Rules",
+      "lines": [
+        "This work includes material from the System Reference Document 5.2.1 (\"SRD 5.2.1\") by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
+      ]
+    },
+    {
+      "title": "Art",
+      "lines": [
+        "Characters, portraits, textures, props, menu ornaments, icons and the title art were drawn for this game with Google Gemini (gemini-3.1-flash-image) and finished in Blender."
+      ]
+    },
+    {
+      "title": "Music",
+      "lines": []
+    },
+    {
+      "title": "Sound effects",
+      "lines": []
+    }
+  ]
+}
