@@ -1,0 +1,19 @@
+{
+  "id": "toma_sarnov",
+  "name": "Toma Sarnov",
+  "title": "A Child in a Cage",
+  "summary": "A small boy of six, Ilka's brother, who sleeps a great deal on the pastries Morgantha feeds him and calls her Granny.",
+  "portrait": "toma_sarnov",
+  "sprite": "toma_sarnov",
+  "attitude": "friendly",
+  "voice": "docs/regions/old_bonegrinder.md",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "child",
+    "old_bonegrinder"
+  ],
+  "region": "old_bonegrinder",
+  "pronouns": "he/him"
+}

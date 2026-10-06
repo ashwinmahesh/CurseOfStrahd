@@ -1,0 +1,54 @@
+{
+  "id": "children_of_the_mill",
+  "name": "The Children in the Mill",
+  "summary": "Two children from the village under the castle are caged in the loft of Old Bonegrinder, the windmill where Morgantha and her daughters bake their dream pastries.",
+  "giver": "ilinca_vrana",
+  "region": "old_bonegrinder",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Two children, Ilka and Toma Sarnov, are kept in cages in the loft of Old Bonegrinder. Their mother gave them to Morgantha when she could no longer pay for her dream pastries. The old woman and her two daughters are night hags: three together are a coven, and far stronger than one.",
+      "objectives": [
+        "Get the children out of the mill",
+        "Don't fight all three hags at once"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "bakery_cleared",
+      "journal": "Offalia, the daughter who minds the oven, is out of the way. The stair to the loft is open.",
+      "objectives": [
+        "Climb to the loft"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "coven_broken",
+      "journal": "Morgantha is dead, and the coven of Old Bonegrinder is broken. The children are still in their cages.",
+      "objectives": [
+        "Free the children"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "bargain_struck",
+      "journal": "We struck a bargain with Morgantha, and she has agreed to let the children go. The coven still stands, and the pastries will go on.",
+      "objectives": [
+        "See the children safely away"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "children_freed",
+      "journal": "Ilka and Toma are out of their cages and on their way down the hill with Ilinca Vrana, the Keeper of the Feather who watched over them.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "children_abandoned",
+      "journal": "We left the Sarnov children in Morgantha's cages and walked away. She thanked us for being sensible.",
+      "objectives": [],
+      "ends": "failure"
+    }
+  ]
+}

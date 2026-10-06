@@ -1,0 +1,631 @@
+{
+  "id": "old_bonegrinder_loft",
+  "name": "Old Bonegrinder, the Loft",
+  "region": "old_bonegrinder",
+  "summary": "The windmill's upper floor under the turning gear: the hags' straw nest, Bella's dressing table, Morgantha's rocking chair, and two cages hung from the rafters with children in them.",
+  "text": "Low rafters, warm air rising from the oven below, and the great wooden gear of the sails overhead, locked still. It smells of straw, sugar and something kept too long.",
+  "map": {
+    "rows": [
+      "##################",
+      "###.....###....###",
+      "##....=.###.....##",
+      "#............=...#",
+      "#.==.............#",
+      "#.==.........=...#",
+      "#............=...#",
+      "#................#",
+      "#............=...#",
+      "#................#",
+      "#................#",
+      "#...............##",
+      "##.............###",
+      "##################"
+    ],
+    "theme": "attic",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "loft_landing",
+      "name": "The stairhead",
+      "cells": [
+        [
+          1,
+          9
+        ],
+        [
+          5,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "loft_nest",
+      "name": "The nest",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          7,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "loft_gears",
+      "name": "Under the great gear",
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          12,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "loft_hearth",
+      "name": "Morgantha's corner",
+      "cells": [
+        [
+          6,
+          6
+        ],
+        [
+          12,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "loft_cages",
+      "name": "The cages",
+      "cells": [
+        [
+          13,
+          1
+        ],
+        [
+          16,
+          11
+        ]
+      ],
+      "light": "dark"
+    }
+  ],
+  "spawns": {
+    "default": [
+      2,
+      10
+    ],
+    "from_stair": [
+      2,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "loft_stair_down",
+      "cell": [
+        1,
+        11
+      ],
+      "to": "old_bonegrinder",
+      "spawn": "from_loft",
+      "label": "Stairs down to the bakery"
+    }
+  ],
+  "props": [
+    {
+      "id": "bonegrinder_soul_bags",
+      "cell": [
+        4,
+        3
+      ],
+      "kind": "examine",
+      "label": "Little bags on hooks",
+      "model": "charms",
+      "dialogue": "old_bonegrinder/mill:soul_bags",
+      "when": "flag.morgantha_slain and not flag.soul_bag_freed and not flag.soul_bag_given and (not flag.bella_pact or flag.bella_slain or flag.bella_fled)"
+    },
+    {
+      "id": "bonegrinder_soul_bags_sealed",
+      "cell": [
+        4,
+        3
+      ],
+      "kind": "examine",
+      "label": "Little bags on hooks",
+      "model": "charms",
+      "when": "not flag.morgantha_slain"
+    },
+    {
+      "id": "bonegrinder_mirror",
+      "cell": [
+        6,
+        2
+      ],
+      "kind": "examine",
+      "label": "A dressing table and mirror",
+      "model": "dressing_table"
+    },
+    {
+      "id": "bonegrinder_rocking_chair",
+      "cell": [
+        10,
+        7
+      ],
+      "kind": "examine",
+      "label": "A rocking chair",
+      "model": "rocking_chair"
+    },
+    {
+      "id": "bonegrinder_cage_ilka",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "decor",
+      "label": "A hanging cage",
+      "model": "cage",
+      "when": "not flag.children_rescued"
+    },
+    {
+      "id": "bonegrinder_cage_toma",
+      "cell": [
+        16,
+        7
+      ],
+      "kind": "decor",
+      "label": "A hanging cage",
+      "model": "cage",
+      "when": "not flag.children_rescued"
+    },
+    {
+      "id": "bonegrinder_tally",
+      "cell": [
+        14,
+        3
+      ],
+      "kind": "examine",
+      "label": "Scratches on a cage bar",
+      "model": "cage",
+      "when": "not flag.children_rescued"
+    },
+    {
+      "id": "bonegrinder_brake",
+      "cell": [
+        11,
+        2
+      ],
+      "kind": "lever",
+      "label": "The sail brake",
+      "model": "winch",
+      "flag": "mill_sails_freed",
+      "when": "flag.morgantha_slain and not flag.mill_sails_freed"
+    }
+  ],
+  "containers": [
+    {
+      "id": "bonegrinder_hag_hoard",
+      "cell": [
+        1,
+        6
+      ],
+      "label": "A chest under the straw",
+      "model": "chest",
+      "lock_dc": 15,
+      "items": [
+        {
+          "id": "perfume",
+          "qty": 2
+        },
+        {
+          "id": "fine_clothes",
+          "qty": 1
+        },
+        {
+          "id": "spell_scroll_level_1",
+          "qty": 1
+        }
+      ],
+      "gold": 140
+    },
+    {
+      "id": "bonegrinder_bella_drawer",
+      "cell": [
+        6,
+        1
+      ],
+      "label": "Bella's jewel box",
+      "model": "jewel_box",
+      "items": [
+        {
+          "id": "mirror",
+          "qty": 1
+        },
+        {
+          "id": "perfume",
+          "qty": 1
+        }
+      ],
+      "gold": 35
+    }
+  ],
+  "traps": [
+    {
+      "id": "bonegrinder_chute",
+      "cells": [
+        [
+          9,
+          4
+        ]
+      ],
+      "label": "A loose hatch over the chute",
+      "detect_dc": 13,
+      "disarm_dc": 12,
+      "save": {
+        "ability": "dex",
+        "dc": 13
+      },
+      "damage": "2d6",
+      "damage_type": "bludgeoning",
+      "text": "The boards give, and you drop into the chute that feeds the millstone, and come out of it a good deal less comfortable."
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        10,
+        6
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        6,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "morgantha",
+      "cell": [
+        10,
+        6
+      ],
+      "dialogue": "old_bonegrinder/morgantha:start",
+      "approach": 8,
+      "when": "not flag.morgantha_slain",
+      "facing": "west"
+    },
+    {
+      "npc": "bella_sunbane",
+      "cell": [
+        5,
+        3
+      ],
+      "dialogue": "old_bonegrinder/bella:start",
+      "when": "not flag.morgantha_slain and not flag.bella_pact and not flag.bella_fled and not flag.bella_slain",
+      "facing": "south"
+    },
+    {
+      "npc": "bella_sunbane",
+      "cell": [
+        10,
+        6
+      ],
+      "dialogue": "old_bonegrinder/bella:inheritance",
+      "approach": 9,
+      "when": "flag.morgantha_slain and flag.bella_pact and not flag.bella_slain and not flag.bella_fled",
+      "facing": "west"
+    },
+    {
+      "npc": "ilka_sarnov",
+      "cell": [
+        15,
+        4
+      ],
+      "dialogue": "old_bonegrinder/children:start",
+      "approach": 5,
+      "when": "not flag.morgantha_slain and not flag.children_rescued",
+      "facing": "west"
+    },
+    {
+      "npc": "ilka_sarnov",
+      "cell": [
+        15,
+        4
+      ],
+      "dialogue": "old_bonegrinder/children:rescue",
+      "approach": 8,
+      "when": "flag.morgantha_slain and not flag.children_rescued",
+      "facing": "west"
+    },
+    {
+      "npc": "toma_sarnov",
+      "cell": [
+        15,
+        7
+      ],
+      "dialogue": "old_bonegrinder/children:start",
+      "when": "not flag.children_rescued",
+      "facing": "west"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
+      "when": "flag.offalia_in_last_stand and flag.bella_in_last_stand",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. In the corner Bella lays down her mirror; on the stair, Offalia's heavy tread. Three voices begin to hum the same tune.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha",
+          "hp": 95
+        },
+        {
+          "monster": "night_hag",
+          "cell": [
+            5,
+            3
+          ],
+          "name": "Bella Sunbane",
+          "hp": 60
+        },
+        {
+          "monster": "night_hag",
+          "cell": [
+            3,
+            12
+          ],
+          "name": "Offalia Wormwiggle",
+          "hp": 60
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
+      "when": "flag.offalia_in_last_stand",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. Behind you on the stair, a heavy tread: Offalia, licking her fingers, coming up to help Mother.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha",
+          "hp": 95
+        },
+        {
+          "monster": "night_hag",
+          "cell": [
+            3,
+            12
+          ],
+          "name": "Offalia Wormwiggle",
+          "hp": 60
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
+      "when": "flag.bella_in_last_stand",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. In the corner Bella lays down her mirror with a sigh, as if asked to do the washing up.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha",
+          "hp": 95
+        },
+        {
+          "monster": "night_hag",
+          "cell": [
+            5,
+            3
+          ],
+          "name": "Bella Sunbane",
+          "hp": 60
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow, and the sweetness goes out of her face like water out of a basin. Under the floor, the grain bins come alive with rats.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha",
+          "hp": 112
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            7,
+            8
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            12,
+            10
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            6,
+            4
+          ],
+          "name": "Rats from the grain bins"
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow, and the sweetness goes out of her face like water out of a basin. Under the floor, the grain bins come alive with rats.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha",
+          "hp": 100
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            7,
+            8
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            12,
+            10
+          ],
+          "name": "Rats from the grain bins"
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow, and the sweetness goes out of her face like water out of a basin. Under the floor, the grain bins come alive with rats.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha",
+          "hp": 85
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            7,
+            8
+          ],
+          "name": "Rats from the grain bins"
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "bella_betrayed",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Bella's laugh comes out of a mouth that is suddenly far too wide. The rocking chair goes over.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Bella Sunbane",
+          "hp": 100
+        }
+      ],
+      "surprise": "",
+      "flag": "bella_slain"
+    },
+    {
+      "id": "bella_betrayed",
+      "trigger": "dialogue",
+      "text": "Bella's laugh comes out of a mouth that is suddenly far too wide. The rocking chair goes over.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Bella Sunbane",
+          "hp": 80
+        }
+      ],
+      "surprise": "",
+      "flag": "bella_slain"
+    }
+  ],
+  "narration": {
+    "enter": "enter:old_bonegrinder_loft"
+  },
+  "rest": "no",
+  "rest_text": "Not up here, under the cages, with the chair still rocking."
+}

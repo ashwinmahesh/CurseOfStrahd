@@ -1,0 +1,108 @@
+# Party banter around Old Bonegrinder. Each node opens with an `if` gate: the node is eligible only while its
+# condition holds. Party members speak only through interjections; a line plays if a matching member is present.
+
+~ banter_sails
+if not flag.morgantha_home_met and not flag.bonegrinder_burned
+interject tag:curious: A windmill with the sails tied down, and the chimney going full blast. What's it grinding, if the wind isn't turning it?
+interject tag:blunt: Don't answer that.
+interject class:wizard: I wasn't going to. I was going to think it very loudly.
+endif
+-> END
+
+~ banter_keeper
+if flag.ilinca_met and not flag.children_rescued
+interject class:cleric: Lycanthropes who worship nothing but keeping watch. I was taught they were all cursed. She seems more tired than cursed.
+interject tag:loyal: Most soldiers I've known were both.
+endif
+-> END
+
+~ banter_coven
+if flag.coven_explained and not flag.morgantha_slain
+interject name:ilse_varga: Three of them, fight them one at a time. That's not cheating. That's just the only tactics anybody ever needed.
+interject name:silvain_aster: It's the first chapter of every treatise on hags, actually. The second chapter is a list of the people who skipped the first.
+endif
+-> END
+
+~ banter_pastry_taste
+if flag.dream_pastry_eaten and flag.offalia_met
+interject name:tamsin_tealeaf: I ate one of those. In the village. It was the best thing I've eaten in my life, and I've eaten in a duke's larder.
+interject name:hedda_ironvow: And now you know where the flour comes from.
+interject name:tamsin_tealeaf: And now I'm never eating anything again. For about an hour.
+endif
+-> END
+
+~ banter_bella_pact
+if flag.bella_pact and not flag.morgantha_slain
+interject tag:devout: We've promised a mill full of stolen souls to a hag so that she'll sit out a fight. I keep turning it over to find the side that looks better.
+interject tag:blunt: There isn't one. There's the side with the children on it. That'll have to do.
+endif
+-> END
+
+~ banter_children_out
+if flag.children_rescued
+interject name:ilse_varga: Two of them, alive, walking down a hill on their own feet. I've had worse days in this trade. Most of them, in fact.
+interject tag:cheerful: Toma waved. Did you see? He waved at me.
+endif
+-> END
+
+~ banter_the_truth
+if flag.sarnov_truth_told
+interject name:hedda_ironvow: We told a ten-year-old her mother sold her. I've been asking myself whether that was right since the stair.
+interject name:silvain_aster: She asked. She'd have known if we lied, and then she'd have known we lied, too. That's two things to carry instead of one.
+endif
+-> END
+
+~ banter_home_again
+if flag.bonegrinder_children_fate == "home"
+interject tag:curious: Do you think their mother will buy pastries again?
+interject tag:blunt: I think she'll look at every child in the village for the rest of her life. That's not a punishment I'd wish on anyone. She earned it anyway.
+endif
+-> END
+
+~ banter_bargain
+if flag.bonegrinder_bargain == "gold" or flag.bonegrinder_bargain == "truce"
+interject tag:blunt: We paid a hag to give back children she stole, and walked out past her oven. Somebody tell me that was the clever thing.
+interject class:wizard: It was the living thing. Clever comes second, in this valley.
+endif
+-> END
+
+~ banter_dream_debt
+if flag.bonegrinder_bargain == "dream" and not flag.morgantha_slain
+interject tag:curious: The one she took a dream from. Do you know what it was?
+interject tag:devout: No. That's the part I can't forgive her. Not the taking. That I don't know what's missing.
+endif
+-> END
+
+~ banter_another_house
+if flag.death_house_children_met and flag.sarnov_children_met
+interject name:tamsin_tealeaf: Another house with children shut in upstairs. Is that every house in Barovia, do you think? Is it the architecture?
+interject name:hedda_ironvow: It is the landlord.
+endif
+-> END
+
+~ banter_kesten
+if flag.bone_heap_searched
+interject class:cleric: Brother Kesten came up this hill alone with a cudgel and a prayer. I'll wear his symbol a while, so that someone finishes the walk.
+endif
+-> END
+
+~ banter_keepers
+if flag.ilinca_vouched
+interject tag:curious: Raven-eyed innkeeper in Vallaki. She meant Urwin, didn't she? The whole family's birds, I'd bet.
+interject tag:loyal: Then that's a family that owes us. Good to have, in a place like this.
+endif
+-> END
+
+~ banter_trade_ended
+if flag.pastry_trade == "ended"
+interject name:tamsin_tealeaf: No more dream pastries anywhere in the valley. Somewhere a lot of people are going to wake up and remember they're sad.
+interject name:ilse_varga: Good. Sad people bolt their doors. Dreaming ones don't.
+endif
+-> END
+
+~ banter_ireena_mill
+if guest:ireena and flag.morgantha_home_met
+interject guest:ireena: My father bought one of her baskets once, the winter he couldn't sleep. He slept all the next day, smiling. I thought she'd done him a kindness.
+interject tag:devout: It was a kindness, from him. Not from her.
+endif
+-> END

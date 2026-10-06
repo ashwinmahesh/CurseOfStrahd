@@ -1,0 +1,464 @@
+{
+  "id": "old_bonegrinder",
+  "name": "Old Bonegrinder",
+  "region": "old_bonegrinder",
+  "summary": "The windmill's ground floor: a bakery around a great brick oven, a millstone that grinds more than grain, a pantry of jars, and a stair up into the loft where the children are kept.",
+  "text": "Warm, floury and close. Everything is dusted white: the tables, the sacks, the floor, the millstone. The oven on the far wall breathes like something asleep.",
+  "map": {
+    "rows": [
+      "####################",
+      "###....#.....#...###",
+      "##.....#.....#....##",
+      "#......#...~~#.....#",
+      "#......#...........#",
+      "#......#...........#",
+      "#####.##.==........#",
+      "#........==........#",
+      "#..~...............#",
+      "#...............####",
+      "#.=...===.......####",
+      "#.=.............####",
+      "#..........==......#",
+      "##................##",
+      "###..............###",
+      "#########.##########"
+    ],
+    "theme": "house",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "mill_bakery",
+      "name": "The bakery",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          18,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "mill_grindstone",
+      "name": "The millstone",
+      "cells": [
+        [
+          8,
+          3
+        ],
+        [
+          12,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "mill_pantry",
+      "name": "The pantry",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "light": "dark"
+    },
+    {
+      "id": "mill_stair_foot",
+      "name": "The foot of the stair",
+      "cells": [
+        [
+          13,
+          4
+        ],
+        [
+          18,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "mill_stair",
+      "name": "The stair",
+      "cells": [
+        [
+          14,
+          1
+        ],
+        [
+          17,
+          3
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      9,
+      14
+    ],
+    "from_yard": [
+      9,
+      14
+    ],
+    "from_loft": [
+      15,
+      3
+    ]
+  },
+  "exits": [
+    {
+      "id": "mill_out_to_yard",
+      "cell": [
+        9,
+        15
+      ],
+      "to": "old_bonegrinder_hill",
+      "spawn": "from_mill",
+      "label": "Out to the yard"
+    },
+    {
+      "id": "mill_stair_up",
+      "cell": [
+        15,
+        1
+      ],
+      "to": "old_bonegrinder_loft",
+      "spawn": "from_stair",
+      "label": "Stairs up to the loft"
+    }
+  ],
+  "doors": [
+    {
+      "id": "bonegrinder_pantry_door",
+      "cell": [
+        5,
+        6
+      ],
+      "label": "Pantry door"
+    }
+  ],
+  "props": [
+    {
+      "id": "bonegrinder_millstone",
+      "cell": [
+        9,
+        6
+      ],
+      "kind": "examine",
+      "label": "The millstone",
+      "model": "rocks"
+    },
+    {
+      "id": "bonegrinder_oven_fire",
+      "cell": [
+        17,
+        10
+      ],
+      "kind": "examine",
+      "label": "The oven's fire",
+      "model": "flame"
+    },
+    {
+      "id": "bonegrinder_hopper",
+      "cell": [
+        11,
+        5
+      ],
+      "kind": "examine",
+      "label": "The grain hopper",
+      "model": "winch"
+    },
+    {
+      "id": "bonegrinder_kneading_table",
+      "cell": [
+        6,
+        10
+      ],
+      "kind": "examine",
+      "label": "Kneading table",
+      "model": "workbench"
+    },
+    {
+      "id": "bonegrinder_receipt_book",
+      "cell": [
+        8,
+        10
+      ],
+      "kind": "book",
+      "label": "A floury receipt book",
+      "model": "book",
+      "codex": "morganthas_receipts",
+      "flag": "bonegrinder_recipe_read",
+      "text": "Morgantha's receipt book, in three hands. The first is old and spiky; the second large and round, with drawings of cakes; the third neat and bored. DREAM PASTRY: flour of the mill, honey, poppy-milk, a sweet sleep-root from the garden, one pinch of the special flour per dozen. The special flour has its own page. Under it someone has written, in the round hand: NOT THE LITTLE ONES YET, MOTHER SAYS. Further on, a ledger: households in the village and on the Vallaki road, how many pastries a week, and a column headed OWING."
+    },
+    {
+      "id": "bonegrinder_flour_sacks",
+      "cell": [
+        3,
+        8
+      ],
+      "kind": "examine",
+      "label": "Flour sacks",
+      "model": "sack"
+    },
+    {
+      "id": "bonegrinder_pantry_jars",
+      "cell": [
+        3,
+        2
+      ],
+      "kind": "search",
+      "label": "Shelves of jars",
+      "model": "shelves",
+      "search_dc": 12,
+      "item": "antitoxin"
+    }
+  ],
+  "containers": [
+    {
+      "id": "hag_oven",
+      "cell": [
+        16,
+        10
+      ],
+      "label": "The great oven",
+      "model": "stove",
+      "items": [],
+      "gold": 4
+    },
+    {
+      "id": "bonegrinder_pastry_rack",
+      "cell": [
+        2,
+        10
+      ],
+      "label": "A rack of cooling pastries",
+      "model": "shelves",
+      "items": [
+        {
+          "id": "dream_pastry",
+          "qty": 6
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "bonegrinder_pantry_shelf",
+      "cell": [
+        5,
+        1
+      ],
+      "label": "A pantry cupboard",
+      "model": "sideboard",
+      "items": [
+        {
+          "id": "potion_of_healing",
+          "qty": 1
+        },
+        {
+          "id": "herbalism_kit",
+          "qty": 1
+        },
+        {
+          "id": "ration",
+          "qty": 3
+        },
+        {
+          "id": "basic_poison",
+          "qty": 1
+        }
+      ],
+      "gold": 0
+    },
+    {
+      "id": "bonegrinder_flour_bin",
+      "cell": [
+        12,
+        3
+      ],
+      "label": "A flour bin",
+      "model": "barrel",
+      "items": [
+        {
+          "id": "sack",
+          "qty": 2
+        }
+      ],
+      "gold": 22
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        15,
+        10
+      ],
+      "kind": "fire",
+      "bright_ft": 15,
+      "dim_ft": 30
+    },
+    {
+      "cell": [
+        8,
+        10
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 10
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "offalia_wormwiggle",
+      "cell": [
+        15,
+        10
+      ],
+      "dialogue": "old_bonegrinder/offalia:start",
+      "approach": 6,
+      "when": "not (flag.offalia_slain or flag.offalia_asleep or flag.offalia_lured)",
+      "facing": "west"
+    },
+    {
+      "npc": "offalia_wormwiggle",
+      "cell": [
+        14,
+        12
+      ],
+      "dialogue": "old_bonegrinder/offalia:asleep",
+      "when": "flag.offalia_asleep and not flag.offalia_slain and not flag.offalia_at_large",
+      "facing": "west"
+    },
+    {
+      "npc": "bella_sunbane",
+      "cell": [
+        15,
+        4
+      ],
+      "dialogue": "old_bonegrinder/bella:start",
+      "approach": 7,
+      "when": "(flag.offalia_slain or flag.offalia_asleep or flag.offalia_lured) and not flag.bella_met and not flag.morgantha_slain",
+      "facing": "south"
+    },
+    {
+      "npc": "bella_sunbane",
+      "cell": [
+        16,
+        3
+      ],
+      "dialogue": "old_bonegrinder/bella:waiting",
+      "when": "flag.bella_pact and not flag.morgantha_slain",
+      "facing": "south"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "bakery_offalia",
+      "trigger": "dialogue",
+      "when": "level >= 6",
+      "text": "Offalia wipes her hands on her apron, and keeps wiping them as they lengthen into something with knuckles like walnuts and nails like a baker's peel.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Offalia Wormwiggle",
+          "hp": 100
+        }
+      ],
+      "surprise": "",
+      "flag": "offalia_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "bakery_cleared"
+      }
+    },
+    {
+      "id": "bakery_offalia",
+      "trigger": "dialogue",
+      "when": "level >= 5",
+      "text": "Offalia wipes her hands on her apron, and keeps wiping them as they lengthen into something with knuckles like walnuts and nails like a baker's peel.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Offalia Wormwiggle",
+          "hp": 80
+        }
+      ],
+      "surprise": "",
+      "flag": "offalia_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "bakery_cleared"
+      }
+    },
+    {
+      "id": "bakery_offalia",
+      "trigger": "dialogue",
+      "text": "Offalia wipes her hands on her apron, and keeps wiping them as they lengthen into something with knuckles like walnuts and nails like a baker's peel.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Offalia Wormwiggle",
+          "hp": 60
+        }
+      ],
+      "surprise": "",
+      "flag": "offalia_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "bakery_cleared"
+      }
+    },
+    {
+      "id": "bakery_offalia",
+      "trigger": "open:hag_oven",
+      "when": "not (flag.offalia_slain or flag.offalia_asleep or flag.offalia_lured)",
+      "text": "The oven door is barely open when a floury hand slams it shut again. Offalia isn't smiling now. Nobody touches Mother's oven.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Offalia Wormwiggle",
+          "hp": 80
+        }
+      ],
+      "surprise": "",
+      "flag": "offalia_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "bakery_cleared"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:old_bonegrinder"
+  },
+  "rest": "risky",
+  "treasure_spots": {
+    "old_bonegrinder": {
+      "container": "hag_oven"
+    }
+  }
+}

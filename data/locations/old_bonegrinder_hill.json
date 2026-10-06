@@ -1,0 +1,310 @@
+{
+  "id": "old_bonegrinder_hill",
+  "name": "Old Bonegrinder, the Hill",
+  "region": "old_bonegrinder",
+  "summary": "A bald crag above the Old Svalich Road, ringed with pines, where a windmill with stopped sails keeps a yard of trampled mud, a garden nobody should eat from, a heap of bones and a dead oak full of ravens.",
+  "text": "The track climbs out of the trees onto bare rock. The windmill stands at the top with its sails locked in a cross; smoke leaks from a pipe in its side, and the whole hill smells of baking.",
+  "map": {
+    "rows": [
+      "##############################",
+      "#..........11222211..........#",
+      "#..........11111111..........#",
+      "#.....................~~.....#",
+      "#.....................~~~....#",
+      "#......................~.....#",
+      "#............####............#",
+      "#...........######...........#",
+      "#...........######...........#",
+      "#...........######....###....#",
+      "#...........######....###....#",
+      "#............####......=.....#",
+      "#..................~~........#",
+      "#..................~~~.......#",
+      "#............................#",
+      "#.....==..............==.....#",
+      "#........~~.......~~.........#",
+      "#.........~........~.........#",
+      "#..........~......~..........#",
+      "#........~~.........~........#",
+      "#..................~~........#",
+      "#.......~~...........~.......#",
+      "#............................#",
+      "##############..##############"
+    ],
+    "theme": "village",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "hill_lookout",
+      "name": "The crag's edge",
+      "cells": [
+        [
+          9,
+          1
+        ],
+        [
+          20,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "hill_bone_heap",
+      "name": "Behind the mill",
+      "cells": [
+        [
+          21,
+          1
+        ],
+        [
+          28,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "hill_oak",
+      "name": "The dead oak",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          8,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "hill_yard",
+      "name": "The mill yard",
+      "cells": [
+        [
+          9,
+          4
+        ],
+        [
+          20,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "hill_shed",
+      "name": "The cart shed",
+      "cells": [
+        [
+          21,
+          8
+        ],
+        [
+          28,
+          14
+        ]
+      ]
+    },
+    {
+      "id": "hill_track",
+      "name": "The track up the hill",
+      "cells": [
+        [
+          1,
+          15
+        ],
+        [
+          28,
+          22
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      14,
+      21
+    ],
+    "from_road": [
+      14,
+      21
+    ],
+    "from_mill": [
+      14,
+      12
+    ]
+  },
+  "exits": [
+    {
+      "id": "bonegrinder_track_down",
+      "cell": [
+        14,
+        23
+      ],
+      "to": "travel",
+      "label": "Down the track to the road"
+    },
+    {
+      "id": "bonegrinder_mill_door",
+      "cell": [
+        14,
+        11
+      ],
+      "to": "old_bonegrinder",
+      "spawn": "from_yard",
+      "label": "The mill door",
+      "when": "not flag.bonegrinder_burned",
+      "locked_text": "Nothing is left inside but heat, ash and the smell of it."
+    }
+  ],
+  "props": [
+    {
+      "id": "bonegrinder_sails",
+      "cell": [
+        14,
+        6
+      ],
+      "kind": "examine",
+      "label": "The windmill's sails",
+      "model": "winch",
+      "burning": "flag.bonegrinder_burned"
+    },
+    {
+      "id": "bonegrinder_dead_oak",
+      "cell": [
+        7,
+        12
+      ],
+      "kind": "examine",
+      "label": "A dead oak full of ravens",
+      "model": "dead_tree"
+    },
+    {
+      "id": "bonegrinder_ravens_west",
+      "cell": [
+        3,
+        6
+      ],
+      "kind": "decor",
+      "label": "Ravens",
+      "model": "crow"
+    },
+    {
+      "id": "bonegrinder_ravens_east",
+      "cell": [
+        26,
+        3
+      ],
+      "kind": "decor",
+      "label": "Ravens",
+      "model": "crow"
+    },
+    {
+      "id": "bonegrinder_bone_heap",
+      "cell": [
+        23,
+        4
+      ],
+      "kind": "search",
+      "label": "A heap of bones",
+      "model": "bones",
+      "search_dc": 13,
+      "item": "holy_symbol_amulet",
+      "flag": "bone_heap_searched"
+    },
+    {
+      "id": "bonegrinder_hag_garden",
+      "cell": [
+        20,
+        12
+      ],
+      "kind": "examine",
+      "label": "A kitchen garden",
+      "model": "reeds"
+    },
+    {
+      "id": "bonegrinder_lookout",
+      "cell": [
+        14,
+        1
+      ],
+      "kind": "examine",
+      "label": "The view from the crag",
+      "model": "rocks"
+    },
+    {
+      "id": "bonegrinder_track_marks",
+      "cell": [
+        14,
+        17
+      ],
+      "kind": "examine",
+      "label": "Cart ruts",
+      "model": "drag_marks"
+    },
+    {
+      "id": "bonegrinder_kindling",
+      "cell": [
+        21,
+        10
+      ],
+      "kind": "examine",
+      "label": "Lamp oil and kindling",
+      "model": "woodpile",
+      "dialogue": "old_bonegrinder/mill:burn",
+      "when": "flag.morgantha_slain and flag.children_rescued and not flag.bonegrinder_burned and flag.bonegrinder_fate != \"bella\""
+    }
+  ],
+  "containers": [
+    {
+      "id": "bonegrinder_pastry_cart",
+      "cell": [
+        23,
+        11
+      ],
+      "label": "Morgantha's pastry cart",
+      "model": "cart",
+      "items": [
+        {
+          "id": "dream_pastry",
+          "qty": 4
+        },
+        {
+          "id": "basket",
+          "qty": 1
+        }
+      ],
+      "gold": 9,
+      "flag": "pastry_cart_raided"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        14,
+        12
+      ],
+      "kind": "window",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "ilinca_vrana",
+      "cell": [
+        8,
+        13
+      ],
+      "dialogue": "old_bonegrinder/ilinca:start",
+      "approach": 7,
+      "when": "not flag.ilinca_joined and not flag.children_rescued",
+      "facing": "east"
+    }
+  ],
+  "narration": {
+    "enter": "enter:old_bonegrinder_hill"
+  },
+  "rest": "risky"
+}
