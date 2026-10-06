@@ -1,5 +1,5 @@
 {
-  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label.",
+  "about": "Which prop art (manifest.json in this folder) dresses each thing in data/locations, read by world/look/set_dressing.gd (docs/art/set_dressing.md). A location prop or container is looked up by its id in `ids` first, then by its `model` in `models`; with neither it uses the art of the same name as its model, else `container_default` for containers. A value is an art id, or {art, mount, scale} to override how it hangs, or null for an invisible spot (something already drawn, or a view). `on_wall` is the art used when the thing stands on a wall square (shelves against a wall). Doors take the first `doors.rules` entry whose words are in their id or label. `floors` gives a place its own ground texture; `low_cover.<place>` and `<place>_run` dress its '=' squares. An entry with `building: true` stands in for the whole house on its square (a windmill, a bell tower); `fade: true` fades a tall piece like the trees. `scales` sizes a piece wherever it stands (stairs fill their square); `fronts` gives furniture a front view that stands flat against a wall beside it.",
   "container_default": "chest",
   "models": {
     "hearth": "fireplace",
@@ -19,7 +19,10 @@
     "ledger": "lectern",
     "crow": "crow_barrel",
     "table_round": "table",
-    "cupboard": "sideboard",
+    "cupboard": {
+      "art": "sideboard",
+      "front": "chest_of_drawers_front"
+    },
     "drawer": "desk",
     "statue_headless": null,
     "fog_bank": {
@@ -90,7 +93,137 @@
     "st_andrals_facade": null,
     "mansion_facade": null,
     "wachterhaus_facade": null,
-    "tser_falls_overlook": null
+    "tser_falls_overlook": null,
+    "markovia_statue": "statue_saint",
+    "bell_tower": {
+      "art": "bell_tower",
+      "building": true
+    },
+    "abbey_bench": "stone_bench",
+    "stitched_sentry": "scarecrow_stitched",
+    "scarecrow_west": "scarecrow",
+    "scarecrow_mid": "scarecrow",
+    "scarecrow_east": "scarecrow",
+    "frost_bed": "garden_bed",
+    "chapel_sunburst": "sunburst",
+    "abbey_organ": "pipe_organ",
+    "surgery_table": "surgery_table",
+    "holt_order_banners": "banner_dragon",
+    "holt_hall_banners": "banner_dragon",
+    "holt_dragon_scar": "crater",
+    "holt_beacon_cradle": "beacon_cradle",
+    "holt_long_table": "table_set",
+    "holt_servants_table": "table_chairs",
+    "holt_dragon_bones": "dragon_bones",
+    "holt_kneeling_marks": "offering_circle",
+    "holt_dragon_window": "window_stained",
+    "krezk_woodpile": "woodpile",
+    "spinning_wheel": "spinning_wheel",
+    "offering_box": "strongbox",
+    "bonegrinder_millstone": "millstone",
+    "bonegrinder_oven_fire": "oven_brick",
+    "hag_oven": "oven_brick",
+    "bonegrinder_sails": {
+      "art": "windmill",
+      "building": true
+    },
+    "bonegrinder_hag_garden": "garden_bed",
+    "bonegrinder_cage_ilka": "cage_hanging",
+    "bonegrinder_cage_toma": "cage_hanging",
+    "bonegrinder_tally": "cage_hanging",
+    "withered_vines": "vines",
+    "east_vines": "vines",
+    "great_press": "wine_press",
+    "mash_vat": "wine_vat",
+    "wizards_casks": "cask_rack",
+    "wizards_rack": "cask_rack",
+    "fermenting_vats": "wine_vat",
+    "cask_racks": "cask_rack",
+    "wicker_cages": "wicker_cage",
+    "cage_post": "wicker_cage",
+    "barrow_mounds": "barrow",
+    "gulthias_tree": {
+      "art": "gulthias_tree",
+      "fade": true
+    },
+    "strahd_effigy": {
+      "art": "strahd_effigy",
+      "fade": true
+    },
+    "standing_stones": "standing_stones",
+    "ritual_offerings": "offering_circle",
+    "sarc_khirad": "amber_sarcophagus",
+    "sarc_norganas": "amber_sarcophagus",
+    "sarc_savnok": "amber_sarcophagus",
+    "sarc_seriach": "amber_sarcophagus",
+    "sarc_sykane": "amber_sarcophagus",
+    "sarc_tarakamedes": "amber_sarcophagus",
+    "sarc_tenebrous": "amber_sarcophagus",
+    "sarc_yrrga": "amber_sarcophagus",
+    "sarc_zhudun": "amber_sarcophagus",
+    "sarc_dahlver_nar": "amber_sarcophagus",
+    "cracked_sarcophagus": "amber_sarcophagus",
+    "hollow_sarcophagus": "amber_sarcophagus",
+    "sarc_zantras": "amber_sarcophagus",
+    "sarc_fekre": "amber_sarcophagus",
+    "sarc_taar_haak": "amber_sarcophagus",
+    "sarc_shami_amourae": "amber_sarcophagus",
+    "sarc_yog": "amber_sarcophagus",
+    "sarc_drizlash": "amber_sarcophagus",
+    "cracked_colossus": {
+      "art": "colossus",
+      "fade": true
+    },
+    "faceless_statue": {
+      "art": "statue_faceless",
+      "fade": true
+    },
+    "berez_hut": {
+      "art": "hut_lysaga",
+      "fade": true
+    },
+    "berez_marinas_statue": "statue_saint",
+    "berez_scarecrow_post": "scarecrow",
+    "lz_boat": "rowboat",
+    "lz_nets": "fishing_nets",
+    "roc_nest": "roc_nest",
+    "vrt_door_ward": {
+      "art": "tower_vr",
+      "building": true,
+      "scale": 1.3
+    },
+    "bottle_racks": {
+      "art": "shelves",
+      "front": "wine_shelf_front"
+    },
+    "old_bottles": {
+      "art": "shelves",
+      "front": "wine_shelf_front"
+    },
+    "bottling_shelf": {
+      "art": "shelves",
+      "front": "wine_shelf_front"
+    },
+    "old_vintage_rack": {
+      "art": "shelves",
+      "front": "wine_shelf_front"
+    },
+    "restricted_shelves": {
+      "art": "book_shelf",
+      "front": "shelves_front_b"
+    },
+    "stacks_shelves": {
+      "art": "book_shelf",
+      "front": "shelves_front_b"
+    },
+    "holt_dragon_bookcases": {
+      "art": "book_shelf",
+      "front": "shelves_front_b"
+    },
+    "holt_dragon_bookcase_2": {
+      "art": "book_shelf",
+      "front": "shelves_front_b"
+    }
   },
   "low_cover": {
     "wild": [
@@ -197,6 +330,12 @@
     ],
     "town_run": [
       "fence"
+    ],
+    "wizard_of_wines": [
+      "vines"
+    ],
+    "wizard_of_wines_run": [
+      "vines"
     ]
   },
   "difficult": {
@@ -209,6 +348,10 @@
     ],
     "interior": [
       "rubble"
+    ],
+    "shrine_yard": [
+      "bramble_a",
+      "bramble_b"
     ]
   },
   "doors": {
@@ -318,5 +461,87 @@
     ],
     "outdoor_default": "door_house",
     "indoor_default": "door_wood"
+  },
+  "floors": {
+    "old_bonegrinder_hill": "village/grass",
+    "wizard_of_wines": "village/grass",
+    "argynvostholt": "village/grass",
+    "abbey_of_st_markovia": "church/stone_flags"
+  },
+  "fronts": {
+    "book_shelf": {
+      "art": "book_shelf_front",
+      "depth": 0.4
+    },
+    "bookshelf": {
+      "art": "book_shelf_front",
+      "depth": 0.4
+    },
+    "shelves": {
+      "art": "shelves_front",
+      "depth": 0.4
+    },
+    "wardrobe": {
+      "art": "wardrobe_front",
+      "depth": 0.5
+    },
+    "cabinet_glass": {
+      "art": "cabinet_glass_front",
+      "depth": 0.4
+    },
+    "sideboard": {
+      "art": "sideboard_front",
+      "depth": 0.45
+    },
+    "pipe_organ": {
+      "art": "pipe_organ_front",
+      "depth": 0.5
+    },
+    "dressing_table": {
+      "art": "dressing_table_front",
+      "depth": 0.4,
+      "body": false
+    },
+    "desk": {
+      "art": "desk_front",
+      "depth": 0.45,
+      "body": false
+    },
+    "bar_counter": {
+      "art": "bar_front",
+      "depth": 0.45
+    },
+    "shop_counter": {
+      "art": "counter_front",
+      "depth": 0.45
+    },
+    "workbench": {
+      "art": "workbench_front",
+      "depth": 0.45,
+      "body": false
+    },
+    "cask_rack": {
+      "art": "cask_rack_front",
+      "depth": 0.5
+    },
+    "cabinet_small": {
+      "art": "cabinet_small_front",
+      "depth": 0.35
+    },
+    "clock_standing": {
+      "art": "clock_tall",
+      "depth": 0.3
+    }
+  },
+  "scales": {
+    "stair_riser": 1.6,
+    "bed": 1.25,
+    "bed_small": 1.2,
+    "coffin": 1.3,
+    "harpsichord": 1.4,
+    "bathtub": 1.25
+  },
+  "town_walls": {
+    "krezk": 2.6
   }
 }

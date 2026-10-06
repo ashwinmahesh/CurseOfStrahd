@@ -1,0 +1,70 @@
+{
+  "id": "rod_of_rulership",
+  "name": "Rod of Rulership",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "rod",
+  "weight_lb": 2,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "rod",
+  "recipes": {
+    "rule": {
+      "name": "Rod of Rulership",
+      "level": 0,
+      "school": "enchantment",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 120
+      },
+      "area_targets": "enemies",
+      "save": "wis",
+      "duration": {
+        "kind": "hours",
+        "amount": 8
+      },
+      "components": {},
+      "tags": [
+        "control",
+        "social"
+      ],
+      "effects": [
+        {
+          "effect": "condition",
+          "params": {
+            "condition": "charmed",
+            "ends_on": [
+              "damaged_by_caster_side"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "powers": [
+    {
+      "id": "rule",
+      "name": "Command Obedience",
+      "recipe": "rule",
+      "dc": 15,
+      "cost": "magic",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true,
+      "text": "Magic action (once per dawn): creatures of your choice within 120 ft make a DC 15 Wisdom save or are Charmed by you for 8 hours."
+    }
+  ],
+  "summary": "Once a day, creatures of your choice within 120 ft are Charmed by you for 8 hours unless they make a DC 15 Wisdom save.",
+  "text": "Brandish the rod as a Magic action to demand obedience from any creatures of your choice in sight and within 120 feet. Each must make a Wisdom saving throw (DC 15) or gain the Charmed condition, lasting 8 hours, during which it treats you as its trusted leader. The charm ends early for a target that you or your companions harm, or that is ordered to act against its nature. Once used, the rod is inert until the next dawn."
+}

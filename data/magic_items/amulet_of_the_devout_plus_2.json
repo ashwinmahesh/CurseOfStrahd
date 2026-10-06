@@ -1,0 +1,71 @@
+{
+  "id": "amulet_of_the_devout_plus_2",
+  "name": "Amulet of the Devout, +2",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Cleric or Paladin"
+  },
+  "theme": "relics",
+  "icon": "holy_symbol",
+  "variant_of": "amulet_of_the_devout",
+  "modifiers": [
+    {
+      "stat": "spell_attack",
+      "value": 2,
+      "when": {
+        "spell_class": "cleric"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 2,
+      "when": {
+        "spell_class": "cleric"
+      }
+    },
+    {
+      "stat": "spell_attack",
+      "value": 2,
+      "when": {
+        "spell_class": "paladin"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 2,
+      "when": {
+        "spell_class": "paladin"
+      }
+    }
+  ],
+  "powers": [
+    {
+      "id": "channel",
+      "name": "Channel Divinity",
+      "cost": "free",
+      "custom": "restore_resource",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true,
+      "params": {
+        "resources": [
+          "channel_divinity",
+          "paladin_channel_divinity"
+        ]
+      },
+      "text": "Once per dawn, regain one use of Channel Divinity."
+    }
+  ],
+  "worn": "neck",
+  "summary": "+2 to your Cleric and Paladin spell attacks and save DC; once a day, a use of Channel Divinity back.",
+  "text": "A deity's emblem worked in gems or precious metal decorates this amulet. While you wear it, your Cleric and Paladin spells gain +2 to their spell attack rolls and their saving throw DCs. Once per dawn, it also lets you use Channel Divinity without spending a use of that feature."
+}

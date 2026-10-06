@@ -1,0 +1,44 @@
+{
+  "id": "necklace_of_fireballs",
+  "name": "Necklace of Fireballs",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false,
+    "charges": {
+      "max": 9,
+      "start": "1d6+3",
+      "when": "never",
+      "last": {
+        "die": 1,
+        "on": 1,
+        "result": "destroyed",
+        "text": "falls apart, its last bead thrown"
+      }
+    }
+  },
+  "theme": "implements",
+  "icon": "necklace",
+  "powers": [
+    {
+      "id": "bead",
+      "name": "Throw beads",
+      "spell": "fireball",
+      "charges": 1,
+      "upcast_charges": 1,
+      "max_level": 9,
+      "dc": 15,
+      "cost": "magic",
+      "text": "Magic action: throw one or more beads up to 60 ft: a level 3 Fireball (save DC 15), one level higher per extra bead."
+    }
+  ],
+  "worn": "neck",
+  "summary": "1d6 + 3 beads: throw one as a Fireball (save DC 15), or several at once for a bigger one.",
+  "text": "1d6 + 3 beads dangle from this necklace. With a Magic action, pull one off and hurl it as far as 60 feet; where it lands, it bursts into a Fireball cast at level 3 (save DC 15). A single Magic action can also fling several beads at once, or the entire necklace, and the Fireball's level goes up by 1 for every bead past the first."
+}

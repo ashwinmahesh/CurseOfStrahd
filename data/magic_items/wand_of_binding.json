@@ -1,0 +1,54 @@
+{
+  "id": "wand_of_binding",
+  "name": "Wand of Binding",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wand",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": "by a Spellcaster",
+    "charges": {
+      "max": 7,
+      "regain": "1d6+1",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "crumbles into ashes"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "wand",
+  "powers": [
+    {
+      "id": "hold_monster",
+      "name": "Hold Monster",
+      "spell": "hold_monster",
+      "charges": 5,
+      "dc": 17
+    },
+    {
+      "id": "hold_person",
+      "name": "Hold Person",
+      "spell": "hold_person",
+      "charges": 2,
+      "dc": 17
+    },
+    {
+      "id": "escape",
+      "name": "Assisted Escape",
+      "cost": "reaction",
+      "charges": 1,
+      "hidden": true,
+      "text": "Reaction, 1 charge: Advantage on a save to avoid being Paralyzed or Restrained, or on a check to escape a grapple (used automatically)."
+    }
+  ],
+  "summary": "7 charges: Hold Monster (5) or Hold Person (2) at DC 17; a charge gives Advantage against being held.",
+  "text": "Holds 7 charges and recovers 1d6 + 1 of them each dawn. When you spend the last one, roll 1d20, and a 1 turns the wand to ash, destroying it. Spells: while you hold it, cast Hold Person (2 charges) or Hold Monster (5 charges) from it, save DC 17. Assisted Escape: while holding it, you can spend 1 charge as a Reaction to gain Advantage on a saving throw against becoming Paralyzed or Restrained, or spend 1 charge to gain Advantage on a check to escape a grapple."
+}

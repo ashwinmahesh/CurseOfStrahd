@@ -1,0 +1,73 @@
+{
+  "id": "giant_rat",
+  "name": "Giant Rat",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "small",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 13,
+  "initiative": 3,
+  "hp": {
+    "average": 7,
+    "dice": "2d6"
+  },
+  "speed": {
+    "walk": 30,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 7,
+    "dex": 16,
+    "con": 11,
+    "int": 2,
+    "wis": 10,
+    "cha": 4
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [],
+  "cr": 0.125,
+  "xp": 25,
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "id": "pack_tactics",
+      "name": "Pack Tactics",
+      "action": "passive",
+      "summary": "Advantage on attack rolls against a target that has a non-Incapacitated ally of this creature within 5 ft.",
+      "implemented": "engine",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "pack_tactics"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d4+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite: +5 to hit, 1d4+3 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A dog-sized rat."
+}

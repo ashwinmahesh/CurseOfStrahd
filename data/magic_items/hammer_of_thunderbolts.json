@@ -1,0 +1,96 @@
+{
+  "id": "hammer_of_thunderbolts",
+  "name": "Hammer of Thunderbolts",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true,
+    "charges": {
+      "max": 5,
+      "regain": "1d4+1",
+      "when": "dawn"
+    }
+  },
+  "theme": "armaments",
+  "icon": "hammer_of_thunderbolts",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "maul"
+    ],
+    "name": "Hammer of Thunderbolts",
+    "weapon_patch": {
+      "range": [
+        20,
+        60
+      ]
+    }
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 1,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "ability",
+      "ability": "str",
+      "value": 4,
+      "max": 30,
+      "requires_worn": [
+        "belt_of_giant_strength",
+        "gauntlets_of_ogre_power"
+      ]
+    }
+  ],
+  "weapon_rules": {
+    "on_hit": [
+      {
+        "nat20": true,
+        "vs": [
+          "giant"
+        ],
+        "save": "con",
+        "dc": 17,
+        "slay": true
+      }
+    ],
+    "special": [
+      "hammer_of_thunderbolts"
+    ],
+    "returns": true
+  },
+  "powers": [
+    {
+      "id": "hurl",
+      "name": "Hurl (Thunderbolt)",
+      "cost": "attack",
+      "charges": 1,
+      "custom": "hammer_hurl",
+      "targeting": "enemy",
+      "range": 60,
+      "text": "Spend 1 charge and throw it (20/60 ft). On a hit, the target and everything within 30 ft of it make a DC 17 Con save or are Stunned until the end of your next turn. It flies back."
+    }
+  ],
+  "summary": "+1 maul. With a Belt of Giant Strength and Gauntlets of Ogre Power: Strength +4 (to 30), Giant's Bane, and thunderbolt throws.",
+  "text": "This magic weapon grants +1 to attack and damage rolls. Giant's Bane: attuning to it requires that you wear both a Belt of Giant Strength (of any kind) and Gauntlets of Ogre Power. As long as you're attuned and holding it, add 4 to your Strength score; this can push it past 20 but never above 30. A 20 rolled on an attack roll against a Giant with this hammer forces the Giant to pass a Constitution saving throw (DC 17) or die. Thunderbolt (5 charges): while attuned, spend 1 charge to hurl the hammer as a ranged weapon attack, treating it as having the Thrown property (normal range 20 feet, long range 60 feet). On a hit, it releases a thunderclap that can be heard 300 feet away, and the target and every other creature in a 30-foot radius around it must pass a Constitution saving throw (DC 17) or suffer the Stunned condition until your next turn ends. Each dawn, 1d4 + 1 spent charges return.",
+  "attune_requires": [
+    "belt_of_giant_strength",
+    "gauntlets_of_ogre_power"
+  ]
+}

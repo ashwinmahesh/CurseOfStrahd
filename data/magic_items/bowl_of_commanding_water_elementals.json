@@ -1,0 +1,40 @@
+{
+  "id": "bowl_of_commanding_water_elementals",
+  "name": "Bowl of Commanding Water Elementals",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "bowl",
+  "powers": [
+    {
+      "id": "summon",
+      "name": "Summon an Water Elemental",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "params": {
+        "monster": "water_elemental",
+        "count": 1,
+        "hours": 1,
+        "concentration": true
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Magic action (once per dawn): summon an Water Elemental, as if by Conjure Elemental; it obeys you while you concentrate, up to an hour.",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "summary": "Once a day, summon an Water Elemental that obeys you (Concentration, up to 1 hour).",
+  "text": "With the bowl in hand, take a Magic action to call forth a Water Elemental into the unoccupied space nearest the bowl. The elemental regards you and your companions as allies and carries out your orders. It remains for up to 1 hour, provided you hold Concentration on it just as you would for a spell. After that the bowl is spent until the next dawn."
+}

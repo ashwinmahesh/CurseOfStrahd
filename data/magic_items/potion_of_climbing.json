@@ -1,0 +1,42 @@
+{
+  "id": "potion_of_climbing",
+  "name": "Potion of Climbing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 50.0,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_brown",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "speed_set",
+            "kind": "climb",
+            "value": "walk"
+          },
+          {
+            "stat": "advantage",
+            "on": "check:athletics"
+          }
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "summary": "For 1 hour: a Climb Speed equal to your Speed, and Advantage on Athletics checks to climb.",
+  "text": "Its brown, silver and gray layers sit like strata of rock and never blend, however hard you shake. Once you drink it, for 1 hour your Climb Speed equals your Speed, and you make Strength (Athletics) checks to climb with Advantage."
+}

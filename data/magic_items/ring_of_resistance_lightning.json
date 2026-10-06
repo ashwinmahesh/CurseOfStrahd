@@ -1,0 +1,27 @@
+{
+  "id": "ring_of_resistance_lightning",
+  "name": "Ring of Resistance (Lightning)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "arcana",
+  "icon": "ring",
+  "worn": "ring",
+  "variant_of": "ring_of_resistance",
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "lightning"
+    }
+  ],
+  "summary": "Resistance to Lightning damage while you wear it.",
+  "text": "Wearing the ring gives you Resistance to Lightning damage; a gemstone in its setting hints at which type it guards against."
+}

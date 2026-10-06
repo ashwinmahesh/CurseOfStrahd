@@ -1,0 +1,19 @@
+{
+  "id": "enduring_spellbook",
+  "name": "Enduring Spellbook",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "book",
+  "summary": "A spellbook that can't be harmed by fire, water or age.",
+  "text": "Neither flame nor water can harm this spellbook or the writing inside it, and time leaves no mark on its pages. (It has no further effect in the game.)"
+}

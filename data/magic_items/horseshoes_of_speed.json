@@ -1,0 +1,22 @@
+{
+  "id": "horseshoes_of_speed",
+  "name": "Horseshoes of Speed",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 4,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "horseshoes",
+  "travel": {
+    "speed_mult": 1.25
+  },
+  "summary": "Shod on a mount, its Speed increases by 30 ft.",
+  "text": "A set of four iron shoes. Once a horse or similar creature wears all four on its hooves, it gains 30 feet of Speed. (In our game, they make the party's journeys faster.)"
+}

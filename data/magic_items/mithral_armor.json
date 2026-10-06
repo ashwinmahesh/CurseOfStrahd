@@ -1,0 +1,36 @@
+{
+  "id": "mithral_armor",
+  "name": "Mithral Armor",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "armor",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "armor",
+    "kinds": [
+      "medium",
+      "heavy"
+    ],
+    "exclude": [
+      "hide_armor"
+    ],
+    "name": "Mithral {base}",
+    "default": "chain_shirt",
+    "armor_patch": {
+      "strength": null,
+      "stealth_disadvantage": false
+    }
+  },
+  "summary": "No Strength requirement and no Disadvantage on Stealth checks.",
+  "text": "Made of light, supple mithral, this armor drops any Strength requirement and any Disadvantage on Dexterity (Stealth) checks that the ordinary version of the armor would have.",
+  "icon": "chain_shirt",
+  "icon_fallback": true
+}

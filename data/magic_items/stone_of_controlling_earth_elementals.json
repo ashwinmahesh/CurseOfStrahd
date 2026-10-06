@@ -1,0 +1,40 @@
+{
+  "id": "stone_of_controlling_earth_elementals",
+  "name": "Stone of Controlling Earth Elementals",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 5,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "stone",
+  "powers": [
+    {
+      "id": "summon",
+      "name": "Summon an Earth Elemental",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "params": {
+        "monster": "earth_elemental",
+        "count": 1,
+        "hours": 1,
+        "concentration": true
+      },
+      "targeting": "place",
+      "range": 60,
+      "text": "Magic action (once per dawn): summon an Earth Elemental, as if by Conjure Elemental; it obeys you while you concentrate, up to an hour.",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      }
+    }
+  ],
+  "summary": "Once a day, summon an Earth Elemental that obeys you (Concentration, up to 1 hour).",
+  "text": "Hold the stone and take a Magic action to call up an Earth Elemental in the unoccupied space nearest the stone. It is friendly toward you and your allies and follows your orders. It stays for up to 1 hour, as long as you keep up Concentration on it the way you would on a spell. After that the stone is spent until the next dawn."
+}

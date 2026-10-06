@@ -1,0 +1,73 @@
+{
+  "id": "blackrazor",
+  "name": "Blackrazor",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book. Artifact random properties use the game's condensed tables (deviations.md)."
+  },
+  "category": "weapon",
+  "weight_lb": 3,
+  "cost_gp": 0,
+  "magic": {
+    "rarity": "artifact",
+    "attunement": true,
+    "sentient": true
+  },
+  "theme": "relics",
+  "icon": "blackrazor",
+  "treasure": {
+    "random": false
+  },
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword"
+    ],
+    "name": "Blackrazor"
+  },
+  "modifiers": [
+    {
+      "stat": "attack",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "damage",
+      "value": 3,
+      "when": {
+        "item": "@self"
+      }
+    },
+    {
+      "stat": "condition_immunity",
+      "value": "charmed"
+    },
+    {
+      "stat": "condition_immunity",
+      "value": "frightened"
+    },
+    {
+      "stat": "sense",
+      "kind": "blindsight",
+      "value": 60,
+      "note": "living creatures only"
+    }
+  ],
+  "weapon_rules": {
+    "special": [
+      "blackrazor"
+    ]
+  },
+  "sentience": {
+    "int": 17,
+    "wis": 10,
+    "cha": 19,
+    "senses": "hearing and darkvision 120 ft",
+    "alignment": "chaotic neutral",
+    "purpose": "to devour souls"
+  },
+  "summary": "+3 sentient greatsword that devours the souls of those it slays, feeding you Temporary Hit Points and a fighting edge.",
+  "text": "Blackrazor glitters like a slice of starry night sky; White Plume Mountain's dungeon once hid it. Attack and damage rolls with this magic weapon gain +3. Devour Soul: a creature this sword reduces to 0 Hit Points is slain and its soul consumed (Constructs and Undead are immune to this), and only a Wish spell can return that creature to life. Each soul it eats grants you a pool of Temporary Hit Points matching the victim's Hit Point maximum, which vanish after 24 hours. While those Temporary Hit Points remain and Blackrazor is in your hand, your attack rolls, ability checks and saving throws have Advantage. Hitting an Undead with it deals 1d10 Necrotic damage to you and restores 1d10 Hit Points to the target; should that Necrotic damage leave you at 0 Hit Points, the sword eats your soul. Soul Hunter: while holding it, you sense the presence of every non-Construct, non-Undead creature within 60 feet, and the Charmed and Frightened conditions can't affect you. Once per day the sword can cast Haste on you, choosing the moment and holding Concentration on its own. It is a sentient, soul-hungry weapon with Intelligence 17, Wisdom 10 and Charisma 19."
+}

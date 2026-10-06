@@ -1,0 +1,86 @@
+{
+  "id": "college_of_spirits",
+  "name": "College of Spirits",
+  "class": "bard",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from the 2025 Unearthed Arcana (Horror Subclasses) and published reviews of Ravenloft: The Horrors Within; compare every number with the book before setting checked_against."
+  },
+  "summary": "Bards who reach past death with cards, candles and ink, borrowing the help of restless and unpredictable spirits.",
+  "role_tags": [
+    "support",
+    "control"
+  ],
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "channeler",
+        "name": "Channeler",
+        "summary": "Guidance (60-foot range); proficiency with playing cards, which (like a crystal, orb, candle or ink pen) serve as your Bard focus.",
+        "text": "Two parts. Cantrip: Guidance is yours, and you can cast it on a creature up to 60 ft away. Tools: you get a deck of playing cards and proficiency with it; the deck, a crystal or orb, a candle or an ink pen can each serve as the focus for your Bard spells.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "guidance"
+          },
+          {
+            "stat": "proficiency",
+            "kind": "tool",
+            "value": "playing_card_set"
+          }
+        ],
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "spirits_from_beyond",
+        "name": "Spirits from Beyond",
+        "summary": "Bonus Action, a Bardic Inspiration use: roll the die and a spirit acts on a creature you see within 30 feet (heal, blast, teleport, frighten and more).",
+        "text": "Cost: a Bonus Action and one Bardic Inspiration use, with a Spellcasting Focus in hand. Pick a creature in sight within 30 ft, roll your Bardic Inspiration die and look up the spirit below; it acts on that creature at once (saves against it use your Bard spell save DC). 1 Beloved: heals die + Cha. 2 Sharpshooter: die + Cha Force damage. 3 Avenger: through the end of your next turn, whoever lands a melee attack roll on the creature takes a die of Force damage. 4 Renegade: the creature may spend its Reaction to teleport 30 ft to a free space it sees. 5 Fortune Teller: Advantage on its D20 Tests until your next turn begins. 6 Wayfarer: Temporary Hit Points of die + Bard level, and +10 ft Speed for as long as any remain. 7 Trickster: Wis save; fail = 2 dice Psychic and Charmed until your next turn begins, pass = half damage only. 8 Shade: Invisible through the end of its next turn, ending early if it attacks, deals damage or casts; when it ends, creatures within 5 ft of it make a Con save or take 2 dice Necrotic. 9 Arsonist: Dex save, 4 dice Fire, half on a pass. 10 Coward: it and any creatures you choose within 30 ft of it make a Wis save or are Frightened until your next turn begins, at half Speed and limited to an action or a Bonus Action. 11 Brute: creatures you choose within 30 ft of it make a Str save; fail = 3 dice Thunder and Prone, pass = half damage only. 12 Controlled Channeling: choose any other row.",
+        "action": "bonus_action",
+        "uses_resource": "bardic_inspiration",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 6,
+      "feature": {
+        "id": "empowered_channeling",
+        "name": "Empowered Channeling",
+        "summary": "Once per turn +1d6 to a Bard spell's damage or healing; Spirit Guardians always prepared, free once per Long Rest, and once per Short Rest it can also give Half Cover.",
+        "text": "Power from Beyond: one Bard spell per turn that harms or heals gains a d6, added to one of its damage rolls or to the healing. Spiritual Manifestation: Spirit Guardians is always prepared for you and one casting per Long Rest needs no slot. As you begin a casting you may also have the spirits ward the living (once per Short or Long Rest): you and allies inside the Emanation get Half Cover.",
+        "modifiers": [
+          {
+            "stat": "spell",
+            "value": "spirit_guardians",
+            "always_prepared": true,
+            "uses": {
+              "count": 1,
+              "recharge": "long"
+            }
+          }
+        ],
+        "resource": {
+          "id": "spiritual_manifestation",
+          "name": "Spiritual Manifestation (Half Cover)",
+          "max": 1,
+          "recharge": "short"
+        },
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 14,
+      "feature": {
+        "id": "mystical_connection",
+        "name": "Mystical Connection",
+        "summary": "Roll twice on the Spirits from Beyond table and pick either effect.",
+        "text": "Each time you consult the Spirits from Beyond table, roll the die a second time and keep the result you prefer.",
+        "implemented": "engine"
+      }
+    }
+  ]
+}

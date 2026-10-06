@@ -1,0 +1,32 @@
+{
+  "id": "ioun_stone_greater_absorption",
+  "name": "Ioun Stone (Greater Absorption)",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true,
+    "charges": {
+      "max": 50,
+      "when": "never"
+    }
+  },
+  "theme": "arcana",
+  "icon": "ioun_stone",
+  "variant_of": "ioun_stone",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "ioun_greater_absorption"
+    }
+  ],
+  "powers": [],
+  "worn": "ioun",
+  "summary": "Absorbs a spell of level 8 or lower aimed only at you (50 levels, then it burns out).",
+  "text": "Once you are attuned, toss this stone upward as a Magic action and it circles your head 1d3 feet away, granting its benefit while it orbits; snatching it back out of the air takes an action. The stones bear the name of Ioun, a deity of knowledge and prophecy worshipped on some worlds. Benefit: it soaks up any spell of level 8 or below that targets you alone, and burns out once it has absorbed 50 spell levels in total."
+}

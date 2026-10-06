@@ -1,0 +1,27 @@
+{
+  "id": "amulet_of_health",
+  "name": "Amulet of Health",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 4000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "amulet",
+  "modifiers": [
+    {
+      "stat": "ability_min",
+      "ability": "con",
+      "value": 19
+    }
+  ],
+  "worn": "neck",
+  "summary": "Your Constitution is 19 while you wear it (no effect if it's already higher).",
+  "text": "Wearing this amulet sets your Constitution score to 19. If your Constitution is 19 or more without it, the amulet does nothing for you."
+}

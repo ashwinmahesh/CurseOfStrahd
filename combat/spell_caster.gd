@@ -131,7 +131,7 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	if c.creature.has_flag("cant_cast"):
 		return "Can't cast spells in this form"
 	var armor := ch.equipped("armor")
-	if not armor.is_empty() and not ch.has_armor_training(str((armor["armor"] as Dictionary)["kind"])):
+	if not armor.is_empty() and not ch.trained_for(armor):
 		return "Wearing armor without training"
 	var level := int(s.get("level", 0))
 	if level > 0 and not bool(entry["free"]):
@@ -155,13 +155,13 @@ func economy_block(c: Combatant, unit: String) -> String:
 			return "Action already used"
 		if c.magic_action_used:
 			return "Only one Magic action this turn (Action Surge's action can't be Magic)"
-		if c.creature.has_flag("slowed") and not c.bonus_available:
-			return "Slowed: an action or a Bonus Action, not both"
+		if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.bonus_available:
+			return "An action or a Bonus Action this turn, not both"
 	if unit == "bonus_action":
 		if not c.bonus_available:
 			return "Bonus Action already used"
-		if c.creature.has_flag("slowed") and not c.action_available and not c.surged:
-			return "Slowed: an action or a Bonus Action, not both"
+		if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.action_available and not c.surged:
+			return "An action or a Bonus Action this turn, not both"
 	return ""
 
 
@@ -352,6 +352,9 @@ func numbers(c: Combatant, entry: Dictionary) -> Dictionary:
 ## attack; Touch is 5 ft; cantrips like Spare the Dying grow with level (`cantrip_scaling.range`).
 func range_ft(s: Dictionary, caster: Combatant = null) -> int:
 	var r := s.get("range", {}) as Dictionary
+	var rh := enc().ravenloft.spell_range(caster, s) if enc() != null else -1
+	if rh >= 0:
+		return rh
 	match str(r.get("kind", "self")):
 		"feet":
 			var ft := int(r.get("feet", 0))
@@ -440,6 +443,8 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 	mode = str((s.get("area_targets_by_choice", {}) as Dictionary).get(choice, mode))
 	var out: Array[Combatant] = []
 	for v in creatures_in(cells):
+		if enc().items.spell_blocked(c, v) != "":
+			continue
 		match mode:
 			"others":
 				if v == c:
@@ -518,6 +523,11 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	var ch := c.creature as Character
 	var level := int(s.get("level", 0))
 	var use_free := bool(entry["free"]) and (bool(opts.get("free", false)) or slot <= level or "psionic_sorcery" in meta)
+	# Tome of the Stilled Tongue: the next Wizard spell needs no slot.
+	if level > 0 and c.has_meta("free_wizard_spell") and "wizard" in (s.get("classes", []) as Array):
+		c.remove_meta("free_wizard_spell")
+		use_free = true
+		ch.set_resource("spell:%s" % spell_id, str(s["name"]), 1, "long", "Tome of the Stilled Tongue")
 	# Divine Intervention: the next Cleric spell of level 5 or lower needs no slot.
 	if level > 0 and c.has_meta("free_cleric_spell") and "cleric" in (s.get("classes", []) as Array) and level <= int(c.get_meta("free_cleric_spell")):
 		c.remove_meta("free_cleric_spell")
@@ -570,6 +580,12 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	var conc: Concentration = null
 	# Fey Reinforcements (Fey Wanderer 11): Summon Fey without Concentration, lasting 1 minute.
 	var fey_free := spell_id == "summon_fey" and CombatFeatures.has_feature(c, "fey_reinforcements") and bool(opts.get("no_concentration", true))
+	# Spirits of Ill Omen, Second Skin: some castings need no Concentration (RavenloftFeatures.skips_concentration).
+	var unbound := e.ravenloft.skips_concentration(c, s, use_free) if bool((s.get("duration", {}) as Dictionary).get("concentration", false)) else {}
+	if not unbound.is_empty():
+		s = s.duplicate(true)
+		s["duration"] = unbound
+		e.log.add("info", "%s casts %s without Concentration" % [c.name(), s["name"]], c.id)
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)) and not fey_free:
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
 		zones.prune()
@@ -638,6 +654,7 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 	var slot := int(ctx["slot"])
 	if not free:
 		enc().class_features.after_cast(c, s, slot)
+	enc().ravenloft.after_cast(c, s, slot)
 	if slot <= 0 or free or not c.creature is Character:
 		return
 	var ch := c.creature as Character
@@ -883,6 +900,11 @@ func _finish_concentration(ctx: Dictionary) -> void:
 func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult) -> void:
 	var s := ctx["s"] as Dictionary
 	var c := ctx["c"] as Combatant
+	# Rod of Absorption, Staff of the Magi: a spell aimed at one creature alone can be soaked up.
+	if enc().items.absorbs_spell(ctx, tgt, cells, r):
+		return
+	# Cube of Force (spells face), Scroll of Protection: creatures the spell can't reach.
+	tgt.assign(tgt.filter(func(t: Combatant) -> bool: return enc().items.spell_blocked(c, t) == ""))
 	if specials.resolve(ctx, tgt, cells, r):
 		return
 	match str(s["id"]):
@@ -1074,6 +1096,7 @@ func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictio
 		rolled = {"total": mx, "text": "maximum (Overchannel) = %d" % mx}
 	var bonus := _damage_bonus(ctx)
 	var total := int(rolled["total"]) + bonus.total()
+	total += enc().ravenloft.spell_damage_bonus(ctx, bonus)
 	# Elemental Affinity (Draconic 6), Radiant Soul (Celestial 6): Charisma to one damage roll of the type.
 	var cc := ctx["c"] as Combatant
 	var dty := _damage_type_safe(ctx)
@@ -1141,6 +1164,9 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	var sit := e.attack_situation(c, t, option)
 	if str(s["id"]) == "sacred_flame":
 		sit["cover_bonus"] = 0
+	# Wand of the War Mage: spell attacks ignore Half Cover.
+	if c.creature.has_flag("spell_attacks_ignore_half_cover") and int(sit.get("cover", 0)) == CombatGrid.Cover.HALF:
+		sit["cover_bonus"] = 0
 	e._consume_marks(c, t)
 	specials.duel_check_attack(c, t)
 	trigger_ends(c, "attack_roll")
@@ -1175,7 +1201,7 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	if s.has("damage"):
 		var rolled := _roll_spell_damage(ctx, t, critical)
 		details.append(str(rolled["text"]))
-		var parts: Array = [{"amount": int(rolled["total"]), "type": _damage_type(ctx), "spell": true}]
+		var parts: Array = [{"amount": int(rolled["total"]), "type": _damage_type(ctx), "spell": true, "spell_id": str(s["id"])}]
 		# Extra damage on any attack roll that hits (Hunter's Mark, Hex).
 		for m in c.creature.modifiers_for(&"extra_damage"):
 			if m.text("on", "weapon") != "attack" or (m.data.has("vs") and str(m.data["vs"]) != t.id):
@@ -1404,6 +1430,9 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			details.append(test.describe() + bonus_text)
 		else:
 			details.append("%s doesn't resist" % t.name())
+		# Ring of Spell Turning: a saved-against spell of level 7 or lower has no effect (and may go back at its caster).
+		if success and e.items.turns_spell(c, t, ctx, victims, r):
+			continue
 		if has_damage and not multi.is_empty():
 			var parts: Array = []
 			for pr in multi:
@@ -1641,8 +1670,11 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	if CombatFeatures.has_feature(c, "supreme_healing") and dice != "":
 		var pmax := DiceRoller.parse_expr(dice)
 		total = int(pmax["count"]) * int(pmax["sides"]) + int(pmax["modifier"])
+	total = e.ravenloft.spell_healing(ctx, t, dice, total)
 	var amount := total + bonus.total() + int((s.get("heal", {}) as Dictionary).get("flat", 0)) \
 		+ int((s.get("upcast", {}) as Dictionary).get("heal_flat", 0)) * maxi(0, int(ctx["slot"]) - int(s.get("level", 0)))
+	# Moon Sickle: healing spells cast while holding it heal 1d4 more.
+	amount += e.items.healing_bonus(c, ctx)
 	var healed := t.creature.heal(amount, str(s["name"]))
 	# Blessed Healer (Life Domain 6): healing another creature with a slot heals you 2 + the slot level.
 	if t != c and int(ctx["slot"]) > 0 and CombatFeatures.has_feature(c, "blessed_healer") and not ctx.has("blessed"):
@@ -1910,6 +1942,8 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 		if caster_type in (m.data.get("types", []) as Array):
 			for blocked: Variant in m.data.get("conditions", []):
 				fxo.conditions.erase(StringName(str(blocked)))
+	# Ring of Free Action: magic can't paralyze or restrain the wearer, or reduce its speed.
+	enc().items.filter_magic_effect(t, fxo)
 	if fxo.modifiers.is_empty() and fxo.conditions.is_empty():
 		return
 	for m in fxo.modifiers:

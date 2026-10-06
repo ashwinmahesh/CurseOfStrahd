@@ -1,0 +1,40 @@
+{
+  "id": "ring_of_djinni_summoning",
+  "name": "Ring of Djinni Summoning",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ring",
+  "weight_lb": 0,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": true
+  },
+  "theme": "relics",
+  "icon": "ring",
+  "worn": "ring",
+  "powers": [
+    {
+      "id": "summon",
+      "name": "Summon the Djinni",
+      "cost": "magic",
+      "custom": "summon_monster",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "params": {
+        "monster": "djinni",
+        "hours": 1,
+        "concentration": true
+      },
+      "targeting": "place",
+      "range": 120,
+      "text": "Magic action: a djinni appears within 120 ft, friendly and obeying you, for up to 1 hour (Concentration); once a day."
+    }
+  ],
+  "summary": "Once a day, summon a djinni that serves you for up to an hour.",
+  "text": "As a Magic action, you call a specific Djinni out of the Elemental Plane of Air into an unoccupied space of your choice within 120 feet. It stays while you concentrate, as you would on a spell, for up to 1 hour, or until it is reduced to 0 Hit Points. It obeys your commands and is friendly toward you and your allies; given no orders, it does nothing except defend itself against attackers. Once it leaves, you must wait 24 hours before summoning it again, and if the djinni dies, the ring loses its magic."
+}

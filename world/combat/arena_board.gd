@@ -13,17 +13,21 @@ const LOW_H := 0.75
 const CUT_FACE := "grave"
 
 var grid: CombatGrid
+var place := ""
 ## shrine_yard (the arena), svalich_road / forest (trees), village (houses), manor, tavern, shop, townhouse, church,
 ## attic (cut-away interiors), dungeon.
 var theme := "shrine_yard"
 var _rng := RandomNumberGenerator.new()
 
 
-static func build(grid_: CombatGrid, theme_: String = "shrine_yard") -> ArenaBoard:
+## `place_` is the location's id: art/sprites/props/catalog.json can dress one place's squares its own way
+## (the Wizard of Wines' '=' rows are vines).
+static func build(grid_: CombatGrid, theme_: String = "shrine_yard", place_: String = "") -> ArenaBoard:
 	var b := ArenaBoard.new()
 	b.name = "ArenaBoard"
 	b.grid = grid_
 	b.theme = theme_
+	b.place = place_
 	b._rng.seed = 7   # cosmetic only (dressing placement), never rules
 	b._build()
 	return b
@@ -78,6 +82,10 @@ func _load_textures() -> void:
 		floor_s = Look.theme_surface(t, "floor_alt")   # the village's streets are cobbled
 	if theme in WILD:
 		floor_s = "village/grass"
+	# A place can have its own ground (catalog "floors"): grass on Bonegrinder's hill, though it's built like a town.
+	var own := str((SetDressing.catalog().get("floors", {}) as Dictionary).get(place, ""))
+	if own != "":
+		floor_s = own
 	if floor_s != "":
 		_floor_tex = Look.cel_textured(floor_s, 0.22)
 	var mud := Look.theme_surface(t, "difficult")
@@ -119,9 +127,9 @@ func _build() -> void:
 		_find_wagons()
 	if theme != "shrine_yard":
 		_load_textures()
-		# Raised ground (a dais, a gallows mound, a ledge): stone outdoors and in churches and dungeons, boards
-		# in towns and rooms.
-		var raised := "church/stone_flags" if theme in WILD or theme == "church" else ("dungeon/stone_floor" if theme == "dungeon" else "interior/wood_planks")
+		# Raised ground: grassy banks outdoors (hills, ledges, a gallows mound), stone in churches and dungeons,
+		# boards in towns and rooms.
+		var raised := "village/grass" if theme in WILD else ("church/stone_flags" if theme == "church" else ("dungeon/stone_floor" if theme == "dungeon" else "interior/wood_planks"))
 		var raised_mat := Look.cel_textured(raised, 0.22)
 		if raised_mat != null:
 			dais = raised_mat
@@ -130,9 +138,26 @@ func _build() -> void:
 			stone = _floor_tex
 		if _mud_tex != null:
 			mud = _mud_tex
+	else:
+		# The shrine yard (the arena, and open-air yards such as the Abbey's garden): grass and flagstones, a mud
+		# patch, stone walls and pillars.
+		var yard_grass := Look.cel_textured("village/grass", 0.22)
+		var yard_flags := Look.cel_textured("church/stone_flags", 0.22)
+		var yard_mud := Look.cel_textured("village/mud_road", 0.22)
+		if yard_grass != null and yard_flags != null:
+			grass = yard_grass
+			stone = yard_grass
+			dais = yard_flags
+			_floor_tex = yard_grass
+		if yard_mud != null:
+			mud = yard_mud
+		_wall_tex = Look.cel_textured("church/stone_wall")
+		_roof_tex = Look.cel_textured("village/roof_slate")
 	_floor_mat = grass
 	if theme in TOWNS:
 		_yard = TownBuilder.plan(self)
+	elif theme == "shrine_yard" and place != "":
+		TownBuilder.plan(self)   # a yard's sheds and shrines are buildings; lone stones stay pillars
 	for z in grid.depth:
 		for x in grid.width:
 			var c := Vector2i(x, z)
@@ -163,8 +188,8 @@ func _build() -> void:
 			if (f & CombatGrid.LOW) != 0:
 				_low_cover(c)
 			_dress(c, dressed)
-	if theme == "shrine_yard":
-		_lanterns()
+	if theme == "shrine_yard" and place == "":
+		_lanterns()   # the arena's lit pillars
 
 
 ## Tall billboards (trees) that fade when they stand between the camera and the party.
@@ -239,6 +264,46 @@ func attach_to_building(c: Vector2i, node: Node3D) -> void:
 		((buildings[int(house_cells[c])] as Dictionary)["extras"] as Array).append(node)
 
 
+## Hides the house on `c` (a piece standing in for the whole building takes its place); returns its ground centre.
+## Every house built from the same block of wall squares (an L-shaped block is several houses).
+func hide_building(c: Vector2i) -> Vector3:
+	var group := int((buildings[int(house_cells[c])] as Dictionary)["group"])
+	var area := Rect2i()
+	for b: Dictionary in buildings:
+		if int(b["group"]) != group:
+			continue
+		_show_house(b, false)
+		area = b["rect"] as Rect2i if area.size == Vector2i.ZERO else area.merge(b["rect"] as Rect2i)
+	return Vector3(area.position.x + area.size.x / 2.0, 0.0, area.position.y + area.size.y / 2.0)
+
+
+func show_building(c: Vector2i) -> void:
+	if not house_cells.has(c):
+		return
+	var group := int((buildings[int(house_cells[c])] as Dictionary)["group"])
+	for b: Dictionary in buildings:
+		if int(b["group"]) == group:
+			_show_house(b, true)
+
+
+func _show_house(b: Dictionary, shown: bool) -> void:
+	b["hidden"] = not shown
+	(b["root"] as Node3D).visible = shown
+	# Ground where the house stood while something else stands there.
+	var r := b["rect"] as Rect2i
+	for i in r.size.x:
+		for j in r.size.y:
+			var c := r.position + Vector2i(i, j)
+			if not shown and not _cleared.has(c):
+				_cleared[c] = _box("Floor", Vector3(1, 0.2, 1), Vector3(c.x + 0.5, -0.1, c.y + 0.5), _floor_mat)
+			elif shown and _cleared.has(c):
+				(_cleared[c] as Node).queue_free()
+				_cleared.erase(c)
+	for e: Variant in b["extras"]:
+		if is_instance_valid(e):
+			(e as Node3D).visible = shown
+
+
 ## Cuts away the houses hiding the party (towns only).
 func cut_buildings(camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 	if not buildings.is_empty():
@@ -309,7 +374,7 @@ func _wagon(c: Vector2i) -> void:
 			if (_wagon_cells[k] as Vector2).is_equal_approx(center):
 				cells += 1
 		var first := get_child_count()
-		prop_sprite("vardo", Vector3(center.x + 0.5, 0.0, center.y + 0.5), clampf(sqrt(cells / 6.0), 0.75, 1.3))
+		SetDressing.stand_piece(self, self, "vardo", c, clampf(sqrt(cells / 6.0), 0.75, 1.3), Vector3(center.x + 0.5, 0.0, center.y + 0.5))
 		_dress(c, first)
 
 
@@ -361,16 +426,18 @@ func _wall(c: Vector2i) -> void:
 			_box("Timber", Vector3(1.02, 0.16, 1.02), Vector3(c.x + 0.5, hh * 0.55, c.y + 0.5), Look.cel("peat"))
 		_box("Roof", Vector3(1.08, 0.24, 1.08), Vector3(c.x + 0.5, hh + 0.12, c.y + 0.5), _roof_tex if _roof_tex != null else Look.cel("blood_deep"))
 		return
+	if house_cells.has(c):
+		return   # a yard's shed or shrine, built whole by TownBuilder
 	var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
 	if border:
 		# The churchyard's outer wall: low, mossy, uneven.
 		var h := OUTER_H + _rng.randf_range(-0.25, 0.15)
-		_box("OuterWall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), Look.cel("slate"))
+		_box("OuterWall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), _wall_tex if _wall_tex != null else Look.cel("slate"))
 		if _rng.randf() < 0.3:
 			_box("Moss", Vector3(1.02, 0.12, 1.02), Vector3(c.x + 0.5, h - 0.05, c.y + 0.5), Look.cel("moss"))
 	else:
 		# Shrine pillars and standing stones.
-		_box("Pillar", Vector3(0.9, WALL_H, 0.9), Vector3(c.x + 0.5, WALL_H / 2.0, c.y + 0.5), Look.cel("pewter"))
+		_box("Pillar", Vector3(0.9, WALL_H, 0.9), Vector3(c.x + 0.5, WALL_H / 2.0, c.y + 0.5), _wall_tex if _wall_tex != null else Look.cel("pewter"))
 		_box("PillarCap", Vector3(1.0, 0.18, 1.0), Vector3(c.x + 0.5, WALL_H + 0.09, c.y + 0.5), Look.cel("slate"))
 
 
@@ -467,18 +534,19 @@ func _low_run(c: Vector2i) -> Dictionary:
 
 
 func _low_cover(c: Vector2i) -> void:
-	var at := Vector3(c.x + 0.5, floor_y(c), c.y + 0.5)
 	var sets := SetDressing.catalog().get("low_cover", {}) as Dictionary
-	var key := _dressing_key()
+	var key := place if place != "" and sets.has(place) else _dressing_key()
 	var choices := sets.get(key, []) as Array
-	if theme in INTERIORS or theme == "dungeon":
+	if theme in INTERIORS or theme == "dungeon" or key == place:
 		var run := _low_run(c)
 		if int(run["size"]) >= 3:
 			choices = sets.get(key + ("_wall_run" if bool(run["by_wall"]) and sets.has(key + "_wall_run") else "_run"), choices) as Array
 	if not choices.is_empty():
 		# Crates and carts in town, stumps and boulders in the woods, a room's furniture indoors.
 		var pick := str(choices[(c.x * 7 + c.y * 3) % choices.size()])
-		if prop_sprite(pick, at, 0.8 if pick in ["wagon", "market_stall"] else 1.0) != null:
+		if SetDressing.has_art(pick):
+			# Fixed in place and turned like the location's own props (against a wall, or facing south).
+			SetDressing.stand_piece(self, self, pick, c, 0.8 if pick in ["wagon", "market_stall"] else 1.0)
 			return
 	if theme in INTERIORS:
 		# Furniture: a table, a bed, a pew.
@@ -493,11 +561,14 @@ func _low_cover(c: Vector2i) -> void:
 	var up := grid.has_flag(c + Vector2i(0, -1), CombatGrid.LOW)
 	var down := grid.has_flag(c + Vector2i(0, 1), CombatGrid.LOW)
 	var base := floor_y(c)
+	var low_mat: Material = _wall_tex if _wall_tex != null else Look.cel("bone_dark")
 	if left or right:
 		# A run of low wall along x.
-		_box("LowWall", Vector3(1.0, LOW_H, 0.45), Vector3(c.x + 0.5, base + LOW_H / 2.0, c.y + 0.5), Look.cel("bone_dark"))
+		_box("LowWall", Vector3(1.0, LOW_H, 0.45), Vector3(c.x + 0.5, base + LOW_H / 2.0, c.y + 0.5), low_mat)
 	elif up or down:
-		_box("LowWall", Vector3(0.45, LOW_H, 1.0), Vector3(c.x + 0.5, base + LOW_H / 2.0, c.y + 0.5), Look.cel("bone_dark"))
+		_box("LowWall", Vector3(0.45, LOW_H, 1.0), Vector3(c.x + 0.5, base + LOW_H / 2.0, c.y + 0.5), low_mat)
+	elif prop_sprite("gravestone", Vector3(c.x + 0.5, base, c.y + 0.5), _rng.randf_range(0.9, 1.1)) != null:
+		pass
 	else:
 		# A leaning gravestone with a plinth.
 		_box("Plinth", Vector3(0.8, 0.18, 0.5), Vector3(c.x + 0.5, base + 0.09, c.y + 0.5), Look.cel("stone"))

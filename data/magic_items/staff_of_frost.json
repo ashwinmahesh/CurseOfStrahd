@@ -1,0 +1,73 @@
+{
+  "id": "staff_of_frost",
+  "name": "Staff of Frost",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "staff",
+  "weight_lb": 4,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": "by a Druid, Sorcerer, Warlock, or Wizard",
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dawn",
+      "last": {
+        "die": 20,
+        "on": 1,
+        "result": "destroyed",
+        "text": "turns to water and is destroyed"
+      }
+    }
+  },
+  "theme": "arcana",
+  "icon": "staff",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Staff of Frost"
+  },
+  "modifiers": [
+    {
+      "stat": "resistance",
+      "value": "cold"
+    }
+  ],
+  "powers": [
+    {
+      "id": "cone_of_cold",
+      "name": "Cone Of Cold",
+      "spell": "cone_of_cold",
+      "charges": 5,
+      "dc": "wielder"
+    },
+    {
+      "id": "fog_cloud",
+      "name": "Fog Cloud",
+      "spell": "fog_cloud",
+      "charges": 1,
+      "dc": "wielder"
+    },
+    {
+      "id": "ice_storm",
+      "name": "Ice Storm",
+      "spell": "ice_storm",
+      "charges": 4,
+      "dc": "wielder"
+    },
+    {
+      "id": "wall_of_ice",
+      "name": "Wall Of Ice",
+      "spell": "wall_of_ice",
+      "charges": 4,
+      "dc": "wielder"
+    }
+  ],
+  "summary": "Resistance to Cold; 10 charges: Cone of Cold (5), Fog Cloud (1), Ice Storm (4), Wall of Ice (4) at your DC.",
+  "text": "Holding this staff grants Resistance to Cold damage. Spend its 10 charges to cast Cone of Cold (5 charges), Wall of Ice or Ice Storm (4 charges each), or Fog Cloud (1 charge), using your spell save DC. Each dawn it gets back 1d6 + 4 charges. Spending the last charge prompts a 1d20 roll; on a 1, the staff melts into water and is destroyed."
+}

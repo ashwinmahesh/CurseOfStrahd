@@ -1,0 +1,43 @@
+{
+  "id": "dancing_sword",
+  "name": "Dancing Sword",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "weapon",
+    "items": [
+      "greatsword",
+      "longsword",
+      "rapier",
+      "scimitar",
+      "shortsword"
+    ],
+    "name": "Dancing {base}",
+    "default": "longsword"
+  },
+  "powers": [
+    {
+      "id": "toss",
+      "name": "Toss into the Air",
+      "cost": "bonus",
+      "custom": "dancing_sword",
+      "targeting": "enemy",
+      "range": 30,
+      "text": "Bonus Action: the sword hovers and flies up to 30 ft to attack a creature within 5 ft of it; later Bonus Actions move it 30 ft and attack again. After its fourth attack it returns to your hand."
+    }
+  ],
+  "summary": "Toss it as a Bonus Action and it fights on its own: up to four attacks, one per Bonus Action, then it returns.",
+  "text": "As a Bonus Action, fling this magic sword upward. It hovers, flies as far as 30 feet, and strikes at a creature you pick within 5 feet of it. Its attacks use your attack roll, and its damage adds your ability modifier. While it hovers, each later Bonus Action can send it up to 30 feet to a new spot no more than 30 feet from you, and that same Bonus Action can have it strike a creature within 5 feet of its new position. Once it has made its fourth attack, it flies back and tries to land in your hand; with no free hand, it clatters down in your space, and if its path to you is blocked, it gets as close as possible and drops. It also stops hovering if you grab it or move more than 30 feet away.",
+  "icon": "longsword",
+  "icon_fallback": true
+}

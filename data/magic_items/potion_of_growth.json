@@ -1,0 +1,51 @@
+{
+  "id": "potion_of_growth",
+  "name": "Potion of Growth",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "potion",
+  "weight_lb": 0.5,
+  "cost_gp": 200.0,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "potion_red",
+  "stackable": true,
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "size_step",
+            "value": 1
+          },
+          {
+            "stat": "advantage",
+            "on": "check:str"
+          },
+          {
+            "stat": "advantage",
+            "on": "save:str"
+          },
+          {
+            "stat": "extra_damage",
+            "dice": "1d4",
+            "on": "weapon"
+          }
+        ]
+      }
+    }
+  ],
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "dice": "1d4"
+  },
+  "summary": "The Enlarge part of Enlarge/Reduce for 1d4 hours (no Concentration).",
+  "text": "For 1d4 hours after drinking, you gain the enlarge half of the Enlarge/Reduce spell with no Concentration needed: you grow by one size category, make Strength checks and Strength saving throws with Advantage, and your weapon hits deal 1d4 extra damage. A bead of red in the potion swells until it tints the whole liquid, then shrinks back again."
+}

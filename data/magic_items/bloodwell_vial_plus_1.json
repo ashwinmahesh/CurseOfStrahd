@@ -1,0 +1,57 @@
+{
+  "id": "bloodwell_vial_plus_1",
+  "name": "Bloodwell Vial, +1",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": "by a Sorcerer"
+  },
+  "theme": "arcana",
+  "icon": "vial",
+  "variant_of": "bloodwell_vial",
+  "modifiers": [
+    {
+      "stat": "spell_attack",
+      "value": 1,
+      "when": {
+        "spell_class": "sorcerer"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 1,
+      "when": {
+        "spell_class": "sorcerer"
+      }
+    }
+  ],
+  "powers": [
+    {
+      "id": "points",
+      "name": "Regain Sorcery Points",
+      "cost": "free",
+      "custom": "restore_resource",
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "field": true,
+      "params": {
+        "resources": [
+          "sorcery_points"
+        ],
+        "amount": 5
+      },
+      "text": "When you spend Hit Point Dice in a Short Rest, regain 5 Sorcery Points (once per dawn)."
+    }
+  ],
+  "worn": "neck",
+  "summary": "+1 to your Sorcerer spell attacks and save DC; once a day, 5 Sorcery Points back after a Short Rest.",
+  "text": "Attuning requires dripping a little of your blood into the vial, which then can't be opened for as long as you stay attuned. While you carry it, your Sorcerer spells gain +1 to their spell attack rolls and their saving throw DCs. Also, once per dawn, when you roll Hit Point Dice to regain Hit Points with the vial on you, you can recover 5 Sorcery Points."
+}

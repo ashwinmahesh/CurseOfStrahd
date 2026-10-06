@@ -1,0 +1,33 @@
+{
+  "id": "rope_of_climbing",
+  "name": "Rope of Climbing",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "rope",
+  "powers": [
+    {
+      "id": "climb",
+      "name": "Command it",
+      "cost": "magic",
+      "custom": "flavour",
+      "params": {
+        "text": "slithers up a wall and knots itself into a climbable rope"
+      },
+      "field": true,
+      "text": "It slithers up a wall and knots itself into a climbable rope. (No other effect in the game.)",
+      "combat": false
+    }
+  ],
+  "summary": "A rope that climbs and ties itself where you tell it, and knots up for easy climbing.",
+  "text": "A 60-foot rope able to bear 3,000 pounds. Holding one end, you can use a Magic action to send the free end moving toward a spot you pick, moving at most 10 feet each turn. You can likewise order it to tie itself firmly to an object or untie itself, to tie knots in itself or undo them, or to coil up for carrying. When knotted, it sprouts big knots every 1 foot, shortens to 50 feet, and gives Advantage on checks to climb it. Its AC is 20 and it has 20 Hit Points; it recovers 1 Hit Point each 5 minutes provided it still has 1 or more, and it is destroyed if reduced to 0 Hit Points."
+}

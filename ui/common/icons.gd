@@ -39,6 +39,9 @@ static func item_key(id: String) -> String:
 ## The icon for a hotbar entry (combat/action_catalog.gd): its spell, the weapon it attacks with, or the item it
 ## uses. null for plain actions (Dash, Grapple, class features).
 static func for_action(action: Dictionary) -> Texture2D:
+	# A magic item's power (a wand's Fireball): the item's own icon.
+	if str(action.get("item_id", "")) != "":
+		return item(str(action["item_id"]))
 	var sid := str(action.get("spell_id", ""))
 	if sid != "":
 		return spell(sid)
@@ -49,7 +52,7 @@ static func for_action(action: Dictionary) -> Texture2D:
 		"attack", "offhand":
 			var option := id.substr(id.find(":") + 1)
 			if option.begins_with("weapon:") or option.begins_with("thrown:"):
-				return item(option.get_slice(":", 1))
+				return item(option.get_slice(":", 1).get_slice("@", 0))
 		"healers_kit":
 			return item("healers_kit")
 	return null

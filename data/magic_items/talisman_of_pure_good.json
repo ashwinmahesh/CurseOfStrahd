@@ -1,0 +1,66 @@
+{
+  "id": "talisman_of_pure_good",
+  "name": "Talisman of Pure Good",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 200000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a creature of good alignment",
+    "charges": {
+      "max": 7,
+      "when": "never",
+      "last": {
+        "die": 1,
+        "on": 1,
+        "result": "destroyed",
+        "text": "dissolves into motes of golden light"
+      }
+    }
+  },
+  "theme": "relics",
+  "icon": "holy_symbol",
+  "treasure": {
+    "random": false
+  },
+  "modifiers": [
+    {
+      "stat": "spell_attack",
+      "value": 2,
+      "when": {
+        "spell_class": "cleric"
+      }
+    },
+    {
+      "stat": "spell_attack",
+      "value": 2,
+      "when": {
+        "spell_class": "paladin"
+      }
+    }
+  ],
+  "powers": [
+    {
+      "id": "fissure",
+      "name": "Fissure of Burning Light",
+      "cost": "magic",
+      "charges": 1,
+      "custom": "talisman_fissure",
+      "targeting": "enemy",
+      "range": 120,
+      "params": {
+        "types": [
+          "fiend",
+          "undead"
+        ]
+      },
+      "text": "Magic action, 1 charge: a Fiend or Undead within 120 ft standing on the ground makes a DC 20 Dex save or falls into a fissure of light and is destroyed."
+    }
+  ],
+  "summary": "A holy symbol (+2 to Cleric and Paladin spell attacks) with 7 charges that open fissures to destroy Fiends and Undead.",
+  "text": "A potent emblem of goodness that burns the unworthy: touching it deals 6d6 Radiant damage to a creature of neither good nor evil alignment and 8d6 Radiant damage to an evil one, and either takes that damage again each time it finishes a turn with the talisman held or carried. A good Cleric or Paladin can use it as a holy symbol and gains +2 to spell attack rolls while wearing or holding it. It holds 7 charges. While the talisman is on you or in hand, a Magic action and 1 charge let you target a creature standing on the ground that you can see within 120 feet. If that creature is a Fiend or Undead, a fissure of searing light yawns beneath it, and unless it makes a Dexterity saving throw against DC 20 it plunges in and is destroyed without a trace before the fissure seals. Using the last charge makes the talisman scatter into golden motes of light, lost forever."
+}

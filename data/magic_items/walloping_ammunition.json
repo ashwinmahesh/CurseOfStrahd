@@ -1,0 +1,37 @@
+{
+  "id": "walloping_ammunition",
+  "name": "Walloping Ammunition",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "ammunition",
+  "weight_lb": 0,
+  "cost_gp": 100,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "consumable": false,
+  "theme": "armaments",
+  "template": {
+    "on": "ammunition",
+    "name": "Walloping {base}",
+    "default": "arrow"
+  },
+  "weapon_rules": {
+    "on_hit": [
+      {
+        "save": "str",
+        "dc": 10,
+        "conditions": [
+          "prone"
+        ]
+      }
+    ]
+  },
+  "summary": "A creature it hits makes a DC 10 Strength save or falls Prone.",
+  "text": "Ammunition that hits hard: any creature it strikes must make a Strength saving throw (DC 10) or be knocked Prone.",
+  "icon": "arrow",
+  "icon_fallback": true
+}

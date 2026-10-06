@@ -1,0 +1,69 @@
+{
+  "id": "eversmoking_bottle",
+  "name": "Eversmoking Bottle",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "implements",
+  "icon": "bottle",
+  "recipes": {
+    "smoke": {
+      "name": "Eversmoking Bottle",
+      "level": 0,
+      "school": "conjuration",
+      "range": {
+        "kind": "self"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 60
+      },
+      "targets": {
+        "kind": "area"
+      },
+      "duration": {
+        "kind": "hours",
+        "amount": 1
+      },
+      "components": {},
+      "tags": [
+        "control"
+      ],
+      "zone": {
+        "triggers": [],
+        "obscured": "heavy"
+      }
+    }
+  },
+  "powers": [
+    {
+      "id": "open",
+      "name": "Open",
+      "cost": "magic",
+      "recipe": "smoke",
+      "uses": {
+        "count": 1,
+        "per": "never"
+      },
+      "field": true,
+      "text": "Magic action: thick smoke pours out and fills 60 ft around the bottle (Heavily Obscured) until you stopper it."
+    },
+    {
+      "id": "close",
+      "name": "Stopper it",
+      "cost": "magic",
+      "custom": "eversmoking_close",
+      "text": "Magic action: stopper the bottle; the smoke disperses."
+    }
+  ],
+  "summary": "Opened, it pours out smoke that heavily obscures everything within 60 ft.",
+  "text": "This 1-pound brass bottle, sealed with a lead stopper, constantly seeps smoke. Removing the stopper takes a Magic action and lets a dense cloud billow forth, filling a 60-foot Emanation centred on the bottle, and everything inside it is Heavily Obscured. For every minute the open bottle sits inside the cloud, the radius grows by 10 feet, to a maximum of 120 feet. The cloud lasts while the bottle stays open. Sealing it again means speaking its command word as a Magic action, after which the smoke disperses in 10 minutes. A moderate wind clears the smoke in 1 minute; a strong wind clears it in 1 round."
+}

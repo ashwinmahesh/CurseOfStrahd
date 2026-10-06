@@ -1,0 +1,35 @@
+{
+  "id": "bead_of_nourishment",
+  "name": "Bead of Nourishment",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 0,
+  "cost_gp": 50.0,
+  "magic": {
+    "rarity": "common",
+    "attunement": false
+  },
+  "consumable": true,
+  "theme": "implements",
+  "icon": "bead",
+  "stackable": true,
+  "powers": [
+    {
+      "id": "eat",
+      "name": "Eat",
+      "cost": "bonus",
+      "custom": "flavour",
+      "params": {
+        "text": "dissolves on your tongue and feeds you for a day"
+      },
+      "field": true,
+      "text": "It dissolves on your tongue and feeds you for a day. (No other effect in the game.)",
+      "consume": true
+    }
+  ],
+  "summary": "Swallow it and you need no food for a day.",
+  "text": "This spongy, tasteless jelly bead melts on your tongue and feeds you like 1 day of rations."
+}

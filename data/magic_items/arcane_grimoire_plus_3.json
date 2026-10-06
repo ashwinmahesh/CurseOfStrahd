@@ -1,0 +1,40 @@
+{
+  "id": "arcane_grimoire_plus_3",
+  "name": "Arcane Grimoire, +3",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 3,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": "by a Wizard"
+  },
+  "theme": "arcana",
+  "icon": "book",
+  "variant_of": "arcane_grimoire",
+  "modifiers": [
+    {
+      "stat": "spell_attack",
+      "value": 3,
+      "when": {
+        "spell_class": "wizard"
+      }
+    },
+    {
+      "stat": "spell_dc",
+      "value": 3,
+      "when": {
+        "spell_class": "wizard"
+      }
+    },
+    {
+      "stat": "flag",
+      "value": "arcane_grimoire"
+    }
+  ],
+  "summary": "+3 to your Wizard spell attacks and save DC; Arcane Recovery brings back one more slot level.",
+  "text": "This leather-bound tome works as a spellbook. While it is in your hand, your Wizard spells can channel through it as a Spellcasting Focus and gain +3 to their spell attack rolls and their saving throw DCs. Whenever you use Arcane Recovery, the total of spell slot levels you get back rises by 1."
+}

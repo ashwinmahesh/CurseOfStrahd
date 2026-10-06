@@ -1,0 +1,99 @@
+{
+  "id": "fire_elemental",
+  "name": "Fire Elemental",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "elemental",
+  "alignment": "unaligned",
+  "ac": 13,
+  "initiative": 3,
+  "hp": {
+    "average": 93,
+    "dice": "11d10+33"
+  },
+  "speed": {
+    "walk": 50
+  },
+  "abilities": {
+    "str": 10,
+    "dex": 17,
+    "con": 16,
+    "int": 6,
+    "wis": 10,
+    "cha": 7
+  },
+  "resistances": [
+    "bludgeoning",
+    "piercing",
+    "slashing"
+  ],
+  "immunities": [
+    "fire",
+    "poison"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained",
+    "unconscious"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 10,
+  "languages": [
+    "primordial"
+  ],
+  "cr": 5,
+  "xp": 1800,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "illumination",
+      "name": "Illumination",
+      "action": "passive",
+      "summary": "Sheds bright light 30 ft and dim light 30 ft more.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "burn",
+          "count": 2
+        }
+      ],
+      "summary": "Two Burn attacks."
+    },
+    {
+      "id": "burn",
+      "name": "Burn",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "2d6+3",
+          "type": "fire"
+        }
+      ],
+      "summary": "Burn: +6 to hit, 2d6+3 Fire."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A living blaze that sets what it touches on fire."
+}

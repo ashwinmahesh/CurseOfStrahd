@@ -1,0 +1,81 @@
+{
+  "id": "hexblood",
+  "name": "Hexblood",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from published reviews and guides to Ravenloft: The Horrors Within (and Van Richten's Guide to Ravenloft, which it revises); compare every number with the book before setting checked_against."
+  },
+  "summary": "Folk bound to hags by magic or bargain, who carry witch-craft in their blood and can watch through tokens of themselves.",
+  "creature_type": "fey",
+  "sizes": [
+    "medium",
+    "small"
+  ],
+  "speed": 30,
+  "darkvision": 60,
+  "spellcasting_ability_choice": [
+    "int",
+    "wis",
+    "cha"
+  ],
+  "traits": [
+    {
+      "id": "darkvision",
+      "name": "Darkvision",
+      "summary": "See in Dim Light within 60 feet as if it were Bright Light, and in Darkness as if it were Dim Light.",
+      "text": "You have Darkvision with a range of 60 feet.",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "darkvision",
+          "value": 60
+        }
+      ],
+      "implemented": "engine"
+    },
+    {
+      "id": "eerie_token",
+      "name": "Eerie Token",
+      "summary": "Bonus Action, once per Long Rest: make a token of yourself; send it 25-word telepathic messages or see and hear through it from up to 10 miles.",
+      "text": "As a Bonus Action you can harmlessly remove a lock of hair, a nail or a tooth and imbue it, making a token that lasts until you finish a Long Rest. While the token and you are on the same plane within 10 miles of each other: Distant Message: as a Magic action you send a telepathic message of up to 25 words to the creature holding or carrying the token. Remote Viewing: as a Magic action you see and hear through the token for 1 minute (you are Blinded and Deafened to your own surroundings meanwhile). Once you make a token, you can't again until you finish a Long Rest, and the old one loses its magic when you do.",
+      "action": "bonus_action",
+      "resource": {
+        "id": "eerie_token",
+        "name": "Eerie Token",
+        "max": 1,
+        "recharge": "long"
+      },
+      "implemented": "text"
+    },
+    {
+      "id": "hex_magic",
+      "name": "Hex Magic",
+      "summary": "Disguise Self and Hex always prepared; each free once per Long Rest (Intelligence, Wisdom or Charisma).",
+      "text": "You always have Disguise Self and Hex prepared. You can cast each once without a spell slot, regaining that use on a Long Rest, and you can also cast them with any spell slots you have. Intelligence, Wisdom or Charisma is your spellcasting ability for them (choose when you pick this species).",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "spell",
+          "value": "disguise_self",
+          "ability": "choice",
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
+        },
+        {
+          "stat": "spell",
+          "value": "hex",
+          "ability": "choice",
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
+        }
+      ],
+      "implemented": "data"
+    }
+  ]
+}

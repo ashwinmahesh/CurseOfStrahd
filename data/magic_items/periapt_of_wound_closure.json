@@ -1,0 +1,30 @@
+{
+  "id": "periapt_of_wound_closure",
+  "name": "Periapt of Wound Closure",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 1,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": true
+  },
+  "theme": "implements",
+  "icon": "amulet",
+  "modifiers": [
+    {
+      "stat": "flag",
+      "value": "wound_closure"
+    },
+    {
+      "stat": "flag",
+      "value": "double_hit_dice"
+    }
+  ],
+  "worn": "neck",
+  "summary": "You stabilize at the start of your turn when dying, and Hit Point Dice you spend heal twice as much.",
+  "text": "If you start your turn dying while wearing this pendant, you automatically stabilize. Also, each Hit Point Die you roll to regain Hit Points restores twice the usual amount."
+}

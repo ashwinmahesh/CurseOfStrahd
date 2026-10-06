@@ -1,0 +1,104 @@
+{
+  "id": "hollow_warden",
+  "name": "Hollow Warden",
+  "class": "ranger",
+  "source": {
+    "book": "RtHW",
+    "note": "Entered from reviews of Ravenloft: The Horrors Within, which reworked the 2025 Unearthed Arcana version; the published numbers for Wrath of the Wild (AC bonus, aura save) are not confirmed. Compare every number with the book before setting checked_against."
+  },
+  "summary": "Rangers who take their strength from old and hungry horrors of the deep wilds and grow monstrous in turn.",
+  "role_tags": [
+    "defender",
+    "striker"
+  ],
+  "always_prepared": {
+    "3": [
+      "wrathful_smite"
+    ],
+    "5": [
+      "alter_self"
+    ],
+    "9": [
+      "phantom_steed"
+    ],
+    "13": [
+      "dominate_beast"
+    ],
+    "17": [
+      "steel_wind_strike"
+    ]
+  },
+  "features": [
+    {
+      "level": 3,
+      "feature": {
+        "id": "hollow_warden_spells",
+        "name": "Hollow Warden Spells",
+        "summary": "Wrathful Smite always prepared; more at levels 5, 9, 13 and 17.",
+        "text": "Always prepared from the Ranger level shown: 3 Wrathful Smite; 5 Alter Self; 9 Phantom Steed; 13 Dominate Beast; 17 Steel Wind Strike.",
+        "implemented": "data"
+      }
+    },
+    {
+      "level": 3,
+      "feature": {
+        "id": "wrath_of_the_wild",
+        "name": "Wrath of the Wild",
+        "summary": "Bonus Action, a Favored Enemy use: transform for 1 minute: +AC, a 10-foot aura that frightens foes, and an Opportunity Attack when a foe hurts you or an ally beside you.",
+        "text": "Cost: a Bonus Action and one Favored Enemy use. You change for 1 minute (or until you end it, free), sprouting rotten bark, bristles or bloody antlers. While changed: your AC rises by your Wisdom modifier (+1 at least); an enemy that starts its turn within 10 ft of you must pass a Wis save against your spell save DC or be Frightened until its next turn starts; and when a creature within your reach damages you or an ally standing within 5 ft of you, you may use your Reaction for an Opportunity Attack on it.",
+        "action": "bonus_action",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 7,
+      "feature": {
+        "id": "hungering_might",
+        "name": "Hungering Might",
+        "summary": "+Wisdom modifier to Constitution saves; while transformed and Bloodied, a hit heals 1d10 + Wisdom modifier once per turn.",
+        "text": "Constitution saves gain your Wisdom modifier (+1 at least). While changed by Wrath of the Wild and Bloodied, a hit with an attack roll heals you 1d10 + your Wisdom modifier, once per turn.",
+        "modifiers": [
+          {
+            "stat": "save",
+            "ability": "con",
+            "value": "mod:wis",
+            "min": 1
+          }
+        ],
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 11,
+      "feature": {
+        "id": "rot_and_violence",
+        "name": "Rot and Violence",
+        "summary": "While transformed, creatures your aura frightens can't regain Hit Points or take Reactions, and your weapon hits can add Sap or Slow to their own mastery.",
+        "text": "While changed by Wrath of the Wild: creatures Frightened by your aura can neither regain Hit Points nor take Reactions; and a weapon hit can trigger Sap or Slow on top of the weapon's own mastery property.",
+        "implemented": "engine"
+      }
+    },
+    {
+      "level": 15,
+      "feature": {
+        "id": "ancient_endurance",
+        "name": "Ancient Endurance",
+        "summary": "Immune to Exhaustion; +Wisdom modifier damage against Frightened creatures; once per Long Rest (or a level 4+ slot) dropping to 0 while transformed leaves you at 30 Hit Points.",
+        "text": "Timeless: Exhaustion can't touch you. Dread Hunter: while changed, add your Wisdom modifier to damage you deal to Frightened creatures. Persistent Hunt: when you drop to 0 Hit Points while changed and survive, go to 30 Hit Points instead; this resets on a Long Rest, or at once if you burn a spell slot of level 4 or higher (free).",
+        "modifiers": [
+          {
+            "stat": "condition_immunity",
+            "value": "exhaustion"
+          }
+        ],
+        "resource": {
+          "id": "persistent_hunt",
+          "name": "Persistent Hunt",
+          "max": 1,
+          "recharge": "long"
+        },
+        "implemented": "engine"
+      }
+    }
+  ]
+}

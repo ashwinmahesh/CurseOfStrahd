@@ -1,0 +1,39 @@
+{
+  "id": "mirror_of_life_trapping",
+  "name": "Mirror of Life Trapping",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "wondrous",
+  "weight_lb": 50,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": false
+  },
+  "theme": "arcana",
+  "icon": "mirror",
+  "powers": [
+    {
+      "id": "trap",
+      "name": "Trap a creature",
+      "cost": "magic",
+      "custom": "mirror_trap",
+      "targeting": "enemy",
+      "range": 30,
+      "text": "Magic action: a creature within 30 ft that sees its reflection makes a DC 15 Cha save or is drawn into one of the mirror's 12 cells."
+    },
+    {
+      "id": "release",
+      "name": "Release a creature",
+      "cost": "magic",
+      "custom": "iron_flask_release",
+      "targeting": "place",
+      "range": 30,
+      "text": "Magic action: free one trapped creature."
+    }
+  ],
+  "summary": "A creature that sees its reflection may be pulled into one of the mirror's twelve cells (Cha DC 15).",
+  "text": "Glimpsed from the corner of the eye, this rectangular mirror, 4 feet tall and 50 pounds, shows faint figures in its glass. The mirror has 10 Hit Points, AC 11 and Vulnerability to Bludgeoning damage, and it breaks apart for good at 0 Hit Points. Once it hangs on a vertical surface, you can stand within 5 feet and speak its command word as a Magic action to switch it on; it stays on until you repeat the word with another Magic action. While it's active, any other creature that sees its own reflection from within 30 feet makes a Charisma saving throw against DC 15. On a failure, the creature and all it wears or carries are drawn into one of twelve extradimensional cells inside the mirror. A creature aware of what the mirror is has Advantage on this save, and Constructs pass automatically. Shattering the mirror frees everyone trapped within."
+}

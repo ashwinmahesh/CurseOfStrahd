@@ -1,0 +1,48 @@
+{
+  "id": "animated_shield",
+  "name": "Animated Shield",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "shield",
+  "weight_lb": 0,
+  "cost_gp": 40000,
+  "magic": {
+    "rarity": "very_rare",
+    "attunement": true
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "shield",
+    "name": "Animated Shield"
+  },
+  "powers": [
+    {
+      "id": "animate",
+      "name": "Animate",
+      "cost": "bonus",
+      "toggle": true,
+      "minutes": 1,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "modifiers": [
+        {
+          "stat": "ac",
+          "value": 2,
+          "when": {
+            "shield": false
+          }
+        }
+      ],
+      "off_cost": "bonus",
+      "text": "Bonus Action: the shield floats and protects you for 1 minute with your hands free (once per dawn)."
+    }
+  ],
+  "summary": "A Bonus Action animates it for 1 minute: it guards you as if wielded, leaving your hands free.",
+  "text": "Use a Bonus Action and the Shield springs from your grip to hover in your space, defending you as though you were wielding it while your hands stay free. It stays aloft for 1 minute, or until you end it with another Bonus Action, die, or gain the Incapacitated condition; it then drops, or returns to a free hand if you have one. After one animation, the Shield needs the next dawn before it will do so again.",
+  "icon": "shield",
+  "icon_fallback": true
+}

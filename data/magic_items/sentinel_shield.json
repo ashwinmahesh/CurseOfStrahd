@@ -1,0 +1,34 @@
+{
+  "id": "sentinel_shield",
+  "name": "Sentinel Shield",
+  "source": {
+    "book": "DMG2024",
+    "note": "Entered from knowledge of the 2024 DMG (personal build); check every number against the book."
+  },
+  "category": "shield",
+  "weight_lb": 0,
+  "cost_gp": 400,
+  "magic": {
+    "rarity": "uncommon",
+    "attunement": false
+  },
+  "theme": "armaments",
+  "template": {
+    "on": "shield",
+    "name": "Sentinel Shield"
+  },
+  "modifiers": [
+    {
+      "stat": "advantage",
+      "on": "initiative"
+    },
+    {
+      "stat": "advantage",
+      "on": "check:perception"
+    }
+  ],
+  "summary": "Advantage on Initiative rolls and Wisdom (Perception) checks while you hold it.",
+  "text": "An eye is emblazoned on this Shield. Holding it gives you Advantage on Wisdom (Perception) checks and Initiative rolls.",
+  "icon": "shield",
+  "icon_fallback": true
+}

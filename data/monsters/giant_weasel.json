@@ -1,0 +1,63 @@
+{
+  "id": "giant_weasel",
+  "name": "Giant Weasel",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "medium",
+  "type": "beast",
+  "alignment": "unaligned",
+  "ac": 13,
+  "initiative": 3,
+  "hp": {
+    "average": 9,
+    "dice": "2d8"
+  },
+  "speed": {
+    "walk": 40,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 11,
+    "dex": 17,
+    "con": 10,
+    "int": 4,
+    "wis": 12,
+    "cha": 5
+  },
+  "skills": {
+    "perception": 3,
+    "stealth": 5
+  },
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 13,
+  "languages": [],
+  "cr": 0.125,
+  "xp": 25,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 5,
+          "dice": "1d4+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "Bite: +5 to hit, 1d4+3 Piercing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A weasel the size of a wolf."
+}

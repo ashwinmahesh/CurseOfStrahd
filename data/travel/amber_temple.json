@@ -8,8 +8,8 @@
       "location": "amber_temple_entrance",
       "spawn": "from_pass",
       "pos": [
-        0.42,
-        0.11
+        0.411,
+        0.139
       ],
       "region": "amber_temple",
       "when": "flag.tsolenka_gate_open or flag.kasimir_sister_told or guest:kasimir_velikov or tarokka.tome.region == amber_temple or tarokka.symbol.region == amber_temple or tarokka.sword.region == amber_temple",

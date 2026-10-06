@@ -48,6 +48,8 @@ def features(d):
         yield x.get("feature", x)
     yield from d.get("traits", [])
     yield from d.get("benefits", [])
+    if "drawback" in d:
+        yield d["drawback"]
     for x in d.get("lineages", []):
         yield from x.get("traits", [])
 

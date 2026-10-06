@@ -199,7 +199,7 @@ def semantic_checks(data):
         for lin in sp.get("lineages", []):
             check_features(lin.get("traits", []), f"species/{spid} {lin['id']}")
     for fid, f in feats.items():
-        check_features(f.get("benefits", []), f"feats/{fid}")
+        check_features(f.get("benefits", []) + ([f["drawback"]] if "drawback" in f else []), f"feats/{fid}")
     for iid, it in items.items():
         for c in it.get("contents", []):
             need("item", items, c["id"], f"items/{iid} contents")

@@ -98,7 +98,8 @@ func test_all_twelve_classes_and_their_subclasses_are_there() -> void:
 		var cls := c.class_data(cid)
 		assert_false(cls.is_empty(), cid)
 		assert_eq((cls["levels"] as Array).size(), 20, "%s levels" % cid)
-		assert_eq(c.subclasses_of(cid).size(), 4, "%s has its four PHB subclasses" % cid)
+		var phb := c.subclasses_of(cid).filter(func(s: Dictionary) -> bool: return str((s["source"] as Dictionary)["book"]) == "PHB2024")
+		assert_eq(phb.size(), 4, "%s has its four PHB subclasses" % cid)
 		for lv in 7:
 			for f: Variant in ((cls["levels"] as Array)[lv] as Dictionary)["features"]:
 				var fd := f as Dictionary
@@ -168,7 +169,7 @@ func test_druid_land_to_level_7() -> void:
 	assert_eq(ch.resource_max("wild_shape"), 3)
 	assert_eq(str((ch.resources["wild_shape"] as Dictionary)["recharge"]), "short_one")
 	var forms := ch.choice("druid.2.wild_shape")
-	assert_true(forms.count <= 6 and forms.count == ch.beast_forms_for(forms).size(), "known forms: %d" % forms.count)
+	assert_eq(forms.count, mini(6, ch.beast_forms_for(forms).size()), "six known forms at Druid 7, or every Beast there is")
 	for f in ch.wild_shape_forms:
 		var m := ch.compendium.monster_data(f)
 		assert_eq(str(m["type"]), "beast")

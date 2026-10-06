@@ -1,0 +1,82 @@
+{
+  "id": "djinni",
+  "name": "Djinni",
+  "source": {
+    "book": "MM2025",
+    "note": "Entered from knowledge of the 2025 Monster Manual for creatures magic items summon; check against the book."
+  },
+  "size": "large",
+  "type": "elemental",
+  "alignment": "neutral",
+  "ac": 17,
+  "initiative": 2,
+  "hp": {
+    "average": 161,
+    "dice": "14d10+84"
+  },
+  "speed": {
+    "walk": 30,
+    "fly": 90
+  },
+  "abilities": {
+    "str": 21,
+    "dex": 15,
+    "con": 22,
+    "int": 15,
+    "wis": 16,
+    "cha": 20
+  },
+  "immunities": [
+    "lightning",
+    "thunder"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 13,
+  "languages": [
+    "primordial"
+  ],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "scimitar",
+          "count": 3
+        }
+      ],
+      "summary": "Three Scimitar attacks."
+    },
+    {
+      "id": "scimitar",
+      "name": "Scimitar",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "2d6+5",
+          "type": "slashing"
+        },
+        {
+          "average": 3,
+          "dice": "1d6",
+          "type": "lightning"
+        }
+      ],
+      "summary": "Scimitar: +9 to hit, 2d6+5 Slashing."
+    }
+  ],
+  "ai_profile": "brute",
+  "summary": "A proud genie of the air with a scimitar crackling with lightning."
+}

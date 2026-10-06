@@ -245,6 +245,7 @@ func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: Stri
 	var text := "Divine Spark %dd8 + Wis %d: %s" % [count, wis, rolled["text"]]
 	var r := CombatResult.new()
 	if not harm:
+		amount = maxi(amount, e.ravenloft.return_to_life(c, target, "%dd8" % count, int(rolled["total"])) + wis)
 		var healed := target.creature.heal(amount, "Divine Spark")
 		r.lines.append(e.log.add("heal", "%s's Divine Spark restores %d Hit Points to %s" % [c.name(), healed, target.name()], c.id, [text]))
 		e.events.append({"type": "heal", "id": target.id, "amount": healed})
@@ -554,6 +555,7 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 	var p := option["profile"] as WeaponProfile
 	var melee := bool(option["melee"])
 	out.append_array(e.class_features.hit_dice(c, target, option, st))
+	out.append_array(e.ravenloft.hit_dice(c, target, option, st))
 	if not c.creature is Character:
 		return out
 	var ch := c.creature as Character
@@ -718,6 +720,7 @@ func flat_damage_bonus(c: Combatant, _target: Combatant, option: Dictionary, st:
 		bonus += c.creature.proficiency_bonus()
 		notes.append("Great Weapon Master +%d" % c.creature.proficiency_bonus())
 	bonus += enc().class_features.flat_bonus(c, _target, option, notes)
+	bonus += enc().ravenloft.flat_bonus(c, _target, option, notes)
 	return bonus
 
 
@@ -768,6 +771,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 	var alive := target.is_alive() and not target.is_down()
 	var size_ok := Creature.SIZES.find(target.creature.size) <= Creature.SIZES.find(&"large")
 	e.class_features.after_hit(c, target, option, st, r)
+	e.ravenloft.after_hit(c, target, option, st, r)
 	# Battle Master maneuvers.
 	if st.has("maneuver"):
 		var id := str(st["maneuver"])
