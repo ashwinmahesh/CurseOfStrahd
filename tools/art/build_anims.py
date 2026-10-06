@@ -3,8 +3,9 @@
 
 Usage: tools/art/build_anims.py [--only id ...] [--jobs 3] [--walk-only | --attack-only]
 
-For each character: blender/render_walk.py with the entry's body, saturation, view count and facing (the same
-flags `make sprite` takes), then blender/render_attack.py from the attack strips (tools/art/anim_keyframes.py).
+For each character: its walk sheet through tools/art/rerender_sprites.py (the flags art/manifest.json records for it,
+e.g. BODY=quadruped or SAT=1.3: the same as make sprites), then blender/render_attack.py from the attack strips
+(tools/art/anim_keyframes.py).
 Blender runs in parallel, one process per character. Prints each script's warnings and lists what failed; then
 `make import` and tools/art/set_import.py give new sheets their VRAM + mipmap import settings (make anims does both).
 """
@@ -31,22 +32,16 @@ def blender(script, args):
     return ok, lines
 
 
-def build(asset_id, spec, walk, attack):
+def build(asset_id, walk, attack):
     out, ok = [], True
     if walk:
-        args = ["--turnaround", str(ROOT / spec.get("turnaround", f"art/generated/characters/{asset_id}_turnaround.png")),
-                "--id", asset_id]
-        if spec.get("body", "humanoid") != "humanoid":
-            args += ["--body", spec["body"]]
-        if spec.get("saturate"):
-            args += ["--saturate", str(spec["saturate"])]
-        if spec.get("views"):
-            args += ["--views", str(spec["views"])]
-        if spec.get("side_faces"):
-            args += ["--side-faces", spec["side_faces"]]
-        good, lines = blender("render_walk.py", args)
+        # The walk sheet with the flags the manifest records for it (make sprites), so both tools agree.
+        r = subprocess.run([sys.executable, str(ROOT / "tools" / "art" / "rerender_sprites.py"), "--only", asset_id],
+                           capture_output=True, text=True)
+        good = r.returncode == 0 and "1 sheets rendered" in r.stdout
         ok &= good
-        out += lines
+        out += [ln.strip() for ln in r.stdout.splitlines() if ln.strip().startswith(("WARNING", "FAILED"))]
+        out += ["walk sheet rendered" if good else f"FAILED walk: {(r.stdout + r.stderr).strip()[-400:]}"]
     if attack:
         good, lines = blender("render_attack.py", ["--id", asset_id])
         ok &= good
@@ -68,12 +63,15 @@ def main():
     unknown = [i for i in ids if i not in reg]
     if unknown:
         sys.exit(f"not in {REGISTRY.relative_to(ROOT)}: {', '.join(unknown)}")
-    ready = [i for i in ids if (ROOT / reg[i].get("turnaround", f"art/generated/characters/{i}_turnaround.png")).exists()]
+    manifest = json.loads((ROOT / "art" / "manifest.json").read_text())["assets"]
+    sources = {Path(m["sprites"]).parent.name: m.get("source", "") for m in manifest
+               if isinstance(m.get("sprites"), str) and m["sprites"].endswith("/walk.tres")}
+    ready = [i for i in ids if (ROOT / sources.get(i, "missing")).is_file()]
     for i in sorted(set(ids) - set(ready)):
-        print(f"skip {i}: no turnaround yet", flush=True)
+        print(f"skip {i}: no walk sheet or turnaround yet", flush=True)
     ids = ready
     with ThreadPoolExecutor(max_workers=a.jobs) as pool:
-        results = list(pool.map(lambda i: build(i, reg[i], not a.attack_only, not a.walk_only), ids))
+        results = list(pool.map(lambda i: build(i, not a.attack_only, not a.walk_only), ids))
     failed = [i for i, ok in zip(ids, results) if not ok]
     if failed:
         sys.exit(f"failed: {' '.join(failed)}")

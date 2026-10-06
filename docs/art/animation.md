@@ -7,7 +7,8 @@ Every character and creature sprite walks in 8 directions and has an attack in 8
 
 | What | Where |
 |---|---|
-| Per-character settings: body type, saturation, the attack's wind-up and strike | `art/anim/animations.json` |
+| Each character's attack: who, the move, its wind-up and strike, whether it's a spell gesture (`casts`) | `art/anim/animations.json` |
+| How each walk sheet is made: `BODY=quadruped` etc., `SAT=1.3` (the flags `make sprites` uses) | `art/manifest.json` `sprite_flags` |
 | Prompt templates | `art/prompts/attack_keyframes.txt`, `art/prompts/walk_keyframes.txt` |
 | Keyframe strips (Gemini, one per view) | `art/generated/anim/<id>/attack_<view>.png`, `walk_<view>.png` |
 | Walk sheet | `art/sprites/<id>/walk.png` + `walk.tres` (walk_<dir>, idle_<dir>) |
@@ -17,14 +18,16 @@ Every character and creature sprite walks in 8 directions and has an attack in 8
 
 ## Commands
 
-- `make anims` re-renders every walk and attack sheet from the strips; `ONLY="wolf ilse_varga"` limits it.
+- `make anims` re-renders every walk sheet (with its manifest flags, like `make sprites`) and every attack sheet
+  from the strips; `ONLY="wolf ilse_varga"` limits it.
 - `make anims ONLY=<id> GENERATE=1` first draws any missing strips for that character.
 - `tools/art/anim_keyframes.py --only <id> --views side front` redraws chosen strips (when a check or a look
   at the sheet finds a bad one); `--retry 2` redraws what `render_attack.py --check` flags.
 
-A new character: `make sprite ...` as before, add an entry to `animations.json` (copy a similar one: `who`, `attack`,
-`windup`, `strike`, plus `body`, `saturate`, `views` when they differ from the defaults), then
-`make anims ONLY=<id> GENERATE=1`, then look at `art/sprites/<id>/attack.png`.
+A new character: `make sprite ...` as before (with `BODY=<type>` for a body the humanoid rig can't walk, recorded in
+its manifest `sprite_flags`), add an entry to `animations.json` (copy a similar one: `who`, `attack`, `windup`,
+`strike`, and `casts` for a spell gesture), then `make anims ONLY=<id> GENERATE=1`, then look at
+`art/sprites/<id>/attack.png`.
 
 ## Attack keyframes
 
@@ -50,9 +53,9 @@ of the reference (arms barely move). 21:9 leaves room for a swung weapon.
 
 ## Walk
 
-- **People** (`body` humanoid, the default): the cutout rig of `blender/render_walk.py`. Head-on, the legs lift and
+- **People** (no `BODY` flag): the cutout rig of `blender/render_walk.py`. Head-on, the legs lift and
   bend in turn and the body sways over the planted foot; in profile the legs swing. The body dips on each stride.
-- **Four-legged** (`quadruped`: wolves): profile and three-quarter views trot on two drawn strides from
+- **Four-legged** (`BODY=quadruped`: wolves): profile and three-quarter views trot on two drawn strides from
   `walk_<view>.png` strips (stretched, gathered) with the standing view as the passing pose; head-on views lift
   their leg halves. Cells are 1.5x wide so a stretched wolf fits.
 - **float** (specter, flying sword): hovers, bobs and leans into the glide. **hop** (broom): squash, leap, land.

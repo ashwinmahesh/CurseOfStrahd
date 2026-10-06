@@ -5,7 +5,8 @@ blender -b --python blender/render_attack.py -- --id <asset_id> [--cell 384] [--
 --check only reads the strips and prints CHECK {"<view>": ["problem", ...]} for views whose strip should be drawn
 again (tools/art/anim_keyframes.py --retry uses it): figures merged or clipped, or frame 1 not the standing view.
 
-Reads the character's entry in art/anim/animations.json, its turnaround (the views the walk sheet is cut from) and one
+Reads the character's entry in art/anim/animations.json, its walk flags and turnaround from art/manifest.json (the
+views the walk sheet is cut from) and one
 attack strip per view, art/generated/anim/<id>/attack_<view>.png (tools/art/anim_keyframes.py): frame 1 redraws the
 turnaround view, frame 2 is the wind-up and frame 3 the strike. Frame 1 sets the strip's scale, so the attack frames
 line up with the walk sheet: same pixel size, same ground line, feet where they stood.
@@ -76,17 +77,17 @@ def figure_plane(name, kf, ppu, place_x):
 def main():
     a = args()
     s = anim.spec(a.id)
-    turnaround = cutout.ROOT / s.get("turnaround", f"art/generated/characters/{a.id}_turnaround.png")
-    sheet = anim.clean_source(cutout.load_rgba(turnaround))
-    figures = cutout.find_figures(sheet, s.get("views") or rw.view_count(sheet))
+    w = anim.walk_flags(a.id)
+    sheet = anim.clean_source(cutout.load_rgba(cutout.ROOT / w["turnaround"]))
+    figures = cutout.find_figures(sheet, w["views"] or rw.view_count(sheet))
     names, dir_view = (rw.VIEWS5, rw.DIR_VIEW5) if len(figures) == 5 else (rw.VIEWS3, rw.DIR_VIEW3)
-    if s.get("side_faces") == "left":
+    if w["side_faces"] == "left":
         figures = [f if n in ("front", "back") else f[:, ::-1].copy() for n, f in zip(names, figures)]
     # The walk sheet's scale (render_walk.py main): the tallest view fills the band; bodies drawn
     # --static also fit the widest view.
     height_px = max(f.shape[0] for f in figures)
     ppu = height_px / rw.FIGURE_HEIGHT
-    if s.get("body", "humanoid") != "humanoid":
+    if w["body"] != "humanoid" or w["static"]:
         width_px = max(f.shape[1] for f in figures)
         ppu = max(ppu, width_px / (rw.FIGURE_HEIGHT * 1.12 * 0.94))
 
@@ -164,7 +165,7 @@ def main():
     frames, (cw, ch) = anim.crop_even(frames, a.cell, MIN_WIDE, MARGIN)
     out_dir = cutout.ROOT / "art" / "sprites" / a.id
     out_dir.mkdir(parents=True, exist_ok=True)
-    sheet_out = anim.finish_sheet(cutout.pack_grid(frames, len(FRAMES)), float(s.get("saturate", 1.0)))
+    sheet_out = anim.finish_sheet(cutout.pack_grid(frames, len(FRAMES)), w["saturate"])
     cutout.save_rgba(sheet_out, out_dir / "attack.png")
     anim.write_frames_tres(out_dir / "attack.tres", f"res://art/sprites/{a.id}/attack.png", (cw, ch),
                            rw.DIRECTIONS, [f[4] for f in FRAMES], "attack", FPS, False,

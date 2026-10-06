@@ -4,7 +4,8 @@ margin, so Gemini sees a single figure.
 
 blender -b --python blender/anim_refs.py -- --id <asset_id> --out <dir>
 
-Reads the turnaround, view count and facing from art/anim/animations.json (as render_attack.py does).
+Reads the turnaround, view count and facing from the character's art/manifest.json walk flags (as render_attack.py
+does).
 
 Writes <dir>/<view>.png and <dir>/views.json ({view: {"height": px, "width": px}}, the figure's size on the sheet).
 """
@@ -28,16 +29,15 @@ def main():
     p.add_argument("--id", required=True)
     p.add_argument("--out", required=True)
     a = p.parse_args(sys.argv[sys.argv.index("--") + 1:])
-    s = anim.spec(a.id)
-    turnaround = cutout.ROOT / s.get("turnaround", f"art/generated/characters/{a.id}_turnaround.png")
-    sheet = cutout.binarize_alpha(cutout.remove_background(cutout.load_rgba(turnaround)))
-    figures = cutout.find_figures(sheet, s.get("views") or rw.view_count(sheet))
+    w = anim.walk_flags(a.id)
+    sheet = cutout.binarize_alpha(cutout.remove_background(cutout.load_rgba(cutout.ROOT / w["turnaround"])))
+    figures = cutout.find_figures(sheet, w["views"] or rw.view_count(sheet))
     names = rw.VIEWS5 if len(figures) == 5 else rw.VIEWS3
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     meta = {}
     for name, fig in zip(names, figures):
-        if s.get("side_faces") == "left" and name not in ("front", "back"):
+        if w["side_faces"] == "left" and name not in ("front", "back"):
             fig = fig[:, ::-1].copy()
         h, w = fig.shape[:2]
         m = int(h * 0.08)

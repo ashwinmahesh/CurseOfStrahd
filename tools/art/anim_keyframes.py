@@ -14,8 +14,8 @@ art/prompts/<kind>_keyframes.txt plus the character's entry. Strips that already
 the views it flags (figures merged or clipped, frame 1 not the standing view) are drawn again, up to N more times.
 --recheck checks every existing strip of the chosen characters first, too.
 
-kind attack: every character (wind-up, strike). kind walk: four-legged bodies only (two strides, profile and
-three-quarter views; head-on views walk with the rig).
+kind attack: every character (wind-up, strike). kind walk: four-legged bodies only (BODY=quadruped in their
+art/manifest.json sprite_flags: two strides, profile and three-quarter views; head-on views walk with the rig).
 """
 import argparse
 import json
@@ -45,6 +45,18 @@ QUADRUPED_STRIDES = (
 
 def model():
     return json.loads((ROOT / "art" / "manifest.json").read_text())["image_model"]
+
+
+def walk_flags():
+    """Sprite folder -> its art/manifest.json sprite_flags as a dict, plus its turnaround ("source")."""
+    out = {}
+    for a in json.loads((ROOT / "art" / "manifest.json").read_text())["assets"]:
+        sp = a.get("sprites")
+        if isinstance(sp, str) and sp.endswith("/walk.tres"):
+            flags = dict(f.split("=", 1) for f in a.get("sprite_flags", []) if "=" in f)
+            flags["source"] = a.get("source", "")
+            out[Path(sp).parent.name] = flags
+    return out
 
 
 def cut_refs(asset_id, out):
@@ -116,11 +128,12 @@ def main():
     missing = [i for i in ids if i not in reg]
     if missing:
         sys.exit(f"not in {REGISTRY.relative_to(ROOT)}: {', '.join(missing)}")
+    flags = walk_flags()
     if a.kind == "walk":
-        ids = [i for i in ids if reg[i].get("body") == "quadruped"]
-    ready = [i for i in ids if (ROOT / reg[i].get("turnaround", f"art/generated/characters/{i}_turnaround.png")).exists()]
+        ids = [i for i in ids if flags.get(i, {}).get("BODY") == "quadruped"]
+    ready = [i for i in ids if i in flags and (ROOT / flags[i]["source"]).exists()]
     for i in sorted(set(ids) - set(ready)):
-        print(f"skip {i}: no turnaround yet", flush=True)
+        print(f"skip {i}: no walk sheet or turnaround yet", flush=True)
     ids = ready
     with tempfile.TemporaryDirectory(prefix="anim_refs_") as tmp:
         refs_cache = {}

@@ -27,6 +27,21 @@ def spec(asset_id):
     return reg[asset_id]
 
 
+def walk_flags(asset_id):
+    """How the character's walk sheet is made, from its art/manifest.json "sprite_flags" (the same flags
+    tools/art/rerender_sprites.py passes to `make sprite`): turnaround, body, saturate, side_faces, views, static."""
+    manifest = json.loads((ROOT / "art" / "manifest.json").read_text())
+    for a in manifest["assets"]:
+        sp = a.get("sprites")
+        if isinstance(sp, str) and sp.endswith("/walk.tres") and Path(sp).parent.name == asset_id:
+            flags = dict(f.split("=", 1) for f in a.get("sprite_flags", []) if "=" in f)
+            return {"turnaround": a.get("source", f"art/generated/characters/{asset_id}_turnaround.png"),
+                    "body": flags.get("BODY", "humanoid"), "saturate": float(flags.get("SAT", 1.0)),
+                    "side_faces": flags.get("SIDE", "right"), "views": int(flags["VIEWS"]) if "VIEWS" in flags else None,
+                    "static": flags.get("STATIC") == "1"}
+    raise SystemExit(f"{asset_id}: no walk sheet in art/manifest.json")
+
+
 def strip_path(asset_id, kind, view):
     return ROOT / "art" / "generated" / "anim" / asset_id / f"{kind}_{view}.png"
 
