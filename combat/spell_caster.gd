@@ -446,6 +446,19 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	if entry.is_empty():
 		return CombatResult.fail("%s doesn't know that spell" % c.name())
 	var war_magic := bool(opts.get("war_magic", false))
+	var meta := (opts.get("metamagic", []) as Array).map(func(x: Variant) -> String: return str(x))
+	var meta_why := _metamagic_check(c, _comp().spell_data(spell_id), meta)
+	if meta_why != "":
+		return CombatResult.fail(meta_why)
+	# Quickened Spell turns a one-action spell into a Bonus Action; Subtle Spell needs no voice.
+	if "quickened" in meta and str(entry["casting"]) == "action":
+		entry["casting"] = "bonus_action"
+		var qwhy := economy_block(c, "bonus_action")
+		entry["legal"] = qwhy == "" and str(entry["reason"]) in ["", "Action already used", "Only one Magic action this turn (Action Surge's action can't be Magic)"]
+		entry["reason"] = qwhy
+	if "subtle" in meta and (str(entry["reason"]) == "Can't speak" or str(entry["reason"]).begins_with("Silence")):
+		entry["legal"] = true
+		entry["reason"] = ""
 	if war_magic and str(entry["reason"]) in ["Action already used", ""] and e.features_attack_why(c) == "" and int(_comp().spell_data(spell_id).get("level", 0)) == 0:
 		entry["legal"] = true
 	if not bool(entry["legal"]):
@@ -467,11 +480,16 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		slot = maxi(slot, level)
 		if ch.slots_left(slot) <= 0:
 			return CombatResult.fail("No level %d slots left" % slot)
-	var check := _check_targets(c, s, slot, targets, point, opts)
+	var copts := opts.duplicate()
+	if "distant" in meta:
+		copts["range_mult"] = true
+	var check := _check_targets(c, s, slot + (1 if "twinned" in meta else 0), targets, point, copts)
 	if str(check["why"]) != "":
 		return CombatResult.fail(str(check["why"]))
 	var tgt := check["targets"] as Array[Combatant]
 	var cell: Vector2i = check["cell"]
+	if not meta.is_empty():
+		_pay_metamagic(c, meta)
 	# Pay for it.
 	var unit := str(entry["casting"])
 	if war_magic:
@@ -507,7 +525,20 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells,
 		"targets": tgt.map(func(t: Combatant) -> String: return t.id)})
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": nums, "conc": conc, "opts": opts, "point": point,
-		"cells": cells, "choice": choice, "direction": direction, "cell": cell}
+		"cells": cells, "choice": choice, "direction": direction, "cell": cell, "metamagic": meta}
+	if "transmuted" in meta and str(opts.get("transmute_to", "")) != "":
+		ctx["transmute_to"] = str(opts["transmute_to"])
+	if "heightened" in meta:
+		ctx["heightened"] = tgt[0].id if not tgt.is_empty() else (_area_victims(c, s, cells)[0].id if not _area_victims(c, s, cells).is_empty() else "")
+	if "extended" in meta:
+		var s_ext := s.duplicate(true)
+		var dd := s_ext.get("duration", {}) as Dictionary
+		if dd.has("amount"):
+			dd["amount"] = mini(int(dd["amount"]) * 2, 24 * 60 if str(dd.get("kind", "")) == "minutes" else 24)
+		ctx["s"] = s_ext
+		if conc != null:
+			var steady := Effect.new("Extended Spell", &"feature", "extended_spell").with_modifier("advantage", {"on": "concentration"})
+			conc.attach(c.creature, steady)
 	var r := CombatResult.new()
 	if "overchannel" in c.armed and level >= 1 and level <= 5 and s.has("damage"):
 		c.armed.erase("overchannel")
@@ -648,6 +679,9 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 			tgt.append(t as Combatant)
 	var out := {"why": "", "targets": tgt, "cell": Vector2i(-1, -1)}
 	var rng := range_ft(s, c)
+	# Distant Spell: double range, Touch becomes 30 ft.
+	if bool(opts.get("range_mult", false)):
+		rng = 30 if str((s.get("range", {}) as Dictionary).get("kind", "")) == "touch" else rng * 2
 	var id := str(s["id"])
 	var tkind := str((s.get("targets", {}) as Dictionary).get("kind", "creature"))
 	var placed := s.has("object") or id in ["misty_step", "summon_fey", "summon_undead"]
@@ -867,6 +901,8 @@ func _damage_dice(ctx: Dictionary, target: Combatant = null) -> String:
 
 
 func _damage_type(ctx: Dictionary, part: Dictionary = {}) -> String:
+	if ctx.has("transmute_to"):
+		return str(ctx["transmute_to"])
 	var s := ctx["s"] as Dictionary
 	var d := part if not part.is_empty() else (s.get("damage", []) as Array)[0] as Dictionary
 	if d.has("type"):
@@ -893,7 +929,9 @@ func _damage_bonus(ctx: Dictionary) -> Breakdown:
 func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictionary:
 	var e := enc()
 	var dice := _damage_dice(ctx, t)
-	var rolled := e._roll_damage_dice(dice, critical, 0, "%s damage" % (ctx["s"] as Dictionary)["name"])
+	var rolled := e._roll_damage_dice(dice, critical, 0, "%s damage" % (ctx["s"] as Dictionary)["name"],
+		{"count": maxi(1, (ctx["c"] as Combatant).creature.ability_mod(&"cha")), "at_most": int(DiceRoller.parse_expr(dice)["sides"]) / 2, "source": "Empowered Spell"} \
+		if "empowered" in (ctx.get("metamagic", []) as Array) else {})
 	var sp := ctx["s"] as Dictionary
 	if bool(ctx.get("overchannel", false)):
 		var pm := DiceRoller.parse_expr(dice)
@@ -964,6 +1002,10 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	var test := c.creature.roll_d20(e.dice, D20Test.Kind.ATTACK_ROLL, atk, ac, keys, sit["advantage"] as Array[String],
 		sit["disadvantage"] as Array[String], "%s → %s (%s)" % [c.name(), t.name(), s["name"]])
 	t.creature.consume_attacked()
+	if not test.success and "seeking" in (ctx.get("metamagic", []) as Array) and not bool(ctx.get("seeking_used", false)):
+		ctx["seeking_used"] = true
+		test = c.creature.roll_d20(e.dice, D20Test.Kind.ATTACK_ROLL, atk, ac, keys, sit["advantage"] as Array[String],
+			sit["disadvantage"] as Array[String], "%s → %s (%s, Seeking Spell reroll)" % [c.name(), t.name(), s["name"]])
 	var details: Array[String] = [test.describe(), atk.describe()]
 	var hit := test.success
 	if hit and e.mirror_image_takes(t, c, test.total):
@@ -1132,7 +1174,9 @@ func _save_spell(ctx: Dictionary, victims: Array[Combatant], r: CombatResult) ->
 			dis.append("Magical Ambush")
 		if c.creature.has_flag("corona") and e.in_sunlight(t) and c.hostile_to(t) and _damage_type_safe(ctx) in ["fire", "radiant"]:
 			dis.append("Corona of Light")
-		var sculpted := _sculpted(ctx, t)
+		var sculpted := _sculpted(ctx, t) or _careful(ctx, t)
+		if str(ctx.get("heightened", "")) == t.id:
+			dis.append("Heightened Spell")
 		var vs := s.get("save_disadvantage_for", "") as String
 		if vs != "" and str(t.creature.creature_type) == vs:
 			dis.append("%s against %s" % [vs.capitalize(), s["name"]])
@@ -1216,6 +1260,68 @@ func _sculpted(ctx: Dictionary, t: Combatant) -> bool:
 		return false
 	ctx["sculpted"] = used + 1
 	return true
+
+
+## Careful Spell: up to the caster's Charisma modifier allies automatically succeed and take no damage.
+func _careful(ctx: Dictionary, t: Combatant) -> bool:
+	var c := ctx["c"] as Combatant
+	if not "careful" in (ctx.get("metamagic", []) as Array) or t == c or not c.allied_with(t):
+		return false
+	var used := int(ctx.get("careful_used", 0))
+	if used >= maxi(1, c.creature.ability_mod(&"cha")):
+		return false
+	ctx["careful_used"] = used + 1
+	return true
+
+
+## Metamagic (Sorcerer): costs in Sorcery Points, one option per spell except Empowered and Seeking.
+const METAMAGIC_COST := {"careful": 1, "distant": 1, "empowered": 1, "extended": 1, "heightened": 2, "quickened": 2,
+	"seeking": 1, "subtle": 1, "transmuted": 1, "twinned": 1}
+
+
+func _metamagic_check(c: Combatant, s: Dictionary, meta: Array) -> String:
+	if meta.is_empty():
+		return ""
+	if not c.creature is Character:
+		return "No Metamagic"
+	var ch := c.creature as Character
+	var cost := 0
+	var main := 0
+	for m: String in meta:
+		if not METAMAGIC_COST.has(m):
+			return "Unknown Metamagic %s" % m
+		if not m in metamagic_known(ch):
+			return "%s doesn't know %s Spell" % [c.name(), m.capitalize()]
+		cost += int(METAMAGIC_COST[m])
+		if not m in ["empowered", "seeking"]:
+			main += 1
+	if main > 1:
+		return "Only one Metamagic option per spell (Empowered and Seeking can join another)"
+	if "twinned" in meta and int((s.get("upcast", {}) as Dictionary).get("targets", 0)) <= 0:
+		return "Twinned Spell needs a spell that can target more creatures at a higher level"
+	if "quickened" in meta and str((s.get("casting_time", {}) as Dictionary).get("unit", "")) != "action":
+		return "Quickened Spell needs a spell with a casting time of an action"
+	if ch.resource_left("sorcery_points") < cost:
+		return "Needs %d Sorcery Points" % cost
+	return ""
+
+
+## Metamagic options a character chose (choices of kind "metamagic").
+static func metamagic_known(ch: Character) -> Array[String]:
+	var out: Array[String] = []
+	for c in ch.choice_defs:
+		if c.kind == "metamagic":
+			for p: Variant in c.picks:
+				out.append(str(p))
+	return out
+
+
+func _pay_metamagic(c: Combatant, meta: Array) -> void:
+	var cost := 0
+	for m: String in meta:
+		cost += int(METAMAGIC_COST[m])
+	(c.creature as Character).spend_resource("sorcery_points", cost)
+	enc().log.add("info", "%s shapes the spell: %s (%d Sorcery Points)" % [c.name(), ", ".join(meta.map(func(x: String) -> String: return x.capitalize())), cost], c.id)
 
 
 func _run_pushes(ctx: Dictionary, pushes: Array[Dictionary]) -> void:

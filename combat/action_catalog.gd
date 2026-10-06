@@ -342,6 +342,13 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		a["count"] = int(t.get("count", 1))
 		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"]
 		a["concentration"] = bool((data.get("duration", {}) as Dictionary).get("concentration", false))
+		if c.creature is Character:
+			var mm: Array = []
+			for m: String in SpellCaster.metamagic_known(c.creature as Character):
+				if e.spells._metamagic_check(c, data, [m]) == "":
+					mm.append({"id": m, "label": "%s Spell (%d SP)" % [m.capitalize(), int(SpellCaster.METAMAGIC_COST[m])]})
+			if not mm.is_empty():
+				a["metamagic"] = mm
 		var choice := data.get("choice", {}) as Dictionary
 		if not choice.is_empty() and str(s["id"]) != "command":
 			var opts_list: Array = []

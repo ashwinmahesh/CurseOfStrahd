@@ -84,3 +84,50 @@ func test_an_inspiration_die_helps_a_failed_roll_once() -> void:
 	var t := h.creature.roll_save(e.dice, &"wis", 30)
 	assert_true(t.extra_label.contains("Bardic Inspiration"), t.describe())
 	assert_false(h.creature.effects.any(func(x: Effect) -> bool: return x.source_id == "bardic_inspiration"), "used up")
+
+
+## A wizard dressed up as a sorcerer for Metamagic: chosen options and Sorcery Points.
+func _sorcerer(e: Encounter, options: Array[String]) -> Combatant:
+	var c := TestCombat.caster_with(e, ["hold_person", "fire_bolt", "burning_hands"], Vector2i(2, 3))
+	var ch := c.creature as Character
+	var mm := Choice.new()
+	mm.key = "sorcerer.2.metamagic"
+	mm.kind = "metamagic"
+	mm.picks.assign(options)
+	ch.choice_defs.append(mm)
+	ch.set_resource("sorcery_points", "Sorcery Points", 5, "long")
+	return c
+
+
+func test_quickened_spell_is_a_bonus_action() -> void:
+	var e := TestCombat.open_field(3)
+	var c := _sorcerer(e, ["quickened", "twinned"])
+	var t := TestCombat.punching_bag(e, Vector2i(6, 3))
+	TestCombat.start_with(e, c)
+	var r := e.spells.cast(c, "fire_bolt", 0, [t], Vector2.INF, Vector2.ZERO, {"metamagic": ["quickened"]})
+	assert_true(r.ok, r.reason)
+	assert_false(c.bonus_available)
+	assert_true(c.action_available, "the action is still there")
+	assert_eq((c.creature as Character).resource_left("sorcery_points"), 3)
+
+
+func test_twinned_spell_adds_a_target() -> void:
+	var e := TestCombat.open_field(3)
+	var c := _sorcerer(e, ["twinned"])
+	var a := TestCombat.punching_bag(e, Vector2i(5, 3))
+	var b := TestCombat.punching_bag(e, Vector2i(6, 3))
+	TestCombat.start_with(e, c)
+	assert_false(e.spells.cast(c, "hold_person", 2, [a, b]).ok, "two targets need a level 3 slot")
+	var r := e.spells.cast(c, "hold_person", 2, [a, b], Vector2.INF, Vector2.ZERO, {"metamagic": ["twinned"]})
+	assert_true(r.ok, r.reason)
+
+
+func test_careful_spell_spares_allies() -> void:
+	var e := TestCombat.open_field(3)
+	var c := _sorcerer(e, ["careful"])
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
+	TestCombat.punching_bag(e, Vector2i(4, 3))
+	TestCombat.start_with(e, c)
+	var hp := ally.creature.hp
+	assert_true(e.spells.cast(c, "burning_hands", 1, [], Vector2.INF, Vector2.RIGHT, {"metamagic": ["careful"]}).ok)
+	assert_eq(ally.creature.hp, hp, "the ally is spared")

@@ -659,6 +659,11 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 		for i in choices.size():
 			var ch0 := choices[i] as Dictionary
 			items.append({"id": "choice:%d" % i, "label": "%s: %s" % [action["label"], ch0["label"]], "enabled": usable, "why": why})
+	var mms := action.get("metamagic", []) as Array
+	if not mms.is_empty():
+		items.append({"separator": "Metamagic"})
+		for mm: Variant in mms:
+			items.append({"id": "meta:%s" % (mm as Dictionary)["id"], "label": str((mm as Dictionary)["label"]), "enabled": usable, "why": why})
 	if str(action["kind"]) == "spell" and str(action["cost"]) == "action" and shown != null:
 		items.append({"separator": "Ready"})
 		items.append({"id": "ready", "label": "Ready %s: release it when an enemy comes in range" % action["label"], "enabled": usable, "why": why})
@@ -682,6 +687,15 @@ func _on_menu(id: String) -> void:
 		show_details(str(d["title"]), d["lines"] as Array)
 	elif id == "use":
 		action_chosen.emit(action)
+	elif id.begins_with("meta:"):
+		var shaped := action.duplicate(true)
+		var o2 := (shaped.get("opts", {}) as Dictionary).duplicate()
+		o2["metamagic"] = [id.substr(5)]
+		shaped["opts"] = o2
+		shaped["sub"] = str(action["sub"]) + " · " + id.substr(5).capitalize()
+		if id.substr(5) == "quickened":
+			shaped["cost"] = "bonus"
+		action_chosen.emit(shaped)
 	elif id == "ready":
 		var ready := action.duplicate(true)
 		ready["kind"] = "ready_spell"
