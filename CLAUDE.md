@@ -42,6 +42,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 - Asset packs from the internet are allowed (owner, 2026-10-06): CC0 or clearly free licences only. Keep
   downloads untouched with their licence in art/sourced/<pack>/ and list each in docs/assets/LICENSES.md.
   Characters come from the Gemini pipeline so the style stays consistent.
+- Every character sprite walks and attacks in 8 directions (docs/art/animation.md; a test checks): after
+  `make sprite`, add the character to art/anim/animations.json and run `make anims ONLY=<id> GENERATE=1`.
 - UI draws on CanvasLayers so the palette pass never touches it.
 
 ## Done means
