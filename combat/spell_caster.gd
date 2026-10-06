@@ -986,6 +986,13 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 		var rolled := _roll_spell_damage(ctx, t, critical)
 		details.append(str(rolled["text"]))
 		var parts: Array = [{"amount": int(rolled["total"]), "type": _damage_type(ctx), "spell": true}]
+		# Extra damage on any attack roll that hits (Hunter's Mark, Hex).
+		for m in c.creature.modifiers_for(&"extra_damage"):
+			if m.text("on", "weapon") != "attack" or (m.data.has("vs") and str(m.data["vs"]) != t.id):
+				continue
+			var xr := e._roll_damage_dice(m.text("dice", "1d6"), critical, 0, m.source_name)
+			parts.append({"amount": int(xr["total"]), "type": m.text("type", _damage_type(ctx)), "spell": true})
+			details.append("%s %s: %s" % [m.source_name, m.text("dice"), xr["text"]])
 		var dr := e.deal_damage(c, t, parts, critical, str(s["name"]), details)
 		r.damage += dr.final
 		if bool(s.get("drain", false)) and dr.final > 0:
@@ -1332,6 +1339,11 @@ func apply_effect_entries(ctx: Dictionary, t: Combatant, entries: Array, when: S
 		var who := t
 		if str(params.get("target", "")) == "self":
 			who = c
+		# A mark the caster carries against the target (Hunter's Mark, Hex): the effect sits on the caster with
+		# `vs: "target"` meaning this target.
+		if str(params.get("target", "")) == "caster_vs":
+			who = c
+			ctx["vs_target"] = t.id
 		var kind := str(fx.get("effect", ""))
 		match kind:
 			"push", "pull":
@@ -1423,6 +1435,8 @@ func _apply_group(ctx: Dictionary, t: Combatant, params: Dictionary, entries: Ar
 					var d := (md as Dictionary).duplicate(true)
 					_substitute_choice(d, choice)
 					_substitute_casting(d, ctx)
+					if str(d.get("vs", "")) == "target":
+						d["vs"] = str(ctx.get("vs_target", ""))
 					var v: Variant = d.get("value", 0)
 					if v is String and (str(v).contains("slot_level") or str(v).contains("mod:")):
 						d["value"] = Formula.evaluate(v, ctx2)
@@ -2328,6 +2342,18 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 				zone.cells = area_for(c, s, Vector2.INF, direction, int(a["slot"]))
 				zones.moved_object(zone, r)
 			e.log.add("spell", "%s turns %s" % [c.name(), s["name"]], c.id)
+		"move_mark":
+			if t == null:
+				return CombatResult.fail("Choose a new target")
+			for fx: Effect in c.creature.effects:
+				if fx.source_id == str(a["spell_id"]):
+					for m in fx.modifiers:
+						if m.data.has("vs"):
+							m.data["vs"] = t.id
+			for x in sustained:
+				if str(x["id"]) == str(a["id"]):
+					x["target_id"] = t.id
+			e.log.add("spell", "%s moves %s to %s" % [c.name(), s["name"], t.name()], c.id)
 		"maintain":
 			e.log.add("spell", "%s keeps %s going" % [c.name(), s["name"]], c.id)
 			var victim := e.get_c(str(a["target_id"]))
@@ -2383,6 +2409,12 @@ func _sustained_check(c: Combatant, a: Dictionary, d: Dictionary, t: Combatant, 
 		"heal_one":
 			if t != null and e.distance(c, t) > int(d.get("range", 30)):
 				return "Out of the aura"
+		"move_mark":
+			var old := e.get_c(str(a["target_id"]))
+			if old != null and old.is_alive() and old.creature.hp > 0:
+				return "The marked creature is still up"
+			if t == null or e.distance(c, t) > int(d.get("range", 90)):
+				return "Choose a creature within %d ft" % int(d.get("range", 90))
 	return ""
 
 

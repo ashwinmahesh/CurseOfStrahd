@@ -756,6 +756,18 @@ func after_d20(cr: Creature, t: D20Test, keys: Array[String]) -> void:
 	var c := e.get_c(cr.id)
 	if c == null:
 		return
+	# A die someone gave this creature (Bardic Inspiration): added to a failed D20 Test, then gone.
+	if not t.success and t.target > 0:
+		for fx: Effect in cr.effects.duplicate():
+			for m in fx.modifiers:
+				if m.stat == &"inspiration_die" and str(c.reaction_rules.get("inspiration", "auto")) != "never":
+					var v := e.dice.roll_expr(m.text("dice", "1d6"), m.source_name)
+					t.add_bonus(int(v["total"]), m.source_name)
+					cr.remove_effect(fx)
+					e.log.add("info", "%s adds %s (%d)" % [c.name(), m.source_name, int(v["total"])], c.id)
+					break
+			if t.success:
+				break
 	var ch := cr as Character
 	var rule := func(kind: String) -> bool: return str(c.reaction_rules.get(kind, "auto")) != "never"
 	if t.kind == D20Test.Kind.ABILITY_CHECK:

@@ -654,7 +654,8 @@
               "dash",
               "heal_one",
               "aim",
-              "maintain"
+              "maintain",
+              "move_mark"
             ]
           },
           "cost": {
@@ -759,6 +760,29 @@
       "type": "string",
       "minLength": 1,
       "description": "The complete rule in our own words: every number and condition a player needs, never copied text."
+    },
+    "on_hit_spell": {
+      "type": "boolean",
+      "description": "Cast as a Bonus Action right after hitting with a weapon or an Unarmed Strike (smites): its damage joins the hit's (doubled on a Critical Hit) and its effects land on the target."
+    },
+    "on_hit_melee_only": {
+      "type": "boolean",
+      "description": "The smite needs a melee hit."
+    },
+    "damage_bonus_vs": {
+      "type": "object",
+      "description": "Extra dice against creature types (Divine Smite: +1d8 against Fiends and Undead).",
+      "properties": {
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dice": {
+          "type": "string"
+        }
+      }
     }
   }
 }

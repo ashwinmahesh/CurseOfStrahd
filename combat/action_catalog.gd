@@ -306,6 +306,8 @@ func _sustained(c: Combatant, out: Array[Dictionary]) -> void:
 				targeting = "direction"
 			"move_object":
 				targeting = "point"
+			"move_mark":
+				targeting = "enemy"
 			"heal_one":
 				targeting = "ally"
 		var cost := "bonus" if str(a["cost"]) == "bonus_action" else "action"

@@ -461,6 +461,19 @@ func rider_options(c: Combatant) -> Array[Dictionary]:
 	if has_feature(c, "rend_mind"):
 		var rw := "" if ch.resource_left("rend_mind") > 0 or ch.resource_left("psionic_energy") >= 3 else "No uses left"
 		out.append({"id": "rend_mind", "label": "Rend Mind", "sub": "Sneak Attack with a blade: Wis save or Stunned", "why": rw})
+	# Smite spells (Divine Smite, Searing Smite...): cast as a Bonus Action right after a hit.
+	for sp in enc().spells.castable(c):
+		var sd := Compendium.shared().spell_data(str(sp["id"]))
+		if not bool(sd.get("on_hit_spell", false)):
+			continue
+		var sw := ""
+		if not c.bonus_available:
+			sw = "Bonus Action already used"
+		elif c.cast_slot_spell_this_turn and int(sd.get("level", 0)) > 0 and not bool(sp["free"]):
+			sw = "Already cast a spell with a slot this turn"
+		elif int(sd.get("level", 0)) > 0 and not bool(sp["free"]) and enc().spells._lowest_slot(ch, int(sd.get("level", 1))) == 0:
+			sw = "No spell slots left"
+		out.append({"id": "smite:" + str(sp["id"]), "label": str(sd["name"]), "sub": "on your next hit", "why": sw})
 	if has_feature(c, "overchannel"):
 		var uses := int(c.get_meta("overchannel_uses", 0))
 		out.append({"id": "overchannel", "label": "Overchannel", "sub": "max damage on the next level 1-5 spell%s" % ("" if uses == 0 else " · costs Necrotic damage"), "why": ""})
@@ -584,6 +597,50 @@ func hit_damage_dice(c: Combatant, target: Combatant, option: Dictionary, st: Di
 		out.append({"dice": str(ch.class_level_of("rogue")), "type": str(p.damage_type), "label": "Assassinate"})
 	if has_feat(c, "charger") and melee and c.moved and e.current() == c and _once(c, "charger"):
 		out.append({"dice": "1d8", "type": str(p.damage_type), "label": "Charge"})
+	# An armed smite spell: cast now (a Bonus Action and a slot); its dice join the hit's.
+	for a: String in c.armed.duplicate():
+		if not a.begins_with("smite:"):
+			continue
+		var sid := a.substr(6)
+		var sd := Compendium.shared().spell_data(sid)
+		if bool(sd.get("on_hit_melee_only", true)) and not melee:
+			continue
+		if not c.bonus_available:
+			break
+		var lvl := int(sd.get("level", 1))
+		var free := false
+		for k in e.spells.castable(c):
+			if str(k["id"]) == sid and bool(k["free"]):
+				free = true
+		var slot := lvl if free else e.spells._lowest_slot(ch, lvl)
+		if slot == 0 or (c.cast_slot_spell_this_turn and not free):
+			break
+		c.armed.erase(a)
+		c.bonus_available = false
+		if free:
+			ch.spend_resource("spell:%s" % sid)
+		else:
+			ch.expend_slot(slot)
+			c.cast_slot_spell_this_turn = true
+		var conc: Concentration = null
+		if bool((sd.get("duration", {}) as Dictionary).get("concentration", false)):
+			conc = c.creature.begin_concentration(sid, str(sd["name"]))
+		e.log.add("spell", "%s casts %s on the hit (level %d)" % [c.name(), sd["name"], slot], c.id)
+		var ctx := {"c": c, "s": sd, "slot": slot, "nums": e.spells.numbers(c, e.spells._entry_any(c, sid)), "conc": conc, "opts": {},
+			"choice": SpellCaster.choice_of(sd, {})}
+		st["smite_ctx"] = ctx
+		for part: Variant in sd.get("damage", []):
+			var pd := part as Dictionary
+			var base := DiceRoller.parse_expr(str(pd.get("dice", "0")))
+			var n := int(base["count"])
+			var up := str((sd.get("upcast", {}) as Dictionary).get("damage", ""))
+			if up != "" and slot > lvl:
+				n += int(DiceRoller.parse_expr(up)["count"]) * (slot - lvl)
+			out.append({"dice": "%dd%d" % [n, int(base["sides"])], "type": str(pd.get("type", e.spells._damage_type(ctx, pd))), "label": str(sd["name"])})
+		var vs := sd.get("damage_bonus_vs", {}) as Dictionary
+		if not vs.is_empty() and str(target.creature.creature_type) in (vs.get("types", []) as Array):
+			out.append({"dice": str(vs.get("dice", "1d8")), "type": str((sd.get("damage", [{}]) as Array)[0].get("type", "radiant")), "label": "%s (%s)" % [sd["name"], target.creature.creature_type]})
+		break
 	if c.has_meta("poisoned_weapon") and _once(c, "poison_dose"):
 		c.remove_meta("poisoned_weapon")
 		st["poison_dose"] = true
@@ -746,6 +803,11 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 			fx12.turn_owner_id = target.id
 			fx12.repeat_save = {"ability": "wis", "dc": rdc, "when": "end"}
 			target.creature.add_effect(fx12)
+	# A smite spell's effects (Searing Smite's burning, Thunderous Smite's push...).
+	if st.has("smite_ctx") and alive:
+		var sctx := st["smite_ctx"] as Dictionary
+		e.spells.apply_effect_entries(sctx, target, (sctx["s"] as Dictionary).get("effects", []) as Array, "hit", r)
+		e.spells._finish_concentration(sctx)
 	# Giant Ancestry riders.
 	match str(st.get("giant", "")):
 		"frosts_chill":
