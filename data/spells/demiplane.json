@@ -1,0 +1,38 @@
+{
+  "id": "demiplane",
+  "name": "Demiplane",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "conjuration",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1
+  },
+  "targets": {
+    "kind": "point",
+    "description": "a flat solid surface you can see"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "A shadowy door on a wall opens onto an empty 30-foot room on its own plane.",
+  "text": "Anything left inside stays there when the door vanishes. Later castings can make a new demiplane or reopen one you (or someone whose demiplane you know) made before."
+}

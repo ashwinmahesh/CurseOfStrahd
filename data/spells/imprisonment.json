@@ -1,0 +1,43 @@
+{
+  "id": "imprisonment",
+  "name": "Imprisonment",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 9,
+  "school": "abjuration",
+  "classes": [
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a statuette of the target worth 5,000+ GP",
+    "m_cost_gp": 5000
+  },
+  "duration": {
+    "kind": "until_dispelled"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "wis",
+  "save_success": "none",
+  "tags": [
+    "control"
+  ],
+  "summary": "Wis save or a creature is bound in a magical prison (burial, chains, hedged prison, minimus containment or slumber) until a condition you set is met.",
+  "text": "A creature that succeeds is immune to your later castings. A bound creature doesn't age, eat or breathe, can't teleport and is hidden from divination; only Dispel Magic cast with a level 9 slot on the prison or statuette can end it early, and reusing the statuette frees the first prisoner."
+}

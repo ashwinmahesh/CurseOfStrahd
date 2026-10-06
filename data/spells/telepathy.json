@@ -1,0 +1,38 @@
+{
+  "id": "telepathy",
+  "name": "Telepathy",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "divination",
+  "classes": [
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "unlimited"
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a pair of linked silver rings"
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a willing creature you are familiar with"
+  },
+  "tags": [
+    "communication"
+  ],
+  "summary": "A two-way telepathic link with a willing creature you know, anywhere on your plane, for 24 hours.",
+  "text": "You can share words, images, sounds and other sensations instantly, and the creature understands you without a shared language. It ends if either of you leaves the plane."
+}

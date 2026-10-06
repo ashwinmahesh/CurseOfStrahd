@@ -1,0 +1,60 @@
+{
+  "id": "holy_aura",
+  "name": "Holy Aura",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "abjuration",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 30
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a reliquary worth 1,000+ GP",
+    "m_cost_gp": 1000
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "ally",
+    "description": "you and creatures of your choice in the aura"
+  },
+  "zone": {
+    "affects": "allies",
+    "triggers": [],
+    "inside": {
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save:all"
+        },
+        {
+          "stat": "attacked_with",
+          "value": "disadvantage"
+        }
+      ]
+    }
+  },
+  "tags": [
+    "defense",
+    "buff"
+  ],
+  "summary": "30-foot Emanation: chosen creatures have Advantage on saves and attacks against them have Disadvantage.",
+  "text": "Creatures of your choice in the aura have Advantage on all saving throws, and other creatures have Disadvantage on attack rolls against them. A Fiend or Undead that hits one of them with a melee attack makes a Constitution save or is Blinded until the end of its next turn."
+}

@@ -1,0 +1,43 @@
+{
+  "id": "prismatic_spray",
+  "name": "Prismatic Spray",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 7,
+  "school": "evocation",
+  "classes": [
+    "bard",
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "area": {
+    "shape": "cone",
+    "size": 60
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "dex",
+  "save_success": "special",
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "60-foot Cone: each creature makes a Dex save against a random coloured ray (12d6 of a random damage type, creeping petrification or banishment).",
+  "text": "Roll 1d8 per creature: 1-5 deal 12d6 Fire, Acid, Lightning, Poison or Cold (half on a success); 6 Restrains on a failure, then Con saves at the end of its turns until three successes free it or three failures Petrify it; 7 Blinds on a failure, then a Wis save at the start of your next turn ends it or, on a failure, sends the creature to another plane. On an 8 the creature is hit by two rays (reroll 8s)."
+}

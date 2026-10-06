@@ -1,0 +1,42 @@
+{
+  "id": "project_image",
+  "name": "Project Image",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 7,
+  "school": "illusion",
+  "classes": [
+    "bard",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "miles",
+    "miles": 500
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a statuette of yourself worth 5+ GP",
+    "m_cost_gp": 5
+  },
+  "duration": {
+    "kind": "days",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "a place within range you have seen before"
+  },
+  "tags": [
+    "utility",
+    "communication"
+  ],
+  "summary": "An intangible copy of you appears at a place you've seen up to 500 miles away; you see and hear through it.",
+  "text": "As a Magic action you move it up to 60 feet and make it talk and act; it vanishes if it takes any damage. A Study action and an Intelligence (Investigation) check against your spell save DC reveals it as an illusion."
+}

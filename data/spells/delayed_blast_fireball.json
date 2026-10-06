@@ -1,0 +1,55 @@
+{
+  "id": "delayed_blast_fireball",
+  "name": "Delayed Blast Fireball",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 7,
+  "school": "evocation",
+  "classes": [
+    "sorcerer",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 150
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a ball of bat guano and sulfur"
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "12d6",
+      "type": "fire"
+    }
+  ],
+  "upcast": {
+    "damage": "1d6",
+    "text": "The starting damage increases by 1d6 for each slot level above 7."
+  },
+  "tags": [
+    "damage"
+  ],
+  "summary": "A bead of fire that bursts in a 20-foot-radius Sphere when the spell ends: Dex save, 12d6 Fire plus 1d6 per turn it waited (half on a success).",
+  "text": "A glowing bead hangs at a point in range until the spell ends, then bursts: each creature within 20 feet of it makes a Dexterity save, taking the stored Fire damage on a failure or half on a success. The damage starts at 12d6 and grows by 1d6 at the end of each of your turns; a creature that touches the bead first makes a Dexterity save, setting it off on a failure or throwing it up to 40 feet on a success. Higher slots add 1d6 to the starting damage per level above 7."
+}

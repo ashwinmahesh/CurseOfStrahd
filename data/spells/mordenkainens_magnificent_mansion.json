@@ -1,0 +1,41 @@
+{
+  "id": "mordenkainens_magnificent_mansion",
+  "name": "Mordenkainen's Magnificent Mansion",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 7,
+  "school": "conjuration",
+  "classes": [
+    "bard",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 300
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a miniature door worth 15+ GP",
+    "m_cost_gp": 15
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "point",
+    "description": "a point within range for the door"
+  },
+  "tags": [
+    "utility"
+  ],
+  "summary": "A hidden door to a furnished extradimensional mansion (up to 50 ten-foot Cubes, food for 100, 100 servants) for 24 hours.",
+  "text": "Only you and creatures you name can enter, and you open or close the door from within 30 feet. The servants obey you but can't harm anyone or leave, and everything inside is pushed out next to the door when the spell ends."
+}

@@ -11,9 +11,9 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 | species | 10 | 9 | 1 |
 | backgrounds | 16 | 4 | 12 |
 | feats | 75 | 17 | 58 |
-| spells | 256 | 216 | 40 |
+| spells | 309 | 216 | 93 |
 | items | 186 | 183 | 3 |
-| monsters | 45 | 28 | 17 |
+| monsters | 56 | 28 | 28 |
 | conditions | 15 | 15 | 0 |
 
 ## Entries to check against the books
@@ -23,9 +23,9 @@ Rules don't include, entered from knowledge of the books; these need a check aga
 - **species** (PHB2024, 1): Aasimar
 - **backgrounds** (PHB2024, 12): Artisan, Charlatan, Entertainer, Farmer, Guard, Guide, Hermit, Merchant, Noble, Sailor, Scribe, Wayfarer
 - **feats** (PHB2024, 58): Actor, Athlete, Blind Fighting, Boon of Energy Resistance, Boon of Fortitude, Boon of Recovery, Boon of Skill, Boon of Speed, Charger, Chef, Crafter, Crossbow Expert, Crusher, Defensive Duelist, Dual Wielder, Dueling, Durable, Elemental Adept, Fey Touched, Great Weapon Master, Healer, Heavily Armored, Heavy Armor Master, Inspiring Leader, Interception, Keen Mind, Lightly Armored, Lucky, Mage Slayer, Martial Weapon Training, Medium Armor Master, Moderately Armored, Mounted Combatant, Musician, Observant, Piercer, Poisoner, Polearm Master, Protection, Resilient, Ritual Caster, Sentinel, Shadow Touched, Sharpshooter, Shield Master, Skill Expert, Skulker, Slasher, Speedy, Spell Sniper, Tavern Brawler, Telekinetic, Telepathic, Thrown Weapon Fighting, Tough, Unarmed Fighting, War Caster, Weapon Master
-- **spells** (PHB2024, 40): Arcane Vigor, Armor of Agathys, Arms of Hadar, Aura of Purity, Aura of Vitality, Beast Sense, Blade Ward, Blinding Smite, Cloud of Daggers, Compelled Duel, Conjure Barrage, Cordon of Arrows, Crown of Madness, Crusader's Mantle, Elemental Weapon, Etherealness, Feign Death, Fount of Moonlight, Friends, Grasping Vine, Hail of Thorns, Hunger of Hadar, Lightning Arrow, Mind Sliver, Phantasmal Killer, Plane Shift, Staggering Smite, Summon Aberration, Summon Beast, Summon Construct, Summon Elemental, Summon Fey, Summon Undead, Thorn Whip, Thunderclap, Thunderous Smite, Toll the Dead, Witch Bolt, Word of Radiance, Wrathful Smite
+- **spells** (PHB2024, 93): Animal Shapes, Antimagic Field, Antipathy/Sympathy, Arcane Vigor, Armor of Agathys, Arms of Hadar, Astral Projection, Aura of Purity, Aura of Vitality, Beast Sense, Befuddlement, Blade Ward, Blinding Smite, Clone, Cloud of Daggers, Compelled Duel, Conjure Barrage, Conjure Celestial, Control Weather, Cordon of Arrows, Crown of Madness, Crusader's Mantle, Delayed Blast Fireball, Demiplane, Divine Word, Dominate Monster, Earthquake, Elemental Weapon, Etherealness, Feign Death, Finger of Death, Fire Storm, Forcecage, Foresight, Fount of Moonlight, Friends, Gate, Glibness, Grasping Vine, Hail of Thorns, Holy Aura, Hunger of Hadar, Imprisonment, Incendiary Cloud, Lightning Arrow, Mass Heal, Maze, Meteor Swarm, Mind Blank, Mind Sliver, Mirage Arcane, Mordenkainen's Magnificent Mansion, Mordenkainen's Sword, Phantasmal Killer, Plane Shift, Power Word Fortify, Power Word Heal, Power Word Kill, Power Word Stun, Prismatic Spray, Prismatic Wall, Project Image, Regenerate, Resurrection, Reverse Gravity, Sequester, Shapechange, Simulacrum, Staggering Smite, Storm of Vengeance, Summon Aberration, Summon Beast, Summon Construct, Summon Elemental, Summon Fey, Summon Undead, Sunburst, Symbol, Telepathy, Teleport, Thorn Whip, Thunderclap, Thunderous Smite, Time Stop, Toll the Dead, True Polymorph, True Resurrection, Tsunami, Weird, Wish, Witch Bolt, Word of Radiance, Wrathful Smite
 - **items** (CoS, 2): Bones of St. Andral, Dream Pastry
 - **items** (PHB2024, 1): Spellbook
 - **monsters** (custom, 1): Apprentice Wizard
-- **monsters** (MM2025, 9): Berserker, Druid, Ghost, Needle Blight, Revenant, Saber-Toothed Tiger, Town Guard, Twig Blight, Vine Blight
+- **monsters** (MM2025, 20): Berserker, Deva, Druid, Flesh Golem, Ghost, Giant Spider, Knight, Mage, Mummy, Needle Blight, Ogre, Priest, Revenant, Saber-Toothed Tiger, Town Guard, Twig Blight, Vine Blight, Wight, Will-o'-Wisp, Wraith
 - **monsters** (CoS, 7): Broom of Animated Attack, Izek Strazni, Kasimir Velikov, Mongrelfolk, Rictavio, Strahd Zombie, Wereraven

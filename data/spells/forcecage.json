@@ -1,0 +1,47 @@
+{
+  "id": "forcecage",
+  "name": "Forcecage",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 7,
+  "school": "evocation",
+  "classes": [
+    "bard",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 100
+  },
+  "area": {
+    "shape": "cube",
+    "size": 20
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "ruby dust worth 1,500+ GP, which the spell consumes",
+    "m_cost_gp": 1500,
+    "m_consumed": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "a 20-foot cage or a 10-foot box"
+  },
+  "tags": [
+    "control"
+  ],
+  "summary": "An invisible, immobile prison of force (a 20-foot barred cage or a solid 10-foot box) traps the creatures inside.",
+  "text": "Creatures wholly inside the cage or box are trapped and can't leave by nonmagical means; creatures partly inside are pushed out. Teleporting or planar travel out needs a Charisma save first (a failure wastes the attempt), a solid box also blocks spells in or out, and Dispel Magic can't end it."
+}

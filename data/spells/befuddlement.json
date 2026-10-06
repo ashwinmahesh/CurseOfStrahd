@@ -1,0 +1,63 @@
+{
+  "id": "befuddlement",
+  "name": "Befuddlement",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "enchantment",
+  "classes": [
+    "bard",
+    "druid",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 150
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a key ring with no keys"
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "creature",
+    "count": 1,
+    "description": "a creature you can see"
+  },
+  "save": "int",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "10d12",
+      "type": "psychic"
+    }
+  ],
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "flag",
+            "value": "cant_cast"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "damage",
+    "debuff"
+  ],
+  "summary": "Int save: 10d12 Psychic damage and the target can't cast spells or take the Magic action; half damage only on a success.",
+  "text": "A creature you can see in range makes an Intelligence save. On a failure it takes 10d12 Psychic damage and can't cast spells or take the Magic action, repeating the save every 30 days (Greater Restoration, Heal or Wish also end it); on a success it takes half damage only."
+}

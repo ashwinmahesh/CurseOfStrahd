@@ -1,0 +1,69 @@
+{
+  "id": "weird",
+  "name": "Weird",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 9,
+  "school": "illusion",
+  "classes": [
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 120
+  },
+  "area": {
+    "shape": "sphere",
+    "size": 30
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "creatures of your choice in the Sphere"
+  },
+  "save": "wis",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "10d10",
+      "type": "psychic"
+    }
+  ],
+  "conditions": [
+    "frightened"
+  ],
+  "effects": [
+    {
+      "effect": "condition",
+      "params": {
+        "condition": "frightened",
+        "repeat_save": "end_of_turn",
+        "repeat_fail_damage": {
+          "dice": "5d10",
+          "type": "psychic"
+        }
+      }
+    }
+  ],
+  "area_targets": "enemies",
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "Chosen creatures in a 30-foot-radius Sphere make a Wis save: 10d10 Psychic and Frightened, or half damage only on a success.",
+  "text": "A Frightened target makes a Wisdom save at the end of each of its turns, taking 5d10 Psychic damage on a failure; a success ends the spell on it."
+}

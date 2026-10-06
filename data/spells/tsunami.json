@@ -1,0 +1,52 @@
+{
+  "id": "tsunami",
+  "name": "Tsunami",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "conjuration",
+  "classes": [
+    "druid"
+  ],
+  "casting_time": {
+    "unit": "minute",
+    "amount": 1
+  },
+  "range": {
+    "kind": "sight"
+  },
+  "area": {
+    "shape": "wall",
+    "size": 300,
+    "width": 50,
+    "height": 300
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "rounds",
+    "amount": 6,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area"
+  },
+  "save": "str",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "6d10",
+      "type": "bludgeoning"
+    }
+  ],
+  "tags": [
+    "damage",
+    "control"
+  ],
+  "summary": "A wall of water up to 300 feet long and high and 50 feet thick: Str save, 6d10 Bludgeoning, half on a success.",
+  "text": "At the start of each of your later turns the wall moves 50 feet away from you, carrying creatures in it; Huge or smaller creatures it holds or reaches make a Strength save or take 5d10 Bludgeoning (once per round), then the wall loses 50 feet of height and 1d10 of damage, ending at 0 height. Swimming in it takes a DC 15 Strength (Athletics) check each turn."
+}

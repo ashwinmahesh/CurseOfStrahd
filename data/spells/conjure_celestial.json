@@ -1,0 +1,82 @@
+{
+  "id": "conjure_celestial",
+  "name": "Conjure Celestial",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 7,
+  "school": "conjuration",
+  "classes": [
+    "cleric"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "area": {
+    "shape": "cylinder",
+    "size": 10,
+    "height": 40
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 10,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "area",
+    "description": "each creature you can see in the Cylinder"
+  },
+  "save": "dex",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "6d12",
+      "type": "radiant"
+    }
+  ],
+  "upcast": {
+    "damage": "1d12",
+    "text": "The healing and the damage each increase by 1d12 for each slot level above 7."
+  },
+  "zone": {
+    "triggers": [
+      "cast",
+      "enter",
+      "end_turn",
+      "moved_into"
+    ],
+    "affects": "enemies",
+    "light": {
+      "bright": 10,
+      "dim": 0
+    }
+  },
+  "sustain": [
+    {
+      "do": "move_object",
+      "cost": "free",
+      "move": 30,
+      "once_per_turn": true,
+      "not_this_turn": false,
+      "label": "Move the pillar of light",
+      "sub": "30 ft",
+      "help": "When you move on your turn, the pillar can move up to 30 ft too; foes it moves onto make the save."
+    }
+  ],
+  "tags": [
+    "damage",
+    "healing",
+    "light"
+  ],
+  "summary": "A movable 10-foot-radius pillar of light that heals (4d12 + modifier) or sears (6d12 Radiant, Dex half) each creature in it.",
+  "text": "A brightly lit Cylinder (10-foot radius, 40 feet high) appears at a point in range; each creature you can see in it either regains 4d12 + your spellcasting modifier Hit Points or makes a Dexterity save against 6d12 Radiant damage (half on a success), your pick per creature. The same happens when the Cylinder moves onto a creature, or a creature enters it or ends its turn there, at most once per turn, and the Cylinder can move up to 30 feet when you move. Higher slots add 1d12 to both the healing and the damage per level above 7."
+}

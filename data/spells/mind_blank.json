@@ -1,0 +1,55 @@
+{
+  "id": "mind_blank",
+  "name": "Mind Blank",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 8,
+  "school": "abjuration",
+  "classes": [
+    "bard",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "touch"
+  },
+  "components": {
+    "v": true,
+    "s": true
+  },
+  "duration": {
+    "kind": "hours",
+    "amount": 24
+  },
+  "targets": {
+    "kind": "ally",
+    "count": 1,
+    "description": "a willing creature you touch"
+  },
+  "effects": [
+    {
+      "effect": "modifiers",
+      "params": {
+        "modifiers": [
+          {
+            "stat": "immunity",
+            "value": "psychic"
+          },
+          {
+            "stat": "condition_immunity",
+            "value": "charmed"
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    "defense"
+  ],
+  "summary": "For 24 hours a willing creature is immune to Psychic damage and the Charmed condition and shielded from mind-reading and scrying.",
+  "text": "The target can't have its emotions, thoughts or location sensed by magic, and no spell, even Wish, can spy on it or control its mind."
+}

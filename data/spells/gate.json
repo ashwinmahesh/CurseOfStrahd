@@ -1,0 +1,44 @@
+{
+  "id": "gate",
+  "name": "Gate",
+  "source": {
+    "book": "PHB2024",
+    "note": "Entered from knowledge of the 2024 PHB; compare every number with the book before setting checked_against."
+  },
+  "level": 9,
+  "school": "conjuration",
+  "classes": [
+    "cleric",
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 60
+  },
+  "components": {
+    "v": true,
+    "s": true,
+    "m": "a diamond worth 5,000+ GP",
+    "m_cost_gp": 5000
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space you can see"
+  },
+  "tags": [
+    "movement",
+    "summon"
+  ],
+  "summary": "Open a portal 5 to 20 feet across to a place on another plane, or name a creature there to pull it through.",
+  "text": "Only the portal's front side carries travellers across, and deities can block it in their domains. A creature you name by its true name is drawn to the nearest free space on your side, free to act as it chooses."
+}
