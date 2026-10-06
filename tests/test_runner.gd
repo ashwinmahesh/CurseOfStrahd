@@ -40,6 +40,8 @@ func _ready() -> void:
 				add_child(tc)
 				await tc.before_each()
 				await tc.call(method)
+				if tc.has_method("after_each"):
+					await tc.call("after_each")
 				if tc.failures.is_empty():
 					print("  ok    ", tc.current_test)
 				else:

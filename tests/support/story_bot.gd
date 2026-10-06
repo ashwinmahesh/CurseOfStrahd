@@ -1,0 +1,382 @@
+class_name StoryBot
+extends RefCounted
+## A scripted player for the Phase 3 exit run (tests/integration/test_phase3_exit.gd): it travels by the locations'
+## exits, walks through doors, talks to people and answers by a list of preferred option texts, wins fights with
+## PartyAutopilot, takes loot, rests and heals between fights, and levels the party up at milestones. Everything goes
+## through the real game scene (scenes/game.tscn), the same calls the mouse and keyboard make. Test-only.
+
+var test: Node
+var root: Node
+## Option text fragments to pick, in order of preference; the first that matches a shown option wins.
+var prefer: Array[String] = []
+## Option text fragments never to pick unless nothing else is left.
+var avoid: Array[String] = []
+var trace: Array[String] = []
+var fights: Array[Dictionary] = []
+var conversations: Array[String] = []
+var _chosen := {}
+var defeated := false
+
+
+func _init(test_: Node, root_: Node) -> void:
+	test = test_
+	root = root_
+
+
+func view() -> LocationView:
+	return root.get("view") as LocationView
+
+
+func st() -> StoryState:
+	return GameState.story
+
+
+func frames(n: int) -> void:
+	for i in n:
+		await test.get_tree().process_frame
+
+
+func note(text: String) -> void:
+	trace.append("[%s] %s" % [view().loc_id if view() != null else "?", text])
+
+
+# --- Waiting --------------------------------------------------------------------------------------
+
+## Lets the game run until the party is standing still, handling fights, conversations and loot on the way.
+## False if the party was defeated.
+func settle(max_frames: int = 4000) -> bool:
+	var idle := 0
+	for i in max_frames:
+		if defeated:
+			return false
+		var v := view()
+		if v == null:
+			await frames(1)
+			continue
+		if v.in_combat:
+			if not await fight():
+				return false
+			idle = 0
+			continue
+		if root.get("dialogue") != null:
+			await converse()
+			idle = 0
+			continue
+		if root.get("loot") != null:
+			var lw := root.get("loot") as LootWindow
+			lw.call("_take_gold")
+			if root.get("loot") != null:
+				lw.call("_take_all")
+			if root.get("loot") != null:
+				lw.call("_close")
+			await frames(1)
+			continue
+		if root.get("screen") != null:
+			root.call("close_screen")
+		if (v.get("_queue") as Array).is_empty() and not v.busy:
+			idle += 1
+			if idle >= 3:
+				return true
+		else:
+			idle = 0
+		await frames(1)
+	note("still busy after %d frames" % max_frames)
+	return true
+
+
+## Plays the current fight to its end with the autopilot. True on victory.
+func fight() -> bool:
+	await frames(2)
+	var v := view()
+	var cv := v.combat_view
+	if cv == null:
+		return true
+	var e := cv.e
+	var foes: Array[String] = []
+	for c in e.combatants:
+		if c.side == &"enemy":
+			foes.append(c.name())
+	var res := PartyAutopilot.new(e).run(40)
+	fights.append({"where": v.loc_id, "foes": foes, "outcome": str(res["outcome"]), "rounds": int(res["rounds"]),
+		"downs": int(res["downs"])})
+	note("fight vs %s: %s in %d rounds, %d down" % [", ".join(foes), res["outcome"], int(res["rounds"]), int(res["downs"])])
+	await frames(2)
+	if v.in_combat and v.combat_view != null:
+		v.combat_view.finished.emit(e.outcome if e.state == Encounter.State.OVER else "defeat")
+	await frames(3)
+	if str(res["outcome"]) != "victory":
+		var lines := e.log.dump().split("\n")
+		for l in lines.slice(0, 80):
+			trace.append("      | " + l)
+		for c in e.combatants:
+			trace.append("      @ %s at %s, %d HP%s" % [c.name(), c.cell, c.creature.hp, " (dead)" if c.creature.dead else ""])
+		defeated = true
+		return false
+	await recover()
+	return true
+
+
+## Answers the open conversation: preferred options first, then options not taken yet, then the last one.
+func converse() -> void:
+	var d := root.get("dialogue") as DialogueUI
+	conversations.append("%s:%s" % [d.runner.file.key if d.runner.file != null else "", d.runner.node])
+	for i in 400:
+		if root.get("dialogue") == null:
+			return
+		if bool(d.get("_waiting_continue")):
+			d.call("_advance")
+			await frames(1)
+			continue
+		var opts := d.options_shown
+		if opts.is_empty():
+			await frames(1)
+			continue
+		var pick := _pick(opts)
+		var text := str((opts[pick] as Dictionary)["text"])
+		_chosen[text] = int(_chosen.get(text, 0)) + 1
+		note("says: %s" % text)
+		d.call("_choose", pick)
+		await frames(1)
+	note("conversation didn't end")
+
+
+func _pick(opts: Array) -> int:
+	var enabled: Array[int] = []
+	for i in opts.size():
+		if bool((opts[i] as Dictionary).get("enabled", true)):
+			enabled.append(i)
+	for p in prefer:
+		for i in enabled:
+			var t := str((opts[i] as Dictionary)["text"])
+			if t.containsn(p) and int(_chosen.get(t, 0)) < 2:
+				return i
+	for i in enabled:
+		var t := str((opts[i] as Dictionary)["text"])
+		if int(_chosen.get(t, 0)) == 0 and not _avoided(t):
+			return i
+	for i in enabled:
+		var t := str((opts[i] as Dictionary)["text"])
+		if t.containsn("goodbye") or t.containsn("leave") or t.containsn("that's all"):
+			return i
+	return int(enabled.back()) if not enabled.is_empty() else 0
+
+
+func _avoided(t: String) -> bool:
+	for a in avoid:
+		if t.containsn(a):
+			return true
+	return false
+
+
+# --- Moving ---------------------------------------------------------------------------------------
+
+## Travels to `location_id` through the exits whose conditions hold now. True when there.
+func go_to(location_id: String) -> bool:
+	for hop in 20:
+		var v := view()
+		if v.loc_id == location_id:
+			return true
+		var route := _route(v.loc_id, location_id)
+		if route.is_empty():
+			note("no way from %s to %s" % [v.loc_id, location_id])
+			return false
+		var exit := route[0]
+		note("heading for %s via %s" % [location_id, exit["id"]])
+		if not await walk_to(_cell(exit["cell"])):
+			return false
+		await frames(4)
+		if view() == v:
+			note("didn't leave by %s" % exit["id"])
+			return false
+	return view().loc_id == location_id
+
+
+## Walks the leader to `cell`, opening doors on the way. True if the leader got there (or left the location).
+func walk_to(cell: Vector2i) -> bool:
+	for attempt in 8:
+		var v := view()
+		if v.leader().cell == cell and attempt > 0:
+			return true
+		if not v.walk_to(cell):
+			# A locked door in the way: unlock the nearest one on a straight path, then try again.
+			if not await _open_blocking_door(cell):
+				note("can't reach %s" % cell)
+				return false
+			continue
+		if not await settle():
+			return false
+		await frames(2)
+		if view() != v:
+			return true
+	return view().leader().cell == cell
+
+
+func _open_blocking_door(goal: Vector2i) -> bool:
+	var v := view()
+	for d: Variant in v.loc.get("doors", []):
+		var door := d as Dictionary
+		var dc := _cell(door["cell"])
+		if v.thing_at(dc).is_empty() or str(v.thing_at(dc)["kind"]) != "door":
+			continue
+		if not v.grid.has_flag(dc, CombatGrid.WALL):
+			continue
+		for tries in 6:
+			v.click(dc)
+			if not await settle():
+				return false
+			if not v.grid.has_flag(dc, CombatGrid.WALL):
+				break
+		if not v.grid.has_flag(dc, CombatGrid.WALL) and v.walk_to(goal):
+			v.set("_queue", [])
+			return true
+	return false
+
+
+## Walks next to a person, prop or container and uses it (talks, examines, opens, searches for it first). A walk cut
+## short (a trap spotted on the way) is walked again.
+func use(cell: Vector2i) -> bool:
+	var v := view()
+	if v.thing_at(cell).is_empty():
+		v.search()
+		await frames(2)
+	if v.thing_at(cell).is_empty():
+		note("nothing at %s" % cell)
+		return false
+	for attempt in 5:
+		var talks := conversations.size()
+		v.click(cell)
+		if not await settle():
+			return false
+		if view() != v or conversations.size() > talks or v.grid.distance_ft(v.leader().cell, 1, cell, 1) <= 5:
+			note("used %s" % cell)
+			return true
+	note("couldn't get next to %s" % cell)
+	return false
+
+
+func talk(npc_id: String) -> bool:
+	var v := view()
+	for shown: Dictionary in v.get("_npc_shown"):
+		if str((shown["spec"] as Dictionary)["npc"]) == npc_id:
+			return await use(shown["cell"] as Vector2i)
+	note("%s isn't here" % npc_id)
+	return false
+
+
+func _route(from: String, to: String) -> Array[Dictionary]:
+	var prev := {from: {}}
+	var queue: Array[String] = [from]
+	while not queue.is_empty():
+		var here := queue.pop_front() as String
+		if here == to:
+			break
+		var loc := Compendium.shared().get_entry("locations", here)
+		for ex: Variant in loc.get("exits", []):
+			var exit := ex as Dictionary
+			var there := str(exit["to"])
+			if prev.has(there) or not StoryConditions.check(str(exit.get("when", "")), st()):
+				continue
+			prev[there] = {"from": here, "exit": exit}
+			queue.append(there)
+	var out: Array[Dictionary] = []
+	if not prev.has(to):
+		return out
+	var at := to
+	while at != from:
+		var p := prev[at] as Dictionary
+		out.push_front(p["exit"] as Dictionary)
+		at = str(p["from"])
+	return out
+
+
+static func _cell(v: Variant) -> Vector2i:
+	var a := v as Array
+	return Vector2i(int(a[0]), int(a[1]))
+
+
+# --- Looking after the party ----------------------------------------------------------------------
+
+## After a fight: heal the fallen with spells, short rest if hurt, long rest if worn down and the place allows it,
+## and level up when a milestone allows.
+func recover() -> void:
+	var party := st().party
+	for ch in party:
+		if ch.dead or ch.hp > 0:
+			continue
+		_heal_with_spells(ch)
+	var hurt := party.filter(func(c: Character) -> bool: return not c.dead and c.hp < c.max_hp() / 2)
+	if not hurt.is_empty():
+		await rest(false)
+	var worn := party.filter(func(c: Character) -> bool: return not c.dead and c.hp < c.max_hp() * 2 / 3)
+	if worn.size() >= 2:
+		await rest(true)
+	await level_up()
+
+
+func _heal_with_spells(target: Character) -> void:
+	for healer in st().party:
+		if healer.dead or healer.hp <= 0:
+			continue
+		for o in FieldCasting.options(st().party, healer, Dice.roller):
+			if bool(o["legal"]) and str(o["id"]) in ["healing_word", "cure_wounds", "prayer_of_healing"]:
+				var t: Array[Character] = [target]
+				var r := FieldCasting.cast(st().party, healer, str(o["id"]), 0, t, Dice.roller)
+				if bool(r["ok"]):
+					note("%s heals %s: %s" % [healer.name, target.name, r["text"]])
+					return
+
+
+func rest(long: bool) -> void:
+	root.call("open_screen", "rest", 0)
+	await frames(1)
+	var rs := root.get("screen") as RestScreen
+	if rs == null:
+		return
+	var rule := str(view().loc.get("rest", "risky"))
+	if rule == "no":
+		root.call("close_screen")
+		return
+	if long:
+		rs.call("_long_rest", rule)
+		note("long rest")
+	else:
+		for ch in st().party:
+			for i in 6:
+				if ch.dead or ch.hp >= ch.max_hp() * 3 / 4:
+					break
+				var hd := ch.hit_dice()
+				var spent := false
+				for die: String in hd:
+					var e := hd[die] as Dictionary
+					if int(e["spent"]) < int(e["total"]):
+						rs.call("_spend", ch, int(die))
+						spent = true
+						break
+				if not spent:
+					break
+		rs.call("_finish_short")
+		note("short rest")
+	root.call("close_screen")
+	await frames(1)
+
+
+func level_up() -> void:
+	for i in st().party.size():
+		var ch := st().party[i]
+		var guard := 0
+		while st().can_level_up(ch) and guard < 4:
+			guard += 1
+			root.call("open_screen", "level_up", i)
+			await frames(1)
+			var lu := root.get("screen") as LevelUpScreen
+			if lu == null or lu.ctl == null:
+				break
+			var ctl := lu.ctl
+			var missing := TestChars.auto_pick(func() -> Array[Choice]: return ctl.pending_choices(),
+				func(key: String, picks: Array) -> void: ctl.choose(key, picks))
+			if not missing.is_empty():
+				note("%s: level up stuck on %s" % [ch.name, missing])
+			lu.call("_confirm")
+			note("%s reaches level %d" % [ch.name, ch.character_level()])
+			root.call("close_screen")
+			await frames(1)

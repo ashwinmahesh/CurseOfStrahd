@@ -90,7 +90,7 @@ func _fighter(c: Combatant) -> CombatResult:
 func _rogue(c: Combatant) -> CombatResult:
 	var foes := _enemies(c)
 	if foes.is_empty():
-		return CombatResult.new()
+		return _melee_turn(c)   # nothing in sight: close in
 	var adjacent := false
 	for f in foes:
 		if e.distance(c, f) <= 5:
@@ -110,12 +110,28 @@ func _rogue(c: Combatant) -> CombatResult:
 
 func _cleric(c: Combatant) -> CombatResult:
 	var ch := c.creature as Character
-	# 1. Pick up the fallen.
+	# 1. Pick up the fallen: Healing Word from afar, or walk over and Cure Wounds.
 	for a in e.allies_of(c):
-		if a.creature.hp <= 0 and not a.creature.dead and e.distance(c, a) <= 60 and c.bonus_available:
-			var hw := _cast(c, "healing_word", 1, [a])
-			if hw.ok:
-				break
+		if a.creature.hp > 0 or a.creature.dead:
+			continue
+		if e.distance(c, a) <= 60 and c.bonus_available and _cast(c, "healing_word", 1, [a]).ok:
+			break
+		if c.action_available and ch.slots_left(1) > 0 and not c.cast_slot_spell_this_turn:
+			if e.distance(c, a) > 5:
+				var reach := e.reachable_for(c)
+				var best := c.cell
+				var best_cost := 1 << 30
+				for cell: Vector2i in reach:
+					var info := reach[cell] as Dictionary
+					if not bool(info["occupied"]) and e.grid.distance_ft(cell, 1, a.cell, a.size_cells) <= 5 and int(info["cost"]) < best_cost:
+						best = cell
+						best_cost = int(info["cost"])
+				if best != c.cell:
+					e.move(c, best)
+			if e.distance(c, a) <= 5:
+				var cw := _cast(c, "cure_wounds", 1, [a])
+				if cw.ok:
+					return cw
 	# 2. Turn a crowd of zombies.
 	var undead := 0
 	for h in e.hostiles_of(c):
@@ -140,7 +156,9 @@ func _cleric(c: Combatant) -> CombatResult:
 				e.spells.spiritual_weapon_attack(c, best, e.spells._beside(c, best))
 		elif ch.slots_left(2) > 0 and e.distance(c, near) <= 60 and not c.cast_slot_spell_this_turn:
 			_cast(c, "spiritual_weapon", 2, [near])
-	if not c.action_available or foes.is_empty():
+	if foes.is_empty():
+		return _melee_turn(c) if c.action_available else CombatResult.new()
+	if not c.action_available:
 		return CombatResult.new()
 	# 5. A cantrip or Guiding Bolt at the best target in range.
 	var target := _weakest(foes)
@@ -160,7 +178,7 @@ func _wizard(c: Combatant) -> CombatResult:
 	var ch := c.creature as Character
 	var foes := _enemies(c)
 	if foes.is_empty():
-		return CombatResult.new()
+		return _melee_turn(c)
 	# Sleep on the biggest cluster of creatures that sleep.
 	if ch.slots_left(1) > 0 and not c.cast_slot_spell_this_turn:
 		var best_point := Vector2.INF

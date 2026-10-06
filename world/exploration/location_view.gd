@@ -325,8 +325,11 @@ func walk_to(cell: Vector2i, then: Callable = Callable()) -> bool:
 		return false
 	_queue = path.slice(1)
 	_on_arrive = then
-	if _queue.is_empty() and then.is_valid():
-		then.call()
+	if _queue.is_empty():
+		if then.is_valid():
+			then.call()
+		elif _exit_at(cell):
+			_check_cell_events()   # standing on a way out and clicking it again: go
 	return true
 
 
@@ -340,6 +343,9 @@ func _path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	avoid.erase(to)
 	# Closed doors that would open at a touch are part of the way: the party opens them as it reaches them.
 	var doors := _openable_doors()
+	# An exit set into a wall (a house's front door on the village map) is walked into like a door.
+	if grid.has_flag(to, CombatGrid.WALL) and _exit_at(to):
+		doors[to] = {}
 	for c: Vector2i in doors:
 		grid.set_flag(c, CombatGrid.WALL, false)
 	var reach := grid.reachable(from, 1, 2000, func(c: Vector2i) -> bool: return avoid.has(c),
@@ -347,6 +353,13 @@ func _path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	for c: Vector2i in doors:
 		grid.set_flag(c, CombatGrid.WALL, true)
 	return CombatGrid.path_to(reach, to)
+
+
+func _exit_at(cell: Vector2i) -> bool:
+	for ex: Variant in loc.get("exits", []):
+		if _cell((ex as Dictionary)["cell"]) == cell:
+			return true
+	return false
 
 
 ## Closed, unlocked, known doors whose conditions hold: {cell: door spec}.
@@ -383,7 +396,7 @@ func _process(delta: float) -> void:
 		return
 	_step_t = SNEAK_STEP_TIME if sneaking else STEP_TIME
 	var next: Vector2i = _queue.pop_front()
-	if grid.has_flag(next, CombatGrid.WALL):
+	if grid.has_flag(next, CombatGrid.WALL) and not _exit_at(next):
 		var door := _openable_doors().get(next, {}) as Dictionary
 		if not door.is_empty():
 			_use_door(door)
@@ -468,8 +481,11 @@ func _check_cell_events() -> bool:
 		var exit := ex as Dictionary
 		if _cell(exit["cell"]) == leader().cell:
 			if not StoryConditions.check(str(exit.get("when", "")), st):
-				narration.emit(str(exit.get("locked_text", "The way is barred.")))
-				return true
+				# A barred way only stops a walk that ends on it (passing over it, or standing there to use
+				# something next to it, carries on).
+				if _queue.is_empty() and not _on_arrive.is_valid():
+					narration.emit(str(exit.get("locked_text", "The way is barred.")))
+				return false
 			_save_positions()
 			st.advance_minutes(5)   # walking between places takes a few minutes; rests take the hours
 			exit_requested.emit(str(exit["to"]), str(exit.get("spawn", "default")))
