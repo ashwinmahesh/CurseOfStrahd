@@ -1,6 +1,7 @@
 # Curse of Strahd — agent rules
 Godot 4.7.2 (typed GDScript) · Blender 5.2 · macOS, Apple Silicon
-Plan: ~/Documents/Obsidian Vault/CurseOfStrahd/Game_Plan.md (owned by the planning thread; read, don't edit)
+Plan: ~/Documents/Obsidian Vault/CurseOfStrahd/Game_Plan.md (status updates are fine; scope changes go through the
+project's coordinator)
 Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log NN - <title>.md")
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
@@ -65,7 +66,8 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
 
 ## Voice (ADR 0013)
 - Spoken lines: ElevenLabs (eleven_v4, owner decision 2026-10-06) via `make voice` only; model, format and each
-  speaker's voice pinned in audio/voice/casting.json. Key: ELEVENLABS_API_KEY, sent as a header. A clip is
+  speaker's voice pinned in audio/voice/casting.json. Barovians, Vistani and the castle's people name `eleven_v3`
+  there, which keeps their accents (owner, 2026-10-07). Key: ELEVENLABS_API_KEY, sent as a header. A clip is
   audio/voice/<speaker>/<sha1(text)[:16]>.mp3, so editing a line leaves it silent until `make voice` runs again;
   `VoiceOver.say` plays it (party lines in the speaker's voice: `VoiceOver.beat_voice`). Lines with {name},
   options and books are never voiced.

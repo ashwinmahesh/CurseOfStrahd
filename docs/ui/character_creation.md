@@ -32,16 +32,26 @@ The UI never computes rules. Every list, number, reason and warning on these scr
 
 ### 1. Start (`cc_01_start`)
 Changed by the owner (2026-10-06): "Only 1 character of the party can be the custom created one (the player can choose
-which one they want to replace). Using a custom character at all is optional." The start screen shows the four
-pregens (portrait, name, class line) with two choices: **Play these four**, or **Bring your own hero**, which asks
-who stays behind ("Leave Ilse behind" under each pregen) and opens the creator in **hero mode** for one character.
-The hero takes the replaced pregen's place in the marching order; the other three keep their builds and their
-personal quests (docs/story/personal_quests.md). Editing the pregens and building all four from scratch are gone.
+which one they want to replace). Using a custom character at all is optional." Changed again on 2026-10-07: six new
+companions replace the four Phase 1 pregens, and the player picks who travels.
 
-Hero mode is the same steps for one character, with three differences: the party strip shows the three companions
-("Travelling with Ilse, Hedda and Silvain"); the **Appearance** step is the paper doll below; and Review's party
-composition counts the companions. A hero can't take a companion's name (`CharacterBuilder.name_problems`). Madam
-Eva's respec of a custom hero opens the same Appearance step.
+The start screen ("Who goes into the mists?") shows the roster, the pregens marked `roster: true` in data/pregens
+(`Pregens.roster_ids()`, in name order): Godrick Pendlebrook (Goliath Paladin), Kip Smudgewick (Tiefling Warlock),
+Liriel Dawnsong (High Elf Cleric), Ratatoille (High Elf Wizard), Thistle (Human Ranger) and Wren Featherfoot
+(Halfling Monk). Each card has the portrait, name and class line, with the summary and hook in its tooltip. The
+player lights up to four (`StoryState.PARTY_CAP`) to travel; the first four are lit to begin with. The rest start
+at camp and can be swapped in on the road (party_management.md, "Who travels"). A seventh card, **Your own hero**,
+opens the creator in **hero mode**; the hero joins the roster and is lit to travel, taking the last lit slot if four
+are already lit. **Begin with these 4** starts the game at level 1. The companions keep their builds and their
+personal quests (docs/story/personal_quests.md). Editing the pregens and building a whole party from scratch are gone.
+
+The old four (Ilse, Tamsin, Hedda and Silvain) stay in data/pregens with `roster: false`, for older saves, the
+combat arena and tests.
+
+Hero mode is the same steps for one character, with three differences: the party strip shows the companions picked
+to travel ("Travelling with Godrick, Liriel and Thistle"); the **Appearance** step is the paper doll below; and
+Review's party composition counts the companions. A hero can't take any pregen's name, the old four's included
+(`CharacterBuilder.name_problems`). Madam Eva's respec of a custom hero opens the same Appearance step.
 
 ### 2. Class (`cc_02_class`)
 ![Class](wireframes/cc_02_class.svg)

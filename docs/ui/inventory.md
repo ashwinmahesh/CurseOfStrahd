@@ -24,7 +24,8 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
   be sold or dropped.
 - **Carrying**: carried / capacity with the breakdown (Strength × 15, × size; Powerful Build counts one size larger)
   and the optional DMG encumbrance thresholds if the owner turns them on.
-- **Attunement**: three slots; attuning happens during a Short Rest (the screen queues it for the next one).
+- **Attunement**: three slots; attuning and ending an attunement are instant, from the item's row (owner house rule,
+  2026-10-07: no Short Rest needed; docs/rules/deviations.md).
 - **Item card** (focus any item): all properties, mastery (and whether the character can use it), what it does for
   this character ("+5 to hit, 1d10+3 two-handed"), a comparison with the equipped item (average damage, AC, weight)
   with ▲/▼ and words, unidentified/cursed state, charges, and actions: Equip in Set 1/2, Give to…, Mark as junk,
