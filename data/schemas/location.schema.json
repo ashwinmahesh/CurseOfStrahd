@@ -454,6 +454,25 @@
           "asleep": {
             "type": "boolean",
             "description": "The NPC lies asleep here: Unconscious (so Incapacitated and Prone), drawn lying down, and the hover hint, Look and the Alt plates say so."
+          },
+          "path": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Waypoints the NPC walks from its cell, in order and back again: [x, y] or [x, y, seconds to stand there].",
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 3,
+              "items": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "pause": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Seconds the NPC stands at each waypoint of its path (default 3)."
           }
         }
       }

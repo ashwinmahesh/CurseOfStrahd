@@ -670,6 +670,30 @@
       ],
       "dialogue": "village_of_barovia/ismark:after_burial",
       "when": "flag.burgomaster_buried and not flag.ireena_escort"
+    },
+    {
+      "npc": "barovia_goodwife",
+      "cell": [
+        16,
+        13
+      ],
+      "dialogue": "village_of_barovia/townsfolk:goodwife",
+      "when": "day",
+      "path": [
+        [
+          22,
+          12
+        ],
+        [
+          34,
+          13,
+          4
+        ],
+        [
+          22,
+          14
+        ]
+      ]
     }
   ],
   "encounters": [
