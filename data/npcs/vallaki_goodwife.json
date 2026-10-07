@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_goodwife",
+  "name": "Goodwife Marta",
+  "title": "Of the Market Row",
+  "summary": "A stout Vallakian housewife who walks the market row and the main street every morning with a basket and a smile she keeps for the Baron's men.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

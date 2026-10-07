@@ -1,0 +1,18 @@
+{
+  "id": "barovia_goodwife",
+  "name": "Goodwife Petra",
+  "title": "Of the Village of Barovia",
+  "summary": "A grey Barovian woman who carries water from the well by daylight and is behind her shutters long before dusk.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}
