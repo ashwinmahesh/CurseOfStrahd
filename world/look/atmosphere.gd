@@ -127,6 +127,10 @@ func _ready() -> void:
 
 
 func _build() -> void:
+	for l: Variant in loc.get("lights", []):
+		var cell := (l as Dictionary).get("cell", []) as Array
+		if cell.size() == 2:
+			_data_lights[Vector2i(int(cell[0]), int(cell[1]))] = str((l as Dictionary).get("kind", "lamp"))
 	env = Environment.new()
 	env.background_mode = Environment.BG_COLOR
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
@@ -265,6 +269,15 @@ func _update_lamp_shadows() -> void:
 	var keep := {}
 	for i in mini(budget, ranked.size()):
 		keep[ranked[i][1]] = true
+	# The nearest few flames that cast shadows sway with their flicker, so their shadows stir (W5; CandleFlicker).
+	var sway := Graphics.swaying_flames()
+	for i in ranked.size():
+		var l := ranked[i][1] as OmniLight3D
+		var swaying := i < budget and sway > 0 and l is CandleFlicker \
+			and str(l.get_meta("light_kind", "")) in ["candle", "lamp", "torch", "fire"]
+		if swaying:
+			sway -= 1
+		l.set_meta("sway", swaying)
 	var fade := _rig.distance + 12.0
 	for l in _lights:
 		if not is_instance_valid(l):
@@ -646,7 +659,124 @@ func _scan_lights() -> void:
 	if view == null:
 		return
 	for n in view.find_children("*", "OmniLight3D", true, false):
-		_lights.append(n as OmniLight3D)
+		var l := n as OmniLight3D
+		_lights.append(l)
+		if Look.modern() and not l.has_meta("light_kind"):
+			_dress_light(l)
+
+
+# --- Lights (W5) -----------------------------------------------------------------------------------
+
+## How each kind of light behaves in the Modern finish (Improvement Ideas W5): `size` is how soft its shadows are
+## (Godot's light_size: a candle's crisp, a hearth's soft), `fog` how strongly it lights the haze around it, `steady`
+## that it doesn't flicker. A window indoors is the moon or the day coming in: cold, steady, with a shaft of light
+## through the haze (_window_shaft).
+const LIGHT_KINDS := {
+	"candle": {"size": 0.03, "fog": 1.0},
+	"lamp": {"size": 0.06, "fog": 1.2},
+	"lantern": {"size": 0.08, "fog": 1.2},
+	"torch": {"size": 0.12, "fog": 1.8},
+	"fire": {"size": 0.25, "fog": 2.0},
+	"magic": {"size": 0.12, "fog": 1.6, "steady": true},
+	"window": {"size": 0.4, "fog": 0.5, "steady": true},
+	"lit_window": {"size": 0.3, "fog": 1.0},
+	"spell": {"size": 0.1, "fog": 1.5},
+}
+## Shafts through windows (W5): how far above the floor the light comes in, how much the spot lights the haze, and
+## the glowing cone drawn along it (shaders/world/light_shaft.gdshader: Godot's fog volumes are too coarse to show a
+## beam's edges at this camera distance).
+const SHAFT_HEIGHT := 2.6
+const SHAFT_FOG := 2.0
+const SHAFT_GLOW := 0.3
+const SHAFT_SHADER := preload("res://shaders/world/light_shaft.gdshader")
+var _data_lights: Dictionary = {}
+
+
+## What a light is: the location's own lights by their square and kind in its data; lit windows from the weather;
+## the party's lantern; a flame (the flame colour); anything else a spell's.
+func _light_kind(l: OmniLight3D) -> String:
+	var view := get_parent()
+	if view != null and view.get("lantern") == l:
+		return "lantern"
+	if str(l.name).begins_with("WindowLight"):
+		return "lit_window"
+	var c := Vector2i(floori(l.global_position.x), floori(l.global_position.z))
+	if _data_lights.has(c):
+		var k := str(_data_lights[c])
+		return k if LIGHT_KINDS.has(k) else "lamp"
+	if l is CandleFlicker:
+		return "fire" if l.light_color.is_equal_approx(Look.color("flame")) else "lamp"
+	return "spell"
+
+
+func _dress_light(l: OmniLight3D) -> void:
+	var kind := _light_kind(l)
+	var spec := LIGHT_KINDS[kind] as Dictionary
+	l.set_meta("light_kind", kind)
+	l.light_size = float(spec["size"])
+	l.light_volumetric_fog_energy = float(spec["fog"])
+	if bool(spec.get("steady", false)) and l is CandleFlicker:
+		(l as CandleFlicker).flicker = 0.0
+	if kind == "window" and not outdoors:
+		# The moon or the day, not a candle: the key light's colour, and its shaft through the haze.
+		l.light_color = sun.light_color
+		_window_shaft(l)
+
+
+## A shaft of the key light (the moon, or the day) coming in through a window over the wall beside the window's
+## square, down across the room through the haze; a child of the window's light, so it hides with it.
+func _window_shaft(l: OmniLight3D) -> void:
+	if board == null:
+		return
+	var c := Vector2i(floori(l.global_position.x), floori(l.global_position.z))
+	var out := Vector2i.ZERO
+	for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if board.grid.in_bounds(c + d) and board.grid.has_flag(c + d, CombatGrid.WALL):
+			out = d
+			break
+	if out == Vector2i.ZERO:
+		return
+	var inward := Vector3(-out.x, 0.0, -out.y)
+	var from := board.cell_center(c) - inward * 1.2 + Vector3(0, SHAFT_HEIGHT, 0)
+	var spot := SpotLight3D.new()
+	spot.name = "WindowShaft"
+	spot.light_color = sun.light_color
+	spot.light_energy = 2.0
+	spot.light_volumetric_fog_energy = SHAFT_FOG
+	spot.spot_range = 8.0
+	spot.spot_angle = 14.0
+	spot.spot_attenuation = 0.6
+	spot.shadow_enabled = true
+	spot.light_size = 0.3
+	spot.distance_fade_enabled = true
+	spot.distance_fade_begin = 40.0
+	spot.distance_fade_length = 10.0
+	l.add_child(spot)
+	var dir := (inward + Vector3(0, -1.1, 0)).normalized()
+	spot.look_at_from_position(from, from + dir)
+	# The cone of lit haze from the window down to where the light meets the floor.
+	var to := from + dir * (from.y / -dir.y)
+	var cone := CylinderMesh.new()
+	cone.top_radius = 0.35
+	cone.bottom_radius = 0.8
+	cone.height = from.distance_to(to)
+	cone.cap_top = false
+	cone.cap_bottom = false
+	var glow := ShaderMaterial.new()
+	glow.shader = SHAFT_SHADER
+	glow.render_priority = 1
+	glow.set_shader_parameter("colour", sun.light_color)
+	glow.set_shader_parameter("strength", SHAFT_GLOW)
+	glow.set_shader_parameter("shaft_length", cone.height)
+	var beam := MeshInstance3D.new()
+	beam.name = "WindowBeam"
+	beam.mesh = cone
+	beam.material_override = glow
+	beam.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	l.add_child(beam)
+	var up := -dir
+	var side := up.cross(Vector3.UP if absf(up.y) < 0.99 else Vector3.RIGHT).normalized()
+	beam.global_transform = Transform3D(Basis(side, up, side.cross(up)), (from + to) / 2.0)
 
 
 ## The lit lights nearest the camera's focus go to the screen pass.
