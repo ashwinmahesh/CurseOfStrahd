@@ -33,10 +33,12 @@ def main():
             unknown.append(clip)
             continue
         e = made.get(clip, {})
-        blob = json.dumps([e.get("voice_id", ""), e.get("model", c["model"]), e.get("format", c["output_format"]),
-                           settings_for(c, f.parent.name) if f.parent.name in c["voices"] else c["default_settings"]],
-                          sort_keys=True)
-        manifest[clip] = {"text": text, "recipe": hashlib.sha1(blob.encode()).hexdigest()[:10], "chars": len(text)}
+        blob = [e.get("voice_id", ""), e.get("model", c["model"]), e.get("format", c["output_format"]),
+                settings_for(c, f.parent.name) if f.parent.name in c["voices"] else c["default_settings"]]
+        if e.get("accent_tag"):
+            blob.append(e["accent_tag"])
+        recipe = hashlib.sha1(json.dumps(blob, sort_keys=True).encode()).hexdigest()[:10]
+        manifest[clip] = {"text": text, "recipe": recipe, "chars": len(text)}
     MANIFEST.write_text(json.dumps(manifest, indent=1, sort_keys=True, ensure_ascii=False) + "\n")
     print(f"{len(manifest)} clips indexed" + (f"; {len(unknown)} clip(s) voice no current line: {unknown[:5]}" if unknown else ""))
 
