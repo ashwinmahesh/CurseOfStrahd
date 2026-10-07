@@ -96,4 +96,5 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   outside `make ci` (it dry-runs them), and ui/ or world/ scripts. Changes to rules/, combat/, story/, core/,
   tests/support or the ci targets need `make ci` green with a clean log.
   The build thread runs `make ci` before every merge to main either way.
+- A new screen or panel goes into tests/integration/test_layout.gd, which fails on text or buttons spilling out.
 - A capture for anything visual. Never weaken tests to pass. Never mark an owner sign-off as passed.

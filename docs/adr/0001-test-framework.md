@@ -18,5 +18,9 @@ The plan asked Phase 0 to pick GUT or gdUnit4. We use a ~60 line runner (`tests/
   playthrough tests under `make golden-saves`, and some of the owner's own), and `test_golden_saves` loads them all in
   every run through `SaveSystem.upgrade`. A change to the save format bumps `GameState.SAVE_VERSION` and adds an
   upgrade step; the old saves stay (tests/saves/README.md).
+- Layout checks (P5, 2026-10-07): `test_layout` opens every screen at 1080p, 1440p, a small window, 16:10 and 4:3
+  with a late golden save's party and fails when text or a button reaches past the window, is wider or taller than a
+  list that doesn't scroll that way, or is cut short with no ellipsis (`tests/support/layout_check.gd`). Spills found
+  when it arrived wait in its KNOWN list for the lane that owns the screen; an entry fails once its spill is gone.
 
 Revisit if we need mocking, parameterized tests or JUnit output for a hosted CI.
