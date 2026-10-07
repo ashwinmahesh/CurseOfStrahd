@@ -13,6 +13,9 @@
 //
 // Godot multiplies DIFFUSE_LIGHT by the albedo afterwards; LIGHT_COLOR already holds the light's energy times PI.
 uniform float specular : hint_range(0.0, 1.0) = 0.5;
+// How wet the place is (W12; Atmosphere): under rain clouds the sun and moon leave almost no highlight, so wet stone
+// glistens in the lamps' light rather than going grey with the sky's.
+global uniform float world_wet;
 
 const float LIT_LIFT = 0.75;
 const float LAMP_GAIN = 1.35;
@@ -34,6 +37,6 @@ void light() {
 	float vis = 0.5 / (ndl * sqrt(ndv * ndv * (1.0 - a2) + a2) + ndv * sqrt(ndl * ndl * (1.0 - a2) + a2));
 	vec3 f0 = mix(vec3(0.16 * specular * specular), ALBEDO, METALLIC);
 	vec3 f = f0 + (1.0 - f0) * pow(1.0 - ldh, 5.0);
-	float sky = LIGHT_IS_DIRECTIONAL ? SKY_SPECULAR : 1.0;
+	float sky = LIGHT_IS_DIRECTIONAL ? SKY_SPECULAR * (1.0 - world_wet * 0.85) : 1.0;
 	SPECULAR_LIGHT += ndl * d * vis * f * LIGHT_COLOR * ATTENUATION * SPECULAR_AMOUNT * sky * step(1e-4, ndl);
 }

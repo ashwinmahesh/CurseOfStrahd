@@ -26,6 +26,9 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	var frame := UiKit.screen_frame(self, "Rest", Vector2(1160, 760))
 	var loc := Compendium.shared().get_entry("locations", st.location)
 	var rule := str(loc.get("rest", "risky"))
+	# Story difficulty: a Long Rest in a risky place is never interrupted (combat/difficulty.gd).
+	if rule == "risky" and Difficulty.of_options(st.options).safe_rests:
+		rule = "safe"
 	if rule == "no":
 		frame.add_child(UiParts.row(UiKit.label("You can't rest here: %s" % loc.get("rest_text", "this place won't let you."), 17, "gilt", 1040)))
 		return

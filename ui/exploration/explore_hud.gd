@@ -44,7 +44,7 @@ var thing_labels: ThingLabels
 ## The exploring controls card (F1), like the one in fights.
 const CONTROLS: Array[String] = [
 	"Mouse: click the floor to walk there; click a person, door, chest or thing to use it (the hint says what a click will do); right-click it for everything you can do; the mouse wheel zooms.",
-	"Hold Alt to see the names of everything you can use nearby.",
+	"Hold Alt to see the names of everything you can use nearby. Hold L to see what each foe in sight can see (always shown while sneaking).",
 	"Keyboard: WASD or the arrows walk · Q / E turn the camera · 1-4 or Tab pick who leads · C character · I inventory · J journal · P party · M map · R rest · F search · V sneak · G split the party · T turn-based (Space ends the round) · F5 quicksave · F9 load it · Esc menu.",
 	"In conversations: 1-9 pick an answer · Space, Enter or a click goes on · H shows what's been said.",
 	"Controller: left stick walks · A uses what's beside you · Back opens its menu · X searches · Y journal · LB / RB character and inventory · Start menu.",

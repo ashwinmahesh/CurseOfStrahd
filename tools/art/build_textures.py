@@ -106,7 +106,7 @@ def main():
                 print(line)
     if MANIFEST.exists():
         data = json.loads(MANIFEST.read_text())
-        data = {"apply": APPLY, "arena_themes": ARENA_THEMES, "themes": data.get("themes", {})}
+        data = {**data, "apply": APPLY, "arena_themes": ARENA_THEMES, "themes": data.get("themes", {})}
         MANIFEST.write_text(json.dumps(data, indent=2) + "\n")
     if failed:
         sys.exit(f"failed: {', '.join(failed)}")
