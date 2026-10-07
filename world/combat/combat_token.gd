@@ -85,6 +85,7 @@ var _bar_fill: MeshInstance3D
 var _bar_back: MeshInstance3D
 var _label: Label3D
 var _status: Label3D
+var _status_y := 0.0   ## the chips' height over a standing figure; a figure lying down has them just above it
 var _flash := 0.0
 var _flash_color := Color.WHITE
 var _base_modulate := Color.WHITE
@@ -204,6 +205,7 @@ func _build() -> void:
 	var top := height_for(aid) + 0.25
 	_label = _text(c.name(), Vector3(0, top, 0), 30, "vellum")
 	_status = _text("", Vector3(0, top + 0.2, 0), 24, "flame")
+	_status_y = top + 0.2
 	_label.visible = false
 	refresh()
 
@@ -262,8 +264,12 @@ func refresh() -> void:
 	_bar_fill.position.x = -w * (1.0 - frac) / 2.0
 	_bar_fill.material_override = Look.cel(colour)
 	var chips: Array[String] = []
+	# Asleep (Sleep, a sleeping NPC): one chip in place of the Unconscious and Incapacitated the sleep carries.
+	var asleep := cr.effects.any(func(fx: Effect) -> bool: return bool(fx.data.get("wakeable", false)) and &"unconscious" in fx.conditions)
+	if asleep and cr.hp > 0:
+		chips.append("Asleep")
 	for cond in cr.active_conditions():
-		if cond in [&"unconscious", &"incapacitated"] and cr.hp <= 0:
+		if cond in [&"unconscious", &"incapacitated"] and (cr.hp <= 0 or asleep):
 			continue
 		chips.append(str(cond).capitalize())
 	if cr.concentration != null:
@@ -289,6 +295,7 @@ func refresh() -> void:
 		_base_modulate = Color(0.6, 0.55, 0.6, 0.85)
 	if sprite != null:
 		var down := not cr.dead and (cr.hp <= 0 or cr.has_condition(&"prone"))
+		_status.position.y = 0.75 if down else _status_y
 		if DirectionalSprite.has_anim(sprite.sprite_frames, "down"):
 			# Drawn falls and a drawn lying pose: the figure itself lies down (fall() plays the fall).
 			sprite.visible = true
