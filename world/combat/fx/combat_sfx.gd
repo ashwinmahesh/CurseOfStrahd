@@ -57,9 +57,7 @@ static func ids_for(cue: Dictionary, moment: String) -> Array[String]:
 	var flavour := (data().get("flavours", {}) as Dictionary).get(str(cue.get("flavour", "")), {}) as Dictionary
 	var out: Array[String] = []
 	for id in _list(own.get(moment, fam.get(moment, []))):
-		var real := str(flavour.get(id.substr(1), "")) if id.begins_with("@") else id
-		if real != "":
-			out.append(real)
+		out.append_array(_list(flavour.get(id.substr(1), "")) if id.begins_with("@") else [id] as Array[String])
 	return out
 
 
