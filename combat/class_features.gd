@@ -339,6 +339,10 @@ func _paladin(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, b
 			if has(c, "vow_of_enmity"):
 				out.append(_entry("vow_of_enmity", "Vow of Enmity", "Advantage vs one foe", "free", _first(enc()._turn_check(c), cw), "enemy",
 					"When you take the Attack action, Channel Divinity: Advantage on attack rolls against a creature within 30 ft for 1 minute.", 30))
+				# The vowed foe dropped before the minute was up: the vow moves to another creature, no action needed.
+				if vow_can_move(c):
+					out.append(_entry("vow_move", "Move Vow of Enmity", "free · the vowed foe is down", "free", "", "enemy",
+						"Your vowed foe dropped to 0 Hit Points: move the vow to another creature within 30 ft for the rest of its minute (no action).", 30))
 		"oath_of_glory":
 			pass
 	if has(c, "abjure_foes"):
@@ -699,8 +703,22 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			if t == null or e.distance(c, t) > 30:
 				return CombatResult.fail("Choose a creature within 30 ft")
 			ch.spend_resource("paladin_channel_divinity")
-			c.set_meta("vow_of_enmity", t.id)
+			for old: Effect in c.creature.effects.duplicate():
+				if old.source_id == "vow_of_enmity":
+					c.creature.remove_effect(old)
+			var vow := _minutes(c, "Vow of Enmity", "vow_of_enmity", 1)
+			var cid := c.id
+			vow.on_end = func() -> void: end_vow(cid)
+			c.creature.add_effect(vow)
+			_vow_on(c, t)
 			e.log.add("info", "%s swears a Vow of Enmity against %s" % [c.name(), t.name()], c.id)
+		"vow_move":
+			if not vow_can_move(c):
+				return CombatResult.fail("The vowed foe is still standing")
+			if t == null or e.distance(c, t) > 30:
+				return CombatResult.fail("Choose a creature within 30 ft")
+			_vow_on(c, t)
+			e.log.add("info", "%s turns the Vow of Enmity on %s" % [c.name(), t.name()], c.id)
 		"peerless_athlete":
 			ch.spend_resource("paladin_channel_divinity")
 			c.bonus_available = false
@@ -1338,13 +1356,51 @@ func companion_why(c: Combatant) -> String:
 # --- Attack hooks ---------------------------------------------------------------------------------------
 
 ## Advantage and Disadvantage from these classes on an attack roll.
+## Whether `c`'s Vow of Enmity is running and its foe has dropped (so it can move for free).
+func vow_can_move(c: Combatant) -> bool:
+	if not c.creature.effects.any(func(x: Effect) -> bool: return x.source_id == "vow_of_enmity"):
+		return false
+	var old := enc().get_c(str(c.get_meta("vow_of_enmity", "")))
+	return old == null or not old.is_alive() or old.creature.hp <= 0
+
+
+func _vow_on(c: Combatant, t: Combatant) -> void:
+	var e := enc()
+	c.set_meta("vow_of_enmity", t.id)
+	for o in e.combatants:
+		for fx: Effect in o.creature.effects.duplicate():
+			if fx.source_id == "vow_of_enmity:mark" and fx.caster_id == c.id:
+				o.creature.remove_effect(fx)
+	var badge := Effect.new("Vowed by %s (Vow of Enmity)" % c.name(), &"feature", "vow_of_enmity:mark")
+	badge.caster_id = c.id
+	badge.ends = Effect.Ends.NEVER
+	badge.data["mark_by"] = c.id
+	badge.data["mark_of"] = "vow_of_enmity"
+	t.creature.add_effect(badge)
+	e.events.append({"type": "condition", "id": t.id})
+
+
+## The minute is up (or the effect was removed): the vow and its tag on the foe end.
+func end_vow(cid: String) -> void:
+	var e := enc()
+	if e == null:
+		return
+	var c := e.get_c(cid)
+	if c != null:
+		c.remove_meta("vow_of_enmity")
+	for o in e.combatants:
+		for fx: Effect in o.creature.effects.duplicate():
+			if fx.source_id == "vow_of_enmity:mark" and fx.caster_id == cid:
+				o.creature.remove_effect(fx)
+
+
 func attack_situation(c: Combatant, target: Combatant, option: Dictionary, adv: Array[String], dis: Array[String]) -> void:
 	var e := enc()
 	var p := option["profile"] as WeaponProfile
 	var brutal := c.armed.any(func(a: String) -> bool: return a.begins_with("brutal:"))
 	if c.creature.has_flag("reckless") and p.ability == &"str" and str(option.get("kind", "")) != "spell" and not brutal:
 		adv.append("Reckless Attack")
-	if str(c.get_meta("vow_of_enmity", "")) == target.id:
+	if str(c.get_meta("vow_of_enmity", "")) == target.id and c.creature.effects.any(func(x: Effect) -> bool: return x.source_id == "vow_of_enmity"):
 		adv.append("Vow of Enmity")
 	if str(c.get_meta("clairvoyant_vs", "")) == target.id:
 		adv.append("Clairvoyant Combatant")
@@ -1637,6 +1693,10 @@ func relentless_rage(c: Combatant) -> bool:
 ## A creature dropped to 0 Hit Points by `by`: Dark One's Blessing (Fiend Patron) for a warlock or a nearby ally.
 func on_drop(by: Combatant, target: Combatant) -> void:
 	var e := enc()
+	# A vowed foe down: the paladin may move the vow (shown on the hotbar and the right-click menu).
+	for v in e.living():
+		if str(v.get_meta("vow_of_enmity", "")) == target.id and vow_can_move(v):
+			e.log.add("info", "%s's Vow of Enmity can move to another foe within 30 ft (free)" % v.name(), v.id)
 	if by == null or not by.hostile_to(target):
 		return
 	for w in e.living():

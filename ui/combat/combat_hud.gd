@@ -638,6 +638,9 @@ func _chips(c: Combatant) -> String:
 		# A marked creature shows "Hexed by ..." once, not the spell's own effect beside it.
 		if marked.has(fx.source_id):
 			continue
+		if fx.data.has("mark_by"):
+			parts.append(fx.name)
+			continue
 		if fx.conditions.is_empty() and fx.source_kind == &"spell" and (cr.concentration == null or fx.source_id != cr.concentration.source_id):
 			parts.append(fx.name)
 	if c.hidden:
