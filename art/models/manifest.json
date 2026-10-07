@@ -3467,6 +3467,433 @@
       ],
       "triangles": 5036,
       "sculpted": true
+    },
+    "amber_sarcophagus": {
+      "file": "art/models/amber_sarcophagus.glb",
+      "mount": "free",
+      "stands_for": [
+        "amber_sarcophagus",
+        "amber_sarcophagus_back"
+      ],
+      "size": [
+        0.98,
+        0.62,
+        0.62
+      ],
+      "materials": [
+        "glow_candle",
+        "pal_ember_deep",
+        "pal_stone_deep",
+        "pal_void"
+      ],
+      "triangles": 272
+    },
+    "satchel": {
+      "file": "art/models/satchel.glb",
+      "mount": "free",
+      "stands_for": [
+        "satchel"
+      ],
+      "size": [
+        0.4,
+        0.442,
+        0.18
+      ],
+      "materials": [
+        "pal_leather",
+        "pal_rust",
+        "pal_tan",
+        "pal_umber",
+        "pal_vellum"
+      ],
+      "triangles": 320
+    },
+    "sack": {
+      "file": "art/models/sack.glb",
+      "mount": "free",
+      "stands_for": [
+        "sack"
+      ],
+      "size": [
+        0.447,
+        0.583,
+        0.438
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_bone_dark",
+        "pal_umber"
+      ],
+      "triangles": 234
+    },
+    "cabinet_glass": {
+      "file": "art/models/cabinet_glass.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "cabinet_glass",
+        "cabinet_glass_front"
+      ],
+      "size": [
+        0.96,
+        1.3,
+        0.444
+      ],
+      "materials": [
+        "pal_frost",
+        "pal_grave",
+        "pal_peat",
+        "pal_silver",
+        "pal_slate",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 324
+    },
+    "shrine_small": {
+      "file": "art/models/shrine_small.glb",
+      "mount": "free",
+      "stands_for": [
+        "shrine_small",
+        "shrine_small_back"
+      ],
+      "size": [
+        0.52,
+        1.476,
+        0.32
+      ],
+      "materials": [
+        "pal_candle",
+        "pal_ivory",
+        "pal_peat",
+        "pal_rust",
+        "pal_stone",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 168
+    },
+    "brazier": {
+      "file": "art/models/brazier.glb",
+      "mount": "free",
+      "stands_for": [
+        "brazier"
+      ],
+      "size": [
+        0.721,
+        0.714,
+        0.74
+      ],
+      "materials": [
+        "glow_ember",
+        "pal_ink"
+      ],
+      "triangles": 596,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.6336,
+          -0.0
+        ]
+      }
+    },
+    "brazier_green": {
+      "file": "art/models/brazier_green.glb",
+      "mount": "free",
+      "stands_for": [
+        "brazier_green"
+      ],
+      "size": [
+        0.461,
+        0.714,
+        0.467
+      ],
+      "materials": [
+        "glow_bile",
+        "pal_ink"
+      ],
+      "triangles": 596,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.6336,
+          -0.0
+        ]
+      }
+    },
+    "perch": {
+      "file": "art/models/perch.glb",
+      "mount": "free",
+      "stands_for": [
+        "perch"
+      ],
+      "size": [
+        0.404,
+        1.328,
+        0.354
+      ],
+      "materials": [
+        "pal_ink",
+        "pal_walnut"
+      ],
+      "triangles": 100
+    },
+    "campfire": {
+      "file": "art/models/campfire.glb",
+      "mount": "free",
+      "stands_for": [
+        "campfire"
+      ],
+      "size": [
+        0.898,
+        0.156,
+        0.828
+      ],
+      "materials": [
+        "glow_candle",
+        "glow_ember",
+        "pal_slate",
+        "pal_stone",
+        "pal_umber"
+      ],
+      "triangles": 416,
+      "sockets": {
+        "flame": [
+          0.0,
+          0.05,
+          -0.0
+        ]
+      },
+      "turns": true
+    },
+    "wall_low": {
+      "file": "art/models/wall_low.glb",
+      "mount": "free",
+      "stands_for": [
+        "wall_low",
+        "wall_low_back"
+      ],
+      "size": [
+        0.982,
+        0.562,
+        0.458
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_parchment",
+        "pal_tan"
+      ],
+      "triangles": 284
+    },
+    "chest_painted": {
+      "file": "art/models/chest_painted.glb",
+      "mount": "free",
+      "stands_for": [
+        "chest_painted",
+        "chest_painted_back"
+      ],
+      "size": [
+        0.79,
+        0.448,
+        0.532
+      ],
+      "materials": [
+        "pal_ash_violet",
+        "pal_bone_dark",
+        "pal_ink"
+      ],
+      "triangles": 602,
+      "container": true
+    },
+    "altar_church": {
+      "file": "art/models/altar_church.glb",
+      "mount": "free",
+      "stands_for": [
+        "altar_church",
+        "altar_church_back"
+      ],
+      "size": [
+        1.0,
+        1.019,
+        0.575
+      ],
+      "materials": [
+        "glow_flame",
+        "pal_bone",
+        "pal_candle",
+        "pal_ivory",
+        "pal_parchment",
+        "pal_tan",
+        "pal_vellum"
+      ],
+      "triangles": 392
+    },
+    "altar_stone": {
+      "file": "art/models/altar_stone.glb",
+      "mount": "free",
+      "stands_for": [
+        "altar_stone",
+        "altar_stone_back"
+      ],
+      "size": [
+        1.0,
+        0.785,
+        0.56
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_pewter",
+        "pal_silver",
+        "pal_slate"
+      ],
+      "triangles": 180
+    },
+    "rocking_chair": {
+      "file": "art/models/rocking_chair.glb",
+      "mount": "free",
+      "stands_for": [
+        "rocking_chair",
+        "rocking_chair_back"
+      ],
+      "size": [
+        0.5,
+        0.955,
+        0.711
+      ],
+      "materials": [
+        "pal_bone",
+        "pal_walnut",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 488
+    },
+    "handcart": {
+      "file": "art/models/handcart.glb",
+      "mount": "free",
+      "stands_for": [
+        "handcart",
+        "handcart_back"
+      ],
+      "size": [
+        1.454,
+        0.703,
+        1.403
+      ],
+      "materials": [
+        "pal_peat",
+        "pal_stone_deep",
+        "pal_umber",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 1348,
+      "big": true
+    },
+    "bed_canopy": {
+      "file": "art/models/bed_canopy.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "bed_canopy",
+        "bed_canopy_back"
+      ],
+      "size": [
+        0.92,
+        1.53,
+        0.98
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_blood_deep",
+        "pal_ivory",
+        "pal_peat",
+        "pal_vellum"
+      ],
+      "triangles": 1376
+    },
+    "dressing_table": {
+      "file": "art/models/dressing_table.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "dressing_table",
+        "dressing_table_front"
+      ],
+      "size": [
+        0.86,
+        1.03,
+        0.42
+      ],
+      "materials": [
+        "pal_grave",
+        "pal_moonlight",
+        "pal_moss",
+        "pal_peat",
+        "pal_plum",
+        "pal_tan"
+      ],
+      "triangles": 596
+    },
+    "milestone": {
+      "file": "art/models/milestone.glb",
+      "mount": "free",
+      "stands_for": [
+        "milestone",
+        "milestone_back"
+      ],
+      "size": [
+        0.475,
+        0.64,
+        0.368
+      ],
+      "materials": [
+        "pal_bone_dark",
+        "pal_moss",
+        "pal_parchment",
+        "pal_umber"
+      ],
+      "triangles": 188
+    },
+    "cabinet_small": {
+      "file": "art/models/cabinet_small.glb",
+      "mount": "against_wall",
+      "stands_for": [
+        "cabinet_small",
+        "cabinet_small_front"
+      ],
+      "size": [
+        0.64,
+        0.84,
+        0.41
+      ],
+      "materials": [
+        "pal_moonlight",
+        "pal_peat",
+        "pal_tan",
+        "pal_umber",
+        "pal_walnut"
+      ],
+      "triangles": 108
+    },
+    "toy_chest": {
+      "file": "art/models/toy_chest.glb",
+      "mount": "free",
+      "stands_for": [
+        "toy_chest",
+        "toy_chest_back"
+      ],
+      "size": [
+        0.634,
+        0.743,
+        0.645
+      ],
+      "materials": [
+        "pal_blood",
+        "pal_moon_blue",
+        "pal_peat",
+        "pal_plum",
+        "pal_tan",
+        "pal_walnut"
+      ],
+      "triangles": 208
     }
   }
 }
