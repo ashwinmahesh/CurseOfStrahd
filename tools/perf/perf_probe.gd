@@ -1,0 +1,500 @@
+extends Node
+## The performance probe (P3): times loads (the data, the title, a new game, every move between places, saving and
+## loading) and measures frame time, draw calls and memory in the heavy places, at 1080p in a window that never shows.
+## Writes one JSON report; tools/perf/perf_run.py launches it and prints the summary.
+## Args after --: --out=/abs/report.json [--frames=N] [--warm=N] [--passes=N] [--only=title,newgame,places,saveload,combat]
+## [--places=id,id] [--size=1920x1080]
+
+const PLACES := ["village_of_barovia", "vallaki", "castle_ravenloft_gates", "castle_ravenloft_main_floor",
+	"castle_ravenloft_court", "castle_ravenloft_catacombs", "wizard_of_wines", "krezk", "argynvostholt", "berez",
+	"death_house_ground", "tser_pool"]
+## The big fight: the vineyard ambush (16 foes) against a level 7 party, every side played by the AI.
+const FIGHT_PLACE := "wizard_of_wines"
+const FIGHT := "vineyard_ambush"
+const NIGHT := 22 * 60
+## The effects phase: each of the Modern finish's costs switched off in turn, in a few heavy places (for W17's presets).
+const EFFECT_PLACES := ["village_of_barovia@night", "vallaki@day", "castle_ravenloft_main_floor@day"]
+const EFFECTS := ["ssao", "ssil", "volumetric_fog", "glow", "dof", "sun_shadows", "screen_pass", "lamps", "half_res", "all"]
+const DAY := 12 * 60
+
+var frames := 240                    ## measured frames per sample
+var warm := 90                       ## frames let pass before measuring (shaders compile, tweens settle)
+var passes := 2
+var report := {"samples": [], "loads": [], "meta": {}}
+var _last_usec := 0
+var _draw_start := 0
+var _draw_ms := 0.0                 ## ms drawing since the last frame began
+var _rec: Array[Dictionary] = []     ## the frames of the sample being taken
+var _recording := false
+var _vp: RID
+
+
+func _ready() -> void:
+	var args := {}
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--") and a.contains("="):
+			args[a.substr(2, a.find("=") - 2)] = a.get_slice("=", 1)
+	frames = int(args.get("frames", frames))
+	warm = int(args.get("warm", warm))
+	passes = int(args.get("passes", passes))
+	var only := str(args.get("only", "title,newgame,places,saveload,combat,effects")).split(",")
+	var places: Array = PLACES if str(args.get("places", "")) == "" else Array(str(args["places"]).split(","))
+	var out := str(args.get("out", "user://perf_report.json"))
+	# Saves and settings in a folder of this run's own, never the player's.
+	SaveSystem.save_dir = "user://perf_saves/%d/" % OS.get_process_id()
+	GameSettings.path = SaveSystem.save_dir.path_join("settings.cfg")
+	Dice.deterministic = true
+	var win := get_window()
+	win.borderless = true
+	win.position = Vector2i(-20000, -20000)
+	var size := str(args.get("size", "1920x1080")).split("x")
+	win.size = Vector2i(int(size[0]), int(size[1]))
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	Engine.max_fps = 0
+	_vp = get_viewport().get_viewport_rid()
+	RenderingServer.viewport_set_measure_render_time(_vp, true)
+	get_tree().process_frame.connect(_on_frame)
+	RenderingServer.frame_pre_draw.connect(_pre_draw)
+	RenderingServer.frame_post_draw.connect(_post_draw)
+	report["meta"] = {"engine_ready_ms": Time.get_ticks_msec(), "size": win.size, "frames": frames, "warm": warm,
+		"passes": passes, "pid": OS.get_process_id(), "adapter": RenderingServer.get_video_adapter_name(),
+		"api": RenderingServer.get_video_adapter_api_version(), "renderer": ProjectSettings.get_setting("rendering/renderer/rendering_method")}
+	await _wait(5)
+	_data_load()
+	if args.has("preload"):
+		await _preload_game(str(args["preload"]))
+	for p in passes:
+		if "title" in only:
+			await _title(p)
+		if "newgame" in only:
+			await _new_game(p)
+		if "places" in only:
+			await _places(p, places)
+		if "saveload" in only:
+			await _save_load(p)
+		if "combat" in only:
+			await _combat(p)
+		if "effects" in only:
+			await _effects(p)
+	var f := FileAccess.open(out, FileAccess.WRITE)
+	f.store_string(JSON.stringify(report, "\t"))
+	f.close()
+	_clean_saves()
+	print("PERF done ", out)
+	get_tree().quit()
+
+
+# --- Phases ---------------------------------------------------------------------------------------
+
+## The rules data (data/*.json through Compendium): read again from disk, warm file cache.
+func _data_load() -> void:
+	_phase("load: data")
+	for i in 3:
+		Compendium.release()
+		var t := Time.get_ticks_usec()
+		Compendium.shared()
+		_load("data_load", "compendium", t)
+	var t2 := Time.get_ticks_usec()
+	var json := 0
+	for folder: String in Compendium.FOLDERS:
+		json += Compendium.shared().table(folder).size()
+	report["meta"]["data_entries"] = json
+	_load("data_load", "count", t2)
+
+
+## What the title screen could do while the player picks: load (and compile the scripts of) the game scene on a
+## worker thread. `how` is "thread" or "main" (the same load on the main thread, for comparison).
+func _preload_game(how: String) -> void:
+	_phase("load: preload game scene")
+	var t := Time.get_ticks_usec()
+	if how == "main":
+		load("res://scenes/game.tscn")
+		_load("preload", "game.tscn (main thread)", t)
+		return
+	ResourceLoader.load_threaded_request("res://scenes/game.tscn", "", true)
+	var frames_ := 0
+	var worst := 0.0
+	var last := Time.get_ticks_usec()
+	while ResourceLoader.load_threaded_get_status("res://scenes/game.tscn") == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		await get_tree().process_frame
+		frames_ += 1
+		var now := Time.get_ticks_usec()
+		worst = maxf(worst, (now - last) / 1000.0)
+		last = now
+	ResourceLoader.load_threaded_get("res://scenes/game.tscn")
+	var row := _load("preload", "game.tscn (worker thread)", t)
+	row["frames"] = frames_
+	row["worst_frame_ms"] = worst
+
+
+func _title(p: int) -> void:
+	_phase("load: title")
+	var t := Time.get_ticks_usec()
+	var menu := (load("res://scenes/main_menu.tscn") as PackedScene).instantiate()
+	add_child(menu)
+	var sync := Time.get_ticks_usec()
+	await _wait(1)
+	_load("title", "title", t, sync)
+	await _sample("title", "title", p)
+	menu.queue_free()
+	await _wait(2)
+
+
+func _new_game(p: int) -> void:
+	_phase("load: new game")
+	GameState.reset()
+	var t := Time.get_ticks_usec()
+	var root := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	var sync := Time.get_ticks_usec()
+	await _wait(1)
+	_load("new_game", str(root.get("view").get("loc_id")), t, sync)
+	await _sample("place", "into_the_mists_road (new game)", p)
+	root.queue_free()
+	await _wait(2)
+
+
+## Every move: the time inside enter_location, to the first frame drawn, and the worst frame of the next second.
+func _places(p: int, places: Array) -> void:
+	var root := await _story_root(5)
+	for id: Variant in places:
+		var where := str(id)
+		if not Compendium.shared().has("locations", where):
+			continue
+		var st := GameState.story
+		st.minute_of_day = DAY
+		var t := Time.get_ticks_usec()
+		_phase("move: " + where)
+		root.call("enter_location", where, "default")
+		var sync := Time.get_ticks_usec()
+		_close_popups(root)
+		await _wait(1)
+		var row := _load("move", where, t, sync)
+		row["hitch_ms"] = await _worst_frame(60)
+		var outdoors := bool(((root.get("view").get("loc") as Dictionary)["map"] as Dictionary).get("outdoors", false))
+		_close_popups(root)
+		await _sample("place", where + (" day" if outdoors else ""), p)
+		if outdoors:
+			st.minute_of_day = NIGHT
+			root.call("_refresh")
+			await _sample("place", where + " night", p)
+	root.queue_free()
+	await _wait(2)
+
+
+func _save_load(p: int) -> void:
+	var root := await _story_root(5)
+	_phase("load: save and load")
+	root.call("enter_location", "vallaki", "default")
+	_close_popups(root)
+	await _wait(10)
+	for i in 3:
+		var t := Time.get_ticks_usec()
+		SaveSystem.save("perf")
+		_load("save", "vallaki", t)
+	var size := FileAccess.get_file_as_bytes(SaveSystem.slot_path("perf")).size()
+	report["meta"]["save_bytes"] = size
+	for i in 3:
+		var t := Time.get_ticks_usec()
+		SaveSystem.load_slot("perf")
+		_load("load_state", "vallaki", t)
+	var t2 := Time.get_ticks_usec()
+	SaveSystem.list_slots()
+	_load("list_slots", "%d slots" % DirAccess.get_files_at(SaveSystem.save_dir).size(), t2)
+	root.queue_free()
+	await _wait(2)
+	# A full load: the save read, the game scene built and the place drawn (what Load and Continue do).
+	var t3 := Time.get_ticks_usec()
+	SaveSystem.load_slot("perf")
+	var root2 := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root2)
+	var sync := Time.get_ticks_usec()
+	await _wait(1)
+	_load("load_game", "vallaki", t3, sync)
+	root2.queue_free()
+	await _wait(2)
+
+
+## The vineyard ambush with every side on the AI, start to finish (or `frames * 8` frames).
+func _combat(p: int) -> void:
+	var root := await _story_root(7)
+	GameState.story.minute_of_day = DAY
+	root.call("enter_location", FIGHT_PLACE, "default")
+	_close_popups(root)
+	await _wait(warm)
+	var view := root.get("view") as Node
+	_phase("combat: " + FIGHT)
+	var t := Time.get_ticks_usec()
+	var ok := bool(view.call("start_encounter", FIGHT))
+	var sync := Time.get_ticks_usec()
+	if not ok:
+		push_warning("PERF: no fight %s" % FIGHT)
+		root.queue_free()
+		return
+	var cv := view.get("combat_view") as Node
+	var e := cv.get("e") as Object
+	for c: Variant in e.get("combatants"):
+		(c as Object).set("controller", &"ai")
+	await _wait(1)
+	var row := _load("combat_start", FIGHT, t, sync)
+	row["combatants"] = (e.get("combatants") as Array).size()
+	_rec.clear()
+	_recording = true
+	var limit := frames * 8
+	var n := 0
+	var t0 := Time.get_ticks_usec()
+	while n < limit and is_instance_valid(cv) and int(e.get("state")) != Encounter.State.OVER:
+		await get_tree().process_frame
+		n += 1
+	_recording = false
+	var s := _summarise("combat", "%s (%d combatants, round %d)" % [FIGHT, row["combatants"], int(e.get("round_no"))], p, _rec)
+	s["wall_s"] = (Time.get_ticks_usec() - t0) / 1e6
+	s["over"] = int(e.get("state")) == Encounter.State.OVER
+	report["samples"].append(s)
+	root.queue_free()
+	await _wait(2)
+
+
+## Each effect off in turn (and all of them at once), between samples with everything on, so drift from the rest of
+## the Mac's load shows up as a difference between the "all on" rows.
+func _effects(p: int) -> void:
+	var root := await _story_root(5)
+	for spec: String in EFFECT_PLACES:
+		var where := spec.get_slice("@", 0)
+		GameState.story.minute_of_day = NIGHT if spec.ends_with("night") else DAY
+		_phase("move: " + where)
+		root.call("enter_location", where, "default")
+		_close_popups(root)
+		root.call("_refresh")
+		await _wait(warm)
+		var view := root.get("view") as Node
+		await _sample("effects", "%s all on" % spec, p)
+		for fx: String in EFFECTS:
+			var undo := _effect_off(view, fx)
+			await _sample("effects", "%s without %s" % [spec, fx], p)
+			undo.call()
+			if fx in ["lamps", "half_res", "all"]:
+				await _sample("effects", "%s all on" % spec, p)
+	root.queue_free()
+	await _wait(2)
+
+
+## Switches one effect off in the place being shown; returns what puts it back.
+func _effect_off(view: Node, fx: String) -> Callable:
+	var atmo := view.get("atmosphere") as Atmosphere
+	var env := atmo.env
+	var cam := (view.get("rig") as CameraRig).camera
+	match fx:
+		"ssao":
+			var was := env.ssao_enabled
+			env.ssao_enabled = false
+			return func() -> void: env.ssao_enabled = was
+		"ssil":
+			var was := env.ssil_enabled
+			env.ssil_enabled = false
+			return func() -> void: env.ssil_enabled = was
+		"volumetric_fog":
+			var was := env.volumetric_fog_enabled
+			env.volumetric_fog_enabled = false
+			return func() -> void: env.volumetric_fog_enabled = was
+		"glow":
+			var was := env.glow_enabled
+			env.glow_enabled = false
+			return func() -> void: env.glow_enabled = was
+		"dof":
+			var was := cam.attributes
+			cam.attributes = null
+			return func() -> void: cam.attributes = was
+		"sun_shadows":
+			var was := atmo.sun.shadow_enabled
+			atmo.sun.shadow_enabled = false
+			return func() -> void: atmo.sun.shadow_enabled = was
+		"screen_pass":
+			var post := view.get("post") as Node3D
+			post.visible = false
+			return func() -> void: post.visible = true
+		"lamps":
+			var lit: Array[OmniLight3D] = []
+			for n in view.find_children("*", "OmniLight3D", true, false):
+				var l := n as OmniLight3D
+				if l.visible:
+					lit.append(l)
+					l.visible = false
+			return func() -> void:
+				for l in lit:
+					if is_instance_valid(l):
+						l.visible = true
+		"half_res":
+			get_viewport().scaling_3d_scale = 0.5
+			return func() -> void: get_viewport().scaling_3d_scale = 1.0
+		"all":
+			var undos: Array[Callable] = []
+			for each: String in EFFECTS:
+				if each not in ["all", "half_res"]:
+					undos.append(_effect_off(view, each))
+			return func() -> void:
+				for u in undos:
+					u.call()
+	return func() -> void: pass
+
+
+# --- Helpers --------------------------------------------------------------------------------------
+
+## A story game with the six pregens at `level` (four travelling), started at the first place.
+func _story_root(level: int) -> Node:
+	GameState.reset()
+	var st := GameState.story
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille", "wren_featherfoot", "kip_smudgewick"]:
+		var ch := Pregens.build(id, level)
+		ch.finish_long_rest()
+		if st.party.size() < StoryState.PARTY_CAP:
+			st.party.append(ch)
+		else:
+			st.bench.append(ch)
+	var root := (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	root.set("autosaves", true)   # as in play: arriving somewhere writes the autosave
+	add_child(root)
+	await _wait(5)
+	_close_popups(root)
+	return root
+
+
+## Conversations or a Strahd visit that open on arrival would hold the measurement: close them.
+func _close_popups(root: Node) -> void:
+	var d := root.get("dialogue") as Node
+	if d != null:
+		d.queue_free()
+		root.set("dialogue", null)
+		ModeController.force(ModeController.Mode.EXPLORATION)
+
+
+func _load(kind: String, what: String, t0: int, sync_end: int = -1) -> Dictionary:
+	var now := Time.get_ticks_usec()
+	var row := {"kind": kind, "what": what, "ms": (now - t0) / 1000.0}
+	if sync_end >= 0:
+		row["sync_ms"] = (sync_end - t0) / 1000.0
+	report["loads"].append(row)
+	print("PERF load %s %s %.1f ms" % [kind, what, row["ms"]])
+	return row
+
+
+func _sample(kind: String, what: String, p: int) -> void:
+	await _wait(warm)
+	_phase("%s: %s" % [kind, what])
+	_rec.clear()
+	_recording = true
+	await _wait(frames)
+	_recording = false
+	report["samples"].append(_summarise(kind, what, p, _rec))
+
+
+func _worst_frame(n: int) -> float:
+	_rec.clear()
+	_recording = true
+	await _wait(n)
+	_recording = false
+	var worst := 0.0
+	for r in _rec:
+		worst = maxf(worst, float(r["ms"]))
+	return worst
+
+
+func _summarise(kind: String, what: String, p: int, rec: Array[Dictionary]) -> Dictionary:
+	var ms: Array[float] = []
+	var gpu: Array[float] = []
+	var rcpu: Array[float] = []
+	var proc: Array[float] = []
+	var draw: Array[float] = []
+	for r in rec:
+		ms.append(float(r["ms"]))
+		gpu.append(float(r["gpu"]))
+		rcpu.append(float(r["rcpu"]))
+		proc.append(float(r["proc"]))
+		draw.append(float(r["draw"]))
+	var s := {"kind": kind, "what": what, "pass": p, "n": rec.size(),
+		"frame_ms": _stats(ms), "gpu_ms": _stats(gpu), "render_cpu_ms": _stats(rcpu), "process_ms": _stats(proc), "draw_ms": _stats(draw),
+		"over_16ms": ms.filter(func(x: float) -> bool: return x > 16.7).size(),
+		"over_33ms": ms.filter(func(x: float) -> bool: return x > 33.3).size(),
+		"draw_calls": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME),
+		"primitives": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME),
+		"objects": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME),
+		"video_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0,
+		"texture_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0,
+		"buffer_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0,
+		"static_mb": Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0,
+		"nodes": Performance.get_monitor(Performance.OBJECT_NODE_COUNT),
+		"objects_all": Performance.get_monitor(Performance.OBJECT_COUNT),
+		"resources": Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT),
+		"rss_mb": _rss_mb(), "load": _loadavg()}
+	print("PERF sample %s | %s | frame p50 %.2f p95 %.2f max %.2f | draw p50 %.2f | gpu p50 %.2f | draws %d | vram %.0f MB | rss %.0f MB" % [
+		kind, what, s["frame_ms"]["p50"], s["frame_ms"]["p95"], s["frame_ms"]["max"], s["draw_ms"]["p50"],
+		s["gpu_ms"]["p50"], s["draw_calls"], s["video_mb"], s["rss_mb"]])
+	return s
+
+
+static func _stats(xs: Array[float]) -> Dictionary:
+	if xs.is_empty():
+		return {"mean": 0.0, "min": 0.0, "p10": 0.0, "p50": 0.0, "p95": 0.0, "p99": 0.0, "max": 0.0}
+	var v: Array[float] = xs.duplicate()
+	v.sort()
+	var total := 0.0
+	for x in v:
+		total += x
+	return {"mean": total / v.size(), "min": v[0], "p10": v[v.size() / 10], "p50": v[v.size() / 2], "p95": v[mini(v.size() - 1, int(v.size() * 0.95))],
+		"p99": v[mini(v.size() - 1, int(v.size() * 0.99))], "max": v[v.size() - 1]}
+
+
+## The Mac's one-minute load average when the sample ended (other lanes' tests and renders share it).
+func _loadavg() -> float:
+	var out: Array = []
+	OS.execute("sysctl", ["-n", "vm.loadavg"], out)
+	return float(str(out[0]).strip_edges().trim_prefix("{ ").get_slice(" ", 0)) if not out.is_empty() else 0.0
+
+
+func _rss_mb() -> float:
+	var out: Array = []
+	OS.execute("ps", ["-o", "rss=", "-p", str(OS.get_process_id())], out)
+	return float(str(out[0]).strip_edges()) / 1024.0 if not out.is_empty() else 0.0
+
+
+## Tells tools/perf/perf_run.py's script profiler which part of the run the next frames belong to.
+func _phase(what: String) -> void:
+	print("PERF phase ", what)
+
+
+func _wait(n: int) -> void:
+	for i in n:
+		await get_tree().process_frame
+
+
+## Each frame: draw the window macOS won't (it's off screen), then note how long the last frame took and how much of
+## it went to drawing (the renderer's CPU side, plus any wait for the GPU to free a frame), from the renderer's own
+## pre- and post-draw signals so it counts the same whether the engine or this probe drew the frame.
+func _on_frame() -> void:
+	if not DisplayServer.window_can_draw():
+		RenderingServer.force_draw(false, get_process_delta_time())
+	var now := Time.get_ticks_usec()
+	if _recording and _last_usec > 0:
+		_rec.append({"ms": (now - _last_usec) / 1000.0, "draw": _draw_ms,
+			"gpu": RenderingServer.viewport_get_measured_render_time_gpu(_vp),
+			"rcpu": RenderingServer.viewport_get_measured_render_time_cpu(_vp),
+			"proc": Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0})
+	_last_usec = now
+	_draw_ms = 0.0
+
+
+func _pre_draw() -> void:
+	_draw_start = Time.get_ticks_usec()
+
+
+func _post_draw() -> void:
+	_draw_ms += (Time.get_ticks_usec() - _draw_start) / 1000.0
+
+
+func _clean_saves() -> void:
+	var dir := DirAccess.open(SaveSystem.save_dir)
+	if dir == null:
+		return
+	for f in dir.get_files():
+		dir.remove(f)
+	DirAccess.remove_absolute(SaveSystem.save_dir)
