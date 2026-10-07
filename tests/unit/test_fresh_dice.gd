@@ -11,6 +11,8 @@ func _rolls(n: int) -> Array[int]:
 
 
 func test_two_loads_of_one_save_roll_differently() -> void:
+	# Saving is refused in a fight; an earlier file in the same run may have left the arena's fight mode on.
+	ModeController.force(ModeController.Mode.EXPLORATION)
 	GameState.reset()
 	GameState.story.party.append(TestChars.pregen("silvain_aster", 3))
 	GameState.story.playthrough_seed = 1234
