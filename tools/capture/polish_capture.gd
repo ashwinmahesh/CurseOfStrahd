@@ -115,6 +115,34 @@ func capture_shots(tool: Node, out: String) -> void:
 	if _wants("saved"):
 		hud.saved_note()
 		await _shoot(tool, out + "_autosaved.png", 4)
+	if _wants("saves"):
+		# Saves with long place names in every list that shows them: the game-over screen, the pause menu's Load and
+		# the title's Load (owner report 2026-10-07: a name ran out of its box). Saves of the capture's own only.
+		var real_dir := SaveSystem.save_dir
+		SaveSystem.save_dir = "user://capture_saves/%d/" % OS.get_process_id()
+		var made: Array[String] = []
+		for loc: String in ["castle_ravenloft_court_weeping", "amber_temple_faceless_god", "death_house_dungeon_1"]:
+			GameState.story.location = loc
+			SaveSystem.save("cap_" + loc)
+			made.append("cap_" + loc)
+		SaveSystem.autosave()
+		made.append(SaveSystem.AUTOSAVE)
+		root.call("open_screen", "game_over", 0)
+		await _shoot(tool, out + "_saves_game_over.png")
+		root.call("open_screen", "menu", 0)
+		(root.get("screen") as PauseMenu).call("_show_saves")
+		await _shoot(tool, out + "_saves_pause_load.png")
+		root.call("close_screen")
+		var title := (load("res://scenes/main_menu.tscn") as PackedScene).instantiate()
+		add_child(title)
+		await tool.call("wait_frames", 4)
+		title.call("_show_loads")
+		await _shoot(tool, out + "_saves_title_load.png")
+		title.queue_free()
+		for slot in made:
+			SaveSystem.delete_slot(slot)
+		DirAccess.remove_absolute(SaveSystem.save_dir)
+		SaveSystem.save_dir = real_dir
 	if _wants("settings"):
 		root.call("open_screen", "menu", 0)
 		await _shoot(tool, out + "_menu.png")

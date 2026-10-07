@@ -18,8 +18,8 @@ static var _colours: Dictionary = {}
 ## ink lines and the same art but lights it smoothly, with filmic tone, bloom on flames and lanterns, deeper contact
 ## shadows and soft mist. Places built after a change use it.
 const STYLES: Array[String] = ["modern", "classic"]
-## Until the owner picks (docs/plans/ui_polish.md), a player who hasn't chosen keeps the look the game had.
-const DEFAULT_STYLE := "classic"
+## The owner picked Modern as the default (2026-10-07); Classic stays in Settings.
+const DEFAULT_STYLE := "modern"
 static var _style := ""
 
 
