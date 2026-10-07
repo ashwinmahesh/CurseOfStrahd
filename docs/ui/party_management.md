@@ -33,6 +33,30 @@ Levels missed at camp wait (owner, 2026-10-07): a benched member keeps their lev
 theirs). Once they're back in the party, **Level up** opens the level-up screen, which reopens for the next level
 until they've caught up, so every choice is the player's.
 
+## Create a character (party overview)
+
+Added by the owner (2026-10-07): a custom character can be created from the party screen at any time. They go
+through the whole creator, start at level 1, and can go straight to the level-up screen to match the party. A game
+has up to four custom characters at once.
+
+**Create a character** (a quill) sits beside **Change who travels** above the party cards, with a "Custom
+characters N of 4" pill on the left. It opens the creator in hero mode (character_creation.md, Start) titled
+"Create a character": every step, the paper doll, and a party strip with the party they'll join. Names already in
+the company and portraits other custom characters wear are taken (each custom character's portrait is also the id
+its sprite is known by). **Join the company** adds them at level 1 with full Hit Points (`StoryState.recruit`, which
+also gives them an id nobody in the company has): to the party while it has room, then the party overview opens with
+"▲ 4 level ups waiting" on their card and **Level up** lit; with the party full, to camp, and the roster screen opens
+with them picked to swap in. **Back** (or Escape on the first step) returns to the party overview.
+
+"Match the party" is the party's milestone level (`StoryState.target_level`, the level the party is levelled to), as
+for a member back from camp: the level-up screen says "Level 2 for Mira; 3 more wait after it, up to the party's
+level 5" and reopens for each level until they're caught up.
+
+Four custom characters at once (`StoryState.CUSTOM_CAP`), counting everyone in the roster, at camp or travelling,
+and the hero made at the start. With four, the button stays but is off, and the reason is written beside it (as it
+is mid-fight or mid-conversation, when it's off too). Custom characters save and load with the game like everyone in
+the roster and keep the look the player made; older saves without any load as before.
+
 ## Character sheet (`pm_02_sheet`)
 ![Character sheet](wireframes/pm_02_sheet.svg)
 

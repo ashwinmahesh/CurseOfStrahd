@@ -16,14 +16,19 @@ var appearance: Dictionary = {}
 var species := "human"
 var class_id := ""
 var tab := "Body"
+## Portraits other custom characters in the company wear: portrait id -> their name. Shown, but not offered (each
+## custom character's portrait is also the id its sprite is known by).
+var taken: Dictionary = {}
 var _left: VBoxContainer
 var _preview: HeroPreview
 var _side: VBoxContainer
 
 
-static func create(app: Dictionary, species_id: String, cls: String, start_tab: String = "Body") -> AppearancePanel:
+static func create(app: Dictionary, species_id: String, cls: String, start_tab: String = "Body",
+		taken_: Dictionary = {}) -> AppearancePanel:
 	var p := AppearancePanel.new()
 	p.appearance = app.duplicate()
+	p.taken = taken_
 	p.species = species_id
 	p.class_id = cls
 	p.tab = start_tab
@@ -218,6 +223,19 @@ func _portraits(box: VBoxContainer) -> void:
 		var pic := UiParts.framed_portrait(id, 90.0)
 		pic.position = Vector2(2, 2)
 		b.add_child(pic)
+		if taken.has(id) and not on:
+			b.disabled = true
+			b.tooltip_text = "%s wears this portrait." % str(taken[id])
+			pic.modulate = Color(1, 1, 1, 0.3)
+			pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var who := UiKit.label(str(taken[id]).get_slice(" ", 0), 12, "gilt_light")
+			who.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			who.clip_text = true
+			who.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+			who.position = Vector2(6, 66)
+			who.size = Vector2(82, 20)
+			who.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			b.add_child(who)
 		if on:
 			b.draw.connect(func() -> void:
 				b.draw_rect(Rect2(Vector2.ZERO, b.size).grow(-0.5), Look.color("gilt_light"), false, 3.0)
