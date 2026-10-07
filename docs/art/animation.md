@@ -104,8 +104,9 @@ VRAM-compressed without mipmaps (`tools/art/set_import.py --sheets`; the crisp s
 character's turnaround at 2K, then `blender/hd_colour.py` gives the redraw the original's colours and rejects it (to
 be drawn again) if the views, their sizes or the picture itself differ. The colours are matched region by region
 (each area between the redraw's ink lines shifts by the median difference from the original under it), so a garment
-Gemini recoloured gets its colour back and no line moves; the faint lavender backgrounds Gemini's 2K images often have
-become white. (The first match added a blurred difference, which left soft halos round the figures;
+Gemini recoloured gets its colour back and no line moves. The cut-out is decided against the original's and stored
+as the redraw's alpha (the renderers use it as it is): Gemini's 2K backgrounds are often a faint lavender, and a pale
+area inside a figure (Godrick's sun, a ghost's robe) would otherwise be taken for a hole and drawn see-through. (The first match added a blurred difference, which left soft halos round the figures;
 `blender/hd_restore.py` recovered the raw redraws from it.) Redraws still need a look by eye: a few changed a design
 (a skull made solid, text on an apron, an added helmet) and were drawn again or dropped. Characters without an
 `_hd.png` (the elephant, the will-o'-wisp, the air elemental, the saber-toothed tiger and the djinni, which Gemini

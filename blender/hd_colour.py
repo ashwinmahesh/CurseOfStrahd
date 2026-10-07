@@ -12,7 +12,7 @@ original, so the standing frames (from the redraw) would change colour against t
 original (a search over small offsets) and gets the original's colours region by region: the redraw's areas between
 its ink lines (a sleeve, a face, the shadow on a cloak) each shift by the median difference from the original under
 them, so a garment Gemini recoloured takes its colour back while every line and edge stays exactly where the redraw
-drew it, and the background becomes plain white. (A blurred difference, the first version, left soft halos round the
+drew it, and the background becomes transparent (the original's cut-out decides what is background). (A blurred difference, the first version, left soft halos round the
 figures wherever the outlines differed by a pixel, and an embossed look along lines; blender/hd_restore.py undid it
 for the sheets made that way.) Writes <turnaround>_hd.png from --src (default: the same file).
 """
@@ -118,7 +118,10 @@ def main():
     # backgrounds are often a faint, uneven lavender, darker along an edge).
     lo_bg = cutout.remove_background(lo_rgba)[..., 3] < 0.5
     lo_bg = np.repeat(np.repeat(np.roll(lo_bg, shift, axis=(0, 1)), 2, axis=0), 2, axis=1)[:hd.shape[0], :hd.shape[1]]
-    background = (cutout.remove_background(hd_rgba)[..., 3] < 0.5) | (lo_bg & (hd.min(axis=2) > 0.6))
+    # Only where the original is background too (give or take its outline): a white area inside a figure (Godrick's
+    # sun, an eye's white) that the cut-out takes for a hole on the redraw's tinted background keeps its colour.
+    lo_bg_near = cutout._box_sum(lo_bg, 6) > 0
+    background = ((cutout.remove_background(hd_rgba)[..., 3] < 0.5) & lo_bg_near) | (lo_bg & (hd.min(axis=2) > 0.6))
     hd = hd.copy()
     hd[background] = 1.0
     hd_rgba = np.concatenate([hd, np.ones(hd.shape[:2] + (1,), np.float32)], axis=2)
@@ -130,7 +133,10 @@ def main():
         print(f"HD REJECT {a.id}: " + "; ".join(problems))
         sys.exit(2)
     fixed = region_match(hd, up, background)
-    out = np.concatenate([fixed, np.ones(fixed.shape[:2] + (1,), np.float32)], axis=2)
+    # The cut-out goes with the picture (alpha), so the renderers use it as it is (cutout.remove_background leaves a
+    # sheet with transparency alone): a pale area inside a figure (a ghost's robe, a white tabard) stays solid unless
+    # the original had a hole there.
+    out = np.concatenate([fixed, (~background).astype(np.float32)[..., None]], axis=2)
     cutout.save_rgba(out, out_path)
     print(f"HD colours {a.id}: shift {shift}, mean colour difference {before:.3f} -> {out_path.name}")
 
