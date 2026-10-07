@@ -889,6 +889,7 @@
     {
       "id": "cat_sleepers",
       "trigger": "enter_area:cat_sleepers_crypt",
+      "waiting": true,
       "when": "night",
       "surprise": "",
       "flag": "cat_sleepers_slain",

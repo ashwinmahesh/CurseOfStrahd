@@ -87,3 +87,13 @@ static func depth_blur() -> bool:
 
 static func set_depth_blur(on: bool) -> void:
 	set_value("depth_blur", on)
+
+
+## Whether exploring runs in rounds, one party member at a time (turn-based mode, F7: LocationPlan). Off by default;
+## T, the hotbar's Turn-based button and the Settings page all switch it.
+static func turn_based() -> bool:
+	return bool(value("turn_based", false))
+
+
+static func set_turn_based(on: bool) -> void:
+	set_value("turn_based", on)

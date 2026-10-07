@@ -559,6 +559,7 @@
     {
       "id": "cauldron_coven",
       "trigger": "enter_area:spires_cauldron_room",
+      "waiting": true,
       "when": "not flag.cauldron_coven_cleared and level >= 11",
       "text": "Around the cauldron, women in black rags look up all at once with the same wet smile. The brew heaves, and something black slops over the rim and keeps coming.",
       "surprise": "",
@@ -632,6 +633,7 @@
     {
       "id": "cauldron_coven",
       "trigger": "enter_area:spires_cauldron_room",
+      "waiting": true,
       "when": "not flag.cauldron_coven_cleared and level >= 10",
       "text": "Around the cauldron, women in black rags look up all at once with the same wet smile. The brew heaves, and something black slops over the rim and keeps coming.",
       "surprise": "",
@@ -691,6 +693,7 @@
     {
       "id": "cauldron_coven",
       "trigger": "enter_area:spires_cauldron_room",
+      "waiting": true,
       "when": "not flag.cauldron_coven_cleared",
       "text": "Around the cauldron, women in black rags look up all at once with the same wet smile. The brew heaves, and something black slops over the rim and keeps coming.",
       "surprise": "",

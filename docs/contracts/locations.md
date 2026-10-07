@@ -39,6 +39,8 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 - **Encounter triggers:** `enter_area:<area>`, `open:<door_or_container>`, `examine:<prop>`, `flag:<flag>` (when a
   flag is set, e.g. by dialogue), `dialogue` (only started by a `combat` line). On victory the game sets `flag` and
   moves `quest: {id, stage}` along. A monster entry may carry `hp` to tune that stat block for this fight.
+  `waiting: true` (an `enter_area` fight only) puts its foes in plain view before the fight: they show once the party
+  can see them, can notice the party, and can be attacked first (docs/rules/stealth.md, F7).
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md).
 - **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6) or `no` (with `rest_text`); default risky.
