@@ -44,9 +44,13 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md).
 - **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6) or `no` (with `rest_text`); default risky.
-- **NPCs:** `{npc, cell, dialogue, when, facing, approach}`. The first entry per NPC whose `when` holds stands there;
-  the game re-checks after every conversation and fight. `approach: n` makes the NPC speak first, once, when the
-  leader comes within n squares and can see them.
+- **NPCs:** `{npc, cell, dialogue, when, facing, approach, path, pause}`. The first entry per NPC whose `when` holds
+  stands there; the game re-checks after every conversation and fight. `approach: n` makes the NPC speak first, once,
+  when the leader comes within n squares and can see them. `path: [[x, y], [x, y, seconds], ...]` walks the NPC from
+  its cell through each waypoint and back, standing `pause` seconds (default 3, or a waypoint's own) at each
+  (NpcRoutes): it holds while anyone talks or fights, while the leader stands beside it and while its next square is
+  taken, and under turn-based exploring walks only as a round ends. Waypoints must be open floor reachable without
+  opening a door.
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
   with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`.
 

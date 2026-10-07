@@ -1,8 +1,8 @@
 class_name LocationNpcs
 extends RefCounted
-## The people in a location (LocationView): who stands here now (each NPC entry's `when`), figures a conversation
-## brings on and takes off again (the dialogue statements `appear` and `vanish`), people who step aside when their talk
-## ends in a fight, and those who speak first when the party comes near.
+## The people in a location (LocationView): who stands here now (each NPC entry's `when`), who walks a route (`path`,
+## NpcRoutes), figures a conversation brings on and takes off again (the dialogue statements `appear` and `vanish`),
+## people who step aside when their talk ends in a fight, and those who speak first when the party comes near.
 
 
 ## Re-reads which NPCs, props and containers are here (their `when` conditions) after a conversation or a fight
@@ -50,6 +50,18 @@ static func _build_npcs(view: LocationView) -> void:
 		view.npc_tokens[str(spec["npc"])] = tok
 		view._npc_shown.append({"spec": spec, "token": tok, "cell": cb.cell, "low_before": view.grid.has_flag(cb.cell, CombatGrid.LOW)})
 		view.grid.set_flag(cb.cell, CombatGrid.LOW, true)   # an NPC blocks the square while standing there
+	# People with a `path` walk it (NpcRoutes), round everyone standing still; each starts after its first pause.
+	for shown in view._npc_shown:
+		var spec := shown["spec"] as Dictionary
+		if not spec.has("path"):
+			continue
+		var own := shown["cell"] as Vector2i
+		view.grid.set_flag(own, CombatGrid.LOW, bool(shown["low_before"]))
+		shown["route"] = NpcRoutes.route_for(view, spec)
+		view.grid.set_flag(own, CombatGrid.LOW, true)
+		shown["wait"] = float(spec.get("pause", NpcRoutes.PAUSE))
+		if not (shown["route"] as Array).is_empty():
+			NpcRoutes.of(view)
 
 
 ## Owner report (2026-10-07): Strahd spoke at the funeral but wasn't there. A scene puts a speaker on the map for as

@@ -424,6 +424,30 @@
       ],
       "dialogue": "krezk/anna:ilya_well",
       "when": "flag.ilya_fate == \"healed\" and day"
+    },
+    {
+      "npc": "krezk_woodcutter",
+      "cell": [
+        12,
+        12
+      ],
+      "dialogue": "krezk/townsfolk:woodcutter",
+      "when": "day",
+      "path": [
+        [
+          24,
+          14
+        ],
+        [
+          24,
+          21,
+          4
+        ],
+        [
+          12,
+          20
+        ]
+      ]
     }
   ],
   "encounters": [

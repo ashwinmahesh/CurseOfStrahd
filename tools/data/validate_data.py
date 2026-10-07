@@ -374,6 +374,23 @@ def campaign_checks(data, errors, pending):
 
 
 OPEN_FLOOR = ".~1234"
+
+
+def _floor_reach(rows, start):
+    """Open-floor squares reachable from `start` in 8 directions (an NPC's walking route)."""
+    seen = {start}
+    todo = [start]
+    while todo:
+        x, z = todo.pop()
+        for dx in (-1, 0, 1):
+            for dz in (-1, 0, 1):
+                n = (x + dx, z + dz)
+                if n in seen or n[1] < 0 or n[1] >= len(rows) or n[0] < 0 or n[0] >= len(rows[n[1]]):
+                    continue
+                if rows[n[1]][n[0]] in OPEN_FLOOR:
+                    seen.add(n)
+                    todo.append(n)
+    return seen
 pending_list = []
 
 
@@ -624,6 +641,13 @@ def story_checks(data, errors, need):
                 flags_set.setdefault(tr["flag"], []).append(w)
         for n in loc.get("npcs", []):
             on_floor(n["cell"], f"npc {n['npc']}")
+            for p in n.get("path", []):
+                on_floor([int(p[0]), int(p[1])], f"npc {n['npc']} path waypoint")
+            if n.get("path"):
+                walkable = _floor_reach(rows, tuple(n["cell"]))
+                for p in n["path"]:
+                    if (int(p[0]), int(p[1])) not in walkable:
+                        errors.append(f"{w}: npc {n['npc']} path waypoint {p[:2]} can't be walked to from {n['cell']}")
             if n["npc"] not in npcs:
                 errors.append(f"{w}: unknown npc '{n['npc']}'")
             if n.get("dialogue"):
