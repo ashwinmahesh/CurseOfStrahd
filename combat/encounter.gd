@@ -43,6 +43,9 @@ var damage_responses: DamageResponses
 var feature_recipes: FeatureRecipes
 var monster_actions: MonsterActions
 var ai: AiBrain
+## The playthrough's difficulty (combat/difficulty.gd): how the AI fights and the optional rules. Balanced unless a
+## story fight sets it up with Difficulty.prepare.
+var difficulty: Difficulty = Difficulty.named(Difficulty.DEFAULT)
 var shapes: ShapeChange
 ## A place where even allies can't pass through each other (a location's or fight's `allies_block`).
 var allies_block := false

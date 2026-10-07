@@ -34,6 +34,9 @@ var dead: bool = false
 var unhealable: int = 0
 ## Player characters (and story NPCs) make Death Saving Throws; monsters die at 0 Hit Points.
 var uses_death_saves: bool = false
+## Story difficulty (combat/difficulty.gd): a death is turned into Unconscious and Stable at 0 Hit Points. Set for
+## each fight, never saved.
+var spared_from_death: bool = false
 
 ## Conditions applied directly (not through an Effect): condition -> Array of source names.
 var conditions: Dictionary = {}
@@ -642,8 +645,8 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 	var maximum := max_hp()
 	if remaining > 0 and hp == 0:
 		if remaining >= maximum:
-			r.instant_death = true
 			_die("Massive Damage")
+			r.instant_death = dead
 		elif uses_death_saves:
 			stable = false
 			var fails := 2 if critical else 1
@@ -662,8 +665,8 @@ func take_damage_parts(parts: Array, critical: bool = false, dice: DiceRoller = 
 			r.dropped_to_zero = true
 			if uses_death_saves:
 				if overflow >= maximum:
-					r.instant_death = true
 					_die("Massive Damage")
+					r.instant_death = dead
 				else:
 					_fall_unconscious()
 			else:
@@ -750,6 +753,15 @@ func _wake_from_zero() -> void:
 
 func _die(reason: String) -> void:
 	if dead:
+		return
+	if spared_from_death and uses_death_saves:
+		hp = 0
+		death_successes = 0
+		death_failures = 0
+		stable = true
+		if not conditions.has(&"unconscious"):
+			add_condition(&"unconscious", "0 Hit Points")
+		log_event({"type": "spared", "creature": id, "reason": reason})
 		return
 	dead = true
 	hp = 0

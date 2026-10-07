@@ -455,6 +455,15 @@ func save_action(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult) -
 
 
 ## A stat-block action's key for the view's effects: "<monster id>.<action id>" (art/vfx/effects.json).
+## What's added to the DCs a monster's own actions set: its `spell_dc` modifiers (Tactician's +2, combat/difficulty.gd).
+func dc_bonus(c: Combatant) -> int:
+	var total := 0
+	var ctx := c.creature.formula_context()
+	for m in c.creature.modifiers_for(&"spell_dc"):
+		total += c.creature.mod_value(m, ctx)
+	return total
+
+
 static func action_key(c: Combatant, act: Dictionary) -> String:
 	var mid := str((c.creature as Monster).data.get("id", "")) if c.creature is Monster else ""
 	return "%s.%s" % [mid, str(act.get("id", ""))]
@@ -472,7 +481,7 @@ func _save_one(c: Combatant, act: Dictionary, t: Combatant, r: CombatResult, rol
 	var keys: Array[String] = []
 	if bool(act.get("magical", false)):
 		keys.append("save_vs:magic")
-	var test := t.creature.roll_save(e.dice, ab, int(sv["dc"]), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act.get("name", ""), t.name()], keys)
+	var test := t.creature.roll_save(e.dice, ab, int(sv["dc"]) + dc_bonus(c), [], [], "%s save vs %s (%s)" % [Creature.ABILITY_NAMES[ab], act.get("name", ""), t.name()], keys)
 	var by_type := {}
 	var parts: Array = []
 	var texts: Array[String] = [test.describe()]
@@ -559,6 +568,12 @@ func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vecto
 	var ab := StringName(str(sc.get("ability", "int")))
 	var dc := Breakdown.new("Spell save DC").add("Stat block", int(sc.get("dc", 8 + c.creature.ability_mod(ab) + c.creature.proficiency_bonus())))
 	var atk := Breakdown.new("Spell attack").add("Stat block", int(sc.get("attack", c.creature.ability_mod(ab) + c.creature.proficiency_bonus())))
+	# Bonuses to the monster's own DCs and spell attacks (Tactician's +2, combat/difficulty.gd).
+	var ctx := c.creature.formula_context()
+	for m in c.creature.modifiers_for(&"spell_dc"):
+		dc.add_nonzero(m.source_name, c.creature.mod_value(m, ctx))
+	for m2 in c.creature.modifiers_for(&"spell_attack"):
+		atk.add_nonzero(m2.source_name, c.creature.mod_value(m2, ctx))
 	return e.spells.cast_with_numbers(c, spell_id, level, targets, point, {"dc": dc, "attack": atk, "mod": c.creature.ability_mod(ab), "ability": ab})
 
 

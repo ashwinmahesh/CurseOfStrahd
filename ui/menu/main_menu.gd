@@ -8,8 +8,10 @@ var _creation: CreationScreen = null
 ## The new game's choice: roster ids travelling ("hero" for the custom hero), and the hero once made.
 var _picked: Array[String] = []
 var _hero: Character = null
+## The new game's difficulty (combat/difficulty.gd), picked on the page after the party.
+var _difficulty := Difficulty.DEFAULT
 var _box: VBoxContainer
-## Which page of the title is showing ("title", "new_game", "load"): Escape steps back from the last two.
+## Which page of the title is showing ("title", "new_game", "difficulty", "load"): Escape steps back a page.
 var _view := "title"
 
 
@@ -168,7 +170,7 @@ func _new_game() -> void:
 		own.tooltip_text = "Make changes to your own hero: looks, voice, class and the rest."
 		row.add_child(own)
 	row.add_child(UiParts.gap())
-	var go := UiParts.primary_button("Begin with these %d" % _picked.size() if _picked.size() != 1 else "Begin alone", _begin)
+	var go := UiParts.primary_button("Go on with these %d" % _picked.size() if _picked.size() != 1 else "Go on alone", _pick_difficulty)
 	go.disabled = _picked.size() != want
 	go.tooltip_text = "" if not go.disabled else "Choose %d to travel." % want
 	row.add_child(go)
@@ -214,6 +216,16 @@ func _roster_card(key: String, art: String, title: String, line: String, hook: S
 		_new_game(), on, func() -> Control: return UiParts.rules_tip(title, "Travelling" if on else "At camp", hook))
 	card.custom_minimum_size = Vector2(132, 0)
 	return card
+
+
+## How hard Barovia is (F1): the last page before the game begins (ui/menu/difficulty_page.gd).
+func _pick_difficulty() -> void:
+	_view = "difficulty"
+	for c in _box.get_children():
+		c.queue_free()
+	DifficultyPage.build(_box, _difficulty, func(id: String) -> void:
+		_difficulty = id
+		_pick_difficulty(), _new_game, _begin)
 
 
 ## The chosen travel; the rest of the roster waits at camp.
@@ -274,6 +286,7 @@ func _start(party: Array[Character], bench: Array[Character] = []) -> void:
 	for ch in bench:
 		st.bench.append(ch)
 	st.gold = 10.0
+	st.options["difficulty"] = _difficulty
 	st.location = ""
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
@@ -301,11 +314,14 @@ func _exit_tree() -> void:
 	Cursors.uninstall()
 
 
-## Escape steps back to the title from the party pick and the load list (the hero creator handles its own).
+## Escape steps back a page: to the party pick from the difficulty, else to the title (the hero creator handles its own).
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and _creation == null and _view != "title":
 		get_viewport().set_input_as_handled()
-		_title()
+		if _view == "difficulty":
+			_new_game()
+		else:
+			_title()
 
 
 func _load(slot: String) -> void:
@@ -320,6 +336,9 @@ func capture_shots(tool: Node, out: String) -> void:
 	_new_game()
 	await tool.call("wait_frames", 10)
 	tool.call("_shot", out + "_2_new_game.png")
+	_pick_difficulty()
+	await tool.call("wait_frames", 10)
+	tool.call("_shot", out + "_3_difficulty.png")
 	_open_hero()
 	var b := _creation.b()
 	b.set_class("fighter")

@@ -140,6 +140,8 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 			numbered[str(md["monster"])] = int(numbered.get(str(md["monster"]), 0)) + 1
 			mon.name = "%s %d" % [mon.name, numbered[str(md["monster"])]]
 		e.add(mon, StringName(str(md.get("side", "enemy"))), LocationView._cell(md["cell"]))
+	# The playthrough's difficulty: enemy Hit Points, what armed foes carry, how they fight (combat/difficulty.gd).
+	Difficulty.of_options(view.st.options).prepare(e)
 	EncounterSetup.bring_familiars(e, party_cbs)
 	_light_the_fight(view, e)
 	var surprised: Array[String] = []
@@ -370,14 +372,16 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	view.combat_ended.emit(outcome)
 	# A foe that withdrew or fled as mist leaves nothing behind (a Tarokka treasure here is still found).
 	if outcome == "victory":
-		_spoils(view, encounter_id, spec, not e.legendary.no_loot())
+		_spoils(view, encounter_id, spec, not e.legendary.no_loot(), AiTactics.leftovers(e))
 
 
-## What a won fight leaves (the encounter's `loot`, and a Tarokka treasure if this fight is a treasure spot), in the
-## loot window like a chest. Leftovers stay as "fight:<id>".
-static func _spoils(view: LocationView, encounter_id: String, spec: Dictionary, with_loot: bool = true) -> void:
+## What a won fight leaves (the encounter's `loot`, what the fallen foes still carried, and a Tarokka treasure if this
+## fight is a treasure spot), in the loot window like a chest. Leftovers stay as "fight:<id>".
+static func _spoils(view: LocationView, encounter_id: String, spec: Dictionary, with_loot: bool = true, carried: Array[Dictionary] = []) -> void:
 	var loot := spec.get("loot", {}) as Dictionary if with_loot else {}
 	var items := (loot.get("items", []) as Array).duplicate(true)
+	for it in carried:
+		items.append(it.duplicate())
 	for treasure in Tarokka.take_from(Tarokka.place_for(view.loc, "encounter", encounter_id), view.st):
 		items.append({"id": treasure, "qty": 1})
 	var gold := float(loot.get("gold", 0))
