@@ -52,3 +52,19 @@ look_soft={
 "type": "float",
 "value": 0.0
 }
+world_wet={
+"type": "float",
+"value": 0.0
+}
+world_snow={
+"type": "float",
+"value": 0.0
+}
+world_time={
+"type": "float",
+"value": 0.0
+}
+world_sky={
+"type": "color",
+"value": Color(0.1, 0.15, 0.25, 1)
+}

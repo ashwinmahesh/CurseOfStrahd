@@ -83,6 +83,15 @@ anyone touching this file.
   in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
   chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
   lightning flashes in a storm (and through the castle's spire windows).
+- **Weather on surfaces** (W12, Modern; `shaders/world/weather_surface.gdshaderinc`, the global uniforms
+  `world_wet`, `world_snow`, `world_time` and `world_sky` that Atmosphere sets from the mood's weather outdoors):
+  rain darkens and glosses everything and its colour deepens, puddles gather in the low places of level ground,
+  ringing with drops and holding the sky's light, and the sun and moon leave almost no highlight under rain cloud, so
+  wet stone glistens in the lamps; snow settles on roofs, ledges and wall tops even when light, and lies on the ground
+  in drifts that join up as it gets heavier (Krezk patchy, the Abbey half covered, the mountains white). The party
+  leaves footprints (decals with a dip and, in mud, standing water) where the ground takes them: snow once it lies
+  (`SNOW_GROUND`), mud, marsh and bare earth, grass and roads in the rain; a print every `STRIDE`, the last
+  `MAX_PRINTS` kept. The pathfinder steers round difficult ground, so prints in mud are rarer than in snow.
 - **Grade.** In the Modern finish (W16) the shade takes the place's own cool colour and loses some of its colour while
   lamplight keeps its warm one, so light pools warm against cool, dark shade (the chosen direction: A's effects in
   B's tone): night blue by default, blue-grey on an overcast day, deep night blue indoors; a mood's `tone` gives

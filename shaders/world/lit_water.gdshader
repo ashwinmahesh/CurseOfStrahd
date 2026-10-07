@@ -2,7 +2,7 @@
 // layers as Classic's water.gdshader, with the same parameters, but lit like the rest of the Modern world. Its colour
 // deepens smoothly from the shore out; small ripples move with the current and bend the light, so the moon and the
 // lamps leave a glittering path on it and the screen-space reflections (Graphics presets) waver; the sky's light lies
-// on it more at a glancing angle; and soft, broken foam laps along the shore. Rain rings are W12's.
+// on it more at a glancing angle; and soft, broken foam laps along the shore. Rain rings it in wet weather (W12).
 shader_type spatial;
 #include "res://shaders/world/lit_light.gdshaderinc"
 
@@ -24,8 +24,7 @@ uniform bool use_mask = false;
 // How choppy the ripples are, and how big (world units across).
 uniform float ripple_strength : hint_range(0.0, 1.0) = 0.35;
 uniform float ripple_size = 0.6;
-// Rain on the water (W12): rings spreading where drops land, 0 = none (AtmosphereWeather sets it).
-uniform float rain : hint_range(0.0, 1.0) = 0.0;
+// Rain on the water (W12): rings spreading where drops land, as wet as the place's weather (world_wet, Atmosphere).
 
 varying vec3 world_pos;
 
@@ -98,9 +97,9 @@ void fragment() {
 	float e = 0.05;
 	float h0 = ripple(p);
 	vec2 slope = vec2(ripple(p + vec2(e, 0.0)) - h0, ripple(p + vec2(0.0, e)) - h0) / e;
-	if (rain > 0.0) {
+	if (world_wet > 0.0) {
 		float r0 = rain_rings(p);
-		slope += vec2(rain_rings(p + vec2(e, 0.0)) - r0, rain_rings(p + vec2(0.0, e)) - r0) / e * 0.08 * rain;
+		slope += vec2(rain_rings(p + vec2(e, 0.0)) - r0, rain_rings(p + vec2(0.0, e)) - r0) / e * 0.08 * world_wet;
 	}
 	vec3 wn = normalize(vec3(-slope.x * ripple_strength * 0.25, 1.0, -slope.y * ripple_strength * 0.25));
 	NORMAL = normalize((VIEW_MATRIX * vec4(wn, 0.0)).xyz);

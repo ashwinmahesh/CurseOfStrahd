@@ -398,10 +398,174 @@ func _tone(p: String) -> Dictionary:
 
 ## Whether the mood's weather includes a kind ("rain", "snow" ...).
 func has_weather(kind: String) -> bool:
+	return not weather_spec(kind).is_empty()
+
+
+## The mood's weather entry of a kind ({"kind": "rain", "amount": 380} ...), or {} if it has none.
+func weather_spec(kind: String) -> Dictionary:
 	for w: Variant in mood.get("weather", []):
-		if str(w) == kind or (w is Dictionary and str((w as Dictionary).get("kind", "")) == kind):
-			return true
-	return false
+		if str(w) == kind:
+			return {"kind": kind}
+		if w is Dictionary and str((w as Dictionary).get("kind", "")) == kind:
+			return w as Dictionary
+	return {}
+
+
+# --- Weather on surfaces (W12) --------------------------------------------------------------------
+
+## How wet rain makes things and how thick snow lies, from the weather's amount (a downpour of 400 drops or more is
+## soaking, a blizzard's snow lies thickest): the Modern world's shaders read them (weather_surface.gdshaderinc).
+const SOAKED_AT := 400.0
+const SNOWED_AT := 400.0
+## Footprints (W12): how far apart the steps fall, how many stay (the oldest go), and on which ground they show:
+## mud, marsh and bare earth always, grass and roads too in the rain, and all the ground once snow lies on it
+## (SNOW_GROUND and heavier: the snow covers most of it, weather_surface.gdshaderinc).
+const STRIDE := 0.3
+const MAX_PRINTS := 120
+const PRINT_GROUND: Array[String] = ["snow", "mud", "marsh", "earth"]
+const WET_PRINT_GROUND: Array[String] = ["grass", "road"]
+const SNOW_GROUND := 0.5
+## How wet the place is and how thick its snow lies (0..1; the shaders' world_wet and world_snow).
+var wetness := 0.0
+var snow_cover := 0.0
+var _prints: Array[Decal] = []
+var _print_root: Node3D = null
+var _last_step: Dictionary = {}   ## party member id -> [where the last print was, which foot]
+static var _print_tex: Array[Texture2D] = []
+
+
+func _set_weather_on_surfaces() -> void:
+	var wet := 0.0
+	var snow := 0.0
+	if Look.modern() and outdoors:
+		var rain := weather_spec("rain")
+		if not rain.is_empty():
+			wet = clampf(float(rain.get("amount", SOAKED_AT)) / SOAKED_AT, 0.5, 1.0)
+		var flakes := weather_spec("snow")
+		if not flakes.is_empty():
+			snow = clampf(float(flakes.get("amount", SNOWED_AT)) / SNOWED_AT, 0.25, 1.0)
+	wetness = wet
+	snow_cover = snow
+	RenderingServer.global_shader_parameter_set(&"world_wet", wet)
+	RenderingServer.global_shader_parameter_set(&"world_snow", snow)
+	_weather_owner = get_instance_id()
+
+
+## Which place set the weather last: a place being left clears it only if no newer place has set its own (the old
+## place is freed after the new one is built).
+static var _weather_owner := 0
+
+
+func _exit_tree() -> void:
+	if _weather_owner == get_instance_id():
+		RenderingServer.global_shader_parameter_set(&"world_wet", 0.0)
+		RenderingServer.global_shader_parameter_set(&"world_snow", 0.0)
+		_weather_owner = 0
+
+
+## The party leaves footprints where the ground takes them (snow, mud, marsh, bare earth): a print every STRIDE,
+## left foot and right, turned the way they walk; the oldest go once MAX_PRINTS stand.
+func _footprints() -> void:
+	var view := get_parent()
+	if board == null or view == null or not Look.modern():
+		return
+	var members := view.get("members") as Array
+	var tokens := view.get("tokens") as Dictionary
+	if members == null or tokens == null:
+		return
+	for cb: Variant in members:
+		var id := str((cb as Object).get("id"))
+		var tok := tokens.get(id) as Node3D
+		if tok == null or not is_instance_valid(tok) or not tok.is_visible_in_tree():
+			continue
+		var at := tok.global_position
+		var last := _last_step.get(id, []) as Array
+		if last.is_empty():
+			_last_step[id] = [at, 1]
+			continue
+		var from := last[0] as Vector3
+		var step := Vector3(at.x - from.x, 0.0, at.z - from.z)
+		if step.length() < STRIDE:
+			continue
+		var foot := -int(last[1])
+		_last_step[id] = [at, foot]
+		var ground := _ground_at(Vector2i(floori(at.x), floori(at.z)))
+		if ground != "":
+			_print(at, step.normalized(), foot, ground)
+
+
+## What the ground is on a square ("snow", "mud" ...) if it takes footprints, else "".
+func _ground_at(c: Vector2i) -> String:
+	var box := board.floor_box(c)
+	var m := box.material_override as ShaderMaterial if box != null else null
+	var surface := str(m.get_meta("surface", "")) if m != null else ""
+	if surface == "":
+		return ""
+	if snow_cover >= SNOW_GROUND:
+		return "snow"
+	for g in PRINT_GROUND:
+		if surface.contains(g):
+			return g
+	if wetness > 0.0:
+		for g in WET_PRINT_GROUND:
+			if surface.contains(g):
+				return "mud"
+	return ""
+
+
+func _print(at: Vector3, dir: Vector3, foot: int, ground: String) -> void:
+	if _print_root == null:
+		_print_root = Node3D.new()
+		_print_root.name = "Footprints"
+		add_child(_print_root)
+	var d := Decal.new()
+	# Deep enough to reach the shaped ground in a hollow (GroundRelief) as well as a flat floor.
+	d.size = Vector3(0.14, 1.4, 0.28)
+	var tex := _footprint_textures()
+	d.texture_albedo = tex[0]
+	d.texture_normal = tex[1]
+	d.texture_orm = tex[2]
+	d.normal_fade = 0.5
+	# Pressed into the ground: snow shows blue shade in the print; mud darker, with water standing in it.
+	d.albedo_mix = 0.6 if ground == "snow" else 0.9
+	d.modulate = Color(0.45, 0.54, 0.7) if ground == "snow" else Color(0.06, 0.045, 0.035)
+	_print_root.add_child(d)
+	var side := Vector3(-dir.z, 0.0, dir.x) * 0.055 * float(foot)
+	d.global_position = Vector3(at.x, board.floor_y(Vector2i(floori(at.x), floori(at.z))) + 0.2, at.z) + side
+	d.rotation.y = atan2(dir.x, dir.z)
+	_prints.append(d)
+	if _prints.size() > MAX_PRINTS:
+		var old := _prints.pop_front() as Decal
+		if is_instance_valid(old):
+			old.queue_free()
+
+
+## A boot's print, made once: its shape (white on clear, tinted by the decal), the dip it presses in (a normal map, so
+## the light catches its edges) and its surface (water in a print in mud is smooth: ORM with low roughness).
+static func _footprint_textures() -> Array[Texture2D]:
+	if not _print_tex.is_empty():
+		return _print_tex
+	var w := 32
+	var h := 64
+	var shape := Image.create(w, h, false, Image.FORMAT_RGBA8)
+	var depth := Image.create(w, h, false, Image.FORMAT_L8)
+	var orm := Image.create(w, h, false, Image.FORMAT_RGB8)
+	for y in h:
+		for x in w:
+			var u := (float(x) + 0.5) / w * 2.0 - 1.0
+			var v := (float(y) + 0.5) / h
+			var sole := 1.0 - Vector2(u / 0.85, (v - 0.32) / 0.3).length()
+			var heel := 1.0 - Vector2(u / 0.7, (v - 0.8) / 0.17).length()
+			var a := clampf(maxf(sole, heel) * 6.0, 0.0, 1.0)
+			shape.set_pixel(x, y, Color(1, 1, 1, a))
+			depth.set_pixel(x, y, Color(1.0 - a, 1.0 - a, 1.0 - a))
+			orm.set_pixel(x, y, Color(1.0, lerpf(0.8, 0.15, a), 0.0))
+	depth.bump_map_to_normal_map(4.0)
+	for img: Image in [shape, depth, orm]:
+		img.generate_mipmaps()
+	_print_tex = [ImageTexture.create_from_image(shape), ImageTexture.create_from_image(depth),
+		ImageTexture.create_from_image(orm)]
+	return _print_tex
 
 
 ## The board's water squares get the moving water (one material for the whole place, the land's lakes included).
@@ -409,8 +573,6 @@ func _build_water() -> void:
 	var spec := mood.get("water", {}) as Dictionary
 	water = ShaderMaterial.new()
 	water.shader = LIT_WATER_SHADER if Look.modern() else WATER_SHADER
-	if Look.modern():
-		water.set_shader_parameter("rain", 1.0 if has_weather("rain") else 0.0)
 	var info := ((Look.textures().get("themes", {}) as Dictionary).get("wild", {}) as Dictionary).get("water", {}) as Dictionary
 	if not info.is_empty() and ResourceLoader.exists("res://" + str(info.get("file", ""))):
 		water.set_shader_parameter("albedo_tex", load("res://" + str(info["file"])) as Texture2D)
@@ -474,6 +636,7 @@ func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_apply_static()
 	weather = AtmosphereWeather.build(self, board, mood, outdoors, get_parent())
 	_show_night_pieces()
+	_set_weather_on_surfaces()
 	_scan_lights()
 	# Lights added later (a lantern lit, a spell's light, a fire) join as they enter the tree, instead of the whole
 	# place being searched for them every second (P3).
@@ -669,8 +832,10 @@ func _apply(k: float) -> void:
 	sun.light_color = (v["key"] as Color).lerp(Look.color("frost"), _flash)
 	sun.light_energy = float(v["key_energy"]) * (1.0 + _flash * 3.0)
 	sun.rotation_degrees = v["key_angle"] as Vector3
+	var sky_light := (v["sky"] as Color).lerp(Look.color("moon_blue"), 0.5)
+	RenderingServer.global_shader_parameter_set(&"world_sky", sky_light)
 	if water != null:
-		water.set_shader_parameter("reflection", (v["sky"] as Color).lerp(Look.color("moon_blue"), 0.5))
+		water.set_shader_parameter("reflection", sky_light)
 	if _post == null:
 		return
 	_post.set_shader_parameter("land_color", v["fog"] as Color)
@@ -696,6 +861,8 @@ func _apply(k: float) -> void:
 
 func _process(delta: float) -> void:
 	_time += delta
+	RenderingServer.global_shader_parameter_set(&"world_time", _time)
+	_footprints()
 	var dirty := false
 	if _blend < 1.0:
 		_blend = minf(1.0, _blend + delta / TRANSITION)

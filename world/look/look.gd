@@ -154,6 +154,7 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	m.set_shader_parameter("wall_band", str(info.get("wrap", "xy")) == "x")
 	m.set_shader_parameter("grid_strength", grid)
 	m.set_shader_parameter("grid_line", color("ink"))
+	m.set_meta("surface", surface)   # what the ground is, for footprints (Atmosphere)
 	if modern():
 		var spec := material_for(surface)
 		var relief := MODERN_RELIEF * float(spec.get("relief", 1.0))
