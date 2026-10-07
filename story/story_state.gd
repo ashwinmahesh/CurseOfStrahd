@@ -525,6 +525,26 @@ func to_dict() -> Dictionary:
 		"options": options.duplicate(), "miles_since_long_rest": miles_since_long_rest}
 
 
+## A pregen loaded from a save wears its look as data/pregens has it now. The six on the roster borrowed other
+## characters' art until their own was drawn, and a save made then kept the borrowed `art` (owner report 2026-10-07:
+## Kip in Gunther Arasek's portrait, Thistle in Mirabel's). Only the look changes: the build, levels and choices stay
+## as saved. A custom hero keeps the look the player made.
+static func current_look(ch: Character) -> void:
+	var app := (ch.build.get("appearance", {}) as Dictionary).duplicate()
+	if bool(app.get("custom", false)):
+		return
+	var data := Compendium.shared().get_entry("pregens", ch.id)
+	if data.is_empty():
+		return
+	var now := ((data.get("build", {}) as Dictionary).get("appearance", {}) as Dictionary)
+	for key: String in ["art", "portrait"]:
+		if now.has(key):
+			app[key] = now[key]
+		else:
+			app.erase(key)
+	ch.build["appearance"] = app
+
+
 static func from_dict(d: Dictionary) -> StoryState:
 	var st := StoryState.new()
 	var saved := {}
@@ -540,6 +560,8 @@ static func from_dict(d: Dictionary) -> StoryState:
 		var ch := Character.from_dict(m as Dictionary)
 		if ch != null:
 			st.bench.append(ch)
+	for ch in st.roster():
+		current_look(ch)
 	st.leader = int(d.get("leader", 0))
 	st.gold = float(d.get("gold", 0.0))
 	for e: Variant in d.get("stash", []):
