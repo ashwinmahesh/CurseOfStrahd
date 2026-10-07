@@ -12,6 +12,7 @@ const LOC := {
 		"#......#",
 		"########"], "light": "dim"},
 	"spawns": {"default": [2, 2]},
+	"encounters": [{"id": "rat", "trigger": "manual", "monsters": [{"monster": "rat", "cell": [6, 3]}]}],
 }
 
 var root: Node
@@ -116,3 +117,17 @@ func test_any_healing_outside_a_fight_clears_prone_and_dying() -> void:
 func test_nothing_to_tend_on_a_member_who_is_up() -> void:
 	var ids := _ids(_view().members[0].cell)
 	assert_false("stabilize" in ids or "kit" in ids, str(ids))
+
+
+## Owner report (2026-10-07): a fight that ended while someone was knocked Prone left them lying there afterwards.
+func test_a_fight_that_ends_while_prone_leaves_them_standing() -> void:
+	var v := _view()
+	assert_true(v.start_encounter("rat"), "a fight starts")
+	await _frames(3)
+	var ch := GameState.story.party[0]
+	ch.add_condition(&"prone", "Shoved")
+	assert_true(ch.has_condition(&"prone"))
+	v.combat_view.finished.emit("victory")
+	await _frames(4)
+	assert_false(v.in_combat, "the fight is over")
+	assert_false(ch.has_condition(&"prone"), "back outside combat, they get up")
