@@ -533,7 +533,9 @@ func _wall(c: Vector2i) -> void:
 			_tree(c)   # the village thins into forest at the map's edge
 			return
 		if border and _outer_tex != null:
-			# A town's palisade.
+			# A town's palisade: the building kit's logs (docs/art/building_kit.md), else a textured box.
+			if TownBuilder.palisade(self, c, _floor_mat):
+				return
 			var ph := 2.2
 			_box("Palisade", Vector3(1, ph, 1), Vector3(c.x + 0.5, ph / 2.0, c.y + 0.5), _outer_tex)
 			return

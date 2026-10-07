@@ -1516,6 +1516,58 @@
       "interior/kitchen_wall": "wall_trim"
     }
   },
+  "building_kit": {
+    "about": "Town houses from the building kit (art/models/kit, blender/building_kit.py, docs/art/building_kit.md): the style each place's houses are built in (its own, else its board theme's); a place or theme not named keeps the plain boxes. The house that holds a church's doors is built in the church style (stone, buttresses, lancets and a bell tower). cores: the house's wall behind the modules (a texture set, or none for a dark core where boards cover it). roofs: thatch or slate for small houses and for grand ones (grand_area squares or more). paints: the colours Vallaki's clapboard houses are painted, one per house.",
+    "themes": {
+      "village": "timber",
+      "vallaki": "clapboard",
+      "town": "clapboard",
+      "shrine_yard": "stone"
+    },
+    "places": {
+      "krezk": "stone",
+      "abbey_of_st_markovia": "stone",
+      "argynvostholt": "stone",
+      "castle_ravenloft_gates": "stone",
+      "castle_ravenloft_overlook": "stone",
+      "tsolenka_pass": "stone"
+    },
+    "cores": {
+      "timber": "interior/plaster_wall",
+      "clapboard": "",
+      "stone": "church/stone_wall",
+      "church": "church/stone_wall"
+    },
+    "roofs": {
+      "timber": {
+        "small": "thatch",
+        "grand": "slate"
+      },
+      "clapboard": {
+        "small": "slate",
+        "grand": "slate"
+      },
+      "stone": {
+        "small": "slate",
+        "grand": "slate"
+      },
+      "church": {
+        "small": "slate",
+        "grand": "slate"
+      }
+    },
+    "grand_area": 30,
+    "paints": [
+      "moon_blue",
+      "slate",
+      "blood_deep",
+      "bog",
+      "bone_dark",
+      "ash_violet",
+      "rust",
+      "night"
+    ]
+  },
   "outdoor_rooms": [
     [
       [
