@@ -37,8 +37,8 @@
     {
       "id": "spell_resistant_save",
       "name": "Magic Resistant",
-      "summary": "add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
-      "text": "add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
+      "summary": "Add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
+      "text": "Add 1d6 to a failed save against magic. Uses equal PB per Long Rest.",
       "implemented": "data",
       "roll_response": {
         "resource": "spell_resistant_save",

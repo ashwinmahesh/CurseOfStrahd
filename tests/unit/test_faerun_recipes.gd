@@ -502,7 +502,9 @@ func test_reweave_fate_adds_advantage_and_grants_thp_only_on_success() -> void:
 func _fate_caster(e: Encounter, spell: String) -> Combatant:
 	var ch := TestChars.custom("wizard", "human", 17)
 	(ch.spellcasting[0]["prepared"] as Array).append(spell)
-	return e.add(ch, &"party", Vector2i(2, 3))
+	var c := e.add(ch, &"party", Vector2i(2, 3))
+	c.reaction_rules[spell] = "auto"
+	return c
 
 func test_large_summon_validates_whole_footprint_and_visibility_before_cost() -> void:
 	var e := TestCombat.open_field()
@@ -515,7 +517,7 @@ func test_large_summon_validates_whole_footprint_and_visibility_before_cost() ->
 	assert_false(_cast(e, c, "summon_dinosaur", [], Vector2(4.5, 3.5)).ok)
 	assert_true(c.action_available)
 
-func test_charge_requires_straight_run_and_cannot_reuse_previous_attack_movement() -> void:
+func test_charge_requires_target_directed_run_and_cannot_reuse_previous_attack_movement() -> void:
 	var e := TestCombat.open_field()
 	var data := SummonBlocks.dinosaur_spirit(6, "triceratops", 20, 20)
 	var c := e.add(Monster.from_data(data), &"party", Vector2i(2, 3))
@@ -527,7 +529,7 @@ func test_charge_requires_straight_run_and_cannot_reuse_previous_attack_movement
 	c.record_step(Vector2i(4, 4), Vector2i(6, 4))
 	c.cell = Vector2i(6, 4)
 	c.moved = true
-	assert_true(e.monster_actions.charge_of(c, t, option).is_empty(), "bent path is not a straight run")
+	assert_true(e.monster_actions.charge_of(c, t, option).is_empty(), "sideways step breaks the target-directed approach")
 	c.clear_run()
 	c.cell = Vector2i(2, 3)
 	c.record_step(Vector2i(2, 3), Vector2i(6, 3))

@@ -8,13 +8,13 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying. Reference-only: Reaction when a visible creature within 60 feet makes a D20 Test: grant Advantage or Disadvantage. Once per Long Rest; a slotted Divination restores use.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying. Reference-only: Reaction when a visible creature within 60 feet makes a D20 Test: grant Advantage or Disadvantage. Once per Long Rest; a slotted Divination restores use.",
   "benefits": [
     {
       "id": "divination_adept_spells",
       "name": "Additional Spells",
-      "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying.",
-      "text": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying.",
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Detect Evil and Good; Mind Spike; Clairvoyance; Divination; Scrying.",
       "implemented": "data",
       "modifiers": [
         {

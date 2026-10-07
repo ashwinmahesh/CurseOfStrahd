@@ -254,13 +254,13 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Blade of Disaster | Controllable field weapon, two attacks, critical threshold, range from blade, saved casting numbers and cleanup; `test_faerun_recipes` | Visual target-selection verification |
 | Enervation; Death Armor; Syluné’s Viper | Actual-damage draining, concentration tether, melee retaliation, dependent conditions, held spell actions and THP cleanup; `test_faerun_recipes` | Broader shared drain provenance |
 | Wail of the Banshee; Waves of Exhaustion; Catnap; Mordenkainen’s Lucubration | Hearing/HP thresholds, temporary Exhaustion contribution, uninterrupted-rest reward, spent-slot recovery; `test_faerun_recipes` | Pact slots and field-casting access tested |
-| Summon Dinosaur; Summon Plant | Form choices, scaled stat blocks and controlled actions, conditional attacks and riders; `test_faerun_recipes` | Placement footprint/visibility and straight-line charge tested; arbitrary scenery objects still pending |
+| Summon Dinosaur; Summon Plant | Form choices, scaled stat blocks and controlled actions, conditional attacks and riders; `test_faerun_recipes` | Placement footprint/visibility and target-directed grid approach tested; arbitrary scenery objects still pending |
 | Detonate | Target-centered secondary burst, post-damage drop-to-zero check, shared damage roll for creatures and objects, primary exclusion; `test_faerun_recipes` | Arbitrary scenery without object HP |
 | Power Word Pain | Shared casting-save gate, time versus slot costs, speed cap and save exception; `test_faerun_recipes` | Source checks complete for these effects |
-| Moment of Prescience; Reweave Fate | Shared D20 replacement and reroll responses, attack defense, Advantage cancellation, THP and slot costs; `test_faerun_recipes` | Synchronous auto/never policy for checks and saves |
+| Moment of Prescience; Reweave Fate | Shared D20 replacement and reroll responses, attack defense, Advantage cancellation, THP and slot costs; `test_faerun_recipes` | Player-accessible Ask/Automatic/Off preferences; synchronous checks/saves only spend on Auto; manual continuation pending |
 | Conjurer | Benign/Distant Transposition, Durable Summons, Focused Conjuration, Splintered Summons; `test_faerun_features`; off-screen targeting captures | Creation spells outside the shared summon path, field-casting companions |
 | Feature activations | Shared validated targeting, costs, resources and slot restoration: Arcane Infiltrator’s Dodge, Winter Walker’s Fortifying Soul, Knowledge’s Divine Foreknowledge; `test_faerun_features` | Remaining active features |
-| Save responses | Arcane Omens, Spell Resistant, Transmuted Anatomy, Boon of Fortune’s Favor; `test_faerun_features` | Synchronous auto/never policy; manual choice of non-allied beneficiaries |
+| Save responses | Arcane Omens, Spell Resistant, Transmuted Anatomy, Boon of Fortune’s Favor; `test_faerun_features` | Reaction-cost responses require Auto, configurable in the class abilities tab; manual synchronous and non-allied beneficiary choices pending |
 | Passive features | Adept slot-threshold preparation, Conjuration concentration bonus, Transmutation turn Speed, Vestige domain spells, Bountiful Health, Desperate Resilience, Iron Mind and Focused Conjuration; `test_faerun_features` | Remaining school benefits, subclass mechanics and concentration callers |
 | Knowledge Domain Mind Magic | Shared `resource_cast` recipe, base-level casting with Channel Divinity, prepared-domain filtering, class provenance and exploration controls; `test_resource_casting` | Existing exploration-only spell handlers still need their own effect audit; Unfettered Mind remains pending |
 | Warrior of the Mystic Arts | Existing third-caster progression, Wisdom casting, cantrip substitution, Focus/slot exchange windows, Focused Strike and Flurry spell substitution; `test_mystic_arts` | Rest and combat recovery UI captured; caster-specific initial/repeated saves and Pact slot recovery tested. Multiclass duplicate-spell sources use the eligible casting class; 13 focused tests cover these paths and the level-2 cap on the actual Flurry casting; full CI checkpoint recorded below |
@@ -282,3 +282,9 @@ Checkpoint counts (2026-10-06): 30 of 52 new spells have recipes or handlers; 22
 
 Influence and NPC attitudes as a rule (attitudes exist in the story; haggling is written into dialogue for now);
 the new classes' level 8-11 features in combat (listed under Classes; the spell and ability thread).
+
+
+Review regression coverage: `test_review_regressions.gd` checks incorporeal flight over ground Difficult
+Terrain, Freedom of Movement and numeric slowing, angled monster charges and broken approaches, plus
+safe default reaction policies and the player-accessible opt-in controls. Existing free responses retain
+their prior policy. These changes do not enable any gated book entries.

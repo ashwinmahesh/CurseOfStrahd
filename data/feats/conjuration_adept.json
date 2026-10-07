@@ -8,13 +8,13 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental. Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental. Concentration saves for Conjuration spells add the modifier of the ability increased by this feat.",
   "benefits": [
     {
       "id": "conjuration_adept_spells",
       "name": "Additional Spells",
-      "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
-      "text": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Entangle; Misty Step; Conjure Animals; Dimension Door; Conjure Elemental.",
       "implemented": "data",
       "modifiers": [
         {

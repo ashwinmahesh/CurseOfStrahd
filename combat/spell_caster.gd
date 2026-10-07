@@ -229,7 +229,7 @@ func begin_reaction_spell(c: Combatant, spell_id: String) -> bool:
 	return true
 
 
-## A synchronous D20 resolver cannot pause. Like Indomitable, these responses use auto/never settings.
+## A synchronous D20 resolver cannot pause. Reaction spells require an explicit automatic decision.
 func after_failed_d20(roller: Combatant, test: D20Test) -> void:
 	if test.success or test.target <= 0 or test.auto_failed:
 		return
@@ -246,7 +246,7 @@ func after_failed_d20(roller: Combatant, test: D20Test) -> void:
 				continue
 			if str(response.get("scope", "self")) == "visible" and (enc().distance(c, roller) > range_ft(s, c) or not enc().can_see(c, roller)):
 				continue
-			if str(c.reaction_rules.get(str(s["id"]), "auto")) == "never" or not begin_reaction_spell(c, str(s["id"])):
+			if enc()._reaction_decision(c, str(s["id"])) != "auto" or not begin_reaction_spell(c, str(s["id"])):
 				continue
 			if response.has("natural"):
 				test.set_natural(int(response["natural"]), str(s["name"]))
@@ -1469,7 +1469,7 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 			sit["disadvantage"] as Array[String], "%s → %s (%s, Seeking Spell reroll)" % [c.name(), t.name(), s["name"]], int(s.get("crit_range", 20)))
 	if test.success:
 		for sid in incoming_roll_responses(t):
-			if str(t.reaction_rules.get(sid, "auto")) != "never":
+			if enc()._reaction_decision(t, sid) == "auto":
 				answer_incoming_roll(t, test, sid)
 	var details: Array[String] = [test.describe(), atk.describe()]
 	var hit := test.success

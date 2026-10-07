@@ -8,13 +8,13 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory. Reference-only: Slotted Enchantments require only costly or consumed Material components; other components are waived.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory. Reference-only: Slotted Enchantments require only costly or consumed Material components; other components are waived.",
   "benefits": [
     {
       "id": "enchantment_adept_spells",
       "name": "Additional Spells",
-      "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory.",
-      "text": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory.",
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Dissonant Whispers; Enthrall; Hold Person; Dominate Beast; Modify Memory.",
       "implemented": "data",
       "modifiers": [
         {

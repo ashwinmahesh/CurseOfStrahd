@@ -8,13 +8,13 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force. Reference-only: Once per turn when an Evocation deals damage on casting, roll and spend up to two unused Hit Dice, adding their total to one damage roll.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force. Reference-only: Once per turn when an Evocation deals damage on casting, roll and spend up to two unused Hit Dice, adding their total to one damage roll.",
   "benefits": [
     {
       "id": "evocation_adept_spells",
       "name": "Additional Spells",
-      "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force.",
-      "text": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force.",
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Chromatic Orb; Shatter; Fireball; Vitriolic Sphere; Wall of Force.",
       "implemented": "data",
       "modifiers": [
         {

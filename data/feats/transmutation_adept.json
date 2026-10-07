@@ -8,13 +8,13 @@
   },
   "category": "general",
   "repeatable": false,
-  "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects. On your turn, a slotted Transmutation adds 5 feet times slot level to Speed until that turn ends.",
+  "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects. On your turn, a slotted Transmutation adds 5 feet times slot level to Speed until that turn ends.",
   "benefits": [
     {
       "id": "transmutation_adept_spells",
       "name": "Additional Spells",
-      "summary": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects.",
-      "text": "always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects.",
+      "summary": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects.",
+      "text": "Always prepare these spells when you have slots of levels 1, 2, 3, 4, and 5 respectively: Jump; Spider Climb; Slow; Polymorph; Animate Objects.",
       "implemented": "data",
       "modifiers": [
         {

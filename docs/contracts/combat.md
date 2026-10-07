@@ -136,9 +136,9 @@ The initiative tracker shows a legendary creature's actions left (◆◇) and th
 
 Reaction offers may provide `stop_if` alongside `stop`: after `use`, the continuation stops only when the predicate is true. This allows an interrupted Shield to spend its Reaction while the original hit continues. Spell casting gates run after casting time is consumed and before slot payment or concentration replacement.
 
-Action targeting `points` collects `count` distinct grid positions into `opts.points`; selecting an already chosen position deselects it. Invalid summon spaces are rejected during selection. Multi-creature feature and sustained-action selections read the action's own `count` instead of a spell's target count. `Combatant.record_step` records a straight voluntary run; attacks consume that run, and teleports/forced movement clear it. Charge checks use distance actually closed during this run.
+Action targeting `points` collects `count` distinct grid positions into `opts.points`; selecting an already chosen position deselects it. Invalid summon spaces are rejected during selection. Multi-creature feature and sustained-action selections read the action's own `count` instead of a spell's target count. `Combatant.record_step` retains the voluntary path. Charge checks count trailing steps that each close distance to the current target, allowing angled approaches on a square grid. Sideways/retreating steps break the counted approach; attacks, teleports, forced movement and new turns clear it.
 
-`feature.hit_response` offers a Reaction after an attack hit survives hit-negating defenses. It spends `resource`, forces a save against the feature class’s spell DC, and applies `effects` on failure through the shared effect engine. `range` and `requires_sight` are opt-in restrictions. Weapon/monster attacks pause for the normal reaction prompt; synchronous spell attacks use the current auto/never response policy. The original hit still resolves if the attacker is Stunned by the response.
+`feature.hit_response` offers a Reaction after an attack hit survives hit-negating defenses. It spends `resource`, forces a save against the feature class’s spell DC, and applies `effects` on failure through the shared effect engine. `range` and `requires_sight` are opt-in restrictions. Weapon/monster attacks pause for the normal reaction prompt; synchronous spell attacks only respond when `Encounter._reaction_decision` returns `auto`. The original hit still resolves if the attacker is Stunned by the response.
 
 Triggered selections reuse `ReactionRequest.target_choices` (`id`, `label`) and `selected_ids`; `spends_reaction: false` changes the prompt and log wording without consuming a Reaction. The encounter remains paused, the HUD allows explicit selection of each candidate, and the continuation revalidates targets. `TriggeredFeatures` reads `feature.cast_form` to expose a casting variant (`opts.cast_form` = feature id) for its named concentration `spell`, checking and spending `resource`. Its `modifiers` attach to that casting’s concentration and duration. An optional `pulse` declares `radius`, `dice` and damage `type`, offered on adoption and each own turn start. Frozen Haunt supplies these values in subclass data. Automatic selection affects enemies; the prompt can select or spare any eligible creature.
 
@@ -171,3 +171,10 @@ Exploration continues to use the existing field spell handlers; this recipe does
 
 The `spell_sequence.max_level` limit applies to the effective level of the actual casting, including upcasting
 and effects that raise that level. Catalog slot choices and engine validation enforce the same cap before costs.
+
+
+Reaction-cost D20 and spell-hit responses never default to spending a player's resource in a synchronous
+resolver. They use the ordinary `Encounter._reaction_decision`: Ask and Off do not spend there; Auto does.
+The class abilities tab exposes Ask / Automatic / Off preferences for known response spells and feature recipes,
+including exhausted ones. Preferences take no action or resource, and forged ids/modes are rejected.
+Free D20 responses retain their prior automatic default. Full manual synchronous continuations remain pending.

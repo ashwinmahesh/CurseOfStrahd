@@ -47,6 +47,7 @@ func why(c: Combatant, f: Dictionary) -> String:
 func list(c: Combatant, out: Array[Dictionary]) -> void:
 	if not c.creature is Character:
 		return
+	enc().reactions.list_policies(c, out)
 	for option in enc().triggered_features.sequence_attack_options(c):
 		var rule := c.get_meta("sequence_attacks") as Dictionary
 		var profile := option["profile"] as WeaponProfile
@@ -208,7 +209,7 @@ func perform(c: Combatant, id: String, targets: Array, restore_slot: int = 0, ce
 	return r
 
 
-## Saving throws resolve synchronously; these use the same configurable auto/never policy as Indomitable.
+## Saving throws resolve synchronously: Reaction costs require explicit Auto; free responses default to Auto.
 ## The feature declares its trigger, range, cost, and adjustment instead of requiring an id-specific branch.
 func after_d20(roller: Combatant, test: D20Test, keys: Array[String]) -> void:
 	if test.success or test.target <= 0 or test.auto_failed:
@@ -236,7 +237,8 @@ func after_d20(roller: Combatant, test: D20Test, keys: Array[String]) -> void:
 				continue
 			var resource := str(def["resource"])
 			var reaction := str(def.get("cost", "free")) == "reaction"
-			if ch.resource_left(resource) <= 0 or (reaction and not e.spells.can_react(c)) or str(c.reaction_rules.get(str(f["id"]), "auto")) == "never":
+			var permitted := e._reaction_decision(c, str(f["id"])) == "auto" if reaction else str(c.reaction_rules.get(str(f["id"]), "auto")) != "never"
+			if ch.resource_left(resource) <= 0 or (reaction and not e.spells.can_react(c)) or not permitted:
 				continue
 			ch.spend_resource(resource)
 			if reaction:
@@ -335,7 +337,7 @@ func _use_hit_response(attacker: Combatant, target: Combatant, f: Dictionary) ->
 func synchronous_hit_responses(attacker: Combatant, target: Combatant) -> void:
 	for raw: Variant in hit_responses(attacker, target):
 		var offer := raw as Dictionary
-		if str(target.reaction_rules.get(str(offer["kind"]), "auto")) != "never" and (offer["still"] as Callable).call():
+		if enc()._reaction_decision(target, str(offer["kind"])) == "auto" and (offer["still"] as Callable).call():
 			(offer["use"] as Callable).call()
 
 

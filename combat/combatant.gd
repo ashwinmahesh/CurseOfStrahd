@@ -43,6 +43,8 @@ var run_start: Vector2i = Vector2i.ZERO
 var run_end: Vector2i = Vector2i.ZERO
 var run_direction: Vector2i = Vector2i.ZERO
 var run_feet: int = 0
+## Voluntary path since the last attack, forced movement, teleport or turn boundary.
+var approach_path: Array[Vector2i] = []
 var stood_up: bool = false
 var hidden: bool = false
 var stealth_total: int = 0
@@ -131,6 +133,7 @@ func reach_ft() -> int:
 
 
 func clear_run() -> void:
+	approach_path.clear()
 	run_start = cell
 	run_end = cell
 	run_direction = Vector2i.ZERO
@@ -138,6 +141,9 @@ func clear_run() -> void:
 
 
 func record_step(from: Vector2i, to: Vector2i) -> void:
+	if approach_path.is_empty() or approach_path[-1] != from:
+		approach_path.assign([from])
+	approach_path.append(to)
 	var direction := Vector2i(signi(to.x - from.x), signi(to.y - from.y))
 	if from != run_end or direction != run_direction:
 		run_start = from

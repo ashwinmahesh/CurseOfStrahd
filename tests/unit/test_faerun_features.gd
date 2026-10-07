@@ -196,6 +196,7 @@ func test_roll_responses_filter_magic_reaction_costs_and_targets() -> void:
 	var ch := TestChars.custom("wizard", "human", 4)
 	_give_feat(ch, "arcane_omens")
 	var helper := e.add(ch, &"party", Vector2i(2, 3))
+	helper.reaction_rules["arcane_omens_benefit"] = "auto"
 	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
 	var enemy := TestCombat.punching_bag(e, Vector2i(9, 3))
 	TestCombat.start_with(e, helper)

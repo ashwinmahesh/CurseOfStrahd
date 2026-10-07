@@ -74,8 +74,8 @@ func roll_recharges(c: Combatant) -> void:
 
 # --- Riders on a hit or a failed save -------------------------------------------------------------
 
-## The action's `charge` block when `c` ran at least its `feet` straight at `target` this turn before the hit (the
-## tracked movement segment must be straight and close the required distance), else {}.
+## The action's charge when the trailing voluntary steps each closed distance to this target.
+## Grid approximations of an angled approach may change direction; sideways/retreating steps break it.
 func charge_of(c: Combatant, target: Combatant, option: Dictionary) -> Dictionary:
 	if c.has_meta("charged_vs"):
 		c.remove_meta("charged_vs")
@@ -86,10 +86,20 @@ func charge_of(c: Combatant, target: Combatant, option: Dictionary) -> Dictionar
 		return {}
 	var ch := act["charge"] as Dictionary
 	var e := enc()
-	var before := e.grid.distance_ft(c.run_start, c.size_cells, target.cell, target.size_cells)
-	if c.run_end != c.cell or c.run_feet < int(ch.get("feet", 20)) or before - e.distance(c, target) < int(ch.get("feet", 20)):
+	if c.approach_path.size() < 2 or c.approach_path[-1] != c.cell:
 		return {}
-	return ch
+	var feet := 0
+	for i in range(c.approach_path.size() - 1, 0, -1):
+		var to := c.approach_path[i]
+		var from := c.approach_path[i - 1]
+		var before := e.grid.distance_ft(from, c.size_cells, target.cell, target.size_cells)
+		var after := e.grid.distance_ft(to, c.size_cells, target.cell, target.size_cells)
+		if after >= before:
+			break
+		feet += e.grid.distance_ft(from, 1, to, 1)
+		if feet >= int(ch.get("feet", 20)):
+			return ch
+	return {}
 
 
 ## Applies `riders` from `src` to `t` after damage `by_type` ({type: amount taken}).
