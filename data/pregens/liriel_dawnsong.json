@@ -4,7 +4,7 @@
   "pronouns": "she/her",
   "summary": "High Elf Cleric (Light Domain), Acolyte. Radiant fire, healing hands and a faith that has never once been asked to bend.",
   "hook": "On the morning of her vows the Morninglord showed her a valley where the sun had not risen in four hundred years, and a voice that said: carry the dawn there. She has never doubted a vision in her life.",
-  "roster": false,
+  "roster": true,
   "build": {
     "name": "Liriel Dawnsong",
     "species": "elf",

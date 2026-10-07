@@ -208,6 +208,18 @@
       "kind": "examine",
       "label": "The altar step",
       "model": "dais",
+      "when": "name:hedda_ironvow and quest.cold_prayers >= warmth and not (quest.cold_prayers >= dawn)",
+      "dialogue": "castle_ravenloft/personal_prayers:start"
+    },
+    {
+      "id": "crg_chapel_dawn_step_liriel",
+      "cell": [
+        10,
+        3
+      ],
+      "kind": "examine",
+      "label": "The altar step",
+      "model": "dais",
       "when": "name:liriel_dawnsong and quest.carry_the_dawn >= faith_kept and not flag.liriel_dawn_prayed",
       "dialogue": "companions/dawn:chapel"
     }

@@ -1,0 +1,81 @@
+# Silvain Aster's personal quest, Aurel's Last Chapter (data/quests/aurels_last_chapter.json): the castle payoff,
+# hook 4 in docs/story/personal_quests.md. The court study (data/locations/castle_ravenloft_court.json) is the lit
+# window Aurel's note saw "high in the east tower" (prop court_study_window_lit, while he reads there). Aurel
+# (npc aurel_mirescu, approach) sits by the fire reading to Strahd's empty chair whenever Silvain is in the party,
+# until he's woken; he isn't there while Strahd waits in the study for the final battle (the seer card), only after.
+# Wake him with Arcana (Silvain) or Persuasion, DC 15 (a failure closes that way), by closing the Tome of Strahd in
+# his hands (if the party carries it), or by sitting with him to the end of the chapter (three hours pass). Each way
+# ends on quest aurels_last_chapter the_last_page.
+
+~ start
+if flag.aurel_found
+Narrator: Aurel reads on by the fire, to the empty chair. He didn't notice you leave, or come back.
+-> wake_menu
+endif
+set aurel_found
+Narrator: Lamplight, a low fire, and the one window in the castle that never goes dark. By the fire a thin man in an ink-stained coat sits reading aloud to an empty armchair.
+interject name:silvain_aster: Not a library. A study. He miscounted the floors; he always did.
+if quest.aurels_last_chapter >= still_reading
+interject name:silvain_aster: Aurel.
+else
+interject name:silvain_aster: Aurel? ...Aurel. You're alive. You absolute idiot, you're alive.
+endif
+Aurel: "...and the young lord rode home over the pass with his brother's letter unopened in his coat, because he already knew what it said..."
+Narrator: He doesn't look up. His eyes are red to the rims, and his voice is hoarse and lovely and does not stop, not to breathe, not for you.
+Narrator: His hands are open in his lap, holding the shape of a book that isn't there. He turns a page of nothing. He has it by heart.
+interject name:silvain_aster: He's charmed. Kept awake and kept reading. I've read the literature on this. I hate the literature.
+-> wake_menu
+
+~ wake_menu
+* [if not flag.aurel_arcana_failed] [name:silvain_aster] [Arcana DC 15] (Find the charm on him and cut its thread.) -> woken_arcana | arcana_failed
+* [Persuasion DC 15] Talk to him. Say Silvain's name until he hears it. -> woken_voice | voice_failed
+* [if item:tome_of_strahd] (Put the Tome in his hands, and close it.) -> woken_tome
+* (Sit with him until the chapter ends.) -> woken_chapter
+* (Leave him reading, for now.) -> END
+
+~ arcana_failed
+set aurel_arcana_failed
+Narrator: The charm is a thread finer than hair, and when you touch it, it pulls tight. Aurel flinches and reads faster.
+interject name:silvain_aster: No. I've made it worse. Nobody touch it again. Not that way.
+-> wake_menu
+
+~ voice_failed
+Narrator: He reads over you, louder, the way a man talks over a noise in the next room. The words don't reach him.
+-> wake_menu
+
+~ woken_arcana
+Narrator: Silvain finds the thread where it's tied, at the back of his neck under the collar, and unpicks it like a bad stitch. Aurel stops in the middle of a word.
+-> woken
+
+~ woken_voice
+Narrator: Somewhere around the tenth "Silvain" the reading slows. Around the twelfth it stops, in the middle of a word.
+-> woken
+
+~ woken_tome
+Narrator: Silvain kneels and puts the Tome of Strahd into the empty hands, real and heavy, open at the page he's reading. Then they close it.
+Narrator: Aurel looks down at the shut book in his lap as if it has just said his name.
+-> woken
+
+~ woken_chapter
+time +180
+Narrator: You sit with him. The chapter is long, and the young lord in it is very sure of himself, and Aurel reads every word as if it matters. Silvain doesn't leave his side.
+Narrator: Hours later he reads the last line of the chapter, and turns the page of nothing, and there is nothing on the other side. He stops.
+-> woken
+
+~ woken
+Aurel [weary]: ...Silvain?
+interject name:silvain_aster: Hello, Aurel.
+Aurel: You came. You absolute idiot, you came. Did you bring a lamp? I asked for a lamp.
+interject name:silvain_aster: I brought friends. One of them is a dwarf with opinions. Also, this.
+Narrator: Silvain takes a pen from an inside pocket, a good one, much mended, and puts it in Aurel's hand. His fingers close round it out of habit.
+Aurel: My pen. You've had my pen for eleven years.
+interject name:silvain_aster: Twelve. You never asked for it back.
+Aurel [sad]: He wouldn't let me sleep until I finished the chapter, and every time I finished he gave me the next. I read him his whole life, Silvain. He wept at the right places.
+interject name:silvain_aster: Then the book is finished. I'm closing it. Come home.
+if not (quest.aurels_last_chapter >= the_last_page)
+quest aurels_last_chapter the_last_page
+endif
+Aurel: I'll go down by the servants' stair. I know the way; I've had a year to count the steps. The tavern in the village, the back room. I'll wait for you there, and sleep, and then we'll argue.
+interject name:hedda_ironvow: Mm. Sleep first. Healer's orders.
+Narrator: He goes slowly, holding the pen. Behind him, for the first time in a year, the lamp in the window goes out.
+-> END

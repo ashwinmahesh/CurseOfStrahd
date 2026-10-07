@@ -168,6 +168,9 @@ quest bury_the_burgomaster priest_agreed
 
 ~ raven
 set holy_symbol_rumor
+if name:hedda_ironvow and not (quest.cold_prayers >= the_symbol)
+quest cold_prayers the_symbol
+endif
 Narrator: At the word relic, Donavich's hands stop shaking.
 Donavich: The Holy Symbol of Ravenkind. Older than this church. A giant raven brought it to a paladin of the dawn, the stories say, and it was turned against the devil once, and lost after. Lost, mind. Not destroyed.
 Donavich: If anyone alive knows where it lies, it's the old Vistani seer at Tser Pool. Or him. He keeps what frightens him.

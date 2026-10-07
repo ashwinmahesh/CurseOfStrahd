@@ -7,8 +7,14 @@ reasons into arcs that run through places the campaign already has and pay off i
 module's own threads: the dead Order at Argynvostholt, the Abbot, Kiril's pack, the Martikovs and Mordenkainen,
 Kasimir, Patrina and Rahadin, Master Vosk and Strahd's letters.
 
-The first four companions (Ilse, Tamsin, Hedda, Silvain) and their quests are retired. Their pregen files stay as test
-fixtures (`roster: false`) so older saves and tests still build them.
+The first four companions (Ilse, Tamsin, Hedda, Silvain) leave the roster (`roster: false`). Their data stays in the
+game so older saves keep working (owner, 2026-10-06): their quests (`kestrel_company`, `the_locket`, `cold_prayers`,
+`aurels_last_chapter`), flags (data/flags/companions_first_four.json), NPCs (`kestrel_vell`, `jory_fenn`,
+`kestrel_merrow`, `aurel_mirescu`), scenes (narrative/companions/{kestrel,locket,prayers,aurel}.dialogue), camp talks,
+banter (banter/party_companions.dialogue), props, Madam Eva's options, the hooks that move their quests on, and their
+Castle Ravenloft payoffs (narrative/castle_ravenloft/personal_*.dialogue, tests/integration/test_castle_personal_quests.gd).
+Everything of theirs is gated on `name:` so a new game never sees it. Their incidental party lines in the regions were
+rewritten for the six, so in an old save they speak only in their own quest scenes.
 
 ## Rules every scene follows
 
@@ -57,7 +63,7 @@ of her own heaven, sewing the devil a bride.
 | `the_fall` | The Abbot reveals the bride | abbot:bride |
 | (choice) | "Do you still remember the sun?" (`liriel_asked_abbot`) opens a way to his repentance at the unveiling | abbot menu, companions/dawn:sun, :unveil |
 | `faith_kept` | After the Abbot's story ends, any ending | camp/liriel:talk_faith |
-| `the_dawn` | She sings real dawn into Castle Ravenloft's chapel (prop `crg_chapel_dawn_step`) | dawn:chapel |
+| `the_dawn` | She sings real dawn into Castle Ravenloft's chapel (prop `crg_chapel_dawn_step_liriel`) | dawn:chapel |
 
 Madam Eva: truth "she's afraid of the dark"; question "will dawn come?"
 

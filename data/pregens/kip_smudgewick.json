@@ -4,7 +4,7 @@
   "pronouns": "he/him",
   "summary": "Tiefling Warlock (Fiend Patron), Merchant. Eldritch fire, a cart of apricots and a contract he reads every night by candlelight.",
   "hook": "When the blight took his family's orchard he signed a devil's contract to save it. The devil has offered him one way out: bring back a signature from the lord of a land of mists. The apricots never rot now.",
-  "roster": false,
+  "roster": true,
   "build": {
     "name": "Kip Smudgewick",
     "species": "tiefling",
@@ -80,7 +80,9 @@
         "always selling"
       ]
     },
-    "appearance": {}
+    "appearance": {
+      "art": "gunther_arasek"
+    }
   },
   "level_plan": [
     {
@@ -91,7 +93,7 @@
         "warlock.1.eldritch_invocations": [
           "pact_of_the_tome",
           "agonizing_blast",
-          "repelling_blast"
+          "armor_of_shadows"
         ],
         "warlock.1.eldritch_invocations/agonizing_blast": [
           "eldritch_blast"
@@ -153,9 +155,9 @@
         "warlock.1.eldritch_invocations": [
           "pact_of_the_tome",
           "agonizing_blast",
+          "armor_of_shadows",
           "repelling_blast",
-          "devils_sight",
-          "fiendish_vigor"
+          "devils_sight"
         ],
         "warlock.prepared": [
           "hex",
@@ -191,10 +193,10 @@
         "warlock.1.eldritch_invocations": [
           "pact_of_the_tome",
           "agonizing_blast",
+          "armor_of_shadows",
           "repelling_blast",
           "devils_sight",
-          "fiendish_vigor",
-          "eldritch_mind"
+          "fiendish_vigor"
         ],
         "warlock.prepared": [
           "hex",
@@ -241,11 +243,11 @@
         "warlock.1.eldritch_invocations": [
           "pact_of_the_tome",
           "agonizing_blast",
+          "armor_of_shadows",
           "repelling_blast",
           "devils_sight",
           "fiendish_vigor",
-          "eldritch_mind",
-          "ascendant_step"
+          "eldritch_mind"
         ],
         "warlock.prepared": [
           "hex",
@@ -300,5 +302,6 @@
         ]
       }
     }
-  ]
+  ],
+  "art_todo": "Borrows the gunther_arasek sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
 }

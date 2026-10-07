@@ -1,0 +1,66 @@
+# Hedda Ironvow's camp talks (story/camp_talk.gd). Quest: Cold Prayers (narrative/companions/prayers.dialogue).
+
+~ talk_cold
+if name:hedda_ironvow and flag.burgomaster_buried and flag.eva_truth_teller != "hedda_ironvow" and not (quest.cold_prayers >= cold)
+-> cold
+endif
+-> END
+
+~ cold
+Narrator: Hedda prays at the end of every day, aloud, the way her chapel taught her. Tonight she stops halfway through and sits back on her heels, and stays there.
+interject name:hedda_ironvow: Mm. Come and sit, if you're going to stare. It's warmer by the fire. That's more than I can say for my god.
+* What's wrong? -> cold_what
+* (Sit with her.) -> cold_what
+
+~ cold_what
+interject name:hedda_ironvow: Since we came through the mist I haven't felt Him. Not once. The prayers still answer. The wounds still close. But it's like warming your hands at a painting of a fire.
+interject name:hedda_ironvow: Back home the first light of every day struck our altar, and you could feel it on your face like a hand. Here it's grey, and the spells come cold, and I do them anyway.
+interject name:hedda_ironvow: I haven't told anyone. A healer who doubts is a healer nobody wants near the bed.
+* Your spells kept us alive. Cold or not. -> cold_alive
+* Maybe He's further away here. That's not the same as gone. -> cold_far
+* What would make it warm again? -> cold_what_warm
+
+~ cold_alive
+interject name:hedda_ironvow: Mm. They did. That's the thing that frightens me. If it works without Him, what was He ever for?
+interject name:hedda_ironvow: ...No. Don't answer that. That's a question for a long winter, and we're busy.
+-> cold_end
+
+~ cold_far
+interject name:hedda_ironvow: Further away. Yes. Stone remembers, and sun warms stone from a long way off, if it gets the chance. Thank you. That is a better sermon than I would have managed tonight.
+-> cold_end
+
+~ cold_what_warm
+interject name:hedda_ironvow: The dream, I think. The silver raven and its little sun. I didn't come here because I was told to. I came because I wanted to see something warm in a cold place. I still want to.
+-> cold_end
+
+~ cold_end
+if not (quest.cold_prayers >= cold)
+quest cold_prayers cold
+endif
+interject name:ilse_varga: For what it's worth, cold prayers stitched my arm twice. I'll take cold.
+interject name:silvain_aster: Silvain Aster, also alive on cold prayers. Present and grateful. Please go back to sleep, Hedda.
+-> END
+
+~ talk_warmth
+if name:hedda_ironvow and quest.find_the_holy_symbol == found
+-> warmth
+endif
+-> END
+
+~ warmth
+Narrator: Hedda doesn't pray tonight. She sits with the Holy Symbol of Ravenkind in both hands, the silver raven and its sunburst, and doesn't say anything for a long time.
+interject name:hedda_ironvow: It's warm.
+interject name:hedda_ironvow: Not the sun. Not yet. A coal somebody kept alive in a cupped hand for three hundred years, waiting for someone to blow on it.
+if flag.hedda_spark_felt
+interject name:hedda_ironvow: The same warmth I felt in St. Andral's, for that one breath. I wasn't imagining it. Mm. I'm glad. I was afraid I had.
+endif
+if flag.eva_question == "dawn"
+interject name:hedda_ironvow: Madam Eva said carry it into his house and I'd see the difference. Mm. I believe her now. I'd like to see his face.
+endif
+interject name:hedda_ironvow: Thank you. All of you. You walked me to it, and I was too proud to say I couldn't find it on my own.
+interject name:tamsin_tealeaf: Can I hold it? Just for a second. I won't steal it. I'd like to know what holy feels like before I'm too old to try being it.
+interject name:hedda_ironvow: Mm. Hold it, little thief. It doesn't mind who it warms. That's rather the point.
+if not (quest.cold_prayers >= warmth)
+quest cold_prayers warmth
+endif
+-> END

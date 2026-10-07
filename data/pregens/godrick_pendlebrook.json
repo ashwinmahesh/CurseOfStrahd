@@ -4,7 +4,7 @@
   "pronouns": "he/him",
   "summary": "Goliath Paladin (Oath of Devotion), Noble. A shield, a longsword and a smile that has talked him out of more trouble than his head has.",
   "hook": "He swore at Sir Pellam's deathbed to carry the old knight's sword to the Order of the Silver Dragon, somewhere in a land of mists, and be knighted there. He has practised kneeling.",
-  "roster": false,
+  "roster": true,
   "build": {
     "name": "Godrick Pendlebrook",
     "species": "goliath",

@@ -3,7 +3,7 @@
 # vallaki/lucian:return (inline). The angel and the fall: abbey_of_st_markovia/abbot:first and :bride (inline) and
 # the question below (the Abbot's menu), which opens a way to his repentance at the unveiling (:unveil). Faith kept:
 # camp/liriel once the Abbot's story is over. The dawn: the altar step in Castle Ravenloft's chapel (prop
-# crg_chapel_dawn_step).
+# crg_chapel_dawn_step_liriel).
 
 # --- Does he remember the sun? (abbey_of_st_markovia/abbot:menu) ------------------------------------------------------
 
@@ -29,7 +29,7 @@ interject name:liriel_dawnsong: I did. So did you.
 Abbot [sad]: Gold first, then white.
 -> abbey_of_st_markovia/unveiling:repent_unmake
 
-# --- The altar step, Castle Ravenloft (prop crg_chapel_dawn_step) --------------------------------------------------
+# --- The altar step, Castle Ravenloft (prop crg_chapel_dawn_step_liriel) --------------------------------------------------
 
 ~ chapel
 if quest.carry_the_dawn >= the_dawn

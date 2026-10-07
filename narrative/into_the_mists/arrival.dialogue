@@ -38,6 +38,19 @@ endif
 if name:kip_smudgewick
 quest the_fine_print the_contract
 endif
+# The first four (kept for older saves).
+if name:ilse_varga
+quest kestrel_company the_letter
+endif
+if name:tamsin_tealeaf
+quest the_locket the_dreams
+endif
+if name:hedda_ironvow
+quest cold_prayers the_dream
+endif
+if name:silvain_aster
+quest aurels_last_chapter the_letter
+endif
 if not name:godrick_pendlebrook
   interject class:fighter: Road goes one way. So do we.
 endif

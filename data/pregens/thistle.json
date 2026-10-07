@@ -4,7 +4,7 @@
   "pronouns": "she/her",
   "summary": "Human Ranger (Hunter), Guide. A longbow, a loud laugh and no idea what a fork is for.",
   "hook": "The old trapper who raised her in the deep woods followed a wolf the size of a pony into a wall of fog and didn't come back. She has followed his trail blazes ever since, and they lead here.",
-  "roster": false,
+  "roster": true,
   "build": {
     "name": "Thistle",
     "species": "human",
@@ -63,8 +63,8 @@
         "scimitar"
       ],
       "ranger.prepared": [
-        "speak_with_animals",
-        "ensnaring_strike"
+        "ensnaring_strike",
+        "cure_wounds"
       ]
     },
     "equipment": {
@@ -79,7 +79,9 @@
         "fierce"
       ]
     },
-    "appearance": {}
+    "appearance": {
+      "art": "mirabel"
+    }
   },
   "level_plan": [
     {
@@ -98,9 +100,9 @@
           "archery"
         ],
         "ranger.prepared": [
-          "speak_with_animals",
           "ensnaring_strike",
-          "cure_wounds"
+          "cure_wounds",
+          "speak_with_animals"
         ]
       }
     },
@@ -116,9 +118,9 @@
           "colossus_slayer"
         ],
         "ranger.prepared": [
-          "speak_with_animals",
           "ensnaring_strike",
           "cure_wounds",
+          "speak_with_animals",
           "hail_of_thorns"
         ]
       }
@@ -136,9 +138,9 @@
           "wis"
         ],
         "ranger.prepared": [
-          "speak_with_animals",
           "ensnaring_strike",
           "cure_wounds",
+          "speak_with_animals",
           "hail_of_thorns",
           "entangle"
         ]
@@ -150,9 +152,9 @@
       "hp": 0,
       "choices": {
         "ranger.prepared": [
-          "speak_with_animals",
           "ensnaring_strike",
           "cure_wounds",
+          "speak_with_animals",
           "hail_of_thorns",
           "entangle",
           "pass_without_trace"
@@ -174,9 +176,9 @@
           "escape_the_horde"
         ],
         "ranger.prepared": [
-          "speak_with_animals",
           "ensnaring_strike",
           "cure_wounds",
+          "speak_with_animals",
           "hail_of_thorns",
           "entangle",
           "pass_without_trace",
@@ -208,9 +210,9 @@
           "stealth"
         ],
         "ranger.prepared": [
-          "speak_with_animals",
           "ensnaring_strike",
           "cure_wounds",
+          "speak_with_animals",
           "hail_of_thorns",
           "entangle",
           "pass_without_trace",
@@ -232,9 +234,9 @@
       "hp": 0,
       "choices": {
         "ranger.prepared": [
-          "speak_with_animals",
           "ensnaring_strike",
           "cure_wounds",
+          "speak_with_animals",
           "hail_of_thorns",
           "entangle",
           "pass_without_trace",
@@ -245,5 +247,6 @@
         ]
       }
     }
-  ]
+  ],
+  "art_todo": "Borrows the mirabel sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
 }

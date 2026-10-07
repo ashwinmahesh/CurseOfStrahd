@@ -4,7 +4,7 @@
   "pronouns": "he/him",
   "summary": "High Elf Wizard (Diviner), Artisan. A spellbook, a skillet and an urgent need to be taken seriously.",
   "hook": "Nobody sat with him at the academy until he learned to throw fire. Then he heard of a great Wizard of Wines beyond the mists, a master of magic and the table both, and set out to become his apprentice.",
-  "roster": false,
+  "roster": true,
   "build": {
     "name": "Ratatoille",
     "species": "elf",
@@ -64,15 +64,15 @@
         "shield",
         "magic_missile",
         "mage_armor",
+        "sleep",
         "burning_hands",
-        "grease",
-        "detect_magic"
+        "thunderwave"
       ],
       "wizard.prepared": [
         "shield",
         "magic_missile",
         "mage_armor",
-        "burning_hands"
+        "sleep"
       ]
     },
     "equipment": {
@@ -87,7 +87,9 @@
         "gourmet"
       ]
     },
-    "appearance": {}
+    "appearance": {
+      "art": "silvain_aster"
+    }
   },
   "level_plan": [
     {
@@ -102,18 +104,18 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant"
         ],
         "wizard.prepared": [
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease"
+          "sleep",
+          "burning_hands"
         ]
       }
     },
@@ -133,10 +135,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web"
@@ -145,9 +147,9 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step"
+          "thunderwave"
         ]
       }
     },
@@ -173,10 +175,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web",
@@ -187,9 +189,9 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step",
+          "thunderwave",
           "web"
         ]
       }
@@ -206,10 +208,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web",
@@ -222,12 +224,12 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step",
+          "thunderwave",
           "web",
-          "fireball",
-          "counterspell"
+          "misty_step",
+          "fireball"
         ]
       }
     },
@@ -240,10 +242,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web",
@@ -258,13 +260,13 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step",
+          "thunderwave",
           "web",
+          "misty_step",
           "fireball",
-          "counterspell",
-          "haste"
+          "counterspell"
         ]
       }
     },
@@ -280,10 +282,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web",
@@ -300,14 +302,14 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step",
+          "thunderwave",
           "web",
+          "misty_step",
           "fireball",
           "counterspell",
-          "haste",
-          "dimension_door"
+          "haste"
         ]
       }
     },
@@ -327,10 +329,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web",
@@ -349,15 +351,15 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step",
+          "thunderwave",
           "web",
+          "misty_step",
           "fireball",
           "counterspell",
           "haste",
-          "dimension_door",
-          "polymorph"
+          "dimension_door"
         ]
       }
     },
@@ -373,10 +375,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web",
@@ -397,17 +399,17 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step",
+          "thunderwave",
           "web",
+          "misty_step",
           "fireball",
           "counterspell",
           "haste",
           "dimension_door",
           "polymorph",
-          "cone_of_cold",
-          "wall_of_force"
+          "cone_of_cold"
         ]
       }
     },
@@ -427,10 +429,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web",
@@ -453,18 +455,18 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step",
+          "thunderwave",
           "web",
+          "misty_step",
           "fireball",
           "counterspell",
           "haste",
           "dimension_door",
           "polymorph",
           "cone_of_cold",
-          "wall_of_force",
-          "greater_invisibility"
+          "wall_of_force"
         ]
       }
     },
@@ -480,10 +482,10 @@
           "shield",
           "magic_missile",
           "mage_armor",
-          "burning_hands",
-          "grease",
-          "detect_magic",
           "sleep",
+          "burning_hands",
+          "thunderwave",
+          "grease",
           "unseen_servant",
           "misty_step",
           "web",
@@ -508,10 +510,11 @@
           "shield",
           "magic_missile",
           "mage_armor",
+          "sleep",
           "burning_hands",
-          "grease",
-          "misty_step",
+          "thunderwave",
           "web",
+          "misty_step",
           "fireball",
           "counterspell",
           "haste",
@@ -519,10 +522,10 @@
           "polymorph",
           "cone_of_cold",
           "wall_of_force",
-          "greater_invisibility",
-          "tashas_bubbling_cauldron"
+          "greater_invisibility"
         ]
       }
     }
-  ]
+  ],
+  "art_todo": "Borrows the silvain_aster sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
 }

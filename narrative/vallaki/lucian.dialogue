@@ -106,6 +106,14 @@ quest bones_of_st_andral bones_returned
 attitude father_lucian friendly
 Narrator: Lucian carries the bundle down to the crypt himself, holding it the way you would hold a sleeping child. You hear the lid of the sarcophagus grind home, and then his voice, saying the old words. Something in the air of the church settles, like a held breath let out.
 Father Lucian [smile]: Welcome home. Welcome home, old man.
+if name:hedda_ironvow and quest.cold_prayers
+set hedda_spark_felt
+Narrator: Hedda, at the back of the nave, puts a hand flat against a pillar and closes her eyes. For the space of one breath her face changes, as if someone has opened a door onto a warm room.
+interject name:hedda_ironvow: There. Did you... No. Just me, then. Mm. That's all right. Just me will do.
+if not (quest.cold_prayers >= a_spark)
+quest cold_prayers a_spark
+endif
+endif
 if flag.milivoj_confessed and not flag.milivoj_shielded
 Father Lucian: And Milivoj. I'll speak to him. Hunger is a sin, they tell me, but I don't think it was his.
 elif flag.milivoj_shielded

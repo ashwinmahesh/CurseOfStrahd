@@ -47,6 +47,7 @@ endif
 * Show us what you have to trade. -> trade
 * Tell us about Madam Eva. -> about_eva
 * [if not flag.stanimir_tale_heard] Tell us a story. -> tale
+* [name:ilse_varga] [if flag.kestrel_tally_tser and not flag.kestrel_jory_told] Ask about the soldiers your people guided a year ago. -> companions/kestrel:stanimir
 * [if not flag.stanimir_read] [Insight DC 14] Who do your people answer to? -> answer_ok | answer_fail
 * Goodbye. -> END
 

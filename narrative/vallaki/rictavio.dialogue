@@ -26,6 +26,7 @@ endif
 * [if flag.rictavio_suspected] You're no showman. Who are you hunting? -> hunted
 * [if flag.rictavio_journal_read] We read your journal, Doctor van Richten. -> unmask
 * [if tarokka.ally.npc == rictavio or tarokka.ally.npc == van_richten] Madam Eva's cards named a man like you. -> cards
+* [name:silvain_aster] [if quest.aurels_last_chapter and not flag.aurel_rictavio_told] Ask about a scholar named Aurel Mirescu. -> companions/aurel:rictavio
 * Goodbye. -> bye
 
 ~ wagon
@@ -111,6 +112,7 @@ endif
 
 ~ hunter_menu
 * [if tarokka.ally.npc == rictavio and not guest:rictavio] Madam Eva's cards named you. Will you hunt with us? -> ally
+* [name:silvain_aster] [if quest.aurels_last_chapter and not flag.aurel_rictavio_told] Ask about a scholar named Aurel Mirescu. -> companions/aurel:rictavio
 * [if flag.bones_theft_known and not flag.bones_returned] The saint's bones are missing from St. Andral's. -> bones_advice
 * What can you tell us about Strahd? -> strahd
 * What should we make of the Baron and Lady Wachter? -> factions

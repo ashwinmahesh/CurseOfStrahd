@@ -4,7 +4,7 @@ extends SceneTree
 ## A spec names its preferred picks by choice key (the longest key that ends the choice's key wins: "prepared" covers
 ## "cleric.prepared", "4.ability_score_improvement" covers "paladin.4.ability_score_improvement"), with per-level
 ## overrides under "levels"; anything left open is filled with the first legal options, the way TestChars.auto_pick
-## does. Existing pregen fields the spec doesn't set (art, roster) are kept.
+## does. The spec also sets `roster`, the look (`appearance`, e.g. a borrowed `art` id) and an `art_todo` note.
 ##
 ##   make pregens [ONLY="id …"] [VERBOSE=1]
 
@@ -71,10 +71,12 @@ func _write(id: String, spec: Dictionary) -> bool:
 	data["pronouns"] = str(spec["pronouns"])
 	data["summary"] = str(spec["summary"])
 	data["hook"] = str(spec["hook"])
-	if not data.has("roster"):
-		data["roster"] = bool(spec.get("roster", false))
-	build.erase("appearance")
-	build["appearance"] = data.get("build", {}).get("appearance", {}) if data.has("build") else {}
+	data["roster"] = bool(spec.get("roster", data.get("roster", false)))
+	if spec.has("art_todo"):
+		data["art_todo"] = str(spec["art_todo"])
+	else:
+		data.erase("art_todo")
+	build["appearance"] = (spec.get("appearance", {}) as Dictionary).duplicate()
 	data["build"] = build
 	data["level_plan"] = plan
 	var f := FileAccess.open(path, FileAccess.WRITE)

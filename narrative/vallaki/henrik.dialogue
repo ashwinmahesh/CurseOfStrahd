@@ -58,6 +58,10 @@ combat storeroom_spawn
 set henrik_confessed
 quest bones_of_st_andral henrik_confessed
 Henrik [afraid]: They came in crates. A black carriage brought them, no driver I could see. Big crates. Heavy. And then a voice, in my head, at night, telling me what to do. Buy the saint. Keep him in the storeroom. With them.
+if name:tamsin_tealeaf and quest.the_locket
+set locket_coach_known
+interject name:tamsin_tealeaf: No driver. And no horses you could hear, I'd bet. ...Sorry. Go on. I'm fine. I'm fine.
+endif
 Henrik: They sleep in the day. At night they go out. They're waiting for the church to be just a church. Then they'll go in, and they'll take whoever is sheltering there, and they'll bring them up the mountain.
 interject class:wizard: Vampire spawn. Sleeping by day in boxes, like the books say. For once I'd have preferred the books to be wrong.
 if name:godrick_pendlebrook

@@ -103,6 +103,26 @@ Strahd [smile]: I am not in, my dear. Observe: the gate. I keep my manners even 
 if flag.ireena_bite_seen
 Narrator: Ireena's hand goes to the scarf at her throat before she can stop it. He sees, and his smile widens.
 endif
+if flag.ilse_invitation_shown
+Strahd: And the soldier who kept my invitation. I am touched. Your company asked after you, you know. Near the end.
+interject name:ilse_varga: Where are they.
+if name:ilse_varga and not (quest.kestrel_company >= the_host)
+quest kestrel_company the_host
+endif
+endif
+if flag.tamsin_locket_recognized
+Strahd [sly]: The little thief carries her portrait. Keep it close. It cost more than you can imagine.
+endif
+if name:liriel_dawnsong
+Strahd: A priestess of the dawn, in my valley. How brave. How very late.
+endif
+if name:wren_featherfoot
+Strahd: And a little monk who stands like a dusk elf. I knew a whole people who stood like that. I wonder who taught you.
+endif
+if name:kip_smudgewick
+Strahd [smile]: And you, merchant. You smell of brimstone and apricots. Someone holds your paper. How interesting.
+interject name:kip_smudgewick: It's, er. It's a small business matter. Lovely to meet you, sir.
+endif
 if class:wizard
 Strahd: And a scholar. My library would delight you. You must come up and see it. Everyone does, eventually.
 endif

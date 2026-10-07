@@ -1,0 +1,65 @@
+{
+  "godrick_pendlebrook": {
+    "shape": "person",
+    "height": 1.55,
+    "expression": "warm, earnest, a big friendly grin",
+    "look": "Sir Godrick Pendlebrook, a huge, broad-shouldered young goliath man about seven and a half feet tall, with grey stone-coloured skin marked with darker grey mottled patches, a bald head, a square, friendly face with a strong jaw and a big warm grin, wearing polished steel chain mail under a sky-blue tabard with a white sunburst, a round steel shield on his left arm, a longsword with a worn griffin pommel at his hip, and brown leather boots",
+    "who": "Sir Godrick Pendlebrook, a huge goliath paladin",
+    "attack": "longsword swing behind a shield",
+    "windup": "the longsword raised high over his right shoulder, the round shield held up in front of his chest, feet planted wide, leaning back",
+    "strike": "the longsword swung down and across in front of him at chest height, the shield pulled in, leaning his whole weight into the blow"
+  },
+  "liriel_dawnsong": {
+    "shape": "person",
+    "height": 1.18,
+    "expression": "serene, gentle, quietly certain",
+    "casts": true,
+    "look": "Liriel Dawnsong, a slight, graceful high elf woman with long straight pale-gold hair, pointed ears, a delicate serene face and large grey eyes, wearing flowing cream and soft gold priestly robes over a light chain shirt, a gold sunburst holy symbol on a chain at her breast, a small round shield on her arm and a slender mace at her belt",
+    "who": "Liriel Dawnsong, an elf cleric of the dawn",
+    "attack": "spell attack",
+    "windup": "the gold sunburst holy symbol raised high in her right hand, a small gathering glow of warm golden light around it, her other hand at her heart, robes swirling",
+    "strike": "the holy symbol thrust out toward the enemy at shoulder height with a burst of golden light leaving it, leaning forward onto the front foot"
+  },
+  "thistle": {
+    "shape": "person",
+    "height": 1.22,
+    "expression": "bold, wild, grinning",
+    "look": "Thistle, a wiry young human woman in her early twenties with a wild mane of tangled russet-red hair with black crow feathers braided into it, freckled sun-browned skin and a wide grin, wearing patched studded leather armour, a fur-trimmed moss-green hooded cloak, fingerless gloves, a longbow and a quiver of arrows on her back and a scimitar at her hip, and worn hide boots",
+    "who": "Thistle, a wild human ranger",
+    "attack": "longbow shot",
+    "windup": "the longbow raised and fully drawn, an arrow nocked and the string pulled back to her cheek, bow arm straight toward the enemy, feet apart",
+    "strike": "the arrow loosed, the bowstring snapped forward and the arrow flying toward the enemy, her drawing hand flung back past her ear"
+  },
+  "ratatoille": {
+    "shape": "person",
+    "height": 1.24,
+    "expression": "eager, fussy, a little pompous",
+    "casts": true,
+    "look": "Ratatoille, a slim, gangly young high elf man with neat dark-brown hair, pointed ears, round wire spectacles and an eager, pinched face, wearing a deep plum wizard's robe with gold trim, a white cook's apron tied over it, a battered copper skillet hanging at his belt beside a leather-bound spellbook, and holding a carved wooden staff",
+    "who": "Ratatoille, an elf wizard and cook",
+    "attack": "spell attack",
+    "windup": "the wooden staff raised high in the right hand, the left hand pulled back beside the hip with fingers curled around a small orange flame, torso leaning back",
+    "strike": "the left arm thrust straight out toward the enemy at shoulder height with the palm open and a burst of orange flame leaving it, the staff swept forward too, robes and apron swinging"
+  },
+  "wren_featherfoot": {
+    "shape": "person",
+    "height": 0.74,
+    "expression": "cheeky, quick, amused",
+    "look": "Wren Featherfoot, a small, lean, athletic halfling man with short curly sandy-brown hair, a cheeky grin and quick bright eyes, barefoot, wearing a sleeveless sky-blue and grey monk's wrap tunic with a rope sash, loose grey trousers tied at the ankles, and cloth wraps around his wrists and forearms",
+    "who": "Wren Featherfoot, a halfling monk",
+    "attack": "flying punch",
+    "windup": "crouched low and coiled on the balls of his feet, the right fist pulled back beside his ribs, the left open hand held forward for balance",
+    "strike": "springing forward in a long lunge, the right fist driven straight out at full arm's length at the enemy, the back leg straight and the heel lifted"
+  },
+  "kip_smudgewick": {
+    "shape": "person",
+    "height": 1.28,
+    "expression": "anxious, friendly, apologetic smile",
+    "casts": true,
+    "look": "Kip Smudgewick, a friendly tiefling man in his early thirties with maroon-red skin, curling dark-grey ram's horns, a long thin tail, golden eyes and an anxious smile, wearing a wide-brimmed straw hat, a mustard-yellow shirt with rolled sleeves, a brown leather waistcoat, a green canvas apron with pockets full of orange apricots, a small black book on a chain at his hip, brown breeches and boots",
+    "who": "Kip Smudgewick, a tiefling warlock",
+    "attack": "eldritch blast",
+    "windup": "both hands pulled back beside his right hip with a crackling ball of violet energy gathering between the palms, knees bent, leaning back",
+    "strike": "both hands thrust straight out toward the enemy at chest height with a beam of crackling violet energy leaving them, leaning forward onto the front foot, the straw hat tilted back"
+  }
+}

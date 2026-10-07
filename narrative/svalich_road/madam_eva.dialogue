@@ -44,6 +44,10 @@ Narrator: The shuffling stops. Madam Eva looks past you at Ireena for a long mom
 Madam Eva [sad]: So. You have come round again, child. Further along the road than last time.
 Ireena: I've never been here in my life.
 Madam Eva: No. Not in this one. Sit by the brazier; you are cold all the way through, and it isn't the weather.
+if flag.tamsin_locket_recognized and name:tamsin_tealeaf
+interject name:tamsin_tealeaf: She means the locket. The woman in the locket. Doesn't she?
+Madam Eva [sly]: Keep that stolen face in your pocket, little thief. Some faces belong to the dead, and the dead want them back.
+endif
 -> before_price
 
 # --- The price ---
@@ -97,6 +101,10 @@ Madam Eva: Who pays? Not something clever. Something that costs you to say out l
 * [name:ratatoille] Admit what he'd rather be. -> truth_ratatoille
 * [name:wren_featherfoot] Admit what his master never finished. -> truth_wren
 * [name:kip_smudgewick] Admit who signed the contract, and who didn't. -> truth_kip
+* [name:ilse_varga] Report the fever. -> truth_ilse
+* [name:hedda_ironvow] Admit what the mist did to her prayers. -> truth_hedda
+* [name:silvain_aster] Admit why they really want the book. -> truth_silvain
+* [name:tamsin_tealeaf] Admit the truth about the locket. -> truth_tamsin
 * Lean close and tell her the thing you have never told the others. -> truth_other
 * On second thought, no. -> price_menu
 
@@ -364,6 +372,10 @@ Madam Eva: One question more, and then the cards sleep. Only one. Choose it well
 * [name:ratatoille] Where is the Wizard of Wines? -> q_wizard
 * [name:wren_featherfoot] Where is Kasimir? -> q_kasimir
 * [name:kip_smudgewick] Is there a way out of my contract? -> q_contract
+* [name:ilse_varga] Where is Kestrel Company? -> q_kestrel
+* [name:tamsin_tealeaf] Who is the woman in the locket? -> q_locket
+* [name:hedda_ironvow] Will dawn ever come to this valley? -> q_dawn
+* [name:silvain_aster] Is Aurel Mirescu alive? -> q_aurel
 * Why were we brought here? -> q_why
 * We've heard enough. -> q_none
 
@@ -488,3 +500,68 @@ if flag.stanimir_misdirects
 Madam Eva: Stanimir has told the castle you went east. He thinks I don't know. Let him think it.
 endif
 -> again_menu
+
+# --- The first four (owner, 2026-10-06: kept so older saves still play their quests) ---
+
+~ truth_ilse
+set eva_reading_paid = "truth"
+set eva_truth_teller = "ilse_varga"
+Player: Report. Kestrel Company marched into the fog without me. I had a fever. It wasn't bad enough to keep me back. I was tired of the work. That's all.
+Madam Eva: And you have been counting heads ever since, so that nobody is ever missing again. Yes. That will do. That is worth more than gold.
+interject name:hedda_ironvow: Mm. Thank you for telling us, Ilse.
+interject name:tamsin_tealeaf: For what it's worth, I'd have stayed in bed too. I'd have stayed in bed for a week.
+-> reading
+
+~ truth_hedda
+set eva_reading_paid = "truth"
+set eva_truth_teller = "hedda_ironvow"
+if not (quest.cold_prayers >= cold)
+quest cold_prayers cold
+endif
+Player: Since we crossed the mist, I have not felt my god. The prayers still answer. They answer cold. I have told no one, because a healer who doubts is a healer nobody lets near the bed.
+Madam Eva [sad]: The Morninglord's light is a long way from here, priestess. It still reaches you. Ask why it reaches, not why it's cold.
+interject name:silvain_aster: Hedda. For the record, those cold prayers have kept me alive twice. I will take cold.
+-> reading
+
+~ truth_silvain
+set eva_reading_paid = "truth"
+set eva_truth_teller = "silvain_aster"
+Player: I tell everyone I want the book for the scholarship. I want it because Aurel went after it, and I would like to know whether my friend is alive. There. Somebody write that down.
+Madam Eva: A scholar who came for a friend, and was ashamed of it. The cards like you better already.
+interject name:tamsin_tealeaf: I knew it. I knew you liked him.
+-> reading
+
+~ truth_tamsin
+set eva_reading_paid = "truth"
+set eva_truth_teller = "tamsin_tealeaf"
+Player: The locket. I'm good, but I'm not that good. Nobody leaves a coach that easy to rob. I think somebody put it where my hand would find it, so I'd carry it here.
+Madam Eva [sly]: Somebody did. And now you have said it aloud, you can stop pretending you are only a thief. Good.
+interject name:ilse_varga: Noted.
+-> reading
+
+~ q_kestrel
+set eva_question = "kestrel"
+Madam Eva: Some of your forty went into his house as guests and never came out as anything. Some walk his roads still, in colours that are not their own. You will see one before the end, sergeant. Count carefully.
+Player: ...Noted.
+-> farewell
+
+~ q_locket
+set eva_question = "locket"
+if not (quest.the_locket >= her_name)
+quest the_locket her_name
+endif
+Madam Eva: Her name was Tatyana. She is dead, and she is not. Whoever put her in your hand wanted you to carry her face home, and you have.
+if guest:ireena
+Ireena: Who is Tatyana?
+Madam Eva [sly]: Ask him, child. He will tell you at great length, and every word will be a lie except her name.
+elif flag.tamsin_locket_recognized
+interject name:tamsin_tealeaf: Home. You mean the burgomaster's house. You mean Ireena.
+Madam Eva: I mean what the cards mean. Put it away, now.
+endif
+-> farewell
+
+~ q_aurel
+set eva_question = "aurel"
+Madam Eva: Your friend with the ink to his elbows went up to the castle to read. He is reading still. Whether he is still alive is a question even the cards find rude.
+Player: That is not an answer. It is very nearly an answer. Thank you.
+-> farewell

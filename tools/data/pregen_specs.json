@@ -89,7 +89,8 @@
           "str"
         ]
       }
-    }
+    },
+    "roster": true
   },
   "liriel_dawnsong": {
     "name": "Liriel Dawnsong",
@@ -206,7 +207,8 @@
           "wis"
         ]
       }
-    }
+    },
+    "roster": true
   },
   "thistle": {
     "name": "Thistle",
@@ -285,9 +287,9 @@
         "stealth"
       ],
       "prepared": [
-        "speak_with_animals",
         "ensnaring_strike",
         "cure_wounds",
+        "speak_with_animals",
         "hail_of_thorns",
         "entangle",
         "pass_without_trace",
@@ -318,7 +320,12 @@
           "dex"
         ]
       }
-    }
+    },
+    "roster": true,
+    "appearance": {
+      "art": "mirabel"
+    },
+    "art_todo": "Borrows the mirabel sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
   },
   "ratatoille": {
     "name": "Ratatoille",
@@ -400,9 +407,9 @@
         "shield",
         "magic_missile",
         "mage_armor",
+        "sleep",
         "burning_hands",
-        "grease",
-        "detect_magic",
+        "thunderwave",
         "misty_step",
         "web",
         "scorching_ray",
@@ -421,9 +428,10 @@
         "otilukes_freezing_sphere",
         "tashas_bubbling_cauldron",
         "chain_lightning",
-        "sleep",
+        "grease",
         "unseen_servant",
         "tensers_floating_disk",
+        "detect_magic",
         "feather_fall",
         "comprehend_languages",
         "identify"
@@ -432,10 +440,11 @@
         "shield",
         "magic_missile",
         "mage_armor",
+        "sleep",
         "burning_hands",
-        "grease",
-        "misty_step",
+        "thunderwave",
         "web",
+        "misty_step",
         "fireball",
         "counterspell",
         "haste",
@@ -448,6 +457,7 @@
         "scorching_ray",
         "hold_person",
         "fly",
+        "grease",
         "detect_magic"
       ]
     },
@@ -470,7 +480,12 @@
           "int"
         ]
       }
-    }
+    },
+    "roster": true,
+    "appearance": {
+      "art": "silvain_aster"
+    },
+    "art_todo": "Borrows the silvain_aster sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
   },
   "wren_featherfoot": {
     "name": "Wren Featherfoot",
@@ -541,7 +556,12 @@
           "wis"
         ]
       }
-    }
+    },
+    "roster": true,
+    "appearance": {
+      "art": "tamsin_tealeaf"
+    },
+    "art_todo": "Borrows the tamsin_tealeaf sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
   },
   "kip_smudgewick": {
     "name": "Kip Smudgewick",
@@ -590,6 +610,7 @@
       "eldritch_invocations": [
         "pact_of_the_tome",
         "agonizing_blast",
+        "armor_of_shadows",
         "repelling_blast",
         "devils_sight",
         "fiendish_vigor",
@@ -650,6 +671,11 @@
           "cha"
         ]
       }
-    }
+    },
+    "roster": true,
+    "appearance": {
+      "art": "gunther_arasek"
+    },
+    "art_todo": "Borrows the gunther_arasek sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
   }
 }

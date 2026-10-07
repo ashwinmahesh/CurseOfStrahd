@@ -166,3 +166,15 @@ func test_every_camp_talk_opens_with_a_condition() -> void:
 				talks += 1
 				assert_true(CampTalk.opening_condition(df, node).contains("name:"), "%s:%s names its companion" % [f, node])
 		assert_true(talks >= 2, "%s has talks" % f)
+
+
+func test_an_old_save_keeps_its_journal_without_the_retired_quests() -> void:
+	# A save from before the six (owner, 2026-10-06) still names the first four's quests; the journal skips them.
+	var st := _party()
+	st.quests["kestrel_company"] = {"stage": "the_letter", "history": ["the_letter"]}
+	st.set_quest_stage("the_ladle", "the_errand")
+	var back := StoryState.from_dict(st.to_dict())
+	var ids: Array[String] = []
+	for q in QuestLog.journal(back):
+		ids.append(str(q["id"]))
+	assert_eq(ids, ["the_ladle"] as Array[String])
