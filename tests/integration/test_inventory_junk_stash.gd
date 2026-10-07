@@ -26,6 +26,10 @@ func after_each() -> void:
 	if root != null:
 		root.queue_free()
 		root = null
+	# The made-up places leave the shared Compendium, so later tests in this process (test_skirmish walks every
+	# location) never meet them.
+	for id: String in ["junk_inn", "junk_road"]:
+		(Compendium.shared().tables["locations"] as Dictionary).erase(id)
 
 
 func _frames(n: int) -> void:
