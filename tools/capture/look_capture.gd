@@ -13,6 +13,7 @@ extends Node
 ## - LOOK_AA=msaa2|fxaa|smaa: another anti-aliasing in place of the preset's.
 ## - LOOK_OUTLINE=off|silhouette|full: the world's ink lines.
 ## - LOOK_FADE=1: the 3D pieces near the party faded, as when they stand in front of it.
+## - LOOK_TILT=1: the camera looking out to the horizon (the sky and what lies past the map).
 ## - LOOK_BENCH=1 times each part of the renderer in turn instead of shooting (_bench), LOOK_BENCH=presets the graphics
 ##   presets, several rounds over, since other work on the machine makes one reading noisy; LOOK_BENCH=pairs what one
 ##   change saves, switching it on and off in quick turns (_bench_pairs), the steadiest under load.
@@ -151,6 +152,12 @@ func _build(shot: Dictionary) -> void:
 				t.set_meta("fade", 0.72)
 				ModelPiece.set_fade(t, 0.72)
 		view.set_process(false)
+	if OS.get_environment("LOOK_TILT") != "":
+		# Looking out to the horizon as the tilted camera does (CameraRig.horizon), set by hand here.
+		view.rig.set_process(false)
+		view.rig.camera.far = 900.0
+		view.rig.camera.position = Vector3(0.0, 9.0, 25.0)
+		view.rig.camera.rotation = Vector3(deg_to_rad(-8.0), 0.0, 0.0)
 	if OS.get_environment("LOOK_SDFGI") != "":
 		var env := view.atmosphere.env
 		env.sdfgi_enabled = true

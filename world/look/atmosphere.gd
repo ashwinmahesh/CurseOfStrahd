@@ -571,6 +571,43 @@ static func _footprint_textures() -> Array[Texture2D]:
 	return _print_tex
 
 
+# --- The sky (W13) -------------------------------------------------------------------------------------
+
+## How plainly the moon (or the low sun) shows in the sky by the time of day: a disc glowing through the cloud at
+## night, a paler glow at dusk and dawn, only a brighter patch in the cloud by day.
+const MOON_SHOWS := {"night": 1.0, "dusk": 0.45, "dawn": 0.45, "day": 0.12}
+## The moon hangs low enough to be seen when the camera looks out to the horizon (degrees above it), on the bearing
+## the key light comes from.
+const MOON_HEIGHT := 14.0
+## Barovia is never clear: the cloud covers at least this much of the sky.
+const MIN_COVER := 0.6
+
+
+## Barovia's sky in the screen pass (strahd_post.gdshader sky_on): outdoors in the Modern finish, coloured by the time
+## of day; seen when the camera tilts toward the horizon (CameraRig.horizon).
+func _apply_sky(v: Dictionary) -> void:
+	var on := Look.modern() and outdoors
+	_post.set_shader_parameter("sky_on", on)
+	if not on:
+		return
+	var sky := v["sky"] as Color
+	var key := v["key"] as Color
+	_post.set_shader_parameter("sky_zenith", sky.darkened(0.25))
+	_post.set_shader_parameter("sky_cloud_lit", sky.lerp(key, 0.45))
+	_post.set_shader_parameter("sky_cloud_shade", sky.lerp(Look.color("void"), 0.45))
+	_post.set_shader_parameter("sky_moon_colour", key.lightened(0.2))
+	_post.set_shader_parameter("sky_moon", float(v["moon"]))
+	# Towards the light, brought down to where a camera looking out can see it.
+	var towards := sun.global_transform.basis.z if sun.is_inside_tree() else Vector3(0.3, 0.6, -0.7)
+	var flat := Vector2(towards.x, towards.z).normalized()
+	var up := sin(deg_to_rad(MOON_HEIGHT))
+	_post.set_shader_parameter("sky_moon_dir", Vector3(flat.x * cos(deg_to_rad(MOON_HEIGHT)), up,
+		flat.y * cos(deg_to_rad(MOON_HEIGHT))))
+	var clouds := mood.get("clouds", {}) as Dictionary
+	_post.set_shader_parameter("sky_cover", maxf(float(clouds.get("cover", 0.5)) + 0.15, MIN_COVER))
+	_post.set_shader_parameter("sky_wind", _vec2(clouds.get("wind", [0.6, 0.25])))
+
+
 ## The board's water squares get the moving water (one material for the whole place, the land's lakes included).
 func _build_water() -> void:
 	var spec := mood.get("water", {}) as Dictionary
@@ -814,6 +851,7 @@ func _target(p: String) -> Dictionary:
 		"tone_tint": Look.color(str(tone.get("ambient_tint", "void"))),
 		"tone_tint_mix": float(tone.get("ambient_mix", 0.0)),
 		"tone_key": float(tone.get("key", 1.0)),
+		"moon": float(MOON_SHOWS.get(p, 0.0)),
 	}
 
 
@@ -861,6 +899,7 @@ func _apply(k: float) -> void:
 	_post.set_shader_parameter("grade_lights", v["grade_lights"] as Color)
 	# The Modern finish tints only the shade (tone_split), by MODERN_TONE's share of the mood's amount.
 	_post.set_shader_parameter("grade_amount", float(v["grade_amount"]))
+	_apply_sky(v)
 	if Look.modern():
 		_post.set_shader_parameter("tone_shade", v["tone_shade"] as Color)
 		_post.set_shader_parameter("tone_amount", float(v["tone_amount"]))
