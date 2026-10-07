@@ -254,7 +254,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 				if str(target.creature.creature_type) == "undead":
 					var hurt := e._roll_damage_dice("1d10", false, 0, label)
 					e.deal_damage(null, c, [{"amount": int(hurt["total"]), "type": "necrotic"}], false, "Blackrazor recoils", [str(hurt["text"])])
-					target.creature.heal(e.dice.roll_one(10, label), label)
+					target.creature.heal(maxi(e.dice.roll_one(10, label), e.heal_floor(target)), label)
 	if target.is_alive() and str(option.get("kind", "")) != "thrown":
 		_spent_ammo_on_hit(c, option)
 

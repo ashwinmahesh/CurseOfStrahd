@@ -62,6 +62,9 @@ var slots_used: Array[int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ## Pact Magic slots spent (Warlock); they come back on a Short or Long Rest.
 var pact_slots_used: int = 0
 var heroic_inspiration: bool = false
+## Where this character's Find Familiar familiar is between fights (2024: it stays until dismissed or dropped to 0 Hit
+## Points, then needs casting again): "" none, "here" with the party, "pocket" in its pocket dimension.
+var familiar: String = ""
 
 
 static func from_build(build_: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2081,7 +2084,7 @@ func to_dict() -> Dictionary:
 	return {"build": build.duplicate(true), "state": state_to_dict(), "inventory": inventory.duplicate(true),
 		"currency": currency.duplicate(), "hit_dice_spent": hit_dice_spent.duplicate(),
 		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
-		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate()}
+		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate(), "familiar": familiar}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2103,6 +2106,7 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 		c.slots_used[i] = int(used[i])
 	c.pact_slots_used = int(d.get("pact_slots_used", 0))
 	c.heroic_inspiration = bool(d.get("heroic_inspiration", false))
+	c.familiar = str(d.get("familiar", ""))
 	for a: Variant in d.get("attuned", []):
 		c.attuned.append(str(a))
 	return c

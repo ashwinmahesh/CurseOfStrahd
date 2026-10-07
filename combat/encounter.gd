@@ -1140,7 +1140,7 @@ func use_item(c: Combatant, item_id: String, target: Combatant) -> CombatResult:
 		var amount := int(p.get("flat", 0))
 		var text := ""
 		if p.has("dice"):
-			var rolled := _roll_damage_dice(str(p["dice"]), false, 0, str(item.get("name", "")))
+			var rolled := heal_roll(str(p["dice"]), target, str(item.get("name", "")))
 			amount += int(rolled["total"])
 			text = str(rolled["text"])
 		var healed := target.creature.heal(amount, str(item.get("name", "")))
@@ -2470,6 +2470,16 @@ func _roll_damage_dice(expr: String, critical: bool, minimum: int, reason: Strin
 	if int(parsed["modifier"]) != 0:
 		text += " %+d" % int(parsed["modifier"])
 	return {"total": total, "text": "%s = %d" % [text.strip_edges(), total]}
+
+
+## Dice rolled to give `t` Hit Points: Soothing Familiar counts low dice as 3s.
+func heal_roll(expr: String, t: Combatant, reason: String, reroll: Dictionary = {}) -> Dictionary:
+	return _roll_damage_dice(expr, false, heal_floor(t), reason, reroll)
+
+
+## The lowest a die rolled to heal `t` counts as (0 = as rolled).
+func heal_floor(t: Combatant) -> int:
+	return faerun.healing_floor(t)
 
 
 ## Deals damage through the target's defenses with the Concentration save, Undead Fortitude, effects that end on

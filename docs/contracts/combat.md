@@ -217,4 +217,10 @@ Batch 3 added `before_d20`, `turn_start`/`turn_end`, `after_save_ended` (a succe
 `attack_advantage` (in `attack_situation`) and queued damage reactions with `fr_` kinds (`queue_damage_reactions`,
 `queued_ok`, `fire_queued`, `queued_text`). `Encounter.hit_context` names the attack whose damage is being dealt
 ({attacker, target, melee, spell}) while `deal_damage` runs for a weapon, monster or spell attack hit.
+Dice that restore Hit Points go through `Encounter.heal_roll(expr, target, reason)` (or `heal_floor(target)` for a
+single die) so Soothing Familiar's 3s apply to every healing roll. `EncounterSetup.bring_familiars` gives each party
+member whose familiar is still summoned (`Character.familiar`: "here" or "pocket", set by casting Find Familiar and
+cleared when it drops to 0 Hit Points or is dismissed) the familiar at the start of a location fight
+(`SpellCaster.precast(c, id, true)`: no slot); `FaerunFeatures.familiar_of(c)` finds it, and its caster's `feat:fr:familiar_away` / `familiar_back` /
+`familiar_dismiss` are Find Familiar's pocket-dimension and dismiss Magic actions.
 

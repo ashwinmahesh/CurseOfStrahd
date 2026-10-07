@@ -410,8 +410,9 @@ func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> Comba
 
 
 ## A spell cast before the fight (Mage Armor, Find Familiar, Animate Dead): its lowest slot is spent and its effect
-## applied, with Concentration if it needs it.
-func precast(c: Combatant, spell_id: String) -> bool:
+## applied, with Concentration if it needs it. With `ritual`, a Ritual spell cast earlier as a Ritual carries over and
+## spends nothing (a summoned familiar joining the fight).
+func precast(c: Combatant, spell_id: String, ritual: bool = false) -> bool:
 	if caster_char(c) == null:
 		return false
 	var ch := caster_char(c)
@@ -421,8 +422,11 @@ func precast(c: Combatant, spell_id: String) -> bool:
 		return false
 	var level := int(s.get("level", 0))
 	var slot := 0
-	# Undead Thralls: a free casting of Animate Dead before the fight comes first.
-	if level > 0 and ch.resource_left("spell:%s" % spell_id) > 0:
+	var as_ritual := ritual and bool(s.get("ritual", false))
+	# A Ritual spends nothing; Undead Thralls: a free casting of Animate Dead before the fight comes first.
+	if as_ritual:
+		slot = level
+	elif level > 0 and ch.resource_left("spell:%s" % spell_id) > 0:
 		ch.spend_resource("spell:%s" % spell_id)
 		slot = level
 	elif level > 0:
@@ -433,7 +437,7 @@ func precast(c: Combatant, spell_id: String) -> bool:
 	var conc: Concentration = null
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
-	enc().log.add("spell", "%s cast %s before the fight%s" % [c.name(), s["name"], " (level %d slot)" % slot if slot > 0 else ""], c.id)
+	enc().log.add("spell", "%s cast %s before the fight%s" % [c.name(), s["name"], " (cast earlier as a Ritual)" if as_ritual else (" (level %d slot)" % slot if slot > 0 else "")], c.id)
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": numbers(c, entry), "conc": conc, "opts": {}, "precast": true,
 		"choice": str(c.get_meta("chain_form", "imp")) if spell_id == "find_familiar" and ClassFeatures.knows_invocation(c, "pact_of_the_chain") else ""}
 	# Necromancy Familiar: the form chosen for it (a Skeleton unless set).
@@ -1428,7 +1432,7 @@ func _roll_spell_damage(ctx: Dictionary, t: Combatant, critical: bool) -> Dictio
 ## Damage from a list of parts outside the spell's main entry (a zone's damage, Ice Knife's burst, Witch Bolt's
 ## later bolts), with upcast dice (`upcast` on the part, else the spell's `upcast.damage`) and the caster's
 ## modifier when `add_mod`. {total, text, type}
-func roll_damage_parts(ctx: Dictionary, parts: Array, critical: bool, _t: Combatant) -> Dictionary:
+func roll_damage_parts(ctx: Dictionary, parts: Array, critical: bool, _t: Combatant, min_die: int = 0) -> Dictionary:
 	var e := enc()
 	var s := ctx["s"] as Dictionary
 	var c := ctx["c"] as Combatant
@@ -1448,7 +1452,7 @@ func roll_damage_parts(ctx: Dictionary, parts: Array, critical: bool, _t: Combat
 			if sc.has("damage"):
 				count += int(DiceRoller.parse_expr(str(sc["damage"]))["count"]) * Spellcasting.cantrip_tier(c.creature.character_level())
 		var dice := Spellcasting._format(count, int(base["sides"]), int(base["modifier"]))
-		var rolled := e._roll_damage_dice(dice, critical, 0, "%s damage" % s["name"])
+		var rolled := e._roll_damage_dice(dice, critical, min_die, "%s damage" % s["name"])
 		var sub := int(rolled["total"])
 		if bool(part.get("add_mod", false)):
 			sub += int((ctx["nums"] as Dictionary).get("mod", 0))
@@ -1992,7 +1996,7 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	elif bool((s.get("heal", {}) as Dictionary).get("add_mod", false)):
 		bonus.add("Spellcasting modifier", int((ctx["nums"] as Dictionary).get("mod", 0)))
 	var heal_reroll := {"count": 99, "at_most": 1, "source": "Healer"} if e.features.has_feat(c, "healer") else {}
-	var rolled := e._roll_damage_dice(dice, false, 0, "%s healing" % s["name"], heal_reroll) if dice != "" else {"total": 0, "text": ""}
+	var rolled := e.heal_roll(dice, t, "%s healing" % s["name"], heal_reroll) if dice != "" else {"total": 0, "text": ""}
 	var total := int(rolled["total"])
 	if t.creature.has_flag("max_healing_received") and dice != "":
 		var p := DiceRoller.parse_expr(dice)
@@ -2129,7 +2133,7 @@ func apply_effect_entries(ctx: Dictionary, t: Combatant, entries: Array, when: S
 				var amount := int(params.get("flat", 0))
 				var roll_text := ""
 				if params.has("dice"):
-					var hr := e._roll_damage_dice(str(params["dice"]), false, 0, str(s["name"]))
+					var hr := e.heal_roll(str(params["dice"]), who, str(s["name"]))
 					amount += int(hr["total"])
 					roll_text = "%s %s" % [params["dice"], hr["text"]]
 				var healed := who.creature.heal(amount, str(s["name"]))
@@ -2804,7 +2808,7 @@ func _arcane_vigor(ctx: Dictionary, r: CombatResult) -> void:
 		var left := int(entry["total"]) - int(entry["spent"])
 		while want > 0 and left > 0:
 			ch.hit_dice_spent[str(die)] = int(ch.hit_dice_spent.get(str(die), 0)) + 1
-			var v := e.dice.roll_one(int(die), "Arcane Vigor (d%s)" % die)
+			var v := maxi(e.dice.roll_one(int(die), "Arcane Vigor (d%s)" % die), e.heal_floor(c))
 			total += v
 			rolls.append("d%s: %d" % [die, v])
 			left -= 1
@@ -3406,7 +3410,7 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 		"heal_one":
 			if t == null:
 				t = c
-			var rolled2 := e._roll_damage_dice(str((d.get("heal", {}) as Dictionary).get("dice", "2d6")), false, 0, str(s["name"]))
+			var rolled2 := e.heal_roll(str((d.get("heal", {}) as Dictionary).get("dice", "2d6")), t, str(s["name"]))
 			var amt := int(rolled2["total"])
 			# Alustriel's Mooncloak: the dice plus the spellcasting modifier.
 			if bool((d.get("heal", {}) as Dictionary).get("add_mod", false)):

@@ -289,7 +289,7 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 		if str(o.hit_on_turn.get(t.id, "")) == turn_key:
 			return
 		o.hit_on_turn[t.id] = turn_key
-		var hp := spells().roll_damage_parts(ctx, [o.rules["heal_allies"]], false, t)
+		var hp := spells().roll_damage_parts(ctx, [o.rules["heal_allies"]], false, t, e.heal_floor(t))
 		var got := t.creature.heal(int(hp["total"]), o.name)
 		e.log.add("heal", "%s regains %d Hit Points (%s)" % [t.name(), got, o.name], t.id, [str(hp["text"])])
 		e.events.append({"type": "heal", "id": t.id, "amount": got})

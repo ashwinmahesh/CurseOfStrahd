@@ -53,6 +53,18 @@ static func from_data(entry: Dictionary, dice: DiceRoller, errors: Array[String]
 	return e
 
 
+## Familiars come along: a party member whose Find Familiar familiar is still summoned (Character.familiar) starts
+## the fight with it beside it, or waiting in its pocket dimension. Nothing is spent: it was cast earlier.
+static func bring_familiars(e: Encounter, party: Array[Combatant]) -> void:
+	for c in party:
+		var ch := c.creature as Character if c.creature is Character else null
+		if ch == null or not ch.familiar in ["here", "pocket"] or not ch.knows_spell("find_familiar"):
+			continue
+		var pocket := ch.familiar == "pocket"
+		if e.spells.precast(c, "find_familiar", true) and pocket:
+			e.faerun.pocket_familiar(c)
+
+
 ## Creature ids the encounter data marks as surprised.
 static func surprised_ids(entry: Dictionary, e: Encounter) -> Array[String]:
 	var out: Array[String] = []

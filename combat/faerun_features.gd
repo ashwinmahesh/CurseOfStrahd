@@ -148,6 +148,12 @@ func list(c: Combatant, out: Array[Dictionary], aw: String, _bw: String) -> void
 			"Bonus Action: up to three creatures within 60 ft who can see you stand up (spending a Reaction) and can't be Charmed, Frightened or possessed for 1 minute.", 60)
 		lr["count"] = 3
 		out.append(lr)
+	_familiar_list(c, out)
+	if feat(c, "elemental_familiar"):
+		var element := _feat_pick(c, "elemental_familiar", "elemental_familiar_resistance")
+		out.append(_entry("elemental_familiar", "Elemental Familiar", "%s burst · Dex DC %d" % [element.capitalize(), _familiar_dc(c)],
+			"bonus", _burst_why(c), "none",
+			"Bonus Action: your familiar within 120 ft spends its Reaction. Each other creature within 5 ft of it makes a Dexterity save or takes 2d4 %s damage, and a Medium or smaller one falls Prone." % element.capitalize()))
 	if feat(c, "emerald_enclave_fledgling") and str(c.get_meta("tag_team_window", "")) == _turn_key():
 		out.append(_entry("tag_team", "Tag Team", "swap with an ally", "free", tw, "ally",
 			"As part of your Help: trade places with a willing ally within 5 ft who isn't Incapacitated. Neither of you provokes Opportunity Attacks.", 5))
@@ -217,6 +223,10 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, _point: Vec
 			return _lordly_resolve(c, _targets_of(t))
 		"tag_team":
 			return _tag_team(c, t)
+		"elemental_familiar":
+			return _elemental_burst(c)
+		"familiar_away", "familiar_back", "familiar_dismiss":
+			return _familiar_command(c, id, cell)
 		_:
 			return _subclass_perform(c, id, t, cell)
 	return CombatResult.new()
@@ -368,7 +378,7 @@ func after_cast(c: Combatant, s: Dictionary, slot: int, free: bool = false, ctx:
 		ch.restore_resource("divination_adept", 1)
 		_log("info", "%s's Divination Adept is ready again" % c.name(), c)
 	if school == "necromancy" and feat(c, "necromancy_adept") and allowed(c, "necromancy_adept_benefit") and c.creature.hp < c.creature.max_hp():
-		var rolled := _spend_hit_dice(ch, 2, "Necromancy Adept")
+		var rolled := _spend_hit_dice(ch, 2, "Necromancy Adept", healing_floor(c))
 		if rolled > 0:
 			var got := c.creature.heal(rolled + slot, "Necromancy Adept")
 			_log("heal", "%s draws on its own life force: +%d Hit Points (Necromancy Adept)" % [c.name(), got], c)
@@ -381,7 +391,7 @@ func after_cast(c: Combatant, s: Dictionary, slot: int, free: bool = false, ctx:
 		for fx: Effect in c.creature.effects:
 			if fx.source_id == "simbuls_synostodweomer":
 				mod = _caster_mod(fx.caster_id, "simbuls_synostodweomer")
-		var rolled := _spend_hit_dice(ch, slot, "Simbul's Synostodweomer")
+		var rolled := _spend_hit_dice(ch, slot, "Simbul's Synostodweomer", healing_floor(c))
 		if rolled > 0:
 			var got := c.creature.heal(rolled + mod, "Simbul's Synostodweomer")
 			_log("heal", "%s draws healing from its own spell: +%d Hit Points (Simbul's Synostodweomer)" % [c.name(), got], c)
@@ -403,7 +413,7 @@ func _abjuration_ward(c: Combatant, slot: int) -> void:
 
 
 ## Rolls up to `n` unused Hit Dice (largest first), spending them; their total, without the Constitution modifier.
-func _spend_hit_dice(ch: Character, n: int, label: String) -> int:
+func _spend_hit_dice(ch: Character, n: int, label: String, min_die: int = 0) -> int:
 	var total := 0
 	for i in n:
 		var pool := ch.hit_dice()
@@ -415,7 +425,7 @@ func _spend_hit_dice(ch: Character, n: int, label: String) -> int:
 		if best == 0:
 			break
 		ch.hit_dice_spent[str(best)] = int(ch.hit_dice_spent.get(str(best), 0)) + 1
-		total += enc().dice.roll_one(best, label)
+		total += maxi(enc().dice.roll_one(best, label), min_die)
 	return total
 
 
@@ -680,6 +690,7 @@ func turn_end(c: Combatant) -> void:
 	if c.hidden and str(c.get_meta("sneaky_cast_turn", "")) == _turn_key():
 		enc()._check_still_hidden(c)
 	_transfix_turn_end(c)
+	_otherworldly_return(c)
 
 
 func _commandant_rally(c: Combatant, t: Combatant) -> CombatResult:
@@ -781,6 +792,8 @@ func after_disengage(c: Combatant) -> void:
 func before_d20(c: Combatant, kind: D20Test.Kind, keys: Array[String]) -> Dictionary:
 	var e := enc()
 	var out := {}
+	if kind == D20Test.Kind.ABILITY_CHECK and _helpful_friend(c, keys):
+		out["advantage"] = ["Helpful Friend"]
 	if kind != D20Test.Kind.SAVING_THROW:
 		return out
 	for h in e.combatants:
@@ -956,7 +969,7 @@ func _wither_and_bloom(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vect
 	if best == null:
 		return
 	var dice := 1 + maxi(0, int(ctx["slot"]) - 2)
-	var rolled := _spend_hit_dice(_ch(best), dice, "Wither and Bloom")
+	var rolled := _spend_hit_dice(_ch(best), dice, "Wither and Bloom", healing_floor(best))
 	if rolled <= 0:
 		return
 	var got := best.creature.heal(rolled + int((ctx["nums"] as Dictionary).get("mod", 0)), "Wither and Bloom")
@@ -1243,7 +1256,7 @@ func _lantern(c: Combatant, mode: String, t: Combatant, ctx: Dictionary, r: Comb
 			var only: Array[Combatant] = [t]
 			e.spells._save_spell(sub, only, r)
 		"mend":
-			var got := t.creature.heal(int(e.dice.roll_expr("4d8", "Spirit Lantern")["total"]) + mod, "Spirit Lantern")
+			var got := t.creature.heal(int(e.heal_roll("4d8", t, "Spirit Lantern")["total"]) + mod, "Spirit Lantern")
 			r.lines.append(e.log.add("heal", "%s mends %s with a captured spirit: +%d Hit Points" % [c.name(), t.name(), got], c.id))
 			e.events.append({"type": "heal", "id": t.id, "amount": got})
 		"veil":
@@ -1694,7 +1707,7 @@ func zone_failed_save(o: FieldObject, t: Combatant) -> void:
 			best = a
 	if best == null:
 		return
-	var got := best.creature.heal(int(e.dice.roll_expr("2d4", "Blessing of Moonlight")["total"]), "Blessing of Moonlight")
+	var got := best.creature.heal(int(e.heal_roll("2d4", best, "Blessing of Moonlight")["total"]), "Blessing of Moonlight")
 	_log("heal", "Moonlight mends %s: +%d Hit Points (Blessing of Moonlight)" % [best.name(), got], bard)
 	e.events.append({"type": "heal", "id": best.id, "amount": got})
 
@@ -1720,7 +1733,7 @@ func _group_recovery(c: Combatant) -> void:
 	ch.spend_resource("banneret_group_recovery")
 	var n := maxi(1, c.creature.ability_mod(&"cha"))
 	for a: Combatant in hurt.slice(0, n):
-		var got := a.creature.heal(e.dice.roll_one(4, "Group Recovery") + ch.class_level_of("fighter"), "Group Recovery")
+		var got := a.creature.heal(maxi(e.dice.roll_one(4, "Group Recovery"), healing_floor(a)) + ch.class_level_of("fighter"), "Group Recovery")
 		_log("heal", "%s rallies %s: +%d Hit Points (Group Recovery)" % [c.name(), a.name(), got], c)
 		e.events.append({"type": "heal", "id": a.id, "amount": got})
 		if CombatFeatures.has_feature(c, "banneret_team_tactics"):
@@ -2105,6 +2118,9 @@ func after_summon(ctx: Dictionary, m: Creature) -> void:
 	if ch == null:
 		return
 	var s := ctx["s"] as Dictionary
+	if str(s.get("id", "")) == "find_familiar":
+		_familiar_feats(c, ch, m)
+		ch.familiar = "here"
 	if str(s.get("id", "")) == "find_familiar" and CombatFeatures.has_feature(c, "necromancy_familiar") and m is Monster:
 		m.creature_type = &"undead"
 		(m as Monster).data["chain"] = true
@@ -2142,6 +2158,7 @@ func _deaths_master(c: Combatant) -> CombatResult:
 ## Reaction and a level 5+ slot). Harvest Undead is handled when the necromancer is hurt.
 func on_death(_source: Combatant, dead: Combatant) -> void:
 	var e := enc()
+	_familiar_lost(dead)
 	if dead.creature.creature_type != &"undead":
 		return
 	for h in e.combatants:
@@ -2260,4 +2277,260 @@ func _harvest_undead(c: Combatant) -> CombatResult:
 	_log("heal", "%s drains %s to mend itself: +%d Hit Points (Harvest Undead)" % [c.name(), u.name(), got], c)
 	e.events.append({"type": "heal", "id": c.id, "amount": got})
 	return CombatResult.new()
+
+
+# --- The familiar feats (Arcana Unleashed): Familiar Friend, Elemental, Otherworldly and Soothing Familiar -------------
+
+## The familiar Find Familiar gave `c` (alive and on the field), or null.
+func familiar_of(c: Combatant) -> Combatant:
+	if c == null:
+		return null
+	var e := enc()
+	for sid: Variant in e.spells.summoned.get(c.id, []):
+		var f := e.get_c(str(sid))
+		if f != null and f.is_alive() and f.creature is Monster and bool((f.creature as Monster).data.get("familiar", false)):
+			return f
+	return null
+
+
+## The pick `c` made for a benefit of one of its feats, or "".
+func _feat_pick(c: Combatant, feat_id: String, benefit_id: String) -> String:
+	var ch := _ch(c)
+	if ch == null:
+		return ""
+	for f in ch.feats_taken:
+		if str(f["id"]) == feat_id:
+			var picks := ch.picks_for("%s.%s" % [str(f["key"]), benefit_id])
+			if not picks.is_empty():
+				return str(picks[0])
+	return ""
+
+
+## 8 + the spellcasting modifier Familiar Friend casts Find Familiar with + the Proficiency Bonus.
+func _familiar_dc(c: Combatant) -> int:
+	var ab := _feat_pick(c, "familiar_friend", "faithful_companion_spell")
+	var mod := c.creature.ability_mod(StringName(ab)) if Creature.ABILITY_NAMES.has(StringName(ab)) else 0
+	return 8 + mod + c.creature.proficiency_bonus()
+
+
+## Fortified Familiar (twice the character level in Hit Points), the Resistance Elemental or Otherworldly Familiar
+## picks, and the Otherworldly familiar's passage through creatures and objects.
+func _familiar_feats(c: Combatant, ch: Character, m: Creature) -> void:
+	if feat(c, "familiar_friend"):
+		var more := 2 * ch.character_level()
+		var fx := Effect.new("Fortified Familiar", &"feature", "familiar_friend").with_modifier("hp_max", {"value": more})
+		fx.ends = Effect.Ends.NEVER
+		m.add_effect(fx)
+		m.hp += more
+	for fid: String in ["elemental_familiar", "otherworldly_familiar"]:
+		if not feat(c, fid):
+			continue
+		var fx2 := Effect.new(str(Compendium.shared().feat_data(fid).get("name", fid)), &"feature", fid)
+		var ty := _feat_pick(c, fid, fid + "_resistance")
+		if ty != "":
+			fx2.with_modifier("resistance", {"value": ty})
+		if fid == "otherworldly_familiar":
+			fx2.with_modifier("flag", {"value": "incorporeal_movement"})
+			fx2.with_modifier("flag", {"value": "otherworldly_familiar"})
+		fx2.ends = Effect.Ends.NEVER
+		m.add_effect(fx2)
+
+
+## Helpful Friend: a check with a skill `c` is proficient in has Advantage while its familiar is within 5 ft, spending
+## a use (on its own unless turned Off).
+func _helpful_friend(c: Combatant, keys: Array[String]) -> bool:
+	var ch := _ch(c)
+	if ch == null or not feat(c, "familiar_friend") or ch.resource_left("helpful_friend") <= 0:
+		return false
+	if str(c.reaction_rules.get("helpful_friend", "auto")) != "auto":
+		return false
+	var proficient := false
+	for k in keys:
+		var skill := StringName(k.trim_prefix("check:"))
+		if k.begins_with("check:") and Abilities.SKILLS.has(skill) and ch.skill_rank(skill) >= 1:
+			proficient = true
+	var fam := familiar_of(c)
+	if not proficient or fam == null or enc().distance(c, fam) > 5:
+		return false
+	ch.spend_resource("helpful_friend")
+	_log("info", "%s's familiar lends a hand (Helpful Friend)" % c.name(), c)
+	return true
+
+
+## Why Elemental Familiar's burst can't happen now, or "".
+func _burst_why(c: Combatant) -> String:
+	var e := enc()
+	var fam := familiar_of(c)
+	var why := e._bonus_check(c)
+	if why != "":
+		return why
+	if fam == null:
+		return "No familiar on the field"
+	if fam.has_meta("pocket"):
+		return "Your familiar is in its pocket dimension"
+	if not fam.reaction_available or not fam.can_act():
+		return "Your familiar can't use its Reaction"
+	if e.distance(c, fam) > 120:
+		return "Your familiar is more than 120 ft away"
+	return ""
+
+
+## Elemental Familiar: a Bonus Action command; the familiar spends its Reaction and each other creature within 5 ft of
+## it makes a Dexterity save or takes 2d4 of the picked type, a Medium or smaller one also falling Prone.
+func _elemental_burst(c: Combatant) -> CombatResult:
+	var e := enc()
+	var why := _burst_why(c)
+	if why != "":
+		return CombatResult.fail(why)
+	var fam := familiar_of(c)
+	c.bonus_available = false
+	fam.reaction_available = false
+	var ty := _feat_pick(c, "elemental_familiar", "elemental_familiar_resistance")
+	if ty == "":
+		ty = "fire"
+	var dc := _familiar_dc(c)
+	var caught: Array[Combatant] = []
+	for o in e.combatants:
+		if o != fam and o.is_alive() and e.distance(fam, o) <= 5:
+			caught.append(o)
+	e.events.append({"type": "ability", "source": "feature", "by": fam.id, "key": "elemental_familiar:%s" % ty,
+		"targets": caught.map(func(x: Combatant) -> String: return x.id), "cells": []})
+	_log("ability", "%s's familiar bursts with %s (Elemental Familiar, Dex DC %d)" % [c.name(), ty.capitalize(), dc], c)
+	for o in caught:
+		var sv := o.creature.roll_save(e.dice, &"dex", dc, [], [], "Dexterity save vs Elemental Familiar (%s)" % o.name())
+		if sv.success:
+			_log("info", "%s dodges the burst" % o.name(), o, [sv.describe()])
+			continue
+		var rolled := e._roll_damage_dice("2d4", false, 0, "Elemental Familiar")
+		e.deal_damage(fam, o, [{"amount": int(rolled["total"]), "type": ty}], false, "Elemental Familiar", [sv.describe(), str(rolled["text"])])
+		if o.is_alive() and Creature.SIZES.find(o.creature.size) <= Creature.SIZES.find(&"medium") and not o.creature.has_condition(&"prone"):
+			o.creature.add_condition(&"prone", "Elemental Familiar")
+			_log("condition", "%s is knocked Prone (Elemental Familiar)" % o.name(), o)
+			e.events.append({"type": "condition", "id": o.id})
+	return CombatResult.new()
+
+
+## Otherworldly Familiar: ending its turn inside an object puts the familiar back in the last open space it moved
+## through (else the nearest one).
+func _otherworldly_return(c: Combatant) -> void:
+	if not c.creature.has_flag("otherworldly_familiar") or c.has_meta("pocket"):
+		return
+	var e := enc()
+	if not c.footprint().any(func(cell: Vector2i) -> bool: return e.grid.is_solid(cell)):
+		return
+	var back := Vector2i(-1, -1)
+	for i in range(c.approach_path.size() - 1, -1, -1):
+		var cell: Vector2i = c.approach_path[i]
+		if cell != c.cell and e.spells._room_for(cell, c.size_cells):
+			back = cell
+			break
+	if back.x < 0:
+		back = e.spells._free_cell_near(c.cell, c.size_cells)
+	var from := c.cell
+	c.cell = back
+	e.events.append({"type": "teleport", "id": c.id, "from": from, "to": back})
+	_log("info", "%s slips back out of the solid object (Otherworldly Familiar)" % c.name(), c)
+
+
+## Soothing Familiar: you and your allies within 5 ft of your familiar (while it's within 120 ft of you) treat each 1
+## or 2 on healing dice as a 3. The lowest a healing die can count as for `t` (0 = as rolled).
+func healing_floor(t: Combatant) -> int:
+	if t == null:
+		return 0
+	var e := enc()
+	for h in e.combatants:
+		if not h.is_alive() or (h != t and not h.allied_with(t)) or not feat(h, "soothing_familiar"):
+			continue
+		var fam := familiar_of(h)
+		if fam != null and fam != t and e.distance(h, fam) <= 120 and e.distance(fam, t) <= 5:
+			return 3
+	return 0
+
+
+# --- Find Familiar's own commands (2024 PHB) ---------------------------------------------------------------------------
+
+## Off the grid while the familiar waits in its pocket dimension.
+const POCKET_CELL := Vector2i(-1000, -1000)
+
+
+## Magic actions for the caster of Find Familiar: send the familiar to its pocket dimension, call it back to a space
+## within 30 ft, or dismiss it for good.
+func _familiar_list(c: Combatant, out: Array[Dictionary]) -> void:
+	var fam := familiar_of(c)
+	if fam == null:
+		return
+	var e := enc()
+	var aw := _first(e._action_check(c), "Only one Magic action this turn" if c.magic_action_used else "")
+	if fam.has_meta("pocket"):
+		out.append(_entry("familiar_back", "Call Familiar Back", "%s · within 30 ft" % fam.name(), "action", aw, "point",
+			"Magic action: your familiar returns from its pocket dimension to an unoccupied space within 30 ft of you.", 30))
+	else:
+		out.append(_entry("familiar_away", "Send Familiar Away", "%s · pocket dimension" % fam.name(), "action", aw, "none",
+			"Magic action: your familiar steps into a pocket dimension, out of the fight until you call it back."))
+	out.append(_entry("familiar_dismiss", "Dismiss Familiar", "%s · for good" % fam.name(), "action", aw, "none",
+		"Magic action: your familiar is gone until you cast Find Familiar again."))
+
+
+func _familiar_command(c: Combatant, id: String, cell: Vector2i) -> CombatResult:
+	var e := enc()
+	var fam := familiar_of(c)
+	if fam == null:
+		return CombatResult.fail("No familiar")
+	var why := _first(e._action_check(c), "Only one Magic action this turn" if c.magic_action_used else "")
+	if why != "":
+		return CombatResult.fail(why)
+	match id:
+		"familiar_away":
+			if fam.has_meta("pocket"):
+				return CombatResult.fail("Already in its pocket dimension")
+			pocket_familiar(c)
+			_log("info", "%s sends %s to its pocket dimension" % [c.name(), fam.name()], c)
+		"familiar_back":
+			if not fam.has_meta("pocket"):
+				return CombatResult.fail("Your familiar is already here")
+			var to := cell
+			if to.x < 0 or e.grid.distance_ft(c.cell, c.size_cells, to, fam.size_cells) > 30 or not e.spells._room_for(to, fam.size_cells):
+				if to.x >= 0:
+					return CombatResult.fail("Choose an unoccupied space within 30 ft")
+				to = e.spells._free_cell_near(c.cell, fam.size_cells)
+			for fx2: Effect in fam.creature.effects.duplicate():
+				if fx2.name == "Pocket Dimension":
+					fam.creature.remove_effect(fx2)
+			fam.remove_meta("pocket")
+			_ch(c).familiar = "here"
+			fam.cell = to
+			e.events.append({"type": "teleport", "id": fam.id, "from": to, "to": to})
+			_log("info", "%s calls %s back" % [c.name(), fam.name()], c)
+		"familiar_dismiss":
+			e.spells._dismiss(fam.id)
+			_ch(c).familiar = ""
+	e.spend_action(c)
+	c.magic_action_used = true
+	return CombatResult.new()
+
+
+## Puts `c`'s familiar in its pocket dimension: off the grid, Incapacitated and untouchable until called back.
+func pocket_familiar(c: Combatant) -> void:
+	var fam := familiar_of(c)
+	if fam == null or fam.has_meta("pocket"):
+		return
+	var fx := Effect.new("Pocket Dimension", &"spell", "find_familiar").with_modifier("flag", {"value": "ethereal"}) \
+		.with_modifier("flag", {"value": "pocket_dimension"})
+	fx.conditions.append(&"incapacitated")
+	fx.ends = Effect.Ends.NEVER
+	fam.creature.add_effect(fx)
+	fam.set_meta("pocket", [fam.cell.x, fam.cell.y])
+	fam.cell = POCKET_CELL
+	enc().events.append({"type": "vanish", "id": fam.id})
+	if _ch(c) != null:
+		_ch(c).familiar = "pocket"
+
+
+## A familiar that drops to 0 Hit Points is gone until its caster casts Find Familiar again.
+func _familiar_lost(dead: Combatant) -> void:
+	if not dead.creature is Monster or not bool((dead.creature as Monster).data.get("familiar", false)) or not dead.has_meta("summoner"):
+		return
+	var owner := _ch(enc().get_c(str(dead.get_meta("summoner"))))
+	if owner != null and familiar_of(enc().get_c(str(dead.get_meta("summoner")))) == null:
+		owner.familiar = ""
 

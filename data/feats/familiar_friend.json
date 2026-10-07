@@ -8,13 +8,13 @@
   },
   "category": "origin",
   "repeatable": false,
-  "summary": "Always prepared: Find Familiar; choose Intelligence, Wisdom, or Charisma for casting. Once per Long Rest, cast Find Familiar without a slot or Material components. This special casting is reference-only. When casting Find Familiar, increase its current and maximum Hit Points by twice your character level. While your familiar is within 5 feet, gain Advantage on a proficient skill check. Uses equal Proficiency Bonus per Long Rest.",
+  "summary": "Find Familiar is always prepared, with one free casting per Long Rest; your familiar is tougher, and while it's beside you it gives you Advantage on checks with skills you're proficient in, Proficiency Bonus times per Long Rest.",
   "benefits": [
     {
       "id": "faithful_companion_spell",
       "name": "Find Familiar",
-      "summary": "Always prepared: Find Familiar; choose Intelligence, Wisdom, or Charisma for casting.",
-      "text": "Always prepared: Find Familiar; choose Intelligence, Wisdom, or Charisma for casting.",
+      "summary": "Find Familiar is always prepared; pick Intelligence, Wisdom or Charisma as its spellcasting ability.",
+      "text": "You always have Find Familiar prepared. Choose Intelligence, Wisdom or Charisma as your spellcasting ability for it.",
       "implemented": "data",
       "choice": {
         "id": "casting_ability",
@@ -31,31 +31,43 @@
           "stat": "spell",
           "value": "find_familiar",
           "ability": "@casting_ability",
-          "always_prepared": true
+          "always_prepared": true,
+          "uses": {
+            "count": 1,
+            "recharge": "long"
+          }
         }
       ]
     },
     {
       "id": "faithful_companion_free",
       "name": "Faithful Companion",
-      "summary": "Once per Long Rest, cast Find Familiar without a slot or Material components. This special casting is reference-only.",
-      "text": "Once per Long Rest, cast Find Familiar without a slot or Material components. This special casting is reference-only.",
-      "implemented": "text"
+      "summary": "Once per Long Rest, cast Find Familiar without a spell slot or its incense.",
+      "text": "Once per Long Rest you can cast Find Familiar without spending a spell slot or the incense it would consume. (Cast as a Ritual from the character sheet it costs nothing anyway; a fight that casts it ahead with a slot uses this free casting first.)",
+      "implemented": "data"
     },
     {
       "id": "fortified_familiar",
       "name": "Fortified Familiar",
-      "summary": "When casting Find Familiar, increase its current and maximum Hit Points by twice your character level.",
-      "text": "When casting Find Familiar, increase its current and maximum Hit Points by twice your character level.",
-      "implemented": "text"
+      "summary": "Your familiar's current and maximum Hit Points rise by twice your character level.",
+      "text": "Whenever you cast Find Familiar, the familiar gains current and maximum Hit Points equal to twice your character level.",
+      "implemented": "engine"
     },
     {
       "id": "helpful_friend",
       "name": "Helpful Friend",
-      "summary": "While your familiar is within 5 feet, gain Advantage on a proficient skill check. Uses equal Proficiency Bonus per Long Rest.",
-      "text": "While your familiar is within 5 feet, gain Advantage on a proficient skill check. Uses equal Proficiency Bonus per Long Rest.",
-      "implemented": "text"
+      "summary": "With your familiar within 5 feet, Advantage on a check with a skill you're proficient in. Proficiency Bonus times per Long Rest.",
+      "text": "While your familiar is within 5 feet of you, you can give yourself Advantage on an ability check that uses a skill you're proficient in. You can do so a number of times equal to your Proficiency Bonus and regain every use when you finish a Long Rest. It's used on its own on such a check (in a fight you can turn it Off in the class tab); outside a fight your familiar is taken to be at your side. It never applies to a check already failed.",
+      "implemented": "engine",
+      "resource": {
+        "id": "helpful_friend",
+        "name": "Helpful Friend",
+        "max": "pb",
+        "recharge": "long"
+      },
+      "policy": "auto",
+      "policy_cost": "One use (Proficiency Bonus per Long Rest)"
     }
   ],
-  "playable": false
+  "playable": true
 }

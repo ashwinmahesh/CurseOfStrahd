@@ -163,7 +163,7 @@ func second_wind(c: Combatant) -> CombatResult:
 	ch.spend_resource("second_wind")
 	c.bonus_available = false
 	var level := ch.class_level_of("fighter")
-	var rolled := e._roll_damage_dice("1d10+%d" % level, false, 0, "Second Wind")
+	var rolled := e.heal_roll("1d10+%d" % level, c, "Second Wind")
 	var healed := ch.heal(int(rolled["total"]), "Second Wind")
 	var r := CombatResult.new()
 	# Tactical Shift (Fighter 5): move up to half Speed without provoking Opportunity Attacks.
@@ -240,7 +240,7 @@ func divine_spark(c: Combatant, target: Combatant, harm: bool, damage_type: Stri
 	var level := c.creature.class_level_of("cleric")
 	var count := 1 + (1 if level >= 7 else 0) + (1 if level >= 13 else 0) + (1 if level >= 18 else 0)
 	var wis := c.creature.ability_mod(&"wis")
-	var rolled := e._roll_damage_dice("%dd8" % count, false, 0, "Divine Spark")
+	var rolled := e._roll_damage_dice("%dd8" % count, false, 0 if harm else e.heal_floor(target), "Divine Spark")
 	var amount := maxi(0, int(rolled["total"]) + wis)
 	var text := "Divine Spark %dd8 + Wis %d: %s" % [count, wis, rolled["text"]]
 	var r := CombatResult.new()
