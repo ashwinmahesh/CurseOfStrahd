@@ -106,7 +106,13 @@ func test_a_single_step_plays_the_walk_cycle() -> void:
 				stood = true
 				break
 		assert_true(stood, "and stands still once there")
-		assert_false((v.tokens[v.members[1].id] as CombatToken).sprite.moving, "followers stop too")
+		# Followers trail a beat behind (PartyGlide) and stop a moment later.
+		var follower := (v.tokens[v.members[1].id] as CombatToken).sprite
+		for i in 60:
+			if not follower.moving:
+				break
+			await get_tree().process_frame
+		assert_false(follower.moving, "followers stop too")
 
 
 func test_locked_door_opens_with_tools_or_force() -> void:

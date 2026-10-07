@@ -23,6 +23,10 @@ var walk_speed := 1.0
 ## The standing pose: "" (on foot), "sneak" (crouched, hidden or sneaking), "ride" (astride a mount) or "down" (lying:
 ## at 0 Hit Points or Prone). A pose the sheet doesn't have falls back to on foot.
 var pose := ""
+## Set as a walk ends (PartyGlide): the walk plays on to the next foot-down frame, briefly, before standing still, so
+## the figure doesn't snap from mid-stride to standing.
+var finish_stride := false
+var _stride_t := 0.0
 var _attacking := false
 var _struck := false
 var _hit_frame := 2
@@ -272,7 +276,7 @@ func _on_animation_finished() -> void:
 	attack_finished.emit()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var cam := get_viewport().get_camera_3d()
 	if cam == null:
 		return
@@ -282,12 +286,26 @@ func _process(_delta: float) -> void:
 		# Moving again cuts the attack short.
 		_on_animation_finished()
 	var base := _loop_for()
+	if finish_stride and not moving and _finishing_stride(delta):
+		return
+	finish_stride = false
+	_stride_t = 0.0
 	speed_scale = walk_speed if base in ["walk", "sneak_walk"] else 1.0
 	var anim := StringName(base + "_" + direction_for(facing, cam.global_basis))
 	if animation != anim:
 		var f := frame
 		play(anim)
 		frame = f if f < sprite_frames.get_frame_count(anim) else 0
+
+
+## Whether the walk is still playing on to a foot-down frame (half-cycle marks), for at most a fifth of a second.
+func _finishing_stride(delta: float) -> bool:
+	var a := str(animation)
+	if not (a.begins_with("walk_") or a.begins_with("sneak_walk_")) or not is_playing():
+		return false
+	_stride_t += delta
+	var half := maxi(1, sprite_frames.get_frame_count(animation) / 2)
+	return frame % half != 0 and _stride_t < 0.2
 
 
 ## The looping animation for the pose and whether the figure is moving.
