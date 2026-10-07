@@ -190,6 +190,14 @@
       "perception",
       "investigation"
     ],
+    "subclass": "thief",
+    "feats": [
+      "alert",
+      "sharpshooter",
+      "skill_expert",
+      "resilient",
+      "crossbow_expert"
+    ],
     "note": "Dexterity first; Expertise in Stealth and Sleight of Hand."
   },
   "levels": [
