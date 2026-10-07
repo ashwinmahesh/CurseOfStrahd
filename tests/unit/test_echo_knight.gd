@@ -280,17 +280,42 @@ func test_shadow_martyr_again_with_unleash_incarnation() -> void:
 	assert_eq(_ch(c).resource_left("unleash_incarnation"), uses - 1)
 
 
-func test_shadow_martyr_against_a_spell_attack_only_on_automatic() -> void:
+func test_shadow_martyr_pauses_an_enemy_spell_attack() -> void:
 	var e := TestCombat.open_field(11)
 	var c := _knight(e, 10, Vector2i(1, 1))
 	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(5, 4))
 	var mage := TestCombat.caster_with(e, ["fire_bolt"], Vector2i(9, 4))
 	mage.side = &"enemy"
+	mage.controller = &"ai"
+	TestCombat.start_with(e, c)
+	assert_true(_do(e, c, "feat:ek:manifest_echo", [], _at(Vector2i(3, 1))).ok)
+	var echo := _echo(e, c)
+	e.end_turn()
+	while e.current() != mage:
+		e.end_turn()
+	var hp := ally.creature.hp
+	TestCombat.next_d20(e, 19)
+	var r := e.spells.cast(mage, "fire_bolt", 0, [ally])
+	assert_true(r.is_paused() and r.pending.kind == "shadow_martyr", "the knight is asked before the spell's roll")
+	if not r.is_paused():
+		return
+	e.answer_reaction(true)
+	assert_eq(ally.creature.hp, hp, "the Fire Bolt went to the echo")
+	assert_false(echo.is_alive(), "and broke it")
+	assert_eq(_ch(c).resource_left("shadow_martyr"), 0)
+
+
+func test_a_roll_that_cant_pause_takes_the_echo_only_on_automatic() -> void:
+	var e := TestCombat.open_field(11)
+	var c := _knight(e, 10, Vector2i(1, 1))
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(5, 4))
+	var mage := TestCombat.caster_with(e, ["chromatic_orb"], Vector2i(9, 4))
+	mage.side = &"enemy"
 	TestCombat.start_with(e, c)
 	assert_true(_do(e, c, "feat:ek:manifest_echo", [], _at(Vector2i(3, 1))).ok)
 	var echo := _echo(e, c)
 	c.reaction_rules["shadow_martyr"] = "ask"
-	assert_eq(e.echo_knight.spell_redirect(mage, ally), ally, "Ask can't pause a spell attack")
+	assert_eq(e.echo_knight.spell_redirect(mage, ally), ally, "Ask can't pause a Chromatic Orb's leap")
 	c.reaction_rules["shadow_martyr"] = "auto"
 	assert_eq(e.echo_knight.spell_redirect(mage, ally), echo, "Automatic sends the echo")
 	assert_true(e.grid.distance_ft(echo.cell, 1, ally.cell, 1) <= 5)

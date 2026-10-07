@@ -61,7 +61,7 @@
         "id": "shadow_martyr",
         "name": "Shadow Martyr",
         "summary": "Reaction before an attack roll against another creature you can see: your echo leaps beside it and takes the attack instead. Once per Short or Long Rest, or spend a use of Unleash Incarnation.",
-        "text": "When a creature you can see is about to make an attack roll against a creature other than you, you can take a Reaction to teleport your echo to an unoccupied space within 5 feet of the target; the attack roll is made against the echo instead. You can do this once per Short or Long Rest, and again by spending a use of Unleash Incarnation. Spell attack rolls can't stop the game for a prompt, so the echo takes those only while Shadow Martyr is set to Automatic in the class tab.",
+        "text": "When a creature you can see is about to make an attack roll against a creature other than you, you can take a Reaction to teleport your echo to an unoccupied space within 5 feet of the target; the attack roll is made against the echo instead. You can do this once per Short or Long Rest, and again by spending a use of Unleash Incarnation. A spell's attack rolls are offered like any other; only a roll a spell makes later without a pause (a Chromatic Orb's leap) takes the echo just while Shadow Martyr is set to Automatic in the class tab.",
         "action": "reaction",
         "implemented": "engine",
         "resource": {

@@ -601,7 +601,8 @@ func _martyr_cost(k: Combatant) -> String:
 	return "Reaction and Shadow Martyr" if _ch(k).resource_left("shadow_martyr") > 0 else "Reaction and a use of Unleash Incarnation"
 
 
-## Offers before an attack roll (Encounter._resolve_attack): each Echo Knight who could send its echo in.
+## Offers before an attack roll (Encounter._resolve_attack, and SpellCaster._before_attack_rolls for a spell's
+## rolls): each Echo Knight who could send its echo in.
 func before_roll(st: Dictionary) -> Array:
 	var out: Array = []
 	var e := enc()
@@ -620,6 +621,9 @@ func before_roll(st: Dictionary) -> Array:
 				if echo == null:
 					return
 				st["target"] = echo
+				# Before a spell's roll (SpellCaster._before_attack_rolls) the spell works the rest out itself.
+				if bool(st.get("pre_roll", false)):
+					return
 				var sit := e.attack_situation(c, echo, st["option"] as Dictionary)
 				var old := st["sit"] as Dictionary
 				for key: String in ["advantage", "disadvantage"]:
@@ -631,8 +635,9 @@ func before_roll(st: Dictionary) -> Array:
 	return out
 
 
-## Shadow Martyr against a spell attack roll, which can't pause for a prompt: the echo takes it only for a knight
-## whose rule for it is Automatic. Returns the creature the roll is made against.
+## Shadow Martyr against a spell attack roll made where the game can't pause (a Chromatic Orb's leap; a spell's own
+## rolls are offered first in SpellCaster._before_attack_rolls): the echo takes it only for a knight whose rule for it
+## is Automatic. Returns the creature the roll is made against.
 func spell_redirect(c: Combatant, t: Combatant) -> Combatant:
 	var e := enc()
 	for k in e.living():
