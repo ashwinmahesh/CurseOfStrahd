@@ -784,7 +784,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		if bool((sreach[dest] as Dictionary)["occupied"]):
 			return CombatResult.fail("Your mount can't end its move in an occupied space")
 		c.moved = true
-		return _walk(steed, CombatGrid.path_to(sreach, dest), 1, CombatResult.new(), {})
+		return _walk(steed, CombatGrid.path_to(sreach, dest), 1, CombatResult.new(), {"willing": true})
 	# Freedom of Movement: 5 ft of movement slips any grapple.
 	if c.creature.has_flag("freedom_of_movement") and grapples.has(c.id) and c.movement_left >= 5:
 		grapples.erase(c.id)
@@ -804,7 +804,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail("You can't end your move in an occupied space")
 	var path := CombatGrid.path_to(reach, dest)
 	var r := CombatResult.new()
-	return _walk(c, path, 1, r, {})
+	return _walk(c, path, 1, r, {"willing": true})
 
 
 ## Moves `c` (not on its own turn) up to `feet` toward the reachable square that best follows `dir` (Confusion,
@@ -893,6 +893,10 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 			carried.cell = to
 			events.append({"type": "move", "id": carried.id, "from": rfrom, "to": to, "mounted": true})
 		_after_step(c, from)
+		# Booming Blade: 5 ft moved of the creature's own will (`handled.willing`, set by move, free_move, jump and a
+		# legendary move) sets off the energy around it.
+		if handled.has("willing"):
+			spells.booming_moved(c)
 		if c.is_down() or state != State.ACTIVE:
 			return r
 		i += 1
@@ -1306,7 +1310,7 @@ func free_move(c: Combatant, dest: Vector2i) -> CombatResult:
 	var keep_dis := c.disengaged
 	c.movement_left = c.free_move_ft
 	c.disengaged = true
-	var r := _walk(c, path, 1, CombatResult.new(), {})
+	var r := _walk(c, path, 1, CombatResult.new(), {"willing": true})
 	c.free_move_ft = 0
 	c.movement_left = keep_move
 	c.disengaged = keep_dis
@@ -1347,7 +1351,7 @@ func jump(c: Combatant, dest: Vector2i) -> CombatResult:
 	c.set_meta("jumped_round", round_no)
 	c.set_meta("jumping", true)
 	log.add("move", "%s leaps %d ft (Jump)" % [c.name(), grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells)], c.id)
-	var r := _walk(c, path, 1, CombatResult.new(), {})
+	var r := _walk(c, path, 1, CombatResult.new(), {"willing": true})
 	c.remove_meta("jumping")
 	return r
 
