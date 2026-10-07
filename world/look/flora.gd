@@ -284,7 +284,8 @@ func ground_item(at: Vector3, s: float) -> Array:
 ## onto the side of a square that faces them, short and sparse grass elsewhere where people walk on wild ground
 ## (never in the middle of a square, so feet and the selection rings stay clear), reeds on the shore. Squares a
 ## location's things stand on, buildings and furniture are left bare.
-func dress_map(board: ArenaBoard, parent: Node3D) -> void:
+## `ground_y` gives the ground's height at a point (the banks under the woods, W11).
+func dress_map(board: ArenaBoard, parent: Node3D, ground_y: Callable) -> void:
 	var g := board.grid
 	var under := spec.get("under", []) as Array
 	var open := spec.get("open", []) as Array
@@ -323,6 +324,11 @@ func dress_map(board: ArenaBoard, parent: Node3D) -> void:
 				_scatter_edge(items, c, edge, woods.normalized())
 			else:
 				_scatter_square(items, c, open, open_scale, 0.32, 0.0)
+	for id: String in items:
+		for it: Array in items[id] as Array:
+			var t := it[0] as Transform3D
+			t.origin.y = float(ground_y.call(Vector2(t.origin.x, t.origin.z))) - 0.02
+			it[0] = t
 	plant_all(parent, items, false, "MapPlants")
 
 
