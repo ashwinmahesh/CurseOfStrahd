@@ -27,7 +27,6 @@ const ARENA := {
 ## the list only shrinks.
 const KNOWN := [
 	["a conversation", "past the window's edge", "the longest options widen the conversation past the right edge instead of wrapping (ui/dialogue/dialogue_ui.gd, lane 20)"],
-	["the title screen (show_loads)", "reaches past the window's edge", "the Load list doesn't scroll: with many saves it runs off the bottom (ui/menu/main_menu.gd, lane 16's Q9)"],
 ]
 
 var root: Node
@@ -371,15 +370,49 @@ func test_the_ending() -> void:
 		await _check("the ending", func() -> Variant: return root.get("ending"))
 
 
-func test_the_title_screen() -> void:
-	# The Load list as full as a player's: every golden save in this run's save folder.
+## The saves lists as full as a player's: every golden save in this run's save folder.
+static func _golden_saves_on_disk(on: bool) -> void:
 	DirAccess.make_dir_recursive_absolute(SaveSystem.save_dir)
 	for f in DirAccess.get_files_at(GoldenSaves.DIR):
 		if not f.ends_with(".json"):
 			continue
+		if not on:
+			SaveSystem.delete_slot(f.get_basename())
+			continue
 		var out := FileAccess.open(SaveSystem.slot_path(f.get_basename()), FileAccess.WRITE)
 		out.store_string(FileAccess.get_file_as_string(GoldenSaves.DIR + f))
 		out.close()
+
+
+## The saves' own page (ui/screens/saves_screen.gd) over the pause menu, to save and to load, the question before a
+## save is written over another, and the game-over screen that leads to it.
+func test_the_saves_pages() -> void:
+	if not await _game(LATE):
+		return
+	_golden_saves_on_disk(true)
+	for mode: int in [SavesScreen.Mode.SAVE, SavesScreen.Mode.LOAD]:
+		await _check("the saves page (%s)" % ("save" if mode == SavesScreen.Mode.SAVE else "load"), func() -> Variant:
+			root.call("open_screen", "menu", 0)
+			await _frames(1)
+			(root.get("screen") as PauseMenu).call("_open_saves", mode)
+			await _frames(2)
+			return root.get("screen"), _close_screen)
+	await _check("the saves page (overwrite?)", func() -> Variant:
+		root.call("open_screen", "menu", 0)
+		await _frames(1)
+		var menu := root.get("screen") as PauseMenu
+		menu.call("_open_saves", SavesScreen.Mode.SAVE)
+		await _frames(1)
+		var page := menu.find_children("*", "SavesScreen", true, false)[0] as SavesScreen
+		page.call("_confirm", page.slots()[0])
+		await _frames(2)
+		return root.get("screen"), _close_screen)
+	await _check("the game-over screen", _screen("game_over", 0), _close_screen)
+	_golden_saves_on_disk(false)
+
+
+func test_the_title_screen() -> void:
+	_golden_saves_on_disk(true)
 	var menu: Node = null
 	for step: String in ["_title", "_new_game", "_show_loads", "_open_hero"]:
 		await _check("the title screen (%s)" % step.trim_prefix("_"), func() -> Variant:
@@ -395,6 +428,4 @@ func test_the_title_screen() -> void:
 			return menu)
 	if menu != null:
 		menu.queue_free()
-	for f in DirAccess.get_files_at(GoldenSaves.DIR):
-		if f.ends_with(".json"):
-			SaveSystem.delete_slot(f.get_basename())
+	_golden_saves_on_disk(false)

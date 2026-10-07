@@ -37,8 +37,18 @@ func save(slot: String) -> Error:
 
 ## Quicksave (F5, the pause menu): over the game's current slot, or a new slot the first time.
 func quick_save() -> Error:
-	var slot := current_slot if current_slot != "" else "save_%s" % Time.get_datetime_string_from_system().replace(":", "-")
-	return save(slot)
+	return save(current_slot if current_slot != "" else new_slot_name())
+
+
+## A slot name no save has yet, from the time: save_<date>T<time>, with _2, _3 after it for a second save that second.
+func new_slot_name() -> String:
+	var base := "save_%s" % Time.get_datetime_string_from_system().replace(":", "-")
+	var slot := base
+	var n := 2
+	while has_slot(slot):
+		slot = "%s_%d" % [base, n]
+		n += 1
+	return slot
 
 
 ## The fight's round-start save (plan §10 Phase 3): allowed in combat, written only by the game at the start of
@@ -70,8 +80,7 @@ func _write_beside(slot: String) -> Error:
 ## The campaign's end (ADR 0014): the game's own slot (a new one if it has none) is written one last time, marked
 ## finished with the ending reached. Finished saves list last and show the ending instead of the place.
 func save_finished(ending_id: String, title: String) -> Error:
-	var slot := current_slot if current_slot not in ["", ROUND_START, AUTOSAVE] \
-		else "save_%s" % Time.get_datetime_string_from_system().replace(":", "-")
+	var slot := current_slot if current_slot not in ["", ROUND_START, AUTOSAVE] else new_slot_name()
 	DirAccess.make_dir_recursive_absolute(save_dir)
 	var data := GameState.to_dict()
 	data["finished"] = {"ending": ending_id, "title": title}
@@ -129,8 +138,7 @@ func has_slot(slot: String) -> bool:
 	return FileAccess.file_exists(slot_path(slot))
 
 
-## Every save on disk, newest first (finished games last): [{slot, saved_at, location, day, party, finished: the
-## ending's title or "", kind: "autosave", "round" (a fight's round start) or "" for a save the player made}].
+## Every save on disk, newest first (finished games last), as describe() gives them.
 func list_slots() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var dir := DirAccess.open(save_dir)
@@ -139,26 +147,36 @@ func list_slots() -> Array[Dictionary]:
 	for f in dir.get_files():
 		if not f.ends_with(".json"):
 			continue
-		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(save_dir.path_join(f)))
-		if not data is Dictionary:
-			continue
-		var d := upgrade(data as Dictionary)
-		var story := d.get("story", {}) as Dictionary
-		var names: Array[String] = []
-		for m: Variant in story.get("party", []):
-			names.append(str(((m as Dictionary).get("build", {}) as Dictionary).get("name", "?")))
-		var loc := Compendium.shared().get_entry("locations", str(story.get("location", "")))
-		var ended := str((d.get("finished", {}) as Dictionary).get("title", ""))
-		var place := str(loc.get("name", story.get("location", ""))) if ended == "" else "The End: %s" % ended
-		out.append({"slot": f.get_basename(), "saved_at": str(d.get("saved_at", "")), "location": place,
-			"day": int(story.get("day", 1)), "party": ", ".join(names), "finished": ended,
-			"kind": {AUTOSAVE: "autosave", ROUND_START: "round"}.get(f.get_basename(), "")})
+		var s := describe(f.get_basename())
+		if not s.is_empty():
+			out.append(s)
 	# Unfinished games first (Continue picks the newest of them), finished ones after.
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		if (str(a["finished"]) == "") != (str(b["finished"]) == ""):
 			return str(a["finished"]) == ""
 		return str(a["saved_at"]) > str(b["saved_at"]))
 	return out
+
+
+## What a save says about itself for the lists, or {} when `slot` isn't a save: {slot, saved_at, location, day, party,
+## finished: the ending's title or "", kind: "autosave", "round" (a fight's round start) or "" for a save the player
+## made}. Other files kept beside the saves (achievements.json, N8) aren't saves: every save says its version.
+func describe(slot: String) -> Dictionary:
+	var path := slot_path(slot)
+	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+	if not data is Dictionary or not (data as Dictionary).has("version"):
+		return {}
+	var d := upgrade(data as Dictionary)
+	var story := d.get("story", {}) as Dictionary
+	var names: Array[String] = []
+	for m: Variant in story.get("party", []):
+		names.append(str(((m as Dictionary).get("build", {}) as Dictionary).get("name", "?")))
+	var loc := Compendium.shared().get_entry("locations", str(story.get("location", "")))
+	var ended := str((d.get("finished", {}) as Dictionary).get("title", ""))
+	var place := str(loc.get("name", story.get("location", ""))) if ended == "" else "The End: %s" % ended
+	return {"slot": slot, "saved_at": str(d.get("saved_at", "")), "location": place,
+		"day": int(story.get("day", 1)), "party": ", ".join(names), "finished": ended,
+		"kind": {AUTOSAVE: "autosave", ROUND_START: "round"}.get(slot, "")}
 
 
 func delete_slot(slot: String) -> void:

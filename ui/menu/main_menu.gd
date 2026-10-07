@@ -9,7 +9,8 @@ var _creation: CreationScreen = null
 var _picked: Array[String] = []
 var _hero: Character = null
 var _box: VBoxContainer
-## Which page of the title is showing ("title", "new_game", "load"): Escape steps back from the last two.
+## Which page of the title is showing ("title", "new_game"): Escape steps back from the second. The saves open on a
+## page of their own (ui/screens/saves_screen.gd), which takes its own Escape.
 var _view := "title"
 
 
@@ -285,23 +286,9 @@ func _start(party: Array[Character], bench: Array[Character] = []) -> void:
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
+## Load: the saves on a page of their own over the title, since the column has no room for a list (lane 16).
 func _show_loads() -> void:
-	_view = "load"
-	for c in _box.get_children():
-		c.queue_free()
-	_box.add_child(UiKit.title("Load"))
-	for s in SaveSystem.list_slots():
-		var slot := str(s["slot"])
-		var prefix := {"autosave": "Autosave · ", "round": "Fight, round start · "}.get(str(s.get("kind", "")), "") as String
-		var b := UiKit.button("%s%s · Day %d" % [prefix, s["location"], int(s["day"])], func() -> void: _load(slot), 17)
-		b.tooltip_text = "%s%s · Day %d · %s\n%s" % [prefix, s["location"], int(s["day"]), str(s["saved_at"]).replace("T", " "), s["party"]]
-		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		# A long place name ends in an ellipsis inside the button instead of widening it past the column.
-		b.clip_text = true
-		b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		b.custom_minimum_size = Vector2(1, b.custom_minimum_size.y)
-		_box.add_child(b)
-	_box.add_child(UiKit.button("Back", _title, 16))
+	SavesScreen.open_on(self, SavesScreen.Mode.LOAD, func() -> void: get_tree().change_scene_to_file(GAME_SCENE), _box)
 
 
 func _exit_tree() -> void:
@@ -313,7 +300,7 @@ func _exit_tree() -> void:
 		ResourceLoader.load_threaded_get(GAME_SCENE)
 
 
-## Escape steps back to the title from the party pick and the load list (the hero creator handles its own).
+## Escape steps back to the title from the party pick (the hero creator and the saves' page handle their own).
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and _creation == null and _view != "title":
 		get_viewport().set_input_as_handled()
