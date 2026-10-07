@@ -87,9 +87,7 @@
         "gourmet"
       ]
     },
-    "appearance": {
-      "art": "silvain_aster"
-    }
+    "appearance": {}
   },
   "level_plan": [
     {
@@ -526,6 +524,5 @@
         ]
       }
     }
-  ],
-  "art_todo": "Borrows the silvain_aster sprite and portrait until its attack animation is drawn; its turnaround and portrait are done (art/anim/companion_specs.json). Then: anim_keyframes, make sprites and make anims for it, and drop build.appearance.art and this note."
+  ]
 }

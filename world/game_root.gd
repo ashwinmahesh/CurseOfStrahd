@@ -19,10 +19,12 @@ var _dialogue_ref := ""
 var menu: ContextMenu                ## the right-click menu on things in the world
 var _menu_cell := Vector2i(-1, -1)
 var ending: EndingScreen = null      ## the campaign's last screen, once the game has ended (ADR 0014)
+var glow := HoverGlow.new()          ## the rim on whatever the mouse is over
 
 
 func _ready() -> void:
 	InputActions.ensure()
+	Cursors.install()
 	GameState.current_scene = "res://scenes/game.tscn"
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--load="):
@@ -81,6 +83,8 @@ func _new_pregen_party() -> void:
 
 
 func enter_location(location_id: String, spawn: String) -> void:
+	_fade_from_black()
+	glow.clear()
 	if view != null:
 		view.queue_free()
 		view = null
@@ -108,6 +112,8 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.party_tended.connect(_refresh)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
+		Cursors.show("pointer")
+		glow.clear()
 		LayerFade.fade(self, hud, false, 0.25)   # the combat HUD fades up in its place
 		Audio.play_music("combat")
 		_boss_music.call_deferred(cv)   # the fight is set up just after this signal
@@ -151,6 +157,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_hover = pick
 		var thing := view.thing_at(pick) if pick.x >= 0 else {}
 		hud.hint(str(thing.get("label", "")), (event as InputEventMouseMotion).position)
+		Cursors.show(Cursors.for_thing(thing))
+		glow.show(view, pick, thing)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 		var cell := view.pick_cell(view.rig.camera, (event as InputEventMouseButton).position)
 		if cell.x >= 0:
@@ -177,10 +185,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_G:
 				_command("split")
 			KEY_ESCAPE:
-				if hud.narration_showing():
+				if hud.controls_showing():
+					hud.toggle_controls()
+				elif hud.narration_showing():
 					hud.close_narration()
 				else:
 					open_screen("menu", 0)
+			KEY_F1:
+				hud.toggle_controls()
 			KEY_M:
 				open_travel(false)
 			KEY_F5:
@@ -340,12 +352,21 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	if ref == "" or dialogue != null:
 		return
 	ModeController.force(ModeController.Mode.DIALOGUE)
+	Cursors.show("pointer")
+	glow.clear()
 	_dialogue_ref = ref
 	hud.visible = false
 	dialogue = DialogueUI.new()
 	add_child(dialogue)
 	dialogue.ended.connect(_dialogue_ended)
 	dialogue.shop_requested.connect(func(npc: String) -> void: open_shop(npc, true))
+	dialogue.stage_requested.connect(func(what: String, npc: String, at: String) -> void:
+		if view == null:
+			return
+		if what == "appear":
+			view.stage_npc(npc, at)
+		else:
+			view.unstage_npc(npc))
 	dialogue.respec_requested.connect(respec)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
@@ -358,6 +379,8 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 
 func _dialogue_ended(combat: String) -> void:
 	dialogue = null
+	if view != null:
+		view.clear_staged()   # whoever stepped into the scene leaves with it
 	# `end_game`, or the parley's yield or ireena, ends the campaign (ADR 0014).
 	if Endings.reached(st) != "" or (Endings.parley_ends(st) and Endings.request(st) != ""):
 		show_ending()
@@ -556,6 +579,32 @@ func _strahd_step(step: Dictionary) -> void:
 
 var _fade: ColorRect = null
 var _fade_label: Label = null
+var _place_fade: ColorRect = null
+
+
+## A new place comes up out of black instead of cutting to it (docs/plans/ui_polish.md): the screen goes dark at once
+## and the place fades in. The change itself isn't delayed, so nothing that waits on it notices.
+func _fade_from_black() -> void:
+	if not is_inside_tree():
+		return
+	if _place_fade == null:
+		var layer := CanvasLayer.new()
+		layer.layer = 39   # over the HUDs, under the time-passing fade and the menus
+		add_child(layer)
+		_place_fade = ColorRect.new()
+		_place_fade.color = Color(Look.color("void"), 0.0)
+		_place_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_place_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		layer.add_child(_place_fade)
+	if _place_fade.has_meta(&"tween"):
+		var old := _place_fade.get_meta(&"tween") as Tween
+		if old != null and old.is_valid():
+			old.kill()
+	_place_fade.color.a = 1.0
+	var tw := create_tween()
+	tw.tween_interval(0.12)
+	tw.tween_property(_place_fade, "color:a", 0.0, 0.6).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	_place_fade.set_meta(&"tween", tw)
 
 
 ## A fade to black and back when time passes (rests, journeys, waiting for noon), with how long it was.
@@ -591,6 +640,7 @@ func _on_time_passed(minutes: int) -> void:
 
 
 func _exit_tree() -> void:
+	Cursors.uninstall()
 	if st != null and st.time_passed.is_connected(_on_time_passed):
 		st.time_passed.disconnect(_on_time_passed)
 
@@ -605,6 +655,8 @@ func _place_mood() -> String:
 
 func open_screen(kind: String, index: int) -> void:
 	close_screen()
+	Cursors.show("pointer")
+	glow.clear()
 	if kind in ["sheet", "inventory", "journal", "party", "level_up"]:
 		Audio.sfx("page")
 	match kind:

@@ -446,3 +446,47 @@ func test_party_members_move_through_each_other_as_difficult_terrain() -> void:
 	assert_true(bool((reach[Vector2i(2, 1)] as Dictionary)["occupied"]), "but you can't stop there")
 	e.allies_block = true
 	assert_false(e.reachable_for(a).has(Vector2i(3, 1)), "a place can say allies block each other")
+
+
+func test_concentration_runs_out_with_the_spell_in_rounds_and_over_a_rest() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.caster_with(e, ["protection_from_evil_and_good"], Vector2i(2, 2), 5, "hedda_ironvow")
+	TestCombat.foe(e, "zombie", Vector2i(10, 6))
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "protection_from_evil_and_good", 1, [c]).ok)
+	assert_true(c.creature.concentration != null)
+	for i in 99:
+		c.creature.on_turn_start(c.creature.id)
+	assert_true(c.creature.concentration != null, "99 rounds in: still going")
+	c.creature.on_turn_start(c.creature.id)
+	assert_true(c.creature.concentration == null, "100 rounds (10 minutes): the spell ends")
+	# Cast again, then the fight ends and the party rests: the clock ends it.
+	c.action_available = true
+	c.magic_action_used = false
+	c.cast_slot_spell_this_turn = false
+	assert_true(e.spells.cast(c, "protection_from_evil_and_good", 1, [c]).ok)
+	c.creature.advance_minutes(60)
+	assert_true(c.creature.concentration == null, "an hour's rest ends a 10-minute spell")
+	assert_false(c.creature.effects.any(func(x: Effect) -> bool: return x.source_id == "protection_from_evil_and_good"))
+
+
+func test_hex_and_hunters_mark_show_who_marked_the_target() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.caster_with(e, ["hex"], Vector2i(2, 2), 5, "silvain_aster")
+	var z := TestCombat.foe(e, "zombie", Vector2i(6, 2))
+	var z2 := TestCombat.foe(e, "zombie", Vector2i(6, 4))
+	TestCombat.start_with(e, c)
+	assert_true(e.spells.cast(c, "hex", 1, [z]).ok)
+	var badge := z.creature.effects.filter(func(x: Effect) -> bool: return x.data.has("mark_by"))
+	assert_eq(badge.size(), 1)
+	assert_eq((badge[0] as Effect).name, "Hexed by %s" % c.name())
+	var pv := ActionCatalog.new(e).attack_preview(c, ActionCatalog.new(e).find(c, "attack:" + str(e.attack_options(c)[0]["id"])), z)
+	assert_true((pv["lines"] as Array).any(func(l: Variant) -> bool: return str(l).begins_with("Hexed by")), "the attack info says so")
+	# The mark moves: the old target loses the tag, the new one gets it.
+	z.creature.hp = 0
+	z.creature.dead = true
+	e.spells.mark_badge(c, z2, "hex", "Hex", c.creature.concentration)
+	assert_false(z2.creature.effects.filter(func(x: Effect) -> bool: return x.data.has("mark_by")).is_empty())
+	assert_true(z.creature.effects.filter(func(x: Effect) -> bool: return x.data.has("mark_by")).is_empty())
+	c.creature.concentration.end("test")
+	assert_true(z2.creature.effects.filter(func(x: Effect) -> bool: return x.data.has("mark_by")).is_empty(), "gone when the spell ends")

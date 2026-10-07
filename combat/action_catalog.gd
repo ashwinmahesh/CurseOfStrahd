@@ -219,6 +219,10 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 		var en := _entry(str(fa["id"]), tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]), str(fa["targeting"]), str(fa["help"]))
 		en["kind"] = "feat"
 		en["range"] = int(fa["range"])
+		# Some features take a choice from the right-click menu (Lay On Hands: how many points).
+		if fa.has("choices"):
+			en["choices"] = fa["choices"]
+			en["choice_label"] = str(fa.get("choice_label", "Choose"))
 		out.append(en)
 	for ro in e.features.rider_options(c):
 		var armed := str(ro["id"]) in c.armed
@@ -338,6 +342,12 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			sub += " · heal %s" % preview["heal_dice"]
 		var a := _entry("spell:" + str(s["id"]), SPELLS, str(s["name"]), sub, cost, str(s["reason"]), _spell_targeting(data),
 			str(data.get("summary", "")))
+		# A smite (Divine Smite, Searing Smite...) is cast right after a hit: choosing it arms it for your next hit,
+		# and nothing (no slot, no free casting) is spent until an attack lands.
+		if bool(data.get("on_hit_spell", false)):
+			a["targeting"] = "none"
+			a["sub"] = sub + " · arms your next hit"
+			a["help"] = "Arms it: it's cast on your next hit with a weapon, spending its slot (or free use) only then. Choose it again to disarm."
 		a["spell_id"] = str(s["id"])
 		a["slot"] = level
 		a["range"] = e.spells.range_ft(data)
@@ -772,13 +782,16 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 		"offhand":
 			return e.offhand_attack(c, t, str(action["option_id"]))
 		"spell":
+			if bool(Compendium.shared().spell_data(str(action["spell_id"])).get("on_hit_spell", false)):
+				return e.features.toggle_rider(c, "smite:" + str(action["spell_id"]))
 			var all_opts := (action.get("opts", {}) as Dictionary).duplicate()
 			all_opts.merge(opts, true)
 			return e.spells.cast(c, str(action["spell_id"]), slot, targets, point, dir, all_opts)
 		"ready_spell":
 			return e.ready_spell(c, str(action["spell_id"]), slot)
 		"feat":
-			return e.feature_actions.perform(c, id.substr(5), t, point if point != Vector2.INF else (Vector2(dir.x, dir.y) + e.center_of(c) if dir != Vector2.ZERO else Vector2.INF))
+			var fchoice := str((action.get("opts", {}) as Dictionary).get("choice", opts.get("choice", "")))
+			return e.feature_actions.perform(c, id.substr(5), t, point if point != Vector2.INF else (Vector2(dir.x, dir.y) + e.center_of(c) if dir != Vector2.ZERO else Vector2.INF), fchoice)
 		"rider":
 			return e.features.toggle_rider(c, id.substr(6))
 		"sustain":
@@ -983,6 +996,9 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	if int(sit["cover"]) > 0:
 		lines.append("%s (+%d AC) from %s" % [CombatGrid.COVER_NAMES[int(sit["cover"])], int(sit["cover_bonus"]), sit["cover_by"]])
 	lines.append("AC %d%s" % [int(hc["ac"]), _known_defenses(t)])
+	for fxm: Effect in t.creature.effects:
+		if fxm.data.has("mark_by"):
+			lines.append(fxm.name + (": your extra damage on a hit" if str(fxm.data["mark_by"]) == c.id else ""))
 	if e.features.sneak_attack_ready(c) and ("finesse" in p.properties or not p.melee):
 		lines.append("Sneak Attack if you hit with Advantage or an ally beside it")
 	if why != "":

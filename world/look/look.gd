@@ -18,8 +18,8 @@ static var _colours: Dictionary = {}
 ## ink lines and the same art but lights it smoothly, with filmic tone, bloom on flames and lanterns, deeper contact
 ## shadows and soft mist. Places built after a change use it.
 const STYLES: Array[String] = ["modern", "classic"]
-## Until the owner picks (docs/plans/ui_polish.md), a player who hasn't chosen keeps the look the game had.
-const DEFAULT_STYLE := "classic"
+## The owner picked Modern as the default (2026-10-07); Classic stays in Settings.
+const DEFAULT_STYLE := "modern"
 static var _style := ""
 
 
@@ -92,7 +92,7 @@ static func theme_surface(theme: String, part: String) -> String:
 ## A cel material with a seamless world-mapped texture ("village/cobbles"), or null if the surface doesn't exist.
 ## `grid` draws a faint square grid on top faces.
 static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
-	var key := "%s|%.2f" % [surface, grid]
+	var key := "%s|%.2f|%s" % [surface, grid, style()]   # a change of look gets fresh materials
 	if _textured.has(key):
 		return _textured[key] as ShaderMaterial
 	var parts := surface.split("/")
@@ -102,6 +102,9 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	var path := "res://" + str(info.get("file", ""))
 	if info.is_empty() or not ResourceLoader.exists(path):
 		return null
+	# The Modern look's smooth tile of the same set, where it's been made (make textures HD=1).
+	if modern() and info.has("hd_file") and ResourceLoader.exists("res://" + str(info["hd_file"])):
+		path = "res://" + str(info["hd_file"])
 	var m := ShaderMaterial.new()
 	m.shader = CEL_WORLD_SHADER
 	m.set_shader_parameter("albedo_tex", load(path) as Texture2D)

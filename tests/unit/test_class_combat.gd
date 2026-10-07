@@ -393,3 +393,27 @@ func test_a_spell_both_prepared_and_granted_keeps_its_free_casting() -> void:
 		if str(sp["id"]) == "misty_step":
 			ms = sp
 	assert_true(bool(ms.get("free", false)), "the free casting survives")
+
+
+func test_vow_of_enmity_lasts_a_minute_and_moves_free_when_its_foe_drops() -> void:
+	var e := TestCombat.open_field()
+	var p := _add(e, TestChars.custom("paladin", "dwarf", 3, {"paladin_subclass": ["oath_of_vengeance"]}), Vector2i(2, 3))
+	var a := TestCombat.foe(e, "zombie", Vector2i(3, 3))
+	var b := TestCombat.foe(e, "zombie", Vector2i(5, 3))
+	TestCombat.start_with(e, p)
+	var cat := ActionCatalog.new(e)
+	assert_true(cat.perform(p, cat.find(p, "feat:cf:vow_of_enmity"), [a]).ok)
+	assert_true(a.creature.effects.any(func(x: Effect) -> bool: return x.name.begins_with("Vowed by")), "the foe shows who vowed against it")
+	assert_true(cat.find(p, "feat:cf:vow_move").is_empty(), "no moving it while the foe stands")
+	e.deal_damage(p, a, [{"amount": 999, "type": "slashing"}], false, "test")
+	var mv := cat.find(p, "feat:cf:vow_move")
+	assert_false(mv.is_empty(), "the foe dropped: the vow can move")
+	var used := (p.creature as Character).resource_left("paladin_channel_divinity")
+	assert_true(cat.perform(p, mv, [b]).ok)
+	assert_eq((p.creature as Character).resource_left("paladin_channel_divinity"), used, "free: no Channel Divinity")
+	var opt := e.option_by_id(p, str(e.attack_options(p)[0]["id"]))
+	var sit := e.attack_situation(p, b, opt)
+	assert_true("Vow of Enmity" in (sit["advantage"] as Array))
+	(p.creature as Character).advance_minutes(1)
+	assert_false("Vow of Enmity" in (e.attack_situation(p, b, opt)["advantage"] as Array), "a minute later it's over")
+	assert_false(b.creature.effects.any(func(x: Effect) -> bool: return x.name.begins_with("Vowed by")))

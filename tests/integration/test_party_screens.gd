@@ -69,6 +69,25 @@ func test_short_rest_spends_hit_dice() -> void:
 	assert_eq(GameState.story.minute_of_day, (minute + 60) % (24 * 60))
 
 
+## Heal up (docs/plans/ui_polish.md): one click spends Hit Point Dice for everyone hurt, never for someone at full.
+func test_heal_up_spends_dice_for_the_hurt() -> void:
+	var ilse := GameState.story.party[0]
+	var tamsin := GameState.story.party[1]
+	ilse.hp = 1
+	tamsin.hp = tamsin.max_hp()
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	var rest := root.get("screen") as RestScreen
+	rest.heal_up()
+	assert_true(ilse.hp > 1, "the hurt one healed")
+	var spent := 0
+	for die: String in ilse.hit_dice():
+		spent += int((ilse.hit_dice()[die] as Dictionary)["spent"])
+	assert_true(spent >= 1)
+	for die: String in tamsin.hit_dice():
+		assert_eq(int((tamsin.hit_dice()[die] as Dictionary)["spent"]), 0, "nobody at full spends a die")
+
+
 func test_level_up_with_a_milestone() -> void:
 	GameState.story.milestones = 1
 	var ilse := GameState.story.party[0]

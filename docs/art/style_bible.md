@@ -24,6 +24,21 @@ silhouettes, and a small saturated palette in the spirit of *Castlevania: Sympho
   sheets are rendered at 384 px cells, mipmapped, and drawn after the pass at full screen resolution. They keep the
   palette because the pipeline already quantized them.
 
+## Two finishes: Modern (default) and Classic
+The owner picked Modern as the default on 2026-10-07 (docs/plans/ui_polish.md); Classic stays in the pause menu's
+Settings (`Look.style`, kept in user://settings.cfg by `GameSettings`). The art is the same in both.
+- **Classic** is the pass described under Palette: every world pixel snapped to the palette, light in two or three
+  hard bands, mist and cloud shadows in flat bands.
+- **Modern** keeps the ink outlines and the palette's hues but drops the snap: the cel shaders light with a soft
+  ramp (`shaders/cel_light.gdshaderinc`, global uniform `look_soft`), floors and walls use the smooth
+  `<surface>_hd.png` tiles (docs/art/textures.md) with relief from a normal map made from the tile itself
+  (`Look.normal_map`), AgX tone mapping with glow on anything brighter than white (flames, lanterns), deeper contact
+  shadows with bounced light, a thin volumetric haze, smooth mist and cloud shadows, a lighter colour grade, and a
+  light depth of field far behind the party that follows the zoom, never near the lens
+  (`Atmosphere._modern_finish`, `_focus_dof`, strengths in `Atmosphere.DOF_STRENGTHS`, "light" by default).
+- Anything new must read in both: check a place with `make capture SCENE=res://tools/capture/polish_capture.tscn`
+  and `POLISH_LOOK=classic|modern POLISH_ONLY=look`.
+
 ## Line and shading
 - Outlines: dark ink (`void`), heavy on silhouettes, lighter inside. The post-process adds outlines to 3D geometry.
 - Shading: two or three flat tones per material, hard edges, no airbrushed gradients.

@@ -17,6 +17,8 @@ func _ready() -> void:
 	# The title never starts paused: a menu opened in a fight pauses the tree, and a scene change keeps it paused.
 	get_tree().paused = false
 	InputActions.ensure()
+	Cursors.install()
+	Cursors.show("pointer")
 	# The window the player picked in Settings, only when this is the game's own title (never a capture inside it).
 	(func() -> void:
 		if is_inside_tree() and get_tree().current_scene == self:
@@ -281,10 +283,18 @@ func _show_loads() -> void:
 		var slot := str(s["slot"])
 		var prefix := {"autosave": "Autosave · ", "round": "Fight, round start · "}.get(str(s.get("kind", "")), "") as String
 		var b := UiKit.button("%s%s · Day %d" % [prefix, s["location"], int(s["day"])], func() -> void: _load(slot), 17)
-		b.tooltip_text = "%s · %s\n%s" % [slot, str(s["saved_at"]).replace("T", " "), s["party"]]
+		b.tooltip_text = "%s%s · Day %d · %s\n%s" % [prefix, s["location"], int(s["day"]), str(s["saved_at"]).replace("T", " "), s["party"]]
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		# A long place name ends in an ellipsis inside the button instead of widening it past the column.
+		b.clip_text = true
+		b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		b.custom_minimum_size = Vector2(1, b.custom_minimum_size.y)
 		_box.add_child(b)
 	_box.add_child(UiKit.button("Back", _title, 16))
+
+
+func _exit_tree() -> void:
+	Cursors.uninstall()
 
 
 ## Escape steps back to the title from the party pick and the load list (the hero creator handles its own).

@@ -1046,6 +1046,144 @@
         "soot_patch",
         "blade_slits"
       ]
+    },
+    "castle_wall_a": {
+      "view": "wall",
+      "items": [
+        "portrait_tatyana",
+        "portrait_strahd",
+        "portrait_jester",
+        "dragon_skull"
+      ],
+      "redone": [
+        "dragon_skull"
+      ]
+    },
+    "castle_wall_b": {
+      "view": "wall",
+      "items": [
+        "cobwebs",
+        "stone_faces",
+        "banner_regiment",
+        "bronze_plaque"
+      ]
+    },
+    "castle_wall_c": {
+      "view": "wall",
+      "items": [
+        "names_wall",
+        "key_board",
+        "wine_rack_bricked",
+        "great_doors"
+      ],
+      "redone": [
+        "names_wall"
+      ]
+    },
+    "castle_floor": {
+      "view": "floor",
+      "items": [
+        "drawbridge",
+        "roof_hatch",
+        "gold_spill",
+        "blood_pool"
+      ],
+      "redone": [
+        "blood_pool"
+      ]
+    },
+    "castle_stand_a": {
+      "view": "stand",
+      "items": [
+        "gold_heap",
+        "skull_chandelier",
+        "lift_cage",
+        "heart_of_sorrow"
+      ]
+    },
+    "castle_stand_b": {
+      "view": "stand",
+      "items": [
+        "cauldron",
+        "stone_font",
+        "glass_vessels",
+        "bat_perch"
+      ]
+    },
+    "pair_gargoyle_throne": {
+      "view": "pair",
+      "items": [
+        "gargoyle",
+        "gargoyle_back",
+        "throne",
+        "throne_back"
+      ]
+    },
+    "pair_black_carriage_black_horse": {
+      "view": "pair",
+      "items": [
+        "black_carriage",
+        "black_carriage_back",
+        "black_horse",
+        "black_horse_back"
+      ]
+    },
+    "pair_saint_defaced_bone_table": {
+      "view": "pair",
+      "items": [
+        "saint_defaced",
+        "saint_defaced_back",
+        "bone_table",
+        "bone_table_back"
+      ]
+    },
+    "pair_bone_throne_bone_chair": {
+      "view": "pair",
+      "items": [
+        "bone_throne",
+        "bone_throne_back",
+        "bone_chair",
+        "bone_chair_back"
+      ]
+    },
+    "pair_iron_maiden_reliquary_sealed": {
+      "view": "pair",
+      "items": [
+        "iron_maiden",
+        "iron_maiden_back",
+        "reliquary_sealed",
+        "reliquary_sealed_back"
+      ]
+    },
+    "pair_coffin_plinth_statue_young_strahd": {
+      "view": "pair",
+      "items": [
+        "coffin_plinth",
+        "coffin_plinth_back",
+        "statue_young_strahd",
+        "statue_young_strahd_back"
+      ]
+    },
+    "dragon_skull": {
+      "view": "wall",
+      "items": [
+        "dragon_skull"
+      ],
+      "aspect": "4:3"
+    },
+    "names_wall": {
+      "view": "wall",
+      "items": [
+        "names_wall"
+      ],
+      "aspect": "3:2"
+    },
+    "blood_pool": {
+      "view": "floor",
+      "items": [
+        "blood_pool"
+      ],
+      "aspect": "1:1"
     }
   },
   "props": {
@@ -2553,6 +2691,210 @@
       "subject": "three thin steel blade tips poking out of three narrow dark slits in a row, the slits and blades only with no floor, wall or board around them",
       "width": 0.9,
       "mount": "floor"
+    },
+    "portrait_tatyana": {
+      "subject": "an oil portrait in an ornate gilt frame of a beautiful young woman with long red hair, alone, sad eyes",
+      "height": 0.8,
+      "saturate": 1.15
+    },
+    "portrait_strahd": {
+      "subject": "a tall full-length oil portrait in a heavy black and gold frame of a pale aristocratic vampire lord in a black cape with a high collar",
+      "height": 1.15,
+      "saturate": 1.1
+    },
+    "portrait_jester": {
+      "subject": "an oil portrait in a gilt frame of a grinning jester in a motley cap with bells",
+      "height": 0.75,
+      "saturate": 1.15
+    },
+    "dragon_skull": {
+      "subject": "the bare bleached-bone skull of a great dragon with empty eye sockets and no flesh, long snout full of fangs, swept-back horns and a bony frill, mounted on a dark stone wall plaque",
+      "height": 0.9
+    },
+    "cobwebs": {
+      "subject": "thick grey cobwebs draped in a corner, a dusty web with a dead moth",
+      "height": 0.8
+    },
+    "stone_faces": {
+      "subject": "a stone wall carved with rows of sorrowful stone faces of the dead",
+      "height": 1.0
+    },
+    "banner_regiment": {
+      "subject": "a long tattered regimental war banner in black and red with a snarling dog emblem",
+      "height": 1.0,
+      "saturate": 1.2
+    },
+    "bronze_plaque": {
+      "subject": "a tarnished green bronze memorial plaque with ornate edges, no readable words",
+      "height": 0.6
+    },
+    "names_wall": {
+      "subject": "a section of grey stone crypt wall whose whole face is carved with many rows of names in deep-cut capital letters, the letters clearly visible",
+      "height": 1.0
+    },
+    "key_board": {
+      "subject": "a wooden key board hung with rows of old iron keys on hooks",
+      "height": 0.7
+    },
+    "wine_rack_bricked": {
+      "subject": "a wall of rough fresh bricks walling up a wine rack, wine corks pressed into the mortar",
+      "height": 1.1
+    },
+    "great_doors": {
+      "subject": "a pair of huge iron-bound black oak castle doors in a pointed stone arch",
+      "height": 1.9
+    },
+    "drawbridge": {
+      "subject": "a heavy wooden drawbridge of thick planks with iron bands and great chains at its corners",
+      "width": 1.0,
+      "mount": "floor"
+    },
+    "roof_hatch": {
+      "subject": "a square wooden roof hatch set in slate tiles, its lid open, a ladder top showing",
+      "width": 0.9,
+      "mount": "floor"
+    },
+    "gold_spill": {
+      "subject": "a spill of gold coins, gems and a goblet across the floor",
+      "width": 1.0,
+      "mount": "floor"
+    },
+    "blood_pool": {
+      "subject": "a dark red pool of spilled blood with a few splashes, on its own with nothing under it",
+      "width": 0.9,
+      "mount": "floor",
+      "saturate": 1.2
+    },
+    "gold_heap": {
+      "subject": "a heaped pile of gold coins with goblets, crowns and jewels poking out",
+      "height": 0.8
+    },
+    "skull_chandelier": {
+      "subject": "a standing iron candelabrum made of human skulls and bones, its candles burning green",
+      "height": 1.6
+    },
+    "lift_cage": {
+      "subject": "an iron lift cage hanging on heavy chains, its barred door open",
+      "height": 1.8
+    },
+    "heart_of_sorrow": {
+      "subject": "a huge crystal heart as tall as a man, faceted and glowing with deep red light inside, hung on heavy chains",
+      "height": 1.9,
+      "saturate": 1.2
+    },
+    "cauldron": {
+      "subject": "a big black iron witches' cauldron bubbling green over a small fire",
+      "height": 1.0
+    },
+    "stone_font": {
+      "subject": "a carved stone font on a pedestal holding still dark water",
+      "height": 1.0
+    },
+    "glass_vessels": {
+      "subject": "four tall glass vessels on iron stands, each holding a murky liquid with something floating in it",
+      "height": 1.6
+    },
+    "bat_perch": {
+      "subject": "a wooden perch of crossbars with bats hanging upside down from it",
+      "height": 1.4
+    },
+    "gargoyle": {
+      "subject": "a crouching grey stone gargoyle with folded bat wings, horns and a snarling face, on a block",
+      "height": 1.2
+    },
+    "throne": {
+      "subject": "a tall throne of carved black wood and red velvet with a high pointed back, on a low stone step",
+      "height": 1.9,
+      "saturate": 1.15
+    },
+    "black_carriage": {
+      "subject": "a black lacquered carriage with tall spoked wheels, red curtains and a gilded crest, no horses",
+      "height": 1.9
+    },
+    "black_horse": {
+      "subject": "a powerful jet-black horse with a red-and-black harness, nostrils flaring",
+      "height": 1.7
+    },
+    "saint_defaced": {
+      "subject": "a weathered stone statue of a robed female saint with her face cut away",
+      "height": 1.9
+    },
+    "bone_table": {
+      "subject": "a long table built of human bones and skulls with a bone top",
+      "height": 0.9
+    },
+    "bone_throne": {
+      "subject": "a throne built of human bones and skulls, a skull on each armrest",
+      "height": 1.8
+    },
+    "bone_chair": {
+      "subject": "a high-backed chair built of bones and skulls",
+      "height": 1.2
+    },
+    "iron_maiden": {
+      "subject": "a rusty iron maiden torture device standing closed, a face cast on its front",
+      "height": 1.9
+    },
+    "reliquary_sealed": {
+      "subject": "a sealed stone reliquary chest carved with runes and a slot for a wand",
+      "height": 0.7
+    },
+    "coffin_plinth": {
+      "subject": "a black lacquered coffin with silver fittings on a stepped stone plinth",
+      "height": 1.0
+    },
+    "statue_young_strahd": {
+      "subject": "a stone statue of a young proud nobleman in plate armour with a longsword",
+      "height": 2.0
+    },
+    "gargoyle_back": {
+      "height": 1.2,
+      "back_of": "gargoyle"
+    },
+    "throne_back": {
+      "height": 1.9,
+      "saturate": 1.15,
+      "back_of": "throne"
+    },
+    "black_carriage_back": {
+      "height": 1.9,
+      "back_of": "black_carriage"
+    },
+    "black_horse_back": {
+      "height": 1.7,
+      "back_of": "black_horse"
+    },
+    "saint_defaced_back": {
+      "height": 1.9,
+      "back_of": "saint_defaced"
+    },
+    "bone_table_back": {
+      "height": 0.9,
+      "back_of": "bone_table"
+    },
+    "bone_throne_back": {
+      "height": 1.8,
+      "back_of": "bone_throne"
+    },
+    "bone_chair_back": {
+      "height": 1.2,
+      "back_of": "bone_chair"
+    },
+    "iron_maiden_back": {
+      "height": 1.9,
+      "back_of": "iron_maiden"
+    },
+    "reliquary_sealed_back": {
+      "height": 0.7,
+      "back_of": "reliquary_sealed"
+    },
+    "coffin_plinth_back": {
+      "height": 1.0,
+      "back_of": "coffin_plinth"
+    },
+    "statue_young_strahd_back": {
+      "height": 2.0,
+      "back_of": "statue_young_strahd"
     }
   },
   "pair_prompt": "A game prop sheet: two objects, each shown twice, arranged in a 2 by 2 grid with wide empty white space between the four drawings; nothing touches or crosses the middle of the image. Every drawing uses the same three-quarter view from slightly above, and each object is turned the same way in its pair: its front faces toward the lower right of the picture. Top left: {0}, seen from the front. Top right: the very same object seen from directly behind at the same angle, so its back faces toward the lower right. Bottom left: {1}, seen from the front. Bottom right: the very same object seen from directly behind at the same angle. Same colours, size and details in each pair, on a plain flat white background, no ground, no ground shadows, no labels, no text, no grid lines, no borders.",

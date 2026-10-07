@@ -21,5 +21,15 @@ static func fresh_seed() -> int:
 	return int(r.randi()) ^ int(Time.get_ticks_usec())
 
 
+## Tests set this (tests/test_runner.gd): a "fresh" seed is then derived from the current one, so a run that loads a
+## save still rolls new dice but the same ones every time it runs.
+var deterministic := false
+var _reseeds := 0
+
+
 func reseed_random() -> void:
+	if deterministic:
+		_reseeds += 1
+		roller.reseed(hash("%d:%d" % [roller.get_seed(), _reseeds]))
+		return
 	roller.reseed(fresh_seed())

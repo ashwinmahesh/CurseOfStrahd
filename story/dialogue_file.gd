@@ -169,6 +169,14 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 		"join", "leave":
 			if parts.size() == 2:
 				return {"t": parts[0], "npc": parts[1]}
+		"appear":
+			if parts.size() == 2:
+				return {"t": "appear", "npc": parts[1], "at": ""}
+			if parts.size() == 4 and parts[2] == "at":
+				return {"t": "appear", "npc": parts[1], "at": parts[3]}
+		"vanish":
+			if parts.size() == 2:
+				return {"t": "vanish", "npc": parts[1]}
 		"combat":
 			if parts.size() == 2:
 				return {"t": "combat", "encounter": parts[1]}

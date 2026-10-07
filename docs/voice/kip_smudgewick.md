@@ -9,13 +9,13 @@ farming accessories".
 
 ## Who he is
 
-Thirty-one, maroon-skinned, curly-horned, in a straw hat. The Smudgewicks have grown apricots on the same hillside
+Fifty, red-skinned, curly-horned, greying, in a straw hat. The Smudgewicks have grown apricots on the same hillside
 for six generations, and Kip has driven the cart to market since he was nine: apricots, apricot jam, dried apricots,
 apricot brandy, pruning knives, grafting wax, straw hats, ladders and "the finest apricot-pit charms in three
 counties" (he carves them himself). He is the best salesman in the family and the worst liar.
 
 Two summers ago a blight took the orchard. Trees died in rows. His mother had borrowed against the land, his little
-sister Pip was sick that winter, and there was no money for the medicine or the debt. A gentleman in a grey coat
+daughter Pip was sick that winter, and there was no money for the medicine or the debt. A gentleman in a grey coat
 came to the farm gate, very polite, very patient, and introduced himself as **Mister Quillon**, an assessor. Kip's
 father sent him away. Kip went after him, alone, and signed.
 
@@ -80,6 +80,6 @@ sometimes succeeds. He is the most anxious person in the party and makes the bra
 
 ## For casting
 
-A friendly, anxious tiefling man in his early thirties with a warm, quick, slightly breathless baritone and a soft
+A friendly, anxious tiefling man of about fifty with a warm, quick, slightly breathless baritone and a soft
 West Country English accent. A fast-talking market-stall salesman, polite and eager to please, apologising and
 selling at once; slow, careful and hard as nails when he is cornered.

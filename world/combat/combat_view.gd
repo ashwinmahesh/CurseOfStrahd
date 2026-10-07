@@ -845,7 +845,11 @@ func _update_hover() -> void:
 	if c == null or mode in [Mode.BUSY, Mode.PROMPT, Mode.OVER]:
 		hud.hide_tooltip()
 		overlay.clear("cursor")
+		Cursors.show("pointer")
 		return
+	# The crossed swords over a foe (to attack or aim at), the pointer elsewhere.
+	var under := _target_under()
+	Cursors.show("attack" if under != null and c.hostile_to(under.combatant) else "pointer")
 	overlay.show_cells("cursor", [hover_cell] if hover_cell.x >= 0 else [])
 	var at := get_viewport().get_mouse_position() if not using_pad else rig.camera.unproject_position(hover_world + Vector3(0, 0.5, 0))
 	var t := _target_under()

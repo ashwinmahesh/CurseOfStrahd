@@ -66,8 +66,8 @@
         ]
       ],
       "light": "dim",
-      "floor": "church/stone_flags",
-      "walls": "church/stone_wall"
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar"
     },
     {
       "id": "cat_guardians_hall",
@@ -96,8 +96,8 @@
           25
         ]
       ],
-      "floor": "church/stone_flags",
-      "walls": "church/stone_wall"
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar"
     }
   ],
   "spawns": {

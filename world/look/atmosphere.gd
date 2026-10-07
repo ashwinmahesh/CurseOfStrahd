@@ -197,6 +197,33 @@ func _modern_finish() -> void:
 	sun.shadow_blur = 1.8
 
 
+## The Modern finish's depth of field, as a strength the owner picks from (docs/plans/ui_polish.md): how soft
+## (Godot's 0..1), where the far blur starts (the camera's distance to the party plus `start` plus `per_zoom` of
+## that distance), how far it takes to come in, and whether anything near the lens blurs.
+const DOF_STRENGTHS := {
+	"old": {"amount": 0.14, "start": 1.0, "per_zoom": 0.12, "transition": 3.5, "transition_per_zoom": 0.25, "near": true},
+	"light": {"amount": 0.08, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
+	"lighter": {"amount": 0.05, "start": 6.0, "per_zoom": 0.2, "transition": 10.0, "transition_per_zoom": 0.0, "near": false},
+}
+## Light unless the owner picks another (2026-10-07: "old" read as a smear at the top of the screen).
+static var dof_strength := "light"
+var _dof: CameraAttributesPractical = null
+
+
+## The sharp band follows the camera's zoom.
+func _focus_dof() -> void:
+	if _dof == null or _rig == null:
+		return
+	var d := _rig.distance
+	var k := DOF_STRENGTHS[dof_strength] as Dictionary
+	_dof.dof_blur_amount = float(k["amount"])
+	_dof.dof_blur_near_enabled = bool(k["near"])
+	_dof.dof_blur_far_distance = d + float(k["start"]) + d * float(k["per_zoom"])
+	_dof.dof_blur_far_transition = float(k["transition"]) + d * float(k["transition_per_zoom"])
+	_dof.dof_blur_near_distance = maxf(1.0, d - 2.0 - d * 0.08)
+	_dof.dof_blur_near_transition = 2.0
+
+
 const MODERN_TONEMAP := Environment.TONE_MAPPER_AGX
 const MODERN_EXPOSURE := 1.35
 const MODERN_GRADE := 0.4
@@ -260,6 +287,13 @@ func _open_the_lake() -> void:
 func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_rig = rig
 	_post = (post.mesh as QuadMesh).material as ShaderMaterial if post != null and post.mesh is QuadMesh else null
+	if Look.modern() and GameSettings.depth_blur() and rig != null and rig.camera != null:
+		# A light depth of field behind the party (DOF_STRENGTHS): the far edge of the screen softens while the party,
+		# foes and anything that can be clicked stay crisp. Settings > Depth blur turns it off.
+		_dof = CameraAttributesPractical.new()
+		_dof.dof_blur_far_enabled = true
+		rig.camera.attributes = _dof
+		_focus_dof()
 	_apply_static()
 	weather = AtmosphereWeather.build(self, board, mood, outdoors, get_parent())
 	_show_night_pieces()
@@ -486,6 +520,7 @@ func _process(delta: float) -> void:
 				wx.set_meta("offset", Vector3(wx.position.x, 0.0, wx.position.z))
 			var off := wx.get_meta("offset") as Vector3
 			wx.global_position = Vector3(_rig.global_position.x + off.x, wx.global_position.y, _rig.global_position.z + off.z)
+	_focus_dof()
 	if _post == null:
 		return
 	_post.set_shader_parameter("atmo_time", _time)

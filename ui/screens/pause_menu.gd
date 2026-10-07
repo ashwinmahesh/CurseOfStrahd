@@ -235,7 +235,7 @@ func _show_menu() -> void:
 
 
 ## Settings (docs/plans/ui_polish.md): the world's look, the window, how fast fights play, how long the Narrator's box
-## stays up, and the respec option, each a choice the player flips with a click; kept in user://settings.cfg.
+## stays up, the Modern look's depth blur, and the respec option, each a choice the player flips with a click; kept in user://settings.cfg.
 func _show_settings() -> void:
 	_clear()
 	_on_settings = true
@@ -249,6 +249,10 @@ func _show_settings() -> void:
 		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
 	_choice_row(266.0, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")
+	_choice_row(303.0, "Depth blur", ["On", "Off"], 0 if GameSettings.depth_blur() else 1, func(i: int) -> void:
+		GameSettings.set_depth_blur(i == 0)
+		_note.text = "From the next place you go.",
+		"Modern look: the far distance softens a little. People and things you can click always stay sharp.")
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
 	respec.add_theme_font_override("font", serif())
@@ -263,11 +267,11 @@ func _show_settings() -> void:
 	respec.focus_mode = Control.FOCUS_NONE
 	_place(respec)
 	respec.reset_size()
-	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, 303.0).y - respec.size.y / 2.0)
+	respec.position = Vector2((_u(W_U, 0).x - respec.size.x) / 2.0, _u(0, 338.0).y - respec.size.y / 2.0)
 	_note = _text("", 9.5, _c("arch_gold_light"))
 	_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_note.position = _u(24, 330)
+	_note.position = _u(24, 356)
 	_note.size = _u(W_U - 48.0, 30)
 	_place(_note)
 	_button(3, "Back", _show_menu)
@@ -347,7 +351,7 @@ func _link(text: String, on_press: Callable) -> Button:
 func _show_saves() -> void:
 	_clear()
 	_title("The party has fallen" if game_over else "Load a Save")
-	var top := 124.0
+	var top := 132.0
 	if game_over:
 		var lost := _text("Barovia keeps what it takes. Load a save to try again.", 10.0, _c("arch_text"))
 		lost.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -365,6 +369,9 @@ func _show_saves() -> void:
 	scroll.position = _u(26, top)
 	var last := FIRST_BUTTON_Y + BUTTON_PITCH * 3.0 - 30.0
 	scroll.size = _u(W_U - 52.0, last - top)
+	# The rows are exactly as wide as the arch's inside; nothing in them can make the list wider.
+	scroll.clip_contents = true
+	_list_box.custom_minimum_size = Vector2(_u(W_U - 52.0, 0).x - 12.0, 0)
 	_place(scroll)
 	_list()
 	if not game_over:
@@ -563,21 +570,33 @@ func _list() -> void:
 		var info := VBoxContainer.new()
 		info.add_theme_constant_override("separation", 0)
 		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		var where := "This game · %s" % s["location"] if str(s["slot"]) == SaveSystem.current_slot else str(s["location"])
+		# The place on the first line and what kind of save it is, the day and when on the second; both cut with an
+		# ellipsis at the row's edge so a long place name never pushes past the box or its buttons (owner report
+		# 2026-10-07: the name ran out of the box under the game-over screen's Load). The full text is in the tooltip.
 		var kind := str(s.get("kind", ""))
-		if kind == "autosave":
-			where = "Autosave · %s" % s["location"]
-		elif kind == "round":
-			where = "Fight, round start · %s" % s["location"]
-		info.add_child(_text("%s · Day %d" % [where, int(s["day"])], 10.0, _c("arch_text")))
-		info.add_child(_text(str(s["saved_at"]).replace("T", " "), 8.0, Color(_c("arch_text"), 0.55)))
+		var what := {"autosave": "Autosave", "round": "Fight, round start"}.get(kind, "This game" if str(s["slot"]) == SaveSystem.current_slot else "Save") as String
+		var place := _fit_line(str(s["location"]), 10.0, _c("arch_text"))
+		info.add_child(place)
+		var when := str(s["saved_at"]).replace("T", " ")
+		when = when.substr(0, 16) if when.length() >= 16 else when
+		info.add_child(_fit_line("%s · Day %d · %s" % [what, int(s["day"]), when], 8.0, Color(_c("arch_text"), 0.6)))
 		row.add_child(info)
 		var slot := str(s["slot"])
 		row.add_child(UiParts.small_button("Load", func() -> void: _load(slot)))
 		if not game_over and kind == "":
 			row.add_child(UiParts.small_button("Overwrite", func() -> void: _save(slot)))
-		var party_text := "%s\n%s" % [slot, s["party"]]
-		_list_box.add_child(UiParts.row(row, func() -> Control: return UiParts.rules_tip("Party", "", party_text)))
+		var party_text := "%s · Day %d\n%s\n%s" % [s["location"], int(s["day"]), s["party"], slot]
+		_list_box.add_child(UiParts.row(row, func() -> Control: return UiParts.rules_tip(what, "", party_text)))
+
+
+## A line of the saves list that takes no width of its own (its row decides) and ends in an ellipsis if it's too long.
+func _fit_line(text: String, size_u: float, colour: Color) -> Label:
+	var l := _text(text, size_u, colour)
+	l.clip_text = true
+	l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	l.custom_minimum_size = Vector2(1, 0)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return l
 
 
 ## F5 and the Quicksave button: over the game's current slot (a new one the first time), as the exploring F5 does.

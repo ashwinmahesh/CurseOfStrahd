@@ -64,7 +64,8 @@
           9
         ]
       ],
-      "floor": "interior/marble_floor"
+      "floor": "castle/black_marble",
+      "walls": "castle/red_damask"
     },
     {
       "id": "court_trophy_room",
@@ -94,7 +95,8 @@
           13
         ]
       ],
-      "floor": "interior/marble_floor"
+      "floor": "castle/black_marble",
+      "walls": "castle/red_damask"
     },
     {
       "id": "court_accountant",
