@@ -201,7 +201,8 @@ def main() -> int:
         wanted = [f for f in a.files.split(",") if f]
         missing = [f for f in wanted if f not in files]
         files = [f for f in wanted if f in files]
-    jobs = max(1, min(a.jobs or default_jobs(), len(files) or 1))
+    wanted = a.jobs or default_jobs()
+    jobs = max(1, min(wanted, len(files) or 1))
     split = []
     if jobs > 1:
         # Longest first; a file with no time yet goes before the rest, since it might be long. One process keeps the
@@ -211,6 +212,8 @@ def main() -> int:
         # A file longer than half a process's share is handed out a test at a time, so it doesn't set the finish.
         share = sum(times.get(f, 0) for f in files) / jobs
         split = [f for f in files if times.get(f, 0) > share / 2]
+        if split:
+            jobs = max(1, wanted)   # a split file's tests can keep more processes busy than there are files
 
     base = [a.godot, "--path", ROOT, "--headless", "--quit-after", "100000", "res://tests/test_runner.tscn", "--"]
     if a.only:
