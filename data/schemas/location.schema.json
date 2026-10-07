@@ -509,6 +509,10 @@
               }
             }
           },
+          "waiting": {
+            "type": "boolean",
+            "description": "F7: the foes stand in plain view before the fight (enter_area triggers only): they show once the party can see them, can notice the party, and can be attacked first (docs/rules/stealth.md)."
+          },
           "surprise": {
             "type": "string",
             "enum": [

@@ -52,8 +52,9 @@ static func show(name: String) -> void:
 	Input.set_default_cursor_shape(int((SLOTS[name] as Array)[0]) as Input.CursorShape)
 
 
-## Which cursor a thing in the world gets (LocationView.thing_at): talk to people, a padlock on what's locked, a lens
-## on what's only to look at, the gauntlet for the rest; the pointer for the floor and the party.
+## Which cursor a thing in the world gets (LocationView.thing_at): talk to people, crossed swords on a foe waiting in
+## plain view, a padlock on what's locked, a lens on what's only to look at, the gauntlet for the rest; the pointer
+## for the floor and the party.
 static func for_thing(thing: Dictionary) -> String:
 	if thing.is_empty():
 		return "pointer"
@@ -61,6 +62,8 @@ static func for_thing(thing: Dictionary) -> String:
 	match str(thing["kind"]):
 		"npc":
 			return "talk"
+		"foe":
+			return "attack"
 		"door", "container":
 			return "locked" if label.ends_with("(locked)") else "use"
 		"prop":

@@ -121,8 +121,13 @@ static func _vec2(v: Variant) -> Vector2:
 
 # --- Building -------------------------------------------------------------------------------------
 
+## Atmospheres on screen, for a change of graphics preset (Graphics.set_preset).
+const GROUP := &"atmosphere"
+
+
 ## The window's renderer follows the graphics preset (anti-aliasing, shadow maps) from the place that opens on.
 func _ready() -> void:
+	add_to_group(GROUP)
 	Graphics.apply(get_viewport())
 
 
@@ -166,6 +171,8 @@ func _build() -> void:
 		_modern_finish()
 	if board == null:
 		return
+	if Look.modern():
+		_flat_floors_cast_no_shadow()
 	if mood.has("water"):
 		_build_water()
 	if outdoors and not (mood.get("surround", {}) as Dictionary).is_empty():
@@ -195,31 +202,45 @@ func _modern_finish() -> void:
 	env.ssao_power = 1.5
 	env.ssao_detail = 0.6
 	env.ssao_light_affect = 0.15
-	env.ssil_enabled = true
 	env.ssil_radius = 3.0
 	env.ssil_intensity = 0.8
-	env.volumetric_fog_enabled = true
 	env.volumetric_fog_density = 0.004 if outdoors else 0.006
 	env.volumetric_fog_anisotropy = 0.45
 	env.volumetric_fog_length = 40.0
 	env.volumetric_fog_ambient_inject = 0.15
-	# Sharper sun and moon shadows (W2): the splits are packed round what the camera sees (_fit_sun_shadows follows
-	# the zoom), and the light's size softens a shadow the further it falls from what casts it.
-	if Graphics.sun_splits() == 4:
-		sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
-	sun.light_angular_distance = SUN_SIZE
 	sun.shadow_blur = 1.0
 	sun.shadow_bias = 0.03
 	sun.shadow_normal_bias = 1.0
-	# Polished and wet floors reflect what stands on them (W3): the lit world shaders' low roughness picks it up. The
-	# flat sky colour isn't reflected: it would lay a grey sheen over every surface and wash the colour out.
+	# The flat sky colour isn't reflected: it would lay a grey sheen over every surface and wash the colour out.
 	env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
-	var steps := Graphics.reflection_steps()
-	env.ssr_enabled = steps > 0
-	env.ssr_max_steps = maxi(steps, 1)
 	env.ssr_fade_in = 0.15
 	env.ssr_fade_out = 2.0
 	env.ssr_depth_tolerance = 0.25
+	apply_graphics()
+
+
+## What the graphics preset decides in the Modern finish (W17; Graphics): the sun's splits and softness (W2: packed
+## round what the camera sees, _fit_sun_shadows following the zoom; the light's size softens a shadow the further it
+## falls from what casts it), light bounced off walls, the haze, reflections on polished and wet floors (W3) and the
+## lamp shadow budget (W2). Called as the place is built and again when the preset changes.
+func apply_graphics() -> void:
+	if not Look.modern():
+		return
+	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS if Graphics.sun_splits() == 4 \
+		else DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+	sun.light_angular_distance = SUN_SIZE if Graphics.sun_soft() else 0.0
+	_fitted_distance = -1.0
+	env.ssil_enabled = Graphics.bounce()
+	env.volumetric_fog_enabled = Graphics.haze()
+	var steps := Graphics.reflection_steps()
+	env.ssr_enabled = steps > 0
+	env.ssr_max_steps = maxi(steps, 1)
+	for l in _lights:
+		if is_instance_valid(l) and l.has_meta("light_kind"):
+			var kind := LIGHT_KINDS[str(l.get_meta("light_kind"))] as Dictionary
+			l.light_size = float(kind["size"]) if Graphics.lamp_soft() else 0.0
+	if is_inside_tree():
+		_update_lamp_shadows()
 
 
 ## The sun or moon's apparent size in degrees for the Modern finish's soft shadows (Godot's PCSS): sharp where a post
@@ -256,7 +277,7 @@ var _shadow_scan := 0.0
 
 func _update_lamp_shadows() -> void:
 	var budget := Graphics.lamp_shadows()
-	if budget <= 0 or _rig == null:
+	if _rig == null or not Look.modern():
 		return
 	var focus := _rig.global_position
 	var ranked: Array[Array] = []
@@ -298,6 +319,21 @@ func _update_lamp_shadows() -> void:
 			l.shadow_enabled = want
 		if want and not is_equal_approx(l.distance_fade_shadow, fade):
 			l.distance_fade_shadow = fade
+
+
+## A level floor or ground square can't shadow anything (nothing stands under it), yet each is its own box that every
+## shadow map would draw again: the sun's splits and every shadowed lamp's six faces (W17: the sun's shadows doubled
+## the draw calls). Raised floors (a dais, steps) keep their shadows.
+func _flat_floors_cast_no_shadow() -> void:
+	for n in board.get_children():
+		var mi := n as MeshInstance3D
+		if mi == null or not (mi.mesh is BoxMesh):
+			continue
+		var name_ := str(mi.name)
+		if not (name_.begins_with("Floor") or name_.begins_with("Ground") or name_.begins_with("Water")):
+			continue
+		if mi.position.y + (mi.mesh as BoxMesh).size.y / 2.0 <= 0.02:
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 ## The Modern finish's depth of field, as a strength the owner picks from (docs/plans/ui_polish.md): how soft
@@ -752,7 +788,7 @@ func _dress_light(l: OmniLight3D) -> void:
 	var kind := _light_kind(l)
 	var spec := LIGHT_KINDS[kind] as Dictionary
 	l.set_meta("light_kind", kind)
-	l.light_size = float(spec["size"])
+	l.light_size = float(spec["size"]) if Graphics.lamp_soft() else 0.0
 	l.light_volumetric_fog_energy = float(spec["fog"])
 	if bool(spec.get("steady", false)) and l is CandleFlicker:
 		(l as CandleFlicker).flicker = 0.0

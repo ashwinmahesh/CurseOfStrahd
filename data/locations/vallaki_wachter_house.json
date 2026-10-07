@@ -318,6 +318,7 @@
     {
       "id": "wachter_cellar_cult",
       "trigger": "enter_area:cellar",
+      "waiting": true,
       "when": "night and flag.vallaki_pledge != \"wachter\" and not flag.wachter_cult_broken and not flag.festival_climax and level >= 5",
       "text": "Seven heads turn from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
       "monsters": [
@@ -408,6 +409,7 @@
     {
       "id": "wachter_cellar_cult",
       "trigger": "enter_area:cellar",
+      "waiting": true,
       "when": "night and flag.vallaki_pledge != \"wachter\" and not flag.wachter_cult_broken and not flag.festival_climax and level >= 4",
       "text": "Seven heads turn from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
       "monsters": [
@@ -474,6 +476,7 @@
     {
       "id": "wachter_cellar_cult",
       "trigger": "enter_area:cellar",
+      "waiting": true,
       "when": "night and flag.vallaki_pledge != \"wachter\" and not flag.wachter_cult_broken and not flag.festival_climax",
       "text": "Seven heads turn from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
       "monsters": [
