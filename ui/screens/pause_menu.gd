@@ -285,9 +285,9 @@ func _show_settings(page: String = "Game") -> void:
 	_buttons[0].grab_focus.call_deferred()
 
 
-## The three page names under the title, the open one lit between lozenges.
+## The three page names under the title, the open one lit over a gilt rule with a lozenge.
 func _page_tabs(page: String) -> void:
-	var xs: Array[float] = [76.0, 140.0, 204.0]
+	var xs: Array[float] = [86.0, 140.0, 194.0]   # clear of the shoulder scrolls
 	for i in SETTINGS_PAGES.size():
 		var name_ := SETTINGS_PAGES[i]
 		var on := name_ == page
@@ -299,10 +299,11 @@ func _page_tabs(page: String) -> void:
 		tab.reset_size()
 		tab.position = Vector2(_u(xs[i], 0).x - tab.size.x / 2.0, _u(0, 124).y - tab.size.y / 2.0)
 		if on:
-			var mark := UiParts.drawn(Vector2(tab.size.x + 22.0 * K, 8.0 * K), func(c: Control) -> void:
-				_lozenge(c, Vector2(3.0 * K, c.size.y / 2.0), 3.0, _c("arch_gold_light"))
-				_lozenge(c, Vector2(c.size.x - 3.0 * K, c.size.y / 2.0), 3.0, _c("arch_gold_light")))
-			mark.position = Vector2(tab.position.x - 11.0 * K, tab.position.y + tab.size.y / 2.0 - 4.0 * K)
+			var mark := UiParts.drawn(Vector2(tab.size.x, 6.0 * K), func(c: Control) -> void:
+				var y := c.size.y / 2.0
+				c.draw_line(Vector2(0, y), Vector2(c.size.x, y), Color(_c("arch_gold"), 0.8), 1.0, true)
+				_lozenge(c, Vector2(c.size.x / 2.0, y), 2.5, _c("arch_gold_light")))
+			mark.position = Vector2(tab.position.x, tab.position.y + tab.size.y - 2.0 * K)
 			_place(mark)
 
 
