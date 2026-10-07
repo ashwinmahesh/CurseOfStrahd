@@ -36,7 +36,11 @@ Adrian: Sorry. Well. It was dark, I was a bird, and this valley teaches people t
 
 ~ to_father
 Adrian: This way, round by the trees. Mind the brambles. They're only brambles. Probably.
+if name:thistle
+interject name:thistle: You're the raven! From the road! I know your smell. You walked with us a mile.
+else
 interject tag:curious: You were the raven. On the road. You walked beside us for a mile.
+endif
 Adrian: A mile and a half. You walk slowly.
 -> END
 
@@ -67,7 +71,11 @@ Adrian: Looking for the last stone. Father hid it the night we ran, and he won't
 ~ elvir
 set adrian_side_heard
 Adrian: Then you know what Father thinks. Last spring he sent Elvir and me to watch the hill. The druids' things caught us in the bracken. I flew. Elvir didn't. That's all there is.
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: That isn't all of it, I think. That is only the part you can bear to say.
+else
 interject tag:blunt: That isn't all there is. That's the part you say out loud.
+endif
 Adrian: It's the part that's true.
 -> menu
 

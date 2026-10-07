@@ -56,7 +56,7 @@ Sorvia [sad]: She's nice. She mended my horse's bridle once and wouldn't take a 
 ~ leave_valley
 Alenka: The mists let us pass. Not you. Not anyone he hasn't finished with.
 Sorvia: And he hasn't finished with you. He's hardly started.
-interject tag:veteran: Noted.
+interject tag:veteran: Good. Neither have we.
 -> menu
 
 ~ insight_ok
@@ -92,7 +92,7 @@ Sorvia: A line of faith straight down the middle, and a crack right across it. D
 
 ~ palm_wizard
 Sorvia: So many lines. You've read too much. One day a book is going to read you back.
-interject name:silvain_aster: That is not how books work. I would like that on the record.
+interject name:ratatoille: That is not how books work. I'll have you know I have read hundreds, and not one has read me back.
 -> menu
 
 ~ palm_any

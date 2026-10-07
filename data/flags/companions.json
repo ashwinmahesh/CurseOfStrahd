@@ -2,104 +2,129 @@
   "region": "companions",
   "flags": [
     {
-      "id": "kestrel_tally_crossroads",
+      "id": "ladle_sword_shown",
       "type": "bool",
-      "summary": "Ilse found Kestrel Company's first tally on the crossroads milestone (forty strokes)."
+      "summary": "Godrick showed Sir Godfrey Sir Aldric Ashgrove's sword (companions/ladle:sword)."
     },
     {
-      "id": "kestrel_tally_tser",
+      "id": "ladle_wall_read",
       "type": "bool",
-      "summary": "Ilse found the second tally on an ash at Tser Pool (thirty-one, and J.F.'s apology)."
+      "summary": "Godrick and Sir Godfrey read the bottom of Godfrey's wall: Aldric rode for help (companions/ladle:wall)."
     },
     {
-      "id": "kestrel_jory_told",
+      "id": "ladle_vladimir_asked",
       "type": "bool",
-      "summary": "Stanimir told Ilse one soldier came back alone and went to Vallaki."
+      "summary": "Godrick asked Vladimir to knight him; Vladimir called Aldric a deserter (companions/ladle:vladimir)."
     },
     {
-      "id": "kestrel_jory_met",
+      "id": "godrick_letters",
       "type": "bool",
-      "summary": "Ilse met Jory Fenn, the company's deserter, on Vallaki's wall."
+      "summary": "The party started teaching Godrick to read (camp/godrick:letters)."
     },
     {
-      "id": "kestrel_jory_asked",
+      "id": "liriel_asked_abbot",
       "type": "bool",
-      "summary": "The party asked Jory who in the company is still alive."
+      "summary": "Liriel asked the Abbot whether he still remembers the sun; opens her way to his repentance at the unveiling."
     },
     {
-      "id": "kestrel_jory_forgiven",
+      "id": "liriel_dawn_prayed",
       "type": "bool",
-      "summary": "Ilse forgave Jory Fenn for running (Phase 6: his drum at the castle gate)."
+      "summary": "Liriel sang the dawn into Castle Ravenloft's chapel (companions/dawn:chapel_hymn)."
     },
     {
-      "id": "kestrel_roll_kept",
+      "id": "fen_blaze_crossroads",
       "type": "bool",
-      "summary": "Jory gave Ilse the captain's roll of Kestrel Company (Phase 6: Ilse calls it)."
+      "summary": "Thistle found Fen's trail blaze on the crossroads signpost."
     },
     {
-      "id": "kestrel_fever_shared",
+      "id": "fen_blaze_lake",
       "type": "bool",
-      "summary": "Ilse told the party about the fever that kept her from the march."
+      "summary": "Thistle found Fen's left-handed blaze and the word RUN above Lake Zarovich."
     },
     {
-      "id": "kestrel_vell_met",
+      "id": "fen_met",
       "type": "bool",
-      "summary": "Corporal Vell's patrol met the party on the castle road at night."
+      "summary": "Thistle found Fen Burley chained in the werewolf den."
     },
     {
-      "id": "kestrel_vell_reached",
-      "type": "bool",
-      "summary": "Ilse got through to Vell (Persuasion): he counted off and fought held back."
-    },
-    {
-      "id": "kestrel_vell_rests",
-      "type": "bool",
-      "summary": "Corporal Vell is destroyed and counted off (encounter kestrel_patrol or kestrel_patrol_reached)."
-    },
-    {
-      "id": "locket_inscription_read",
-      "type": "bool",
-      "summary": "Tamsin opened the back of the locket: 'For T., from S. Every morning, at the water.'"
-    },
-    {
-      "id": "locket_coach_known",
-      "type": "bool",
-      "summary": "Henrik's black carriage told Tamsin whose coach he robbed."
-    },
-    {
-      "id": "locket_arrigal_confirmed",
-      "type": "bool",
-      "summary": "Arrigal confirmed the carriage was sent out empty with the locket, for a thief to find."
-    },
-    {
-      "id": "locket_fate",
+      "id": "fen_fate",
       "type": "string",
-      "summary": "What Tamsin did with the locket at the Pool of the White Sun: pool, ireena or kept (Phase 6 reads it)."
+      "summary": "What Thistle did for Fen: cured (Remove Curse), freed (into the high woods as a wolf) or rests (mercy)."
     },
     {
-      "id": "hedda_spark_felt",
+      "id": "fen_force_tried",
       "type": "bool",
-      "summary": "Hedda felt the Morninglord's warmth for a breath when St. Andral's bones came home."
+      "summary": "Someone tried to tear Fen's rings out of the rock and failed; that way is spent."
     },
     {
-      "id": "hedda_keepers_told",
+      "id": "fen_pick_tried",
       "type": "bool",
-      "summary": "Davian told Hedda the Keepers' story of the raven and the sun."
+      "summary": "Someone tried to pick Fen's silver cuffs and failed; that way is spent."
     },
     {
-      "id": "aurel_cipher_read",
+      "id": "kiril_offer_heard",
       "type": "bool",
-      "summary": "Silvain read Aurel's shorthand in the margins of his last note."
+      "summary": "Kiril asked Thistle to run with his pack, and she answered him."
     },
     {
-      "id": "aurel_rictavio_told",
+      "id": "ratatoille_supper_cooked",
       "type": "bool",
-      "summary": "Rictavio told Silvain about meeting Aurel."
+      "summary": "Ratatoille cooked supper for the Martikovs (companions/table:supper)."
     },
     {
-      "id": "aurel_margins_found",
+      "id": "ratatoille_zantras_refused",
       "type": "bool",
-      "summary": "Silvain found Aurel's note to them in a chained book at the Amber Temple."
+      "summary": "Ratatoille turned away from Zantras's offer of an audience forever."
+    },
+    {
+      "id": "ratatoille_dinner_tasted",
+      "type": "bool",
+      "summary": "Ratatoille passed judgement on Strahd's dinner, and heard his offer (companions/table:dinner)."
+    },
+    {
+      "id": "ratatoille_refused_strahd",
+      "type": "bool",
+      "summary": "Ratatoille refused Strahd's offer of a title and a tower at dinner."
+    },
+    {
+      "id": "wren_letter_given",
+      "type": "bool",
+      "summary": "Wren gave Kasimir Master Sorrel's letter."
+    },
+    {
+      "id": "wren_patrina_words",
+      "type": "bool",
+      "summary": "Wren had Kasimir read Sorrel's 'let her rest' to Patrina's ghost."
+    },
+    {
+      "id": "wren_rahadin_met",
+      "type": "bool",
+      "summary": "Wren told Rahadin who his teacher was."
+    },
+    {
+      "id": "kip_vosk_paid",
+      "type": "bool",
+      "summary": "Master Vosk read Kip's contract and took his fee."
+    },
+    {
+      "id": "kip_invitation_kept",
+      "type": "bool",
+      "summary": "Kip kept Strahd's dinner invitation from the black carriage: a signature freely given."
+    },
+    {
+      "id": "kip_strahd_signed",
+      "type": "bool",
+      "summary": "Strahd signed for Kip at dinner, on the back of a bill for one apricot."
+    },
+    {
+      "id": "kip_strahd_offer_heard",
+      "type": "bool",
+      "summary": "Strahd offered to buy Kip's contract at dinner (once)."
+    },
+    {
+      "id": "kip_contract_void",
+      "type": "bool",
+      "summary": "Mister Quillon was paid with Strahd's signature and Kip's contract burned (camp/kip:settle)."
     }
   ]
 }

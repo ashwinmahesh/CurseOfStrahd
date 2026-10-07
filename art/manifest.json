@@ -5086,6 +5086,72 @@
       "sprite_flags": [
         "BODY=float"
       ]
+    },
+    {
+      "id": "godrick_pendlebrook",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/godrick_pendlebrook_turnaround.png",
+      "sprites": "art/sprites/godrick_pendlebrook/walk.tres",
+      "portrait": "art/portraits/godrick_pendlebrook.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Sir Godrick Pendlebrook, a huge, broad-shouldered young goliath man about seven and a half feet tall, with grey stone-coloured skin marked with darker grey mottled patches, a bald head, a square, friendly face with a strong jaw and a big warm grin, wearing polished steel chain mail under a sky-blue tabard with a white sunburst, a round steel shield on his left arm, a longsword with a worn griffin pommel at his hip, and brown leather boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "liriel_dawnsong",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/liriel_dawnsong_turnaround.png",
+      "sprites": "art/sprites/liriel_dawnsong/walk.tres",
+      "portrait": "art/portraits/liriel_dawnsong.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Liriel Dawnsong, a slight, graceful high elf woman with long straight pale-gold hair, pointed ears, a delicate serene face and large grey eyes, wearing flowing cream and soft gold priestly robes over a light chain shirt, a gold sunburst holy symbol on a chain at her breast, a small round shield on her arm and a slender mace at her belt. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "thistle",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/thistle_turnaround.png",
+      "sprites": "art/sprites/thistle/walk.tres",
+      "portrait": "art/portraits/thistle.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Thistle, a wiry young human woman in her early twenties with a wild mane of tangled russet-red hair with black crow feathers braided into it, freckled sun-browned skin and a wide grin, wearing patched studded leather armour, a fur-trimmed moss-green hooded cloak, fingerless gloves, a longbow and a quiver of arrows on her back and a scimitar at her hip, and worn hide boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "ratatoille",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/ratatoille_turnaround.png",
+      "sprites": "art/sprites/ratatoille/walk.tres",
+      "portrait": "art/portraits/ratatoille.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Ratatoille, a slim, gangly young high elf man with neat dark-brown hair, pointed ears, round wire spectacles and an eager, pinched face, wearing a deep plum wizard's robe with gold trim, a white cook's apron tied over it, a battered copper skillet hanging at his belt beside a leather-bound spellbook, and holding a carved wooden staff. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "wren_featherfoot",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/wren_featherfoot_turnaround.png",
+      "sprites": "art/sprites/wren_featherfoot/walk.tres",
+      "portrait": "art/portraits/wren_featherfoot.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Wren Featherfoot, a small, lean, athletic halfling man with short curly sandy-brown hair, a cheeky grin and quick bright eyes, barefoot, wearing a sleeveless sky-blue and grey monk's wrap tunic with a rope sash, loose grey trousers tied at the ankles, and cloth wraps around his wrists and forearms. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "kip_smudgewick",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/kip_smudgewick_turnaround.png",
+      "sprites": "art/sprites/kip_smudgewick/walk.tres",
+      "portrait": "art/portraits/kip_smudgewick.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Kip Smudgewick, a friendly tiefling man in his early thirties with maroon-red skin, curling dark-grey ram's horns, a long thin tail, golden eyes and an anxious smile, wearing a wide-brimmed straw hat, a mustard-yellow shirt with rolled sleeves, a brown leather waistcoat, a green canvas apron with pockets full of orange apricots, a small black book on a chain at his hip, brown breeches and boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
     }
   ],
   "image_provider": "gemini"

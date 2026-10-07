@@ -1,0 +1,20 @@
+{
+  "id": "fen_burley",
+  "name": "Fen Burley",
+  "title": "Trapper of the Thornwood",
+  "summary": "The old trapper who raised Thistle in the deep woods. Kiril's pack bit him beyond the mists and dragged him home to hunt for them; he refused to hunt children, so he hangs in silver chains in their den, waiting for the moon to change his mind.",
+  "portrait": "werewolf",
+  "sprite": "werewolf",
+  "attitude": "friendly",
+  "voice": "docs/voice/fen_burley.md",
+  "monster": "werewolf",
+  "guest": false,
+  "tags": [
+    "werewolf",
+    "lycanthrope",
+    "werewolf_den",
+    "companions"
+  ],
+  "region": "companions",
+  "pronouns": "he/him"
+}

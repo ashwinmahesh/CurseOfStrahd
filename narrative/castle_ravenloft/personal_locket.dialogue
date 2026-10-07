@@ -1,0 +1,107 @@
+# Tamsin Tealeaf's personal quest, The Woman in the Locket (data/quests/the_locket.json): the castle payoff, hook 2
+# in docs/story/personal_quests.md. Prop court_locket_candles in the court study
+# (data/locations/castle_ravenloft_court.json): candles under Tatyana's portrait over the fireplace. The portrait
+# itself is the study's treasure spot (container court_study_portrait) and is left alone. Needs Tamsin.
+# By flag.locket_fate: "kept" (or never decided, so he still has it): Strahd comes for it, and Tamsin puts it in his
+# hand (given_to_strahd, failure) or drops it in the fire (burned, success). "pool": Strahd notices it's gone.
+# "ireena": Ireena, if she travels with the party, shows it to him. Strahd is here unless he lies in his coffin or is
+# destroyed; without him each fate has a short beat ("kept" then waits for him). No rolls.
+
+~ start
+Narrator: Under the portrait over the fireplace someone keeps a stand of candles lit. The painted woman has red hair and Ireena's eyes.
+interject name:tamsin_tealeaf: Hello again. You look better in oils. Bigger, anyway.
+if flag.locket_fate == "pool"
+-> pool
+elif flag.locket_fate == "ireena"
+-> ireena
+endif
+-> kept
+
+# --- He still has it ----------------------------------------------------------------------------------------
+
+~ kept
+Narrator: The locket is warm inside Tamsin's shirt. It has been warm since the castle gate.
+if flag.strahd_in_coffin or flag.strahd_destroyed
+interject name:tamsin_tealeaf: He's not coming, is he. Not tonight. Well, I'm not handing her to a painting. He can ask me himself.
+-> END
+endif
+Narrator: The chair by the fire is not empty. You would swear it was a moment ago.
+Strahd: You carried her home, thief. All that way, and you never once dropped her. Now give her to me.
+if name:silvain_aster and not (quest.aurels_last_chapter >= the_last_page)
+Narrator: By the fire, the reader's voice falters for the first time in a year. Then it goes on.
+endif
+interject name:tamsin_tealeaf: You left her on a coach seat for me. Like milk for a cat.
+Strahd [smile]: For whoever came. You came. I am grateful, and I am not often grateful.
+-> kept_menu
+
+~ kept_menu
+* [name:tamsin_tealeaf] (Put the locket in his hand.) -> give
+* [name:tamsin_tealeaf] (Drop the locket into the fire.) -> burn
+* [name:tamsin_tealeaf] Not yet. -> not_yet
+
+~ give
+Narrator: Tamsin takes out the locket and holds it a moment, the way he held it over the pool. Then he puts it in the long white hand.
+Strahd: Thank you.
+Narrator: He opens it and looks at the face inside for a long time. He means the thanks. That is the worst part.
+interject name:tamsin_tealeaf: ...She stopped calling. Just now. Like a door shutting in another house.
+interject name:hedda_ironvow: Mm. That wasn't yours to give, little thief. Or his to take.
+Narrator: When you look again, the chair is empty.
+if not (quest.the_locket >= given_to_strahd)
+quest the_locket given_to_strahd
+endif
+-> END
+
+~ burn
+Narrator: Tamsin opens the locket once and says something to the painted face, too quietly for anyone else. Then he drops it into the fire.
+Narrator: The silver goes soft and dark. The little painted woman curls up like a leaf.
+Narrator: Strahd says nothing at all.
+interject name:tamsin_tealeaf: Returned to sender. Not you. The other one. Every morning, at the water, he said. She can go and meet him.
+Narrator: When you look again, the chair by the fire is empty. Nobody saw him go. Above the mantel the painted woman looks down at the ash.
+if not (quest.the_locket >= given_to_strahd)
+quest the_locket burned
+endif
+-> END
+
+~ not_yet
+Strahd: Then I will ask again. I am very patient, and you will have to sleep some time.
+Narrator: The candles lean, and stand straight, and the chair is empty.
+-> END
+
+# --- It went to Sergei ------------------------------------------------------------------------------------
+
+~ pool
+set locket_portrait_seen
+if flag.strahd_in_coffin or flag.strahd_destroyed
+interject name:tamsin_tealeaf: I gave yours back. To him, the one with the sunburst. I hope that was right. You don't have to say. You're a painting.
+-> END
+endif
+Narrator: The chair by the fire is not empty. You would swear it was a moment ago.
+Strahd: You gave it to my brother. How very like him to accept.
+interject name:tamsin_tealeaf: He said thank you. Very polite about it. I assumed it ran in the family.
+Strahd: He always did take what was meant for me, and thank whoever brought it.
+Narrator: The candles lean, and stand straight, and the chair is empty.
+-> END
+
+# --- It went to Ireena ------------------------------------------------------------------------------------
+
+~ ireena
+set locket_portrait_seen
+if not guest:ireena
+interject name:tamsin_tealeaf: Ireena has your locket now. You'd like her. She'd hate that. She has it, and she isn't here, and that's the right way round.
+-> END
+endif
+if flag.strahd_in_coffin or flag.strahd_destroyed
+Narrator: Ireena takes the locket from her collar, opens it, and holds it up beside the portrait. The same face, twice. Three times.
+Ireena: So that's her. I remember a chapel full of white flowers, and a man with a sunburst on his coat. And a wall.
+Ireena: I won't remember the rest. I've decided.
+-> END
+endif
+Narrator: The chair by the fire is not empty. You would swear it was a moment ago.
+Strahd: Ireena.
+Narrator: She doesn't answer him. She takes the locket from her collar and opens it, so he can see whose it is now.
+Ireena: It was given to her. Then it was given to me. You only ever took it.
+Narrator: For a moment he has no answer, and he does not like it.
+Ireena: I remember a chapel full of white flowers. I remember Sergei. I don't remember loving you. I've looked.
+Strahd: You will.
+Narrator: The candles lean, and stand straight, and the chair is empty. Ireena closes the locket. Her hand is steady.
+-> END

@@ -66,17 +66,6 @@ Ismark [weary]: Stop that. I can feel you reading me. Yes, I should have saved h
 Narrator: He gives you nothing but a tired man's face. It is a very good tired man's face; he has had practice.
 -> menu
 
-~ letter
-set ilse_invitation_shown
-if name:ilse_varga and not (quest.kestrel_company >= the_host)
-quest kestrel_company the_host
-endif
-Narrator: The sealed letter goes down on the table between the cups. Ismark looks at the ornate S, and the colour leaves his face.
-Ismark [afraid]: That's not my father's hand. Father wrote letters too, begging for help. The Vistani carried them out of the valley. Nobody ever answered. Except, it seems, him.
-interject name:ilse_varga: A year I've carried this. Now I know whose door to knock on.
-Ismark: Then he invited you. You're his guests, or his game. Let's make you the third thing: his problem.
--> menu
-
 ~ ask
 Ismark: Two things. First: help me carry my father to the church and see him buried properly, with Father Donavich's words over him. Ireena won't leave until it's done.
 Ismark: Second: once he's in the ground, take Ireena west to Vallaki. It has walls, a church with old relics under the altar, and a baron who's a fool, but a careful fool. And it's farther from the castle.
@@ -183,3 +172,16 @@ Ismark [weary]: He's in the ground. Properly or not, he's in it, and nobody's di
 ~ parri
 Ismark: He did. He made it deeper "for the wolves". Bildrath will charge me for every inch. Worth it.
 -> after_burial
+
+# --- The first four (owner, 2026-10-06: kept so older saves still play their quests) ---
+
+~ letter
+set ilse_invitation_shown
+if name:ilse_varga and not (quest.kestrel_company >= the_host)
+quest kestrel_company the_host
+endif
+Narrator: The sealed letter goes down on the table between the cups. Ismark looks at the ornate S, and the colour leaves his face.
+Ismark [afraid]: That's not my father's hand. Father wrote letters too, begging for help. The Vistani carried them out of the valley. Nobody ever answered. Except, it seems, him.
+interject name:ilse_varga: A year I've carried this. Now I know whose door to knock on.
+Ismark: Then he invited you. You're his guests, or his game. Let's make you the third thing: his problem.
+-> menu

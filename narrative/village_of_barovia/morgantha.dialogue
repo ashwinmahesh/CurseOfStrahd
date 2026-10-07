@@ -9,7 +9,7 @@ set morgantha_met
 Narrator: An old woman in a flour-dusted shawl leans on a handcart heaped with glazed pastries under a cloth. Her smile arrives well before she does.
 Morgantha [smile]: Pastries! Fresh dream pastries! Oh, look at you. New faces. Lovely, plump new faces. Come, come, my ducklings. One bite and all your troubles go to sleep.
 interject species:halfling: She's looking at me the way my aunt looks at a ham.
-interject species:dwarf: Mm. She's eyeing me the way a mason eyes good stone.
+interject species:dwarf: She's eyeing me the way a mason eyes good stone.
 -> menu
 
 ~ again

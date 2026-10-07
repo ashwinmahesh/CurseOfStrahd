@@ -1,0 +1,18 @@
+{
+  "id": "mister_quillon",
+  "name": "Mister Quillon",
+  "title": "Assessor",
+  "summary": "A polite gentleman in a grey coat with a ledger under his arm, who calls on people at their worst moment with an offer. He holds Kip Smudgewick's contract. He is a devil, and very good at his job.",
+  "portrait": "noble",
+  "sprite": "noble",
+  "attitude": "indifferent",
+  "voice": "docs/voice/mister_quillon.md",
+  "guest": false,
+  "tags": [
+    "fiend",
+    "devil",
+    "companions"
+  ],
+  "region": "companions",
+  "pronouns": "he/him"
+}

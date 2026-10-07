@@ -48,6 +48,7 @@ endif
 * [if flag.vladimir_yielded and not flag.order_fate] By the Order's law, we command now. The Order rides with us. -> yield_ride
 * [if not flag.order_fate] What would the Order want from us? Name your terms. -> terms
 * [if not flag.order_fate and not flag.vladimir_duel_won] We'll settle this by the Order's own law. A trial of arms. -> duel_offer
+* [name:godrick_pendlebrook] [if flag.ladle_sword_shown and not flag.ladle_vladimir_asked] Ask the commander to knight Godrick with Sir Aldric's sword. -> companions/ladle:vladimir
 * Goodbye, Commander. -> bye
 
 ~ order
@@ -59,7 +60,7 @@ Vladimir: Every knight of the Order died at his post. Every knight of the Order 
 ~ dragon
 set argynvost_skull_known
 Vladimir: He fell in the courtyard, in his own shape, with forty of us around him. They took his head to the castle to hang on a wall where guests can admire it. I am told he is much admired.
-interject name:ilse_varga: Forty. My company was forty.
+interject name:thistle: Our hut's got two chairs. One's been empty since spring.
 Vladimir: Then you know how a hall sounds with forty empty chairs. Mine are not empty. I have seen to that.
 -> menu
 
@@ -69,7 +70,7 @@ Vladimir: Death is a door. He would walk through it, out of this valley and away
 if flag.strahd_met
 Vladimir: You have met him. Then you saw it: he is bored. Imagine an eternity of that, in a valley that hates him, watched by men he cannot kill. That is my gift to him.
 endif
-interject tag:devout: That isn't justice. That's a feud you've married.
+interject tag:pious: That isn't justice. That's a feud you've married.
 Vladimir: Four hundred years. A long marriage. We have not quarrelled once.
 -> menu
 
@@ -126,7 +127,7 @@ Sir Godfrey Gwilym [sad]: I'll stand, Vladimir. I won't say it.
 else
 Sir Godfrey Gwilym [sad]: ...We watch.
 endif
-interject tag:devout: Stone remembers what's sworn over it. I'd hoped to forget this one.
+interject tag:pious: Heaven hears an oath sworn in hate as clearly as one sworn in love. I wish it hadn't heard this one.
 gold +150
 give holy_water 2
 Vladimir: The Order's war chest, what there is of it, and the chaplain's water. Spend it getting to his door.
@@ -187,7 +188,7 @@ set order_fate = "ride"
 quest the_order_of_the_silver_dragon ride
 quest the_dark_beacon waiting
 Narrator: Swords come off the table and go back into scabbards that have not felt them in centuries. Somewhere in the house a door bangs open, and the cold that comes through it smells of horses that aren't there.
-interject name:ilse_varga: Forty knights. We count off at the castle gate, and I want every one of them answered for.
+interject name:liriel_dawnsong: Forty knights, riding for the dawn at last. I have prayed for far less, and been grateful.
 -> climax_end
 
 # ---------------------------------------------------------------- The trial of arms

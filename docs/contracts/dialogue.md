@@ -36,7 +36,8 @@ Speaker [mood]: Text               Picks a portrait expression (neutral, smile, 
                                    closes a door or raises a price, a fight, an alarm, lost time or gold.
 * [if <condition>] Text -> node    Shown only when the condition holds.
 * [Cleric] Text -> node            Shown only if a party member is a Cleric; that character speaks it. Also
-                                   [Elf], [Criminal] (background) and [tag:blunt].
+                                   [Elf], [Criminal] (background), [tag:blunt] and [knows:remove_curse] (a spell that character can cast
+                                   now; the option text should name it).
 -> node                            Jump. "-> END" ends the conversation; "-> file:node" jumps to another file.
 if <condition>                     Conditional block, closed by "endif" ("elif <condition>" and "else" allowed).
 set flag_id                        Sets a flag to true. "set flag_id = 3", "set flag_id = \"string\"",
@@ -61,8 +62,9 @@ respec                             The player picks a party member to rebuild fr
 check Skill DC n -> ok | fail      A check with no choice (e.g. a passive moment). Uses the best party member.
 interject <selector>: Text         A party member matching the selector says Text, if one is present (the first
                                    match in marching order): class:rogue, species:elf, background:criminal,
-                                   tag:blunt, name:tamsin_tealeaf. Write class/species lines so any such character
-                                   could say them; use name: for a pregen's own voice.
+                                   tag:blunt, name:thistle, knows:remove_curse (can cast it now). Write
+                                   class/species lines so any such character could say them; use name: for a
+                                   pregen's own voice.
 combat encounter_id                Ends the conversation and starts a fight from the location's encounters.
 narrate trigger_key                Plays a Narrator trigger (below) inline.
 end_game                           Ends the campaign (ADR 0014): the ending whose condition holds is played

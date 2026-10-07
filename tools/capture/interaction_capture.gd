@@ -9,7 +9,7 @@ var root: Node
 
 func _ready() -> void:
 	GameState.reset()
-	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, 3)
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)

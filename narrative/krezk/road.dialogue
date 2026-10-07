@@ -32,5 +32,5 @@ Narrator: At a bend stands a waist-high stone with a sunburst cut into it, so ol
 ~ waystone_coin
 gold -1
 Narrator: The coin clicks into the niche beside the candle. The flame doesn't move, but for a mile after, the wind seems to be at your backs.
-interject tag:devout: The White Sun's people. Krezk's not far, then.
+interject tag:pious: The White Sun's people. Krezk's not far, then.
 -> END

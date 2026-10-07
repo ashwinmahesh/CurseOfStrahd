@@ -49,7 +49,11 @@ if not flag.martikovs_reconciled
 quest elvir_martikov truth_found
 endif
 Ruxandra: The black-eyed boy. Yes. He told his brother to fly, and the brother flew, and the boy laughed at us all the way up the hill. He stopped laughing, in the end. The tree is very thorough.
-interject tag:blunt: Noted. All of it.
+if name:wren_featherfoot
+interject name:wren_featherfoot: Thank you. That's all we needed to hear.
+else
+interject tag:blunt: We heard. Every word of it.
+endif
 -> summit_menu
 
 ~ fight

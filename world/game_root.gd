@@ -67,12 +67,16 @@ func _ready() -> void:
 		show_ending.call_deferred()
 
 
-## A quick start: the four pregens at level 1 (plan §5.6 Start step). The full creator replaces this in the menu.
+## A quick start: four of the six at level 1 travelling, the other two at camp (plan §5.6 Start step). The menu's
+## roster pick replaces this.
 func _new_pregen_party() -> void:
-	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille", "wren_featherfoot", "kip_smudgewick"]:
 		var ch := Pregens.build(id, 1)
 		ch.finish_long_rest()
-		st.party.append(ch)
+		if st.party.size() < StoryState.PARTY_CAP:
+			st.party.append(ch)
+		else:
+			st.bench.append(ch)
 	st.gold = 10.0
 
 

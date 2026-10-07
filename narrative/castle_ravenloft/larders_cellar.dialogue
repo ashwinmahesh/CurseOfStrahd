@@ -28,8 +28,8 @@ endif
 Narrator: His purse is still on his belt. The ledger's last page is a bill to the castle for six casks, marked paid in a different hand.
 gold +35
 give book 1
-interject tag:devout: Rest now, whoever you were. You can stop holding your breath.
-interject name:tamsin_tealeaf: Whoever he was, he kept a very tidy purse.
+interject tag:pious: Rest now, whoever you were. You can stop holding your breath.
+interject name:kip_smudgewick: Delivered six casks, got marked paid, got bricked in. I'm never delivering to a castle again. Poor fellow.
 -> END
 
 ~ niche_open

@@ -1,0 +1,58 @@
+{
+  "id": "fens_trail",
+  "name": "Grandda's Trail",
+  "summary": "Thistle was raised in the deep woods by a trapper called Fen Burley. He followed a wolf the size of a pony into a wall of fog and never came back. She followed his trail blazes in.",
+  "region": "companions",
+  "stages": [
+    {
+      "id": "the_trail",
+      "journal": "Last spring a wolf the size of a pony came out of the Thornwood and took two of Fen Burley's hounds. Fen went after it, leaving his trail blazes the way he always did: three notches and a crow feather in the cut. The trail ran into a bank of fog that had not been there the day before. He didn't come back. Thistle followed the blazes.",
+      "objectives": [
+        "Follow Grandda Fen's blazes"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_blazes",
+      "journal": "Fen's blaze at the crossroads, a year weathered: three notches and a crow's feather gone to a quill. He came this way, alive and steady, following something big. Thistle put a fresh feather in the cut.",
+      "objectives": [
+        "Find his next blaze"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_wolf_road",
+      "journal": "Another of Fen's blazes, on the trail above Lake Zarovich, cut with his left hand. He was hurt. The blaze points up into the hills where the wolves den, and below it, scratched in a hurry, a word Thistle has never seen him write: RUN.",
+      "objectives": [
+        "Go up into the hills"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found_him",
+      "journal": "In the werewolves' den, chained in silver beside the pack's old leader: Fen Burley. Kiril's pack bit him beyond the mists and dragged him home, and he refused to hunt children for them, so they hung him up to wait for the moon to change his mind. It hasn't yet.",
+      "objectives": [
+        "Decide what to do for Grandda Fen"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "fen_cured",
+      "journal": "The curse came out of Fen Burley like a splinter, and left an old man sitting in the straw, crying and laughing and patting Thistle's face to be sure of it. He'll wait for her in Krezk, where they have walls she can climb.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "fen_freed",
+      "journal": "Thistle broke Fen's chains, and he went out of the den on four legs with a sound that might have been a laugh. He'll keep to the high woods. 'Don't follow my blazes this time, lass. Make your own.'",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "fen_rests",
+      "journal": "Fen asked Thistle to do it before the moon came, and she did, quickly, the way he taught her. She buried him under a rowan with a crow feather in the bark. She didn't speak for the rest of the day.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

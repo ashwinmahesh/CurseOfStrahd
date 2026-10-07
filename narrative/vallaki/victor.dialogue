@@ -47,6 +47,7 @@ endif
 ~ circle
 Victor: A door. Out of this house, out of this town, out of this valley. A teleportation circle, from a book that was never meant for this town. It's nearly right.
 Victor: Do you know what it's like being his son? Every week a festival. Every week I have to stand on the dais and wave. I'd rather be nowhere.
+interject name:ratatoille: I was sixteen once. Nobody sat with me either. Nowhere is not better, I promise you.
 -> menu
 
 ~ maids
@@ -136,7 +137,10 @@ Victor: Out. Out of this attic, out of this house, out of his festivals. With a 
 Victor: Yes. Obviously yes. I'll get my book. Don't tell Mother until we're past the gate.
 join victor_vallakovich
 quest find_the_ally found
+interject name:ratatoille: Rule one, apprentice: you draw nothing on any floor without asking me first. Rule two: you call me Master. Rule two is optional.
+if not name:ratatoille
 interject class:wizard: Rule one: you do not draw anything on any floor without asking me first.
+endif
 -> END
 
 ~ ally_no

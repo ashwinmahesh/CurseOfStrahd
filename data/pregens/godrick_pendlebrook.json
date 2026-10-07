@@ -1,0 +1,223 @@
+{
+  "id": "godrick_pendlebrook",
+  "name": "Godrick Pendlebrook",
+  "pronouns": "he/him",
+  "summary": "Goliath Paladin (Oath of Devotion), Noble. A shield, a longsword and a smile that has talked him out of more trouble than his head has.",
+  "hook": "He swore at Sir Pellam's deathbed to carry the old knight's sword to the Order of the Silver Dragon, somewhere in a land of mists, and be knighted there. He has practised kneeling.",
+  "roster": true,
+  "build": {
+    "name": "Godrick Pendlebrook",
+    "species": "goliath",
+    "background": "noble",
+    "ability_method": "standard_array",
+    "base_scores": {
+      "str": 15,
+      "dex": 10,
+      "con": 13,
+      "int": 8,
+      "wis": 12,
+      "cha": 14
+    },
+    "levels": [
+      {
+        "class": "paladin",
+        "hp": 0
+      }
+    ],
+    "choices": {
+      "species.giant_ancestry": [
+        "stone_giant"
+      ],
+      "background.abilities": [
+        "str",
+        "str",
+        "cha"
+      ],
+      "background.tool": [
+        "playing_card_set"
+      ],
+      "background.feat.skilled_proficiencies": [
+        "animal_handling",
+        "performance",
+        "perception"
+      ],
+      "origin.languages": [
+        "giant",
+        "dwarvish"
+      ],
+      "paladin.1.skills": [
+        "athletics",
+        "insight"
+      ],
+      "paladin.1.weapon_mastery": [
+        "longsword",
+        "javelin"
+      ],
+      "paladin.prepared": [
+        "divine_smite",
+        "bless"
+      ]
+    },
+    "equipment": {
+      "class": "a",
+      "background": "a"
+    },
+    "identity": {
+      "pronouns": "he/him",
+      "tags": [
+        "gallant",
+        "earnest",
+        "big-hearted"
+      ]
+    },
+    "appearance": {}
+  },
+  "level_plan": [
+    {
+      "level": 2,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {
+        "paladin.2.fighting_style": [
+          "defense"
+        ],
+        "paladin.prepared": [
+          "divine_smite",
+          "bless",
+          "cure_wounds"
+        ]
+      }
+    },
+    {
+      "level": 3,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {
+        "paladin.3.paladin_subclass": [
+          "oath_of_devotion"
+        ],
+        "paladin.prepared": [
+          "divine_smite",
+          "bless",
+          "cure_wounds",
+          "heroism"
+        ]
+      }
+    },
+    {
+      "level": 4,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {
+        "paladin.4.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "paladin.4.ability_score_improvement/ability_score_improvement.abilities": [
+          "str",
+          "cha"
+        ],
+        "paladin.prepared": [
+          "divine_smite",
+          "bless",
+          "cure_wounds",
+          "heroism",
+          "command"
+        ]
+      }
+    },
+    {
+      "level": 5,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {
+        "paladin.prepared": [
+          "divine_smite",
+          "bless",
+          "cure_wounds",
+          "heroism",
+          "command",
+          "warding_bond"
+        ]
+      }
+    },
+    {
+      "level": 6,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 7,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {
+        "paladin.prepared": [
+          "divine_smite",
+          "bless",
+          "cure_wounds",
+          "heroism",
+          "command",
+          "warding_bond",
+          "lesser_restoration"
+        ]
+      }
+    },
+    {
+      "level": 8,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {
+        "paladin.8.ability_score_improvement": [
+          "ability_score_improvement"
+        ],
+        "paladin.8.ability_score_improvement/ability_score_improvement.abilities": [
+          "str",
+          "str"
+        ]
+      }
+    },
+    {
+      "level": 9,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {
+        "paladin.prepared": [
+          "divine_smite",
+          "bless",
+          "cure_wounds",
+          "heroism",
+          "command",
+          "warding_bond",
+          "lesser_restoration",
+          "revivify",
+          "aura_of_vitality"
+        ]
+      }
+    },
+    {
+      "level": 10,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {}
+    },
+    {
+      "level": 11,
+      "class": "paladin",
+      "hp": 0,
+      "choices": {
+        "paladin.prepared": [
+          "divine_smite",
+          "bless",
+          "cure_wounds",
+          "heroism",
+          "command",
+          "warding_bond",
+          "lesser_restoration",
+          "revivify",
+          "aura_of_vitality",
+          "remove_curse"
+        ]
+      }
+    }
+  ]
+}

@@ -55,7 +55,7 @@ Narrator: The two of them go down the stairs together, arguing in low voices abo
 else
 Narrator: A little later, through the window, you hear the shouting start on the shore. It goes on for a long time. Then it stops, and there is only the sound of two people sitting by a fire.
 endif
-interject name:silvain_aster: I would like it noted that I just watched Rudolph van Richten put on his coat to go and be shouted at. Nobody at the academy will believe me.
+interject name:wren_featherfoot: Look at him. Putting his coat on to go and get shouted at by his student. ...Lucky old man.
 -> END
 
 ~ ally_again

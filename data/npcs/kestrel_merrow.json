@@ -1,0 +1,19 @@
+{
+  "id": "kestrel_merrow",
+  "name": "Captain Merrow",
+  "title": "Kestrel Company",
+  "summary": "Aldous Merrow, Kestrel Company's captain, who signed Strahd's contract for forty and called his soldiers in to dinner one name at a time. Now a vampire spawn who keeps the company's table in the castle's dining hall.",
+  "portrait": "vampire_spawn",
+  "sprite": "vampire_spawn",
+  "attitude": "hostile",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "undead",
+    "vampire_spawn",
+    "companions",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

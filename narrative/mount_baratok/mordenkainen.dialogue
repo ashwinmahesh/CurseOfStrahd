@@ -20,6 +20,13 @@ endif
 if guest:rictavio
 interject guest:rictavio: I know that face. Thirty years older and wild as a goat, but I know it. Good God. They told me he was dead.
 endif
+if name:ratatoille and quest.a_seat_at_the_table >= a_winery and not (quest.a_seat_at_the_table >= the_wizard_found)
+interject name:ratatoille: Dragonchess. Against nobody. Davian said the wizard who paid with the stones played dragonchess against himself, and had a long nose, and was rude.
+mad_mage: I am not rude. I am occasionally correct at people.
+interject name:ratatoille: It's him. It's the Wizard of Wines. And he looks exactly like the woodcut in my third-year textbook of the greatest wizard alive, which is impossible, because that wizard would never talk to a rock.
+mad_mage [sly]: This rock is an excellent listener. Better than you, I expect.
+quest a_seat_at_the_table the_wizard_found
+endif
 -> mad_menu
 
 ~ mad_menu
@@ -109,7 +116,7 @@ mad_mage: A jar. Yes. A little woman with a jar, saying hush now. I remember the
 mad_mage: Cards! I love cards. Yes, certainly, I'll come, where are we going? We'll need provisions, and a plan, and a...
 Narrator: He stops. He looks at you with polite interest, as if you had just walked in.
 mad_mage: I'm sorry. Have we met? Are you real?
-interject tag:devout: He can't come like this. Not with half of him still in a bottle somewhere.
+interject tag:pious: He can't come like this. Not with half of him still in a bottle somewhere.
 -> mad_menu
 
 ~ chess
@@ -134,7 +141,7 @@ Mordenkainen: I came to this valley to kill him, and he beat me, and then he had
 if flag.mordenkainen_memory_jar_taken
 Mordenkainen: The witch. Lysaga. She held my eyes open while she did it, and sang. I'll remember that now, too. Thank you, I suppose.
 endif
-interject name:silvain_aster: Mordenkainen. The Mordenkainen. I have copied your sword spell out by hand eleven times. I have... questions.
+interject name:kip_smudgewick: Mister Mordenkainen, sir. An honour. I've got questions, if you've a minute. Contractual ones. No rush.
 Mordenkainen: Everyone has questions. Very few have the right ones. Ask later.
 -> restored_menu
 
@@ -148,6 +155,7 @@ Mordenkainen: You again. Good. I've been rebuilding my spells from the bottom up
 * What do you know about Strahd? -> about_strahd
 * [if not flag.tsolenka_watchword_known] The gate in the Tsolenka Pass is held by dead men. -> watchword
 * What waits at the Amber Temple? -> temple
+* [name:ratatoille] [if quest.a_seat_at_the_table >= a_winery and not (quest.a_seat_at_the_table >= the_masters_word)] Ask to become his apprentice. -> companions/table:apprentice
 * Goodbye. -> bye
 
 ~ ally

@@ -40,7 +40,11 @@ endif
 ~ wall
 Dmitri Krezkov: The road ends here. The mountains don't. Everything that comes down out of them, or up the road at us, meets the wall first. That's what a wall is for.
 Dmitri Krezkov: Every stranger who knocked in my lifetime wanted something. Twice, it was him, wearing a stranger's face, asking nicely. So now we ask for a reason, and we decide what a reason is.
+if name:wren_featherfoot
+interject name:wren_featherfoot: And we were a reason. Lucky us.
+else
 interject tag:blunt: And we were a reason.
+endif
 Dmitri Krezkov: You were. Don't spend it all at once.
 -> menu
 

@@ -2,25 +2,25 @@
 # node is eligible only while its condition holds. Party members speak only through interjections.
 
 ~ banter_gates
-if at:castle_ravenloft_gates and not visited:castle_ravenloft_main_floor
-interject name:tamsin_tealeaf: Drawbridge down, portcullis up, doors open. Nobody locks up against us. I hate that.
-interject name:ilse_varga: An open gate is an ambush or an invitation. Here it's both.
-interject tag:blunt: Then we go in ready for both.
+if at:castle_ravenloft_gates and not visited:castle_ravenloft_main_floor and name:kip_smudgewick and name:godrick_pendlebrook
+interject name:kip_smudgewick: Drawbridge down, gate up, doors wide open. Nobody leaves a door open like that unless they're selling something.
+interject name:godrick_pendlebrook: Maybe he's being polite. Sir Pellam always said, assume good manners until you're bitten.
+interject tag:blunt: Manners or a trap, we go in ready for both.
 endif
 -> END
 
 ~ banter_invited
-if flag.strahd_invitation == "accepted" and not flag.castle_dinner
-interject name:hedda_ironvow: Dinner with a vampire. Mind your manners and keep your hand near your hammer.
-interject name:silvain_aster: If he offers the soup, I'm eating the soup. I've had eleven days of trail rations.
+if flag.strahd_invitation == "accepted" and not flag.castle_dinner and name:liriel_dawnsong and name:ratatoille
+interject name:liriel_dawnsong: I shall say grace at his table. Aloud. I should like to see his face.
+interject name:ratatoille: And if there is soup, I am tasting the soup. Purely as research. I must know what four hundred years does to a stock.
 endif
 -> END
 
 ~ banter_dined
-if flag.castle_dinner == "dined"
-interject name:hedda_ironvow: I ate a vampire's bread at a vampire's table. If my mother could see me.
-interject name:tamsin_tealeaf: It was very good bread.
-interject name:hedda_ironvow: That's what worries me.
+if flag.castle_dinner == "dined" and name:thistle and name:ratatoille
+interject name:thistle: Ate with my hands at the vampire's table. He watched me the whole time. Smiling.
+interject name:ratatoille: The soup wanted salt. Four hundred years to practise, and the soup wants salt.
+interject name:thistle: Cook. He was smiling at me.
 endif
 -> END
 
@@ -31,8 +31,9 @@ endif
 -> END
 
 ~ banter_affront
-if flag.crg_dinner_fight_over
-interject name:ilse_varga: He left. He wasn't losing. He just got bored and left.
+if flag.crg_dinner_fight_over and name:wren_featherfoot and name:godrick_pendlebrook
+interject name:wren_featherfoot: He left. He wasn't losing. He moved his sleeve out of the wine and left. Rude.
+interject name:godrick_pendlebrook: I thought we were doing quite well.
 interject class:wizard: He was measuring us. Next time he won't leave.
 endif
 -> END
@@ -44,22 +45,24 @@ endif
 -> END
 
 ~ banter_hoard
-if flag.crg_hoard_opened
-interject name:tamsin_tealeaf: Three hundred crowns he never spent. In centuries. What's he saving for?
-interject name:silvain_aster: Nothing. That's rather the point of him.
+if flag.crg_hoard_opened and name:wren_featherfoot and name:liriel_dawnsong
+interject name:wren_featherfoot: Three hundred crowns behind a fire, never touched. Centuries of it. What's he saving up for?
+interject name:liriel_dawnsong: Nothing. A man with forever doesn't save, Wren. He only keeps.
 endif
 -> END
 
 ~ banter_chapel
-if at:castle_ravenloft_chapel
-interject name:hedda_ironvow: Nobody's prayed honestly in here in a long time. When we're done, I'll put that right.
-interject class:cleric: Holy ground, once. It still remembers.
+if at:castle_ravenloft_chapel and name:liriel_dawnsong and name:kip_smudgewick
+interject name:liriel_dawnsong: Morning's grace to this house. It was holy ground once, and it still remembers. Someone should pray here honestly.
+interject name:kip_smudgewick: Is it all right if I come in? With the horns, I mean. I can wait at the back.
+interject name:liriel_dawnsong: You'll stand at the front, Kip. With me.
 endif
 -> END
 
 ~ banter_overlook
-if at:castle_ravenloft_overlook
-interject name:silvain_aster: You can see the whole valley from here. Every road, every roof.
-interject tag:blunt: That's why he likes it. It's all his, from up here.
+if at:castle_ravenloft_overlook and name:thistle and name:kip_smudgewick
+interject name:thistle: You can see the whole valley from up here! Every road. Every roof. Every tree.
+interject name:kip_smudgewick: Not one orchard, though. The whole valley, and not one orchard. How do people live?
+interject tag:blunt: That's why he likes it up here. It's all his.
 endif
 -> END

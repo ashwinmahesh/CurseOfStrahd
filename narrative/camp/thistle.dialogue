@@ -1,0 +1,90 @@
+# Thistle's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays once.
+# Quest: Grandda's Trail (narrative/companions/fen.dialogue).
+
+~ talk_grandda
+if name:thistle and quest.fens_trail
+-> grandda
+endif
+-> END
+
+~ grandda
+Narrator: Thistle isn't in her bedroll. She's up a tree at the edge of the firelight, straddling a branch, eating something she caught.
+interject name:thistle: Can't sleep on the ground here. Ground's wrong. Smells like a cellar.
+* Tell us about your grandda. -> grandda_tell
+* What are you eating? -> grandda_eat
+
+~ grandda_eat
+interject name:thistle: Don't know. It had legs. Want some?
+-> grandda_tell
+
+~ grandda_tell
+interject name:thistle: Fen. Fen Burley. Not my real grandda; he found me in a fox's den when I was this big. Said the vixen didn't want me and he didn't either, but somebody had to.
+interject name:thistle: He doesn't talk. Not much. I learned talking from him, so that's why I'm like this. He says one word when ten would do and then he goes and does the thing.
+interject name:thistle: He taught me tracking. Traps. Which mushrooms. How to sit still for a whole day for a deer. How to... how to do the hares quick, so they don't feel it.
+interject name:thistle: He went after that wolf because it took the dogs. Old Bess and Nettle. He loved those dogs. He never said. He went after them anyway.
+interject name:thistle: I'll find him. I can track a moth across a frozen lake. I'll find him.
+* We'll help. -> grandda_help
+* What if he's... -> grandda_dead
+
+~ grandda_help
+interject name:thistle: Course you will. You're my pack now. That's how packs work.
+-> END
+
+~ grandda_dead
+interject name:thistle: Then I'll find that. And I'll bury him proper. And then I'll find the wolf.
+Narrator: She goes back to eating whatever it was. You don't think she's hungry.
+-> END
+
+~ talk_towns
+if name:thistle and visited:vallaki and flag.eva_truth_teller != "thistle"
+-> towns
+endif
+-> END
+
+~ towns
+Narrator: Thistle comes back to camp late, very pleased with herself, with powdered sugar all down her front.
+interject name:thistle: Don't say anything.
+* Is that sugar? -> towns_sugar
+* We won't. -> towns_sugar
+
+~ towns_sugar
+interject name:thistle: It's from the town. There's a woman sells little cakes. Little round ones, with jam in. I had six.
+interject name:thistle: I hate towns. Stone boxes. Everybody whispering. Nobody says what they mean. You can't see the sky.
+interject name:thistle: The cakes are all right.
+interject name:thistle: And the beds. The beds at the inn are all right. And the fire in the big room, with everyone round it, and the singing. That's all right.
+interject name:thistle: Don't tell Grandda. He'd say I'd gone soft. Like a house cat.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: There's nothing wrong with a house cat. House cats are brilliant. They live in houses AND they can kill things.
+endif
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: You can belong to the woods and the town both, dear heart. Most of us belong to more than one place. It's how we know we're not lost.
+endif
+interject name:thistle: Six cakes. I'm getting more tomorrow.
+-> END
+
+~ talk_after
+if name:thistle and flag.fen_fate
+-> after
+endif
+-> END
+
+~ after
+if flag.fen_fate == "cured"
+Narrator: Thistle is braiding crow feathers into a cord in the firelight, fast and neat, and humming something tuneless and happy under her breath.
+interject name:thistle: It's for Grandda. For when we go to Krezk. He likes things with feathers. He'll pretend he doesn't.
+interject name:thistle: He's old now. He was old before, but he's old now. All that wolf went out of him and left an old man. He kept patting my face, like he couldn't believe it was there.
+interject name:thistle: Thank you. For the... the prayer. For that. I don't say thank you right. Grandda says I say it like a threat. THANK YOU.
+elif flag.fen_fate == "freed"
+Narrator: Somewhere far off in the hills a single wolf howls, long and low, and stops. Thistle, at the fire, lifts her head.
+interject name:thistle: That's him. That's Grandda. He's saying goodnight.
+interject name:thistle: He'll be all right up there. The high woods are wide. He won't hunt kids. He'll hunt deer and the odd stupid shepherd and he'll be all right.
+interject name:thistle: Every full moon, I'll know where he is. That's something. That's more than most people get.
+Narrator: She cups her hands and howls back. It's a very good howl. Nobody in camp sleeps for a while after it.
+else
+Narrator: Thistle hasn't spoken all day. Tonight she sits by the fire with her knees up and her knife in her hands, cleaning a blade that is already clean.
+interject name:thistle: He wasn't scared. Did you see? He wasn't scared. He was looking at me the whole time.
+interject name:thistle: He taught me that. The quick way. For hares. So they don't feel it. I didn't know what he was teaching me. I thought it was hares.
+interject name:thistle: Good lass. That's what he said. Good lass.
+Narrator: Somebody sits down next to her. She leans on them, hard, and doesn't say anything else, and that's all right.
+endif
+-> END

@@ -80,6 +80,7 @@ quest bones_of_st_andral milivoj_confessed
 Milivoj [sad]: I sold them. Henrik. The coffin maker. Twenty gold. He came to me at night, shaking all over, and asked for the saint by name. Said someone made him ask. I didn't ask who.
 Milivoj: Twenty gold is a winter. I've got two brothers and a sister and a roof that leaks onto all of them. The saint's dead. They're not. That's how I did the sum.
 interject class:cleric: That's a hard sum. I won't pretend it isn't.
+interject name:kip_smudgewick: I know that sum. I did it myself, once, for my family. You don't stop doing it after.
 * We won't tell Father Lucian it was you. -> shield
 * Father Lucian deserves to know. -> no_shield
 * [if gold >= 10] (Give him ten gold.) For your brothers and sister. -> kindness

@@ -18,7 +18,7 @@ elif flag.exethanter_phylactery == "returned"
 Exethanter: Visitors! I feel as though I ought to be grateful to you for something. I am, whatever it was. Hello!
 else
 Exethanter: Visitors! How unusual. We almost never get visitors. Have we met? You have the look of people I've met. Everyone does, lately.
-interject name:ilse_varga: Twice, warden. We've met twice.
+interject name:ratatoille: Twice, warden. Both times you admired my spellbook. Quite rightly.
 Exethanter: Then this is the third time, and the third time is when one finally gets to know a person. Splendid.
 endif
 -> menu
@@ -52,7 +52,7 @@ Exethanter: Ask away! I'll answer the ones I recall. It won't take long.
 Exethanter: This? The Amber Temple. We built it. Well. They built it, and I helped, and then they all died and I didn't, which I gather is the usual arrangement with liches.
 Exethanter: We gathered up the vestiges, you see: the last scraps of dead gods and worse, things the world was right to forget. Amber holds them. Nothing else does. And then we sat down to guard them forever.
 Exethanter: The trouble with forever is that the things you're guarding can talk.
-interject tag:bookish: And the wardens listened.
+interject tag:scholarly: And the wardens listened.
 Exethanter [sad]: One by one. They were very persuasive scraps. I believe I listened too. I can't remember to which.
 -> menu
 

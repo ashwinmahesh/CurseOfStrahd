@@ -40,7 +40,11 @@ Krezk Watchman: We don't take strangers. Not for coin, not for pity, not for sto
 
 ~ shelter
 Krezk Watchman: Shelter's for Krezk. You're not Krezk. There's a ledge under the pines a mile back that keeps the snow off, if you don't mind the wolves minding you.
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: Oh, we don't mind wolves, sir. Thank you kindly.
+else
 interject tag:blunt: He means it kindly. I think.
+endif
 -> reasons
 
 ~ abbey_hint
@@ -117,7 +121,10 @@ set krezk_reason = "wolves"
 Krezk Watchman: ...Wait there.
 Narrator: He hammers on the gate and calls a name. The broad, grey-bearded man who comes out through the wicket has been crying recently and has made very sure it doesn't show.
 Dmitri Krezkov: Dmitri Krezkov, burgomaster. You're a priest. A real one, with a god that answers?
+interject name:liriel_dawnsong: He answers. Here, more quietly than I'm used to. But He answers.
+if not name:liriel_dawnsong
 interject class:cleric: Most days. Not always when I'd like.
+endif
 Dmitri Krezkov: That's more than mine does. My son is sick. My last son. If your god answers you in my house, you can have anything Krezk owns. Open it.
 set krezk_reason = "cleric"
 set ilya_heard

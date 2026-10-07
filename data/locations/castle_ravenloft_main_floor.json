@@ -682,6 +682,18 @@
       "kind": "decor",
       "label": "An arrow slit",
       "model": "window_shuttered"
+    },
+    {
+      "id": "crg_kestrel_coats",
+      "cell": [
+        4,
+        8
+      ],
+      "kind": "examine",
+      "label": "Grey coats on the chairs",
+      "model": "coats",
+      "when": "name:ilse_varga and quest.kestrel_company >= the_deserter and not flag.kestrel_merrow_counted",
+      "dialogue": "castle_ravenloft/personal_kestrel:coats"
     }
   ],
   "containers": [
@@ -827,6 +839,27 @@
       "when": "flag.strahd_invitation == \"accepted\" and not flag.castle_dinner",
       "facing": "south",
       "approach": 8
+    },
+    {
+      "npc": "kestrel_merrow",
+      "cell": [
+        6,
+        5
+      ],
+      "dialogue": "castle_ravenloft/personal_kestrel:at_dinner",
+      "when": "name:ilse_varga and quest.kestrel_company >= the_deserter and not flag.kestrel_merrow_counted and not flag.kestrel_merrow_fallen and flag.strahd_invitation == \"accepted\" and not flag.castle_dinner",
+      "facing": "south"
+    },
+    {
+      "npc": "kestrel_merrow",
+      "cell": [
+        2,
+        9
+      ],
+      "dialogue": "castle_ravenloft/personal_kestrel:roll_call",
+      "when": "name:ilse_varga and quest.kestrel_company >= the_deserter and not flag.kestrel_merrow_counted and not flag.kestrel_merrow_fallen and (flag.strahd_invitation != \"accepted\" or flag.castle_dinner == \"dined\" or flag.crg_dinner_fight_over)",
+      "facing": "east",
+      "approach": 10
     }
   ],
   "encounters": [
@@ -992,6 +1025,194 @@
             42,
             7
           ]
+        }
+      ]
+    },
+    {
+      "id": "crg_kestrel_cellar",
+      "trigger": "enter_area:crg_servery",
+      "when": "name:ilse_varga and quest.kestrel_company >= the_deserter and not (quest.kestrel_company >= count_off) and not flag.kestrel_vell_rests",
+      "text": "Up the servants' stair comes Corporal Vell, two of the company at his back. 'Sergeant,' he says. 'You're late.' Then the hunger turns over in all three.",
+      "surprise": "",
+      "flag": "kestrel_vell_rests",
+      "quest": {
+        "id": "kestrel_company",
+        "stage": "vell_rests"
+      },
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            1
+          ],
+          "name": "Corporal Vell"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            2
+          ],
+          "name": "Private Venn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            2
+          ],
+          "name": "Private Corrin"
+        }
+      ]
+    },
+    {
+      "id": "crg_kestrel_cellar",
+      "trigger": "enter_area:crg_servery",
+      "when": "name:ilse_varga and quest.kestrel_company >= the_deserter and not (quest.kestrel_company >= count_off)",
+      "text": "Up the servants' stair from the cellars come three of Kestrel Company, grey under crimson, keeping step. They know Ilse. It doesn't stop them.",
+      "surprise": "",
+      "flag": "kestrel_cellar_cleared",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            2
+          ],
+          "name": "Private Venn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            1
+          ],
+          "name": "Private Corrin"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            2
+          ],
+          "name": "Private Ash"
+        }
+      ]
+    },
+    {
+      "id": "crg_kestrel_table",
+      "trigger": "dialogue",
+      "when": "flag.kestrel_merrow_called",
+      "text": "Every panel in the hall stands open. Four of Kestrel Company come out of the walls in step, and their captain draws his sword.",
+      "surprise": "",
+      "flag": "kestrel_merrow_fallen",
+      "quest": {
+        "id": "kestrel_company",
+        "stage": "count_off"
+      },
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            9
+          ],
+          "name": "Captain Merrow",
+          "hp": 110
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            1,
+            6
+          ],
+          "name": "Private Hale"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            1,
+            12
+          ],
+          "name": "Private Dosh"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            12,
+            5
+          ],
+          "name": "Lance-Corporal Brannock"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            12,
+            13
+          ],
+          "name": "Private Lind"
+        }
+      ]
+    },
+    {
+      "id": "crg_kestrel_table",
+      "trigger": "dialogue",
+      "when": "not flag.kestrel_jory_forgiven",
+      "text": "Two of Kestrel Company step out of the panelling behind their captain, and the candles gutter.",
+      "surprise": "",
+      "flag": "kestrel_merrow_fallen",
+      "quest": {
+        "id": "kestrel_company",
+        "stage": "count_off"
+      },
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            9
+          ],
+          "name": "Captain Merrow",
+          "hp": 110
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            1,
+            6
+          ],
+          "name": "Private Hale"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            1,
+            12
+          ],
+          "name": "Private Dosh"
+        }
+      ]
+    },
+    {
+      "id": "crg_kestrel_table",
+      "trigger": "dialogue",
+      "text": "Captain Merrow draws his sword alone. Behind the panels his company stands in its ranks, and does not come.",
+      "surprise": "",
+      "flag": "kestrel_merrow_fallen",
+      "quest": {
+        "id": "kestrel_company",
+        "stage": "count_off"
+      },
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            9
+          ],
+          "name": "Captain Merrow",
+          "hp": 110
         }
       ]
     }

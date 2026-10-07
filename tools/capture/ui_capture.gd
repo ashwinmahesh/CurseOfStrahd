@@ -5,7 +5,7 @@ extends Node
 ## the sheet for a level 7 warlock, monk and druid.
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
-const PARTY: Array[String] = ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]
+const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 ## [character index, tab]
 const SHEET_SHOTS := [[2, "Actions"], [0, "Actions"], [2, "Spells"], [3, "Spells"], [1, "Features"], [0, "Equipment"],
 	[0, "Effects"], [3, "Notes"]]

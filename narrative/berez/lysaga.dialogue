@@ -14,7 +14,11 @@ quest the_witch_of_berez arrived
 endif
 Narrator: The hut on the stump leans down toward you on its knotted legs of root, like a dog sniffing at a stranger. A shutter bangs open. A tiny old woman looks out, with a face like a walnut and eyes like two wet currants.
 Baba Lysaga: Visitors! Nobody visits. The river took all the visitors years ago. What are you, then: lost, hungry, or stupid?
+if name:thistle
+interject name:thistle: Yes. All three. What's for supper?
+else
 interject tag:blunt: Yes.
+endif
 Baba Lysaga [smile]: Ha! An honest one. Honest ones boil soft.
 else
 Baba Lysaga: Back again, my ducks? The hut remembers you. It's been licking its doorstep.
@@ -112,7 +116,10 @@ if attitude.baba_lysaga == hostile
 Baba Lysaga [sly]: Not you, liars. You sit by the door, where the draught is. My boy's name in a liar's mouth. I haven't forgotten, and neither has the hut.
 Narrator: The floor under the bench by the door is warmer than the rest, and it gives, very slightly, like a tongue.
 endif
+interject name:ratatoille: The fire is burning green. Madame, that is not a cooking fire.
+if not name:ratatoille
 interject class:wizard: The fire is burning green.
+endif
 Baba Lysaga [smile]: It likes company.
 if flag.lysaga_flattered
 Baba Lysaga: And tell me how he looks. Is he eating? He never ate enough. He'd sit at that window with his supper going cold, waiting for the sun to go down.
@@ -162,17 +169,29 @@ Baba Lysaga [smile]: My boy. My little prince. I pulled him into the world with 
 Baba Lysaga: His mother had no milk and less sense. I was the one who sang to him. I was the one he came to. Whatever they tell you, I was the one.
 if flag.strahd_met
 Baba Lysaga: You've seen him! Isn't he handsome? Did he ask after me?
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: No, madam. I'm sorry. He didn't.
+else
 interject tag:blunt: No.
+endif
 Baba Lysaga [angry]: He's busy. He has a whole country to look after.
 endif
-interject name:hedda_ironvow: Mm. Every nursemaid I ever met thought the baby was hers. Most of them didn't raise a vampire.
+interject name:wren_featherfoot: Master Sorrel says every nursemaid thinks the baby's hers. He never said what to do when the baby's a vampire.
 -> hearth_menu
 
 ~ cradle
 Narrator: In the cradle by the tub, under a crocheted blanket, lies a root dug out of the marsh and trimmed into the shape of a swaddled infant. Tucked under its chin like a rattle is a green gem the size of a hen's egg, glowing softly.
 Baba Lysaga: My new boy. He's growing. Green things grow, if you give them the right stone.
 if flag.wizard_of_wines_hook
+if name:kip_smudgewick
+interject name:kip_smudgewick: That gem. The vineyard at the crossroads lost three like it, and their vines are dying. I know what that looks like.
+elif name:thistle
+interject name:thistle: That green stone. The grape place at the crossroads lost three like it. Their vines are dying.
+elif class:wizard and not name:ratatoille
 interject class:wizard: That gem. The winery at the crossroads lost three like it. Their vines are dying.
+else
+interject tag:curious: That gem. The winery at the crossroads lost three like it. Their vines are dying.
+endif
 Baba Lysaga [sly]: Then the vines should have kept a better watch, shouldn't they.
 endif
 if flag.lysaga_flattered
