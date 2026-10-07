@@ -104,6 +104,27 @@ func test_cube_cone_and_line_areas() -> void:
 	assert_eq(line.size(), 6)
 
 
+func test_a_15_ft_cone_is_an_even_wedge_in_all_eight_directions() -> void:
+	var rows: Array = []
+	for i in 11:
+		rows.append("...........")
+	var g := CombatGrid.from_rows(rows)
+	var me := Vector2i(5, 5)
+	var straight := g.cone_from(me, 1, Vector2(9.5, 5.5), 15)
+	assert_eq(straight.size(), 7, "straight out: 1, then 3, then 3 squares")
+	for want: Vector2i in [Vector2i(6, 5), Vector2i(7, 4), Vector2i(7, 5), Vector2i(7, 6), Vector2i(8, 4), Vector2i(8, 5), Vector2i(8, 6)]:
+		assert_true(want in straight, "%s in the cone" % want)
+	var diagonal := g.cone_from(me, 1, Vector2(9.5, 9.5), 15)
+	assert_eq(diagonal.size(), 6)
+	for cell in diagonal:
+		assert_true(Vector2i(cell.y, cell.x) in diagonal, "a diagonal cone is mirror-symmetric (no L)")
+	# Every direction gives the same number of squares, and a slightly-off aim snaps to the nearest direction.
+	for aim: Vector2 in [Vector2(1.5, 5.5), Vector2(5.5, 1.5), Vector2(5.5, 9.5), Vector2(1.5, 1.5), Vector2(9.5, 1.5), Vector2(1.5, 9.5)]:
+		var n := g.cone_from(me, 1, aim, 15).size()
+		assert_true(n == 7 or n == 6, "%s: %d squares" % [aim, n])
+	assert_eq(g.cone_from(me, 1, Vector2(9.5, 6.3), 15), straight, "aim snaps to the nearest of the eight directions")
+
+
 func test_walls_stop_areas() -> void:
 	var g := CombatGrid.from_rows([".......", "...#...", "...#...", "...#...", "......."])
 	var cells := g.area_cells("sphere", 15, Vector2(2, 2.5))

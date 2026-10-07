@@ -425,6 +425,11 @@ func area_for(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2, s
 			if g.in_bounds(f) and not f in em:
 				em.append(f)
 		return em
+	if self_origin and shape == "cone":
+		var aim := direction if direction.length() > 0.01 else Vector2(c.facing)
+		if aim.length() < 0.01:
+			aim = Vector2.RIGHT
+		return g.cone_from(c.cell, c.size_cells, center + aim, size)
 	if self_origin:
 		var dir := direction.normalized() if direction.length() > 0.01 else Vector2(c.facing)
 		if dir.length() < 0.01:
