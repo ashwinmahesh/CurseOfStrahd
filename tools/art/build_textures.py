@@ -15,6 +15,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gemini_budget  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 BLENDER = "/Applications/Blender.app/Contents/MacOS/Blender"
 RECIPES = ROOT / "tools" / "art" / "texture_recipes.json"
@@ -60,6 +63,10 @@ def main():
     a = p.parse_args()
     rec = json.loads(RECIPES.read_text())
     failed = []
+    if a.generate and not a.manifest_only:
+        # The art spend ledger: stops before a batch it can't finish.
+        gemini_budget.preflight(sum(not a.only or f"{t}/{s}" in a.only for t, ss in rec["themes"].items() for s in ss),
+                                "", "texture swatches")
     for theme, surfaces in rec["themes"].items():
         for surf, r in surfaces.items():
             if a.manifest_only:

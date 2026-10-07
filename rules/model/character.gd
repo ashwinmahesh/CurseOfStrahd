@@ -1698,6 +1698,9 @@ func apply_starting_equipment() -> void:
 	var bg := compendium.background_data(str(build.get("background", "")))
 	if not bg.is_empty():
 		_take_option(bg.get("equipment", []) as Array, str(eq.get("background", "a")))
+	# Starting gear isn't news: only what the party finds, buys or is given is marked new.
+	for e in inventory:
+		e.erase("new")
 	auto_equip()
 
 
@@ -1714,6 +1717,7 @@ func _take_option(options: Array, pick: String) -> void:
 
 ## Adds `qty` of an item. `state` carries an item's own state when it moves (charges, uses, a lifted curse, what a
 ## Bag of Holding holds); a new magic item with charges starts with its full count (MagicItems.starting_charges).
+## The entry is marked `new` until the inventory screen shows it (its New filter); a player's `junk` mark travels with it.
 func add_item(item_id: String, qty: int = 1, state: Dictionary = {}) -> void:
 	# A scroll that only says its level becomes a particular spell (each one picked on its own).
 	if MagicItems.GENERIC_SCROLLS.has(item_id):
@@ -1725,11 +1729,12 @@ func add_item(item_id: String, qty: int = 1, state: Dictionary = {}) -> void:
 		for entry in inventory:
 			if str(entry["id"]) == item_id:
 				entry["qty"] = int(entry["qty"]) + qty
+				entry["new"] = true
 				return
-		inventory.append({"id": item_id, "qty": qty, "slot": ""})
+		inventory.append({"id": item_id, "qty": qty, "slot": "", "new": true})
 	else:
 		for i in qty:
-			var entry := {"id": item_id, "qty": 1, "slot": ""}
+			var entry := {"id": item_id, "qty": 1, "slot": "", "new": true}
 			for k: String in state:
 				if not k in ["id", "qty", "slot"]:
 					entry[k] = (state[k] as Variant) if not (state[k] is Dictionary or state[k] is Array) else state[k].duplicate(true)

@@ -124,12 +124,7 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 		return
 	if not _ok(GameState.story.get_flag("death_house_armor_destroyed") == true, "the armor on the balcony"):
 		return
-	for i in 12:
-		if not bot.view().thing_at(Vector2i(11, 3)).is_empty():
-			break
-		bot.view().search()
-		await bot.frames(2)
-	if not _ok(not bot.view().thing_at(Vector2i(11, 3)).is_empty(), "found the panel to the attic stair"):
+	if not _ok(await bot.search_for(Vector2i(11, 3)), "found the panel to the attic stair"):
 		return
 	if not _ok(await bot.go_to("death_house_attic"), "reached death_house_attic"):
 		return
@@ -137,11 +132,8 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 	# 4. The hidden stair (searching the storage room's corner) and the first milestone.
 	if not _ok(await bot.walk_to(Vector2i(16, 1)), "walked to (16, 1)"):
 		return
-	for i in 12:
-		if not bot.view().thing_at(Vector2i(18, 1)).is_empty():
-			break
-		bot.view().search()
-		await bot.frames(2)
+	if not _ok(await bot.search_for(Vector2i(18, 1)), "found the seam in the storage room"):
+		return
 	if not _ok(await bot.use(Vector2i(18, 1)), "used the thing at (18, 1)"):
 		return
 	if not _ok(bool(GameState.story.get_flag("death_house_secret_stair_found")), "flag death_house_secret_stair_found"):

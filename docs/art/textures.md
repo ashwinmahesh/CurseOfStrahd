@@ -74,6 +74,28 @@ bands blend, with the swatch's own fine shading laid back over them, at the snap
 the entry's `hd_file` in the manifest; `Look.cel_textured` uses it when the look is Modern, else the snapped tile.
 No new images are generated for it. The snapped tiles are not touched.
 
+## How a surface takes the light (the Modern finish, Improvement Ideas W3)
+
+In the Modern finish `Look.cel_textured` gives a surface `shaders/world/lit_world.gdshader` and `Look.cel` gives
+flat colours `shaders/world/lit.gdshader`: the same world mapping and parameters as the Classic cel shaders, lit
+like painted 3D instead of in bands (`shaders/world/lit_light.gdshaderinc`: Lambert lifted towards the light,
+lamps a third stronger, GGX highlights, the sun and moon at half the highlight of a lamp). Classic keeps
+`cel.gdshader` and `cel_world.gdshader` as they were frozen (owner, 2026-10-07).
+
+What a surface takes, in this order (each optional; the first that exists wins):
+
+| Key in the surface's manifest entry | What it is |
+|---|---|
+| `normal_file` | A tangent-space normal map in the tile's own UV (OpenGL convention, green up), same tiling as `file`. Without one, `Look.normal_map` makes one from the tile's brightness (dark lines read as grooves). |
+| `orm_file` | Occlusion, roughness and metal in red, green and blue (glTF's order), same tiling. Without one, the numbers below are used and roughness varies with the tile's brightness (dark grout and cracks rougher, worn tops smoother). |
+| `material` | `{"roughness": 0..1, "spread": 0..1, "relief": n, "metallic": 0..1}`: overrides for this surface. `spread` is how much rougher the dark of the tile is than its light; `relief` scales the normal map (1 = `Look.MODERN_RELIEF`). |
+
+Without any of these a surface takes the row of `Look.MATERIALS` whose word its name holds (marble 0.15, tile and
+parquet 0.3, cobbles 0.4 with a wide spread so the stone tops glint, flagstones 0.5, stone 0.65, plaster 0.9,
+rugs and thatch 1.0), else roughness 0.8. Flat colours: `Look.COLOUR_MATERIALS` (pewter and silver are metal,
+ivory, bone and polished walnut take a soft highlight, cloth colours stay dull), else 0.75. Roughness never goes
+below 0.1, which the screen pass keeps for water.
+
 ## Applying them (for the lead)
 
 - **Material.** `shaders/cel.gdshader` already has `albedo_tex` and `use_texture`. It *multiplies* `albedo`,
