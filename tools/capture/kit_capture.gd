@@ -4,7 +4,8 @@ extends Node
 ## kit can be judged side by side. Not part of the game.
 ##   make capture SCENE=res://tools/capture/kit_capture.tscn NAME=kit/before FRAMES=10
 ## Environment: KIT_SHOTS=village_dusk,vallaki_noon (default: every shot); KIT_OFF=1 builds the towns without the kit
-## (the plain boxes), for the same shots before and after under the same light.
+## (the plain boxes), for the same shots before and after under the same light; KIT_LOW_WALLS=1 keeps rooms' walls at
+## the cut-away height (before W8); KIT_LIT=1 adds a work light.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn), and optionally the square
 ## the camera looks at, how far it is, and how many 45-degree steps it is turned from the opening heading.
@@ -33,7 +34,22 @@ const SHOTS := {
 		"look": [20, 12], "dist": 15.0},
 	"death_house_hall": {"loc": "death_house_ground", "cells": [[13, 8], [14, 8], [13, 9], [14, 9]]},
 	"castle_hall": {"loc": "castle_ravenloft_main_floor", "cells": [[25, 8], [26, 8], [25, 9], [26, 9]]},
+	"inn": {"loc": "vallaki_blue_water_inn", "cells": [[6, 8], [7, 8], [6, 9], [7, 9]]},
+	"inn_turned": {"loc": "vallaki_blue_water_inn", "cells": [[6, 8], [7, 8], [6, 9], [7, 9]], "yaw": 2},
+	"hall_turned": {"loc": "death_house_ground", "cells": [[13, 8], [14, 8], [13, 9], [14, 9]], "yaw": 1},
+	"death_house_upper": {"loc": "death_house_upper"},
+	"dungeon": {"loc": "death_house_dungeon_2"},
 	"church": {"loc": "village_church", "cells": [[10, 14], [11, 14], [10, 15], [11, 15]]},
+	"castle_gates": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 27], [20, 27], [19, 28], [20, 28]],
+		"look": [19, 16], "dist": 22.0},
+	"castle_bridge": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[19, 26], [20, 26], [19, 27], [20, 27]],
+		"dist": 12.0, "yaw": 1},
+	"castle_yard": {"loc": "castle_ravenloft_gates", "hour": 21, "cells": [[15, 14], [16, 14], [15, 15], [16, 15]],
+		"look": [18, 8], "dist": 16.0},
+	"castle_overlook": {"loc": "castle_ravenloft_overlook", "hour": 21, "cells": [[10, 3], [11, 3], [10, 4], [11, 4]],
+		"dist": 14.0},
+	"castle_roofs": {"loc": "castle_ravenloft_spires_roofs", "hour": 21, "cells": [[8, 6], [9, 6], [8, 7], [9, 7]],
+		"dist": 16.0},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 
@@ -44,6 +60,8 @@ func _ready() -> void:
 	InputActions.ensure()
 	if OS.get_environment("KIT_OFF") != "":
 		SetDressing.catalog().erase("building_kit")
+	elif OS.get_environment("KIT_LOW_WALLS") != "":
+		((SetDressing.catalog()["building_kit"] as Dictionary)["interiors"] as Dictionary)["full_walls"] = false
 
 
 func capture_shots(tool: Node, out: String) -> void:
@@ -95,3 +113,14 @@ func _build(shot: Dictionary) -> void:
 	if shot.has("yaw"):
 		rig.rotate_step(int(shot["yaw"]))
 	rig.snap_to_target()
+	if OS.get_environment("KIT_LIT") != "":
+		# A work light, to judge shapes in a dark interior (as location_tour's --lit).
+		var env := view.get("_env") as Environment
+		if env != null:
+			env.ambient_light_energy = 2.2
+		var lamp := OmniLight3D.new()
+		lamp.light_color = Look.color("bone")
+		lamp.omni_range = 16.0
+		lamp.light_energy = 2.0
+		rig.add_child(lamp)
+		lamp.position = Vector3(0, 5, 0)

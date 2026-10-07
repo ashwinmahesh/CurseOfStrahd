@@ -64,7 +64,8 @@
         "roughness": 0.25,
         "macro": 0.2
       },
-      "crop": 0.5
+      "crop": 0.5,
+      "lift": 22
     },
     "interior/marble_floor": {
       "subject": "a grand hall floor of grey and white veined marble slabs laid in a diamond pattern, polished but cracked and dulled with age",
