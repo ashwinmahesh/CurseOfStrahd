@@ -3,7 +3,7 @@
 
 Reads the files changed since the branch left main (committed, staged, unstaged and untracked) and runs only what
 covers them:
-  docs (*.md, docs/)                       nothing
+  docs (*.md, docs/)                       nothing, but docs/rules/ and docs/tasks/ run make validate (rules docs)
   art and audio files, their pipelines     make import
   data/, narrative/                        make validate, test_data_integrity and the tests that quote a changed id
   tests/saves/ (golden saves)              test_golden_saves
@@ -35,6 +35,7 @@ EVERYTHING = ("Makefile", "project.godot", "addons/", "tests/test_runner.", "too
               "tools/lint_gd.sh")
 LINTED = ("rules/", "combat/", "story/")
 GOLDEN = "tests/saves/"  # the golden saves: test_golden_saves loads them all (P4)
+RULES_DOCS = ("docs/rules/", "docs/tasks/")  # make validate checks them against the plan and the data (P12)
 MAX_COST = 2  # a test that uses the change (1) or uses a script that does (2); scenes and resources cost nothing
 CI_TARGETS = {"import", "validate", "lint", "test", "ci", "check"}
 
@@ -191,7 +192,7 @@ def plan(files: list[str], fork: str) -> dict:
         out["why"] += [p for p, k in kinds.items() if k == "everything" and p != "Makefile"]
         return out
     out["import"] = any(k == "asset" for k in kinds.values())
-    out["validate"] = any(k in ("data", "code", "tool") for k in kinds.values())
+    out["validate"] = any(k in ("data", "code", "tool") for k in kinds.values()) or any(p.startswith(RULES_DOCS) for p in files)
     out["lint"] = any(p.endswith(".gd") and p.startswith(LINTED) for p in files)
     tests: set[str] = set()
     data = [p for p, k in kinds.items() if k == "data"]

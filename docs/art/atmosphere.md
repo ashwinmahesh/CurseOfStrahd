@@ -77,7 +77,13 @@ anyone touching this file.
   in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
   chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
   lightning flashes in a storm (and through the castle's spire windows).
-- **Grade.** Each time of day maps brightness through its own shadow and light colours, so a scene keeps to one
+- **Grade.** In the Modern finish (W16) the shade takes the place's own cool colour and loses some of its colour while
+  lamplight keeps its warm one, so light pools warm against cool, dark shade (the chosen direction: A's effects in
+  B's tone): night blue by default, blue-grey on an overcast day, deep night blue indoors; a mood's `tone` gives
+  its own (Berez, Yester Hill, crypts and the castle larders sick green, the brides' court crimson, the castle's
+  storm bruise purple, a tavern warm peat, the snows moon blue) and can change how much colour the shade keeps, how
+  deep its blacks go and how much ambient light fills it (`Atmosphere.MODERN_TONE`, `DAY_TONE`, `INDOOR_TONE`). In
+  Classic each time of day maps brightness through its own shadow and light colours, so a scene keeps to one
   family of hues; strongly coloured light (a lantern, a fire) keeps more of its own colour. Greys stay on the grey
   ramp in the palette snap where the mood asks (`keep_greys`), so a pale grey fades without a muddy brown ring. A
   vignette sinks the screen's edges towards `void`.

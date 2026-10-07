@@ -93,6 +93,8 @@
         "background": {"type": "string"},
         "species": {"type": "string"},
         "skills": {"type": "array", "items": {"type": "string"}},
+        "subclass": {"type": "string", "description": "Recommended picks on level up (Q10, rules/progression/recommended_picks.gd)."},
+        "feats": {"type": "array", "items": {"type": "string"}, "description": "Feats recommended on level up, best first."},
         "note": {"type": "string"}
       }
     },
