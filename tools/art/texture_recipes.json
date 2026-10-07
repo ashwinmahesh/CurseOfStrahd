@@ -387,6 +387,40 @@
         "tile_world_units": 2.0,
         "axis": "both"
       }
+    },
+    "castle": {
+      "flagstones": {
+        "subject": "a castle hall floor of large dark grey-violet flagstones, worn smooth, with fine cracks",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "ashlar": {
+        "subject": "a gothic castle wall of dark grey ashlar stone blocks with thin pointed blind arches carved in it",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      },
+      "black_marble": {
+        "subject": "a floor of polished black marble slabs veined with dark red, reflecting faint light",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.15
+      },
+      "red_damask": {
+        "subject": "deep blood-red damask wallpaper with a black bat-and-vine pattern, faded",
+        "view": "wall",
+        "tile_world_units": 2.0,
+        "axis": "both",
+        "saturate": 1.2
+      },
+      "courtyard": {
+        "subject": "a castle courtyard of worn irregular grey flagstones with weeds and moss in the cracks",
+        "view": "floor",
+        "tile_world_units": 2.0,
+        "axis": "both"
+      }
     }
   }
 }
