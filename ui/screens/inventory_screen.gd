@@ -5,8 +5,15 @@ extends CanvasLayer
 ## what the item does for this character and a comparison with what's equipped, carrying capacity with its
 ## breakdown, and actions: equip, unequip, use (a Potion of Healing), give to another character, drop. Quest items
 ## can't be dropped. The party's coins are shown with the purse.
+## Search and junk (U3): a search box, the Magic filter, New and Junk marks with their own filters, sorting by newest,
+## and marking items as junk for a merchant's Sell all junk (ShopScreen). "New" is what arrived since the character's
+## page was last opened (Character.add_item marks it; closing this screen clears it for every page that was shown).
 
-const FILTERS := ["All", "Weapons", "Armor", "Consumables", "Tools", "Gear"]
+const FILTERS := ["All", "Weapons", "Armor", "Consumables", "Magic", "Gear"]
+const SORTS := ["name", "weight", "value", "newest"]
+## Item categories each filter keeps (Magic is any magic item, whatever its category; Gear is everything else).
+const FILTER_CATEGORIES := {"Weapons": ["weapon", "ammunition"], "Armor": ["armor", "shield", "clothing"],
+	"Consumables": ["potion", "consumable", "scroll"]}
 
 var root: Node
 var st: StoryState
@@ -14,8 +21,16 @@ var index := 0
 var filter := "All"
 var sort_by := "name"
 var selected := ""
+## What the search box holds (matched against an item's name, kind and rarity).
+var search := ""
+## "new" or "junk" shows only items with that mark; "" shows everything the filter keeps.
+var marks := ""
 var _frame: VBoxContainer
 var _card: VBoxContainer
+var _list: VBoxContainer
+var _list_foot: Control
+## The characters whose page was shown: their New marks clear when the screen closes.
+var _viewed := {}
 ## PrepareScreen.snapshot() as an item's Long Rest ended (Daern's Instant Fortress, Rod of Security): while this screen
 ## stays open it offers the chance to change prepared spells the rest screen gives, counted from that list.
 var _prepared_before: Dictionary = {}
@@ -100,8 +115,9 @@ func _draw() -> void:
 		doll.add_child(UiKit.label("Overloaded", 14, "vampire_red"))
 	row.add_child(doll)
 	# Backpack
+	_viewed[ch.id] = true
 	var pack := VBoxContainer.new()
-	pack.custom_minimum_size = Vector2(560, 0)
+	pack.custom_minimum_size = Vector2(580, 0)
 	pack.add_theme_constant_override("separation", 0)
 	pack.add_child(UiParts.tab_strip(Array(FILTERS, TYPE_STRING, "", null), filter, func(f: String) -> void:
 		filter = f
@@ -111,10 +127,11 @@ func _draw() -> void:
 	var inner := VBoxContainer.new()
 	inner.add_theme_constant_override("separation", 6)
 	pane.add_child(inner)
+	inner.add_child(_search_row(ch))
 	var sorts := HBoxContainer.new()
 	sorts.add_theme_constant_override("separation", 4)
 	sorts.add_child(UiParts.caption("Sort", 11))
-	for s: String in ["name", "weight", "value"]:
+	for s: String in SORTS:
 		var sb := UiParts.small_button(s.capitalize(), func() -> void:
 			sort_by = s
 			_draw())
@@ -122,78 +139,39 @@ func _draw() -> void:
 			UiParts.light_up(sb)
 		sorts.add_child(sb)
 	inner.add_child(sorts)
-	var list := VBoxContainer.new()
-	list.add_theme_constant_override("separation", 4)
-	var rows: Array[Dictionary] = []
-	for e in ch.inventory:
-		if int(e["qty"]) <= 0:
-			continue
-		var data := Compendium.shared().item_data(str(e["id"]))
-		if not _passes(data):
-			continue
-		rows.append({"e": e, "d": data})
-	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		var da := a["d"] as Dictionary
-		var db := b["d"] as Dictionary
-		match sort_by:
-			"weight":
-				return float(da.get("weight_lb", 0)) > float(db.get("weight_lb", 0))
-			"value":
-				return float(da.get("cost_gp", 0)) > float(db.get("cost_gp", 0))
-		return str(da.get("name", "")) < str(db.get("name", "")))
-	if rows.is_empty():
-		list.add_child(UiKit.label("Nothing here yet.", 15, "bone"))
-	for r in rows:
-		var e := r["e"] as Dictionary
-		var data := r["d"] as Dictionary
-		var slot := str(e.get("slot", ""))
-		var id := str(e["id"])
-		var line := HBoxContainer.new()
-		line.add_theme_constant_override("separation", 10)
-		UiParts.add_icon(line, "item", str(MagicItems.shown_data(data, e).get("id", id)))
-		var nm := UiKit.label(MagicItems.display_name(data, e) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""), 15, "gilt_light" if id == selected else "vellum")
-		nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		line.add_child(nm)
-		if slot != "":
-			line.add_child(UiParts.pill("Equipped", "moonlight"))
-		if bool(data.get("quest", false)):
-			line.add_child(UiParts.pill("Quest", "flame"))
-		if not (data.get("magic", {}) as Dictionary).is_empty():
-			line.add_child(UiParts.pill("Attuned" if id in ch.attuned else "Magic", "lilac"))
-		if MagicItems.has_charges(data):
-			line.add_child(UiParts.pill("%d/%d" % [int(e.get("charges", 0)), MagicItems.max_charges(data, e)], "moonlight"))
-		var wt := UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment")
-		wt.custom_minimum_size = Vector2(52, 0)
-		wt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		line.add_child(wt)
-		list.add_child(UiParts.click_row(line, func() -> void:
-			selected = id
-			_draw(), id == selected))
-	var scroll := UiParts.fill_scroll(list)
-	inner.add_child(scroll)
+	_list = VBoxContainer.new()
+	_list.add_theme_constant_override("separation", 4)
+	inner.add_child(UiParts.fill_scroll(_list))
+	_list_foot = VBoxContainer.new()
+	inner.add_child(_list_foot)
+	_fill_list()
 	pack.add_child(pane)
+	# The party stash (plan §5.6; owner, 2026-10-07): things go in from anywhere, and come out only at a safe place
+	# (an inn, a home).
 	var at_safe := _stash_open()
-	if at_safe:
-		# The party stash (plan §5.6): kept at safe places like an inn.
-		pack.add_child(UiParts.section("Party stash"))
-		var sl := VBoxContainer.new()
-		sl.add_theme_constant_override("separation", 4)
-		if st.stash.is_empty():
-			sl.add_child(UiKit.label("Empty. Select an item and choose Stash it.", 13, "bone"))
-		for se in st.stash:
-			var sid := str(se["id"])
-			var srow := HBoxContainer.new()
-			srow.add_theme_constant_override("separation", 8)
-			UiParts.add_icon(srow, "item", sid, 24.0)
-			var sn := UiKit.label("%s ×%d" % [Compendium.shared().display_name("items", sid), int(se["qty"])], 14, "vellum")
-			sn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			srow.add_child(sn)
-			srow.add_child(UiParts.small_button("Take", func() -> void:
-				st.stash_take(sid, _ch())
-				_draw()))
-			sl.add_child(UiParts.row(srow))
-		var stash_scroll := UiKit.scroll(sl, Vector2(540, 130))
-		pack.add_child(stash_scroll)
+	var where := UiParts.caption("Take out here" if at_safe else "Take out at an inn or a home", 11, "bile" if at_safe else "parchment")
+	pack.add_child(UiParts.section("Party stash", where))
+	var sl := VBoxContainer.new()
+	sl.add_theme_constant_override("separation", 4)
+	if st.stash.is_empty():
+		sl.add_child(UiKit.label("Empty. Select an item and choose Send to the stash.", 13, "bone"))
+	for se in st.stash:
+		var sid := str(se["id"])
+		var srow := HBoxContainer.new()
+		srow.add_theme_constant_override("separation", 8)
+		UiParts.add_icon(srow, "item", sid, 24.0)
+		var sn := UiKit.label("%s ×%d" % [Compendium.shared().display_name("items", sid), int(se["qty"])], 14, "vellum" if at_safe else "bone")
+		sn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		srow.add_child(sn)
+		var take := UiParts.small_button("Take", func() -> void:
+			st.stash_take(sid, _ch())
+			_draw())
+		take.disabled = not at_safe
+		take.tooltip_text = "To %s's pack" % ch.name.get_slice(" ", 0) if at_safe else "Only at a safe place: an inn or a home"
+		srow.add_child(take)
+		sl.add_child(UiParts.row(srow))
+	var stash_scroll := UiKit.scroll(sl, Vector2(560, 130))
+	pack.add_child(stash_scroll)
 	row.add_child(pack)
 	# Item card
 	_card = VBoxContainer.new()
@@ -242,20 +220,209 @@ func _slot_row(ch: Character, slot: String) -> Control:
 		_draw(), id == selected)
 
 
-func _passes(data: Dictionary) -> bool:
+## Whether the filter tab, the New or Junk mark and the search box all keep this entry. `data` is what it shows as (a
+## disguised item is found by what it passes for).
+func _passes(e: Dictionary, data: Dictionary) -> bool:
+	return InventoryScreen.in_filter(filter, data) and (marks == "" or bool(e.get(marks, false))) \
+		and InventoryScreen.matches(search, data, e)
+
+
+static func in_filter(name_: String, data: Dictionary) -> bool:
 	var cat := str(data.get("category", ""))
-	match filter:
-		"Weapons":
-			return cat == "weapon" or cat == "ammunition"
-		"Armor":
-			return cat in ["armor", "shield", "clothing"]
-		"Consumables":
-			return cat in ["potion", "consumable", "scroll"]
-		"Tools":
-			return cat in ["tool", "focus"]
+	match name_:
+		"Magic":
+			return not (data.get("magic", {}) as Dictionary).is_empty()
 		"Gear":
-			return cat in ["gear", "container", "pack", "light"]
+			for cats: Variant in FILTER_CATEGORIES.values():
+				if cat in (cats as Array):
+					return false
+			return true
+		"All":
+			return true
+	return cat in (FILTER_CATEGORIES.get(name_, []) as Array)
+
+
+## The search box: every word typed must appear in the item's name, its kind or its rarity ("rare ring", "potion").
+static func matches(text: String, data: Dictionary, e: Dictionary = {}) -> bool:
+	if text.strip_edges() == "":
+		return true
+	var hay := " ".join([MagicItems.display_name(data, e), str(data.get("category", "")),
+		str((data.get("magic", {}) as Dictionary).get("rarity", "")).replace("_", " "),
+		"magic" if not (data.get("magic", {}) as Dictionary).is_empty() else ""]).to_lower()
+	for word in text.to_lower().split(" ", false):
+		if not hay.contains(word):
+			return false
 	return true
+
+
+## Quest items (a key, St. Andral's bones) and the three treasures (`quest_locked`) can't be dropped, stashed, sold or
+## marked as junk.
+static func is_quest(data: Dictionary) -> bool:
+	return bool(data.get("quest", false)) or bool(data.get("quest_locked", false)) or str(data.get("category", "")) == "quest"
+
+
+## Junk (U3): a player's mark on an entry, kept when it changes hands; a merchant's Sell all junk sells it.
+static func can_be_junk(data: Dictionary) -> bool:
+	return not is_quest(data)
+
+
+static func is_junk(e: Dictionary) -> bool:
+	return bool(e.get("junk", false))
+
+
+## Marks (or unmarks) every carried `item_id` of `ch` as junk.
+static func set_junk(ch: Character, item_id: String, on: bool) -> void:
+	for e in ch.inventory:
+		if str(e["id"]) == item_id:
+			if on:
+				e["junk"] = true
+			else:
+				e.erase("junk")
+
+
+## The search box, and the New and Junk marks as toggles with how many of each the pack holds.
+func _search_row(ch: Character) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	# A gilt magnifying glass before the box.
+	row.add_child(UiParts.drawn(Vector2(24, 30), func(c: Control) -> void:
+		var at := Vector2(10, c.size.y / 2.0 - 2.0)
+		c.draw_arc(at, 7.0, 0.0, TAU, 24, Look.color("gilt"), 2.0, true)
+		c.draw_line(at + Vector2(5, 5), at + Vector2(12, 12), Look.color("gilt"), 3.0, true)
+		UiParts.diamond(c, at, 2.5, Look.color("gilt_light"), true)))
+	var box := LineEdit.new()
+	box.placeholder_text = "Search the pack"
+	box.text = search
+	box.clear_button_enabled = true
+	box.custom_minimum_size = Vector2(250, 0)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	box.add_theme_font_size_override("font_size", 15)
+	box.add_theme_color_override("clear_button_color", Look.color("gilt"))
+	box.add_theme_color_override("clear_button_color_pressed", Look.color("gilt_light"))
+	# Only the list redraws as the text changes, so the box keeps its focus and caret.
+	box.text_changed.connect(func(t: String) -> void:
+		search = t
+		_fill_list())
+	row.add_child(box)
+	var counts := {"new": 0, "junk": 0}
+	for e in ch.inventory:
+		if int(e["qty"]) > 0:
+			for k: String in counts:
+				if bool(e.get(k, false)):
+					counts[k] = int(counts[k]) + 1
+	for m: Array in [["new", "New", "Arrived since you last looked"], ["junk", "Junk", "Marked to sell: a merchant's Sell all junk takes them"]]:
+		var key := str(m[0])
+		var b := UiParts.small_button("%s %d" % [m[1], int(counts[key])], func() -> void:
+			marks = "" if marks == key else key
+			_draw())
+		b.tooltip_text = str(m[2])
+		if marks == key:
+			UiParts.light_up(b)
+		row.add_child(b)
+	return row
+
+
+## The backpack rows the filter, marks and search keep, sorted; with Junk shown, what the junk adds up to.
+func _fill_list() -> void:
+	if _list == null:
+		return
+	for c in _list.get_children():
+		c.queue_free()
+	for c in _list_foot.get_children():
+		c.queue_free()
+	var ch := _ch()
+	var rows: Array[Dictionary] = []
+	for i in ch.inventory.size():
+		var e := ch.inventory[i]
+		if int(e["qty"]) <= 0:
+			continue
+		var data := Compendium.shared().item_data(str(e["id"]))
+		if not _passes(e, MagicItems.shown_data(data, e)):
+			continue
+		rows.append({"e": e, "d": data, "i": i})
+	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var da := a["d"] as Dictionary
+		var db := b["d"] as Dictionary
+		match sort_by:
+			"weight":
+				return float(da.get("weight_lb", 0)) > float(db.get("weight_lb", 0))
+			"value":
+				return float(da.get("cost_gp", 0)) > float(db.get("cost_gp", 0))
+			"newest":
+				# What's new first, then the latest to arrive.
+				var na := bool((a["e"] as Dictionary).get("new", false))
+				var nb := bool((b["e"] as Dictionary).get("new", false))
+				return na if na != nb else int(a["i"]) > int(b["i"])
+		return MagicItems.display_name(da, a["e"] as Dictionary) < MagicItems.display_name(db, b["e"] as Dictionary))
+	if rows.is_empty():
+		var why := "Nothing here yet."
+		if search.strip_edges() != "":
+			why = "Nothing in %s's pack matches \"%s\"." % [ch.name.get_slice(" ", 0), search.strip_edges()]
+		elif marks == "junk":
+			why = "Nothing marked as junk. Pick an item and choose Mark as junk."
+		elif marks == "new":
+			why = "Nothing new since you last looked."
+		_list.add_child(UiKit.label(why, 15, "bone", 520))
+	for r in rows:
+		_list.add_child(_pack_row(ch, r["e"] as Dictionary, r["d"] as Dictionary))
+	if marks == "junk" and not rows.is_empty():
+		var weight := 0.0
+		var value := 0.0
+		for r in rows:
+			var q := int((r["e"] as Dictionary)["qty"])
+			weight += float((r["d"] as Dictionary).get("weight_lb", 0)) * q
+			value += float((r["d"] as Dictionary).get("cost_gp", 0)) * q
+		_list_foot.add_child(UiKit.label("%d junk, %s lb, worth %s gp new. A merchant's Sell all junk sells it for less." % [rows.size(),
+			_num(weight), _num(value)], 13, "parchment", 520))
+
+
+## One backpack row: icon, name and count, its marks (equipped, quest, magic, charges, new, junk) and weight.
+func _pack_row(ch: Character, e: Dictionary, data: Dictionary) -> Control:
+	var slot := str(e.get("slot", ""))
+	var id := str(e["id"])
+	var junk := InventoryScreen.is_junk(e)
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 10)
+	UiParts.add_icon(line, "item", str(MagicItems.shown_data(data, e).get("id", id)))
+	var nm := UiKit.label(MagicItems.display_name(data, e) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else ""), 15,
+		"gilt_light" if id == selected else ("bone" if junk else "vellum"))
+	nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	nm.clip_text = true
+	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	line.add_child(nm)
+	if bool(e.get("new", false)):
+		line.add_child(UiParts.pill("New", "gilt_light"))
+	if junk:
+		line.add_child(UiParts.pill("Junk", "bone"))
+	if slot != "":
+		line.add_child(UiParts.pill("Equipped", "moonlight"))
+	if InventoryScreen.is_quest(data):
+		line.add_child(UiParts.pill("Quest", "flame"))
+	if not (data.get("magic", {}) as Dictionary).is_empty():
+		line.add_child(UiParts.pill("Attuned" if id in ch.attuned else "Magic", "lilac"))
+	if MagicItems.has_charges(data):
+		line.add_child(UiParts.pill("%d/%d" % [int(e.get("charges", 0)), MagicItems.max_charges(data, e)], "moonlight"))
+	var wt := UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment")
+	wt.custom_minimum_size = Vector2(52, 0)
+	wt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	line.add_child(wt)
+	return UiParts.click_row(line, func() -> void:
+		selected = id
+		_draw(), id == selected)
+
+
+static func _num(v: float) -> String:
+	return str(int(v)) if is_equal_approx(v, roundf(v)) else "%.1f" % v
+
+
+## Closing the screen: what was shown on each page is no longer new.
+func _exit_tree() -> void:
+	if st == null:
+		return
+	for m in st.party:
+		if _viewed.has(m.id):
+			for e in m.inventory:
+				e.erase("new")
 
 
 func _draw_card() -> void:
@@ -421,7 +588,7 @@ func _draw_card() -> void:
 		var other := st.party[i]
 		give.add_child(UiParts.small_button(other.name.get_slice(" ", 0), func() -> void: _give(other)))
 	_card.add_child(give)
-	var quest := bool(data.get("quest", false))
+	var quest := InventoryScreen.is_quest(data)
 	var drop := UiParts.small_button("Drop one", func() -> void:
 		if slot != "":
 			ch.unequip(slot)
@@ -433,12 +600,24 @@ func _draw_card() -> void:
 	var bottom := HBoxContainer.new()
 	bottom.add_theme_constant_override("separation", 6)
 	bottom.add_child(drop)
-	if _stash_open() and not quest:
-		bottom.add_child(UiParts.small_button("Stash it", func() -> void:
-			st.stash_put(selected, ch)
-			if _entry(selected).is_empty():
-				selected = ""
-			_draw()))
+	# Into the party stash from anywhere (owner, 2026-10-07); it comes out again at a safe place.
+	var stash := UiParts.small_button("Send to the stash", func() -> void:
+		st.stash_put(selected, ch)
+		if _entry(selected).is_empty():
+			selected = ""
+		_draw())
+	stash.disabled = quest
+	stash.tooltip_text = "Can't: needed for a quest" if quest else ("Into the party stash; take it out here or at any safe place" if _stash_open()
+		else "Into the party stash; take it out at an inn or a home")
+	bottom.add_child(stash)
+	var junk := InventoryScreen.is_junk(entry)
+	var jb := UiParts.small_button("Not junk" if junk else "Mark as junk", func() -> void:
+		InventoryScreen.set_junk(ch, selected, not junk)
+		_draw())
+	jb.disabled = not InventoryScreen.can_be_junk(data)
+	jb.tooltip_text = "Can't: needed for a quest" if jb.disabled else ("Keep it out of Sell all junk" if junk
+		else "A merchant's Sell all junk sells it with the rest")
+	bottom.add_child(jb)
 	_card.add_child(bottom)
 
 
@@ -495,7 +674,7 @@ func _spellbook_card(book: Array) -> void:
 		_card.add_child(acts)
 
 
-## The stash is reachable where it's safe to rest (an inn, a home).
+## Things come out of the stash only where it's safe to rest (an inn, a home); they go in from anywhere.
 func _stash_open() -> bool:
 	return str(Compendium.shared().get_entry("locations", st.location).get("rest", "")) == "safe"
 

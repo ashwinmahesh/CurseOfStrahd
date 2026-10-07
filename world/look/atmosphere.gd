@@ -121,6 +121,11 @@ static func _vec2(v: Variant) -> Vector2:
 
 # --- Building -------------------------------------------------------------------------------------
 
+## The window's renderer follows the graphics preset (anti-aliasing, shadow maps) from the place that opens on.
+func _ready() -> void:
+	Graphics.apply(get_viewport())
+
+
 func _build() -> void:
 	env = Environment.new()
 	env.background_mode = Environment.BG_COLOR
@@ -194,7 +199,92 @@ func _modern_finish() -> void:
 	env.volumetric_fog_anisotropy = 0.45
 	env.volumetric_fog_length = 40.0
 	env.volumetric_fog_ambient_inject = 0.15
-	sun.shadow_blur = 1.8
+	# Sharper sun and moon shadows (W2): the splits are packed round what the camera sees (_fit_sun_shadows follows
+	# the zoom), and the light's size softens a shadow the further it falls from what casts it.
+	if Graphics.sun_splits() == 4:
+		sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
+	sun.light_angular_distance = SUN_SIZE
+	sun.shadow_blur = 1.0
+	sun.shadow_bias = 0.03
+	sun.shadow_normal_bias = 1.0
+	# Polished and wet floors reflect what stands on them (W3): the lit world shaders' low roughness picks it up. The
+	# flat sky colour isn't reflected: it would lay a grey sheen over every surface and wash the colour out.
+	env.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
+	var steps := Graphics.reflection_steps()
+	env.ssr_enabled = steps > 0
+	env.ssr_max_steps = maxi(steps, 1)
+	env.ssr_fade_in = 0.15
+	env.ssr_fade_out = 2.0
+	env.ssr_depth_tolerance = 0.25
+
+
+## The sun or moon's apparent size in degrees for the Modern finish's soft shadows (Godot's PCSS): sharp where a post
+## meets the ground, softer at the far end of a long dusk shadow.
+const SUN_SIZE := 1.2
+var _fitted_distance := -1.0
+
+
+## The sun's shadow reaches only as far as the camera can see, in splits packed round the ground in view (the camera
+## looks 40 degrees down with a 32 degree field, so the ground in view runs from about 0.75 to 1.5 times its distance
+## to the party), so a square near the party gets four times the shadow detail it had with one 60 unit reach.
+func _fit_sun_shadows() -> void:
+	if _rig == null or not Look.modern() or is_equal_approx(_rig.distance, _fitted_distance):
+		return
+	_fitted_distance = _rig.distance
+	var d := _rig.distance
+	var far := d * 1.7 + 12.0
+	sun.directional_shadow_max_distance = far
+	if sun.directional_shadow_mode == DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS:
+		sun.directional_shadow_split_1 = d * 0.9 / far
+		sun.directional_shadow_split_2 = d * 1.15 / far
+		sun.directional_shadow_split_3 = d * 1.45 / far
+	else:
+		sun.directional_shadow_split_1 = d * 1.15 / far
+
+
+## Shadows for the lights near the party, up to the graphics preset's budget (W2): lamps, hearths, lit windows, the
+## party's lantern and spell lights all can, nearest first; the rest light without. A light already casting keeps its
+## shadow until another is clearly nearer, so shadows don't flicker on and off as the party walks; shadows fade out
+## a little past the party. A light with the meta `no_shadow` never casts one.
+const LAMP_SHADOW_KEEP := 0.7
+var _shadow_scan := 0.0
+
+
+func _update_lamp_shadows() -> void:
+	var budget := Graphics.lamp_shadows()
+	if budget <= 0 or _rig == null:
+		return
+	var focus := _rig.global_position
+	var ranked: Array[Array] = []
+	for l in _lights:
+		if not is_instance_valid(l) or not l.is_visible_in_tree() or l.light_energy <= 0.01 or l.has_meta("no_shadow"):
+			continue
+		var d2 := l.global_position.distance_squared_to(focus)
+		ranked.append([d2 * (LAMP_SHADOW_KEEP if l.shadow_enabled else 1.0), l])
+	ranked.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) < float(b[0]))
+	var keep := {}
+	for i in mini(budget, ranked.size()):
+		keep[ranked[i][1]] = true
+	var fade := _rig.distance + 12.0
+	for l in _lights:
+		if not is_instance_valid(l):
+			continue
+		# Only real changes are set: setting a light's shadow again, even to the same value, can make Godot redraw its
+		# shadow map.
+		var want := keep.has(l)
+		if want != l.shadow_enabled:
+			if want:
+				l.shadow_bias = 0.04
+				l.shadow_normal_bias = 1.0
+				l.shadow_blur = 1.0
+				l.omni_shadow_mode = OmniLight3D.SHADOW_CUBE
+				l.distance_fade_enabled = true
+				# Only the shadow fades with distance; the light itself still reaches the far side of the map.
+				l.distance_fade_begin = 500.0
+				l.distance_fade_length = 10.0
+			l.shadow_enabled = want
+		if want and not is_equal_approx(l.distance_fade_shadow, fade):
+			l.distance_fade_shadow = fade
 
 
 ## The Modern finish's depth of field, as a strength the owner picks from (docs/plans/ui_polish.md): how soft
@@ -521,6 +611,11 @@ func _process(delta: float) -> void:
 			var off := wx.get_meta("offset") as Vector3
 			wx.global_position = Vector3(_rig.global_position.x + off.x, wx.global_position.y, _rig.global_position.z + off.z)
 	_focus_dof()
+	_fit_sun_shadows()
+	_shadow_scan -= delta
+	if _shadow_scan <= 0.0:
+		_shadow_scan = 0.25
+		_update_lamp_shadows()
 	if _post == null:
 		return
 	_post.set_shader_parameter("atmo_time", _time)
