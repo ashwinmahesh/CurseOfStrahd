@@ -79,6 +79,30 @@ func capture_shots(tool: Node, out: String) -> void:
 		await tool.call("wait_frames", 140)
 		await _shoot(tool, out + "_hud_second_toast.png", 2)
 		root.call("_command", "sneak")
+	if _wants("talk"):
+		# Morgantha: one question asked, her options again with it dimmed, and the scroll-back.
+		root.call("start_dialogue", "village_of_barovia/morgantha:start", "morgantha")
+		var d := root.get("dialogue") as DialogueUI
+		if d != null:
+			for i in 12:
+				if not d.options_shown.is_empty():
+					break
+				d.call("_advance")
+				await tool.call("wait_frames", 2)
+			d.call("_choose", 0)
+			for i in 12:
+				if d == null or not is_instance_valid(d) or not d.options_shown.is_empty():
+					break
+				d.call("_advance")
+				await tool.call("wait_frames", 2)
+			await _shoot(tool, out + "_talk_asked.png")
+			if is_instance_valid(d):
+				d.toggle_history()
+				await _shoot(tool, out + "_talk_history.png")
+				d.queue_free()
+			root.set("dialogue", null)
+			hud.visible = true
+			ModeController.force(ModeController.Mode.EXPLORATION)
 	if _wants("alt"):
 		hud.thing_labels.pinned = true
 		await _shoot(tool, out + "_alt_village.png")
