@@ -1806,11 +1806,16 @@ func apply_effect_entries(ctx: Dictionary, t: Combatant, entries: Array, when: S
 				continue
 			"heal":
 				var amount := int(params.get("flat", 0))
+				var roll_text := ""
 				if params.has("dice"):
-					amount += int(e._roll_damage_dice(str(params["dice"]), false, 0, str(s["name"]))["total"])
+					var hr := e._roll_damage_dice(str(params["dice"]), false, 0, str(s["name"]))
+					amount += int(hr["total"])
+					roll_text = "%s %s" % [params["dice"], hr["text"]]
 				var healed := who.creature.heal(amount, str(s["name"]))
 				if healed > 0:
-					r.lines.append(e.log.add("heal", "%s regains %d Hit Points (%s)" % [who.name(), healed, s["name"]], who.id))
+					var capped := " (rolled %d, now at full)" % amount if healed < amount and who.creature.hp >= who.creature.max_hp() else ""
+					r.lines.append(e.log.add("heal", "%s regains %d Hit Points (%s)%s" % [who.name(), healed, s["name"], capped], who.id,
+						[roll_text] if roll_text != "" else []))
 					e.events.append({"type": "heal", "id": who.id, "amount": healed})
 				continue
 			"end_condition":

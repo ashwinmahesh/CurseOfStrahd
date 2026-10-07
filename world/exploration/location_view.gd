@@ -1103,7 +1103,7 @@ func _tend(cell: Vector2i, action_id: String) -> void:
 			amount += int(dice.roll_expr(str(heal["dice"]), "%s gives %s %s" % [holder.name, target.name, name])["total"])
 		var healed := target.heal(amount, name)
 		holder.remove_one(item_id)
-		toast.emit("%s gives %s a %s: %d Hit Points" % [holder.name.get_slice(" ", 0), who, name, healed])
+		toast.emit("%s gives %s a %s: rolled %d, %d Hit Points" % [holder.name.get_slice(" ", 0), who, name, amount, healed])
 	refresh_party()
 	party_tended.emit()
 

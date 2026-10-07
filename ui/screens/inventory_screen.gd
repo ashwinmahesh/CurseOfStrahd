@@ -470,7 +470,10 @@ func _drink() -> void:
 	if root.has_method("_refresh"):
 		root.call("_refresh")
 	_draw()
-	_card.add_child(UiKit.label("%s regains %d Hit Points." % [ch.name, healed], 15, "bile"))
+	# Owner report (2026-10-07): "it restored 1 Hit Point". Show the roll and the cap, so a near-full drinker's 1 makes sense.
+	var full := " (now at full)" if ch.hp >= ch.max_hp() and healed < int(rolled["total"]) else ""
+	_card.add_child(UiKit.label("%s drinks it: rolled %d (%s), regains %d Hit Points%s." % [ch.name, int(rolled["total"]),
+		str(heal["dice"]), healed, full], 15, "bile"))
 
 
 ## A worn magic item as a row you can click: where it's worn, the item, and whether it's working.
