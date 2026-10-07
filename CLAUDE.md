@@ -65,10 +65,11 @@ number with that source (BR2024 = the free 2024 Basic Rules). SRD 5.2.1 attribut
   heroes have the fuller HD set instead: `make keys [ONLY=<id>]` (docs/art/animation.md).
 - UI draws on CanvasLayers so the palette pass never touches it.
 - Git LFS (owner decision 2026-10-07; .gitattributes): new or changed images under art/generated, art/sprites,
-  art/portraits, art/creator and art/textures, and voice mp3s, are stored in LFS. Older files stay plain blobs until
-  they change: never `git lfs migrate` or `git add --renormalize`, and stage only files you changed (an old image whose
-  timestamp moved shows as modified and would be uploaded to LFS). This repo's worktrees share its LFS setup; a
-  separate clone needs `git lfs install` (art/generated isn't used at run time, so `lfs.fetchexclude` can skip it).
+  art/portraits, art/creator and art/textures, voice mp3s, and sound clips under art/sourced, are stored in LFS. Older
+  files stay plain blobs until they change: never `git lfs migrate` or `git add --renormalize`, and stage only files
+  you changed (an old image whose timestamp moved shows as modified and would be uploaded to LFS). This repo's
+  worktrees share its LFS setup; a separate clone needs `git lfs install` (art/generated isn't used at run time, so
+  `lfs.fetchexclude` can skip it).
 
 ## Voice (ADR 0013)
 - Spoken lines: ElevenLabs (eleven_v4, owner decision 2026-10-06) via `make voice` only; model, format and each
