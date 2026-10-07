@@ -34,7 +34,9 @@ func test_save_and_load_round_trip() -> void:
 	Dice.reseed(77)
 	Dice.roller.d20()
 	assert_eq(SaveSystem.save("unit_test"), OK)
-	var next_roll := Dice.roller.d20()
+	var would_follow: Array[int] = []
+	for i in 8:
+		would_follow.append(Dice.roller.d20())
 	GameState.reset()
 	Dice.reseed(1)
 	assert_eq(SaveSystem.load_slot("unit_test"), OK)
@@ -42,7 +44,11 @@ func test_save_and_load_round_trip() -> void:
 	assert_eq(GameState.leader_index, 1)
 	assert_eq(GameState.get_flag("ireena_escorted"), true)
 	assert_eq(GameState.party_positions[0], Vector3(1.5, 0, -2))
-	assert_eq(Dice.roller.d20(), next_roll, "dice continue from the saved state")
+	# Owner decision 2026-10-07 (ADR 0002): a load rolls fresh dice instead of replaying the saved sequence.
+	var after_load: Array[int] = []
+	for i in 8:
+		after_load.append(Dice.roller.d20())
+	assert_ne(after_load, would_follow, "a load doesn't replay the rolls that followed the save")
 	DirAccess.remove_absolute(SaveSystem.slot_path("unit_test"))
 
 

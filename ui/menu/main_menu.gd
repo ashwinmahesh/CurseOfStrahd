@@ -222,6 +222,7 @@ func _open_hero() -> void:
 ## A fresh playthrough: the party at level 1 on the Old Svalich Road, at dusk.
 func _start(party: Array[Character], bench: Array[Character] = []) -> void:
 	GameState.reset()
+	Dice.reseed_random()   # every new game rolls its own dice
 	SaveSystem.current_slot = ""    # a new game has no save slot until its first save
 	var st := GameState.story
 	for ch in party:
