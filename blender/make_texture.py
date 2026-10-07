@@ -223,10 +223,15 @@ def main():
         entry["saturate"] = a.saturate
     if a.note:
         entry["note"] = a.note
-    data.setdefault("themes", {}).setdefault(a.theme, {})[a.surface] = entry
+    old = data.setdefault("themes", {}).setdefault(a.theme, {}).get(a.surface, {})
+    for k in ("hd_file", "normal_file", "orm_file", "variants", "material", "hd_source"):   # the HD set (W4) stays
+        if k in old:
+            entry[k] = old[k]
+    data["themes"][a.theme][a.surface] = entry
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(json.dumps(data, indent=2) + "\n")
     print(f"texture: {rel} ({a.size} px from a {n} px seamless tile, wrap {entry['wrap']}, colours {', '.join(names)})")
 
 
-main()
+if __name__ == "__main__":   # blender/make_surface.py imports the seamless tools
+    main()

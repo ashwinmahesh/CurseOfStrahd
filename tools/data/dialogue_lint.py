@@ -34,6 +34,7 @@ RE_CHECK = re.compile(r"^check\s+([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)\s*->\s*([A-Z
 RE_INTERJECT = re.compile(r"^interject\s+([a-z]+:[a-z0-9_]+):\s+(.+)$")
 RE_COMBAT = re.compile(rf"^combat\s+({ID})$")
 RE_NARRATE = re.compile(r"^narrate\s+([a-z0-9_:]+)$")
+RE_CUTSCENE = re.compile(r"^cutscene\s+([a-z][a-z0-9_]*)$")
 RE_IF = re.compile(r"^(if|elif)\s+(.+)$")
 RE_VARIANT = re.compile(r"^\|\s*(?:\[([^\]]+)\]\s*)?(.+)$")
 RE_COOLDOWN = re.compile(r"^(cooldown\s+\d+|once)$")
@@ -71,7 +72,7 @@ def conditions_approval(expr):
 def parse_file(path):
     text = Path(path).read_text()
     out = {"nodes": {}, "jumps": [], "flags_read": {}, "flags_set": {}, "speakers": [], "items": [], "quests": [],
-           "skills": [], "encounters": [], "selectors": [], "narrates": [], "errors": []}
+           "skills": [], "encounters": [], "selectors": [], "narrates": [], "cutscenes": [], "errors": []}
     node = None
     depth = 0
     narrator_file = "/narrator/" in str(path).replace("\\", "/")
@@ -243,6 +244,10 @@ def parse_file(path):
         m = RE_NARRATE.match(line)
         if m:
             out["narrates"].append((m.group(1), where))
+            continue
+        m = RE_CUTSCENE.match(line)
+        if m:
+            out["cutscenes"].append((m.group(1), where))
             continue
         m = RE_LINE.match(line)
         if m:

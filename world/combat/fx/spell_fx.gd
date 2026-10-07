@@ -301,16 +301,21 @@ func cast(cue: Dictionary, caster: CombatToken, targets: Array[CombatToken], cel
 			var on: Array[CombatToken] = targets.duplicate()
 			if on.is_empty():
 				on.append(caster)
-			for t in on:
+			for one: Variant in on:
+				if not is_instance_valid(one):
+					continue   # freed during the pause after the last one (see _missiles)
+				var t := one as CombatToken
 				match family:
 					"heal":
 						FxBodies.heal(self, cue, t)
 					"buff":
 						FxBodies.buff(self, cue, t)
 					"debuff":
-						FxBodies.debuff(self, cue, caster, t)
+						if is_instance_valid(caster):
+							FxBodies.debuff(self, cue, caster, t)
 					"psychic":
-						FxBodies.psychic(self, cue, caster, t)
+						if is_instance_valid(caster):
+							FxBodies.psychic(self, cue, caster, t)
 					"ward":
 						FxBodies.ward(self, cue, t)
 					"transform":
@@ -323,7 +328,8 @@ func cast(cue: Dictionary, caster: CombatToken, targets: Array[CombatToken], cel
 ## from target to target (Chain Lightning).
 func _missiles(family: String, cue: Dictionary, caster: CombatToken, others: Array[CombatToken]) -> void:
 	if others.is_empty():
-		FxBodies.glimmer(self, cue, caster)
+		if is_instance_valid(caster):
+			FxBodies.glimmer(self, cue, caster)
 		return
 	var shots: Array[CombatToken] = []
 	var count := int(cue.get("count", 1))
@@ -331,14 +337,23 @@ func _missiles(family: String, cue: Dictionary, caster: CombatToken, others: Arr
 		for i in (count if others.size() == 1 else 1):
 			shots.append(t)
 	var last: Signal
-	var from := caster
-	for t in shots:
-		var to := SpellFx.chest(t) + _spread(count)
-		var start := SpellFx.hand(from, to) if from == caster else SpellFx.chest(from)
+	# A token can be freed while the volley flies (a creature that vanishes, a summons dismissed, the story ending the
+	# fight), so they're held untyped and checked before use: a shot at a freed one is skipped, and a chain whose last
+	# link went flies on from where it stood (Baba Lysaga's fight, 2026-10-07).
+	var from: Variant = caster
+	var from_at := Vector3.ZERO
+	for shot: Variant in shots:
+		if not is_instance_valid(shot):
+			continue
+		var to := SpellFx.chest(shot as CombatToken) + _spread(count)
+		var start := from_at if from_at != Vector3.ZERO else to
+		if is_instance_valid(from):
+			start = SpellFx.hand(from as CombatToken, to) if from == caster else SpellFx.chest(from as CombatToken)
 		last = FxMissiles.fly(self, family, cue, start, to, true)
 		if bool(cue.get("chain", false)):
 			await until(last)
-			from = t
+			from = shot
+			from_at = to
 		else:
 			await wait(0.09)
 	await until(last)
@@ -360,7 +375,8 @@ func _cells_at(tokens: Array[CombatToken]) -> Array:
 ## The volley's caster rolls an attack at `target` (`action`: the attack event's): true when a missile flew for it
 ## (and has landed), so the view skips its lunge.
 func volley(attacker: CombatToken, target: CombatToken, hit: bool, action: String = "") -> bool:
-	if _volley.is_empty() or str(_volley["caster"]) != attacker.combatant.id or target == null:
+	if _volley.is_empty() or not is_instance_valid(attacker) or not is_instance_valid(target) \
+			or str(_volley["caster"]) != attacker.combatant.id:
 		return false
 	var cue := _volley["cue"] as Dictionary
 	if action != "" and action != "spell:" + str(cue["key"]):
@@ -371,6 +387,8 @@ func volley(attacker: CombatToken, target: CombatToken, hit: bool, action: Strin
 
 ## One missile of `cue`'s family from `attacker` at `target` (a monster's Fire Ray, an arrow).
 func missile(cue: Dictionary, attacker: CombatToken, target: CombatToken, hit: bool) -> void:
+	if not is_instance_valid(attacker) or not is_instance_valid(target):
+		return
 	var to := SpellFx.chest(target)
 	await FxMissiles.fly(self, str(cue["family"]), cue, SpellFx.hand(attacker, to), to, hit)
 
