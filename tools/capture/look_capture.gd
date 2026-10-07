@@ -151,6 +151,15 @@ func _build(shot: Dictionary) -> void:
 				t.set_meta("fade", 0.72)
 				ModelPiece.set_fade(t, 0.72)
 		view.set_process(false)
+	if OS.get_environment("LOOK_SDFGI") != "":
+		var env := view.atmosphere.env
+		env.sdfgi_enabled = true
+		env.sdfgi_use_occlusion = true
+		env.sdfgi_cascades = 4
+		env.sdfgi_min_cell_size = 0.2
+		env.sdfgi_bounce_feedback = 0.5
+		env.sdfgi_energy = 1.0
+		env.ssil_enabled = false
 	if OS.get_environment("LOOK_WET") != "":
 		RenderingServer.global_shader_parameter_set(&"world_wet", float(OS.get_environment("LOOK_WET")))
 	var off := OS.get_environment("LOOK_OFF").split(",", false)
@@ -300,7 +309,14 @@ func _bench_pairs(tool: Node, id: String) -> void:
 	var sun := view.atmosphere.sun
 	var vp := get_viewport()
 	# [name, on, off]: what to set for the change on, and for it off.
+	var env := view.atmosphere.env
 	var changes: Array[Array] = [
+		["SDFGI (vs SSIL)", func() -> void:
+			env.sdfgi_enabled = true
+			env.ssil_enabled = false,
+			func() -> void:
+				env.sdfgi_enabled = false
+				env.ssil_enabled = Graphics.bounce()],
 		["texture noise (vs hashed)", func() -> void: post.set_shader_parameter("fast_noise", true),
 			func() -> void: post.set_shader_parameter("fast_noise", false)],
 		["flat floors cast no shadow", func() -> void:

@@ -161,6 +161,13 @@ casting a shadow was a third of the village's frame (they no longer do: nothing 
 their shadows, the screen pass (its mist noise now comes from a texture, 1 to 2 ms cheaper outdoors), MSAA, light
 bounced off walls and the depth of field. Contact shadows, reflections, glow, haze and SMAA are cheap.
 
+**Bounce light outdoors (W18, tried and left off).** Godot's real-time global illumination (SDFGI, the only kind that
+needs no baking) was tried in place of the screen-space bounce (SSIL) on outdoor maps, 2026-10-07: in the village it
+cost about 4.7 ms a frame more at 1080p (paired timing) and on the forest road about the same as SSIL, and the
+pictures showed little difference beyond darker tree interiors and eaves. It stays off; `LOOK_SDFGI=1` in
+look_capture turns it on to try again (after W17's 60 fps check, or if the land gets big open slopes the screen
+can't see round).
+
 **The frame meter.** F3 shows frames a second, the average and slowest frame of the last half second and the preset
 in the top left corner, orange when over the 60 fps budget (`FrameMeter`, GameSettings `frame_meter`; Graphics puts
 it on the window).
