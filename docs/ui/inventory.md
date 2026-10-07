@@ -21,7 +21,21 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 - **Paper doll**: head, cloak, neck, armor, hands, belt, two rings, feet; **weapon sets** (main hand + off hand,
   two sets with a quick swap ↻); ammunition and spellcasting focus slots. Equipping armor shows the new AC on the
   slot; armor without training warns before equipping (Disadvantage on Str/Dex rolls, no spellcasting).
-- **Backpack**: filters (All, Weapons, Armor, Consumables, Magic, Gear), the New and Junk marks as toggles with their
+  Built (U11, 2026-10-07): every worn slot of the 2024 DMG (head, eyes, neck, cloak, armor, robe down the left;
+  wrists, hands, belt, two rings, feet down the right; Ioun Stones in a row when worn) as gothic-arch tiles round
+  the portrait, with the Armor Class shield and three attunement lozenges beneath it; weapon set I (in hand) and set
+  II (stowed in the pack, `Character.weapon_set_2`) with ↻ Swap outside fights (in one, a character attacks with any
+  weapon they carry: the weapon-juggling deviation); four **quick slots** (`Character.quick_slots`) whose items the
+  fight's hotbar also shows on its Common tab. A slot takes only what fits (armor, a weapon or a held wand, rod or
+  staff, a Shield or Light weapon in the off hand, a worn item in its own slot) and lights green while a drag it takes
+  hovers over it. Ammunition and focus slots aren't built.
+- **Drag and drop**: pack items onto a doll slot, set II or a quick slot; anything onto another character's chip
+  (the whole stack, that very item with its own charges) or the stash; slots, set II, quick slots and (at a safe
+  place) the stash back into the pack. Right-click a tile for its actions (the first is what a double-click does):
+  take off, wear or hold, set II, keep to hand, give, send to the stash, junk, split the stack in two, drop one. The
+  card's How many stepper sets how many of a stack Give, Send to the stash and Split off move.
+- **Backpack**: an icon grid of arch tiles (count, a gilt spark when new, crossed out when junk, a moonlight lozenge
+  when equipped, lilac edge for magic, flame for a quest item); filters (All, Weapons, Armor, Consumables, Magic, Gear), the New and Junk marks as toggles with their
   counts, sort by name, weight, value or newest, and a search box (every word must appear in the item's name, kind
   or rarity); columns Item / Qty / Weight / Value; packs open as containers (▸). Quest items (and the three
   treasures) show Quest and can't be sold, stashed, dropped or marked as junk. **New** is what arrived since the

@@ -105,6 +105,38 @@ func capture_shots(tool: Node, out: String) -> void:
 			{"id": "rope", "qty": 1}, {"id": "torch", "qty": 5}], 25.0, null)
 		await _shoot(tool, "%s_loot.png" % out)
 		lw.queue_free()
+	if _wants("doll"):
+		# U11: rings and a cloak worn, a bow in weapon set II, potions in the quick slots, then the right-click menu and a
+		# drag over the free ring slot.
+		var g := GameState.story.party[0]
+		g.add_item("cloak_of_protection")
+		g.wear("ring_of_protection")
+		g.wear("cloak_of_protection")
+		g.attune("ring_of_protection")
+		g.attune("cloak_of_protection")
+		g.add_item("longbow")
+		g.weapon_set_2 = {"main_hand": "longbow"}
+		g.quick_slots.assign(["potion_of_healing", "candle"])
+		var inv := _inventory(func(i: InventoryScreen) -> void: i.selected = "longbow")
+		await _shoot(tool, "%s_doll.png" % out)
+		var wand: ItemTile = null
+		for n in inv.find_children("*", "ItemTile", true, false):
+			if str((n as ItemTile).payload.get("id", "")) == "wand_of_secrets":
+				wand = n as ItemTile
+		if wand != null:
+			inv.call("_pick", wand.payload["entry"])
+			inv.call("_open_menu", inv.actions_for(wand.payload["entry"] as Dictionary), wand.get_global_rect().get_center())
+			await _shoot(tool, "%s_menu.png" % out)
+			for m in inv.find_children("*", "PopupMenu", true, false):
+				(m as PopupMenu).hide()
+			for n in inv.find_children("*", "ItemTile", true, false):
+				var t := n as ItemTile
+				if t.payload.is_empty() and t.caption == "Ring":
+					t.set("_drop_ok", true)
+					t.queue_redraw()
+					break
+			await _shoot(tool, "%s_drag.png" % out)
+		root.call("close_screen")
 	if _wants("level_up"):
 		# Q10: a companion at an Ability Score Improvement (filled from their own level plan), and a new hero choosing a
 		# subclass (filled with the class's recommended picks). Each shot scrolls to the picks.
