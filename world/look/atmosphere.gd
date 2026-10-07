@@ -197,18 +197,29 @@ func _modern_finish() -> void:
 	sun.shadow_blur = 1.8
 
 
-## How soft the modern finish's depth of field is (0 none, Godot's 0..1).
-const MODERN_DOF := 0.14
+## The Modern finish's depth of field, as a strength the owner picks from (docs/plans/ui_polish.md): how soft
+## (Godot's 0..1), where the far blur starts (the camera's distance to the party plus `start` plus `per_zoom` of
+## that distance), how far it takes to come in, and whether anything near the lens blurs.
+const DOF_STRENGTHS := {
+	"old": {"amount": 0.14, "start": 1.0, "per_zoom": 0.12, "transition": 3.5, "transition_per_zoom": 0.25, "near": true},
+	"light": {"amount": 0.08, "start": 3.0, "per_zoom": 0.15, "transition": 6.0, "transition_per_zoom": 0.3, "near": false},
+	"lighter": {"amount": 0.05, "start": 6.0, "per_zoom": 0.2, "transition": 10.0, "transition_per_zoom": 0.0, "near": false},
+}
+## Light unless the owner picks another (2026-10-07: "old" read as a smear at the top of the screen).
+static var dof_strength := "light"
 var _dof: CameraAttributesPractical = null
 
 
-## The sharp band follows the camera's zoom: from a little in front of the party to a little behind it.
+## The sharp band follows the camera's zoom.
 func _focus_dof() -> void:
 	if _dof == null or _rig == null:
 		return
 	var d := _rig.distance
-	_dof.dof_blur_far_distance = d + 1.0 + d * 0.12
-	_dof.dof_blur_far_transition = 3.5 + d * 0.25
+	var k := DOF_STRENGTHS[dof_strength] as Dictionary
+	_dof.dof_blur_amount = float(k["amount"])
+	_dof.dof_blur_near_enabled = bool(k["near"])
+	_dof.dof_blur_far_distance = d + float(k["start"]) + d * float(k["per_zoom"])
+	_dof.dof_blur_far_transition = float(k["transition"]) + d * float(k["transition_per_zoom"])
 	_dof.dof_blur_near_distance = maxf(1.0, d - 2.0 - d * 0.08)
 	_dof.dof_blur_near_transition = 2.0
 
@@ -280,8 +291,6 @@ func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 		# The diorama's depth of field (tilt-shift): the party's ground sharp, what's far behind and near the lens soft.
 		_dof = CameraAttributesPractical.new()
 		_dof.dof_blur_far_enabled = true
-		_dof.dof_blur_near_enabled = true
-		_dof.dof_blur_amount = MODERN_DOF
 		rig.camera.attributes = _dof
 		_focus_dof()
 	_apply_static()
