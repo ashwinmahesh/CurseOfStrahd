@@ -20,12 +20,23 @@ func test_arena_loads_from_data() -> void:
 			assert_false(e.grid.is_solid(cell), "%s stands on open floor" % c.name())
 
 
-func test_arena_fights_finish_with_sensible_results() -> void:
+## The twelve fights in two halves, so make test can run them side by side (they took two and a half minutes in one
+## test). Each half must be won at least half the time, as the twelve together were.
+func test_arena_fights_1_to_6_finish_with_sensible_results() -> void:
+	_fights(range(1, 7))
+
+
+func test_arena_fights_7_to_12_finish_with_sensible_results() -> void:
+	_fights(range(7, 13))
+
+
+## Plays the arena once per seed with the autopilot, to the end.
+func _fights(seeds: Array) -> void:
 	var wins := 0
 	var rounds := 0
 	var downs := 0
-	var runs := 12
-	for seed_value in range(1, runs + 1):
+	var runs := seeds.size()
+	for seed_value: int in seeds:
 		var e := EncounterSetup.load_id(ARENA, DiceRoller.new(seed_value))
 		var res := PartyAutopilot.new(e).run(30)
 		assert_ne(str(res["outcome"]), "timeout", "seed %d finished" % seed_value)
@@ -36,5 +47,6 @@ func test_arena_fights_finish_with_sensible_results() -> void:
 		for c in e.combatants:
 			assert_true(c.creature.hp >= 0 and c.creature.hp <= c.creature.max_hp(), "%s HP in range" % c.name())
 		assert_true(e.pending == null)
-	print("        arena: %d/%d victories, %.1f rounds on average, %.1f party members dropped per fight" % [wins, runs, rounds / float(runs), downs / float(runs)])
+	print("        arena seeds %d-%d: %d/%d victories, %.1f rounds on average, %.1f party members dropped per fight" % [
+		seeds[0], seeds[-1], wins, runs, rounds / float(runs), downs / float(runs)])
 	assert_true(wins >= runs / 2, "the party should usually win (%d/%d)" % [wins, runs])

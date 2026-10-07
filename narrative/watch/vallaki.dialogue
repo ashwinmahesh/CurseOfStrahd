@@ -1,0 +1,60 @@
+# The Baron's watch answers a crime somebody saw in Vallaki (F8 and F2's town watch; docs/rules/stealth.md,
+# docs/voice/vallaki_guard.md). story/crime.gd counts the offence in crime_vallaki and stages a Town Guard beside the
+# party, then plays theft or trespass. Every way out clears the count: a fine, a word that works, or a fight.
+
+~ theft
+Town Guard [angry]: You there. Stop. Hands where I can see them. Stealing, in Vallaki, in festival week. The Baron will want that in the speech.
+-> charge
+
+~ trespass
+Town Guard [angry]: That's a private house, and you were told to get out of it. In Vallaki that's a fine. The Baron is very fond of fines.
+-> charge
+
+~ charge
+if flag.crime_vallaki >= 2
+Town Guard: Again? Fifty gold for the Baron's coffers, or the stocks. The stocks are full this week, mostly of people who frowned.
+else
+Town Guard: Twenty-five gold for the Baron's coffers, and we'll call it festival spirit.
+endif
+* [if flag.crime_vallaki < 2 and gold >= 25] Pay the twenty-five gold. -> pay_small
+* [if flag.crime_vallaki >= 2 and gold >= 50] Pay the fifty gold. -> pay_large
+* [if flag.crime_vallaki < 2 and gold < 25] We haven't got twenty-five gold. -> empty_purse
+* [if flag.crime_vallaki >= 2 and gold < 50] We haven't got fifty gold. -> empty_purse
+* [Persuasion DC 15] A misunderstanding. We were putting it back. -> let_off | not_buying
+* [Deception DC 15] The owner sent us to fetch it. Go and ask. -> let_off | not_buying
+* Refuse. -> refuse
+
+~ not_buying
+Town Guard: No. I've heard that one before, and so has the Baron, and he made it a crime to say it.
+* [if flag.crime_vallaki < 2 and gold >= 25] Pay the twenty-five gold. -> pay_small
+* [if flag.crime_vallaki >= 2 and gold >= 50] Pay the fifty gold. -> pay_large
+* [if flag.crime_vallaki < 2 and gold < 25] We haven't got twenty-five gold. -> empty_purse
+* [if flag.crime_vallaki >= 2 and gold < 50] We haven't got fifty gold. -> empty_purse
+* Refuse. -> refuse
+
+~ pay_small
+gold -25
+set crime_vallaki = 0
+Town Guard [smile]: Lovely. The Baron thanks you for your contribution to the festival. All will be well.
+-> END
+
+~ pay_large
+gold -50
+set crime_vallaki = 0
+Town Guard: Paid in full. Do it a third time and I'll have to remember your faces, and I'd honestly rather not.
+-> END
+
+~ empty_purse
+gold -50
+set crime_vallaki = 0
+Town Guard: Then whatever you've got will do. Turn out your pockets. All of it. There. Now go and be poor somewhere quietly.
+-> END
+
+~ let_off
+set crime_vallaki = 0
+Town Guard: Fine. Fine! I didn't see anything. I never see anything. It's the only way to stay sane in this town.
+-> END
+
+~ refuse
+Town Guard [angry]: Then it's the stocks, the hard way. Watch! To me!
+combat watch_arrest

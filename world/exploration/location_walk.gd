@@ -109,8 +109,8 @@ static func tick(view: LocationView, delta: float) -> void:
 	var was := view.leader().cell
 	_advance_party(view, next)
 	LocationPlan.spend(view, was, next)
-	# Foes in plain view may notice the party (LocationStealth).
-	if _check_cell_events(view) or LocationStealth.after_step(view):
+	# Foes in plain view may notice the party (LocationStealth); a private room's people may see it (LocationCrime).
+	if _check_cell_events(view) or LocationStealth.after_step(view) or LocationCrime.check_trespass(view):
 		view._queue.clear()
 		view._on_arrive = Callable()
 		return

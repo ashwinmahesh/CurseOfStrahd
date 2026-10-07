@@ -17,7 +17,7 @@ const LOC := {
 	"spawns": {"default": [3, 3]},
 	"doors": [{"id": "den_door", "cell": [6, 3]}],
 	"encounters": [{"id": "den_wolf", "trigger": "enter_area:den", "waiting": true,
-		"monsters": [{"monster": "wolf", "cell": [11, 2]}], "flag": "test_den_wolf_dead"}]
+		"monsters": [{"monster": "wolf", "cell": [11, 2], "facing": "west"}], "flag": "test_den_wolf_dead"}]
 }
 
 var root: Node

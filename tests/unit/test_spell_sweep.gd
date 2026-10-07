@@ -146,12 +146,52 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 const NO_EFFECT_ON_FOES := ["enthrall"]
 
 
-func test_every_combat_spell_changes_something() -> void:
+## The sweep in slices by spell level, so make test can run them side by side (as one test it took up to 9 minutes).
+## Together they cover every level; each slice must check about three quarters of the spells it had on 2026-10-07
+## (76, 52, 77, 58 and 48), where the one test asked for more than 80 in all.
+const SLICES := [[0, 1], [2], [3, 4], [5, 6], [7, 8, 9]]
+
+
+func test_the_slices_cover_every_spell_level() -> void:
+	var levels := {}
+	for slice: Array in SLICES:
+		for lv: int in slice:
+			assert_false(levels.has(lv), "level %d is in one slice only" % lv)
+			levels[lv] = true
+	for s: Dictionary in Compendium.shared().all("spells"):
+		assert_true(levels.has(int(s.get("level", 0))), "%s's level %d is swept" % [s["id"], int(s.get("level", 0))])
+
+
+func test_every_cantrip_and_level_1_combat_spell_changes_something() -> void:
+	assert_true(_sweep(SLICES[0]) > 55, "checked the cantrips and level 1 spells")
+
+
+func test_every_level_2_combat_spell_changes_something() -> void:
+	assert_true(_sweep(SLICES[1]) > 35, "checked the level 2 spells")
+
+
+func test_every_level_3_and_4_combat_spell_changes_something() -> void:
+	assert_true(_sweep(SLICES[2]) > 55, "checked the level 3 and 4 spells")
+
+
+func test_every_level_5_and_6_combat_spell_changes_something() -> void:
+	assert_true(_sweep(SLICES[3]) > 40, "checked the level 5 and 6 spells")
+
+
+func test_every_level_7_to_9_combat_spell_changes_something() -> void:
+	assert_true(_sweep(SLICES[4]) > 30, "checked the level 7 to 9 spells")
+
+
+## Casts every combat spell of `levels` (up to six seeds each) and fails on any that can't be cast or changes nothing.
+## Returns how many it checked.
+func _sweep(levels: Array) -> int:
 	var none: Array[String] = []
 	var failed: Array[String] = []
 	var checked := 0
 	for s: Dictionary in Compendium.shared().all("spells"):
 		var id := str(s["id"])
+		if not int(s.get("level", 0)) in levels:
+			continue
 		var probe := TestCombat.open_field(1)
 		if not probe.spells.has_combat_rules(s):
 			continue
@@ -184,6 +224,7 @@ func test_every_combat_spell_changes_something() -> void:
 			failed.append("%s: can't be cast (%s)" % [id, last["skip"]])
 		elif not changed:
 			none.append(id)
-	assert_true(checked > 80, "checked %d spells" % checked)
-	assert_eq(failed, [] as Array[String], "spells that can't be cast in the sweep")
-	assert_eq(none, [] as Array[String], "spells that change nothing")
+	assert_eq(failed, [] as Array[String], "spells that can't be cast in the sweep (levels %s)" % [levels])
+	assert_eq(none, [] as Array[String], "spells that change nothing (levels %s)" % [levels])
+	print("    swept %d combat spells of level %s" % [checked, levels])
+	return checked
