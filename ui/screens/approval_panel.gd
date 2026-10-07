@@ -59,6 +59,9 @@ static func _card(st: StoryState, ch: Character, travelling: bool) -> Control:
 	col.add_child(head)
 	col.add_child(meter(Approval.score(st, ch.id), BAR_WIDTH + 100.0, 16.0))
 	col.add_child(UiKit.label(str(t["says"]), 13, "parchment", CARD_WIDTH - 30.0))
+	var heart := Approval.romance_line(st, ch.id)
+	if heart != "":
+		col.add_child(UiKit.label("♥ " + heart, 14, "rose", CARD_WIDTH - 30.0))
 	var mem := Approval.memories(st, ch.id)
 	if mem.is_empty():
 		col.add_child(UiKit.label("Nothing you've done has stayed with them yet.", 13, "bone", CARD_WIDTH - 30.0))
@@ -113,6 +116,9 @@ static func _tip(st: StoryState, ch: Character) -> Control:
 	for m in Approval.memories(st, ch.id):
 		lines.append("%s %s (day %d)" % ["▲" if int(m["delta"]) > 0 else "▼", str(m["why"]), int(m["day"])])
 	var body := "\n".join(lines) if not lines.is_empty() else "Nothing you've done has stayed with them yet."
+	var heart := Approval.romance_line(st, ch.id)
+	if heart != "":
+		body = "♥ %s\n%s" % [heart, body]
 	return UiParts.rules_tip("%s: %s" % [ch.name.get_slice(" ", 0), str(t["name"])],
 		"Approval %+d, from -100 to +100" % Approval.score(st, ch.id), body, facts,
-		"Choices made while they travel with you move it. Warm and better opens their confidences at camp; Close opens the best ending of their own story; Strained shuts it until mended.")
+		"Choices made while they travel with you move it. Warm and better opens their confidences at camp, and romances; Close or better adds to the end of their own story; Strained or worse holds that ending back until it's mended.")

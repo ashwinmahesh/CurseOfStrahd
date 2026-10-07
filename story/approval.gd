@@ -33,6 +33,17 @@ const TIERS: Array[Dictionary] = [
 		"says": "Still walks with you. For now."},
 ]
 
+## Romances between the six (owner, 2026-10-07: approval includes romances; camp/romance_<pair>.dialogue): each pair's
+## string flag is "spark", "courting", "together", or "over" when the party steered them apart. Thistle walks one at a
+## time (each spark waits for the other to be unset or over).
+const ROMANCES: Array[Dictionary] = [
+	{"flag": "romance_thistle_wren", "pair": ["thistle", "wren_featherfoot"]},
+	{"flag": "romance_godrick_thistle", "pair": ["godrick_pendlebrook", "thistle"]},
+	{"flag": "romance_liriel_ratatoille", "pair": ["liriel_dawnsong", "ratatoille"]},
+]
+## How the party screen words each stage.
+const ROMANCE_WORDS := {"spark": "Sweet on %s", "courting": "Courting %s", "together": "Together with %s"}
+
 ## A change this big (either way) is "greatly".
 const GREAT := 5
 ## How many moments each companion remembers on the party screen.
@@ -83,6 +94,25 @@ static func memories(st: StoryState, id: String) -> Array[Dictionary]:
 	for i in range(list.size() - 1, -1, -1):
 		out.append(list[i] as Dictionary)
 	return out
+
+
+## A companion's romance as it stands: {partner: id, stage: spark | courting | together}, or {} when there's none (or
+## it's over).
+static func romance(st: StoryState, id: String) -> Dictionary:
+	for r in ROMANCES:
+		var pair := r["pair"] as Array
+		var stage := str(st.get_flag(str(r["flag"]), ""))
+		if id in pair and ROMANCE_WORDS.has(stage):
+			return {"partner": str(pair[1] if str(pair[0]) == id else pair[0]), "stage": stage}
+	return {}
+
+
+## "Courting Wren", for the party screen, or "".
+static func romance_line(st: StoryState, id: String) -> String:
+	var r := romance(st, id)
+	if r.is_empty():
+		return ""
+	return str(ROMANCE_WORDS[str(r["stage"])]) % first_name(str(r["partner"]))
 
 
 ## A condition term `approval.<id> <op> <rhs>` (StoryConditions): rhs is a tier id (compared by rank, so `<= strained`

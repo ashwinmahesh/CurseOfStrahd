@@ -46,6 +46,7 @@ gold -1
 give dream_pastry 1
 set dream_pastries_bought += 1
 Morgantha [smile]: A wise choice. Wrap it up warm, dearie. And remember: Morgantha remembers every customer. Every one.
+approve ratatoille -1 kip_smudgewick -1: You bought one of Morgantha's dream pastries
 -> menu
 
 ~ buy_three
@@ -53,6 +54,7 @@ gold -3
 give dream_pastry 3
 set dream_pastries_bought += 3
 Morgantha [smile]: Three! Oh, you've a family to feed, I can tell. Do bring them by sometime. Bring the little ones especially.
+approve ratatoille -2 kip_smudgewick -1: You bought three of Morgantha's dream pastries
 -> menu
 
 ~ sample
@@ -80,6 +82,7 @@ Narrator: A sweet old woman with flour on her sleeves. You find nothing else, an
 set morgantha_suspected
 Narrator: The crust is threaded with a fine white powder that isn't flour, and under the honey is a bitter, sleepy smell. Bone, ground very fine, and something to make you dream.
 Morgantha [sly]: Secret ingredient, dearie. Every family has one.
+approve ratatoille +2: You broke a pastry open and found out what was really in it
 -> menu
 
 ~ medicine_fail

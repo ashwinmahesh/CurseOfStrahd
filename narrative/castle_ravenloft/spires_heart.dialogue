@@ -31,6 +31,7 @@ endif
 ~ study
 set heart_of_sorrow_known
 Narrator: The magic is old and simple and very strong: a binding, one end tied to the glass and the other to someone who isn't here. Whatever is done to him, the glass takes first.
+approve ratatoille +2: You studied the magic in the Heart of Sorrow before touching it
 -> menu
 
 ~ study_fail
